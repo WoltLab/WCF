@@ -1,336 +1,308 @@
 <?php
 
-use wcf\event\acp\menu\item\ItemCollecting;
 use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\event\EventHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\language\preload\command\ResetPreloadCache;
 use wcf\system\language\preload\PhrasePreloader;
-use wcf\system\menu\acp\AcpMenuItem;
 use wcf\system\package\license\LicenseApi;
-use wcf\system\request\LinkHandler;
-use wcf\system\style\FontAwesomeIcon;
 use wcf\system\user\authentication\LoginRedirect;
 use wcf\system\WCF;
 
-return static function (): void {
-    $eventHandler = EventHandler::getInstance();
+return new class {
+    public function __invoke(): void
+    {
+        $this->initEventListeners();
+        $this->initEndpoints();
+        $this->initACPMenuItems();
+        $this->initLicenseData();
+    }
 
-    $cronjobNextExec = CronjobScheduler::getInstance()->getNextExec();
-    if ($cronjobNextExec !== null) {
-        WCF::getTPL()->assign(
-            'executeCronjobs',
-            $cronjobNextExec < TIME_NOW && \defined('OFFLINE') && !OFFLINE
+    private function initEventListeners(): void
+    {
+        $eventHandler = EventHandler::getInstance();
+
+        $cronjobNextExec = CronjobScheduler::getInstance()->getNextExec();
+        if ($cronjobNextExec !== null) {
+            WCF::getTPL()->assign(
+                'executeCronjobs',
+                $cronjobNextExec < TIME_NOW && \defined('OFFLINE') && !OFFLINE
+            );
+        }
+
+        $eventHandler->register(
+            \wcf\event\user\authentication\UserLoggedIn::class,
+            \wcf\system\event\listener\UserLoginCancelLostPasswordListener::class
+        );
+        $eventHandler->register(
+            \wcf\event\session\PreserveVariablesCollecting::class,
+            static function (\wcf\event\session\PreserveVariablesCollecting $event) {
+                $event->keys[] = LoginRedirect::SESSION_VAR_KEY;
+            }
+        );
+
+        $eventHandler->register(
+            \wcf\event\user\UsernameValidating::class,
+            \wcf\system\event\listener\UsernameValidatingCheckCharactersListener::class
+        );
+
+        $eventHandler->register(
+            \wcf\event\user\RegistrationSpamChecking::class,
+            \wcf\system\event\listener\RegistrationSpamCheckingSfsListener::class
+        );
+        $eventHandler->register(
+            \wcf\event\page\ContactFormSpamChecking::class,
+            \wcf\system\event\listener\ContactFormSpamCheckingSfsListener::class
+        );
+        $eventHandler->register(
+            \wcf\event\message\MessageSpamChecking::class,
+            \wcf\system\event\listener\MessageSpamCheckingSfsListener::class
+        );
+
+        $eventHandler->register(
+            \wcf\event\package\PackageListChanged::class,
+            static function () {
+                foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+                    $command = new ResetPreloadCache($language);
+                    $command();
+                }
+            }
+        );
+        $eventHandler->register(
+            \wcf\event\language\LanguageImported::class,
+            static function (\wcf\event\language\LanguageImported $event) {
+                $command = new ResetPreloadCache($event->language);
+                $command();
+            }
+        );
+        $eventHandler->register(
+            \wcf\event\language\PhraseChanged::class,
+            \wcf\system\event\listener\PhraseChangedPreloadListener::class
+        );
+        $eventHandler->register(
+            \wcf\event\package\PackageInstallationPluginSynced::class,
+            \wcf\system\event\listener\PipSyncedPhrasePreloadListener::class
+        );
+        WCF::getTPL()->assign('phrasePreloader', new PhrasePreloader());
+        $eventHandler->register(
+            \wcf\event\language\PreloadPhrasesCollecting::class,
+            \wcf\system\event\listener\PreloadPhrasesCollectingListener::class
+        );
+
+        $eventHandler->register(
+            \wcf\event\worker\RebuildWorkerCollecting::class,
+            static function (\wcf\event\worker\RebuildWorkerCollecting $event) {
+                $event->register(\wcf\system\worker\LikeRebuildDataWorker::class, -100);
+                $event->register(\wcf\system\worker\ArticleRebuildDataWorker::class, 50);
+                $event->register(\wcf\system\worker\PageRebuildDataWorker::class, 50);
+                $event->register(\wcf\system\worker\PollRebuildDataWorker::class, 60);
+                $event->register(\wcf\system\worker\UserActivityPointUpdateEventsWorker::class, 65);
+                $event->register(\wcf\system\worker\UserRebuildDataWorker::class, 70);
+                $event->register(\wcf\system\worker\UserActivityPointItemsRebuildDataWorker::class, 75);
+                $event->register(\wcf\system\worker\CommentRebuildDataWorker::class, 120);
+                $event->register(\wcf\system\worker\CommentResponseRebuildDataWorker::class, 121);
+                $event->register(\wcf\system\worker\AttachmentRebuildDataWorker::class, 450);
+                $event->register(\wcf\system\worker\MediaRebuildDataWorker::class, 450);
+                $event->register(\wcf\system\worker\UnfurlUrlRebuildDataWorker::class, 450);
+                $event->register(\wcf\system\worker\FileRebuildDataWorker::class, 475);
+                $event->register(\wcf\system\worker\SitemapRebuildWorker::class, 500);
+                $event->register(\wcf\system\worker\StatDailyRebuildDataWorker::class, 800);
+            }
+        );
+
+        $eventHandler->register(
+            \wcf\event\package\PackageUpdateListChanged::class,
+            \wcf\system\event\listener\PackageUpdateListChangedLicenseListener::class
+        );
+
+        $eventHandler->register(
+            \wcf\event\acp\dashboard\box\BoxCollecting::class,
+            static function (\wcf\event\acp\dashboard\box\BoxCollecting $event) {
+                $event->register(new \wcf\system\acp\dashboard\box\NewsAcpDashboardBox());
+                $event->register(new \wcf\system\acp\dashboard\box\StatusMessageAcpDashboardBox());
+                $event->register(new \wcf\system\acp\dashboard\box\ExpiringLicensesAcpDashboardBox());
+                $event->register(new \wcf\system\acp\dashboard\box\UsersAwaitingApprovalAcpDashboardBox());
+                $event->register(new \wcf\system\acp\dashboard\box\SystemInfoAcpDashboardBox());
+                $event->register(new \wcf\system\acp\dashboard\box\CreditsAcpDashboardBox());
+            }
         );
     }
 
-    $eventHandler->register(
-        \wcf\event\user\authentication\UserLoggedIn::class,
-        \wcf\system\event\listener\UserLoginCancelLostPasswordListener::class
-    );
-    $eventHandler->register(
-        \wcf\event\session\PreserveVariablesCollecting::class,
-        static function (\wcf\event\session\PreserveVariablesCollecting $event) {
-            $event->keys[] = LoginRedirect::SESSION_VAR_KEY;
-        }
-    );
-
-    $eventHandler->register(
-        \wcf\event\user\UsernameValidating::class,
-        \wcf\system\event\listener\UsernameValidatingCheckCharactersListener::class
-    );
-
-    $eventHandler->register(
-        \wcf\event\user\RegistrationSpamChecking::class,
-        \wcf\system\event\listener\RegistrationSpamCheckingSfsListener::class
-    );
-    $eventHandler->register(
-        \wcf\event\page\ContactFormSpamChecking::class,
-        \wcf\system\event\listener\ContactFormSpamCheckingSfsListener::class
-    );
-    $eventHandler->register(
-        \wcf\event\message\MessageSpamChecking::class,
-        \wcf\system\event\listener\MessageSpamCheckingSfsListener::class
-    );
-
-    $eventHandler->register(
-        \wcf\event\package\PackageListChanged::class,
-        static function () {
-            foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
-                $command = new ResetPreloadCache($language);
-                $command();
+    private function initEndpoints(): void
+    {
+        EventHandler::getInstance()->register(
+            \wcf\event\endpoint\ControllerCollecting::class,
+            static function (\wcf\event\endpoint\ControllerCollecting $event) {
+                $event->register(new \wcf\system\endpoint\controller\core\articles\GetArticlePopover());
+                $event->register(new \wcf\system\endpoint\controller\core\files\DeleteFile());
+                $event->register(new \wcf\system\endpoint\controller\core\files\GenerateThumbnails());
+                $event->register(new \wcf\system\endpoint\controller\core\files\PrepareUpload());
+                $event->register(new \wcf\system\endpoint\controller\core\files\upload\SaveChunk());
+                $event->register(new \wcf\system\endpoint\controller\core\comments\CreateComment());
+                $event->register(new \wcf\system\endpoint\controller\core\comments\DeleteComment());
+                $event->register(new \wcf\system\endpoint\controller\core\comments\EditComment());
+                $event->register(new \wcf\system\endpoint\controller\core\comments\EnableComment());
+                $event->register(new \wcf\system\endpoint\controller\core\comments\RenderComments());
+                $event->register(new \wcf\system\endpoint\controller\core\comments\RenderComment());
+                $event->register(new \wcf\system\endpoint\controller\core\comments\UpdateComment());
+                $event->register(new \wcf\system\endpoint\controller\core\comments\responses\CreateResponse());
+                $event->register(new \wcf\system\endpoint\controller\core\comments\responses\DeleteResponse());
+                $event->register(new \wcf\system\endpoint\controller\core\comments\responses\EditResponse());
+                $event->register(new \wcf\system\endpoint\controller\core\comments\responses\EnableResponse());
+                $event->register(new \wcf\system\endpoint\controller\core\comments\responses\RenderResponse());
+                $event->register(new \wcf\system\endpoint\controller\core\comments\responses\RenderResponses());
+                $event->register(new \wcf\system\endpoint\controller\core\comments\responses\UpdateResponse());
+                $event->register(new \wcf\system\endpoint\controller\core\exceptions\RenderException());
+                $event->register(new \wcf\system\endpoint\controller\core\gridViews\GetRows());
+                $event->register(new \wcf\system\endpoint\controller\core\gridViews\GetGridView());
+                $event->register(new \wcf\system\endpoint\controller\core\gridViews\GetRow());
+                $event->register(new \wcf\system\endpoint\controller\core\cronjobs\logs\ClearLogs());
+                $event->register(new \wcf\system\endpoint\controller\core\listViews\GetItems());
+                $event->register(new \wcf\system\endpoint\controller\core\listViews\GetItem());
+                $event->register(new \wcf\system\endpoint\controller\core\messages\GetMentionSuggestions());
+                $event->register(new \wcf\system\endpoint\controller\core\messages\RenderQuote());
+                $event->register(new \wcf\system\endpoint\controller\core\messages\ResetRemovalQuotes());
+                $event->register(new \wcf\system\endpoint\controller\core\sessions\DeleteSession());
+                $event->register(new \wcf\system\endpoint\controller\core\versionTrackers\RevertVersion());
+                $event->register(new \wcf\system\endpoint\controller\core\moderationQueues\ChangeJustifiedStatus());
+                $event->register(new \wcf\system\endpoint\controller\core\moderationQueues\CloseReport());
+                $event->register(new \wcf\system\endpoint\controller\core\moderationQueues\DeleteContent());
+                $event->register(new \wcf\system\endpoint\controller\core\moderationQueues\EnableContent());
+                $event->register(new \wcf\system\endpoint\controller\core\moderationQueues\MarkAsRead());
+                $event->register(new \wcf\system\endpoint\controller\core\styles\AddDarkMode());
+                $event->register(new \wcf\system\endpoint\controller\core\styles\CopyStyle());
+                $event->register(new \wcf\system\endpoint\controller\core\styles\DeleteStyle());
+                $event->register(new \wcf\system\endpoint\controller\core\styles\DisableStyle());
+                $event->register(new \wcf\system\endpoint\controller\core\styles\EnableStyle());
+                $event->register(new \wcf\system\endpoint\controller\core\styles\SetStyleAsDefault());
+                $event->register(new \wcf\system\endpoint\controller\core\users\options\DeleteOption());
+                $event->register(new \wcf\system\endpoint\controller\core\users\options\DisableOption());
+                $event->register(new \wcf\system\endpoint\controller\core\users\options\EnableOption());
+                $event->register(new \wcf\system\endpoint\controller\core\users\ranks\DeleteUserRank());
+                $event->register(new \wcf\system\endpoint\controller\core\users\trophies\DeleteUserTrophy());
+                $event->register(new \wcf\system\endpoint\controller\core\interactions\GetBulkContextMenuOptions());
+                $event->register(new \wcf\system\endpoint\controller\core\interactions\GetContextMenuOptions());
+                $event->register(new \wcf\system\endpoint\controller\core\articles\DeleteArticle());
+                $event->register(new \wcf\system\endpoint\controller\core\articles\SoftDeleteArticle());
+                $event->register(new \wcf\system\endpoint\controller\core\articles\RestoreArticle());
+                $event->register(new \wcf\system\endpoint\controller\core\articles\PublishArticle());
+                $event->register(new \wcf\system\endpoint\controller\core\articles\UnpublishArticle());
+                $event->register(new \wcf\system\endpoint\controller\core\articles\contents\GetArticleContentHeaderTitle());
+                $event->register(new \wcf\system\endpoint\controller\core\attachments\DeleteAttachment());
+                $event->register(new \wcf\system\endpoint\controller\core\cronjobs\EnableCronjob());
+                $event->register(new \wcf\system\endpoint\controller\core\cronjobs\DisableCronjob());
+                $event->register(new \wcf\system\endpoint\controller\core\cronjobs\DeleteCronjob());
+                $event->register(new \wcf\system\endpoint\controller\core\cronjobs\ExecuteCronjob());
+                $event->register(new \wcf\system\endpoint\controller\core\captchas\questions\EnableQuestion());
+                $event->register(new \wcf\system\endpoint\controller\core\captchas\questions\DisableQuestion());
+                $event->register(new \wcf\system\endpoint\controller\core\captchas\questions\DeleteQuestion());
+                $event->register(new \wcf\system\endpoint\controller\core\boxes\DisableBox());
+                $event->register(new \wcf\system\endpoint\controller\core\boxes\EnableBox());
+                $event->register(new \wcf\system\endpoint\controller\core\boxes\DeleteBox());
+                $event->register(new \wcf\system\endpoint\controller\core\bbcodes\media\providers\DeleteProvider());
+                $event->register(new \wcf\system\endpoint\controller\core\bbcodes\media\providers\DisableProvider());
+                $event->register(new \wcf\system\endpoint\controller\core\bbcodes\media\providers\EnableProvider());
+                $event->register(new \wcf\system\endpoint\controller\core\bbcodes\DeleteBBCode());
+                $event->register(new \wcf\system\endpoint\controller\core\languages\DisableLanguage());
+                $event->register(new \wcf\system\endpoint\controller\core\languages\DeleteLanguage());
+                $event->register(new \wcf\system\endpoint\controller\core\languages\EnableLanguage());
+                $event->register(new \wcf\system\endpoint\controller\core\languages\SetAsDefaultLanguage());
+                $event->register(new \wcf\system\endpoint\controller\core\languages\items\DeleteItem());
+                $event->register(new \wcf\system\endpoint\controller\core\labels\DeleteLabel());
+                $event->register(new \wcf\system\endpoint\controller\core\labels\groups\ChangeLabelShowOrder());
+                $event->register(new \wcf\system\endpoint\controller\core\labels\groups\ChangeShowOrder());
+                $event->register(new \wcf\system\endpoint\controller\core\labels\groups\DeleteGroup());
+                $event->register(new \wcf\system\endpoint\controller\core\labels\groups\GetLabelShowOrder());
+                $event->register(new \wcf\system\endpoint\controller\core\labels\groups\GetShowOrder());
+                $event->register(new \wcf\system\endpoint\controller\core\pages\DeletePage());
+                $event->register(new \wcf\system\endpoint\controller\core\pages\DisablePage());
+                $event->register(new \wcf\system\endpoint\controller\core\pages\EnablePage());
+                $event->register(new \wcf\system\endpoint\controller\core\templates\groups\DeleteTemplateGroup());
+                $event->register(new \wcf\system\endpoint\controller\core\packages\updates\servers\DisableServer());
+                $event->register(new \wcf\system\endpoint\controller\core\packages\updates\servers\DeleteServer());
+                $event->register(new \wcf\system\endpoint\controller\core\packages\updates\servers\EnableServer());
+                $event->register(new \wcf\system\endpoint\controller\core\paid\subscriptions\DeleteSubscription());
+                $event->register(new \wcf\system\endpoint\controller\core\paid\subscriptions\DisableSubscription());
+                $event->register(new \wcf\system\endpoint\controller\core\paid\subscriptions\EnableSubscription());
+                $event->register(new \wcf\system\endpoint\controller\core\paid\subscriptions\users\DeleteSubscriptionUser());
+                $event->register(new \wcf\system\endpoint\controller\core\templates\DeleteTemplate());
+                $event->register(new \wcf\system\endpoint\controller\core\tags\DeleteTag());
+                $event->register(new \wcf\system\endpoint\controller\core\users\groups\assignment\DeleteAssignment());
+                $event->register(new \wcf\system\endpoint\controller\core\users\groups\assignment\EnableAssignment());
+                $event->register(new \wcf\system\endpoint\controller\core\users\groups\assignment\DisableAssignment());
+                $event->register(new \wcf\system\endpoint\controller\core\users\groups\DeleteGroup());
+                $event->register(new \wcf\system\endpoint\controller\core\menus\DeleteMenu());
+                $event->register(new \wcf\system\endpoint\controller\core\trophies\EnableTrophy());
+                $event->register(new \wcf\system\endpoint\controller\core\trophies\DisableTrophy());
+                $event->register(new \wcf\system\endpoint\controller\core\trophies\DeleteTrophy());
+                $event->register(new \wcf\system\endpoint\controller\core\trophies\GetShowOrder());
+                $event->register(new \wcf\system\endpoint\controller\core\trophies\ChangeShowOrder());
+                $event->register(new \wcf\system\endpoint\controller\core\ads\EnableAd());
+                $event->register(new \wcf\system\endpoint\controller\core\ads\DisableAd());
+                $event->register(new \wcf\system\endpoint\controller\core\ads\DeleteAd());
+                $event->register(new \wcf\system\endpoint\controller\core\ads\GetShowOrder());
+                $event->register(new \wcf\system\endpoint\controller\core\ads\ChangeShowOrder());
+                $event->register(new \wcf\system\endpoint\controller\core\notices\EnableNotice());
+                $event->register(new \wcf\system\endpoint\controller\core\notices\DisableNotice());
+                $event->register(new \wcf\system\endpoint\controller\core\notices\DeleteNotice());
+                $event->register(new \wcf\system\endpoint\controller\core\notices\GetShowOrder());
+                $event->register(new \wcf\system\endpoint\controller\core\notices\ChangeShowOrder());
+                $event->register(new \wcf\system\endpoint\controller\core\reactions\types\EnableType());
+                $event->register(new \wcf\system\endpoint\controller\core\reactions\types\DisableType());
+                $event->register(new \wcf\system\endpoint\controller\core\reactions\types\DeleteType());
+                $event->register(new \wcf\system\endpoint\controller\core\reactions\types\GetShowOrder());
+                $event->register(new \wcf\system\endpoint\controller\core\reactions\types\ChangeShowOrder());
+                $event->register(new \wcf\system\endpoint\controller\core\smilies\DeleteSmiley());
+                $event->register(new \wcf\system\endpoint\controller\core\smilies\GetShowOrder());
+                $event->register(new \wcf\system\endpoint\controller\core\smilies\ChangeShowOrder());
+                $event->register(new \wcf\system\endpoint\controller\core\smilies\categories\GetSmileyShowOrder());
+                $event->register(new \wcf\system\endpoint\controller\core\smilies\categories\ChangeSmileyShowOrder());
+                $event->register(new \wcf\system\endpoint\controller\core\attachments\ChangeShowOrder());
+                $event->register(new \wcf\system\endpoint\controller\core\contact\options\DeleteOption());
+                $event->register(new \wcf\system\endpoint\controller\core\contact\options\ChangeShowOrder());
+                $event->register(new \wcf\system\endpoint\controller\core\contact\options\GetShowOrder());
+                $event->register(new \wcf\system\endpoint\controller\core\contact\options\DisableOption());
+                $event->register(new \wcf\system\endpoint\controller\core\contact\options\EnableOption());
+                $event->register(new \wcf\system\endpoint\controller\core\contact\recipients\DeleteRecipient());
+                $event->register(new \wcf\system\endpoint\controller\core\contact\recipients\ChangeShowOrder());
+                $event->register(new \wcf\system\endpoint\controller\core\contact\recipients\GetShowOrder());
+                $event->register(new \wcf\system\endpoint\controller\core\contact\recipients\DisableRecipient());
+                $event->register(new \wcf\system\endpoint\controller\core\contact\recipients\EnableRecipient());
             }
-        }
-    );
-    $eventHandler->register(
-        \wcf\event\language\LanguageImported::class,
-        static function (\wcf\event\language\LanguageImported $event) {
-            $command = new ResetPreloadCache($event->language);
-            $command();
-        }
-    );
-    $eventHandler->register(
-        \wcf\event\language\PhraseChanged::class,
-        \wcf\system\event\listener\PhraseChangedPreloadListener::class
-    );
-    $eventHandler->register(
-        \wcf\event\package\PackageInstallationPluginSynced::class,
-        \wcf\system\event\listener\PipSyncedPhrasePreloadListener::class
-    );
-    WCF::getTPL()->assign('phrasePreloader', new PhrasePreloader());
-    $eventHandler->register(
-        \wcf\event\language\PreloadPhrasesCollecting::class,
-        \wcf\system\event\listener\PreloadPhrasesCollectingListener::class
-    );
-
-    $eventHandler->register(
-        \wcf\event\worker\RebuildWorkerCollecting::class,
-        static function (\wcf\event\worker\RebuildWorkerCollecting $event) {
-            $event->register(\wcf\system\worker\LikeRebuildDataWorker::class, -100);
-            $event->register(\wcf\system\worker\ArticleRebuildDataWorker::class, 50);
-            $event->register(\wcf\system\worker\PageRebuildDataWorker::class, 50);
-            $event->register(\wcf\system\worker\PollRebuildDataWorker::class, 60);
-            $event->register(\wcf\system\worker\UserActivityPointUpdateEventsWorker::class, 65);
-            $event->register(\wcf\system\worker\UserRebuildDataWorker::class, 70);
-            $event->register(\wcf\system\worker\UserActivityPointItemsRebuildDataWorker::class, 75);
-            $event->register(\wcf\system\worker\CommentRebuildDataWorker::class, 120);
-            $event->register(\wcf\system\worker\CommentResponseRebuildDataWorker::class, 121);
-            $event->register(\wcf\system\worker\AttachmentRebuildDataWorker::class, 450);
-            $event->register(\wcf\system\worker\MediaRebuildDataWorker::class, 450);
-            $event->register(\wcf\system\worker\UnfurlUrlRebuildDataWorker::class, 450);
-            $event->register(\wcf\system\worker\FileRebuildDataWorker::class, 475);
-            $event->register(\wcf\system\worker\SitemapRebuildWorker::class, 500);
-            $event->register(\wcf\system\worker\StatDailyRebuildDataWorker::class, 800);
-        }
-    );
-
-    $eventHandler->register(
-        \wcf\event\package\PackageUpdateListChanged::class,
-        \wcf\system\event\listener\PackageUpdateListChangedLicenseListener::class
-    );
-
-    $eventHandler->register(
-        \wcf\event\acp\dashboard\box\BoxCollecting::class,
-        static function (\wcf\event\acp\dashboard\box\BoxCollecting $event) {
-            $event->register(new \wcf\system\acp\dashboard\box\NewsAcpDashboardBox());
-            $event->register(new \wcf\system\acp\dashboard\box\StatusMessageAcpDashboardBox());
-            $event->register(new \wcf\system\acp\dashboard\box\ExpiringLicensesAcpDashboardBox());
-            $event->register(new \wcf\system\acp\dashboard\box\UsersAwaitingApprovalAcpDashboardBox());
-            $event->register(new \wcf\system\acp\dashboard\box\SystemInfoAcpDashboardBox());
-            $event->register(new \wcf\system\acp\dashboard\box\CreditsAcpDashboardBox());
-        }
-    );
-
-    $eventHandler->register(
-        \wcf\event\endpoint\ControllerCollecting::class,
-        static function (\wcf\event\endpoint\ControllerCollecting $event) {
-            $event->register(new \wcf\system\endpoint\controller\core\articles\GetArticlePopover());
-            $event->register(new \wcf\system\endpoint\controller\core\files\DeleteFile());
-            $event->register(new \wcf\system\endpoint\controller\core\files\GenerateThumbnails());
-            $event->register(new \wcf\system\endpoint\controller\core\files\PrepareUpload());
-            $event->register(new \wcf\system\endpoint\controller\core\files\upload\SaveChunk());
-            $event->register(new \wcf\system\endpoint\controller\core\comments\CreateComment());
-            $event->register(new \wcf\system\endpoint\controller\core\comments\DeleteComment());
-            $event->register(new \wcf\system\endpoint\controller\core\comments\EditComment());
-            $event->register(new \wcf\system\endpoint\controller\core\comments\EnableComment());
-            $event->register(new \wcf\system\endpoint\controller\core\comments\RenderComments());
-            $event->register(new \wcf\system\endpoint\controller\core\comments\RenderComment());
-            $event->register(new \wcf\system\endpoint\controller\core\comments\UpdateComment());
-            $event->register(new \wcf\system\endpoint\controller\core\comments\responses\CreateResponse());
-            $event->register(new \wcf\system\endpoint\controller\core\comments\responses\DeleteResponse());
-            $event->register(new \wcf\system\endpoint\controller\core\comments\responses\EditResponse());
-            $event->register(new \wcf\system\endpoint\controller\core\comments\responses\EnableResponse());
-            $event->register(new \wcf\system\endpoint\controller\core\comments\responses\RenderResponse());
-            $event->register(new \wcf\system\endpoint\controller\core\comments\responses\RenderResponses());
-            $event->register(new \wcf\system\endpoint\controller\core\comments\responses\UpdateResponse());
-            $event->register(new \wcf\system\endpoint\controller\core\exceptions\RenderException());
-            $event->register(new \wcf\system\endpoint\controller\core\gridViews\GetRows());
-            $event->register(new \wcf\system\endpoint\controller\core\gridViews\GetGridView());
-            $event->register(new \wcf\system\endpoint\controller\core\gridViews\GetRow());
-            $event->register(new \wcf\system\endpoint\controller\core\cronjobs\logs\ClearLogs());
-            $event->register(new \wcf\system\endpoint\controller\core\listViews\GetItems());
-            $event->register(new \wcf\system\endpoint\controller\core\listViews\GetItem());
-            $event->register(new \wcf\system\endpoint\controller\core\messages\GetMentionSuggestions());
-            $event->register(new \wcf\system\endpoint\controller\core\messages\RenderQuote());
-            $event->register(new \wcf\system\endpoint\controller\core\messages\ResetRemovalQuotes());
-            $event->register(new \wcf\system\endpoint\controller\core\sessions\DeleteSession());
-            $event->register(new \wcf\system\endpoint\controller\core\versionTrackers\RevertVersion());
-            $event->register(new \wcf\system\endpoint\controller\core\moderationQueues\ChangeJustifiedStatus());
-            $event->register(new \wcf\system\endpoint\controller\core\moderationQueues\CloseReport());
-            $event->register(new \wcf\system\endpoint\controller\core\moderationQueues\DeleteContent());
-            $event->register(new \wcf\system\endpoint\controller\core\moderationQueues\EnableContent());
-            $event->register(new \wcf\system\endpoint\controller\core\moderationQueues\MarkAsRead());
-            $event->register(new \wcf\system\endpoint\controller\core\styles\AddDarkMode());
-            $event->register(new \wcf\system\endpoint\controller\core\styles\CopyStyle());
-            $event->register(new \wcf\system\endpoint\controller\core\styles\DeleteStyle());
-            $event->register(new \wcf\system\endpoint\controller\core\styles\DisableStyle());
-            $event->register(new \wcf\system\endpoint\controller\core\styles\EnableStyle());
-            $event->register(new \wcf\system\endpoint\controller\core\styles\SetStyleAsDefault());
-            $event->register(new \wcf\system\endpoint\controller\core\users\options\DeleteOption());
-            $event->register(new \wcf\system\endpoint\controller\core\users\options\DisableOption());
-            $event->register(new \wcf\system\endpoint\controller\core\users\options\EnableOption());
-            $event->register(new \wcf\system\endpoint\controller\core\users\ranks\DeleteUserRank());
-            $event->register(new \wcf\system\endpoint\controller\core\users\trophies\DeleteUserTrophy());
-            $event->register(new \wcf\system\endpoint\controller\core\interactions\GetBulkContextMenuOptions());
-            $event->register(new \wcf\system\endpoint\controller\core\interactions\GetContextMenuOptions());
-            $event->register(new \wcf\system\endpoint\controller\core\articles\DeleteArticle());
-            $event->register(new \wcf\system\endpoint\controller\core\articles\SoftDeleteArticle());
-            $event->register(new \wcf\system\endpoint\controller\core\articles\RestoreArticle());
-            $event->register(new \wcf\system\endpoint\controller\core\articles\PublishArticle());
-            $event->register(new \wcf\system\endpoint\controller\core\articles\UnpublishArticle());
-            $event->register(new \wcf\system\endpoint\controller\core\articles\contents\GetArticleContentHeaderTitle());
-            $event->register(new \wcf\system\endpoint\controller\core\attachments\DeleteAttachment());
-            $event->register(new \wcf\system\endpoint\controller\core\cronjobs\EnableCronjob());
-            $event->register(new \wcf\system\endpoint\controller\core\cronjobs\DisableCronjob());
-            $event->register(new \wcf\system\endpoint\controller\core\cronjobs\DeleteCronjob());
-            $event->register(new \wcf\system\endpoint\controller\core\cronjobs\ExecuteCronjob());
-            $event->register(new \wcf\system\endpoint\controller\core\captchas\questions\EnableQuestion());
-            $event->register(new \wcf\system\endpoint\controller\core\captchas\questions\DisableQuestion());
-            $event->register(new \wcf\system\endpoint\controller\core\captchas\questions\DeleteQuestion());
-            $event->register(new \wcf\system\endpoint\controller\core\boxes\DisableBox());
-            $event->register(new \wcf\system\endpoint\controller\core\boxes\EnableBox());
-            $event->register(new \wcf\system\endpoint\controller\core\boxes\DeleteBox());
-            $event->register(new \wcf\system\endpoint\controller\core\bbcodes\media\providers\DeleteProvider());
-            $event->register(new \wcf\system\endpoint\controller\core\bbcodes\media\providers\DisableProvider());
-            $event->register(new \wcf\system\endpoint\controller\core\bbcodes\media\providers\EnableProvider());
-            $event->register(new \wcf\system\endpoint\controller\core\bbcodes\DeleteBBCode());
-            $event->register(new \wcf\system\endpoint\controller\core\languages\DisableLanguage());
-            $event->register(new \wcf\system\endpoint\controller\core\languages\DeleteLanguage());
-            $event->register(new \wcf\system\endpoint\controller\core\languages\EnableLanguage());
-            $event->register(new \wcf\system\endpoint\controller\core\languages\SetAsDefaultLanguage());
-            $event->register(new \wcf\system\endpoint\controller\core\languages\items\DeleteItem());
-            $event->register(new \wcf\system\endpoint\controller\core\labels\DeleteLabel());
-            $event->register(new \wcf\system\endpoint\controller\core\labels\groups\ChangeLabelShowOrder());
-            $event->register(new \wcf\system\endpoint\controller\core\labels\groups\ChangeShowOrder());
-            $event->register(new \wcf\system\endpoint\controller\core\labels\groups\DeleteGroup());
-            $event->register(new \wcf\system\endpoint\controller\core\labels\groups\GetLabelShowOrder());
-            $event->register(new \wcf\system\endpoint\controller\core\labels\groups\GetShowOrder());
-            $event->register(new \wcf\system\endpoint\controller\core\pages\DeletePage());
-            $event->register(new \wcf\system\endpoint\controller\core\pages\DisablePage());
-            $event->register(new \wcf\system\endpoint\controller\core\pages\EnablePage());
-            $event->register(new \wcf\system\endpoint\controller\core\templates\groups\DeleteTemplateGroup());
-            $event->register(new \wcf\system\endpoint\controller\core\packages\updates\servers\DisableServer());
-            $event->register(new \wcf\system\endpoint\controller\core\packages\updates\servers\DeleteServer());
-            $event->register(new \wcf\system\endpoint\controller\core\packages\updates\servers\EnableServer());
-            $event->register(new \wcf\system\endpoint\controller\core\paid\subscriptions\DeleteSubscription());
-            $event->register(new \wcf\system\endpoint\controller\core\paid\subscriptions\DisableSubscription());
-            $event->register(new \wcf\system\endpoint\controller\core\paid\subscriptions\EnableSubscription());
-            $event->register(new \wcf\system\endpoint\controller\core\paid\subscriptions\users\DeleteSubscriptionUser());
-            $event->register(new \wcf\system\endpoint\controller\core\templates\DeleteTemplate());
-            $event->register(new \wcf\system\endpoint\controller\core\tags\DeleteTag());
-            $event->register(new \wcf\system\endpoint\controller\core\users\groups\assignment\DeleteAssignment());
-            $event->register(new \wcf\system\endpoint\controller\core\users\groups\assignment\EnableAssignment());
-            $event->register(new \wcf\system\endpoint\controller\core\users\groups\assignment\DisableAssignment());
-            $event->register(new \wcf\system\endpoint\controller\core\users\groups\DeleteGroup());
-            $event->register(new \wcf\system\endpoint\controller\core\menus\DeleteMenu());
-            $event->register(new \wcf\system\endpoint\controller\core\trophies\EnableTrophy());
-            $event->register(new \wcf\system\endpoint\controller\core\trophies\DisableTrophy());
-            $event->register(new \wcf\system\endpoint\controller\core\trophies\DeleteTrophy());
-            $event->register(new \wcf\system\endpoint\controller\core\trophies\GetShowOrder());
-            $event->register(new \wcf\system\endpoint\controller\core\trophies\ChangeShowOrder());
-            $event->register(new \wcf\system\endpoint\controller\core\ads\EnableAd());
-            $event->register(new \wcf\system\endpoint\controller\core\ads\DisableAd());
-            $event->register(new \wcf\system\endpoint\controller\core\ads\DeleteAd());
-            $event->register(new \wcf\system\endpoint\controller\core\ads\GetShowOrder());
-            $event->register(new \wcf\system\endpoint\controller\core\ads\ChangeShowOrder());
-            $event->register(new \wcf\system\endpoint\controller\core\notices\EnableNotice());
-            $event->register(new \wcf\system\endpoint\controller\core\notices\DisableNotice());
-            $event->register(new \wcf\system\endpoint\controller\core\notices\DeleteNotice());
-            $event->register(new \wcf\system\endpoint\controller\core\notices\GetShowOrder());
-            $event->register(new \wcf\system\endpoint\controller\core\notices\ChangeShowOrder());
-            $event->register(new \wcf\system\endpoint\controller\core\reactions\types\EnableType());
-            $event->register(new \wcf\system\endpoint\controller\core\reactions\types\DisableType());
-            $event->register(new \wcf\system\endpoint\controller\core\reactions\types\DeleteType());
-            $event->register(new \wcf\system\endpoint\controller\core\reactions\types\GetShowOrder());
-            $event->register(new \wcf\system\endpoint\controller\core\reactions\types\ChangeShowOrder());
-            $event->register(new \wcf\system\endpoint\controller\core\smilies\DeleteSmiley());
-            $event->register(new \wcf\system\endpoint\controller\core\smilies\GetShowOrder());
-            $event->register(new \wcf\system\endpoint\controller\core\smilies\ChangeShowOrder());
-            $event->register(new \wcf\system\endpoint\controller\core\smilies\categories\GetSmileyShowOrder());
-            $event->register(new \wcf\system\endpoint\controller\core\smilies\categories\ChangeSmileyShowOrder());
-            $event->register(new \wcf\system\endpoint\controller\core\attachments\ChangeShowOrder());
-            $event->register(new \wcf\system\endpoint\controller\core\contact\options\DeleteOption());
-            $event->register(new \wcf\system\endpoint\controller\core\contact\options\ChangeShowOrder());
-            $event->register(new \wcf\system\endpoint\controller\core\contact\options\GetShowOrder());
-            $event->register(new \wcf\system\endpoint\controller\core\contact\options\DisableOption());
-            $event->register(new \wcf\system\endpoint\controller\core\contact\options\EnableOption());
-            $event->register(new \wcf\system\endpoint\controller\core\contact\recipients\DeleteRecipient());
-            $event->register(new \wcf\system\endpoint\controller\core\contact\recipients\ChangeShowOrder());
-            $event->register(new \wcf\system\endpoint\controller\core\contact\recipients\GetShowOrder());
-            $event->register(new \wcf\system\endpoint\controller\core\contact\recipients\DisableRecipient());
-            $event->register(new \wcf\system\endpoint\controller\core\contact\recipients\EnableRecipient());
-        }
-    );
-
-    // The options are not available while the WCFSetup process has not yet completed.
-    if (defined('MODULE_CONTACT_FORM') && MODULE_CONTACT_FORM) {
-        $eventHandler->register(ItemCollecting::class, static function (ItemCollecting $event) {
-            if (!WCF::getSession()->getPermission("admin.contact.canManageContactForm")) {
-                return;
-            }
-
-            $event->register(
-                new AcpMenuItem(
-                    "wcf.acp.menu.link.contact",
-                    parentMenuItem: 'wcf.acp.menu.link.configuration'
-                )
-            );
-
-            $event->register(
-                new AcpMenuItem(
-                    "wcf.acp.menu.link.contact.options",
-                    parentMenuItem: "wcf.acp.menu.link.contact",
-                    link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\ContactOptionListPage::class),
-                )
-            );
-            $event->register(
-                new AcpMenuItem(
-                    "wcf.acp.menu.link.contact.options.add",
-                    WCF::getLanguage()->get("wcf.acp.contact.option.add"),
-                    "wcf.acp.menu.link.contact.options",
-                    LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\ContactOptionAddForm::class),
-                    FontAwesomeIcon::fromValues("plus"),
-                )
-            );
-            $event->register(
-                new AcpMenuItem(
-                    "wcf.acp.menu.link.contact.recipients",
-                    parentMenuItem: "wcf.acp.menu.link.contact",
-                    link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\ContactRecipientListPage::class),
-                )
-            );
-            $event->register(
-                new AcpMenuItem(
-                    "wcf.acp.menu.link.contact.recipients.add",
-                    WCF::getLanguage()->get("wcf.acp.contact.recipient.add"),
-                    "wcf.acp.menu.link.contact.recipients",
-                    LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\ContactRecipientAddForm::class),
-                    FontAwesomeIcon::fromValues("plus"),
-                )
-            );
-        });
+        );
     }
 
-    try {
-        $licenseApi = new LicenseApi();
-        $licenseData = $licenseApi->readFromFile();
-        if ($licenseData !== null) {
-            $brandingFree = $licenseData->woltlab['com.woltlab.brandingFree'] ?? '0.0';
-            $expiresAt = $licenseData->license['expiryDates']['com.woltlab.brandingFree'] ?? \TIME_NOW;
-            if ($brandingFree !== '0.0' && ($expiresAt === -1 || $expiresAt >= \TIME_NOW)) {
-                define('WOLTLAB_BRANDING', false);
-            }
-
-            // Expire the cached license data after 60 days.
-            if ($licenseData->creationDate->getTimestamp() < \TIME_NOW - 86400 * 60) {
-                $licenseApi->clearLicenseFile();
-            }
-        }
-    } catch (\Throwable) {
-        // Reading the license file must never cause any errors.
+    private function initACPMenuItems(): void
+    {
+        EventHandler::getInstance()->register(
+            \wcf\event\acp\menu\item\ItemCollecting::class,
+            \wcf\system\event\listener\AcpMenuItemCollectingListener::class
+        );
     }
 
-    if (!defined('WOLTLAB_BRANDING')) {
-        define('WOLTLAB_BRANDING', true);
+    private function initLicenseData(): void
+    {
+        try {
+            $licenseApi = new LicenseApi();
+            $licenseData = $licenseApi->readFromFile();
+            if ($licenseData !== null) {
+                $brandingFree = $licenseData->woltlab['com.woltlab.brandingFree'] ?? '0.0';
+                $expiresAt = $licenseData->license['expiryDates']['com.woltlab.brandingFree'] ?? \TIME_NOW;
+                if ($brandingFree !== '0.0' && ($expiresAt === -1 || $expiresAt >= \TIME_NOW)) {
+                    define('WOLTLAB_BRANDING', false);
+                }
+
+                // Expire the cached license data after 60 days.
+                if ($licenseData->creationDate->getTimestamp() < \TIME_NOW - 86400 * 60) {
+                    $licenseApi->clearLicenseFile();
+                }
+            }
+        } catch (\Throwable) {
+            // Reading the license file must never cause any errors.
+        }
+
+        if (!defined('WOLTLAB_BRANDING')) {
+            define('WOLTLAB_BRANDING', true);
+        }
     }
 };

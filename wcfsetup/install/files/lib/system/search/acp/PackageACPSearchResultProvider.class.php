@@ -22,7 +22,7 @@ class PackageACPSearchResultProvider implements IACPSearchResultProvider
     {
         if (
             !WCF::getSession()->getPermission('admin.configuration.package.canUpdatePackage')
-            && !WCF::getSession()->getPermission('admin.configuration.package.canUninstallPackage')
+            && !WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage')
         ) {
             return [];
         }

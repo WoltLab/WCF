@@ -28,22 +28,15 @@
 								{if $_subMenuItems|empty}
 									<li{if $_menuItem->menuItem|in_array:$_activeMenuItems} class="active"{/if}><a href="{$_menuItem->getLink()}" class="acpPageSubMenuLink">{$_menuItem}</a></li>
 								{else}
-									{if $_menuItem->menuItem === 'wcf.acp.menu.link.option.category'}
-										{* handle special option categories *}
+									<li class="acpPageSubMenuLinkWrapper">
+										<a href="{$_menuItem->getLink()}" class="acpPageSubMenuLink{if $_menuItem->menuItem|in_array:$_activeMenuItems && $_activeMenuItems[0] === $_menuItem->menuItem} active{/if}">{$_menuItem}</a>
+										
 										{foreach from=$_subMenuItems item=_subMenuItem}
-											<li{if $_subMenuItem->menuItem|in_array:$_activeMenuItems} class="active"{/if}><a href="{$_subMenuItem->getLink()}" class="acpPageSubMenuLink">{$_subMenuItem}</a></li>
+											<a href="{$_subMenuItem->getLink()}" class="acpPageSubMenuIcon jsTooltip{if $_subMenuItem->menuItem|in_array:$_activeMenuItems} active{/if}" title="{$_subMenuItem}">
+												{unsafe:$_subMenuItem->getIcon()->toHtml()}
+											</a>
 										{/foreach}
-									{else}
-										<li class="acpPageSubMenuLinkWrapper">
-											<a href="{$_menuItem->getLink()}" class="acpPageSubMenuLink{if $_menuItem->menuItem|in_array:$_activeMenuItems && $_activeMenuItems[0] === $_menuItem->menuItem} active{/if}">{$_menuItem}</a>
-											
-											{foreach from=$_subMenuItems item=_subMenuItem}
-												<a href="{$_subMenuItem->getLink()}" class="acpPageSubMenuIcon jsTooltip{if $_subMenuItem->menuItem|in_array:$_activeMenuItems} active{/if}" title="{$_subMenuItem}">
-													{unsafe:$_subMenuItem->getIcon()->toHtml()}
-												</a>
-											{/foreach}
-										</li>
-									{/if}
+									</li>
 								{/if}
 							{/foreach}
 						</ol>

@@ -30,7 +30,7 @@ final class PackageListPage extends AbstractGridViewPage
      */
     public $neededPermissions = [
         'admin.configuration.package.canUpdatePackage',
-        'admin.configuration.package.canUninstallPackage',
+        'admin.configuration.package.canInstallPackage',
     ];
 
     #[\Override]

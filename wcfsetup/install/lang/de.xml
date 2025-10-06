@@ -737,7 +737,6 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.group.option.admin.management.canManageCronjob"><![CDATA[Kann zeitgesteuerte Aufgaben verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.configuration.package.canEditServer"><![CDATA[Kann Paket-Server bearbeiten]]></item>
 		<item name="wcf.acp.group.option.admin.configuration.package.canInstallPackage"><![CDATA[Kann Pakete installieren]]></item>
-		<item name="wcf.acp.group.option.admin.configuration.package.canUninstallPackage"><![CDATA[Kann Pakete deinstallieren]]></item>
 		<item name="wcf.acp.group.option.admin.configuration.package.canUpdatePackage"><![CDATA[Kann Pakete aktualisieren]]></item>
 		<item name="wcf.acp.group.option.admin.user.accessibleGroups"><![CDATA[Zugängliche Benutzergruppen]]></item>
 		<item name="wcf.acp.group.option.admin.user.accessibleGroups.description"><![CDATA[Mitglieder dieser Benutzergruppe haben auf diese Gruppen Zugriff. Zusätzlich muss angegeben werden, ob z.B. die Benutzergruppe bearbeitet werden darf.]]></item>

@@ -28,7 +28,7 @@ class PackageAction extends AbstractDatabaseObjectAction
     /**
      * @inheritDoc
      */
-    protected $permissionsDelete = ['admin.configuration.package.canUninstallPackage'];
+    protected $permissionsDelete = ['admin.configuration.package.canInstallPackage'];
 
     /**
      * @inheritDoc

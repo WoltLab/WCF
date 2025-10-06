@@ -220,7 +220,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
      */
     public function canUninstall()
     {
-        if (!WCF::getSession()->getPermission('admin.configuration.package.canUninstallPackage')) {
+        if (!WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage')) {
             return false;
         }
 
