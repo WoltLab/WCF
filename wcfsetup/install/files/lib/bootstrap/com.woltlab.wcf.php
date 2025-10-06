@@ -221,10 +221,10 @@ return new class {
                 $event->register(new \wcf\system\endpoint\controller\core\packages\updates\servers\DisableServer());
                 $event->register(new \wcf\system\endpoint\controller\core\packages\updates\servers\DeleteServer());
                 $event->register(new \wcf\system\endpoint\controller\core\packages\updates\servers\EnableServer());
-                $event->register(new \wcf\system\endpoint\controller\core\paid\subscriptions\DeleteSubscription());
-                $event->register(new \wcf\system\endpoint\controller\core\paid\subscriptions\DisableSubscription());
-                $event->register(new \wcf\system\endpoint\controller\core\paid\subscriptions\EnableSubscription());
-                $event->register(new \wcf\system\endpoint\controller\core\paid\subscriptions\users\DeleteSubscriptionUser());
+                $event->register(new \wcf\system\endpoint\controller\core\paidSubscriptions\DeleteSubscription());
+                $event->register(new \wcf\system\endpoint\controller\core\paidSubscriptions\DisableSubscription());
+                $event->register(new \wcf\system\endpoint\controller\core\paidSubscriptions\EnableSubscription());
+                $event->register(new \wcf\system\endpoint\controller\core\paidSubscriptions\users\DeleteSubscriptionUser());
                 $event->register(new \wcf\system\endpoint\controller\core\templates\DeleteTemplate());
                 $event->register(new \wcf\system\endpoint\controller\core\tags\DeleteTag());
                 $event->register(new \wcf\system\endpoint\controller\core\users\groups\assignment\DeleteAssignment());

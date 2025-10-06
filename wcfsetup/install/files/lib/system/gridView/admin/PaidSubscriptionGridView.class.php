@@ -109,8 +109,8 @@ final class PaidSubscriptionGridView extends AbstractGridView
         $this->addQuickInteraction(
             new ToggleInteraction(
                 "enable",
-                "core/paid/subscriptions/%s/enable",
-                "core/paid/subscriptions/%s/disable"
+                "core/paidSubscriptions/%s/enable",
+                "core/paidSubscriptions/%s/disable"
             )
         );
 

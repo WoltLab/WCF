@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\endpoint\controller\core\paid\subscriptions\users;
+namespace wcf\system\endpoint\controller\core\paidSubscriptions\users;
 
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
@@ -21,7 +21,7 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  */
-#[DeleteRequest('/core/paid/subscriptions/users/{id:\d+}')]
+#[DeleteRequest('/core/paid-subscriptions/users/{id:\d+}')]
 final class DeleteSubscriptionUser implements IController
 {
     #[\Override]
