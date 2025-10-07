@@ -30,7 +30,7 @@ final class EnableOption implements IController
         $this->assertOptionCanBeEnabled();
 
         if ($option->isDisabled) {
-            (new \wcf\system\user\option\command\EnableOption($option))();
+            (new \wcf\command\user\option\EnableOption($option))();
         }
 
         return new JsonResponse([]);

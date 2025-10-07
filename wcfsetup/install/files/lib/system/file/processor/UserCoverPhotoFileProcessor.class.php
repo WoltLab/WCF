@@ -8,7 +8,7 @@ use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
-use wcf\system\user\command\SetCoverPhoto;
+use wcf\command\user\SetCoverPhoto;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -161,8 +161,8 @@ final class UserCoverPhotoFileProcessor extends AbstractFileProcessor
         $user = $this->getUserByFile($file);
         if ($user === null) {
             return WCF::getSession()->getVar(
-                    \sprintf(self::SESSION_VARIABLE, $file->fileID)
-                ) !== null;
+                \sprintf(self::SESSION_VARIABLE, $file->fileID)
+            ) !== null;
         }
 
         return $user->canEditCoverPhoto();

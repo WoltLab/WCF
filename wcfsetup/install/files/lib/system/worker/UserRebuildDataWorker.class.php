@@ -19,7 +19,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\file\processor\UserAvatarFileProcessor;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\image\ImageHandler;
-use wcf\system\user\command\SetCoverPhoto;
+use wcf\command\user\SetCoverPhoto;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 

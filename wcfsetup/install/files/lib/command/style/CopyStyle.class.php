@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\style\command;
+namespace wcf\command\style;
 
 use wcf\data\style\Style;
 use wcf\data\style\StyleEditor;

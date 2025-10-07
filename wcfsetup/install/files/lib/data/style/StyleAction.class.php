@@ -10,7 +10,7 @@ use wcf\data\user\UserAction;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\image\ImageHandler;
 use wcf\system\request\LinkHandler;
-use wcf\system\style\command\CopyStyle;
+use wcf\command\style\CopyStyle;
 use wcf\system\style\command\CreateManifest;
 use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
