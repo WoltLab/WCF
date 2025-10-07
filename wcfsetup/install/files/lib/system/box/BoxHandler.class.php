@@ -5,7 +5,7 @@ namespace wcf\system\box;
 use wcf\data\box\Box;
 use wcf\data\box\BoxList;
 use wcf\command\box\CreateBoxCondition;
-use wcf\system\box\command\CreateBoxToPageAssignments;
+use wcf\command\box\CreateBoxToPageAssignments;
 use wcf\system\event\EventHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\SingletonFactory;

@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\box\command;
+namespace wcf\command\box;
 
 use wcf\data\box\Box;
 use wcf\data\page\Page;
@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since       6.1
+ * @since       6.2
  */
 final class CreateBoxToPageAssignments
 {
@@ -25,8 +25,7 @@ final class CreateBoxToPageAssignments
         private readonly string $boxIdentifier,
         private readonly array $pageIdentifiers,
         private readonly bool $visible = true,
-    ) {
-    }
+    ) {}
 
     /**
      * @throws \InvalidArgumentException
