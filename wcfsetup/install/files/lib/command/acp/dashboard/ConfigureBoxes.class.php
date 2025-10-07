@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\acp\dashboard\command;
+namespace wcf\command\acp\dashboard;
 
 use wcf\data\user\User;
 use wcf\system\acp\dashboard\AcpDashboard;
@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @author      Marcel Werk
  * @copyright   2001-2023 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since       6.1
+ * @since       6.2
  */
 final class ConfigureBoxes
 {
@@ -23,8 +23,7 @@ final class ConfigureBoxes
         private readonly AcpDashboard $dashboard,
         private readonly User $user,
         private readonly array $boxes,
-    ) {
-    }
+    ) {}
 
     public function __invoke(): void
     {

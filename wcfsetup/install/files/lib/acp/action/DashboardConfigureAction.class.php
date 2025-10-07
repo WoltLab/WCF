@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\system\acp\dashboard\AcpDashboard;
-use wcf\system\acp\dashboard\command\ConfigureBoxes;
+use wcf\command\acp\dashboard\ConfigureBoxes;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\field\MultipleSelectionFormField;
 use wcf\system\form\builder\Psr15DialogForm;
