@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\comment\command;
+namespace wcf\command\comment;
 
 use wcf\data\comment\Comment;
 use wcf\data\comment\CommentAction;
@@ -23,7 +23,7 @@ use wcf\system\user\notification\UserNotificationHandler;
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since       6.1
+ * @since       6.2
  */
 final class DeleteComments
 {
