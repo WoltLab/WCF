@@ -50,7 +50,7 @@ final class UpdateComment implements IController
             throw new PermissionDeniedException();
         }
 
-        (new \wcf\system\comment\command\UpdateComment(
+        (new \wcf\command\comment\UpdateComment(
             $comment,
             $htmlInputProcessor,
         ))();
