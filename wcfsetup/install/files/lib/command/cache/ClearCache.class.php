@@ -1,11 +1,11 @@
 <?php
 
-namespace wcf\system\cache\command;
+namespace wcf\command\cache;
 
 use wcf\data\option\OptionEditor;
 use wcf\data\package\update\server\PackageUpdateServer;
+use wcf\event\cache\CacheCleared;
 use wcf\system\cache\CacheHandler;
-use wcf\system\cache\event\CacheCleared;
 use wcf\system\event\EventHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\style\StyleHandler;
@@ -14,20 +14,13 @@ use wcf\system\user\storage\UserStorageHandler;
 /**
  * Performs a full cache clear.
  *
- * @author  Tim Duesterhus
+ * @author      Tim Duesterhus
  * @copyright   2001-2021 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since   6.0
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since       6.2
  */
 final class ClearCache
 {
-    private EventHandler $eventHandler;
-
-    public function __construct()
-    {
-        $this->eventHandler = EventHandler::getInstance();
-    }
-
     public function __invoke(): void
     {
         OptionEditor::resetCache();
@@ -42,7 +35,7 @@ final class ClearCache
 
         PackageUpdateServer::resetAll();
 
-        $this->eventHandler->fire(
+        EventHandler::getInstance()->fire(
             new CacheCleared()
         );
     }

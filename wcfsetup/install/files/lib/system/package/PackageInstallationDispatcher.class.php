@@ -15,7 +15,7 @@ use wcf\data\package\PackageEditor;
 use wcf\data\user\UserAction;
 use wcf\event\package\PackageListChanged;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\cache\command\ClearCache;
+use wcf\command\cache\ClearCache;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\devtools\DevtoolsSetup;
 use wcf\system\Environment;

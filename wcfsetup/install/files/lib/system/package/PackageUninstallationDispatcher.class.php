@@ -7,7 +7,7 @@ use wcf\data\package\PackageEditor;
 use wcf\event\package\PackageListChanged;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\PackageCacheBuilder;
-use wcf\system\cache\command\ClearCache;
+use wcf\command\cache\ClearCache;
 use wcf\system\event\EventHandler;
 use wcf\system\package\command\RebuildBootstrapper;
 use wcf\system\package\plugin\IPackageInstallationPlugin;
