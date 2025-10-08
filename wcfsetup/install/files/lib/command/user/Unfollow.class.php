@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\user\command;
+namespace wcf\command\user;
 
 use wcf\data\user\follow\UserFollow;
 use wcf\data\user\follow\UserFollowEditor;
@@ -14,13 +14,14 @@ use wcf\system\user\storage\UserStorageHandler;
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since       6.1
+ * @since       6.2
  */
 final class Unfollow
 {
-    public function __construct(private readonly User $user, private readonly User $target)
-    {
-    }
+    public function __construct(
+        private readonly User $user,
+        private readonly User $target
+    ) {}
 
     public function __invoke(): void
     {

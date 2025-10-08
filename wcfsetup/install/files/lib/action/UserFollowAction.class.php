@@ -12,7 +12,7 @@ use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\command\user\Follow;
-use wcf\system\user\command\Unfollow;
+use wcf\command\user\Unfollow;
 use wcf\system\WCF;
 
 /**

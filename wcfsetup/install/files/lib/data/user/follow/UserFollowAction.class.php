@@ -11,7 +11,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\command\user\Follow;
-use wcf\system\user\command\Unfollow;
+use wcf\command\user\Unfollow;
 use wcf\system\user\GroupedUserList;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
