@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\user\command;
+namespace wcf\command\user;
 
 use wcf\data\user\User;
 use wcf\system\user\notification\object\UserRegistrationUserNotificationObject;
@@ -13,11 +13,13 @@ use wcf\system\WCF;
  * @author      Olaf Braun
  * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since       6.1
+ * @since       6.2
  */
 final class CreateRegistrationNotification
 {
-    public function __construct(private readonly User $user) {}
+    public function __construct(
+        private readonly User $user
+    ) {}
 
     public function __invoke(): void
     {
