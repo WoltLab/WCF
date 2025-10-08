@@ -70,7 +70,7 @@ final class CreateResponse implements IController
             $isDisabled = true;
         }
 
-        $response = (new \wcf\system\comment\response\command\CreateResponse(
+        $response = (new \wcf\command\comment\response\CreateResponse(
             $comment,
             $htmlInputProcessor,
             WCF::getUser()->userID ? WCF::getUser() : null,
