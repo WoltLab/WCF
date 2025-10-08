@@ -9,7 +9,7 @@ use wcf\data\object\type\ObjectType;
 use wcf\event\comment\CommentsDeleted;
 use wcf\system\comment\CommentHandler;
 use wcf\system\comment\manager\ICommentManager;
-use wcf\system\comment\response\command\DeleteResponses;
+use wcf\command\comment\response\DeleteResponses;
 use wcf\system\event\EventHandler;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\moderation\queue\ModerationQueueManager;
