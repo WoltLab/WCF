@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\package\command;
+namespace wcf\command\package;
 
 use wcf\data\package\Package;
 use wcf\data\package\PackageList;
@@ -10,10 +10,10 @@ use wcf\system\WCF;
 /**
  * Rebuilds the bootstrapping script.
  *
- * @author  Tim Duesterhus
+ * @author      Tim Duesterhus
  * @copyright   2001-2021 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since   6.0
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since       6.2
  */
 final class RebuildBootstrapper
 {

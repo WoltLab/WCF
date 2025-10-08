@@ -20,7 +20,6 @@ use wcf\system\exception\ErrorException;
 use wcf\system\exception\IPrintableException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
-use wcf\system\package\command\RebuildBootstrapper;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\request\Request;
@@ -218,7 +217,7 @@ class WCF
         try {
             $bootstrappers = require(self::BOOTSTRAP_LOADER);
         } catch (\Exception $e) {
-            $command = new RebuildBootstrapper();
+            $command = new \wcf\command\package\RebuildBootstrapper();
             $command();
 
             $bootstrappers = require(self::BOOTSTRAP_LOADER);
