@@ -3,7 +3,6 @@
 namespace wcf\command\file;
 
 use wcf\data\file\File;
-use wcf\system\file\command\ReplaceFileSource;
 
 /**
  * Converts an image to its WebP variant by replacing it with it.

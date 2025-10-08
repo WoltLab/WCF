@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\file\command;
+namespace wcf\command\file;
 
 use wcf\data\file\File;
 use wcf\data\file\FileEditor;
@@ -18,7 +18,7 @@ use function wcf\functions\exception\logThrowable;
  * @author      Alexander Ebert
  * @copyright   2001-2025 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since       6.1
+ * @since       6.2
  */
 final class ReplaceFileSource
 {
