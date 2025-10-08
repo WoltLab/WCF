@@ -18,6 +18,7 @@
 .sidebarListItem__image {
 	display: flex;
 	grid-area: image;
+	margin-right: 10px;
 	/* Slight offset to align it with the text to the right of it. */
 	padding-top: 4px;
 }
