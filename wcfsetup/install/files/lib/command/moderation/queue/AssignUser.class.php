@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\moderation\queue\command;
+namespace wcf\command\moderation\queue;
 
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueEditor;
@@ -11,54 +11,34 @@ use wcf\system\event\EventHandler;
 /**
  * Assigns a user to a moderation queue entry.
  *
- * @author  Tim Duesterhus
+ * @author      Tim Duesterhus
  * @copyright   2001-2022 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since   6.0
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since       6.2
  */
 final class AssignUser
 {
-    private EventHandler $eventHandler;
-
-    private int $moderationQueueId;
-
-    /**
-     * The user the queue entry should be assigned to. null to remove the assignment.
-     */
-    private ?int $userId;
-
     public function __construct(
-        ModerationQueue $moderationQueue,
-        ?User $user,
-    ) {
-        $this->moderationQueueId = $moderationQueue->queueID;
-        $this->userId = $user?->userID;
-
-        $this->eventHandler = EventHandler::getInstance();
-    }
+        private readonly ModerationQueue $moderationQueue,
+        private readonly ?User $user,
+    ) {}
 
     public function __invoke(): void
     {
-        $moderationQueueEditor = new ModerationQueueEditor(new ModerationQueue($this->moderationQueueId));
-        if ($this->userId !== null) {
-            $user = new User($this->userId);
-        } else {
-            $user = null;
-        }
-
+        $moderationQueueEditor = new ModerationQueueEditor($this->moderationQueue);
         $oldAssignee = $moderationQueueEditor->assignedUserID ? new User($moderationQueueEditor->assignedUserID) : null;
 
         // If the old assignee matches the new assignee, we do not need to
         // do anything.
-        if ($oldAssignee?->userID === $user?->userID) {
+        if ($oldAssignee?->userID === $this->user?->userID) {
             return;
         }
 
         $data = [
-            'assignedUserID' => $user?->userID,
+            'assignedUserID' => $this->user?->userID,
         ];
 
-        if ($user !== null) {
+        if ($this->user !== null) {
             if ($moderationQueueEditor->status == ModerationQueue::STATUS_OUTSTANDING) {
                 $data['status'] = ModerationQueue::STATUS_PROCESSING;
             }
@@ -70,10 +50,10 @@ final class AssignUser
 
         $moderationQueueEditor->update($data);
 
-        $this->eventHandler->fire(
+        EventHandler::getInstance()->fire(
             new UserAssigned(
                 $moderationQueueEditor->getDecoratedObject(),
-                $user,
+                $this->user,
                 $oldAssignee
             )
         );
