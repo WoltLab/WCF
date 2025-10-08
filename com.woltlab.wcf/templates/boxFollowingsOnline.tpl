@@ -2,7 +2,7 @@
 	{foreach from=$usersOnlineList item=userOnline}
 		<li class="sidebarListItem">
 			<div class="sidebarListItem__image">
-				{user object=$userOnline type='avatar32' ariaHidden='true' tabindex='-1'}
+				{user object=$userOnline type='avatar24' ariaHidden='true' tabindex='-1'}
 			</div>
 
 			<div class="sidebarListItem__content">

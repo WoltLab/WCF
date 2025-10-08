@@ -16,12 +16,15 @@
 }
 
 .sidebarListItem__image {
+	display: flex;
 	grid-area: image;
-	margin-right: 10px;
+	/* Slight offset to align it with the text to the right of it. */
+	padding-top: 4px;
 }
 
 .sidebarListItem__image img {
-	max-width: 64px;
+	max-height: 24px;
+	max-width: 24px;
 }
 
 .sidebarListItem__content {
@@ -76,11 +79,7 @@
 	display: flex;
 }
 
-.sidebarListItem__meta__avatar + .sidebarListItem__meta__item {
-	margin-left: 5px;
-}
-
-.sidebarListItem__meta__item:not(.sidebarListItem__meta__avatar) + .sidebarListItem__meta__item::before {
+.sidebarListItem__meta__item:not(:first-child)::before {
 	content: "•";
 	margin: 0 3px;
 }
