@@ -18,7 +18,7 @@ use wcf\system\menu\user\UserMenu;
 use wcf\system\option\user\UserOptionHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\StyleHandler;
-use wcf\system\user\command\SetColorScheme;
+use wcf\command\user\SetColorScheme;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
