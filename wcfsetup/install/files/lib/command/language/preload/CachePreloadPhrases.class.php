@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\language\preload\command;
+namespace wcf\command\language\preload;
 
 use wcf\data\language\Language;
 use wcf\event\language\PreloadPhrasesCollecting;
@@ -9,31 +9,23 @@ use wcf\system\io\AtomicWriter;
 use wcf\util\StringUtil;
 
 /**
- * Rebuilds the phrase preload cache for the
- * requested language.
+ * Rebuilds the phrase preload cache for the requested language.
  *
- * @author Alexander Ebert
- * @copyright 2001-2022 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since 6.0
+ * @author      Alexander Ebert
+ * @copyright   2001-2022 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since       6.2
  */
 final class CachePreloadPhrases
 {
-    private readonly EventHandler $eventHandler;
-
-    private readonly Language $language;
-
-    public function __construct(Language $language)
-    {
-        $this->language = $language;
-
-        $this->eventHandler = EventHandler::getInstance();
-    }
+    public function __construct(
+        private readonly Language $language
+    ) {}
 
     public function __invoke(): void
     {
         $event = new PreloadPhrasesCollecting($this->language);
-        $this->eventHandler->fire($event);
+        EventHandler::getInstance()->fire($event);
 
         $file = new AtomicWriter(\WCF_DIR . $this->language->getPreloadCacheFilename());
         $file->write(

@@ -3,7 +3,7 @@
 namespace wcf\system\language\preload;
 
 use wcf\data\language\Language;
-use wcf\system\language\preload\command\CachePreloadPhrases;
+use wcf\command\language\preload\CachePreloadPhrases;
 use wcf\system\WCF;
 
 /**
