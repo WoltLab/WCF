@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\style\command;
+namespace wcf\command\style;
 
 use wcf\data\page\PageCache;
 use wcf\data\style\Style;
@@ -15,16 +15,13 @@ use wcf\util\JSON;
  * @author      Olaf Braun
  * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since       6.1
+ * @since       6.2
  */
 final class CreateManifest
 {
-    private readonly Style $style;
-
-    public function __construct(Style $style)
-    {
-        $this->style = $style;
-    }
+    public function __construct(
+        private readonly Style $style
+    ) {}
 
     public function __invoke(): void
     {
@@ -35,7 +32,7 @@ final class CreateManifest
 
         $icons = [];
         foreach ([192, 256, 512] as $iconSize) {
-            $icons [] = [
+            $icons[] = [
                 "src" => \sprintf(
                     "%sandroid-chrome-%dx%d.png",
                     $this->style->hasFavicon ? "" : "../favicon/default.",

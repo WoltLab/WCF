@@ -11,7 +11,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\image\ImageHandler;
 use wcf\system\request\LinkHandler;
 use wcf\command\style\CopyStyle;
-use wcf\system\style\command\CreateManifest;
+use wcf\command\style\CreateManifest;
 use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
