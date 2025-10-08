@@ -4,7 +4,7 @@ namespace wcf\system\event\listener;
 
 use wcf\event\package\PackageInstallationPluginSynced;
 use wcf\system\language\LanguageFactory;
-use wcf\system\language\preload\command\ResetPreloadCache;
+use wcf\command\language\preload\ResetPreloadCache;
 
 /**
  * Resets the preload cache when certain PIPs have been synced.
