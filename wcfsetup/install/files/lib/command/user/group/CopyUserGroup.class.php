@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\user\group\command;
+namespace wcf\command\user\group;
 
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\group\UserGroupAction;
@@ -15,6 +15,7 @@ use wcf\system\WCF;
  * @author      Olaf Braun
  * @copyright   2001-2025 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since       6.2
  */
 final class CopyUserGroup
 {

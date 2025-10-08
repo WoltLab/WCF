@@ -5,7 +5,7 @@ namespace wcf\data\user\group;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\group\command\CopyUserGroup;
+use wcf\command\user\group\CopyUserGroup;
 use wcf\system\WCF;
 
 /**
