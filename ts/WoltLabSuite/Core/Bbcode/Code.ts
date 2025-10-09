@@ -99,7 +99,7 @@ class Code {
     }
 
     const container = document.createElement("div");
-    container.innerHTML = Prism.highlight(this.codeContainer.textContent!, grammar, this.language);
+    container.innerHTML = Prism.highlight(this.codeContainer.textContent, grammar, this.language);
 
     // Step 3) Insert the highlighted lines into the page.
     // This is performed in small chunks to prevent the UI thread from being blocked for complex

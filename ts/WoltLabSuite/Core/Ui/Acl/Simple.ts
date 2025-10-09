@@ -44,7 +44,7 @@ class UiAclSimple {
 
     const excludedSearchValues: string[] = [];
     this.list.querySelectorAll(".aclLabel").forEach((label) => {
-      excludedSearchValues.push(label.textContent!);
+      excludedSearchValues.push(label.textContent);
     });
 
     this.searchInput = new UiUserSearchInput(
@@ -123,7 +123,7 @@ class UiAclSimple {
     const target = event.currentTarget as HTMLButtonElement;
     const parent = target.parentElement!;
     const label = parent.querySelector(".aclLabel")!;
-    this.searchInput.removeExcludedSearchValues(label.textContent!);
+    this.searchInput.removeExcludedSearchValues(label.textContent);
 
     parent.remove();
 

@@ -41,7 +41,7 @@ export class DialogSetup {
 
   fromHtml(html: string): DialogControls {
     const fragment = DomUtil.createFragmentFromHtml(html);
-    if (fragment.childElementCount === 0 && fragment.textContent!.trim() === "") {
+    if (fragment.childElementCount === 0 && fragment.textContent.trim() === "") {
       throw new TypeError("The provided HTML string was empty.");
     }
 

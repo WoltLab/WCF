@@ -32,14 +32,14 @@ export function render(container: HTMLElement): void {
 
   QrCreator.render(
     {
-      text: getUrl(readableIssuer, label, secret.textContent!),
+      text: getUrl(readableIssuer, label, secret.textContent),
       size: canvas.clientWidth,
     },
     canvas,
   );
 
   const a = document.createElement("a");
-  a.href = getUrl(window.location.hostname, label, secret.textContent!);
+  a.href = getUrl(window.location.hostname, label, secret.textContent);
   a.ariaLabel = Language.get("wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.link");
 
   canvas.parentElement!.insertAdjacentElement("afterbegin", a);

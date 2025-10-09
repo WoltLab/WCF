@@ -162,7 +162,7 @@ export class PageMenuMain implements PageMenuProvider {
     const languageMapping = new Map<string, HTMLAnchorElement>();
     Array.from(dropDownMenu.children).forEach((listItem: HTMLElement) => {
       const identifier = listItem.dataset.languageCode!;
-      const title = listItem.querySelector("span")!.textContent!.trim();
+      const title = listItem.querySelector("span")!.textContent.trim();
       const icon = listItem.querySelector<HTMLImageElement>("img.iconFlag") || undefined;
 
       languageMapping.set(identifier, listItem.querySelector("a")!);
@@ -402,7 +402,7 @@ export class PageMenuMain implements PageMenuProvider {
           counter.remove();
           this.menuItemBadges.delete(menuItem.identifier);
         } else {
-          const value = parseInt(counter.textContent!, 10);
+          const value = parseInt(counter.textContent, 10);
           if (value !== menuItem.counter) {
             counter.textContent = menuItem.counter.toString();
           }

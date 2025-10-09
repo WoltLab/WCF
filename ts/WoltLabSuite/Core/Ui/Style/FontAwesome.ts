@@ -64,7 +64,7 @@ class UiStyleFontAwesome implements DialogCallbackObject {
           this.itemListFilter = new UiItemListFilter("fontAwesomeIcons", {
             callbackPrepareItem: (item) => {
               const small = item.querySelector("small") as HTMLElement;
-              const text = small.textContent!.trim();
+              const text = small.textContent.trim();
 
               return {
                 item,
