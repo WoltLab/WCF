@@ -82,7 +82,7 @@ export async function getExifBytesFromJpeg(blob: Blob | File): Promise<Exif> {
 
   const bytes = await blobToUint8(blob);
 
-  let exif = new Uint8Array(0);
+  let exif: Uint8Array<ArrayBufferLike> = new Uint8Array(0);
 
   if (bytes[0] !== 0xff && bytes[1] !== Tag.SOI) {
     throw new Error("Not a JPEG");
@@ -169,7 +169,7 @@ export async function removeExifData(blob: Blob | File): Promise<Blob> {
     }
   }
 
-  return new Blob([result], { type: blob.type });
+  return new Blob([result as BlobPart], { type: blob.type });
 }
 
 /**
@@ -192,7 +192,7 @@ export async function setExifData(blob: Blob, exif: Exif): Promise<Blob> {
 
   const result = concatUint8Arrays(start, exif, end);
 
-  return new Blob([result], { type: blob.type });
+  return new Blob([result as BlobPart], { type: blob.type });
 }
 
 export type Exif = Uint8Array;

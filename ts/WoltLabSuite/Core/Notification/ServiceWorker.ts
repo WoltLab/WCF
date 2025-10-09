@@ -46,7 +46,7 @@ class ServiceWorker {
       await this.#serviceWorkerRegistration
     ).pushManager.subscribe({
       userVisibleOnly: true,
-      applicationServerKey: this.#urlBase64ToUint8Array(this.#publicKey),
+      applicationServerKey: this.#urlBase64ToUint8Array(this.#publicKey) as BufferSource,
     });
     if (!subscription) {
       // subscription failed
