@@ -1,19 +1,19 @@
 <?php
 
-namespace wcf\system\user\option\command;
+namespace wcf\command\user\option;
 
 use wcf\data\user\option\UserOption;
-use wcf\data\user\option\UserOptionEditor;
+use wcf\data\user\option\UserOptionAction;
 
 /**
- * Enables a user option.
+ * Deletes a user option.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  */
-final class EnableOption
+final class DeleteOption
 {
     public function __construct(
         private readonly UserOption $option,
@@ -21,8 +21,7 @@ final class EnableOption
 
     public function __invoke(): void
     {
-        (new UserOptionEditor($this->option))->update([
-            'isDisabled' => 0,
-        ]);
+        $action = new UserOptionAction([$this->option], 'delete');
+        $action->executeAction();
     }
 }

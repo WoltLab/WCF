@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\user\command;
+namespace wcf\command\user;
 
 use wcf\data\file\File;
 use wcf\data\file\FileAction;
@@ -21,8 +21,7 @@ final class SetCoverPhoto
     public function __construct(
         private readonly User $user,
         private readonly ?File $file = null
-    ) {
-    }
+    ) {}
 
     public function __invoke(): void
     {

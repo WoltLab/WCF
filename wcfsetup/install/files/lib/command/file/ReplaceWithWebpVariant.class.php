@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\file\command;
+namespace wcf\command\file;
 
 use wcf\data\file\File;
 

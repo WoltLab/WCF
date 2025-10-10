@@ -10,7 +10,6 @@ use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\style\command\AddDarkMode as AddDarkModeCommand;
 use wcf\system\WCF;
 
 /**
@@ -31,7 +30,7 @@ final class AddDarkMode implements IController
 
         $this->assertDarkModeCanBeAdded($style);
 
-        $command = new AddDarkModeCommand($style);
+        $command = new \wcf\command\style\AddDarkMode($style);
         $command();
 
         return new JsonResponse([]);

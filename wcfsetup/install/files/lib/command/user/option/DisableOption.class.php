@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\user\option\command;
+namespace wcf\command\user\option;
 
 use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionEditor;

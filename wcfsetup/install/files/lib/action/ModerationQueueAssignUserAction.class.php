@@ -11,7 +11,7 @@ use wcf\system\form\builder\field\user\UserFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\Psr15DialogForm;
-use wcf\system\moderation\queue\command\AssignUser;
+use wcf\command\moderation\queue\AssignUser;
 use wcf\system\WCF;
 
 /**

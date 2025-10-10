@@ -7,7 +7,7 @@ use Laminas\Diactoros\Response\TextResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use wcf\system\cache\command\ClearCache;
+use wcf\command\cache\ClearCache;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 

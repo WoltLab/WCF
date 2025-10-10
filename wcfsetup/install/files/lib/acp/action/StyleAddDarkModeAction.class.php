@@ -11,7 +11,6 @@ use wcf\data\style\Style;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\style\command\AddDarkMode;
 use wcf\system\WCF;
 
 /**
@@ -51,7 +50,7 @@ final class StyleAddDarkModeAction implements RequestHandlerInterface
         if ($request->getMethod() === 'GET') {
             return new TextResponse('Unsupported', 400);
         } elseif ($request->getMethod() === 'POST') {
-            $command = new AddDarkMode($style);
+            $command = new \wcf\command\style\AddDarkMode($style);
             $command();
 
             return new EmptyResponse();

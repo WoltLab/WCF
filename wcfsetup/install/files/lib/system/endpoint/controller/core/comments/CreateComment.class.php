@@ -73,7 +73,7 @@ final class CreateComment implements IController
             $isDisabled = true;
         }
 
-        $comment = (new \wcf\system\comment\command\CreateComment(
+        $comment = (new \wcf\command\comment\CreateComment(
             $objectType,
             $parameters->objectID,
             $htmlInputProcessor,

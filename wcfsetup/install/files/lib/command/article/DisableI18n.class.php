@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\article\command;
+namespace wcf\command\article;
 
 use wcf\data\article\Article;
 use wcf\data\article\ArticleAction;

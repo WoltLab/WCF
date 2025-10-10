@@ -18,7 +18,7 @@ use wcf\system\form\builder\field\FileProcessorFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\Psr15DialogForm;
-use wcf\system\user\command\SetAvatar;
+use wcf\command\user\SetAvatar;
 use wcf\system\user\UserProfileHandler;
 use wcf\system\WCF;
 use wcf\util\HtmlString;

@@ -15,7 +15,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\RadioButtonFormField;
 use wcf\system\form\builder\Psr15DialogForm;
-use wcf\system\tagging\command\SetSynonym;
+use wcf\command\tag\SetTagSynonym;
 use wcf\system\WCF;
 
 /**
@@ -70,7 +70,7 @@ final class TagSynonymAction implements RequestHandlerInterface
             }
 
             $tagID = $form->getData()["data"]["tagID"];
-            (new SetSynonym(
+            (new SetTagSynonym(
                 $tagList->search($tagID),
                 $tagList->getObjects()
             ))();

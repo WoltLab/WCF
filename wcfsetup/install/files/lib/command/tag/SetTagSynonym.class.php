@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\tagging\command;
+namespace wcf\command\tag;
 
 use wcf\data\tag\Tag;
 use wcf\data\tag\TagEditor;
@@ -13,7 +13,7 @@ use wcf\data\tag\TagEditor;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  */
-final class SetSynonym
+final class SetTagSynonym
 {
     /**
      * @param Tag[] $tags

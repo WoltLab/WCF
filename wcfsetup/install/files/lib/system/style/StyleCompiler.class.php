@@ -12,7 +12,7 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
-use wcf\system\style\command\CreateManifest;
+use wcf\command\style\CreateManifest;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\JSON;

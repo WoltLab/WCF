@@ -3,7 +3,7 @@
 use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\event\EventHandler;
 use wcf\system\language\LanguageFactory;
-use wcf\system\language\preload\command\ResetPreloadCache;
+use wcf\command\language\preload\ResetPreloadCache;
 use wcf\system\language\preload\PhrasePreloader;
 use wcf\system\package\license\LicenseApi;
 use wcf\system\user\authentication\LoginRedirect;

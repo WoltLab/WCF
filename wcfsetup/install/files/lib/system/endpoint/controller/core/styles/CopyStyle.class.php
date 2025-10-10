@@ -9,7 +9,6 @@ use wcf\data\style\Style;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
-use wcf\system\style\command\CopyStyle as CopyStyleCommand;
 use wcf\system\WCF;
 
 /**
@@ -30,8 +29,7 @@ final class CopyStyle implements IController
 
         $this->assertStyleCanBeCopied();
 
-        $command = new CopyStyleCommand($style);
-        $command();
+        (new \wcf\command\style\CopyStyle($style))();
 
         return new JsonResponse([]);
     }
