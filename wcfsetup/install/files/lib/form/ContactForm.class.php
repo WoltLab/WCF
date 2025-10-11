@@ -7,7 +7,7 @@ use wcf\data\contact\option\ContactOptionList;
 use wcf\data\contact\recipient\ContactRecipient;
 use wcf\data\contact\recipient\ContactRecipientList;
 use wcf\event\page\ContactFormSpamChecking;
-use wcf\system\contact\form\SubmitContactForm;
+use wcf\command\contact\form\SubmitContactForm;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;

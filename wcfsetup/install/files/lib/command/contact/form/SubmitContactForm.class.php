@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\contact\form;
+namespace wcf\command\contact\form;
 
 use wcf\data\contact\option\ContactOption;
 use wcf\data\contact\option\ContactOptionList;
