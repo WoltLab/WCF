@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>6.2.0 dev 1</version>
-		<date>2025-03-24</date>
+		<version>6.2.0 Alpha 1</version>
+		<date>2025-10-13</date>
 	</packageinformation>
 
 	<authorinformation>
@@ -90,6 +90,7 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="coreObject"/>
 		<instruction type="fileDelete"/>
 		<instruction type="templateDelete"/>
+		<instruction type="userGroupOption"/>
 		<instruction type="userMenu"/>
 		<instruction type="userOption"/>
 	</instructions>
