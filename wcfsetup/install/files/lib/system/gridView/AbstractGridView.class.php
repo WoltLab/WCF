@@ -56,7 +56,7 @@ abstract class AbstractGridView
     private int $rowsPerPage = 20;
     private string $baseUrl = '';
     private string $defaultSortField = '';
-    private string $defaultSortOrder = '';
+    private string $defaultSortOrder = 'ASC';
     private string $sortField = '';
     private string $sortOrder = 'ASC';
     private int $pageNo = 1;

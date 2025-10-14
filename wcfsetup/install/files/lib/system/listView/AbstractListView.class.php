@@ -36,7 +36,7 @@ abstract class AbstractListView
     private int $itemsPerPage = 20;
     private string $baseUrl = '';
     private string $defaultSortField = '';
-    private string $defaultSortOrder = '';
+    private string $defaultSortOrder = 'ASC';
     private string $sortField = '';
     private string $sortOrder = 'ASC';
     private string $cssClassName = '';
