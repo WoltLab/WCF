@@ -25,20 +25,7 @@ final class RebuildBootstrapper
 
         $result = "<?php /* {$now->format('c')} */\n\n";
         $result .= <<<'EOT'
-            return (function() {
-                if (\ENABLE_DEBUG_MODE) {
-                    $shuffle = static function (array $array) {
-                        \shuffle($array);
-
-                        return $array;
-                    };
-                } else {
-                    $shuffle = static function (array $array) {
-                        return $array;
-                    };
-                }
-
-                return [
+            return [
             EOT;
         $result .= "\n";
 
@@ -49,22 +36,13 @@ final class RebuildBootstrapper
                 continue;
             }
 
-            if (\count($group) === 1) {
-                $package = $group[0];
-                $result .= "        require(__DIR__ . '/{$this->getRelativeBootstrapFilename($package)}'),\n";
-            } else {
-                $result .= "        ...\$shuffle([\n";
-                \shuffle($group);
-                foreach ($group as $package) {
-                    $result .= "            require(__DIR__ . '/{$this->getRelativeBootstrapFilename($package)}'),\n";
-                }
-                $result .= "        ]),\n";
+            foreach ($group as $package) {
+                $result .= "    require(__DIR__ . '/{$this->getRelativeBootstrapFilename($package)}'),\n";
             }
         }
 
         $result .= <<<'EOT'
-                ];
-            })();
+            ];
             EOT;
         $result .= "\n";
 
