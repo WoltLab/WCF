@@ -250,9 +250,10 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
             $avatarList->readObjects();
             $resetAvatarCache = [];
 
-            $sql = "UPDATE wcf1_user
-                    SET    avatarFileID = ?
-                    WHERE  userID = ?";
+            $sql = "UPDATE  wcf1_user
+                    SET     avatarFileID = ?,
+                            avatarPathname = ?
+                    WHERE   userID = ?";
             $avatarUpdateStatement = WCF::getDB()->prepare($sql);
 
             foreach ($avatarList as $avatar) {
@@ -338,8 +339,12 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
                     continue;
                 }
 
+                $filename = $file->getSourceFilenameWebp() ?? $file->getSourceFilename();
+                $pathname = $file->getRelativePath() . $filename;
+
                 $avatarUpdateStatement->execute([
                     $file->fileID,
+                    $pathname,
                     $avatar->userID
                 ]);
             }
