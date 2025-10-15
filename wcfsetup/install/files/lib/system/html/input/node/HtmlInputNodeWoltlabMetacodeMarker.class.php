@@ -531,8 +531,6 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
                         }
 
                         $firstChildNode = $element->childNodes->item(0);
-                        \assert($firstChildNode === null || $firstChildNode instanceof \DOMElement);
-
                         $this->wrapContent($name, $attributes, $firstChildNode, null);
                     } else {
                         $this->wrapContent($name, $attributes, $element, null);
@@ -554,8 +552,8 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
      *
      * @param string $name element tag name
      * @param string $attributes encoded attribute string
-     * @param ?\DOMElement $startNode first node to wrap
-     * @param ?\DOMElement $endNode last node to wrap
+     * @param ?\DOMNode $startNode first node to wrap
+     * @param ?\DOMNode $endNode last node to wrap
      * @return \DOMElement newly created element
      */
     protected function wrapContent($name, $attributes, $startNode, $endNode)
