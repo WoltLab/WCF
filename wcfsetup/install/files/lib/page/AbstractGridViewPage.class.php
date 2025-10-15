@@ -50,8 +50,14 @@ abstract class AbstractGridViewPage extends AbstractPage
         if (isset($_REQUEST['filters']) && \is_array($_REQUEST['filters'])) {
             $this->filters = $_REQUEST['filters'];
         }
+    }
 
+    #[\Override]
+    public function show()
+    {
         $this->canonicalURL = $this->getCanonicalUrl();
+
+        return parent::show();
     }
 
     #[\Override]
