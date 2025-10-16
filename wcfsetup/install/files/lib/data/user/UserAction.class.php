@@ -835,11 +835,14 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         // confirm status, because if the user can enable himself by an email confirmation and we do not reset
         // the email confirmed status, the behavior is undefined, because a user exists, which is not enabled
         // but has a valid email address (Which doesn't usually happen).
+        $data = [
+            'activationCode' => UserRegistrationUtil::getActivationCode(),
+        ];
+        if (!((int)REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN)) {
+            $data['emailConfirmed'] = Hex::encode(\random_bytes(20));
+        }
         $action = new self($this->objects, 'update', [
-            'data' => [
-                'activationCode' => UserRegistrationUtil::getActivationCode(),
-                'emailConfirmed' => Hex::encode(\random_bytes(20)),
-            ],
+            'data' => $data,
             'removeGroups' => UserGroup::getGroupIDsByType([UserGroup::USERS]),
         ]);
         $action->executeAction();
