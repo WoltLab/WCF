@@ -106,6 +106,8 @@ export class State extends EventTarget {
     if (cause === StateChangeCause.Change || cause === StateChangeCause.Pagination) {
       this.#updateQueryString();
     }
+
+    this.#updateGridViewFooter();
   }
 
   #switchPage(pageNo: number, source: StateChangeCause): void {

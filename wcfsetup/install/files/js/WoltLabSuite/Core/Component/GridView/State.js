@@ -75,6 +75,7 @@ define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], 
             if (cause === 0 /* StateChangeCause.Change */ || cause === 2 /* StateChangeCause.Pagination */) {
                 this.#updateQueryString();
             }
+            this.#updateGridViewFooter();
         }
         #switchPage(pageNo, source) {
             this.#pagination.page = pageNo;
