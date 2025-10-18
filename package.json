@@ -7,7 +7,7 @@
     "@typescript-eslint/eslint-plugin": "^8.46.1",
     "@typescript-eslint/parser": "^8.46.1",
     "esbuild": "^0.25.11",
-    "eslint": "^9.37.0",
+    "eslint": "^9.38.0",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.6.2",
     "typescript": "^5.9.3"
@@ -25,7 +25,7 @@
     "@types/sortablejs": "^1.15.8",
     "@types/supercluster": "^7.1.3",
     "@types/twitter-for-web": "0.0.6",
-    "@woltlab/editor": "git+https://github.com/WoltLab/editor.git#20b6e74a04a335423a66e1b494ba63bb7c7f32eb",
+    "@woltlab/editor": "git+https://github.com/WoltLab/editor.git#be0fc99f19cdcdbaac62d02f3d4928b10249689c",
     "@woltlab/visual-dom-diff": "git+https://github.com/WoltLab/visual-dom-diff.git#e5b51fce3157d1eda310566fc1f86101341d1fea",
     "@woltlab/zxcvbn": "git+https://github.com/WoltLab/zxcvbn.git#5b582b24e437f1883ccad3c37dae7c3c5f1e7da3",
     "cropperjs": "2.0.1",
