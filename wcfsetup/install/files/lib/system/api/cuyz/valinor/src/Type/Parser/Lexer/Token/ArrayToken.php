@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace CuyZ\Valinor\Type\Parser\Lexer\Token;
 
-use CuyZ\Valinor\Type\CompositeTraversableType;
+use CuyZ\Valinor\Type\Parser\Exception\InvalidType;
 use CuyZ\Valinor\Type\Parser\Exception\Iterable\ArrayClosingBracketMissing;
 use CuyZ\Valinor\Type\Parser\Exception\Iterable\ArrayCommaMissing;
+use CuyZ\Valinor\Type\Parser\Exception\Iterable\ArrayExpectedCommaOrClosingBracket;
+use CuyZ\Valinor\Type\Parser\Exception\Iterable\ArrayMissingSubType;
 use CuyZ\Valinor\Type\Parser\Exception\Iterable\ShapedArrayClosingBracketMissing;
 use CuyZ\Valinor\Type\Parser\Exception\Iterable\ShapedArrayColonTokenMissing;
 use CuyZ\Valinor\Type\Parser\Exception\Iterable\ShapedArrayCommaMissing;
 use CuyZ\Valinor\Type\Parser\Exception\Iterable\ShapedArrayElementTypeMissing;
 use CuyZ\Valinor\Type\Parser\Exception\Iterable\ShapedArrayEmptyElements;
-use CuyZ\Valinor\Type\Parser\Exception\Iterable\ShapedArrayInvalidUnsealedType;
 use CuyZ\Valinor\Type\Parser\Exception\Iterable\ShapedArrayUnexpectedTokenAfterSealedType;
 use CuyZ\Valinor\Type\Parser\Exception\Iterable\ShapedArrayWithoutElementsWithSealedType;
 use CuyZ\Valinor\Type\Parser\Lexer\TokenStream;
@@ -20,10 +21,15 @@ use CuyZ\Valinor\Type\Type;
 use CuyZ\Valinor\Type\Types\ArrayKeyType;
 use CuyZ\Valinor\Type\Types\ArrayType;
 use CuyZ\Valinor\Type\Types\IntegerValueType;
+use CuyZ\Valinor\Type\Types\IterableType;
 use CuyZ\Valinor\Type\Types\NonEmptyArrayType;
 use CuyZ\Valinor\Type\Types\ShapedArrayElement;
 use CuyZ\Valinor\Type\Types\ShapedArrayType;
 use CuyZ\Valinor\Type\Types\StringValueType;
+use CuyZ\Valinor\Type\Types\UnionType;
+use CuyZ\Valinor\Type\Types\UnresolvableType;
+
+use function implode;
 
 /** @internal */
 final class ArrayToken implements TraversingToken
@@ -32,8 +38,10 @@ final class ArrayToken implements TraversingToken
 
     private static self $nonEmptyArray;
 
+    private static self $iterable;
+
     private function __construct(
-        /** @var class-string<ArrayType|NonEmptyArrayType> */
+        /** @var class-string<ArrayType|NonEmptyArrayType|IterableType> */
         private string $arrayType,
         private string $symbol
     ) {}
@@ -48,6 +56,11 @@ final class ArrayToken implements TraversingToken
         return self::$nonEmptyArray ??= new self(NonEmptyArrayType::class, 'non-empty-array');
     }
 
+    public static function iterable(): self
+    {
+        return self::$iterable ??= new self(IterableType::class, 'iterable');
+    }
+
     public function traverse(TokenStream $stream): Type
     {
         if ($stream->done()) {
@@ -55,6 +68,8 @@ final class ArrayToken implements TraversingToken
         }
 
         if ($stream->next() instanceof OpeningBracketToken) {
+            $stream->forward();
+
             return $this->arrayType($stream);
         }
 
@@ -70,10 +85,18 @@ final class ArrayToken implements TraversingToken
         return $this->symbol;
     }
 
-    private function arrayType(TokenStream $stream): CompositeTraversableType
+    private function arrayType(TokenStream $stream): Type
     {
-        $stream->forward();
+        if ($stream->done()) {
+            throw new ArrayMissingSubType($this->symbol . '<');
+        }
+
         $type = $stream->read();
+
+        if ($stream->done()) {
+            throw new ArrayExpectedCommaOrClosingBracket($this->symbol, $type);
+        }
+
         $token = $stream->forward();
 
         if ($token instanceof ClosingBracketToken) {
@@ -81,11 +104,34 @@ final class ArrayToken implements TraversingToken
         }
 
         if (! $token instanceof CommaToken) {
-            throw new ArrayCommaMissing($this->arrayType, $type);
+            throw new ArrayCommaMissing($this->symbol, $type);
         }
 
-        $keyType = ArrayKeyType::from($type);
+        $keyType = $type;
+
+        if (! $keyType instanceof ArrayKeyType) {
+            $keyTypes = $type instanceof UnionType ? $type->types() : [$type];
+
+            try {
+                $keyType = ArrayKeyType::from($keyTypes);
+            } catch (InvalidType $exception) {
+                $subTypes = implode('|', array_map(static fn (Type $type) => $type->toString(), $keyTypes));
+
+                $keyType = new UnresolvableType($subTypes, $exception->getMessage());
+            }
+        } else {
+            $keyTypes = $keyType->types;
+        }
+
+        if ($stream->done()) {
+            throw new ArrayMissingSubType($this->symbol . '<' . $keyType->toString() . ',');
+        }
+
         $subType = $stream->read();
+
+        if ($keyType instanceof UnresolvableType) {
+            return $keyType->forArrayType($this->symbol, $keyTypes, $subType);
+        }
 
         $arrayType = new ($this->arrayType)($keyType, $subType);
 
@@ -96,7 +142,7 @@ final class ArrayToken implements TraversingToken
         return $arrayType;
     }
 
-    private function shapedArrayType(TokenStream $stream): ShapedArrayType
+    private function shapedArrayType(TokenStream $stream): Type
     {
         $stream->forward();
 
@@ -135,9 +181,9 @@ final class ArrayToken implements TraversingToken
                 throw new ShapedArrayClosingBracketMissing($elements, unsealedType: false);
             }
 
-            if ($stream->next() instanceof VacantToken) {
-                $type = new StringValueType($stream->forward()->symbol());
-            } elseif ($isUnsealed && ($stream->next() instanceof ClosingCurlyBracketToken || $stream->next() instanceof CommaToken)) {
+            $keyToken = $stream->next();
+
+            if ($isUnsealed && ($keyToken instanceof ClosingCurlyBracketToken || $keyToken instanceof CommaToken)) {
                 $stream->forward();
                 break;
             } else {
@@ -149,10 +195,6 @@ final class ArrayToken implements TraversingToken
 
                 if ($elements === []) {
                     throw new ShapedArrayWithoutElementsWithSealedType($unsealedType);
-                }
-
-                if (! $unsealedType instanceof ArrayType) {
-                    throw new ShapedArrayInvalidUnsealedType($elements, $unsealedType);
                 }
 
                 if ($stream->done()) {
@@ -192,7 +234,7 @@ final class ArrayToken implements TraversingToken
                 $type = null;
 
                 if (! $key instanceof StringValueType && ! $key instanceof IntegerValueType) {
-                    $key = new StringValueType($key->toString());
+                    $key = new StringValueType($keyToken->symbol());
                 }
 
                 if ($key instanceof IntegerValueType) {
@@ -225,12 +267,6 @@ final class ArrayToken implements TraversingToken
             throw new ShapedArrayEmptyElements();
         }
 
-        if ($unsealedType) {
-            return ShapedArrayType::unsealed($unsealedType, ...$elements);
-        } elseif ($isUnsealed) {
-            return ShapedArrayType::unsealedWithoutType(...$elements);
-        }
-
-        return new ShapedArrayType(...$elements);
+        return ShapedArrayType::from($elements, $isUnsealed, $unsealedType);
     }
 }

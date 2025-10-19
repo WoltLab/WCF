@@ -27,9 +27,11 @@ final class NodeMessage implements Message, HasCode, Stringable
         private string $name,
         private string $path,
         private string $type,
+        private string $expectedSignature,
         private string $sourceValue,
     ) {}
 
+    /** @pure */
     public function withLocale(string $locale): self
     {
         $clone = clone $this;
@@ -38,6 +40,7 @@ final class NodeMessage implements Message, HasCode, Stringable
         return $clone;
     }
 
+    /** @pure */
     public function locale(): string
     {
         return $this->locale;
@@ -47,20 +50,23 @@ final class NodeMessage implements Message, HasCode, Stringable
      * Allows to customize the body of the message. It can contain placeholders
      * that will be replaced by their corresponding values, as described below:
      *
-     * | Placeholder          | Description                                    |
-     * |----------------------|------------------------------------------------|
-     * | `{message_code}`     | The code of the message                        |
-     * | `{node_name}`        | Name of the node to which the message is bound |
-     * | `{node_path}`        | Path of the node to which the message is bound |
-     * | `{node_type}`        | Type of the node to which the message is bound |
-     * | `{source_value}`     | The source value that was given to the node    |
-     * | `{original_message}` | The original message before being customized   |
+     * | Placeholder            | Description                                  |
+     * |------------------------|----------------------------------------------|
+     * | `{message_code}`       | The code of the message                      |
+     * | `{node_name}`          | Name of the node                             |
+     * | `{node_path}`          | Path of the node                             |
+     * | `{node_type}`          | PHP type of the node                         |
+     * | `{expected_signature}` | String representation of the expected type   |
+     * | `{source_value}`       | The source value that was given to the node  |
+     * | `{original_message}`   | The original message before being customized |
      *
      * Example:
      *
      * ```php
      * $message = $message->withBody('new message for value: {source_value}');
      * ```
+     *
+     * @pure
      */
     public function withBody(string $body): self
     {
@@ -70,26 +76,37 @@ final class NodeMessage implements Message, HasCode, Stringable
         return $clone;
     }
 
+    /** @pure */
     public function body(): string
     {
         return $this->body;
     }
 
+    /** @pure */
     public function name(): string
     {
         return $this->name;
     }
 
+    /** @pure */
     public function path(): string
     {
         return $this->path;
     }
 
+    /** @pure */
     public function type(): string
     {
         return $this->type;
     }
 
+    /** @pure */
+    public function expectedSignature(): string
+    {
+        return $this->expectedSignature;
+    }
+
+    /** @pure */
     public function sourceValue(): string
     {
         return $this->sourceValue;
@@ -99,6 +116,8 @@ final class NodeMessage implements Message, HasCode, Stringable
      * Adds a parameter that can replace a placeholder in the message body.
      *
      * @see self::withBody()
+     *
+     * @pure
      */
     public function withParameter(string $name, string $value): self
     {
@@ -108,16 +127,19 @@ final class NodeMessage implements Message, HasCode, Stringable
         return $clone;
     }
 
+    /** @pure */
     public function originalMessage(): Message
     {
         return $this->message;
     }
 
+    /** @pure */
     public function isError(): bool
     {
         return $this->message instanceof ErrorMessage;
     }
 
+    /** @pure */
     public function code(): string
     {
         if ($this->message instanceof HasCode) {
@@ -131,17 +153,20 @@ final class NodeMessage implements Message, HasCode, Stringable
         return 'unknown';
     }
 
+    /** @pure */
     public function toString(): string
     {
         return $this->format($this->body, $this->parameters());
     }
 
+    /** @pure */
     public function __toString(): string
     {
         return $this->toString();
     }
 
     /**
+     * @pure
      * @param array<string, string> $parameters
      */
     private function format(string $body, array $parameters): string
@@ -159,6 +184,7 @@ final class NodeMessage implements Message, HasCode, Stringable
             'node_name' => $this->name,
             'node_path' => $this->path,
             'node_type' => $this->type,
+            'expected_signature' => $this->expectedSignature,
             'source_value' => $this->sourceValue,
         ];
 

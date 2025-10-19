@@ -90,7 +90,6 @@ final class CompiledTransformer implements Transformer
 
     private function inferType(mixed $value, bool $isSure = false): Type
     {
-        // @infection-ignore-all (mutation from `true` to `false` is useless)
         return match (true) {
             $value instanceof UnitEnum => EnumType::native($value::class),
             is_object($value) && ! $value instanceof Closure && ! $value instanceof Generator => $this->inferObjectType($value),
@@ -110,7 +109,7 @@ final class CompiledTransformer implements Transformer
         if (is_iterable($value)) {
             $iterableType = $this->inferIterableType($value);
 
-            return new NativeClassType($value::class, ['SubType' => $iterableType->subType()]);
+            return new NativeClassType($value::class, [$iterableType->subType()]);
         }
 
         return new NativeClassType($value::class);

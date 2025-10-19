@@ -6,11 +6,9 @@ namespace CuyZ\Valinor\Mapper;
 
 use CuyZ\Valinor\Definition\ParameterDefinition;
 use CuyZ\Valinor\Definition\Repository\FunctionDefinitionRepository;
-use CuyZ\Valinor\Library\Settings;
 use CuyZ\Valinor\Mapper\Exception\TypeErrorDuringArgumentsMapping;
-use CuyZ\Valinor\Mapper\Tree\Builder\RootNodeBuilder;
 use CuyZ\Valinor\Mapper\Tree\Exception\UnresolvableShellType;
-use CuyZ\Valinor\Mapper\Tree\Shell;
+use CuyZ\Valinor\Mapper\Tree\RootNodeBuilder;
 use CuyZ\Valinor\Type\ObjectType;
 use CuyZ\Valinor\Type\Types\ShapedArrayElement;
 use CuyZ\Valinor\Type\Types\ShapedArrayType;
@@ -22,12 +20,9 @@ final class TypeArgumentsMapper implements ArgumentsMapper
     public function __construct(
         private FunctionDefinitionRepository $functionDefinitionRepository,
         private RootNodeBuilder $nodeBuilder,
-        private Settings $settings,
     ) {}
 
-    /**
-     * @pure
-     */
+    /** @pure */
     public function mapArguments(callable $callable, mixed $source): array
     {
         $function = $this->functionDefinitionRepository->for($callable);
@@ -39,16 +34,13 @@ final class TypeArgumentsMapper implements ArgumentsMapper
                 $parameter->isOptional,
                 $parameter->attributes,
             ),
-            $function->parameters->toList(),
+            $function->parameters->toArray(),
         );
 
-        $type = new ShapedArrayType(...$elements);
-
-        $shell = Shell::root($this->settings, $type, $source);
-        $shell = $shell->withAttributes($function->attributes);
+        $type = new ShapedArrayType($elements);
 
         try {
-            $node = $this->nodeBuilder->build($shell);
+            $node = $this->nodeBuilder->build($source, $type, $function->attributes);
         } catch (UnresolvableShellType $exception) {
             throw new TypeErrorDuringArgumentsMapping($function, $exception);
         }
@@ -60,17 +52,15 @@ final class TypeArgumentsMapper implements ArgumentsMapper
 
         // Transforms the source value if there is only one object argument, to
         // ensure the source can contain flattened values.
-        if (count($elements) === 1 && $elements[0]->type() instanceof ObjectType) {
-            $shell = $shell->withType($elements[0]->type());
-
-            $node = $this->nodeBuilder->build($shell);
+        if (count($elements) === 1 && $function->parameters->at(0)->type instanceof ObjectType) {
+            $node = $this->nodeBuilder->build($source, $function->parameters->at(0)->type, $function->attributes);
 
             if ($node->isValid()) {
                 /** @var array<string, mixed> */
-                return [$elements[0]->key()->value() => $node->value()];
+                return [$function->parameters->at(0)->name => $node->value()];
             }
         }
 
-        throw new ArgumentsMapperError($shell->value(), $type->toString(), $function->signature, $node->messages());
+        throw new ArgumentsMapperError($source, $type->toString(), $function->signature, $node->messages());
     }
 }

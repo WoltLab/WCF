@@ -7,25 +7,39 @@ namespace CuyZ\Valinor\Type\Types;
 use CuyZ\Valinor\Compiler\Native\ComplianceNode;
 use CuyZ\Valinor\Compiler\Node;
 use CuyZ\Valinor\Type\CombiningType;
-use CuyZ\Valinor\Type\CompositeType;
+use CuyZ\Valinor\Type\DumpableType;
+use CuyZ\Valinor\Type\Parser\Exception\Union\ForbiddenMixedType;
 use CuyZ\Valinor\Type\Type;
-use CuyZ\Valinor\Type\Types\Exception\ForbiddenMixedType;
 
+use function array_filter;
 use function array_map;
 use function array_values;
 use function implode;
 
 /** @internal */
-final class UnionType implements CombiningType
+final class UnionType implements CombiningType, DumpableType
 {
     /** @var non-empty-list<Type> */
     private array $types;
 
-    private string $signature;
-
+    /**
+     * @no-named-arguments
+     */
     public function __construct(Type $type, Type $otherType, Type ...$otherTypes)
     {
-        $types = [$type, $otherType, ...$otherTypes];
+        $this->types = [$type, $otherType, ...$otherTypes];
+    }
+
+    /**
+     * @no-named-arguments
+     */
+    public static function from(Type $type, Type ...$otherTypes): Type
+    {
+        if ($otherTypes === []) {
+            return $type;
+        }
+
+        $types = [$type, ...$otherTypes];
         $filteredTypes = [];
 
         foreach ($types as $subType) {
@@ -44,8 +58,7 @@ final class UnionType implements CombiningType
             $filteredTypes[] = $subType;
         }
 
-        $this->types = $filteredTypes;
-        $this->signature = implode('|', array_map(fn (Type $type) => $type->toString(), $this->types));
+        return new self(...$filteredTypes);
     }
 
     public function accepts(mixed $value): bool
@@ -71,23 +84,13 @@ final class UnionType implements CombiningType
 
     public function matches(Type $other): bool
     {
-        if ($other instanceof self) {
-            foreach ($this->types as $type) {
-                if (! $other->isMatchedBy($type)) {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
         foreach ($this->types as $type) {
-            if ($type->matches($other)) {
-                return true;
+            if (! $type->matches($other)) {
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     public function isMatchedBy(Type $other): bool
@@ -101,19 +104,28 @@ final class UnionType implements CombiningType
         return false;
     }
 
-    public function traverse(): array
+    public function inferGenericsFrom(Type $other, Generics $generics): Generics
     {
-        $types = [];
+        $otherTypes = $other instanceof UnionType ? $other->types : [$other];
+        $otherTypes = array_filter($otherTypes, fn (Type $type) => ! $type->matches($this));
 
-        foreach ($this->types as $type) {
-            $types[] = $type;
-
-            if ($type instanceof CompositeType) {
-                $types = [...$types, ...$type->traverse()];
+        foreach ($otherTypes as $otherType) {
+            foreach ($this->types as $type) {
+                $generics = $type->inferGenericsFrom($otherType, $generics);
             }
         }
 
-        return $types;
+        return $generics;
+    }
+
+    public function traverse(): array
+    {
+        return $this->types;
+    }
+
+    public function replace(callable $callback): Type
+    {
+        return new self(...array_map($callback, $this->types));
     }
 
     public function types(): array
@@ -136,8 +148,21 @@ final class UnionType implements CombiningType
         return new self(...array_values($subNativeTypes));
     }
 
+    public function dumpParts(): iterable
+    {
+        $types = $this->types;
+
+        while ($type = array_shift($types)) {
+            yield $type;
+
+            if ($types !== []) {
+                yield '|';
+            }
+        }
+    }
+
     public function toString(): string
     {
-        return $this->signature;
+        return implode('|', array_map(static fn (Type $type) => $type->toString(), $this->types));
     }
 }

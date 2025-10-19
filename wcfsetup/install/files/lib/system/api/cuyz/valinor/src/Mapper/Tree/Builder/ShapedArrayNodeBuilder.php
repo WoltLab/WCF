@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace CuyZ\Valinor\Mapper\Tree\Builder;
 
 use CuyZ\Valinor\Mapper\Tree\Exception\SourceMustBeIterable;
+use CuyZ\Valinor\Mapper\Tree\Exception\UnexpectedKeysInSource;
+use CuyZ\Valinor\Mapper\Tree\Message\NodeMessage;
 use CuyZ\Valinor\Mapper\Tree\Shell;
 use CuyZ\Valinor\Type\Types\ShapedArrayType;
 
@@ -16,15 +18,15 @@ use function is_iterable;
 /** @internal */
 final class ShapedArrayNodeBuilder implements NodeBuilder
 {
-    public function build(Shell $shell, RootNodeBuilder $rootBuilder): Node
+    public function build(Shell $shell): Node
     {
-        $type = $shell->type();
+        $type = $shell->type;
         $value = $shell->value();
 
         assert($type instanceof ShapedArrayType);
 
         if (! is_iterable($value)) {
-            return Node::error($shell, new SourceMustBeIterable($value, $type));
+            return $shell->error(new SourceMustBeIterable($value));
         }
 
         $children = [];
@@ -35,9 +37,8 @@ final class ShapedArrayNodeBuilder implements NodeBuilder
             $value = iterator_to_array($value);
         }
 
-        foreach ($type->elements() as $element) {
-            $childrenNames[] = $element->key()->value();
-            $key = $element->key()->value();
+        foreach ($type->elements as $key => $element) {
+            $childrenNames[] = $key;
 
             $child = $shell->child((string)$key, $element->type());
             $child = $child->withAttributes($element->attributes());
@@ -48,7 +49,7 @@ final class ShapedArrayNodeBuilder implements NodeBuilder
                 continue;
             }
 
-            $child = $rootBuilder->build($child);
+            $child = $child->build();
 
             if (! $child->isValid()) {
                 $errors[] = $child;
@@ -59,11 +60,11 @@ final class ShapedArrayNodeBuilder implements NodeBuilder
             unset($value[$key]);
         }
 
-        if ($type->isUnsealed()) {
-            $childrenNames = array_merge($childrenNames, array_keys($value));
-
-            $unsealedShell = $shell->withType($type->unsealedType())->withValue($value);
-            $unsealedNode = $rootBuilder->build($unsealedShell);
+        if ($type->isUnsealed) {
+            $unsealedNode = $shell
+                ->withType($type->unsealedType())
+                ->withValue($value)
+                ->build();
 
             if (! $unsealedNode->isValid()) {
                 $errors[] = $unsealedNode;
@@ -74,13 +75,48 @@ final class ShapedArrayNodeBuilder implements NodeBuilder
         }
 
         if ($errors === []) {
-            $node = Node::new(value: $children, childrenCount: count($children));
+            $node = $shell->node($children);
         } else {
-            $node = Node::branchWithErrors($errors);
+            $node = $shell->errors($errors);
         }
 
-        $node = $node->checkUnexpectedKeys($shell, $childrenNames);
+        if (! $type->isUnsealed) {
+            $node = $this->checkUnexpectedKeys($shell, $node, $childrenNames);
+        }
 
         return $node;
+    }
+
+    /**
+     * @param list<int|string> $children
+     */
+    private function checkUnexpectedKeys(Shell $shell, Node $node, array $children): Node
+    {
+        $value = $shell->value();
+
+        if ($shell->allowSuperfluousKeys || ! is_array($value)) {
+            return $node;
+        }
+
+        $diff = array_diff(array_keys($value), $children, $shell->allowedSuperfluousKeys);
+
+        if ($diff === []) {
+            return $node;
+        }
+
+        /** @var non-empty-list<int|string> $children */
+        $error = new UnexpectedKeysInSource($value, $children);
+
+        $nodeMessage = new NodeMessage(
+            $error,
+            $error->body(),
+            $shell->name,
+            $shell->path,
+            "`{$shell->type->toString()}`",
+            $shell->expectedSignature(),
+            $shell->dumpValue(),
+        );
+
+        return $node->appendMessage($nodeMessage);
     }
 }

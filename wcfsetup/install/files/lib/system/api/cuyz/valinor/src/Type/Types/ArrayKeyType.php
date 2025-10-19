@@ -8,17 +8,21 @@ use CuyZ\Valinor\Compiler\Native\ComplianceNode;
 use CuyZ\Valinor\Compiler\Node;
 use CuyZ\Valinor\Mapper\Tree\Message\ErrorMessage;
 use CuyZ\Valinor\Mapper\Tree\Message\MessageBuilder;
+use CuyZ\Valinor\Type\CompositeType;
 use CuyZ\Valinor\Type\IntegerType;
 use CuyZ\Valinor\Type\Parser\Exception\Iterable\InvalidArrayKey;
 use CuyZ\Valinor\Type\ScalarType;
 use CuyZ\Valinor\Type\StringType;
+use CuyZ\Valinor\Type\DumpableType;
 use CuyZ\Valinor\Type\Type;
+use CuyZ\Valinor\Type\VacantType;
 use LogicException;
 
+use function in_array;
 use function is_int;
 
 /** @internal */
-final class ArrayKeyType implements ScalarType
+final class ArrayKeyType implements ScalarType, CompositeType, DumpableType
 {
     private static self $default;
 
@@ -26,56 +30,52 @@ final class ArrayKeyType implements ScalarType
 
     private static self $string;
 
-    /** @var non-empty-list<IntegerType|StringType> */
-    private array $types;
-
-    private string $signature;
-
-    private function __construct(Type $type)
-    {
-        $types = $type instanceof UnionType
-            ? [...$type->types()]
-            : [$type];
-
-        foreach ($types as $subType) {
-            if (! $subType instanceof IntegerType && ! $subType instanceof StringType) {
-                throw new InvalidArrayKey($subType);
-            }
-        }
-
-        /** @var non-empty-list<IntegerType|StringType> $types */
-        $this->types = $types;
-        $this->signature = $type->toString();
-    }
+    public function __construct(
+        /** @var non-empty-list<IntegerType|StringType|VacantType> */
+        public readonly array $types,
+    ) {}
 
     public static function default(): self
     {
-        if (!isset(self::$default)) {
-            self::$default = new self(new UnionType(NativeIntegerType::get(), NativeStringType::get()));
-            self::$default->signature = 'array-key';
-        }
-
-        return self::$default;
+        return self::$default ??= new self([NativeIntegerType::get(), NativeStringType::get()]);
     }
 
     public static function integer(): self
     {
-        return self::$integer ??= new self(NativeIntegerType::get());
+        return self::$integer ??= new self([NativeIntegerType::get()]);
     }
 
     public static function string(): self
     {
-        return self::$string ??= new self(NativeStringType::get());
+        return self::$string ??= new self([NativeStringType::get()]);
     }
 
-    public static function from(Type $type): self
+    /**
+     * @param non-empty-list<Type> $types
+     */
+    public static function from(array $types): self
     {
-        return match (true) {
-            $type instanceof self => $type,
-            $type instanceof NativeIntegerType => self::integer(),
-            $type instanceof NativeStringType => self::string(),
-            default => new self($type),
-        };
+        if (count($types) === 1) {
+            if ($types[0] instanceof NativeStringType) {
+                return self::string();
+            }
+
+            if ($types[0] instanceof NativeIntegerType) {
+                return self::integer();
+            }
+        }
+
+        $invalidArrayKeys = array_filter(
+            $types,
+            static fn (Type $type) => ! $type instanceof IntegerType && ! $type instanceof StringType && ! $type instanceof VacantType,
+        );
+
+        if ($invalidArrayKeys !== []) {
+            throw new InvalidArrayKey($invalidArrayKeys);
+        }
+
+        /** @var non-empty-list<IntegerType|StringType|VacantType> $types */
+        return new self($types);
     }
 
     public function accepts(mixed $value): bool
@@ -112,30 +112,10 @@ final class ArrayKeyType implements ScalarType
 
     public function matches(Type $other): bool
     {
-        if ($other instanceof MixedType) {
-            return true;
-        }
-
-        if ($other instanceof ScalarConcreteType) {
-            return true;
-        }
-
-        if ($other instanceof UnionType) {
-            return $this->isMatchedBy($other);
-        }
-
-        if (! $other instanceof self) {
-            return false;
-        }
-
         foreach ($this->types as $type) {
-            foreach ($other->types as $otherType) {
-                if ($type->matches($otherType)) {
-                    continue 2;
-                }
+            if (! $type->matches($other)) {
+                return false;
             }
-
-            return false;
         }
 
         return true;
@@ -152,10 +132,22 @@ final class ArrayKeyType implements ScalarType
         return false;
     }
 
+    public function inferGenericsFrom(Type $other, Generics $generics): Generics
+    {
+        if (! $other instanceof self) {
+            return $generics;
+        }
+
+        $selfTypes = UnionType::from(...$this->types);
+        $otherTypes = UnionType::from(...$other->types);
+
+        return $selfTypes->inferGenericsFrom($otherTypes, $generics);
+    }
+
     public function canCast(mixed $value): bool
     {
         foreach ($this->types as $type) {
-            if ($type->canCast($value)) {
+            if ($type instanceof ScalarType && $type->canCast($value)) {
                 return true;
             }
         }
@@ -166,7 +158,7 @@ final class ArrayKeyType implements ScalarType
     public function cast(mixed $value): string|int
     {
         foreach ($this->types as $type) {
-            if ($type->canCast($value)) {
+            if (! $type instanceof VacantType && $type->canCast($value)) {
                 return $type->cast($value);
             }
         }
@@ -181,6 +173,22 @@ final class ArrayKeyType implements ScalarType
             ->build();
     }
 
+    public function traverse(): array
+    {
+        return $this->types;
+    }
+
+    public function replace(callable $callback): Type
+    {
+        if (in_array($this, [self::default(), self::integer(), self::string()], true)) {
+            return $this;
+        }
+
+        return self::from(
+            array_map($callback, $this->types),
+        );
+    }
+
     public function nativeType(): Type
     {
         $types = [];
@@ -189,15 +197,33 @@ final class ArrayKeyType implements ScalarType
             $types[$type->nativeType()->toString()] = $type->nativeType();
         }
 
-        if (count($types) === 1) {
-            return array_values($types)[0];
-        }
+        return UnionType::from(...array_values($types));
+    }
 
-        return new UnionType(...array_values($types));
+    public function dumpParts(): iterable
+    {
+        $types = $this->types;
+
+        while ($type = array_shift($types)) {
+            yield $type;
+
+            if ($types !== []) {
+                yield '|';
+            }
+        }
     }
 
     public function toString(): string
     {
-        return $this->signature;
+        if ($this === self::default()) {
+            return 'array-key';
+        }
+
+        $signature = array_map(
+            static fn (Type $type): string => $type->toString(),
+            $this->types
+        );
+
+        return implode('|', $signature);
     }
 }

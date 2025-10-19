@@ -3,6 +3,7 @@
 namespace CuyZ\Valinor\Type\Parser\Lexer;
 
 use function array_map;
+use function array_values;
 use function implode;
 use function preg_split;
 use function trim;
@@ -20,6 +21,8 @@ final class TokensExtractor
         'Whitespace' => '\s+',
         'Union' => '\|',
         'Intersection' => '&',
+        'Opening parenthesis' => '\(',
+        'Closing parenthesis' => '\)',
         'Opening bracket' => '\<',
         'Closing bracket' => '\>',
         'Opening square bracket' => '\[',
@@ -54,13 +57,14 @@ final class TokensExtractor
     }
 
     /**
-     * @return array<non-empty-string>
+     * @return list<non-empty-string>
      */
     public function filtered(): array
     {
-        return array_filter(
+        // PHP8.5 use pipes
+        return array_values(array_filter(
             array_map(trim(...), $this->symbols),
             static fn ($value) => $value !== '',
-        );
+        ));
     }
 }

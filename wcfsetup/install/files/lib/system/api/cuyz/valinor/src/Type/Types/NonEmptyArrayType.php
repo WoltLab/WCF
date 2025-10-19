@@ -7,7 +7,7 @@ namespace CuyZ\Valinor\Type\Types;
 use CuyZ\Valinor\Compiler\Native\ComplianceNode;
 use CuyZ\Valinor\Compiler\Node;
 use CuyZ\Valinor\Type\CompositeTraversableType;
-use CuyZ\Valinor\Type\CompositeType;
+use CuyZ\Valinor\Type\DumpableType;
 use CuyZ\Valinor\Type\Type;
 use CuyZ\Valinor\Utility\Polyfill;
 
@@ -15,37 +15,18 @@ use function function_exists;
 use function is_array;
 
 /** @internal */
-final class NonEmptyArrayType implements CompositeTraversableType
+final class NonEmptyArrayType implements CompositeTraversableType, DumpableType
 {
     private static self $native;
 
-    private ArrayKeyType $keyType;
+    public function __construct(
+        private ArrayKeyType $keyType,
+        private Type $subType,
+    ) {}
 
-    private Type $subType;
-
-    private string $signature;
-
-    public function __construct(ArrayKeyType $keyType, Type $subType)
-    {
-        $this->keyType = $keyType;
-        $this->subType = $subType;
-        $this->signature = $keyType === ArrayKeyType::default()
-            ? "non-empty-array<{$subType->toString()}>"
-            : "non-empty-array<{$keyType->toString()}, {$subType->toString()}>";
-    }
-
-    /**
-     * @codeCoverageIgnore
-     * @infection-ignore-all
-     */
     public static function native(): self
     {
-        if (! isset(self::$native)) {
-            self::$native = new self(ArrayKeyType::default(), MixedType::get());
-            self::$native->signature = 'non-empty-array';
-        }
-
-        return self::$native;
+        return self::$native ??= new self(ArrayKeyType::default(), MixedType::get());
     }
 
     public function accepts(mixed $value): bool
@@ -111,6 +92,17 @@ final class NonEmptyArrayType implements CompositeTraversableType
             && $this->subType->matches($other->subType());
     }
 
+    public function inferGenericsFrom(Type $other, Generics $generics): Generics
+    {
+        if (! $other instanceof CompositeTraversableType) {
+            return $generics;
+        }
+
+        $generics = $this->keyType->inferGenericsFrom($other->keyType(), $generics);
+
+        return $this->subType->inferGenericsFrom($other->subType(), $generics);
+    }
+
     public function keyType(): ArrayKeyType
     {
         return $this->keyType;
@@ -123,11 +115,15 @@ final class NonEmptyArrayType implements CompositeTraversableType
 
     public function traverse(): array
     {
-        if ($this->subType instanceof CompositeType) {
-            return [$this->subType, ...$this->subType->traverse()];
-        }
+        return [$this->keyType, $this->subType];
+    }
 
-        return [$this->subType];
+    public function replace(callable $callback): Type
+    {
+        return new self(
+            $callback($this->keyType),
+            $callback($this->subType),
+        );
     }
 
     public function nativeType(): ArrayType
@@ -135,8 +131,27 @@ final class NonEmptyArrayType implements CompositeTraversableType
         return ArrayType::native();
     }
 
+    public function dumpParts(): iterable
+    {
+        yield 'non-empty-array<';
+
+        if ($this->keyType !== ArrayKeyType::default()) {
+            yield $this->keyType;
+            yield ', ';
+        }
+
+        yield $this->subType;
+        yield '>';
+    }
+
     public function toString(): string
     {
-        return $this->signature;
+        if ($this === self::native()) {
+            return 'non-empty-array';
+        }
+
+        return $this->keyType === ArrayKeyType::default()
+            ? "non-empty-array<{$this->subType->toString()}>"
+            : "non-empty-array<{$this->keyType->toString()}, {$this->subType->toString()}>";
     }
 }

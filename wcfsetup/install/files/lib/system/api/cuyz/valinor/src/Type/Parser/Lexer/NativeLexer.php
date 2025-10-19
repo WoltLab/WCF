@@ -9,6 +9,7 @@ use CuyZ\Valinor\Type\Parser\Lexer\Token\CallableToken;
 use CuyZ\Valinor\Type\Parser\Lexer\Token\ClassStringToken;
 use CuyZ\Valinor\Type\Parser\Lexer\Token\ClosingBracketToken;
 use CuyZ\Valinor\Type\Parser\Lexer\Token\ClosingCurlyBracketToken;
+use CuyZ\Valinor\Type\Parser\Lexer\Token\ClosingParenthesisToken;
 use CuyZ\Valinor\Type\Parser\Lexer\Token\ClosingSquareBracketToken;
 use CuyZ\Valinor\Type\Parser\Lexer\Token\ColonToken;
 use CuyZ\Valinor\Type\Parser\Lexer\Token\CommaToken;
@@ -17,11 +18,11 @@ use CuyZ\Valinor\Type\Parser\Lexer\Token\FloatValueToken;
 use CuyZ\Valinor\Type\Parser\Lexer\Token\IntegerToken;
 use CuyZ\Valinor\Type\Parser\Lexer\Token\IntegerValueToken;
 use CuyZ\Valinor\Type\Parser\Lexer\Token\IntersectionToken;
-use CuyZ\Valinor\Type\Parser\Lexer\Token\IterableToken;
 use CuyZ\Valinor\Type\Parser\Lexer\Token\ListToken;
 use CuyZ\Valinor\Type\Parser\Lexer\Token\NullableToken;
 use CuyZ\Valinor\Type\Parser\Lexer\Token\OpeningBracketToken;
 use CuyZ\Valinor\Type\Parser\Lexer\Token\OpeningCurlyBracketToken;
+use CuyZ\Valinor\Type\Parser\Lexer\Token\OpeningParenthesisToken;
 use CuyZ\Valinor\Type\Parser\Lexer\Token\OpeningSquareBracketToken;
 use CuyZ\Valinor\Type\Parser\Lexer\Token\StringValueToken;
 use CuyZ\Valinor\Type\Parser\Lexer\Token\Token;
@@ -60,6 +61,8 @@ final class NativeLexer implements TypeLexer
         return match (strtolower($symbol)) {
             '|' => UnionToken::get(),
             '&' => IntersectionToken::get(),
+            '(' => OpeningParenthesisToken::get(),
+            ')' => ClosingParenthesisToken::get(),
             '<' => OpeningBracketToken::get(),
             '>' => ClosingBracketToken::get(),
             '[' => OpeningSquareBracketToken::get(),
@@ -75,9 +78,9 @@ final class NativeLexer implements TypeLexer
             'int', 'integer' => IntegerToken::get(),
             'array' => ArrayToken::array(),
             'non-empty-array' => ArrayToken::nonEmptyArray(),
+            'iterable' => ArrayToken::iterable(),
             'list' => ListToken::list(),
             'non-empty-list' => ListToken::nonEmptyList(),
-            'iterable' => IterableToken::get(),
             'class-string' => ClassStringToken::get(),
             'callable' => CallableToken::get(),
             'value-of' => ValueOfToken::get(),

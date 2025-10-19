@@ -38,10 +38,19 @@ final class NonEmptyStringType implements StringType
             return $other->isMatchedBy($this);
         }
 
+        if ($other instanceof ArrayKeyType) {
+            return $other->isMatchedBy($this);
+        }
+
         return $other instanceof self
             || $other instanceof NativeStringType
             || $other instanceof ScalarConcreteType
             || $other instanceof MixedType;
+    }
+
+    public function inferGenericsFrom(Type $other, Generics $generics): Generics
+    {
+        return $generics;
     }
 
     public function canCast(mixed $value): bool

@@ -4,32 +4,33 @@ declare(strict_types=1);
 
 namespace CuyZ\Valinor\Utility;
 
-use CuyZ\Valinor\Mapper\Object\Argument;
-use CuyZ\Valinor\Mapper\Object\Arguments;
 use CuyZ\Valinor\Type\BooleanType;
 use CuyZ\Valinor\Type\CompositeTraversableType;
 use CuyZ\Valinor\Type\CompositeType;
-use CuyZ\Valinor\Type\FixedType;
 use CuyZ\Valinor\Type\FloatType;
 use CuyZ\Valinor\Type\IntegerType;
 use CuyZ\Valinor\Type\ObjectType;
+use CuyZ\Valinor\Type\Parser\Exception\InvalidType;
 use CuyZ\Valinor\Type\ScalarType;
 use CuyZ\Valinor\Type\StringType;
 use CuyZ\Valinor\Type\Type;
-use CuyZ\Valinor\Type\Types\EnumType;
+use CuyZ\Valinor\Type\Types\NullType;
+use CuyZ\Valinor\Type\Types\UnresolvableType;
+use CuyZ\Valinor\Type\VacantType;
 
 /** @internal */
 final class TypeHelper
 {
     /**
-     * Sorting the types by priority: objects, arrays, scalars, everything else.
+     * Sorting the types by priority: objects, arrays, scalars/null, everything else.
      */
     public static function typePriority(Type $type): int
     {
         return match (true) {
             $type instanceof ObjectType => 3,
             $type instanceof CompositeTraversableType => 2,
-            $type instanceof ScalarType => 1,
+            $type instanceof ScalarType,
+            $type instanceof NullType => 1,
             default => 0,
         };
     }
@@ -48,56 +49,49 @@ final class TypeHelper
         };
     }
 
-    public static function dump(Type $type, bool $surround = true): string
+    /**
+     * @return list<Type>
+     */
+    public static function traverseRecursively(Type $type): array
     {
-        if ($type instanceof EnumType) {
-            $text = $type->readableSignature();
-        } elseif ($type instanceof FixedType) {
-            return $type->toString();
-        } elseif (self::containsObject($type)) {
-            $text = '?';
-        } else {
-            $text = $type->toString();
-        }
+        $types = [];
 
-        return $surround ? "`$text`" : $text;
-    }
-
-    public static function dumpArguments(Arguments $arguments): string
-    {
-        if (count($arguments) === 0) {
-            return 'array';
-        }
-
-        if (count($arguments) === 1) {
-            return self::dump($arguments->at(0)->type());
-        }
-
-        $parameters = array_map(
-            function (Argument $argument) {
-                $name = $argument->name();
-                $type = $argument->type();
-
-                $signature = self::dump($type, false);
-
-                return $argument->isRequired() ? "$name: $signature" : "$name?: $signature";
-            },
-            [...$arguments],
-        );
-
-        return '`array{' . implode(', ', $parameters) . '}`';
-    }
-
-    public static function containsObject(Type $type): bool
-    {
         if ($type instanceof CompositeType) {
             foreach ($type->traverse() as $subType) {
-                if (self::containsObject($subType)) {
-                    return true;
-                }
+                $types = [...$types, $subType, ...self::traverseRecursively($subType)];
             }
         }
 
-        return $type instanceof ObjectType;
+        return $types;
+    }
+
+    /**
+     * @param non-empty-array<non-empty-string, Type> $vacantTypes
+     */
+    public static function assignVacantTypes(Type $type, array $vacantTypes): Type
+    {
+        try {
+            return self::doAssignVacantTypes($type, $vacantTypes);
+        } catch (InvalidType $exception) {
+            return new UnresolvableType($type->toString(), $exception->getMessage());
+        }
+    }
+
+    /**
+     * @param non-empty-array<non-empty-string, Type> $vacantTypes
+     */
+    private static function doAssignVacantTypes(Type $type, array $vacantTypes): Type
+    {
+        if ($type instanceof VacantType && isset($vacantTypes[$type->symbol()])) {
+            return $vacantTypes[$type->symbol()];
+        }
+
+        if ($type instanceof CompositeType) {
+            return $type->replace(
+                static fn (Type $subType) => self::doAssignVacantTypes($subType, $vacantTypes),
+            );
+        }
+
+        return $type;
     }
 }

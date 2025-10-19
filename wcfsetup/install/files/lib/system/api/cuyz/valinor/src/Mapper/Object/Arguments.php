@@ -9,6 +9,9 @@ use CuyZ\Valinor\Definition\ParameterDefinition;
 use CuyZ\Valinor\Definition\Parameters;
 use CuyZ\Valinor\Definition\Properties;
 use CuyZ\Valinor\Definition\PropertyDefinition;
+use CuyZ\Valinor\Type\Types\ShapedArrayElement;
+use CuyZ\Valinor\Type\Types\ShapedArrayType;
+use CuyZ\Valinor\Type\Types\StringValueType;
 use IteratorAggregate;
 use Traversable;
 
@@ -61,6 +64,31 @@ final class Arguments implements IteratorAggregate, Countable
     public function names(): array
     {
         return array_keys($this->arguments);
+    }
+
+    public function merge(self $other): self
+    {
+        return new self(
+            ...$this->arguments,
+            ...array_diff_key($other->arguments, $this->arguments)
+        );
+    }
+
+    public function toShapedArray(): ShapedArrayType
+    {
+        return new ShapedArrayType(
+            elements: array_map(
+                static fn (Argument $argument) => new ShapedArrayElement(
+                    key: new StringValueType($argument->name()),
+                    type: $argument->type(),
+                    optional: ! $argument->isRequired(),
+                    attributes: $argument->attributes(),
+                ),
+                $this->arguments,
+            ),
+            isUnsealed: false,
+            unsealedType: null,
+        );
     }
 
     /**

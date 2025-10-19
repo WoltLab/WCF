@@ -7,13 +7,13 @@ namespace CuyZ\Valinor\Cache\Warmup;
 use CuyZ\Valinor\Cache\Exception\InvalidSignatureToWarmup;
 use CuyZ\Valinor\Definition\Repository\ClassDefinitionRepository;
 use CuyZ\Valinor\Mapper\Object\Factory\ObjectBuilderFactory;
-use CuyZ\Valinor\Mapper\Tree\Builder\ObjectImplementations;
+use CuyZ\Valinor\Mapper\Tree\Builder\InterfaceInferringContainer;
 use CuyZ\Valinor\Type\ClassType;
-use CuyZ\Valinor\Type\CompositeType;
-use CuyZ\Valinor\Type\Parser\Exception\InvalidType;
 use CuyZ\Valinor\Type\Parser\TypeParser;
 use CuyZ\Valinor\Type\Type;
 use CuyZ\Valinor\Type\Types\InterfaceType;
+use CuyZ\Valinor\Type\Types\UnresolvableType;
+use CuyZ\Valinor\Utility\TypeHelper;
 
 use function in_array;
 
@@ -25,7 +25,7 @@ final class RecursiveCacheWarmupService
 
     public function __construct(
         private TypeParser $parser,
-        private ObjectImplementations $implementations,
+        private InterfaceInferringContainer $interfaceInferringContainer,
         private ClassDefinitionRepository $classDefinitionRepository,
         private ObjectBuilderFactory $objectBuilderFactory
     ) {}
@@ -33,11 +33,13 @@ final class RecursiveCacheWarmupService
     public function warmup(string ...$signatures): void
     {
         foreach ($signatures as $signature) {
-            try {
-                $this->warmupType($this->parser->parse($signature));
-            } catch (InvalidType $exception) {
-                throw new InvalidSignatureToWarmup($signature, $exception);
+            $type = $this->parser->parse($signature);
+
+            if ($type instanceof UnresolvableType) {
+                throw new InvalidSignatureToWarmup($type);
             }
+
+            $this->warmupType($type);
         }
     }
 
@@ -51,10 +53,8 @@ final class RecursiveCacheWarmupService
             $this->warmupClassType($type);
         }
 
-        if ($type instanceof CompositeType) {
-            foreach ($type->traverse() as $subType) {
-                $this->warmupType($subType);
-            }
+        foreach (TypeHelper::traverseRecursively($type) as $subType) {
+            $this->warmupType($subType);
         }
     }
 
@@ -62,11 +62,11 @@ final class RecursiveCacheWarmupService
     {
         $interfaceName = $type->className();
 
-        if (! $this->implementations->has($interfaceName)) {
+        if (! $this->interfaceInferringContainer->has($interfaceName)) {
             return;
         }
 
-        $function = $this->implementations->function($interfaceName);
+        $function = $this->interfaceInferringContainer->inferFunctionFor($interfaceName);
 
         $this->warmupType($function->returnType);
 

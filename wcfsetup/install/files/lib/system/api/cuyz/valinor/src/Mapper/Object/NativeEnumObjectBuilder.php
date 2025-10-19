@@ -24,9 +24,7 @@ class NativeEnumObjectBuilder implements ObjectBuilder
             $types[] = ValueTypeFactory::from($value);
         }
 
-        $argumentType = count($types) === 1
-            ? $types[0]
-            : new UnionType(...$types);
+        $argumentType = UnionType::from(...$types);
 
         $this->enum = $type;
         $this->arguments = new Arguments(
@@ -39,7 +37,7 @@ class NativeEnumObjectBuilder implements ObjectBuilder
         return $this->arguments;
     }
 
-    public function build(array $arguments): object
+    public function buildObject(array $arguments): object
     {
         return $this->enum->cases()[$arguments['value']];
     }
