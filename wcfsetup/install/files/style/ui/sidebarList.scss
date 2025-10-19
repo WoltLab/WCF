@@ -82,7 +82,7 @@
 	display: flex;
 }
 
-.sidebarListItem__meta__item:not(:first-child)::before {
+.sidebarListItem__meta__item:not(:last-child)::after {
 	content: "•";
 	margin: 0 3px;
 }
