@@ -13,7 +13,7 @@ use Pelago\Emogrifier\Utilities\Preg;
  *
  * It will only add attributes, but leaves the style attribute untouched.
  *
- * To trigger the conversion, call the convertCssToVisualAttributes method.
+ * To trigger the conversion, call the `convertCssToVisualAttributes` method.
  */
 final class CssToAttributeConverter extends AbstractHtmlProcessor
 {
@@ -23,7 +23,14 @@ final class CssToAttributeConverter extends AbstractHtmlProcessor
      * only for certain values, the mapping is an object with an allowlist
      * of nodes and values.
      *
-     * @var array<string, array{attribute: string, nodes?: array<int, string>, values?: array<int, string>}>
+     * @var array<
+     *        non-empty-string,
+     *        array{
+     *          attribute: non-empty-string,
+     *          nodes?: list<non-empty-string>,
+     *          values?: list<non-empty-string>
+     *        }
+     *      >
      */
     private $cssToHtmlMap = [
         'background-color' => [
@@ -53,7 +60,6 @@ final class CssToAttributeConverter extends AbstractHtmlProcessor
     public function convertCssToVisualAttributes(): self
     {
         $declarationBlockParser = new DeclarationBlockParser();
-        /** @var \DOMElement $node */
         foreach ($this->getAllNodesWithStyleAttribute() as $node) {
             $inlineStyleDeclarations = $declarationBlockParser->parse($node->getAttribute('style'));
             $this->mapCssToHtmlAttributes($inlineStyleDeclarations, $node);
@@ -65,21 +71,24 @@ final class CssToAttributeConverter extends AbstractHtmlProcessor
     /**
      * Returns a list with all DOM nodes that have a style attribute.
      *
-     * @return \DOMNodeList
+     * @return \DOMNodeList<\DOMElement>
      */
     private function getAllNodesWithStyleAttribute(): \DOMNodeList
     {
-        return $this->getXPath()->query('//*[@style]');
+        $result = $this->getXPath()->query('//*[@style]');
+        \assert($result instanceof \DOMNodeList);
+        /** @var \DOMNodeList<\DOMElement> $result */
+
+        return $result;
     }
 
     /**
-     * Applies $styles to $node.
+     * Applies `$styles` to `$node`.
      *
-     * This method maps CSS styles to HTML attributes and adds those to the
-     * node.
+     * This method maps CSS styles to HTML attributes and adds those to the node.
      *
-     * @param array<string, string> $styles the new CSS styles taken from the global styles to be applied to this node
-     * @param \DOMElement $node node to apply styles to
+     * @param array<non-empty-string, string> $styles
+     *        the new CSS styles taken from the global styles to be applied to this node
      */
     private function mapCssToHtmlAttributes(array $styles, \DOMElement $node): void
     {
@@ -91,13 +100,11 @@ final class CssToAttributeConverter extends AbstractHtmlProcessor
     }
 
     /**
-     * Tries to apply the CSS style to $node as an attribute.
+     * Tries to apply the CSS style to `$node` as an attribute.
      *
      * This method maps a CSS rule to HTML attributes and adds those to the node.
      *
-     * @param string $property the name of the CSS property to map
-     * @param string $value the value of the style rule to map
-     * @param \DOMElement $node node to apply styles to
+     * @param non-empty-string $property
      */
     private function mapCssToHtmlAttribute(string $property, string $value, \DOMElement $node): void
     {
@@ -109,11 +116,9 @@ final class CssToAttributeConverter extends AbstractHtmlProcessor
     /**
      * Looks up the CSS property in the mapping table and maps it if it matches the conditions.
      *
-     * @param string $property the name of the CSS property to map
-     * @param string $value the value of the style rule to map
-     * @param \DOMElement $node node to apply styles to
+     * @param non-empty-string $property
      *
-     * @return bool true if the property can be mapped using the simple mapping table
+     * @return bool whether the property can be mapped using the simple mapping table
      */
     private function mapSimpleCssProperty(string $property, string $value, \DOMElement $node): bool
     {
@@ -135,9 +140,7 @@ final class CssToAttributeConverter extends AbstractHtmlProcessor
     /**
      * Maps CSS properties that need special transformation to an HTML attribute.
      *
-     * @param string $property the name of the CSS property to map
-     * @param string $value the value of the style rule to map
-     * @param \DOMElement $node node to apply styles to
+     * @param non-empty-string $property
      */
     private function mapComplexCssProperty(string $property, string $value, \DOMElement $node): void
     {
@@ -181,7 +184,7 @@ final class CssToAttributeConverter extends AbstractHtmlProcessor
     /**
      * @param \DOMElement $node node to apply styles to
      * @param string $value the value of the style rule to map
-     * @param string $property the name of the CSS property to map
+     * @param non-empty-string $property the name of the CSS property to map
      */
     private function mapWidthOrHeightProperty(\DOMElement $node, string $value, string $property): void
     {
@@ -227,11 +230,6 @@ final class CssToAttributeConverter extends AbstractHtmlProcessor
         }
     }
 
-    /**
-     * @param \DOMElement $node
-     *
-     * @return bool
-     */
     private function isTableOrImageNode(\DOMElement $node): bool
     {
         return $node->nodeName === 'table' || $node->nodeName === 'img';
@@ -243,8 +241,7 @@ final class CssToAttributeConverter extends AbstractHtmlProcessor
      *
      * @param string $value a CSS property value with 1, 2, 3 or 4 sizes
      *
-     * @return array<string, string>
-     *         an array of values for top, right, bottom and left (using these as associative array keys)
+     * @return array{top: string, right: string, bottom: string, left: string}
      */
     private function parseCssShorthandValue(string $value): array
     {

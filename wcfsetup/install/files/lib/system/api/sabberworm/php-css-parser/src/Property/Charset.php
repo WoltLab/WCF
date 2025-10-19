@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sabberworm\CSS\Property;
 
-use Sabberworm\CSS\Comment\Comment;
+use Sabberworm\CSS\Comment\CommentContainer;
 use Sabberworm\CSS\OutputFormat;
 use Sabberworm\CSS\Position\Position;
 use Sabberworm\CSS\Position\Positionable;
@@ -18,118 +20,55 @@ use Sabberworm\CSS\Value\CSSString;
  */
 class Charset implements AtRule, Positionable
 {
+    use CommentContainer;
     use Position;
 
     /**
      * @var CSSString
      */
-    private $oCharset;
+    private $charset;
 
     /**
-     * @var int
-     *
-     * @internal since 8.8.0
+     * @param int<1, max>|null $lineNumber
      */
-    protected $iLineNo;
-
-    /**
-     * @var array<array-key, Comment>
-     *
-     * @internal since 8.8.0
-     */
-    protected $aComments;
-
-    /**
-     * @param CSSString $oCharset
-     * @param int $iLineNo
-     */
-    public function __construct(CSSString $oCharset, $iLineNo = 0)
+    public function __construct(CSSString $charset, ?int $lineNumber = null)
     {
-        $this->oCharset = $oCharset;
-        $this->setPosition($iLineNo);
-        $this->aComments = [];
+        $this->charset = $charset;
+        $this->setPosition($lineNumber);
     }
 
     /**
-     * @param string|CSSString $oCharset
-     *
-     * @return void
+     * @param string|CSSString $charset
      */
-    public function setCharset($sCharset)
+    public function setCharset($charset): void
     {
-        $sCharset = $sCharset instanceof CSSString ? $sCharset : new CSSString($sCharset);
-        $this->oCharset = $sCharset;
+        $charset = $charset instanceof CSSString ? $charset : new CSSString($charset);
+        $this->charset = $charset;
+    }
+
+    public function getCharset(): string
+    {
+        return $this->charset->getString();
     }
 
     /**
-     * @return string
+     * @return non-empty-string
      */
-    public function getCharset()
+    public function render(OutputFormat $outputFormat): string
     {
-        return $this->oCharset->getString();
+        return "{$outputFormat->getFormatter()->comments($this)}@charset {$this->charset->render($outputFormat)};";
     }
 
     /**
-     * @return string
-     *
-     * @deprecated in V8.8.0, will be removed in V9.0.0. Use `render` instead.
+     * @return non-empty-string
      */
-    public function __toString()
-    {
-        return $this->render(new OutputFormat());
-    }
-
-    /**
-     * @param OutputFormat|null $oOutputFormat
-     *
-     * @return string
-     */
-    public function render($oOutputFormat)
-    {
-        return "{$oOutputFormat->comments($this)}@charset {$this->oCharset->render($oOutputFormat)};";
-    }
-
-    /**
-     * @return string
-     */
-    public function atRuleName()
+    public function atRuleName(): string
     {
         return 'charset';
     }
 
-    /**
-     * @return string
-     */
-    public function atRuleArgs()
+    public function atRuleArgs(): CSSString
     {
-        return $this->oCharset;
-    }
-
-    /**
-     * @param array<array-key, Comment> $aComments
-     *
-     * @return void
-     */
-    public function addComments(array $aComments)
-    {
-        $this->aComments = array_merge($this->aComments, $aComments);
-    }
-
-    /**
-     * @return array<array-key, Comment>
-     */
-    public function getComments()
-    {
-        return $this->aComments;
-    }
-
-    /**
-     * @param array<array-key, Comment> $aComments
-     *
-     * @return void
-     */
-    public function setComments(array $aComments)
-    {
-        $this->aComments = $aComments;
+        return $this->charset;
     }
 }

@@ -18,6 +18,33 @@ Please also have a look at our
 
 ### Fixed
 
+## 8.1.0: Add support for PHP 8.5
+
+### Added
+
+- Add support for PHP 8.5 (#1470)
+
+### Changed
+
+- Require `sabberworm/php-css-parser` version 9.1.0 or higher (#1465)
+- Improve declaration block parsing performance (#1452)
+
+### Fixed
+
+- Make some type annotations more specific (#1428)
+
+## 8.0.0: Dependency updates and dropped support for old Symfony versions
+
+### Changed
+
+- Require `sabberworm/php-css-parser` version 9.0.0 or higher
+  (#1399, #1418, #1421)
+- Raise the minimum required Symfony bugfix versions (#1361)
+
+### Removed
+
+- Drop support for Symfony 4.4, 6.0, 6.1, 6.2 (#1358, #1361)
+
 ## 7.3.0: Add support for PHP 8.4 and CSS custom properties
 
 ### Added
