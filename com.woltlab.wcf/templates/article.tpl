@@ -232,7 +232,7 @@
 				<div class="entry__navigation__item__content">
 					<div class="entry__navigation__item__entityName">{lang}wcf.article.nextArticle{/lang}</div>
 					<div class="entry__navigation__item__title">
-						<a href="{$nextArticle->getLink()}" rel="prev" class="entry__navigation__item__link articleLink" data-object-id="{$previousArticle->getObjectID()}">
+						<a href="{$nextArticle->getLink()}" rel="prev" class="entry__navigation__item__link articleLink" data-object-id="{$nextArticle->getObjectID()}">
 							{$nextArticle->getTitle()}
 						</a>
 					</div>
