@@ -227,7 +227,7 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
                     $statement->execute([$html, $user->userID]);
                 }
 
-                if ($user->avatarFileID !== null && $user->avatarPathname === null) {
+                if ($user->avatarFileID !== null) {
                     $file = $avatarFiles[$user->avatarFileID] ?? null;
                     \assert(
                         $file !== null,
@@ -237,9 +237,11 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
                     $filename = $file->getSourceFilenameWebp() ?? $file->getSourceFilename();
                     $pathname = $file->getRelativePath() . $filename;
 
-                    $user->update([
-                        'avatarPathname' => $pathname,
-                    ]);
+                    if ($user->avatarPathname !== $pathname) {
+                        $user->update([
+                            'avatarPathname' => $pathname,
+                        ]);
+                    }
                 }
             }
             WCF::getDB()->commitTransaction();
