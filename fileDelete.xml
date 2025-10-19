@@ -599,7 +599,6 @@
 		<file>lib/system/upload/AvatarUploadFileValidationStrategy.class.php</file>
 		<file>lib/system/upload/UserCoverPhotoUploadFileSaveStrategy.class.php</file>
 		<file>lib/system/upload/UserCoverPhotoUploadFileValidationStrategy.class.php</file>
-		<file>style/layout/pageNavigation.scss</file>
 		<file>style/ui/imageViewer.scss</file>
 		<file>style/ui/like.scss</file>
 	</delete>
