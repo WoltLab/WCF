@@ -139,6 +139,22 @@
 	animation-timeline: scroll(inline);
 }
 
+@property --drop-shadow-opacity {
+	syntax: "<percentage>";
+	inherits: true;
+	initial-value: 0%;
+}
+
+.gridView__actionColumn::before {
+	background-image: linear-gradient(to right, rgb(0 0 0 / 0%), rgb(0 0 0 / var(--drop-shadow-opacity)));
+	bottom: 0;
+	content: "";
+	left: -10px;
+	position: absolute;
+	top: 0;
+	width: 10px;
+}
+
 .gridView__selectColumn {
 	position: sticky;
 	left: 0;
@@ -237,13 +253,13 @@
 
 @keyframes gridView__actionColumn__dropShadow {
 	0% {
-		filter: drop-shadow(rgba(0, 0, 0, 0.08) -2px 10px 6px);
+		--drop-shadow-opacity: 8%;
 	}
 	75% {
-		filter: drop-shadow(rgba(0, 0, 0, 0.08) -2px 10px 6px);
+		--drop-shadow-opacity: 8%;
 	}
 	99% {
-		filter: none;
+		--drop-shadow-opacity: 0%;
 	}
 }
 
