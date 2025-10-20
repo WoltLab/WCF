@@ -410,6 +410,10 @@ a.ck.ck-button.ck-link-toolbar__preview:focus {
 	--ck-z-panel: 91;
 }
 
+.ck.ck-responsive-form {
+	width: auto;
+}
+
 html[data-color-scheme="dark"] {
 	.ck.ck-editor,
 	.ck.ck-body {
