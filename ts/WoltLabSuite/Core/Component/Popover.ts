@@ -100,6 +100,10 @@ class Popover {
 
     if (this.#timerHide === undefined) {
       this.#timerHide = new RepeatingTimer((timer) => {
+        if (this.#container?.querySelector(".dropdown.dropdownOpen") !== null) {
+          return;
+        }
+
         timer.stop();
 
         this.#container?.setAttribute("aria-hidden", "true");

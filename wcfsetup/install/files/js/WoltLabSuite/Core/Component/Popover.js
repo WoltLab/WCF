@@ -80,6 +80,9 @@ define(["require", "exports", "tslib", "../Devtools", "../Dom/Util", "../Helper/
             this.#timerShouldShow?.stop();
             if (this.#timerHide === undefined) {
                 this.#timerHide = new Repeating_1.default((timer) => {
+                    if (this.#container?.querySelector(".dropdown.dropdownOpen") !== null) {
+                        return;
+                    }
                     timer.stop();
                     this.#container?.setAttribute("aria-hidden", "true");
                 }, 500 /* Delay.Hide */);
