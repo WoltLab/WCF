@@ -729,7 +729,8 @@ html.iOS {
 
 	.ck-search {
 		.ck-labeled-field-view__input-wrapper {
-			svg, .ck-off {
+			svg,
+			.ck-off {
 				transform: none !important;
 			}
 		}
@@ -742,10 +743,17 @@ html.iOS {
 			}
 		}
 	}
+
+	.ck.ck-emoji__tiles {
+		/* Use the same value applied to `max-height` to prevent the dialog
+		   from jumping when the number of results change. */
+		min-height: min(265px, 40vh);
+	}
 }
 
 .ck-button__label {
-	&.ck-emoji, &.ck-smiley {
+	&.ck-emoji,
+	&.ck-smiley {
 		font-size: var(--wcfFontSizeDefault) !important;
 	}
 }
@@ -753,7 +761,8 @@ html.iOS {
 @media (hover: hover) {
 	.ck.ck-emoji-picker-form {
 		.ck-button {
-			&:not(:hover), &.ck-emoji__tile:hover {
+			&:not(:hover),
+			&.ck-emoji__tile:hover {
 				background-color: transparent !important;
 			}
 		}
