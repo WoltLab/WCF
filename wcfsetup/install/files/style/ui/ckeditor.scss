@@ -161,6 +161,10 @@ a.ck.ck-button-bold {
 	.ck.ck-list .ck-list__item .ck-button:not(.ck-disabled):hover {
 		color: var(--wcfDropdownLink);
 	}
+
+	.ck.ck-list__item > .ck-button.ck-on:not(.ck-list-item-button):hover:not(.ck-disabled) {
+		color: var(--wcfDropdownText);
+	}
 }
 
 .ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable),
