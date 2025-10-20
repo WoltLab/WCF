@@ -246,7 +246,8 @@ final class ImageUtil
 
             default:
                 throw new \InvalidArgumentException(\sprintf(
-                    "Unsupported image format '%s', expecting one of 'gif', 'jpg', 'png' or 'webp'.",
+                    "Unsupported image format '%s' (mime type %s), expecting one of 'gif', 'jpg', 'png' or 'webp'.",
+                    $imageData['mime'],
                     $extension
                 ));
         }
