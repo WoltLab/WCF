@@ -55,7 +55,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
     </button>
   </div>
   <div class="quoteBoxContent htmlContent">
-    ${quote.rawMessage === undefined ? quote.message : quote.rawMessage}
+    ${quote.rawMessage ?? quote.message}
   </div>
 </div>
         `);
