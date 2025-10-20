@@ -23,7 +23,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
             }
             else {
                 button.dataset.tooltip = (0, Language_1.getPhrase)("wcf.user.button.unfollow");
-                button.querySelector("fa-icon")?.setIcon("minus");
+                button.querySelector("fa-icon")?.setIcon("user-minus");
             }
         }
         else {
@@ -38,7 +38,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
             }
             else {
                 button.dataset.tooltip = (0, Language_1.getPhrase)("wcf.user.button.follow");
-                button.querySelector("fa-icon")?.setIcon("plus");
+                button.querySelector("fa-icon")?.setIcon("user-plus");
             }
         }
         (0, Snackbar_1.showDefaultSuccessSnackbar)();
