@@ -64,7 +64,7 @@ export class ListView {
     this.#noItemsNotice.hidden = response.totalItems !== 0;
     this.#state.updateFromResponse(cause, response.pages, response.filterLabels);
     if (cause === StateChangeCause.Pagination) {
-      scrollToElement(this.#viewElement);
+      scrollToElement(this.#viewElement.closest(".listView")!);
     }
 
     triggerDomChange();

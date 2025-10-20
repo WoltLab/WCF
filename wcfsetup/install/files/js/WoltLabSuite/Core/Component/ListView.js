@@ -36,7 +36,7 @@ define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listen
             this.#noItemsNotice.hidden = response.totalItems !== 0;
             this.#state.updateFromResponse(cause, response.pages, response.filterLabels);
             if (cause === 2 /* StateChangeCause.Pagination */) {
-                (0, Scroll_1.element)(this.#viewElement);
+                (0, Scroll_1.element)(this.#viewElement.closest(".listView"));
             }
             (0, Listener_1.trigger)();
         }
