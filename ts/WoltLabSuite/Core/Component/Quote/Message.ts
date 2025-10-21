@@ -22,6 +22,7 @@ import {
 } from "WoltLabSuite/Core/Component/Quote/Storage";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 import { dispatchToCkeditor } from "WoltLabSuite/Core/Component/Ckeditor/Event";
+import { showSuccessSnackbar } from "../Snackbar";
 
 type Container = {
   element: HTMLElement;
@@ -175,6 +176,8 @@ function setup() {
       );
 
       removeSelection();
+
+      showSuccessSnackbar(getPhrase("wcf.message.quote.quoteSelected.success"));
     }),
   );
   copyQuote.appendChild(buttonSaveQuote);

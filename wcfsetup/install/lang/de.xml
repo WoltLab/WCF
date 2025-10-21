@@ -4323,6 +4323,7 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.message.bbcode.code.copy.success"><![CDATA[Der Inhalt wurde erfolgreich kopiert.]]></item>
 		<item name="wcf.message.quote.insertQuote"><![CDATA[Zitat einfügen]]></item>
 		<item name="wcf.message.quote.quoteSelected"><![CDATA[Zitat speichern]]></item>
+		<item name="wcf.message.quote.quoteSelected.success"><![CDATA[Zitat gespeichert]]></item>
 		<item name="wcf.message.quote.quoteAndReply"><![CDATA[Zitat einfügen]]></item>
 		<item name="wcf.message.quote.quoteMessage"><![CDATA[Zitieren]]></item>
 		<item name="wcf.message.settings"><![CDATA[Einstellungen]]></item>

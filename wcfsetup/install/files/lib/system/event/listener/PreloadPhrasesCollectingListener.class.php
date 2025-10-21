@@ -141,6 +141,7 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.message.share.socialMedia');
 
         $event->preload('wcf.message.quote.quoteSelected');
+        $event->preload('wcf.message.quote.quoteSelected.success');
         $event->preload('wcf.message.quote.quoteAndReply');
         $event->preload('wcf.message.quote.quoteMessage');
         $event->preload('wcf.message.quote.insertQuote');

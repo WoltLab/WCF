@@ -7,7 +7,7 @@
  * @since 6.2
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Component/Quote/Storage", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Component/Ckeditor/Event"], function (require, exports, tslib_1, Util_1, Language_1, Selector_1, Storage_1, PromiseMutex_1, Event_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Component/Quote/Storage", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Component/Ckeditor/Event", "../Snackbar"], function (require, exports, tslib_1, Util_1, Language_1, Selector_1, Storage_1, PromiseMutex_1, Event_1, Snackbar_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.registerContainer = registerContainer;
@@ -106,6 +106,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
             }
             await (0, Storage_1.saveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.message, selectedMessage.container.className);
             removeSelection();
+            (0, Snackbar_1.showSuccessSnackbar)((0, Language_1.getPhrase)("wcf.message.quote.quoteSelected.success"));
         }));
         copyQuote.appendChild(buttonSaveQuote);
         const buttonSaveAndInsertQuote = document.createElement("button");
