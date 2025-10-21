@@ -8,6 +8,7 @@ import { Fancybox, CarouselSlide, FancyboxInstance } from "@fancyapps/ui";
 import { getPageOverlayContainer } from "WoltLabSuite/Core/Helper/PageOverlay";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import { ConsentPlugin } from "./Fancybox/ConsentPlugin";
+import { scrollDisable, scrollEnable } from "WoltLabSuite/Core/Ui/Screen";
 
 setDefaultConfig();
 
@@ -41,6 +42,18 @@ function setDefaultConfig(): void {
   }
   defaultConfig.plugins.consent = () => {
     return new ConsentPlugin();
+  };
+
+  // Delegate the handling of the scroll suppression to our own implementation.
+  defaultConfig.hideClass = false;
+  defaultConfig.hideScrollbar = false;
+  defaultConfig.on = {
+    ready() {
+      scrollDisable();
+    },
+    close() {
+      scrollEnable();
+    },
   };
 }
 

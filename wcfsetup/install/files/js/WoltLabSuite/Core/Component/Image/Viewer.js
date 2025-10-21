@@ -3,7 +3,7 @@
  * @copyright 2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "@fancyapps/ui", "WoltLabSuite/Core/Helper/PageOverlay", "WoltLabSuite/Core/Language", "./Fancybox/ConsentPlugin"], function (require, exports, ui_1, PageOverlay_1, Language_1, ConsentPlugin_1) {
+define(["require", "exports", "@fancyapps/ui", "WoltLabSuite/Core/Helper/PageOverlay", "WoltLabSuite/Core/Language", "./Fancybox/ConsentPlugin", "WoltLabSuite/Core/Ui/Screen"], function (require, exports, ui_1, PageOverlay_1, Language_1, ConsentPlugin_1, Screen_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -36,6 +36,17 @@ define(["require", "exports", "@fancyapps/ui", "WoltLabSuite/Core/Helper/PageOve
         }
         defaultConfig.plugins.consent = () => {
             return new ConsentPlugin_1.ConsentPlugin();
+        };
+        // Delegate the handling of the scroll suppression to our own implementation.
+        defaultConfig.hideClass = false;
+        defaultConfig.hideScrollbar = false;
+        defaultConfig.on = {
+            ready() {
+                (0, Screen_1.scrollDisable)();
+            },
+            close() {
+                (0, Screen_1.scrollEnable)();
+            },
         };
     }
     function getLocalization() {
