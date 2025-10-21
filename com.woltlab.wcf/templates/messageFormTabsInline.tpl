@@ -48,7 +48,7 @@
 			<li data-name="quotes" hidden>
 				<button type="button">
 					{icon name='quote-left'}
-					<span>{lang}wcf.bbcode.quote{/lang}</span>
+					<span>{lang}wcf.bbcode.quote.messageTab{/lang}</span>
 				</button>
 			</li>
 		</ul>

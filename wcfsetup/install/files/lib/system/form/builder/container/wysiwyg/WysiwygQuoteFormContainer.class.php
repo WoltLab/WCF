@@ -20,7 +20,7 @@ class WysiwygQuoteFormContainer extends WysiwygTabFormContainer
     {
         $this->icon(FontAwesomeIcon::fromValues('quote-left'))
             ->name('quotes')
-            ->label('wcf.bbcode.quote');
+            ->label('wcf.bbcode.quote.messageTab');
     }
 
     #[\Override]
