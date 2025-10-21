@@ -3,6 +3,7 @@
 namespace wcf\system\gridView\admin;
 
 use wcf\acp\form\MenuEditForm;
+use wcf\acp\page\MenuItemListPage;
 use wcf\data\box\Box;
 use wcf\data\DatabaseObject;
 use wcf\data\menu\I18nMenuList;
@@ -12,12 +13,14 @@ use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\AbstractColumnRenderer;
+use wcf\system\gridView\renderer\ILinkColumnRenderer;
 use wcf\system\gridView\renderer\NumberColumnRenderer;
 use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
 use wcf\system\gridView\renderer\PhraseColumnRenderer;
 use wcf\system\interaction\admin\MenuInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
+use wcf\system\request\LinkHandler;
 use wcf\system\view\filter\I18nTextFilter;
 use wcf\system\view\filter\IntegerFilter;
 use wcf\system\view\filter\SelectFilter;
@@ -51,7 +54,21 @@ final class MenuGridView extends AbstractGridView
             GridViewColumn::for("items")
                 ->label("wcf.acp.menu.item.list")
                 ->filter(new IntegerFilter('items', 'wcf.acp.menu.item.list', $this->subSelectItems()))
-                ->renderer(new NumberColumnRenderer())
+                ->renderer(new class extends NumberColumnRenderer implements ILinkColumnRenderer {
+                    #[\Override]
+                    public function render(mixed $value, DatabaseObject $row): string
+                    {
+                        if (!$value) {
+                            return parent::render($value, $row);
+                        }
+
+                        return \sprintf(
+                            '<a href="%s">%s</a>',
+                            LinkHandler::getInstance()->getControllerLink(MenuItemListPage::class, ['object' => $row]),
+                            parent::render($value, $row)
+                        );
+                    }
+                })
                 ->sortable(sortByDatabaseColumn: $this->subSelectItems()),
             GridViewColumn::for("position")
                 ->label("wcf.acp.box.position")
