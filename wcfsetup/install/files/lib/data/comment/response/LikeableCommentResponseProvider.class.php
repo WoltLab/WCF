@@ -96,9 +96,9 @@ class LikeableCommentResponseProvider extends AbstractObjectTypeProvider impleme
 
         foreach ($likeData as $objectTypeID => $likes) {
             $objectType = CommentHandler::getInstance()->getObjectType($objectTypeID);
-            if (CommentHandler::getInstance()->getCommentManager($objectType->objectType) instanceof IViewableLikeProvider) {
-                /** @noinspection PhpUndefinedMethodInspection */
-                CommentHandler::getInstance()->getCommentManager($objectType->objectType)->prepare($likes);
+            $commentManager = CommentHandler::getInstance()->getCommentManager($objectType->objectType);
+            if ($commentManager instanceof IViewableLikeProvider) {
+                $commentManager->prepare($likes);
             }
         }
     }
@@ -114,7 +114,9 @@ class LikeableCommentResponseProvider extends AbstractObjectTypeProvider impleme
     {
         return \array_map(
             static fn(CommentResponse $comment) => new LikeableCommentResponse($comment),
-            CommentResponseRuntimeCache::getInstance()->getObjects($objectIDs)
+            \array_filter(
+                CommentResponseRuntimeCache::getInstance()->getObjects($objectIDs),
+            )
         );
     }
 }
