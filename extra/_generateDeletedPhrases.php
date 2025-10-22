@@ -55,10 +55,6 @@ if (($noIndentation !== 1 && $indented !== 1) || $noIndentation === $indented) {
 $indentation = $noIndentation ? "" : "\t";
 
 \sort($missingIdentifiers, \SORT_NATURAL);
-$missingIdentifiers = \array_map(
-    static fn($identifier) => "{$indentation}\t<item name=\"{$identifier}\"/>",
-    $missingIdentifiers
-);
 
 if ($hasDeleteBlock) {
     // Find the position of {$indentation}<delete> and {$indentation}</delete>
@@ -67,10 +63,26 @@ if ($hasDeleteBlock) {
     $endTag = "\n{$indentation}</delete>\n";
     $end = \mb_strpos($data, $endTag);
 
+    if ($start === false && $end === false) {
+        if ($indentation === "") {
+            $indentation = "\t";
+        }
+
+        $startTag = "\n{$indentation}<delete>\n";
+        $start = \mb_strpos($data, $startTag);
+        $endTag = "\n{$indentation}</delete>\n";
+        $end = \mb_strpos($data, $endTag);
+    }
+
     if ($start === false || $end === false) {
-        echo "Could not find the start and end positions.\n";
+        echo "Could not find the start (" . \get_debug_type($start) . ") and end (" . \get_debug_type($end) . ") positions.\n";
         exit(1);
     }
+
+    $missingIdentifiers = \array_map(
+        static fn($identifier) => "{$indentation}\t<item name=\"{$identifier}\"/>",
+        $missingIdentifiers
+    );
 
     $before = \mb_substr($data, 0, $start + \mb_strlen($startTag));
     $after = \mb_substr($data, $end);
@@ -85,6 +97,11 @@ if ($hasDeleteBlock) {
         echo "Could not find the end position.\n";
         exit(1);
     }
+
+    $missingIdentifiers = \array_map(
+        static fn($identifier) => "{$indentation}\t<item name=\"{$identifier}\"/>",
+        $missingIdentifiers
+    );
 
     $before = \mb_substr($data, 0, $end + \mb_strlen($endTag));
     $after = \mb_substr($data, $end + \mb_strlen($endTag));
