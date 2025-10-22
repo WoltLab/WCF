@@ -29,6 +29,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\ImplementationException;
 use wcf\system\user\signature\SignatureCache;
 use wcf\system\user\storage\UserStorageHandler;
+use wcf\system\user\UserProfileHandler;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 use wcf\util\StringUtil;
@@ -306,6 +307,12 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      */
     public function isFollowing($userID)
     {
+        if ($userID === WCF::getUser()->userID) {
+            // This code block is intended to avoid unnecessary queries,
+            // as only the user storage for the active user needs to be fetched.
+            return UserProfileHandler::getInstance()->getUserProfile()->isFollower($this->userID);
+        }
+
         return \in_array($userID, $this->getFollowingUsers());
     }
 
