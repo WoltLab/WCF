@@ -93,8 +93,9 @@ final class StyleGridView extends AbstractGridView
                             }
 
                             return \sprintf(
-                                '<a href="%s" class="externalURL">%s</a>',
+                                '<a href="%s" class="externalURL"%s>%s</a>',
                                 StringUtil::encodeHTML($row->authorURL),
+                                \EXTERNAL_LINK_TARGET_BLANK ? ' target="_blank"' : '',
                                 $value
                             );
                         }
