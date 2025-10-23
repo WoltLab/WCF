@@ -8,7 +8,7 @@
 					{foreach from=$user->getSpecialTrophies() item=trophy}
 						<li class="sidebarListItem">
 							<div class="sidebarListItem__image">
-								{unsafe:$trophy->renderTrophy(24)}
+								{unsafe:$trophy->renderTrophy(32)}
 							</div>
 
 							<div class="sidebarListItem__content">
