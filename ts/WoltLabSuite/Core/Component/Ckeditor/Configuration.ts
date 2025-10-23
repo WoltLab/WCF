@@ -352,6 +352,7 @@ class ConfigurationBuilder {
       },
       emoji: {
         definitionsUrl: getDataSource(key),
+        dropdownLimit: 20,
       },
       toolbar: this.#getToolbar(),
       ui: {
