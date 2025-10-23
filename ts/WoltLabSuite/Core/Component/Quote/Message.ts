@@ -49,6 +49,7 @@ type ElementBoundaries = {
 
 const containers = new Map<string, Container>();
 const quoteMessageButtons = new Map<string, HTMLElement>();
+let activeContent: HTMLElement | undefined = undefined;
 let activeMessageId = "";
 let activeEditor: CKEditor | undefined = undefined;
 let timerSelectionChange: number | undefined = undefined;
@@ -250,7 +251,15 @@ function setup() {
   window.addEventListener(
     "resize",
     () => {
-      copyQuote.classList.remove("active");
+      if (!copyQuote.classList.contains("active")) {
+        return;
+      }
+
+      if (activeContent === undefined) {
+        copyQuote.classList.remove("active");
+      } else {
+        alignQuoteButtons(activeContent);
+      }
     },
     { passive: true },
   );
@@ -512,6 +521,7 @@ function onMouseUp(event?: MouseEvent): void {
     copyQuote.classList.remove("touchForceInaccessible");
   }
 
+  activeContent = content;
   alignQuoteButtons(content);
 
   copyQuote.classList.remove("active");

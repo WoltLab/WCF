@@ -18,6 +18,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
     let selectedMessage;
     const containers = new Map();
     const quoteMessageButtons = new Map();
+    let activeContent = undefined;
     let activeMessageId = "";
     let activeEditor = undefined;
     let timerSelectionChange = undefined;
@@ -149,7 +150,15 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
             }
         }, { passive: false });
         window.addEventListener("resize", () => {
-            copyQuote.classList.remove("active");
+            if (!copyQuote.classList.contains("active")) {
+                return;
+            }
+            if (activeContent === undefined) {
+                copyQuote.classList.remove("active");
+            }
+            else {
+                alignQuoteButtons(activeContent);
+            }
         }, { passive: true });
     }
     setup();
@@ -359,6 +368,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
         if (wasInaccessible) {
             copyQuote.classList.remove("touchForceInaccessible");
         }
+        activeContent = content;
         alignQuoteButtons(content);
         copyQuote.classList.remove("active");
         if (wasInaccessible) {
