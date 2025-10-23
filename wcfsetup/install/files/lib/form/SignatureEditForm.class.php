@@ -106,7 +106,7 @@ class SignatureEditForm extends MessageForm
 
         // default values
         if (empty($_POST)) {
-            $this->text = WCF::getUser()->signature;
+            $this->text = WCF::getUser()->signature ?? '';
         }
 
         $this->signatureCache = SignatureCache::getInstance()->getSignature(WCF::getUser());
