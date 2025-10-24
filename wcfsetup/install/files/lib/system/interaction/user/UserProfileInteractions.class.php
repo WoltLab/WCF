@@ -115,6 +115,10 @@ final class UserProfileInteractions extends AbstractInteractionProvider
                     );
                 }
             },
+            new ReportInteraction(
+                'com.woltlab.wcf.user',
+                'wcf.user.profile.report'
+            ),
         ]);
 
         EventHandler::getInstance()->fire(
