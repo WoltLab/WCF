@@ -23,6 +23,7 @@ import {
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 import { dispatchToCkeditor } from "WoltLabSuite/Core/Component/Ckeditor/Event";
 import { showSuccessSnackbar } from "../Snackbar";
+import { platform } from "WoltLabSuite/Core/Environment";
 
 type Container = {
   element: HTMLElement;
@@ -42,9 +43,11 @@ let selectedMessage:
 
 type ElementBoundaries = {
   bottom: number;
+  height: number;
   left: number;
   right: number;
   top: number;
+  width: number;
 };
 
 const containers = new Map<string, Container>();
@@ -250,6 +253,22 @@ function setup() {
 
   window.addEventListener(
     "resize",
+    () => {
+      if (!copyQuote.classList.contains("active")) {
+        return;
+      }
+
+      if (activeContent === undefined) {
+        copyQuote.classList.remove("active");
+      } else {
+        alignQuoteButtons(activeContent);
+      }
+    },
+    { passive: true },
+  );
+
+  window.addEventListener(
+    "scroll",
     () => {
       if (!copyQuote.classList.contains("active")) {
         return;
@@ -572,8 +591,20 @@ function alignQuoteButtons(content: HTMLElement): void {
     left = containerBoundaries.right - dimensions.width;
   }
 
-  copyQuote.style.setProperty("top", `${coordinates.bottom + 7}px`);
-  copyQuote.style.setProperty("left", `${left}px`);
+  // iOS shows an own selection overlay that could appear on top of the quote
+  // selection. If the top and bottom edge are on screen then the iOS tooltip
+  // appears at the top if the top boundary is at least 50% from the top.
+  if (platform() === "ios") {
+    const showAbove = coordinates.top - window.scrollY < window.innerHeight / 2;
+    if (showAbove) {
+      const top = coordinates.top - dimensions.height - 7;
+      copyQuote.style.setProperty("inset", `${top}px auto auto ${left}px`);
+
+      return;
+    }
+  }
+
+  copyQuote.style.setProperty("inset", `${coordinates.bottom + 7}px auto auto ${left}px`);
 }
 
 function getElementBoundaries(selection: Selection | null): ElementBoundaries {
@@ -592,8 +623,10 @@ function getElementBoundaries(selection: Selection | null): ElementBoundaries {
   const scrollTop = window.scrollY;
   return {
     bottom: rect.bottom + scrollTop,
+    height: rect.height,
     left: rect.left,
     right: rect.right,
     top: rect.top + scrollTop,
+    width: rect.height,
   };
 }
