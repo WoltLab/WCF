@@ -244,6 +244,18 @@ a.ck.ck-button-bold {
 	color: var(--ck-color-text);
 }
 
+.ck.ck-form .ck.ck-input-number,
+.ck.ck-form .ck.ck-input-text {
+	font-size: var(--wcfFontSizeDefault);
+}
+
+@media (pointer: coarse) {
+	.ck.ck-form .ck.ck-input-number,
+	.ck.ck-form .ck.ck-input-text {
+		font-size: 16px;
+	}
+}
+
 @media (hover: hover) {
 	.ck.ck-form__row,
 	.ck.ck-body {
