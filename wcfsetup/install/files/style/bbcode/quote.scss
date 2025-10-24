@@ -69,6 +69,10 @@
 }
 
 .quoteBoxContent {
+	grid-area: content;
+}
+
+.quoteBox.collapsed .quoteBoxContent {
 	display: -webkit-box;
 	grid-area: content;
 	overflow: hidden;
