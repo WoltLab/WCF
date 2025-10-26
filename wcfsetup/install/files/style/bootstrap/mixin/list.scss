@@ -24,7 +24,7 @@
 @mixin dotSeparated {
 	> li {
 		&:not(:last-child):after {
-			content: "\00b7";
+			content: "•";
 			margin-left: 5px;
 		}
 	}

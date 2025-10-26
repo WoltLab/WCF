@@ -229,13 +229,13 @@ ol.nativeList {
 
 .separatorLeft::before {
 	color: var(--wcfContentText);
-	content: "\00b7";
+	content: "•";
 	margin-right: 0.25em;
 }
 
 .separatorRight::after {
 	color: var(--wcfContentText);
-	content: "\00b7";
+	content: "•";
 	margin-left: 0.25em;
 }
 
