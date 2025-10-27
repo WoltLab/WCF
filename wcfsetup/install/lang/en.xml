@@ -1138,8 +1138,6 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.menu.link.smiley"><![CDATA[Smilies]]></item>
 		<item name="wcf.acp.menu.link.smiley.add"><![CDATA[Add Smiley]]></item>
 		<item name="wcf.acp.menu.link.smiley.list"><![CDATA[Smilies]]></item>
-		<item name="wcf.acp.menu.link.smiley.category.add"><![CDATA[Add Smiley Category]]></item>
-		<item name="wcf.acp.menu.link.smiley.category.list"><![CDATA[Smiley Categories]]></item>
 		<item name="wcf.acp.menu.link.activityPoint"><![CDATA[Activity Points]]></item>
 		<item name="wcf.acp.menu.link.user.rank"><![CDATA[User Ranks]]></item>
 		<item name="wcf.acp.menu.link.user.rank.list"><![CDATA[User Ranks]]></item>
@@ -2810,9 +2808,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.smiley.add"><![CDATA[Add Smiley]]></item>
 		<item name="wcf.acp.smiley.edit"><![CDATA[Edit Smiley]]></item>
 		<item name="wcf.acp.smiley.title"><![CDATA[Title]]></item>
-		<item name="wcf.acp.smiley.category.add"><![CDATA[Add Smiley Category]]></item>
-		<item name="wcf.acp.smiley.category.edit"><![CDATA[Edit Smiley Category]]></item>
-		<item name="wcf.acp.smiley.category.list"><![CDATA[Smiley Categories]]></item>
 		<item name="wcf.acp.smiley.categoryID.default"><![CDATA[Default Category]]></item>
 		<item name="wcf.acp.smiley.categoryID.error.invalid"><![CDATA[The selected category is invalid.]]></item>
 		<item name="wcf.acp.smiley.smileyCode"><![CDATA[Primary Smiley Code]]></item>
@@ -5716,5 +5711,10 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.user.option.skype"/>
 	<item name="wcf.user.profileHits"/>
 	<item name="wcf.user.profileHits.hitsPerDay"/>
+	<item name="wcf.acp.menu.link.smiley.category.list"/>
+	<item name="wcf.acp.smiley.category.list"/>
+	<item name="wcf.acp.menu.link.smiley.category.add"/>
+	<item name="wcf.acp.smiley.category.add"/>
+	<item name="wcf.acp.smiley.category.edit"/>
 </delete>
 </language>

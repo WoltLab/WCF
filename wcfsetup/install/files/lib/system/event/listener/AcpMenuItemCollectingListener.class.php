@@ -944,11 +944,13 @@ final class AcpMenuItemCollectingListener
         ));
         $event->register(new AcpMenuItem(
             'wcf.acp.menu.link.smiley.category.list',
+            title: WCF::getLanguage()->get('wcf.category.list'),
             parentMenuItem: 'wcf.acp.menu.link.smiley',
             link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\SmileyCategoryListPage::class),
         ));
         $event->register(new AcpMenuItem(
             'wcf.acp.menu.link.smiley.category.add',
+            title: WCF::getLanguage()->get('wcf.category.add'),
             parentMenuItem: 'wcf.acp.menu.link.smiley.category.list',
             link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\SmileyCategoryAddForm::class),
             icon: FontAwesomeIcon::fromValues('plus')

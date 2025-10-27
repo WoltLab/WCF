@@ -1162,8 +1162,6 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.menu.link.smiley"><![CDATA[Smileys]]></item>
 		<item name="wcf.acp.menu.link.smiley.add"><![CDATA[Smiley hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.smiley.list"><![CDATA[Smileys]]></item>
-		<item name="wcf.acp.menu.link.smiley.category.add"><![CDATA[Smiley-Kategorie hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.smiley.category.list"><![CDATA[Smiley-Kategorien]]></item>
 		<item name="wcf.acp.menu.link.activityPoint"><![CDATA[Aktivitätspunkte]]></item>
 		<item name="wcf.acp.menu.link.user.rank"><![CDATA[Benutzerränge]]></item>
 		<item name="wcf.acp.menu.link.user.rank.list"><![CDATA[Benutzerränge]]></item>
@@ -2883,9 +2881,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.smiley.add"><![CDATA[Smiley hinzufügen]]></item>
 		<item name="wcf.acp.smiley.edit"><![CDATA[Smiley bearbeiten]]></item>
 		<item name="wcf.acp.smiley.title"><![CDATA[Titel]]></item>
-		<item name="wcf.acp.smiley.category.add"><![CDATA[Smiley-Kategorie hinzufügen]]></item>
-		<item name="wcf.acp.smiley.category.edit"><![CDATA[Smiley-Kategorie bearbeiten]]></item>
-		<item name="wcf.acp.smiley.category.list"><![CDATA[Smiley-Kategorien]]></item>
 		<item name="wcf.acp.smiley.categoryID.default"><![CDATA[Standard-Kategorie]]></item>
 		<item name="wcf.acp.smiley.categoryID.error.invalid"><![CDATA[Die gewählte Kategorie ist ungültig.]]></item>
 		<item name="wcf.acp.smiley.smileyCode"><![CDATA[Primärer Smiley-Code]]></item>
@@ -5714,5 +5709,10 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.user.option.skype"/>
 	<item name="wcf.user.profileHits"/>
 	<item name="wcf.user.profileHits.hitsPerDay"/>
+	<item name="wcf.acp.menu.link.smiley.category.list"/>
+	<item name="wcf.acp.smiley.category.list"/>
+	<item name="wcf.acp.menu.link.smiley.category.add"/>
+	<item name="wcf.acp.smiley.category.add"/>
+	<item name="wcf.acp.smiley.category.edit"/>
 </delete>
 </language>
