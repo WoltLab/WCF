@@ -1119,8 +1119,6 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.menu.link.user.option"><![CDATA[Custom User Fields]]></item>
 		<item name="wcf.acp.menu.link.user.option.list"><![CDATA[Custom User Fields]]></item>
 		<item name="wcf.acp.menu.link.user.option.add"><![CDATA[Add Custom User Field]]></item>
-		<item name="wcf.acp.menu.link.user.option.category.list"><![CDATA[Field Categories]]></item>
-		<item name="wcf.acp.menu.link.user.option.category.add"><![CDATA[Add Field Category]]></item>
 		<item name="wcf.acp.menu.link.userOptionDefaults"><![CDATA[User Field Settings]]></item>
 		<item name="wcf.acp.menu.link.user.profileMenu"><![CDATA[User Profile Menu]]></item>
 		<item name="wcf.acp.menu.link.template"><![CDATA[Templates]]></item>
@@ -3072,10 +3070,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.user.quickSearch.newest"><![CDATA[Newest users]]></item>
 		<item name="wcf.acp.user.option.access"><![CDATA[Access]]></item>
 		<item name="wcf.acp.user.option.add"><![CDATA[Add Custom User Field]]></item>
-		<item name="wcf.acp.user.option.category.add"><![CDATA[Add Custom User Field Category]]></item>
-		<item name="wcf.acp.user.option.category.edit"><![CDATA[Edit Custom User Field Category]]></item>
 		<item name="wcf.acp.user.option.category.options"><![CDATA[Fields]]></item>
-		<item name="wcf.acp.user.option.category.list"><![CDATA[Custom User Field Categories]]></item>
 		<item name="wcf.acp.user.option.defaultValue"><![CDATA[Default Value]]></item>
 		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[Default option value suggested on first edit.]]></item>
 		<item name="wcf.acp.user.option.description"><![CDATA[Description]]></item>
@@ -5716,5 +5711,10 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.menu.link.smiley.category.add"/>
 	<item name="wcf.acp.smiley.category.add"/>
 	<item name="wcf.acp.smiley.category.edit"/>
+	<item name="wcf.acp.menu.link.user.option.category.list"/>
+	<item name="wcf.acp.user.option.category.list"/>
+	<item name="wcf.acp.user.option.category.add"/>
+	<item name="wcf.acp.user.option.category.edit"/>
+	<item name="wcf.acp.menu.link.user.option.category.add"/>
 </delete>
 </language>

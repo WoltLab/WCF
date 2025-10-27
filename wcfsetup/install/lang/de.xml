@@ -1143,8 +1143,6 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.menu.link.user.option"><![CDATA[Profilfelder]]></item>
 		<item name="wcf.acp.menu.link.user.option.list"><![CDATA[Profilfelder]]></item>
 		<item name="wcf.acp.menu.link.user.option.add"><![CDATA[Profilfeld hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.user.option.category.list"><![CDATA[Profilfeld-Kategorien]]></item>
-		<item name="wcf.acp.menu.link.user.option.category.add"><![CDATA[Profilfeld-Kategorie hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.userOptionDefaults"><![CDATA[Benutzerprofil-Einstellungen]]></item>
 		<item name="wcf.acp.menu.link.user.profileMenu"><![CDATA[Benutzerprofil-Menü]]></item>
 		<item name="wcf.acp.menu.link.template"><![CDATA[Templates]]></item>
@@ -3145,10 +3143,7 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.quickSearch.newest"><![CDATA[Neueste Benutzer]]></item>
 		<item name="wcf.acp.user.option.access"><![CDATA[Zugriff]]></item>
 		<item name="wcf.acp.user.option.add"><![CDATA[Benutzerprofilfeld hinzufügen]]></item>
-		<item name="wcf.acp.user.option.category.add"><![CDATA[Benutzerprofilfeld-Kategorie hinzufügen]]></item>
-		<item name="wcf.acp.user.option.category.edit"><![CDATA[Benutzerprofilfeld-Kategorie bearbeiten]]></item>
 		<item name="wcf.acp.user.option.category.options"><![CDATA[Felder]]></item>
-		<item name="wcf.acp.user.option.category.list"><![CDATA[Benutzerprofilfeld-Kategorien]]></item>
 		<item name="wcf.acp.user.option.defaultValue"><![CDATA[Standardwert]]></item>
 		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[Wert, der beim erstmaligen Ausfüllen als Standard vorgegeben ist.]]></item>
 		<item name="wcf.acp.user.option.description"><![CDATA[Beschreibung]]></item>
@@ -5714,5 +5709,10 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.menu.link.smiley.category.add"/>
 	<item name="wcf.acp.smiley.category.add"/>
 	<item name="wcf.acp.smiley.category.edit"/>
+	<item name="wcf.acp.menu.link.user.option.category.list"/>
+	<item name="wcf.acp.user.option.category.list"/>
+	<item name="wcf.acp.user.option.category.add"/>
+	<item name="wcf.acp.user.option.category.edit"/>
+	<item name="wcf.acp.menu.link.user.option.category.add"/>
 </delete>
 </language>
