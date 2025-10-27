@@ -1119,8 +1119,6 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.menu.link.user.option"><![CDATA[Custom User Fields]]></item>
 		<item name="wcf.acp.menu.link.user.option.list"><![CDATA[Custom User Fields]]></item>
 		<item name="wcf.acp.menu.link.user.option.add"><![CDATA[Add Custom User Field]]></item>
-		<item name="wcf.acp.menu.link.user.option.category.list"><![CDATA[Field Categories]]></item>
-		<item name="wcf.acp.menu.link.user.option.category.add"><![CDATA[Add Field Category]]></item>
 		<item name="wcf.acp.menu.link.userOptionDefaults"><![CDATA[User Field Settings]]></item>
 		<item name="wcf.acp.menu.link.user.profileMenu"><![CDATA[User Profile Menu]]></item>
 		<item name="wcf.acp.menu.link.template"><![CDATA[Templates]]></item>
@@ -1138,8 +1136,6 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.menu.link.smiley"><![CDATA[Smilies]]></item>
 		<item name="wcf.acp.menu.link.smiley.add"><![CDATA[Add Smiley]]></item>
 		<item name="wcf.acp.menu.link.smiley.list"><![CDATA[Smilies]]></item>
-		<item name="wcf.acp.menu.link.smiley.category.add"><![CDATA[Add Smiley Category]]></item>
-		<item name="wcf.acp.menu.link.smiley.category.list"><![CDATA[Smiley Categories]]></item>
 		<item name="wcf.acp.menu.link.activityPoint"><![CDATA[Activity Points]]></item>
 		<item name="wcf.acp.menu.link.user.rank"><![CDATA[User Ranks]]></item>
 		<item name="wcf.acp.menu.link.user.rank.list"><![CDATA[User Ranks]]></item>
@@ -1183,13 +1179,9 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.menu.link.cms.box.add"><![CDATA[Add Box]]></item>
 		<item name="wcf.acp.menu.link.media"><![CDATA[Media]]></item>
 		<item name="wcf.acp.menu.link.media.list"><![CDATA[Media]]></item>
-		<item name="wcf.acp.menu.link.media.category.list"><![CDATA[Categories]]></item>
-		<item name="wcf.acp.menu.link.media.category.add"><![CDATA[Add Category]]></item>
 		<item name="wcf.acp.menu.link.article"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.menu.link.article.list"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.menu.link.article.add"><![CDATA[Add Article]]></item>
-		<item name="wcf.acp.menu.link.article.category.list"><![CDATA[Categories]]></item>
-		<item name="wcf.acp.menu.link.article.category.add"><![CDATA[Add Category]]></item>
 		<item name="wcf.acp.menu.link.maintenance.sitemap"><![CDATA[Sitemaps]]></item>
 		<item name="wcf.acp.menu.add"><![CDATA[Add Menu]]></item>
 		<item name="wcf.acp.menu.edit"><![CDATA[Edit Menu]]></item>
@@ -1211,8 +1203,6 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.menu.link.contact.options"><![CDATA[Option Fields]]></item>
 		<item name="wcf.acp.menu.link.contact.recipients"><![CDATA[Recipient]]></item>
 		<item name="wcf.acp.menu.link.trophy"><![CDATA[Trophies]]></item>
-		<item name="wcf.acp.menu.link.trophy.category.list"><![CDATA[Categories]]></item>
-		<item name="wcf.acp.menu.link.trophy.category.add"><![CDATA[Add Category]]></item>
 		<item name="wcf.acp.menu.link.trophy.list"><![CDATA[Trophies]]></item>
 		<item name="wcf.acp.menu.link.trophy.add"><![CDATA[Add Trophy]]></item>
 		<item name="wcf.acp.menu.link.trophy.edit"><![CDATA[Edit Trophy]]></item>
@@ -2810,9 +2800,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.smiley.add"><![CDATA[Add Smiley]]></item>
 		<item name="wcf.acp.smiley.edit"><![CDATA[Edit Smiley]]></item>
 		<item name="wcf.acp.smiley.title"><![CDATA[Title]]></item>
-		<item name="wcf.acp.smiley.category.add"><![CDATA[Add Smiley Category]]></item>
-		<item name="wcf.acp.smiley.category.edit"><![CDATA[Edit Smiley Category]]></item>
-		<item name="wcf.acp.smiley.category.list"><![CDATA[Smiley Categories]]></item>
 		<item name="wcf.acp.smiley.categoryID.default"><![CDATA[Default Category]]></item>
 		<item name="wcf.acp.smiley.categoryID.error.invalid"><![CDATA[The selected category is invalid.]]></item>
 		<item name="wcf.acp.smiley.smileyCode"><![CDATA[Primary Smiley Code]]></item>
@@ -3077,10 +3064,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.user.quickSearch.newest"><![CDATA[Newest users]]></item>
 		<item name="wcf.acp.user.option.access"><![CDATA[Access]]></item>
 		<item name="wcf.acp.user.option.add"><![CDATA[Add Custom User Field]]></item>
-		<item name="wcf.acp.user.option.category.add"><![CDATA[Add Custom User Field Category]]></item>
-		<item name="wcf.acp.user.option.category.edit"><![CDATA[Edit Custom User Field Category]]></item>
 		<item name="wcf.acp.user.option.category.options"><![CDATA[Fields]]></item>
-		<item name="wcf.acp.user.option.category.list"><![CDATA[Custom User Field Categories]]></item>
 		<item name="wcf.acp.user.option.defaultValue"><![CDATA[Default Value]]></item>
 		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[Default option value suggested on first edit.]]></item>
 		<item name="wcf.acp.user.option.description"><![CDATA[Description]]></item>
@@ -5716,5 +5700,21 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.user.option.skype"/>
 	<item name="wcf.user.profileHits"/>
 	<item name="wcf.user.profileHits.hitsPerDay"/>
+	<item name="wcf.acp.menu.link.smiley.category.list"/>
+	<item name="wcf.acp.smiley.category.list"/>
+	<item name="wcf.acp.menu.link.smiley.category.add"/>
+	<item name="wcf.acp.smiley.category.add"/>
+	<item name="wcf.acp.smiley.category.edit"/>
+	<item name="wcf.acp.menu.link.user.option.category.list"/>
+	<item name="wcf.acp.user.option.category.list"/>
+	<item name="wcf.acp.user.option.category.add"/>
+	<item name="wcf.acp.user.option.category.edit"/>
+	<item name="wcf.acp.menu.link.user.option.category.add"/>
+	<item name="wcf.acp.menu.link.media.category.list"/>
+	<item name="wcf.acp.menu.link.article.category.list"/>
+	<item name="wcf.acp.menu.link.trophy.category.list"/>
+	<item name="wcf.acp.menu.link.media.category.add"/>
+	<item name="wcf.acp.menu.link.article.category.add"/>
+	<item name="wcf.acp.menu.link.trophy.category.add"/>
 </delete>
 </language>

@@ -1,13 +1,13 @@
-{include file='header' pageTitle='wcf.acp.user.option.category.list'}
+{include file='header' pageTitle='wcf.category.list'}
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.user.option.category.list{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
+		<h1 class="contentTitle">{lang}wcf.category.list{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='UserOptionCategoryAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.user.option.category.add{/lang}</span></a></li>
+			<li><a href="{link controller='UserOptionCategoryAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.category.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -71,7 +71,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='UserOptionCategoryAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.user.option.category.add{/lang}</span></a></li>
+				<li><a href="{link controller='UserOptionCategoryAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.category.add{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

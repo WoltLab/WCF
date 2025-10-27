@@ -24,7 +24,7 @@ class SmileyCategoryAddForm extends CategoryAddFormBuilderForm
     /**
      * @inheritDoc
      */
-    public string $pageTitle = 'wcf.acp.smiley.category.add';
+    public string $pageTitle = 'wcf.category.add';
 
     /**
      * @inheritDoc
