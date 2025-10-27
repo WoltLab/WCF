@@ -908,7 +908,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.user.profile.coverPhoto.canSeeCoverPhotos"><![CDATA[Can view users’ cover photos]]></item>
 		<item name="wcf.acp.group.option.user.profile.coverPhoto.canUploadCoverPhoto"><![CDATA[Can upload their cover photo]]></item>
 		<item name="wcf.acp.group.option.user.profile.coverPhoto.maxSize"><![CDATA[Maximum Image File Size]]></item>
-		<item name="wcf.acp.group.option.admin.content.reaction.canManageReactionType"><![CDATA[Can manage reaction types]]></item>
+		<item name="wcf.acp.group.option.admin.content.reaction.canManageReactionType"><![CDATA[Can manage reactions]]></item>
 		<item name="wcf.acp.group.option.category.user.message.contactForm"><![CDATA[Contact Form]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.maxSize"><![CDATA[Maximum Attachment File Size]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions"><![CDATA[Allowed Attachment File Extensions]]></item>
@@ -1215,9 +1215,9 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.menu.link.devtools.notificationTest"><![CDATA[Notification Test]]></item>
 		<item name="wcf.acp.menu.link.log.modification"><![CDATA[Global Modification Log]]></item>
 		<item name="wcf.acp.menu.link.reactionType"><![CDATA[Reactions]]></item>
-		<item name="wcf.acp.menu.link.reactionType.list"><![CDATA[Reaction Types]]></item>
-		<item name="wcf.acp.menu.link.reactionType.add"><![CDATA[Add Reaction Type]]></item>
-		<item name="wcf.acp.menu.link.reactionType.edit"><![CDATA[Edit Reaction Type]]></item>
+		<item name="wcf.acp.menu.link.reactionType.list"><![CDATA[Reactions]]></item>
+		<item name="wcf.acp.menu.link.reactionType.add"><![CDATA[Add Reaction]]></item>
+		<item name="wcf.acp.menu.link.reactionType.edit"><![CDATA[Edit Reaction]]></item>
 		<item name="wcf.acp.menu.link.language.item.add"><![CDATA[Add Phrase]]></item>
 		<item name="wcf.acp.menu.link.systemCheck"><![CDATA[System Check]]></item>
 		<item name="wcf.acp.menu.link.devtools.missingLanguageItem.list"><![CDATA[Missing Phrases]]></item>
@@ -1520,8 +1520,8 @@ Restricting usernames to ASCII characters restricts usernames to latin letters, 
 		<item name="wcf.acp.option.user_cleanup_activity_event_lifetime.description"><![CDATA[Recent activities will be removed after the following days.]]></item>
 		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime"><![CDATA[Profile Visitors]]></item>
 		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime.description"><![CDATA[Profile visitors will be removed after the following days.]]></item>
-		<item name="wcf.acp.option.category.message.general.likes"><![CDATA[Reaction System]]></item>
-		<item name="wcf.acp.option.module_like"><![CDATA[Reaction System]]></item>
+		<item name="wcf.acp.option.category.message.general.likes"><![CDATA[Reactions]]></item>
+		<item name="wcf.acp.option.module_like"><![CDATA[Reactions]]></item>
 		<item name="wcf.acp.option.like_show_summary"><![CDATA[Display reaction summary]]></item>
 		<item name="wcf.acp.option.module_user_profile_wall"><![CDATA[User profile wall]]></item>
 		<item name="wcf.acp.option.category.message.sidebar"><![CDATA[Sidebar]]></item>
@@ -2585,9 +2585,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.acpTemplateDelete.application"><![CDATA[App]]></item>
 	</category>
 	<category name="wcf.acp.reactionType">
-		<item name="wcf.acp.reactionType.type"><![CDATA[Reaction Type]]></item>
 		<item name="wcf.acp.reactionType.image"><![CDATA[Reaction File]]></item>
-		<item name="wcf.acp.reactionType.showOrder.description"><![CDATA[The reaction type will be shown after the selected reaction type.]]></item>
 		<item name="wcf.acp.reactionType.isAssignable"><![CDATA[Allow use]]></item>
 		<item name="wcf.acp.reactionType.isAssignable.description"><![CDATA[If a reaction cannot be used, users cannot react with the reaction. If a content has already been reacted to with the reaction, it remains visible to users.]]></item>
 		<item name="wcf.acp.reactionType.isNotAssignable"><![CDATA[Disallow use]]></item>
@@ -5716,5 +5714,7 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.menu.link.article.category.add"/>
 	<item name="wcf.acp.menu.link.trophy.category.add"/>
 	<item name="wcf.acp.option.google_maps_zoom.description"/>
+	<item name="wcf.acp.reactionType.type"/>
+	<item name="wcf.acp.reactionType.showOrder.description"/>
 </delete>
 </language>

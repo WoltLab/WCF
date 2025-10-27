@@ -70,7 +70,6 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm
                     ->i18n()
                     ->languageItemPattern('wcf.reactionType.title\d+'),
                 ShowOrderFormField::create()
-                    ->description('wcf.acp.reactionType.showOrder.description')
                     ->required()
                     ->options(new ReactionTypeList()),
                 BooleanFormField::create('isAssignable')
