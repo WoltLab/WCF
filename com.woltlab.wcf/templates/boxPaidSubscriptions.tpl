@@ -3,7 +3,7 @@
 		<li>
 			<div class="containerHeadline">
 				<h3>{$subscription->getTitle()}</h3>
-				<small>{lang}wcf.paidSubscription.formattedCost{/lang}</small>
+				<small>{unsafe:$subscription->getFormattedCost()}</small>
 			</div>
 			
 			{if !PAID_SUBSCRIPTION_ENABLE_TOS_CONFIRMATION && $__wcf->user->canPurchasePaidSubscriptions()}

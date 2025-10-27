@@ -44,7 +44,7 @@
 			{foreach from=$subscriptions item=subscription}
 				<li>
 					<div class="containerHeadline">
-						<h3>{$subscription->getTitle()} <span class="badge label">{lang}wcf.paidSubscription.formattedCost{/lang}</span></h3>
+						<h3>{$subscription->getTitle()} <span class="badge label">{unsafe:$subscription->getFormattedCost()}</span></h3>
 						<div class="htmlContent">{unsafe:$subscription->getFormattedDescription()}</div>
 					</div>
 					
