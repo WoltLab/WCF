@@ -156,4 +156,8 @@ declare global {
     "woltlab-core-reaction-summary": WoltlabCoreReactionSummaryElement;
     "woltlab-core-toggle-button": WoltlabCoreToggleButtonElement;
   }
+
+  interface Element {
+    moveBefore(node: Element | CharacterData, child: Node | null): void;
+  }
 }

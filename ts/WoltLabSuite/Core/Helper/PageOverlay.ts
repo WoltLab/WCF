@@ -12,7 +12,11 @@ const adoptiveParents: HTMLElement[] = [];
 export function adoptPageOverlayContainer(element: HTMLElement): void {
   adoptiveParents.push(element);
 
-  element.append(container);
+  if ("moveBefore" in Element.prototype && document.body.contains(container)) {
+    element.moveBefore(container, null);
+  } else {
+    element.append(container);
+  }
 }
 
 /**
@@ -42,7 +46,11 @@ export function releasePageOverlayContainer(element: HTMLElement): void {
     adoptiveParents.pop();
 
     const previousParent = adoptiveParents[adoptiveParents.length - 1];
-    previousParent.append(container);
+    if ("moveBefore" in Element.prototype) {
+      previousParent.moveBefore(container, null);
+    } else {
+      previousParent.append(container);
+    }
 
     return;
   }
