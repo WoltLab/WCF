@@ -257,7 +257,7 @@ class File extends DatabaseObject implements ITitledLinkObject, IImageDataProvid
 
         if ($minWidth !== null || $minHeight !== null) {
             $thumbnails = $this->getThumbnails();
-            usort($thumbnails, fn(FileThumbnail $a, FileThumbnail $b) => $a->width <=> $b->width);
+            \usort($thumbnails, fn(FileThumbnail $a, FileThumbnail $b) => $a->width <=> $b->width);
 
             foreach ($thumbnails as $thumbnail) {
                 if ($minWidth !== null && $minWidth > $thumbnail->width) {
@@ -278,7 +278,11 @@ class File extends DatabaseObject implements ITitledLinkObject, IImageDataProvid
             }
         }
 
-        return new ImageData($this->getLink(), $this->width, $this->height);
+        return new ImageData(
+            $this->getFullSizeImageSource() ?? $this->getLink(),
+            $this->width,
+            $this->height
+        );
     }
 
     #[\Override]
