@@ -542,11 +542,13 @@ final class AcpMenuItemCollectingListener
         ));
         $event->register(new AcpMenuItem(
             'wcf.acp.menu.link.trophy.category.list',
+            title: WCF::getLanguage()->get('wcf.category.list'),
             parentMenuItem: 'wcf.acp.menu.link.trophy',
             link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\TrophyCategoryListPage::class),
         ));
         $event->register(new AcpMenuItem(
             'wcf.acp.menu.link.trophy.category.add',
+            title: WCF::getLanguage()->get('wcf.category.add'),
             parentMenuItem: 'wcf.acp.menu.link.trophy.category.list',
             link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\TrophyCategoryAddForm::class),
             icon: FontAwesomeIcon::fromValues('plus')
@@ -643,11 +645,13 @@ final class AcpMenuItemCollectingListener
         ));
         $event->register(new AcpMenuItem(
             'wcf.acp.menu.link.media.category.list',
+            title: WCF::getLanguage()->get('wcf.category.list'),
             parentMenuItem: 'wcf.acp.menu.link.media',
             link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\MediaCategoryListPage::class),
         ));
         $event->register(new AcpMenuItem(
             'wcf.acp.menu.link.media.category.add',
+            title: WCF::getLanguage()->get('wcf.category.add'),
             parentMenuItem: 'wcf.acp.menu.link.media.category.list',
             link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\MediaCategoryAddForm::class),
             icon: FontAwesomeIcon::fromValues('plus')
@@ -686,11 +690,13 @@ final class AcpMenuItemCollectingListener
         if (WCF::getSession()->getPermission('admin.content.article.canManageCategory')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.article.category.list',
+                title: WCF::getLanguage()->get('wcf.category.list'),
                 parentMenuItem: 'wcf.acp.menu.link.article',
                 link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\ArticleCategoryListPage::class),
             ));
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.article.category.add',
+                title: WCF::getLanguage()->get('wcf.category.add'),
                 parentMenuItem: 'wcf.acp.menu.link.article.category.list',
                 link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\ArticleCategoryAddForm::class),
                 icon: FontAwesomeIcon::fromValues('plus')

@@ -1179,13 +1179,9 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.menu.link.cms.box.add"><![CDATA[Add Box]]></item>
 		<item name="wcf.acp.menu.link.media"><![CDATA[Media]]></item>
 		<item name="wcf.acp.menu.link.media.list"><![CDATA[Media]]></item>
-		<item name="wcf.acp.menu.link.media.category.list"><![CDATA[Categories]]></item>
-		<item name="wcf.acp.menu.link.media.category.add"><![CDATA[Add Category]]></item>
 		<item name="wcf.acp.menu.link.article"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.menu.link.article.list"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.menu.link.article.add"><![CDATA[Add Article]]></item>
-		<item name="wcf.acp.menu.link.article.category.list"><![CDATA[Categories]]></item>
-		<item name="wcf.acp.menu.link.article.category.add"><![CDATA[Add Category]]></item>
 		<item name="wcf.acp.menu.link.maintenance.sitemap"><![CDATA[Sitemaps]]></item>
 		<item name="wcf.acp.menu.add"><![CDATA[Add Menu]]></item>
 		<item name="wcf.acp.menu.edit"><![CDATA[Edit Menu]]></item>
@@ -1207,8 +1203,6 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.menu.link.contact.options"><![CDATA[Option Fields]]></item>
 		<item name="wcf.acp.menu.link.contact.recipients"><![CDATA[Recipient]]></item>
 		<item name="wcf.acp.menu.link.trophy"><![CDATA[Trophies]]></item>
-		<item name="wcf.acp.menu.link.trophy.category.list"><![CDATA[Categories]]></item>
-		<item name="wcf.acp.menu.link.trophy.category.add"><![CDATA[Add Category]]></item>
 		<item name="wcf.acp.menu.link.trophy.list"><![CDATA[Trophies]]></item>
 		<item name="wcf.acp.menu.link.trophy.add"><![CDATA[Add Trophy]]></item>
 		<item name="wcf.acp.menu.link.trophy.edit"><![CDATA[Edit Trophy]]></item>
@@ -5716,5 +5710,11 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.user.option.category.add"/>
 	<item name="wcf.acp.user.option.category.edit"/>
 	<item name="wcf.acp.menu.link.user.option.category.add"/>
+	<item name="wcf.acp.menu.link.media.category.list"/>
+	<item name="wcf.acp.menu.link.article.category.list"/>
+	<item name="wcf.acp.menu.link.trophy.category.list"/>
+	<item name="wcf.acp.menu.link.media.category.add"/>
+	<item name="wcf.acp.menu.link.article.category.add"/>
+	<item name="wcf.acp.menu.link.trophy.category.add"/>
 </delete>
 </language>
