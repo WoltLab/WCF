@@ -27,8 +27,9 @@ import { element as scrollToElement } from "../Ui/Scroll";
 import Devtools from "../Devtools";
 import { setupSubmitShortcut } from "./Ckeditor/Keyboard";
 import { setup as setupLayer } from "./Ckeditor/Layer";
+import { setup as setupBalloonPanel } from "./Ckeditor/BalloonPanel";
 import { browser, touch } from "../Environment";
-import { WoltlabSmileyItem } from "@woltlab/editor/plugins/ckeditor5-woltlab-smiley";
+import type { WoltlabSmileyItem } from "@woltlab/editor/plugins/ckeditor5-woltlab-smiley";
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
@@ -288,6 +289,7 @@ export async function setupCkeditor(
   }
 
   setupLayer();
+  setupBalloonPanel();
 
   const { create: createEditor, CKEditor5 } = await import("@woltlab/editor");
 

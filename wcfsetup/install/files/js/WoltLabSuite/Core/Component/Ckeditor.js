@@ -12,7 +12,7 @@
  * @since 6.0
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Autosave", "./Ckeditor/Configuration", "./Ckeditor/Event", "./Ckeditor/SubmitOnEnter", "./Ckeditor/Normalizer", "../Ui/Scroll", "../Devtools", "./Ckeditor/Keyboard", "./Ckeditor/Layer", "../Environment"], function (require, exports, tslib_1, Attachment_1, Media_1, Mention_1, Quote_1, Autosave_1, Configuration_1, Event_1, SubmitOnEnter_1, Normalizer_1, Scroll_1, Devtools_1, Keyboard_1, Layer_1, Environment_1) {
+define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Autosave", "./Ckeditor/Configuration", "./Ckeditor/Event", "./Ckeditor/SubmitOnEnter", "./Ckeditor/Normalizer", "../Ui/Scroll", "../Devtools", "./Ckeditor/Keyboard", "./Ckeditor/Layer", "./Ckeditor/BalloonPanel", "../Environment"], function (require, exports, tslib_1, Attachment_1, Media_1, Mention_1, Quote_1, Autosave_1, Configuration_1, Event_1, SubmitOnEnter_1, Normalizer_1, Scroll_1, Devtools_1, Keyboard_1, Layer_1, BalloonPanel_1, Environment_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setupCkeditor = setupCkeditor;
@@ -205,6 +205,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
             throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
         }
         (0, Layer_1.setup)();
+        (0, BalloonPanel_1.setup)();
         const { create: createEditor, CKEditor5 } = await new Promise((resolve_1, reject_1) => { require(["@woltlab/editor"], resolve_1, reject_1); }).then(tslib_1.__importStar);
         await new Promise((resolve) => {
             window.requestAnimationFrame(resolve);
