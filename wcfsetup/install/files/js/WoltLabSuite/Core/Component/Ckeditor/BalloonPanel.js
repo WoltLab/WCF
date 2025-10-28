@@ -17,7 +17,6 @@ define(["require", "exports", "WoltLabSuite/Core/Helper/PageOverlay"], function 
     exports.setup = setup;
     const trackedBalloons = new WeakSet();
     function watch(balloon) {
-        console.log("Tracking", balloon);
         trackedBalloons.add(balloon);
         const observer = new MutationObserver(() => {
             verifyHorizontalPosition(balloon);

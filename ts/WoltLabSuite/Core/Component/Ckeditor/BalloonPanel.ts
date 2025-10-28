@@ -17,8 +17,6 @@ import { getPageOverlayContainer } from "WoltLabSuite/Core/Helper/PageOverlay";
 const trackedBalloons = new WeakSet<HTMLElement>();
 
 function watch(balloon: HTMLElement): void {
-  console.log("Tracking", balloon);
-
   trackedBalloons.add(balloon);
 
   const observer = new MutationObserver(() => {
