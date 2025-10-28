@@ -1,8 +1,8 @@
 {capture assign='sidebarLeft'}
 	{assign var=__userMenuActiveItems value=$__wcf->getUserMenu()->getActiveMenuItems()}
 	
-	<section class="box" data-static-box-identifier="com.woltlab.wcf.UserMenu">
-		{foreach from=$__wcf->getUserMenu()->getMenuItems('') item=menuCategory}
+	{foreach from=$__wcf->getUserMenu()->getMenuItems('') item='menuCategory' name='userMenu'}
+		<section class="box" data-static-box-identifier="com.woltlab.wcf.UserMenu{$tpl[foreach][userMenu][iteration]}">
 			<h2 class="boxTitle">{$menuCategory->getTitle()}</h2>
 			
 			<nav class="boxContent">
@@ -14,6 +14,6 @@
 					{/foreach}
 				</ol>
 			</nav>
-		{/foreach}
-	</section>
+		</section>
+	{/foreach}
 {/capture}
