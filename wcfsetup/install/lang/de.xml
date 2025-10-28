@@ -829,7 +829,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.group.showOnTeamPage"><![CDATA[Mitglieder dieser Benutzergruppe auf der Team-Seite anzeigen]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEnableUser"><![CDATA[Kann Benutzer aktivieren]]></item>
 		<item name="wcf.acp.group.option.user.profile.renamePeriod"><![CDATA[Umbenennung]]></item>
-		<item name="wcf.acp.group.option.user.profile.renamePeriod.description"><![CDATA[Zeitraum nach dem Mitglieder dieser Benutzergruppe ihren Benutzernamen ändern können.]]></item>
+		<item name="wcf.acp.group.option.user.profile.renamePeriod.description"><![CDATA[Zeitraum nach dem Mitglieder dieser Benutzergruppe ihren Benutzernamen ändern können. [0, um Zeitraum zu deaktivieren]]]></item>
 		<item name="wcf.acp.group.option.user.profile.cannotBeIgnored"><![CDATA[Kann nicht blockiert werden]]></item>
 		<item name="wcf.acp.group.option.mod.general.canUseModeration"><![CDATA[Kann Moderation benutzen]]></item>
 		<item name="wcf.acp.group.option.category.user.like"><![CDATA[Reaktions-System]]></item>
@@ -1522,7 +1522,7 @@ Die Beschränkung auf ASCII-Zeichen erlaubt in Benutzernamen lediglich lateinisc
 		<item name="wcf.acp.option.user_forbidden_titles"><![CDATA[Reservierte Benutzertitel]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles.description"><![CDATA[Benutzertitel, die nicht verwendet werden dürfen.]]></item>
 		<item name="wcf.acp.option.profile_show_old_username"><![CDATA[Alten Namen anzeigen]]></item>
-		<item name="wcf.acp.option.profile_show_old_username.description"><![CDATA[Zeitraum in dem bei Änderungen des Benutzernamens zusätzlich der alte Benutzername im Profil angezeigt wird.]]></item>
+		<item name="wcf.acp.option.profile_show_old_username.description"><![CDATA[Zeitraum in dem bei Änderungen des Benutzernamens zusätzlich der alte Benutzername im Profil angezeigt wird. [0, um Anzeige abzuschalten]]]></item>
 		<item name="wcf.acp.option.members_list_users_per_page"><![CDATA[Mitglieder pro Seite]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_field"><![CDATA[Standard-Sortierung]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_field.description"/>

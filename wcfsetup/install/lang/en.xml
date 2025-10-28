@@ -587,7 +587,7 @@
 		<item name="wcf.acp.devtools.project.license"><![CDATA[License]]></item>
 		<item name="wcf.acp.devtools.missingLanguageItem.languageID"><![CDATA[Language]]></item>
 		<item name="wcf.acp.devtools.missingLanguageItem.languageItem"><![CDATA[Name of Phrase]]></item>
-		<item name="wcf.acp.devtools.missingLanguageItem.lastTime"><![CDATA[Time of Last Occurence]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.lastTime"><![CDATA[Last Detection]]></item>
 		<item name="wcf.acp.devtools.missingLanguageItem.delete.confirmMessage"><![CDATA[Do you really want to delete this entry?]]></item>
 		<item name="wcf.acp.devtools.missingLanguageItem.stackTrace"><![CDATA[Stacktrace]]></item>
 		<item name="wcf.acp.devtools.missingLanguageItem.showStackTrace"><![CDATA[Show Stacktrace]]></item>
@@ -804,8 +804,8 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.userOnlineMarking.error.invalid"><![CDATA[There must be an occurrence of “%s”.]]></item>
 		<item name="wcf.acp.group.showOnTeamPage"><![CDATA[Display members on staff page]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEnableUser"><![CDATA[Can approve users]]></item>
-		<item name="wcf.acp.group.option.user.profile.renamePeriod"><![CDATA[Change Username]]></item>
-		<item name="wcf.acp.group.option.user.profile.renamePeriod.description"><![CDATA[Users can change their username after the following days.]]></item>
+		<item name="wcf.acp.group.option.user.profile.renamePeriod"><![CDATA[Delay Between Username Changes]]></item>
+		<item name="wcf.acp.group.option.user.profile.renamePeriod.description"><![CDATA[Users can change their username after the following days. Use 0 to disable.]]></item>
 		<item name="wcf.acp.group.option.user.profile.cannotBeIgnored"><![CDATA[Cannot be blocked]]></item>
 		<item name="wcf.acp.group.option.mod.general.canUseModeration"><![CDATA[Can access moderation]]></item>
 		<item name="wcf.acp.group.option.category.user.like"><![CDATA[Reaction System]]></item>
@@ -1414,7 +1414,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.option.attachment_image_autoscale_quality"><![CDATA[Quality]]></item>
 		<item name="wcf.acp.option.attachment_image_autoscale_quality.description"><![CDATA[Defines the quality of the scaled image.]]></item>
 		<item name="wcf.acp.option.attachment_image_autoscale_file_type"><![CDATA[File type]]></item>
-		<item name="wcf.acp.option.attachment_image_autoscale_file_type.jpeg"><![CDATA[WebP (lossy, the generated files are small)]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_file_type.jpeg"><![CDATA[WebP (lossy, generates smaller files)]]></item>
 		<item name="wcf.acp.option.attachment_image_autoscale_file_type.keep"><![CDATA[Keep the file type]]></item>
 		<item name="wcf.acp.option.module_smiley"><![CDATA[Smilies]]></item>
 		<item name="wcf.acp.option.category.message.censorship"><![CDATA[Censorship]]></item>
@@ -1500,7 +1500,7 @@ Restricting usernames to ASCII characters restricts usernames to latin letters, 
 		<item name="wcf.acp.option.user_forbidden_titles"><![CDATA[Reserved User Titles]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles.description"><![CDATA[You can specify which user titles are unavailable for users.]]></item>
 		<item name="wcf.acp.option.profile_show_old_username"><![CDATA[Display Previous Username]]></item>
-		<item name="wcf.acp.option.profile_show_old_username.description"><![CDATA[Previous usernames will be displayed for the following days.]]></item>
+		<item name="wcf.acp.option.profile_show_old_username.description"><![CDATA[Previous usernames will be displayed for the following days. Use 0 to disable.]]></item>
 		<item name="wcf.acp.option.members_list_users_per_page"><![CDATA[Members per Page]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_field"><![CDATA[Sort by]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_field.description"><![CDATA[Choose default sort option of member list.]]></item>
