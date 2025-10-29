@@ -233,6 +233,9 @@
 			]
 		});
 	});
+	require(["WoltLabSuite/Core/Form/Builder/FormGuard"], ({ setup }) => {
+		setup(document.getElementById("registerForm"))
+	});
 </script>
 
 {include file='authFlowFooter'}
