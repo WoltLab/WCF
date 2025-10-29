@@ -131,6 +131,16 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
         switch ($this->packageInstallationPlugin->pluginName) {
             case 'file':
                 StyleHandler::resetStylesheets(false);
+
+                $sql = "UPDATE  wcf1_option
+                        SET     optionValue = ?
+                        WHERE   optionName = ?";
+                $statement = WCF::getDB()->prepare($sql);
+                $statement->execute([
+                    \TIME_NOW,
+                    'last_update_time',
+                ]);
+                OptionEditor::resetCache();
                 break;
 
             case 'language':
