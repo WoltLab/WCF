@@ -77,12 +77,16 @@ final class UserAuthenticationFailureGridView extends AbstractGridView
                 ->filter(TimeFilter::class)
                 ->renderer(new TimeColumnRenderer())
                 ->sortable(),
+            GridViewColumn::for("lastActivityTime")
+                ->label("wcf.user.lastActivityTime")
+                ->renderer(new TimeColumnRenderer())
+                ->sortable(sortByDatabaseColumn: "lastActivityTime"),
             GridViewColumn::for("validationError")
                 ->label("wcf.acp.user.authentication.failure.validationError")
                 ->filter(
                     new SelectFilter(
                         [
-                            'invalidPassword' => "wcf.acp.user.authentication.failure.validationError.invalidPassword",
+                            "invalidPassword" => "wcf.acp.user.authentication.failure.validationError.invalidPassword",
                             "invalidUsername" => "wcf.acp.user.authentication.failure.validationError.invalidUsername",
                         ],
                         "validationError",
@@ -130,7 +134,10 @@ final class UserAuthenticationFailureGridView extends AbstractGridView
     #[\Override]
     protected function createObjectList(): UserAuthenticationFailureList
     {
-        return new UserAuthenticationFailureList();
+        $list = new UserAuthenticationFailureList();
+        $list->sqlSelects = "(SELECT lastActivityTime FROM wcf1_user WHERE userID = user_authentication_failure.userID) AS lastActivityTime";
+
+        return $list;
     }
 
     #[\Override]
