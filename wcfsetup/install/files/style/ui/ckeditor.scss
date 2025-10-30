@@ -559,6 +559,19 @@ html[data-color-scheme="dark"] {
 	margin: 0 0 20px 20px;
 }
 
+@include screen-xs {
+	.messageFloatObjectLeft,
+	.messageFloatObjectRight {
+		float: none;
+		margin: 0 0 20px 0;
+
+		/* Center the element by moving it 50% of the parent’s width to the left
+		   and then moving it back by 50% of the element’s width. */
+		margin-left: 50%;
+		transform: translateX(-50%);
+	}
+}
+
 /* Quotes */
 .ck.ck-content blockquote {
 	background-color: var(--wcfContentBackground);
