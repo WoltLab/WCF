@@ -10,6 +10,7 @@ use wcf\event\gridView\admin\BoxGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
+use wcf\system\gridView\renderer\NumberColumnRenderer;
 use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
 use wcf\system\interaction\admin\BoxInteractions;
 use wcf\system\interaction\Divider;
@@ -79,6 +80,7 @@ final class BoxGridView extends AbstractGridView
                 ->sortable(),
             GridViewColumn::for('showOrder')
                 ->label('wcf.global.showOrder')
+                ->renderer(new NumberColumnRenderer())
                 ->filter(IntegerFilter::class)
                 ->sortable(),
         ]);
