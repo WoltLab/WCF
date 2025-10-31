@@ -89,6 +89,15 @@ final class RequestHandler extends SingletonFactory
      */
     public function handle(string $application = 'wcf', bool $isACPRequest = false): void
     {
+        // Override the application when this request was the result of a smart
+        // rewrite.
+        if ($application === 'wcf' && \PACKAGE_ID > 1) {
+            $app = ApplicationHandler::getInstance()->getApplicationByID(\PACKAGE_ID);
+            \assert($app !== null);
+
+            $application = $app->getAbbreviation();
+        }
+
         try {
             $this->isACPRequest = $isACPRequest;
 

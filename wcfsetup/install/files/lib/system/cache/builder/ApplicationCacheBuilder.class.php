@@ -9,20 +9,20 @@ use wcf\system\WCF;
 /**
  * Caches applications.
  *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Alexander Ebert
+ * @copyright   2001-2025 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class ApplicationCacheBuilder extends AbstractCacheBuilder
+final class ApplicationCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rebuild(array $parameters)
     {
         $data = [
             'abbreviation' => [],
             'application' => [],
+            'sortedPaths' => [],
+            'rootApplication' => null,
         ];
 
         // fetch applications
@@ -34,7 +34,11 @@ class ApplicationCacheBuilder extends AbstractCacheBuilder
 
         foreach ($applications as $application) {
             $data['application'][$application->packageID] = $application;
+            $data['sortedPaths'][$application->packageID] = $application->domainPath;
         }
+
+        \uasort($data['sortedPaths'], static fn($a, $b) => \mb_strlen($b) - \mb_strlen($a));
+        $data['rootApplication'] = $this->getRootApplication($data['sortedPaths']);
 
         // fetch abbreviations
         $sql = "SELECT packageID, package
@@ -48,5 +52,23 @@ class ApplicationCacheBuilder extends AbstractCacheBuilder
         }
 
         return $data;
+    }
+
+    /**
+     * @param array<int, string> $sortedPaths
+     * @since 6.2
+     */
+    private function getRootApplication(array $sortedPaths): ?int
+    {
+        $candidate = \array_key_last($sortedPaths);
+        $shortestPath = $sortedPaths[$candidate];
+
+        foreach ($sortedPaths as $path) {
+            if (!\str_starts_with($path, $shortestPath)) {
+                return null;
+            }
+        }
+
+        return $candidate;
     }
 }

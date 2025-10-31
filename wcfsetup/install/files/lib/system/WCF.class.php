@@ -24,6 +24,7 @@ use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\request\Request;
 use wcf\system\request\RequestHandler;
+use wcf\system\request\RouteHandler;
 use wcf\system\session\SessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\style\StyleHandler;
@@ -194,6 +195,7 @@ class WCF
         // start initialization
         $this->initDB();
         $this->loadOptions();
+        $this->resolveActiveApplication();
         $this->initSession();
         $this->initLanguage();
         $this->initTPL();
@@ -418,7 +420,7 @@ class WCF
         require($filename);
 
         // check if option file is complete and writable
-        if (PACKAGE_ID) {
+        if (!\defined('\\PACKAGE_ID')) {
             if (!\is_writable($filename)) {
                 FileUtil::makeWritable($filename);
 
@@ -447,6 +449,66 @@ class WCF
                 \spl_autoload_unregister([self::class, 'autoload']);
                 \spl_autoload_register([self::class, 'autoloadDebug'], true, true);
             }
+        }
+    }
+
+    protected function resolveActiveApplication(): void
+    {
+        if (\defined('PACKAGE_ID')) {
+            return;
+        }
+
+        $applications = ApplicationHandler::getInstance()->getApplications();
+        if (!\URL_OMIT_INDEX_PHP || \count($applications) === 1) {
+            \define('PACKAGE_ID', 1);
+            return;
+        }
+
+        // We do not support smart rewrites for setups where apps are installed
+        // in different directory where the only shared ancestor is not an app.
+        $rootApp = ApplicationHandler::getInstance()->getRootApplication();
+        if ($rootApp === null) {
+            \define('PACKAGE_ID', 1);
+            return;
+        }
+
+        $sortedPaths = ApplicationHandler::getInstance()->getSortedPaths();
+
+        // When the core is the root app we can simply check the path info for
+        // any apps appearing at the start of it.
+        $coreIsAtRoot = ($rootApp === ApplicationHandler::getInstance()->getWCF());
+
+        /** @var ?int */
+        $candidate = null;
+        $pathInfo = RouteHandler::getPathInfo();
+        if ($coreIsAtRoot) {
+            foreach ($sortedPaths as $packageID => $pathname) {
+                if (\str_starts_with($pathInfo, \mb_substr($pathname, \mb_strlen($rootApp->domainPath)))) {
+                    $candidate = $packageID;
+                    break;
+                }
+            }
+
+            \assert($candidate !== null);
+
+            $app = ApplicationHandler::getInstance()->getApplicationByID($candidate);
+            $prefix = \mb_substr($app->domainPath, \mb_strlen($rootApp->domainPath));
+            RouteHandler::ltrimPathInfo($prefix);
+        } else {
+            \wcfDebug(RouteHandler::getPath(), $pathInfo);
+        }
+
+        if ($candidate === null) {
+            \define('PACKAGE_ID', 1);
+        } else {
+            $application = ApplicationHandler::getInstance()->getApplicationByID($candidate);
+            \assert($application !== null);
+
+            \define('PACKAGE_ID', $candidate);
+
+            // Include the `app.config.inc.php` of the primary app.
+            $pathname = FileUtil::addTrailingSlash(FileUtil::getRealPath(\WCF_DIR . $application->getPackage()->packageDir)) . 'app.config.inc.php';
+            require_once $pathname;
         }
     }
 

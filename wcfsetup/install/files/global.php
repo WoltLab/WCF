@@ -10,11 +10,16 @@
 require_once(__DIR__ . '/app.config.inc.php');
 
 // Make the frontend inaccessible until WCFSetup completes.
+/*
+
+TODO: This is currently not possible, find a solution!
+
 if (!PACKAGE_ID) {
     \http_response_code(500);
 
     exit;
 }
+*/
 
 // initiate wcf core
 require_once(WCF_DIR . 'lib/system/WCF.class.php');

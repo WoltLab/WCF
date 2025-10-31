@@ -26,16 +26,20 @@ use wcf\util\Url;
 final class ApplicationHandler extends SingletonFactory
 {
     /**
-     * application cache
-     * @var mixed[][]
+     * @var array{
+     *  abbreviation: array<string, int>,
+     *  application: array<int, Application>,
+     *  sortedPaths: array<int, string>,
+     *  rootApplication: ?int,
+     * }
      */
-    protected $cache;
+    private array $cache;
 
     /**
      * list of page URLs
      * @var string[]
      */
-    protected array $pageURLs = [];
+    private array $pageURLs;
 
     /**
      * Initializes cache.
@@ -185,7 +189,7 @@ final class ApplicationHandler extends SingletonFactory
      */
     public function isInternalURL(string $url): bool
     {
-        if (empty($this->pageURLs)) {
+        if (!isset($this->pageURLs)) {
             $internalHostnames = ArrayUtil::trim(\explode("\n", StringUtil::unifyNewlines(\INTERNAL_HOSTNAMES)));
 
             $this->pageURLs = \array_unique([
@@ -219,9 +223,7 @@ final class ApplicationHandler extends SingletonFactory
      * @since 5.2
      * @deprecated 5.5 - This function is a noop. The 'active' status is determined live.
      */
-    public function rebuildActiveApplication(): void
-    {
-    }
+    public function rebuildActiveApplication(): void {}
 
     /**
      * @since 6.0
@@ -229,6 +231,37 @@ final class ApplicationHandler extends SingletonFactory
     public function getDomainName(): string
     {
         return $this->getApplicationByID(1)->domainName;
+    }
+
+    /**
+     * Returns a list of the domain paths of all apps sorted by their length
+     * with the longest value appearing first. The key of each path is the
+     * package id of the corresponding app.
+     *
+     * @return array<int, string>
+     * @since 6.2
+     */
+    public function getSortedPaths(): array
+    {
+        return $this->cache['sortedPaths'];
+    }
+
+    /**
+     * Returns the app that is the root of all other apps. This is the case when
+     * all other apps installed in a direct or indirect subdirectory.
+     *
+     * @since 6.2
+     */
+    public function getRootApplication(): ?Application
+    {
+        if ($this->cache['rootApplication'] === null) {
+            return null;
+        }
+
+        $rootApp = $this->getApplicationByID($this->cache['rootApplication']);
+        \assert($rootApp !== null);
+
+        return $rootApp;
     }
 
     /**
@@ -263,7 +296,7 @@ final class ApplicationHandler extends SingletonFactory
         }
 
         if ($skipCache) {
-            $sql = "SELECT package 
+            $sql = "SELECT package
                     FROM   wcf" . WCF_N . "_package
                     WHERE  isApplication = ?";
             $statement = WCF::getDB()->prepareUnmanaged($sql);

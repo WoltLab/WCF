@@ -384,4 +384,17 @@ final class RouteHandler extends SingletonFactory
 
         return self::$pathInfo;
     }
+
+    /**
+     * TODO: This is merely a helper to get this working for the time being.
+     *
+     * @since 6.2
+     */
+    public static function ltrimPathInfo(string $prefix): void
+    {
+        \assert(isset(self::$pathInfo));
+        \assert(\str_starts_with(self::$pathInfo, $prefix));
+
+        self::$pathInfo = \mb_substr(self::$pathInfo, \mb_strlen($prefix));
+    }
 }

@@ -447,9 +447,9 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
         $content = "<?php\n";
         $content .= "// {$package->package} (packageID {$packageID})\n";
         $content .= "if (!defined('{$prefix}_DIR')) define('{$prefix}_DIR', __DIR__.'/');\n";
-        $content .= "if (!defined('PACKAGE_ID')) define('PACKAGE_ID', {$packageID});\n";
 
         if ($packageID != 1) {
+            $content .= "if (!defined('PACKAGE_ID')) define('PACKAGE_ID', {$packageID});\n";
             $content .= "\n";
             $content .= "// helper constants for applications\n";
             $content .= "if (!defined('RELATIVE_{$prefix}_DIR')) define('RELATIVE_{$prefix}_DIR', '');\n";
