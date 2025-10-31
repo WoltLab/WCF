@@ -3,12 +3,15 @@
 namespace wcf\system\gridView\admin;
 
 use wcf\acp\form\LabelGroupEditForm;
+use wcf\acp\page\LabelListPage;
+use wcf\data\DatabaseObject;
 use wcf\data\label\group\I18nLabelGroupList;
 use wcf\data\label\group\LabelGroup;
 use wcf\event\gridView\admin\LabelGroupGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
+use wcf\system\gridView\renderer\ILinkColumnRenderer;
 use wcf\system\gridView\renderer\NumberColumnRenderer;
 use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
 use wcf\system\gridView\renderer\PhraseColumnRenderer;
@@ -16,6 +19,7 @@ use wcf\system\gridView\renderer\TruncatedTextColumnRenderer;
 use wcf\system\interaction\admin\LabelGroupInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
+use wcf\system\request\LinkHandler;
 use wcf\system\view\filter\I18nTextFilter;
 use wcf\system\view\filter\IntegerFilter;
 use wcf\system\view\filter\TextFilter;
@@ -54,15 +58,27 @@ final class LabelGroupGridView extends AbstractGridView
                 ->sortable(),
             GridViewColumn::for('labels')
                 ->label('wcf.acp.label.list')
-                ->renderer(new NumberColumnRenderer())
-                ->filter(IntegerFilter::class)
-                ->sortable(
-                    sortByDatabaseColumn: '(
-                        SELECT  COUNT(*)
-                        FROM    wcf1_label
-                        WHERE   groupID = label_group.groupID
-                    )'
-                ),
+                ->filter(new IntegerFilter('labels', 'wcf.acp.label.list', $this->subSelectLabels()))
+                ->renderer(new class extends NumberColumnRenderer implements ILinkColumnRenderer {
+                    #[\Override]
+                    public function render(mixed $value, DatabaseObject $row): string
+                    {
+                        if (!$value) {
+                            return parent::render($value, $row);
+                        }
+
+                        return \sprintf(
+                            '<a href="%s">%s</a>',
+                            LinkHandler::getInstance()->getControllerLink(LabelListPage::class, [
+                                'filters' => [
+                                    'groupID' => $row->getObjectID(),
+                                ],
+                            ]),
+                            parent::render($value, $row)
+                        );
+                    }
+                })
+                ->sortable(sortByDatabaseColumn: $this->subSelectLabels()),
             GridViewColumn::for('showOrder')
                 ->label('wcf.global.showOrder')
                 ->renderer(new NumberColumnRenderer())
@@ -108,5 +124,14 @@ final class LabelGroupGridView extends AbstractGridView
     protected function getInitializedEvent(): LabelGroupGridViewInitialized
     {
         return new LabelGroupGridViewInitialized($this);
+    }
+
+    private function subSelectLabels(): string
+    {
+        return "(
+            SELECT  COUNT(*)
+            FROM    wcf1_label
+            WHERE   groupID = label_group.groupID
+        )";
     }
 }
