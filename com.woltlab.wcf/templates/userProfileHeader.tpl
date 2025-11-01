@@ -117,7 +117,7 @@
 							data-follow-user="{link controller='UserFollow' id=$user->userID}{/link}"
 							class="userProfileHeader__button button small jsTooltip"
 							title="{lang}wcf.user.button.unfollow{/lang}"
-						>{icon name='minus' type='solid'}</button>
+						>{icon name='user-minus' type='solid'}</button>
 					{else}
 						<button
 							type="button"
@@ -125,7 +125,7 @@
 							data-follow-user="{link controller='UserFollow' id=$user->userID}{/link}"
 							class="userProfileHeader__button button small jsTooltip"
 							title="{lang}wcf.user.button.follow{/lang}"
-						>{icon name='plus' type='solid'}</button>
+						>{icon name='user-plus' type='solid'}</button>
 					{/if}
 				{/if}
 			{/if}
