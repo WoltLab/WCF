@@ -495,7 +495,22 @@ class WCF
             $prefix = \mb_substr($app->domainPath, \mb_strlen($rootApp->domainPath));
             RouteHandler::ltrimPathInfo($prefix);
         } else {
-            \wcfDebug(RouteHandler::getPath(), $pathInfo);
+            // The path info is relative to the root app, therefore we need to
+            // resolve the invoked app by examining the start of it.
+            $lengthOfRootPath = \mb_strlen($rootApp->domainPath);
+            foreach ($sortedPaths as $packageID => $pathname) {
+                $pathname = \mb_substr($pathname, $lengthOfRootPath);
+                if (\str_starts_with($pathInfo, $pathname)) {
+                    $candidate = $packageID;
+
+                    // Trim the path info to strip the invoekd app from it.
+                    RouteHandler::ltrimPathInfo($pathname);
+
+                    break;
+                }
+            }
+
+            \assert($candidate !== null);
         }
 
         if ($candidate === null) {
