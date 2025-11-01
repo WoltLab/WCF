@@ -35,14 +35,12 @@ body[data-page-identifier="com.woltlab.wcf.User"] .userProfileContent:first-chil
 }
 
 .userProfileHeader__coverPhoto {
-	height: 250px;
-
-	@include screen-sm {
+	@include screen-sm-down {
 		height: 150px;
 	}
 
-	@include screen-xs {
-		height: 100px;
+	@include screen-md-up {
+		height: 250px;
 	}
 }
 
