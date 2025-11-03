@@ -1,6 +1,6 @@
 /**
- * @author    Olaf Braun
- * @copyright 2001-2024 WoltLab GmbH
+ * @author    Alexander Ebert
+ * @copyright 2001-2025 WoltLab GmbH
  * @license   GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since     6.2
  * @woltlabExcludeBundle all
@@ -8,30 +8,33 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.BadgeColorPreview = void 0;
-    class BadgeColorPreview {
-        #container;
-        #referenceField;
-        #defaultLabelText;
-        constructor(fieldId, referenceFieldId, defaultLabelText) {
-            this.#defaultLabelText = defaultLabelText;
-            this.#container = document.getElementById(fieldId);
-            if (this.#container === null) {
-                throw new Error("Unknown field with id '" + fieldId + "'.");
+    exports.setup = setup;
+    function updatePreview(inputField, fields, placeholder) {
+        window.requestAnimationFrame(() => {
+            const value = inputField.value.trim() || placeholder;
+            for (const field of fields) {
+                field.textContent = value;
             }
-            this.#referenceField = document.getElementById(referenceFieldId);
-            if (this.#referenceField === null) {
-                throw new Error("Unknown reference element '" + referenceFieldId + "'.");
-            }
-            this.#referenceField.addEventListener("input", () => this.#updatePreview());
-            this.#updatePreview();
-        }
-        #updatePreview() {
-            const value = this.#referenceField.value.trim() || this.#defaultLabelText;
-            this.#container.querySelectorAll(".labelSelection__span.badge").forEach((span) => {
-                span.textContent = value;
-            });
-        }
+        });
     }
-    exports.BadgeColorPreview = BadgeColorPreview;
+    function setup(containerId, inputFieldId, placeholder) {
+        const container = document.getElementById(containerId);
+        if (container === null) {
+            throw new Error(`Unknown container with id '${containerId}'.`);
+        }
+        const inputField = document.getElementById(inputFieldId);
+        if (inputField === null) {
+            throw new Error(`Unknown input field with id '${inputFieldId}'.`);
+        }
+        else if (!(inputField instanceof HTMLInputElement)) {
+            throw new Error("Expected the input field to be an <input> element.", { cause: { inputField } });
+        }
+        const fields = Array.from(container.querySelectorAll(".labelSelection__span:not(.labelSelection__span--custom)"));
+        if (fields.length === 0) {
+            throw new Error("The container does not contain any fields.", { cause: { container } });
+        }
+        inputField.addEventListener("input", () => {
+            updatePreview(inputField, fields, placeholder);
+        }, { passive: true });
+    }
 });

@@ -1,6 +1,6 @@
 <ul class="labelSelection{if !$field->getClasses()|empty} {implode from=$field->getClasses() item=class glue=' '}{$class}{/implode}{/if}">
 	{foreach from=$field->getOptions() item=color}
-		<li{if $color == 'custom'} class="custom"{/if}>
+		<li{if $color === 'custom'} class="labelSelection__custom custom"{/if}>
 			<label class="labelSelection__label">
 				<input {*
 					*}type="radio" {*
@@ -11,8 +11,8 @@
 					*}{if $field->isImmutable()} disabled{/if}{*
 					*}{foreach from=$field->getFieldAttributes() key=attributeName item=attributeValue} {$attributeName}="{$attributeValue}"{/foreach}{*
 					*}>
-				{if $color == 'custom'}
-					<span class="labelSelection__span">
+				{if $color === 'custom'}
+					<span class="labelSelection__span labelSelection__span--custom">
 						<input type="text" id="{$field->getPrefixedId()}Custom" {*
 							*}name="{$field->getPrefixedId()}customCssClassName" {*
 						    *}value="{$field->getCustomClassName()}" {*
@@ -30,8 +30,8 @@
 
 <script data-relocate="true">
 	{if $field->getTextReferenceNodeId()}
-		require(["WoltLabSuite/Core/Form/Builder/Field/Controller/BadgeColor"], ({ BadgeColorPreview }) => {
-			new BadgeColorPreview(
+		require(["WoltLabSuite/Core/Form/Builder/Field/Controller/BadgeColor"], ({ setup }) => {
+			setup(
 				'{unsafe:$field->getPrefixedId()|encodeJS}Container',
 				'{unsafe:$field->getTextReferenceNodeId()|encodeJS}',
 				'{unsafe:$field->getDefaultLabelText()|encodeJS}',
