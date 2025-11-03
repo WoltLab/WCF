@@ -38,6 +38,24 @@ class LabelGroup extends DatabaseObject implements IRouteController
     }
 
     /**
+     * Returns the title and, if available, the description as a combined string.
+     *
+     * @since 6.2
+     */
+    public function getExtendedTitle(): string
+    {
+        if (!$this->groupDescription) {
+            return $this->getTitle();
+        }
+
+        return \sprintf(
+            "%s / %s",
+            $this->getTitle(),
+            $this->groupDescription
+        );
+    }
+
+    /**
      * Callback for uasort() to sort label groups by show order and (if equal) group id.
      *
      * @param LabelGroup $groupA

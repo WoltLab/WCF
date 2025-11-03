@@ -4,6 +4,7 @@ namespace wcf\system\gridView\admin;
 
 use wcf\acp\form\LabelEditForm;
 use wcf\data\DatabaseObject;
+use wcf\data\label\group\LabelGroupList;
 use wcf\data\label\group\ViewableLabelGroup;
 use wcf\data\label\I18nLabelList;
 use wcf\data\label\Label;
@@ -77,25 +78,16 @@ final class LabelGridView extends AbstractGridView
                             $group = $groups[$row->groupID];
                             \assert($group instanceof ViewableLabelGroup);
 
-                            if (empty($group->groupDescription)) {
-                                return StringUtil::encodeHTML($group->getTitle());
-                            }
-                            return \sprintf(
-                                "%s / %s",
-                                StringUtil::encodeHTML($group->getTitle()),
-                                StringUtil::encodeHTML($group->groupDescription)
-                            );
+                            return StringUtil::encodeHTML($group->getExtendedTitle());
                         }
                     }
                 )
                 ->filter(
                     new SelectFilter(
-                        \array_map(
-                            static fn(ViewableLabelGroup $group) => $group->getTitle(),
-                            LabelCacheBuilder::getInstance()->getData(arrayIndex: "groups"),
-                        ),
+                        $this->getAvailableLabelGroups(),
                         'groupID',
-                        'wcf.acp.label.group'
+                        'wcf.acp.label.group',
+                        labelLanguageItems: false
                     )
                 )
                 ->sortable(),
@@ -134,5 +126,23 @@ final class LabelGridView extends AbstractGridView
     protected function getInitializedEvent(): LabelGridViewInitialized
     {
         return new LabelGridViewInitialized($this);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    protected function getAvailableLabelGroups(): array
+    {
+        $labelGroupList = new LabelGroupList();
+        $labelGroupList->readObjects();
+        $labelGroups = \array_map(static fn($group) => $group->getExtendedTitle(), $labelGroupList->getObjects());
+
+        $collator = new \Collator(WCF::getLanguage()->getLocale());
+        \uasort(
+            $labelGroups,
+            static fn(string $groupA, string $groupB) => $collator->compare($groupA, $groupB)
+        );
+
+        return $labelGroups;
     }
 }
