@@ -77,9 +77,20 @@ class FileEditor extends DatabaseObjectEditor
         $fileSize = $fileTemporary->fileSize;
         $fileHash = $fileTemporary->fileHash;
         if ($isImage) {
+            $exifData = $fileTemporary->exifData;
+            if ($exifData !== null) {
+                $exifData = JSON::decode($exifData);
+            }
+
             $imageWasModified = false;
             try {
-                $imageWasModified = self::normalizeImageRotation($pathname, $width, $height, $mimeType);
+                $imageWasModified = self::normalizeImageRotation(
+                    $pathname,
+                    $width,
+                    $height,
+                    $mimeType,
+                    $exifData,
+                );
             } catch (\Throwable) {
             }
 
@@ -176,7 +187,13 @@ class FileEditor extends DatabaseObjectEditor
 
             $imageWasModified = false;
             try {
-                $imageWasModified = self::normalizeImageRotation($pathname, $width, $height, $mimeType);
+                $imageWasModified = self::normalizeImageRotation(
+                    $pathname,
+                    $width,
+                    $height,
+                    $mimeType,
+                    $exifData,
+                );
             } catch (\Throwable) {
             }
 
@@ -221,20 +238,22 @@ class FileEditor extends DatabaseObjectEditor
      * Rotating the image can cause the dimensions to change, the image size to
      * differ and the file hash to be different.
      *
+     * @param null|array<string, array<string, mixed>> $exifData
      * @return bool true if the image was modified.
      */
     private static function normalizeImageRotation(
         string $pathname,
         int $width,
         int $height,
-        string $mimeType
+        string $mimeType,
+        ?array $exifData,
     ): bool {
         $adapter = ImageHandler::getInstance()->getAdapter();
         if (!$adapter->checkMemoryLimit($width, $height, $mimeType)) {
             return false;
         }
 
-        $exifData = ExifUtil::getExifData($pathname);
+        $exifData ??= ExifUtil::getExifData($pathname);
         if ($exifData === []) {
             return false;
         }

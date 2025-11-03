@@ -399,7 +399,7 @@ export function setup(): void {
             const result = checksums[i];
 
             if (result.status === "fulfilled") {
-              const exif = exifData.get(validFiles[i]) || null;
+              const exif = exifData.get(validFiles[i]) || exifData.get(files[i]) || null;
               void upload(element, validFiles[i], result.value, exif);
             } else {
               throw new Error(result.reason);
