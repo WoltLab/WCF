@@ -39,7 +39,7 @@ class ReportInteraction extends AbstractInteraction
     public function render(DatabaseObject $object): string
     {
         $objectType = StringUtil::encodeHTML($this->objectType);
-        $objectID = StringUtil::encodeHTML($object->getObjectID());
+        $objectID = StringUtil::encodeHTML((string)$object->getObjectID());
         if (\is_string($this->languageItem)) {
             $label = WCF::getLanguage()->get($this->languageItem);
         } else {
