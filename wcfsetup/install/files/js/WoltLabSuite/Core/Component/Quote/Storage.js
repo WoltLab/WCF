@@ -208,6 +208,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
         }));
     }
     window.addEventListener("storage", (event) => {
+        if (event.key !== STORAGE_KEY) {
+            return;
+        }
         (0, List_1.refreshQuoteLists)();
         const oldValue = parseJson(event.oldValue);
         const newValue = parseJson(event.newValue);
