@@ -46,15 +46,20 @@ class PasswordFormField extends AbstractFormField implements
      */
     protected $templateName = 'shared_passwordFormField';
 
+    /**
+     * @since 6.2
+     */
     protected bool $strengthMeter = true;
 
     /**
      * @var IFormField[]
+     * @since 6.2
      */
     protected array $relatedFields = [];
 
     /**
      * @var string[]
+     * @since 6.2
      */
     protected array $relatedFieldsId = [];
 
@@ -110,6 +115,8 @@ class PasswordFormField extends AbstractFormField implements
     /**
      * Sets if the password strength meter should be used to provide feedback
      * to the user about the strength of their password.
+     *
+     * @since 6.2
      */
     public function passwordStrengthMeter(bool $passwordStrengthMeter = true): self
     {
@@ -143,6 +150,9 @@ class PasswordFormField extends AbstractFormField implements
         return $this;
     }
 
+    /**
+     * @since 6.2
+     */
     public function addMeterRelatedFieldId(string $fieldId): self
     {
         $this->relatedFieldsId[] = $fieldId;
@@ -150,6 +160,9 @@ class PasswordFormField extends AbstractFormField implements
         return $this;
     }
 
+    /**
+     * @since 6.2
+     */
     public function getStrengthMeter(): bool
     {
         return $this->strengthMeter;
@@ -157,6 +170,7 @@ class PasswordFormField extends AbstractFormField implements
 
     /**
      * @return string[]
+     * @since 6.2
      */
     public function getRelatedFieldsIDs(): array
     {
