@@ -54,9 +54,8 @@ class LabelAddForm extends AbstractFormBuilderForm
     {
         parent::createForm();
 
-        $labelGroupList = new LabelGroupList();
-        $labelGroupList->readObjects();
-        if ($labelGroupList->count() === 0) {
+        $labelGroups = $this->getAvailableLabelGroups();
+        if ($labelGroups === []) {
             throw new NamedUserException(
                 HtmlString::fromSafeHtml(WCF::getLanguage()->getDynamicVariable('wcf.acp.label.error.noGroups'))
             );
@@ -67,7 +66,7 @@ class LabelAddForm extends AbstractFormBuilderForm
                 ->appendChildren([
                     SelectFormField::create('groupID')
                         ->label('wcf.acp.label.group')
-                        ->options($labelGroupList)
+                        ->options($labelGroups, labelLanguageItems: false)
                         ->immutable($this->formAction !== 'create')
                         ->description('wcf.acp.label.group.permanentSelection')
                         ->required(),
@@ -82,6 +81,24 @@ class LabelAddForm extends AbstractFormBuilderForm
                         ->textReferenceNodeId('label')
                 ])
         ]);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    protected function getAvailableLabelGroups(): array
+    {
+        $labelGroupList = new LabelGroupList();
+        $labelGroupList->readObjects();
+        $labelGroups = \array_map(static fn($group) => $group->getExtendedTitle(), $labelGroupList->getObjects());
+
+        $collator = new \Collator(WCF::getLanguage()->getLocale());
+        \uasort(
+            $labelGroups,
+            static fn(string $groupA, string $groupB) => $collator->compare($groupA, $groupB)
+        );
+
+        return $labelGroups;
     }
 
     protected function getShowOrderField(): IFormField
