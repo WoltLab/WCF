@@ -7,10 +7,10 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
 /**
  * Implementation of a form field for a password.
  *
- * @author  Matthias Schmidt
- * @copyright   2001-2021 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since   5.4
+ * @author      Matthias Schmidt
+ * @copyright   2001-2025 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since       5.4
  */
 class PasswordFormField extends AbstractFormField implements
     IAttributeFormField,
@@ -62,6 +62,12 @@ class PasswordFormField extends AbstractFormField implements
      * @since 6.2
      */
     protected array $relatedFieldsId = [];
+
+    /**
+     * @var string[]
+     * @since 6.2
+     */
+    protected array $staticDictionary = [];
 
     /**
      * Creates a new instance of `PasswordFormField`.
@@ -180,5 +186,25 @@ class PasswordFormField extends AbstractFormField implements
         }
 
         return $result;
+    }
+
+    /**
+     * @param string[] $staticDictionary
+     * @since 6.2
+     */
+    public function addStaticDictionary(array $staticDictionary): static
+    {
+        $this->staticDictionary = \array_merge($this->staticDictionary, $staticDictionary);
+
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     * @since 6.2
+     */
+    public function getStaticDictionary(): array
+    {
+        return $this->staticDictionary;
     }
 }
