@@ -118,7 +118,7 @@ class PasswordFormField extends AbstractFormField implements
      *
      * @since 6.2
      */
-    public function passwordStrengthMeter(bool $passwordStrengthMeter = true): self
+    public function passwordStrengthMeter(bool $passwordStrengthMeter = true): static
     {
         $this->strengthMeter = $passwordStrengthMeter;
 
@@ -143,7 +143,7 @@ class PasswordFormField extends AbstractFormField implements
         return ['new-password', 'current-password'];
     }
 
-    public function addMeterRelatedField(IFormField $input): self
+    public function addMeterRelatedField(IFormField $input): static
     {
         $this->relatedFields[] = $input;
 
@@ -153,7 +153,7 @@ class PasswordFormField extends AbstractFormField implements
     /**
      * @since 6.2
      */
-    public function addMeterRelatedFieldId(string $fieldId): self
+    public function addMeterRelatedFieldId(string $fieldId): static
     {
         $this->relatedFieldsId[] = $fieldId;
 

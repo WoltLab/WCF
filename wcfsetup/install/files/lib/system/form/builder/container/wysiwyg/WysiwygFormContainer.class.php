@@ -197,7 +197,7 @@ class WysiwygFormContainer extends FormContainer
      * @return  WysiwygFormContainer            this form container
      * @throws  \BadMethodCallException         if the attachment form field has already been initialized
      */
-    public function attachmentData(?string $objectType = null, int $parentObjectID = 0, ?int $objectID = null): self
+    public function attachmentData(?string $objectType = null, int $parentObjectID = 0, ?int $objectID = null): static
     {
         if ($this->attachmentField !== null) {
             throw new \BadMethodCallException("The attachment form field '{$this->getId()}' has already been initialized. Use the atatchment form field directly to manipulate attachment data.");
