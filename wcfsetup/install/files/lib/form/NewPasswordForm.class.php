@@ -107,6 +107,7 @@ final class NewPasswordForm extends AbstractFormBuilderForm
                         ->addFieldClass('long')
                         ->autocomplete('new-password')
                         ->fieldAttribute('passwordrules', UserRegistrationUtil::getPasswordRulesAttributeValue())
+                        ->addStaticDictionary([$this->user->username, $this->user->email])
                         ->addValidator(new FormFieldValidator(
                             'passwordValidator',
                             $this->validatePassword(...)
