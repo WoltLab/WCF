@@ -74,14 +74,14 @@ class FileEditor extends DatabaseObjectEditor
             [$width, $height] = \getimagesize($pathname);
         }
 
+        $exifData = $fileTemporary->exifData;
+        if ($exifData !== null) {
+            $exifData = JSON::decode($exifData);
+        }
+
         $fileSize = $fileTemporary->fileSize;
         $fileHash = $fileTemporary->fileHash;
         if ($isImage) {
-            $exifData = $fileTemporary->exifData;
-            if ($exifData !== null) {
-                $exifData = JSON::decode($exifData);
-            }
-
             $imageWasModified = false;
             try {
                 $imageWasModified = self::normalizeImageRotation(
@@ -91,6 +91,10 @@ class FileEditor extends DatabaseObjectEditor
                     $mimeType,
                     $exifData,
                 );
+
+                if ($imageWasModified && $exifData !== null) {
+                    unset($exifData['IFD0']['Orientation']);
+                }
             } catch (\Throwable) {
             }
 
@@ -111,7 +115,7 @@ class FileEditor extends DatabaseObjectEditor
             'width' => $width,
             'height' => $height,
             'uploadTime' => \TIME_NOW,
-            'exifData' => $fileTemporary->exifData,
+            'exifData' => $exifData !== null ? JSON::encode($exifData) : null,
         ]]);
         $file = $fileAction->executeAction()['returnValues'];
         \assert($file instanceof File);
@@ -194,6 +198,10 @@ class FileEditor extends DatabaseObjectEditor
                     $mimeType,
                     $exifData,
                 );
+
+                if ($imageWasModified && $exifData !== null) {
+                    unset($exifData['IFD0']['Orientation']);
+                }
             } catch (\Throwable) {
             }
 
@@ -212,7 +220,7 @@ class FileEditor extends DatabaseObjectEditor
             'width' => $width,
             'height' => $height,
             'uploadTime' => $uploadTime,
-            'exifData' => JSON::encode($exifData),
+            'exifData' => $exifData !== null ? JSON::encode($exifData) : null,
         ]]);
         $file = $fileAction->executeAction()['returnValues'];
         \assert($file instanceof File);
