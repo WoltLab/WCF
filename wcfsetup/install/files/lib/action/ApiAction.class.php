@@ -3,6 +3,7 @@
 namespace wcf\action;
 
 use CuyZ\Valinor\Mapper\MappingError;
+use CuyZ\Valinor\Utility\String\StringFormatterError;
 use FastRoute\ConfigureRoutes;
 use FastRoute\Dispatcher\Result\MethodNotAllowed;
 use FastRoute\Dispatcher\Result\NotMatched;
@@ -98,6 +99,8 @@ final class ApiAction implements RequestHandlerInterface
             return $this->toErrorResponse(RequestFailure::ValidationFailed, $e->getType(), $e->getMessage(), $e->getField());
         } catch (IllegalLinkException) {
             return $this->toErrorResponse(RequestFailure::ValidationFailed, 'assertion_failed');
+        } catch (StringFormatterError) {
+            return $this->toErrorResponse(RequestFailure::InternalError, 'malformed_utf8');
         } catch (\Throwable $e) {
             logThrowable($e);
 
