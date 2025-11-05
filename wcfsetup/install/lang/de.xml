@@ -3266,7 +3266,7 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.acp.user.notificationPresetSettings"><![CDATA[Vorgabewerte für Benachrichtigungen bearbeiten]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} auf dieser Seite die Standardeinstellungen für neue Benutzer festlegen, dies wirkt sich nicht auf bestehende Benutzer aus. Benutzer können abweichende Einstellungen festlegen.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers"><![CDATA[Änderungen auch auf bestehende Benutzerkonten anwenden]]></item>
-		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers.description"><![CDATA[Die hier eingestellten Änderungen der Vorgabewerte für Benachrichtigungen werden auch in bestehende Benutzerkonten übernommen. Die entsprechenden Einstellungen der Benutzer werden dabei überschrieben.]]></item>
+		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers.description"><![CDATA[Die hier eingestellten Änderungen der Vorgabewerte für Benachrichtigungen werden auch in bestehende Benutzerkonten übernommen. Die entsprechenden Einstellungen der Benutzer werden dabei überschrieben.<br><br>Hinweis: Es werden nur die Einstellungen überschrieben, die mit dem Absenden des Formulars geändert werden.]]></item>
 		<item name="wcf.acp.user.bulkProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
 		<item name="wcf.acp.user.bulkProcessing.action"><![CDATA[Aktion]]></item>
 		<item name="wcf.acp.user.bulkProcessing.assignToUserGroups"><![CDATA[Benutzergruppen zuweisen]]></item>
