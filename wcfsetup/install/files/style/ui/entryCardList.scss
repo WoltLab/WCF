@@ -60,6 +60,11 @@ html[data-color-scheme="dark"] {
 		transform: translateX(100%);
 		opacity: 0;
 	}
+
+	#content:has(:focus-visible) .entryCardList__item__buttons {
+		transform: none;
+		opacity: 1;
+	}
 }
 
 html[data-color-scheme="dark"] .entryCardList__item__buttons {
