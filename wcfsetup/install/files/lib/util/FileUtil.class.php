@@ -223,13 +223,8 @@ final class FileUtil
     /**
      * Scans a folder (and subfolder) for a specific file.
      * Returns the filename if found, otherwise false.
-     *
-     * @param string $folder
-     * @param string $searchfile
-     * @param bool $recursive
-     * @return  mixed
      */
-    public static function scanFolder($folder, $searchfile, $recursive = true)
+    public static function scanFolder(string $folder, string $searchfile, bool $recursive = true): string|false
     {
         if (!@\is_dir($folder)) {
             return false;
@@ -259,6 +254,8 @@ final class FileUtil
             }
         }
         @\closedir($dirh);
+
+        return false;
     }
 
     /**
