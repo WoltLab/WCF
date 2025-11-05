@@ -50,51 +50,6 @@
 		<instruction type="script">acp/install_com.woltlab.wcf_step2.php</instruction>
 	</instructions>
 
-	<instructions type="update" fromversion="6.1.*">
-		<!--
-tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
-	acp/database/update_com.woltlab.wcf_6.2_step1.php \
-	acp/database/update_com.woltlab.wcf_6.2_step2.php \
-	acp/update_com.woltlab.wcf_6.2_backgroundJob.php \
-	acp/update_com.woltlab.wcf_6.2_checkSystemRequirements.php \
-	acp/update_com.woltlab.wcf_6.2_contactOptions.php \
-	acp/update_com.woltlab.wcf_6.2_styleVariables.php
-		-->
-		<instruction type="file">files_pre_check.tar</instruction>
-
-		<instruction type="script">acp/update_com.woltlab.wcf_6.2_checkSystemRequirements.php</instruction>
-		
-		<!-- The following scripts must be executed in this particular order. -->
-		<instruction type="script">acp/update_com.woltlab.wcf_6.2_backgroundJob.php</instruction>
-		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.2_step1.php</instruction>
-		<instruction type="script">acp/update_com.woltlab.wcf_6.2_contactOptions.php</instruction>
-		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.2_step2.php</instruction>
-		
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.2_styleVariables.php</instruction>
-
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-
-		<instruction type="option"/>
-		<instruction type="script">acp/update_com.woltlab.wcf_6.2_option.php</instruction>
-
-		<instruction type="language" run="standalone"/>
-
-		<instruction type="objectTypeDefinition"/>
-		<instruction type="objectType"/>
-		<instruction type="page"/>
-		<instruction type="acpMenu"/>
-		<instruction type="acpTemplateDelete"/>
-		<instruction type="clipboardAction"/>
-		<instruction type="coreObject"/>
-		<instruction type="fileDelete"/>
-		<instruction type="templateDelete"/>
-		<instruction type="userGroupOption"/>
-		<instruction type="userMenu"/>
-		<instruction type="userOption"/>
-	</instructions>
-
 	<instructions type="update" fromversion="6.2.0 Alpha 3">
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
