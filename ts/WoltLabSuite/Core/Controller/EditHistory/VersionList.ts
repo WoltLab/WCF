@@ -50,7 +50,9 @@ function initRadioButtons(container: HTMLElement): void {
     newIdInput.addEventListener("change", () => {
       newInputChanged(newIdInput);
     });
-    newInputChanged(newIdInput);
+    if (newIdInput.checked) {
+      newInputChanged(newIdInput);
+    }
   });
 
   function oldInputChanged(oldIdInput: HTMLInputElement): void {
@@ -67,7 +69,9 @@ function initRadioButtons(container: HTMLElement): void {
     oldIdInput.addEventListener("change", () => {
       oldInputChanged(oldIdInput);
     });
-    oldInputChanged(oldIdInput);
+    if (oldIdInput.checked) {
+      oldInputChanged(oldIdInput);
+    }
   });
 }
 
