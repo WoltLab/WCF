@@ -44,6 +44,7 @@ define(["require", "exports", "tslib", "../../Core", "sortablejs", "WoltLabSuite
                     filter: this.#filter.bind(this),
                     onMove: this.#onMove.bind(this),
                     onEnd: this.#onEnd.bind(this),
+                    preventOnFilter: false,
                 },
                 isSimpleSorting: false,
                 additionalParameters: {},
@@ -137,7 +138,7 @@ define(["require", "exports", "tslib", "../../Core", "sortablejs", "WoltLabSuite
             });
         }
         #filter(event, target) {
-            if (sortablejs_1.default.utils.is(target, ".sortableNoSorting")) {
+            if (sortablejs_1.default.utils.is(target, ".sortableNoSorting") || target.nodeName === "INPUT") {
                 return true;
             }
             const eventTarget = event.target;
