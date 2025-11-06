@@ -1236,10 +1236,10 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.notice.add"><![CDATA[Add Notice]]></item>
 		<item name="wcf.acp.notice.cssClassName"><![CDATA[Appearance]]></item>
 		<item name="wcf.acp.notice.cssClassName.description"><![CDATA[You can select a predefined appearance or provide your own <abbr title="Cascading Style Sheets">CSS</abbr> class name.]]></item>
-		<item name="wcf.acp.notice.cssClassName.error"><![CDATA[Error Message]]></item>
+		<item name="wcf.acp.notice.cssClassName.error"><![CDATA[Error]]></item>
 		<item name="wcf.acp.notice.cssClassName.error.invalid"><![CDATA[The entered CSS class name is invalid.]]></item>
 		<item name="wcf.acp.notice.cssClassName.info"><![CDATA[Information]]></item>
-		<item name="wcf.acp.notice.cssClassName.success"><![CDATA[Success Message]]></item>
+		<item name="wcf.acp.notice.cssClassName.success"><![CDATA[Success]]></item>
 		<item name="wcf.acp.notice.cssClassName.warning"><![CDATA[Warning]]></item>
 		<item name="wcf.acp.notice.conditions"><![CDATA[Conditions]]></item>
 		<item name="wcf.acp.notice.conditions.description"><![CDATA[If no conditions are specified, the notice will display for every user.]]></item>
