@@ -6,6 +6,7 @@ input[type="password"],
 input[type="search"],
 input[type="tel"],
 input[type="text"],
+input[type="time"],
 input[type="url"],
 select,
 textarea {
@@ -22,6 +23,7 @@ input[type="password"],
 input[type="search"],
 input[type="tel"],
 input[type="text"],
+input[type="time"],
 input[type="url"] {
 	&::placeholder {
 		color: var(--wcfInputPlaceholder);
@@ -63,6 +65,7 @@ input[type="text"] {
 	input[type="search"],
 	input[type="tel"],
 	input[type="text"],
+	input[type="time"],
 	input[type="url"],
 	select,
 	textarea {
