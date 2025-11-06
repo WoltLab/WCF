@@ -7,7 +7,7 @@
 	{/foreach}
 {/capture}
 
-<div class="messageTabMenuContent{if $__tabCount} messageTabMenu{/if}" data-preselect="true" data-collapsible="false" id="smilies-{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}">
+<div class="messageTabMenuContent{if $__tabCount > 1} messageTabMenu{/if}" data-preselect="true" data-collapsible="false" id="smilies-{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}">
 	{assign var='__firstSmileyCategory' value=$smileyCategories|reset}
 	{capture assign=__defaultSmilies}
 		{if $__firstSmileyCategory->categoryID}
