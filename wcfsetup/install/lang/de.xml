@@ -2658,7 +2658,7 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.pip.acpTemplateDelete.application"><![CDATA[App]]></item>
 	</category>
 	<category name="wcf.acp.reactionType">
-		<item name="wcf.acp.reactionType.image"><![CDATA[Reaktions-Datei]]></item>
+		<item name="wcf.acp.reactionType.image"><![CDATA[Reaktions-Grafik]]></item>
 		<item name="wcf.acp.reactionType.isAssignable"><![CDATA[Verwendung erlauben]]></item>
 		<item name="wcf.acp.reactionType.isAssignable.description"><![CDATA[Wenn eine Reaktion nicht verwendet werden kann, können Benutzer nicht mit der Reaktion reagieren. Wurde auf einen Inhalt bereits mit der Reaktion reagiert, ist sie auch weiterhin für Benutzer sichtbar.]]></item>
 		<item name="wcf.acp.reactionType.isNotAssignable"><![CDATA[Verwendung verbieten]]></item>

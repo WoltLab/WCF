@@ -2585,7 +2585,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.acpTemplateDelete.application"><![CDATA[App]]></item>
 	</category>
 	<category name="wcf.acp.reactionType">
-		<item name="wcf.acp.reactionType.image"><![CDATA[Reaction File]]></item>
+		<item name="wcf.acp.reactionType.image"><![CDATA[Reaction Image]]></item>
 		<item name="wcf.acp.reactionType.isAssignable"><![CDATA[Allow use]]></item>
 		<item name="wcf.acp.reactionType.isAssignable.description"><![CDATA[If a reaction cannot be used, users cannot react with the reaction. If a content has already been reacted to with the reaction, it remains visible to users.]]></item>
 		<item name="wcf.acp.reactionType.isNotAssignable"><![CDATA[Disallow use]]></item>
