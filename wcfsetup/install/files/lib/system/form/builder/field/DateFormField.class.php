@@ -296,11 +296,28 @@ class DateFormField extends AbstractFormField implements
 
             if ($this->value === '') {
                 $this->value = null;
-            } elseif ($this->getValueDateTimeObject() === null) {
-                try {
-                    $this->value($value);
-                } catch (\InvalidArgumentException) {
-                    $this->value = null;
+            } else {
+                // Suppressing the time zone causes the generated datetime
+                // string to omit the time zone entirely.
+                //
+                // This is an incorrect behavior of the JS component which we
+                // cannot fix for compatibility reasons. We therefore implicitly
+                // assume Zulu time here.
+                if (
+                    $this->supportsTime()
+                    && $this->hasFieldAttribute('data-ignore-timezone')
+                    && $this->getFieldAttribute('data-ignore-timezone') === 'true'
+                ) {
+                    $value .= 'Z';
+                    $this->value = $value;
+                }
+
+                if ($this->getValueDateTimeObject() === null) {
+                    try {
+                        $this->value($value);
+                    } catch (\InvalidArgumentException) {
+                        $this->value = null;
+                    }
                 }
             }
         }
