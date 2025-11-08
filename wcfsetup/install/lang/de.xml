@@ -4153,7 +4153,7 @@ Dateianhänge:
 		<item name="wcf.form.option.textarea"><![CDATA[Mehrzeiliger Text]]></item>
 		<item name="wcf.form.option.sourceCode"><![CDATA[Quellcode]]></item>
 		<item name="wcf.form.option.url"><![CDATA[Link]]></item>
-		<item name="wcf.form.option.wysiwyg"><![CDATA[Wysiwyg]]></item>
+		<item name="wcf.form.option.wysiwyg"><![CDATA[WYSIWYG]]></item>
 		<item name="wcf.form.option.shared.currency"><![CDATA[Währung]]></item>
 		<item name="wcf.form.option.shared.defaultValue"><![CDATA[Standardwert]]></item>
 		<item name="wcf.form.option.shared.maxLength"><![CDATA[Maximale Textlänge]]></item>
