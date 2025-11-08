@@ -30,7 +30,7 @@ define(["require", "exports", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabS
         }
     }
     function setup() {
-        (0, Selector_1.wheneverFirstSeen)("#wcf\\\\action\\\\UserAvatarAction_avatarFileIDContainer woltlab-core-file img", (img) => {
+        (0, Selector_1.wheneverFirstSeen)(`#wcf\\\\action\\\\UserAvatarAction_avatarFileIDContainer woltlab-core-file img`, (img) => {
             img.classList.add("userAvatarImage");
             img.parentElement.classList.add("userAvatar");
         });
@@ -43,6 +43,18 @@ define(["require", "exports", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabS
                 const file = document.querySelector(`#wcf\\\\action\\\\UserAvatarAction_avatarFileIDContainer woltlab-core-file[file-id="${fileId}"]`);
                 avatarForm.querySelector("img.userAvatarImage").src = file.link;
                 (0, Snackbar_1.showDefaultSuccessSnackbar)();
+            });
+        }
+        else {
+            (0, FileProcessor_1.registerCallback)("wcf\\action\\UserAvatarAction_avatarFileID", (fileId) => {
+                if (fileId === undefined) {
+                    return;
+                }
+                document
+                    .getElementById("wcf\\action\\UserAvatarAction_avatarFileIDContainer")
+                    ?.closest("woltlab-core-dialog")
+                    ?.querySelector(".dialog__control__button--primary")
+                    ?.click();
             });
         }
         (0, Selector_1.wheneverFirstSeen)("[data-edit-avatar]", (button) => {

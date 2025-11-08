@@ -41,7 +41,7 @@ async function editAvatar(button: HTMLElement): Promise<void> {
 
 export function setup(): void {
   wheneverFirstSeen(
-    "#wcf\\\\action\\\\UserAvatarAction_avatarFileIDContainer woltlab-core-file img",
+    `#wcf\\\\action\\\\UserAvatarAction_avatarFileIDContainer woltlab-core-file img`,
     (img: HTMLImageElement) => {
       img.classList.add("userAvatarImage");
       img.parentElement!.classList.add("userAvatar");
@@ -61,6 +61,18 @@ export function setup(): void {
 
       avatarForm.querySelector<HTMLImageElement>("img.userAvatarImage")!.src = file.link!;
       showDefaultSuccessSnackbar();
+    });
+  } else {
+    registerCallback("wcf\\action\\UserAvatarAction_avatarFileID", (fileId: number | undefined) => {
+      if (fileId === undefined) {
+        return;
+      }
+
+      document
+        .getElementById("wcf\\action\\UserAvatarAction_avatarFileIDContainer")
+        ?.closest("woltlab-core-dialog")
+        ?.querySelector<HTMLButtonElement>(".dialog__control__button--primary")
+        ?.click();
     });
   }
 

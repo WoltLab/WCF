@@ -70,6 +70,11 @@ export function setup(): void {
         coverPhotoElement.src = coverPhotoUrl;
 
         coverPhotoElement.dataset.objectId = fileId?.toString() || "";
+
+        document
+          .getElementById("wcf\\action\\UserCoverPhotoAction_coverPhotoFileIDContainer")
+          ?.closest("woltlab-core-dialog")
+          ?.close();
       } else {
         // ACP cover photo management
         if (!coverPhotoElement && coverPhotoUrl) {
