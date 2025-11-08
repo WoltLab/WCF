@@ -1675,7 +1675,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.enable_polling"><![CDATA[Enable background notifications]]></item>
 		<item name="wcf.acp.option.enable_polling.description"><![CDATA[Periodically retrieves new notifications in the background, requests are dispatched every 5 minutes. Interval increases to up to 15 minutes on inactivity.]]></item>
 		<item name="wcf.acp.option.module_contact_form"><![CDATA[Enable contact form]]></item>
-		<item name="wcf.acp.option.module_contact_form.description"><![CDATA[Enables the contact form, once enabled you can customize the <a href="{link controller='ContactSettings'}{/link}">input fields and recipients</a> to better suit your needs.]]></item>
+		<item name="wcf.acp.option.module_contact_form.description"><![CDATA[Enables the contact form, once enabled you can customize the <a href="{link controller='ContactOptionList'}{/link}">option fields</a> and <a href="{link controller='ContactRecipientList'}{/link}">recipients</a> to better suit your needs.]]></item>
 		<item name="wcf.acp.option.module_trophy"><![CDATA[Trophies]]></item>
 		<item name="wcf.acp.option.category.module.development"><![CDATA[Development]]></item>
 		<item name="wcf.acp.option.category.module.development.notice"><![CDATA[These options are used exclusively for development and debugging, they’re not suitable for use in production environments.]]></item>

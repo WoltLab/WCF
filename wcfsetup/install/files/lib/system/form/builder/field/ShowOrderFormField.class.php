@@ -101,7 +101,7 @@ final class ShowOrderFormField extends SingleSelectionFormField
 
         // when editing an object, the value has to be reduced by one to determine the
         // relevant sibling as the edited object is shown after its previous sibling
-        if ($this->getDocument()->getFormMode() === IFormDocument::FORM_MODE_UPDATE) {
+        if ($this->getDocument()->getFormMode() === IFormDocument::FORM_MODE_UPDATE && $value > 0) {
             $value--;
         }
 
