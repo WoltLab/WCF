@@ -26,7 +26,15 @@ class RatingFormOption extends AbstractFormOption
     #[\Override]
     public function getFormField(string $id, array $configuration = []): AbstractFormField
     {
-        return RatingFormField::create($id);
+        return RatingFormField::create($id)
+            ->nullable(empty($configuration['required']));
+    }
+
+    #[\Override]
+    public function getFilterFormField(string $id, array $configuration = []): AbstractFormField
+    {
+        return RatingFormField::create($id)
+            ->nullable();
     }
 
     #[\Override]
