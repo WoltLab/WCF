@@ -50,7 +50,8 @@ final class TemplateGridView extends AbstractGridView
         $this->addColumns([
             GridViewColumn::for("templateID")
                 ->label("wcf.global.objectID")
-                ->renderer(new ObjectIdColumnRenderer()),
+                ->renderer(new ObjectIdColumnRenderer())
+                ->sortable(),
             GridViewColumn::for("application")
                 ->label("wcf.acp.template.application")
                 ->filter(new SelectFilter(

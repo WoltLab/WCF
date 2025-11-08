@@ -36,7 +36,8 @@ final class TemplateGroupGridView extends AbstractGridView
         $this->addColumns([
             GridViewColumn::for('templateGroupID')
                 ->label('wcf.global.objectID')
-                ->renderer(new ObjectIdColumnRenderer()),
+                ->renderer(new ObjectIdColumnRenderer())
+                ->sortable(),
             GridViewColumn::for('templateGroupName')
                 ->label('wcf.global.name')
                 ->titleColumn()
