@@ -301,21 +301,30 @@ class DateFormField extends AbstractFormField implements
                 // string to omit the time zone entirely.
                 //
                 // This is an incorrect behavior of the JS component which we
-                // cannot fix for compatibility reasons. We therefore implicitly
-                // assume Zulu time here.
+                // cannot fix for compatibility reasons.
+                $isValidTime = false;
                 if (
                     $this->supportsTime()
                     && $this->hasFieldAttribute('data-ignore-timezone')
                     && $this->getFieldAttribute('data-ignore-timezone') === 'true'
                 ) {
-                    $value .= 'Z';
-                    $this->value = $value;
+                    $dateTime = \DateTime::createFromFormat(
+                        'Y-m-d\TH:i:s',
+                        $this->getValue(),
+                        new \DateTimeZone('UTC')
+                    );
+
+                    if ($dateTime !== false) {
+                        $isValidTime = true;
+
+                        $this->value = $dateTime->format(self::TIME_FORMAT);
+                    }
                 }
 
-                if ($this->getValueDateTimeObject() === null) {
+                if (!$isValidTime && $this->getValueDateTimeObject() === null) {
                     try {
                         $this->value($value);
-                    } catch (\InvalidArgumentException) {
+                    } catch (\InvalidArgumentException $e) {
                         $this->value = null;
                     }
                 }
