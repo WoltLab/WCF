@@ -45,6 +45,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "
                 link.href = file.link;
                 link.dataset.fancybox =
                     "attachments" + (data.messageObjectID ? `-${data.messageObjectID}` : "");
+                link.dataset.type = "image";
                 link.title = file.filename;
                 link.dataset.caption = file.filename;
                 link.textContent = file.filename;
