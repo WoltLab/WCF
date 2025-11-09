@@ -80,28 +80,34 @@ define(["require", "exports", "../Ajax/Error", "../Component/Dialog", "../Core",
         }
     }
     function showErrorDialog(apiError) {
-        const code = (0, StringUtil_1.escapeHTML)(apiError.code);
-        const type = (0, StringUtil_1.escapeHTML)(apiError.type);
-        const message = apiError.message ? (0, StringUtil_1.escapeHTML)(apiError.message) : "(not set)";
-        const param = apiError.param ? "<kbd>" + (0, StringUtil_1.escapeHTML)(apiError.param) + "</kbd>" : "(not set)";
-        const html = `
-    <dl>
-      <dt>Unexpected server error</dt>
-      <dd><kbd>${type}</kbd></dd>
-    </dl>
-    <dl>
-      <dt>Error code</dt>
-      <dd><kbd>${code}</kbd></dd>
-    </dl>
-    <dl>
-      <dt>Parameter</dt>
-      <dd>${param}</dd>
-    </dl>
-    <dl>
-      <dt>Message</dt>
-      <dd>${message}</dd>
-    </dl>
-  `;
+        let html = "";
+        if ((!window.ENABLE_DEBUG_MODE && apiError.code === "permission_denied") || apiError.code === "assertion_failed") {
+            html = (0, Language_1.getPhrase)(apiError.code === "permission_denied" ? "wcf.ajax.error.permissionDenied" : "wcf.ajax.error.illegalLink");
+        }
+        else {
+            const code = (0, StringUtil_1.escapeHTML)(apiError.code);
+            const type = (0, StringUtil_1.escapeHTML)(apiError.type);
+            const message = apiError.message ? (0, StringUtil_1.escapeHTML)(apiError.message) : "(not set)";
+            const param = apiError.param ? "<kbd>" + (0, StringUtil_1.escapeHTML)(apiError.param) + "</kbd>" : "(not set)";
+            html = `
+      <dl>
+        <dt>Unexpected server error</dt>
+        <dd><kbd>${type}</kbd></dd>
+      </dl>
+      <dl>
+        <dt>Error code</dt>
+        <dd><kbd>${code}</kbd></dd>
+      </dl>
+      <dl>
+        <dt>Parameter</dt>
+        <dd>${param}</dd>
+      </dl>
+      <dl>
+        <dt>Message</dt>
+        <dd>${message}</dd>
+      </dl>
+    `;
+        }
         const dialog = (0, Dialog_1.dialogFactory)().fromHtml(html).asAlert();
         dialog.show((0, Language_1.getPhrase)("wcf.global.error.title"));
     }

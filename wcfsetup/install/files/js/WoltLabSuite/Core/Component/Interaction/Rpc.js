@@ -16,16 +16,10 @@ define(["require", "exports", "WoltLabSuite/Core/Api/DeleteObject", "WoltLabSuit
             return;
         }
         if (confirmationType == Confirmation_1.ConfirmationType.Delete) {
-            const result = await (0, DeleteObject_1.deleteObject)(endpoint);
-            if (!result.ok) {
-                return;
-            }
+            (await (0, DeleteObject_1.deleteObject)(endpoint)).unwrap();
         }
         else {
-            const result = await (0, PostObject_1.postObject)(endpoint, confirmationResult.reason ? { reason: confirmationResult.reason } : undefined);
-            if (!result.ok) {
-                return;
-            }
+            (await (0, PostObject_1.postObject)(endpoint, confirmationResult.reason ? { reason: confirmationResult.reason } : undefined)).unwrap();
         }
         if (interactionEffect === InteractionEffect_1.InteractionEffect.ReloadItem || interactionEffect === InteractionEffect_1.InteractionEffect.ReloadPage) {
             element.dispatchEvent(new CustomEvent("interaction:invalidate", {

@@ -105,29 +105,36 @@ export async function fromInfallibleApiRequest<T = unknown>(request: () => Promi
 }
 
 function showErrorDialog(apiError: ApiError): void {
-  const code = escapeHTML(apiError.code);
-  const type = escapeHTML(apiError.type);
-  const message = apiError.message ? escapeHTML(apiError.message) : "(not set)";
-  const param = apiError.param ? "<kbd>" + escapeHTML(apiError.param) + "</kbd>" : "(not set)";
+  let html = "";
+  if ((!window.ENABLE_DEBUG_MODE && apiError.code === "permission_denied") || apiError.code === "assertion_failed") {
+    html = getPhrase(
+      apiError.code === "permission_denied" ? "wcf.ajax.error.permissionDenied" : "wcf.ajax.error.illegalLink",
+    );
+  } else {
+    const code = escapeHTML(apiError.code);
+    const type = escapeHTML(apiError.type);
+    const message = apiError.message ? escapeHTML(apiError.message) : "(not set)";
+    const param = apiError.param ? "<kbd>" + escapeHTML(apiError.param) + "</kbd>" : "(not set)";
 
-  const html = `
-    <dl>
-      <dt>Unexpected server error</dt>
-      <dd><kbd>${type}</kbd></dd>
-    </dl>
-    <dl>
-      <dt>Error code</dt>
-      <dd><kbd>${code}</kbd></dd>
-    </dl>
-    <dl>
-      <dt>Parameter</dt>
-      <dd>${param}</dd>
-    </dl>
-    <dl>
-      <dt>Message</dt>
-      <dd>${message}</dd>
-    </dl>
-  `;
+    html = `
+      <dl>
+        <dt>Unexpected server error</dt>
+        <dd><kbd>${type}</kbd></dd>
+      </dl>
+      <dl>
+        <dt>Error code</dt>
+        <dd><kbd>${code}</kbd></dd>
+      </dl>
+      <dl>
+        <dt>Parameter</dt>
+        <dd>${param}</dd>
+      </dl>
+      <dl>
+        <dt>Message</dt>
+        <dd>${message}</dd>
+      </dl>
+    `;
+  }
 
   const dialog = dialogFactory().fromHtml(html).asAlert();
   dialog.show(getPhrase("wcf.global.error.title"));

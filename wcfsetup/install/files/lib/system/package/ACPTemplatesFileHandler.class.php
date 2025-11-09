@@ -84,6 +84,10 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler
      */
     public function logFiles(array $files)
     {
+        if ($files === []) {
+            return;
+        }
+
         // remove file extension
         $files = \array_map(static function (string $file) {
             if (\basename($file) !== $file) {

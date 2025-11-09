@@ -49,7 +49,7 @@ final class HtmlUpcastNodeWoltlabMetacode extends AbstractHtmlUpcastNode
                 $element->removeAttribute('data-attributes');
             }
             $bbcode = BBCodeCache::getInstance()->getBBCodeByTag($name);
-            if (!$bbcode->originIsSystem) {
+            if ($bbcode === null || !$bbcode->originIsSystem) {
                 $nodes[] = [$element, $name, $emptyMetacodeUpcast, $attributes];
                 continue;
             }
@@ -99,7 +99,7 @@ final class HtmlUpcastNodeWoltlabMetacode extends AbstractHtmlUpcastNode
                     $endParagraph = $element->ownerDocument->createElement('p');
                     $endParagraph->append("[/{$name}]");
 
-                    if ($bbcode->isSourceCode) {
+                    if ($bbcode?->isSourceCode) {
                         $content = $element->ownerDocument->createElement('p');
                         $content->append($element->textContent);
                         DomUtil::replaceElement($element, $startParagraph, false);
