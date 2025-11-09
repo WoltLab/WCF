@@ -4059,7 +4059,7 @@ Dateianhänge:
 		<item name="wcf.global.form.error.invalidCssClassName"><![CDATA[Der eingegebene Wert ist keine gültige CSS-Klasse.]]></item>
 	</category>
 	<category name="wcf.fancybox">
-		<item name="wcf.fancybox.imageEerror"><![CDATA[Dieses Bild konnte nicht geladen werden.]]></item>
+		<item name="wcf.fancybox.imageError"><![CDATA[Dieses Bild konnte nicht geladen werden.]]></item>
 		<item name="wcf.fancybox.moveUp"><![CDATA[Nach oben bewegen]]></item>
 		<item name="wcf.fancybox.moveDown"><![CDATA[Nach unten bewegen]]></item>
 		<item name="wcf.fancybox.moveLeft"><![CDATA[Nach links bewegen]]></item>
@@ -5716,5 +5716,6 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.option.google_maps_zoom.description"/>
 	<item name="wcf.acp.reactionType.type"/>
 	<item name="wcf.acp.reactionType.showOrder.description"/>
+	<item name="wcf.fancybox.imageEerror"/>
 </delete>
 </language>
