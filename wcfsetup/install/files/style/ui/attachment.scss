@@ -317,8 +317,8 @@ html[data-color-scheme="dark"] {
 }
 
 .messageAttachmentMeta {
-	@include wcfFontSmall;
-
 	color: var(--wcfContentDimmedText);
 	grid-area: meta;
+
+	@include wcfFontSmall;
 }
