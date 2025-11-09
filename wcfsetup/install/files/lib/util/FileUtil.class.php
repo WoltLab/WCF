@@ -10,28 +10,12 @@ use wcf\system\io\GZipFile;
 /**
  * Contains file-related functions.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2025 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 final class FileUtil
 {
-    /**
-     * finfo instance
-     */
-    protected static \finfo $finfo;
-
-    /**
-     * memory limit in bytes
-     */
-    protected static int $memoryLimit;
-
-    /**
-     * chmod mode
-     * @var string
-     */
-    protected static $mode;
-
     /**
      * A regular expression that allows to detect links within text.
      */
@@ -422,13 +406,14 @@ final class FileUtil
      */
     public static function getMimeType(string $filename): string
     {
-        if (!isset(self::$finfo)) {
-            self::$finfo = new \finfo(\FILEINFO_MIME_TYPE);
+        static $finfo = null;
+        if ($finfo === null) {
+            $finfo = new \finfo(\FILEINFO_MIME_TYPE);
         }
 
         // \finfo->file() can fail for files that contain only 1 byte, because libmagic expects at least
         // a few bytes in order to determine the type. See https://bugs.php.net/bug.php?id=64684
-        $mimeType = @self::$finfo->file($filename);
+        $mimeType = @$finfo->file($filename);
 
         return $mimeType ?: 'application/octet-stream';
     }
@@ -445,19 +430,20 @@ final class FileUtil
             return;
         }
 
-        if (self::$mode === null) {
+        static $mode = null;
+        if ($mode === null) {
             // WCFSetup
             if (\defined('INSTALL_SCRIPT') && \file_exists(INSTALL_SCRIPT)) {
                 // do not use PHP_OS here, as this represents the system it was built on != running on
                 // php_uname() is forbidden on some strange hosts; PHP_EOL is reliable
                 if (\PHP_EOL == "\r\n") {
                     // Windows
-                    self::$mode = '0777';
+                    $mode = '0777';
                 } else {
                     // anything but Windows
                     \clearstatcache();
 
-                    self::$mode = '0666';
+                    $mode = '0666';
 
                     $tmpFilename = '__permissions_' . \sha1((string)\time()) . '.txt';
                     @\touch($tmpFilename);
@@ -470,7 +456,7 @@ final class FileUtil
                         $fileOwner = \fileowner($tmpFilename);
 
                         if ($scriptOwner === $fileOwner) {
-                            self::$mode = '0644';
+                            $mode = '0644';
                         }
 
                         @\unlink($tmpFilename);
@@ -482,18 +468,18 @@ final class FileUtil
                     throw new SystemException("Unable to find 'wcf/lib/system/WCF.class.php'.");
                 }
 
-                self::$mode = '0' . \substr(\sprintf('%o', \fileperms(WCF_DIR . 'lib/system/WCF.class.php')), -3);
+                $mode = '0' . \substr(\sprintf('%o', \fileperms(WCF_DIR . 'lib/system/WCF.class.php')), -3);
             }
         }
 
         if (\is_dir($filename)) {
-            if (self::$mode == '0644') {
+            if ($mode == '0644') {
                 @\chmod($filename, 0755);
             } else {
                 @\chmod($filename, 0777);
             }
         } else {
-            @\chmod($filename, \octdec(self::$mode));
+            @\chmod($filename, \octdec($mode));
         }
 
         if (!\is_writable($filename)) {
@@ -507,20 +493,21 @@ final class FileUtil
      */
     public static function getMemoryLimit(): int
     {
-        if (!isset(self::$memoryLimit)) {
-            self::$memoryLimit = 0;
+        static $memoryLimit = null;
 
-            $memoryLimit = \ini_get('memory_limit');
+        if ($memoryLimit === null) {
+            $memoryLimit = 0;
+            $iniMemoryLimit = \ini_get('memory_limit');
 
             // no limit
-            if ($memoryLimit == "-1") {
-                self::$memoryLimit = -1;
+            if ($iniMemoryLimit == "-1") {
+                $memoryLimit = -1;
             } else {
-                self::$memoryLimit = \ini_parse_quantity($memoryLimit);
+                $memoryLimit = \ini_parse_quantity($iniMemoryLimit);
             }
         }
 
-        return self::$memoryLimit;
+        return $memoryLimit;
     }
 
     /**
