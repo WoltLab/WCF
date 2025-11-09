@@ -537,7 +537,7 @@ class PageAddForm extends AbstractForm
      */
     protected function validateTitle()
     {
-        if ($this->isMultilingual) {
+        if ($this->isMultilingual || $this->pageType === 'system') {
             foreach ($this->availableLanguages as $language) {
                 if (empty($this->title[$language->languageID])) {
                     throw new UserInputException('title_' . $language->languageID);
