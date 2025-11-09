@@ -32,18 +32,11 @@ async function handleRpcInteraction(
   }
 
   if (confirmationType == ConfirmationType.Delete) {
-    const result = await deleteObject(endpoint);
-    if (!result.ok) {
-      return;
-    }
+    (await deleteObject(endpoint)).unwrap();
   } else {
-    const result = await postObject(
-      endpoint,
-      confirmationResult.reason ? { reason: confirmationResult.reason } : undefined,
-    );
-    if (!result.ok) {
-      return;
-    }
+    (
+      await postObject(endpoint, confirmationResult.reason ? { reason: confirmationResult.reason } : undefined)
+    ).unwrap();
   }
 
   if (interactionEffect === InteractionEffect.ReloadItem || interactionEffect === InteractionEffect.ReloadPage) {

@@ -16,6 +16,9 @@ final class PreloadPhrasesCollectingListener
 {
     public function __invoke(PreloadPhrasesCollecting $event): void
     {
+        $event->preload('wcf.ajax.error.illegalLink');
+        $event->preload('wcf.ajax.error.permissionDenied');
+
         $event->preload('wcf.button.delete.confirmMessage');
 
         $event->preload('wcf.clipboard.item.mark');
