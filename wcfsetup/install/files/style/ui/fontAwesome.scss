@@ -1,34 +1,35 @@
-.fontAwesomeIcons {
+.fontAwesome__icons {
 	border: 1px solid var(--wcfContentBorderInner);
+	display: grid;
+	grid-auto-flow: row;
+	grid-template-columns: repeat(3, 150px);
 	max-height: 540px;
 	overflow: auto;
 
 	@media only screen and (min-height: 700px) and (max-height: 800px) {
 		max-height: 450px;
 	}
+}
 
-	> li {
-		display: inline-flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		padding: 10px 0;
-		width: 150px;
+.fontAwesome__icon {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	padding: 10px 0;
+	width: 100%;
+}
 
-		&:hover {
-			background-color: var(--wcfButtonBackgroundActive);
-			color: var(--wcfButtonTextActive);
-			cursor: pointer;
+.fontAwesome__icon__name {
+	color: var(--wcfContentDimmedText);
+}
 
-			> small {
-				color: inherit;
-				cursor: pointer;
-			}
-		}
+@media (hover: hover) {
+	.fontAwesome__icon:hover {
+		background-color: var(--wcfButtonBackgroundActive);
+		color: var(--wcfButtonTextActive);
 
-		> small {
-			color: var(--wcfContentDimmedText);
-			flex: 0 0 100%;
-			text-align: center;
+		.fontAwesome__icon__name {
+			color: inherit;
 		}
 	}
 }
