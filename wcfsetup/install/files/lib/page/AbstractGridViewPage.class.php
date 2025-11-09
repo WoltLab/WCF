@@ -24,9 +24,9 @@ abstract class AbstractGridViewPage extends AbstractPage
      * @var TGridView
      */
     protected AbstractGridView $gridView;
-    protected int $pageNo = 1;
-    protected string $sortField = '';
-    protected string $sortOrder = '';
+    public int $pageNo = 1;
+    public string $sortField = '';
+    public string $sortOrder = '';
 
     /**
      * @var mixed[]
