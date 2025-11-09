@@ -421,16 +421,19 @@ class BoxAddForm extends AbstractForm
      */
     protected function readBoxImages()
     {
-        if (!empty($this->imageID)) {
-            $mediaList = new ViewableMediaList();
-            $mediaList->setObjectIDs($this->imageID);
-            $mediaList->readObjects();
+        $imageIDs = \array_filter($this->imageID);
+        if ($imageIDs === []) {
+            return;
+        }
 
-            foreach ($this->imageID as $languageID => $imageID) {
-                $image = $mediaList->search($imageID);
-                if ($image !== null && $image->isImage) {
-                    $this->images[$languageID] = $image;
-                }
+        $mediaList = new ViewableMediaList();
+        $mediaList->setObjectIDs(\array_values($imageIDs));
+        $mediaList->readObjects();
+
+        foreach ($imageIDs as $languageID => $imageID) {
+            $image = $mediaList->search($imageID);
+            if ($image !== null && $image->isImage) {
+                $this->images[$languageID] = $image;
             }
         }
     }
@@ -503,7 +506,7 @@ class BoxAddForm extends AbstractForm
         // validate images
         if (WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
             foreach ($this->imageID as $languageID => $imageID) {
-                if (!isset($this->images[$languageID])) {
+                if ($imageID !== 0 && !isset($this->images[$languageID])) {
                     throw new UserInputException('imageID' . $languageID);
                 }
             }
