@@ -83,4 +83,9 @@ interface IFormOption
      * Returns the PHP DDL column definition to store the values.
      */
     public function getDatabaseTableColumn(string $name): AbstractDatabaseTableColumn;
+
+    /**
+     * Returns true, if this form option is filterable.
+     */
+    public function isFilterable(): bool;
 }

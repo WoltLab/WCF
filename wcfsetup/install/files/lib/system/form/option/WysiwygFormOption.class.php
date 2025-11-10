@@ -28,12 +28,6 @@ class WysiwygFormOption extends AbstractFormOption
     }
 
     #[\Override]
-    public function getFilterFormField(string $id, array $configuration = []): AbstractFormField
-    {
-        return TextFormField::create($id);
-    }
-
-    #[\Override]
     public function getFormField(string $id, array $configuration = []): AbstractFormField
     {
         return WysiwygFormField::create($id)
@@ -47,12 +41,6 @@ class WysiwygFormOption extends AbstractFormOption
     }
 
     #[\Override]
-    public function applyFilter(DatabaseObjectList $list, string $columnName, mixed $value): void
-    {
-        $list->getConditionBuilder()->add("{$columnName} LIKE ?", ['%' . WCF::getDB()->escapeLikeValue($value) . '%']);
-    }
-
-    #[\Override]
     public function getFormatter(): IFormOptionFormatter
     {
         return new WysiwygFormatter();
@@ -62,5 +50,17 @@ class WysiwygFormOption extends AbstractFormOption
     public function getPlainTextFormatter(): IFormOptionFormatter
     {
         return new WysiwygPlainTextFormatter();
+    }
+
+    #[\Override]
+    public function getFilterFormField(string $id, array $configuration = []): AbstractFormField
+    {
+        throw new \BadMethodCallException("IconFormOption does not support filtering.");
+    }
+
+    #[\Override]
+    public function isFilterable(): bool
+    {
+        return false;
     }
 }

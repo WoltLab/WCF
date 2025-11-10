@@ -34,4 +34,16 @@ class IconFormOption extends AbstractFormOption
     {
         return new IconFormatter();
     }
+
+    #[\Override]
+    public function getFilterFormField(string $id, array $configuration = []): AbstractFormField
+    {
+        throw new \BadMethodCallException("IconFormOption does not support filtering.");
+    }
+
+    #[\Override]
+    public function isFilterable(): bool
+    {
+        return false;
+    }
 }
