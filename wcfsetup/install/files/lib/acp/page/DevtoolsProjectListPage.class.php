@@ -4,6 +4,7 @@ namespace wcf\acp\page;
 
 use wcf\data\devtools\project\DevtoolsProjectList;
 use wcf\page\SortablePage;
+use wcf\system\WCF;
 
 /**
  * Shows a list of devtools projects.
@@ -51,4 +52,13 @@ class DevtoolsProjectListPage extends SortablePage
      * @inheritDoc
      */
     public $validSortFields = ['projectID', 'name', 'path'];
+    
+    #[\Override]
+    public function assignVariables() {
+	parent::assignVariables();
+		
+	WCF::getTPL()->assign([
+		'wcfDir' => WCF_DIR,
+	]);
+    }
 }
