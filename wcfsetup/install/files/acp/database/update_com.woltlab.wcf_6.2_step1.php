@@ -9,6 +9,7 @@
  */
 
 use wcf\system\database\table\column\IntDatabaseTableColumn;
+use wcf\system\database\table\column\MediumblobDatabaseTableColumn;
 use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
 use wcf\system\database\table\column\VarcharDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
@@ -69,11 +70,11 @@ return [
     PartialDatabaseTable::create('wcf1_file')
         ->columns([
             IntDatabaseTableColumn::create('uploadTime'),
-            MediumtextDatabaseTableColumn::create('exifData'),
+            MediumblobDatabaseTableColumn::create('exifData'),
         ]),
     PartialDatabaseTable::create('wcf1_file_temporary')
         ->columns([
-            MediumtextDatabaseTableColumn::create('exifData'),
+            MediumblobDatabaseTableColumn::create('exifData'),
         ]),
     PartialDatabaseTable::create('wcf1_menu_item')
         ->columns([

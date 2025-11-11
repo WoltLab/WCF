@@ -86,7 +86,7 @@ final class PrepareUpload implements IController
 
         $exifData = $this->parseExifData($exifBytes);
         if ($exifData !== null) {
-            $exifData = JSON::encode($exifData);
+            $exifData = \serialize($exifData);
         }
 
         $action = new FileTemporaryAction([], 'create', [

@@ -76,7 +76,7 @@ class FileEditor extends DatabaseObjectEditor
 
         $exifData = $fileTemporary->exifData;
         if ($exifData !== null) {
-            $exifData = JSON::decode($exifData);
+            $exifData = \unserialize($exifData);
         }
 
         $fileSize = $fileTemporary->fileSize;
@@ -115,7 +115,7 @@ class FileEditor extends DatabaseObjectEditor
             'width' => $width,
             'height' => $height,
             'uploadTime' => \TIME_NOW,
-            'exifData' => $exifData !== null ? JSON::encode($exifData) : null,
+            'exifData' => $exifData !== null ? \serialize($exifData) : null,
         ]]);
         $file = $fileAction->executeAction()['returnValues'];
         \assert($file instanceof File);
@@ -220,7 +220,7 @@ class FileEditor extends DatabaseObjectEditor
             'width' => $width,
             'height' => $height,
             'uploadTime' => $uploadTime,
-            'exifData' => $exifData !== null ? JSON::encode($exifData) : null,
+            'exifData' => $exifData !== null ? \serialize($exifData) : null,
         ]]);
         $file = $fileAction->executeAction()['returnValues'];
         \assert($file instanceof File);
