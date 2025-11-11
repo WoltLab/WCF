@@ -3,7 +3,13 @@
 		<div class="gridView__filterBar">
 			<div class="gridView__filters" id="{$view->getID()}_filters">
 				{foreach from=$view->getActiveFilters() item='value' key='key'}
-					<button type="button" class="button small" data-filter="{$key}" data-filter-value="{$value}">
+					<button
+						type="button"
+						class="button small jsTooltip"
+						data-filter="{$key}"
+						data-filter-value="{$value}"
+						title="{lang filterLabel=$view->getFilterLabel($key)}wcf.page.removeFilterTooltip{/lang}"
+					>
 						{icon name='circle-xmark'}
 						{$view->getFilterLabel($key)}
 					</button>
@@ -84,6 +90,7 @@
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Component/GridView'], ({ GridView }) => {
 		WoltLabLanguage.registerPhrase("wcf.clipboard.button.numberOfSelectedItems", '{jslang __literal=true}wcf.clipboard.button.numberOfSelectedItems{/jslang}');
+		WoltLabLanguage.registerPhrase("wcf.page.removeFilterTooltip", '{jslang __literal=true}wcf.page.removeFilterTooltip{/jslang}');
 		
 		new GridView(
 			'{unsafe:$view->getID()|encodeJS}',

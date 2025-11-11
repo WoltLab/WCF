@@ -4,7 +4,13 @@
 			{if $view->isFilterable()}
 				<div class="listView__filters" id="{$view->getID()}_filters">
 					{foreach from=$view->getActiveFilters() item='value' key='key'}
-						<button type="button" class="button small" data-filter="{$key}" data-filter-value="{$value}">
+						<button
+							type="button"
+							class="button small jsTooltip"
+							data-filter="{$key}"
+							data-filter-value="{$value}"
+							title="{lang filterLabel=$view->getFilterLabel($key)}wcf.page.removeFilterTooltip{/lang}"
+						>
 							{icon name='circle-xmark'}
 							{$view->getFilterLabel($key)}
 						</button>
@@ -93,6 +99,7 @@
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Component/ListView'], ({ ListView }) => {
 		WoltLabLanguage.registerPhrase("wcf.clipboard.button.numberOfSelectedItems", '{jslang __literal=true}wcf.clipboard.button.numberOfSelectedItems{/jslang}');
+		WoltLabLanguage.registerPhrase("wcf.page.removeFilterTooltip", '{jslang __literal=true}wcf.page.removeFilterTooltip{/jslang}');
 		
 		new ListView(
 			'{unsafe:$view->getID()|encodeJS}',
