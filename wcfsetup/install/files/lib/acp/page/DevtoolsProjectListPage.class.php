@@ -52,13 +52,14 @@ class DevtoolsProjectListPage extends SortablePage
      * @inheritDoc
      */
     public $validSortFields = ['projectID', 'name', 'path'];
-    
+
     #[\Override]
-    public function assignVariables() {
-	parent::assignVariables();
-		
-	WCF::getTPL()->assign([
-		'wcfDir' => WCF_DIR,
-	]);
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign([
+                'wcfDir' => WCF_DIR,
+        ]);
     }
 }
