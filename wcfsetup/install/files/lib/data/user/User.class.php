@@ -526,7 +526,12 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public function getLanguage()
     {
-        $language = LanguageFactory::getInstance()->getLanguage($this->languageID);
+        $language = null;
+
+        if ($this->languageID) {
+            $language = LanguageFactory::getInstance()->getLanguage($this->languageID);
+        }
+
         if ($language === null) {
             $language = LanguageFactory::getInstance()->getLanguage(LanguageFactory::getInstance()->getDefaultLanguageID());
         }
