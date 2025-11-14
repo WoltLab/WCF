@@ -290,7 +290,7 @@ abstract class AbstractGridView
     public function renderColumn(GridViewColumn $column, DatabaseObject $row): string
     {
         $value = $this->getData($row, $column->getID());
-        if ($column->encodeValue()) {
+        if ($value !== null && $column->encodeValue()) {
             $value = StringUtil::encodeHTML($value);
         }
 
