@@ -4250,6 +4250,8 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.message.bbcode.code.copy"><![CDATA[Copy Contents]]></item>
 		<item name="wcf.message.bbcode.code.copy.success"><![CDATA[The contents have been successfully copied.]]></item>
 		<item name="wcf.message.quote.insertQuote"><![CDATA[Insert Quote]]></item>
+		<item name="wcf.message.quote.insertAllQuotes"><![CDATA[Insert All Quotes]]></item>
+		<item name="wcf.message.quote.deleteAllQuotes"><![CDATA[Delete All Quotes]]></item>
 		<item name="wcf.message.quote.quoteSelected"><![CDATA[Save Quote]]></item>
 		<item name="wcf.message.quote.quoteSelected.success"><![CDATA[Quote saved]]></item>
 		<item name="wcf.message.quote.quoteAndReply"><![CDATA[Insert Quote]]></item>

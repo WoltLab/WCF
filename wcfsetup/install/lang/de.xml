@@ -4304,6 +4304,8 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.message.bbcode.code.copy"><![CDATA[Inhalt kopieren]]></item>
 		<item name="wcf.message.bbcode.code.copy.success"><![CDATA[Der Inhalt wurde erfolgreich kopiert.]]></item>
 		<item name="wcf.message.quote.insertQuote"><![CDATA[Zitat einfügen]]></item>
+		<item name="wcf.message.quote.insertAllQuotes"><![CDATA[Alle Zitate einfügen]]></item>
+		<item name="wcf.message.quote.deleteAllQuotes"><![CDATA[Alle Zitate löschen]]></item>
 		<item name="wcf.message.quote.quoteSelected"><![CDATA[Zitat speichern]]></item>
 		<item name="wcf.message.quote.quoteSelected.success"><![CDATA[Zitat gespeichert]]></item>
 		<item name="wcf.message.quote.quoteAndReply"><![CDATA[Zitat einfügen]]></item>

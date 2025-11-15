@@ -110,6 +110,13 @@
 	pointer-events: none !important;
 }
 
+.quoteBox__bulk__actions {
+	display: flex;
+	gap: 5px;
+	justify-content: end;
+	margin-bottom: 10px;
+}
+
 @include screen-xs {
 	.messageTabMenu:not(.messageTabMenuContent) > .messageTabMenuContent.messageTabMenuContent--quotes.active {
 		padding-left: 10px;
