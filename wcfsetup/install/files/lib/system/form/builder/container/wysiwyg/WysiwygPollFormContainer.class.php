@@ -298,6 +298,10 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
                 $wysiwygId = $this->getWysiwygId();
 
                 foreach (self::FIELD_NAMES as $fieldName) {
+                    if ($fieldName === 'isPublic' && !$this->getIsPublicField()->isAvailable()) {
+                        continue;
+                    }
+
                     $parameters[$wysiwygId . '_pollData'][$fieldName] = $parameters['data'][$id . \ucfirst($fieldName)];
                     unset($parameters['data'][$id . \ucfirst($fieldName)]);
                 }
