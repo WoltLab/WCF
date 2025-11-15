@@ -88,7 +88,12 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
         }
         $user = WCF::getUser();
         try {
-            SessionHandler::getInstance()->changeUser(new User($notification->userID), true);
+            $targetUser = new User($notification->userID);
+            if ($targetUser->banned) {
+                return;
+            }
+
+            SessionHandler::getInstance()->changeUser($targetUser, true);
             $processedNotifications = UserNotificationHandler::getInstance()->processNotifications([$notification]);
             if ($processedNotifications['count'] == 0) {
                 return;
