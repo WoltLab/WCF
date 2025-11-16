@@ -182,12 +182,11 @@ final class UserCoverPhotoFileProcessor extends AbstractFileProcessor
     #[\Override]
     public function delete(array $fileIDs, array $thumbnailIDs): void
     {
-        \array_map(
-            static fn(int $fileID) => WCF::getSession()->unregister(
+        foreach ($fileIDs as $fileID) {
+            WCF::getSession()->unregister(
                 \sprintf(self::SESSION_VARIABLE, $fileID)
-            ),
-            $fileIDs
-        );
+            );
+        }
 
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add('coverPhotoFileID IN (?)', [$fileIDs]);
