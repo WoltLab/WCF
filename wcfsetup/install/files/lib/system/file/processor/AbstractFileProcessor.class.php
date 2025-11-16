@@ -103,4 +103,10 @@ abstract class AbstractFileProcessor implements IFileProcessor
     {
         // There is usually no need to react to this change.
     }
+
+    #[\Override]
+    public function isSingleFile(): bool
+    {
+        return false;
+    }
 }

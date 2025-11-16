@@ -175,17 +175,6 @@ final class UserAvatarFileProcessor extends AbstractFileProcessor
     }
 
     #[\Override]
-    public function countExistingFiles(array $context): ?int
-    {
-        $user = $this->getUser($context);
-        if ($user === null) {
-            return null;
-        }
-
-        return $user->avatarFileID === null ? 0 : 1;
-    }
-
-    #[\Override]
     public function getMaximumSize(array $context): int
     {
         /**
@@ -259,5 +248,11 @@ final class UserAvatarFileProcessor extends AbstractFileProcessor
         }
 
         return UserProfileRuntimeCache::getInstance()->getObject($userID);
+    }
+
+    #[\Override]
+    public function isSingleFile(): bool
+    {
+        return true;
     }
 }

@@ -255,10 +255,10 @@ export class FileProcessor {
     });
   }
 
+  /**
+   * @deprecated 6.2 Use `FileProcessor::isSingleFile()` instead which gracefully handles replacements.
+   */
   #startReplaceFile(element: WoltlabCoreFileElement): string {
-    // Add to context an extra attribute that the replace button is clicked.
-    // After the dialog is closed or the file is selected, the context will be reset to his old value.
-    // This is necessary as the serverside validation will otherwise fail.
     const oldContext = this.#uploadButton.dataset.context!;
     const context = JSON.parse(oldContext);
     context.__replace = true;

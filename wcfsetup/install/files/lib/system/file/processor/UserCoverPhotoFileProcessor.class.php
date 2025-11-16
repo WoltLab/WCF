@@ -199,17 +199,6 @@ final class UserCoverPhotoFileProcessor extends AbstractFileProcessor
     }
 
     #[\Override]
-    public function countExistingFiles(array $context): ?int
-    {
-        $user = $this->getUser($context);
-        if ($user === null) {
-            return null;
-        }
-
-        return $user->coverPhotoFileID === null ? 0 : 1;
-    }
-
-    #[\Override]
     public function getImageCropperConfiguration(): ImageCropperConfiguration
     {
         return ImageCropperConfiguration::forMinMax(
@@ -229,5 +218,11 @@ final class UserCoverPhotoFileProcessor extends AbstractFileProcessor
                 true,
             ),
         ];
+    }
+
+    #[\Override]
+    public function isSingleFile(): bool
+    {
+        return true;
     }
 }
