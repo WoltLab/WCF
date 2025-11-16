@@ -67,6 +67,7 @@
 		<div class="userProfileHeader__title">
 			<h1 class="userProfileHeader__username">
 				<span class="userProfileUsername">{$view->user->username}</span>
+				{event name='afterUsername'}
 				{if $view->user->banned}
 					<span class="jsTooltip jsUserBanned" title="{lang}wcf.user.banned{/lang}">
 						{icon name='lock'}
