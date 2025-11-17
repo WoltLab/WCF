@@ -3436,7 +3436,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.category.position"><![CDATA[Position]]></item>
 		<item name="wcf.category.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.category.title"><![CDATA[Titel]]></item>
-		<item name="wcf.category.button.choose"><![CDATA[Kategorien wählen]]></item>
+		<item name="wcf.category.button.choose"><![CDATA[Kategorie wählen]]></item>
 		<item name="wcf.category.descriptionUseHtml"><![CDATA[HTML in der Beschreibung verwenden]]></item>
 	</category>
 	<category name="wcf.ckeditor">
