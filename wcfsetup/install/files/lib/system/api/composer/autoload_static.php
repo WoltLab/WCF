@@ -111,7 +111,6 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'W' => 
         array (
             'WoltLab\\WebpExif\\' => 17,
-            'Webmozart\\Assert\\' => 17,
         ),
         'S' => 
         array (
@@ -188,10 +187,6 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'WoltLab\\WebpExif\\' => 
         array (
             0 => __DIR__ . '/..' . '/woltlab/webp-exif/src',
-        ),
-        'Webmozart\\Assert\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/webmozart/assert/src',
         ),
         'Symfony\\Polyfill\\Php85\\' => 
         array (
@@ -421,6 +416,7 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'CuyZ\\Valinor\\Compiler\\Native\\AssignNode' => __DIR__ . '/..' . '/cuyz/valinor/src/Compiler/Native/AssignNode.php',
         'CuyZ\\Valinor\\Compiler\\Native\\CallNode' => __DIR__ . '/..' . '/cuyz/valinor/src/Compiler/Native/CallNode.php',
         'CuyZ\\Valinor\\Compiler\\Native\\CastNode' => __DIR__ . '/..' . '/cuyz/valinor/src/Compiler/Native/CastNode.php',
+        'CuyZ\\Valinor\\Compiler\\Native\\ClassNameNode' => __DIR__ . '/..' . '/cuyz/valinor/src/Compiler/Native/ClassNameNode.php',
         'CuyZ\\Valinor\\Compiler\\Native\\ClassNode' => __DIR__ . '/..' . '/cuyz/valinor/src/Compiler/Native/ClassNode.php',
         'CuyZ\\Valinor\\Compiler\\Native\\CloneNode' => __DIR__ . '/..' . '/cuyz/valinor/src/Compiler/Native/CloneNode.php',
         'CuyZ\\Valinor\\Compiler\\Native\\ClosureNode' => __DIR__ . '/..' . '/cuyz/valinor/src/Compiler/Native/ClosureNode.php',
@@ -709,7 +705,6 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\ShapedArrayCommaMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/ShapedArrayCommaMissing.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\ShapedArrayElementDuplicatedKey' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/ShapedArrayElementDuplicatedKey.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\ShapedArrayElementTypeMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/ShapedArrayElementTypeMissing.php',
-        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\ShapedArrayEmptyElements' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/ShapedArrayEmptyElements.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\ShapedArrayUnexpectedTokenAfterSealedType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/ShapedArrayUnexpectedTokenAfterSealedType.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\ShapedArrayWithoutElementsWithSealedType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/ShapedArrayWithoutElementsWithSealedType.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\SimpleArrayClosingBracketMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/SimpleArrayClosingBracketMissing.php',
@@ -2503,9 +2498,6 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'Symfony\\Polyfill\\Php83\\Php83' => __DIR__ . '/..' . '/symfony/polyfill-php83/Php83.php',
         'Symfony\\Polyfill\\Php84\\Php84' => __DIR__ . '/..' . '/symfony/polyfill-php84/Php84.php',
         'Symfony\\Polyfill\\Php85\\Php85' => __DIR__ . '/..' . '/symfony/polyfill-php85/Php85.php',
-        'Webmozart\\Assert\\Assert' => __DIR__ . '/..' . '/webmozart/assert/src/Assert.php',
-        'Webmozart\\Assert\\InvalidArgumentException' => __DIR__ . '/..' . '/webmozart/assert/src/InvalidArgumentException.php',
-        'Webmozart\\Assert\\Mixin' => __DIR__ . '/..' . '/webmozart/assert/src/Mixin.php',
         'WoltLab\\WebpExif\\ChunkType' => __DIR__ . '/..' . '/woltlab/webp-exif/src/ChunkType.php',
         'WoltLab\\WebpExif\\Chunk\\Alph' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Alph.php',
         'WoltLab\\WebpExif\\Chunk\\Anim' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Anim.php',
