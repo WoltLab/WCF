@@ -42,14 +42,24 @@
 
 <script data-relocate="true">
 	{
-		const code = document.getElementById('code') ?? document.getElementById('onetimecode');
-		if (code) {
-			code.addEventListener('input', () => {
-				if (code.value.length == code.maxLength) {
-					code.form.submit();	
+		let wasSubmitted = false;
+		const form = document.getElementById("multifactorAuthentication");
+		form.addEventListener("submit", () => {
+			document.getElementById("submitButton").disabled = true;
+			wasSubmitted = true;
+		});
+		const code = document.getElementById("code") ?? document.getElementById("onetimecode");
+		code?.addEventListener("input", () => {
+			if (!wasSubmitted && code.value.length === code.maxLength) {
+				if (form.requestSubmit) {
+					form.requestSubmit();
+				} else {
+					form.submit();
 				}
-			});
-		}
+
+				wasSubmitted = true;
+			}
+		});
 	}
 </script>
 
