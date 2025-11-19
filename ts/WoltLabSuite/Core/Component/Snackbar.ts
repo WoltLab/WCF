@@ -192,7 +192,7 @@ class SnackbarContainer {
     void snackbar.addEventListener("snackbar:close", () => {
       const i = this.#snackbars.indexOf(snackbar);
       if (i !== -1) {
-        this.#snackbars = this.#snackbars.splice(i, 1);
+        this.#snackbars.splice(i, 1);
       }
     });
   }
