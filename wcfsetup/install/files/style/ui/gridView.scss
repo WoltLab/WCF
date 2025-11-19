@@ -81,6 +81,11 @@
 
 	&.gridView__column--text {
 		max-width: 20%;
+
+		.badge,
+		a.badge {
+			vertical-align: baseline;
+		}
 	}
 
 	&.gridView__column--digits,
