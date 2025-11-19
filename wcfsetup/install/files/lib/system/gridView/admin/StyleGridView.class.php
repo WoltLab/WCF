@@ -59,14 +59,15 @@ final class StyleGridView extends AbstractGridView
                                 );
                             }
 
-                            if (!$row->styleDescription) {
+                            $styleDescription = $row->styleDescription ? WCF::getLanguage()->get($row->styleDescription) : '';
+                            if ($styleDescription === '') {
                                 return $value;
                             }
 
                             return \sprintf(
                                 '%s<br><small>%s</small>',
                                 $value,
-                                StringUtil::encodeHTML(WCF::getLanguage()->get($row->styleDescription))
+                                StringUtil::encodeHTML($styleDescription),
                             );
                         }
                     },
