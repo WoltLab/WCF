@@ -22,9 +22,6 @@ export function setup(editorId: string): void {
   }
 
   const tabMenu = getTabMenu(editorId);
-  if (tabMenu === undefined) {
-    throw new Error("Unable to find the corresponding tab menu.");
-  }
 
   const editor = document.getElementById(editorId);
   if (editor === null) {
@@ -143,7 +140,7 @@ export function setup(editorId: string): void {
       }
     }
 
-    tabMenu.setTabCounter("attachments", counter);
+    tabMenu?.setTabCounter("attachments", counter);
   });
   observer.observe(fileList, {
     childList: true,
