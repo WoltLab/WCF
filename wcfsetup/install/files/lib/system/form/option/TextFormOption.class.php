@@ -3,6 +3,8 @@
 namespace wcf\system\form\option;
 
 use wcf\data\DatabaseObjectList;
+use wcf\system\database\table\column\AbstractDatabaseTableColumn;
+use wcf\system\database\table\column\VarcharDatabaseTableColumn;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\WCF;
@@ -33,9 +35,13 @@ class TextFormOption extends AbstractFormOption
     public function getFormField(string $id, array $configuration = []): AbstractFormField
     {
         $formField = TextFormField::create($id);
-        if (!empty($configuration['maxLength'])) {
-            $formField->maximumLength($configuration['maxLength']);
-        }
+        $formField->maximumLength(
+            \min(
+                255,
+                $configuration['maxLength'] ?? 255
+            )
+        );
+
         if (isset($configuration['defaultTextValue'])) {
             $formField->value($configuration['defaultTextValue']);
         }
@@ -53,5 +59,12 @@ class TextFormOption extends AbstractFormOption
     public function applyFilter(DatabaseObjectList $list, string $columnName, mixed $value): void
     {
         $list->getConditionBuilder()->add("{$columnName} LIKE ?", ['%' . WCF::getDB()->escapeLikeValue($value) . '%']);
+    }
+
+    #[\Override]
+    public function getDatabaseTableColumn(string $name): AbstractDatabaseTableColumn
+    {
+        return VarcharDatabaseTableColumn::create($name)
+            ->length(255);
     }
 }

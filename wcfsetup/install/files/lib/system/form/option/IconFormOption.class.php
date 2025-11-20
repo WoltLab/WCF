@@ -2,6 +2,8 @@
 
 namespace wcf\system\form\option;
 
+use wcf\system\database\table\column\AbstractDatabaseTableColumn;
+use wcf\system\database\table\column\VarcharDatabaseTableColumn;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\IconFormField;
 use wcf\system\form\option\formatter\IconFormatter;
@@ -45,5 +47,12 @@ class IconFormOption extends AbstractFormOption
     public function isFilterable(): bool
     {
         return false;
+    }
+
+    #[\Override]
+    public function getDatabaseTableColumn(string $name): AbstractDatabaseTableColumn
+    {
+        return VarcharDatabaseTableColumn::create($name)
+            ->length(255);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace wcf\system\form\option;
 
+use wcf\system\database\table\column\AbstractDatabaseTableColumn;
+use wcf\system\database\table\column\TinyintDatabaseTableColumn;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\RatingFormField;
 use wcf\system\form\option\formatter\IFormOptionFormatter;
@@ -41,5 +43,11 @@ class RatingFormOption extends AbstractFormOption
     public function getFormatter(): IFormOptionFormatter
     {
         return new RatingFormatter();
+    }
+
+    #[\Override]
+    public function getDatabaseTableColumn(string $name): AbstractDatabaseTableColumn
+    {
+        return TinyintDatabaseTableColumn::create($name);
     }
 }
