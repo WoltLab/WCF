@@ -17,11 +17,17 @@ type Response = {
 export async function getRow(
   gridViewClass: string,
   objectId: string | number,
+  filters?: Map<string, string>,
   gridViewParameters?: Map<string, string>,
 ): Promise<Response> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/grid-views/row`);
   url.searchParams.set("gridView", gridViewClass);
   url.searchParams.set("objectID", objectId.toString());
+  if (filters) {
+    filters.forEach((value, key) => {
+      url.searchParams.set(`filters[${key}]`, value);
+    });
+  }
   if (gridViewParameters) {
     gridViewParameters.forEach((value, key) => {
       if (Array.isArray(value)) {

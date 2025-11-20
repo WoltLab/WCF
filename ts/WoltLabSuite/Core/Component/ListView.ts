@@ -71,10 +71,16 @@ export class ListView {
   }
 
   async #refreshItem(item: HTMLElement): Promise<void> {
-    const { template } = await getItem(this.#viewClassName, item.dataset.objectId!, this.#listViewParameters);
+    const { template } = await getItem(
+      this.#viewClassName,
+      item.dataset.objectId!,
+      this.#state.getActiveFilters(),
+      this.#listViewParameters,
+    );
     item.replaceWith(createFragmentFromHtml(template));
     this.#state.refreshSelection();
     triggerDomChange();
+    this.#checkEmptyList();
   }
 
   #initInteractions(): void {

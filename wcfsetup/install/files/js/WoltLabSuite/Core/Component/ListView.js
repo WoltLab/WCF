@@ -41,10 +41,11 @@ define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listen
             (0, Listener_1.trigger)();
         }
         async #refreshItem(item) {
-            const { template } = await (0, GetItem_1.getItem)(this.#viewClassName, item.dataset.objectId, this.#listViewParameters);
+            const { template } = await (0, GetItem_1.getItem)(this.#viewClassName, item.dataset.objectId, this.#state.getActiveFilters(), this.#listViewParameters);
             item.replaceWith((0, Util_1.createFragmentFromHtml)(template));
             this.#state.refreshSelection();
             (0, Listener_1.trigger)();
+            this.#checkEmptyList();
         }
         #initInteractions() {
             (0, Selector_1.wheneverFirstSeen)(`#${this.#viewElement.id} .listView__item`, (item) => {

@@ -39,10 +39,11 @@ define(["require", "exports", "tslib", "../Api/GridViews/GetRow", "../Api/GridVi
             Listener_1.default.trigger();
         }
         async #refreshRow(row) {
-            const { template } = await (0, GetRow_1.getRow)(this.#gridClassName, row.dataset.objectId, this.#gridViewParameters);
+            const { template } = await (0, GetRow_1.getRow)(this.#gridClassName, row.dataset.objectId, this.#state.getActiveFilters(), this.#gridViewParameters);
             row.replaceWith(Util_1.default.createFragmentFromHtml(template));
             this.#state.refreshSelection();
             Listener_1.default.trigger();
+            this.#checkEmptyTable();
         }
         #initInteractions() {
             (0, Selector_1.wheneverFirstSeen)(`#${this.#table.id} tbody tr`, (row) => {

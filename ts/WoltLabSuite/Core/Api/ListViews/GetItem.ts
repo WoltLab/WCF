@@ -17,11 +17,17 @@ type Response = {
 export async function getItem(
   listViewClass: string,
   objectId: string | number,
+  filters?: Map<string, string>,
   listViewParameters?: Map<string, string>,
 ): Promise<Response> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/list-views/item`);
   url.searchParams.set("listView", listViewClass);
   url.searchParams.set("objectID", objectId.toString());
+  if (filters) {
+    filters.forEach((value, key) => {
+      url.searchParams.set(`filters[${key}]`, value);
+    });
+  }
   if (listViewParameters) {
     listViewParameters.forEach((value, key) => {
       if (Array.isArray(value)) {
