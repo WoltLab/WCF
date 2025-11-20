@@ -74,6 +74,7 @@ define(["require", "exports", "tslib", "../Api/GridViews/GetRow", "../Api/GridVi
             });
             this.#table.addEventListener("interaction:remove", (event) => {
                 event.target.remove();
+                this.#state.removeSelection(parseInt(event.target.dataset.objectId));
                 this.#checkEmptyTable();
             });
             this.#table.addEventListener("interaction:reset-selection", () => {

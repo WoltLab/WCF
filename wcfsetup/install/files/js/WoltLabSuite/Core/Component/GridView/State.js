@@ -144,6 +144,9 @@ define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], 
         resetSelection() {
             this.#selection.resetSelection();
         }
+        removeSelection(objectId) {
+            this.#selection.removeSelection(objectId);
+        }
         refreshSelection() {
             this.#selection.refresh();
         }

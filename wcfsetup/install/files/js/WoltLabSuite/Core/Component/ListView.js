@@ -77,6 +77,7 @@ define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listen
             });
             this.#viewElement.addEventListener("interaction:remove", (event) => {
                 event.target.remove();
+                this.#state.removeSelection(parseInt(event.target.dataset.objectId));
                 this.#checkEmptyList();
             });
             this.#viewElement.addEventListener("interaction:reset-selection", () => {

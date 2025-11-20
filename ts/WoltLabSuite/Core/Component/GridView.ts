@@ -111,6 +111,7 @@ export class GridView {
 
     this.#table.addEventListener("interaction:remove", (event) => {
       (event.target as HTMLElement).remove();
+      this.#state.removeSelection(parseInt((event.target as HTMLElement).dataset.objectId!));
       this.#checkEmptyTable();
     });
 
