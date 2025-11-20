@@ -67,11 +67,17 @@ export class GridView {
   }
 
   async #refreshRow(row: HTMLElement): Promise<void> {
-    const { template } = await getRow(this.#gridClassName, row.dataset.objectId!, this.#gridViewParameters);
+    const { template } = await getRow(
+      this.#gridClassName,
+      row.dataset.objectId!,
+      this.#state.getActiveFilters(),
+      this.#gridViewParameters,
+    );
 
     row.replaceWith(DomUtil.createFragmentFromHtml(template));
     this.#state.refreshSelection();
     DomChangeListener.trigger();
+    this.#checkEmptyTable();
   }
 
   #initInteractions(): void {
