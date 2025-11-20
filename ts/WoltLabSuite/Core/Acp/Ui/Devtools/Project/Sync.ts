@@ -4,6 +4,7 @@ import { AjaxCallbackSetup, AjaxResponseException } from "../../../../Ajax/Data"
 import { DialogCallbackSetup } from "../../../../Ui/Dialog/Data";
 import { dialogFactory } from "../../../../Component/Dialog";
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
+import { syncVersion } from "WoltLabSuite/Core/Api/DevtoolsProjects/SyncVersion";
 
 interface PipData {
   dependencies: string[];
@@ -37,6 +38,7 @@ class AcpUiDevtoolsProjectSync {
   private readonly pips: PipData[] = [];
   private readonly projectId: number;
   private queue: PendingPip[] = [];
+  #syncVersionAfterCompletion = false;
 
   constructor(projectId: number) {
     this.projectId = projectId;
@@ -162,6 +164,7 @@ class AcpUiDevtoolsProjectSync {
     }
 
     this.buttonSyncAll.classList.add("disabled");
+    this.#syncVersionAfterCompletion = true;
 
     this.queue = [];
     this.pips.forEach((pip) => {
@@ -174,9 +177,23 @@ class AcpUiDevtoolsProjectSync {
 
   private syncNext(): void {
     if (this.queue.length === 0) {
-      this.buttonSyncAll.classList.remove("disabled");
+      const showSuccess = () => {
+        this.buttonSyncAll.classList.remove("disabled");
 
-      showDefaultSuccessSnackbar();
+        showDefaultSuccessSnackbar();
+      };
+
+      if (this.#syncVersionAfterCompletion) {
+        void this.#syncPackageVersion()
+          .then(() => {
+            showSuccess();
+          })
+          .finally(() => {
+            this.#syncVersionAfterCompletion = false;
+          });
+      } else {
+        showSuccess();
+      }
 
       return;
     }
@@ -187,6 +204,10 @@ class AcpUiDevtoolsProjectSync {
 
   private getButtonIdentifier(pluginName: string, target: string): string {
     return `${pluginName}-${target}`;
+  }
+
+  async #syncPackageVersion(): Promise<void> {
+    await syncVersion(this.projectId);
   }
 
   _ajaxSuccess(data: AjaxResponse): void {
