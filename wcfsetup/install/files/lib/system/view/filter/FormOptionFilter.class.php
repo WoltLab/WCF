@@ -46,4 +46,16 @@ final class FormOptionFilter extends AbstractFilter
     {
         return $this->option->renderFilterValue($value, $this->configuration);
     }
+
+    #[\Override]
+    public function serializeValue(mixed $value): string
+    {
+        return $this->option->serializeValue($value);
+    }
+
+    #[\Override]
+    public function unserializeValue(string $value): mixed
+    {
+        return $this->option->unserializeValue($value);
+    }
 }

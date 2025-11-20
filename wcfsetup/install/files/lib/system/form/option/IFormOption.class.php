@@ -88,4 +88,14 @@ interface IFormOption
      * Returns true, if this form option is filterable.
      */
     public function isFilterable(): bool;
+
+    /**
+     * Serializes the given form field value to a string that can be passed in a URL.
+     */
+    public function serializeValue(mixed $value): string;
+
+    /**
+     * Unserializes the given string to a value that can be passed to the form field.
+     */
+    public function unserializeValue(string $value): mixed;
 }
