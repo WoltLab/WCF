@@ -200,6 +200,19 @@ html.iOS select {
 	}
 }
 
+/*
+	CSS hack to target only Safari.
+	Taken from https://browserstrangeness.github.io/css_hacks.html#safari
+*/
+@supports (font: -apple-system-body) {
+	.sideBySide.templateDiff .nativeList {
+		margin-block-start: 1em;
+		margin-block-end: 1em;
+		margin-inline-end: 0px;
+		padding-inline-start: 40px;
+	}
+}
+
 html[data-color-scheme="dark"] .sideBySide.templateDiff {
 	--templateDiff-added-background: #172810;
 	--templateDiff-added-color: #4f9c51;
