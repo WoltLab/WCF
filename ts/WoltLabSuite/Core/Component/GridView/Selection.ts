@@ -274,6 +274,16 @@ export class Selection extends EventTarget {
     this.#updateSelectionBar();
   }
 
+  removeSelection(objectId: number): void {
+    const selectedIds = this.getSelectedIds();
+    if (selectedIds.indexOf(objectId) !== -1) {
+      selectedIds.splice(selectedIds.indexOf(objectId), 1);
+      window.localStorage.setItem(this.#getStorageKey(), JSON.stringify(selectedIds));
+    }
+
+    this.#change();
+  }
+
   #initBulkInteractions(): void {
     if (!this.#bulkInteractionButton) {
       return;

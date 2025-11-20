@@ -115,6 +115,7 @@ export class ListView {
 
     this.#viewElement.addEventListener("interaction:remove", (event) => {
       (event.target as HTMLElement).remove();
+      this.#state.removeSelection(parseInt((event.target as HTMLElement).dataset.objectId!));
       this.#checkEmptyList();
     });
 

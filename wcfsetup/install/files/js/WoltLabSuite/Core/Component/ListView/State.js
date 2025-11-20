@@ -152,6 +152,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "./F
         resetSelection() {
             this.#selection.resetSelection();
         }
+        removeSelection(objectId) {
+            this.#selection.removeSelection(objectId);
+        }
         refreshSelection() {
             this.#selection.refresh();
         }

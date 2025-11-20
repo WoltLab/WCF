@@ -199,6 +199,10 @@ export class State extends EventTarget {
     this.#selection.resetSelection();
   }
 
+  removeSelection(objectId: number): void {
+    this.#selection.removeSelection(objectId);
+  }
+
   refreshSelection(): void {
     this.#selection.refresh();
   }
