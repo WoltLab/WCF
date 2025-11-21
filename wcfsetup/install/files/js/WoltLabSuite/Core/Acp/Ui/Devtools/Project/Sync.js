@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language", "../../../../Component/Dialog", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Ajax, Language, Dialog_1, Snackbar_1) {
+define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language", "../../../../Component/Dialog", "WoltLabSuite/Core/Component/Snackbar", "WoltLabSuite/Core/Api/Devtools/Projects/SyncVersion"], function (require, exports, tslib_1, Ajax, Language, Dialog_1, Snackbar_1, SyncVersion_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
@@ -12,6 +12,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
         pips = [];
         projectId;
         queue = [];
+        #syncVersionAfterCompletion = false;
         constructor(projectId) {
             this.projectId = projectId;
             const restrictedSync = document.getElementById("syncShowOnlyMatches");
@@ -108,6 +109,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
                 return;
             }
             this.buttonSyncAll.classList.add("disabled");
+            this.#syncVersionAfterCompletion = true;
             this.queue = [];
             this.pips.forEach((pip) => {
                 pip.targets.forEach((target) => {
@@ -118,8 +120,22 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
         }
         syncNext() {
             if (this.queue.length === 0) {
-                this.buttonSyncAll.classList.remove("disabled");
-                (0, Snackbar_1.showDefaultSuccessSnackbar)();
+                const showSuccess = () => {
+                    this.buttonSyncAll.classList.remove("disabled");
+                    (0, Snackbar_1.showDefaultSuccessSnackbar)();
+                };
+                if (this.#syncVersionAfterCompletion) {
+                    void this.#syncPackageVersion()
+                        .then(() => {
+                        showSuccess();
+                    })
+                        .finally(() => {
+                        this.#syncVersionAfterCompletion = false;
+                    });
+                }
+                else {
+                    showSuccess();
+                }
                 return;
             }
             const next = this.queue.shift();
@@ -127,6 +143,9 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
         }
         getButtonIdentifier(pluginName, target) {
             return `${pluginName}-${target}`;
+        }
+        async #syncPackageVersion() {
+            await (0, SyncVersion_1.syncVersion)(this.projectId);
         }
         _ajaxSuccess(data) {
             const identifier = this.getButtonIdentifier(data.returnValues.pluginName, data.returnValues.target);

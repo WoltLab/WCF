@@ -152,6 +152,7 @@ return new class {
                 $event->register(new \wcf\system\endpoint\controller\core\comments\responses\RenderResponse());
                 $event->register(new \wcf\system\endpoint\controller\core\comments\responses\RenderResponses());
                 $event->register(new \wcf\system\endpoint\controller\core\comments\responses\UpdateResponse());
+                $event->register(new \wcf\system\endpoint\controller\core\devtools\projects\SyncVersion());
                 $event->register(new \wcf\system\endpoint\controller\core\exceptions\RenderException());
                 $event->register(new \wcf\system\endpoint\controller\core\gridViews\GetRows());
                 $event->register(new \wcf\system\endpoint\controller\core\gridViews\GetGridView());
