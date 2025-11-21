@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\endpoint\controller\core\devtoolsProjects;
+namespace wcf\system\endpoint\controller\core\devtools\projects;
 
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
@@ -25,7 +25,7 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  */
-#[PostRequest('/core/devtools-projects/{id:\d+}/sync-version')]
+#[PostRequest('/core/devtools/projects/{id:\d+}/sync-version')]
 final class SyncVersion implements IController
 {
     #[\Override]

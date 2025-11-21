@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language", "../../../../Component/Dialog", "WoltLabSuite/Core/Component/Snackbar", "WoltLabSuite/Core/Api/DevtoolsProjects/SyncVersion"], function (require, exports, tslib_1, Ajax, Language, Dialog_1, Snackbar_1, SyncVersion_1) {
+define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language", "../../../../Component/Dialog", "WoltLabSuite/Core/Component/Snackbar", "WoltLabSuite/Core/Api/Devtools/Projects/SyncVersion"], function (require, exports, tslib_1, Ajax, Language, Dialog_1, Snackbar_1, SyncVersion_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;

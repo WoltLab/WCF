@@ -1,5 +1,5 @@
 /**
- * Synchronizes the version of an installed package with the versio number in
+ * Synchronizes the version of an installed package with the version number in
  * the `package.xml` of the project.
  *
  * @author    Alexander Ebert
@@ -10,10 +10,10 @@
  */
 
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
-import { fromInfallibleApiRequest } from "../Result";
+import { fromInfallibleApiRequest } from "../../Result";
 
 export async function syncVersion(projectId: number): Promise<[]> {
   return fromInfallibleApiRequest(() => {
-    return prepareRequest(`${window.WSC_RPC_API_URL}core/devtools-projects/${projectId}/sync-version`).post().fetchAsJson();
+    return prepareRequest(`${window.WSC_RPC_API_URL}core/devtools/projects/${projectId}/sync-version`).post().fetchAsJson();
   });
 }

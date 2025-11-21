@@ -4,7 +4,7 @@ import { AjaxCallbackSetup, AjaxResponseException } from "../../../../Ajax/Data"
 import { DialogCallbackSetup } from "../../../../Ui/Dialog/Data";
 import { dialogFactory } from "../../../../Component/Dialog";
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
-import { syncVersion } from "WoltLabSuite/Core/Api/DevtoolsProjects/SyncVersion";
+import { syncVersion } from "WoltLabSuite/Core/Api/Devtools/Projects/SyncVersion";
 
 interface PipData {
   dependencies: string[];
