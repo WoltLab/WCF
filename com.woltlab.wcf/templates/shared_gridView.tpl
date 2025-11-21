@@ -63,15 +63,17 @@
 
 	<div class="gridView__footer" id="{$view->getID()}_footer"{if $view->countPages() < 2} hidden{/if}>
 		{if $view->hasBulkInteractions()}
-			<div id="{$view->getID()}_selectionBar" class="gridView__selectionBar dropdown" hidden>
-				<button type="button" id="{$view->getID()}_bulkInteractionButton" class="button small gridView__bulkInteractionButton dropdownToggle"></button>
-				<ul class="dropdownMenu">
-					<li class="disabled"><span>{lang}wcf.global.loading{/lang}</span></li>
-					<li class="dropdownDivider"></li>
-					<li>
-						<button type="button" id="{$view->getID()}_resetSelectionButton">{lang}wcf.clipboard.item.unmarkAll{/lang}</button>
-					</li>
-				</ul>
+			<div class="gridView__selectionBar__container">
+				<div id="{$view->getID()}_selectionBar" class="gridView__selectionBar dropdown" hidden>
+					<button type="button" id="{$view->getID()}_bulkInteractionButton" class="button small gridView__bulkInteractionButton dropdownToggle"></button>
+					<ul class="dropdownMenu">
+						<li class="disabled"><span>{lang}wcf.global.loading{/lang}</span></li>
+						<li class="dropdownDivider"></li>
+						<li>
+							<button type="button" id="{$view->getID()}_resetSelectionButton">{lang}wcf.clipboard.item.unmarkAll{/lang}</button>
+						</li>
+					</ul>
+				</div>
 			</div>
 		{/if}
 

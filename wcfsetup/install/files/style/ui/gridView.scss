@@ -197,45 +197,62 @@
 }
 
 .gridView__footer {
-	align-items: center;
-	background-color: var(--wcfContentContainerBackground);
-	border-bottom-left-radius: var(--wcfBorderRadius);
-	border-bottom-right-radius: var(--wcfBorderRadius);
-	border-top: 1px solid var(--wcfContentContainerBorder);
+	align-items: end;
 	bottom: 0;
 	display: flex;
 	flex-wrap: wrap;
 	gap: 10px;
-	margin-top: 20px;
 	min-height: 54px;
-	padding-top: 10px;
-	padding-bottom: 10px;
+	padding: 10px 0;
 	position: sticky;
 	z-index: 2;
+}
+
+.gridView__footer::after {
+	content: "";
+	flex: 1;
+}
+
+.gridView__footer:not(:has(.gridView__selectionBar__container))::before {
+	content: "";
+	flex: 1;
+}
+
+.gridView__selectionBar__container {
+	display: flex;
+	flex: 1;
+}
+
+@include screen-xs {
+	.gridView__selectionBar__container:has(.gridView__selectionBar:not([hidden])) {
+		flex: none;
+	}
 }
 
 @include screen-sm-down {
 	.gridView__footer {
 		margin-bottom: -10px;
-		margin-left: -10px;
-		margin-right: -10px;
-		padding-left: 10px;
-		padding-right: 10px;
 	}
 }
 
 @include screen-md-up {
 	.gridView__footer {
 		margin-bottom: -20px;
-		margin-left: -20px;
-		margin-right: -20px;
-		padding-left: 20px;
-		padding-right: 20px;
 	}
 }
 
-.gridView__pagination {
-	margin-inline-start: auto;
+.gridView__selectionBar,
+.gridView__pagination:not(:has(woltlab-core-pagination[count="1"])) {
+	backdrop-filter: blur(24px);
+	background-color: rgb(var(--wcfContentContainerBackground-rgb) / 78%);
+	border: 1px solid transparent;
+	border-radius: var(--wcfBorderRadiusContainer);
+	box-shadow: var(--wcfBoxShadow);
+	padding: 10px;
+}
+
+html[data-color-scheme="dark"] :is(.gridView__selectionBar, .gridView__pagination) {
+	border-color: var(--wcfContentContainerBorder);
 }
 
 .gridView__actionColumn__buttons {
