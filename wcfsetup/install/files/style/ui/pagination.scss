@@ -18,6 +18,7 @@
 }
 
 .pagination__link {
+	--padding-vertical: 4px;
 	--padding-side: 8px;
 
 	border-radius: 4px;
@@ -25,7 +26,7 @@
 	display: inline-block;
 	font-variant: tabular-nums;
 	min-width: calc(2ch + 2 * var(--padding-side));
-	padding: 4px var(--padding-side);
+	padding: var(--padding-vertical) var(--padding-side);
 	text-align: center;
 }
 
@@ -38,5 +39,11 @@ body:not(.touch) .pagination__link:hover {
 @include screen-xs {
 	.pagination__wrapper {
 		text-align: center;
+	}
+
+	.pagination__link {
+		--padding-vertical: 8px;
+
+		@include wcfFontSmall;
 	}
 }
