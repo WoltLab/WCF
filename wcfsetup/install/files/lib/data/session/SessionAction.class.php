@@ -51,6 +51,7 @@ class SessionAction extends AbstractDatabaseObjectAction
      * will return updated counters for notifications and 3rd party components.
      *
      * @return mixed[]
+     * @deprecated 6.2 This method is a relic of the pre 5.4 session system and is no longer required.
      */
     public function keepAlive()
     {
@@ -113,6 +114,8 @@ class SessionAction extends AbstractDatabaseObjectAction
 
         // notify 3rd party components
         EventHandler::getInstance()->fireAction($this, 'poll', $pollData);
+
+        WCF::getSession()->disableUpdate(true);
 
         return [
             'keepAliveData' => $keepAliveData,

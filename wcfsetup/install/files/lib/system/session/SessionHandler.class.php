@@ -147,7 +147,7 @@ final class SessionHandler extends SingletonFactory
             case 'parentPageObjectID':
                 return $this->legacySession->{$key} ?? null;
 
-                /** @deprecated 5.4 - The below values are deprecated. */
+            /** @deprecated 5.4 - The below values are deprecated. */
             case 'ipAddress':
                 return UserUtil::getIpAddress();
             case 'userAgent':
@@ -383,8 +383,12 @@ final class SessionHandler extends SingletonFactory
     /**
      * Disables update on shutdown.
      */
-    public function disableUpdate(): void
+    public function disableUpdate(bool $unlessVariablesHaveChanged = false): void
     {
+        if ($unlessVariablesHaveChanged && $this->variablesChanged) {
+            return;
+        }
+
         $this->doNotUpdate = true;
     }
 
