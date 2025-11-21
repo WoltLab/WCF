@@ -16,6 +16,7 @@ use wcf\form\AbstractForm;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\cache\builder\ArticleCategoryLabelCacheBuilder;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\html\upcast\HtmlUpcastProcessor;
@@ -26,6 +27,7 @@ use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\DateUtil;
 use wcf\util\HeaderUtil;
+use wcf\util\HtmlString;
 use wcf\util\StringUtil;
 
 /**
@@ -226,12 +228,22 @@ class ArticleAddForm extends AbstractForm
      */
     public $attachmentObjectType = 'com.woltlab.wcf.article';
 
+    protected CategoryNodeTree $categoryNodeTree;
+
     /**
      * @inheritDoc
      */
     public function readParameters()
     {
         parent::readParameters();
+
+
+        $this->categoryNodeTree = new CategoryNodeTree('com.woltlab.wcf.article.category');
+        if (\iterator_count($this->categoryNodeTree->getIterator()) === 0) {
+            throw new NamedUserException(
+                HtmlString::fromSafeHtml(WCF::getLanguage()->getDynamicVariable('wcf.acp.article.category.error.noCategories'))
+            );
+        }
 
         if (isset($_REQUEST['categoryID'])) {
             $this->categoryID = \intval($_REQUEST['categoryID']);
@@ -707,7 +719,7 @@ class ArticleAddForm extends AbstractForm
             'teaser' => $this->teaser,
             'content' => $this->content,
             'availableLanguages' => $this->availableLanguages,
-            'categoryNodeList' => (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator(),
+            'categoryNodeList' => $this->categoryNodeTree->getIterator(),
             'accessibleCategoryIDs' => ArticleCategory::getAccessibleCategoryIDs(),
             'labelIDs' => $this->labelIDs,
             'labelGroups' => $this->labelGroups,

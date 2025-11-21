@@ -84,6 +84,7 @@
 		<item name="wcf.acp.article.category.sortField"><![CDATA[Sortierung]]></item>
 		<item name="wcf.acp.article.category.sortField.publicationDate"><![CDATA[Veröffentlichungsdatum]]></item>
 		<item name="wcf.acp.article.category.sortField.title"><![CDATA[Titel]]></item>
+		<item name="wcf.acp.article.category.error.noCategories"><![CDATA[Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} einen Artikel erstellen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst, musst du{else}könne, müssen Sie{/if} eine <a href="{link controller='ArticleCategoryAdd' isACP=true}{/link}">Kategorie anlegen</a>.]]></item>
 		<item name="wcf.acp.article.content"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.article.enableComments"><![CDATA[Kommentare aktivieren]]></item>
 		<item name="wcf.acp.article.i18n"><![CDATA[Mehrsprachigkeit]]></item>
