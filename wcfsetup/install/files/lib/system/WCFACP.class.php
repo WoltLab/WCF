@@ -47,6 +47,7 @@ class WCFACP extends WCF
         // start initialization
         $this->initDB();
         $this->loadOptions();
+        $this->resolveActiveApplication();
         $this->initSession();
         $this->initLanguage();
         $this->initTPL();
