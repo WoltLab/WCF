@@ -527,7 +527,7 @@ class WCF
      */
     protected function resolveActiveApplication(): void
     {
-        if (!isset($_GET['__rewrittenPath'])) {
+        if (!isset($_GET['__rewrittenPath']) || \defined('PACKAGE_ID')) {
             if (!\defined('PACKAGE_ID')) {
                 \define('PACKAGE_ID', 1);
             }
