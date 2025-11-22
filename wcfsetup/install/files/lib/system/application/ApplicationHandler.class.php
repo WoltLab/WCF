@@ -26,16 +26,17 @@ use wcf\util\Url;
 final class ApplicationHandler extends SingletonFactory
 {
     /**
-     * application cache
-     * @var mixed[][]
+     * @var array{
+     *  abbreviation: array<string, int>,
+     *  application: array<int, Application>,
+     * }
      */
-    protected $cache;
+    private array $cache;
 
     /**
-     * list of page URLs
      * @var string[]
      */
-    protected array $pageURLs = [];
+    private array $pageURLs;
 
     /**
      * Initializes cache.
@@ -185,7 +186,7 @@ final class ApplicationHandler extends SingletonFactory
      */
     public function isInternalURL(string $url): bool
     {
-        if (empty($this->pageURLs)) {
+        if (!isset($this->pageURLs)) {
             $internalHostnames = ArrayUtil::trim(\explode("\n", StringUtil::unifyNewlines(\INTERNAL_HOSTNAMES)));
 
             $this->pageURLs = \array_unique([
@@ -219,9 +220,7 @@ final class ApplicationHandler extends SingletonFactory
      * @since 5.2
      * @deprecated 5.5 - This function is a noop. The 'active' status is determined live.
      */
-    public function rebuildActiveApplication(): void
-    {
-    }
+    public function rebuildActiveApplication(): void {}
 
     /**
      * @since 6.0
@@ -263,7 +262,7 @@ final class ApplicationHandler extends SingletonFactory
         }
 
         if ($skipCache) {
-            $sql = "SELECT package 
+            $sql = "SELECT package
                     FROM   wcf" . WCF_N . "_package
                     WHERE  isApplication = ?";
             $statement = WCF::getDB()->prepareUnmanaged($sql);
