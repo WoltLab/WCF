@@ -33,6 +33,7 @@ final class BackgroundQueuePerformAction extends AbstractAction
             // background job's memory usage without a memory-heavy job skewing the numbers for
             // the following jobs.
             if (\PHP_VERSION_ID >= 80200) {
+                // @phpstan-ignore function.notFound
                 \memory_reset_peak_usage();
             }
 

@@ -503,7 +503,7 @@ class PollManager extends SingletonFactory
             throw new SystemException("Object type '" . $objectType . "' (id " . $objectTypeID . ") is not valid for object type definition 'com.woltlab.wcf.poll'");
         }
 
-        if ($this->cache[$objectType]->className === null) {
+        if ($this->cache[$objectType]->className === '') {
             throw new SystemException("Object type '" . $objectType . "' does not provide a processor class name");
         }
 

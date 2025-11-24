@@ -61,7 +61,7 @@ class TrophyListPage extends MultipleLinkPage
 
     /**
      * The category object filter
-     * @var TrophyCategory
+     * @var ?TrophyCategory
      * @deprecated since 5.2, use CategoryTrophyListPage instead
      */
     public $category;

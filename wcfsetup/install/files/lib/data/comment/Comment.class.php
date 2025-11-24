@@ -22,7 +22,7 @@ use wcf\util\StringUtil;
  * @property-read   int $objectTypeID               id of the `com.woltlab.wcf.comment.commentableContent` object type
  * @property-read   int $objectID                   id of the commented object of the object type represented by `$objectTypeID`
  * @property-read   int $time                       timestamp at which the comment has been written
- * @property-read   int|null $userID                id of the user who wrote the comment or `null` if the user does not exist anymore or if the comment has been written by a guest
+ * @property-read   ?int $userID                id of the user who wrote the comment or `null` if the user does not exist anymore or if the comment has been written by a guest
  * @property-read   string $username                name of the user or guest who wrote the comment
  * @property-read   string $message                 comment message
  * @property-read   int $responses                  number of responses on the comment
@@ -44,7 +44,7 @@ class Comment extends DatabaseObject implements IMessage
      */
     public function getResponseIDs()
     {
-        if ($this->responseIDs === null || $this->responseIDs == '') {
+        if ($this->responseIDs === '') {
             return [];
         }
 
@@ -63,7 +63,7 @@ class Comment extends DatabaseObject implements IMessage
      */
     public function getUnfilteredResponseIDs()
     {
-        if ($this->unfilteredResponseIDs === null || $this->unfilteredResponseIDs == '') {
+        if ($this->unfilteredResponseIDs === '') {
             return [];
         }
 

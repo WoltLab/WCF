@@ -687,7 +687,9 @@ class WCF
             EmailTemplateEngine::getInstance()->addApplication($abbreviation, $packageDir . 'templates/');
 
             // init application and assign it as template variable
-            self::$applicationObjects[$application->packageID] = \call_user_func([$className, 'getInstance']);
+            $applicationObject = \call_user_func([$className, 'getInstance']);
+            \assert($applicationObject instanceof IApplication);
+            self::$applicationObjects[$application->packageID] = $applicationObject;
             static::getTPL()->assign('__' . $abbreviation, self::$applicationObjects[$application->packageID]);
             EmailTemplateEngine::getInstance()->assign(
                 '__' . $abbreviation,

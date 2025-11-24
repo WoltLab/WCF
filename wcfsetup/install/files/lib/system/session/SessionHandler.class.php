@@ -1085,20 +1085,20 @@ final class SessionHandler extends SingletonFactory
             // ... and the grace period since the last check is also exceeded.
             if ($_POST === [] || $lastCheck < (TIME_NOW - self::REAUTHENTICATION_GRACE_PERIOD)) {
                 return true;
-            } else if ($_POST !== []) {
-                // Check if the current request is a POST request against the
-                // ACP's ReauthenticationForm which must ignore the soft limit
-                // to allow a reauthentication.
-                //
-                // Without this exception the user will end up in a loop where
-                // the POST to submit the reauthentication will determine that
-                // no reauthentication is required and redirect to the admin
-                // panel instead. This in turn will be a GET request, asking
-                // for a reauthentication again and thus close the loop.
-                $className = RequestHandler::getInstance()->getActiveRequest()?->getClassName();
-                if ($className !== null && \is_subclass_of($className, \wcf\form\ReauthenticationForm::class)) {
-                    return true;
-                }
+            }
+
+            // Check if the current request is a POST request against the
+            // ACP's ReauthenticationForm which must ignore the soft limit
+            // to allow a reauthentication.
+            //
+            // Without this exception the user will end up in a loop where
+            // the POST to submit the reauthentication will determine that
+            // no reauthentication is required and redirect to the admin
+            // panel instead. This in turn will be a GET request, asking
+            // for a reauthentication again and thus close the loop.
+            $className = RequestHandler::getInstance()->getActiveRequest()?->getClassName();
+            if ($className !== null && \is_subclass_of($className, \wcf\form\ReauthenticationForm::class)) {
+                return true;
             }
         }
 

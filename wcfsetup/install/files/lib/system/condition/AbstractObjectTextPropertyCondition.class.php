@@ -130,7 +130,7 @@ abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition
         parent::setData($condition);
 
         if ($this->supportsMultipleValues) {
-            /** @noinspection PhpParamsInspection */
+            // @phpstan-ignore argument.type
             $this->fieldValue = \implode(',', $this->fieldValue);
         }
     }

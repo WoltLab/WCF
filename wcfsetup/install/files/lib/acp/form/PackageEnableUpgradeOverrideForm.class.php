@@ -118,14 +118,17 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
 
     /**
      * @return ?array{title: string, description: string}
+     * @phpstan-ignore return.unusedType
      */
     private function checkMinimumPhpVersion(): ?array
     {
         // Minimum: PHP 8.1.2
+        // @phpstan-ignore greaterOrEqual.alwaysTrue
         if (\PHP_VERSION_ID >= 80102) {
             return null;
         }
 
+        // @phpstan-ignore deadCode.unreachable
         if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
             return [
                 'title' => 'Unzureichende PHP-Version',

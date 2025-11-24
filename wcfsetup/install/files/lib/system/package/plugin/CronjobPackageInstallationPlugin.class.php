@@ -111,6 +111,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
     {
         if (\class_exists(\Random\Engine\Xoshiro256StarStar::class, false)) {
             // Generate stable, but differing values for each (instance, cronjob) pair.
+            // @phpstan-ignore class.notFound
             $randomizer = new \Random\Randomizer(new \Random\Engine\Xoshiro256StarStar(
                 \hash('sha256', \sprintf(
                     '%s:%s:%d:%s',
@@ -120,6 +121,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
                     $name
                 ), true)
             ));
+            // @phpstan-ignore class.notFound
             $engine = static fn(int $min, int $max) => $randomizer->getInt($min, $max);
         } else {
             // A seedable engine is not available, use completely random values.
@@ -383,20 +385,23 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
         }
 
         foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
-            if (!empty($descriptions)) {
-                if (isset($descriptions[$language->languageCode])) {
-                    $data['description'][$language->languageID] = $descriptions[$language->languageCode];
-                } elseif (isset($descriptions[''])) {
-                    $data['description'][$language->languageID] = $descriptions[''];
-                } elseif (isset($descriptions['en'])) {
-                    $data['description'][$language->languageID] = $descriptions['en'];
-                } elseif (isset($descriptions[WCF::getLanguage()->getFixedLanguageCode()])) {
-                    $data['description'][$language->languageID] = $descriptions[WCF::getLanguage()->getFixedLanguageCode()];
-                } else {
-                    $data['description'][$language->languageID] = \reset($descriptions);
-                }
-            } else {
+            if ($descriptions === []) {
                 $data['description'][$language->languageID] = '';
+
+                continue;
+            }
+
+            if (isset($descriptions[$language->languageCode])) {
+                $data['description'][$language->languageID] = $descriptions[$language->languageCode];
+            } elseif (isset($descriptions[''])) {
+                $data['description'][$language->languageID] = $descriptions[''];
+            } elseif (isset($descriptions['en'])) {
+                $data['description'][$language->languageID] = $descriptions['en'];
+            } elseif (isset($descriptions[WCF::getLanguage()->getFixedLanguageCode()])) {
+                $data['description'][$language->languageID] = $descriptions[WCF::getLanguage()->getFixedLanguageCode()];
+            } else {
+                // @phpstan-ignore variable.undefined
+                $data['description'][$language->languageID] = \reset($descriptions);
             }
         }
 

@@ -34,6 +34,8 @@ class ExceptionMailerCronjob extends AbstractCronjob
 
         $timestamp = RegistryHandler::getInstance()->get('com.woltlab.wcf', 'exceptionMailerTimestamp');
         $timestamp = \max($timestamp, TIME_NOW - 86400 * 3);
+
+        $files = [];
         for ($it = $timestamp; $it < TIME_NOW; $it += 86400) {
             $files[\gmdate('Y-m-d', $it)] = [];
         }
@@ -85,7 +87,8 @@ class ExceptionMailerCronjob extends AbstractCronjob
             $files[$file]['count'] = $count;
         }
 
-        if (empty($files)) {
+        // @phpstan-ignore identical.alwaysFalse
+        if ($files === []) {
             return;
         }
 

@@ -7,12 +7,6 @@ parameters:
 			path: wcfsetup/install/files/lib/acp/form/AbstractCategoryEditForm.class.php
 
 		-
-			message: '#^Strict comparison using \=\=\= between array and false will always evaluate to false\.$#'
-			identifier: identical.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/acp/form/LanguageAddForm.class.php
-
-		-
 			message: '#^Property wcf\\acp\\form\\LanguageImportForm\:\:\$language \(wcf\\data\\language\\Language\) does not accept wcf\\data\\language\\LanguageEditor\.$#'
 			identifier: assign.propertyType
 			count: 1
@@ -65,12 +59,6 @@ parameters:
 			identifier: assign.propertyType
 			count: 2
 			path: wcfsetup/install/files/lib/data/comment/CommentAction.class.php
-
-		-
-			message: '#^While loop condition is always true\.$#'
-			identifier: while.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/data/user/notification/event/UserNotificationEventAction.class.php
 
 		-
 			message: '#^Instanceof between wcf\\data\\search\\ISearchResultObject and wcf\\data\\search\\ISearchResultObject will always evaluate to true\.$#'
@@ -355,12 +343,6 @@ parameters:
 			path: wcfsetup/install/files/lib/system/condition/AbstractMultiSelectCondition.class.php
 
 		-
-			message: '#^Parameter \#2 \$array of function implode expects array\|null, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: wcfsetup/install/files/lib/system/condition/AbstractObjectTextPropertyCondition.class.php
-
-		-
 			message: '#^Strict comparison using \=\=\= between array\<mixed\> and null will always evaluate to false\.$#'
 			identifier: identical.alwaysFalse
 			count: 1
@@ -463,12 +445,6 @@ parameters:
 			path: wcfsetup/install/files/lib/system/condition/user/UserLastActivityTimeIntervalDaysCondition.class.php
 
 		-
-			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
-			identifier: identical.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/system/database/statement/PreparedStatement.class.php
-
-		-
 			message: '#^Instanceof between wcf\\system\\database\\table\\column\\IDatabaseTableColumn and wcf\\system\\database\\table\\column\\IDatabaseTableColumn will always evaluate to true\.$#'
 			identifier: instanceof.alwaysTrue
 			count: 1
@@ -529,12 +505,6 @@ parameters:
 			path: wcfsetup/install/files/lib/system/form/builder/CustomFormNode.class.php
 
 		-
-			message: '#^Empty array passed to foreach\.$#'
-			identifier: foreach.emptyArray
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/CustomFormNode.class.php
-
-		-
 			message: '#^Result of && is always false\.$#'
 			identifier: booleanAnd.alwaysFalse
 			count: 1
@@ -583,12 +553,6 @@ parameters:
 			path: wcfsetup/install/files/lib/system/form/builder/GridViewFormNode.class.php
 
 		-
-			message: '#^Empty array passed to foreach\.$#'
-			identifier: foreach.emptyArray
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/GridViewFormNode.class.php
-
-		-
 			message: '#^Result of && is always false\.$#'
 			identifier: booleanAnd.alwaysFalse
 			count: 1
@@ -613,12 +577,6 @@ parameters:
 			path: wcfsetup/install/files/lib/system/form/builder/LanguageItemFormNode.class.php
 
 		-
-			message: '#^Empty array passed to foreach\.$#'
-			identifier: foreach.emptyArray
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/LanguageItemFormNode.class.php
-
-		-
 			message: '#^Result of && is always false\.$#'
 			identifier: booleanAnd.alwaysFalse
 			count: 1
@@ -640,12 +598,6 @@ parameters:
 			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/TemplateFormNode.class.php
-
-		-
-			message: '#^Empty array passed to foreach\.$#'
-			identifier: foreach.emptyArray
-			count: 2
 			path: wcfsetup/install/files/lib/system/form/builder/TemplateFormNode.class.php
 
 		-
@@ -670,12 +622,6 @@ parameters:
 			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 3
-			path: wcfsetup/install/files/lib/system/form/builder/button/FormButton.class.php
-
-		-
-			message: '#^Empty array passed to foreach\.$#'
-			identifier: foreach.emptyArray
-			count: 2
 			path: wcfsetup/install/files/lib/system/form/builder/button/FormButton.class.php
 
 		-
@@ -736,12 +682,6 @@ parameters:
 			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 3
-			path: wcfsetup/install/files/lib/system/form/builder/field/AbstractFormField.class.php
-
-		-
-			message: '#^Empty array passed to foreach\.$#'
-			identifier: foreach.emptyArray
-			count: 2
 			path: wcfsetup/install/files/lib/system/form/builder/field/AbstractFormField.class.php
 
 		-
@@ -907,12 +847,6 @@ parameters:
 			path: wcfsetup/install/files/lib/system/form/builder/wysiwyg/WysiwygSmileyFormNode.class.php
 
 		-
-			message: '#^Empty array passed to foreach\.$#'
-			identifier: foreach.emptyArray
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/wysiwyg/WysiwygSmileyFormNode.class.php
-
-		-
 			message: '#^Result of && is always false\.$#'
 			identifier: booleanAnd.alwaysFalse
 			count: 1
@@ -1066,10 +1000,4 @@ parameters:
 			message: '#^Parameter \#1 \$iterator of class RecursiveIteratorIterator constructor expects T of IteratorAggregate\|RecursiveIterator, DirectoryIterator given\.$#'
 			identifier: argument.type
 			count: 2
-			path: wcfsetup/install/files/lib/util/DirectoryUtil.class.php
-
-		-
-			message: '#^Property wcf\\util\\DirectoryUtil\:\:\$fileObjects \(array\<DirectoryIterator\>\) does not accept array\<SplFileInfo\>\.$#'
-			identifier: assign.propertyType
-			count: 1
 			path: wcfsetup/install/files/lib/util/DirectoryUtil.class.php
