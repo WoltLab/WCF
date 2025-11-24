@@ -104,15 +104,14 @@ class MenuItemNodeTree
         }
 
         // build menu structure
-        foreach ($menuItemList as $menuItem) {
+        foreach ($menuItemList->getObjects() as $menuItem) {
             $menuItem->cachePageObject();
 
             $this->menuItems[$menuItem->itemID] = $menuItem;
 
-            if (!isset($this->menuItemStructure[$menuItem->parentItemID])) {
-                $this->menuItemStructure[$menuItem->parentItemID] = [];
-            }
-            $this->menuItemStructure[$menuItem->parentItemID][] = $menuItem->itemID;
+            $parentItemID = $menuItem->parentItemID ?? '';
+            $this->menuItemStructure[$parentItemID] ??= [];
+            $this->menuItemStructure[$parentItemID][] = $menuItem->itemID;
         }
 
         // generate node tree
@@ -150,7 +149,7 @@ class MenuItemNodeTree
     {
         $nodes = [];
 
-        $itemIDs = ($this->menuItemStructure[$parentID] ?? []);
+        $itemIDs = ($this->menuItemStructure[$parentID ?? ''] ?? []);
         foreach ($itemIDs as $itemID) {
             $menuItem = $this->menuItems[$itemID];
 
