@@ -95,7 +95,7 @@
 	<dl>
 		<dt>{lang}wcf.acp.devtools.project.quickSetup.path{/lang}</dt>
 		<dd>
-			<input type="text" name="projectQuickSetupPath" id="projectQuickSetupPath" class="long" />
+			<input type="text" name="projectQuickSetupPath" id="projectQuickSetupPath" class="long" placeholder="{$projectQuickSetupPathPlaceholder}">
 			<small>{lang}wcf.acp.devtools.project.quickSetup.path.description{/lang}</small>
 		</dd>
 	</dl>
