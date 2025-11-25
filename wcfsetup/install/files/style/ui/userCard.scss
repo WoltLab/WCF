@@ -126,6 +126,8 @@
 }
 
 .userCard__username {
+	display: inline;
+
 	@include wcfFontHeadline;
 	@include wcfFontBold;
 }
@@ -143,6 +145,12 @@
 	&:focus {
 		color: inherit;
 	}
+}
+
+.userCard__statusIcons {
+	display: inline;
+	position: relative;
+	z-index: 1;
 }
 
 .userCard__footer__stats {
