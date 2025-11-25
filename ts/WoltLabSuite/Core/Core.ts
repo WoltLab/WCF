@@ -14,6 +14,7 @@ const _clone = function (variable: any): any {
   return variable;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 const _cloneObject = function (obj: object | any[]): object | any[] | null {
   if (!obj) {
     return null;
@@ -34,6 +35,7 @@ const _prefix = "wsc" + window.WCF_PATH.hashCode() + "-";
 /**
  * Deep clones an object.
  */
+// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 export function clone(obj: object | any[]): object | any[] {
   return _clone(obj);
 }
