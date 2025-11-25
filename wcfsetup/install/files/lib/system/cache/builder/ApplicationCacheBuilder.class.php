@@ -77,6 +77,11 @@ final class ApplicationCacheBuilder extends AbstractCacheBuilder
      */
     private function getRootApplication(array $sortedPaths): ?int
     {
+        // There are no applications during the setup.
+        if ($sortedPaths === []) {
+            return null;
+        }
+
         $candidate = \array_key_last($sortedPaths);
         $shortestPath = $sortedPaths[$candidate];
 
