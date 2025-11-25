@@ -31,7 +31,7 @@ class BulkFormBuilderDialogInteraction extends AbstractBulkInteraction
     public function render(array $objects): string
     {
         $identifier = StringUtil::encodeJS($this->getIdentifier());
-        $label = WCF::getLanguage()->get($this->languageItem) . ' (' . \count($objects) . ')';
+        $label = WCF::getLanguage()->get($this->languageItem);
         $objectIDs = \array_values(\array_map(fn(DatabaseObject $object) => $object->getObjectID(), $objects));
         $endpoint = StringUtil::encodeHTML(
             LinkHandler::getInstance()->getControllerLink($this->controller, [
