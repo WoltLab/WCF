@@ -11,7 +11,7 @@ import { MenuItem, PageMenuMainProvider } from "../../../../../Ui/Page/Menu/Main
 function getSubMenuItems(subMenu: HTMLElement, menuItem: string): MenuItem[] {
   const categoryList = subMenu.querySelector(`.acpPageSubMenuCategoryList[data-menu-item="${menuItem}"]`)!;
   return Array.from(categoryList.querySelectorAll(".acpPageSubMenuCategory")).map((category: HTMLOListElement) => {
-    const title = category.querySelector("span")!.textContent!;
+    const title = category.querySelector("span")!.textContent;
     const children = getMenuItems(category);
 
     return {
@@ -41,7 +41,7 @@ function getMenuItems(category: HTMLOListElement): MenuItem[] {
       depth: 2,
       identifier: null,
       link: link.href,
-      title: link.textContent!,
+      title: link.textContent,
     };
   });
 }
@@ -73,7 +73,7 @@ export class AcpUiPageMenuMainBackend implements PageMenuMainProvider {
     const menuItems: MenuItem[] = Array.from(menu.querySelectorAll(".acpPageMenuLink")).map(
       (link: HTMLAnchorElement) => {
         const menuItem = link.dataset.menuItem!;
-        const title = link.querySelector(".acpPageMenuItemLabel")!.textContent!;
+        const title = link.querySelector(".acpPageMenuItemLabel")!.textContent;
         const children = getSubMenuItems(subMenu, menuItem);
 
         return {

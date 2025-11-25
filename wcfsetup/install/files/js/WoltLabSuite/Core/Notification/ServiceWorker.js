@@ -42,6 +42,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
             await this.unsubscribe(currentSubscription);
             const subscription = await (await this.#serviceWorkerRegistration).pushManager.subscribe({
                 userVisibleOnly: true,
+                // The typings for buffers conflict with an implicit dependency on node.
                 applicationServerKey: this.#urlBase64ToUint8Array(this.#publicKey),
             });
             if (!subscription) {

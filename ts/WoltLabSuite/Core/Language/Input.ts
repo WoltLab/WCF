@@ -187,7 +187,7 @@ function select(elementId: string, languageId: number, isInit: boolean): void {
   const dropdownMenu = UiDropdownSimple.getDropdownMenu(data.element.closest(".inputAddon")!.id)!;
 
   const item = dropdownMenu.querySelector(`[data-language-id="${languageId}"]`);
-  const label = item ? item.textContent! : "";
+  const label = item ? item.textContent : "";
 
   // save current value
   if (data.languageId !== languageId) {

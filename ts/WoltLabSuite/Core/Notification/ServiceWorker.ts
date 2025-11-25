@@ -46,7 +46,8 @@ class ServiceWorker {
       await this.#serviceWorkerRegistration
     ).pushManager.subscribe({
       userVisibleOnly: true,
-      applicationServerKey: this.#urlBase64ToUint8Array(this.#publicKey),
+      // The typings for buffers conflict with an implicit dependency on node.
+      applicationServerKey: this.#urlBase64ToUint8Array(this.#publicKey) as BufferSource,
     });
     if (!subscription) {
       // subscription failed

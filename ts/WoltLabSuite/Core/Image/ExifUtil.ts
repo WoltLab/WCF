@@ -103,7 +103,8 @@ export async function getExifBytesFromJpeg(blob: Blob | File): Promise<Exif> {
       if (isExifSignature(signature)) {
         // append the found EXIF sequence, usually only a single EXIF (APP1) sequence should be defined
         const sequence = bytes.slice(i, length + i);
-        exif = concatUint8Arrays(exif, sequence);
+        // The typings for buffers conflict with an implicit dependency on node.
+        exif = concatUint8Arrays(exif, sequence) as Uint8Array<ArrayBuffer>;
       }
     }
 
@@ -154,7 +155,13 @@ export async function removeExifData(blob: Blob | File): Promise<Blob> {
     }
   }
 
-  return new Blob([result], { type: blob.type });
+  return new Blob(
+    [
+      // The typings for buffers conflict with an implicit dependency on node.
+      result as BlobPart,
+    ],
+    { type: blob.type },
+  );
 }
 
 /**
@@ -177,7 +184,13 @@ export async function setExifData(blob: Blob, exif: Exif): Promise<Blob> {
 
   const result = concatUint8Arrays(start, exif, end);
 
-  return new Blob([result], { type: blob.type });
+  return new Blob(
+    [
+      // The typings for buffers conflict with an implicit dependency on node.
+      result as BlobPart,
+    ],
+    { type: blob.type },
+  );
 }
 
 export type Exif = Uint8Array;

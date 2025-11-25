@@ -166,10 +166,10 @@ class Ckeditor {
 }
 
 function* findModelForRemoval(
-  element: CKEditor5.Engine.Element,
+  element: CKEditor5.Engine.ModelElement,
   model: string,
   attributes: Record<string, string | number | boolean>,
-): Generator<CKEditor5.Engine.Element> {
+): Generator<CKEditor5.Engine.ModelElement> {
   if (element.is("element", model)) {
     const isMatch = Object.entries(attributes).every(([key, value]) => {
       if (!element.hasAttribute(key)) {

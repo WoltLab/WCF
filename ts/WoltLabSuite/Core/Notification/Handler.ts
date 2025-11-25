@@ -233,7 +233,7 @@ class NotificationHandler {
 
       try {
         notification = new window.Notification(pollData.notification.title, {
-          body: div.textContent!,
+          body: div.textContent,
           icon: this.icon,
         });
       } catch (e) {

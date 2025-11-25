@@ -246,7 +246,7 @@ export class UiMessageQuote implements AjaxCallbackObject {
 
       if (node instanceof HTMLAnchorElement) {
         // \u2026 === &hellip;
-        const value = node.textContent!;
+        const value = node.textContent;
         if (value.indexOf("\u2026") > 0) {
           const tmp = value.split(/\u2026/);
           if (tmp.length === 2) {

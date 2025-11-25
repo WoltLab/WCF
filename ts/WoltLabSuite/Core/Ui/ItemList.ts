@@ -502,7 +502,7 @@ export function getValues(elementId: string): ItemData[] {
   data.list.querySelectorAll(".item > span").forEach((span: HTMLSpanElement) => {
     values.push({
       objectId: +(span.dataset.objectId || ""),
-      value: span.textContent!.trim(),
+      value: span.textContent.trim(),
       type: span.dataset.type,
     });
   });

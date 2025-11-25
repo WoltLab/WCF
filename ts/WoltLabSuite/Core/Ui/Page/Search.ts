@@ -60,7 +60,7 @@ class UiPageSearch implements AjaxCallbackObject, DialogCallbackObject {
     const page = event.currentTarget as HTMLElement;
     const pageTitle = page.querySelector("h3")!;
 
-    this.callbackSelect!(page.dataset.pageId! + "#" + pageTitle.textContent!.replace(/['"]/g, ""));
+    this.callbackSelect!(page.dataset.pageId! + "#" + pageTitle.textContent.replace(/['"]/g, ""));
 
     UiDialog.close(this);
   }

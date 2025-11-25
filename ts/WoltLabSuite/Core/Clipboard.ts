@@ -15,5 +15,5 @@ export async function copyTextToClipboard(text: string): Promise<void> {
 }
 
 export async function copyElementTextToClipboard(element: HTMLElement): Promise<void> {
-  return copyTextToClipboard(element.textContent!.replace(/\u200B/g, "").replace(/\u00A0/g, " "));
+  return copyTextToClipboard(element.textContent.replace(/\u200B/g, "").replace(/\u00A0/g, " "));
 }
