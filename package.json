@@ -4,10 +4,10 @@
     "bundle-web-components": "npx esbuild ts/WoltLabSuite/WebComponent/index.ts --minify --bundle --watch --outfile=wcfsetup/install/files/js/WoltLabSuite/WebComponent.min.js"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^8.46.1",
-    "@typescript-eslint/parser": "^8.46.1",
-    "esbuild": "^0.25.11",
-    "eslint": "^9.38.0",
+    "@typescript-eslint/eslint-plugin": "^8.48.0",
+    "@typescript-eslint/parser": "^8.48.0",
+    "esbuild": "^0.27.0",
+    "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.6.2",
     "typescript": "^5.9.3"
@@ -30,14 +30,14 @@
     "@woltlab/zxcvbn": "git+https://github.com/WoltLab/zxcvbn.git#5b582b24e437f1883ccad3c37dae7c3c5f1e7da3",
     "cropperjs": "2.0.1",
     "exifreader": "^4.32.0",
-    "focus-trap": "^7.6.5",
+    "focus-trap": "^7.6.6",
     "hash-wasm": "^4.12.0",
     "html-parsed-element": "^0.4.1",
     "perfect-scrollbar": "^1.5.6",
     "qr-creator": "^1.0.0",
     "reflect-metadata": "^0.2.2",
     "sortablejs": "^1.15.6",
-    "tabbable": "^6.2.0",
+    "tabbable": "^6.3.0",
     "tslib": "^2.8.1"
   },
   "exifreader": {

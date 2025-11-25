@@ -94,6 +94,7 @@ define(["require", "exports", "./WebP"], function (require, exports, WebP_1) {
                 if (isExifSignature(signature)) {
                     // append the found EXIF sequence, usually only a single EXIF (APP1) sequence should be defined
                     const sequence = bytes.slice(i, length + i);
+                    // The typings for buffers conflict with an implicit dependency on node.
                     exif = concatUint8Arrays(exif, sequence);
                 }
             }
@@ -148,7 +149,10 @@ define(["require", "exports", "./WebP"], function (require, exports, WebP_1) {
                 i += length;
             }
         }
-        return new Blob([result], { type: blob.type });
+        return new Blob([
+            // The typings for buffers conflict with an implicit dependency on node.
+            result,
+        ], { type: blob.type });
     }
     /**
      * Overrides the APP1 (EXIF / XMP) sections of a JPEG blob with the given data.
@@ -164,6 +168,9 @@ define(["require", "exports", "./WebP"], function (require, exports, WebP_1) {
         const start = bytes.slice(0, offset);
         const end = bytes.slice(offset);
         const result = concatUint8Arrays(start, exif, end);
-        return new Blob([result], { type: blob.type });
+        return new Blob([
+            // The typings for buffers conflict with an implicit dependency on node.
+            result,
+        ], { type: blob.type });
     }
 });

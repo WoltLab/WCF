@@ -354,11 +354,19 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
             }
         }
 
-        $appendToPreviousParagraph = static function ($node) {
-            /** @var ?\DOMElement $paragraph */
-            $paragraph = $node->previousSibling;
+        $appendToPreviousParagraph = static function (\DOMNode $node) {
+            $paragraph = $node;
+            while ($paragraph = $paragraph->previousSibling) {
+                if ($paragraph instanceof \DOMText) {
+                    if (!\str_contains($paragraph->textContent, ' ') && StringUtil::trim($paragraph->textContent) === '') {
+                        continue;
+                    }
+                }
 
-            if (!$paragraph || $paragraph->nodeName !== 'p') {
+                break;
+            }
+
+            if ($paragraph === null || $paragraph->nodeName !== 'p') {
                 $paragraph = $node->ownerDocument->createElement('p');
                 $node->parentNode->insertBefore($paragraph, $node);
             }

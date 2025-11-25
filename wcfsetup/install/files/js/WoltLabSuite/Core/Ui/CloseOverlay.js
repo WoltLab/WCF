@@ -33,6 +33,7 @@ define(["require", "exports", "tslib", "../CallbackList"], function (require, ex
     function remove(identifier) {
         _callbackList.remove(identifier);
     }
+    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
     function execute(origin, identifier) {
         _callbackList.forEach(null, (callback) => callback(origin, identifier));
     }
