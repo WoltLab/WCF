@@ -194,6 +194,7 @@ class WCF
         // start initialization
         $this->initDB();
         $this->loadOptions();
+        $this->resolveActiveApplication();
         $this->initSession();
         $this->initLanguage();
         $this->initTPL();
@@ -418,7 +419,7 @@ class WCF
         require($filename);
 
         // check if option file is complete and writable
-        if (PACKAGE_ID) {
+        if (!defined('PACKAGE_ID') || \PACKAGE_ID !== 0) {
             if (!\is_writable($filename)) {
                 FileUtil::makeWritable($filename);
 
@@ -517,6 +518,26 @@ class WCF
 
         // The autoscale quality setting for attachments was removed with version 6.2.
         \define('ATTACHMENT_IMAGE_AUTOSCALE_QUALITY', 80);
+    }
+
+    /**
+     * Resolve the active application and the path when using smart URL rewriting.
+     *
+     * @since 6.2
+     */
+    protected function resolveActiveApplication(): void
+    {
+        if (!isset($_GET['__rewrittenPath']) || \defined('PACKAGE_ID')) {
+            if (!\defined('PACKAGE_ID')) {
+                \define('PACKAGE_ID', 1);
+            }
+
+            return;
+        }
+
+        ApplicationHandler::getInstance()->resolveActiveApplication($_GET['__rewrittenPath']);
+
+        unset($_GET['__rewrittenPath']);
     }
 
     /**

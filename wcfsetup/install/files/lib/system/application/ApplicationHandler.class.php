@@ -26,16 +26,19 @@ use wcf\util\Url;
 final class ApplicationHandler extends SingletonFactory
 {
     /**
-     * application cache
-     * @var mixed[][]
+     * @var array{
+     *  abbreviation: array<string, int>,
+     *  application: array<int, Application>,
+     *  rootApplication: ?int,
+     *  sortedPaths: array<int, string>
+     * }
      */
-    protected $cache;
+    private array $cache;
 
     /**
-     * list of page URLs
      * @var string[]
      */
-    protected array $pageURLs = [];
+    private array $pageURLs;
 
     /**
      * Initializes cache.
@@ -185,7 +188,7 @@ final class ApplicationHandler extends SingletonFactory
      */
     public function isInternalURL(string $url): bool
     {
-        if (empty($this->pageURLs)) {
+        if (!isset($this->pageURLs)) {
             $internalHostnames = ArrayUtil::trim(\explode("\n", StringUtil::unifyNewlines(\INTERNAL_HOSTNAMES)));
 
             $this->pageURLs = \array_unique([
@@ -219,9 +222,7 @@ final class ApplicationHandler extends SingletonFactory
      * @since 5.2
      * @deprecated 5.5 - This function is a noop. The 'active' status is determined live.
      */
-    public function rebuildActiveApplication(): void
-    {
-    }
+    public function rebuildActiveApplication(): void {}
 
     /**
      * @since 6.0
@@ -229,6 +230,52 @@ final class ApplicationHandler extends SingletonFactory
     public function getDomainName(): string
     {
         return $this->getApplicationByID(1)->domainName;
+    }
+
+    /**
+     * Resolve the active package id based on the rewritten URL.
+     *
+     * @since 6.2
+     */
+    public function resolveActiveApplication(string $path): void
+    {
+        $rootApplication = $this->cache['rootApplication'];
+        \assert($rootApplication !== null);
+
+        $path = FileUtil::removeLeadingSlash($path);
+        $packageID = \array_find_key(
+            $this->cache['sortedPaths'],
+            static fn($prefix) => \str_starts_with($path, $prefix),
+        );
+
+        if ($packageID === null) {
+            \assert($this->cache['rootApplication'] !== null);
+            $packageID = $this->cache['rootApplication'];
+        } else {
+            $prefix = $this->cache['sortedPaths'][$packageID];
+            $path = \mb_substr($path, \mb_strlen($prefix));
+        }
+
+
+        RouteHandler::overridePathInfo($path);
+
+        if (!\defined('PACKAGE_ID')) {
+            \define('PACKAGE_ID', $packageID);
+
+            if ($packageID !== 1) {
+                $application = ApplicationHandler::getInstance()->getApplicationByID($packageID);
+                \assert($application !== null);
+
+                // Include the `app.config.inc.php` of the primary app.
+                $pathname = FileUtil::addTrailingSlash(
+                    FileUtil::getRealPath(
+                        \WCF_DIR . $application->getPackage()->packageDir
+                    )
+                ) . 'app.config.inc.php';
+
+                require_once $pathname;
+            }
+        }
     }
 
     /**
@@ -263,7 +310,7 @@ final class ApplicationHandler extends SingletonFactory
         }
 
         if ($skipCache) {
-            $sql = "SELECT package 
+            $sql = "SELECT package
                     FROM   wcf" . WCF_N . "_package
                     WHERE  isApplication = ?";
             $statement = WCF::getDB()->prepareUnmanaged($sql);

@@ -384,4 +384,14 @@ final class RouteHandler extends SingletonFactory
 
         return self::$pathInfo;
     }
+
+    /**
+     * Overrides the path info as part of the smart URL rewriting feature.
+     *
+     * @since 6.2
+     */
+    public static function overridePathInfo(string $pathInfo): void
+    {
+        self::$pathInfo = $pathInfo;
+    }
 }

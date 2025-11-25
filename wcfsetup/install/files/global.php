@@ -1,21 +1,19 @@
 <?php
 
 /**
- * @author  Marcel Werk
+ * @author      Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
-// include config
 require_once(__DIR__ . '/app.config.inc.php');
 
-// Make the frontend inaccessible until WCFSetup completes.
-if (!PACKAGE_ID) {
+// Deny access to the frontend until the WCFSetup has completed.
+if (defined('PACKAGE_ID') && PACKAGE_ID === 0) {
     \http_response_code(500);
 
     exit;
 }
 
-// initiate wcf core
 require_once(WCF_DIR . 'lib/system/WCF.class.php');
 new wcf\system\WCF();
