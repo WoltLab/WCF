@@ -261,6 +261,20 @@ final class ApplicationHandler extends SingletonFactory
 
         if (!\defined('PACKAGE_ID')) {
             \define('PACKAGE_ID', $packageID);
+
+            if ($packageID !== 1) {
+                $application = ApplicationHandler::getInstance()->getApplicationByID($packageID);
+                \assert($application !== null);
+
+                // Include the `app.config.inc.php` of the primary app.
+                $pathname = FileUtil::addTrailingSlash(
+                    FileUtil::getRealPath(
+                        \WCF_DIR . $application->getPackage()->packageDir
+                    )
+                ) . 'app.config.inc.php';
+
+                require_once $pathname;
+            }
         }
     }
 
