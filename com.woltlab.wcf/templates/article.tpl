@@ -69,12 +69,6 @@
 	class="section entry article"
 	{unsafe:$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.likeableArticle', $article->articleID)}
 >
-	{if $articleContent->teaser}
-		<div class="entry__teaser htmlContent">
-			{unsafe:$articleContent->getFormattedTeaser()}
-		</div>
-	{/if}
-	
 	{if $articleContent->getImage() && $articleContent->getImage()->hasThumbnail('large')}
 		<div class="entry__coverPhoto__wrapper" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
 			<figure class="entry__coverPhoto">
@@ -92,6 +86,12 @@
 			<meta itemprop="url" content="{$articleContent->getImage()->getThumbnailLink('large')}">
 			<meta itemprop="width" content="{$articleContent->getImage()->getThumbnailWidth('large')}">
 			<meta itemprop="height" content="{$articleContent->getImage()->getThumbnailHeight('large')}">
+		</div>
+	{/if}
+
+	{if $articleContent->teaser}
+		<div class="entry__teaser htmlContent">
+			{unsafe:$articleContent->getFormattedTeaser()}
 		</div>
 	{/if}
 	
