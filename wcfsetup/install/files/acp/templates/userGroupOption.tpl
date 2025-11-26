@@ -139,7 +139,11 @@
 					
 					{if $errorType[$group->groupID]|isset}
 						<small class="innerError">
-							{lang}wcf.acp.group.option.error.{$errorType[$group->groupID]}{/lang}
+							{if $errorType[$group->groupID] === 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.group.option.error.{$errorType[$group->groupID]}{/lang}
+							{/if}
 						</small>
 					{/if}
 					{hascontent}<small>{content}{lang __optional=true}wcf.acp.group.option.{$userGroupOption->optionName}.description{/lang}{/content}</small>{/hascontent}
