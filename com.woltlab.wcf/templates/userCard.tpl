@@ -40,18 +40,22 @@
 	</div>
 
 	<div class="userCard__content">
-		<h3 class="userCard__username">
-			<a href="{$user->getLink()}" class="userCard__link">{unsafe:$user->getFormattedUsername()}</a>
+		<div class="userCard__headline">
+			<h3 class="userCard__username">
+				<a href="{$user->getLink()}" class="userCard__link">{unsafe:$user->getFormattedUsername()}</a>
+			</h3>
 			
-			{if $user->banned}
-				<span class="jsTooltip jsUserBanned" title="{lang}wcf.user.banned{/lang}">
-					{icon name='lock'}
-				</span>
-			{/if}
+			<div class="userCard__statusIcons">
+				{if $user->banned}
+					<span class="jsTooltip jsUserBanned" role="status" title="{lang}wcf.user.banned{/lang}">
+						{icon name='lock'}
+					</span>
+				{/if}
 
-			{event name='icons'}
-		</h3>
-
+				{event name='icons'}
+			</div>
+		</div>
+		
 		{event name='afterUsername'}
 
 		{if MODULE_USER_RANK}
