@@ -2972,7 +2972,7 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.style.globalValues.input"><![CDATA[Individuelles CSS und SCSS]]></item>
 		<item name="wcf.acp.style.globalValues.input.error"><![CDATA[Der SCSS-Code enthält einen Fehler: {$errorType.message}.]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Vorschaubild]]></item>
-		<item name="wcf.acp.style.image.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Lade{else}Laden Sie{/if} hier ein Vorschaubild dieses Stiles hoch, als Bildformate sind JPG und PNG zulässig. Es wird empfohlen Vorschaubilder immer mit der Größe 102 × 64 Pixel anzulegen, größere Grafiken werden automatisch skaliert.]]></item>
+		<item name="wcf.acp.style.image.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Lade{else}Laden Sie{/if} hier ein Vorschaubild dieses Stiles hoch, als Bildformate sind JPG, PNG und WebP zulässig. Es wird empfohlen Vorschaubilder immer mit der Größe 102 × 64 Pixel anzulegen, größere Grafiken werden automatisch skaliert.]]></item>
 		<item name="wcf.acp.style.image2x"><![CDATA[Vorschaubild (HD)]]></item>
 		<item name="wcf.acp.style.image2x.description"><![CDATA[Diese Grafik wird für hochauflösende Bildschirme (z. B. Apple Retina-Display oder 4K/UHD-Monitore) verwendet und muss doppelt so groß sein wie das normale Vorschaubild.]]></item>
 		<item name="wcf.acp.style.imagePath"><![CDATA[Bilder-Pfad]]></item>

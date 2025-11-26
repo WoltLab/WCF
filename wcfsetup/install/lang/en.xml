@@ -2900,7 +2900,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.globalValues.input"><![CDATA[Individual CSS and SCSS]]></item>
 		<item name="wcf.acp.style.globalValues.input.error"><![CDATA[The SCSS code contains an error: {$errorType.message}.]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Preview Image]]></item>
-		<item name="wcf.acp.style.image.description"><![CDATA[Upload a preview image for this style, acceptable image types are JPG and PNG. Dimensions should be 102 × 64 pixels, exceeding images will be scaled.]]></item>
+		<item name="wcf.acp.style.image.description"><![CDATA[Upload a preview image for this style, acceptable image types are JPG, PNG and WebP. Dimensions should be 102 × 64 pixels, exceeding images will be scaled.]]></item>
 		<item name="wcf.acp.style.image2x"><![CDATA[Preview Image (HD)]]></item>
 		<item name="wcf.acp.style.image2x.description"><![CDATA[This image is used on high resolution displays such as the Apple Retina or 4K/UHD-displays. The image must be double times the dimensions of the normal image to work.]]></item>
 		<item name="wcf.acp.style.imagePath"><![CDATA[Image Path]]></item>
