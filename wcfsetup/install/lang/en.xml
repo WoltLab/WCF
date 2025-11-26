@@ -5413,7 +5413,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.notification.commentResponseOwner.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} replied to the comment by <strong>{$author}</strong> on your wall.]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.mail.plaintext"><![CDATA[{@$authorList} replied to {@$commentAuthor}’s comment on your wall [URL:{@$owner->getLink()}#wall/comment{@$commentID}/response{@$responseID}]{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.mail.html"><![CDATA[<p>{@$authorList} replied to <strong>{$commentAuthor}</strong>’s comment on <a href="{$owner->getLink()}#wall/comment{@$commentID}/response{@$responseID}">your wall</a>:</p>]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.notification.comment"><![CDATA[New comment on my wall]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.notification.comment"><![CDATA[New comment on your wall]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponse"><![CDATA[New reply to your comment]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponseOwner"><![CDATA[New reply to a comment on your wall]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.like.notification.like"><![CDATA[Reaction to your comment]]></item>
@@ -5425,7 +5425,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.notification.com.woltlab.wcf.administration"><![CDATA[Administration]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.report"><![CDATA[New report]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.notification.comment"><![CDATA[New comment to a moderation entry]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.notification.comment"><![CDATA[New comment on a moderation entry]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.response.notification.commentResponse"><![CDATA[New reply to a comment on a moderation entry]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.page"><![CDATA[Pages]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.page.notification.comment"><![CDATA[New comment on a page]]></item>
@@ -5475,9 +5475,9 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.notification.article.mail.plaintext"><![CDATA[{@$author} wrote the article “{@$articleContent->getTitle()}” [URL:{@$articleContent->getLink()}]:]]></item>
 		<item name="wcf.user.notification.article.mail.html"><![CDATA[<p><strong>{$author}</strong> wrote the article <a href="{$articleContent->getLink()}">{$articleContent->getTitle()}</a>:</p>]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.response.notification.commentResponseOwner"><![CDATA[New reply to a comment on your article]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.response.notification.commentResponse"><![CDATA[New reply to your comment and to article in subscribed category]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.notification.comment"><![CDATA[New comment to your article and to article in subscribed category]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.like.notification.like"><![CDATA[Reaction to your comment to an article]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.response.notification.commentResponse"><![CDATA[New reply to your comment and to articles in a subscribed category]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.notification.comment"><![CDATA[New comment to your article and to articles in a subscribed category]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.like.notification.like"><![CDATA[Reaction to your comment on an article]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.response.like.notification.like"><![CDATA[Reaction to your reply to a comment]]></item>
 		<item name="wcf.user.notification.pageComment.responseOwner.title"><![CDATA[New Reply (Page)]]></item>
 		<item name="wcf.user.notification.status.active"><![CDATA[Active]]></item>
