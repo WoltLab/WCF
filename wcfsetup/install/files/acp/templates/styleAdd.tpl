@@ -12,13 +12,18 @@
 		});
 
 		ColorPicker.fromSelector(".jsColorPicker");
-	});
-	
-	$(function() {
-		$('.jsUnitSelect').change(function(event) {
-			var $target = $(event.currentTarget);
-			$target.prev().attr('step', (($target.val() === 'em' || $target.val() === 'rem') ? '0.01' : '1'));
-		}).trigger('change');
+
+		function updateStep(selection) {
+			const input = selection.previousElementSibling;
+			input.step = (selection.value === "em" || selection.value === "rem") ? "0.01" : "1";
+		}
+
+		document.querySelectorAll(".jsUnitSelect").forEach((selection) => {
+			selection.addEventListener("change", () => {
+				updateStep(selection);
+			});
+			updateStep(selection);
+		});
 	});
 </script>
 
