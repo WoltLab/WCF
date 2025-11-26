@@ -5443,9 +5443,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.notification.pageComment.responseOwner.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} replied to your comment on the page <strong>{$page->getTitle()}</strong>.]]></item>
 		<item name="wcf.user.notification.pageComment.responseOwner.mail.plaintext"><![CDATA[{@$authorList} replied to your comment on the page “{@$page->getTitle()}” [URL:{@$page->getLink()}#comment{@$commentID}]{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.pageComment.responseOwner.mail.html"><![CDATA[<p>{@$authorList} replied to your comment on the page <a href="{$page->getLink()}#comment{@$commentID}">{$page->getTitle()}</a>:</p>]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.article.comment.notification.comment"><![CDATA[New comment to your article]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.article.comment.response.notification.commentResponse"><![CDATA[New reply to your comment]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.article.comment.response.notification.commentResponseOwner"><![CDATA[New reply to a comment on your article]]></item>
 		<item name="wcf.user.notification.comment.title"><![CDATA[New Comment ({$typeName})]]></item>
 		<item name="wcf.user.notification.comment.mail.title"><![CDATA[New Comment on "{@$objectTitle}" ({@$typeName})]]></item>
 		<item name="wcf.user.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} New Comments ({$typeName})]]></item>
