@@ -359,6 +359,11 @@ html[data-color-scheme="light"] .ck-body-wrapper .ck.ck-balloon-panel {
 	overflow: auto;
 }
 
+/* Prevent the selection for the heading to take up lots of space for no reason. */
+.ck.ck-dropdown.ck-heading-dropdown .ck-dropdown__button .ck-button__label {
+	width: auto;
+}
+
 /* Prevent the “Material Design” like behavior of form labels. */
 .ck.ck-labeled-field-view__input-wrapper {
 	display: flex;
