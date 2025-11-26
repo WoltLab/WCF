@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>6.2.0 Beta 2</version>
-		<date>2025-11-12</date>
+		<version>6.2.0 Beta 4</version>
+		<date>2025-11-26</date>
 	</packageinformation>
 
 	<authorinformation>
@@ -50,12 +50,10 @@
 		<instruction type="script">acp/install_com.woltlab.wcf_step2.php</instruction>
 	</instructions>
 
-	<instructions type="update" fromversion="6.2.0 Beta 1">
+	<instructions type="update" fromversion="6.2.0 Beta 2">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
-		<instruction type="database">acp/database/update_com.woltlab.wcf_6.2_step1.php</instruction>
-		<instruction type="script">acp/update_com.woltlab.wcf_6.2.0_beta_2_fileTemporary_exifData.php</instruction>
-		<instruction type="script">acp/update_com.woltlab.wcf_6.2.0_beta_2_file_exifData.php</instruction>
 		<instruction type="language"/>
 	</instructions>
 </package>
