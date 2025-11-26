@@ -328,6 +328,7 @@
 		<item name="wcf.acp.cronjob.expressionType.random"><![CDATA[Ungefähre Zeitspanne]]></item>
 		<item name="wcf.acp.cronjob.expressionRandom"><![CDATA[Zeitspanne]]></item>
 		<item name="wcf.acp.cronjob.description"><![CDATA[Beschreibung]]></item>
+		<item name="wcf.acp.cronjob.lastExec"><![CDATA[Letzte Ausführung]]></item>
 		<item name="wcf.acp.cronjob.nextExec"><![CDATA[Nächste Ausführung]]></item>
 		<item name="wcf.acp.cronjob.edit"><![CDATA[Cronjob bearbeiten]]></item>
 		<item name="wcf.acp.cronjob.className"><![CDATA[PHP-Klassenname]]></item>

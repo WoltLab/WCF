@@ -83,6 +83,11 @@ final class CronjobGridView extends AbstractGridView
                     }
                 )
                 ->sortable(),
+            GridViewColumn::for('lastExec')
+                ->label('wcf.acp.cronjob.lastExec')
+                ->renderer(new TimeColumnRenderer())
+                ->filter(TimeFilter::class)
+                ->sortable(),
             GridViewColumn::for('nextExec')
                 ->label('wcf.acp.cronjob.nextExec')
                 ->renderer(

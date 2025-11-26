@@ -304,6 +304,7 @@
 		<item name="wcf.acp.cronjob.expressionType.random"><![CDATA[Approximate time span]]></item>
 		<item name="wcf.acp.cronjob.expressionRandom"><![CDATA[Time Span]]></item>
 		<item name="wcf.acp.cronjob.description"><![CDATA[Description]]></item>
+		<item name="wcf.acp.cronjob.lastExec"><![CDATA[Last Execution]]></item>
 		<item name="wcf.acp.cronjob.nextExec"><![CDATA[Next Scheduled Execution]]></item>
 		<item name="wcf.acp.cronjob.edit"><![CDATA[Edit Cronjob]]></item>
 		<item name="wcf.acp.cronjob.className"><![CDATA[PHP Class Name]]></item>
