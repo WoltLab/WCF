@@ -52,7 +52,6 @@ final class TagGridView extends AbstractGridView
                 ->sortable(),
             GridViewColumn::for('synonymName')
                 ->label('wcf.acp.tag.synonymFor')
-                ->renderer(new DefaultColumnRenderer())
                 ->filter(new TextFilter('synonymName', 'wcf.acp.tag.synonymFor', 'synonym.name'))
                 ->sortable(sortByDatabaseColumn: "synonym.name"),
             GridViewColumn::for('languageName')
