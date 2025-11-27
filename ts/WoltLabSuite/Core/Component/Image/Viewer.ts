@@ -25,7 +25,16 @@ export function setupLegacy() {
 }
 
 export function showFancybox(userSlides?: Array<CarouselSlide>): FancyboxInstance {
-  return Fancybox.show(userSlides);
+  const fancybox = Fancybox.show(userSlides);
+  if (fancybox === undefined) {
+    throw new Error("Unable to initialize a fancybox instance.", {
+      cause: {
+        userSlides,
+      },
+    });
+  }
+
+  return fancybox;
 }
 
 function setDefaultConfig(): void {

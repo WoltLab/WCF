@@ -20,7 +20,15 @@ define(["require", "exports", "@fancyapps/ui", "WoltLabSuite/Core/Helper/PageOve
         });
     }
     function showFancybox(userSlides) {
-        return ui_1.Fancybox.show(userSlides);
+        const fancybox = ui_1.Fancybox.show(userSlides);
+        if (fancybox === undefined) {
+            throw new Error("Unable to initialize a fancybox instance.", {
+                cause: {
+                    userSlides,
+                },
+            });
+        }
+        return fancybox;
     }
     function setDefaultConfig() {
         const defaultConfig = ui_1.Fancybox.getDefaults();
