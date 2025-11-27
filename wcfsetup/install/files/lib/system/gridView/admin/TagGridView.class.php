@@ -7,10 +7,12 @@ use wcf\data\DatabaseObject;
 use wcf\data\tag\Tag;
 use wcf\data\tag\TagList;
 use wcf\event\gridView\admin\TagGridViewInitialized;
+use wcf\page\TaggedListViewPage;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
+use wcf\system\gridView\renderer\ILinkColumnRenderer;
 use wcf\system\gridView\renderer\NumberColumnRenderer;
 use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
 use wcf\system\interaction\admin\TagInteractions;
@@ -18,6 +20,7 @@ use wcf\system\interaction\bulk\admin\TagBulkInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\language\LanguageFactory;
+use wcf\system\request\LinkHandler;
 use wcf\system\view\filter\IntegerFilter;
 use wcf\system\view\filter\ObjectIdFilter;
 use wcf\system\view\filter\SelectFilter;
@@ -89,7 +92,34 @@ final class TagGridView extends AbstractGridView
                 ->sortable(sortByDatabaseColumn: 'language.languageName'),
             GridViewColumn::for('usageCount')
                 ->label('wcf.acp.tag.usageCount')
-                ->renderer(new NumberColumnRenderer())
+                ->renderer(
+                    new class extends NumberColumnRenderer implements ILinkColumnRenderer {
+                        #[\Override]
+                        public function render(mixed $value, DatabaseObject $row): string
+                        {
+                            \assert($row instanceof Tag);
+
+                            if (!$value) {
+                                return parent::render($value, $row);
+                            }
+
+                            return \sprintf(
+                                '<a href="%s">%s<a>',
+                                StringUtil::encodeHTML(
+                                    LinkHandler::getInstance()->getControllerLink(
+                                        TaggedListViewPage::class,
+                                        [
+                                            'tagIDs' => [
+                                                $row->getObjectID()
+                                            ]
+                                        ]
+                                    )
+                                ),
+                                parent::render($value, $row),
+                            );
+                        }
+                    }
+                )
                 ->filter(new IntegerFilter('usageCount', 'wcf.acp.tag.usageCount', $this->subSelectUsageCount()))
                 ->sortable(sortByDatabaseColumn: $this->subSelectUsageCount()),
         ]);
