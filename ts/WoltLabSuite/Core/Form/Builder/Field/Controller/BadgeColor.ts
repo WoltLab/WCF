@@ -42,4 +42,8 @@ export function setup(containerId: string, inputFieldId: string, placeholder: st
     },
     { passive: true },
   );
+
+  if (inputField.value !== "") {
+    updatePreview(inputField, fields, placeholder);
+  }
 }

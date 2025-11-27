@@ -36,5 +36,8 @@ define(["require", "exports"], function (require, exports) {
         inputField.addEventListener("input", () => {
             updatePreview(inputField, fields, placeholder);
         }, { passive: true });
+        if (inputField.value !== "") {
+            updatePreview(inputField, fields, placeholder);
+        }
     }
 });
