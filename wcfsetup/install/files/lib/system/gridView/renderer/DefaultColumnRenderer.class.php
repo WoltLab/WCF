@@ -18,7 +18,7 @@ class DefaultColumnRenderer extends AbstractColumnRenderer
     #[\Override]
     public function render(mixed $value, DatabaseObject $row): string
     {
-        return $value;
+        return (string)$value;
     }
 
     #[\Override]
