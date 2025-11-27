@@ -4342,6 +4342,7 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.message.toc.hide"><![CDATA[Verbergen]]></item>
 		<item name="wcf.message.toc.show"><![CDATA[Anzeigen]]></item>
 		<item name="wcf.message.user.consent.button.enable"><![CDATA[Alle externen Inhalte anzeigen]]></item>
+		<item name="wcf.message.user.consent.button.enableOnce"><![CDATA[Inhalt einmalig anzeigen]]></item>
 		<item name="wcf.message.user.consent.description"><![CDATA[Inhalte von externen Seiten werden ohne {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Zustimmung nicht automatisch geladen und angezeigt.]]></item>
 		<item name="wcf.message.user.consent.notice"><![CDATA[Durch die Aktivierung der externen Inhalte {if LANGUAGE_USE_INFORMAL_VARIANT}erklärst du dich{else}erklären Sie sich{/if} damit einverstanden, dass personenbezogene Daten an Drittplattformen übermittelt werden. Mehr Informationen dazu haben wir in unserer Datenschutzerklärung zur Verfügung gestellt.]]></item>
 		<item name="wcf.message.user.consent.title"><![CDATA[Externer Inhalt]]></item>

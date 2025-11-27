@@ -4288,6 +4288,7 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.message.toc.hide"><![CDATA[hide]]></item>
 		<item name="wcf.message.toc.show"><![CDATA[show]]></item>
 		<item name="wcf.message.user.consent.button.enable"><![CDATA[Display all external content]]></item>
+		<item name="wcf.message.user.consent.button.enable"><![CDATA[Display content once]]></item>
 		<item name="wcf.message.user.consent.description"><![CDATA[Content embedded from external sources will not be displayed without your consent.]]></item>
 		<item name="wcf.message.user.consent.notice"><![CDATA[Through the activation of external content, you agree that personal data may be transferred to third party platforms. We have provided more information on this in our privacy policy.]]></item>
 		<item name="wcf.message.user.consent.title"><![CDATA[External Content]]></item>

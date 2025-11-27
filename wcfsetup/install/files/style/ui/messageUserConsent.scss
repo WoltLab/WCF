@@ -26,8 +26,12 @@
 }
 
 .messageUserConsentButtonContainer {
+	column-gap: 5px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 	margin: 10px 0;
-	text-align: center;
+	row-gap: 10px;
 }
 
 .messageUserConsentNotice {
