@@ -258,6 +258,10 @@
         return "";
       }
 
+      if (page === 1) {
+        return this.url;
+      }
+
       const url = new URL(this.url);
       url.search += url.search !== "" ? "&" : "?";
       url.search += new URLSearchParams([["pageNo", page.toString()]]).toString();
