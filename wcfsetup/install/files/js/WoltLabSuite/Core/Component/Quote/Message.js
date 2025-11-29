@@ -38,8 +38,16 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
             if (container.classList.contains("jsInvalidQuoteTarget")) {
                 return;
             }
-            container.addEventListener("mousedown", (event) => onMouseDown(event));
+            container.addEventListener("mousedown", (event) => {
+                onMouseDown(event);
+            });
             container.classList.add("jsQuoteMessageContainer");
+            container.addEventListener("touchstart", (event) => {
+                if (event.target instanceof Node && (event.target === copyQuote || copyQuote.contains(event.target))) {
+                    return;
+                }
+                copyQuote.classList.remove("active");
+            });
             const quoteMessage = container.querySelector(".jsQuoteMessage");
             if (quoteMessage === null) {
                 return;

@@ -81,8 +81,18 @@ export function registerContainer(
       return;
     }
 
-    container.addEventListener("mousedown", (event) => onMouseDown(event));
+    container.addEventListener("mousedown", (event) => {
+      onMouseDown(event);
+    });
     container.classList.add("jsQuoteMessageContainer");
+
+    container.addEventListener("touchstart", (event) => {
+      if (event.target instanceof Node && (event.target === copyQuote || copyQuote.contains(event.target))) {
+        return;
+      }
+
+      copyQuote.classList.remove("active");
+    });
 
     const quoteMessage = container.querySelector<HTMLElement>(".jsQuoteMessage");
     if (quoteMessage === null) {
