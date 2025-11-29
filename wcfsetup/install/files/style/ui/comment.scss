@@ -108,10 +108,11 @@
 
 	.commentAdd__placeholder {
 		align-items: center;
-		background-color: var(--wcfButtonBackground);
+		background-color: var(--wcfInputBackground);
+		border: 1px solid var(--wcfInputBorder);
 		border-radius: var(--wcfBorderRadius);
 		column-gap: 10px;
-		color: var(--wcfButtonText);
+		color: var(--wcfInputText);
 		display: flex;
 		padding: 10px 20px;
 		width: 100%;
@@ -121,6 +122,12 @@
 		left: 200%;
 		position: absolute;
 		top: -100%;
+	}
+}
+
+@media (hover: hover) {
+	.commentAdd__content--collapsed .commentAdd__placeholder:hover {
+		border-color: var(--wcfInputBorderActive);
 	}
 }
 
