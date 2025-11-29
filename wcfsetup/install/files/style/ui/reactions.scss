@@ -38,7 +38,8 @@ html[data-color-scheme="dark"] .reactionPopover {
 	height: 20px;
 }
 
-.reactionPopoverContent .reactionType {
+.reactionPopoverContent .reactionType,
+.reactionTypeListImage .reactionType {
 	width: 24px;
 	height: 24px;
 }

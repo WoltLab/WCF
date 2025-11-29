@@ -57,7 +57,7 @@ final class ReactionTypeGridView extends AbstractGridView
                         #[\Override]
                         public function getClasses(): string
                         {
-                            return "gridView__column--icon";
+                            return "gridView__column--icon reactionTypeListImage";
                         }
                     }
                 ),
