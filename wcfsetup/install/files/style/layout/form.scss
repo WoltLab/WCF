@@ -365,10 +365,40 @@ html[data-color-scheme="dark"] .passwordStrengthScore {
 .selectOptionsList {
 	display: flex;
 	flex-direction: column;
-	gap: 3px;
+	gap: 5px;
 }
 
 .selectOptionsListItem {
-	display: flex;
 	align-items: center;
+	column-gap: 5px;
+	display: flex;
+}
+
+.selectOptionsListItem__inputContainer {
+	align-items: center;
+	display: flex;
+	gap: 5px;
+}
+
+.selectOptionsList + .selectOptionsListItem__addItem {
+	margin-top: 10px;
+}
+
+@include screen-xs {
+	.selectOptionsList {
+		gap: 10px;
+	}
+
+	.selectOptionsListItem {
+		column-gap: 10px;
+	}
+
+	.selectOptionsListItem__inputContainer {
+		display: grid;
+		grid-template-columns: 1fr max-content;
+	}
+
+	.selectOptionsListItem__inputContainer > :last-child {
+		grid-column: 1 / 3;
+	}
 }

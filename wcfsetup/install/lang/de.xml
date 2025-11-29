@@ -4140,6 +4140,7 @@ Dateianhänge:
 		<item name="wcf.form.field.upload.error.fileExtension"><![CDATA[Die Datei „{$filename}“ hat eine ungültige Dateiendung. Erlaubt sind: {implode from=$allowedFileExtensions item=extension}{$extension}{/implode}.]]></item>
 		<item name="wcf.form.selectOptions.key"><![CDATA[Bezeichner]]></item>
 		<item name="wcf.form.selectOptions.value"><![CDATA[Wert]]></item>
+		<item name="wcf.form.selectOptions.addItem"><![CDATA[Weitere Option hinzufügen]]></item>
 		<item name="wcf.form.option.boolean"><![CDATA[Ja/Nein]]></item>
 		<item name="wcf.form.option.checkboxes"><![CDATA[Checkboxen]]></item>
 		<item name="wcf.form.option.currency"><![CDATA[Währung]]></item>
