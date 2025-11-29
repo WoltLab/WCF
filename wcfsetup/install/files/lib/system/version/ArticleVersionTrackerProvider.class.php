@@ -69,7 +69,7 @@ class ArticleVersionTrackerProvider extends AbstractVersionTrackerProvider
      */
     public function getCurrentVersion(IVersionTrackerObject $object)
     {
-        \assert($object instanceof Article);
+        \assert($object instanceof ArticleVersionTracker);
 
         $properties = $this->getTrackedProperties();
 
