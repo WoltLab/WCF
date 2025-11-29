@@ -54,6 +54,7 @@ textarea::placeholder {
 input[type="search"],
 input[type="text"] {
 	-webkit-appearance: none;
+	appearance: none;
 }
 
 @media (pointer: coarse) {
@@ -95,6 +96,7 @@ input[disabled],
 textarea[disabled] {
 	-webkit-text-fill-color: var(--wcfInputDisabledText); /* override safari font color change */
 	-webkit-opacity: 1; /* override mobile safari opacity change affecting text color */
+	opacity: 1;
 }
 
 select {
