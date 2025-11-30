@@ -198,12 +198,12 @@
 
 .gridView__footer {
 	align-items: end;
-	bottom: 0;
+	bottom: -10px;
 	display: flex;
 	flex-wrap: wrap;
 	gap: 10px;
 	min-height: 54px;
-	padding: 10px 0;
+	padding: 20px 0;
 	position: sticky;
 	z-index: 2;
 }
