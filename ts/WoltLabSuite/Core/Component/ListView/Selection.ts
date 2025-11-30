@@ -175,11 +175,24 @@ export class Selection extends EventTarget {
     this.dispatchEvent(new CustomEvent("list-view:update-selection"));
 
     if (selectedIds.length === 0) {
-      this.#selectionBar.hidden = true;
+      if ("startViewTransition" in document) {
+        document.startViewTransition(() => {
+          this.#selectionBar!.hidden = true;
+        });
+      } else {
+        this.#selectionBar.hidden = true;
+      }
+
       return;
     }
 
-    this.#selectionBar.hidden = false;
+    if ("startViewTransition" in document) {
+      document.startViewTransition(() => {
+        this.#selectionBar!.hidden = false;
+      });
+    } else {
+      this.#selectionBar.hidden = false;
+    }
     this.#bulkInteractionButton!.textContent = getPhrase("wcf.clipboard.button.numberOfSelectedItems", {
       numberOfSelectedItems: selectedIds.length,
     });

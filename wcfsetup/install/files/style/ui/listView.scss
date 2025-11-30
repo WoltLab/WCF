@@ -73,36 +73,14 @@
 }
 
 .listView__footer {
-	align-items: end;
 	bottom: -10px;
 	display: flex;
-	flex-wrap: wrap;
+	justify-content: center;
 	gap: 10px;
 	min-height: 54px;
 	padding: 20px 0;
 	position: sticky;
 	z-index: 2;
-}
-
-.listView__footer::after {
-	content: "";
-	flex: 1;
-}
-
-.listView__footer:not(:has(.listView__selectionBar__container))::before {
-	content: "";
-	flex: 1;
-}
-
-.listView__selectionBar__container {
-	display: flex;
-	flex: 1;
-}
-
-@include screen-xs {
-	.listView__selectionBar__container:has(.listView__selectionBar:not([hidden])) {
-		flex: none;
-	}
 }
 
 @include screen-sm-down {
@@ -117,17 +95,41 @@
 	}
 }
 
-.listView__selectionBar,
-.listView__pagination:not(:has(woltlab-core-pagination[count="1"])) {
+.listView__footer__container {
 	backdrop-filter: blur(24px);
 	background-color: rgb(var(--wcfContentContainerBackground-rgb) / 78%);
 	border: 1px solid transparent;
 	border-radius: var(--wcfBorderRadiusContainer);
 	box-shadow: var(--wcfBoxShadow);
+	display: flex;
+	gap: 21px;
 	padding: 10px;
 }
 
-html[data-color-scheme="dark"] :is(.listView__selectionBar, .listView__pagination) {
+.listView__selectionBar:not([hidden]) + .listView__pagination:not(:has(woltlab-core-pagination[count="1"]))::before {
+	bottom: 0;
+	border-left: 1px solid var(--wcfContentContainerBorder);
+	content: "";
+	position: absolute;
+	transform: translateX(-10px);
+	top: 0;
+}
+
+@include screen-xs {
+	.listView__footer__container{
+		align-items: center;
+		flex-direction: column;
+	}
+
+	.listView__selectionBar:not([hidden]) + .listView__pagination:not(:has(woltlab-core-pagination[count="1"]))::before {
+		border-left-width: 0;
+		border-top: 1px solid var(--wcfContentContainerBorder);
+		inset: auto 0;
+		transform: translateY(-10px);
+	}
+}
+
+html[data-color-scheme="dark"] .listView__footer__container {
 	border-color: var(--wcfContentContainerBorder);
 }
 

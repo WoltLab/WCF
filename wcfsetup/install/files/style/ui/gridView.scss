@@ -197,36 +197,14 @@
 }
 
 .gridView__footer {
-	align-items: end;
 	bottom: -10px;
 	display: flex;
-	flex-wrap: wrap;
+	justify-content: center;
 	gap: 10px;
 	min-height: 54px;
 	padding: 20px 0;
 	position: sticky;
 	z-index: 2;
-}
-
-.gridView__footer::after {
-	content: "";
-	flex: 1;
-}
-
-.gridView__footer:not(:has(.gridView__selectionBar__container))::before {
-	content: "";
-	flex: 1;
-}
-
-.gridView__selectionBar__container {
-	display: flex;
-	flex: 1;
-}
-
-@include screen-xs {
-	.gridView__selectionBar__container:has(.gridView__selectionBar:not([hidden])) {
-		flex: none;
-	}
 }
 
 @include screen-sm-down {
@@ -241,17 +219,40 @@
 	}
 }
 
-.gridView__selectionBar,
-.gridView__pagination:not(:has(woltlab-core-pagination[count="1"])) {
+.gridView__footer__container {
 	backdrop-filter: blur(24px);
 	background-color: rgb(var(--wcfContentContainerBackground-rgb) / 78%);
 	border: 1px solid transparent;
 	border-radius: var(--wcfBorderRadiusContainer);
 	box-shadow: var(--wcfBoxShadow);
+	display: flex;
+	gap: 21px;
 	padding: 10px;
 }
 
-html[data-color-scheme="dark"] :is(.gridView__selectionBar, .gridView__pagination) {
+.gridView__selectionBar:not([hidden]) + .gridView__pagination:not(:has(woltlab-core-pagination[count="1"]))::before {
+	border-left: 1px solid var(--wcfContentContainerBorder);
+	content: "";
+	inset: 0 auto;
+	position: absolute;
+	transform: translateX(-10px);
+}
+
+@include screen-xs {
+	.gridView__footer__container{
+		align-items: center;
+		flex-direction: column;
+	}
+
+	.gridView__selectionBar:not([hidden]) + .gridView__pagination:not(:has(woltlab-core-pagination[count="1"]))::before {
+		border-left-width: 0;
+		border-top: 1px solid var(--wcfContentContainerBorder);
+		inset: auto 0;
+		transform: translateY(-10px);
+	}
+}
+
+html[data-color-scheme="dark"] .gridView__footer__container {
 	border-color: var(--wcfContentContainerBorder);
 }
 

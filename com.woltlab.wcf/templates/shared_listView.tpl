@@ -71,8 +71,8 @@
 	<woltlab-core-notice type="info" id="{$view->getID()}_noItemsNotice"{if $view->countItems()} hidden{/if}>{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
 
 	<div class="listView__footer" id="{$view->getID()}_footer"{if $view->countPages() < 2} hidden{/if}>
-		{if $view->hasBulkInteractions()}
-			<div class="listView__selectionBar__container">
+		<div class="listView__footer__container">
+			{if $view->hasBulkInteractions()}
 				<div id="{$view->getID()}_selectionBar" class="listView__selectionBar dropdown" hidden>
 					<button type="button" id="{$view->getID()}_bulkInteractionButton" class="button small listView__bulkInteractionButton dropdownToggle"></button>
 					<ul class="dropdownMenu">
@@ -83,17 +83,17 @@
 						</li>
 					</ul>
 				</div>
-			</div>
-		{/if}
+			{/if}
 
-		<div class="listView__pagination">
-			<woltlab-core-pagination
-				id="{$view->getID()}_pagination"
-				page="{$view->getPageNo()}"
-				count="{$view->countPages()}"
-				behavior="button"
-				url="{$view->getBaseUrl()}"
-			></woltlab-core-pagination>
+			<div class="listView__pagination">
+				<woltlab-core-pagination
+					id="{$view->getID()}_pagination"
+					page="{$view->getPageNo()}"
+					count="{$view->countPages()}"
+					behavior="button"
+					url="{$view->getBaseUrl()}"
+				></woltlab-core-pagination>
+			</div>
 		</div>
 	</div>
 </div>
