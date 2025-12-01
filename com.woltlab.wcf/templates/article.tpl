@@ -115,7 +115,7 @@
 
 	<footer class="entry__footer">
 		{if MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canViewLike')}
-			<div class="articleLikesSummery">
+			<div class="article__reactionSummary">
 				{include file="reactionSummaryList" reactionData=$articleLikeData objectType="com.woltlab.wcf.likeableArticle" objectID=$article->articleID}
 			</div>
 		{/if}
@@ -265,7 +265,7 @@
 				
 				// selectors
 				containerSelector: '.article',
-				summarySelector: '.articleLikesSummery'
+				summarySelector: '.article__reactionSummary'
 			});
 		});
 	</script>
