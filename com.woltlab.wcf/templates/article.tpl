@@ -265,7 +265,6 @@
 				
 				// selectors
 				containerSelector: '.article',
-				summarySelector: '.article__reactionSummary'
 			});
 		});
 	</script>
