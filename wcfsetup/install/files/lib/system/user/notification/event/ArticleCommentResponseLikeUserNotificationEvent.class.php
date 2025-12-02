@@ -74,13 +74,20 @@ class ArticleCommentResponseLikeUserNotificationEvent extends AbstractSharedUser
             return $this->getLanguage()->getDynamicVariable(
                 'wcf.user.notification.articleComment.response.like.message.stacked',
                 [
+                    'authorList' => $this->getLanguage()->getDynamicVariable('wcf.user.notification.stacked.authorList', [
+                        'authors' => $authors,
+                        'count' => $count,
+                        'others' => $count - 1,
+                    ]),
+                    'article' => $article,
+                    'reaction' => $this->getSingleReaction(),
+                    // Not used anymore but kept here for backwards compatibility with third party translations
                     'author' => $this->author,
                     'authors' => $authors,
                     'commentID' => $this->additionalData['commentID'],
                     'commentUser' => $commentUser,
                     'count' => $count,
                     'others' => $count - 1,
-                    'article' => $article,
                     'responseID' => $this->getUserNotificationObject()->objectID,
                     'reactions' => $this->getReactionsForAuthors(),
                 ]
@@ -89,8 +96,10 @@ class ArticleCommentResponseLikeUserNotificationEvent extends AbstractSharedUser
 
         return $this->getLanguage()->getDynamicVariable('wcf.user.notification.articleComment.response.like.message', [
             'author' => $this->author,
-            'commentID' => $this->additionalData['commentID'],
             'article' => $article,
+            'reaction' => $this->getSingleReaction(),
+            // Not used anymore but kept here for backwards compatibility with third party translations
+            'commentID' => $this->additionalData['commentID'],
             'responseID' => $this->getUserNotificationObject()->objectID,
             'reactions' => $this->getReactionsForAuthors(),
         ]);

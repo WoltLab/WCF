@@ -71,11 +71,18 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
 
         if ($count > 1) {
             return $this->getLanguage()->getDynamicVariable('wcf.article.like.notification.message.stacked', [
+                'authorList' => $this->getLanguage()->getDynamicVariable('wcf.user.notification.stacked.authorList', [
+                    'authors' => $authors,
+                    'count' => $count,
+                    'others' => $count - 1,
+                ]),
+                'article' => $article,
+                'reaction' => $this->getSingleReaction(),
+                // Not used anymore but kept here for backwards compatibility with third party translations
                 'author' => $this->author,
                 'authors' => $authors,
                 'count' => $count,
                 'others' => $count - 1,
-                'article' => $article,
                 'reactions' => $this->getReactionsForAuthors(),
             ]);
         }
@@ -83,6 +90,8 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
         return $this->getLanguage()->getDynamicVariable('wcf.article.like.notification.message', [
             'author' => $this->author,
             'article' => $article,
+            'reaction' => $this->getSingleReaction(),
+            // Not used anymore but kept here for backwards compatibility with third party translations
             'userNotificationObject' => $this->getUserNotificationObject(),
             'reactions' => $this->getReactionsForAuthors(),
         ]);
