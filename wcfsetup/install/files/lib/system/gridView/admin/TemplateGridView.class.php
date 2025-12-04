@@ -2,7 +2,9 @@
 
 namespace wcf\system\gridView\admin;
 
+use wcf\acp\form\TemplateAddForm;
 use wcf\acp\form\TemplateEditForm;
+use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
@@ -25,6 +27,7 @@ use wcf\system\gridView\renderer\TimeColumnRenderer;
 use wcf\system\interaction\admin\TemplateInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
+use wcf\system\request\LinkHandler;
 use wcf\system\view\filter\AbstractFilter;
 use wcf\system\view\filter\SelectFilter;
 use wcf\system\view\filter\TextFilter;
@@ -86,7 +89,26 @@ final class TemplateGridView extends AbstractGridView
             ),
         ]);
         $this->setInteractionProvider($provider);
-        $this->addRowLink(new GridViewRowLink(TemplateEditForm::class));
+        $this->addRowLink(new class extends GridViewRowLink {
+            #[\Override]
+            public function render(mixed $value, DatabaseObject $row, bool $isPrimaryColumn = false): string
+            {
+                \assert($row instanceof Template);
+
+                if ($row->templateGroupID) {
+                    $link = LinkHandler::getInstance()->getControllerLink(TemplateEditForm::class, ['object' => $row]);
+                } else {
+                    $link = LinkHandler::getInstance()->getControllerLink(TemplateAddForm::class, ['copy' => $row->templateID]);
+                }
+
+                return \sprintf(
+                    '<a href="%s" class="gridView__rowLink" tabindex="%s">%s</a>',
+                    $link,
+                    $isPrimaryColumn ? '0' : '-1',
+                    $value,
+                );
+            }
+        });
 
         $this->setDefaultSortField("templateName");
 
