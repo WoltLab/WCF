@@ -73,7 +73,7 @@ final class SelectFormField extends AbstractFormField implements
      */
     public function value($value)
     {
-        if ($value !== null) {
+        if ($value !== null && $value !== '') {
             if (!isset($this->getOptions()[$value])) {
                 throw new \InvalidArgumentException("Unknown value '{$value}' for field '{$this->getId()}'.");
             }
