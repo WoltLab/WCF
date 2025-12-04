@@ -8,8 +8,11 @@ a.badge {
 	color: var(--color);
 	display: inline-block;
 	line-height: 1.28;
+	max-width: 100%;
+	overflow: hidden;
 	padding: 2px 6px;
 	position: relative;
+	text-overflow: ellipsis;
 	vertical-align: middle;
 	white-space: nowrap;
 	word-wrap: normal;
