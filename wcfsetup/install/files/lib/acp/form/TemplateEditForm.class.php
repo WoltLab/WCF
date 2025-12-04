@@ -50,7 +50,7 @@ class TemplateEditForm extends TemplateAddForm
             );
             $this->formObject = new Template($queryParameters['id']);
 
-            if (!$this->formObject->getObjectID()) {
+            if (!$this->formObject->getObjectID() || $this->formObject->templateGroupID === null) {
                 throw new IllegalLinkException();
             }
         } catch (MappingError) {
