@@ -202,7 +202,7 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
             return 'python';
         }
 
-        if (Regex::compile('^#!/bin/(ba|z)?sh')->match($content)) {
+        if (Regex::compile('^#!(/usr)?/bin/(ba|z)?sh')->match($content)) {
             return 'bash';
         }
 
