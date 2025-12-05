@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\acp\form\TemplateGroupAddForm;
+use wcf\acp\form\TemplateGroupEditForm;
 use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\group\TemplateGroupAction;
 use wcf\data\template\TemplateAction;
@@ -70,7 +71,7 @@ final class TemplateGroupCopyAction implements RequestHandlerInterface
 
             $returnValues = (new TemplateGroupAction([], 'create', ['data' => $data]))->executeAction();
             /** @var TemplateGroup $templateGroup */
-            $templateGroup = $returnValues['returnValues'];
+            $newTemplateGroup = $returnValues['returnValues'];
 
             $templateList = new TemplateList();
             $templateList->getConditionBuilder()->add(
@@ -85,7 +86,7 @@ final class TemplateGroupCopyAction implements RequestHandlerInterface
                         'application' => $template->application,
                         'templateName' => $template->templateName,
                         'packageID' => $template->packageID,
-                        'templateGroupID' => $templateGroup->templateGroupID,
+                        'templateGroupID' => $newTemplateGroup->templateGroupID,
                     ],
                     'source' => $template->getSource(),
                 ]))->executeAction();
@@ -93,13 +94,9 @@ final class TemplateGroupCopyAction implements RequestHandlerInterface
 
             return new JsonResponse([
                 'result' => [
-                    'redirectURL' => LinkHandler::getInstance()->getLink(
-                        'TemplateGroupEdit',
-                        [
-                            'isACP' => true,
-                            'id' => $templateGroup->templateGroupID,
-                        ]
-                    ),
+                    'redirectURL' => LinkHandler::getInstance()->getControllerLink(TemplateGroupEditForm::class, [
+                        'id' => $newTemplateGroup->templateGroupID,
+                    ]),
                 ]
             ]);
         } else {
