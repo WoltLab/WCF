@@ -75,7 +75,10 @@ final class TemplateGroupGridView extends AbstractGridView
             ),
         ]);
         $this->setInteractionProvider($provider);
-        $this->addRowLink(new GridViewRowLink(TemplateGroupEditForm::class));
+        $this->addRowLink(new GridViewRowLink(
+            TemplateGroupEditForm::class,
+            isAvailableCallback: static fn(TemplateGroup $group) => !$group->isImmutable()
+        ));
 
         $this->setDefaultSortField("templateGroupName");
     }
