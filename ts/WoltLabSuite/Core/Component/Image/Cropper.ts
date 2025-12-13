@@ -148,7 +148,7 @@ abstract class ImageCropper {
               .saveFile(
                 { exif: this.orientation ? undefined : this.exif, image: canvas },
                 this.file.name,
-                this.file.type,
+                this.file.type === "image/png" ? "image/webp" : this.file.type,
               )
               .then((resizedFile) => {
                 resolve(resizedFile);
@@ -335,7 +335,7 @@ class ExactImageCropper extends ImageCropper {
       return this.resizer.saveFile(
         { exif: this.orientation ? undefined : this.exif, image: this.image },
         this.file.name,
-        this.file.type,
+        this.file.type === "image/png" ? "image/webp" : this.file.type,
       );
     }
 

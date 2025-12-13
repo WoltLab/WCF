@@ -111,7 +111,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Image/Resizer", "WoltL
                     void this.getCanvas()
                         .then((canvas) => {
                         this.resizer
-                            .saveFile({ exif: this.orientation ? undefined : this.exif, image: canvas }, this.file.name, this.file.type)
+                            .saveFile({ exif: this.orientation ? undefined : this.exif, image: canvas }, this.file.name, this.file.type === "image/png" ? "image/webp" : this.file.type)
                             .then((resizedFile) => {
                             resolve(resizedFile);
                         })
@@ -252,7 +252,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Image/Resizer", "WoltL
                 return size.width == this.width && size.height == this.height;
             }).length > 0 &&
                 this.image instanceof HTMLCanvasElement) {
-                return this.resizer.saveFile({ exif: this.orientation ? undefined : this.exif, image: this.image }, this.file.name, this.file.type);
+                return this.resizer.saveFile({ exif: this.orientation ? undefined : this.exif, image: this.image }, this.file.name, this.file.type === "image/png" ? "image/webp" : this.file.type);
             }
             return super.showDialog();
         }
