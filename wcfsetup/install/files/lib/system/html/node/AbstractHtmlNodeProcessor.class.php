@@ -2,9 +2,7 @@
 
 namespace wcf\system\html\node;
 
-use wcf\system\exception\SystemException;
 use wcf\system\html\IHtmlProcessor;
-use wcf\util\JSON;
 
 /**
  * Default implementation for html node processors.
@@ -308,12 +306,12 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
      */
     public function parseAttributes($attributes)
     {
-        if (!empty($attributes)) {
+        if ($attributes !== '') {
             $parsedAttributes = \base64_decode($attributes, true);
             if ($parsedAttributes !== false) {
                 try {
-                    $parsedAttributes = JSON::decode($parsedAttributes);
-                } catch (SystemException $e) {
+                    $parsedAttributes = \json_decode($parsedAttributes, true, flags: \JSON_THROW_ON_ERROR);
+                } catch (\JsonException) {
                     /* parse errors can occur if user provided malicious content - ignore them */
                     $parsedAttributes = [];
                 }
