@@ -163,6 +163,7 @@ class LabelHandler extends SingletonFactory
 
                 if (!$group->hasPermissions() || $group->getPermission($optionID, $user)) {
                     $isValid = true;
+                    break;
                 }
             }
 
