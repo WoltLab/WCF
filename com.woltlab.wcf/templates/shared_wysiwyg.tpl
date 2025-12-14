@@ -47,6 +47,10 @@
 		{jsphrase name='wcf.editor.restoreDraft.preview'}
 		{jsphrase name='wcf.editor.restoreDraft.restoreOrDiscard'}
 
+		{if $__wcf->language->languageCode !== 'en'}
+		window.CKEDITOR_TRANSLATIONS['{unsafe:$__wcf->language->getBcp47()|strtolower|encodeJS}'].dictionary["Single line code"] = '{jslang}wcf.editor.button.code{/jslang}';
+		{/if}
+
 		{include file='mediaJavaScript'}
 
 		const element = document.getElementById('{unsafe:$wysiwygSelector|encodeJS}');

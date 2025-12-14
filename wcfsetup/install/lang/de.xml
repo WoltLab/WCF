@@ -3824,7 +3824,7 @@ Dateianhänge:
 		<item name="wcf.editor.autosave.restored"><![CDATA[Entwurf wiederhergestellt]]></item>
 		<item name="wcf.editor.button.alignment"><![CDATA[Ausrichtung]]></item>
 		<item name="wcf.editor.button.bold"><![CDATA[Fett]]></item>
-		<item name="wcf.editor.button.code"><![CDATA[Code]]></item>
+		<item name="wcf.editor.button.code"><![CDATA[Einzeiliger Code]]></item>
 		<item name="wcf.editor.button.color"><![CDATA[Schriftfarbe]]></item>
 		<item name="wcf.editor.button.color.removeColor"><![CDATA[Schriftfarbe entfernen]]></item>
 		<item name="wcf.editor.button.font"><![CDATA[Schriftart]]></item>
