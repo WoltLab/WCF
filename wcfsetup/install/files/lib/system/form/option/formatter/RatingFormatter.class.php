@@ -24,7 +24,7 @@ final class RatingFormatter implements IFormOptionFormatter
             if ($rating >= $i) {
                 $html .= FontAwesomeIcon::fromString('star;true')->toHtml();
             } else if ($rating + 0.5 >= $i) {
-                $html .= FontAwesomeIcon::fromString('star-half-stroke;false')->toHtml();
+                $html .= FontAwesomeIcon::fromString('star-half-stroke;true')->toHtml();
             } else {
                 $html .= FontAwesomeIcon::fromString('star;false')->toHtml();
             }
