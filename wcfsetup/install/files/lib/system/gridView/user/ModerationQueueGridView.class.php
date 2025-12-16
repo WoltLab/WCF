@@ -11,7 +11,6 @@ use wcf\event\gridView\user\ModerationQueueGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
-use wcf\system\gridView\renderer\AbstractColumnRenderer;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
 use wcf\system\gridView\renderer\NumberColumnRenderer;
 use wcf\system\gridView\renderer\TimeColumnRenderer;
@@ -126,7 +125,7 @@ final class ModerationQueueGridView extends AbstractGridView
                 ->label("wcf.moderation.type")
                 ->filter($this->getDefinitionFilter())
                 ->renderer(
-                    new class extends AbstractColumnRenderer {
+                    new class extends DefaultColumnRenderer {
                         #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
@@ -139,7 +138,7 @@ final class ModerationQueueGridView extends AbstractGridView
             GridViewColumn::for("objectType")
                 ->label("wcf.moderation.objectType")
                 ->renderer(
-                    new class extends AbstractColumnRenderer {
+                    new class extends DefaultColumnRenderer {
                         #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
@@ -187,7 +186,7 @@ final class ModerationQueueGridView extends AbstractGridView
                     }
                 )
                 ->renderer(
-                    new class extends AbstractColumnRenderer {
+                    new class extends DefaultColumnRenderer {
                         #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
