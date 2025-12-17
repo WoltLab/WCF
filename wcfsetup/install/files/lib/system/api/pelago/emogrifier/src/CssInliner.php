@@ -8,23 +8,20 @@ use Pelago\Emogrifier\Css\CssDocument;
 use Pelago\Emogrifier\HtmlProcessor\AbstractHtmlProcessor;
 use Pelago\Emogrifier\Utilities\CssConcatenator;
 use Pelago\Emogrifier\Utilities\DeclarationBlockParser;
-use Pelago\Emogrifier\Utilities\Preg;
 use Symfony\Component\CssSelector\CssSelectorConverter;
 use Symfony\Component\CssSelector\Exception\ParseException;
+
+use function Safe\preg_match;
+use function Safe\preg_replace;
+use function Safe\preg_replace_callback;
+use function Safe\preg_split;
 
 /**
  * This class provides functions for converting CSS styles into inline style attributes in your HTML code.
  */
 final class CssInliner extends AbstractHtmlProcessor
 {
-    /**
-     * @var int<0, 1>
-     */
     private const CACHE_KEY_SELECTOR = 0;
-
-    /**
-     * @var int<0, 1>
-     */
     private const CACHE_KEY_COMBINED_STYLES = 1;
 
     /**
@@ -32,8 +29,6 @@ final class CssInliner extends AbstractHtmlProcessor
      * for which the applicable elements can be determined (by converting the selector to an XPath expression).
      * (Contains alternation without a group and is intended to be placed within a capturing, non-capturing or lookahead
      * group, as appropriate for the usage context.)
-     *
-     * @var non-empty-string
      */
     private const PSEUDO_CLASS_MATCHER
         = 'empty|(?:first|last|nth(?:-last)?+|only)-(?:child|of-type)|not\\([[:ascii:]]*\\)|root';
@@ -41,22 +36,16 @@ final class CssInliner extends AbstractHtmlProcessor
     /**
      * This regular expression component matches an `...of-type` pseudo class name, without the preceding ":".  These
      * pseudo-classes can currently online be inlined if they have an associated type in the selector expression.
-     *
-     * @var non-empty-string
      */
     private const OF_TYPE_PSEUDO_CLASS_MATCHER = '(?:first|last|nth(?:-last)?+|only)-of-type';
 
     /**
      * regular expression component to match a selector combinator
-     *
-     * @var non-empty-string
      */
     private const COMBINATOR_MATCHER = '(?:\\s++|\\s*+[>+~]\\s*+)(?=[[:alpha:]_\\-.#*:\\[])';
 
     /**
      * options array key for `querySelectorAll`
-     *
-     * @var non-empty-string
      */
     private const QSA_ALWAYS_THROW_PARSE_EXCEPTION = 'alwaysThrowParseException';
 
@@ -451,8 +440,13 @@ final class CssInliner extends AbstractHtmlProcessor
         $callback = static function (array $propertyNameMatches) use ($declarationBlockParser): string {
             return $declarationBlockParser->normalizePropertyName($propertyNameMatches[0]);
         };
-        $normalizedOriginalStyle = (new Preg())->throwExceptions($this->debug)
-            ->replaceCallback($pattern, $callback, $node->getAttribute('style'));
+        if (\function_exists('Safe\\preg_replace_callback')) {
+            $normalizedOriginalStyle = preg_replace_callback($pattern, $callback, $node->getAttribute('style'));
+        } else {
+            // @phpstan-ignore-next-line The safe version is only available in "thecodingmachine/safe" for PHP >= 8.1.
+            $normalizedOriginalStyle = \preg_replace_callback($pattern, $callback, $node->getAttribute('style'));
+            \assert(\is_string($normalizedOriginalStyle));
+        }
 
         // In order to not overwrite existing style attributes in the HTML, we have to save the original HTML styles.
         $nodePath = $node->getNodePath();
@@ -601,7 +595,6 @@ final class CssInliner extends AbstractHtmlProcessor
     {
         $matches = $parsedCss->getStyleRulesData(\array_keys($this->allowedMediaTypes));
 
-        $preg = (new Preg())->throwExceptions($this->debug);
         $cssRules = [
             'inlinable' => [],
             'uninlinable' => [],
@@ -612,14 +605,14 @@ final class CssInliner extends AbstractHtmlProcessor
             }
 
             $mediaQuery = $cssRule->getContainingAtRule();
-            $declarationsBlock = $cssRule->getDeclarationAsText();
+            $declarationsBlock = $cssRule->getDeclarationsAsText();
             $selectors = $cssRule->getSelectors();
 
             // Maybe exclude CSS selectors
             if (\count($this->excludedCssSelectors) > 0) {
                 // Normalize spaces, line breaks & tabs
-                $selectorsNormalized = \array_map(static function (string $selector) use ($preg): string {
-                    return $preg->replace('@\\s++@u', ' ', $selector);
+                $selectorsNormalized = \array_map(static function (string $selector): string {
+                    return preg_replace('@\\s++@u', ' ', $selector);
                 }, $selectors);
                 /** @var array<non-empty-string> $selectors */
                 $selectors = \array_filter($selectorsNormalized, function (string $selector): bool {
@@ -669,17 +662,16 @@ final class CssInliner extends AbstractHtmlProcessor
      */
     private function hasUnsupportedPseudoClass(string $selector): bool
     {
-        $preg = (new Preg())->throwExceptions($this->debug);
-
-        if ($preg->match('/:(?!' . self::PSEUDO_CLASS_MATCHER . ')[\\w\\-]/i', $selector) !== 0) {
+        if (preg_match('/:(?!' . self::PSEUDO_CLASS_MATCHER . ')[\\w\\-]/i', $selector) !== 0) {
             return true;
         }
 
-        if ($preg->match('/:(?:' . self::OF_TYPE_PSEUDO_CLASS_MATCHER . ')/i', $selector) === 0) {
+        if (preg_match('/:(?:' . self::OF_TYPE_PSEUDO_CLASS_MATCHER . ')/i', $selector) === 0) {
             return false;
         }
 
-        foreach ($preg->split('/' . self::COMBINATOR_MATCHER . '/', $selector) as $selectorPart) {
+        foreach (preg_split('/' . self::COMBINATOR_MATCHER . '/', $selector) as $selectorPart) {
+            \assert(\is_string($selectorPart));
             if ($this->selectorPartHasUnsupportedOfTypePseudoClass($selectorPart)) {
                 return true;
             }
@@ -698,13 +690,11 @@ final class CssInliner extends AbstractHtmlProcessor
      */
     private function selectorPartHasUnsupportedOfTypePseudoClass(string $selectorPart): bool
     {
-        $preg = (new Preg())->throwExceptions($this->debug);
-
-        if ($preg->match('/^[\\w\\-]/', $selectorPart) !== 0) {
+        if (preg_match('/^[\\w\\-]/', $selectorPart) !== 0) {
             return false;
         }
 
-        return $preg->match('/:(?:' . self::OF_TYPE_PSEUDO_CLASS_MATCHER . ')/i', $selectorPart) !== 0;
+        return preg_match('/:(?:' . self::OF_TYPE_PSEUDO_CLASS_MATCHER . ')/i', $selectorPart) !== 0;
     }
 
     /**
@@ -735,14 +725,13 @@ final class CssInliner extends AbstractHtmlProcessor
             return $this->caches[self::CACHE_KEY_SELECTOR][$selectorKey];
         }
 
-        $preg = (new Preg())->throwExceptions($this->debug);
         $precedence = 0;
         foreach ($this->selectorPrecedenceMatchers as $matcher => $value) {
             if (\trim($selector) === '') {
                 break;
             }
             $count = 0;
-            $selector = $preg->replace('/' . $matcher . '\\w+/', '', $selector, -1, $count);
+            $selector = preg_replace('/' . $matcher . '\\w+/', '', $selector, -1, $count);
             $precedence += ($value * $count);
             \assert($precedence >= 0);
         }
@@ -847,7 +836,7 @@ final class CssInliner extends AbstractHtmlProcessor
      */
     private function attributeValueIsImportant(string $attributeValue): bool
     {
-        return (new Preg())->throwExceptions($this->debug)->match('/!\\s*+important$/i', $attributeValue) !== 0;
+        return preg_match('/!\\s*+important$/i', $attributeValue) !== 0;
     }
 
     /**
@@ -902,8 +891,8 @@ final class CssInliner extends AbstractHtmlProcessor
         $importantStyleDeclarations = [];
         foreach ($inlineStyleDeclarations as $property => $value) {
             if ($this->attributeValueIsImportant($value)) {
-                $importantStyleDeclarations[$property]
-                    = (new Preg())->throwExceptions($this->debug)->replace('/\\s*+!\\s*+important$/i', '', $value);
+                $declaration = preg_replace('/\\s*+!\\s*+important$/i', '', $value);
+                $importantStyleDeclarations[$property] = $declaration;
             } else {
                 $regularStyleDeclarations[$property] = $value;
             }
@@ -1007,8 +996,6 @@ final class CssInliner extends AbstractHtmlProcessor
      */
     private function removeUnmatchablePseudoComponents(string $selector): string
     {
-        $preg = (new Preg())->throwExceptions($this->debug);
-
         // The regex allows nested brackets via `(?2)`.
         // A space is temporarily prepended because the callback can't determine if the match was at the very start.
         $pattern = '/([\\s>+~]?+):not(\\([^()]*+(?:(?2)[^()]*+)*+\\))/i';
@@ -1016,8 +1003,13 @@ final class CssInliner extends AbstractHtmlProcessor
         $callback = function (array $matches): string {
             return $this->replaceUnmatchableNotComponent($matches);
         };
-        $untrimmedSelectorWithoutNots = (new Preg())->throwExceptions($this->debug)
-            ->replaceCallback($pattern, $callback, ' ' . $selector);
+        if (\function_exists('Safe\\preg_replace_callback')) {
+            $untrimmedSelectorWithoutNots = preg_replace_callback($pattern, $callback, ' ' . $selector);
+        } else {
+            // @phpstan-ignore-next-line The safe version is only available in "thecodingmachine/safe" for PHP >= 8.1.
+            $untrimmedSelectorWithoutNots = \preg_replace_callback($pattern, $callback, ' ' . $selector);
+            \assert(\is_string($untrimmedSelectorWithoutNots));
+        }
         $selectorWithoutNots = \ltrim($untrimmedSelectorWithoutNots);
 
         $selectorWithoutUnmatchablePseudoComponents = $this->removeSelectorComponents(
@@ -1025,19 +1017,20 @@ final class CssInliner extends AbstractHtmlProcessor
             $selectorWithoutNots
         );
 
-        if ($preg->match(
+        if (preg_match(
             '/:(?:' . self::OF_TYPE_PSEUDO_CLASS_MATCHER . ')/i',
             $selectorWithoutUnmatchablePseudoComponents
         ) === 0) {
             return $selectorWithoutUnmatchablePseudoComponents;
         }
 
-        $selectorParts = $preg->split(
+        $selectorParts = preg_split(
             '/(' . self::COMBINATOR_MATCHER . ')/',
             $selectorWithoutUnmatchablePseudoComponents,
             -1,
             PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
         );
+        /** @var list<string> $selectorParts */
 
         return \implode('', \array_map(
             function (string $selectorPart): string {
@@ -1078,7 +1071,7 @@ final class CssInliner extends AbstractHtmlProcessor
      */
     private function removeSelectorComponents(string $matcher, string $selector): string
     {
-        return (new Preg())->throwExceptions($this->debug)->replace(
+        return preg_replace(
             ['/([\\s>+~]|^)' . $matcher . '/i', '/' . $matcher . '/i'],
             ['$1*', ''],
             $selector

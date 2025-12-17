@@ -199,7 +199,7 @@ class WebPush
         foreach ($batches as $batch) {
             $batch = $this->prepare($batch);
             $pool = new Pool($this->client, $batch, [
-                'requestConcurrency' => $requestConcurrency,
+                'concurrency' => $requestConcurrency,
                 'fulfilled' => function (ResponseInterface $response, int $index) use ($callback, $batch) {
                     /** @var RequestInterface $request **/
                     $request = $batch[$index];
@@ -235,8 +235,8 @@ class WebPush
     }
 
     /**
-     * @throws \ErrorException
-     * add back @throws \Random\RandomException when we drop PHP 8.1 support
+     * @throws \ErrorException Thrown on php 8.1
+     * @throws \Random\RandomException Thrown on php 8.2 and higher
      */
     protected function prepare(array $notifications): array
     {
