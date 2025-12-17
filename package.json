@@ -4,17 +4,17 @@
     "bundle-web-components": "npx esbuild ts/WoltLabSuite/WebComponent/index.ts --minify --bundle --watch --outfile=wcfsetup/install/files/js/WoltLabSuite/WebComponent.min.js"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^8.48.0",
-    "@typescript-eslint/parser": "^8.48.0",
-    "esbuild": "^0.27.0",
-    "eslint": "^9.39.1",
+    "@typescript-eslint/eslint-plugin": "^8.50.0",
+    "@typescript-eslint/parser": "^8.50.0",
+    "esbuild": "^0.27.2",
+    "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
-    "prettier": "^3.6.2",
+    "prettier": "^3.7.4",
     "typescript": "^5.9.3"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-inspector": "^5.0.0",
-    "@fancyapps/ui": "^6.1.6",
+    "@fancyapps/ui": "^6.1.7",
     "@googlemaps/markerclusterer": "2.6.2",
     "@types/facebook-js-sdk": "^3.3.12",
     "@types/google.maps": "^3.58.1",
@@ -29,7 +29,7 @@
     "@woltlab/visual-dom-diff": "git+https://github.com/WoltLab/visual-dom-diff.git#e5b51fce3157d1eda310566fc1f86101341d1fea",
     "@woltlab/zxcvbn": "git+https://github.com/WoltLab/zxcvbn.git#5b582b24e437f1883ccad3c37dae7c3c5f1e7da3",
     "cropperjs": "2.1.0",
-    "exifreader": "^4.32.0",
+    "exifreader": "^4.33.1",
     "focus-trap": "^7.6.6",
     "hash-wasm": "^4.12.0",
     "html-parsed-element": "^0.4.1",
