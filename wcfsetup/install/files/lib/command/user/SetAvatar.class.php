@@ -6,7 +6,9 @@ use wcf\data\file\File;
 use wcf\data\file\FileAction;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
+use wcf\event\user\AvatarChanged;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\event\EventHandler;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\user\UserProfileHandler;
@@ -54,5 +56,7 @@ final class SetAvatar
         if ($this->user->userID === WCF::getUser()->userID) {
             UserProfileHandler::getInstance()->reloadUserProfile();
         }
+
+        EventHandler::getInstance()->fire(new AvatarChanged($this->user, $this->file));
     }
 }

@@ -5,6 +5,8 @@ namespace wcf\command\user;
 use wcf\data\user\follow\UserFollow;
 use wcf\data\user\follow\UserFollowEditor;
 use wcf\data\user\User;
+use wcf\event\user\UserUnfollowed;
+use wcf\system\event\EventHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\storage\UserStorageHandler;
 
@@ -35,6 +37,8 @@ final class Unfollow
         }
 
         $this->resetUserStorage();
+
+        EventHandler::getInstance()->fire(new UserUnfollowed($this->user, $this->target));
     }
 
     private function removeActivityEvent(): void

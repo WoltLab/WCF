@@ -5,6 +5,8 @@ namespace wcf\command\user;
 use wcf\data\user\follow\UserFollow;
 use wcf\data\user\follow\UserFollowEditor;
 use wcf\data\user\User;
+use wcf\event\user\UserFollowed;
+use wcf\system\event\EventHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\UserFollowUserNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
@@ -40,6 +42,8 @@ final class Follow
         $this->sendNotification($follow);
         $this->fireActivityEvent();
         $this->resetUserStorage();
+
+        EventHandler::getInstance()->fire(new UserFollowed($this->user, $this->target));
     }
 
     private function sendNotification(UserFollow $follow): void
