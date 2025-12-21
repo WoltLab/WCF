@@ -6,7 +6,9 @@ use wcf\data\file\File;
 use wcf\data\file\FileAction;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
+use wcf\event\user\CoverPhotoChanged;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\event\EventHandler;
 
 /**
  * Sets the cover photo of a user.
@@ -36,5 +38,7 @@ final class SetCoverPhoto
             'coverPhotoHasWebP' => 0,
         ]);
         UserProfileRuntimeCache::getInstance()->removeObject($this->user->userID);
+
+        EventHandler::getInstance()->fire(new CoverPhotoChanged($this->user, $this->file));
     }
 }
