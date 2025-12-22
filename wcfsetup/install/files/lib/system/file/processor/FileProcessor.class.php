@@ -364,6 +364,9 @@ final class FileProcessor extends SingletonFactory
         }
 
         $maximumCount = $fileProcessor->getMaximumCount($context);
+        if ($maximumCount === null) {
+            return false;
+        }
 
         $sql = "SELECT  COUNT(*)
                 FROM    wcf1_file_temporary

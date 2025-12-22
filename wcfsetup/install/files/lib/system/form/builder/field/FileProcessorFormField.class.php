@@ -228,13 +228,14 @@ final class FileProcessorFormField extends AbstractFormField
 
         $fileProcessor = $this->getFileProcessor();
 
-        if (\count($this->files) > $fileProcessor->getMaximumCount($this->context)) {
+        $maximumCount = $fileProcessor->getMaximumCount($this->context);
+        if ($maximumCount !== null && \count($this->files) > $maximumCount) {
             $this->addValidationError(
                 new FormFieldValidationError(
                     'maximumFiles',
                     'wcf.upload.error.maximumCountReached',
                     [
-                        'maximumCount' => $fileProcessor->getMaximumCount($this->context),
+                        'maximumCount' => $maximumCount,
                         'count' => \count($this->files),
                     ]
                 )
