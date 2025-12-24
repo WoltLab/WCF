@@ -88,7 +88,6 @@ class UserProfileCommentLikeUserNotificationEvent extends AbstractSharedUserNoti
             'owner' => $owner,
             'reaction' => $this->getSingleReaction(),
             // Not used anymore but kept here for backwards compatibility with third party translations
-            'author' => $this->author,
             'commentID' => $this->getCommentID(),
             'userNotificationObject' => $this->getUserNotificationObject(),
             'reactions' => $this->getReactionsForAuthors(),
