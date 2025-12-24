@@ -8,16 +8,14 @@ use wcf\data\DatabaseObjectList;
 use wcf\data\language\category\LanguageCategoryList;
 use wcf\data\language\item\LanguageItem;
 use wcf\data\language\item\LanguageItemList;
-use wcf\data\language\Language;
 use wcf\data\language\LanguageList;
 use wcf\event\gridView\admin\LanguageItemGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
+use wcf\system\gridView\FormBuilderDialogGridViewRowLink;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\renderer\AbstractColumnRenderer;
 use wcf\system\gridView\renderer\TruncatedTextColumnRenderer;
 use wcf\system\interaction\admin\LanguageItemInteractions;
-use wcf\system\interaction\Divider;
-use wcf\system\interaction\FormBuilderDialogInteraction;
 use wcf\system\request\LinkHandler;
 use wcf\system\view\filter\BooleanFilter;
 use wcf\system\view\filter\SelectFilter;
@@ -127,19 +125,14 @@ final class LanguageItemGridView extends AbstractGridView
             },
             new BooleanFilter('isCustomLanguageItem', 'wcf.acp.language.item.isCustomLanguageItem'),
         ]);
-        $provider = new LanguageItemInteractions();
-        $provider->addInteractions([
-            new Divider(),
-            new FormBuilderDialogInteraction(
-                'edit',
-                LinkHandler::getInstance()->getControllerLink(
-                    LanguageItemEditAction::class,
-                    ['id' => '%s']
-                ),
-                'wcf.global.button.edit'
+        $this->setInteractionProvider(new LanguageItemInteractions());
+        $this->addRowLink(new FormBuilderDialogGridViewRowLink(
+            'edit',
+            LinkHandler::getInstance()->getControllerLink(
+                LanguageItemEditAction::class,
+                ['id' => '%s']
             )
-        ]);
-        $this->setInteractionProvider($provider);
+        ));
         $this->setDefaultSortField('languageItem');
     }
 

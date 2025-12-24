@@ -9,14 +9,14 @@ use wcf\system\request\LinkHandler;
 use wcf\util\StringUtil;
 
 /**
- * Represents a row link of a grid view.
+ * Represents a row link in a grid view that uses a link.
  *
  * @author      Marcel Werk
- * @copyright   2001-2024 WoltLab GmbH
+ * @copyright   2001-2025 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  */
-class GridViewRowLink
+class GridViewRowLink extends AbstractGridViewRowLink
 {
     /**
      * @param array<string, mixed> $parameters
@@ -26,12 +26,12 @@ class GridViewRowLink
         private readonly array $parameters = [],
         private readonly string $cssClass = '',
         private readonly bool $isLinkableObject = false,
-        private readonly ?\Closure $isAvailableCallback = null
-    ) {}
+        ?\Closure $isAvailableCallback = null
+    ) {
+        parent::__construct($isAvailableCallback);
+    }
 
-    /**
-     * Renders the row link.
-     */
+    #[\Override]
     public function render(mixed $value, DatabaseObject $row, bool $isPrimaryColumn = false): string
     {
         $href = '';
@@ -78,14 +78,5 @@ class GridViewRowLink
         }
 
         throw new \BadMethodCallException("GridViewRowLink expects object to be an implementation of ILinkableObject.");
-    }
-
-    public function isAvailable(DatabaseObject $row): bool
-    {
-        if ($this->isAvailableCallback === null) {
-            return true;
-        }
-
-        return ($this->isAvailableCallback)($row);
     }
 }
