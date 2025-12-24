@@ -72,13 +72,15 @@ class StyleHandler extends SingletonFactory
 
     /**
      * Returns the active style.
-     *
-     * @return  ActiveStyle
      */
-    public function getStyle()
+    public function getStyle(): ActiveStyle
     {
         if ($this->style === null) {
-            $this->changeStyle();
+            if (RequestHandler::getInstance()->isACPRequest()) {
+                $this->style = new ActiveStyle($this->getDefaultStyle());
+            } else {
+                $this->changeStyle();
+            }
         }
 
         return $this->style;
