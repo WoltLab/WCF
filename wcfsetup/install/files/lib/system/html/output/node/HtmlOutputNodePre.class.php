@@ -37,7 +37,7 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
             if ($element->getAttribute('class') === 'woltlabHtml') {
-                [$nodeIdentifier, $tagName] = $htmlNodeProcessor->getWcfNodeIdentifer();
+                [$nodeIdentifier, $tagName] = $htmlNodeProcessor->getWcfNodeIdentifier();
                 $htmlNodeProcessor->addNodeData($this, $nodeIdentifier, ['rawHTML' => $element->textContent]);
 
                 $htmlNodeProcessor->renameTag($element, $tagName);
@@ -51,7 +51,7 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
                     $prefix = '';
                     // Create a unique prefix if possible
                     $prefix = \str_replace('.', '_', $context['objectType']) . '_' . $context['objectID'] . '_';
-                    [$nodeIdentifier, $tagName] = $htmlNodeProcessor->getWcfNodeIdentifer();
+                    [$nodeIdentifier, $tagName] = $htmlNodeProcessor->getWcfNodeIdentifier();
                     $htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
                         'content' => $element->textContent,
                         'file' => $element->getAttribute('data-file'),

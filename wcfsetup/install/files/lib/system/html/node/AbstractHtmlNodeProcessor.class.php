@@ -418,8 +418,9 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
      * Returns a randomly generated tagName+identifier pair for <wcfNode-*> tags.
      *
      * @return array{0: string, 1: string}
+     * @since 6.2
      */
-    public function getWcfNodeIdentifer(): array
+    public function getWcfNodeIdentifier(): array
     {
         static $counter = 0;
         static $prefix = null;
@@ -434,5 +435,16 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
         $identifier = $prefix . $counter++;
 
         return [$identifier, "wcfNode-{$identifier}"];
+    }
+
+    /**
+     * Returns a randomly generated tagName+identifier pair for <wcfNode-*> tags.
+     *
+     * @return array{0: string, 1: string}
+     * @deprecated 6.2 Use `getWcfNodeIdentifier` instead.
+     */
+    public function getWcfNodeIdentifer(): array
+    {
+        return $this->getWcfNodeIdentifier();
     }
 }

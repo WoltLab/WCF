@@ -30,7 +30,7 @@ class HtmlOutputNodeWoltlabMetacode extends AbstractHtmlOutputNode
             $name = $element->getAttribute('data-name');
             $attributes = $element->getAttribute('data-attributes');
 
-            [$nodeIdentifier, $tagName] = $htmlNodeProcessor->getWcfNodeIdentifer();
+            [$nodeIdentifier, $tagName] = $htmlNodeProcessor->getWcfNodeIdentifier();
 
             $element = $htmlNodeProcessor->renameTag($element, $tagName);
 
