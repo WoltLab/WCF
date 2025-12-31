@@ -32,7 +32,7 @@ class ToggleInteraction extends AbstractInteraction
     #[\Override]
     public function render(DatabaseObject $object): string
     {
-        $identifier = StringUtil::encodeJS($this->getIdentifier());
+        $identifier = StringUtil::encodeHTML($this->getIdentifier());
 
         $enableEndpoint = StringUtil::encodeHTML(
             LinkHandler::getInstance()->getControllerLink(ApiAction::class, ['id' => 'rpc']) .

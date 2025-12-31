@@ -29,7 +29,7 @@ class FormBuilderDialogInteraction extends AbstractInteraction
     #[\Override]
     public function render(DatabaseObject $object): string
     {
-        $identifier = StringUtil::encodeJS($this->getIdentifier());
+        $identifier = StringUtil::encodeHTML($this->getIdentifier());
 
         if (\is_string($this->languageItem)) {
             $label = WCF::getLanguage()->get($this->languageItem);
