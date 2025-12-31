@@ -28,7 +28,7 @@ class FormBuilderDialogGridViewRowLink extends AbstractGridViewRowLink
     #[\Override]
     public function render(mixed $value, DatabaseObject $row, bool $isPrimaryColumn = false): string
     {
-        $identifier = StringUtil::encodeJS($this->identifier);
+        $identifier = StringUtil::encodeHTML($this->identifier);
         $endpoint = StringUtil::encodeHTML(
             \sprintf($this->endpoint, $row->getObjectID())
         );
