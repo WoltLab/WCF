@@ -396,9 +396,9 @@ abstract class AbstractGridView
      *
      * @param TDatabaseObject $row
      */
-    protected function getData(DatabaseObject $row, string $identifer): mixed
+    protected function getData(DatabaseObject $row, string $identifier): mixed
     {
-        return $row->__get($identifer);
+        return $row->__get($identifier);
     }
 
     /**
