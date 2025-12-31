@@ -52,7 +52,7 @@ abstract class AbstractGridView
      */
     protected DatabaseObjectList $objectList;
 
-    private GridViewRowLink $rowLink;
+    private IGridViewRowLink $rowLink;
     private int $rowsPerPage = 20;
     private string $baseUrl = '';
     private string $defaultSortField = '';
@@ -339,6 +339,11 @@ abstract class AbstractGridView
                 fn($interaction) => $interaction->renderInitialization($this->getID() . '_table'),
                 $this->getQuickInteractions()
             ));
+        }
+
+        if (isset($this->rowLink)) {
+            $code .= "\n";
+            $code .= $this->rowLink->renderInitialization($this->getID() . '_table');
         }
 
         return $code;
@@ -634,7 +639,7 @@ abstract class AbstractGridView
     /**
      * Adds the given row link to the grid view.
      */
-    public function addRowLink(GridViewRowLink $rowLink): void
+    public function addRowLink(IGridViewRowLink $rowLink): void
     {
         $this->rowLink = $rowLink;
     }

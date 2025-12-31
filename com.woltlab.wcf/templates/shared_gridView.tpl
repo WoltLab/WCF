@@ -112,9 +112,7 @@
 		);
 	});
 </script>
-{if $view->hasInteractions()}
-	{unsafe:$view->renderInteractionInitialization()}
-{/if}
+{unsafe:$view->renderInteractionInitialization()}
 {if $view->hasBulkInteractions()}
 	{unsafe:$view->renderBulkInteractionInitialization()}
 {/if}
