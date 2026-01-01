@@ -76,6 +76,15 @@ abstract class AbstractGridView
     private array $availableFilters = [];
 
     /**
+     * @var array<string, array{
+     *  filter: IViewFilter,
+     *  target: ?string,
+     *  insertBefore: bool,
+     * }>
+     */
+    private array $extraFilters = [];
+
+    /**
      * Adds a new column to the grid view.
      */
     public function addColumn(GridViewColumn $column): void
@@ -683,22 +692,52 @@ abstract class AbstractGridView
         EventHandler::getInstance()->fire($event);
     }
 
+    private function buildAvailableFilters(): void
+    {
+        $filters = [];
+        foreach ($this->getColumns() as $column) {
+            if ($column->getFilter() !== null) {
+                $filters[] = $column->getFilter();
+            }
+        }
+
+        foreach ($this->extraFilters as $filterData) {
+            $filter = $filterData['filter'];
+
+            if ($filterData['target'] === null) {
+                if ($filterData['insertBefore']) {
+                    \array_unshift($filters, $filter);
+                } else {
+                    $filters[] = $filter;
+                }
+            } else {
+                $index = \array_find_key(
+                    $filters,
+                    static fn($filterObj) => $filterObj->getId() === $filterData['target']
+                );
+                if ($index === null) {
+                    throw new \RuntimeException("Cannot find the target '{$filterData['target']}' for filter '{$filter->getId()}'.");
+                }
+
+                if (!$filterData['insertBefore']) {
+                    $index++;
+                }
+
+                \array_splice($filters, $index, 0, [$filter]);
+            }
+        }
+
+        foreach ($filters as $filter) {
+            $this->availableFilters[$filter->getId()] = $filter;
+        }
+    }
+
     /**
      * Validates the configuration of this grid view.
      */
     protected function validate(): void
     {
-        $columnFilters = [];
-        foreach ($this->getColumns() as $column) {
-            if ($column->getFilter() !== null) {
-                $columnFilters[$column->getID()] = $column->getFilter();
-            }
-        }
-
-        $this->availableFilters = [
-            ...$columnFilters,
-            ...$this->availableFilters,
-        ];
+        $this->buildAvailableFilters();
 
         if ($this->getDefaultSortField() === '') {
             throw new \InvalidArgumentException("Undefined default sort field.");
@@ -863,7 +902,29 @@ abstract class AbstractGridView
 
     public function addAvailableFilter(IViewFilter $filter): void
     {
-        $this->availableFilters[$filter->getId()] = $filter;
+        $this->extraFilters[$filter->getId()] = [
+            'filter' => $filter,
+            'target' => null,
+            'insertBefore' => false,
+        ];
+    }
+
+    public function addAvailableFilterBefore(IViewFilter $filter, ?string $targetFilterID = null): void
+    {
+        $this->extraFilters[$filter->getId()] = [
+            'filter' => $filter,
+            'target' => $targetFilterID,
+            'insertBefore' => true,
+        ];
+    }
+
+    public function addAvailableFilterAfter(IViewFilter $filter, ?string $targetFilterID = null): void
+    {
+        $this->extraFilters[$filter->getId()] = [
+            'filter' => $filter,
+            'target' => $targetFilterID,
+            'insertBefore' => false,
+        ];
     }
 
     /**
