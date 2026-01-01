@@ -30,6 +30,7 @@ async function loadPreview(message: string): Promise<void> {
   if (previewContainer === undefined) {
     const template = document.getElementById("previewTemplate") as HTMLTemplateElement;
     const fragment = template.content.cloneNode(true);
+    document.getElementById("signatureContainer")!.insertAdjacentElement("beforebegin", template);
     template.replaceWith(fragment);
 
     previewContainer = document.getElementById("previewContainer")!;

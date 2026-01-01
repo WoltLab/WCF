@@ -21,14 +21,6 @@
 		</section>
 	{/if}
 
-	<template id="previewTemplate">
-		<section class="section">
-			<h2 class="sectionTitle">{lang}wcf.global.preview{/lang}</h2>
-			
-			<div class="htmlContent messageSignatureConstraints" id="previewContainer"></div>
-		</section>
-	</template>
-	
 	{if !$__wcf->user->disableSignature}
 		<section class="section" id="signatureContainer">
 			<h2 class="sectionTitle">{lang}wcf.user.signature{/lang}</h2>
@@ -73,6 +65,14 @@
 		</div>
 	{/if}
 </form>
+
+<template id="previewTemplate">
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.preview{/lang}</h2>
+		
+		<div class="htmlContent messageSignatureConstraints" id="previewContainer"></div>
+	</section>
+</template>
 
 <script data-relocate="true">
 	require(["WoltLabSuite/Core/Component/User/Signature/Preview"], ({ setup }) => {
