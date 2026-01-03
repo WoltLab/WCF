@@ -188,7 +188,13 @@ export class State extends EventTarget {
   }
 
   #updateGridViewFooter(): void {
-    this.#gridViewFooter.hidden = this.#pagination.count < 2 && !this.#selection.selectionBarVisible();
+    const hasPagination = this.#pagination.count > 1;
+    this.#gridViewFooter.hidden = !hasPagination && !this.#selection.selectionBarVisible();
+
+    const paginationContainer = this.#pagination.closest<HTMLElement>(".gridView__pagination");
+    if (paginationContainer !== null) {
+      paginationContainer.hidden = !hasPagination;
+    }
   }
 
   setBulkInteractionContextMenuOptions(options: string): void {
