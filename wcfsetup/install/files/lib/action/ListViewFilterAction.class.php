@@ -12,6 +12,7 @@ use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\form\builder\container\RowFormContainer;
 use wcf\system\form\builder\Psr15DialogForm;
 use wcf\system\listView\AbstractListView;
 use wcf\system\WCF;
@@ -101,6 +102,9 @@ final class ListViewFilterAction implements RequestHandlerInterface
             WCF::getLanguage()->get('wcf.global.filter')
         );
 
+        $container = RowFormContainer::create('container');
+        $form->appendChild($container);
+
         foreach ($listView->getAvailableFilters() as $filter) {
             $formField = $filter->getFormField();
 
@@ -109,7 +113,8 @@ final class ListViewFilterAction implements RequestHandlerInterface
                 $formField->value($value);
             }
 
-            $form->appendChild($formField);
+            $formField->addClasses(['col-xs-12', 'col-md-6']);
+            $container->appendChild($formField);
         }
 
         $form->markRequiredFields(false);
