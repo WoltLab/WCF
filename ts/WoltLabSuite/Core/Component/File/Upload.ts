@@ -460,6 +460,11 @@ export function setup(): void {
 
             throw e;
           }
+        })
+        .catch((e) => {
+          promiseReject();
+
+          throw e;
         });
     });
   });
