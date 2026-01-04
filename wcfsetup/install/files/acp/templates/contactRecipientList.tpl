@@ -20,7 +20,7 @@
 </header>
 
 <div class="section">
-    {unsafe:$gridView->render()}
+	{unsafe:$gridView->render()}
 </div>
 
 {if $gridView->countRows() > 1}
