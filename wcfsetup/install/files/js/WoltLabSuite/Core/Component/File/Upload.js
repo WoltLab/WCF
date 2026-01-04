@@ -337,6 +337,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                         promiseReject();
                         throw e;
                     }
+                })
+                    .catch((e) => {
+                    promiseReject();
+                    throw e;
                 });
             });
         });

@@ -136,7 +136,12 @@ define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], 
             this.#switchPage(pageNo, 1 /* StateChangeCause.History */);
         }
         #updateGridViewFooter() {
-            this.#gridViewFooter.hidden = this.#pagination.count < 2 && !this.#selection.selectionBarVisible();
+            const hasPagination = this.#pagination.count > 1;
+            this.#gridViewFooter.hidden = !hasPagination && !this.#selection.selectionBarVisible();
+            const paginationContainer = this.#pagination.closest(".gridView__pagination");
+            if (paginationContainer !== null) {
+                paginationContainer.hidden = !hasPagination;
+            }
         }
         setBulkInteractionContextMenuOptions(options) {
             this.#selection.setBulkInteractionContextMenuOptions(options);
