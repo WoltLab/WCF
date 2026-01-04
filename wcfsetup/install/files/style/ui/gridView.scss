@@ -11,10 +11,14 @@
 
 .gridView__column,
 .gridView__headerColumn {
+	max-width: 400px;
 	padding: 10px;
 	text-align: left;
 	vertical-align: middle;
+	overflow: hidden;
 	position: relative;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .gridView__headerColumn {
@@ -80,8 +84,6 @@
 	}
 
 	&.gridView__column--text {
-		max-width: 20%;
-
 		.badge,
 		a.badge {
 			vertical-align: baseline;
