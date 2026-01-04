@@ -146,6 +146,18 @@
 	animation-timeline: scroll(inline);
 }
 
+/* Hack to fix a weird position error in iOS Safari
+   See https://www.woltlab.com/community/thread/314181/ */
+html.iOS {
+	.gridView__headerColumn {
+		box-shadow: inset 0 -2px 0 0 var(--wcfContentBorder);
+	}
+
+	.gridView__actionColumn {
+		top: 1px;
+	}
+}
+
 @property --drop-shadow-opacity {
 	syntax: "<percentage>";
 	inherits: true;
@@ -241,12 +253,13 @@
 }
 
 @include screen-xs {
-	.gridView__footer__container{
+	.gridView__footer__container {
 		align-items: center;
 		flex-direction: column;
 	}
 
-	.gridView__selectionBar:not([hidden]) + .gridView__pagination:not(:has(woltlab-core-pagination[count="1"]))::before {
+	.gridView__selectionBar:not([hidden])
+		+ .gridView__pagination:not(:has(woltlab-core-pagination[count="1"]))::before {
 		border-left-width: 0;
 		border-top: 1px solid var(--wcfContentContainerBorder);
 		inset: auto 0;
