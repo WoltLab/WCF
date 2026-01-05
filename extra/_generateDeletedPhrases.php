@@ -40,7 +40,7 @@ $hasDeleteBlock = $xml->xpath('/ns:language/ns:delete');
 \assert(\is_array($hasDeleteBlock));
 $hasDeleteBlock = $hasDeleteBlock !== [];
 
-if ($missingIdentifiers === [] && $hasDeleteBlock) {
+if ($missingIdentifiers === [] && !$hasDeleteBlock) {
     return;
 }
 
