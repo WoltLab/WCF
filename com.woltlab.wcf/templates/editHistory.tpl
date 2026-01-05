@@ -12,8 +12,8 @@
 {include file='header'}
 
 {if $mode == 'html'}
-<template id="oldMessage"><div>{unsafe:$old->getMessage()}<div></template>
-<template id="newMessage"><div>{unsafe:$new->getMessage()}<div></template>
+<template id="oldMessage"><div>{unsafe:$old->getMessage()}</div></template>
+<template id="newMessage"><div>{unsafe:$new->getMessage()}</div></template>
 <div class="section editHistoryDiff">
 	<div class="htmlContent" id="results"></div>
 </div>
