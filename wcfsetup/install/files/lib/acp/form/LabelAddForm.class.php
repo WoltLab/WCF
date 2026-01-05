@@ -49,24 +49,34 @@ class LabelAddForm extends AbstractFormBuilderForm
      */
     public $objectActionClass = LabelAction::class;
 
+    /**
+     * @var array<int, string>
+     */
+    protected array $labelGroups;
+
+    #[\Override]
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign([
+            'hasLabelGroups' => $this->labelGroups !== [],
+        ]);
+    }
+
     #[\Override]
     protected function createForm()
     {
         parent::createForm();
 
-        $labelGroups = $this->getAvailableLabelGroups();
-        if ($labelGroups === []) {
-            throw new NamedUserException(
-                HtmlString::fromSafeHtml(WCF::getLanguage()->getDynamicVariable('wcf.acp.label.error.noGroups'))
-            );
-        }
+        $this->labelGroups = $this->getAvailableLabelGroups();
 
         $this->form->appendChildren([
             FormContainer::create('section')
                 ->appendChildren([
                     SelectFormField::create('groupID')
                         ->label('wcf.acp.label.group')
-                        ->options($labelGroups, labelLanguageItems: false)
+                        ->options($this->labelGroups, labelLanguageItems: false)
                         ->immutable($this->formAction !== 'create')
                         ->description('wcf.acp.label.group.permanentSelection')
                         ->required(),
