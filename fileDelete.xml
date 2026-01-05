@@ -7,6 +7,7 @@
 		<file>acp/js/WCF.ACP.Language.min.js</file>
 		<file>acp/js/WCF.ACP.Style.js</file>
 		<file>acp/js/WCF.ACP.Style.min.js</file>
+		<file>acp/update_com.woltlab.wcf_6.1.0_beta_2_migrateStaticFiles.php</file>
 		<file>acp/update_com.woltlab.wcf_6.1_checkSystemRequirements.php</file>
 		<file>acp/update_com.woltlab.wcf_6.1_messageEmbeddedObject.php</file>
 		<file>acp/update_com.woltlab.wcf_6.1_serviceWorker.php</file>
@@ -545,6 +546,7 @@
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Iterable/InvalidIterableKey.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Iterable/IterableClosingBracketMissing.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Iterable/IterableCommaMissing.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Iterable/ShapedArrayEmptyElements.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Iterable/ShapedArrayInvalidUnsealedType.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Scalar/InvalidClassStringSubType.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Template/DuplicatedTemplateName.php</file>
@@ -559,6 +561,7 @@
 		<file>lib/system/api/cuyz/valinor/src/Utility/Priority/HasPriority.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Utility/Priority/PrioritizedList.php</file>
 		<file>lib/system/api/paragonie/sodium_compat/lib/namespaced.php</file>
+		<file>lib/system/api/pelago/emogrifier/src/Utilities/Preg.php</file>
 		<file>lib/system/api/scssphp/scssphp/bin/pscss</file>
 		<file>lib/system/api/scssphp/scssphp/scss.inc.php</file>
 		<file>lib/system/api/scssphp/scssphp/src/Base/Range.php</file>
@@ -590,6 +593,12 @@
 		<file>lib/system/api/scssphp/scssphp/src/Formatter/OutputBlock.php</file>
 		<file>lib/system/api/scssphp/scssphp/src/Parser.php</file>
 		<file>lib/system/api/scssphp/scssphp/src/SourceMap/SourceMapGenerator.php</file>
+		<file>lib/system/api/webmozart/assert/CHANGELOG.md</file>
+		<file>lib/system/api/webmozart/assert/README.md</file>
+		<file>lib/system/api/webmozart/assert/composer.json</file>
+		<file>lib/system/api/webmozart/assert/src/Assert.php</file>
+		<file>lib/system/api/webmozart/assert/src/InvalidArgumentException.php</file>
+		<file>lib/system/api/webmozart/assert/src/Mixin.php</file>
 		<file>lib/system/clipboard/action/ArticleClipboardAction.class.php</file>
 		<file>lib/system/clipboard/action/ModerationQueueActivationClipboardAction.class.php</file>
 		<file>lib/system/clipboard/action/ModerationQueueClipboardAction.class.php</file>

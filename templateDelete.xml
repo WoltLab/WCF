@@ -3,6 +3,7 @@
 	<delete>
 		<template>avatarEdit</template>
 		<template>imageViewer</template>
+		<template>messageFormSmilies</template>
 		<template>taggedArticleList</template>
 		<template>unreadArticleList</template>
 		<template>watchedArticleList</template>
