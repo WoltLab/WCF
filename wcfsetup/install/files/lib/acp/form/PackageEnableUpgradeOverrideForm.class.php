@@ -20,7 +20,6 @@ use wcf\system\WCF;
  * @author  Tim Duesterhus
  * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since   5.3
  */
 final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
 {
@@ -134,20 +133,20 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
 
     private function checkMaximumPhpVersion(): ?array
     {
-        // Maximum: PHP 8.3.x
-        if (\PHP_VERSION_ID < 80399) {
+        // Maximum: PHP 8.4.x
+        if (\PHP_VERSION_ID < 80499) {
             return null;
         }
 
         if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
             return [
                 'title' => 'Inkompatible PHP-Version',
-                'description' => 'Es wird nur PHP 8.1, 8.2 oder 8.3 unterstützt.',
+                'description' => 'Es wird nur PHP 8.1, 8.2, 8.3 oder 8.4 unterstützt.',
             ];
         } else {
             return [
                 'title' => 'Incompatible PHP version',
-                'description' => 'Only PHP 8.1, 8.2 or 8.3 are supported.',
+                'description' => 'Only PHP 8.1, 8.2, 8.3 or 8.4 are supported.',
             ];
         }
     }
@@ -158,12 +157,12 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
             'ctype',
             'dom',
             'exif',
+            'fileinfo',
             'gd',
             ['gmp', 'bcmath'],
             'intl',
             'libxml',
             'mbstring',
-            'openssl',
             'pdo_mysql',
             'pdo',
             'zlib',
