@@ -72,9 +72,9 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.2_styleVariables.php</instruction>
 
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
+		<instruction type="acpTemplate"/>
+		<instruction type="file"/>
+		<instruction type="template"/>
 
 		<instruction type="option"/>
 		<instruction type="script">acp/update_com.woltlab.wcf_6.2_option.php</instruction>
