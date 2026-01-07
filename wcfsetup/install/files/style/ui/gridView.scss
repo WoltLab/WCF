@@ -312,3 +312,20 @@ html[data-color-scheme="dark"] .gridView__footer__container {
 		box-shadow: rgba(0, 0, 0, 0.08) 0px 10px 16px 2px;
 	}
 }
+
+.gridView__filter__list {
+	display: grid;
+	gap: 20px;
+	grid-auto-flow: row;
+	grid-template-columns: 1fr 1fr;
+}
+
+.gridView__filter__item {
+	margin: 0 !important;
+}
+
+@include screen-xs {
+	.gridView__filter__list {
+		grid-template-columns: 1fr;
+	}
+}
