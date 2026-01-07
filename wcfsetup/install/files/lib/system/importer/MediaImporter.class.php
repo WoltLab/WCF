@@ -57,7 +57,7 @@ class MediaImporter extends AbstractImporter
         if (!empty($additionalData['contents'])) {
             foreach ($additionalData['contents'] as $languageCode => $contentData) {
                 $languageID = 0;
-                if (!$languageCode) {
+                if ($languageCode) {
                     if (($language = LanguageFactory::getInstance()->getLanguageByCode($languageCode)) !== null) {
                         $languageID = $language->languageID;
                     } else {
