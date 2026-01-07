@@ -365,6 +365,7 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley"><![CDATA[Smilies]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley.category"><![CDATA[Smiley categories]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article"><![CDATA[Articles]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article.attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article.category"><![CDATA[Article categories]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article.comment"><![CDATA[Article comments]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article.comment.response"><![CDATA[Replies to article comments]]></item>
