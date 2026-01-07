@@ -14,29 +14,30 @@ import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
 import { registerCallback } from "WoltLabSuite/Core/Form/Builder/Field/Controller/FileProcessor";
 import WoltlabCoreFile from "WoltLabSuite/Core/Component/File/woltlab-core-file";
 import { showDefaultSuccessSnackbar } from "../Snackbar";
+import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
+import * as FormBuilderManager from "WoltLabSuite/Core/Form/Builder/Manager";
 
-interface Result {
-  avatar: string;
-}
+type ResponseGetForm = {
+  dialog: string;
+  formId: string;
+  title: string;
+};
+
+let defaultAvatar = "";
 
 async function editAvatar(button: HTMLElement): Promise<void> {
-  const { ok, result } = await dialogFactory().usingFormBuilder().fromEndpoint<Result>(button.dataset.editAvatar!);
+  defaultAvatar = button.dataset.defaultAvatar || "";
 
-  if (ok) {
-    const avatarForm = document.getElementById("avatarForm");
-    if (avatarForm) {
-      const img = avatarForm.querySelector<HTMLImageElement>("img.userAvatarImage")!;
-      if (img.src === result.avatar) {
-        return;
-      }
+  const json = (await prepareRequest(button.dataset.editAvatar!).get().fetchAsJson()) as ResponseGetForm;
+  const dialog = dialogFactory().fromHtml(json.dialog).withoutControls();
 
-      // In the ACP, the form should not be reloaded after changing the avatar.
-      img.src = result.avatar;
-      showDefaultSuccessSnackbar();
-    } else {
-      window.location.reload();
+  dialog.addEventListener("afterClose", () => {
+    if (FormBuilderManager.hasForm(json.formId)) {
+      FormBuilderManager.unregisterForm(json.formId);
     }
-  }
+  });
+
+  dialog.show(json.title);
 }
 
 export function setup(): void {
@@ -51,28 +52,32 @@ export function setup(): void {
   const avatarForm = document.getElementById("avatarForm");
   if (avatarForm) {
     registerCallback("wcf\\action\\UserAvatarAction_avatarFileID", (fileId: number | undefined) => {
-      if (!fileId) {
-        return;
+      let link = defaultAvatar;
+      if (fileId !== undefined) {
+        const file = document.querySelector<WoltlabCoreFile>(
+          `#wcf\\\\action\\\\UserAvatarAction_avatarFileIDContainer woltlab-core-file[file-id="${fileId}"]`,
+        )!;
+
+        link = file.link!;
       }
 
-      const file = document.querySelector<WoltlabCoreFile>(
-        `#wcf\\\\action\\\\UserAvatarAction_avatarFileIDContainer woltlab-core-file[file-id="${fileId}"]`,
-      )!;
-
-      avatarForm.querySelector<HTMLImageElement>("img.userAvatarImage")!.src = file.link!;
-      showDefaultSuccessSnackbar();
-    });
-  } else {
-    registerCallback("wcf\\action\\UserAvatarAction_avatarFileID", (fileId: number | undefined) => {
-      if (fileId === undefined) {
-        return;
-      }
+      avatarForm.querySelector<HTMLImageElement>("img.userAvatarImage")!.src = link;
 
       document
         .getElementById("wcf\\action\\UserAvatarAction_avatarFileIDContainer")
         ?.closest("woltlab-core-dialog")
-        ?.querySelector<HTMLButtonElement>(".dialog__control__button--primary")
-        ?.click();
+        ?.close();
+
+      showDefaultSuccessSnackbar();
+    });
+  } else {
+    registerCallback("wcf\\action\\UserAvatarAction_avatarFileID", () => {
+      document
+        .getElementById("wcf\\action\\UserAvatarAction_avatarFileIDContainer")
+        ?.closest("woltlab-core-dialog")
+        ?.close();
+
+      window.location.reload();
     });
   }
 

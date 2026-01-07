@@ -5257,9 +5257,7 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.avatar"><![CDATA[Avatar]]></item>
 		<item name="wcf.user.avatar.edit"><![CDATA[Avatar bearbeiten]]></item>
 		<item name="wcf.user.avatar.error.disabled"><![CDATA[Der Administrator hat{if $__wcf->user->avatarID} {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} derzeitigen Avatar gesperrt und{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} die weitere Nutzungsberechtigung der Avatar-Funktion {if !$__wcf->user->disableAvatarReason}entzogen.{else} aus folgenden Gründen entzogen: {$__wcf->user->disableAvatarReason}{/if}]]></item>
-		<item name="wcf.user.avatar.type.custom"><![CDATA[Eigenen Avatar hochladen]]></item>
 		<item name="wcf.user.avatar.type.custom.description"><![CDATA[Eigene Avatare dürfen die Dateiendungen {"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')} besitzen.<br>Die Mindestgröße für Avatare liegt bei 128 × 128 Pixel.]]></item>
-		<item name="wcf.user.avatar.type.none"><![CDATA[Keinen Avatar verwenden]]></item>
 	</category>
 	<category name="wcf.user.condition">
 		<item name="wcf.user.condition.activityPoints"><![CDATA[Punkte]]></item>
@@ -5727,5 +5725,7 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.user.option.skype"/>
 	<item name="wcf.user.profileHits"/>
 	<item name="wcf.user.profileHits.hitsPerDay"/>
+	<item name="wcf.user.avatar.type.none"/>
+	<item name="wcf.user.avatar.type.custom"/>
 </delete>
 </language>

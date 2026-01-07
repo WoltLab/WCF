@@ -614,7 +614,7 @@
 					<dl>
 						<dt></dt>
 						<dd>
-							<button type="button" class="button userAvatarManagement" data-edit-avatar="{link controller="UserAvatar" forceFrontend=true id=$user->userID}{/link}">
+							<button type="button" class="button userAvatarManagement" data-edit-avatar="{link controller="UserAvatar" forceFrontend=true id=$user->userID}{/link}" data-default-avatar="{$__wcf->getPath()}images/avatars/avatar-default.svg">
 								{lang}wcf.user.avatar.edit{/lang}
 							</button>
 						</dd>
