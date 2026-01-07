@@ -83,13 +83,6 @@
 		font-weight: 600;
 	}
 
-	&.gridView__column--text {
-		.badge,
-		a.badge {
-			vertical-align: baseline;
-		}
-	}
-
 	&.gridView__column--digits,
 	&.gridView__column--id {
 		font-variant: tabular-nums;
