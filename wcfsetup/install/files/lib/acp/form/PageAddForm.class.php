@@ -871,6 +871,7 @@ class PageAddForm extends AbstractForm
             'menuItemNodeList' => $this->menuItems->getNodeList(),
             'enableShareButtons' => $this->enableShareButtons,
             'invertPermissions' => $this->invertPermissions,
+            'supportsCustomUrl' => true,
         ]);
     }
 }

@@ -146,7 +146,7 @@
 					</dd>
 				</dl>
 
-				{if $action === 'edit' && $page->originIsSystem}
+				{if $action === 'edit' && $page->originIsSystem && $supportsCustomUrl}
 					<dl{if $errorField == 'overrideApplicationPackageID'} class="formError"{/if}>
 						<dt><label for="overrideApplicationPackageID">{lang}wcf.acp.page.application{/lang}</label></dt>
 						<dd>
@@ -171,21 +171,23 @@
 				{/if}
 
 				{if !$isMultilingual}
-					<dl{if $errorField == 'customURL_0'} class="formError"{/if}>
-						<dt><label for="customURL">{lang}wcf.acp.page.customURL{/lang}</label></dt>
-						<dd>
-							<input type="text" id="customURL" name="customURL[0]" value="{if !$customURL[0]|empty}{$customURL[0]}{/if}" class="long" maxlength="255">
-							{if $errorField == 'customURL_0'}
-								<small class="innerError">
-									{if $errorType == 'empty'}
-										{lang}wcf.global.form.error.empty{/lang}
-									{else}
-										{lang}wcf.acp.page.customURL.error.{$errorType}{/lang}
-									{/if}
-								</small>
-							{/if}
-						</dd>
-					</dl>
+					{if $supportsCustomUrl}
+						<dl{if $errorField == 'customURL_0'} class="formError"{/if}>
+							<dt><label for="customURL">{lang}wcf.acp.page.customURL{/lang}</label></dt>
+							<dd>
+								<input type="text" id="customURL" name="customURL[0]" value="{if !$customURL[0]|empty}{$customURL[0]}{/if}" class="long" maxlength="255">
+								{if $errorField == 'customURL_0'}
+									<small class="innerError">
+										{if $errorType == 'empty'}
+											{lang}wcf.global.form.error.empty{/lang}
+										{else}
+											{lang}wcf.acp.page.customURL.error.{$errorType}{/lang}
+										{/if}
+									</small>
+								{/if}
+							</dd>
+						</dl>
+					{/if}
 				{else}
 					{foreach from=$availableLanguages item=availableLanguage}
 						{assign var='__errorFieldName' value='customURL_'|concat:$availableLanguage->languageID}

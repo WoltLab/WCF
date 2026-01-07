@@ -51,6 +51,12 @@ class PageEditForm extends PageAddForm
     public $page;
 
     /**
+     * Controls wether or not a particular page supports custom URLs.
+     * @since 6.2
+     */
+    public bool $supportsCustomUrl = true;
+
+    /**
      * @inheritDoc
      *
      * @throws  IllegalLinkException
@@ -178,6 +184,10 @@ class PageEditForm extends PageAddForm
      */
     protected function validateCustomUrl($languageID, $customURL)
     {
+        if (!$this->supportsCustomUrl) {
+            return;
+        }
+
         if ($this->pageType == 'system') {
             if ($customURL != $this->page->controllerCustomURL) {
                 parent::validateCustomUrl($languageID, $customURL);
@@ -222,6 +232,12 @@ class PageEditForm extends PageAddForm
             }
 
             $data['controllerCustomURL'] = (!empty($this->customURL[0]) ? $this->customURL[0] : '');
+
+            if (!$this->supportsCustomUrl) {
+                $data['overrideApplicationPackageID'] = null;
+                $data['controllerCustomURL'] = '';
+            }
+
             $this->objectAction = new PageAction([$this->page], 'update', [
                 'data' => \array_merge($this->additionalFields, $data),
                 'boxToPage' => $this->getBoxToPage(),
@@ -356,6 +372,7 @@ class PageEditForm extends PageAddForm
                 $this->page,
                 LinkHandler::getInstance()->getControllerLink(PageListPage::class)
             ),
+            'supportsCustomUrl' => $this->supportsCustomUrl,
         ]);
     }
 }
