@@ -38,7 +38,7 @@ final class ArticleAttachmentImporter extends AbstractAttachmentImporter
 
             foreach ($article->getArticleContents() as $content) {
                 $newMessage = $this->fixEmbeddedAttachments(
-                    $content->message,
+                    $content->content,
                     $oldID,
                     $attachmentID
                 );
