@@ -2,6 +2,10 @@
 
 {event name='wysiwyg'}
 
+<script data-relocate="true">
+	{include file='mediaJavaScript'}
+</script>
+
 <script data-eager="true">
 {
 	let stylesheet = document.getElementById("ckeditor5-stylesheet");
@@ -50,8 +54,6 @@
 		{if $__wcf->language->languageCode !== 'en'}
 		window.CKEDITOR_TRANSLATIONS['{unsafe:$__wcf->language->getFixedLanguageCode()|strtolower|encodeJS}'].dictionary["Single line code"] = '{jslang}wcf.editor.button.code{/jslang}';
 		{/if}
-
-		{include file='mediaJavaScript'}
 
 		const element = document.getElementById('{unsafe:$wysiwygSelector|encodeJS}');
 		if (element === null) {
