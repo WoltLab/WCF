@@ -50,4 +50,24 @@ class RatingFormOption extends AbstractFormOption
     {
         return TinyintDatabaseTableColumn::create($name);
     }
+
+    #[\Override]
+    public function serializeValue(mixed $value): string
+    {
+        if ($value === null) {
+            return '0';
+        }
+
+        return parent::serializeValue($value);
+    }
+
+    #[\Override]
+    public function unserializeValue(string $value): mixed
+    {
+        if ($value === '0') {
+            return null;
+        }
+
+        return parent::unserializeValue($value);
+    }
 }
