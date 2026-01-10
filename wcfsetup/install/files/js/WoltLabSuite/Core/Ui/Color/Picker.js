@@ -23,6 +23,7 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
         hslContainer = undefined;
         input;
         newColor = undefined;
+        opacityInput = null;
         oldColor = undefined;
         options;
         /**
@@ -69,6 +70,15 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
   </div>
   <div class="colorPickerValueContainer">
     <div>
+      <dl>
+        <dt>${Language.get("wcf.style.colorPicker.opacity")}</dt>
+        <dd>
+          <div class="inputAddon">
+          <input type="number" class="tiny colorPickerOpacity" min="0" max="100" step="1" value="0">
+          <span class="inputSuffix">%</span>
+          </div>
+        </dd>
+      </dl>
       <dl>
         <dt>${Language.get("wcf.style.colorPicker.color")}</dt>
         <dd class="colorPickerChannels">
@@ -127,6 +137,13 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
                         this.colorTextInput = content.querySelector("input[type=text]");
                         this.colorTextInput.addEventListener("blur", (ev) => this.updateColorFromHex(ev));
                         this.colorTextInput.addEventListener("input", (ev) => this.updateColorFromHex(ev));
+                        this.opacityInput = content.querySelector(".colorPickerOpacity");
+                        this.opacityInput.addEventListener("blur", (event) => {
+                            this.setOpacity(event);
+                        });
+                        this.opacityInput.addEventListener("input", (event) => {
+                            this.setOpacity(event);
+                        });
                         if (ColorUtil.isValidColor(this.input.value)) {
                             this.setInitialColor(this.input.value);
                         }
@@ -188,6 +205,25 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
             }
             this.setColor(color, "hex" /* ColorSource.HEX */);
         }
+        setOpacity(event) {
+            if (event instanceof KeyboardEvent && event.key !== "Enter") {
+                return;
+            }
+            const opacityInput = this.opacityInput;
+            let opacity = parseInt(opacityInput.value);
+            if (Number.isNaN(opacity)) {
+                opacity = 100;
+            }
+            else {
+                opacity = Math.min(Math.max(opacity, 1), 100);
+            }
+            if (opacity !== parseInt(opacityInput.value)) {
+                opacityInput.value = opacity.toString();
+            }
+            const currentColor = this.getColor("hex" /* ColorSource.HEX */);
+            currentColor.a = opacity / 100;
+            this.setColor(currentColor, "opacity" /* ColorSource.Opacity */);
+        }
         /**
          * Returns the current RGBA color set via the color and alpha input.
          *
@@ -235,7 +271,7 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
                 this.hslContainer.style.setProperty(`--${"saturation" /* HSL.Saturation */}`, `${s}%`);
                 this.hslContainer.style.setProperty(`--${"lightness" /* HSL.Lightness */}`, `${l}%`);
             }
-            else {
+            else if (source !== "opacity" /* ColorSource.Opacity */) {
                 const { h, s, l } = ColorUtil.rgbToHsl(r, g, b);
                 this.hsl.get("hue" /* HSL.Hue */).value = h.toString();
                 this.hsl.get("saturation" /* HSL.Saturation */).value = s.toString();
@@ -249,6 +285,9 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
                 this.channels.get("g" /* Channel.G */).value = g.toString();
                 this.channels.get("b" /* Channel.B */).value = b.toString();
                 this.channels.get("a" /* Channel.A */).value = a.toString();
+            }
+            if (source !== "opacity" /* ColorSource.Opacity */) {
+                this.opacityInput.value = Math.trunc(a * 100).toString();
             }
             this.newColor.style.backgroundColor = ColorUtil.rgbaToString(color);
             if (source !== "hex" /* ColorSource.HEX */) {

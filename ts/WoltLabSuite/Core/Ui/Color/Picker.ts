@@ -33,6 +33,7 @@ const enum HSL {
 const enum ColorSource {
   HEX = "hex",
   HSL = "hsl",
+  Opacity = "opacity",
   RGBA = "rgba",
   Setup = "setup",
 }
@@ -50,6 +51,7 @@ class UiColorPicker implements DialogCallbackObject {
   private hslContainer?: HTMLElement = undefined;
   protected readonly input: HTMLInputElement;
   protected newColor?: HTMLElement = undefined;
+  protected opacityInput: HTMLInputElement | null = null;
   protected oldColor?: HTMLElement = undefined;
   protected readonly options: ColorPickerOptions;
 
@@ -106,6 +108,15 @@ class UiColorPicker implements DialogCallbackObject {
   </div>
   <div class="colorPickerValueContainer">
     <div>
+      <dl>
+        <dt>${Language.get("wcf.style.colorPicker.opacity")}</dt>
+        <dd>
+          <div class="inputAddon">
+          <input type="number" class="tiny colorPickerOpacity" min="0" max="100" step="1" value="0">
+          <span class="inputSuffix">%</span>
+          </div>
+        </dd>
+      </dl>
       <dl>
         <dt>${Language.get("wcf.style.colorPicker.color")}</dt>
         <dd class="colorPickerChannels">
@@ -173,6 +184,14 @@ class UiColorPicker implements DialogCallbackObject {
           this.colorTextInput.addEventListener("blur", (ev) => this.updateColorFromHex(ev));
           this.colorTextInput.addEventListener("input", (ev) => this.updateColorFromHex(ev));
 
+          this.opacityInput = content.querySelector(".colorPickerOpacity") as HTMLInputElement;
+          this.opacityInput.addEventListener("blur", (event) => {
+            this.setOpacity(event);
+          });
+          this.opacityInput.addEventListener("input", (event) => {
+            this.setOpacity(event);
+          });
+
           if (ColorUtil.isValidColor(this.input.value)) {
             this.setInitialColor(this.input.value);
           } else if (this.element.dataset.color && ColorUtil.isValidColor(this.element.dataset.color)) {
@@ -239,6 +258,28 @@ class UiColorPicker implements DialogCallbackObject {
     this.setColor(color, ColorSource.HEX);
   }
 
+  protected setOpacity(event: Event): void {
+    if (event instanceof KeyboardEvent && event.key !== "Enter") {
+      return;
+    }
+
+    const opacityInput = this.opacityInput!;
+    let opacity = parseInt(opacityInput.value);
+    if (Number.isNaN(opacity)) {
+      opacity = 100;
+    } else {
+      opacity = Math.min(Math.max(opacity, 1), 100);
+    }
+
+    if (opacity !== parseInt(opacityInput.value)) {
+      opacityInput.value = opacity.toString();
+    }
+
+    const currentColor = this.getColor(ColorSource.HEX);
+    currentColor.a = opacity / 100;
+    this.setColor(currentColor, ColorSource.Opacity);
+  }
+
   /**
    * Returns the current RGBA color set via the color and alpha input.
    *
@@ -297,7 +338,7 @@ class UiColorPicker implements DialogCallbackObject {
       this.hslContainer!.style.setProperty(`--${HSL.Hue}`, `${h}`);
       this.hslContainer!.style.setProperty(`--${HSL.Saturation}`, `${s}%`);
       this.hslContainer!.style.setProperty(`--${HSL.Lightness}`, `${l}%`);
-    } else {
+    } else if (source !== ColorSource.Opacity) {
       const { h, s, l } = ColorUtil.rgbToHsl(r, g, b);
 
       this.hsl.get(HSL.Hue)!.value = h.toString();
@@ -314,6 +355,10 @@ class UiColorPicker implements DialogCallbackObject {
       this.channels.get(Channel.G)!.value = g.toString();
       this.channels.get(Channel.B)!.value = b.toString();
       this.channels.get(Channel.A)!.value = a.toString();
+    }
+
+    if (source !== ColorSource.Opacity) {
+      this.opacityInput!.value = Math.trunc(a * 100).toString();
     }
 
     this.newColor!.style.backgroundColor = ColorUtil.rgbaToString(color);
