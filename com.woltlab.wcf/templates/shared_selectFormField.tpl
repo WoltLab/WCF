@@ -1,8 +1,12 @@
 <select
 	id="{$field->getPrefixedId()}"
 	name="{$field->getPrefixedId()}"
-	{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}
-	{if $field->isRequired()} required{/if}
+	{if !$field->getFieldClasses()|empty || $field->isImmutable()} class="{if $field->isImmutable()}disabled {/if}{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}
+	{if $field->isImmutable()}
+		tabindex="-1"
+	{elseif $field->isRequired()}
+		required
+	{/if}
 >
 	<option value="">{lang}wcf.global.noSelection{/lang}</option>
 	{foreach from=$field->getNestedOptions() item=__fieldNestedOption}

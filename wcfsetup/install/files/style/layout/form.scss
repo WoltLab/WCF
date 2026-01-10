@@ -14,6 +14,11 @@ textarea {
 	@include input;
 }
 
+select.disabled[tabindex="-1"] {
+	pointer-events: none;
+	user-select: none;
+}
+
 /* set placeholder color */
 input[type="date"],
 input[type="datetime"],
