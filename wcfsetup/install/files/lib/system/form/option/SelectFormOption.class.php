@@ -30,7 +30,8 @@ class SelectFormOption extends AbstractFormOption
     #[\Override]
     public function getFormField(string $id, array $configuration = []): AbstractFormField
     {
-        $formField = SelectFormField::create($id);
+        $formField = SelectFormField::create($id)
+            ->ignoreInvalidValues();
         $this->setSelectOptions($formField, $configuration);
 
         return $formField;

@@ -32,6 +32,11 @@ final class SelectFormField extends AbstractFormField implements
     protected $templateName = 'shared_selectFormField';
 
     /**
+     * @since 6.2
+     */
+    private bool $ignoreInvalidValues = false;
+
+    /**
      * @inheritDoc
      */
     public function readValue()
@@ -75,10 +80,26 @@ final class SelectFormField extends AbstractFormField implements
     {
         if ($value !== null && $value !== '') {
             if (!isset($this->getOptions()[$value])) {
-                throw new \InvalidArgumentException("Unknown value '{$value}' for field '{$this->getId()}'.");
+                if ($this->ignoreInvalidValues) {
+                    $value = null;
+                } else {
+                    throw new \InvalidArgumentException("Unknown value '{$value}' for field '{$this->getId()}'.");
+                }
             }
         }
 
         return parent::value($value);
+    }
+
+    /**
+     * Ignores invalid values when reading them from data.
+     *
+     * @since 6.2
+     */
+    public function ignoreInvalidValues(bool $ignoreInvalidValues = true): self
+    {
+        $this->ignoreInvalidValues = $ignoreInvalidValues;
+
+        return $this;
     }
 }
