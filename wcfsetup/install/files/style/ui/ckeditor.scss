@@ -55,6 +55,11 @@
 	--ck-font-size-normal: var(--wcfFontSizeDefault);
 	--ck-font-size-small: var(--wcfFontSizeSmall);
 	--ck-font-size-tiny: var(--wcfFontSizeSmall);
+
+	--ck-focus-outer-shadow: var(--ck-focus-outer-shadow-geometry) var(--ck-color-focus-outer-shadow);
+	--ck-color-widget-editable-focus-background: var(--ck-color-base-background);
+	--ck-color-widget-drag-handler-icon-color: var(--ck-color-base-background);
+	--ck-color-widget-type-around-button-hover: var(--ck-color-widget-hover-border);
 }
 
 .ck.ck-content {
