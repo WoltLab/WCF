@@ -281,7 +281,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
                     '@monthly' => '@monthly',
                 ])
                 ->addDependency(
-                    (new ValueFormFieldDependency())
+                    ValueFormFieldDependency::create('expressionExpressionType')
                         ->fieldId('expressionType')
                         ->values(['random'])
                 ),
@@ -315,7 +315,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
                     ->description("wcf.acp.cronjob.{$timeProperty}.description")
                     ->required()
                     ->addDependency(
-                        (new ValueFormFieldDependency())
+                        ValueFormFieldDependency::create($timeProperty . 'ExpressionType')
                             ->fieldId('expressionType')
                             ->values([''])
                     )
