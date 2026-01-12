@@ -32,7 +32,7 @@ use wcf\util\StringUtil;
  */
 abstract class AbstractListView
 {
-    private int $objectCount;
+    protected int $objectCount;
     private int $itemsPerPage = 20;
     private string $baseUrl = '';
     private string $defaultSortField = '';
@@ -72,12 +72,12 @@ abstract class AbstractListView
     /**
      * @var TDatabaseObject[]
      */
-    private array $objects;
+    protected array $objects;
 
     /**
      * @var TDatabaseObjectList
      */
-    private DatabaseObjectList $objectList;
+    protected DatabaseObjectList $objectList;
 
     /**
      * Returns the number of items per page.
