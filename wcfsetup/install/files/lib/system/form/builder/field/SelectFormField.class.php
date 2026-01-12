@@ -37,6 +37,11 @@ final class SelectFormField extends AbstractFormField implements
     private bool $ignoreInvalidValues = false;
 
     /**
+     * @since 6.2
+     */
+    private ?string $defaultValue = null;
+
+    /**
      * @inheritDoc
      */
     public function readValue()
@@ -101,5 +106,44 @@ final class SelectFormField extends AbstractFormField implements
         $this->ignoreInvalidValues = $ignoreInvalidValues;
 
         return $this;
+    }
+
+    /**
+     * Sets an initial default value.
+     *
+     * The provided value must be among the existing values, setting it to
+     * `null` disables this feature. When a default value is present the default
+     * option “No Selection” becomes unavailable.
+     *
+     * @since 6.2
+     */
+    public function defaultValue(?string $defaultValue = null): self
+    {
+        if ($defaultValue !== null && !isset($this->getOptions()[$defaultValue])) {
+            throw new \InvalidArgumentException("Unknown default value '{$defaultValue}' for field '{$this->getId()}'.");
+        }
+
+        $this->defaultValue = $defaultValue;
+
+        return $this;
+    }
+
+    /**
+     * @since 6.2
+     */
+    public function hasDefaultValue(): bool
+    {
+        return $this->defaultValue !== null;
+    }
+
+    #[\Override]
+    public function getValue()
+    {
+        $value = parent::getValue();
+        if ($value === null && $this->defaultValue !== null) {
+            return $this->defaultValue;
+        }
+
+        return $value;
     }
 }
