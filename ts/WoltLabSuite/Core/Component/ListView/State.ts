@@ -209,7 +209,13 @@ export class State extends EventTarget {
   }
 
   #updateListViewFooter(): void {
-    this.#listViewFooter.hidden = this.#pagination.count < 2 && !this.#selection.selectionBarVisible();
+    const hasPagination = this.#pagination.count > 1;
+    this.#listViewFooter.hidden = !hasPagination && !this.#selection.selectionBarVisible();
+
+    const paginationContainer = this.#pagination.closest<HTMLElement>(".listView__pagination");
+    if (paginationContainer !== null) {
+      paginationContainer.hidden = !hasPagination;
+    }
   }
 
   setBulkInteractionContextMenuOptions(options: string): void {

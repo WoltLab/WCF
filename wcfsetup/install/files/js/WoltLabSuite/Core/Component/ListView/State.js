@@ -144,7 +144,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "./F
             this.#switchPage(pageNo, 1 /* StateChangeCause.History */);
         }
         #updateListViewFooter() {
-            this.#listViewFooter.hidden = this.#pagination.count < 2 && !this.#selection.selectionBarVisible();
+            const hasPagination = this.#pagination.count > 1;
+            this.#listViewFooter.hidden = !hasPagination && !this.#selection.selectionBarVisible();
+            const paginationContainer = this.#pagination.closest(".listView__pagination");
+            if (paginationContainer !== null) {
+                paginationContainer.hidden = !hasPagination;
+            }
         }
         setBulkInteractionContextMenuOptions(options) {
             this.#selection.setBulkInteractionContextMenuOptions(options);
