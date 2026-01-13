@@ -36,7 +36,10 @@ class UnfurlUrlEditor extends DatabaseObjectEditor
      */
     public static function saveUnfurlImage(string $file, string $originalFile): ?File
     {
-        $imageData = \getimagesize($file);
+        $imageData = @\getimagesize($file);
+        if ($imageData === false) {
+            return null;
+        }
 
         $imageAdapter = ImageHandler::getInstance()->getAdapter();
         if (!$imageAdapter->checkMemoryLimit($imageData[0], $imageData[1], $imageData['mime'])) {
