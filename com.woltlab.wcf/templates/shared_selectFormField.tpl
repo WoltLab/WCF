@@ -8,7 +8,9 @@
 		required
 	{/if}
 >
-	<option value="">{lang}wcf.global.noSelection{/lang}</option>
+	{if !$field->hasDefaultValue()}
+		<option value="">{lang}wcf.global.noSelection{/lang}</option>
+	{/if}
 	{foreach from=$field->getNestedOptions() item=__fieldNestedOption}
 		<option
 			value="{$__fieldNestedOption[value]}"
