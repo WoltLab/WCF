@@ -26,6 +26,10 @@
 	max-width: 24px;
 }
 
+.sidebarListItem__image:has(fa-icon) {
+	width: 24px;
+}
+
 .sidebarListItem__content {
 	grid-area: content;
 	display: flex;
