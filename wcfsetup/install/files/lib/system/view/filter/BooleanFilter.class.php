@@ -4,7 +4,7 @@ namespace wcf\system\view\filter;
 
 use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\form\builder\field\CheckboxFormField;
+use wcf\system\form\builder\field\BooleanFormField;
 
 /**
  * Filter for boolean columns.
@@ -28,9 +28,8 @@ class BooleanFilter extends AbstractFilter
     #[\Override]
     public function getFormField(): AbstractFormField
     {
-        return CheckboxFormField::create($this->id)
-            ->label($this->languageItem)
-            ->nullable();
+        return BooleanFormField::create($this->id)
+            ->label($this->languageItem);
     }
 
     #[\Override]
