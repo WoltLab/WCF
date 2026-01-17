@@ -1,4 +1,5 @@
 .googleMap {
+	border-radius: var(--wcfBorderRadius);
 	display: block;
 	height: 400px;
 }
@@ -72,4 +73,8 @@
 	a:hover {
 		color: #369;
 	}
+}
+
+.googleMapsInput + .googleMap {
+	margin-top: 10px;
 }

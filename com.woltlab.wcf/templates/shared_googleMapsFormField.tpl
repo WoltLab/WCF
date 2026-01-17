@@ -1,5 +1,4 @@
 {capture assign='googleMapsElementID'}{$field->getPrefixedId()}_map{/capture}
-{include file='shared_googleMapsElement' accessUserLocation=true googleMapsLat=$field->getLatitude() googleMapsLng=$field->getLongitude()}
 
 <input
 	type="text"
@@ -17,3 +16,5 @@
 	data-google-maps-geocoding-store="{$field->getPrefixedId()}_"
 	data-google-maps-marker
 >
+
+{include file='shared_googleMapsElement' accessUserLocation=true googleMapsLat=$field->getLatitude() googleMapsLng=$field->getLongitude()}
