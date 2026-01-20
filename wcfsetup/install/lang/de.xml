@@ -4166,6 +4166,7 @@ Dateianhänge:
 		<item name="wcf.form.option.shared.selectOptions"><![CDATA[Auswahloptionen]]></item>
 		<item name="wcf.form.option.shared.required"><![CDATA[Das Feld muss zwingend ausgefüllt werden]]></item>
 		<item name="wcf.form.option.shared.unit"><![CDATA[Einheit]]></item>
+		<item name="wcf.form.option.shared.urlLinkText"><![CDATA[Linktext]]></item>
 		<item name="wcf.form.option.optionType"><![CDATA[Feldtyp]]></item>
 	</category>
 	<category name="wcf.image">

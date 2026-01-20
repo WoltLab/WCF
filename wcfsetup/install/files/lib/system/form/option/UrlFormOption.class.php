@@ -57,4 +57,10 @@ class UrlFormOption extends AbstractFormOption
     {
         return TextDatabaseTableColumn::create($name);
     }
+
+    #[\Override]
+    public function getConfigurationFormFields(): array
+    {
+        return ['urlLinkText'];
+    }
 }

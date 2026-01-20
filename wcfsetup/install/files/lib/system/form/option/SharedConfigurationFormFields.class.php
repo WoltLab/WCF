@@ -63,7 +63,11 @@ final class SharedConfigurationFormFields
                 ->value(false),
             'unit' => TextFormField::create('unit')
                 ->label('wcf.form.option.shared.unit')
-                ->addFieldClass('short')
+                ->addFieldClass('short'),
+            'urlLinkText' => TextFormField::create('urlLinkText')
+                ->label('wcf.form.option.shared.urlLinkText')
+                ->maximumLength(80)
+                ->minimumLength(2)
         ];
     }
 
