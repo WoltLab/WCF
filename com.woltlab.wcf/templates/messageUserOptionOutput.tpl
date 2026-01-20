@@ -6,12 +6,6 @@
 	</div>
 	
 	<script data-relocate="true">
-		const element = document.getElementById('{unsafe:$option->optionName|encodeJS}');
-		if (element) {
-			const dl = element.closest('dl');
-			if (dl) {
-				dl.classList.add('wide');
-			}
-		}
+		document.getElementById('{unsafe:$option->optionName|encodeJS}')?.closest('dl')?.classList.add('wide');
 	</script>
 {/hascontent}
