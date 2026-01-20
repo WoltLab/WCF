@@ -58,4 +58,12 @@ interface IArticleDiscussionProvider
      * @return bool
      */
     public static function isResponsible(Article $article);
+
+    /**
+     * Migrates discussions from one content to another. This is intended to be
+     * used when converting a monolingual article into a multilingual one.
+     *
+     * @since 6.2
+     */
+    public function migrateDiscussions(ArticleContent $oldContent, ArticleContent $newContent): void;
 }

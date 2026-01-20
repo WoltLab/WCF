@@ -3,6 +3,9 @@
 namespace wcf\system\article\discussion;
 
 use wcf\data\article\Article;
+use wcf\data\article\content\ArticleContent;
+use wcf\data\article\content\ArticleContentEditor;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\comment\CommentHandler;
 use wcf\system\WCF;
 
@@ -12,21 +15,16 @@ use wcf\system\WCF;
  * @author      Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since       5.2
  */
 class CommentArticleDiscussionProvider extends AbstractArticleDiscussionProvider
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDiscussionCount()
     {
         return $this->articleContent ? $this->articleContent->comments : $this->article->getArticleContent()->comments;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDiscussionCountPhrase()
     {
         return WCF::getLanguage()->getDynamicVariable('wcf.article.articleComments', [
@@ -35,17 +33,13 @@ class CommentArticleDiscussionProvider extends AbstractArticleDiscussionProvider
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDiscussionLink()
     {
         return $this->articleContent->getLink() . '#comments';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function renderDiscussions()
     {
         $commentCanAdd = WCF::getSession()->getPermission('user.article.canAddComment');
@@ -63,6 +57,31 @@ class CommentArticleDiscussionProvider extends AbstractArticleDiscussionProvider
             'commentObjectTypeID' => $commentObjectTypeID,
             'lastCommentTime' => $commentList->getMinCommentTime(),
             'likeData' => (MODULE_LIKE) ? $commentList->getLikeData() : [],
+        ]);
+    }
+
+    #[\Override]
+    public function migrateDiscussions(ArticleContent $oldContent, ArticleContent $newContent): void
+    {
+        $objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName(
+            'com.woltlab.wcf.comment.commentableContent',
+            'com.woltlab.wcf.articleComment',
+        );
+        \assert($objectTypeID !== null);
+
+        $sql = "UPDATE  wcf1_comment
+                SET     objectID = ?
+                WHERE   objectTypeID = ?
+                    AND objectID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            $newContent->articleContentID,
+            $objectTypeID,
+            $oldContent->articleContentID,
+        ]);
+
+        (new ArticleContentEditor($newContent))->update([
+            'comments' => $oldContent->comments,
         ]);
     }
 

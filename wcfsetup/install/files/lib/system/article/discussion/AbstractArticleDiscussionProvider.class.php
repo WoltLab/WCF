@@ -26,21 +26,17 @@ abstract class AbstractArticleDiscussionProvider implements IArticleDiscussionPr
      */
     protected $articleContent;
 
-    /**
-     * AbstractArticleDiscussionProvider constructor.
-     *
-     * @param Article $article
-     */
     public function __construct(Article $article)
     {
         $this->article = $article;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setArticleContent(ArticleContent $articleContent)
     {
         $this->articleContent = $articleContent;
     }
+
+    #[\Override]
+    public function migrateDiscussions(ArticleContent $oldContent, ArticleContent $newContent): void {}
 }
