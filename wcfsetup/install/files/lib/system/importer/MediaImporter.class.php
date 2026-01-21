@@ -100,6 +100,8 @@ class MediaImporter extends AbstractImporter
             $data['categoryID'] = $categoryID;
         }
 
+        $data['captionEnableHtml'] ??= 0;
+
         // save media
         $media = MediaEditor::create($data);
 
