@@ -787,7 +787,6 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.category.user.profile.avatar"><![CDATA[Avatars]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.rank"><![CDATA[User Ranks]]></item>
 		<item name="wcf.acp.group.option.category.user.signature"><![CDATA[Signatures]]></item>
-		<item name="wcf.acp.group.option.user.profile.avatar.allowedFileExtensions"><![CDATA[Allowed Image Extensions]]></item>
 		<item name="wcf.acp.group.option.user.profile.avatar.canSeeAvatars"><![CDATA[Can view users’ avatars]]></item>
 		<item name="wcf.acp.group.option.user.profile.avatar.canUploadAvatar"><![CDATA[Can upload their avatar]]></item>
 		<item name="wcf.acp.group.option.user.profile.canChangeEmail"><![CDATA[Can change their email address]]></item>
@@ -5259,7 +5258,7 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.user.avatar"><![CDATA[Avatar]]></item>
 		<item name="wcf.user.avatar.edit"><![CDATA[Edit Avatar]]></item>
 		<item name="wcf.user.avatar.error.disabled"><![CDATA[The administrators {if $__wcf->user->avatarID}have blocked your avatar and {/if}disallowed you from using an avatar{if $__wcf->user->disableAvatarReason}: {$__wcf->user->disableAvatarReason}{/if}.]]></item>
-		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar.<br>The minimum dimensions are 128 × 128 pixels.]]></item>
+		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “gif, jpg, jpeg, png, webp” for your avatar.<br>The minimum dimensions are 128 × 128 pixels.]]></item>
 	</category>
 	<category name="wcf.user.condition">
 		<item name="wcf.user.condition.activityPoints"><![CDATA[Points]]></item>
