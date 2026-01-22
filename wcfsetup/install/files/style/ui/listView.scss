@@ -2,6 +2,7 @@
 	border-bottom: 2px solid var(--wcfTabularBoxHeadline);
 	display: flex;
 	flex-direction: row;
+	flex-wrap: wrap;
 	gap: 5px;
 	padding-bottom: 5px;
 }
@@ -116,12 +117,13 @@
 }
 
 @include screen-xs {
-	.listView__footer__container{
+	.listView__footer__container {
 		align-items: center;
 		flex-direction: column;
 	}
 
-	.listView__selectionBar:not([hidden]) + .listView__pagination:not(:has(woltlab-core-pagination[count="1"]))::before {
+	.listView__selectionBar:not([hidden])
+		+ .listView__pagination:not(:has(woltlab-core-pagination[count="1"]))::before {
 		border-left-width: 0;
 		border-top: 1px solid var(--wcfContentContainerBorder);
 		inset: auto 0;
