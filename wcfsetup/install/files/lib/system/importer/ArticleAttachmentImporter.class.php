@@ -45,7 +45,7 @@ final class ArticleAttachmentImporter extends AbstractAttachmentImporter
 
                 if ($newMessage) {
                     (new ArticleContentEditor($content))->update([
-                        'message' => $newMessage,
+                        'content' => $newMessage,
                     ]);
                 }
             }
