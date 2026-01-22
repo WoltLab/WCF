@@ -38,7 +38,13 @@ final class UserAvatarFileProcessor extends AbstractFileProcessor
     #[\Override]
     public function getAllowedFileExtensions(array $context): array
     {
-        return \explode("\n", WCF::getSession()->getPermission('user.profile.avatar.allowedFileExtensions'));
+        return [
+            "png",
+            "jpg",
+            "jpeg",
+            "gif",
+            "webp",
+        ];
     }
 
     #[\Override]
