@@ -18,6 +18,10 @@ use wcf\system\form\option\formatter\WysiwygPlainTextFormatter;
  */
 class WysiwygFormOption extends AbstractFormOption
 {
+    private string $objectType;
+
+    private int $objectID;
+
     #[\Override]
     public function getId(): string
     {
@@ -27,8 +31,12 @@ class WysiwygFormOption extends AbstractFormOption
     #[\Override]
     public function getFormField(string $id, array $configuration = []): AbstractFormField
     {
+        if (!isset($this->objectType)) {
+            throw new \RuntimeException("The WYSIWYG context has not been set.");
+        }
+
         return WysiwygFormField::create($id)
-            ->objectType('com.woltlab.wcf.genericFormOption');
+            ->objectType($this->objectType);
     }
 
     #[\Override]
@@ -40,13 +48,21 @@ class WysiwygFormOption extends AbstractFormOption
     #[\Override]
     public function getFormatter(): IFormOptionFormatter
     {
-        return new WysiwygFormatter();
+        if (!isset($this->objectType)) {
+            throw new \RuntimeException("The WYSIWYG context has not been set.");
+        }
+
+        return new WysiwygFormatter($this->objectType, $this->objectID);
     }
 
     #[\Override]
     public function getPlainTextFormatter(): IFormOptionFormatter
     {
-        return new WysiwygPlainTextFormatter();
+        if (!isset($this->objectType)) {
+            throw new \RuntimeException("The WYSIWYG context has not been set.");
+        }
+
+        return new WysiwygPlainTextFormatter($this->objectType, $this->objectID);
     }
 
     #[\Override]
@@ -59,5 +75,14 @@ class WysiwygFormOption extends AbstractFormOption
     public function isFilterable(): bool
     {
         return false;
+    }
+
+    /**
+     * Sets the context for the HTML processors.
+     */
+    public function setContext(string $objectType, int $objectID): void
+    {
+        $this->objectType = $objectType;
+        $this->objectID = $objectID;
     }
 }
