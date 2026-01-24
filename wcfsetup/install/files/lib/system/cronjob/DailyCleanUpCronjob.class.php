@@ -156,6 +156,7 @@ class DailyCleanUpCronjob extends AbstractCronjob
             new \RecursiveDirectoryIterator($tempFolder, \FilesystemIterator::SKIP_DOTS),
             \RecursiveIteratorIterator::CHILD_FIRST
         );
+        /** @var \SplFileInfo $file */
         foreach ($it as $file) {
             if ($file->getPathname() === $tempFolder) {
                 continue;
@@ -164,7 +165,8 @@ class DailyCleanUpCronjob extends AbstractCronjob
                 continue;
             }
 
-            if ($file->getMTime() < TIME_NOW - 86400) {
+            $mtime = @$file->getMTime();
+            if ($mtime !== false && $mtime < TIME_NOW - 86400) {
                 if ($file->isDir()) {
                     @\rmdir($file->getPathname());
                 } elseif ($file->isFile()) {
