@@ -177,3 +177,20 @@ html[data-color-scheme="dark"] .listView__footer__container {
 		background-color: var(--wcfButtonPrimaryBackgroundActive);
 	}
 }
+
+.listView__filter__list {
+	display: grid;
+	gap: 20px;
+	grid-auto-flow: row;
+	grid-template-columns: 1fr 1fr;
+}
+
+.listView__filter__item {
+	margin: 0 !important;
+}
+
+@include screen-xs {
+	.listView__filter__list {
+		grid-template-columns: 1fr;
+	}
+}
