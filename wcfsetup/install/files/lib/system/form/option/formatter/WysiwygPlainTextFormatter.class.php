@@ -14,12 +14,17 @@ use wcf\system\html\output\HtmlOutputProcessor;
  */
 final class WysiwygPlainTextFormatter implements IFormOptionFormatter
 {
+    public function __construct(
+        private readonly string $objectType,
+        private readonly int $objectID,
+    ) {}
+
     #[\Override]
     public function format(string $value, int $languageID, array $configuration): string
     {
         $processor = new HtmlOutputProcessor();
         $processor->setOutputType('text/plain');
-        $processor->process($value, 'com.woltlab.wcf.genericFormOption', 0, true, $languageID);
+        $processor->process($value, $this->objectType, $this->objectID, true, $languageID);
 
         return $processor->getHtml();
     }
