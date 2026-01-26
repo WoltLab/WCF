@@ -86,7 +86,14 @@ class UserOptionCategoryAddForm extends AbstractFormBuilderForm
             ->addProcessor(
                 new CustomFormDataProcessor(
                     'categoryName',
-                    null,
+                    function (IFormDocument $document, array $parameters) {
+                        // These category name is unconditionally stored in a
+                        // phrase and never in actual columns as it is usually
+                        // the case with the `I18nHandler`.
+                        unset($parameters['data']['categoryName']);
+
+                        return $parameters;
+                    },
                     function (IFormDocument $document, array $data, IStorableObject $object) {
                         \assert($object instanceof UserOptionCategory);
                         $data['categoryName'] = 'wcf.user.option.category.' . $object->categoryName;
