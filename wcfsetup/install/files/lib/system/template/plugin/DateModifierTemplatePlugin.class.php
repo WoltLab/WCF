@@ -4,6 +4,7 @@ namespace wcf\system\template\plugin;
 
 use wcf\system\template\TemplateEngine;
 use wcf\system\WCF;
+use wcf\util\DateUtil;
 
 /**
  * Template modifier plugin which renders a \DateTimeInterface or
@@ -37,9 +38,10 @@ class DateModifierTemplatePlugin implements IModifierTemplatePlugin
         }
 
         if (!empty($tagArgs[1])) {
-            return $dateTime
-                ->setTimezone(WCF::getUser()->getTimeZone())
-                ->format($tagArgs[1]);
+            return DateUtil::format(
+                $dateTime,
+                $tagArgs[1]
+            );
         } else {
             $locale = WCF::getLanguage()->getLocale();
             $timeZone = WCF::getUser()->getTimeZone();
