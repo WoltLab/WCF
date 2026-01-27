@@ -5606,6 +5606,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.upload.error.delete.unknownError"><![CDATA[An unknown error occurred while deleting the file.]]></item>
 		<item name="wcf.upload.error.delete.permissionDenied"><![CDATA[The file cannot be deleted, use <strong>Replace</strong> instead to swap out the file.]]></item>
 		<item name="wcf.upload.validation.error.noImage"><![CDATA[The file is not an image.]]></item>
+		<item name="wcf.upload.validation.error.notSquare"><![CDATA[The file is not square.]]></item>
 		<item name="wcf.upload.validation.error.tooSmall"><![CDATA[The file is too small.]]></item>
 		<item name="wcf.upload.single.limits"><![CDATA[Maximum file size: {$maximumSize|filesize}<br>
 Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>

@@ -175,6 +175,7 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.upload.error.delete.permissionDenied');
         $event->preload('wcf.upload.error.delete.unknownError');
         $event->preload('wcf.upload.validation.error.noImage');
+        $event->preload('wcf.upload.validation.error.notSquare');
         $event->preload('wcf.upload.validation.error.tooSmall');
 
         $event->preload('wcf.user.activityPoint');
