@@ -204,31 +204,6 @@ abstract class ImageCropper {
       const selection = event.detail as Selection;
       this.cropperCanvasRect = this.cropperCanvas!.getBoundingClientRect();
 
-      // Calculate the scaling ratio because the lower and upper boundary are
-      // defined in absolute values but the cropper will implicitly scale to fit
-      // onto the available screen space. The cropper will preserve the aspect
-      // ratio thus we only need to check the width.
-      const scalingRatio = this.cropperCanvasRect.width / this.width;
-
-      // Enforce the upper and lower boundary of the dimensions. Any changes to
-      // the position are also ignored at this point because we support
-      // adjustments to the positions only as long as the dimensions are not
-      // violated in either direction.
-      const minWidth = this.minSize.width * scalingRatio;
-      const maxWidth = Math.floor(Math.min(this.maxSize.width * scalingRatio, this.cropperCanvasRect.width));
-      const minHeight = this.minSize.height * scalingRatio;
-      const maxHeight = Math.floor(Math.min(this.maxSize.height * scalingRatio, this.cropperCanvasRect.height));
-      if (
-        selection.width < minWidth ||
-        selection.width > maxWidth ||
-        selection.height < minHeight ||
-        selection.height > maxHeight
-      ) {
-        event.preventDefault();
-
-        return;
-      }
-
       // Check if the position of the selection violates any of the boundaries
       // and move it accordingly.
       // See https://fengyuanchen.github.io/cropperjs/v2/api/cropper-selection.html#limit-boundaries
