@@ -840,7 +840,12 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
             $form
         );
 
-        foreach ($formData['name_i18n'] as $languageID => $name) {
+        $names = $formData['name_i18n'] ?? [];
+        if ($names === []) {
+            $names[LanguageFactory::getInstance()->getDefaultLanguageID()] = $formData['data']['name'];
+        }
+
+        foreach ($names as $languageID => $name) {
             $name = $document->createElement('name', $this->getAutoCdataValue($name));
             $name->setAttribute('language', LanguageFactory::getInstance()->getLanguage($languageID)->languageCode);
 
