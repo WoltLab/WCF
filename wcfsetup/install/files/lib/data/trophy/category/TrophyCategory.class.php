@@ -17,12 +17,6 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   3.1
- *
- * @method      TrophyCategory[]    getChildCategories()
- * @method      TrophyCategory[]    getAllChildCategories()
- * @method      TrophyCategory      getParentCategory()
- * @method      TrophyCategory[]    getParentCategories()
- * @method static TrophyCategory|null getCategory($categoryID)
  */
 class TrophyCategory extends AbstractDecoratedCategory implements ITitledLinkObject
 {

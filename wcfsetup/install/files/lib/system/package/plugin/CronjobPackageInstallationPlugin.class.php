@@ -400,7 +400,6 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
             } elseif (isset($descriptions[WCF::getLanguage()->getFixedLanguageCode()])) {
                 $data['description'][$language->languageID] = $descriptions[WCF::getLanguage()->getFixedLanguageCode()];
             } else {
-                // @phpstan-ignore variable.undefined
                 $data['description'][$language->languageID] = \reset($descriptions);
             }
         }
