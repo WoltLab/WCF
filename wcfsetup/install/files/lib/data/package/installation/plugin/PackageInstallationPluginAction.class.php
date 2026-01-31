@@ -2,6 +2,7 @@
 
 namespace wcf\data\package\installation\plugin;
 
+use wcf\command\package\SetLastUpdateTime;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\devtools\project\DevtoolsProject;
 use wcf\data\option\OptionEditor;
@@ -132,15 +133,7 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
             case 'file':
                 StyleHandler::resetStylesheets(false);
 
-                $sql = "UPDATE  wcf1_option
-                        SET     optionValue = ?
-                        WHERE   optionName = ?";
-                $statement = WCF::getDB()->prepare($sql);
-                $statement->execute([
-                    \TIME_NOW,
-                    'last_update_time',
-                ]);
-                OptionEditor::resetCache();
+                (new SetLastUpdateTime())();
                 break;
 
             case 'language':
