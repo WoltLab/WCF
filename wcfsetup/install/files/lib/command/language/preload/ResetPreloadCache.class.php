@@ -2,6 +2,7 @@
 
 namespace wcf\command\language\preload;
 
+use wcf\command\package\SetLastUpdateTime;
 use wcf\data\language\Language;
 
 /**
@@ -25,5 +26,7 @@ final class ResetPreloadCache
         if (\file_exists($filename)) {
             \unlink($filename);
         }
+
+        (new SetLastUpdateTime())();
     }
 }
