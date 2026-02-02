@@ -16,6 +16,7 @@ use wcf\data\user\UserAction;
 use wcf\event\package\PackageListChanged;
 use wcf\system\application\ApplicationHandler;
 use wcf\command\cache\ClearCache;
+use wcf\command\package\SetLastUpdateTime;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\devtools\DevtoolsSetup;
 use wcf\system\Environment;
@@ -174,15 +175,7 @@ class PackageInstallationDispatcher
 
             $this->logInstallationStep([], 'start cleanup');
 
-            // update "last update time" option
-            $sql = "UPDATE  wcf1_option
-                    SET     optionValue = ?
-                    WHERE   optionName = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([
-                TIME_NOW,
-                'last_update_time',
-            ]);
+            (new SetLastUpdateTime())();
 
             if ($this->action == 'install') {
                 // save localized package infos
