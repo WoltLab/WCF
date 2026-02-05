@@ -19,6 +19,8 @@ if (\function_exists('posix_getuid') && \posix_getuid() === 0) {
     exit(1);
 }
 
+\define('PACKAGE_ID', 1);
+
 // include config
 require_once(__DIR__ . '/app.config.inc.php');
 
