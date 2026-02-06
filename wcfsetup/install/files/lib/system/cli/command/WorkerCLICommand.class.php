@@ -5,6 +5,7 @@ namespace wcf\system\cli\command;
 use Laminas\ProgressBar\Adapter\Console as ConsoleProgressBar;
 use Laminas\ProgressBar\ProgressBar;
 use phpline\internal\Log;
+use wcf\system\cache\runtime\AbstractRuntimeCache;
 use wcf\system\CLIWCF;
 use wcf\system\io\File;
 use wcf\system\Regex;
@@ -164,6 +165,7 @@ class WorkerCLICommand implements ICLICommand
                 // execute worker
                 $worker->execute();
                 $worker->finalize();
+                $this->resetRuntimeCaches();
 
                 // update progress
                 $progress = $worker->getProgress();
@@ -210,6 +212,7 @@ class WorkerCLICommand implements ICLICommand
         $worker->validate();
         $worker->execute();
         $worker->finalize();
+        $this->resetRuntimeCaches();
 
         $fileDescriptors = [
             // Bind STDIN to a pipe to allow sending the command.
@@ -398,6 +401,33 @@ class WorkerCLICommand implements ICLICommand
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * Resets all runtime caches to avoid memory leaks inside workers.
+     *
+     * @since 6.2
+     */
+    protected function resetRuntimeCaches(): void
+    {
+        foreach (\get_declared_classes() as $className) {
+            if (!\str_ends_with($className, 'RuntimeCache')) {
+                continue;
+            }
+
+            if (!\is_subclass_of($className, AbstractRuntimeCache::class)) {
+                continue;
+            }
+
+            $runtimeCache = \call_user_func([$className, 'getInstance']);
+            \assert($runtimeCache instanceof AbstractRuntimeCache);
+
+            $runtimeCache->removeObjects(
+                \array_keys(
+                    $runtimeCache->getCachedObjects(),
+                ),
+            );
         }
     }
 
