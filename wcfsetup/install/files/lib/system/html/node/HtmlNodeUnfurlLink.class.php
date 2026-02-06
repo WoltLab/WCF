@@ -64,10 +64,15 @@ class HtmlNodeUnfurlLink extends HtmlNodePlainLink
             return;
         }
 
+        $urlID = self::findOrCreate($uri);
+        if ($urlID === null) {
+            // Ignore malformed URLs.
+            return;
+        }
+
         self::removeStyling($link);
 
         $uri = self::lowercaseHostname($uri);
-        $urlID = self::findOrCreate($uri);
 
         $link->link->setAttribute(self::UNFURL_URL_ID_ATTRIBUTE_NAME, (string)$urlID);
     }
@@ -89,9 +94,13 @@ class HtmlNodeUnfurlLink extends HtmlNodePlainLink
         return $uri->withHost(\mb_strtolower($uri->getHost()));
     }
 
-    private static function findOrCreate(Uri $uri): int
+    private static function findOrCreate(Uri $uri): ?int
     {
-        $unfurlUrl = (new FindOrCreateUnfurlUrl($uri->__toString()))();
+        try {
+            $unfurlUrl = (new FindOrCreateUnfurlUrl($uri->__toString()))();
+        } catch (\InvalidArgumentException) {
+            return null;
+        }
 
         return $unfurlUrl->urlID;
     }
