@@ -165,10 +165,9 @@ class MessageEmbeddedObjectManager extends SingletonFactory
         }
         WCF::getDB()->commitTransaction();
 
-        // prepare statement
-        $sql = "INSERT INTO wcf1_message_embedded_object
-                            (messageObjectTypeID, messageID, embeddedObjectTypeID, embeddedObjectID)
-                VALUES      (?, ?, ?, ?)";
+        $sql = "INSERT IGNORE INTO  wcf1_message_embedded_object
+                                    (messageObjectTypeID, messageID, embeddedObjectTypeID, embeddedObjectID)
+                VALUES              (?, ?, ?, ?)";
         $statement = WCF::getDB()->prepare($sql);
 
         WCF::getDB()->beginTransaction();
