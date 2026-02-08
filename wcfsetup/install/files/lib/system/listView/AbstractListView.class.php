@@ -748,7 +748,15 @@ abstract class AbstractListView
         return $this->containerCssClassName;
     }
 
+    /**
+     * @deprecared 6.2 Use `setMarkAsReadEndpoint()` instead.
+     */
     public function setMarkAsReadEndpoints(string $endpoint): void
+    {
+        $this->setMarkAsReadEndpoint($endpoint);
+    }
+
+    public function setMarkAsReadEndpoint(string $endpoint): void
     {
         $this->markAsReadEndpoint = $endpoint;
     }
