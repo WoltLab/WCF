@@ -2,9 +2,10 @@
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.2
  */
 
-import { Fancybox, CarouselSlide, FancyboxInstance } from "@fancyapps/ui";
+import { Fancybox, CarouselSlide } from "@fancyapps/ui";
 import { getPageOverlayContainer } from "WoltLabSuite/Core/Helper/PageOverlay";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import { ConsentPlugin } from "./Fancybox/ConsentPlugin";
@@ -24,17 +25,8 @@ export function setupLegacy() {
   });
 }
 
-export function showFancybox(userSlides?: Array<CarouselSlide>): FancyboxInstance {
-  const fancybox = Fancybox.show(userSlides);
-  if (fancybox === undefined) {
-    throw new Error("Unable to initialize a fancybox instance.", {
-      cause: {
-        userSlides,
-      },
-    });
-  }
-
-  return fancybox;
+export function showFancybox(userSlides?: Array<CarouselSlide>): void {
+  Fancybox.show(userSlides);
 }
 
 function setDefaultConfig(): void {
