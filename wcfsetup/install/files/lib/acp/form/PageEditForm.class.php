@@ -375,4 +375,15 @@ class PageEditForm extends PageAddForm
             'supportsCustomUrl' => $this->supportsCustomUrl,
         ]);
     }
+
+    #[\Override]
+    protected function validateTitle()
+    {
+        if ($this->page->pageType === 'system' && $this->page->requireObjectID) {
+            // Allow an empty title for pages that dynamically generate their title based on a given ID (e.g. `ArticlePage`).
+            return;
+        }
+
+        parent::validateTitle();
+    }
 }
