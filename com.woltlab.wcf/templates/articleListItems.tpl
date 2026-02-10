@@ -81,11 +81,9 @@
 					</div>
 				{/if}
 				{if $article->getDiscussionProvider()->getDiscussionCountPhrase()}{* empty phrase indicates that comments are disabled *}
-					<div class="entryCardList__item__meta__icon">
+					<div class="entryCardList__item__meta__icon" aria-hidden="true">
 						{icon name='comments'}
-						<span aria-label="{$article->getDiscussionProvider()->getDiscussionCountPhrase()}">
-							{$article->getDiscussionProvider()->getDiscussionCount()}
-						</span>
+						<span>{$article->getDiscussionProvider()->getDiscussionCount()}</span>
 					</div>
 				{/if}
 
