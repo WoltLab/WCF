@@ -175,24 +175,11 @@ export class Selection extends EventTarget {
     this.dispatchEvent(new CustomEvent("grid-view:update-selection"));
 
     if (selectedIds.length === 0) {
-      if ("startViewTransition" in document) {
-        document.startViewTransition(() => {
-          this.#selectionBar!.hidden = true;
-        });
-      } else {
-        this.#selectionBar.hidden = true;
-      }
-
+      this.#selectionBar.hidden = true;
       return;
     }
 
-    if ("startViewTransition" in document) {
-      document.startViewTransition(() => {
-        this.#selectionBar!.hidden = false;
-      });
-    } else {
-      this.#selectionBar.hidden = false;
-    }
+    this.#selectionBar.hidden = false;
 
     this.#bulkInteractionButton!.textContent = getPhrase("wcf.clipboard.button.numberOfSelectedItems", {
       numberOfSelectedItems: selectedIds.length,
