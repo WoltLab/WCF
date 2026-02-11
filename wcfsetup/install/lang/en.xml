@@ -3292,6 +3292,7 @@ Your account on {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link}] has been a
 Maximum file size: {@$attachmentHandler->getMaxSize()|filesize}<br>
 Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensions()}]]></item>
 		<item name="wcf.attachment.insert"><![CDATA[Insert into message]]></item>
+		<item name="wcf.attachment.inserted"><![CDATA[Inserted]]></item>
 		<item name="wcf.attachment.insertAll"><![CDATA[Insert All]]></item>
 		<item name="wcf.attachment.insertFull"><![CDATA[Full Image]]></item>
 		<item name="wcf.attachment.insertThumbnail"><![CDATA[Thumbnail]]></item>

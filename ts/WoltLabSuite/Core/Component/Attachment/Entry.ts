@@ -12,7 +12,7 @@ import {
   updateFileInformation,
 } from "WoltLabSuite/Core/Component/File/Helper";
 
-type FileProcessorData = {
+export type FileProcessorData = {
   attachmentID: number;
   messageObjectID: number | null;
 };
