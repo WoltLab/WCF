@@ -145,6 +145,14 @@ function scrollEnable(isSetup: boolean) {
 
 function scrollDisable() {
   _enableTabScroll = false;
+
+  _tabMenus.forEach((tabMenu) => {
+    const activeTab = tabMenu.getActiveTab();
+    const menu = activeTab.closest(".menu, .tabMenu") as HTMLElement;
+    menu.querySelectorAll(".tabMenuOverlayLeft, .tabMenuOverlayRight").forEach((overlay) => {
+      overlay.classList.remove("active");
+    });
+  });
 }
 
 function scrollMenu(
