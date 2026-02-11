@@ -188,15 +188,10 @@ function observeInsertedAttachments(element: HTMLElement, files: HTMLCollectionO
       continue;
     }
 
-    const indicator = wrapper.querySelector<HTMLElement>(".fileList__item__indicator");
-    if (indicator === null) {
-      continue;
-    }
-
     const { attachmentID } = file.data as FileProcessorData;
     if (embeddedAttachments.has(attachmentID)) {
       wrapper.classList.add("fileList__item--inserted");
-    } else if (indicator !== null) {
+    } else {
       wrapper.classList.remove("fileList__item--inserted");
     }
   }

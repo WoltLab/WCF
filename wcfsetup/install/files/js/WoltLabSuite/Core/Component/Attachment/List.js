@@ -152,15 +152,11 @@ define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Messa
             if (wrapper === null) {
                 continue;
             }
-            const indicator = wrapper.querySelector(".fileList__item__indicator");
-            if (indicator === null) {
-                continue;
-            }
             const { attachmentID } = file.data;
             if (embeddedAttachments.has(attachmentID)) {
                 wrapper.classList.add("fileList__item--inserted");
             }
-            else if (indicator !== null) {
+            else {
                 wrapper.classList.remove("fileList__item--inserted");
             }
         }
