@@ -256,6 +256,7 @@ export class WoltlabCoreDialogElement extends HTMLElement {
     const dialogRole = this.#dialog.getAttribute("role");
     if (dialogRole !== "alert" && dialogRole !== "alertdialog") {
       closeButton = document.createElement("button");
+      closeButton.type = "button";
       closeButton.innerHTML = '<fa-icon size="24" name="xmark"></fa-icon>';
       closeButton.classList.add("dialog__closeButton", "jsTooltip");
       closeButton.title = Language.get("wcf.dialog.button.close");
