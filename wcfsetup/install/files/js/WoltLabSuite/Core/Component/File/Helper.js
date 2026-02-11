@@ -80,10 +80,17 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/F
         const filename = document.createElement("div");
         filename.classList.add("fileList__item__filename");
         filename.textContent = file.filename || file.dataset.filename;
+        const indicatorIcon = document.createElement("fa-icon");
+        indicatorIcon.setIcon("circle-check");
+        const fileIndicator = document.createElement("div");
+        fileIndicator.classList.add("fileList__item__indicator", "green", "jsTooltip");
+        fileIndicator.setAttribute("aria-hidden", "true");
+        fileIndicator.title = (0, Language_1.getPhrase)("wcf.attachment.inserted");
+        fileIndicator.append(indicatorIcon);
         const fileSize = document.createElement("div");
         fileSize.classList.add("fileList__item__fileSize");
         fileSize.textContent = (0, FileUtil_1.formatFilesize)(file.fileSize || parseInt(file.dataset.fileSize));
-        container.append(fileWrapper, filename, fileSize);
+        container.append(fileWrapper, filename, fileIndicator, fileSize);
     }
     function updateFileInformation(container, file) {
         const filename = container.querySelector(".fileList__item__filename");
