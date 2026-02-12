@@ -19,6 +19,7 @@
 
 	<script data-relocate="true">
 		{jsphrase name='wcf.attachment.insert'}
+		{jsphrase name='wcf.attachment.inserted'}
 		{jsphrase name='wcf.attachment.insertFull'}
 		{jsphrase name='wcf.attachment.moreOptions'}
 

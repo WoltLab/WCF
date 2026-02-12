@@ -3369,6 +3369,7 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 Maximale Dateigröße: {@$attachmentHandler->getMaxSize()|filesize}<br>
 Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExtensions()}]]></item>
 		<item name="wcf.attachment.insert"><![CDATA[In Text einfügen]]></item>
+		<item name="wcf.attachment.inserted"><![CDATA[Eingefügt]]></item>
 		<item name="wcf.attachment.insertAll"><![CDATA[Alle einfügen]]></item>
 		<item name="wcf.attachment.insertFull"><![CDATA[Original einfügen]]></item>
 		<item name="wcf.attachment.insertThumbnail"><![CDATA[Vorschau einfügen]]></item>

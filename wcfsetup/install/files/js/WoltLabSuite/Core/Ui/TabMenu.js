@@ -131,6 +131,13 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
     }
     function scrollDisable() {
         _enableTabScroll = false;
+        _tabMenus.forEach((tabMenu) => {
+            const activeTab = tabMenu.getActiveTab();
+            const menu = activeTab.closest(".menu, .tabMenu");
+            menu.querySelectorAll(".tabMenuOverlayLeft, .tabMenuOverlayRight").forEach((overlay) => {
+                overlay.classList.remove("active");
+            });
+        });
     }
     function scrollMenu(list, left, scrollLeft, scrollWidth, width, paddingRight) {
         // allow some padding to indicate overflow
