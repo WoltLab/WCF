@@ -37,6 +37,7 @@
       if (!data.size) return;
 
       const button = document.createElement("button");
+      button.type = "button";
       button.classList.add("reactionSummary", "jsTooltip");
       button.title = window.WoltLabLanguage.getPhrase("wcf.reactions.summary.listReactions");
       button.addEventListener("click", () => {
