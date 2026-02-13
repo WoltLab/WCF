@@ -139,7 +139,7 @@ define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Messa
             const attachmentId = parseInt(img.dataset.attachmentId);
             embeddedAttachments.add(attachmentId);
         });
-        const bbcodeMatches = editor.element.innerText.matchAll(/\[attach=('\d+'|"\d+"|\d+)(?:,[^]]+?)?\]\[\/attach\]/g);
+        const bbcodeMatches = editor.element.innerText.matchAll(/\[attach=(?:'|")?(\d+)(?:'|")?(?:,[^]]+?)?\]\[\/attach\]/g);
         for (const match of bbcodeMatches) {
             const attachmentId = parseInt(match[1]);
             embeddedAttachments.add(attachmentId);
