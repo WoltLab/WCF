@@ -70,7 +70,13 @@
 	{unsafe:$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.likeableArticle', $article->articleID)}
 >
 	{if $articleContent->getImage() && $articleContent->getImage()->hasThumbnail('large')}
-		<div class="entry__coverPhoto__wrapper" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+		<div
+			class="entry__coverPhoto__wrapper"
+			{if !$articleContent->getImage()->caption && !$articleContent->getImage()->title && !$articleContent->getImage()->altText}
+				aria-hidden="true"
+			{/if}
+			itemprop="image" itemscope itemtype="http://schema.org/ImageObject"
+		>
 			<figure class="entry__coverPhoto">
 				{unsafe:$articleContent->getImage()->getThumbnailTag('large')}
 				{if $articleContent->getImage()->caption}
