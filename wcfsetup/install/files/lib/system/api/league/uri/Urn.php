@@ -13,9 +13,11 @@ declare(strict_types=1);
 
 namespace League\Uri;
 
+use BackedEnum;
 use Closure;
 use JsonSerializable;
 use League\Uri\Contracts\Conditionable;
+use League\Uri\Contracts\Transformable;
 use League\Uri\Contracts\UriComponentInterface;
 use League\Uri\Contracts\UriInterface;
 use League\Uri\Exceptions\SyntaxError;
@@ -41,7 +43,7 @@ use function strtolower;
  *      f_component: ?string,
  *  }
  */
-final class Urn implements Conditionable, Stringable, JsonSerializable
+final class Urn implements Conditionable, Stringable, JsonSerializable, Transformable
 {
     /**
      * RFC8141 regular expression URN splitter.
@@ -87,9 +89,9 @@ final class Urn implements Conditionable, Stringable, JsonSerializable
     private readonly ?string $fComponent;
 
     /**
-     * @param Rfc3986Uri|WhatWgUrl|Stringable|string $urn the percent-encoded URN
+     * @param Rfc3986Uri|WhatWgUrl|BackedEnum|Stringable|string $urn the percent-encoded URN
      */
-    public static function parse(Rfc3986Uri|WhatWgUrl|Stringable|string $urn): ?Urn
+    public static function parse(Rfc3986Uri|WhatWgUrl|BackedEnum|Stringable|string $urn): ?Urn
     {
         try {
             return self::fromString($urn);
@@ -110,15 +112,16 @@ final class Urn implements Conditionable, Stringable, JsonSerializable
     }
 
     /**
-     * @param Rfc3986Uri|WhatWgUrl|Stringable|string $urn the percent-encoded URN
+     * @param Rfc3986Uri|WhatWgUrl|BackedEnum|Stringable|string $urn the percent-encoded URN
      *
      * @throws SyntaxError if the URN is invalid
      */
-    public static function fromString(Rfc3986Uri|WhatWgUrl|Stringable|string $urn): self
+    public static function fromString(Rfc3986Uri|WhatWgUrl|BackedEnum|Stringable|string $urn): self
     {
         $urn = match (true) {
             $urn instanceof Rfc3986Uri => $urn->toRawString(),
             $urn instanceof WhatWgUrl => $urn->toAsciiString(),
+            $urn instanceof BackedEnum => (string) $urn->value,
             default => (string) $urn,
         };
 
@@ -155,8 +158,16 @@ final class Urn implements Conditionable, Stringable, JsonSerializable
      *
      * @throws SyntaxError if the URN is invalid
      */
-    public static function fromRfc2141(Stringable|string $nid, Stringable|string $nss): self
+    public static function fromRfc2141(BackedEnum|Stringable|string $nid, BackedEnum|Stringable|string $nss): self
     {
+        if ($nid instanceof BackedEnum) {
+            $nid = $nid->value;
+        }
+
+        if ($nss instanceof BackedEnum) {
+            $nss = $nss->value;
+        }
+
         return new self((string) $nid, (string) $nss);
     }
 
@@ -327,7 +338,7 @@ final class Urn implements Conditionable, Stringable, JsonSerializable
      * {q_component} for the q-component without its delimiter
      * {f_component} for the f-component without its delimiter
      */
-    public function resolve(UriTemplate|Template|string|null $template = null): UriInterface
+    public function resolve(UriTemplate|Template|BackedEnum|string|null $template = null): UriInterface
     {
         return null !== $template ? Uri::fromTemplate($template, $this->toComponents()) : Uri::new($this->uriString);
     }
@@ -363,8 +374,12 @@ final class Urn implements Conditionable, Stringable, JsonSerializable
      * @throws SyntaxError for invalid component or transformations
      *                     that would result in an object in invalid state.
      */
-    public function withNid(Stringable|string $nid): self
+    public function withNid(BackedEnum|Stringable|string $nid): self
     {
+        if ($nid instanceof BackedEnum) {
+            $nid = $nid->value;
+        }
+
         $nid = (string) $nid;
 
         return $this->nid === $nid ? $this : new self(
@@ -385,7 +400,7 @@ final class Urn implements Conditionable, Stringable, JsonSerializable
      * @throws SyntaxError for invalid component or transformations
      *                     that would result in an object in invalid state.
      */
-    public function withNss(Stringable|string $nss): self
+    public function withNss(BackedEnum|Stringable|string $nss): self
     {
         $nss = Encoder::encodePath($nss);
 
@@ -409,8 +424,12 @@ final class Urn implements Conditionable, Stringable, JsonSerializable
      * @throws SyntaxError for invalid component or transformations
      *                     that would result in an object in invalid state.
      */
-    public function withRComponent(Stringable|string|null $component): self
+    public function withRComponent(BackedEnum|Stringable|string|null $component): self
     {
+        if ($component instanceof BackedEnum) {
+            $component = (string) $component->value;
+        }
+
         if ($component instanceof UriComponentInterface) {
             $component = $component->value();
         }
@@ -444,7 +463,7 @@ final class Urn implements Conditionable, Stringable, JsonSerializable
      * @throws SyntaxError for invalid component or transformations
      *                     that would result in an object in invalid state.
      */
-    public function withQComponent(Stringable|string|null $component): self
+    public function withQComponent(BackedEnum|Stringable|string|null $component): self
     {
         if ($component instanceof UriComponentInterface) {
             $component = $component->value();
@@ -472,7 +491,7 @@ final class Urn implements Conditionable, Stringable, JsonSerializable
      * @throws SyntaxError for invalid component or transformations
      *                     that would result in an object in invalid state.
      */
-    public function withFComponent(Stringable|string|null $component): self
+    public function withFComponent(BackedEnum|Stringable|string|null $component): self
     {
         if ($component instanceof UriComponentInterface) {
             $component = $component->value();
@@ -502,7 +521,7 @@ final class Urn implements Conditionable, Stringable, JsonSerializable
         return $copy->uriString === $this->uriString ? $this : $copy;
     }
 
-    public function equals(Urn|Rfc3986Uri|WhatWgUrl|Stringable|string $other, UrnComparisonMode $urnComparisonMode = UrnComparisonMode::ExcludeComponents): bool
+    public function equals(Urn|Rfc3986Uri|WhatWgUrl|BackedEnum|Stringable|string $other, UrnComparisonMode $urnComparisonMode = UrnComparisonMode::ExcludeComponents): bool
     {
         if (!$other instanceof Urn) {
             $other = self::parse($other);
@@ -525,6 +544,11 @@ final class Urn implements Conditionable, Stringable, JsonSerializable
             null !== $onFail => $onFail($this),
             default => $this,
         } ?? $this;
+    }
+
+    public function transform(callable $callback): static
+    {
+        return $callback($this);
     }
 
     /**
