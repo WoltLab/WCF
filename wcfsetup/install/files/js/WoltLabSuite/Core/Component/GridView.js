@@ -81,6 +81,9 @@ define(["require", "exports", "tslib", "../Api/GridViews/GetRow", "../Api/GridVi
             this.#table.addEventListener("interaction:reset-selection", () => {
                 this.#state.resetSelection();
             });
+            this.#table.addEventListener("interaction:bulk-completed", () => {
+                this.#checkEmptyTable();
+            });
         }
         #setupState(gridId, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder) {
             const state = new State_1.State(gridId, this.#table, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder);

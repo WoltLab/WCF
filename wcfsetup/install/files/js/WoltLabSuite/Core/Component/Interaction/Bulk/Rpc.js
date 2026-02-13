@@ -15,9 +15,10 @@ define(["require", "exports", "WoltLabSuite/Core/Api/DeleteObject", "WoltLabSuit
         if (!confirmationResult.result) {
             return;
         }
-        const snackbar = (0, Snackbar_1.showProgressSnackbar)(label, objectIds.length);
-        for (let i = 0; i < objectIds.length; i++) {
-            if (confirmationType == Confirmation_1.ConfirmationType.Delete) {
+        const length = objectIds.length;
+        const snackbar = (0, Snackbar_1.showProgressSnackbar)(label, length);
+        for (let i = 0; i < length; i++) {
+            if (confirmationType === Confirmation_1.ConfirmationType.Delete) {
                 await (0, DeleteObject_1.deleteObject)(endpoint.replace(/%s/, objectIds[i].toString()));
             }
             else {
@@ -28,7 +29,7 @@ define(["require", "exports", "WoltLabSuite/Core/Api/DeleteObject", "WoltLabSuit
             if (!element) {
                 continue;
             }
-            if (confirmationType == Confirmation_1.ConfirmationType.Delete) {
+            if (confirmationType === Confirmation_1.ConfirmationType.Delete) {
                 element.dispatchEvent(new CustomEvent("interaction:remove", {
                     bubbles: true,
                 }));
@@ -41,6 +42,7 @@ define(["require", "exports", "WoltLabSuite/Core/Api/DeleteObject", "WoltLabSuit
         }
         snackbar.markAsDone();
         container.dispatchEvent(new CustomEvent("interaction:reset-selection"));
+        container.dispatchEvent(new CustomEvent("interaction:bulk-completed"));
     }
     function setup(identifier, container) {
         container.addEventListener("bulk-interaction", (event) => {

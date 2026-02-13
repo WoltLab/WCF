@@ -124,6 +124,10 @@ export class GridView {
     this.#table.addEventListener("interaction:reset-selection", () => {
       this.#state.resetSelection();
     });
+
+    this.#table.addEventListener("interaction:bulk-completed", () => {
+      this.#checkEmptyTable();
+    });
   }
 
   #setupState(
