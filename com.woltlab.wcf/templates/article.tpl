@@ -211,7 +211,7 @@
 	<div class="section entry__navigation">
 		{if $previousArticle}
 			<article class="entry__navigation__item entry__navigation__item--previous{if $previousArticle->getTeaserImage()} entry__navigation__item--withImage{/if}">
-				<div class="entry__navigation__item__icon" aria-hidden="true">
+				<div class="entry__navigation__item__icon">
 					{icon size=48 name='chevron-left'}
 				</div>
 				{if $previousArticle->getTeaserImage()}
@@ -231,7 +231,7 @@
 		{/if}
 		{if $nextArticle}
 			<article class="entry__navigation__item entry__navigation__item--next{if $nextArticle->getTeaserImage()} entry__navigation__item--withImage{/if}">
-				<div class="entry__navigation__item__icon" aria-hidden="true">
+				<div class="entry__navigation__item__icon">
 					{icon size=48 name='chevron-right'}
 				</div>
 				{if $nextArticle->getTeaserImage()}
