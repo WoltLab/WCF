@@ -3,6 +3,7 @@
 namespace wcf\system\package;
 
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -220,6 +221,10 @@ final class PackageUpdateDispatcher extends SingletonFactory
                 $e->getResponse()->getHeaders(),
                 $e->getResponse()->getBody(),
                 $updateServer,
+            );
+        } catch (ServerException $e) {
+            throw new SystemException(
+                WCF::getLanguage()->get('wcf.acp.package.update.error.listNotFound') . ' (' . $e->getResponse()->getStatusCode() . ')'
             );
         }
 
