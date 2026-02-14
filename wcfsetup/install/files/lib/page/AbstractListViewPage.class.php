@@ -96,7 +96,7 @@ abstract class AbstractListViewPage extends AbstractPage
         if ($this->filters !== []) {
             $this->listView->setActiveFilters($this->filters);
         }
-        if ($this->pageNo != 1) {
+        if ($this->pageNo > 1) {
             $this->listView->setPageNo($this->pageNo);
         }
         $this->listView->setBaseUrl(
