@@ -73,6 +73,9 @@ final class PaidSubscriptionTransactionLogGridView extends AbstractGridView
                                 return parent::render($value, $row);
                             } else {
                                 $user = UserRuntimeCache::getInstance()->getObject($value);
+                                if ($user === null) {
+                                    return '';
+                                }
 
                                 return \sprintf(
                                     '<a href="%s">%s</a>',
