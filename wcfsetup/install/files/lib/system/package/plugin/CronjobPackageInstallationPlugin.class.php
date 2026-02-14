@@ -224,7 +224,30 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
     {
         parent::prepareCreate($data);
 
-        $data['nextExec'] = TIME_NOW;
+        // Set the execution date to 10 minutes in the future to avoid collisions
+        // with the cronjob scheduler.
+        $data['nextExec'] = TIME_NOW + 600;
+    }
+
+    #[\Override]
+    protected function cleanup(): void
+    {
+        // Calculating the time of the next execution of a cronjob requires the
+        // object to be created and thus cannot be calcualted ahead of time.
+        $cronjobList = new CronjobList();
+        $cronjobList->getConditionBuilder()->add('packageID = ?', [$this->installation->getPackageID()]);
+        $cronjobList->getConditionBuilder()->add('lastExec = ?', [0]);
+        $cronjobList->getConditionBuilder()->add('afterNextExec = ?', [0]);
+        $cronjobList->readObjects();
+
+        foreach ($cronjobList as $cronjob) {
+            $nextExec = $cronjob->getNextExec(TIME_NOW);
+            (new CronjobEditor($cronjob))->update([
+                'nextExec' => $nextExec,
+                // Offset taken from `CronjobScheduler`
+                'afterNextExec' => $cronjob->getNextExec($nextExec + 120),
+            ]);
+        }
     }
 
     /**
