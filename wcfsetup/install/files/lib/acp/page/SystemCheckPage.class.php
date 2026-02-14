@@ -4,6 +4,7 @@ namespace wcf\acp\page;
 
 use wcf\data\application\Application;
 use wcf\page\AbstractPage;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\Environment;
 use wcf\system\exception\SystemException;
@@ -300,9 +301,13 @@ class SystemCheckPage extends AbstractPage
             foreach ($keys as $column => $reference) {
                 $innerConditionBuilder = new PreparedStatementConditionBuilder(false);
                 $innerConditionBuilder->add('REFERENCED_TABLE_SCHEMA = ?', [WCF::getDB()->getDatabaseName()]);
-                $innerConditionBuilder->add('REFERENCED_TABLE_NAME = ?', [$reference['referenceTable']]);
+                $innerConditionBuilder->add('REFERENCED_TABLE_NAME = ?', [
+                        ApplicationHandler::insertRealDatabaseTableNames($reference['referenceTable'])
+                ]);
                 $innerConditionBuilder->add('REFERENCED_COLUMN_NAME = ?', [$reference['referenceColumn']]);
-                $innerConditionBuilder->add('TABLE_NAME = ?', [$table]);
+                $innerConditionBuilder->add('TABLE_NAME = ?', [
+                        ApplicationHandler::insertRealDatabaseTableNames($table)
+                ]);
                 $innerConditionBuilder->add('COLUMN_NAME = ?', [$column]);
 
                 $conditionBuilder->add('(' . $innerConditionBuilder . ')', $innerConditionBuilder->getParameters());
