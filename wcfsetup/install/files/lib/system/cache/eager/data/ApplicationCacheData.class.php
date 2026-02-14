@@ -17,8 +17,10 @@ final class ApplicationCacheData
         public readonly array $applications,
         /** @var array<string, int> */
         public readonly array $abbreviations,
-    ) {
-    }
+        public readonly ?int $rootApplicationID,
+        /** @var array<int, string> */
+        public readonly array $sortedPaths,
+    ) {}
 
     public function getApplication(int $packageID): ?Application
     {

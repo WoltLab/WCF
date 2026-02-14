@@ -28,7 +28,6 @@ final class ApplicationCache extends AbstractEagerCache
         $statement->execute();
         $applications = $statement->fetchObjects(Application::class, 'packageID');
 
-
         $sql = "SELECT packageID, package
                 FROM   wcf" . WCF_N . "_package
                 WHERE  isApplication = ?";
@@ -41,9 +40,61 @@ final class ApplicationCache extends AbstractEagerCache
             $abbreviation[Package::getAbbreviation($package)] = $packageID;
         }
 
+        $sortedPaths = [];
+        foreach ($applications as $application) {
+            $sortedPaths[$application->packageID] = $application->domainPath;
+        }
+
+        \uasort($sortedPaths, static fn($a, $b) => \mb_strlen($b) - \mb_strlen($a));
+        $rootApplicationID = $this->getRootApplicationID($sortedPaths);
+
+        if ($rootApplicationID !== null) {
+            $sortedPaths = $this->stripCommonPath($sortedPaths, $rootApplicationID);
+        }
+
         return new ApplicationCacheData(
             $applications,
             $abbreviation,
+            $rootApplicationID,
+            $sortedPaths,
         );
+    }
+
+    /**
+     * @param array<int, string> $sortedPaths
+     * @return array<int, string>
+     * @since 6.2
+     */
+    private function stripCommonPath(array $sortedPaths, int $rootApplication): array
+    {
+        $length = \mb_strlen($sortedPaths[$rootApplication]);
+
+        return \array_map(
+            static fn($path) => \mb_substr($path, $length),
+            $sortedPaths
+        );
+    }
+
+    /**
+     * @param array<int, string> $sortedPaths
+     * @since 6.2
+     */
+    private function getRootApplicationID(array $sortedPaths): ?int
+    {
+        // There are no applications during the setup.
+        if ($sortedPaths === []) {
+            return null;
+        }
+
+        $candidate = \array_key_last($sortedPaths);
+        $shortestPath = $sortedPaths[$candidate];
+
+        foreach ($sortedPaths as $path) {
+            if (!\str_starts_with($path, $shortestPath)) {
+                return null;
+            }
+        }
+
+        return $candidate;
     }
 }
