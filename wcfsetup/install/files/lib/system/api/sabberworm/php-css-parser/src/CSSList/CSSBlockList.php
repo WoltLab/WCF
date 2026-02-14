@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sabberworm\CSS\CSSList;
 
 use Sabberworm\CSS\CSSElement;
 use Sabberworm\CSS\Property\Selector;
 use Sabberworm\CSS\Rule\Rule;
 use Sabberworm\CSS\RuleSet\DeclarationBlock;
+use Sabberworm\CSS\RuleSet\RuleContainer;
 use Sabberworm\CSS\RuleSet\RuleSet;
 use Sabberworm\CSS\Value\CSSFunction;
 use Sabberworm\CSS\Value\Value;
@@ -20,171 +23,162 @@ use Sabberworm\CSS\Value\ValueList;
 abstract class CSSBlockList extends CSSList
 {
     /**
-     * @param int $iLineNo
+     * Gets all `DeclarationBlock` objects recursively, no matter how deeply nested the selectors are.
+     *
+     * @return list<DeclarationBlock>
      */
-    public function __construct($iLineNo = 0)
+    public function getAllDeclarationBlocks(): array
     {
-        parent::__construct($iLineNo);
+        $result = [];
+
+        foreach ($this->contents as $item) {
+            if ($item instanceof DeclarationBlock) {
+                $result[] = $item;
+            } elseif ($item instanceof CSSBlockList) {
+                $result = \array_merge($result, $item->getAllDeclarationBlocks());
+            }
+        }
+
+        return $result;
     }
 
     /**
-     * @param array<int, DeclarationBlock> $aResult
+     * Returns all `RuleSet` objects recursively found in the tree, no matter how deeply nested the rule sets are.
      *
-     * @return void
+     * @return list<RuleSet>
      */
-    protected function allDeclarationBlocks(array &$aResult)
+    public function getAllRuleSets(): array
     {
-        foreach ($this->aContents as $mContent) {
-            if ($mContent instanceof DeclarationBlock) {
-                $aResult[] = $mContent;
-            } elseif ($mContent instanceof CSSBlockList) {
-                $mContent->allDeclarationBlocks($aResult);
-            }
-        }
-    }
+        $result = [];
 
-    /**
-     * @param array<int, RuleSet> $aResult
-     *
-     * @return void
-     */
-    protected function allRuleSets(array &$aResult)
-    {
-        foreach ($this->aContents as $mContent) {
-            if ($mContent instanceof RuleSet) {
-                $aResult[] = $mContent;
-            } elseif ($mContent instanceof CSSBlockList) {
-                $mContent->allRuleSets($aResult);
+        foreach ($this->contents as $item) {
+            if ($item instanceof RuleSet) {
+                $result[] = $item;
+            } elseif ($item instanceof CSSBlockList) {
+                $result = \array_merge($result, $item->getAllRuleSets());
+            } elseif ($item instanceof DeclarationBlock) {
+                $result[] = $item->getRuleSet();
             }
         }
+
+        return $result;
     }
 
     /**
      * Returns all `Value` objects found recursively in `Rule`s in the tree.
      *
-     * @param CSSElement|string|null $element
+     * @param CSSElement|null $element
      *        This is the `CSSList` or `RuleSet` to start the search from (defaults to the whole document).
-     *        If a string is given, it is used as a rule name filter.
-     *        Passing a string for this parameter is deprecated in version 8.9.0, and will not work from v9.0;
-     *        use the following parameter to pass a rule name filter instead.
-     * @param string|bool|null $ruleSearchPatternOrSearchInFunctionArguments
+     * @param string|null $ruleSearchPattern
      *        This allows filtering rules by property name
      *        (e.g. if "color" is passed, only `Value`s from `color` properties will be returned,
      *        or if "font-" is provided, `Value`s from all font rules, like `font-size`, and including `font` itself,
      *        will be returned).
-     *        If a Boolean is provided, it is treated as the `$searchInFunctionArguments` argument.
-     *        Passing a Boolean for this parameter is deprecated in version 8.9.0, and will not work from v9.0;
-     *        use the `$searchInFunctionArguments` parameter instead.
-     * @param bool $searchInFunctionArguments whether to also return Value objects used as Function arguments.
+     * @param bool $searchInFunctionArguments whether to also return `Value` objects used as `CSSFunction` arguments.
      *
-     * @return array<int, Value>
+     * @return list<Value>
      *
      * @see RuleSet->getRules()
      */
     public function getAllValues(
-        $element = null,
-        $ruleSearchPatternOrSearchInFunctionArguments = null,
-        $searchInFunctionArguments = false
-    ) {
-        if (\is_bool($ruleSearchPatternOrSearchInFunctionArguments)) {
-            $searchInFunctionArguments = $ruleSearchPatternOrSearchInFunctionArguments;
-            $searchString = null;
-        } else {
-            $searchString = $ruleSearchPatternOrSearchInFunctionArguments;
-        }
-
-        if ($element === null) {
-            $element = $this;
-        } elseif (\is_string($element)) {
-            $searchString = $element;
-            $element = $this;
-        }
+        ?CSSElement $element = null,
+        ?string $ruleSearchPattern = null,
+        bool $searchInFunctionArguments = false
+    ): array {
+        $element = $element ?? $this;
 
         $result = [];
-        $this->allValues($element, $result, $searchString, $searchInFunctionArguments);
+        if ($element instanceof CSSBlockList) {
+            foreach ($element->getContents() as $contentItem) {
+                // Statement at-rules are skipped since they do not contain values.
+                if ($contentItem instanceof CSSElement) {
+                    $result = \array_merge(
+                        $result,
+                        $this->getAllValues($contentItem, $ruleSearchPattern, $searchInFunctionArguments)
+                    );
+                }
+            }
+        } elseif ($element instanceof RuleContainer) {
+            foreach ($element->getRules($ruleSearchPattern) as $rule) {
+                $result = \array_merge(
+                    $result,
+                    $this->getAllValues($rule, $ruleSearchPattern, $searchInFunctionArguments)
+                );
+            }
+        } elseif ($element instanceof Rule) {
+            $value = $element->getValue();
+            // `string` values are discarded.
+            if ($value instanceof CSSElement) {
+                $result = \array_merge(
+                    $result,
+                    $this->getAllValues($value, $ruleSearchPattern, $searchInFunctionArguments)
+                );
+            }
+        } elseif ($element instanceof ValueList) {
+            if ($searchInFunctionArguments || !($element instanceof CSSFunction)) {
+                foreach ($element->getListComponents() as $component) {
+                    // `string` components are discarded.
+                    if ($component instanceof CSSElement) {
+                        $result = \array_merge(
+                            $result,
+                            $this->getAllValues($component, $ruleSearchPattern, $searchInFunctionArguments)
+                        );
+                    }
+                }
+            }
+        } elseif ($element instanceof Value) {
+            $result[] = $element;
+        }
+
         return $result;
     }
 
     /**
-     * @param CSSElement|string $oElement
-     * @param array<int, Value> $aResult
-     * @param string|null $sSearchString
-     * @param bool $bSearchInFunctionArguments
-     *
-     * @return void
+     * @return list<Selector>
      */
-    protected function allValues($oElement, array &$aResult, $sSearchString = null, $bSearchInFunctionArguments = false)
+    protected function getAllSelectors(?string $specificitySearch = null): array
     {
-        if ($oElement instanceof CSSBlockList) {
-            foreach ($oElement->getContents() as $oContent) {
-                $this->allValues($oContent, $aResult, $sSearchString, $bSearchInFunctionArguments);
-            }
-        } elseif ($oElement instanceof RuleSet) {
-            foreach ($oElement->getRules($sSearchString) as $oRule) {
-                $this->allValues($oRule, $aResult, $sSearchString, $bSearchInFunctionArguments);
-            }
-        } elseif ($oElement instanceof Rule) {
-            $this->allValues($oElement->getValue(), $aResult, $sSearchString, $bSearchInFunctionArguments);
-        } elseif ($oElement instanceof ValueList) {
-            if ($bSearchInFunctionArguments || !($oElement instanceof CSSFunction)) {
-                foreach ($oElement->getListComponents() as $mComponent) {
-                    $this->allValues($mComponent, $aResult, $sSearchString, $bSearchInFunctionArguments);
-                }
-            }
-        } else {
-            // Non-List `Value` or `CSSString` (CSS identifier)
-            $aResult[] = $oElement;
-        }
-    }
+        $result = [];
 
-    /**
-     * @param array<int, Selector> $aResult
-     * @param string|null $sSpecificitySearch
-     *
-     * @return void
-     */
-    protected function allSelectors(array &$aResult, $sSpecificitySearch = null)
-    {
-        /** @var array<int, DeclarationBlock> $aDeclarationBlocks */
-        $aDeclarationBlocks = [];
-        $this->allDeclarationBlocks($aDeclarationBlocks);
-        foreach ($aDeclarationBlocks as $oBlock) {
-            foreach ($oBlock->getSelectors() as $oSelector) {
-                if ($sSpecificitySearch === null) {
-                    $aResult[] = $oSelector;
+        foreach ($this->getAllDeclarationBlocks() as $declarationBlock) {
+            foreach ($declarationBlock->getSelectors() as $selector) {
+                if ($specificitySearch === null) {
+                    $result[] = $selector;
                 } else {
-                    $sComparator = '===';
-                    $aSpecificitySearch = explode(' ', $sSpecificitySearch);
-                    $iTargetSpecificity = $aSpecificitySearch[0];
-                    if (count($aSpecificitySearch) > 1) {
-                        $sComparator = $aSpecificitySearch[0];
-                        $iTargetSpecificity = $aSpecificitySearch[1];
+                    $comparator = '===';
+                    $expressionParts = \explode(' ', $specificitySearch);
+                    $targetSpecificity = $expressionParts[0];
+                    if (\count($expressionParts) > 1) {
+                        $comparator = $expressionParts[0];
+                        $targetSpecificity = $expressionParts[1];
                     }
-                    $iTargetSpecificity = (int)$iTargetSpecificity;
-                    $iSelectorSpecificity = $oSelector->getSpecificity();
-                    $bMatches = false;
-                    switch ($sComparator) {
+                    $targetSpecificity = (int) $targetSpecificity;
+                    $selectorSpecificity = $selector->getSpecificity();
+                    $comparatorMatched = false;
+                    switch ($comparator) {
                         case '<=':
-                            $bMatches = $iSelectorSpecificity <= $iTargetSpecificity;
+                            $comparatorMatched = $selectorSpecificity <= $targetSpecificity;
                             break;
                         case '<':
-                            $bMatches = $iSelectorSpecificity < $iTargetSpecificity;
+                            $comparatorMatched = $selectorSpecificity < $targetSpecificity;
                             break;
                         case '>=':
-                            $bMatches = $iSelectorSpecificity >= $iTargetSpecificity;
+                            $comparatorMatched = $selectorSpecificity >= $targetSpecificity;
                             break;
                         case '>':
-                            $bMatches = $iSelectorSpecificity > $iTargetSpecificity;
+                            $comparatorMatched = $selectorSpecificity > $targetSpecificity;
                             break;
                         default:
-                            $bMatches = $iSelectorSpecificity === $iTargetSpecificity;
+                            $comparatorMatched = $selectorSpecificity === $targetSpecificity;
                             break;
                     }
-                    if ($bMatches) {
-                        $aResult[] = $oSelector;
+                    if ($comparatorMatched) {
+                        $result[] = $selector;
                     }
                 }
             }
         }
+
+        return $result;
     }
 }

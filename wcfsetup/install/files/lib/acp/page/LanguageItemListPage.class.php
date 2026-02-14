@@ -4,14 +4,13 @@ namespace wcf\acp\page;
 
 use wcf\page\AbstractGridViewPage;
 use wcf\system\gridView\admin\LanguageItemGridView;
-use wcf\system\WCF;
 
 /**
  * Shows a list of language items.
  *
  * @author      Olaf Braun, Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @extends AbstractGridViewPage<LanguageItemGridView>
  */
@@ -30,6 +29,6 @@ final class LanguageItemListPage extends AbstractGridViewPage
     #[\Override]
     protected function createGridView(): LanguageItemGridView
     {
-        return new LanguageItemGridView(WCF::getLanguage());
+        return new LanguageItemGridView();
     }
 }

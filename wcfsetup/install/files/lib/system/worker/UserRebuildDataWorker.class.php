@@ -3,6 +3,7 @@
 namespace wcf\system\worker;
 
 use wcf\data\file\FileEditor;
+use wcf\data\file\FileList;
 use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\user\avatar\UserAvatarEditor;
 use wcf\data\user\avatar\UserAvatarList;
@@ -18,7 +19,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\file\processor\UserAvatarFileProcessor;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\image\ImageHandler;
-use wcf\system\user\command\SetCoverPhoto;
+use wcf\command\user\SetCoverPhoto;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
@@ -140,15 +141,28 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
                     WHERE   userID = ?";
             $statement = WCF::getDB()->prepare($sql);
 
-            // retrieve permissions
+            // retrieve permissions and cache avatar files
             $userIDs = [];
+            $avatarFileIDs = [];
             foreach ($users as $user) {
                 $userIDs[] = $user->userID;
+
+                if ($user->avatarFileID !== null) {
+                    $avatarFileIDs[] = $user->avatarFileID;
+                }
             }
             $userPermissions = $this->getBulkUserPermissions(
                 $userIDs,
                 ['user.message.disallowedBBCodes', 'user.signature.disallowedBBCodes']
             );
+
+            $avatarFiles = [];
+            if ($avatarFileIDs !== []) {
+                $fileList = new FileList();
+                $fileList->setObjectIDs($avatarFileIDs);
+                $fileList->readObjects();
+                $avatarFiles = $fileList->getObjects();
+            }
 
             $htmlInputProcessor = new HtmlInputProcessor();
             WCF::getDB()->beginTransaction();
@@ -212,6 +226,23 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
 
                     $statement->execute([$html, $user->userID]);
                 }
+
+                if ($user->avatarFileID !== null) {
+                    $file = $avatarFiles[$user->avatarFileID] ?? null;
+                    \assert(
+                        $file !== null,
+                        "Expected the avatarFileID {$user->avatarFileID} of user {$user->userID} to exist."
+                    );
+
+                    $filename = $file->getSourceFilenameWebp() ?? $file->getSourceFilename();
+                    $pathname = $file->getRelativePath() . $filename;
+
+                    if ($user->avatarPathname !== $pathname) {
+                        $user->update([
+                            'avatarPathname' => $pathname,
+                        ]);
+                    }
+                }
             }
             WCF::getDB()->commitTransaction();
 
@@ -221,9 +252,10 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
             $avatarList->readObjects();
             $resetAvatarCache = [];
 
-            $sql = "UPDATE wcf1_user
-                    SET    avatarFileID = ?
-                    WHERE  userID = ?";
+            $sql = "UPDATE  wcf1_user
+                    SET     avatarFileID = ?,
+                            avatarPathname = ?
+                    WHERE   userID = ?";
             $avatarUpdateStatement = WCF::getDB()->prepare($sql);
 
             foreach ($avatarList as $avatar) {
@@ -309,8 +341,12 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
                     continue;
                 }
 
+                $filename = $file->getSourceFilenameWebp() ?? $file->getSourceFilename();
+                $pathname = $file->getRelativePath() . $filename;
+
                 $avatarUpdateStatement->execute([
                     $file->fileID,
+                    $pathname,
                     $avatar->userID
                 ]);
             }

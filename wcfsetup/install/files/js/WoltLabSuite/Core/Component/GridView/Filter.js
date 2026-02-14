@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  */
-define(["require", "exports", "../../Helper/PromiseMutex", "../Dialog"], function (require, exports, PromiseMutex_1, Dialog_1) {
+define(["require", "exports", "WoltLabSuite/Core/Language", "../../Helper/PromiseMutex", "../Dialog"], function (require, exports, Language_1, PromiseMutex_1, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Filter = void 0;
@@ -51,7 +51,12 @@ define(["require", "exports", "../../Helper/PromiseMutex", "../Dialog"], functio
             for (const key of this.#filters.keys()) {
                 const button = document.createElement("button");
                 button.type = "button";
-                button.classList.add("button", "small");
+                button.title = (0, Language_1.getPhrase)("wcf.page.removeFilterTooltip", {
+                    filterLabel: labels[key],
+                });
+                button.classList.add("button", "small", "jsTooltip");
+                button.dataset.filter = key;
+                button.dataset.filterValue = this.#filters.get(key);
                 const icon = document.createElement("fa-icon");
                 icon.setIcon("circle-xmark");
                 button.append(icon, labels[key]);

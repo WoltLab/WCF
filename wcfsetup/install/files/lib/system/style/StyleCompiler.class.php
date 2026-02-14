@@ -3,6 +3,7 @@
 namespace wcf\system\style;
 
 use ScssPhp\ScssPhp\Compiler;
+use ScssPhp\ScssPhp\Exception\SassException;
 use ScssPhp\ScssPhp\OutputStyle;
 use ScssPhp\ScssPhp\ValueConverter;
 use wcf\data\application\Application;
@@ -12,7 +13,7 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
-use wcf\system\style\command\CreateManifest;
+use wcf\command\style\CreateManifest;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\JSON;
@@ -710,7 +711,13 @@ final class StyleCompiler extends SingletonFactory
                 return ValueConverter::fromPhp($value);
             }
 
-            return ValueConverter::parseValue($value);
+            try {
+                return ValueConverter::parseValue($value);
+            } catch (SassException $e) {
+                if (\str_contains($e->getMessage(), 'Sass modules are not implemented yet')) {
+                    return ValueConverter::fromPhp($value);
+                }
+            }
         }, $variables));
 
         try {

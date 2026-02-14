@@ -25,7 +25,7 @@ interface IInteraction
     public function renderInitialization(string $containerId): ?string;
 
     /**
-     * Returns true if this interaction is available for the given object
+     * Returns true if this interaction is available for the given object.
      */
     public function isAvailable(DatabaseObject $object): bool;
 

@@ -20,7 +20,6 @@ use wcf\system\exception\ErrorException;
 use wcf\system\exception\IPrintableException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
-use wcf\system\package\command\RebuildBootstrapper;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\request\Request;
@@ -80,7 +79,7 @@ if (\function_exists('mb_regex_encoding')) {
 \mb_language('uni');
 
 // define current woltlab suite version
-\define('WCF_VERSION', '6.2.0 dev 1');
+\define('WCF_VERSION', '6.2.0 RC 4');
 
 // define current unix timestamp
 \define('TIME_NOW', \time());
@@ -195,6 +194,7 @@ class WCF
         // start initialization
         $this->initDB();
         $this->loadOptions();
+        $this->resolveActiveApplication();
         $this->initSession();
         $this->initLanguage();
         $this->initTPL();
@@ -218,7 +218,7 @@ class WCF
         try {
             $bootstrappers = require(self::BOOTSTRAP_LOADER);
         } catch (\Exception $e) {
-            $command = new RebuildBootstrapper();
+            $command = new \wcf\command\package\RebuildBootstrapper();
             $command();
 
             $bootstrappers = require(self::BOOTSTRAP_LOADER);
@@ -419,7 +419,7 @@ class WCF
         require($filename);
 
         // check if option file is complete and writable
-        if (PACKAGE_ID) {
+        if (!defined('PACKAGE_ID') || \PACKAGE_ID !== 0) {
             if (!\is_writable($filename)) {
                 FileUtil::makeWritable($filename);
 
@@ -518,6 +518,26 @@ class WCF
 
         // The autoscale quality setting for attachments was removed with version 6.2.
         \define('ATTACHMENT_IMAGE_AUTOSCALE_QUALITY', 80);
+    }
+
+    /**
+     * Resolve the active application and the path when using smart URL rewriting.
+     *
+     * @since 6.2
+     */
+    protected function resolveActiveApplication(): void
+    {
+        if (!isset($_GET['__rewrittenPath']) || \defined('PACKAGE_ID')) {
+            if (!\defined('PACKAGE_ID')) {
+                \define('PACKAGE_ID', 1);
+            }
+
+            return;
+        }
+
+        ApplicationHandler::getInstance()->resolveActiveApplication($_GET['__rewrittenPath']);
+
+        unset($_GET['__rewrittenPath']);
     }
 
     /**
@@ -688,7 +708,9 @@ class WCF
             EmailTemplateEngine::getInstance()->addApplication($abbreviation, $packageDir . 'templates/');
 
             // init application and assign it as template variable
-            self::$applicationObjects[$application->packageID] = \call_user_func([$className, 'getInstance']);
+            $applicationObject = \call_user_func([$className, 'getInstance']);
+            \assert($applicationObject instanceof IApplication);
+            self::$applicationObjects[$application->packageID] = $applicationObject;
             static::getTPL()->assign('__' . $abbreviation, self::$applicationObjects[$application->packageID]);
             EmailTemplateEngine::getInstance()->assign(
                 '__' . $abbreviation,

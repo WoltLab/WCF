@@ -13,8 +13,8 @@ use wcf\event\file\GenerateWebpVariant;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
-use wcf\system\file\command\ReplaceFileSource;
-use wcf\system\file\command\ReplaceWithWebpVariant;
+use wcf\command\file\ReplaceFileSource;
+use wcf\command\file\ReplaceWithWebpVariant;
 use wcf\system\file\processor\exception\DamagedImage;
 use wcf\system\image\adapter\exception\ImageNotProcessable;
 use wcf\system\image\adapter\exception\ImageNotReadable;
@@ -204,6 +204,12 @@ final class FileProcessor extends SingletonFactory
             try {
                 $imageAdapter->saveImageAs($imageAdapter->getImage(), $filename, 'webp', 80);
             } catch (\Throwable $e) {
+                // The image violates the policy for the maximum width, height
+                // or area. This is not actionable in any case.
+                if (\str_starts_with($e->getMessage(), 'width or height exceeds limit')) {
+                    return $file;
+                }
+
                 // Ignore any errors trying to save the file unless in debug mode.
                 if (\ENABLE_DEBUG_MODE) {
                     throw $e;
@@ -348,7 +354,7 @@ final class FileProcessor extends SingletonFactory
     public function hasReachedUploadLimit(IFileProcessor $fileProcessor, array $context): bool
     {
         $isReplacement = $context['__replace'] ?? false;
-        if ($isReplacement) {
+        if ($isReplacement || $fileProcessor->isSingleFile()) {
             return false;
         }
 
@@ -358,6 +364,9 @@ final class FileProcessor extends SingletonFactory
         }
 
         $maximumCount = $fileProcessor->getMaximumCount($context);
+        if ($maximumCount === null) {
+            return false;
+        }
 
         $sql = "SELECT  COUNT(*)
                 FROM    wcf1_file_temporary
@@ -438,7 +447,15 @@ final class FileProcessor extends SingletonFactory
 
             case 'webp':
                 $command = new ReplaceWithWebpVariant($file);
-                return $command();
+                $newFile = $command();
+
+                // The files identity differs if the file has been replaced.
+                if ($file !== $newFile) {
+                    $processor = $newFile->getProcessor();
+                    $processor?->replacedWithWebpVariant($newFile);
+                }
+
+                return $newFile;
 
             default:
                 throw new \LogicException("Unreachable");
@@ -457,7 +474,7 @@ final class FileProcessor extends SingletonFactory
             return $file;
         }
 
-        $command = new ReplaceFileSource($file, $fileWithoutExif, $file->filename);
+        $command = new ReplaceFileSource($file, $fileWithoutExif, $file->filename, false);
         $newFile = $command();
 
         return $newFile;

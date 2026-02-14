@@ -7,11 +7,12 @@
  * @since 6.2
  */
 
-import { getRow } from "../Api/Gridviews/GetRow";
-import { getRows } from "../Api/Gridviews/GetRows";
+import { getRow } from "../Api/GridViews/GetRow";
+import { getRows } from "../Api/GridViews/GetRows";
 import { getBulkContextMenuOptions } from "../Api/Interactions/GetBulkContextMenuOptions";
 import DomChangeListener from "../Dom/Change/Listener";
 import DomUtil from "../Dom/Util";
+import { promiseMutex } from "../Helper/PromiseMutex";
 import { wheneverFirstSeen } from "../Helper/Selector";
 import UiDropdownSimple from "../Ui/Dropdown/Simple";
 import { State, StateChangeCause } from "./GridView/State";
@@ -31,6 +32,8 @@ export class GridView {
     baseUrl: string = "",
     sortField = "",
     sortOrder = "ASC",
+    defaultSortField = "",
+    defaultSortOrder = "ASC",
     bulkInteractionProviderClassName: string,
     gridViewParameters?: Map<string, string>,
   ) {
@@ -41,7 +44,7 @@ export class GridView {
     this.#gridViewParameters = gridViewParameters;
 
     this.#initInteractions();
-    this.#state = this.#setupState(gridId, pageNo, baseUrl, sortField, sortOrder);
+    this.#state = this.#setupState(gridId, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder);
     this.#initEventListeners();
   }
 
@@ -64,22 +67,32 @@ export class GridView {
   }
 
   async #refreshRow(row: HTMLElement): Promise<void> {
-    const { template } = await getRow(this.#gridClassName, row.dataset.objectId!, this.#gridViewParameters);
+    const { template } = await getRow(
+      this.#gridClassName,
+      row.dataset.objectId!,
+      this.#state.getActiveFilters(),
+      this.#gridViewParameters,
+    );
 
     row.replaceWith(DomUtil.createFragmentFromHtml(template));
     this.#state.refreshSelection();
     DomChangeListener.trigger();
+    this.#checkEmptyTable();
   }
 
   #initInteractions(): void {
     wheneverFirstSeen(`#${this.#table.id} tbody tr`, (row) => {
-      row.querySelectorAll<HTMLElement>(".dropdownToggle").forEach((element) => {
-        let dropdown = UiDropdownSimple.getDropdownMenu(element.dataset.target!);
-        if (!dropdown) {
-          dropdown = element.closest(".dropdown")!.querySelector<HTMLElement>(".dropdownMenu")!;
-        }
+      const containers = [row];
 
-        dropdown?.querySelectorAll<HTMLButtonElement>("[data-interaction]").forEach((element) => {
+      row.querySelectorAll<HTMLElement>(".dropdownToggle").forEach((element) => {
+        const dropdown = UiDropdownSimple.getDropdownMenu(element.dataset.target!);
+        if (dropdown) {
+          containers.push(dropdown);
+        }
+      });
+
+      for (const container of containers) {
+        container.querySelectorAll<HTMLButtonElement>("[data-interaction]").forEach((element) => {
           element.addEventListener("click", () => {
             row.dispatchEvent(
               new CustomEvent("interaction:execute", {
@@ -89,7 +102,7 @@ export class GridView {
             );
           });
         });
-      });
+      }
     });
   }
 
@@ -104,22 +117,45 @@ export class GridView {
 
     this.#table.addEventListener("interaction:remove", (event) => {
       (event.target as HTMLElement).remove();
+      this.#state.removeSelection(parseInt((event.target as HTMLElement).dataset.objectId!));
       this.#checkEmptyTable();
     });
 
     this.#table.addEventListener("interaction:reset-selection", () => {
       this.#state.resetSelection();
     });
+
+    this.#table.addEventListener("interaction:bulk-completed", () => {
+      this.#checkEmptyTable();
+    });
   }
 
-  #setupState(gridId: string, pageNo: number, baseUrl: string, sortField: string, sortOrder: string): State {
-    const state = new State(gridId, this.#table, pageNo, baseUrl, sortField, sortOrder);
+  #setupState(
+    gridId: string,
+    pageNo: number,
+    baseUrl: string,
+    sortField: string,
+    sortOrder: string,
+    defaultSortField: string,
+    defaultSortOrder: string,
+  ): State {
+    const state = new State(
+      gridId,
+      this.#table,
+      pageNo,
+      baseUrl,
+      sortField,
+      sortOrder,
+      defaultSortField,
+      defaultSortOrder,
+    );
     state.addEventListener("grid-view:change", (event) => {
       void this.#loadRows(event.detail.source);
     });
-    state.addEventListener("grid-view:get-bulk-interactions", (event) => {
-      void this.#loadBulkInteractions(event.detail.objectIds);
-    });
+    state.addEventListener(
+      "grid-view:get-bulk-interactions",
+      promiseMutex((event) => this.#loadBulkInteractions(event.detail.objectIds)),
+    );
 
     return state;
   }

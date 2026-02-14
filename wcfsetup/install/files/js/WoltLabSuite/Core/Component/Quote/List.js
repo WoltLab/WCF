@@ -55,7 +55,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
     </button>
   </div>
   <div class="quoteBoxContent htmlContent">
-    ${quote.rawMessage === undefined ? quote.message : quote.rawMessage}
+    ${quote.rawMessage ?? quote.message}
   </div>
 </div>
         `);
@@ -85,11 +85,40 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
             }
             tabMenu.setTabCounter("quotes", quotesCount);
             if (quotesCount > 0) {
+                this.#addBulkButtons();
                 tabMenu.showTab("quotes");
             }
             else {
                 tabMenu.hideTab("quotes");
             }
+        }
+        #addBulkButtons() {
+            const removeIcon = document.createElement("fa-icon");
+            removeIcon.setIcon("times");
+            const removeAll = document.createElement("button");
+            removeAll.type = "button";
+            removeAll.classList.add("button", "small");
+            removeAll.append(removeIcon, " ", (0, Language_1.getPhrase)("wcf.message.quote.deleteAllQuotes"));
+            removeAll.addEventListener("click", () => {
+                this.#container.querySelectorAll('button[data-action="delete"]').forEach((button) => {
+                    button.click();
+                });
+            });
+            const insertIcon = document.createElement("fa-icon");
+            insertIcon.setIcon("paste");
+            const insertAll = document.createElement("button");
+            insertAll.type = "button";
+            insertAll.classList.add("button", "buttonPrimary", "small");
+            insertAll.append(insertIcon, " ", (0, Language_1.getPhrase)("wcf.message.quote.insertAllQuotes"));
+            insertAll.addEventListener("click", () => {
+                this.#container.querySelectorAll('button[data-action="insert"]').forEach((button) => {
+                    button.click();
+                });
+            });
+            const buttons = document.createElement("div");
+            buttons.classList.add("quoteBox__bulk__actions");
+            buttons.append(removeAll, insertAll);
+            this.#container.prepend(buttons);
         }
         #formSubmitted() {
             const formSubmit = this.#editor.closest("form").querySelector(".formSubmit");

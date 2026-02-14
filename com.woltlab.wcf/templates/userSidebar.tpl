@@ -1,5 +1,5 @@
 {if !$user->isProtected()}
-	{if MODULE_TROPHY && $__wcf->session->getPermission('user.profile.trophy.canSeeTrophies') && ($user->isAccessible('canViewTrophies') || $user->userID == $__wcf->session->userID) && $specialTrophyCount}
+	{if $specialTrophyCount && $user->showTrophyPoints()}
 		<section class="box" data-static-box-identifier="com.woltlab.wcf.UserTrophies">
 			<h2 class="boxTitle">{lang}wcf.user.trophy.trophyPoints{/lang} <span class="badge">{#$user->trophyPoints}</span></h2>
 			
@@ -8,7 +8,7 @@
 					{foreach from=$user->getSpecialTrophies() item=trophy}
 						<li class="sidebarListItem">
 							<div class="sidebarListItem__image">
-								{unsafe:$trophy->renderTrophy(32)}
+								{unsafe:$trophy->renderTrophy(24)}
 							</div>
 
 							<div class="sidebarListItem__content">

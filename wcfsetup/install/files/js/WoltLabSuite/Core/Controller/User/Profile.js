@@ -38,8 +38,13 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "../../Componen
     }
     const tabContentLoaded = new Map();
     function setupTabMenu(userId) {
+        const content = document.getElementById("profileContent");
+        if (content === null) {
+            // Profile is restricted and the current user cannot see the contents.
+            return;
+        }
         // Mark the default tab as loaded.
-        tabContentLoaded.set(document.getElementById("profileContent").dataset.active, true);
+        tabContentLoaded.set(content.dataset.active, true);
         // Load the content of the active tab, as we do not receive an event for it.
         void loadTabMenuContent(userId, (0, TabMenu_1.getTabMenu)("profileContent").getActiveTab().dataset.name);
         EventHandler.add("com.woltlab.wcf.simpleTabMenu_profileContent", "select", (data) => {

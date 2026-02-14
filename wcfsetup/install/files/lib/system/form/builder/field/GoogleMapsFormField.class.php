@@ -45,6 +45,7 @@ final class GoogleMapsFormField extends AbstractFormField implements
     public function __construct()
     {
         $this->addFieldClass('long');
+        $this->addFieldClass('googleMapsInput');
     }
 
     /**

@@ -36,7 +36,7 @@ class BulkRpcInteraction extends AbstractBulkInteraction
     {
         $identifier = StringUtil::encodeJS($this->getIdentifier());
         $dataLabel = WCF::getLanguage()->get($this->languageItem);
-        $label = WCF::getLanguage()->get($this->languageItem) . ' (' . \count($objects) . ')';
+        $label = WCF::getLanguage()->get($this->languageItem);
         $confirmationMessage = WCF::getLanguage()->getDynamicVariable($this->confirmationMessage);
         $endpoint = StringUtil::encodeHTML(
             LinkHandler::getInstance()->getControllerLink(ApiAction::class, ['id' => 'rpc']) . $this->endpoint

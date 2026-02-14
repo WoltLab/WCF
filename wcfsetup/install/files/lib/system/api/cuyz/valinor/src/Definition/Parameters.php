@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace CuyZ\Valinor\Definition;
 
 use Countable;
+use CuyZ\Valinor\Type\Types\Generics;
 use IteratorAggregate;
 use Traversable;
 
+use function array_map;
 use function array_values;
 
 /**
@@ -17,7 +19,7 @@ use function array_values;
  */
 final class Parameters implements IteratorAggregate, Countable
 {
-    /** @var ParameterDefinition[] */
+    /** @var array<non-empty-string, ParameterDefinition> */
     private array $parameters = [];
 
     public function __construct(ParameterDefinition ...$parameters)
@@ -45,17 +47,35 @@ final class Parameters implements IteratorAggregate, Countable
         return array_values($this->parameters)[$index];
     }
 
-    /**
-     * @return list<ParameterDefinition>
-     */
-    public function toList(): array
+    public function assignGenerics(Generics $generics): self
     {
-        return array_values($this->parameters);
+        return new self(
+            ...array_map(
+                static fn (ParameterDefinition $parameter) => $parameter->assignGenerics($generics),
+                $this->parameters,
+            ),
+        );
+    }
+
+    /**
+     * @return array<non-empty-string, ParameterDefinition>
+     */
+    public function toArray(): array
+    {
+        return $this->parameters;
     }
 
     public function count(): int
     {
         return count($this->parameters);
+    }
+
+    public function forCallable(callable $callable): self
+    {
+        return new self(...array_map(
+            fn (ParameterDefinition $parameter) => $parameter->forCallable($callable),
+            $this->parameters
+        ));
     }
 
     /**

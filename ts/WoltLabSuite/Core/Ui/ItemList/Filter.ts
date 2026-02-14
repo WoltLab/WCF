@@ -158,7 +158,7 @@ class UiItemListFilter {
    */
   protected _prepareItem(item: HTMLLIElement): ItemMetaData {
     const label = item.children[0] as HTMLElement;
-    const text = label.textContent!.trim();
+    const text = label.textContent.trim();
 
     const checkbox = label.children[0];
     while (checkbox.nextSibling) {

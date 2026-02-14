@@ -9,10 +9,6 @@ use wcf\data\smiley\I18nSmileyList;
 use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\I18nTextFilter;
-use wcf\system\gridView\filter\NumericFilter;
-use wcf\system\gridView\filter\SelectFilter;
-use wcf\system\gridView\filter\TextFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\AbstractColumnRenderer;
@@ -24,6 +20,10 @@ use wcf\system\interaction\admin\SmileyInteractions;
 use wcf\system\interaction\bulk\admin\SmileyBulkInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
+use wcf\system\view\filter\I18nTextFilter;
+use wcf\system\view\filter\IntegerFilter;
+use wcf\system\view\filter\SelectFilter;
+use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -66,12 +66,12 @@ final class SmileyGridView extends AbstractGridView
             GridViewColumn::for('smileyTitle')
                 ->label('wcf.global.title')
                 ->titleColumn()
-                ->filter(new I18nTextFilter())
+                ->filter(I18nTextFilter::class)
                 ->renderer(new PhraseColumnRenderer())
                 ->sortable(sortByDatabaseColumn: "smileyTitleI18n"),
             GridViewColumn::for('aliases')
                 ->label('wcf.acp.smiley.aliases')
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->sortable()
                 ->renderer(
                     new class extends AbstractColumnRenderer {
@@ -95,14 +95,14 @@ final class SmileyGridView extends AbstractGridView
             GridViewColumn::for("categoryID")
                 ->label("wcf.global.category")
                 ->filter(
-                    new class($this->getSmileyCategories()) extends SelectFilter {
+                    new class($this->getSmileyCategories(), 'categoryID', 'wcf.global.category') extends SelectFilter {
                         #[\Override]
-                        public function applyFilter(DatabaseObjectList $list, string $id, string $value): void
+                        public function applyFilter(DatabaseObjectList $list, string $value): void
                         {
                             if (\intval($value) === 0) {
                                 $list->getConditionBuilder()->add("categoryID IS NULL");
                             } else {
-                                parent::applyFilter($list, $id, $value);
+                                parent::applyFilter($list, $value);
                             }
                         }
                     }
@@ -123,7 +123,7 @@ final class SmileyGridView extends AbstractGridView
             GridViewColumn::for('showOrder')
                 ->label('wcf.global.showOrder')
                 ->renderer(new NumberColumnRenderer())
-                ->filter(new NumericFilter())
+                ->filter(IntegerFilter::class)
                 ->sortable(),
         ]);
 
@@ -137,8 +137,7 @@ final class SmileyGridView extends AbstractGridView
 
         $this->addRowLink(new GridViewRowLink(SmileyEditForm::class));
 
-        $this->setSortField("showOrder");
-        $this->setSortOrder("ASC");
+        $this->setDefaultSortField("showOrder");
     }
 
     /**

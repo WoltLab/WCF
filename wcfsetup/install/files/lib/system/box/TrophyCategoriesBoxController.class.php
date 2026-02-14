@@ -40,11 +40,10 @@ class TrophyCategoriesBoxController extends AbstractBoxController
         if (\count($categories)) {
             // get active category
             $activeCategory = null;
-            if (RequestHandler::getInstance()->getActiveRequest() !== null) {
-                if (RequestHandler::getInstance()->getActiveRequest()->getRequestObject() instanceof TrophyListPage || RequestHandler::getInstance()->getActiveRequest()->getRequestObject() instanceof TrophyPage) {
-                    if (RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->category !== null) {
-                        $activeCategory = RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->category;
-                    }
+            $requestObject = RequestHandler::getInstance()->getActiveRequest()?->getRequestObject();
+            if ($requestObject instanceof TrophyListPage || $requestObject instanceof TrophyPage) {
+                if ($requestObject->category !== null) {
+                    $activeCategory = $requestObject->category;
                 }
             }
 

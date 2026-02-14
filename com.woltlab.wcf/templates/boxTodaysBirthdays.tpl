@@ -2,7 +2,7 @@
 	{foreach from=$birthdayUserProfiles item=birthdayUserProfile}
 		<li class="sidebarListItem">
 			<div class="sidebarListItem__image">
-				{user object=$birthdayUserProfile type='avatar32' ariaHidden='true' tabindex='-1'}
+				{user object=$birthdayUserProfile type='avatar24' ariaHidden='true' tabindex='-1'}
 			</div>
 
 			<div class="sidebarListItem__content">

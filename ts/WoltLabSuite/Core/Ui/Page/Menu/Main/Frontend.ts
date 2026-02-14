@@ -10,12 +10,12 @@ import { MenuItem, MenuItemDepth, PageMenuMainProvider } from "./Provider";
 
 function normalizeMenuItem(menuItem: HTMLElement, depth: MenuItemDepth): MenuItem {
   const anchor = menuItem.querySelector(".boxMenuLink") as HTMLAnchorElement;
-  const title = anchor.querySelector(".boxMenuLinkTitle")!.textContent as string;
+  const title = anchor.querySelector(".boxMenuLinkTitle")!.textContent;
 
   let counter = 0;
   const outstandingItems = anchor.querySelector(".boxMenuLinkOutstandingItems");
   if (outstandingItems) {
-    counter = parseInt(outstandingItems.textContent!.replace(/[^0-9]/, ""), 10);
+    counter = parseInt(outstandingItems.textContent.replace(/[^0-9]/, ""), 10);
   }
 
   const subMenu = menuItem.querySelector("ol");

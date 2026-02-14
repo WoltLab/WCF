@@ -1,16 +1,15 @@
 <script data-relocate="true">
-require(["WoltLabSuite/Core/Language"], (Language) => {
-	Language.addObject({
-		'wcf.style.colorPicker': '{jslang}wcf.style.colorPicker{/jslang}',
-		'wcf.style.colorPicker.button.apply': '{jslang}wcf.style.colorPicker.button.apply{/jslang}',
-		'wcf.style.colorPicker.color': '{jslang}wcf.style.colorPicker.color{/jslang}',
-		'wcf.style.colorPicker.current': '{jslang}wcf.style.colorPicker.current{/jslang}',
-		'wcf.style.colorPicker.error.invalidColor': '{jslang}wcf.style.colorPicker.error.invalidColor{/jslang}',
-		'wcf.style.colorPicker.hexAlpha': '{jslang}wcf.style.colorPicker.hexAlpha{/jslang}',
-		'wcf.style.colorPicker.hue': '{jslang}wcf.style.colorPicker.hue{/jslang}',
-		'wcf.style.colorPicker.lightness': '{jslang}wcf.style.colorPicker.lightness{/jslang}',
-		'wcf.style.colorPicker.new': '{jslang}wcf.style.colorPicker.new{/jslang}',
-		'wcf.style.colorPicker.saturation': '{jslang}wcf.style.colorPicker.saturation{/jslang}',
-	});
-});
+{
+	{jsphrase name='wcf.style.colorPicker'}
+	{jsphrase name='wcf.style.colorPicker.button.apply'}
+	{jsphrase name='wcf.style.colorPicker.color'}
+	{jsphrase name='wcf.style.colorPicker.current'}
+	{jsphrase name='wcf.style.colorPicker.error.invalidColor'}
+	{jsphrase name='wcf.style.colorPicker.hexAlpha'}
+	{jsphrase name='wcf.style.colorPicker.hue'}
+	{jsphrase name='wcf.style.colorPicker.lightness'}
+	{jsphrase name='wcf.style.colorPicker.new'}
+	{jsphrase name='wcf.style.colorPicker.opacity'}
+	{jsphrase name='wcf.style.colorPicker.saturation'}
+}
 </script>

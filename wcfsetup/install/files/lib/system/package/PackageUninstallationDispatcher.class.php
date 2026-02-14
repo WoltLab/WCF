@@ -7,9 +7,10 @@ use wcf\data\package\PackageEditor;
 use wcf\event\package\PackageListChanged;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\PackageCacheBuilder;
-use wcf\system\cache\command\ClearCache;
+use wcf\command\cache\ClearCache;
+use wcf\data\package\PackageCache;
+use wcf\event\package\PackageUninstallationStarted;
 use wcf\system\event\EventHandler;
-use wcf\system\package\command\RebuildBootstrapper;
 use wcf\system\package\plugin\IPackageInstallationPlugin;
 use wcf\system\setup\Uninstaller;
 use wcf\system\WCF;
@@ -60,6 +61,11 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
             switch ($data['nodeType']) {
                 case 'start':
                     $step = $this->handleStartMarker($nodeData);
+
+                    $package = PackageCache::getInstance()->getPackage($this->queue->packageID);
+                    \assert($package !== null);
+                    $event = new PackageUninstallationStarted($package);
+                    EventHandler::getInstance()->fire($event);
                     break;
 
                 case 'package':
@@ -78,7 +84,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
                     $step = $this->executePIP($nodeData);
 
                     if ($nodeData['pluginName'] == 'file') {
-                        $command = new RebuildBootstrapper();
+                        $command = new \wcf\command\package\RebuildBootstrapper();
                         $command();
                     }
                     break;

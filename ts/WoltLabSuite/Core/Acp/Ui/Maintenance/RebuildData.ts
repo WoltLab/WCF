@@ -34,13 +34,13 @@ export async function runAllWorkers(): Promise<void> {
 
   let i = 1;
   for (const worker of sorted) {
-    await runWorker(worker, `${worker.textContent!} (${i++} / ${sorted.length})`, true);
+    await runWorker(worker, `${worker.textContent} (${i++} / ${sorted.length})`, true);
   }
 }
 
 async function runWorker(
   button: HTMLElement,
-  dialogTitle: string = button.textContent!,
+  dialogTitle: string = button.textContent,
   implicitContinue = false,
 ): Promise<void> {
   return new Promise<void>((resolve, reject) => {

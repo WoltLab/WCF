@@ -22,7 +22,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "./F
         #sorting;
         #listViewFooter;
         #pageNo;
-        constructor(viewId, viewElement, pageNo, baseUrl, sortField, sortOrder) {
+        constructor(viewId, viewElement, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder) {
             super();
             this.#baseUrl = baseUrl;
             this.#pageNo = pageNo;
@@ -35,7 +35,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "./F
             this.#filter.addEventListener("list-view:change", () => {
                 this.#switchPage(1, 0 /* StateChangeCause.Change */);
             });
-            this.#sorting = new Sorting_1.default(document.getElementById(`${viewId}_sorting`) ?? undefined, sortField, sortOrder);
+            this.#sorting = new Sorting_1.default(document.getElementById(`${viewId}_sorting`) ?? undefined, sortField, sortOrder, defaultSortField, defaultSortOrder);
             this.#sorting.addEventListener("list-view:change", () => {
                 this.#switchPage(1, 0 /* StateChangeCause.Change */);
             });
@@ -144,13 +144,21 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "./F
             this.#switchPage(pageNo, 1 /* StateChangeCause.History */);
         }
         #updateListViewFooter() {
-            this.#listViewFooter.hidden = this.#pagination.count < 2 && !this.#selection.selectionBarVisible();
+            const hasPagination = this.#pagination.count > 1;
+            this.#listViewFooter.hidden = !hasPagination && !this.#selection.selectionBarVisible();
+            const paginationContainer = this.#pagination.closest(".listView__pagination");
+            if (paginationContainer !== null) {
+                paginationContainer.hidden = !hasPagination;
+            }
         }
         setBulkInteractionContextMenuOptions(options) {
             this.#selection.setBulkInteractionContextMenuOptions(options);
         }
         resetSelection() {
             this.#selection.resetSelection();
+        }
+        removeSelection(objectId) {
+            this.#selection.removeSelection(objectId);
         }
         refreshSelection() {
             this.#selection.refresh();

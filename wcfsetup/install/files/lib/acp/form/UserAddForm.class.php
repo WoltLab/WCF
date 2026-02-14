@@ -249,7 +249,7 @@ class UserAddForm extends UserOptionListForm
 
         // validate user language
         $language = LanguageFactory::getInstance()->getLanguage($this->languageID);
-        if ($language === null || !$language->languageID) {
+        if ($language === null) {
             // use default language
             $this->languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
         }
@@ -257,7 +257,7 @@ class UserAddForm extends UserOptionListForm
         // validate visible languages
         foreach ($this->visibleLanguages as $key => $visibleLanguage) {
             $language = LanguageFactory::getInstance()->getLanguage($visibleLanguage);
-            if (!$language->languageID || !$language->hasContent) {
+            if ($language === null || !$language->hasContent) {
                 unset($this->visibleLanguages[$key]);
             }
         }

@@ -442,6 +442,11 @@
 			<classname>wcf\system\importer\UserAvatarImporter</classname>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.user.coverPhoto</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname>wcf\system\importer\UserCoverPhotoImporter</classname>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.user.comment</name>
 			<definitionname>com.woltlab.wcf.importer</definitionname>
 			<classname>wcf\system\importer\UserCommentImporter</classname>
@@ -490,6 +495,11 @@
 			<name>com.woltlab.wcf.article</name>
 			<definitionname>com.woltlab.wcf.importer</definitionname>
 			<classname>wcf\system\importer\ArticleImporter</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article.attachment</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname>wcf\system\importer\ArticleAttachmentImporter</classname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.media.category</name>

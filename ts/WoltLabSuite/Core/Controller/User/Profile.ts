@@ -50,8 +50,14 @@ function setupVisitorList(userId: number): void {
 const tabContentLoaded = new Map<string, boolean>();
 
 function setupTabMenu(userId: number): void {
+  const content = document.getElementById("profileContent");
+  if (content === null) {
+    // Profile is restricted and the current user cannot see the contents.
+    return;
+  }
+
   // Mark the default tab as loaded.
-  tabContentLoaded.set(document.getElementById("profileContent")!.dataset.active!, true);
+  tabContentLoaded.set(content.dataset.active!, true);
 
   // Load the content of the active tab, as we do not receive an event for it.
   void loadTabMenuContent(userId, getTabMenu("profileContent")!.getActiveTab().dataset.name!);

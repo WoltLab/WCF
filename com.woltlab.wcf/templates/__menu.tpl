@@ -4,10 +4,17 @@
 		
 		{foreach from=$menuItemNodeList item=menuItemNode}
 			<li class="{if $menuItemNode->isActiveNode()}active{/if}{if $menuItemNode->hasChildren()} boxMenuHasChildren{/if}" data-identifier="{$menuItemNode->identifier}">
-				<a {anchorAttributes url=$menuItemNode->getURL() appendClassname=false} class="boxMenuLink"{if $menuItemNode->isActiveNode()} aria-current="page"{/if}>
+				<a
+					{anchorAttributes url=$menuItemNode->getURL() appendClassname=false}
+					class="boxMenuLink"
+					{if $menuItemNode->getOutstandingItems() > 0}
+						aria-label="{$menuItemNode->getTitle()} {lang}wcf.page.menu.outstandingItems{/lang}"
+					{/if}
+					{if $menuItemNode->isActiveNode()} aria-current="page"{/if}
+				>
 					<span class="boxMenuLinkTitle">{$menuItemNode->getTitle()}</span>
 					{if $menuItemNode->getOutstandingItems() > 0}
-						<span class="boxMenuLinkOutstandingItems badge badgeUpdate" aria-label="{lang}wcf.page.menu.outstandingItems{/lang}">{#$menuItemNode->getOutstandingItems()}</span>
+						<span class="boxMenuLinkOutstandingItems badge badgeUpdate" aria-hidden="true">{#$menuItemNode->getOutstandingItems()}</span>
 					{/if}
 					{if $menuIdentifier == 'com.woltlab.wcf.MainMenu' && $menuItemNode->hasChildren() && $menuItemNode->getDepth() == 1}
 						{icon name='angle-down' type='solid'}

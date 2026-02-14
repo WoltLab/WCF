@@ -12,9 +12,6 @@ use wcf\data\user\trophy\UserTrophyList;
 use wcf\event\gridView\admin\UserTrophyGridViewInitialized;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\SelectFilter;
-use wcf\system\gridView\filter\TimeFilter;
-use wcf\system\gridView\filter\UserFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\AbstractColumnRenderer;
@@ -26,6 +23,9 @@ use wcf\system\interaction\admin\UserTrophyInteractions;
 use wcf\system\interaction\bulk\admin\UserTrophyBulkInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
+use wcf\system\view\filter\SelectFilter;
+use wcf\system\view\filter\TimeFilter;
+use wcf\system\view\filter\UserFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -51,7 +51,7 @@ final class UserTrophyGridView extends AbstractGridView
             GridViewColumn::for("userID")
                 ->label("wcf.user.username")
                 ->titleColumn()
-                ->filter(new UserFilter())
+                ->filter(UserFilter::class)
                 ->renderer(new UserLinkColumnRenderer(UserEditForm::class))
                 ->sortable(),
             GridViewColumn::for("image")
@@ -92,7 +92,7 @@ final class UserTrophyGridView extends AbstractGridView
                 ->label('wcf.global.date')
                 ->sortable()
                 ->renderer(new TimeColumnRenderer())
-                ->filter(new TimeFilter()),
+                ->filter(TimeFilter::class),
         ]);
 
         $provider = new UserTrophyInteractions();
@@ -113,20 +113,15 @@ final class UserTrophyGridView extends AbstractGridView
             )
         );
 
-        $this->setSortField("time");
-        $this->setSortOrder("DESC");
+        $this->setDefaultSortField("time");
+        $this->setDefaultSortOrder("DESC");
     }
 
     private function getTrophySelectFilter(): SelectFilter
     {
-        return new class() extends SelectFilter {
-            public function __construct()
-            {
-                parent::__construct([], "trophyID");
-            }
-
+        return new class([], 'trophyID', 'wcf.acp.trophy') extends SelectFilter {
             #[\Override]
-            public function getFormField(string $id, string $label): SelectFormField
+            public function getFormField(): SelectFormField
             {
                 $options = [];
                 foreach (TrophyCategoryCache::getInstance()->getCategories() as $category) {
@@ -147,8 +142,8 @@ final class UserTrophyGridView extends AbstractGridView
                     }
                 }
 
-                return SelectFormField::create($id)
-                    ->label($label)
+                return SelectFormField::create($this->id)
+                    ->label($this->languageItem)
                     ->options($options, true, false);
             }
 

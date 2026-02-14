@@ -6,80 +6,70 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Language", "../Dialog", "../ItemList/Filter"], function (require, exports, tslib_1, Language, Dialog_1, Filter_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "../ItemList/Filter", "WoltLabSuite/Core/Component/Dialog"], function (require, exports, tslib_1, Language_1, Filter_1, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = setup;
     exports.open = open;
-    Language = tslib_1.__importStar(Language);
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
     Filter_1 = tslib_1.__importDefault(Filter_1);
-    class UiStyleFontAwesome {
-        callback = undefined;
-        iconList = undefined;
-        itemListFilter = undefined;
-        open(callback) {
-            this.callback = callback;
-            Dialog_1.default.open(this);
-        }
-        /**
-         * Selects an icon, notifies the callback and closes the dialog.
-         */
-        click(event) {
-            event.preventDefault();
-            const target = event.target;
-            const item = target.closest("li");
-            const icon = item.querySelector("fa-icon");
-            Dialog_1.default.close(this);
-            this.callback(icon.name, icon.solid);
-        }
-        _dialogSetup() {
-            return {
-                id: "fontAwesomeSelection",
-                options: {
-                    onSetup: () => {
-                        this.iconList = document.getElementById("fontAwesomeIcons");
-                        const icons = [];
-                        window.getFontAwesome7Metadata().forEach(([, hasRegular], name) => {
-                            if (hasRegular) {
-                                icons.push(`<li><fa-icon size="48" name="${name}" solid></fa-icon><small>${name}</small></li>`);
-                            }
-                            icons.push(`<li><fa-icon size="48" name="${name}"></fa-icon><small>${name}</small></li>`);
-                        });
-                        // build icons
-                        this.iconList.innerHTML = icons.join("");
-                        this.iconList.addEventListener("click", (ev) => this.click(ev));
-                        this.itemListFilter = new Filter_1.default("fontAwesomeIcons", {
-                            callbackPrepareItem: (item) => {
-                                const small = item.querySelector("small");
-                                const text = small.textContent.trim();
-                                return {
-                                    item,
-                                    span: small,
-                                    text,
-                                };
-                            },
-                            enableVisibilityFilter: false,
-                            filterPosition: "top",
-                        });
-                    },
-                    onShow: () => {
-                        this.itemListFilter.reset();
-                    },
-                    title: Language.get("wcf.global.fontAwesome.selectIcon"),
-                },
-                source: '<ul class="fontAwesomeIcons" id="fontAwesomeIcons"></ul>',
-            };
-        }
+    function createIconList() {
+        const ul = document.createElement("ul");
+        ul.classList.add("fontAwesome__icons");
+        ul.id = "fontAwesomeIcons";
+        const icons = [];
+        window.getFontAwesome7Metadata().forEach(([, hasRegular], name) => {
+            if (hasRegular) {
+                icons.push(`<li><button type="button" class="fontAwesome__icon"><fa-icon size="48" name="${name}" solid></fa-icon><small class="fontAwesome__icon__name">${name}</small></button></li>`);
+            }
+            icons.push(`<li><button type="button" class="fontAwesome__icon"><fa-icon size="48" name="${name}"></fa-icon><small class="fontAwesome__icon__name">${name}</small></button></li>`);
+        });
+        ul.innerHTML = icons.join("");
+        return ul;
     }
-    let uiStyleFontAwesome;
-    /**
-     * Sets the list of available icons, must be invoked prior to any call
-     * to the `open()` method.
-     */
-    function setup() {
-        if (!uiStyleFontAwesome) {
-            uiStyleFontAwesome = new UiStyleFontAwesome();
+    let content = undefined;
+    function getContent() {
+        if (content === undefined) {
+            const iconList = createIconList();
+            iconList.addEventListener("click", (event) => {
+                event.preventDefault();
+                const { target } = event;
+                if (!(target instanceof HTMLButtonElement)) {
+                    return;
+                }
+                const icon = target.querySelector("fa-icon");
+                const selectedEvent = new CustomEvent("font-awesome:selected", {
+                    bubbles: true,
+                    detail: {
+                        icon: icon.name,
+                        forceSolid: icon.solid,
+                    },
+                });
+                iconList.dispatchEvent(selectedEvent);
+            });
+            content = document.createElement("div");
+            content.id = "fontAwesomeSelection";
+            content.append(iconList);
+        }
+        return content;
+    }
+    let itemListFilter = undefined;
+    function setupListeners() {
+        if (itemListFilter === undefined) {
+            itemListFilter = new Filter_1.default("fontAwesomeIcons", {
+                callbackPrepareItem: (item) => {
+                    const small = item.querySelector("small");
+                    const text = small.textContent.trim();
+                    return {
+                        item,
+                        span: small,
+                        text,
+                    };
+                },
+                enableVisibilityFilter: false,
+                filterPosition: "top",
+            });
+        }
+        else {
+            itemListFilter.reset();
         }
     }
     /**
@@ -87,9 +77,12 @@ define(["require", "exports", "tslib", "../../Language", "../Dialog", "../ItemLi
      * invoked with the selection icon's name as the only argument.
      */
     function open(callback) {
-        if (!uiStyleFontAwesome) {
-            throw new Error("Missing icon data, please include the template before calling this method using `{include file='shared_fontAwesomeJavaScript'}`.");
-        }
-        uiStyleFontAwesome.open(callback);
+        const dialog = (0, Dialog_1.dialogFactory)().fromElement(getContent()).asConfirmation();
+        dialog.addEventListener("font-awesome:selected", (event) => {
+            dialog.close();
+            callback(event.detail.icon, event.detail.forceSolid);
+        }, { once: true });
+        dialog.show((0, Language_1.getPhrase)("wcf.global.fontAwesome.selectIcon"));
+        setupListeners();
     }
 });

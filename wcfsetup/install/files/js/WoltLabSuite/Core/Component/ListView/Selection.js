@@ -204,6 +204,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
                     this.#bulkInteractionsPlaceholder = lastDivider.previousElementSibling;
                     this.#bulkInteractionsPlaceholder.remove();
                 }
+                while (lastDivider.previousElementSibling !== null) {
+                    lastDivider.previousElementSibling.remove();
+                }
                 menu.prepend(fragment);
                 this.#initBulkInteractions();
             }
@@ -219,6 +222,14 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
                 .forEach((checkbox) => (checkbox.checked = false));
             window.localStorage.removeItem(this.#getStorageKey());
             this.#updateSelectionBar();
+        }
+        removeSelection(objectId) {
+            const selectedIds = this.getSelectedIds();
+            if (selectedIds.indexOf(objectId) !== -1) {
+                selectedIds.splice(selectedIds.indexOf(objectId), 1);
+                window.localStorage.setItem(this.#getStorageKey(), JSON.stringify(selectedIds));
+            }
+            this.#change();
         }
         #initBulkInteractions() {
             if (!this.#bulkInteractionButton) {

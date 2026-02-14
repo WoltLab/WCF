@@ -50,21 +50,12 @@ final class StringValueType implements StringType, FixedType
 
     public function matches(Type $other): bool
     {
-        if ($other instanceof UnionType) {
-            return $other->isMatchedBy($this);
-        }
+        return $other->accepts($this->value);
+    }
 
-        if ($other instanceof self) {
-            return $this->value === $other->value;
-        }
-
-        if ($other instanceof ArrayKeyType) {
-            return $other->isMatchedBy($this);
-        }
-
-        return $other instanceof StringType
-            || $other instanceof ScalarConcreteType
-            || $other instanceof MixedType;
+    public function inferGenericsFrom(Type $other, Generics $generics): Generics
+    {
+        return $generics;
     }
 
     public function canCast(mixed $value): bool

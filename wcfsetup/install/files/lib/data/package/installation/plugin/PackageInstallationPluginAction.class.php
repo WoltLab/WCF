@@ -2,6 +2,7 @@
 
 namespace wcf\data\package\installation\plugin;
 
+use wcf\command\package\SetLastUpdateTime;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\devtools\project\DevtoolsProject;
 use wcf\data\option\OptionEditor;
@@ -131,6 +132,8 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
         switch ($this->packageInstallationPlugin->pluginName) {
             case 'file':
                 StyleHandler::resetStylesheets(false);
+
+                (new SetLastUpdateTime())();
                 break;
 
             case 'language':

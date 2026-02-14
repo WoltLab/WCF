@@ -9,7 +9,7 @@ use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
- * Represents a bulk interaction that call a form builder action.
+ * Represents a bulk interaction that calls a form builder action.
  *
  * @author      Olaf Braun
  * @copyright   2001-2025 WoltLab GmbH
@@ -31,11 +31,11 @@ class BulkFormBuilderDialogInteraction extends AbstractBulkInteraction
     public function render(array $objects): string
     {
         $identifier = StringUtil::encodeJS($this->getIdentifier());
-        $label = WCF::getLanguage()->get($this->languageItem) . ' (' . \count($objects) . ')';
+        $label = WCF::getLanguage()->get($this->languageItem);
         $objectIDs = \array_values(\array_map(fn(DatabaseObject $object) => $object->getObjectID(), $objects));
         $endpoint = StringUtil::encodeHTML(
             LinkHandler::getInstance()->getControllerLink($this->controller, [
-                'objectIDs' => $objectIDs
+                'ids' => $objectIDs
             ])
         );
 

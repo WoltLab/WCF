@@ -17,6 +17,11 @@ final class IntegerFormatter implements IFormOptionFormatter
     #[\Override]
     public function format(string $value, int $languageID, array $configuration): string
     {
-        return StringUtil::formatNumeric(\intval($value));
+        $suffix = '';
+        if (!empty($configuration['unit'])) {
+            $suffix = ' ' . StringUtil::encodeHTML($configuration['unit']);
+        }
+
+        return StringUtil::formatNumeric(\intval($value)) . $suffix;
     }
 }

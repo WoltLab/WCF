@@ -16,6 +16,7 @@ import { wheneverFirstSeen } from "../Helper/Selector";
 import UiDropdownSimple from "../Ui/Dropdown/Simple";
 import { getItem } from "../Api/ListViews/GetItem";
 import { getBulkContextMenuOptions } from "../Api/Interactions/GetBulkContextMenuOptions";
+import { promiseMutex } from "../Helper/PromiseMutex";
 
 export class ListView {
   readonly #viewClassName: string;
@@ -32,6 +33,8 @@ export class ListView {
     baseUrl: string = "",
     sortField = "",
     sortOrder = "ASC",
+    defaultSortField = "",
+    defaultSortOrder = "ASC",
     bulkInteractionProviderClassName: string,
     listViewParameters?: Map<string, string>,
   ) {
@@ -42,7 +45,7 @@ export class ListView {
     this.#listViewParameters = listViewParameters;
 
     this.#initInteractions();
-    this.#state = this.#setupState(viewId, pageNo, baseUrl, sortField, sortOrder);
+    this.#state = this.#setupState(viewId, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder);
     this.#initEventListeners();
   }
 
@@ -61,17 +64,23 @@ export class ListView {
     this.#noItemsNotice.hidden = response.totalItems !== 0;
     this.#state.updateFromResponse(cause, response.pages, response.filterLabels);
     if (cause === StateChangeCause.Pagination) {
-      scrollToElement(this.#viewElement);
+      scrollToElement(this.#viewElement.closest(".listView")!);
     }
 
     triggerDomChange();
   }
 
   async #refreshItem(item: HTMLElement): Promise<void> {
-    const { template } = await getItem(this.#viewClassName, item.dataset.objectId!, this.#listViewParameters);
+    const { template } = await getItem(
+      this.#viewClassName,
+      item.dataset.objectId!,
+      this.#state.getActiveFilters(),
+      this.#listViewParameters,
+    );
     item.replaceWith(createFragmentFromHtml(template));
     this.#state.refreshSelection();
     triggerDomChange();
+    this.#checkEmptyList();
   }
 
   #initInteractions(): void {
@@ -94,6 +103,11 @@ export class ListView {
         });
       });
     });
+
+    const listView = this.#viewElement.closest(".listView") as HTMLElement;
+    listView.querySelector<HTMLButtonElement>(".listView__editMode__toggle")?.addEventListener("click", () => {
+      listView.classList.add("listView--editMode");
+    });
   }
 
   #initEventListeners(): void {
@@ -107,6 +121,7 @@ export class ListView {
 
     this.#viewElement.addEventListener("interaction:remove", (event) => {
       (event.target as HTMLElement).remove();
+      this.#state.removeSelection(parseInt((event.target as HTMLElement).dataset.objectId!));
       this.#checkEmptyList();
     });
 
@@ -115,14 +130,32 @@ export class ListView {
     });
   }
 
-  #setupState(viewId: string, pageNo: number, baseUrl: string, sortField: string, sortOrder: string): State {
-    const state = new State(viewId, this.#viewElement, pageNo, baseUrl, sortField, sortOrder);
+  #setupState(
+    viewId: string,
+    pageNo: number,
+    baseUrl: string,
+    sortField: string,
+    sortOrder: string,
+    defaultSortField: string,
+    defaultSortOrder: string,
+  ): State {
+    const state = new State(
+      viewId,
+      this.#viewElement,
+      pageNo,
+      baseUrl,
+      sortField,
+      sortOrder,
+      defaultSortField,
+      defaultSortOrder,
+    );
     state.addEventListener("list-view:change", (event) => {
       void this.#loadItems(event.detail.source);
     });
-    state.addEventListener("list-view:get-bulk-interactions", (event) => {
-      void this.#loadBulkInteractions(event.detail.objectIds);
-    });
+    state.addEventListener(
+      "list-view:get-bulk-interactions",
+      promiseMutex((event) => this.#loadBulkInteractions(event.detail.objectIds)),
+    );
 
     return state;
   }

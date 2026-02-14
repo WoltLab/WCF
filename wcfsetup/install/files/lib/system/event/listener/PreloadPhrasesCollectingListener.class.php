@@ -16,6 +16,9 @@ final class PreloadPhrasesCollectingListener
 {
     public function __invoke(PreloadPhrasesCollecting $event): void
     {
+        $event->preload('wcf.ajax.error.illegalLink');
+        $event->preload('wcf.ajax.error.permissionDenied');
+
         $event->preload('wcf.button.delete.confirmMessage');
 
         $event->preload('wcf.clipboard.item.mark');
@@ -140,10 +143,13 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.message.share.permalink.html');
         $event->preload('wcf.message.share.socialMedia');
 
+        $event->preload('wcf.message.quote.deleteAllQuotes');
+        $event->preload('wcf.message.quote.insertAllQuotes');
+        $event->preload('wcf.message.quote.insertQuote');
         $event->preload('wcf.message.quote.quoteSelected');
+        $event->preload('wcf.message.quote.quoteSelected.success');
         $event->preload('wcf.message.quote.quoteAndReply');
         $event->preload('wcf.message.quote.quoteMessage');
-        $event->preload('wcf.message.quote.insertQuote');
 
         $event->preload('wcf.moderation.report.reportContent');
 
@@ -169,6 +175,7 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.upload.error.delete.permissionDenied');
         $event->preload('wcf.upload.error.delete.unknownError');
         $event->preload('wcf.upload.validation.error.noImage');
+        $event->preload('wcf.upload.validation.error.notSquare');
         $event->preload('wcf.upload.validation.error.tooSmall');
 
         $event->preload('wcf.user.activityPoint');

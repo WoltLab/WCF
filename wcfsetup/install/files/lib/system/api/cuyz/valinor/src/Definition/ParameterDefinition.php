@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace CuyZ\Valinor\Definition;
 
 use CuyZ\Valinor\Type\Type;
+use CuyZ\Valinor\Type\Types\Generics;
+use CuyZ\Valinor\Utility\TypeHelper;
 
 /** @internal */
 final class ParameterDefinition
@@ -21,4 +23,34 @@ final class ParameterDefinition
         public readonly mixed $defaultValue,
         public readonly Attributes $attributes
     ) {}
+
+    public function forCallable(callable $callable): self
+    {
+        return new self(
+            $this->name,
+            $this->signature,
+            $this->type,
+            $this->nativeType,
+            $this->isOptional,
+            $this->isVariadic,
+            $this->defaultValue,
+            $this->attributes->forCallable($callable)
+        );
+    }
+
+    public function assignGenerics(Generics $generics): self
+    {
+        assert($generics->items !== []);
+
+        return new self(
+            $this->name,
+            $this->signature,
+            TypeHelper::assignVacantTypes($this->type, $generics->items),
+            $this->nativeType,
+            $this->isOptional,
+            $this->isVariadic,
+            $this->defaultValue,
+            $this->attributes
+        );
+    }
 }

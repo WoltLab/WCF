@@ -35,7 +35,13 @@ body[data-page-identifier="com.woltlab.wcf.User"] .userProfileContent:first-chil
 }
 
 .userProfileHeader__coverPhoto {
-	height: 250px;
+	@include screen-sm-down {
+		height: 150px;
+	}
+
+	@include screen-md-up {
+		height: 250px;
+	}
 }
 
 .userProfileHeader__coverPhotoImage {
@@ -68,6 +74,8 @@ body[data-page-identifier="com.woltlab.wcf.User"] .userProfileContent:first-chil
 }
 
 .userProfileHeader__avatarBorder {
+	/* The color prevents any bleed-through caused by rounding errors. */
+	background-color: var(--wcfContentBackground);
 	position: absolute;
 	bottom: 0;
 	left: 0;
@@ -92,6 +100,7 @@ body[data-page-identifier="com.woltlab.wcf.User"] .userProfileContent:first-chil
 }
 
 .userProfileHeader__username {
+	display: inline;
 	font-size: var(--wcfFontSizeTitle);
 	font-weight: 600;
 	line-height: 1.05;
@@ -99,6 +108,12 @@ body[data-page-identifier="com.woltlab.wcf.User"] .userProfileContent:first-chil
 	@include screen-sm-down {
 		font-size: var(--wcfFontSizeHeadline);
 	}
+}
+
+.userProfileHeader__statusIcons {
+	display: inline;
+	position: relative;
+	z-index: 1;
 }
 
 .userProfileHeader__stats {
@@ -164,9 +179,9 @@ body[data-page-identifier="com.woltlab.wcf.User"] .userProfileContent:first-chil
 }
 
 .userProfileHeader__meta {
-	flex: 1 0 calc(100% - 138px);
+	flex: 1 0 calc(100% - 148px);
 	color: var(--wcfContentDimmedText);
-	margin-left: 138px;
+	margin-left: 148px;
 
 	@include screen-sm-down {
 		margin-left: 0;

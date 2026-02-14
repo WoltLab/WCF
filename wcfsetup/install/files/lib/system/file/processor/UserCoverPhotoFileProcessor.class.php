@@ -8,7 +8,7 @@ use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
-use wcf\system\user\command\SetCoverPhoto;
+use wcf\command\user\SetCoverPhoto;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -161,8 +161,8 @@ final class UserCoverPhotoFileProcessor extends AbstractFileProcessor
         $user = $this->getUserByFile($file);
         if ($user === null) {
             return WCF::getSession()->getVar(
-                    \sprintf(self::SESSION_VARIABLE, $file->fileID)
-                ) !== null;
+                \sprintf(self::SESSION_VARIABLE, $file->fileID)
+            ) !== null;
         }
 
         return $user->canEditCoverPhoto();
@@ -182,12 +182,11 @@ final class UserCoverPhotoFileProcessor extends AbstractFileProcessor
     #[\Override]
     public function delete(array $fileIDs, array $thumbnailIDs): void
     {
-        \array_map(
-            static fn(int $fileID) => WCF::getSession()->unregister(
+        foreach ($fileIDs as $fileID) {
+            WCF::getSession()->unregister(
                 \sprintf(self::SESSION_VARIABLE, $fileID)
-            ),
-            $fileIDs
-        );
+            );
+        }
 
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add('coverPhotoFileID IN (?)', [$fileIDs]);
@@ -197,17 +196,6 @@ final class UserCoverPhotoFileProcessor extends AbstractFileProcessor
                 " . $conditionBuilder;
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([null, ...$conditionBuilder->getParameters()]);
-    }
-
-    #[\Override]
-    public function countExistingFiles(array $context): ?int
-    {
-        $user = $this->getUser($context);
-        if ($user === null) {
-            return null;
-        }
-
-        return $user->coverPhotoFileID === null ? 0 : 1;
     }
 
     #[\Override]
@@ -230,5 +218,11 @@ final class UserCoverPhotoFileProcessor extends AbstractFileProcessor
                 true,
             ),
         ];
+    }
+
+    #[\Override]
+    public function isSingleFile(): bool
+    {
+        return true;
     }
 }

@@ -9,14 +9,14 @@ use wcf\data\cronjob\log\CronjobLogList;
 use wcf\data\DatabaseObject;
 use wcf\event\gridView\admin\CronjobLogGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\SelectFilter;
-use wcf\system\gridView\filter\TimeFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
 use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
 use wcf\system\gridView\renderer\TimeColumnRenderer;
 use wcf\system\interaction\AbstractInteraction;
 use wcf\system\interaction\IInteraction;
+use wcf\system\view\filter\SelectFilter;
+use wcf\system\view\filter\TimeFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -45,7 +45,11 @@ final class CronjobLogGridView extends AbstractGridView
                 ->label('wcf.acp.cronjob')
                 ->sortable()
                 ->titleColumn()
-                ->filter(new SelectFilter($availableCronjobs))
+                ->filter(new SelectFilter(
+                    $availableCronjobs,
+                    'cronjobID',
+                    'wcf.acp.cronjob'
+                ))
                 ->renderer([
                     new class($availableCronjobs) extends DefaultColumnRenderer {
                         /**
@@ -62,15 +66,19 @@ final class CronjobLogGridView extends AbstractGridView
             GridViewColumn::for('execTime')
                 ->label('wcf.acp.cronjob.log.execTime')
                 ->sortable()
-                ->filter(new TimeFilter())
+                ->filter(TimeFilter::class)
                 ->renderer(new TimeColumnRenderer()),
             GridViewColumn::for('success')
                 ->label('wcf.acp.cronjob.log.status')
                 ->sortable()
-                ->filter(new SelectFilter([
-                    1 => 'wcf.acp.cronjob.log.success',
-                    0 => 'wcf.acp.cronjob.log.error',
-                ]))
+                ->filter(new SelectFilter(
+                    [
+                        1 => 'wcf.acp.cronjob.log.success',
+                        0 => 'wcf.acp.cronjob.log.error',
+                    ],
+                    'success',
+                    'wcf.acp.cronjob.log.status'
+                ))
                 ->renderer([
                     new class extends DefaultColumnRenderer {
                         public function render(mixed $value, DatabaseObject $row): string
@@ -91,8 +99,8 @@ final class CronjobLogGridView extends AbstractGridView
         ]);
 
         $this->addQuickInteraction($this->getShowDetailsInteraction());
-        $this->setSortField('execTime');
-        $this->setSortOrder('DESC');
+        $this->setDefaultSortField('execTime');
+        $this->setDefaultSortOrder('DESC');
     }
 
     #[\Override]

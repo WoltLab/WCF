@@ -1,6 +1,6 @@
 {if !$removeLinks|isset}{assign var='removeLinks' value=false}{/if}
 {if $float === 'center'}<p class="text-center">{/if}
-<span class="mediaBBCode{if $float != 'none'} messageFloatObject{$float|ucfirst}{/if}"{if $width !== 'auto'} style="width: {$width}px; display: inline-flex"{/if}>
+<span class="mediaBBCode{if $float != 'none'} messageFloatObject{$float|ucfirst}{/if}"{if $width !== 'auto'} style="width: {$width}px; display: inline-flex; flex-direction: column"{/if}>
 	{if $media->isImage}
 		{if $thumbnailSize != 'original'}
 			{if !$removeLinks}

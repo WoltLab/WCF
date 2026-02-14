@@ -198,9 +198,10 @@ final class AttachmentBBCode extends AbstractBBCode
      */
     private function getImageStyle(Attachment $attachment, string $outputType, mixed $thumbnail): array
     {
-        // Always use thumbnails for the simplified HTML output.
-        if ($outputType == 'text/simplified-html') {
-            return [true, "auto"];
+        // Always use thumbnails for the simplified HTML output unless there is
+        // no thumbnail available.
+        if ($outputType === 'text/simplified-html') {
+            return [$attachment->hasThumbnail(), "auto"];
         }
 
         $isThumbnail = false;

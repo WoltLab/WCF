@@ -204,12 +204,6 @@ class UiPollEditor {
     optionInput.value = optionValue;
     optionInput.maxLength = 255;
     optionInput.addEventListener("keydown", (ev) => this.optionInputKeyDown(ev));
-    optionInput.addEventListener("click", () => {
-      // work-around for some weird focus issue on iOS/Android
-      if (document.activeElement !== optionInput) {
-        optionInput.focus();
-      }
-    });
 
     pollOptionInput.append(sortHandle, optionInput, addButton, deleteButton);
 

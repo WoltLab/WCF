@@ -16,7 +16,7 @@ use wcf\system\WCF;
  * @property-read   int $groupID        unique id of the label group
  * @property-read   string $groupName      name of the label group or name of language item which contains the label text
  * @property-read   string $groupDescription   description of the label group (only shown in ACP)
- * @property-read   int $forceSelection     is `1` if a label in the label group has to be selected when creating an object for which the label group is available, otherwise `0`
+ * @property-read   1|0 $forceSelection     is `1` if a label in the label group has to be selected when creating an object for which the label group is available, otherwise `0`
  * @property-read   int $showOrder      position of the label group in relation to the other label groups
  */
 class LabelGroup extends DatabaseObject implements IRouteController
@@ -35,6 +35,24 @@ class LabelGroup extends DatabaseObject implements IRouteController
     public function __toString(): string
     {
         return $this->getTitle();
+    }
+
+    /**
+     * Returns the title and, if available, the description as a combined string.
+     *
+     * @since 6.2
+     */
+    public function getExtendedTitle(): string
+    {
+        if (!$this->groupDescription) {
+            return $this->getTitle();
+        }
+
+        return \sprintf(
+            "%s / %s",
+            $this->getTitle(),
+            $this->groupDescription
+        );
     }
 
     /**

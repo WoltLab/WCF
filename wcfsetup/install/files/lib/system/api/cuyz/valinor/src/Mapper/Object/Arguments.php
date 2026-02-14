@@ -9,6 +9,9 @@ use CuyZ\Valinor\Definition\ParameterDefinition;
 use CuyZ\Valinor\Definition\Parameters;
 use CuyZ\Valinor\Definition\Properties;
 use CuyZ\Valinor\Definition\PropertyDefinition;
+use CuyZ\Valinor\Type\Types\ShapedArrayElement;
+use CuyZ\Valinor\Type\Types\ShapedArrayType;
+use CuyZ\Valinor\Type\Types\StringValueType;
 use IteratorAggregate;
 use Traversable;
 
@@ -25,13 +28,17 @@ use function count;
 final class Arguments implements IteratorAggregate, Countable
 {
     /** @var array<string, Argument> */
-    private array $arguments = [];
+    private readonly array $arguments;
+
+    private ShapedArrayType $shapedArray;
 
     public function __construct(Argument ...$arguments)
     {
+        $args = [];
         foreach ($arguments as $argument) {
-            $this->arguments[$argument->name()] = $argument;
+            $args[$argument->name()] = $argument;
         }
+        $this->arguments = $args;
     }
 
     public static function fromParameters(Parameters $parameters): self
@@ -61,6 +68,31 @@ final class Arguments implements IteratorAggregate, Countable
     public function names(): array
     {
         return array_keys($this->arguments);
+    }
+
+    public function merge(self $other): self
+    {
+        return new self(
+            ...$this->arguments,
+            ...array_diff_key($other->arguments, $this->arguments)
+        );
+    }
+
+    public function toShapedArray(): ShapedArrayType
+    {
+        return $this->shapedArray ??= new ShapedArrayType(
+            elements: array_map(
+                static fn (Argument $argument) => new ShapedArrayElement(
+                    key: new StringValueType($argument->name()),
+                    type: $argument->type(),
+                    optional: ! $argument->isRequired(),
+                    attributes: $argument->attributes(),
+                ),
+                $this->arguments,
+            ),
+            isUnsealed: false,
+            unsealedType: null,
+        );
     }
 
     /**

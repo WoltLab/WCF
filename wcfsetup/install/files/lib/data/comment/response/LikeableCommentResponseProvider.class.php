@@ -6,6 +6,7 @@ use wcf\data\comment\Comment;
 use wcf\data\like\ILikeObjectTypeProvider;
 use wcf\data\like\object\ILikeObject;
 use wcf\data\object\type\AbstractObjectTypeProvider;
+use wcf\system\cache\runtime\CommentResponseRuntimeCache;
 use wcf\system\comment\CommentHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\like\IViewableLikeProvider;
@@ -95,10 +96,27 @@ class LikeableCommentResponseProvider extends AbstractObjectTypeProvider impleme
 
         foreach ($likeData as $objectTypeID => $likes) {
             $objectType = CommentHandler::getInstance()->getObjectType($objectTypeID);
-            if (CommentHandler::getInstance()->getCommentManager($objectType->objectType) instanceof IViewableLikeProvider) {
-                /** @noinspection PhpUndefinedMethodInspection */
-                CommentHandler::getInstance()->getCommentManager($objectType->objectType)->prepare($likes);
+            $commentManager = CommentHandler::getInstance()->getCommentManager($objectType->objectType);
+            if ($commentManager instanceof IViewableLikeProvider) {
+                $commentManager->prepare($likes);
             }
         }
+    }
+
+    #[\Override]
+    public function getObjectByID($objectID)
+    {
+        return new LikeableCommentResponse(CommentResponseRuntimeCache::getInstance()->getObject($objectID));
+    }
+
+    #[\Override]
+    public function getObjectsByIDs(array $objectIDs)
+    {
+        return \array_map(
+            static fn(CommentResponse $comment) => new LikeableCommentResponse($comment),
+            \array_filter(
+                CommentResponseRuntimeCache::getInstance()->getObjects($objectIDs),
+            )
+        );
     }
 }

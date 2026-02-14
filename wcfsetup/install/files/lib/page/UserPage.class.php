@@ -201,11 +201,6 @@ class UserPage extends AbstractPage
     {
         // update profile hits
         if ($this->user->userID != WCF::getUser()->userID && !WCF::getSession()->spiderIdentifier && !$this->user->isProtected()) {
-            $editor = new UserEditor($this->user->getDecoratedObject());
-            $editor->updateCounters(['profileHits' => 1]);
-
-            // save visitor
-            /** @noinspection PhpUndefinedFieldInspection */
             if (PROFILE_ENABLE_VISITORS && WCF::getUser()->userID && !WCF::getUser()->canViewOnlineStatus) {
                 (new TrackUserProfileVisitor(WCF::getUser(), $this->user->getDecoratedObject(), \TIME_NOW))();
             }

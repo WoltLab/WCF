@@ -61,6 +61,13 @@ final class SharedConfigurationFormFields
             'required' => BooleanFormField::create('required')
                 ->label('wcf.form.option.shared.required')
                 ->value(false),
+            'unit' => TextFormField::create('unit')
+                ->label('wcf.form.option.shared.unit')
+                ->addFieldClass('short'),
+            'urlLinkText' => TextFormField::create('urlLinkText')
+                ->label('wcf.form.option.shared.urlLinkText')
+                ->maximumLength(80)
+                ->minimumLength(2)
         ];
     }
 

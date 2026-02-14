@@ -165,7 +165,7 @@ class HtmlBBCodeParser extends BBCodeParser
 
         // step 2) check if tags are properly opened and closed, incorrect nesting doesn't matter here
         foreach ($this->tagArray as $i => &$tag) {
-            // @phpstan-ignore offsetAccess.notFound
+            // @phpstan-ignore booleanNot.alwaysFalse
             if (!$tag['valid']) {
                 continue;
             }
@@ -214,7 +214,6 @@ class HtmlBBCodeParser extends BBCodeParser
         $newTagArray = $newTextArray = [];
         $buffer = '';
         foreach ($this->tagArray as $i => $tag) {
-            // @phpstan-ignore if.alwaysFalse
             if ($tag['valid']) {
                 // cleanup
                 unset($tag['matching']);

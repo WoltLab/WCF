@@ -9,8 +9,8 @@
 
 	// input elements do not inherit font family, size and line-height from body
 	font-family: var(--wcfFontFamily);
-	@include wcfFontDefault;
 	@include wcfLineHeight;
+	@include wcfFontDefault;
 
 	&:focus,
 	&:hover {

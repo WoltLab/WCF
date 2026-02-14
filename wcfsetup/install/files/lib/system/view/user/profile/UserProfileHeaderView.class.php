@@ -154,9 +154,5 @@ final class UserProfileHeaderView
                 tooltip: 'wcf.user.profile.management'
             )
         );
-
-        if (!$this->isInAccessibleGroup() || $this->user->userID == WCF::getUser()->userID) {
-            return;
-        }
     }
 }

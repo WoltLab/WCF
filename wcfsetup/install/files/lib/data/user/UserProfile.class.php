@@ -10,6 +10,7 @@ use wcf\data\trophy\TrophyCache;
 use wcf\data\user\avatar\AvatarDecorator;
 use wcf\data\user\avatar\DefaultAvatar;
 use wcf\data\user\avatar\IUserAvatar;
+use wcf\data\user\avatar\StaticAvatar;
 use wcf\data\user\cover\photo\DefaultUserCoverPhoto;
 use wcf\data\user\cover\photo\IUserCoverPhoto;
 use wcf\data\user\cover\photo\UserCoverPhoto;
@@ -28,6 +29,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\ImplementationException;
 use wcf\system\user\signature\SignatureCache;
 use wcf\system\user\storage\UserStorageHandler;
+use wcf\system\user\UserProfileHandler;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 use wcf\util\StringUtil;
@@ -305,6 +307,12 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      */
     public function isFollowing($userID)
     {
+        if ($userID === WCF::getUser()->userID) {
+            // This code block is intended to avoid unnecessary queries,
+            // as only the user storage for the active user needs to be fetched.
+            return UserProfileHandler::getInstance()->getUserProfile()->isFollower($this->userID);
+        }
+
         return \in_array($userID, $this->getFollowingUsers());
     }
 
@@ -353,19 +361,8 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
             $avatar = null;
             if (!$this->disableAvatar) {
                 if ($this->canSeeAvatar()) {
-                    if ($this->avatarFileID !== null) {
-                        $data = UserStorageHandler::getInstance()->getField('avatar', $this->userID);
-                        if ($data === null) {
-                            $avatar = FileRuntimeCache::getInstance()->getObject($this->avatarFileID);
-
-                            UserStorageHandler::getInstance()->update(
-                                $this->userID,
-                                'avatar',
-                                \serialize($avatar)
-                            );
-                        } else {
-                            $avatar = \unserialize($data);
-                        }
+                    if ($this->avatarPathname !== null) {
+                        $avatar = new StaticAvatar($this->avatarPathname);
                     } else {
                         $parameters = ['avatar' => null];
                         EventHandler::getInstance()->fireAction($this, 'getAvatar', $parameters);

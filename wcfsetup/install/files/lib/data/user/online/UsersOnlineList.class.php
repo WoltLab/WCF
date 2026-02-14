@@ -5,7 +5,6 @@ namespace wcf\data\user\online;
 use wcf\data\option\OptionAction;
 use wcf\data\session\SessionList;
 use wcf\data\user\group\UserGroup;
-use wcf\data\user\TUserAvatarObjectList;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\system\event\EventHandler;
@@ -24,8 +23,6 @@ use wcf\util\StringUtil;
  */
 class UsersOnlineList extends SessionList
 {
-    use TUserAvatarObjectList;
-
     /**
      * @inheritDoc
      */
@@ -91,8 +88,6 @@ class UsersOnlineList extends SessionList
         }
         $this->objectIDs = $this->indexToObject;
         $this->rewind();
-
-        $this->cacheAvatarFiles();
     }
 
     /**

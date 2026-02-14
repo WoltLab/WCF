@@ -21,4 +21,12 @@ class CommentRuntimeCache extends AbstractRuntimeCache
      * @inheritDoc
      */
     protected $listClassName = CommentList::class;
+
+    /**
+     * @since 6.2
+     */
+    public function cacheComment(Comment $comment): void
+    {
+        $this->objects[$comment->commentID] = $comment;
+    }
 }

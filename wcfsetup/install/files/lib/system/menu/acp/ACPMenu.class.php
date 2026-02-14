@@ -57,13 +57,13 @@ class ACPMenu extends TreeMenu
             return;
         }
 
-        $this->loadLegacyMenuItems();
-
         $event = new ItemCollecting();
         EventHandler::getInstance()->fire($event);
         foreach ($event->getItems() as $item) {
             $this->menuItems[$item->parentMenuItem][] = $item;
         }
+
+        $this->loadLegacyMenuItems();
     }
 
     /**

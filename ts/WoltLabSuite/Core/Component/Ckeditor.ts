@@ -27,8 +27,9 @@ import { element as scrollToElement } from "../Ui/Scroll";
 import Devtools from "../Devtools";
 import { setupSubmitShortcut } from "./Ckeditor/Keyboard";
 import { setup as setupLayer } from "./Ckeditor/Layer";
+import { setup as setupBalloonPanel } from "./Ckeditor/BalloonPanel";
 import { browser, touch } from "../Environment";
-import { WoltlabSmileyItem } from "@woltlab/editor/plugins/ckeditor5-woltlab-smiley";
+import type { WoltlabSmileyItem } from "@woltlab/editor/plugins/ckeditor5-woltlab-smiley";
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
@@ -170,10 +171,10 @@ class Ckeditor {
 }
 
 function* findModelForRemoval(
-  element: CKEditor5.Engine.Element,
+  element: CKEditor5.Engine.ModelElement,
   model: string,
   attributes: Record<string, string | number | boolean>,
-): Generator<CKEditor5.Engine.Element> {
+): Generator<CKEditor5.Engine.ModelElement> {
   if (element.is("element", model)) {
     const isMatch = Object.entries(attributes).every(([key, value]) => {
       if (!element.hasAttribute(key)) {
@@ -288,6 +289,7 @@ export async function setupCkeditor(
   }
 
   setupLayer();
+  setupBalloonPanel();
 
   const { create: createEditor, CKEditor5 } = await import("@woltlab/editor");
 

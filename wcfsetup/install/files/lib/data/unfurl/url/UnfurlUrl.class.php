@@ -22,18 +22,18 @@ use wcf\util\Url;
  * @property-read string $url
  * @property-read string $urlHash
  * @property-read string $title
- * @property-read string $description
+ * @property-read ?string $description
  * @property-read string $imageHash
  * @property-read string $imageUrl
- * @property-read string $imageUrlHash
- * @property-read string $imageExtension
+ * @property-read ?string $imageUrlHash
+ * @property-read ?string $imageExtension
  * @property-read int $width
  * @property-read int $height
  * @property-read int $lastFetch
- * @property-read int $imageID
+ * @property-read ?int $imageID
  * @property-read int $isStored
  * @property-read string $status
- * @property-read int|null $fileID
+ * @property-read ?int $fileID
  */
 class UnfurlUrl extends DatabaseObject
 {

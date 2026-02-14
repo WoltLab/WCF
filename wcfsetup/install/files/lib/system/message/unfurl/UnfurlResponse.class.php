@@ -229,8 +229,15 @@ final class UnfurlResponse
     public function getTitle(): ?string
     {
         if (!empty($this->body)) {
-            // og:title
+            // property=og:title
             $list = $this->domXPath->query("//meta[@property='og:title']");
+            foreach ($list as $node) {
+                /** @var \DOMElement $node */
+                return StringUtil::trim($node->getAttribute("content"));
+            }
+
+            // name=og:title
+            $list = $this->domXPath->query("//meta[@name='og:title']");
             foreach ($list as $node) {
                 /** @var \DOMElement $node */
                 return StringUtil::trim($node->getAttribute("content"));
@@ -252,8 +259,15 @@ final class UnfurlResponse
     public function getDescription(): ?string
     {
         if (!empty($this->body)) {
-            // og:description
+            // property=og:description
             $list = $this->domXPath->query("//meta[@property='og:description']");
+            foreach ($list as $node) {
+                /** @var \DOMElement $node */
+                return StringUtil::trim($node->getAttribute("content"));
+            }
+
+            // name=og:description
+            $list = $this->domXPath->query("//meta[@name='og:description']");
             foreach ($list as $node) {
                 /** @var \DOMElement $node */
                 return StringUtil::trim($node->getAttribute("content"));
@@ -269,15 +283,29 @@ final class UnfurlResponse
     public function getImageUrl(): ?string
     {
         if (!empty($this->body)) {
-            // og:image
+            // property=og:image
             $list = $this->domXPath->query("//meta[@property='og:image']");
             foreach ($list as $node) {
                 /** @var \DOMElement $node */
                 return $node->getAttribute("content");
             }
 
-            // og:image:url
+            // property=og:image:url
             $list = $this->domXPath->query("//meta[@property='og:image:url']");
+            foreach ($list as $node) {
+                /** @var \DOMElement $node */
+                return $node->getAttribute("content");
+            }
+
+            // name=og:image
+            $list = $this->domXPath->query("//meta[@name='og:image']");
+            foreach ($list as $node) {
+                /** @var \DOMElement $node */
+                return $node->getAttribute("content");
+            }
+
+            // name=og:image:url
+            $list = $this->domXPath->query("//meta[@name='og:image:url']");
             foreach ($list as $node) {
                 /** @var \DOMElement $node */
                 return $node->getAttribute("content");

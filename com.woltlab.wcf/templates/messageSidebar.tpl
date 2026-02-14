@@ -104,7 +104,7 @@
 								<dd>{#$userProfile->activityPoints}</dd>
 							{/if}
 							
-							{if MODULE_TROPHY && MESSAGE_SIDEBAR_ENABLE_TROPHY_POINTS && $userProfile->trophyPoints && $__wcf->session->getPermission('user.profile.trophy.canSeeTrophies') && ($userProfile->isAccessible('canViewTrophies') || $userProfile->userID == $__wcf->session->userID)}
+							{if MODULE_TROPHY && MESSAGE_SIDEBAR_ENABLE_TROPHY_POINTS && $userProfile->showTrophyPoints()}
 								<dt><a href="#" class="trophyPoints jsTooltip userTrophyOverlayList" data-user-id="{$userProfile->userID}" title="{lang user=$userProfile}wcf.user.trophy.showTrophies{/lang}">{lang}wcf.user.trophy.trophyPoints{/lang}</a></dt>
 								<dd>{#$userProfile->trophyPoints}</dd>
 							{/if}

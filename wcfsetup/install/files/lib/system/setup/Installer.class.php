@@ -150,6 +150,10 @@ class Installer
                     // remove trailing slash
                     $directories[] = FileUtil::removeTrailingSlash($file['filename']);
                 } else {
+                    if (\str_ends_with($file['filename'], '.DS_Store')) {
+                        continue;
+                    }
+
                     $files[$index] = $file['filename'];
                 }
             }

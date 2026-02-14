@@ -187,7 +187,7 @@
 				<li id="outstandingModeration" data-count="{$__wcf->getModerationQueueManager()->getUnreadModerationCount()}">
 					<a
 						class="jsTooltip"
-						href="{link controller='ModerationList'}{/link}"
+						href="{link controller='ModerationList'}filters[status]=0{/link}"
 						title="{lang}wcf.moderation.moderation{/lang}"
 						role="button"
 						tabindex="0"
@@ -205,7 +205,7 @@
 									deletedContent: '{jslang}wcf.moderation.showDeletedContent{/jslang}',
 									deletedContentLink: '{link controller='DeletedContentList' encode=false}{/link}',
 									noItems: '{jslang}wcf.moderation.noMoreItems{/jslang}',
-									showAllLink: '{link controller='ModerationList' encode=false}{/link}',
+									showAllLink: '{link controller='ModerationList' encode=false}filters[status]=0{/link}',
 									showAllTitle: '{jslang}wcf.moderation.showAll{/jslang}',
 									title: '{jslang}wcf.moderation.moderation{/jslang}'
 								});

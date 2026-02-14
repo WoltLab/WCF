@@ -2,8 +2,6 @@
 
 namespace wcf\system\box\command;
 
-use wcf\data\box\Box;
-use wcf\data\condition\ConditionAction;
 use wcf\system\WCF;
 
 /**
@@ -15,6 +13,7 @@ use wcf\system\WCF;
  * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.1
+ * @deprecated  6.2 Use `\wcf\command\box\CreateBoxCondition` instead.
  */
 final class CreateBoxCondition
 {
@@ -26,47 +25,18 @@ final class CreateBoxCondition
         private readonly string $conditionDefinition,
         private readonly string $conditionObjectType,
         private readonly array $conditionData
-    ) {
-    }
+    ) {}
 
     /**
      * @throws \InvalidArgumentException
      */
     public function __invoke(): void
     {
-        $objectTypeID = $this->getObjectTypeID();
-        if (!$objectTypeID) {
-            throw new \InvalidArgumentException(
-                "Unknown box condition '{$this->conditionObjectType}' of condition definition '{$this->conditionDefinition}'"
-            );
-        }
-
-        $box = Box::getBoxByIdentifier($this->boxIdentifier);
-        if ($box === null) {
-            throw new \InvalidArgumentException("Unknown box with identifier '{$this->boxIdentifier}'");
-        }
-
-        (new ConditionAction([], 'create', [
-            'data' => [
-                'conditionData' => \serialize($this->conditionData),
-                'objectID' => $box->boxID,
-                'objectTypeID' => $objectTypeID,
-            ],
-        ]))->executeAction();
-    }
-
-    private function getObjectTypeID(): ?int
-    {
-        // do not rely on caches during package installation
-        $sql = "SELECT      objectTypeID
-                FROM        wcf1_object_type object_type
-                INNER JOIN  wcf1_object_type_definition object_type_definition
-                ON          object_type.definitionID = object_type_definition.definitionID
-                WHERE       objectType = ?
-                        AND definitionName = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([$this->conditionObjectType, $this->conditionDefinition]);
-
-        return $statement->fetchSingleColumn();
+        (new \wcf\command\box\CreateBoxCondition(
+            $this->boxIdentifier,
+            $this->conditionDefinition,
+            $this->conditionObjectType,
+            $this->conditionData
+        ))();
     }
 }

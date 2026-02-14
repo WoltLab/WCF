@@ -51,12 +51,11 @@
 	cursor: pointer;
 }
 
-.labelSelection.inlineList > li {
-	flex-basis: 30%;
-}
-
-.labelSelection > li.custom {
-	display: flex;
+.labelSelection {
+	column-gap: 10px;
+	display: grid;
+	grid-auto-flow: row;
+	grid-template-columns: repeat(3, 1fr);
 }
 
 .labelSelection__label {
@@ -71,6 +70,16 @@
 	margin-right: 7px;
 }
 
-.labelSelection > li.custom .labelSelection__span {
+.labelSelection__span {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.labelSelection__custom {
+	display: flex;
+}
+
+.labelSelection__custom .labelSelection__span {
 	flex: 1 1 auto;
 }

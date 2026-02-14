@@ -9,8 +9,6 @@ use wcf\data\user\group\assignment\UserGroupAssignmentList;
 use wcf\data\user\group\UserGroup;
 use wcf\event\gridView\admin\UserGroupAssignmentGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\SelectFilter;
-use wcf\system\gridView\filter\TextFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
@@ -19,6 +17,8 @@ use wcf\system\interaction\admin\UserGroupAssignmentInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
+use wcf\system\view\filter\SelectFilter;
+use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -44,18 +44,20 @@ final class UserGroupAssignmentGridView extends AbstractGridView
             GridViewColumn::for("title")
                 ->label("wcf.global.name")
                 ->titleColumn()
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->sortable(),
             GridViewColumn::for("groupID")
                 ->label("wcf.acp.group.assignment.userGroup")
-                ->filter(
-                    new SelectFilter(UserGroup::getSortedGroupsByType([], [
+                ->filter(new SelectFilter(
+                    UserGroup::getSortedGroupsByType([], [
                         UserGroup::EVERYONE,
                         UserGroup::GUESTS,
                         UserGroup::OWNER,
                         UserGroup::USERS,
-                    ]))
-                )
+                    ]),
+                    'groupID',
+                    'wcf.acp.group.assignment.userGroup'
+                ))
                 ->sortable()
                 ->renderer(
                     new class extends DefaultColumnRenderer {
@@ -84,7 +86,7 @@ final class UserGroupAssignmentGridView extends AbstractGridView
             )
         );
 
-        $this->setSortField("title");
+        $this->setDefaultSortField("title");
         $this->addRowLink(new GridViewRowLink(UserGroupAssignmentEditForm::class));
     }
 

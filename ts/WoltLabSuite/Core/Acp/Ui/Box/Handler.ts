@@ -155,7 +155,7 @@ class AcpUiBoxHandler {
 
     UiPageSearchHandler.open(
       this.activePageId,
-      selectedOption.textContent!.trim(),
+      selectedOption.textContent.trim(),
       (objectId) => {
         this.pageObjectId.value = objectId.toString();
         this.cache.set(this.activePageId, objectId);

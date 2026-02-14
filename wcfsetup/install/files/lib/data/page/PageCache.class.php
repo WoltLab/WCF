@@ -48,12 +48,13 @@ class PageCache extends SingletonFactory
 
     /**
      * Returns a page by page id or null.
-     *
-     * @param int $pageID page id
-     * @return  Page|null
      */
-    public function getPage($pageID)
+    public function getPage(?int $pageID): ?Page
     {
+        if ($pageID === null) {
+            return null;
+        }
+
         return $this->cache['pages'][$pageID] ?? null;
     }
 

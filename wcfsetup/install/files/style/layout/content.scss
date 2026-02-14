@@ -30,7 +30,6 @@
 	align-items: flex-start;
 	display: flex;
 	justify-content: flex-end;
-	margin-top: -10px;
 
 	.contentHeaderIcon {
 		flex: 0 0 64px;
@@ -40,13 +39,11 @@
 	.contentHeaderTitle,
 	> .contentTitle {
 		flex: 1 auto;
-		margin-top: 10px;
 	}
 
 	.contentHeaderNavigation {
 		flex: 0 0 auto;
 		margin-left: 15px;
-		margin-top: 10px;
 	}
 
 	.contentHeaderDescription {
@@ -116,6 +113,7 @@
 
 	@include screen-sm-down {
 		flex-wrap: wrap;
+		row-gap: 10px;
 
 		.contentHeaderNavigation {
 			flex-shrink: 1;
@@ -462,6 +460,7 @@ fieldset {
 	align-self: center;
 	display: flex;
 	margin-left: auto;
+	max-width: 100%;
 }
 
 .contentInteractionButtons {

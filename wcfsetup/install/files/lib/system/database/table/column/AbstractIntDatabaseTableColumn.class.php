@@ -17,7 +17,9 @@ abstract class AbstractIntDatabaseTableColumn extends AbstractDatabaseTableColum
 {
     use TAutoIncrementDatabaseTableColumn;
     use TDefaultValueDatabaseTableColumn;
-    use TLengthDatabaseTableColumn;
+    use TLengthDatabaseTableColumn {
+        length as private traitLength;
+    }
 
     /**
      * @inheritDoc
@@ -59,5 +61,14 @@ abstract class AbstractIntDatabaseTableColumn extends AbstractDatabaseTableColum
         }
 
         return $column;
+    }
+
+    /**
+     * @deprecated 6.2 Setting the length on *INT columns does not actually limit the length, its use is unnecessary and discouraged.
+     */
+    #[\Override]
+    public function length(?int $length): static
+    {
+        return $this->traitLength($length);
     }
 }

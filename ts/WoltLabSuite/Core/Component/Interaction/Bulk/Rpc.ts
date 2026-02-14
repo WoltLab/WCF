@@ -25,10 +25,11 @@ async function handleRpcInteraction(
     return;
   }
 
-  const snackbar = showProgressSnackbar(label, objectIds.length);
+  const length = objectIds.length;
+  const snackbar = showProgressSnackbar(label, length);
 
-  for (let i = 0; i < objectIds.length; i++) {
-    if (confirmationType == ConfirmationType.Delete) {
+  for (let i = 0; i < length; i++) {
+    if (confirmationType === ConfirmationType.Delete) {
       await deleteObject(endpoint.replace(/%s/, objectIds[i].toString()));
     } else {
       await postObject(
@@ -44,7 +45,7 @@ async function handleRpcInteraction(
       continue;
     }
 
-    if (confirmationType == ConfirmationType.Delete) {
+    if (confirmationType === ConfirmationType.Delete) {
       element.dispatchEvent(
         new CustomEvent("interaction:remove", {
           bubbles: true,
@@ -61,6 +62,7 @@ async function handleRpcInteraction(
 
   snackbar.markAsDone();
   container.dispatchEvent(new CustomEvent("interaction:reset-selection"));
+  container.dispatchEvent(new CustomEvent("interaction:bulk-completed"));
 }
 
 export function setup(identifier: string, container: HTMLElement): void {

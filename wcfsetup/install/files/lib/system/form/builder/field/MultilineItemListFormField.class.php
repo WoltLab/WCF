@@ -32,7 +32,7 @@ class MultilineItemListFormField extends ItemListFormField implements INullableF
     /**
      * @see TFilterableSelectionFormField::filterable()
      */
-    public function filterable(bool $filterable = true): self
+    public function filterable(bool $filterable = true): static
     {
         $this->filterable = $filterable;
 

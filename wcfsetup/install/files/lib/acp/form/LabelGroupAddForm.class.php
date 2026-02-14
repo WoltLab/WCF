@@ -129,12 +129,13 @@ class LabelGroupAddForm extends AbstractForm
         // get label object type handlers
         $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.label.objectType');
         foreach ($objectTypes as $objectType) {
-            $this->labelObjectTypes[$objectType->objectTypeID] = $objectType->getProcessor();
-            $this->labelObjectTypes[$objectType->objectTypeID]->setObjectTypeID($objectType->objectTypeID);
-        }
+            $handler = $objectType->getProcessor();
+            \assert($handler instanceof ILabelObjectTypeHandler);
 
-        foreach ($this->labelObjectTypes as $objectTypeID => $labelObjectType) {
-            $this->labelObjectTypeContainers[$objectTypeID] = $labelObjectType->getContainer();
+            $container = $handler->getContainerForObjectType($objectType);
+
+            $this->labelObjectTypes[$objectType->objectTypeID] = $handler;
+            $this->labelObjectTypeContainers[$objectType->objectTypeID] = $container;
         }
 
         parent::readData();

@@ -44,6 +44,11 @@ class MultipleSelectionFormField extends AbstractFormField implements
     protected $value = [];
 
     /**
+     * @since 6.2
+     */
+    private bool $ignoreInvalidValues = false;
+
+    /**
      * @inheritDoc
      */
     public function hasSaveValue()
@@ -130,13 +135,30 @@ class MultipleSelectionFormField extends AbstractFormField implements
             throw new InvalidFormFieldValue($this, 'array', \gettype($value));
         }
 
-        $unknownValues = \array_diff($value, \array_keys($this->getOptions()));
-        if (!empty($unknownValues)) {
-            throw new \InvalidArgumentException(
-                "Unknown values '" . \implode("', '", $unknownValues) . "' for field '{$this->getId()}'."
-            );
+        $validKeys = \array_keys($this->getOptions());
+        $unknownValues = \array_diff($value, $validKeys);
+        if ($unknownValues !== []) {
+            if ($this->ignoreInvalidValues) {
+                $value = \array_intersect($value, $validKeys);
+            } else {
+                throw new \InvalidArgumentException(
+                    "Unknown values '" . \implode("', '", $unknownValues) . "' for field '{$this->getId()}'."
+                );
+            }
         }
 
         return parent::value($value);
+    }
+
+    /**
+     * Ignores invalid values when reading them from data.
+     *
+     * @since 6.2
+     */
+    public function ignoreInvalidValues(bool $ignoreInvalidValues = true): self
+    {
+        $this->ignoreInvalidValues = $ignoreInvalidValues;
+
+        return $this;
     }
 }

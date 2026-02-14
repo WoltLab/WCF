@@ -14,9 +14,6 @@ use wcf\event\gridView\admin\ModificationLogGridViewInitialized;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\IGridViewFilter;
-use wcf\system\gridView\filter\TextFilter;
-use wcf\system\gridView\filter\TimeFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
 use wcf\system\gridView\renderer\ILinkColumnRenderer;
@@ -24,6 +21,9 @@ use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
 use wcf\system\gridView\renderer\TimeColumnRenderer;
 use wcf\system\gridView\renderer\UserLinkColumnRenderer;
 use wcf\system\log\modification\IExtendedModificationLogHandler;
+use wcf\system\view\filter\SelectFilter;
+use wcf\system\view\filter\TextFilter;
+use wcf\system\view\filter\TimeFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -55,7 +55,7 @@ final class ModificationLogGridView extends AbstractGridView
                 ->label('wcf.user.username')
                 ->sortable(true, 'modification_log.username')
                 ->renderer(new UserLinkColumnRenderer())
-                ->filter(new TextFilter('modification_log.username')),
+                ->filter(new TextFilter('userID', 'wcf.user.username', 'modification_log.username')),
             GridViewColumn::for('action')
                 ->label('wcf.acp.modificationLog.action')
                 ->titleColumn()
@@ -79,22 +79,21 @@ final class ModificationLogGridView extends AbstractGridView
                     },
                 ])
                 ->filter(
-                    new class($this->getAvailableActions()) implements IGridViewFilter {
-                        /**
-                         * @param array<string|int, string> $options
-                         */
-                        public function __construct(private readonly array $options) {}
-
+                    new class(
+                        $this->getAvailableActions(),
+                        'action',
+                        'wcf.acp.modificationLog.action'
+                    ) extends SelectFilter {
                         #[\Override]
-                        public function getFormField(string $id, string $label): AbstractFormField
+                        public function getFormField(): AbstractFormField
                         {
-                            return SelectFormField::create($id)
-                                ->label($label)
+                            return SelectFormField::create($this->id)
+                                ->label($this->languageItem)
                                 ->options($this->options, false, false);
                         }
 
                         #[\Override]
-                        public function applyFilter(DatabaseObjectList $list, string $id, string $value): void
+                        public function applyFilter(DatabaseObjectList $list, string $value): void
                         {
                             if (\is_numeric($value)) {
                                 $list->getConditionBuilder()->add(
@@ -152,11 +151,11 @@ final class ModificationLogGridView extends AbstractGridView
                 ->label('wcf.global.date')
                 ->sortable()
                 ->renderer(new TimeColumnRenderer())
-                ->filter(new TimeFilter()),
+                ->filter(TimeFilter::class),
         ]);
 
-        $this->setSortField('time');
-        $this->setSortOrder('DESC');
+        $this->setDefaultSortField('time');
+        $this->setDefaultSortOrder('DESC');
     }
 
     #[\Override]
@@ -168,7 +167,30 @@ final class ModificationLogGridView extends AbstractGridView
     #[\Override]
     protected function createObjectList(): ModificationLogList
     {
-        return new ModificationLogList();
+        $list = new ModificationLogList();
+
+        $availableObjectTypeIDs = [];
+        foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.modifiableContent') as $objectType) {
+            $processor = $objectType->getProcessor();
+            if ($processor === null) {
+                continue;
+            }
+            \assert($processor instanceof IExtendedModificationLogHandler);
+
+            if (!$processor->includeInLogList()) {
+                continue;
+            }
+
+            $availableObjectTypeIDs[] = $objectType->objectTypeID;
+        }
+
+        if ($availableObjectTypeIDs !== []) {
+            $list->getConditionBuilder()->add('objectTypeID IN (?)', [$availableObjectTypeIDs]);
+        } else {
+            $list->getConditionBuilder()->add('1 = 0');
+        }
+
+        return $list;
     }
 
     /**

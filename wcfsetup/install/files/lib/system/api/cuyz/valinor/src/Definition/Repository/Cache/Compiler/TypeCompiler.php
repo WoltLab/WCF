@@ -13,6 +13,7 @@ use CuyZ\Valinor\Type\Types\CallableType;
 use CuyZ\Valinor\Type\Types\ClassStringType;
 use CuyZ\Valinor\Type\Types\EnumType;
 use CuyZ\Valinor\Type\Types\FloatValueType;
+use CuyZ\Valinor\Type\Types\GenericType;
 use CuyZ\Valinor\Type\Types\IntegerRangeType;
 use CuyZ\Valinor\Type\Types\IntegerValueType;
 use CuyZ\Valinor\Type\Types\InterfaceType;
@@ -72,7 +73,6 @@ final class TypeCompiler
             case $type instanceof NonEmptyStringType:
             case $type instanceof NumericStringType:
             case $type instanceof UndefinedObjectType:
-            case $type instanceof CallableType:
             case $type instanceof MixedType:
             case $type instanceof ScalarConcreteType:
                 return "$class::get()";
@@ -101,33 +101,48 @@ final class TypeCompiler
                 return "new $class(" . implode(', ', $subTypes) . ')';
             case $type instanceof ArrayKeyType:
                 return match ($type->toString()) {
+                    'array-key' => "$class::default()",
                     'string' => "$class::string()",
                     'int' => "$class::integer()",
-                    default => "$class::default()",
+                    default => (function () use ($type, $class) {
+                        $types = array_map(
+                            fn (Type $subType) => $this->compile($subType),
+                            $type->types,
+                        );
+
+                        return "new $class([" . implode(', ', $types) . '])';
+                    })(),
                 };
             case $type instanceof ShapedArrayType:
-                $elements = implode(', ', array_map(
-                    fn (ShapedArrayElement $element) => $this->compileArrayShapeElement($element),
-                    $type->elements()
-                ));
+                $elements = [];
 
-                if ($type->hasUnsealedType()) {
-                    $unsealedType = $this->compile($type->unsealedType());
+                foreach ($type->elements as $key => $element) {
+                    $subkey = $this->compile($element->key());
+                    $subtype = $this->compile($element->type());
+                    $optional = var_export($element->isOptional(), true);
+                    $attributes = $this->attributesCompiler->compile($element->attributes());
 
-                    return "$class::unsealed($unsealedType, $elements)";
-                } elseif ($type->isUnsealed()) {
-                    return "$class::unsealedWithoutType($elements)";
+                    $elements[] = var_export($key, true) . ' => new ' . ShapedArrayElement::class . "($subkey, $subtype, $optional, $attributes)";
                 }
 
-                return "new $class($elements)";
+                $elements = implode(', ', $elements);
+                $isUnsealed = var_export($type->isUnsealed, true);
+                $unsealedType = $type->hasUnsealedType() ? $this->compile($type->unsealedType()) : 'null';
+
+                return "new $class([$elements], $isUnsealed, $unsealedType)";
             case $type instanceof ArrayType:
             case $type instanceof NonEmptyArrayType:
                 if ($type->toString() === 'array' || $type->toString() === 'non-empty-array') {
                     return "$class::native()";
                 }
 
-                $keyType = $this->compile($type->keyType());
                 $subType = $this->compile($type->subType());
+
+                if (str_ends_with($type->toString(), '[]')) {
+                    return "$class::simple($subType)";
+                }
+
+                $keyType = $this->compile($type->keyType());
 
                 return "new $class($keyType, $subType)";
             case $type instanceof ListType:
@@ -156,13 +171,12 @@ final class TypeCompiler
 
                 return "new $class('{$type->className()}', [$generics])";
             case $type instanceof ClassStringType:
-                if (null === $type->subType()) {
-                    return "new $class()";
-                }
+                $subTypes = implode(', ', array_map(
+                    fn (Type $subType) => $this->compile($subType),
+                    $type->subTypes(),
+                ));
 
-                $subType = $this->compile($type->subType());
-
-                return "new $class($subType)";
+                return "new $class([$subTypes])";
             case $type instanceof EnumType:
                 $enumName = var_export($type->className(), true);
                 $pattern = var_export($type->pattern(), true);
@@ -175,6 +189,19 @@ final class TypeCompiler
                 $cases = implode(', ', $cases);
 
                 return "new $class($enumName, $pattern, [$cases])";
+            case $type instanceof CallableType:
+                $returnType = $this->compile($type->returnType);
+                $parameters = implode(', ', array_map(
+                    fn (Type $subType) => $this->compile($subType),
+                    $type->parameters,
+                ));
+
+                return "new $class([$parameters], $returnType)";
+            case $type instanceof GenericType:
+                $symbol = var_export($type->symbol, true);
+                $innerType = $this->compile($type->innerType);
+
+                return "new $class($symbol, $innerType)";
             case $type instanceof UnresolvableType:
                 $raw = var_export($type->toString(), true);
                 $message = var_export($type->message(), true);
@@ -183,16 +210,5 @@ final class TypeCompiler
             default:
                 throw new TypeCannotBeCompiled($type);
         }
-    }
-
-    private function compileArrayShapeElement(ShapedArrayElement $element): string
-    {
-        $class = ShapedArrayElement::class;
-        $key = $this->compile($element->key());
-        $type = $this->compile($element->type());
-        $optional = var_export($element->isOptional(), true);
-        $attributes = $this->attributesCompiler->compile($element->attributes());
-
-        return "new $class($key, $type, $optional, $attributes)";
     }
 }

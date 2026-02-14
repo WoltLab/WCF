@@ -7,7 +7,7 @@
 				</h3>
 				
 				<div class="sidebarListItem__description">
-					{lang}wcf.paidSubscription.formattedCost{/lang}
+					{unsafe:$subscription->getFormattedCost()}
 				</div>
 			</div>
 

@@ -21,4 +21,12 @@ class CommentResponseRuntimeCache extends AbstractRuntimeCache
      * @inheritDoc
      */
     protected $listClassName = CommentResponseList::class;
+
+    /**
+     * @since 6.2
+     */
+    public function cacheResponse(CommentResponse $response): void
+    {
+        $this->objects[$response->responseID] = $response;
+    }
 }

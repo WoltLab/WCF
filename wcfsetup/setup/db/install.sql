@@ -608,7 +608,7 @@ CREATE TABLE wcf1_file (
 	height INT,
 	fileHashWebp CHAR(64),
 	uploadTime INT,
-	exifData MEDIUMTEXT
+	exifData MEDIUMBLOB
 );
 
 DROP TABLE IF EXISTS wcf1_file_temporary;
@@ -621,7 +621,7 @@ CREATE TABLE wcf1_file_temporary (
 	objectTypeID INT,
 	context TEXT,
 	chunks VARBINARY(255) NOT NULL,
-	exifData MEDIUMTEXT
+	exifData MEDIUMBLOB
 );
 
 DROP TABLE IF EXISTS wcf1_file_thumbnail;
@@ -835,7 +835,8 @@ CREATE TABLE wcf1_menu_item (
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	originIsSystem TINYINT(1) NOT NULL DEFAULT 0,
-	packageID INT(10) NOT NULL
+	packageID INT(10) NOT NULL,
+	urlParameters VARCHAR(255) NOT NULL DEFAULT ''
 );
 
 DROP TABLE IF EXISTS wcf1_message_embedded_object;
@@ -1560,6 +1561,7 @@ CREATE TABLE wcf1_user (
 	registrationIpAddress VARCHAR(39) NOT NULL DEFAULT '',
 	avatarID INT(10),
 	avatarFileID INT(10) DEFAULT NULL,
+	avatarPathname VARCHAR(255) DEFAULT NULL,
 	disableAvatar TINYINT(1) NOT NULL DEFAULT 0,
 	disableAvatarReason TEXT,
 	disableAvatarExpires INT(10) NOT NULL DEFAULT 0,
@@ -1569,7 +1571,6 @@ CREATE TABLE wcf1_user (
 	disableSignatureReason TEXT,
 	disableSignatureExpires INT(10) NOT NULL DEFAULT 0,
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
-	profileHits INT(10) NOT NULL DEFAULT 0,
 	rankID INT(10),
 	userTitle VARCHAR(255) NOT NULL DEFAULT '',
 	userOnlineGroupID INT(10),

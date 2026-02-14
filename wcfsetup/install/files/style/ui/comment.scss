@@ -108,10 +108,11 @@
 
 	.commentAdd__placeholder {
 		align-items: center;
-		background-color: var(--wcfSidebarBackground);
+		background-color: var(--wcfInputBackground);
+		border: 1px solid var(--wcfInputBorder);
 		border-radius: var(--wcfBorderRadius);
 		column-gap: 10px;
-		color: var(--wcfSidebarText);
+		color: var(--wcfInputText);
 		display: flex;
 		padding: 10px 20px;
 		width: 100%;
@@ -124,8 +125,10 @@
 	}
 }
 
-html[data-color-scheme="dark"] .commentAdd__content--collapsed .commentAdd__placeholder {
-	border: 1px solid var(--wcfSidebarBorder);
+@media (hover: hover) {
+	.commentAdd__content--collapsed .commentAdd__placeholder:hover {
+		border-color: var(--wcfInputBorderActive);
+	}
 }
 
 .commentAdd__content--loading {

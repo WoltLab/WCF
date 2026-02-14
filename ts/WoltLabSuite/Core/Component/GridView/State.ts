@@ -34,6 +34,8 @@ export class State extends EventTarget {
     baseUrl: string,
     sortField: string,
     sortOrder: string,
+    defaultSortField: string,
+    defaultSortOrder: string,
   ) {
     super();
 
@@ -52,7 +54,7 @@ export class State extends EventTarget {
       this.#switchPage(1, StateChangeCause.Change);
     });
 
-    this.#sorting = new Sorting(table, sortField, sortOrder);
+    this.#sorting = new Sorting(table, sortField, sortOrder, defaultSortField, defaultSortOrder);
     this.#sorting.addEventListener("grid-view:change", () => {
       this.#switchPage(1, StateChangeCause.Change);
     });
@@ -104,6 +106,8 @@ export class State extends EventTarget {
     if (cause === StateChangeCause.Change || cause === StateChangeCause.Pagination) {
       this.#updateQueryString();
     }
+
+    this.#updateGridViewFooter();
   }
 
   #switchPage(pageNo: number, source: StateChangeCause): void {
@@ -184,7 +188,13 @@ export class State extends EventTarget {
   }
 
   #updateGridViewFooter(): void {
-    this.#gridViewFooter.hidden = this.#pagination.count < 2 && !this.#selection.selectionBarVisible();
+    const hasPagination = this.#pagination.count > 1;
+    this.#gridViewFooter.hidden = !hasPagination && !this.#selection.selectionBarVisible();
+
+    const paginationContainer = this.#pagination.closest<HTMLElement>(".gridView__pagination");
+    if (paginationContainer !== null) {
+      paginationContainer.hidden = !hasPagination;
+    }
   }
 
   setBulkInteractionContextMenuOptions(options: string): void {
@@ -193,6 +203,10 @@ export class State extends EventTarget {
 
   resetSelection(): void {
     this.#selection.resetSelection();
+  }
+
+  removeSelection(objectId: number): void {
+    this.#selection.removeSelection(objectId);
   }
 
   refreshSelection(): void {

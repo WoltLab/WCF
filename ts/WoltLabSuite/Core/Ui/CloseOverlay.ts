@@ -16,6 +16,7 @@ export enum Origin {
   Search = "search",
 }
 
+// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 type Callback = (origin?: string | Origin, identifier?: string) => void;
 
 let hasGlobalListener = false;
@@ -36,8 +37,11 @@ export function remove(identifier: string): void {
 }
 
 export function execute(): void;
+// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 export function execute(origin: string | Origin): void;
+// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 export function execute(origin: string | Origin, identifier: string): void;
+// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 export function execute(origin?: string | Origin, identifier?: string): void {
   _callbackList.forEach(null, (callback) => callback(origin, identifier));
 }

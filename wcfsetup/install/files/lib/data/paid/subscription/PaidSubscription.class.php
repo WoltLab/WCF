@@ -133,4 +133,26 @@ class PaidSubscription extends DatabaseObject implements ITitledObject
 
         return $list->countObjects() ? true : false;
     }
+
+    /**
+     * @since 6.2
+     */
+    public function getFormattedCost(): string
+    {
+        $type = match (true) {
+            $this->subscriptionLength === 0 => 'perpetual',
+            $this->isRecurring === 1 => 'recurring',
+            default => 'nonrecurring',
+        };
+
+        return WCF::getLanguage()->getDynamicVariable(
+            "wcf.paidSubscription.formattedCost.{$type}",
+            [
+                'currency' => $this->currency,
+                'cost' => $this->cost,
+                'unit' => $this->subscriptionLengthUnit,
+                'length' => $this->subscriptionLength,
+            ],
+        );
+    }
 }

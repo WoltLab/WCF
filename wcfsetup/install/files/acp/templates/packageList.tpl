@@ -8,7 +8,7 @@
 			'wcf.acp.package.uninstallation.title': '{jslang}wcf.acp.package.uninstallation.title{/jslang}',
 		});
 		
-		{if $__wcf->session->getPermission('admin.configuration.package.canUninstallPackage')}
+		{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
 			new WCF.ACP.Package.Uninstallation($('.jsPackageRow .jsUninstallButton'));
 		{/if}
 		
@@ -20,7 +20,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.package.list{/lang} <span class="badge badgeInverse">{#$gridView->countRows()}</span></h1>
+		<h1 class="contentTitle">{lang}wcf.acp.package.list{/lang}</h1>
 	</div>
 	
 	{hascontent}
@@ -51,7 +51,7 @@
 	{/hascontent}
 </header>
 
-{if !(80100 <= PHP_VERSION_ID && PHP_VERSION_ID <= 80399)}
+{if !(80100 <= PHP_VERSION_ID && PHP_VERSION_ID <= 80499)}
 	<woltlab-core-notice type="error">{lang}wcf.global.incompatiblePhpVersion{/lang}</woltlab-core-notice>
 {/if}
 {foreach from=$taintedApplications item=$taintedApplication}

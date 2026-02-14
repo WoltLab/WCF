@@ -2,57 +2,43 @@
 
 namespace wcf\system\label\object\type;
 
-use wcf\data\article\category\ArticleCategoryNode;
 use wcf\data\article\category\ArticleCategoryNodeTree;
-use wcf\data\category\CategoryNode;
+use wcf\data\object\type\ObjectType;
 use wcf\system\cache\builder\ArticleCategoryLabelCacheBuilder;
 
 /**
  * Object type handler for article categories.
  *
- * @author  Marcel Werk
+ * @author      Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       3.1
  */
 class ArticleCategoryLabelObjectTypeHandler extends AbstractLabelObjectTypeHandler
 {
-    /**
-     * category list
-     * @var \RecursiveIteratorIterator<CategoryNode>
-     */
-    public $categoryList;
-
-    /**
-     * @inheritDoc
-     */
-    protected function init()
+    #[\Override]
+    public function getContainerForObjectType(ObjectType $objectType): LabelObjectTypeContainer
     {
+        $container = new LabelObjectTypeContainer(
+            $objectType->objectTypeID,
+        );
         $categoryTree = new ArticleCategoryNodeTree('com.woltlab.wcf.article.category');
-        $this->categoryList = $categoryTree->getIterator();
-    }
+        $categoryList = $categoryTree->getIterator();
 
-    /**
-     * @inheritDoc
-     */
-    public function setObjectTypeID($objectTypeID)
-    {
-        parent::setObjectTypeID($objectTypeID);
-
-        $this->container = new LabelObjectTypeContainer($this->objectTypeID);
-        /** @var ArticleCategoryNode $category */
-        foreach ($this->categoryList as $category) {
-            $this->container->add(new LabelObjectType(
-                $category->getTitle(),
-                $category->categoryID,
-                $category->getDepth() - 1
-            ));
+        foreach ($categoryList as $category) {
+            $container->add(
+                new LabelObjectType(
+                    $category->getTitle(),
+                    $category->categoryID,
+                    $category->getDepth() - 1
+                )
+            );
         }
+
+        return $container;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         ArticleCategoryLabelCacheBuilder::getInstance()->reset();

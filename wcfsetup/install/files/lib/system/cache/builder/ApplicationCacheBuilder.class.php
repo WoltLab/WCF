@@ -7,13 +7,13 @@ use wcf\system\cache\eager\ApplicationCache;
 /**
  * Caches applications.
  *
- * @author  Alexander Ebert
+ * @author      Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @deprecated 6.3 Use `ApplicationCache` instead.
  */
-class ApplicationCacheBuilder extends AbstractLegacyCacheBuilder
+final class ApplicationCacheBuilder extends AbstractLegacyCacheBuilder
 {
     #[\Override]
     protected function rebuild(array $parameters): array
@@ -23,6 +23,8 @@ class ApplicationCacheBuilder extends AbstractLegacyCacheBuilder
         return [
             'application' => $cache->applications,
             'abbreviation' => $cache->abbreviations,
+            'rootApplicationID' => $cache->rootApplicationID,
+            'sortedPaths' => $cache->sortedPaths,
         ];
     }
 

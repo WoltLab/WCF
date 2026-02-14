@@ -36,7 +36,7 @@ class UserMenuDataModerationQueue implements UserMenuProvider {
 
     const badge = button.querySelector<HTMLElement>(".badge");
     if (badge) {
-      const counter = parseInt(badge.textContent!.trim());
+      const counter = parseInt(badge.textContent.trim());
       if (counter) {
         this.counter = counter;
       }

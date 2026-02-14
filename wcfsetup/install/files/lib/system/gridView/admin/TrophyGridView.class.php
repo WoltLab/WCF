@@ -8,9 +8,6 @@ use wcf\data\trophy\I18nTrophyList;
 use wcf\data\trophy\Trophy;
 use wcf\event\gridView\admin\TrophyGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\I18nTextFilter;
-use wcf\system\gridView\filter\NumericFilter;
-use wcf\system\gridView\filter\ObjectIdFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\AbstractColumnRenderer;
@@ -22,6 +19,8 @@ use wcf\system\interaction\bulk\admin\TrophyBulkInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
+use wcf\system\view\filter\I18nTextFilter;
+use wcf\system\view\filter\IntegerFilter;
 use wcf\system\WCF;
 
 /**
@@ -42,7 +41,6 @@ final class TrophyGridView extends AbstractGridView
             GridViewColumn::for("trophyID")
                 ->label("wcf.global.objectID")
                 ->renderer(new ObjectIdColumnRenderer())
-                ->filter(new ObjectIdFilter())
                 ->sortable(),
             GridViewColumn::for("image")
                 ->label("wcf.acp.trophy")
@@ -67,12 +65,12 @@ final class TrophyGridView extends AbstractGridView
                 ->titleColumn()
                 ->label("wcf.global.title")
                 ->renderer(new PhraseColumnRenderer())
-                ->filter(new I18nTextFilter())
+                ->filter(I18nTextFilter::class)
                 ->sortable(sortByDatabaseColumn: "titleI18n"),
             GridViewColumn::for("showOrder")
                 ->label("wcf.global.showOrder")
                 ->renderer(new NumberColumnRenderer())
-                ->filter(new NumericFilter())
+                ->filter(IntegerFilter::class)
                 ->sortable(),
         ]);
 
@@ -88,7 +86,7 @@ final class TrophyGridView extends AbstractGridView
             new ToggleInteraction("enable", "core/trophies/%s/enable", "core/trophies/%s/disable")
         );
 
-        $this->setSortField("showOrder");
+        $this->setDefaultSortField("showOrder");
         $this->addRowLink(new GridViewRowLink(TrophyEditForm::class));
     }
 

@@ -130,7 +130,7 @@ class WysiwygFormContainer extends FormContainer
      * is `true` if smilies are supported for this container, otherwise `false`
      * @var bool
      */
-    protected $supportSmilies = \MODULE_SMILEY;
+    protected $supportSmilies = !!\MODULE_SMILEY;
 
     /**
      * actual wysiwyg form field
@@ -194,10 +194,9 @@ class WysiwygFormContainer extends FormContainer
      * @param null|string $objectType name of attachment object type or `null` to unset previous attachment data
      * @param int $parentObjectID id of the parent of the object the attachments belong to or `0` if no such parent exists
      * @param ?int $objectID id of the object the attachments belong to
-     * @return  WysiwygFormContainer            this form container
      * @throws  \BadMethodCallException         if the attachment form field has already been initialized
      */
-    public function attachmentData(?string $objectType = null, int $parentObjectID = 0, ?int $objectID = null): self
+    public function attachmentData(?string $objectType = null, int $parentObjectID = 0, ?int $objectID = null): static
     {
         if ($this->attachmentField !== null) {
             throw new \BadMethodCallException("The attachment form field '{$this->getId()}' has already been initialized. Use the atatchment form field directly to manipulate attachment data.");

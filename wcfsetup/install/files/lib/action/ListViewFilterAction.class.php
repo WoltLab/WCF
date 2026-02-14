@@ -12,6 +12,8 @@ use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\container\RowFormContainer;
 use wcf\system\form\builder\Psr15DialogForm;
 use wcf\system\listView\AbstractListView;
 use wcf\system\WCF;
@@ -64,13 +66,16 @@ final class ListViewFilterAction implements RequestHandlerInterface
             if ($response !== null) {
                 return $response;
             }
+
             $rawData = $form->getData();
             $data = $rawData['data'];
-            // This code is required to bypass the strange behavior of the LabelFormField.
-            if (!empty($rawData['labelIDs'])) {
-                foreach ($rawData['labelIDs'] as $groupID => $value) {
-                    $data['labelIDs' . $groupID] = $value;
+
+            foreach ($view->getAvailableFilters() as $filter) {
+                if (!isset($rawData[$filter->getFormDataId()])) {
+                    continue;
                 }
+
+                $data[$filter->getId()] = $filter->serializeValue($rawData[$filter->getFormDataId()]);
             }
 
             foreach ($data as $key => $value) {
@@ -98,14 +103,20 @@ final class ListViewFilterAction implements RequestHandlerInterface
             WCF::getLanguage()->get('wcf.global.filter')
         );
 
+        $container = FormContainer::create('container');
+        $container->addClass('listView__filter__list');
+        $form->appendChild($container);
+
         foreach ($listView->getAvailableFilters() as $filter) {
             $formField = $filter->getFormField();
 
             if (isset($values[$filter->getID()])) {
-                $formField->value($values[$filter->getID()]);
+                $value = $filter->unserializeValue($values[$filter->getID()]);
+                $formField->value($value);
             }
 
-            $form->appendChild($formField);
+            $formField->addClass('listView__filter__item');
+            $container->appendChild($formField);
         }
 
         $form->markRequiredFields(false);

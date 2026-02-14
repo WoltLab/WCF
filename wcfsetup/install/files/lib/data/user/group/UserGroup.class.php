@@ -18,22 +18,15 @@ use wcf\util\ArrayUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $groupID        unique id of the user group
- * @property-read   string $groupName      name of the user group or name of language
- *                item which contains the name
- * @property-read   string $groupDescription   description of the user group or name of
- *                language item which contains the description
- * @property-read   int $groupType      identifier of the type of user group
- * @property-read   int $priority       priority of the user group used to determine
- *                member's user rank and online marking
- * @property-read   string $userOnlineMarking  HTML code used to print the formatted name of
- *                a user group member
- * @property-read   int $showOnTeamPage     is `1` if the user group and its members
- *                should be shown on the team page, otherwise `0`
- * @property-read       int $allowMention           is `1` if the user group can be mentioned in messages,
- *                      otherwise `0`
- * @property-read       int $requireMultifactor           is `1` if group members need to set up multi-factor
- *                      authentcation, otherwise `0`
+ * @property-read   int     $groupID            unique id of the user group
+ * @property-read   string  $groupName          name of the user group or name of language item which contains the name
+ * @property-read   string  $groupDescription   description of the user group or name of language item which contains the description
+ * @property-read   int     $groupType          identifier of the type of user group
+ * @property-read   int     $priority           priority of the user group used to determine member's user rank and online marking
+ * @property-read   string  $userOnlineMarking  HTML code used to print the formatted name of a user group member
+ * @property-read   0|1     $showOnTeamPage     is `1` if the user group and its members should be shown on the team page, otherwise `0`
+ * @property-read   0|1     $allowMention       is `1` if the user group can be mentioned in messages, otherwise `0`
+ * @property-read   0|1     $requireMultifactor is `1` if group members need to set up multi-factor authentcation, otherwise `0`
  */
 class UserGroup extends DatabaseObject implements ITitledObject
 {
@@ -608,7 +601,6 @@ class UserGroup extends DatabaseObject implements ITitledObject
             'admin.configuration.canEditOption',
             'admin.configuration.canManageApplication',
             'admin.configuration.package.canInstallPackage',
-            'admin.configuration.package.canUninstallPackage',
             'admin.configuration.package.canUpdatePackage',
             'admin.general.canUseAcp',
             'admin.general.canViewPageDuringOfflineMode',

@@ -2,6 +2,8 @@
 
 namespace wcf\system\form\option;
 
+use wcf\system\database\table\column\AbstractDatabaseTableColumn;
+use wcf\system\database\table\column\TinyintDatabaseTableColumn;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\RatingFormField;
 use wcf\system\form\option\formatter\IFormOptionFormatter;
@@ -26,12 +28,46 @@ class RatingFormOption extends AbstractFormOption
     #[\Override]
     public function getFormField(string $id, array $configuration = []): AbstractFormField
     {
-        return RatingFormField::create($id);
+        return RatingFormField::create($id)
+            ->nullable(empty($configuration['required']));
+    }
+
+    #[\Override]
+    public function getFilterFormField(string $id, array $configuration = []): AbstractFormField
+    {
+        return RatingFormField::create($id)
+            ->nullable();
     }
 
     #[\Override]
     public function getFormatter(): IFormOptionFormatter
     {
         return new RatingFormatter();
+    }
+
+    #[\Override]
+    public function getDatabaseTableColumn(string $name): AbstractDatabaseTableColumn
+    {
+        return TinyintDatabaseTableColumn::create($name);
+    }
+
+    #[\Override]
+    public function serializeValue(mixed $value): string
+    {
+        if ($value === null) {
+            return '0';
+        }
+
+        return parent::serializeValue($value);
+    }
+
+    #[\Override]
+    public function unserializeValue(string $value): mixed
+    {
+        if ($value === '0') {
+            return null;
+        }
+
+        return parent::unserializeValue($value);
     }
 }

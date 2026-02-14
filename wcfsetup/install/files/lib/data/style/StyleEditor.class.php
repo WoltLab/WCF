@@ -785,7 +785,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                                 switch ($imageData[2]) {
                                     case \IMAGETYPE_PNG:
                                     case \IMAGETYPE_JPEG:
-                                    case \IMAGETYPE_GIF:
+                                    case \IMAGETYPE_WEBP:
                                         $style->update([$type => 'style-' . $style->styleID . '/stylePreview' . ($type === 'image2x' ? '@2x' : '') . '.' . $fileExtension]);
                                 }
                             }

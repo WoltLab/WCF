@@ -3,6 +3,7 @@
 namespace wcf\system\image\cover\photo;
 
 use wcf\data\file\File;
+use wcf\system\file\processor\ImageData;
 
 /**
  * Represents a cover photo that is based on a file upload.
@@ -80,5 +81,11 @@ final class FileCoverPhoto implements ICoverPhoto
         }
 
         return $this->file->mimeType;
+    }
+
+    #[\Override]
+    public function getImageData(?int $minWidth = null, ?int $minHeight = null): ?ImageData
+    {
+        return $this->file->getImageData($minWidth, $minHeight);
     }
 }

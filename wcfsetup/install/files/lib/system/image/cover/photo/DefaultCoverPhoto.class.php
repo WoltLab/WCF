@@ -2,6 +2,7 @@
 
 namespace wcf\system\image\cover\photo;
 
+use wcf\system\file\processor\ImageData;
 use wcf\system\style\StyleHandler;
 use wcf\util\FileUtil;
 
@@ -80,5 +81,11 @@ final class DefaultCoverPhoto implements ICoverPhoto
         }
 
         return self::$defaultCoverPhoto;
+    }
+
+    #[\Override]
+    public function getImageData(?int $minWidth = null, ?int $minHeight = null): ?ImageData
+    {
+        return null;
     }
 }

@@ -2,7 +2,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.notice.list{/lang} <span class="badge badgeInverse">{#$gridView->countRows()}</span></h1>
+		<h1 class="contentTitle">{lang}wcf.acp.notice.list{/lang}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">
@@ -24,16 +24,16 @@
 </div>
 
 {if $gridView->countRows() > 1}
-<script data-relocate="true">
-	require(["WoltLabSuite/Core/Component/ChangeShowOrder"], ({ setup }) => {
-		{jsphrase name='wcf.global.changeShowOrder'}
+	<script data-relocate="true">
+		require(["WoltLabSuite/Core/Component/ChangeShowOrder"], ({ setup }) => {
+			{jsphrase name='wcf.global.changeShowOrder'}
 
-		setup(
-			document.querySelector('.jsChangeShowOrder'),
-			'core/notices/show-order',
-		);
-	});
-</script>
+			setup(
+				document.querySelector('.jsChangeShowOrder'),
+				'core/notices/show-order',
+			);
+		});
+	</script>
 {/if}
 
 {include file='footer'}

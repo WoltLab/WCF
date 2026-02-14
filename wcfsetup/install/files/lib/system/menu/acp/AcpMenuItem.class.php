@@ -22,16 +22,20 @@ final class AcpMenuItem implements ITreeMenuItem
         public readonly string $parentMenuItem = '',
         public readonly string $link = '',
         public readonly ?FontAwesomeIcon $icon = null
-    ) {
-    }
+    ) {}
 
-    public function getLink()
+    #[\Override]
+    public function getLink(): string
     {
         return $this->link;
     }
 
-    public function getIcon(): ?FontAwesomeIcon
+    public function getIcon(): FontAwesomeIcon
     {
+        if ($this->icon === null) {
+            return FontAwesomeIcon::fromString('question;true');
+        }
+
         return $this->icon;
     }
 

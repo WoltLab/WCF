@@ -2,11 +2,7 @@
 
 namespace wcf\system\user\command;
 
-use wcf\data\user\follow\UserFollow;
-use wcf\data\user\follow\UserFollowEditor;
 use wcf\data\user\User;
-use wcf\system\user\activity\event\UserActivityEventHandler;
-use wcf\system\user\storage\UserStorageHandler;
 
 /**
  * Saves that a user is unfollowing another user.
@@ -15,6 +11,7 @@ use wcf\system\user\storage\UserStorageHandler;
  * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.1
+ * @deprecated  6.2 Use `\wcf\command\user\Unfollow` instead.
  */
 final class Unfollow
 {
@@ -25,29 +22,9 @@ final class Unfollow
 
     public function __invoke(): void
     {
-        $follow = UserFollow::getFollow($this->user->userID, $this->target->userID);
-
-        if ($follow->followID) {
-            $followEditor = new UserFollowEditor($follow);
-            $followEditor->delete();
-
-            $this->removeActivityEvent();
-        }
-
-        $this->resetUserStorage();
-    }
-
-    private function removeActivityEvent(): void
-    {
-        UserActivityEventHandler::getInstance()->removeEvent(
-            'com.woltlab.wcf.user.recentActivityEvent.follow',
-            $this->target->userID
-        );
-    }
-
-    private function resetUserStorage(): void
-    {
-        UserStorageHandler::getInstance()->reset([$this->target->userID], 'followerUserIDs');
-        UserStorageHandler::getInstance()->reset([$this->user->userID], 'followingUserIDs');
+        (new \wcf\command\user\Unfollow(
+            $this->user,
+            $this->target
+        ))();
     }
 }

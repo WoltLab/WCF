@@ -19,7 +19,7 @@ class URLOptionType extends TextOptionType
     protected function getContent(Option $option, $newValue)
     {
         if ($newValue && !\preg_match('~^https?://~i', $newValue)) {
-            $newValue = 'http://' . $newValue;
+            $newValue = 'https://' . $newValue;
         }
 
         return parent::getContent($option, $newValue);

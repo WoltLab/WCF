@@ -108,12 +108,18 @@
 .recentActivityListItem__image {
 	grid-area: image;
 	align-self: center;
+
+	@include screen-sm-down {
+		text-align: center;
+		margin-top: 5px;
+	}
 }
 
 .recentActivityListItem__image img {
 	border-radius: var(--wcfBorderRadius);
+	max-height: 200px;
 	max-width: 300px;
-	height: auto;
+	object-fit: cover;
 
 	@include screen-sm-down {
 		max-width: 100%;
@@ -133,7 +139,7 @@
 	&:focus {
 		color: inherit;
 		text-decoration: underline;
-		text-underline-offset: 0.2em;
+		text-underline-offset: 3px;
 	}
 }
 

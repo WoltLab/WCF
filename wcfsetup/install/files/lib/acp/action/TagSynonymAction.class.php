@@ -15,7 +15,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\RadioButtonFormField;
 use wcf\system\form\builder\Psr15DialogForm;
-use wcf\system\tagging\command\SetSynonym;
+use wcf\command\tag\SetTagSynonym;
 use wcf\system\WCF;
 
 /**
@@ -42,21 +42,21 @@ final class TagSynonymAction implements RequestHandlerInterface
             $parameters = Helper::mapQueryParameters(
                 $request->getQueryParams(),
                 <<<'EOT'
-                array {
-                    objectIDs: array<positive-int>
-                }
-                EOT,
+                    array {
+                        ids: array<positive-int>
+                    }
+                    EOT
             );
         } catch (MappingError) {
             throw new IllegalLinkException();
         }
 
-        if (\count($parameters['objectIDs']) < 2) {
+        if (\count($parameters['ids']) < 2) {
             throw new IllegalLinkException();
         }
 
         $tagList = new TagList();
-        $tagList->setObjectIDs($parameters['objectIDs']);
+        $tagList->setObjectIDs($parameters['ids']);
         $tagList->readObjects();
 
         $form = $this->getForm($tagList->getObjects());
@@ -70,7 +70,7 @@ final class TagSynonymAction implements RequestHandlerInterface
             }
 
             $tagID = $form->getData()["data"]["tagID"];
-            (new SetSynonym(
+            (new SetTagSynonym(
                 $tagList->search($tagID),
                 $tagList->getObjects()
             ))();

@@ -17,6 +17,10 @@
 	</nav>
 </header>
 
-{unsafe:$form->getHtml()}
+{if $hasLabelGroups}
+	{unsafe:$form->getHtml()}
+{else}
+	<woltlab-core-notice type="error">{lang}wcf.acp.label.error.noGroups{/lang}</woltlab-core-notice>
+{/if}
 
 {include file='footer'}

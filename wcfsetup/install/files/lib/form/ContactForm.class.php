@@ -7,7 +7,7 @@ use wcf\data\contact\option\ContactOptionList;
 use wcf\data\contact\recipient\ContactRecipient;
 use wcf\data\contact\recipient\ContactRecipientList;
 use wcf\event\page\ContactFormSpamChecking;
-use wcf\system\contact\form\SubmitContactForm;
+use wcf\command\contact\form\SubmitContactForm;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
@@ -15,6 +15,7 @@ use wcf\system\flood\FloodControl;
 use wcf\system\form\builder\field\CaptchaFormField;
 use wcf\system\form\builder\field\EmailFormField;
 use wcf\system\form\builder\field\FileProcessorFormField;
+use wcf\system\form\builder\field\ICensorshipFormField;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\TextFormField;
@@ -51,6 +52,7 @@ class ContactForm extends AbstractFormBuilderForm
             TextFormField::create('name')
                 ->label('wcf.contact.sender')
                 ->required()
+                ->censorship()
                 ->value(WCF::getUser()->username ?: ''),
             EmailFormField::create('email')
                 ->label('wcf.user.email')
@@ -224,6 +226,10 @@ class ContactForm extends AbstractFormBuilderForm
 
             if (!empty($option->getConfiguration()['required'])) {
                 $formField->required();
+            }
+
+            if ($formField instanceof ICensorshipFormField) {
+                $formField->censorship();
             }
 
             $formFields[] = $formField;

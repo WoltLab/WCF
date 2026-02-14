@@ -2,6 +2,8 @@
 
 namespace wcf\system\label\object\type;
 
+use wcf\data\object\type\ObjectType;
+
 /**
  * Every label object type handler has to implement this interface.
  *
@@ -12,10 +14,21 @@ namespace wcf\system\label\object\type;
 interface ILabelObjectTypeHandler
 {
     /**
+     * Provides a container object that groups all objects that can be assigned
+     * a label group.
+     *
+     * Implementations must not rely on any state provided by `getObjectTypeID()`.
+     *
+     * @since 6.2
+     */
+    public function getContainerForObjectType(ObjectType $objectType): LabelObjectTypeContainer;
+
+    /**
      * Sets object type id.
      *
      * @param int $objectTypeID
      * @return void
+     * @deprecated 6.2 Use `getContainerForObjectType()` instead.
      */
     public function setObjectTypeID($objectTypeID);
 
@@ -23,6 +36,7 @@ interface ILabelObjectTypeHandler
      * Returns object type id.
      *
      * @return  int
+     * @deprecated 6.2 Use `getContainerForObjectType()` instead.
      */
     public function getObjectTypeID();
 
@@ -30,6 +44,7 @@ interface ILabelObjectTypeHandler
      * Returns a label object type container.
      *
      * @return  LabelObjectTypeContainer
+     * @deprecated 6.2 Use `getContainerForObjectType()` instead.
      */
     public function getContainer();
 

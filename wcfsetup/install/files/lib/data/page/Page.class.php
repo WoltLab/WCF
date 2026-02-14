@@ -29,7 +29,7 @@ use wcf\system\WCF;
  * @since   3.0
  *
  * @property-read   int $pageID                 unique id of the page
- * @property-read   int|null $parentPageID               id of the page's parent page or `null` if it has no parent page
+ * @property-read   ?int $parentPageID               id of the page's parent page or `null` if it has no parent page
  * @property-read   string $identifier             unique textual identifier of the page
  * @property-read   string $name                   monolingual name of the page shown in the ACP
  * @property-read   string $pageType               type of the page, default types: `text`, `html`, `tpl` `system`
@@ -37,8 +37,8 @@ use wcf\system\WCF;
  * @property-read   int $isMultilingual             is `1` if the page is available in different languages, otherwise `0`
  * @property-read   int $originIsSystem             is `1` if the page has been delivered by a package, otherwise `0` (i.e. the page has been created in the ACP)
  * @property-read   int $packageID              id of the package the which delivers the page or `1` if it has been created in the ACP
- * @property-read   int $applicationPackageID           id of the package of the application the pages belongs to
- * @property-read   int $overrideApplicationPackageID   id of the package of the application that the page virtually belongs to
+ * @property-read   ?int $applicationPackageID           id of the package of the application the pages belongs to
+ * @property-read   ?int $overrideApplicationPackageID   id of the package of the application that the page virtually belongs to
  * @property-read   string $controller             name of the page controller class
  * @property-read   string $handler                name of the page handler class for `system` pages or empty
  * @property-read   string $controllerCustomURL            custom url of the page
@@ -50,8 +50,8 @@ use wcf\system\WCF;
  * @property-read   int $allowSpidersToIndex            is `1` if the page is accessible for search spiders, otherwise `0`
  * @property-read   int $excludeFromLandingPage         is `1` if the page can never be set as landing page, otherwise `0`
  * @property-read   int $enableShareButtons             is `1` if the page should display share buttons, otherwise `0`
- * @property-read   string $permissions                comma separated list of user group permissions of which the active user needs to have at least one to access the page
- * @property-read   string $options                comma separated list of options of which at least one needs to be enabled for the page to be accessible
+ * @property-read   ?string $permissions                comma separated list of user group permissions of which the active user needs to have at least one to access the page
+ * @property-read   ?string $options                comma separated list of options of which at least one needs to be enabled for the page to be accessible
  * @property-read   int $invertPermissions                is `1` if the permissions are inverted
  */
 class Page extends DatabaseObject implements ILinkableObject, ITitledObject

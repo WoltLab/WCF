@@ -72,4 +72,22 @@ abstract class AbstractFormOption implements IFormOption
     {
         return MediumtextDatabaseTableColumn::create($name);
     }
+
+    #[\Override]
+    public function isFilterable(): bool
+    {
+        return true;
+    }
+
+    #[\Override]
+    public function serializeValue(mixed $value): string
+    {
+        return (string)$value;
+    }
+
+    #[\Override]
+    public function unserializeValue(string $value): mixed
+    {
+        return $value;
+    }
 }

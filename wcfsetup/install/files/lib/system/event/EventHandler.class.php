@@ -271,16 +271,18 @@ final class EventHandler extends SingletonFactory
         if (isset($this->psr14ListenerClasses[$eventClass])) {
             $this->psr14Listeners[$eventClass] ??= [];
 
-            foreach ($this->psr14ListenerClasses[$eventClass] as $listenerClass) {
+            foreach ($this->psr14ListenerClasses[$eventClass] as $index => $listenerClass) {
                 $object = $this->getListenerObject($listenerClass);
 
-                $this->psr14Listeners[$eventClass][] = $object;
+                $this->psr14Listeners[$eventClass][$index] = $object;
             }
+
+            \ksort($this->psr14Listeners[$eventClass], \SORT_NUMERIC);
 
             unset($this->psr14ListenerClasses[$eventClass]);
         }
 
-        return $this->psr14Listeners[$eventClass] ?? [];
+        return \array_values($this->psr14Listeners[$eventClass] ?? []);
     }
 
     /**
@@ -293,12 +295,14 @@ final class EventHandler extends SingletonFactory
      */
     public function register(string $event, string|callable $listener): void
     {
+        static $i = 0;
+
         if (\is_string($listener)) {
             $this->psr14ListenerClasses[$event] ??= [];
-            $this->psr14ListenerClasses[$event][] = $listener;
+            $this->psr14ListenerClasses[$event][$i++] = $listener;
         } else {
             $this->psr14Listeners[$event] ??= [];
-            $this->psr14Listeners[$event][] = $listener;
+            $this->psr14Listeners[$event][$i++] = $listener;
         }
     }
 

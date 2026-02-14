@@ -29,17 +29,24 @@ class LinkInteraction extends AbstractInteraction
     #[\Override]
     public function render(DatabaseObject $object): string
     {
-        $href = LinkHandler::getInstance()->getControllerLink(
-            $this->controllerClass,
-            ['object' => $object]
-        );
-
         if (\is_string($this->languageItem)) {
             $title = WCF::getLanguage()->get($this->languageItem);
         } else {
             $title = ($this->languageItem)($object);
         }
 
-        return \sprintf('<a href="%s">%s</a>', StringUtil::encodeHTML($href), $title);
+        return \sprintf(
+            '<a href="%s">%s</a>',
+            StringUtil::encodeHTML($this->getLink($object)),
+            $title
+        );
+    }
+
+    protected function getLink(DatabaseObject $object): string
+    {
+        return LinkHandler::getInstance()->getControllerLink(
+            $this->controllerClass,
+            ['object' => $object]
+        );
     }
 }

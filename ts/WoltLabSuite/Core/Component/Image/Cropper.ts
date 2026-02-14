@@ -148,7 +148,7 @@ abstract class ImageCropper {
               .saveFile(
                 { exif: this.orientation ? undefined : this.exif, image: canvas },
                 this.file.name,
-                this.file.type,
+                this.file.type === "image/png" ? "image/webp" : this.file.type,
               )
               .then((resizedFile) => {
                 resolve(resizedFile);
@@ -204,51 +204,23 @@ abstract class ImageCropper {
       const selection = event.detail as Selection;
       this.cropperCanvasRect = this.cropperCanvas!.getBoundingClientRect();
 
-      // Limit the selection to the min/max size.
-      const selectionRatio = Math.min(
-        this.cropperCanvasRect.width / this.width,
-        this.cropperCanvasRect.height / this.height,
-      );
-
-      // Round all values to integers to avoid dealing with the wonderful world
-      // of IEEE 754 numbers.
-      const minWidth = Math.ceil(this.minSize.width * selectionRatio);
-      const maxWidth = Math.round(this.cropperCanvasRect.width);
-      const minHeight = Math.ceil(minWidth / this.configuration.aspectRatio);
-      const maxHeight = Math.round(maxWidth / this.configuration.aspectRatio);
-
-      const width = Math.round(selection.width);
-      const height = Math.round(selection.height);
-      const x = Math.round(selection.x);
-      const y = Math.round(selection.y);
-
-      if (width < minWidth || height < minHeight || width > maxWidth || height > maxHeight) {
-        event.preventDefault();
-
-        // Stop the event handling here otherwise the following code would try
-        // to adjust the position on an invalid size that could potentially
-        // violate the boundaries.
-        return;
-      }
-
-      // Limit the selection to the canvas boundaries.
-      // see https://fengyuanchen.github.io/cropperjs/v2/api/cropper-selection.html#limit-boundaries
+      // Check if the position of the selection violates any of the boundaries
+      // and move it accordingly.
+      // See https://fengyuanchen.github.io/cropperjs/v2/api/cropper-selection.html#limit-boundaries
       const maxSelection: Selection = {
         x: 0,
         y: 0,
-        width: maxWidth,
-        height: Math.round(this.cropperCanvasRect.height),
+        width: this.cropperCanvasRect.width,
+        height: this.cropperCanvasRect.height,
       };
-
       if (!inSelection(selection, maxSelection)) {
         event.preventDefault();
+
         // Clamp the position to the boundaries of the canvas.
-        void this.cropperSelection!.$nextTick().then(() => {
+        void this.cropperSelection!.$nextTick(() => {
           this.cropperSelection!.$change(
-            clampValue(x, width, maxSelection.width),
-            clampValue(y, height, maxSelection.height),
-            width,
-            height,
+            clampValue(selection.x, selection.width, maxSelection.width),
+            clampValue(selection.y, selection.height, maxSelection.height),
           );
         });
       }
@@ -338,7 +310,7 @@ class ExactImageCropper extends ImageCropper {
       return this.resizer.saveFile(
         { exif: this.orientation ? undefined : this.exif, image: this.image },
         this.file.name,
-        this.file.type,
+        this.file.type === "image/png" ? "image/webp" : this.file.type,
       );
     }
 

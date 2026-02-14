@@ -271,7 +271,15 @@ class UserOptionAddForm extends AbstractFormBuilderForm
             ->addProcessor(
                 new CustomFormDataProcessor(
                     'optionNameDataProcessor',
-                    null,
+                    function (IFormDocument $document, array $parameters) {
+                        // These values are unconditionally stored in phrases and
+                        // never in actual columns as it is usually the case with
+                        // the `I18nHandler`.
+                        unset($parameters['data']['optionName']);
+                        unset($parameters['data']['optionDescription']);
+
+                        return $parameters;
+                    },
                     function (IFormDocument $document, array $data, IStorableObject $object) {
                         \assert($object instanceof UserOption);
                         $data['optionName'] = 'wcf.user.option.' . $object->optionName;

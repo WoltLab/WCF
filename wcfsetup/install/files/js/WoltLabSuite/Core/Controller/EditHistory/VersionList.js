@@ -41,7 +41,9 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Compo
             newIdInput.addEventListener("change", () => {
                 newInputChanged(newIdInput);
             });
-            newInputChanged(newIdInput);
+            if (newIdInput.checked) {
+                newInputChanged(newIdInput);
+            }
         });
         function oldInputChanged(oldIdInput) {
             const oldId = oldIdInput.value === "current" ? Infinity : parseInt(oldIdInput.value);
@@ -54,7 +56,9 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Compo
             oldIdInput.addEventListener("change", () => {
                 oldInputChanged(oldIdInput);
             });
-            oldInputChanged(oldIdInput);
+            if (oldIdInput.checked) {
+                oldInputChanged(oldIdInput);
+            }
         });
     }
     function setup(container) {

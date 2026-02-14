@@ -39,7 +39,7 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Ui
         (0, LazyLoader_1.whenFirstSeen)(".articleLink", () => {
             void new Promise((resolve_2, reject_2) => { require(["WoltLabSuite/Core/Component/Popover"], resolve_2, reject_2); }).then(tslib_1.__importStar).then(({ setupFor }) => {
                 setupFor({
-                    endpoint: (objectId) => (0, GetArticlePopover_1.getArticlePopover)(objectId),
+                    endpoint: (objectId) => (0, GetArticlePopover_1.getArticlePopover)(objectId).then((response) => response.template),
                     identifier: "com.woltlab.wcf.article",
                     selector: ".articleLink",
                 });

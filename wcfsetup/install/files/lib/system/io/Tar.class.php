@@ -222,6 +222,42 @@ class Tar implements IArchive
     }
 
     /**
+     * Extracts a file in chunks in order to process large files without
+     * requiring the entire file to be read to memory.
+     *
+     * @return \Generator<false|string>
+     * @since 6.2
+     */
+    public function extractToChunks(int|string $index, int $chunkSize): \Generator
+    {
+        if (!$this->read) {
+            $this->open();
+            $this->readContent();
+        }
+        $header = $this->getFileInfo($index);
+
+        // can not extract a folder
+        if ($header['type'] !== 'file') {
+            yield false;
+            return;
+        }
+
+        // seek to offset
+        $this->file->seek($header['offset']);
+
+        $fileSize = $header['size'];
+        $iterations = ceil($fileSize / $chunkSize);
+        for ($i = 0; $i < $iterations; $i++) {
+            $length = $chunkSize;
+            if ($i + 1 >= $iterations) {
+                $length = $fileSize % $chunkSize;
+            }
+
+            yield $this->file->read($length);
+        }
+    }
+
+    /**
      * @inheritDoc
      */
     public function extract($index, $destination)

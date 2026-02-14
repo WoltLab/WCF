@@ -7,25 +7,43 @@ namespace CuyZ\Valinor\Type\Types;
 use CuyZ\Valinor\Compiler\Native\ComplianceNode;
 use CuyZ\Valinor\Compiler\Node;
 use CuyZ\Valinor\Type\CombiningType;
-use CuyZ\Valinor\Type\CompositeType;
 use CuyZ\Valinor\Type\ObjectType;
+use CuyZ\Valinor\Type\Parser\Exception\Intersection\InvalidIntersectionElement;
 use CuyZ\Valinor\Type\Type;
+use CuyZ\Valinor\Type\VacantType;
 
-use function array_values;
+use function array_filter;
 use function implode;
 
 /** @internal */
 final class IntersectionType implements CombiningType
 {
-    /** @var non-empty-list<ObjectType> */
+    /** @var non-empty-list<ObjectType|VacantType> */
     private array $types;
 
-    private string $signature;
-
-    public function __construct(ObjectType $type, ObjectType $otherType, ObjectType ...$otherTypes)
+    /**
+     * @no-named-arguments
+     */
+    public function __construct(ObjectType|VacantType $type, ObjectType|VacantType $otherType, ObjectType|VacantType ...$otherTypes)
     {
-        $this->types = [$type, $otherType, ...array_values($otherTypes)];
-        $this->signature = implode('&', array_map(fn (Type $type) => $type->toString(), $this->types));
+        $this->types = [$type, $otherType, ...$otherTypes];
+    }
+
+    /**
+     * @no-named-arguments
+     */
+    public static function from(Type $type, Type $otherType, Type ...$otherTypes): self
+    {
+        $types = [$type, $otherType, ...$otherTypes];
+
+        $invalidTypes = array_filter($types, static fn (Type $type) => ! $type instanceof ObjectType && ! $type instanceof VacantType);
+
+        if ($invalidTypes !== []) {
+            throw new InvalidIntersectionElement($types, $invalidTypes);
+        }
+
+        /** @var list<ObjectType|VacantType> $types */
+        return new self(...$types);
     }
 
     public function accepts(mixed $value): bool
@@ -42,7 +60,7 @@ final class IntersectionType implements CombiningType
     public function compiledAccept(ComplianceNode $node): ComplianceNode
     {
         return Node::logicalAnd(...array_map(
-            fn (ObjectType $type) => $type->compiledAccept($node),
+            fn (Type $type) => $type->compiledAccept($node),
             $this->types,
         ));
     }
@@ -66,6 +84,11 @@ final class IntersectionType implements CombiningType
         return true;
     }
 
+    public function inferGenericsFrom(Type $other, Generics $generics): Generics
+    {
+        return $generics;
+    }
+
     public function isMatchedBy(Type $other): bool
     {
         foreach ($this->types as $type) {
@@ -79,21 +102,16 @@ final class IntersectionType implements CombiningType
 
     public function traverse(): array
     {
-        $types = [];
+        return $this->types;
+    }
 
-        foreach ($this->types as $type) {
-            $types[] = $type;
-
-            if ($type instanceof CompositeType) {
-                $types = [...$types, ...$type->traverse()];
-            }
-        }
-
-        return $types;
+    public function replace(callable $callback): Type
+    {
+        return self::from(...array_map($callback, $this->types));
     }
 
     /**
-     * @return non-empty-list<ObjectType>
+     * @return non-empty-list<ObjectType|VacantType>
      */
     public function types(): array
     {
@@ -102,16 +120,15 @@ final class IntersectionType implements CombiningType
 
     public function nativeType(): IntersectionType
     {
-        return new self(
-            ...array_map(
-                static fn (ObjectType $type) => $type->nativeType(),
-                $this->types,
-            ),
-        );
+        // @phpstan-ignore argument.type
+        return new self(...array_map(
+            static fn (Type $type) => $type->nativeType(),
+            $this->types,
+        ));
     }
 
     public function toString(): string
     {
-        return $this->signature;
+        return implode('&', array_map(static fn (Type $type) => $type->toString(), $this->types));
     }
 }

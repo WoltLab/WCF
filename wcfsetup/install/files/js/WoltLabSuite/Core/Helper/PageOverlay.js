@@ -15,7 +15,12 @@ define(["require", "exports"], function (require, exports) {
      */
     function adoptPageOverlayContainer(element) {
         adoptiveParents.push(element);
-        element.append(container);
+        if ("moveBefore" in Element.prototype && document.body.contains(container)) {
+            element.moveBefore(container, null);
+        }
+        else {
+            element.append(container);
+        }
     }
     /**
      * Releases the page overlay container again, allowing
@@ -41,7 +46,12 @@ define(["require", "exports"], function (require, exports) {
         if (index === adoptiveParents.length - 1) {
             adoptiveParents.pop();
             const previousParent = adoptiveParents[adoptiveParents.length - 1];
-            previousParent.append(container);
+            if ("moveBefore" in Element.prototype) {
+                previousParent.moveBefore(container, null);
+            }
+            else {
+                previousParent.append(container);
+            }
             return;
         }
         // `element` was an intermediate owner but is no longer holding a reference

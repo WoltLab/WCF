@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Message/MessageTabMenu", "sortablejs", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Api/PostObject"], function (require, exports, tslib_1, Entry_1, Event_1, MessageTabMenu_1, sortablejs_1, PromiseMutex_1, PostObject_1) {
+define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Message/MessageTabMenu", "sortablejs", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Api/PostObject", "WoltLabSuite/Core/Core", "../Ckeditor"], function (require, exports, tslib_1, Entry_1, Event_1, MessageTabMenu_1, sortablejs_1, PromiseMutex_1, PostObject_1, Core_1, Ckeditor_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -12,9 +12,6 @@ define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Messa
             throw new Error(`The attachments container for '${editorId}' does not exist.`);
         }
         const tabMenu = (0, MessageTabMenu_1.getTabMenu)(editorId);
-        if (tabMenu === undefined) {
-            throw new Error("Unable to find the corresponding tab menu.");
-        }
         const editor = document.getElementById(editorId);
         if (editor === null) {
             throw new Error(`The editor element for '${editorId}' does not exist.`);
@@ -118,11 +115,50 @@ define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Messa
                     counter++;
                 }
             }
-            tabMenu.setTabCounter("attachments", counter);
+            tabMenu?.setTabCounter("attachments", counter);
         });
         observer.observe(fileList, {
             childList: true,
             subtree: true,
         });
+        (0, Event_1.listenToCkeditor)(editor)
+            .changeData((0, Core_1.debounce)(() => {
+            observeInsertedAttachments(editor, files);
+        }, 500))
+            .ready(() => {
+            observeInsertedAttachments(editor, files);
+        });
+    }
+    function observeInsertedAttachments(element, files) {
+        const editor = (0, Ckeditor_1.getCkeditor)(element);
+        if (editor === undefined) {
+            throw new Error(`Could not find the CKEditor for element '${element.id}'.`);
+        }
+        const embeddedAttachments = new Set();
+        editor.element.querySelectorAll(".woltlabAttachment[data-attachment-id]").forEach((img) => {
+            const attachmentId = parseInt(img.dataset.attachmentId);
+            embeddedAttachments.add(attachmentId);
+        });
+        const bbcodeMatches = editor.element.innerText.matchAll(/\[attach=(?:'|")?(\d+)(?:'|")?(?:,[^]]+?)?\]\[\/attach\]/g);
+        for (const match of bbcodeMatches) {
+            const attachmentId = parseInt(match[1]);
+            embeddedAttachments.add(attachmentId);
+        }
+        for (const file of files) {
+            if (file.isFailedUpload()) {
+                continue;
+            }
+            const wrapper = file.closest(".fileList__item");
+            if (wrapper === null) {
+                continue;
+            }
+            const { attachmentID } = file.data;
+            if (embeddedAttachments.has(attachmentID)) {
+                wrapper.classList.add("fileList__item--inserted");
+            }
+            else {
+                wrapper.classList.remove("fileList__item--inserted");
+            }
+        }
     }
 });

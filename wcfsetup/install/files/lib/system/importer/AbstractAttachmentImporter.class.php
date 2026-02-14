@@ -89,7 +89,7 @@ class AbstractAttachmentImporter extends AbstractImporter
             }
 
             return $attachment->attachmentID;
-        } catch (SystemException $e) {
+        } catch (SystemException) {
             // copy failed; delete attachment
             $editor = new AttachmentEditor($attachment);
             $editor->delete();

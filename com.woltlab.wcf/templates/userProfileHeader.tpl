@@ -65,14 +65,24 @@
 			</div>
 		</div>
 		<div class="userProfileHeader__title">
-			<h1 class="userProfileHeader__username">
-				<span class="userProfileUsername">{$view->user->username}</span>
-				{if $view->user->banned}
-					<span class="jsTooltip jsUserBanned" title="{lang}wcf.user.banned{/lang}">
-						{icon name='lock'}
-					</span>
-				{/if}
-			</h1>
+			<div class="userProfileHeader__headline">
+				<h1 class="userProfileHeader__username">
+					<span class="userProfileUsername">{$view->user->username}</span>
+				</h1>
+
+				<div class="userProfileHeader__statusIcons">
+					{if $view->user->banned}
+						<span class="jsTooltip jsUserBanned" role="status" title="{lang}wcf.user.banned{/lang}">
+							{icon name='lock'}
+						</span>
+					{/if}
+
+					{event name='icons'}
+				</div>
+			</div>
+			
+			{event name='afterUsername'}
+
 			<div class="userProfileHeader__rank">
 				{if MODULE_USER_RANK}
 					{if $view->user->getUserTitle()}
@@ -83,7 +93,7 @@
 					{/if}
 				{/if}
 			</div>
-			{event name='afterTitle'}
+			{event name='afterUserTitle'}
 		</div>
 		<div class="userProfileHeader__stats">
 			{foreach from=$view->getStatItems() item='statItem'}
@@ -117,7 +127,7 @@
 							data-follow-user="{link controller='UserFollow' id=$user->userID}{/link}"
 							class="userProfileHeader__button button small jsTooltip"
 							title="{lang}wcf.user.button.unfollow{/lang}"
-						>{icon name='minus' type='solid'}</button>
+						>{icon name='user-minus' type='solid'}</button>
 					{else}
 						<button
 							type="button"
@@ -125,7 +135,7 @@
 							data-follow-user="{link controller='UserFollow' id=$user->userID}{/link}"
 							class="userProfileHeader__button button small jsTooltip"
 							title="{lang}wcf.user.button.follow{/lang}"
-						>{icon name='plus' type='solid'}</button>
+						>{icon name='user-plus' type='solid'}</button>
 					{/if}
 				{/if}
 			{/if}

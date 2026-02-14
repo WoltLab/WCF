@@ -55,7 +55,7 @@ abstract class AbstractListViewBoxController extends AbstractDatabaseObjectListB
             $this->loadContent();
         }
 
-        return $this->getListView()->countItems() > 0;
+        return $this->getListView()->getItems() !== [];
     }
 
     #[\Override]

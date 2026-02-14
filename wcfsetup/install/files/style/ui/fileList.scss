@@ -23,12 +23,15 @@
 	box-shadow: var(--wcfBoxShadowCard);
 	display: grid;
 	grid-template-areas:
-		"file filename"
-		"file fileSize"
-		"file buttons"
-		"file error";
-	grid-template-columns: 80px auto;
+		"file filename  indicator"
+		"file fileSize 	fileSize"
+		"file buttons 	buttons"
+		"file error 	error";
+	grid-template-columns: 80px auto 0;
 	padding: 10px;
+}
+.fileList__item--inserted {
+	grid-template-columns: 80px auto 20px;
 }
 
 .fileList__item--error {
@@ -58,7 +61,18 @@
 	margin-right: 10px;
 }
 
+.fileList__item__indicator {
+	grid-area: indicator;
+	margin-left: 5px;
+	visibility: hidden;
+}
+
+.fileList__item--inserted .fileList__item__indicator {
+	visibility: visible;
+}
+
 .fileList__item__filename {
+	align-self: center;
 	font-size: 12px;
 	grid-area: filename;
 	overflow: hidden;

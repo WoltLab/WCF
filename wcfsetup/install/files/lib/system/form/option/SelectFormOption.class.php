@@ -2,6 +2,8 @@
 
 namespace wcf\system\form\option;
 
+use wcf\system\database\table\column\AbstractDatabaseTableColumn;
+use wcf\system\database\table\column\VarcharDatabaseTableColumn;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\option\formatter\IFormOptionFormatter;
@@ -28,7 +30,8 @@ class SelectFormOption extends AbstractFormOption
     #[\Override]
     public function getFormField(string $id, array $configuration = []): AbstractFormField
     {
-        $formField = SelectFormField::create($id);
+        $formField = SelectFormField::create($id)
+            ->ignoreInvalidValues();
         $this->setSelectOptions($formField, $configuration);
 
         return $formField;
@@ -50,5 +53,12 @@ class SelectFormOption extends AbstractFormOption
     public function getPlainTextFormatter(): IFormOptionFormatter
     {
         return new SelectFormatter(false);
+    }
+
+    #[\Override]
+    public function getDatabaseTableColumn(string $name): AbstractDatabaseTableColumn
+    {
+        return VarcharDatabaseTableColumn::create($name)
+            ->length(255);
     }
 }

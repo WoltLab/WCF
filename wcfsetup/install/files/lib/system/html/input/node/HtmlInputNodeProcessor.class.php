@@ -354,11 +354,19 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
             }
         }
 
-        $appendToPreviousParagraph = static function ($node) {
-            /** @var ?\DOMElement $paragraph */
-            $paragraph = $node->previousSibling;
+        $appendToPreviousParagraph = static function (\DOMNode $node) {
+            $paragraph = $node;
+            while ($paragraph = $paragraph->previousSibling) {
+                if ($paragraph instanceof \DOMText) {
+                    if (!\str_contains($paragraph->textContent, ' ') && StringUtil::trim($paragraph->textContent) === '') {
+                        continue;
+                    }
+                }
 
-            if (!$paragraph || $paragraph->nodeName !== 'p') {
+                break;
+            }
+
+            if ($paragraph === null || $paragraph->nodeName !== 'p') {
                 $paragraph = $node->ownerDocument->createElement('p');
                 $node->parentNode->insertBefore($paragraph, $node);
             }
@@ -380,6 +388,13 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                 if ($node->textContent === "\n" || $node->textContent === "\r\n") {
                     // check if the previous node is a <p>, otherwise ignore this node entirely
                     if ($node->previousSibling === null || $node->previousSibling->nodeName !== 'p') {
+                        $node = $node->nextSibling;
+                        continue;
+                    }
+                } else {
+                    $textContent = StringUtil::trim($node->textContent);
+                    // Ignore any text node that only contains whitespace.
+                    if ($textContent === '') {
                         $node = $node->nextSibling;
                         continue;
                     }

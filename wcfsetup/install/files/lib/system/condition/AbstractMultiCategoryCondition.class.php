@@ -38,7 +38,8 @@ abstract class AbstractMultiCategoryCondition extends AbstractMultiSelectConditi
         $categoryTree = (new $this->nodeTreeClassname($this->objectType))->getIterator();
         $categoryCount = \iterator_count($categoryTree);
 
-        $fieldElement = '<select name="' . $this->fieldName . '[]" id="' . $this->fieldName . '" multiple size="' . ($categoryCount >= 10 ? 10 : $categoryCount) . '">';
+        $size = \min(\max($categoryCount, 10), 3);
+        $fieldElement = '<select name="' . $this->fieldName . '[]" id="' . $this->fieldName . '" multiple size="' . $size . '">';
         /** @var CategoryNode $categoryNode */
         foreach ($categoryTree as $categoryNode) {
             $fieldElement .= "<option value=\"{$categoryNode->categoryID}\"" . (\in_array(

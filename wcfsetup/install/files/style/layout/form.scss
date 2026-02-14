@@ -6,11 +6,17 @@ input[type="password"],
 input[type="search"],
 input[type="tel"],
 input[type="text"],
+input[type="time"],
 input[type="url"],
 select,
 textarea {
 	margin: 0; /* safari fix */
 	@include input;
+}
+
+select.disabled[tabindex="-1"] {
+	pointer-events: none;
+	user-select: none;
 }
 
 /* set placeholder color */
@@ -22,6 +28,7 @@ input[type="password"],
 input[type="search"],
 input[type="tel"],
 input[type="text"],
+input[type="time"],
 input[type="url"] {
 	&::placeholder {
 		color: var(--wcfInputPlaceholder);
@@ -52,6 +59,7 @@ textarea::placeholder {
 input[type="search"],
 input[type="text"] {
 	-webkit-appearance: none;
+	appearance: none;
 }
 
 @media (pointer: coarse) {
@@ -63,6 +71,7 @@ input[type="text"] {
 	input[type="search"],
 	input[type="tel"],
 	input[type="text"],
+	input[type="time"],
 	input[type="url"],
 	select,
 	textarea {
@@ -92,6 +101,7 @@ input[disabled],
 textarea[disabled] {
 	-webkit-text-fill-color: var(--wcfInputDisabledText); /* override safari font color change */
 	-webkit-opacity: 1; /* override mobile safari opacity change affecting text color */
+	opacity: 1;
 }
 
 select {
@@ -362,10 +372,40 @@ html[data-color-scheme="dark"] .passwordStrengthScore {
 .selectOptionsList {
 	display: flex;
 	flex-direction: column;
-	gap: 3px;
+	gap: 5px;
 }
 
 .selectOptionsListItem {
-	display: flex;
 	align-items: center;
+	column-gap: 5px;
+	display: flex;
+}
+
+.selectOptionsListItem__inputContainer {
+	align-items: center;
+	display: flex;
+	gap: 5px;
+}
+
+.selectOptionsList + .selectOptionsListItem__addItem {
+	margin-top: 10px;
+}
+
+@include screen-xs {
+	.selectOptionsList {
+		gap: 10px;
+	}
+
+	.selectOptionsListItem {
+		column-gap: 10px;
+	}
+
+	.selectOptionsListItem__inputContainer {
+		display: grid;
+		grid-template-columns: 1fr max-content;
+	}
+
+	.selectOptionsListItem__inputContainer > :last-child {
+		grid-column: 1 / 3;
+	}
 }

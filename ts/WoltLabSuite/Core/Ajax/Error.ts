@@ -93,6 +93,7 @@ async function getErrorHtml(error: ApiError): Promise<string | HTMLIFrameElement
         // The content is possibly HTML, use an iframe for rendering.
         const iframe = document.createElement("iframe");
         iframe.classList.add("dialog__iframe");
+        iframe.sandbox = "";
         iframe.srcdoc = message;
 
         return iframe;

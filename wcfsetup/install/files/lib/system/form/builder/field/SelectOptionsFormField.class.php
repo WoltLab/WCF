@@ -56,7 +56,10 @@ final class SelectOptionsFormField extends AbstractFormField implements
     public function getHtmlVariables()
     {
         return [
-            'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
+            'availableLanguages' => \array_map(
+                static fn($language) => $language->__toString(),
+                LanguageFactory::getInstance()->getLanguages()
+            ),
         ];
     }
 

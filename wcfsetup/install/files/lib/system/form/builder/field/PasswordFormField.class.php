@@ -7,10 +7,10 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
 /**
  * Implementation of a form field for a password.
  *
- * @author  Matthias Schmidt
- * @copyright   2001-2021 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since   5.4
+ * @author      Matthias Schmidt
+ * @copyright   2001-2025 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since       5.4
  */
 class PasswordFormField extends AbstractFormField implements
     IAttributeFormField,
@@ -46,17 +46,28 @@ class PasswordFormField extends AbstractFormField implements
      */
     protected $templateName = 'shared_passwordFormField';
 
+    /**
+     * @since 6.2
+     */
     protected bool $strengthMeter = true;
 
     /**
      * @var IFormField[]
+     * @since 6.2
      */
     protected array $relatedFields = [];
 
     /**
      * @var string[]
+     * @since 6.2
      */
     protected array $relatedFieldsId = [];
+
+    /**
+     * @var string[]
+     * @since 6.2
+     */
+    protected array $staticDictionary = [];
 
     /**
      * Creates a new instance of `PasswordFormField`.
@@ -110,8 +121,10 @@ class PasswordFormField extends AbstractFormField implements
     /**
      * Sets if the password strength meter should be used to provide feedback
      * to the user about the strength of their password.
+     *
+     * @since 6.2
      */
-    public function passwordStrengthMeter(bool $passwordStrengthMeter = true): self
+    public function passwordStrengthMeter(bool $passwordStrengthMeter = true): static
     {
         $this->strengthMeter = $passwordStrengthMeter;
 
@@ -136,20 +149,26 @@ class PasswordFormField extends AbstractFormField implements
         return ['new-password', 'current-password'];
     }
 
-    public function addMeterRelatedField(IFormField $input): self
+    public function addMeterRelatedField(IFormField $input): static
     {
         $this->relatedFields[] = $input;
 
         return $this;
     }
 
-    public function addMeterRelatedFieldId(string $fieldId): self
+    /**
+     * @since 6.2
+     */
+    public function addMeterRelatedFieldId(string $fieldId): static
     {
         $this->relatedFieldsId[] = $fieldId;
 
         return $this;
     }
 
+    /**
+     * @since 6.2
+     */
     public function getStrengthMeter(): bool
     {
         return $this->strengthMeter;
@@ -157,6 +176,7 @@ class PasswordFormField extends AbstractFormField implements
 
     /**
      * @return string[]
+     * @since 6.2
      */
     public function getRelatedFieldsIDs(): array
     {
@@ -166,5 +186,25 @@ class PasswordFormField extends AbstractFormField implements
         }
 
         return $result;
+    }
+
+    /**
+     * @param string[] $staticDictionary
+     * @since 6.2
+     */
+    public function addStaticDictionary(array $staticDictionary): static
+    {
+        $this->staticDictionary = \array_merge($this->staticDictionary, $staticDictionary);
+
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     * @since 6.2
+     */
+    public function getStaticDictionary(): array
+    {
+        return $this->staticDictionary;
     }
 }

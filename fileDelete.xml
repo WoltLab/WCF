@@ -7,6 +7,7 @@
 		<file>acp/js/WCF.ACP.Language.min.js</file>
 		<file>acp/js/WCF.ACP.Style.js</file>
 		<file>acp/js/WCF.ACP.Style.min.js</file>
+		<file>acp/update_com.woltlab.wcf_6.1.0_beta_2_migrateStaticFiles.php</file>
 		<file>acp/update_com.woltlab.wcf_6.1_checkSystemRequirements.php</file>
 		<file>acp/update_com.woltlab.wcf_6.1_messageEmbeddedObject.php</file>
 		<file>acp/update_com.woltlab.wcf_6.1_serviceWorker.php</file>
@@ -181,7 +182,6 @@
 		<file>icon/font-awesome/v6/brands/galactic-republic.svg</file>
 		<file>icon/font-awesome/v6/brands/galactic-senate.svg</file>
 		<file>icon/font-awesome/v6/brands/get-pocket.svg</file>
-		<file>icon/font-awesome/v6/brands/gg-circle.svg</file>
 		<file>icon/font-awesome/v6/brands/gg.svg</file>
 		<file>icon/font-awesome/v6/brands/git-alt.svg</file>
 		<file>icon/font-awesome/v6/brands/git.svg</file>
@@ -519,18 +519,49 @@
 		<file>lib/system/api/bin/pscss</file>
 		<file>lib/system/api/cuyz/valinor/src/Cache/ChainCache.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Cache/WarmupCache.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/Exception/ClassTypeAliasesDuplication.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/Exception/ExtendTagTypeError.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/Exception/InvalidExtendTagClassName.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/Exception/InvalidExtendTagType.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/Exception/InvalidTypeAliasImportClass.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/Exception/InvalidTypeAliasImportClassType.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/Exception/SeveralExtendTagsFound.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/Exception/UnknownTypeAliasImport.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Definition/Repository/Cache/CacheClassDefinitionRepository.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/Repository/Reflection/TypeResolver/ClassTemplatesResolver.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/Factory/CacheObjectBuilderFactory.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Source/IdentifiableSource.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/RootNodeBuilder.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/TreeNode.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/ValueAlteringNodeBuilder.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Exception/InvalidAbstractObjectName.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Exception/InvalidNodeHasNoMappedValue.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Exception/SourceValueWasNotFilled.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Node.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/NodeTraverser.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Normalizer/Transformer/EvaluatedTransformer.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Generic/AssignedGenericNotFound.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Generic/InvalidAssignedGeneric.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/InvalidIntersectionType.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Iterable/InvalidIterableKey.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Iterable/IterableClosingBracketMissing.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Iterable/IterableCommaMissing.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Iterable/ShapedArrayEmptyElements.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Iterable/ShapedArrayInvalidUnsealedType.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Scalar/InvalidClassStringSubType.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Template/DuplicatedTemplateName.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Template/InvalidClassTemplate.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/UnknownSymbol.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Factory/LexingTypeParserFactory.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Factory/Specifications/TypeAliasAssignerSpecification.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/GenericCheckerParser.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Lexer/Annotations.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Lexer/Token/IterableToken.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Types/Exception/InvalidUnionOfClassString.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Utility/Priority/HasPriority.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Utility/Priority/PrioritizedList.php</file>
+		<file>lib/system/api/paragonie/sodium_compat/lib/namespaced.php</file>
+		<file>lib/system/api/pelago/emogrifier/src/Utilities/Preg.php</file>
 		<file>lib/system/api/scssphp/scssphp/bin/pscss</file>
 		<file>lib/system/api/scssphp/scssphp/scss.inc.php</file>
 		<file>lib/system/api/scssphp/scssphp/src/Base/Range.php</file>
@@ -562,6 +593,12 @@
 		<file>lib/system/api/scssphp/scssphp/src/Formatter/OutputBlock.php</file>
 		<file>lib/system/api/scssphp/scssphp/src/Parser.php</file>
 		<file>lib/system/api/scssphp/scssphp/src/SourceMap/SourceMapGenerator.php</file>
+		<file>lib/system/api/webmozart/assert/CHANGELOG.md</file>
+		<file>lib/system/api/webmozart/assert/README.md</file>
+		<file>lib/system/api/webmozart/assert/composer.json</file>
+		<file>lib/system/api/webmozart/assert/src/Assert.php</file>
+		<file>lib/system/api/webmozart/assert/src/InvalidArgumentException.php</file>
+		<file>lib/system/api/webmozart/assert/src/Mixin.php</file>
 		<file>lib/system/clipboard/action/ArticleClipboardAction.class.php</file>
 		<file>lib/system/clipboard/action/ModerationQueueActivationClipboardAction.class.php</file>
 		<file>lib/system/clipboard/action/ModerationQueueClipboardAction.class.php</file>
@@ -571,7 +608,6 @@
 		<file>lib/system/upload/AvatarUploadFileValidationStrategy.class.php</file>
 		<file>lib/system/upload/UserCoverPhotoUploadFileSaveStrategy.class.php</file>
 		<file>lib/system/upload/UserCoverPhotoUploadFileValidationStrategy.class.php</file>
-		<file>style/layout/pageNavigation.scss</file>
 		<file>style/ui/imageViewer.scss</file>
 		<file>style/ui/like.scss</file>
 	</delete>

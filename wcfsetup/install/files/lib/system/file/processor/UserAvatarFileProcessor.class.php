@@ -3,11 +3,12 @@
 namespace wcf\system\file\processor;
 
 use wcf\data\file\File;
+use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
-use wcf\system\user\command\SetAvatar;
+use wcf\command\user\SetAvatar;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -37,7 +38,13 @@ final class UserAvatarFileProcessor extends AbstractFileProcessor
     #[\Override]
     public function getAllowedFileExtensions(array $context): array
     {
-        return \explode("\n", WCF::getSession()->getPermission('user.profile.avatar.allowedFileExtensions'));
+        return [
+            "png",
+            "jpg",
+            "jpeg",
+            "gif",
+            "webp",
+        ];
     }
 
     #[\Override]
@@ -145,20 +152,7 @@ final class UserAvatarFileProcessor extends AbstractFileProcessor
     #[\Override]
     public function getThumbnailFormats(): array
     {
-        return [
-            new ThumbnailFormat(
-                '128',
-                UserAvatarFileProcessor::AVATAR_SIZE,
-                UserAvatarFileProcessor::AVATAR_SIZE,
-                false
-            ),
-            new ThumbnailFormat(
-                '256',
-                UserAvatarFileProcessor::AVATAR_SIZE_2X,
-                UserAvatarFileProcessor::AVATAR_SIZE_2X,
-                false
-            ),
-        ];
+        return [];
     }
 
     #[\Override]
@@ -174,22 +168,16 @@ final class UserAvatarFileProcessor extends AbstractFileProcessor
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add('avatarFileID IN (?)', [$fileIDs]);
 
-        $sql = "UPDATE wcf1_user
-                SET    avatarFileID = ?
+        $sql = "UPDATE  wcf1_user
+                SET     avatarFileID = ?,
+                        avatarPathname = ?
                 " . $conditionBuilder;
         $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([null, ...$conditionBuilder->getParameters()]);
-    }
-
-    #[\Override]
-    public function countExistingFiles(array $context): ?int
-    {
-        $user = $this->getUser($context);
-        if ($user === null) {
-            return null;
-        }
-
-        return $user->avatarFileID === null ? 0 : 1;
+        $statement->execute([
+            null,
+            null,
+            ...$conditionBuilder->getParameters()
+        ]);
     }
 
     #[\Override]
@@ -214,6 +202,29 @@ final class UserAvatarFileProcessor extends AbstractFileProcessor
             new ImageCropSize(UserAvatarFileProcessor::AVATAR_SIZE, UserAvatarFileProcessor::AVATAR_SIZE),
             new ImageCropSize(UserAvatarFileProcessor::AVATAR_SIZE_2X, UserAvatarFileProcessor::AVATAR_SIZE_2X)
         );
+    }
+
+    #[\Override]
+    public function replacedWithWebpVariant(File $file): void
+    {
+        $user = $this->getUserByFile($file);
+        if ($user === null) {
+            return;
+        }
+
+        $filename = $file->getSourceFilenameWebp() ?? $file->getSourceFilename();
+        $pathname = $file->getRelativePath() . $filename;
+
+        if ($user->avatarPathname === $pathname) {
+            return;
+        }
+
+        // The relative path to the avatar is stored in a denormalized form in
+        // the user table. This path may be outdated if either the avatar is
+        // later converted to WebP or during the upload.
+        (new UserEditor($user->getDecoratedObject()))->update([
+            'avatarPathname' => $pathname,
+        ]);
     }
 
     /**
@@ -243,5 +254,11 @@ final class UserAvatarFileProcessor extends AbstractFileProcessor
         }
 
         return UserProfileRuntimeCache::getInstance()->getObject($userID);
+    }
+
+    #[\Override]
+    public function isSingleFile(): bool
+    {
+        return true;
     }
 }

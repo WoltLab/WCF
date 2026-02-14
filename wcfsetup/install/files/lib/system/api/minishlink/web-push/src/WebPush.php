@@ -199,7 +199,7 @@ class WebPush
         foreach ($batches as $batch) {
             $batch = $this->prepare($batch);
             $pool = new Pool($this->client, $batch, [
-                'requestConcurrency' => $requestConcurrency,
+                'concurrency' => $requestConcurrency,
                 'fulfilled' => function (ResponseInterface $response, int $index) use ($callback, $batch) {
                     /** @var RequestInterface $request **/
                     $request = $batch[$index];
@@ -235,8 +235,8 @@ class WebPush
     }
 
     /**
-     * @throws \ErrorException
-     * add back @throws \Random\RandomException when we drop PHP 8.1 support
+     * @throws \ErrorException Thrown on php 8.1
+     * @throws \Random\RandomException Thrown on php 8.2 and higher
      */
     protected function prepare(array $notifications): array
     {
@@ -263,7 +263,7 @@ class WebPush
                 $localPublicKey = $encrypted['localPublicKey'];
 
                 $headers = [
-                    'Content-Type' => 'application/octet-stream',
+                    'Content-Type' => $options['contentType'],
                     'Content-Encoding' => $contentEncoding,
                 ];
 
@@ -384,6 +384,7 @@ class WebPush
         $this->defaultOptions['topic'] = $defaultOptions['topic'] ?? null;
         $this->defaultOptions['batchSize'] = $defaultOptions['batchSize'] ?? 1000;
         $this->defaultOptions['requestConcurrency'] = $defaultOptions['requestConcurrency'] ?? 100;
+        $this->defaultOptions['contentType'] = $defaultOptions['contentType'] ?? 'application/octet-stream';
 
 
         return $this;

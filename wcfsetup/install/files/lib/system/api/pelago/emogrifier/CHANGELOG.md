@@ -18,6 +18,51 @@ Please also have a look at our
 
 ### Fixed
 
+## 8.2.0: Add support for Symfony 8.0
+
+### Added
+
+- Add support for Symfony 8.0 (#1509)
+
+### Changed
+
+- Improve performance of checking for existing `Content-Type` (#1518, #1519)
+
+### Fixed
+
+- Support very large content in `meta` element in `head` (#1519)
+- Support very large HTML files without a `Content-Type` (#1518)
+- Allow numbers and underscores in CSS property names (#1500)
+- Use safe version of some PHP functions
+  (#1457, #1492, #1495, #1496, #1499, #1503, #1513, #1515, #1517)
+
+## 8.1.0: Add support for PHP 8.5
+
+### Added
+
+- Add support for PHP 8.5 (#1470)
+
+### Changed
+
+- Require `sabberworm/php-css-parser` version 9.1.0 or higher (#1465)
+- Improve declaration block parsing performance (#1452)
+
+### Fixed
+
+- Make some type annotations more specific (#1428)
+
+## 8.0.0: Dependency updates and dropped support for old Symfony versions
+
+### Changed
+
+- Require `sabberworm/php-css-parser` version 9.0.0 or higher
+  (#1399, #1418, #1421)
+- Raise the minimum required Symfony bugfix versions (#1361)
+
+### Removed
+
+- Drop support for Symfony 4.4, 6.0, 6.1, 6.2 (#1358, #1361)
+
 ## 7.3.0: Add support for PHP 8.4 and CSS custom properties
 
 ### Added

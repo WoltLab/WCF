@@ -31,7 +31,7 @@ class PackagePage extends AbstractPage
      */
     public $neededPermissions = [
         'admin.configuration.package.canUpdatePackage',
-        'admin.configuration.package.canUninstallPackage',
+        'admin.configuration.package.canInstallPackage',
     ];
 
     /**

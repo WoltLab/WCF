@@ -6,6 +6,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\LinkHandler;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Abstract implementation of a page that is rendering a grid view.
@@ -52,6 +53,14 @@ abstract class AbstractGridViewPage extends AbstractPage
     }
 
     #[\Override]
+    public function show()
+    {
+        $this->canonicalURL = $this->getCanonicalUrl();
+
+        return parent::show();
+    }
+
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -66,6 +75,7 @@ abstract class AbstractGridViewPage extends AbstractPage
 
         WCF::getTPL()->assign([
             'gridView' => $this->gridView,
+            'headContent' => $this->getHeadContent(),
         ]);
     }
 
@@ -88,7 +98,65 @@ abstract class AbstractGridViewPage extends AbstractPage
         if ($this->pageNo != 1) {
             $this->gridView->setPageNo($this->pageNo);
         }
-        $this->gridView->setBaseUrl(LinkHandler::getInstance()->getControllerLink(static::class));
+        $this->gridView->setBaseUrl(
+            LinkHandler::getInstance()->getControllerLink(static::class, $this->getBaseUrlParameters())
+        );
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getBaseUrlParameters(): array
+    {
+        return [];
+    }
+
+    protected function getHeadContent(): string
+    {
+        $linkTags = [];
+        if ($this->gridView->getPageNo() < $this->gridView->countPages()) {
+            $linkTags[] = \sprintf(
+                '<link rel="next" href="%s">',
+                StringUtil::encodeHTML(
+                    LinkHandler::getInstance()->getControllerLink(static::class, \array_merge(
+                        $this->getBaseUrlParameters(),
+                        [
+                            'pageNo' => $this->gridView->getPageNo() + 1,
+                            'sortField' => $this->sortField ?: null,
+                            'sortOrder' => $this->sortOrder ?: null,
+                        ]
+                    ))
+                )
+            );
+        }
+
+        if ($this->gridView->getPageNo() > 1) {
+            $linkTags[] = \sprintf(
+                '<link rel="prev" href="%s">',
+                StringUtil::encodeHTML(
+                    LinkHandler::getInstance()->getControllerLink(static::class, \array_merge(
+                        $this->getBaseUrlParameters(),
+                        [
+                            'pageNo' => $this->gridView->getPageNo() !== 2 ? $this->gridView->getPageNo() - 1 : null,
+                            'sortField' => $this->sortField ?: null,
+                            'sortOrder' => $this->sortOrder ?: null,
+                        ]
+                    ))
+                )
+            );
+        }
+
+        return \implode("\n", $linkTags);
+    }
+
+    protected function getCanonicalUrl(): string
+    {
+        return LinkHandler::getInstance()->getControllerLink(static::class, \array_merge(
+            $this->getBaseUrlParameters(),
+            [
+                'pageNo' => $this->pageNo !== 1 ? $this->pageNo : null,
+            ]
+        ));
     }
 
     /**

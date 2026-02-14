@@ -69,6 +69,7 @@ class UiSortableList {
           filter: this.#filter.bind(this),
           onMove: this.#onMove.bind(this),
           onEnd: this.#onEnd.bind(this),
+          preventOnFilter: false,
         } as Sortable.Options,
         isSimpleSorting: false,
         additionalParameters: {},
@@ -195,7 +196,7 @@ class UiSortableList {
   }
 
   #filter(event: Event | TouchEvent, target: HTMLElement) {
-    if (Sortable.utils.is(target, ".sortableNoSorting")) {
+    if (Sortable.utils.is(target, ".sortableNoSorting") || target.nodeName === "INPUT") {
       return true;
     }
 

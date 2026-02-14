@@ -167,6 +167,7 @@
 			visibility 0s linear 0.24s;
 		visibility: hidden;
 		width: 50px;
+		z-index: 1;
 
 		&.active {
 			opacity: 1;

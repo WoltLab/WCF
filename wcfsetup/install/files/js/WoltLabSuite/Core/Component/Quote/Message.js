@@ -7,7 +7,7 @@
  * @since 6.2
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Component/Quote/Storage", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Component/Ckeditor/Event"], function (require, exports, tslib_1, Util_1, Language_1, Selector_1, Storage_1, PromiseMutex_1, Event_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Component/Quote/Storage", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Component/Ckeditor/Event", "../Snackbar", "WoltLabSuite/Core/Environment"], function (require, exports, tslib_1, Util_1, Language_1, Selector_1, Storage_1, PromiseMutex_1, Event_1, Snackbar_1, Environment_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.registerContainer = registerContainer;
@@ -18,6 +18,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
     let selectedMessage;
     const containers = new Map();
     const quoteMessageButtons = new Map();
+    let activeContent = undefined;
     let activeMessageId = "";
     let activeEditor = undefined;
     let timerSelectionChange = undefined;
@@ -37,8 +38,16 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
             if (container.classList.contains("jsInvalidQuoteTarget")) {
                 return;
             }
-            container.addEventListener("mousedown", (event) => onMouseDown(event));
+            container.addEventListener("mousedown", (event) => {
+                onMouseDown(event);
+            });
             container.classList.add("jsQuoteMessageContainer");
+            container.addEventListener("touchstart", (event) => {
+                if (event.target instanceof Node && (event.target === copyQuote || copyQuote.contains(event.target))) {
+                    return;
+                }
+                copyQuote.classList.remove("active");
+            });
             const quoteMessage = container.querySelector(".jsQuoteMessage");
             if (quoteMessage === null) {
                 return;
@@ -106,6 +115,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
             }
             await (0, Storage_1.saveQuote)(selectedMessage.container.objectType, selectedMessage.container.objectId, selectedMessage.message, selectedMessage.container.className);
             removeSelection();
+            (0, Snackbar_1.showSuccessSnackbar)((0, Language_1.getPhrase)("wcf.message.quote.quoteSelected.success"));
         }));
         copyQuote.appendChild(buttonSaveQuote);
         const buttonSaveAndInsertQuote = document.createElement("button");
@@ -148,7 +158,26 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
             }
         }, { passive: false });
         window.addEventListener("resize", () => {
-            copyQuote.classList.remove("active");
+            if (!copyQuote.classList.contains("active")) {
+                return;
+            }
+            if (activeContent === undefined) {
+                copyQuote.classList.remove("active");
+            }
+            else {
+                alignQuoteButtons(activeContent);
+            }
+        }, { passive: true });
+        window.addEventListener("scroll", () => {
+            if (!copyQuote.classList.contains("active")) {
+                return;
+            }
+            if (activeContent === undefined) {
+                copyQuote.classList.remove("active");
+            }
+            else {
+                alignQuoteButtons(activeContent);
+            }
         }, { passive: true });
     }
     setup();
@@ -358,6 +387,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
         if (wasInaccessible) {
             copyQuote.classList.remove("touchForceInaccessible");
         }
+        activeContent = content;
         alignQuoteButtons(content);
         copyQuote.classList.remove("active");
         if (wasInaccessible) {
@@ -402,8 +432,18 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
         else if (left + dimensions.width > containerBoundaries.right) {
             left = containerBoundaries.right - dimensions.width;
         }
-        copyQuote.style.setProperty("top", `${coordinates.bottom + 7}px`);
-        copyQuote.style.setProperty("left", `${left}px`);
+        // iOS shows an own selection overlay that could appear on top of the quote
+        // selection. If the top and bottom edge are on screen then the iOS tooltip
+        // appears at the top if the top boundary is at least 50% from the top.
+        if ((0, Environment_1.platform)() === "ios") {
+            const showAbove = coordinates.top - window.scrollY < window.innerHeight / 2;
+            if (showAbove) {
+                const top = coordinates.top - dimensions.height - 7;
+                copyQuote.style.setProperty("inset", `${top}px auto auto ${left}px`);
+                return;
+            }
+        }
+        copyQuote.style.setProperty("inset", `${coordinates.bottom + 7}px auto auto ${left}px`);
     }
     function getElementBoundaries(selection) {
         if (!selection) {
@@ -418,9 +458,11 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
         const scrollTop = window.scrollY;
         return {
             bottom: rect.bottom + scrollTop,
+            height: rect.height,
             left: rect.left,
             right: rect.right,
             top: rect.top + scrollTop,
+            width: rect.height,
         };
     }
 });

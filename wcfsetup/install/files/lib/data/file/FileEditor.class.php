@@ -74,12 +74,27 @@ class FileEditor extends DatabaseObjectEditor
             [$width, $height] = \getimagesize($pathname);
         }
 
+        $exifData = $fileTemporary->exifData;
+        if ($exifData !== null) {
+            $exifData = \unserialize($exifData);
+        }
+
         $fileSize = $fileTemporary->fileSize;
         $fileHash = $fileTemporary->fileHash;
         if ($isImage) {
             $imageWasModified = false;
             try {
-                $imageWasModified = self::normalizeImageRotation($pathname, $width, $height, $mimeType);
+                $imageWasModified = self::normalizeImageRotation(
+                    $pathname,
+                    $width,
+                    $height,
+                    $mimeType,
+                    $exifData,
+                );
+
+                if ($imageWasModified && $exifData !== null) {
+                    unset($exifData['IFD0']['Orientation']);
+                }
             } catch (\Throwable) {
             }
 
@@ -100,7 +115,7 @@ class FileEditor extends DatabaseObjectEditor
             'width' => $width,
             'height' => $height,
             'uploadTime' => \TIME_NOW,
-            'exifData' => $fileTemporary->exifData,
+            'exifData' => $exifData !== null ? \serialize($exifData) : null,
         ]]);
         $file = $fileAction->executeAction()['returnValues'];
         \assert($file instanceof File);
@@ -176,7 +191,17 @@ class FileEditor extends DatabaseObjectEditor
 
             $imageWasModified = false;
             try {
-                $imageWasModified = self::normalizeImageRotation($pathname, $width, $height, $mimeType);
+                $imageWasModified = self::normalizeImageRotation(
+                    $pathname,
+                    $width,
+                    $height,
+                    $mimeType,
+                    $exifData,
+                );
+
+                if ($imageWasModified && $exifData !== null) {
+                    unset($exifData['IFD0']['Orientation']);
+                }
             } catch (\Throwable) {
             }
 
@@ -195,7 +220,7 @@ class FileEditor extends DatabaseObjectEditor
             'width' => $width,
             'height' => $height,
             'uploadTime' => $uploadTime,
-            'exifData' => JSON::encode($exifData),
+            'exifData' => $exifData !== null ? \serialize($exifData) : null,
         ]]);
         $file = $fileAction->executeAction()['returnValues'];
         \assert($file instanceof File);
@@ -221,20 +246,22 @@ class FileEditor extends DatabaseObjectEditor
      * Rotating the image can cause the dimensions to change, the image size to
      * differ and the file hash to be different.
      *
+     * @param null|array<string, array<string, mixed>> $exifData
      * @return bool true if the image was modified.
      */
     private static function normalizeImageRotation(
         string $pathname,
         int $width,
         int $height,
-        string $mimeType
+        string $mimeType,
+        ?array $exifData,
     ): bool {
         $adapter = ImageHandler::getInstance()->getAdapter();
         if (!$adapter->checkMemoryLimit($width, $height, $mimeType)) {
             return false;
         }
 
-        $exifData = ExifUtil::getExifData($pathname);
+        $exifData ??= ExifUtil::getExifData($pathname);
         if ($exifData === []) {
             return false;
         }

@@ -2,10 +2,12 @@
 
 namespace wcf\system\form\option;
 
+use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\MultipleSelectionFormField;
 use wcf\system\form\option\formatter\IFormOptionFormatter;
 use wcf\system\form\option\formatter\MultipleSelectionFormatter;
+use wcf\system\WCF;
 
 /**
  * Implementation of a form field for selecting multiple values.
@@ -28,7 +30,8 @@ class CheckboxesFormOption extends AbstractFormOption
     #[\Override]
     public function getFormField(string $id, array $configuration = []): AbstractFormField
     {
-        $formField = MultipleSelectionFormField::create($id);
+        $formField = MultipleSelectionFormField::create($id)
+            ->ignoreInvalidValues();
         $this->setSelectOptions($formField, $configuration);
 
         return $formField;
@@ -50,5 +53,36 @@ class CheckboxesFormOption extends AbstractFormOption
     public function getPlainTextFormatter(): IFormOptionFormatter
     {
         return $this->getFormatter();
+    }
+
+    #[\Override]
+    public function serializeValue(mixed $value): string
+    {
+        return \implode(',', $value);
+    }
+
+    /**
+     * @return array<string|int>
+     */
+    #[\Override]
+    public function unserializeValue(string $value): array
+    {
+        return \explode(',', $value);
+    }
+
+    #[\Override]
+    public function applyFilter(DatabaseObjectList $list, string $columnName, mixed $value): void
+    {
+        foreach ($this->unserializeValue($value) as $selectedValue) {
+            $list->getConditionBuilder()->add(
+                "({$columnName} = ? OR {$columnName} LIKE ? OR {$columnName} LIKE ? OR {$columnName} LIKE ?) ",
+                [
+                    $selectedValue,
+                    WCF::getDB()->escapeLikeValue($selectedValue) . ',%',
+                    '%,' . WCF::getDB()->escapeLikeValue($selectedValue),
+                    '%,' . WCF::getDB()->escapeLikeValue($selectedValue) . ',%',
+                ]
+            );
+        }
     }
 }

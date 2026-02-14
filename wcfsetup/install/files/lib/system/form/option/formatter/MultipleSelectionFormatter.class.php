@@ -22,7 +22,7 @@ final class MultipleSelectionFormatter implements IFormOptionFormatter
             return '';
         };
 
-        $keys = \explode("\n", $value);
+        $keys = \explode(",", $value);
         $selectOptions = JSON::decode($configuration['selectOptions']);
         $html = '';
 

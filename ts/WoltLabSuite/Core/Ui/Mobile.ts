@@ -294,7 +294,7 @@ function rebuildMobileNavigation(navigation: HTMLElement): void {
     }
 
     const label = button.querySelector("span:not(.icon)")!;
-    item.innerHTML = `<a href="#">${label.textContent!}</a>`;
+    item.innerHTML = `<a href="#">${label.textContent}</a>`;
     item.children[0].addEventListener("click", function (event) {
       event.preventDefault();
       event.stopPropagation();

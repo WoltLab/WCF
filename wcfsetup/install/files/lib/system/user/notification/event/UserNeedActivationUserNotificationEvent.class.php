@@ -73,6 +73,6 @@ class UserNeedActivationUserNotificationEvent extends AbstractUserNotificationEv
     #[\Override]
     public function getEventHash()
     {
-        return \sha1($this->eventID);
+        return \sha1((string)$this->eventID);
     }
 }

@@ -6,7 +6,6 @@ use wcf\data\acp\session\log\ACPSessionLog;
 use wcf\page\AbstractGridViewPage;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\gridView\admin\ACPSessionGridView;
-use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -69,15 +68,8 @@ final class ACPSessionLogPage extends AbstractGridViewPage
     }
 
     #[\Override]
-    protected function initGridView(): void
+    protected function getBaseUrlParameters(): array
     {
-        parent::initGridView();
-
-        $this->gridView->setBaseUrl(
-            LinkHandler::getInstance()->getControllerLink(
-                ACPSessionLogPage::class,
-                ['id' => $this->sessionLog->sessionLogID]
-            )
-        );
+        return ['id' => $this->sessionLog->sessionLogID];
     }
 }

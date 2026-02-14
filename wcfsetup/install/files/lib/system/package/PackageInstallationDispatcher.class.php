@@ -15,7 +15,8 @@ use wcf\data\package\PackageEditor;
 use wcf\data\user\UserAction;
 use wcf\event\package\PackageListChanged;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\cache\command\ClearCache;
+use wcf\command\cache\ClearCache;
+use wcf\command\package\SetLastUpdateTime;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\devtools\DevtoolsSetup;
 use wcf\system\Environment;
@@ -29,7 +30,6 @@ use wcf\system\form\element\MultipleSelectionFormElement;
 use wcf\system\form\element\TextInputFormElement;
 use wcf\system\form\FormDocument;
 use wcf\system\language\LanguageFactory;
-use wcf\system\package\command\RebuildBootstrapper;
 use wcf\system\package\plugin\IPackageInstallationPlugin;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\request\RouteHandler;
@@ -175,15 +175,7 @@ class PackageInstallationDispatcher
 
             $this->logInstallationStep([], 'start cleanup');
 
-            // update "last update time" option
-            $sql = "UPDATE  wcf1_option
-                    SET     optionValue = ?
-                    WHERE   optionName = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([
-                TIME_NOW,
-                'last_update_time',
-            ]);
+            (new SetLastUpdateTime())();
 
             if ($this->action == 'install') {
                 // save localized package infos
@@ -217,7 +209,7 @@ class PackageInstallationDispatcher
 
             VersionTracker::getInstance()->createStorageTables();
 
-            $command = new RebuildBootstrapper();
+            $command = new \wcf\command\package\RebuildBootstrapper();
             $command();
 
             EventHandler::getInstance()->fire(new PackageListChanged());

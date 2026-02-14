@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+Please also have a look at our
+[API and deprecation policy](docs/API-and-deprecation-policy.md).
+
 ## x.y.z
 
 ### Added
@@ -14,6 +17,106 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ### Removed
 
 ### Fixed
+
+### Documentation
+
+## 9.1.0: Add support for PHP 8.5
+
+### Added
+
+- Add support for PHP 8.5 (#1355)
+
+### Fixed
+
+- Improve performance of selector validation
+  (avoiding silent PCRE catastrophic failure) (#1372)
+- Use typesafe versions of PHP functions (#1368, #1370)
+
+## 9.0.0: New features, deprecation removals and bug fixes
+
+### Added
+
+- Interface `RuleContainer` for `RuleSet` `Rule` manipulation methods (#1256)
+- Partial support for CSS Color Module Level 4:
+    - `rgb` and `rgba`, and `hsl` and `hsla` are now aliases (#797)
+    - Parse color functions that use the "modern" syntax (#800)
+    - Render RGB functions with "modern" syntax when required (#840)
+    - Support `none` as color function component value (#859)
+- Add a class diagram to the README (#482)
+- Add more tests (#449)
+
+### Changed
+
+- `DeclarationBlock` no longer extends `RuleSet` and instead has a `RuleSet` as
+  a property; use `getRuleSet()` to access it directly (#1194)
+- The default line (and column) number is now `null` (not zero) (#1288)
+- `setPosition()` (in `Rule` and other classes) now has fluent interface,
+  returning itself (#1259)
+- `RuleSet::removeRule()` now only allows `Rule` as the parameter
+  (implementing classes are `AtRuleSet` and `DeclarationBlock`);
+  use `removeMatchingRules()` or `removeAllRules()` for other functions (#1255)
+- `RuleSet::getRules()` and `getRulesAssoc()` now only allow `string` or `null`
+  as the parameter (implementing classes are `AtRuleSet` and `DeclarationBlock`)
+  (#1253)
+- Initialize `KeyFrame` properties to sensible defaults (#1146)
+- Make `OutputFormat` `final` (#1128)
+- Make `Selector` a `Renderable` (#1017)
+- Only allow `string` for some `OutputFormat` properties (#885)
+- Use more native type declarations and strict mode
+  (#641, #772, #774, #778, #804, #841, #873, #875, #891, #922, #923, #933, #958,
+  #964, #967, #1000, #1044, #1134, #1136, #1137, #1139, #1140, #1141, #1145,
+  #1162, #1163, #1166, #1172, #1174, #1178, #1179, #1181, #1183, #1184, #1186,
+  #1187, #1190, #1192, #1193, #1203)
+- Add visibility to all class/interface constants (#469)
+
+### Removed
+
+- Remove `getLineNo()` from these classes (use `getLineNumber()` instead):
+  `Comment`, `CSSList`, `SourceException`, `Charset`, `CSSNamespace`, `Import`,
+  `Rule`, `DeclarationBlock`, `RuleSet`, `CSSFunction`, `Value` (#1258)
+- Remove `Rule::getColNo()` (use `getColumnNumber()` instead) (#1287)
+- Passing a string as the first argument to `getAllValues()` is no longer
+  supported and will not work;
+  the search pattern should now be passed as the second argument (#1243)
+- Passing a Boolean as the second argument to `getAllValues()` is no longer
+  supported and will not work; the flag for searching in function arguments
+  should now be passed as the third argument (#1243)
+- Remove `__toString()` (#1046)
+- Drop magic method forwarding in `OutputFormat` (#898)
+- Drop `atRuleArgs()` from the `AtRule` interface (#1141)
+- Remove `OutputFormat::get()` and `::set()` (#1108, #1110)
+- Drop special support for vendor prefixes (#1083)
+- Remove the IE hack in `Rule` (#995)
+- Drop `getLineNo()` from the `Renderable` interface (#1038)
+- Remove `OutputFormat::level()` (#874)
+- Remove expansion of shorthand properties (#838)
+- Remove `Parser::setCharset/getCharset` (#808)
+- Remove `Rule::getValues()` (#582)
+- Remove `Rule::setValues()` (#562)
+- Remove `Document::getAllSelectors()` (#561)
+- Remove `DeclarationBlock::getSelector()` (#559)
+- Remove `DeclarationBlock::setSelector()` (#560)
+- Drop support for PHP < 7.2 (#420)
+
+### Fixed
+
+- Remove trailing semicolon from declaration blocks with 'compact'
+  `OutputFormat` (#1345)
+- Parse selector functions (like `:not`) with comma-separated arguments (#1292)
+- Parse quoted attribute selector value containing comma (#1323)
+- Allow comma in selectors (e.g. `:not(html, body)`) (#1293)
+- Insert `Rule` before sibling even with different property name
+  (in `RuleSet::addRule()`) (#1270)
+- Ensure `RuleSet::addRule()` sets non-negative column number when sibling
+  provided (#1268)
+- Don't render `rgb` colors with percentage values using hex notation (#803)
+
+### Documentation
+
+- Add an API and deprecation policy (#720)
+
+@ziegenberg is a new contributor to this release and did a lot of the heavy
+lifting. Thanks! :heart:
 
 ## 8.9.0: New features, bug fixes and deprecations
 
@@ -108,21 +211,23 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
-- Add support for PHP 8.4 (#675, #701, #746, #751)
+- Add support for PHP 8.4 (#643, #657)
 
 ### Changed
 
-- Mark parsing-internal classes and methods as `@internal` (#711)
+- Mark parsing-internal classes and methods as `@internal` (#674)
 - Block installations on unsupported higher PHP versions (#691)
 
 ### Deprecated
 
-- Deprecate the expansion of shorthand properties (#719)
-- Deprecate `Parser::setCharset()` and `Parser::getCharset()` (#703)
+- Deprecate the expansion of shorthand properties
+  (#578, #580, #579, #577, #576, #575, #574, #573, #572, #571, #570, #569, #566,
+  #567, #558, #714)
+- Deprecate `Parser::setCharset()` and `Parser::getCharset()` (#688)
 
 ### Fixed
 
-- Fix type errors in PHP strict mode (#695)
+- Fix type errors in PHP strict mode (#664)
 
 ## 8.6.0
 
@@ -134,14 +239,14 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
-- Improve performance of Value::parseValue with many delimiters by refactoring
+- Improve performance of `Value::parseValue` with many delimiters by refactoring
   to remove `array_search()` (#413)
 
 ## 8.5.2
 
 ### Changed
 
-- Mark all class constants as `@internal` (#500)
+- Mark all class constants as `@internal` (#472)
 
 ### Fixed
 

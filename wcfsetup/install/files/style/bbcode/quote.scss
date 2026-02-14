@@ -69,6 +69,10 @@
 }
 
 .quoteBoxContent {
+	grid-area: content;
+}
+
+.quoteBox.collapsed .quoteBoxContent {
 	display: -webkit-box;
 	grid-area: content;
 	overflow: hidden;
@@ -104,6 +108,13 @@
 
 .quoteBox.quoteBox--tabMenu .quoteBoxContent {
 	pointer-events: none !important;
+}
+
+.quoteBox__bulk__actions {
+	display: flex;
+	gap: 5px;
+	justify-content: end;
+	margin-bottom: 10px;
 }
 
 @include screen-xs {

@@ -7,13 +7,12 @@ use wcf\data\DatabaseObject;
 use wcf\data\tag\Tag;
 use wcf\data\tag\TagList;
 use wcf\event\gridView\admin\TagGridViewInitialized;
+use wcf\page\TaggedListViewPage;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\NumericFilter;
-use wcf\system\gridView\filter\SelectFilter;
-use wcf\system\gridView\filter\TextFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
+use wcf\system\gridView\renderer\ILinkColumnRenderer;
 use wcf\system\gridView\renderer\NumberColumnRenderer;
 use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
 use wcf\system\interaction\admin\TagInteractions;
@@ -21,6 +20,11 @@ use wcf\system\interaction\bulk\admin\TagBulkInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\language\LanguageFactory;
+use wcf\system\request\LinkHandler;
+use wcf\system\view\filter\IntegerFilter;
+use wcf\system\view\filter\ObjectIdFilter;
+use wcf\system\view\filter\SelectFilter;
+use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -42,16 +46,16 @@ final class TagGridView extends AbstractGridView
             GridViewColumn::for('tagID')
                 ->label('wcf.global.objectID')
                 ->renderer(new ObjectIdColumnRenderer())
-                ->sortable(),
+                ->sortable()
+                ->filter(ObjectIdFilter::class),
             GridViewColumn::for('name')
                 ->label('wcf.acp.tag.name')
                 ->titleColumn()
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->sortable(),
             GridViewColumn::for('synonymName')
                 ->label('wcf.acp.tag.synonymFor')
-                ->renderer(new DefaultColumnRenderer())
-                ->filter(new TextFilter("synonym.name"))
+                ->filter(new TextFilter('synonymName', 'wcf.acp.tag.synonymFor', 'synonym.name'))
                 ->sortable(sortByDatabaseColumn: "synonym.name"),
             GridViewColumn::for('languageName')
                 ->label('wcf.acp.tag.languageID')
@@ -79,12 +83,44 @@ final class TagGridView extends AbstractGridView
                         }
                     }
                 )
-                ->filter(new SelectFilter(LanguageFactory::getInstance()->getLanguages(), "tag.languageID"))
+                ->filter(new SelectFilter(
+                    LanguageFactory::getInstance()->getLanguages(),
+                    'languageName',
+                    'wcf.acp.tag.languageID',
+                    'tag.languageID'
+                ))
                 ->sortable(sortByDatabaseColumn: 'language.languageName'),
             GridViewColumn::for('usageCount')
                 ->label('wcf.acp.tag.usageCount')
-                ->renderer(new NumberColumnRenderer())
-                ->filter(new NumericFilter($this->subSelectUsageCount(), true))
+                ->renderer(
+                    new class extends NumberColumnRenderer implements ILinkColumnRenderer {
+                        #[\Override]
+                        public function render(mixed $value, DatabaseObject $row): string
+                        {
+                            \assert($row instanceof Tag);
+
+                            if (!$value) {
+                                return parent::render($value, $row);
+                            }
+
+                            return \sprintf(
+                                '<a href="%s">%s<a>',
+                                StringUtil::encodeHTML(
+                                    LinkHandler::getInstance()->getControllerLink(
+                                        TaggedListViewPage::class,
+                                        [
+                                            'tagIDs' => [
+                                                $row->getObjectID()
+                                            ]
+                                        ]
+                                    )
+                                ),
+                                parent::render($value, $row),
+                            );
+                        }
+                    }
+                )
+                ->filter(new IntegerFilter('usageCount', 'wcf.acp.tag.usageCount', $this->subSelectUsageCount()))
                 ->sortable(sortByDatabaseColumn: $this->subSelectUsageCount()),
         ]);
 
@@ -96,7 +132,7 @@ final class TagGridView extends AbstractGridView
         $this->setBulkInteractionProvider(new TagBulkInteractions());
         $this->setInteractionProvider($provider);
 
-        $this->setSortField('name');
+        $this->setDefaultSortField('name');
         $this->addRowLink(new GridViewRowLink(TagEditForm::class));
     }
 

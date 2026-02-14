@@ -13,8 +13,8 @@ use wcf\system\interaction\bulk\IBulkInteractionProvider;
 use wcf\system\interaction\IInteractionProvider;
 use wcf\system\interaction\InteractionContextMenuComponent;
 use wcf\system\interaction\InteractionContextMenuComponentConfiguration;
-use wcf\system\listView\filter\IListViewFilter;
-use wcf\system\listView\filter\exception\InvalidFilterValue;
+use wcf\system\view\filter\IViewFilter;
+use wcf\system\view\filter\exception\InvalidFilterValue;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -32,9 +32,11 @@ use wcf\util\StringUtil;
  */
 abstract class AbstractListView
 {
-    private int $objectCount;
+    protected int $objectCount;
     private int $itemsPerPage = 20;
     private string $baseUrl = '';
+    private string $defaultSortField = '';
+    private string $defaultSortOrder = 'ASC';
     private string $sortField = '';
     private string $sortOrder = 'ASC';
     private string $cssClassName = '';
@@ -45,10 +47,10 @@ abstract class AbstractListView
     private ?IBulkInteractionProvider $bulkInteractionProvider = null;
     private InteractionContextMenuComponent $interactionContextMenuComponent;
     private ?InteractionContextMenuComponentConfiguration $interactionContextMenuComponentConfiguration = null;
-    private bool $allowFiltering = true;
-    private bool $allowSorting = true;
-    private bool $allowInteractions = true;
-    private bool $allowBulkInteractions = true;
+    protected bool $allowFiltering = true;
+    protected bool $allowSorting = true;
+    protected bool $allowInteractions = true;
+    protected bool $allowBulkInteractions = true;
     private int $fixedNumberOfItems = 0;
     private string $markAsReadEndpoint = '';
 
@@ -63,19 +65,19 @@ abstract class AbstractListView
     private array $availableSortFields = [];
 
     /**
-     * @var array<string, IListViewFilter>
+     * @var array<string, IViewFilter>
      */
     private array $availableFilters = [];
 
     /**
      * @var TDatabaseObject[]
      */
-    private array $objects;
+    protected array $objects;
 
     /**
      * @var TDatabaseObjectList
      */
-    private DatabaseObjectList $objectList;
+    protected DatabaseObjectList $objectList;
 
     /**
      * Returns the number of items per page.
@@ -107,6 +109,44 @@ abstract class AbstractListView
     public function setFixedNumberOfItems(int $fixedNumberOfItems): void
     {
         $this->fixedNumberOfItems = $fixedNumberOfItems;
+    }
+
+    /**
+     * Sets the default sort field of the list view.
+     */
+    public function setDefaultSortField(string $sortField): void
+    {
+        $this->defaultSortField = $sortField;
+        $this->setSortField($sortField);
+    }
+
+    /**
+     * Sets the default sort order of the list view.
+     */
+    public function setDefaultSortOrder(string $sortOrder): void
+    {
+        if ($sortOrder !== 'ASC' && $sortOrder !== 'DESC') {
+            throw new \InvalidArgumentException("Invalid value '{$sortOrder}' as default sort order given.");
+        }
+
+        $this->defaultSortOrder = $sortOrder;
+        $this->setSortOrder($sortOrder);
+    }
+
+    /**
+     * Returns the default sort field of the list view.
+     */
+    public function getDefaultSortField(): string
+    {
+        return $this->defaultSortField;
+    }
+
+    /**
+     * Returns the sort order of the list view.
+     */
+    public function getDefaultSortOrder(): string
+    {
+        return $this->defaultSortOrder;
     }
 
     /**
@@ -223,6 +263,10 @@ abstract class AbstractListView
 
     protected function validate(): void
     {
+        if ($this->getDefaultSortField() === '') {
+            throw new \InvalidArgumentException("Undefined default sort field.");
+        }
+
         if ($this->getSortField()) {
             if (!isset($this->availableSortFields[$this->getSortField()])) {
                 if (\ENABLE_DEBUG_MODE) {
@@ -321,9 +365,7 @@ abstract class AbstractListView
      */
     public function getObjectList(): DatabaseObjectList
     {
-        if (!isset($this->objectList)) {
-            $this->initObjectList();
-        }
+        $this->init();
 
         return $this->objectList;
     }
@@ -357,9 +399,16 @@ abstract class AbstractListView
      */
     public function getID(): string
     {
-        $classNamePieces = \explode('\\', static::class);
+        $id = \str_replace('\\', '_', static::class);
 
-        return \implode('-', $classNamePieces);
+        if ($this->getParameters() !== []) {
+            $parameters = $this->getParameters();
+            \array_multisort($parameters);
+
+            $id .= '_' . \sha1(\serialize($parameters));
+        }
+
+        return $id;
     }
 
     /**
@@ -367,8 +416,8 @@ abstract class AbstractListView
      */
     public function isFilterable(): bool
     {
-        return $this->allowFiltering
-            && $this->availableFilters !== [];
+        return $this->getAvailableFilters() !== []
+            && $this->allowFiltering;
     }
 
     /**
@@ -419,13 +468,13 @@ abstract class AbstractListView
         return $this->availableSortFields;
     }
 
-    public function addAvailableFilter(IListViewFilter $filter): void
+    public function addAvailableFilter(IViewFilter $filter): void
     {
         $this->availableFilters[$filter->getId()] = $filter;
     }
 
     /**
-     * @param IListViewFilter[] $filters
+     * @param IViewFilter[] $filters
      */
     public function addAvailableFilters(array $filters): void
     {
@@ -440,7 +489,7 @@ abstract class AbstractListView
     }
 
     /**
-     * @return array<string, IListViewFilter>
+     * @return array<string, IViewFilter>
      */
     public function getAvailableFilters(): array
     {
@@ -543,6 +592,27 @@ abstract class AbstractListView
     {
         return $this->allowInteractions
             && $this->interactionProvider !== null;
+    }
+
+    /**
+     * Returns true if there is at least one kind of interaction available to
+     * the current user.
+     */
+    public function hasAvailableInteractions(): bool
+    {
+        if ($this->hasBulkInteractions()) {
+            return true;
+        }
+
+        if ($this->hasInteractions()) {
+            foreach ($this->getItems() as $item) {
+                if ($this->renderInteractionContextMenuButton($item) !== '') {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -663,6 +733,8 @@ abstract class AbstractListView
 
     public function render(): string
     {
+        $this->init();
+
         return WCF::getTPL()->render('wcf', 'shared_listView', ['view' => $this]);
     }
 
@@ -676,7 +748,15 @@ abstract class AbstractListView
         return $this->containerCssClassName;
     }
 
+    /**
+     * @deprecared 6.2 Use `setMarkAsReadEndpoint()` instead.
+     */
     public function setMarkAsReadEndpoints(string $endpoint): void
+    {
+        $this->setMarkAsReadEndpoint($endpoint);
+    }
+
+    public function setMarkAsReadEndpoint(string $endpoint): void
     {
         $this->markAsReadEndpoint = $endpoint;
     }
@@ -703,6 +783,13 @@ abstract class AbstractListView
                 <span class="listView__item__unread__indicator" aria-hidden="true"></span>
             </button>
             HTML;
+    }
+
+    private function init(): void
+    {
+        if (!isset($this->objectList)) {
+            $this->initObjectList();
+        }
     }
 
     /**

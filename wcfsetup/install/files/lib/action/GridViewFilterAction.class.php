@@ -12,6 +12,7 @@ use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\Psr15DialogForm;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\WCF;
@@ -65,9 +66,19 @@ final class GridViewFilterAction implements RequestHandlerInterface
                 return $response;
             }
 
-            $data = $form->getData()['data'];
+            $rawData = $form->getData();
+            $data = $rawData['data'];
+
+            foreach ($view->getAvailableFilters() as $filter) {
+                if (!isset($rawData[$filter->getFormDataId()])) {
+                    continue;
+                }
+
+                $data[$filter->getId()] = $filter->serializeValue($rawData[$filter->getFormDataId()]);
+            }
+
             foreach ($data as $key => $value) {
-                if ($value === '' || $value === null) {
+                if ($value === '' || $value === null || $value === 0) {
                     unset($data[$key]);
                 }
             }
@@ -91,14 +102,20 @@ final class GridViewFilterAction implements RequestHandlerInterface
             WCF::getLanguage()->get('wcf.global.filter')
         );
 
-        foreach ($gridView->getFilterableColumns() as $column) {
-            $formField = $column->getFilterFormField();
+        $container = FormContainer::create('container');
+        $container->addClass('gridView__filter__list');
+        $form->appendChild($container);
 
-            if (isset($values[$column->getID()])) {
-                $formField->value($values[$column->getID()]);
+        foreach ($gridView->getAvailableFilters() as $filter) {
+            $formField = $filter->getFormField();
+
+            if (isset($values[$filter->getID()])) {
+                $value = $filter->unserializeValue($values[$filter->getID()]);
+                $formField->value($value);
             }
 
-            $form->appendChild($formField);
+            $formField->addClass('gridView__filter__item');
+            $container->appendChild($formField);
         }
 
         $form->markRequiredFields(false);

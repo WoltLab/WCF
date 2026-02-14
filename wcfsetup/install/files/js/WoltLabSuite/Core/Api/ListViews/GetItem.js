@@ -10,10 +10,15 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getItem = getItem;
-    async function getItem(listViewClass, objectId, listViewParameters) {
+    async function getItem(listViewClass, objectId, filters, listViewParameters) {
         const url = new URL(`${window.WSC_RPC_API_URL}core/list-views/item`);
         url.searchParams.set("listView", listViewClass);
         url.searchParams.set("objectID", objectId.toString());
+        if (filters) {
+            filters.forEach((value, key) => {
+                url.searchParams.set(`filters[${key}]`, value);
+            });
+        }
         if (listViewParameters) {
             listViewParameters.forEach((value, key) => {
                 if (Array.isArray(value)) {

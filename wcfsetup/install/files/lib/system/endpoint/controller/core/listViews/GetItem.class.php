@@ -40,6 +40,10 @@ final class GetItem implements IController
             throw new PermissionDeniedException();
         }
 
+        if ($parameters->filters !== []) {
+            $view->setActiveFilters($parameters->filters);
+        }
+
         $view->setObjectIDFilter($parameters->objectID);
 
         return new JsonResponse([
@@ -55,6 +59,8 @@ final class GetItemParameters
         /** @var non-empty-string */
         public readonly string $listView,
         public readonly string|int $objectID,
+        /** @var string[] */
+        public readonly array $filters,
         /** @var array<string, string|string[]> */
         public readonly array $listViewParameters,
     ) {}

@@ -8,10 +8,6 @@ use wcf\data\paid\subscription\I18nPaidSubscriptionList;
 use wcf\data\paid\subscription\PaidSubscription;
 use wcf\event\gridView\admin\PaidSubscriptionGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\I18nTextFilter;
-use wcf\system\gridView\filter\NumericFilter;
-use wcf\system\gridView\filter\ObjectIdFilter;
-use wcf\system\gridView\filter\SelectFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\NumberColumnRenderer;
@@ -22,6 +18,10 @@ use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
 use wcf\system\payment\method\PaymentMethodHandler;
+use wcf\system\view\filter\FloatFilter;
+use wcf\system\view\filter\I18nTextFilter;
+use wcf\system\view\filter\IntegerFilter;
+use wcf\system\view\filter\SelectFilter;
 use wcf\system\WCF;
 
 /**
@@ -42,22 +42,17 @@ final class PaidSubscriptionGridView extends AbstractGridView
             GridViewColumn::for('subscriptionID')
                 ->label('wcf.global.objectID')
                 ->renderer(new ObjectIdColumnRenderer())
-                ->filter(new ObjectIdFilter())
                 ->sortable(),
             GridViewColumn::for('title')
                 ->label('wcf.global.title')
                 ->titleColumn()
                 ->renderer(new PhraseColumnRenderer())
-                ->filter(new I18nTextFilter())
+                ->filter(I18nTextFilter::class)
                 ->sortable(sortByDatabaseColumn: 'titleI18n'),
-            GridViewColumn::for('description')
-                ->label('wcf.global.description')
-                ->filter(new I18nTextFilter())
-                ->hidden(),
             GridViewColumn::for('cost')
                 ->label('wcf.acp.paidSubscription.cost')
                 ->sortable()
-                ->filter(new NumericFilter())
+                ->filter(FloatFilter::class)
                 ->renderer(
                     new class extends NumberColumnRenderer {
                         #[\Override]
@@ -71,14 +66,9 @@ final class PaidSubscriptionGridView extends AbstractGridView
                         }
                     }
                 ),
-            GridViewColumn::for('currency')
-                ->label('wcf.acp.paidSubscription.currency')
-                ->filter(new SelectFilter($this->getAvailableCurrencies()))
-                ->hidden(),
             GridViewColumn::for('subscriptionLength')
                 ->label('wcf.acp.paidSubscription.subscriptionLength')
                 ->sortable()
-                ->filter(new NumericFilter())
                 ->renderer(
                     new class extends NumberColumnRenderer {
                         #[\Override]
@@ -90,11 +80,11 @@ final class PaidSubscriptionGridView extends AbstractGridView
                             }
 
                             return \sprintf(
-                                "%s %d",
+                                "%d %s",
+                                $row->subscriptionLength,
                                 WCF::getLanguage()->get(
                                     "wcf.acp.paidSubscription.subscriptionLengthUnit." . $row->subscriptionLengthUnit
-                                ),
-                                $row->subscriptionLength
+                                )
                             );
                         }
                     }
@@ -103,9 +93,13 @@ final class PaidSubscriptionGridView extends AbstractGridView
                 ->label('wcf.global.showOrder')
                 ->sortable()
                 ->renderer(new NumberColumnRenderer())
-                ->filter(new NumericFilter())
+                ->filter(IntegerFilter::class)
         ]);
 
+        $this->addAvailableFilters([
+            new I18nTextFilter('description', 'wcf.global.description'),
+            new SelectFilter($this->getAvailableCurrencies(), 'currency', 'wcf.acp.paidSubscription.currency'),
+        ]);
         $provider = new PaidSubscriptionInteractions();
         $provider->addInteractions([
             new Divider(),
@@ -115,12 +109,12 @@ final class PaidSubscriptionGridView extends AbstractGridView
         $this->addQuickInteraction(
             new ToggleInteraction(
                 "enable",
-                "core/paid/subscriptions/%s/enable",
-                "core/paid/subscriptions/%s/disable"
+                "core/paidSubscriptions/%s/enable",
+                "core/paidSubscriptions/%s/disable"
             )
         );
 
-        $this->setSortField('showOrder');
+        $this->setDefaultSortField('showOrder');
         $this->addRowLink(new GridViewRowLink(PaidSubscriptionEditForm::class));
     }
 

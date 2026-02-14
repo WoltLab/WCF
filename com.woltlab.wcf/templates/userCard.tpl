@@ -22,7 +22,7 @@
 							data-follow-user="{link controller='UserFollow' id=$user->userID}{/link}"
 							class="button small jsTooltip"
 							title="{lang}wcf.user.button.unfollow{/lang}"
-						>{icon name='minus' type='solid'}</button>
+						>{icon name='user-minus' type='solid'}</button>
 					{else}
 						<button
 							type="button"
@@ -30,7 +30,7 @@
 							data-follow-user="{link controller='UserFollow' id=$user->userID}{/link}"
 							class="button small jsTooltip"
 							title="{lang}wcf.user.button.follow{/lang}"
-						>{icon name='plus' type='solid'}</button>
+						>{icon name='user-plus' type='solid'}</button>
 					{/if}
 				{/if}
 			{/if}
@@ -40,18 +40,22 @@
 	</div>
 
 	<div class="userCard__content">
-		<h3 class="userCard__username">
-			<a href="{$user->getLink()}" class="userCard__link">{unsafe:$user->getFormattedUsername()}</a>
+		<div class="userCard__headline">
+			<h3 class="userCard__username">
+				<a href="{$user->getLink()}" class="userCard__link">{unsafe:$user->getFormattedUsername()}</a>
+			</h3>
 			
-			{if $user->banned}
-				<span class="jsTooltip jsUserBanned" title="{lang}wcf.user.banned{/lang}">
-					{icon name='lock'}
-				</span>
-			{/if}
+			<div class="userCard__statusIcons">
+				{if $user->banned}
+					<span class="jsTooltip jsUserBanned" role="status" title="{lang}wcf.user.banned{/lang}">
+						{icon name='lock'}
+					</span>
+				{/if}
 
-			{event name='icons'}
-		</h3>
-
+				{event name='icons'}
+			</div>
+		</div>
+		
 		{event name='afterUsername'}
 
 		{if MODULE_USER_RANK}
@@ -110,24 +114,24 @@
 					{event name='beforeStats'}
 					
 					{if MODULE_LIKE && $user->likesReceived}
-						<div class="userCard__footer__statsItem">
+						<a class="userCard__footer__statsItem" href="{$user->getLink()}#likes">
 							<span class="userCard__footer__statsItem__key">{lang}wcf.user.reactionsReceived{/lang}</span>
 							<span class="userCard__footer__statsItem__value">{#$user->likesReceived}</span>
-						</div>
+						</a>
 					{/if}
 
 					{if $user->activityPoints}
-						<div class="userCard__footer__statsItem">
+						<button type="button" class="userCard__footer__statsItem activityPointsDisplay" data-user-id="{$user->userID}">
 							<span class="userCard__footer__statsItem__key">{lang}wcf.user.activityPoint{/lang}</span>
 							<span class="userCard__footer__statsItem__value">{#$user->activityPoints}</span>
-						</div>
+						</button>
 					{/if}
 
 					{if $user->showTrophyPoints()}
-						<div class="userCard__footer__statsItem">
+						<button type="button" class="userCard__footer__statsItem userTrophyOverlayList" data-user-id="{$user->userID}">
 							<span class="userCard__footer__statsItem__key">{lang}wcf.user.trophy.trophyPoints{/lang}</span>
 							<span class="userCard__footer__statsItem__value">{#$user->trophyPoints}</span>
-						</div>
+						</button>
 					{/if}
 
 					{event name='afterStats'}

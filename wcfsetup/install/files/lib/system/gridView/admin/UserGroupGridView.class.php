@@ -9,8 +9,6 @@ use wcf\data\user\group\I18nUserGroupList;
 use wcf\data\user\group\UserGroup;
 use wcf\event\gridView\admin\UserGroupGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\I18nTextFilter;
-use wcf\system\gridView\filter\NumericFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\ILinkColumnRenderer;
@@ -21,6 +19,8 @@ use wcf\system\interaction\admin\UserGroupInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\request\LinkHandler;
+use wcf\system\view\filter\I18nTextFilter;
+use wcf\system\view\filter\IntegerFilter;
 use wcf\system\WCF;
 
 /**
@@ -45,7 +45,7 @@ final class UserGroupGridView extends AbstractGridView
             GridViewColumn::for("groupName")
                 ->label("wcf.global.name")
                 ->titleColumn()
-                ->filter(new I18nTextFilter())
+                ->filter(I18nTextFilter::class)
                 ->renderer(
                     new class extends PhraseColumnRenderer {
                         #[\Override]
@@ -94,11 +94,11 @@ final class UserGroupGridView extends AbstractGridView
                         }
                     }
                 )
-                ->filter(new NumericFilter($this->subSelectMembers()))
+                ->filter(new IntegerFilter('members', 'wcf.acp.group.members', $this->subSelectMembers()))
                 ->sortable(sortByDatabaseColumn: $this->subSelectMembers()),
             GridViewColumn::for("priority")
                 ->label("wcf.acp.group.priority")
-                ->filter(new NumericFilter())
+                ->filter(IntegerFilter::class)
                 ->renderer(new NumberColumnRenderer())
                 ->sortable(),
         ]);
@@ -114,7 +114,7 @@ final class UserGroupGridView extends AbstractGridView
             UserGroupEditForm::class,
             isAvailableCallback: static fn(UserGroup $group) => $group->isEditable()
         ));
-        $this->setSortField("groupName");
+        $this->setDefaultSortField("groupName");
     }
 
     private function subSelectMembers(): string

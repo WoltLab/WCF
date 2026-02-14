@@ -54,6 +54,14 @@ abstract class AbstractListViewPage extends AbstractPage
     }
 
     #[\Override]
+    public function show()
+    {
+        $this->canonicalURL = $this->getCanonicalUrl();
+
+        return parent::show();
+    }
+
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -139,19 +147,17 @@ abstract class AbstractListViewPage extends AbstractPage
             );
         }
 
-        $linkTags[] = \sprintf(
-            '<link rel="canonical" href="%s">',
-            StringUtil::encodeHTML(
-                LinkHandler::getInstance()->getControllerLink(static::class, \array_merge(
-                    $this->getBaseUrlParameters(),
-                    [
-                        'pageNo' => $this->listView->getPageNo() !== 1 ? $this->listView->getPageNo() : null,
-                    ]
-                ))
-            )
-        );
-
         return \implode("\n", $linkTags);
+    }
+
+    protected function getCanonicalUrl(): string
+    {
+        return LinkHandler::getInstance()->getControllerLink(static::class, \array_merge(
+            $this->getBaseUrlParameters(),
+            [
+                'pageNo' => $this->pageNo !== 1 ? $this->pageNo : null,
+            ]
+        ));
     }
 
     /**

@@ -37,12 +37,12 @@ final class ArticleCategoryAction implements RequestHandlerInterface
             $request->getQueryParams(),
             <<<'EOT'
                 array {
-                    objectIDs: positive-int[]
+                    ids: positive-int[]
                 }
                 EOT
         );
 
-        if ($parameters['objectIDs'] === []) {
+        if ($parameters['ids'] === []) {
             throw new IllegalLinkException();
         }
 

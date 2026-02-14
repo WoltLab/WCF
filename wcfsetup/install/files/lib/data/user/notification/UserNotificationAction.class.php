@@ -56,7 +56,6 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
                 VALUES      (?, ?, ?)";
         $statement = WCF::getDB()->prepare($sql);
 
-        WCF::getDB()->beginTransaction();
         foreach ($notifications as $notificationData) {
             $statement->execute([
                 $notificationData['object']->notificationID,
@@ -64,7 +63,6 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
                 TIME_NOW,
             ]);
         }
-        WCF::getDB()->commitTransaction();
 
         return $notifications;
     }
@@ -128,7 +126,6 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
                 WHERE   notificationID = ?";
         $triggerStatement = WCF::getDB()->prepare($sql);
 
-        WCF::getDB()->beginTransaction();
         $notificationIDs = [];
         foreach ($notifications as $notificationData) {
             $notificationIDs[] = $notificationData['object']->notificationID;
@@ -144,7 +141,6 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
                 $notificationData['object']->notificationID,
             ]);
         }
-        WCF::getDB()->commitTransaction();
 
         $notificationList = new UserNotificationList();
         $notificationList->setObjectIDs($notificationIDs);

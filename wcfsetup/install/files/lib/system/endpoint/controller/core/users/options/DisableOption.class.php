@@ -30,7 +30,7 @@ final class DisableOption implements IController
         $this->assertOptionCanBeDisabled();
 
         if (!$option->isDisabled) {
-            (new \wcf\system\user\option\command\DisableOption($option))();
+            (new \wcf\command\user\option\DisableOption($option))();
         }
 
         return new JsonResponse([]);

@@ -4,7 +4,13 @@
 			{if $view->isFilterable()}
 				<div class="listView__filters" id="{$view->getID()}_filters">
 					{foreach from=$view->getActiveFilters() item='value' key='key'}
-						<button type="button" class="button small" data-filter="{$key}" data-filter-value="{$value}">
+						<button
+							type="button"
+							class="button small jsTooltip"
+							data-filter="{$key}"
+							data-filter-value="{$value}"
+							title="{lang filterLabel=$view->getFilterLabel($key)}wcf.page.removeFilterTooltip{/lang}"
+						>
 							{icon name='circle-xmark'}
 							{$view->getFilterLabel($key)}
 						</button>
@@ -12,11 +18,19 @@
 				</div>
 			{/if}
 			<div class="listView__header__buttons">
-				{if $view->hasBulkInteractions()}
+				{if $view->hasAvailableInteractions()}
 					<div class="listView__header__button">
-						<label class="listView__selectAllItems__label jsTooltip" title="{lang}wcf.clipboard.item.markAll{/lang}">
-							<input type="checkbox" id="{$view->getID()}_selectAllItems" class="listView__selectAllItems" aria-label="{lang}wcf.clipboard.item.markAll{/lang}">
-						</label>
+						<button type="button" class="button small listView__editMode__toggle">
+							{icon name='pencil'}
+							<span>{lang}wcf.global.button.edit{/lang}</span>
+						</button>
+
+						{if $view->hasBulkInteractions()}
+							<label class="listView__selectAllItems__label jsTooltip" title="{lang}wcf.clipboard.item.markAll{/lang}">
+								<input type="checkbox" id="{$view->getID()}_selectAllItems" class="listView__selectAllItems"
+									aria-label="{lang}wcf.clipboard.item.markAll{/lang}">
+							</label>
+						{/if}
 					</div>
 				{/if}
 				{if $view->isSortable()}
@@ -57,27 +71,29 @@
 	<woltlab-core-notice type="info" id="{$view->getID()}_noItemsNotice"{if $view->countItems()} hidden{/if}>{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
 
 	<div class="listView__footer" id="{$view->getID()}_footer"{if $view->countPages() < 2} hidden{/if}>
-		{if $view->hasBulkInteractions()}
-			<div id="{$view->getID()}_selectionBar" class="listView__selectionBar dropdown" hidden>
-				<button type="button" id="{$view->getID()}_bulkInteractionButton" class="button small listView__bulkInteractionButton dropdownToggle"></button>
-				<ul class="dropdownMenu">
-					<li class="disabled"><span>{lang}wcf.global.loading{/lang}</span></li>
-					<li class="dropdownDivider"></li>
-					<li>
-						<button type="button" id="{$view->getID()}_resetSelectionButton">{lang}wcf.clipboard.item.unmarkAll{/lang}</button>
-					</li>
-				</ul>
-			</div>
-		{/if}
+		<div class="listView__footer__container">
+			{if $view->hasBulkInteractions()}
+				<div id="{$view->getID()}_selectionBar" class="listView__selectionBar dropdown" hidden>
+					<button type="button" id="{$view->getID()}_bulkInteractionButton" class="button small listView__bulkInteractionButton dropdownToggle"></button>
+					<ul class="dropdownMenu">
+						<li class="disabled"><span>{lang}wcf.global.loading{/lang}</span></li>
+						<li class="dropdownDivider"></li>
+						<li>
+							<button type="button" id="{$view->getID()}_resetSelectionButton">{lang}wcf.clipboard.item.unmarkAll{/lang}</button>
+						</li>
+					</ul>
+				</div>
+			{/if}
 
-		<div class="listView__pagination">
-			<woltlab-core-pagination
-				id="{$view->getID()}_pagination"
-				page="{$view->getPageNo()}"
-				count="{$view->countPages()}"
-				behavior="button"
-				url="{$view->getBaseUrl()}"
-			></woltlab-core-pagination>
+			<div class="listView__pagination">
+				<woltlab-core-pagination
+					id="{$view->getID()}_pagination"
+					page="{$view->getPageNo()}"
+					count="{$view->countPages()}"
+					behavior="button"
+					url="{$view->getBaseUrl()}"
+				></woltlab-core-pagination>
+			</div>
 		</div>
 	</div>
 </div>
@@ -85,6 +101,7 @@
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Component/ListView'], ({ ListView }) => {
 		WoltLabLanguage.registerPhrase("wcf.clipboard.button.numberOfSelectedItems", '{jslang __literal=true}wcf.clipboard.button.numberOfSelectedItems{/jslang}');
+		WoltLabLanguage.registerPhrase("wcf.page.removeFilterTooltip", '{jslang __literal=true}wcf.page.removeFilterTooltip{/jslang}');
 		
 		new ListView(
 			'{unsafe:$view->getID()|encodeJS}',
@@ -93,6 +110,8 @@
 			'{unsafe:$view->getBaseUrl()|encodeJS}',
 			'{unsafe:$view->getSortField()|encodeJS}',
 			'{unsafe:$view->getSortOrder()|encodeJS}',
+			'{unsafe:$view->getDefaultSortField()|encodeJS}',
+			'{unsafe:$view->getDefaultSortOrder()|encodeJS}',
 			'{unsafe:$view->getBulkInteractionProviderClassName()|encodeJS}',
 			new Map([
 				{foreach from=$view->getParameters() key='name' item='value'}

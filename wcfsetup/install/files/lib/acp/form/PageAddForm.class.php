@@ -537,17 +537,15 @@ class PageAddForm extends AbstractForm
      */
     protected function validateTitle()
     {
-        if ($this->addPageToMainMenu) {
-            if ($this->isMultilingual) {
-                foreach ($this->availableLanguages as $language) {
-                    if (empty($this->title[$language->languageID])) {
-                        throw new UserInputException('title_' . $language->languageID);
-                    }
+        if ($this->isMultilingual || $this->pageType === 'system') {
+            foreach ($this->availableLanguages as $language) {
+                if (empty($this->title[$language->languageID])) {
+                    throw new UserInputException('title_' . $language->languageID);
                 }
-            } else {
-                if (empty($this->title[0])) {
-                    throw new UserInputException('title');
-                }
+            }
+        } else {
+            if (empty($this->title[0])) {
+                throw new UserInputException('title');
             }
         }
     }
@@ -873,6 +871,7 @@ class PageAddForm extends AbstractForm
             'menuItemNodeList' => $this->menuItems->getNodeList(),
             'enableShareButtons' => $this->enableShareButtons,
             'invertPermissions' => $this->invertPermissions,
+            'supportsCustomUrl' => true,
         ]);
     }
 }

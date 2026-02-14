@@ -8,7 +8,6 @@ use wcf\data\bbcode\BBCodeList;
 use wcf\data\DatabaseObject;
 use wcf\event\gridView\admin\BBCodeGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\TextFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\AbstractColumnRenderer;
@@ -16,6 +15,7 @@ use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
 use wcf\system\interaction\admin\BBCodeInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
+use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
 
 /**
@@ -39,7 +39,7 @@ final class BBCodeGridView extends AbstractGridView
                 ->sortable(),
             GridViewColumn::for('bbcodeTag')
                 ->label('wcf.acp.bbcode.bbcodeTag')
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->titleColumn()
                 ->renderer(
                     new class extends AbstractColumnRenderer {
@@ -53,7 +53,7 @@ final class BBCodeGridView extends AbstractGridView
                 ->sortable(),
             GridViewColumn::for('className')
                 ->label('wcf.acp.bbcode.className')
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->sortable(),
         ]);
 
@@ -64,7 +64,7 @@ final class BBCodeGridView extends AbstractGridView
         ]);
         $this->setInteractionProvider($provider);
 
-        $this->setSortField('bbcodeTag');
+        $this->setDefaultSortField('bbcodeTag');
         $this->addRowLink(new GridViewRowLink(BBCodeEditForm::class));
     }
 

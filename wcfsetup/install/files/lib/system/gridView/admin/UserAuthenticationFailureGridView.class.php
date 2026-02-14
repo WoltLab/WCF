@@ -8,10 +8,6 @@ use wcf\data\user\authentication\failure\UserAuthenticationFailure;
 use wcf\data\user\authentication\failure\UserAuthenticationFailureList;
 use wcf\event\gridView\admin\UserAuthenticationFailureGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\IpAddressFilter;
-use wcf\system\gridView\filter\SelectFilter;
-use wcf\system\gridView\filter\TextFilter;
-use wcf\system\gridView\filter\TimeFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
 use wcf\system\gridView\renderer\IpAddressColumnRenderer;
@@ -19,6 +15,10 @@ use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
 use wcf\system\gridView\renderer\TimeColumnRenderer;
 use wcf\system\gridView\renderer\TruncatedTextColumnRenderer;
 use wcf\system\gridView\renderer\UserLinkColumnRenderer;
+use wcf\system\view\filter\IpAddressFilter;
+use wcf\system\view\filter\SelectFilter;
+use wcf\system\view\filter\TextFilter;
+use wcf\system\view\filter\TimeFilter;
 use wcf\system\WCF;
 
 /**
@@ -44,10 +44,14 @@ final class UserAuthenticationFailureGridView extends AbstractGridView
                 ->label("wcf.acp.user.authentication.failure.environment")
                 ->sortable()
                 ->filter(
-                    new SelectFilter([
-                        'user' => "wcf.acp.user.authentication.failure.environment.user",
-                        'admin' => "wcf.acp.user.authentication.failure.environment.admin",
-                    ])
+                    new SelectFilter(
+                        [
+                            'user' => "wcf.acp.user.authentication.failure.environment.user",
+                            'admin' => "wcf.acp.user.authentication.failure.environment.admin",
+                        ],
+                        "environment",
+                        "wcf.acp.user.authentication.failure.environment"
+                    )
                 )
                 ->renderer(
                     new class extends DefaultColumnRenderer {
@@ -65,21 +69,29 @@ final class UserAuthenticationFailureGridView extends AbstractGridView
             GridViewColumn::for("userID")
                 ->label("wcf.user.username")
                 ->titleColumn()
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->renderer(new UserLinkColumnRenderer(UserEditForm::class))
                 ->sortable(),
             GridViewColumn::for("time")
                 ->label("wcf.acp.user.authentication.failure.time")
-                ->filter(new TimeFilter())
+                ->filter(TimeFilter::class)
                 ->renderer(new TimeColumnRenderer())
                 ->sortable(),
+            GridViewColumn::for("lastActivityTime")
+                ->label("wcf.user.lastActivityTime")
+                ->renderer(new TimeColumnRenderer())
+                ->sortable(sortByDatabaseColumn: "lastActivityTime"),
             GridViewColumn::for("validationError")
                 ->label("wcf.acp.user.authentication.failure.validationError")
                 ->filter(
-                    new SelectFilter([
-                        'invalidPassword' => "wcf.acp.user.authentication.failure.validationError.invalidPassword",
-                        "invalidUsername" => "wcf.acp.user.authentication.failure.validationError.invalidUsername",
-                    ])
+                    new SelectFilter(
+                        [
+                            "invalidPassword" => "wcf.acp.user.authentication.failure.validationError.invalidPassword",
+                            "invalidUsername" => "wcf.acp.user.authentication.failure.validationError.invalidUsername",
+                        ],
+                        "validationError",
+                        "wcf.acp.user.authentication.failure.validationError"
+                    )
                 )
                 ->renderer(
                     new class extends DefaultColumnRenderer {
@@ -97,18 +109,19 @@ final class UserAuthenticationFailureGridView extends AbstractGridView
                 ->sortable(),
             GridViewColumn::for("ipAddress")
                 ->label("wcf.user.ipAddress")
-                ->filter(new IpAddressFilter())
+                ->filter(IpAddressFilter::class)
                 ->renderer(new IpAddressColumnRenderer())
                 ->sortable(),
             GridViewColumn::for("userAgent")
                 ->label("wcf.user.userAgent")
+                ->filter(TextFilter::class)
+                ->unsafeDisableEncoding()
                 ->renderer(new TruncatedTextColumnRenderer(75))
-                ->filter(new TextFilter())
                 ->sortable(),
         ]);
 
-        $this->setSortField("time");
-        $this->setSortOrder("DESC");
+        $this->setDefaultSortField("time");
+        $this->setDefaultSortOrder("DESC");
     }
 
     #[\Override]
@@ -121,7 +134,10 @@ final class UserAuthenticationFailureGridView extends AbstractGridView
     #[\Override]
     protected function createObjectList(): UserAuthenticationFailureList
     {
-        return new UserAuthenticationFailureList();
+        $list = new UserAuthenticationFailureList();
+        $list->sqlSelects = "(SELECT lastActivityTime FROM wcf1_user WHERE userID = user_authentication_failure.userID) AS lastActivityTime";
+
+        return $list;
     }
 
     #[\Override]

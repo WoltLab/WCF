@@ -25,13 +25,8 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   3.0
  *
- * @method      ArticleCategory[]   getChildCategories()
- * @method      ArticleCategory[]   getAllChildCategories()
- * @method      ?ArticleCategory     getParentCategory()
- * @method      ArticleCategory[]   getParentCategories()
- * @method static ArticleCategory|null    getCategory($categoryID)
- * @property-read       string $sortField
- * @property-read       string $sortOrder
+ * @property-read string $sortField
+ * @property-read string $sortOrder
  */
 class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleObject, ITitledLinkObject
 {

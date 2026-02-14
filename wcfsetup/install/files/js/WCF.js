@@ -4442,6 +4442,7 @@ if (COMPILER_TARGET_DEFAULT) {
 	 * Default implementation for inline editors.
 	 *
 	 * @param        string                elementSelector
+	 * @deprecated 6.2 Use [interactions](https://docs.woltlab.com/6.2/php/api/interactions/) instead
 	 */
 	WCF.InlineEditor = Class.extend({
 		/**

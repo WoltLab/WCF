@@ -7,12 +7,13 @@ use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
 use wcf\event\IPsr14Event;
 use wcf\system\event\EventHandler;
-use wcf\system\gridView\filter\exception\InvalidFilterValue;
+use wcf\system\view\filter\exception\InvalidFilterValue;
 use wcf\system\interaction\bulk\IBulkInteractionProvider;
 use wcf\system\interaction\IInteraction;
 use wcf\system\interaction\IInteractionProvider;
 use wcf\system\interaction\InteractionContextMenuComponent;
 use wcf\system\request\LinkHandler;
+use wcf\system\view\filter\IViewFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -51,20 +52,37 @@ abstract class AbstractGridView
      */
     protected DatabaseObjectList $objectList;
 
-    private GridViewRowLink $rowLink;
+    private IGridViewRowLink $rowLink;
     private int $rowsPerPage = 20;
     private string $baseUrl = '';
+    private string $defaultSortField = '';
+    private string $defaultSortOrder = 'ASC';
     private string $sortField = '';
     private string $sortOrder = 'ASC';
     private int $pageNo = 1;
-    /**
-     * @var array<string, string|int>
-     */
-    private array $activeFilters = [];
     private string|int|null $objectIDFilter = null;
     private ?IInteractionProvider $interactionProvider = null;
     private ?IBulkInteractionProvider $bulkInteractionProvider = null;
     private InteractionContextMenuComponent $interactionContextMenuComponent;
+
+    /**
+     * @var array<string, string|int>
+     */
+    private array $activeFilters = [];
+
+    /**
+     * @var array<string, IViewFilter>
+     */
+    private array $availableFilters = [];
+
+    /**
+     * @var array<string, array{
+     *  filter: IViewFilter,
+     *  target: ?string,
+     *  insertBefore: bool,
+     * }>
+     */
+    private array $extraFilters = [];
 
     /**
      * Adds a new column to the grid view.
@@ -177,16 +195,6 @@ abstract class AbstractGridView
     }
 
     /**
-     * Returns all columns that are filterable.
-     *
-     * @return GridViewColumn[]
-     */
-    public function getFilterableColumns(): array
-    {
-        return \array_filter($this->getColumns(), fn($column) => $column->getFilter() !== null);
-    }
-
-    /**
      * Sets the interaction provider that is used to render the interaction context menu.
      */
     public function setInteractionProvider(IInteractionProvider $provider): void
@@ -267,6 +275,8 @@ abstract class AbstractGridView
      */
     public function render(): string
     {
+        $this->init();
+
         return WCF::getTPL()->render('wcf', 'shared_gridView', ['view' => $this]);
     }
 
@@ -275,6 +285,7 @@ abstract class AbstractGridView
      */
     public function renderRows(): string
     {
+        $this->init();
         $this->prepareRenderers();
 
         return WCF::getTPL()->render('wcf', 'shared_gridViewRows', ['view' => $this]);
@@ -288,7 +299,7 @@ abstract class AbstractGridView
     public function renderColumn(GridViewColumn $column, DatabaseObject $row): string
     {
         $value = $this->getData($row, $column->getID());
-        if ($column->encodeValue()) {
+        if ($value !== null && $column->encodeValue()) {
             $value = StringUtil::encodeHTML($value);
         }
 
@@ -337,6 +348,11 @@ abstract class AbstractGridView
                 fn($interaction) => $interaction->renderInitialization($this->getID() . '_table'),
                 $this->getQuickInteractions()
             ));
+        }
+
+        if (isset($this->rowLink)) {
+            $code .= "\n";
+            $code .= $this->rowLink->renderInitialization($this->getID() . '_table');
         }
 
         return $code;
@@ -394,9 +410,9 @@ abstract class AbstractGridView
      *
      * @param TDatabaseObject $row
      */
-    protected function getData(DatabaseObject $row, string $identifer): mixed
+    protected function getData(DatabaseObject $row, string $identifier): mixed
     {
-        return $row->__get($identifer);
+        return $row->__get($identifier);
     }
 
     /**
@@ -428,9 +444,16 @@ abstract class AbstractGridView
      */
     public function getID(): string
     {
-        $classNamePieces = \explode('\\', static::class);
+        $id = \str_replace('\\', '_', static::class);
 
-        return \implode('-', $classNamePieces);
+        if ($this->getParameters() !== []) {
+            $parameters = $this->getParameters();
+            \array_multisort($parameters);
+
+            $id .= '_' . \sha1(\serialize($parameters));
+        }
+
+        return $id;
     }
 
     /**
@@ -450,14 +473,48 @@ abstract class AbstractGridView
     }
 
     /**
+     * Sets the default sort field of the grid view.
+     */
+    public function setDefaultSortField(string $sortField): void
+    {
+        $this->defaultSortField = $sortField;
+        $this->setSortField($sortField);
+    }
+
+    /**
+     * Sets the default sort order of the grid view.
+     */
+    public function setDefaultSortOrder(string $sortOrder): void
+    {
+        if ($sortOrder !== 'ASC' && $sortOrder !== 'DESC') {
+            throw new \InvalidArgumentException("Invalid value '{$sortOrder}' as default sort order given.");
+        }
+
+        $this->defaultSortOrder = $sortOrder;
+        $this->setSortOrder($sortOrder);
+    }
+
+    /**
+     * Returns the default sort field of the grid view.
+     */
+    public function getDefaultSortField(): string
+    {
+        return $this->defaultSortField;
+    }
+
+    /**
+     * Returns the sort order of the grid view.
+     */
+    public function getDefaultSortOrder(): string
+    {
+        return $this->defaultSortOrder;
+    }
+
+    /**
      * Sets the sort field of the grid view.
      */
     public function setSortField(string $sortField): void
     {
-        if (!\in_array($sortField, \array_map(fn($column) => $column->getID(), $this->getSortableColumns()))) {
-            throw new \InvalidArgumentException("Invalid value '{$sortField}' as sort field given.");
-        }
-
         $this->sortField = $sortField;
     }
 
@@ -526,7 +583,7 @@ abstract class AbstractGridView
      */
     public function isFilterable(): bool
     {
-        return $this->getFilterableColumns() !== [];
+        return $this->getAvailableFilters() !== [];
     }
 
     /**
@@ -565,22 +622,17 @@ abstract class AbstractGridView
      */
     public function getFilterLabel(string $id): string
     {
-        $column = $this->getColumn($id);
-        if (!$column) {
-            throw new \LogicException("Unknown column '" . $id . "'.");
-        }
-
-        if (!$column->getFilter()) {
-            throw new \LogicException("Column '" . $id . "' has no filter.");
+        if (!isset($this->availableFilters[$id])) {
+            throw new \LogicException("Unknown filter '" . $id . "'.");
         }
 
         if (!isset($this->activeFilters[$id])) {
             throw new \LogicException("No value for filter '" . $id . "' found.");
         }
 
-        $value = $column->getFilter()->renderValue($this->activeFilters[$id]);
+        $value = $this->availableFilters[$id]->renderValue($this->activeFilters[$id]);
 
-        return $column->getLabel() . ($value !== '' ? ': ' . $value : '');
+        return $this->availableFilters[$id]->getLabel() . ($value !== '' ? ': ' . $value : '');
     }
 
     /**
@@ -596,7 +648,7 @@ abstract class AbstractGridView
     /**
      * Adds the given row link to the grid view.
      */
-    public function addRowLink(GridViewRowLink $rowLink): void
+    public function addRowLink(IGridViewRowLink $rowLink): void
     {
         $this->rowLink = $rowLink;
     }
@@ -640,11 +692,67 @@ abstract class AbstractGridView
         EventHandler::getInstance()->fire($event);
     }
 
+    private function buildAvailableFilters(): void
+    {
+        $filters = [];
+        foreach ($this->getColumns() as $column) {
+            if ($column->getFilter() !== null) {
+                $filters[] = $column->getFilter();
+            }
+        }
+
+        foreach ($this->extraFilters as $filterData) {
+            $filter = $filterData['filter'];
+
+            if ($filterData['target'] === null) {
+                if ($filterData['insertBefore']) {
+                    \array_unshift($filters, $filter);
+                } else {
+                    $filters[] = $filter;
+                }
+            } else {
+                $index = \array_find_key(
+                    $filters,
+                    static fn($filterObj) => $filterObj->getId() === $filterData['target']
+                );
+                if ($index === null) {
+                    throw new \RuntimeException("Cannot find the target '{$filterData['target']}' for filter '{$filter->getId()}'.");
+                }
+
+                if (!$filterData['insertBefore']) {
+                    $index++;
+                }
+
+                \array_splice($filters, $index, 0, [$filter]);
+            }
+        }
+
+        foreach ($filters as $filter) {
+            $this->availableFilters[$filter->getId()] = $filter;
+        }
+    }
+
     /**
      * Validates the configuration of this grid view.
      */
     protected function validate(): void
     {
+        $this->buildAvailableFilters();
+
+        if ($this->getDefaultSortField() === '') {
+            throw new \InvalidArgumentException("Undefined default sort field.");
+        }
+
+        if ($this->getSortField()) {
+            if (!\in_array($this->getSortField(), \array_map(fn($column) => $column->getID(), $this->getSortableColumns()))) {
+                if (\ENABLE_DEBUG_MODE) {
+                    throw new \InvalidArgumentException("Invalid value '{$this->getSortField()}' as sort field given.");
+                } {
+                    $this->setSortField('');
+                }
+            }
+        }
+
         $titleColumn = null;
 
         foreach ($this->getColumns() as $column) {
@@ -718,9 +826,7 @@ abstract class AbstractGridView
      */
     public function getObjectList(): DatabaseObjectList
     {
-        if (!isset($this->objectList)) {
-            $this->initObjectList();
-        }
+        $this->init();
 
         return $this->objectList;
     }
@@ -739,6 +845,9 @@ abstract class AbstractGridView
     protected function initObjectList(): void
     {
         $this->objectList = $this->createObjectList();
+        $this->fireInitializedEvent();
+        $this->validate();
+
         $this->objectList->sqlLimit = $this->getRowsPerPage();
         $this->objectList->sqlOffset = ($this->getPageNo() - 1) * $this->getRowsPerPage();
         if ($this->getSortField()) {
@@ -759,9 +868,8 @@ abstract class AbstractGridView
                 [$this->getObjectIDFilter()]
             );
         }
+
         $this->applyFilters();
-        $this->validate();
-        $this->fireInitializedEvent();
     }
 
     /**
@@ -770,8 +878,7 @@ abstract class AbstractGridView
     protected function applyFilters(): void
     {
         $this->activeFilters = \array_filter($this->activeFilters, function ($value, $key) {
-            $column = $this->getColumn($key);
-            if (!$column) {
+            if (!isset($this->availableFilters[$key])) {
                 if (\ENABLE_DEBUG_MODE) {
                     throw new \LogicException("Filter applied for unknown column '{$key}'.");
                 } else {
@@ -780,7 +887,7 @@ abstract class AbstractGridView
             }
 
             try {
-                $column->getFilter()->applyFilter($this->getObjectList(), $column->getID(), $value);
+                $this->availableFilters[$key]->applyFilter($this->getObjectList(), $value);
             } catch (InvalidFilterValue $e) {
                 if (\ENABLE_DEBUG_MODE) {
                     throw $e;
@@ -791,6 +898,60 @@ abstract class AbstractGridView
 
             return true;
         }, \ARRAY_FILTER_USE_BOTH);
+    }
+
+    public function addAvailableFilter(IViewFilter $filter): void
+    {
+        $this->extraFilters[$filter->getId()] = [
+            'filter' => $filter,
+            'target' => null,
+            'insertBefore' => false,
+        ];
+    }
+
+    public function addAvailableFilterBefore(IViewFilter $filter, ?string $targetFilterID = null): void
+    {
+        $this->extraFilters[$filter->getId()] = [
+            'filter' => $filter,
+            'target' => $targetFilterID,
+            'insertBefore' => true,
+        ];
+    }
+
+    public function addAvailableFilterAfter(IViewFilter $filter, ?string $targetFilterID = null): void
+    {
+        $this->extraFilters[$filter->getId()] = [
+            'filter' => $filter,
+            'target' => $targetFilterID,
+            'insertBefore' => false,
+        ];
+    }
+
+    /**
+     * @param IViewFilter[] $filters
+     */
+    public function addAvailableFilters(array $filters): void
+    {
+        foreach ($filters as $filter) {
+            $this->addAvailableFilter($filter);
+        }
+    }
+
+    /**
+     * @return array<string, IViewFilter>
+     */
+    public function getAvailableFilters(): array
+    {
+        $this->init();
+
+        return $this->availableFilters;
+    }
+
+    private function init(): void
+    {
+        if (!isset($this->objectList)) {
+            $this->initObjectList();
+        }
     }
 
     /**

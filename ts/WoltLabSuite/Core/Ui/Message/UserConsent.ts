@@ -31,6 +31,15 @@ class UserConsent {
       wheneverFirstSeen(".jsButtonMessageUserConsentEnable", (button) => {
         button.addEventListener("click", (event) => this.click(event));
       });
+
+      wheneverFirstSeen(".jsButtonMessageUserConsentOnce", (button) => {
+        button.addEventListener("click", () => {
+          const container = button.closest<HTMLElement>(".messageUserConsent");
+          if (container !== null) {
+            this.enableExternalMedia(container);
+          }
+        });
+      });
     }
   }
 

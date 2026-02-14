@@ -48,7 +48,6 @@ final class BadgeColorFormField extends RadioButtonFormField implements IPattern
     public function __construct()
     {
         $this
-            ->addClass('inlineList')
             ->addFieldClass('labelSelection__radio')
             ->defaultLabelText(WCF::getLanguage()->get('wcf.acp.label.defaultValue'))
             ->options(\array_combine(self::AVAILABLE_CSS_CLASSNAMES, self::AVAILABLE_CSS_CLASSNAMES))

@@ -11,6 +11,7 @@ use wcf\system\exception\ImplementationException;
 use wcf\system\page\handler\ILookupPageHandler;
 use wcf\system\page\handler\IMenuPageHandler;
 use wcf\system\WCF;
+use wcf\util\Url;
 
 /**
  * Represents a menu item.
@@ -32,6 +33,7 @@ use wcf\system\WCF;
  * @property-read   int $isDisabled     is `1` if the menu item is disabled and thus not shown in the menu, otherwise `0`
  * @property-read   int $originIsSystem     is `1` if the menu item has been delivered by a package, otherwise `0` (if the menu item has been created by an admin in the ACP)
  * @property-read   int $packageID      id of the package the which delivers the menu item or `1` if it has been created in the ACP
+ * @property-read   string $urlParameters
  */
 class MenuItem extends DatabaseObject implements ITitledObject
 {
@@ -93,15 +95,24 @@ class MenuItem extends DatabaseObject implements ITitledObject
         if ($this->pageObjectID) {
             $handler = $this->getMenuPageHandler();
             if ($handler && $handler instanceof ILookupPageHandler) {
-                return $handler->getLink($this->pageObjectID);
+                return $this->appendUrlParameters($handler->getLink($this->pageObjectID));
             }
         }
 
         if ($this->pageID) {
-            return $this->getPage()->getLink();
+            return $this->appendUrlParameters($this->getPage()->getLink());
         } else {
             return WCF::getLanguage()->get($this->externalURL);
         }
+    }
+
+    private function appendUrlParameters(string $url): string
+    {
+        if (!$this->urlParameters) {
+            return $url;
+        }
+
+        return Url::withQueryString($url, $this->urlParameters);
     }
 
     /**

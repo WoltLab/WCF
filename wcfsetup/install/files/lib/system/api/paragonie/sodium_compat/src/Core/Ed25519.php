@@ -51,7 +51,7 @@ abstract class ParagonIE_Sodium_Core_Ed25519 extends ParagonIE_Sodium_Core_Curve
         string $seed
     ): string {
         if (self::strlen($seed) !== self::SEED_BYTES) {
-            throw new RangeException('crypto_sign keypair seed must be 32 bytes long');
+            throw new SodiumException('crypto_sign keypair seed must be CRYPTO_SIGN_SEEDBYTES bytes long');
         }
         $pk = self::publickey_from_secretkey($seed);
         $sk = $seed . $pk;
@@ -116,6 +116,20 @@ abstract class ParagonIE_Sodium_Core_Ed25519 extends ParagonIE_Sodium_Core_Curve
     }
 
     /**
+     * Returns TRUE if $A represents a point on the order of the Edwards25519 prime order subgroup.
+     * Returns FALSE if $A is on a different subgroup.
+     *
+     * @param ParagonIE_Sodium_Core_Curve25519_Ge_P3 $A
+     * @return bool
+     */
+    public static function is_on_main_subgroup(ParagonIE_Sodium_Core_Curve25519_Ge_P3 $A): bool
+    {
+        $p1 = self::ge_mul_l($A);
+        $t = self::fe_sub($p1->Y, $p1->Z);
+        return self::fe_isnonzero($p1->X) && self::fe_isnonzero($t);
+    }
+
+    /**
      * @param string $pk
      * @return string
      * @throws SodiumException
@@ -124,13 +138,16 @@ abstract class ParagonIE_Sodium_Core_Ed25519 extends ParagonIE_Sodium_Core_Curve
     public static function pk_to_curve25519(
         string $pk
     ): string {
+        if (self::strlen($pk) !== 32) {
+            throw new SodiumException('Argument 1 must be CRYPTO_SIGN_PUBLICKEYBYTES bytes');
+        }
         if (self::small_order($pk)) {
             throw new SodiumException('Public key is on a small order');
         }
         $A = self::ge_frombytes_negate_vartime(self::substr($pk, 0, 32));
-        $p1 = self::ge_mul_l($A);
-        if (!self::fe_isnonzero($p1->X)) {
-            throw new SodiumException('Unexpected zero result');
+        // check that A * L == identity point
+        if (!self::is_on_main_subgroup($A)) {
+            throw new SodiumException('Public key is not on a member of the main subgroup');
         }
         $one_minux_y = self::fe_invert(
             self::fe_sub(
@@ -220,6 +237,9 @@ abstract class ParagonIE_Sodium_Core_Ed25519 extends ParagonIE_Sodium_Core_Curve
         #[SensitiveParameter]
         string $sk
     ): string {
+        if (self::strlen($sk) !== 64) {
+            throw new SodiumException('Argument 2 must be CRYPTO_SIGN_SECRETKEYBYTES long.');
+        }
         $az =  hash('sha512', self::substr($sk, 0, 32), true);
 
         $az[0] = self::intToChr(self::chrToInt($az[0]) & 248);
@@ -270,11 +290,14 @@ abstract class ParagonIE_Sodium_Core_Ed25519 extends ParagonIE_Sodium_Core_Curve
         string $message,
         string $pk
     ): bool {
-        if (self::strlen($sig) < 64) {
-            throw new SodiumException('Signature is too short');
+        if (self::strlen($sig) !== 64) {
+            throw new SodiumException('Argument 1 must be CRYPTO_SIGN_BYTES long');
+        }
+        if (self::strlen($pk) !== 32) {
+            throw new SodiumException('Argument 3 must be CRYPTO_SIGN_PUBLICKEYBYTES long');
         }
         if ((self::chrToInt($sig[63]) & 240) && self::check_S_lt_L(self::substr($sig, 32, 32))) {
-            throw new SodiumException('S < L - Invalid signature');
+            throw new SodiumException('S >= L - Invalid signature');
         }
         if (self::small_order($sig)) {
             throw new SodiumException('Signature is on too small of an order');
@@ -297,6 +320,9 @@ abstract class ParagonIE_Sodium_Core_Ed25519 extends ParagonIE_Sodium_Core_Curve
         ParagonIE_Sodium_Compat::$fastMult = true;
 
         $A = self::ge_frombytes_negate_vartime($pk);
+        if (!self::is_on_main_subgroup($A)) {
+            throw new SodiumException('Public key is not on main subgroup');
+        }
 
         $hDigest = hash(
             'sha512',

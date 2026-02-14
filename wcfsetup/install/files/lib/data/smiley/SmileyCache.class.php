@@ -57,7 +57,6 @@ class SmileyCache extends SingletonFactory
         $this->cachedSmileyByCode = SmileyCacheBuilder::getInstance()->getData([], 'codes');
         $smileyCategories = CategoryHandler::getInstance()->getCategories('com.woltlab.wcf.bbcode.smiley');
 
-        // @phpstan-ignore assign.propertyType
         $this->cachedCategories[null] = new SmileyCategory(new Category(null, [
             'categoryID' => null,
             'parentCategoryID' => 0,

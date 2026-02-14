@@ -70,6 +70,10 @@ final class LanguageItemEditAction implements RequestHandlerInterface
                 }
             }
 
+            if (!$data['languageUseCustomValue'] && !$languageItem->languageCustomItemValue) {
+                $data['languageCustomItemValue'] = null;
+            }
+
             $editor = new LanguageItemEditor($languageItem);
             $editor->update($data);
 

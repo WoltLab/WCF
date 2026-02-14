@@ -31,6 +31,14 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "../
                 (0, Selector_1.wheneverFirstSeen)(".jsButtonMessageUserConsentEnable", (button) => {
                     button.addEventListener("click", (event) => this.click(event));
                 });
+                (0, Selector_1.wheneverFirstSeen)(".jsButtonMessageUserConsentOnce", (button) => {
+                    button.addEventListener("click", () => {
+                        const container = button.closest(".messageUserConsent");
+                        if (container !== null) {
+                            this.enableExternalMedia(container);
+                        }
+                    });
+                });
             }
         }
         click(event) {

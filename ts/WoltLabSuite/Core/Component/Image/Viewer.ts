@@ -2,12 +2,14 @@
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.2
  */
 
-import { Fancybox, CarouselSlide, FancyboxInstance } from "@fancyapps/ui";
+import { Fancybox, CarouselSlide } from "@fancyapps/ui";
 import { getPageOverlayContainer } from "WoltLabSuite/Core/Helper/PageOverlay";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import { ConsentPlugin } from "./Fancybox/ConsentPlugin";
+import { scrollDisable, scrollEnable } from "WoltLabSuite/Core/Ui/Screen";
 
 setDefaultConfig();
 
@@ -23,8 +25,8 @@ export function setupLegacy() {
   });
 }
 
-export function showFancybox(userSlides?: Array<CarouselSlide>): FancyboxInstance {
-  return Fancybox.show(userSlides);
+export function showFancybox(userSlides?: Array<CarouselSlide>): void {
+  Fancybox.show(userSlides);
 }
 
 function setDefaultConfig(): void {
@@ -41,6 +43,18 @@ function setDefaultConfig(): void {
   }
   defaultConfig.plugins.consent = () => {
     return new ConsentPlugin();
+  };
+
+  // Delegate the handling of the scroll suppression to our own implementation.
+  defaultConfig.hideClass = false;
+  defaultConfig.hideScrollbar = false;
+  defaultConfig.on = {
+    ready() {
+      scrollDisable();
+    },
+    close() {
+      scrollEnable();
+    },
   };
 }
 

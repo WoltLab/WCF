@@ -68,7 +68,7 @@ class BoxVersionTrackerProvider extends AbstractVersionTrackerProvider
      */
     public function getCurrentVersion(IVersionTrackerObject $object)
     {
-        \assert($object instanceof Box);
+        \assert($object instanceof BoxVersionTracker);
 
         $properties = $this->getTrackedProperties();
 

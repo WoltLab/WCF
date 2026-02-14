@@ -17,12 +17,12 @@ define(["require", "exports"], function (require, exports) {
         #sortField;
         #sortOrder;
         #dropdownMenu;
-        constructor(dropdownMenu, sortField, sortOrder) {
+        constructor(dropdownMenu, sortField, sortOrder, defaultSortField, defaultSortOrder) {
             super();
             this.#sortField = sortField;
-            this.#defaultSortField = sortField;
+            this.#defaultSortField = defaultSortField;
             this.#sortOrder = sortOrder;
-            this.#defaultSortOrder = sortOrder;
+            this.#defaultSortOrder = defaultSortOrder;
             this.#dropdownMenu = dropdownMenu;
             this.#dropdownMenu?.querySelectorAll("[data-sort-id]").forEach((element) => {
                 element.addEventListener("click", () => {
@@ -40,6 +40,14 @@ define(["require", "exports"], function (require, exports) {
         getQueryParameters() {
             if (this.#sortField === "") {
                 return [];
+            }
+            if (this.#sortField === this.#defaultSortField) {
+                if (this.#sortOrder !== this.#defaultSortOrder) {
+                    return [["sortOrder", this.#sortOrder]];
+                }
+                else {
+                    return [];
+                }
             }
             return [
                 ["sortField", this.#sortField],

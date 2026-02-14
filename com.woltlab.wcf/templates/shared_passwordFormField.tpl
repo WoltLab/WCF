@@ -27,6 +27,11 @@
 					document.getElementById('{unsafe:$fieldId|encodeJS}'),
 				{/foreach}
 				],
+				staticDictionary: [
+				{foreach from=$field->getStaticDictionary() item=staticDictionary}
+					'{unsafe:$staticDictionary|encodeJS}',
+				{/foreach}
+				],
 			});
 		});
 	</script>

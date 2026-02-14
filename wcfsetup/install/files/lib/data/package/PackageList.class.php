@@ -35,6 +35,7 @@ class PackageList extends DatabaseObjectList
     {
         $list = new self();
         $list->readObjects();
+        $list->sqlOrderBy = "packageID ASC";
         $pending = $list->getObjects();
 
         $sql = "SELECT  packageID, requirement

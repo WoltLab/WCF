@@ -8,11 +8,6 @@ use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\update\server\PackageUpdateServerList;
 use wcf\event\gridView\admin\PackageUpdateServerGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\NumericFilter;
-use wcf\system\gridView\filter\ObjectIdFilter;
-use wcf\system\gridView\filter\SelectFilter;
-use wcf\system\gridView\filter\TextFilter;
-use wcf\system\gridView\filter\TimeFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
@@ -25,6 +20,10 @@ use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\IInteraction;
 use wcf\system\interaction\ToggleInteraction;
+use wcf\system\view\filter\IntegerFilter;
+use wcf\system\view\filter\SelectFilter;
+use wcf\system\view\filter\TextFilter;
+use wcf\system\view\filter\TimeFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -46,29 +45,32 @@ final class PackageUpdateServerGridView extends AbstractGridView
             GridViewColumn::for('packageUpdateServerID')
                 ->label('wcf.global.objectID')
                 ->renderer(new ObjectIdColumnRenderer())
-                ->filter(new ObjectIdFilter())
                 ->sortable(),
             GridViewColumn::for('serverURL')
                 ->label('wcf.acp.updateServer.serverURL')
                 ->titleColumn()
                 ->sortable()
-                ->filter(new TextFilter()),
+                ->filter(TextFilter::class),
             GridViewColumn::for('loginUsername')
                 ->label('wcf.acp.updateServer.loginUsername')
                 ->sortable()
-                ->filter(new TextFilter()),
+                ->filter(TextFilter::class),
             GridViewColumn::for('packages')
                 ->label('wcf.acp.updateServer.packages')
                 ->renderer(new NumberColumnRenderer())
-                ->filter(new NumericFilter($this->subSelectPackages()))
+                ->filter(new IntegerFilter('packages', 'wcf.acp.updateServer.packages', $this->subSelectPackages()))
                 ->sortable(sortByDatabaseColumn: $this->subSelectPackages()),
             GridViewColumn::for('status')
                 ->label('wcf.acp.updateServer.status')
                 ->filter(
-                    new SelectFilter([
-                        'online' => 'online',
-                        'offline' => 'offline',
-                    ])
+                    new SelectFilter(
+                        [
+                            'online' => 'online',
+                            'offline' => 'offline',
+                        ],
+                        'status',
+                        'wcf.acp.updateServer.status'
+                    )
                 )
                 ->renderer(
                     new class extends DefaultColumnRenderer {
@@ -89,7 +91,7 @@ final class PackageUpdateServerGridView extends AbstractGridView
             GridViewColumn::for('lastUpdateTime')
                 ->label('wcf.acp.updateServer.lastUpdateTime')
                 ->renderer(new TimeColumnRenderer())
-                ->filter(new TimeFilter())
+                ->filter(TimeFilter::class)
                 ->sortable(),
         ]);
 
@@ -110,7 +112,7 @@ final class PackageUpdateServerGridView extends AbstractGridView
             )
         );
 
-        $this->setSortField('serverURL');
+        $this->setDefaultSortField('serverURL');
         $this->addRowLink(new GridViewRowLink(PackageUpdateServerEditForm::class));
     }
 

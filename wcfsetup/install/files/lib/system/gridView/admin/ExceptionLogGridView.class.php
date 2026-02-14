@@ -7,11 +7,11 @@ use wcf\data\DatabaseObjectList;
 use wcf\event\gridView\admin\ExceptionLogGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\Regex;
-use wcf\system\gridView\filter\SelectFilter;
-use wcf\system\gridView\filter\TextFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\TimeColumnRenderer;
+use wcf\system\view\filter\SelectFilter;
+use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
 use wcf\util\ExceptionLogUtil;
@@ -42,21 +42,20 @@ final class ExceptionLogGridView extends AbstractGridView
                 ->titleColumn(),
             GridViewColumn::for('exceptionID')
                 ->label('wcf.acp.exceptionLog.search.exceptionID')
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->sortable(),
             GridViewColumn::for('date')
                 ->label('wcf.acp.exceptionLog.exception.date')
                 ->sortable()
                 ->renderer(new TimeColumnRenderer()),
-            GridViewColumn::for('logFile')
-                ->label('wcf.acp.exceptionLog.search.logFile')
-                ->filter(new SelectFilter($this->getAvailableLogFiles()))
-                ->hidden(true),
         ]);
 
+        $this->addAvailableFilters([
+            new SelectFilter($this->getAvailableLogFiles(), 'logFile', 'wcf.acp.exceptionLog.search.logFile'),
+        ]);
         $this->addRowLink(new GridViewRowLink(cssClass: 'jsExceptionLogEntry'));
-        $this->setSortField('date');
-        $this->setSortOrder('DESC');
+        $this->setDefaultSortField('date');
+        $this->setDefaultSortOrder('DESC');
 
         if ($applyDefaultFilter && $this->getDefaultLogFile() !== null) {
             $this->setActiveFilters([
@@ -171,6 +170,8 @@ final class ExceptionLogGridView extends AbstractGridView
     protected function initObjectList(): void
     {
         $this->objectList = $this->createObjectList();
+        $this->fireInitializedEvent();
+        $this->validate();
 
         $objects = $this->loadDataSource();
         $this->objectCount = \count($objects);
@@ -182,9 +183,6 @@ final class ExceptionLogGridView extends AbstractGridView
             }
         });
         $this->objects = \array_slice($objects, ($this->getPageNo() - 1) * $this->getRowsPerPage(), $this->getRowsPerPage());
-
-        $this->validate();
-        $this->fireInitializedEvent();
     }
 
     #[\Override]

@@ -7,6 +7,7 @@
  * @since 6.2
  */
 
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import { promiseMutex } from "../../Helper/PromiseMutex";
 import { dialogFactory } from "../Dialog";
 
@@ -63,7 +64,12 @@ export class Filter extends EventTarget {
     for (const key of this.#filters.keys()) {
       const button = document.createElement("button");
       button.type = "button";
-      button.classList.add("button", "small");
+      button.title = getPhrase("wcf.page.removeFilterTooltip", {
+        filterLabel: labels[key],
+      });
+      button.classList.add("button", "small", "jsTooltip");
+      button.dataset.filter = key;
+      button.dataset.filterValue = this.#filters.get(key);
       const icon = document.createElement("fa-icon");
       icon.setIcon("circle-xmark");
       button.append(icon, labels[key]);

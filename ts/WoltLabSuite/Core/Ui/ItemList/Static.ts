@@ -298,12 +298,15 @@ function syncShadow(data: ElementData): ItemData[] | null {
 function blur(event: FocusEvent): void {
   const input = event.currentTarget as HTMLInputElement;
 
-  window.setTimeout(() => {
-    const value = input.value.trim();
-    if (value.length) {
-      addItem(input.id, { objectId: 0, value: value });
-    }
-  }, 100);
+  const focusedElement = event.relatedTarget;
+  if (focusedElement instanceof HTMLElement && focusedElement.closest(".dropdownMenu") !== null) {
+    return;
+  }
+
+  const value = input.value.trim();
+  if (value.length) {
+    addItem(input.id, { objectId: 0, value: value });
+  }
 }
 
 /**
@@ -417,7 +420,7 @@ export function getValues(elementId: string): ItemData[] {
   data.list.querySelectorAll(".item > span").forEach((span: HTMLElement) => {
     values.push({
       objectId: ~~span.dataset.objectId!,
-      value: span.textContent!,
+      value: span.textContent,
     });
   });
 

@@ -55,6 +55,11 @@
 	--ck-font-size-normal: var(--wcfFontSizeDefault);
 	--ck-font-size-small: var(--wcfFontSizeSmall);
 	--ck-font-size-tiny: var(--wcfFontSizeSmall);
+
+	--ck-focus-outer-shadow: var(--ck-focus-outer-shadow-geometry) var(--ck-color-focus-outer-shadow);
+	--ck-color-widget-editable-focus-background: var(--ck-color-base-background);
+	--ck-color-widget-drag-handler-icon-color: var(--ck-color-base-background);
+	--ck-color-widget-type-around-button-hover: var(--ck-color-widget-hover-border);
 }
 
 .ck.ck-content {
@@ -161,6 +166,10 @@ a.ck.ck-button-bold {
 	.ck.ck-list .ck-list__item .ck-button:not(.ck-disabled):hover {
 		color: var(--wcfDropdownLink);
 	}
+
+	.ck.ck-list__item > .ck-button.ck-on:not(.ck-list-item-button):hover:not(.ck-disabled) {
+		color: var(--wcfDropdownText);
+	}
 }
 
 .ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable),
@@ -238,6 +247,18 @@ a.ck.ck-button-bold {
 
 	background-color: var(--wcfButtonBackgroundActive);
 	color: var(--ck-color-text);
+}
+
+.ck.ck-form .ck.ck-input-number,
+.ck.ck-form .ck.ck-input-text {
+	font-size: var(--wcfFontSizeDefault);
+}
+
+@media (pointer: coarse) {
+	.ck.ck-form .ck.ck-input-number,
+	.ck.ck-form .ck.ck-input-text {
+		font-size: 16px;
+	}
 }
 
 @media (hover: hover) {
@@ -343,6 +364,11 @@ html[data-color-scheme="light"] .ck-body-wrapper .ck.ck-balloon-panel {
 	overflow: auto;
 }
 
+/* Prevent the selection for the heading to take up lots of space for no reason. */
+.ck.ck-dropdown.ck-heading-dropdown .ck-dropdown__button .ck-button__label {
+	width: auto;
+}
+
 /* Prevent the “Material Design” like behavior of form labels. */
 .ck.ck-labeled-field-view__input-wrapper {
 	display: flex;
@@ -408,6 +434,10 @@ a.ck.ck-button.ck-link-toolbar__preview:focus {
 .ck.ck-balloon-panel {
 	--ck-z-modal: 90;
 	--ck-z-panel: 91;
+}
+
+.ck.ck-responsive-form {
+	width: auto;
 }
 
 html[data-color-scheme="dark"] {
@@ -537,6 +567,19 @@ html[data-color-scheme="dark"] {
 .messageFloatObjectRight {
 	float: right;
 	margin: 0 0 20px 20px;
+}
+
+@include screen-xs {
+	.messageFloatObjectLeft,
+	.messageFloatObjectRight {
+		float: none;
+		margin: 0 0 20px 0;
+
+		/* Center the element by moving it 50% of the parent’s width to the left
+		   and then moving it back by 50% of the element’s width. */
+		margin-left: 50%;
+		transform: translateX(-50%);
+	}
 }
 
 /* Quotes */
@@ -729,7 +772,8 @@ html.iOS {
 
 	.ck-search {
 		.ck-labeled-field-view__input-wrapper {
-			svg, .ck-off {
+			svg,
+			.ck-off {
 				transform: none !important;
 			}
 		}
@@ -742,10 +786,17 @@ html.iOS {
 			}
 		}
 	}
+
+	.ck.ck-emoji__tiles {
+		/* Use the same value applied to `max-height` to prevent the dialog
+		   from jumping when the number of results change. */
+		min-height: min(265px, 40vh);
+	}
 }
 
 .ck-button__label {
-	&.ck-emoji, &.ck-smiley {
+	&.ck-emoji,
+	&.ck-smiley {
 		font-size: var(--wcfFontSizeDefault) !important;
 	}
 }
@@ -753,7 +804,8 @@ html.iOS {
 @media (hover: hover) {
 	.ck.ck-emoji-picker-form {
 		.ck-button {
-			&:not(:hover), &.ck-emoji__tile:hover {
+			&:not(:hover),
+			&.ck-emoji__tile:hover {
 				background-color: transparent !important;
 			}
 		}

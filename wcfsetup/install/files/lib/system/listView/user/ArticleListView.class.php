@@ -13,9 +13,9 @@ use wcf\system\interaction\bulk\user\ArticleBulkInteractions;
 use wcf\system\interaction\user\ArticleInteractions;
 use wcf\system\label\LabelHandler;
 use wcf\system\listView\AbstractListView;
-use wcf\system\listView\filter\BooleanFilter;
-use wcf\system\listView\filter\LabelFilter;
-use wcf\system\listView\filter\TextFilter;
+use wcf\system\view\filter\BooleanFilter;
+use wcf\system\view\filter\LabelFilter;
+use wcf\system\view\filter\TextFilter;
 use wcf\system\listView\ListViewSortField;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
@@ -53,8 +53,8 @@ class ArticleListView extends AbstractListView
         $this->setInteractionProvider(new ArticleInteractions());
         $this->setBulkInteractionProvider(new ArticleBulkInteractions());
         $this->setItemsPerPage(\ARTICLES_PER_PAGE);
-        $this->setSortField('time');
-        $this->setSortOrder(\ARTICLE_SORT_ORDER);
+        $this->setDefaultSortField('time');
+        $this->setDefaultSortOrder(\ARTICLE_SORT_ORDER);
         $this->setCssClassName('entryCardList');
         $this->setContainerCssClassName('entryCardList__container');
     }

@@ -984,6 +984,8 @@ html:not([data-color-scheme="dark"]) .page__colorScheme--dark {
 			}
 
 			> li {
+				margin-bottom: 20px;
+
 				@include screen-md-up {
 					flex: 0 0 25%;
 					max-width: 25%;
@@ -993,12 +995,10 @@ html:not([data-color-scheme="dark"]) .page__colorScheme--dark {
 					flex: 1 1 100%;
 				}
 
-				margin-bottom: 20px;
-
 				> .boxMenuLink {
-					@include wcfFontHeadline;
-
 					margin-bottom: 10px;
+
+					@include wcfFontHeadline;
 				}
 			}
 		}

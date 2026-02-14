@@ -4,6 +4,7 @@ namespace wcf\http\middleware;
 
 use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Tree\Message\NodeMessage;
+use CuyZ\Valinor\Utility\String\StringFormatterError;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
@@ -32,10 +33,15 @@ final class HandleValinorMappingErrors implements MiddlewareInterface
     {
         try {
             return $handler->handle($request);
-        } catch (MappingError $e) {
-            $message = "Could not map type '{$e->type()}'.";
-            $errors = $e->messages()
-                ->formatWith(new PrependPath());
+        } catch (MappingError | StringFormatterError $e) {
+            if ($e instanceof MappingError) {
+                $message = "Could not map type '{$e->type()}'.";
+                $errors = $e->messages()
+                    ->formatWith(new PrependPath());
+            } else {
+                $message = "Rejected malformed UTF-8 input.";
+                $errors = [];
+            }
 
             $preferredType = Helper::getPreferredContentType($request, [
                 'application/json',

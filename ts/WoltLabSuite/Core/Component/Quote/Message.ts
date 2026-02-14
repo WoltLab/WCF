@@ -22,6 +22,8 @@ import {
 } from "WoltLabSuite/Core/Component/Quote/Storage";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 import { dispatchToCkeditor } from "WoltLabSuite/Core/Component/Ckeditor/Event";
+import { showSuccessSnackbar } from "../Snackbar";
+import { platform } from "WoltLabSuite/Core/Environment";
 
 type Container = {
   element: HTMLElement;
@@ -41,13 +43,16 @@ let selectedMessage:
 
 type ElementBoundaries = {
   bottom: number;
+  height: number;
   left: number;
   right: number;
   top: number;
+  width: number;
 };
 
 const containers = new Map<string, Container>();
 const quoteMessageButtons = new Map<string, HTMLElement>();
+let activeContent: HTMLElement | undefined = undefined;
 let activeMessageId = "";
 let activeEditor: CKEditor | undefined = undefined;
 let timerSelectionChange: number | undefined = undefined;
@@ -76,8 +81,18 @@ export function registerContainer(
       return;
     }
 
-    container.addEventListener("mousedown", (event) => onMouseDown(event));
+    container.addEventListener("mousedown", (event) => {
+      onMouseDown(event);
+    });
     container.classList.add("jsQuoteMessageContainer");
+
+    container.addEventListener("touchstart", (event) => {
+      if (event.target instanceof Node && (event.target === copyQuote || copyQuote.contains(event.target))) {
+        return;
+      }
+
+      copyQuote.classList.remove("active");
+    });
 
     const quoteMessage = container.querySelector<HTMLElement>(".jsQuoteMessage");
     if (quoteMessage === null) {
@@ -175,6 +190,8 @@ function setup() {
       );
 
       removeSelection();
+
+      showSuccessSnackbar(getPhrase("wcf.message.quote.quoteSelected.success"));
     }),
   );
   copyQuote.appendChild(buttonSaveQuote);
@@ -247,7 +264,31 @@ function setup() {
   window.addEventListener(
     "resize",
     () => {
-      copyQuote.classList.remove("active");
+      if (!copyQuote.classList.contains("active")) {
+        return;
+      }
+
+      if (activeContent === undefined) {
+        copyQuote.classList.remove("active");
+      } else {
+        alignQuoteButtons(activeContent);
+      }
+    },
+    { passive: true },
+  );
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!copyQuote.classList.contains("active")) {
+        return;
+      }
+
+      if (activeContent === undefined) {
+        copyQuote.classList.remove("active");
+      } else {
+        alignQuoteButtons(activeContent);
+      }
     },
     { passive: true },
   );
@@ -307,7 +348,7 @@ function getNodeText(node: Node): string {
 
     if (node instanceof HTMLAnchorElement) {
       // \u2026 === &hellip;
-      const value = node.textContent!;
+      const value = node.textContent;
       if (value.indexOf("\u2026") > 0) {
         const tmp = value.split(/\u2026/);
         if (tmp.length === 2) {
@@ -509,6 +550,7 @@ function onMouseUp(event?: MouseEvent): void {
     copyQuote.classList.remove("touchForceInaccessible");
   }
 
+  activeContent = content;
   alignQuoteButtons(content);
 
   copyQuote.classList.remove("active");
@@ -559,8 +601,20 @@ function alignQuoteButtons(content: HTMLElement): void {
     left = containerBoundaries.right - dimensions.width;
   }
 
-  copyQuote.style.setProperty("top", `${coordinates.bottom + 7}px`);
-  copyQuote.style.setProperty("left", `${left}px`);
+  // iOS shows an own selection overlay that could appear on top of the quote
+  // selection. If the top and bottom edge are on screen then the iOS tooltip
+  // appears at the top if the top boundary is at least 50% from the top.
+  if (platform() === "ios") {
+    const showAbove = coordinates.top - window.scrollY < window.innerHeight / 2;
+    if (showAbove) {
+      const top = coordinates.top - dimensions.height - 7;
+      copyQuote.style.setProperty("inset", `${top}px auto auto ${left}px`);
+
+      return;
+    }
+  }
+
+  copyQuote.style.setProperty("inset", `${coordinates.bottom + 7}px auto auto ${left}px`);
 }
 
 function getElementBoundaries(selection: Selection | null): ElementBoundaries {
@@ -579,8 +633,10 @@ function getElementBoundaries(selection: Selection | null): ElementBoundaries {
   const scrollTop = window.scrollY;
   return {
     bottom: rect.bottom + scrollTop,
+    height: rect.height,
     left: rect.left,
     right: rect.right,
     top: rect.top + scrollTop,
+    width: rect.height,
   };
 }

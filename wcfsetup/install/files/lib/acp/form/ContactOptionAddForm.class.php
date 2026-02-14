@@ -7,8 +7,10 @@ use wcf\data\contact\option\ContactOptionAction;
 use wcf\data\contact\option\ContactOptionList;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\ShowOrderFormField;
 use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\option\FormOptionHandler;
 
 /**
  * Shows the contact option add form.
@@ -67,6 +69,24 @@ class ContactOptionAddForm extends AbstractFormOptionAddForm
             BooleanFormField::create('isDisabled')
                 ->label('wcf.acp.customOption.isDisabled'),
         ]);
+    }
+
+    #[\Override]
+    protected function getOptionTypeFormField(): SelectFormField
+    {
+        $formField = parent::getOptionTypeFormField();
+
+        // Remove the WYSIWYG type because the contact form does not support
+        // embedded objects due to the unique behavior of it.
+        $formField->options(
+            \array_filter(
+                FormOptionHandler::getInstance()->getSortedOptionTypes(),
+                static fn($id) => $id !== "wysiwyg",
+                \ARRAY_FILTER_USE_KEY,
+            ),
+        );
+
+        return $formField;
     }
 
     /**

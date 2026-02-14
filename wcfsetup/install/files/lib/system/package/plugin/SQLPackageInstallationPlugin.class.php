@@ -41,7 +41,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin
                 $this->installation->getAction()
             );
             $conflicts = $parser->test();
-            if ($conflicts !== [] && isset($conflicts['CREATE TABLE'])) {
+            if (isset($conflicts['CREATE TABLE'])) {
                 $unknownCreateTable = $conflicts['CREATE TABLE'];
 
                 $errorMessage = "Can't overwrite unknown table";

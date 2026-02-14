@@ -37,6 +37,8 @@ export class State extends EventTarget {
     baseUrl: string,
     sortField: string,
     sortOrder: string,
+    defaultSortField: string,
+    defaultSortOrder: string,
   ) {
     super();
 
@@ -55,7 +57,13 @@ export class State extends EventTarget {
       this.#switchPage(1, StateChangeCause.Change);
     });
 
-    this.#sorting = new Sorting(document.getElementById(`${viewId}_sorting`) ?? undefined, sortField, sortOrder);
+    this.#sorting = new Sorting(
+      document.getElementById(`${viewId}_sorting`) ?? undefined,
+      sortField,
+      sortOrder,
+      defaultSortField,
+      defaultSortOrder,
+    );
     this.#sorting.addEventListener("list-view:change", () => {
       this.#switchPage(1, StateChangeCause.Change);
     });
@@ -201,7 +209,13 @@ export class State extends EventTarget {
   }
 
   #updateListViewFooter(): void {
-    this.#listViewFooter.hidden = this.#pagination.count < 2 && !this.#selection.selectionBarVisible();
+    const hasPagination = this.#pagination.count > 1;
+    this.#listViewFooter.hidden = !hasPagination && !this.#selection.selectionBarVisible();
+
+    const paginationContainer = this.#pagination.closest<HTMLElement>(".listView__pagination");
+    if (paginationContainer !== null) {
+      paginationContainer.hidden = !hasPagination;
+    }
   }
 
   setBulkInteractionContextMenuOptions(options: string): void {
@@ -210,6 +224,10 @@ export class State extends EventTarget {
 
   resetSelection(): void {
     this.#selection.resetSelection();
+  }
+
+  removeSelection(objectId: number): void {
+    this.#selection.removeSelection(objectId);
   }
 
   refreshSelection(): void {

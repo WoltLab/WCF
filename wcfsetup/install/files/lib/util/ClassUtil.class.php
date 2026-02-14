@@ -59,7 +59,6 @@ final class ClassUtil
             );
         }
 
-        // @phpstan-ignore function.alreadyNarrowedType
         return \is_subclass_of($className, $targetClass);
     }
 

@@ -1,3 +1,10 @@
 .benchmarkDetails .hot {
 	color: var(--wcfStatusErrorText);
 }
+
+.benchmark__stacktrace__context {
+	color: var(--wcfContentDimmedText);
+	display: block;
+	
+	@include wcfFontSmall;
+}

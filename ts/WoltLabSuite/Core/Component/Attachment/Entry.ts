@@ -12,7 +12,7 @@ import {
   updateFileInformation,
 } from "WoltLabSuite/Core/Component/File/Helper";
 
-type FileProcessorData = {
+export type FileProcessorData = {
   attachmentID: number;
   messageObjectID: number | null;
 };
@@ -63,6 +63,7 @@ function fileInitializationCompleted(element: HTMLElement, file: WoltlabCoreFile
       link.href = file.link!;
       link.dataset.fancybox =
         "attachments" + (data.messageObjectID ? `-${(data as FileProcessorData).messageObjectID}` : "");
+      link.dataset.type = "image";
       link.title = file.filename;
       link.dataset.caption = file.filename;
       link.textContent = file.filename;

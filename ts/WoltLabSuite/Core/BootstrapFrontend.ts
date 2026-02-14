@@ -65,7 +65,7 @@ function setupArticlePopover(): void {
   whenFirstSeen(".articleLink", () => {
     void import("WoltLabSuite/Core/Component/Popover").then(({ setupFor }) => {
       setupFor({
-        endpoint: (objectId) => getArticlePopover(objectId),
+        endpoint: (objectId) => getArticlePopover(objectId).then((response) => response.template),
         identifier: "com.woltlab.wcf.article",
         selector: ".articleLink",
       });

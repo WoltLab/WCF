@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pelago\Emogrifier\Css;
 
+use Sabberworm\CSS\OutputFormat;
 use Sabberworm\CSS\Property\Selector;
 use Sabberworm\CSS\RuleSet\DeclarationBlock;
 
@@ -25,7 +26,6 @@ final class StyleRule
     private $containingAtRule;
 
     /**
-     * @param DeclarationBlock $declarationBlock
      * @param string $containingAtRule e.g. `@media screen and (max-width: 480px)`
      */
     public function __construct(DeclarationBlock $declarationBlock, string $containingAtRule = '')
@@ -35,15 +35,16 @@ final class StyleRule
     }
 
     /**
-     * @return array<int, string> the selectors, e.g. `["h1", "p"]`
+     * @return array<non-empty-string> the selectors, e.g. `["h1", "p"]`
      */
     public function getSelectors(): array
     {
-        /** @var array<int, Selector> $selectors */
         $selectors = $this->declarationBlock->getSelectors();
         return \array_map(
             static function (Selector $selector): string {
-                return (string) $selector;
+                $selectorAsString = $selector->getSelector();
+                \assert($selectorAsString !== '');
+                return $selectorAsString;
             },
             $selectors
         );
@@ -52,9 +53,16 @@ final class StyleRule
     /**
      * @return string the CSS declarations, separated and followed by a semicolon, e.g., `color: red; height: 4px;`
      */
-    public function getDeclarationAsText(): string
+    public function getDeclarationsAsText(): string
     {
-        return \implode(' ', $this->declarationBlock->getRules());
+        $rules = $this->declarationBlock->getRules();
+        $renderedRules = [];
+        $outputFormat = OutputFormat::create();
+        foreach ($rules as $rule) {
+            $renderedRules[] = $rule->render($outputFormat);
+        }
+
+        return \implode(' ', $renderedRules);
     }
 
     /**
@@ -66,7 +74,7 @@ final class StyleRule
     }
 
     /**
-     * @returns string e.g. `@media screen and (max-width: 480px)`, or an empty string
+     * @return string e.g. `@media screen and (max-width: 480px)`, or an empty string
      */
     public function getContainingAtRule(): string
     {

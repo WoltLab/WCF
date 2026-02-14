@@ -67,6 +67,11 @@ define(["require", "exports", "tslib", "../FileUtil", "./ExifUtil", "pica"], fun
         async saveFile(data, fileName, fileType = this.fileType, quality = this.quality) {
             const basename = /(.+)(\..+?)$/.exec(fileName);
             let blob = await pica.toBlob(data.image, fileType, quality);
+            // Safari does not support image/webp for canvas.toBlob()
+            if (fileType === "image/webp" && blob.type === "image/png") {
+                fileType = "image/jpeg";
+                blob = await pica.toBlob(data.image, fileType, quality);
+            }
             if (fileType === "image/jpeg" && typeof data.exif !== "undefined") {
                 blob = await ExifUtil.setExifData(blob, data.exif);
             }

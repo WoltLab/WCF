@@ -62,20 +62,29 @@ class ArticleCommentLikeUserNotificationEvent extends AbstractSharedUserNotifica
 
         if ($count > 1) {
             return $this->getLanguage()->getDynamicVariable('wcf.user.notification.articleComment.like.message.stacked', [
+                'authorList' => $this->getLanguage()->getDynamicVariable('wcf.user.notification.stacked.authorList', [
+                    'authors' => $authors,
+                    'count' => $count,
+                    'others' => $count - 1,
+                ]),
+                'article' => $article,
+                'reaction' => $this->getSingleReaction(),
+                // Not used anymore but kept here for backwards compatibility with third party translations
                 'author' => $this->author,
                 'authors' => $authors,
                 'commentID' => $this->getCommentID(),
                 'count' => $count,
                 'others' => $count - 1,
-                'article' => $article,
                 'reactions' => $this->getReactionsForAuthors(),
             ]);
         }
 
         return $this->getLanguage()->getDynamicVariable('wcf.user.notification.articleComment.like.message', [
             'author' => $this->author,
-            'commentID' => $this->getCommentID(),
             'article' => $article,
+            'reaction' => $this->getSingleReaction(),
+            // Not used anymore but kept here for backwards compatibility with third party translations
+            'commentID' => $this->getCommentID(),
             'reactions' => $this->getReactionsForAuthors(),
         ]);
     }

@@ -80,7 +80,7 @@ final class PackageManifest
             return $file;
         }, \array_filter(
             $this->archive->getRequirements(),
-            static fn ($requirement) => isset($requirement['file'])
+            static fn($requirement) => isset($requirement['file'])
         ));
 
         $optionals = \array_map(static function (array $optional): string {
@@ -173,6 +173,8 @@ final class PackageManifest
      */
     private function getFiles(array $ignore = []): array
     {
+        $oneMb = 1024 * 1024;
+
         $tar = $this->archive->getTar();
         $files = [];
         foreach ($tar->getContentList() as $file) {
@@ -186,7 +188,15 @@ final class PackageManifest
             if ($tar instanceof DevtoolsTar) {
                 $files[$file['filename']] = 'Fake Devtools Archive';
             } else {
-                $files[$file['filename']] = \hash('sha256', $tar->extractToString($file['filename']));
+                if ($file['size'] > $oneMb) {
+                    $ctx = \hash_init('sha256');
+                    foreach ($tar->extractToChunks($file['filename'], $oneMb) as $chunk) {
+                        \hash_update($ctx, $chunk);
+                    }
+                    $files[$file['filename']] = \hash_final($ctx);
+                } else {
+                    $files[$file['filename']] = \hash('sha256', $tar->extractToString($file['filename']));
+                }
             }
         }
         \ksort($files);

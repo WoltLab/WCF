@@ -120,7 +120,7 @@ class MarkerLoader {
             if (!dialog) {
               dialog = dialogFactory().fromHtml(data.dialog!).withoutControls();
             }
-            dialog.show(button.dataset.title || button.textContent!);
+            dialog.show(button.dataset.title || button.textContent);
           });
         });
       }

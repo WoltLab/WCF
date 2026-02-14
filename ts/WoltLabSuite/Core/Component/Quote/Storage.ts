@@ -284,6 +284,10 @@ function saveStorage(data: StorageData) {
 }
 
 window.addEventListener("storage", (event) => {
+  if (event.key !== STORAGE_KEY) {
+    return;
+  }
+
   refreshQuoteLists();
 
   const oldValue = parseJson(event.oldValue);

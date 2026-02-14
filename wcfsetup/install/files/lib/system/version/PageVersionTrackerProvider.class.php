@@ -70,7 +70,7 @@ class PageVersionTrackerProvider extends AbstractVersionTrackerProvider
      */
     public function getCurrentVersion(IVersionTrackerObject $object)
     {
-        \assert($object instanceof Page);
+        \assert($object instanceof PageVersionTracker);
 
         $properties = $this->getTrackedProperties();
 

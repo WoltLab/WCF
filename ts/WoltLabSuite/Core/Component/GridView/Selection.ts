@@ -180,6 +180,7 @@ export class Selection extends EventTarget {
     }
 
     this.#selectionBar.hidden = false;
+
     this.#bulkInteractionButton!.textContent = getPhrase("wcf.clipboard.button.numberOfSelectedItems", {
       numberOfSelectedItems: selectedIds.length,
     });
@@ -247,6 +248,10 @@ export class Selection extends EventTarget {
         this.#bulkInteractionsPlaceholder.remove();
       }
 
+      while (lastDivider.previousElementSibling !== null) {
+        lastDivider.previousElementSibling.remove();
+      }
+
       menu.prepend(fragment);
 
       this.#initBulkInteractions();
@@ -268,6 +273,16 @@ export class Selection extends EventTarget {
     window.localStorage.removeItem(this.#getStorageKey());
 
     this.#updateSelectionBar();
+  }
+
+  removeSelection(objectId: number): void {
+    const selectedIds = this.getSelectedIds();
+    if (selectedIds.indexOf(objectId) !== -1) {
+      selectedIds.splice(selectedIds.indexOf(objectId), 1);
+      window.localStorage.setItem(this.#getStorageKey(), JSON.stringify(selectedIds));
+    }
+
+    this.#change();
   }
 
   #initBulkInteractions(): void {

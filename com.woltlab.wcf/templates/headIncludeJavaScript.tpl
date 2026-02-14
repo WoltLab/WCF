@@ -118,6 +118,17 @@ window.addEventListener('pageshow', function(event) {
 <script data-relocate="true">
 	require(["WoltLabSuite/Core/Devtools/Style/LiveReload"], (LiveReload) => LiveReload.watch());
 </script>
+<style>
+button:not([type]) {
+	border: 5px solid red !important;
+}
+button:not([type])::before {
+	background-color: #fff !important;
+	color: red !important;
+	content: "BUTTON_WITHOUT_TYPE";
+	font-weight: 600;
+}
+</style>
 {/if}
 
 <script data-relocate="true">

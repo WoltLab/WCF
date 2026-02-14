@@ -8,12 +8,6 @@ use wcf\data\attachment\AdministrativeAttachmentList;
 use wcf\data\DatabaseObject;
 use wcf\event\gridView\admin\AttachmentGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\NumericFilter;
-use wcf\system\gridView\filter\ObjectIdFilter;
-use wcf\system\gridView\filter\SelectFilter;
-use wcf\system\gridView\filter\TextFilter;
-use wcf\system\gridView\filter\TimeFilter;
-use wcf\system\gridView\filter\UserFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\AbstractColumnRenderer;
@@ -27,6 +21,12 @@ use wcf\system\interaction\admin\AttachmentInteractions;
 use wcf\system\interaction\bulk\admin\AttachmentBulkInteractions;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\FontAwesomeIcon;
+use wcf\system\view\filter\IntegerFilter;
+use wcf\system\view\filter\ObjectIdFilter;
+use wcf\system\view\filter\SelectFilter;
+use wcf\system\view\filter\TextFilter;
+use wcf\system\view\filter\TimeFilter;
+use wcf\system\view\filter\UserFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -48,9 +48,8 @@ final class AttachmentGridView extends AbstractGridView
             GridViewColumn::for('fileID')
                 ->label('wcf.global.objectID')
                 ->renderer(new ObjectIdColumnRenderer())
-                ->filter(new ObjectIdFilter())
+                ->filter(ObjectIdFilter::class)
                 ->sortable(),
-
             GridViewColumn::for('preview')
                 ->label('wcf.attachment.preview')
                 ->renderer(
@@ -89,16 +88,13 @@ final class AttachmentGridView extends AbstractGridView
             GridViewColumn::for('filename')
                 ->label('wcf.attachment.filename')
                 ->titleColumn()
-                ->filter(new TextFilter('file_table.filename'))
+                ->filter(new TextFilter('filename', 'wcf.attachment.filename', 'file_table.filename'))
+                ->unsafeDisableEncoding()
                 ->renderer(new TruncatedTextColumnRenderer())
                 ->sortable(sortByDatabaseColumn: 'file_table.filename'),
-            GridViewColumn::for('fileType')
-                ->label('wcf.attachment.fileType')
-                ->filter(new SelectFilter($this->getAvailableFileTypes(), 'file_table.mimeType'))
-                ->hidden(),
             GridViewColumn::for('username')
                 ->label('wcf.user.username')
-                ->filter(new UserFilter('user_table.username'))
+                ->filter(new UserFilter('usernane', 'wcf.user.username', 'user_table.username'))
                 ->renderer(
                     new class extends AbstractColumnRenderer {
                         #[\Override]
@@ -128,11 +124,11 @@ final class AttachmentGridView extends AbstractGridView
             GridViewColumn::for('uploadTime')
                 ->label('wcf.attachment.uploadTime')
                 ->renderer(new TimeColumnRenderer())
-                ->filter(new TimeFilter())
+                ->filter(TimeFilter::class)
                 ->sortable(),
             GridViewColumn::for('downloads')
                 ->label('wcf.attachment.downloads')
-                ->filter(new NumericFilter())
+                ->filter(IntegerFilter::class)
                 ->renderer(new NumberColumnRenderer())
                 ->sortable(),
             GridViewColumn::for('filesize')
@@ -142,17 +138,24 @@ final class AttachmentGridView extends AbstractGridView
             GridViewColumn::for('lastDownloadTime')
                 ->label('wcf.attachment.lastDownloadTime')
                 ->renderer(new TimeColumnRenderer())
-                ->filter(new TimeFilter())
+                ->filter(TimeFilter::class)
                 ->sortable(),
         ]);
 
+        $this->addAvailableFilters([
+            new SelectFilter(
+                $this->getAvailableFileTypes(),
+                'fileType',
+                'wcf.attachment.fileType',
+                'file_table.mimeType'
+            )
+        ]);
         $interaction = new AttachmentInteractions();
         $this->setInteractionProvider($interaction);
         $this->setBulkInteractionProvider(new AttachmentBulkInteractions());
         $this->addRowLink(new GridViewRowLink(isLinkableObject: true));
-
-        $this->setSortOrder('DESC');
-        $this->setSortField('uploadTime');
+        $this->setDefaultSortField('uploadTime');
+        $this->setDefaultSortOrder('DESC');
     }
 
     /**

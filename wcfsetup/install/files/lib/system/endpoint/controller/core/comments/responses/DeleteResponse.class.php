@@ -30,7 +30,7 @@ final class DeleteResponse implements IController
 
         $this->assertResponseIsDeletable($response);
 
-        (new \wcf\system\comment\response\command\DeleteResponses([$response]))();
+        (new \wcf\command\comment\response\DeleteResponses([$response]))();
 
         return new JsonResponse([]);
     }

@@ -2,6 +2,10 @@
 
 {event name='wysiwyg'}
 
+<script data-relocate="true">
+	{include file='mediaJavaScript'}
+</script>
+
 <script data-eager="true">
 {
 	let stylesheet = document.getElementById("ckeditor5-stylesheet");
@@ -14,6 +18,11 @@
 
 		document.querySelector('link[rel="stylesheet"]').before(stylesheet);
 	}
+
+	// Immediately remove the script from the DOM. This prevents any selectors
+	// from breaking that target the immediate sibling of the editor element.
+	// Furthermore, removing it makes no difference in terms of the functionality.
+	document.currentScript.remove();
 }
 </script>
 <script data-relocate="true">
@@ -42,7 +51,9 @@
 		{jsphrase name='wcf.editor.restoreDraft.preview'}
 		{jsphrase name='wcf.editor.restoreDraft.restoreOrDiscard'}
 
-		{include file='mediaJavaScript'}
+		{if $__wcf->language->languageCode !== 'en'}
+		window.CKEDITOR_TRANSLATIONS['{unsafe:$__wcf->language->getFixedLanguageCode()|strtolower|encodeJS}'].dictionary["Single line code"] = '{jslang}wcf.editor.button.code{/jslang}';
+		{/if}
 
 		const element = document.getElementById('{unsafe:$wysiwygSelector|encodeJS}');
 		if (element === null) {

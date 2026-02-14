@@ -2,8 +2,10 @@
 
 namespace wcf\system\user\notification\event;
 
+use wcf\data\reaction\type\ReactionType;
 use wcf\data\user\UserProfile;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\reaction\ReactionHandler;
 use wcf\system\user\notification\object\IUserNotificationObject;
 use wcf\system\WCF;
 
@@ -53,6 +55,22 @@ trait TReactionUserNotificationEvent
         $this->cachedReactions = $statement->fetchMap('reactionTypeID', 'count');
 
         return $this->cachedReactions;
+    }
+
+    /**
+     * Returns `Reactiontype` if all reactions use the same type.
+     *
+     * @since 6.2
+     */
+    final protected function getSingleReaction(): ?ReactionType
+    {
+        if (\count($this->getReactionsForAuthors()) !== 1) {
+            return null;
+        }
+
+        return ReactionHandler::getInstance()->getReactionTypeByID(
+            \array_key_first($this->getReactionsForAuthors())
+        );
     }
 
     /**

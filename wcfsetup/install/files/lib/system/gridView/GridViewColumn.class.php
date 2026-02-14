@@ -4,7 +4,7 @@ namespace wcf\system\gridView;
 
 use wcf\data\DatabaseObject;
 use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\gridView\filter\IGridViewFilter;
+use wcf\system\view\filter\IViewFilter;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
 use wcf\system\gridView\renderer\IColumnRenderer;
 use wcf\system\gridView\renderer\ILinkColumnRenderer;
@@ -30,9 +30,9 @@ final class GridViewColumn
 
     private bool $sortable = false;
     private string $sortByDatabaseColumn = '';
-    private ?IGridViewFilter $filter = null;
+    private ?IViewFilter $filter = null;
     private bool $hidden = false;
-    private bool $valueEncoding = true;
+    private bool $unsafeDisableEncoding = false;
     private bool $titleColumn = false;
 
     private function __construct(private readonly string $id) {}
@@ -169,10 +169,34 @@ final class GridViewColumn
 
     /**
      * Sets a filter for this column.
+     *
+     * @param IViewFilter|class-string<IViewFilter>|null $filter
      */
-    public function filter(?IGridViewFilter $filter): static
+    public function filter(IViewFilter|string|null $filter): static
     {
-        $this->filter = $filter;
+        if (\is_string($filter)) {
+            $possibleValues = [
+                'id' => $this->getID(),
+                'languageItem' => $this->getLabel(),
+            ];
+
+            $class = new \ReflectionClass($filter);
+            $constructor = $class->getMethod('__construct');
+            $values = [];
+            foreach ($constructor->getParameters() as $parameter) {
+                $name = $parameter->getName();
+
+                if (\array_key_exists($name, $possibleValues)) {
+                    $values[$name] = $possibleValues[$name];
+                } elseif (!$parameter->isOptional()) {
+                    throw new \InvalidArgumentException("Cannot instantiate {$class->getName()}. The parameter {$name} is not optional but cannot be provided automatically. Please instantiate the filter yourself.");
+                }
+            }
+
+            $this->filter = $class->newInstanceArgs($values);
+        } else {
+            $this->filter = $filter;
+        }
 
         return $this;
     }
@@ -180,7 +204,7 @@ final class GridViewColumn
     /**
      * Returns the filter of this column.
      */
-    public function getFilter(): ?IGridViewFilter
+    public function getFilter(): ?IViewFilter
     {
         return $this->filter;
     }
@@ -194,7 +218,7 @@ final class GridViewColumn
             throw new \LogicException('This column has no filter.');
         }
 
-        return $this->getFilter()->getFormField($this->getID(), $this->getLabel());
+        return $this->getFilter()->getFormField();
     }
 
     /**
@@ -234,11 +258,11 @@ final class GridViewColumn
     }
 
     /**
-     * Determines whether the value of this column should be encoded before rendering.
+     * Disables the encoding of the value of this column before rendering.
      */
-    public function valueEncoding(bool $valueEncoding = true): static
+    public function unsafeDisableEncoding(bool $unsafeDisableEncoding = true): static
     {
-        $this->valueEncoding = $valueEncoding;
+        $this->unsafeDisableEncoding = $unsafeDisableEncoding;
 
         return $this;
     }
@@ -248,7 +272,7 @@ final class GridViewColumn
      */
     public function encodeValue(): bool
     {
-        return $this->valueEncoding;
+        return !$this->unsafeDisableEncoding;
     }
 
     /**

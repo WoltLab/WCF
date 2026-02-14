@@ -6,7 +6,6 @@ namespace CuyZ\Valinor\Type\Types;
 
 use CuyZ\Valinor\Compiler\Native\ComplianceNode;
 use CuyZ\Valinor\Compiler\Node;
-use CuyZ\Valinor\Type\ObjectType;
 use CuyZ\Valinor\Type\Type;
 use CuyZ\Valinor\Utility\IsSingleton;
 
@@ -34,9 +33,12 @@ final class UndefinedObjectType implements Type
         }
 
         return $other instanceof self
-            || $other instanceof ObjectType
-            || $other instanceof IntersectionType
             || $other instanceof MixedType;
+    }
+
+    public function inferGenericsFrom(Type $other, Generics $generics): Generics
+    {
+        return $generics;
     }
 
     public function nativeType(): UndefinedObjectType

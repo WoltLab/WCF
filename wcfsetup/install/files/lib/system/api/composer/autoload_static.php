@@ -8,10 +8,91 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
+        '72243e5536b63e298acb6476f01f1aff' => __DIR__ . '/..' . '/thecodingmachine/safe/lib/special_cases.php',
+        '3f648889e687f31c52f949ba8a9d0873' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/apache.php',
+        'eeb4581d958421a4244aaa4167c6a575' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/apcu.php',
+        '04cb0b3c1dac5b5ddb23c14e3d66dbe9' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/array.php',
+        '450b332a74a9a21e043c5e953485a791' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/bzip2.php',
+        '6e9b7954ecfd7cbb9ca239319d1acdb6' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/calendar.php',
+        '2c6d7e8bd2de9a272a9d4d43b0a4304a' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/classobj.php',
+        '0b8231c1ad0865447c988a4c16b4001f' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/com.php',
+        '7643a71fe1c3256058c8fee234cb86e5' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/cubrid.php',
+        '68e1365710575942efc1d55000032cee' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/curl.php',
+        '02fd26bca803106c5b942a7197c3ad8b' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/datetime.php',
+        'f4817dcbd956cd221b1c31f6fbd5749c' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/dir.php',
+        '51c3f2d10ca61a70dbcea0e38d8e902d' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/eio.php',
+        '1d34f34327ca3e81535963016e3be2c3' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/errorfunc.php',
+        '4fd0ba2d3717b0424d474bebfdafa2b4' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/exec.php',
+        '98f4dae054bc7fb19c13be14935cbdd3' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/fileinfo.php',
+        '5530ae063ba88323eaf0a07904efdf85' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/filesystem.php',
+        '633f4f134975d70e97bddad83348e91a' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/filter.php',
+        'fbd163fc68c5faf73d5ed4002ffd836d' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/fpm.php',
+        '21b511999d61411fab0692ff8795bbed' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/ftp.php',
+        '85fbd73fc92365cd90526b0ea03cae3a' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/funchand.php',
+        'a2e4c6dfdbf36f56f1945ddcbd54e289' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/gettext.php',
+        '51df9c146e0b7dcbdf358d8abd24dbdc' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/gmp.php',
+        '93bb7fe678d7dcfb1322f8e3475a48b0' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/gnupg.php',
+        'c171ba99cf316379ff66468392bf4950' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/hash.php',
+        '5ab4aad4c28e468209fbfcceb2e5e6a5' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/ibase.php',
+        '4d57409c5e8e576b0c64c08d9d731cfb' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/ibmDb2.php',
+        'eeb246d5403972a9d62106e4a4883496' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/iconv.php',
+        'c28a05f498c01b810a714f7214b7a8da' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/image.php',
+        '8063cd92acdf00fd978b5599eb7cc142' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/imap.php',
+        '8bd26dbe768e9c9599edad7b198e5446' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/info.php',
+        'd4362910bde43c0f956b52527effd7d4' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/inotify.php',
+        '696ba49197d9b55f0428a12bb5a818e1' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/json.php',
+        '9818aaa99c8647c63f8ef62b7a368160' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/ldap.php',
+        'bcf523ff2a195eb08e0fbb668ed784d0' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/libxml.php',
+        '68be68a9a8b95bb56cab6109ff03bc88' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/lzf.php',
+        'bdca804bb0904ea9f53f328dfc0bb8a5' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/mailparse.php',
+        'b0a3fcac3eaf55445796d6af26b89366' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/mbstring.php',
+        '98de16b8db03eb0cb4d318b4402215a6' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/misc.php',
+        '7cefd81607cd21b8b3a15656eb6465f5' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/mysql.php',
+        'aaf438b080089c6d0686679cd34aa72e' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/mysqli.php',
+        'cbac956836b72483dcff1ac39d5c0a0f' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/network.php',
+        '6c8f89dfbdc117d7871f572269363f25' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/oci8.php',
+        '169a669966a45c06bf55ed029122729b' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/opcache.php',
+        'def61bf4fecd4d4bca7354919cd69302' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/openssl.php',
+        '26bb010649a6d32d4120181458aa6ef2' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/outcontrol.php',
+        '002ebcb842e2c0d5b7f67fe64cc93158' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/pcntl.php',
+        '86df38612982dade72c7085ce7eca81f' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/pcre.php',
+        '1fc22f445c69ea8706e82fce301c0831' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/pgsql.php',
+        'c70b42561584f7144bff38cd63c4eef3' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/posix.php',
+        '9923214639c32ca5173db03a177d3b63' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/ps.php',
+        '7e9c3f8eae2b5bf42205c4f1295cb7a7' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/pspell.php',
+        '91aa91f6245c349c2e2e88bd0025f199' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/readline.php',
+        'ccf972e9e1fd8935f45f95e13b54ad59' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/rnp.php',
+        'd43773cacb9e5e8e897aa255e32007d1' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/rpminfo.php',
+        'f053a3849e9e8383762b34b91db0320b' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/rrd.php',
+        '775b964f72f827a1bf87c65ab5b10800' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/sem.php',
+        '816428bd69c29ab5e1ed622af5dca0cd' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/session.php',
+        '5093e233bedbefaef0df262bfbab0a5c' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/shmop.php',
+        'b080617b1d949683c2e37f8f01dc0e15' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/sockets.php',
+        '2708aa182ddcfe6ce27c96acaaa40f69' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/sodium.php',
+        'f1b96cb260a5baeea9a7285cda82a1ec' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/solr.php',
+        '3fd8853757d0fe3557c179efb807afeb' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/spl.php',
+        '9312ce96a51c846913fcda5f186d58dd' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/sqlsrv.php',
+        'd3eb383ad0b8b962b29dc4afd29d6715' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/ssdeep.php',
+        '42a09bc448f441a0b9f9367ea975c0bf' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/ssh2.php',
+        'ef711077d356d1b33ca0b10b67b0be8f' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/stream.php',
+        '764b09f6df081cbb2807b97c6ace3866' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/strings.php',
+        'ef241678769fee4a44aaa288f3b78aa1' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/swoole.php',
+        '0efc8f6778cba932b9e2a89e28de2452' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/uodbc.php',
+        'd383d32907b98af53ee9208c62204fd0' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/uopz.php',
+        '2fd2e4060f7fe772660f002ce38f0b71' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/url.php',
+        '782249e03deebeaf57b9991ff5493aa0' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/var.php',
+        '344440cd1cd7200fdb4f12af0d3c587f' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/xdiff.php',
+        '3599f369219c658a5fb6c4fe66832f62' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/xml.php',
+        '7fcd313da9fae337051b091b3492c21b' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/xmlrpc.php',
+        'd668c74cfa92d893b582356733d9a80e' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/yaml.php',
+        '4af1dca6db8c527c6eed27bff85ff0e5' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/yaz.php',
+        'fe43ca06499ac37bc2dedd823af71eb5' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/zip.php',
+        '356736db98a6834f0a886b8d509b0ecd' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/zlib.php',
         '3109cb1a231dcd04bee1f9f620d46975' => __DIR__ . '/..' . '/paragonie/sodium_compat/autoload.php',
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
+        '5897ea0ac4cccf14d323035e65887801' => __DIR__ . '/..' . '/symfony/polyfill-php82/bootstrap.php',
         '9d2b9fc6db0f153a0a149fefb182415e' => __DIR__ . '/..' . '/symfony/polyfill-php84/bootstrap.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
         '07d7f1a47144818725fd8d91a907ac57' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/create_uploaded_file.php',
@@ -22,18 +103,16 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'b6c2870932b0250c10334a86dcb33c7f' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/normalize_uploaded_files.php',
         'd02cf21124526632320d6f20b1bbf905' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/parse_cookie_header.php',
         '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
-        '5897ea0ac4cccf14d323035e65887801' => __DIR__ . '/..' . '/symfony/polyfill-php82/bootstrap.php',
         '662a729f963d39afe703c9d9b7ab4a8c' => __DIR__ . '/..' . '/symfony/polyfill-php83/bootstrap.php',
         '606a39d89246991a373564698c2d8383' => __DIR__ . '/..' . '/symfony/polyfill-php85/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
-        'W' => 
+        'W' =>
         array (
             'WoltLab\\WebpExif\\' => 17,
-            'Webmozart\\Assert\\' => 17,
         ),
-        'S' => 
+        'S' =>
         array (
             'Symfony\\Polyfill\\Php85\\' => 23,
             'Symfony\\Polyfill\\Php84\\' => 23,
@@ -47,7 +126,7 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
             'ScssPhp\\ScssPhp\\' => 16,
             'Sabberworm\\CSS\\' => 15,
         ),
-        'P' => 
+        'P' =>
         array (
             'Psr\\SimpleCache\\' => 16,
             'Psr\\Log\\' => 8,
@@ -58,18 +137,19 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
             'Psr\\Clock\\' => 10,
             'Psr\\Cache\\' => 10,
             'Pelago\\Emogrifier\\' => 18,
+            'ParagonIE\\Sodium\\' => 17,
             'ParagonIE\\ConstantTime\\' => 23,
         ),
-        'N' => 
+        'N' =>
         array (
             'Nelexa\\Buffer\\' => 14,
             'Negotiation\\' => 12,
         ),
-        'M' => 
+        'M' =>
         array (
             'Minishlink\\WebPush\\' => 19,
         ),
-        'L' => 
+        'L' =>
         array (
             'League\\Uri\\' => 11,
             'Laminas\\Stdlib\\' => 15,
@@ -77,26 +157,26 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
             'Laminas\\HttpHandlerRunner\\' => 26,
             'Laminas\\Diactoros\\' => 18,
         ),
-        'J' => 
+        'J' =>
         array (
             'Jose\\Component\\' => 15,
         ),
-        'G' => 
+        'G' =>
         array (
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
         ),
-        'F' => 
+        'F' =>
         array (
             'FastRoute\\' => 10,
         ),
-        'C' => 
+        'C' =>
         array (
             'CuyZ\\Valinor\\' => 13,
             'Cron\\' => 5,
         ),
-        'B' => 
+        'B' =>
         array (
             'Brick\\Math\\' => 11,
             'Base64Url\\' => 10,
@@ -104,182 +184,182 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
     );
 
     public static $prefixDirsPsr4 = array (
-        'WoltLab\\WebpExif\\' => 
+        'WoltLab\\WebpExif\\' =>
         array (
             0 => __DIR__ . '/..' . '/woltlab/webp-exif/src',
         ),
-        'Webmozart\\Assert\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/webmozart/assert/src',
-        ),
-        'Symfony\\Polyfill\\Php85\\' => 
+        'Symfony\\Polyfill\\Php85\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php85',
         ),
-        'Symfony\\Polyfill\\Php84\\' => 
+        'Symfony\\Polyfill\\Php84\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php84',
         ),
-        'Symfony\\Polyfill\\Php83\\' => 
+        'Symfony\\Polyfill\\Php83\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php83',
         ),
-        'Symfony\\Polyfill\\Php82\\' => 
+        'Symfony\\Polyfill\\Php82\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php82',
         ),
-        'Symfony\\Polyfill\\Ctype\\' => 
+        'Symfony\\Polyfill\\Ctype\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
-        'Symfony\\Component\\Filesystem\\' => 
+        'Symfony\\Component\\Filesystem\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/filesystem',
         ),
-        'Symfony\\Component\\CssSelector\\' => 
+        'Symfony\\Component\\CssSelector\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/css-selector',
         ),
-        'SpomkyLabs\\Pki\\' => 
+        'SpomkyLabs\\Pki\\' =>
         array (
             0 => __DIR__ . '/..' . '/spomky-labs/pki-framework/src',
         ),
-        'SourceSpan\\' => 
+        'SourceSpan\\' =>
         array (
             0 => __DIR__ . '/..' . '/scssphp/source-span/src',
         ),
-        'ScssPhp\\ScssPhp\\' => 
+        'ScssPhp\\ScssPhp\\' =>
         array (
             0 => __DIR__ . '/..' . '/scssphp/scssphp/src',
         ),
-        'Sabberworm\\CSS\\' => 
+        'Sabberworm\\CSS\\' =>
         array (
             0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/src',
         ),
-        'Psr\\SimpleCache\\' => 
+        'Psr\\SimpleCache\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/simple-cache/src',
         ),
-        'Psr\\Log\\' => 
+        'Psr\\Log\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
         ),
-        'Psr\\Http\\Server\\' => 
+        'Psr\\Http\\Server\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/http-server-middleware/src',
             1 => __DIR__ . '/..' . '/psr/http-server-handler/src',
         ),
-        'Psr\\Http\\Message\\' => 
+        'Psr\\Http\\Message\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/http-factory/src',
             1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
-        'Psr\\Http\\Client\\' => 
+        'Psr\\Http\\Client\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/http-client/src',
         ),
-        'Psr\\EventDispatcher\\' => 
+        'Psr\\EventDispatcher\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/event-dispatcher/src',
         ),
-        'Psr\\Clock\\' => 
+        'Psr\\Clock\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/clock/src',
         ),
-        'Psr\\Cache\\' => 
+        'Psr\\Cache\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/cache/src',
         ),
-        'Pelago\\Emogrifier\\' => 
+        'Pelago\\Emogrifier\\' =>
         array (
             0 => __DIR__ . '/..' . '/pelago/emogrifier/src',
         ),
-        'ParagonIE\\ConstantTime\\' => 
+        'ParagonIE\\Sodium\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced',
+        ),
+        'ParagonIE\\ConstantTime\\' =>
         array (
             0 => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src',
         ),
-        'Nelexa\\Buffer\\' => 
+        'Nelexa\\Buffer\\' =>
         array (
             0 => __DIR__ . '/..' . '/nelexa/buffer/src/Nelexa/Buffer',
         ),
-        'Negotiation\\' => 
+        'Negotiation\\' =>
         array (
             0 => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation',
         ),
-        'Minishlink\\WebPush\\' => 
+        'Minishlink\\WebPush\\' =>
         array (
             0 => __DIR__ . '/..' . '/minishlink/web-push/src',
         ),
-        'League\\Uri\\' => 
+        'League\\Uri\\' =>
         array (
             0 => __DIR__ . '/..' . '/league/uri',
             1 => __DIR__ . '/..' . '/league/uri-interfaces',
         ),
-        'Laminas\\Stdlib\\' => 
+        'Laminas\\Stdlib\\' =>
         array (
             0 => __DIR__ . '/..' . '/laminas/laminas-stdlib/src',
         ),
-        'Laminas\\ProgressBar\\' => 
+        'Laminas\\ProgressBar\\' =>
         array (
             0 => __DIR__ . '/..' . '/laminas/laminas-progressbar/src',
         ),
-        'Laminas\\HttpHandlerRunner\\' => 
+        'Laminas\\HttpHandlerRunner\\' =>
         array (
             0 => __DIR__ . '/..' . '/laminas/laminas-httphandlerrunner/src',
         ),
-        'Laminas\\Diactoros\\' => 
+        'Laminas\\Diactoros\\' =>
         array (
             0 => __DIR__ . '/..' . '/laminas/laminas-diactoros/src',
         ),
-        'Jose\\Component\\' => 
+        'Jose\\Component\\' =>
         array (
             0 => __DIR__ . '/..' . '/web-token/jwt-library',
         ),
-        'GuzzleHttp\\Psr7\\' => 
+        'GuzzleHttp\\Psr7\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
         ),
-        'GuzzleHttp\\Promise\\' => 
+        'GuzzleHttp\\Promise\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/promises/src',
         ),
-        'GuzzleHttp\\' => 
+        'GuzzleHttp\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
-        'FastRoute\\' => 
+        'FastRoute\\' =>
         array (
             0 => __DIR__ . '/..' . '/nikic/fast-route/src',
         ),
-        'CuyZ\\Valinor\\' => 
+        'CuyZ\\Valinor\\' =>
         array (
             0 => __DIR__ . '/..' . '/cuyz/valinor/src',
         ),
-        'Cron\\' => 
+        'Cron\\' =>
         array (
             0 => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron',
         ),
-        'Brick\\Math\\' => 
+        'Brick\\Math\\' =>
         array (
             0 => __DIR__ . '/..' . '/brick/math/src',
         ),
-        'Base64Url\\' => 
+        'Base64Url\\' =>
         array (
             0 => __DIR__ . '/..' . '/spomky-labs/base64url/src',
         ),
     );
 
     public static $prefixesPsr0 = array (
-        'P' => 
+        'P' =>
         array (
-            'Parsedown' => 
+            'Parsedown' =>
             array (
                 0 => __DIR__ . '/..' . '/erusev/parsedown',
             ),
         ),
-        'H' => 
+        'H' =>
         array (
-            'HTMLPurifier' => 
+            'HTMLPurifier' =>
             array (
                 0 => __DIR__ . '/..' . '/ezyang/htmlpurifier/library',
             ),
@@ -336,6 +416,7 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'CuyZ\\Valinor\\Compiler\\Native\\AssignNode' => __DIR__ . '/..' . '/cuyz/valinor/src/Compiler/Native/AssignNode.php',
         'CuyZ\\Valinor\\Compiler\\Native\\CallNode' => __DIR__ . '/..' . '/cuyz/valinor/src/Compiler/Native/CallNode.php',
         'CuyZ\\Valinor\\Compiler\\Native\\CastNode' => __DIR__ . '/..' . '/cuyz/valinor/src/Compiler/Native/CastNode.php',
+        'CuyZ\\Valinor\\Compiler\\Native\\ClassNameNode' => __DIR__ . '/..' . '/cuyz/valinor/src/Compiler/Native/ClassNameNode.php',
         'CuyZ\\Valinor\\Compiler\\Native\\ClassNode' => __DIR__ . '/..' . '/cuyz/valinor/src/Compiler/Native/ClassNode.php',
         'CuyZ\\Valinor\\Compiler\\Native\\CloneNode' => __DIR__ . '/..' . '/cuyz/valinor/src/Compiler/Native/CloneNode.php',
         'CuyZ\\Valinor\\Compiler\\Native\\ClosureNode' => __DIR__ . '/..' . '/cuyz/valinor/src/Compiler/Native/ClosureNode.php',
@@ -378,14 +459,6 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'CuyZ\\Valinor\\Definition\\AttributeDefinition' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/AttributeDefinition.php',
         'CuyZ\\Valinor\\Definition\\Attributes' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Attributes.php',
         'CuyZ\\Valinor\\Definition\\ClassDefinition' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/ClassDefinition.php',
-        'CuyZ\\Valinor\\Definition\\Exception\\ClassTypeAliasesDuplication' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Exception/ClassTypeAliasesDuplication.php',
-        'CuyZ\\Valinor\\Definition\\Exception\\ExtendTagTypeError' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Exception/ExtendTagTypeError.php',
-        'CuyZ\\Valinor\\Definition\\Exception\\InvalidExtendTagClassName' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Exception/InvalidExtendTagClassName.php',
-        'CuyZ\\Valinor\\Definition\\Exception\\InvalidExtendTagType' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Exception/InvalidExtendTagType.php',
-        'CuyZ\\Valinor\\Definition\\Exception\\InvalidTypeAliasImportClass' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Exception/InvalidTypeAliasImportClass.php',
-        'CuyZ\\Valinor\\Definition\\Exception\\InvalidTypeAliasImportClassType' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Exception/InvalidTypeAliasImportClassType.php',
-        'CuyZ\\Valinor\\Definition\\Exception\\SeveralExtendTagsFound' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Exception/SeveralExtendTagsFound.php',
-        'CuyZ\\Valinor\\Definition\\Exception\\UnknownTypeAliasImport' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Exception/UnknownTypeAliasImport.php',
         'CuyZ\\Valinor\\Definition\\FunctionDefinition' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/FunctionDefinition.php',
         'CuyZ\\Valinor\\Definition\\FunctionObject' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/FunctionObject.php',
         'CuyZ\\Valinor\\Definition\\FunctionsContainer' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/FunctionsContainer.php',
@@ -416,14 +489,15 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'CuyZ\\Valinor\\Definition\\Repository\\Reflection\\ReflectionMethodDefinitionBuilder' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Repository/Reflection/ReflectionMethodDefinitionBuilder.php',
         'CuyZ\\Valinor\\Definition\\Repository\\Reflection\\ReflectionParameterDefinitionBuilder' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Repository/Reflection/ReflectionParameterDefinitionBuilder.php',
         'CuyZ\\Valinor\\Definition\\Repository\\Reflection\\ReflectionPropertyDefinitionBuilder' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Repository/Reflection/ReflectionPropertyDefinitionBuilder.php',
+        'CuyZ\\Valinor\\Definition\\Repository\\Reflection\\TypeResolver\\ClassGenericResolver' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Repository/Reflection/TypeResolver/ClassGenericResolver.php',
         'CuyZ\\Valinor\\Definition\\Repository\\Reflection\\TypeResolver\\ClassImportedTypeAliasResolver' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Repository/Reflection/TypeResolver/ClassImportedTypeAliasResolver.php',
         'CuyZ\\Valinor\\Definition\\Repository\\Reflection\\TypeResolver\\ClassLocalTypeAliasResolver' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Repository/Reflection/TypeResolver/ClassLocalTypeAliasResolver.php',
         'CuyZ\\Valinor\\Definition\\Repository\\Reflection\\TypeResolver\\ClassParentTypeResolver' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Repository/Reflection/TypeResolver/ClassParentTypeResolver.php',
-        'CuyZ\\Valinor\\Definition\\Repository\\Reflection\\TypeResolver\\ClassTemplatesResolver' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Repository/Reflection/TypeResolver/ClassTemplatesResolver.php',
         'CuyZ\\Valinor\\Definition\\Repository\\Reflection\\TypeResolver\\FunctionReturnTypeResolver' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Repository/Reflection/TypeResolver/FunctionReturnTypeResolver.php',
         'CuyZ\\Valinor\\Definition\\Repository\\Reflection\\TypeResolver\\ParameterTypeResolver' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Repository/Reflection/TypeResolver/ParameterTypeResolver.php',
         'CuyZ\\Valinor\\Definition\\Repository\\Reflection\\TypeResolver\\PropertyTypeResolver' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Repository/Reflection/TypeResolver/PropertyTypeResolver.php',
         'CuyZ\\Valinor\\Definition\\Repository\\Reflection\\TypeResolver\\ReflectionTypeResolver' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Repository/Reflection/TypeResolver/ReflectionTypeResolver.php',
+        'CuyZ\\Valinor\\Definition\\Repository\\Reflection\\TypeResolver\\TemplateResolver' => __DIR__ . '/..' . '/cuyz/valinor/src/Definition/Repository/Reflection/TypeResolver/TemplateResolver.php',
         'CuyZ\\Valinor\\Library\\Container' => __DIR__ . '/..' . '/cuyz/valinor/src/Library/Container.php',
         'CuyZ\\Valinor\\Library\\Settings' => __DIR__ . '/..' . '/cuyz/valinor/src/Library/Settings.php',
         'CuyZ\\Valinor\\MapperBuilder' => __DIR__ . '/..' . '/cuyz/valinor/src/MapperBuilder.php',
@@ -450,6 +524,7 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'CuyZ\\Valinor\\Mapper\\Object\\Exception\\MissingConstructorClassTypeParameter' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Object/Exception/MissingConstructorClassTypeParameter.php',
         'CuyZ\\Valinor\\Mapper\\Object\\Exception\\ObjectBuildersCollision' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Object/Exception/ObjectBuildersCollision.php',
         'CuyZ\\Valinor\\Mapper\\Object\\Exception\\PermissiveTypeNotAllowed' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Object/Exception/PermissiveTypeNotAllowed.php',
+        'CuyZ\\Valinor\\Mapper\\Object\\Factory\\CircularDependencyDetectorObjectBuilderFactory' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Object/Factory/CircularDependencyDetectorObjectBuilderFactory.php',
         'CuyZ\\Valinor\\Mapper\\Object\\Factory\\ConstructorObjectBuilderFactory' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Object/Factory/ConstructorObjectBuilderFactory.php',
         'CuyZ\\Valinor\\Mapper\\Object\\Factory\\DateTimeObjectBuilderFactory' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Object/Factory/DateTimeObjectBuilderFactory.php',
         'CuyZ\\Valinor\\Mapper\\Object\\Factory\\DateTimeZoneObjectBuilderFactory' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Object/Factory/DateTimeZoneObjectBuilderFactory.php',
@@ -482,15 +557,14 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'CuyZ\\Valinor\\Mapper\\TreeMapper' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/TreeMapper.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Builder\\ArrayNodeBuilder' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Builder/ArrayNodeBuilder.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Builder\\ConverterContainer' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Builder/ConverterContainer.php',
+        'CuyZ\\Valinor\\Mapper\\Tree\\Builder\\InterfaceInferringContainer' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Builder/InterfaceInferringContainer.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Builder\\InterfaceNodeBuilder' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Builder/InterfaceNodeBuilder.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Builder\\ListNodeBuilder' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Builder/ListNodeBuilder.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Builder\\MixedNodeBuilder' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Builder/MixedNodeBuilder.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Builder\\Node' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Builder/Node.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Builder\\NodeBuilder' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Builder/NodeBuilder.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Builder\\NullNodeBuilder' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Builder/NullNodeBuilder.php',
-        'CuyZ\\Valinor\\Mapper\\Tree\\Builder\\ObjectImplementations' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Builder/ObjectImplementations.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Builder\\ObjectNodeBuilder' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Builder/ObjectNodeBuilder.php',
-        'CuyZ\\Valinor\\Mapper\\Tree\\Builder\\RootNodeBuilder' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Builder/RootNodeBuilder.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Builder\\ScalarNodeBuilder' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Builder/ScalarNodeBuilder.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Builder\\ShapedArrayNodeBuilder' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Builder/ShapedArrayNodeBuilder.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Builder\\TypeNodeBuilder' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Builder/TypeNodeBuilder.php',
@@ -503,10 +577,10 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'CuyZ\\Valinor\\Mapper\\Tree\\Exception\\CannotResolveTypeFromUnion' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Exception/CannotResolveTypeFromUnion.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Exception\\CircularDependencyDetected' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Exception/CircularDependencyDetected.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Exception\\ConverterHasInvalidCallableParameter' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Exception/ConverterHasInvalidCallableParameter.php',
+        'CuyZ\\Valinor\\Mapper\\Tree\\Exception\\ConverterHasInvalidReturnType' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Exception/ConverterHasInvalidReturnType.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Exception\\ConverterHasNoParameter' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Exception/ConverterHasNoParameter.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Exception\\ConverterHasTooManyParameters' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Exception/ConverterHasTooManyParameters.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Exception\\InterfaceHasBothConstructorAndInfer' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Exception/InterfaceHasBothConstructorAndInfer.php',
-        'CuyZ\\Valinor\\Mapper\\Tree\\Exception\\InvalidAbstractObjectName' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Exception/InvalidAbstractObjectName.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Exception\\InvalidArrayKey' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Exception/InvalidArrayKey.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Exception\\InvalidIterableKeyType' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Exception/InvalidIterableKeyType.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Exception\\InvalidListKey' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Exception/InvalidListKey.php',
@@ -540,6 +614,8 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'CuyZ\\Valinor\\Mapper\\Tree\\Message\\Messages' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Message/Messages.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Message\\NodeMessage' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Message/NodeMessage.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Message\\UserlandError' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Message/UserlandError.php',
+        'CuyZ\\Valinor\\Mapper\\Tree\\ObjectTrace' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/ObjectTrace.php',
+        'CuyZ\\Valinor\\Mapper\\Tree\\RootNodeBuilder' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/RootNodeBuilder.php',
         'CuyZ\\Valinor\\Mapper\\Tree\\Shell' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/Tree/Shell.php',
         'CuyZ\\Valinor\\Mapper\\TypeArgumentsMapper' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/TypeArgumentsMapper.php',
         'CuyZ\\Valinor\\Mapper\\TypeTreeMapper' => __DIR__ . '/..' . '/cuyz/valinor/src/Mapper/TypeTreeMapper.php',
@@ -589,69 +665,74 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'CuyZ\\Valinor\\Type\\CombiningType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/CombiningType.php',
         'CuyZ\\Valinor\\Type\\CompositeTraversableType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/CompositeTraversableType.php',
         'CuyZ\\Valinor\\Type\\CompositeType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/CompositeType.php',
+        'CuyZ\\Valinor\\Type\\DumpableType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/DumpableType.php',
+        'CuyZ\\Valinor\\Type\\Dumper\\TypeDumpContext' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Dumper/TypeDumpContext.php',
+        'CuyZ\\Valinor\\Type\\Dumper\\TypeDumper' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Dumper/TypeDumper.php',
         'CuyZ\\Valinor\\Type\\FixedType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/FixedType.php',
         'CuyZ\\Valinor\\Type\\FloatType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/FloatType.php',
-        'CuyZ\\Valinor\\Type\\GenericType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/GenericType.php',
         'CuyZ\\Valinor\\Type\\IntegerType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/IntegerType.php',
         'CuyZ\\Valinor\\Type\\ObjectType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/ObjectType.php',
+        'CuyZ\\Valinor\\Type\\ObjectWithGenericType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/ObjectWithGenericType.php',
         'CuyZ\\Valinor\\Type\\Parser\\CachedParser' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/CachedParser.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Callable\\ExpectedClosingParenthesisAfterCallable' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Callable/ExpectedClosingParenthesisAfterCallable.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Callable\\ExpectedColonAfterCallableClosingParenthesis' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Callable/ExpectedColonAfterCallableClosingParenthesis.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Callable\\ExpectedReturnTypeAfterCallableColon' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Callable/ExpectedReturnTypeAfterCallableColon.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Callable\\ExpectedTypeForCallable' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Callable/ExpectedTypeForCallable.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Callable\\UnexpectedTokenAfterCallableClosingParenthesis' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Callable/UnexpectedTokenAfterCallableClosingParenthesis.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Constant\\ClassConstantCaseNotFound' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Constant/ClassConstantCaseNotFound.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Constant\\MissingClassConstantCase' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Constant/MissingClassConstantCase.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Enum\\EnumCaseNotFound' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Enum/EnumCaseNotFound.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Enum\\EnumHasNoCase' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Enum/EnumHasNoCase.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Enum\\MissingEnumCase' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Enum/MissingEnumCase.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Enum\\MissingSpecificEnumCase' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Enum/MissingSpecificEnumCase.php',
-        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Generic\\AssignedGenericNotFound' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Generic/AssignedGenericNotFound.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Generic\\CannotAssignGeneric' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Generic/CannotAssignGeneric.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Generic\\GenericClosingBracketMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Generic/GenericClosingBracketMissing.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Generic\\GenericCommaMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Generic/GenericCommaMissing.php',
-        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Generic\\InvalidAssignedGeneric' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Generic/InvalidAssignedGeneric.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Generic\\MissingGenerics' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Generic/MissingGenerics.php',
-        'CuyZ\\Valinor\\Type\\Parser\\Exception\\InvalidIntersectionType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/InvalidIntersectionType.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Intersection\\InvalidIntersectionElement' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Intersection/InvalidIntersectionElement.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Intersection\\RightIntersectionTypeMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Intersection/RightIntersectionTypeMissing.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\InvalidType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/InvalidType.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\ArrayClosingBracketMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/ArrayClosingBracketMissing.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\ArrayCommaMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/ArrayCommaMissing.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\ArrayExpectedCommaOrClosingBracket' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/ArrayExpectedCommaOrClosingBracket.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\ArrayMissingSubType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/ArrayMissingSubType.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\InvalidArrayKey' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/InvalidArrayKey.php',
-        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\InvalidIterableKey' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/InvalidIterableKey.php',
-        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\IterableClosingBracketMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/IterableClosingBracketMissing.php',
-        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\IterableCommaMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/IterableCommaMissing.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\InvalidShapedArrayUnsealedType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/InvalidShapedArrayUnsealedType.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\ListClosingBracketMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/ListClosingBracketMissing.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\ListMissingSubType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/ListMissingSubType.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\ShapedArrayClosingBracketMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/ShapedArrayClosingBracketMissing.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\ShapedArrayColonTokenMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/ShapedArrayColonTokenMissing.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\ShapedArrayCommaMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/ShapedArrayCommaMissing.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\ShapedArrayElementDuplicatedKey' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/ShapedArrayElementDuplicatedKey.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\ShapedArrayElementTypeMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/ShapedArrayElementTypeMissing.php',
-        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\ShapedArrayEmptyElements' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/ShapedArrayEmptyElements.php',
-        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\ShapedArrayInvalidUnsealedType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/ShapedArrayInvalidUnsealedType.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\ShapedArrayUnexpectedTokenAfterSealedType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/ShapedArrayUnexpectedTokenAfterSealedType.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\ShapedArrayWithoutElementsWithSealedType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/ShapedArrayWithoutElementsWithSealedType.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Iterable\\SimpleArrayClosingBracketMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Iterable/SimpleArrayClosingBracketMissing.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Magic\\ValueOfClosingBracketMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Magic/ValueOfClosingBracketMissing.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Magic\\ValueOfIncorrectSubType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Magic/ValueOfIncorrectSubType.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Magic\\ValueOfMissingSubType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Magic/ValueOfMissingSubType.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Magic\\ValueOfOpeningBracketMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Magic/ValueOfOpeningBracketMissing.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\MissingClosingQuoteChar' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/MissingClosingQuoteChar.php',
-        'CuyZ\\Valinor\\Type\\Parser\\Exception\\RightIntersectionTypeMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/RightIntersectionTypeMissing.php',
-        'CuyZ\\Valinor\\Type\\Parser\\Exception\\RightUnionTypeMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/RightUnionTypeMissing.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Scalar\\ClassStringClosingBracketMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Scalar/ClassStringClosingBracketMissing.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Scalar\\ClassStringMissingSubType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Scalar/ClassStringMissingSubType.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Scalar\\IntegerRangeInvalidMaxValue' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Scalar/IntegerRangeInvalidMaxValue.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Scalar\\IntegerRangeInvalidMinValue' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Scalar/IntegerRangeInvalidMinValue.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Scalar\\IntegerRangeMissingClosingBracket' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Scalar/IntegerRangeMissingClosingBracket.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Scalar\\IntegerRangeMissingComma' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Scalar/IntegerRangeMissingComma.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Scalar\\IntegerRangeMissingMaxValue' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Scalar/IntegerRangeMissingMaxValue.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Scalar\\IntegerRangeMissingMinValue' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Scalar/IntegerRangeMissingMinValue.php',
-        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Scalar\\InvalidClassStringSubType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Scalar/InvalidClassStringSubType.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Scalar\\NullableMissingRightType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Scalar/NullableMissingRightType.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Scalar\\ReversedValuesForIntegerRange' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Scalar/ReversedValuesForIntegerRange.php',
         'CuyZ\\Valinor\\Type\\Parser\\Exception\\Scalar\\SameValueForIntegerRange' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Scalar/SameValueForIntegerRange.php',
-        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Template\\DuplicatedTemplateName' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Template/DuplicatedTemplateName.php',
-        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Template\\InvalidClassTemplate' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Template/InvalidClassTemplate.php',
-        'CuyZ\\Valinor\\Type\\Parser\\Exception\\UnknownSymbol' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/UnknownSymbol.php',
-        'CuyZ\\Valinor\\Type\\Parser\\Factory\\LexingTypeParserFactory' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Factory/LexingTypeParserFactory.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Exception\\UnexpectedToken' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/UnexpectedToken.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Union\\ForbiddenMixedType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Union/ForbiddenMixedType.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Union\\InvalidClassStringElements' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Union/InvalidClassStringElements.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Exception\\Union\\RightUnionTypeMissing' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Exception/Union/RightUnionTypeMissing.php',
         'CuyZ\\Valinor\\Type\\Parser\\Factory\\Specifications\\AliasSpecification' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Factory/Specifications/AliasSpecification.php',
         'CuyZ\\Valinor\\Type\\Parser\\Factory\\Specifications\\ClassContextSpecification' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Factory/Specifications/ClassContextSpecification.php',
-        'CuyZ\\Valinor\\Type\\Parser\\Factory\\Specifications\\TypeAliasAssignerSpecification' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Factory/Specifications/TypeAliasAssignerSpecification.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Factory\\Specifications\\ObjectSpecification' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Factory/Specifications/ObjectSpecification.php',
         'CuyZ\\Valinor\\Type\\Parser\\Factory\\Specifications\\TypeParserSpecification' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Factory/Specifications/TypeParserSpecification.php',
         'CuyZ\\Valinor\\Type\\Parser\\Factory\\TypeParserFactory' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Factory/TypeParserFactory.php',
-        'CuyZ\\Valinor\\Type\\Parser\\GenericCheckerParser' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/GenericCheckerParser.php',
-        'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Annotations' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Annotations.php',
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\NativeLexer' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/NativeLexer.php',
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\SpecificationsLexer' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/SpecificationsLexer.php',
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\TokenStream' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/TokenStream.php',
@@ -662,6 +743,7 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Token\\ClassStringToken' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Token/ClassStringToken.php',
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Token\\ClosingBracketToken' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Token/ClosingBracketToken.php',
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Token\\ClosingCurlyBracketToken' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Token/ClosingCurlyBracketToken.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Token\\ClosingParenthesisToken' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Token/ClosingParenthesisToken.php',
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Token\\ClosingSquareBracketToken' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Token/ClosingSquareBracketToken.php',
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Token\\ColonToken' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Token/ColonToken.php',
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Token\\CommaToken' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Token/CommaToken.php',
@@ -671,13 +753,13 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Token\\IntegerToken' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Token/IntegerToken.php',
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Token\\IntegerValueToken' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Token/IntegerValueToken.php',
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Token\\IntersectionToken' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Token/IntersectionToken.php',
-        'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Token\\IterableToken' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Token/IterableToken.php',
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Token\\LeftTraversingToken' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Token/LeftTraversingToken.php',
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Token\\ListToken' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Token/ListToken.php',
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Token\\NullableToken' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Token/NullableToken.php',
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Token\\ObjectToken' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Token/ObjectToken.php',
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Token\\OpeningBracketToken' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Token/OpeningBracketToken.php',
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Token\\OpeningCurlyBracketToken' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Token/OpeningCurlyBracketToken.php',
+        'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Token\\OpeningParenthesisToken' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Token/OpeningParenthesisToken.php',
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Token\\OpeningSquareBracketToken' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Token/OpeningSquareBracketToken.php',
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Token\\StringValueToken' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Token/StringValueToken.php',
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\Token\\Token' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/Token/Token.php',
@@ -692,6 +774,8 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'CuyZ\\Valinor\\Type\\Parser\\Lexer\\TypeLexer' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/Lexer/TypeLexer.php',
         'CuyZ\\Valinor\\Type\\Parser\\LexingParser' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/LexingParser.php',
         'CuyZ\\Valinor\\Type\\Parser\\TypeParser' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/TypeParser.php',
+        'CuyZ\\Valinor\\Type\\Parser\\UnresolvableTypeFinderParser' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/UnresolvableTypeFinderParser.php',
+        'CuyZ\\Valinor\\Type\\Parser\\VacantTypeAssignerParser' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Parser/VacantTypeAssignerParser.php',
         'CuyZ\\Valinor\\Type\\ScalarType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/ScalarType.php',
         'CuyZ\\Valinor\\Type\\StringType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/StringType.php',
         'CuyZ\\Valinor\\Type\\Type' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Type.php',
@@ -701,11 +785,11 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'CuyZ\\Valinor\\Type\\Types\\CallableType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Types/CallableType.php',
         'CuyZ\\Valinor\\Type\\Types\\ClassStringType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Types/ClassStringType.php',
         'CuyZ\\Valinor\\Type\\Types\\EnumType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Types/EnumType.php',
-        'CuyZ\\Valinor\\Type\\Types\\Exception\\ForbiddenMixedType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Types/Exception/ForbiddenMixedType.php',
-        'CuyZ\\Valinor\\Type\\Types\\Exception\\InvalidUnionOfClassString' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Types/Exception/InvalidUnionOfClassString.php',
         'CuyZ\\Valinor\\Type\\Types\\Factory\\CannotBuildTypeFromValue' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Types/Factory/CannotBuildTypeFromValue.php',
         'CuyZ\\Valinor\\Type\\Types\\Factory\\ValueTypeFactory' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Types/Factory/ValueTypeFactory.php',
         'CuyZ\\Valinor\\Type\\Types\\FloatValueType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Types/FloatValueType.php',
+        'CuyZ\\Valinor\\Type\\Types\\GenericType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Types/GenericType.php',
+        'CuyZ\\Valinor\\Type\\Types\\Generics' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Types/Generics.php',
         'CuyZ\\Valinor\\Type\\Types\\IntegerRangeType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Types/IntegerRangeType.php',
         'CuyZ\\Valinor\\Type\\Types\\IntegerValueType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Types/IntegerValueType.php',
         'CuyZ\\Valinor\\Type\\Types\\InterfaceType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Types/InterfaceType.php',
@@ -734,9 +818,11 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'CuyZ\\Valinor\\Type\\Types\\UndefinedObjectType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Types/UndefinedObjectType.php',
         'CuyZ\\Valinor\\Type\\Types\\UnionType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Types/UnionType.php',
         'CuyZ\\Valinor\\Type\\Types\\UnresolvableType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/Types/UnresolvableType.php',
+        'CuyZ\\Valinor\\Type\\VacantType' => __DIR__ . '/..' . '/cuyz/valinor/src/Type/VacantType.php',
         'CuyZ\\Valinor\\Utility\\IsSingleton' => __DIR__ . '/..' . '/cuyz/valinor/src/Utility/IsSingleton.php',
         'CuyZ\\Valinor\\Utility\\Package' => __DIR__ . '/..' . '/cuyz/valinor/src/Utility/Package.php',
         'CuyZ\\Valinor\\Utility\\Polyfill' => __DIR__ . '/..' . '/cuyz/valinor/src/Utility/Polyfill.php',
+        'CuyZ\\Valinor\\Utility\\Reflection\\Annotations' => __DIR__ . '/..' . '/cuyz/valinor/src/Utility/Reflection/Annotations.php',
         'CuyZ\\Valinor\\Utility\\Reflection\\NamespaceFinder' => __DIR__ . '/..' . '/cuyz/valinor/src/Utility/Reflection/NamespaceFinder.php',
         'CuyZ\\Valinor\\Utility\\Reflection\\PhpParser' => __DIR__ . '/..' . '/cuyz/valinor/src/Utility/Reflection/PhpParser.php',
         'CuyZ\\Valinor\\Utility\\Reflection\\Reflection' => __DIR__ . '/..' . '/cuyz/valinor/src/Utility/Reflection/Reflection.php',
@@ -1438,9 +1524,12 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'Laminas\\Stdlib\\StringWrapper\\Native' => __DIR__ . '/..' . '/laminas/laminas-stdlib/src/StringWrapper/Native.php',
         'Laminas\\Stdlib\\StringWrapper\\StringWrapperInterface' => __DIR__ . '/..' . '/laminas/laminas-stdlib/src/StringWrapper/StringWrapperInterface.php',
         'League\\Uri\\BaseUri' => __DIR__ . '/..' . '/league/uri/BaseUri.php',
+        'League\\Uri\\Builder' => __DIR__ . '/..' . '/league/uri/Builder.php',
         'League\\Uri\\Contracts\\AuthorityInterface' => __DIR__ . '/..' . '/league/uri-interfaces/Contracts/AuthorityInterface.php',
+        'League\\Uri\\Contracts\\Conditionable' => __DIR__ . '/..' . '/league/uri-interfaces/Contracts/Conditionable.php',
         'League\\Uri\\Contracts\\DataPathInterface' => __DIR__ . '/..' . '/league/uri-interfaces/Contracts/DataPathInterface.php',
         'League\\Uri\\Contracts\\DomainHostInterface' => __DIR__ . '/..' . '/league/uri-interfaces/Contracts/DomainHostInterface.php',
+        'League\\Uri\\Contracts\\FragmentDirective' => __DIR__ . '/..' . '/league/uri-interfaces/Contracts/FragmentDirective.php',
         'League\\Uri\\Contracts\\FragmentInterface' => __DIR__ . '/..' . '/league/uri-interfaces/Contracts/FragmentInterface.php',
         'League\\Uri\\Contracts\\HostInterface' => __DIR__ . '/..' . '/league/uri-interfaces/Contracts/HostInterface.php',
         'League\\Uri\\Contracts\\IpHostInterface' => __DIR__ . '/..' . '/league/uri-interfaces/Contracts/IpHostInterface.php',
@@ -1448,6 +1537,7 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'League\\Uri\\Contracts\\PortInterface' => __DIR__ . '/..' . '/league/uri-interfaces/Contracts/PortInterface.php',
         'League\\Uri\\Contracts\\QueryInterface' => __DIR__ . '/..' . '/league/uri-interfaces/Contracts/QueryInterface.php',
         'League\\Uri\\Contracts\\SegmentedPathInterface' => __DIR__ . '/..' . '/league/uri-interfaces/Contracts/SegmentedPathInterface.php',
+        'League\\Uri\\Contracts\\Transformable' => __DIR__ . '/..' . '/league/uri-interfaces/Contracts/Transformable.php',
         'League\\Uri\\Contracts\\UriAccess' => __DIR__ . '/..' . '/league/uri-interfaces/Contracts/UriAccess.php',
         'League\\Uri\\Contracts\\UriComponentInterface' => __DIR__ . '/..' . '/league/uri-interfaces/Contracts/UriComponentInterface.php',
         'League\\Uri\\Contracts\\UriException' => __DIR__ . '/..' . '/league/uri-interfaces/Contracts/UriException.php',
@@ -1459,6 +1549,9 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'League\\Uri\\Exceptions\\OffsetOutOfBounds' => __DIR__ . '/..' . '/league/uri-interfaces/Exceptions/OffsetOutOfBounds.php',
         'League\\Uri\\Exceptions\\SyntaxError' => __DIR__ . '/..' . '/league/uri-interfaces/Exceptions/SyntaxError.php',
         'League\\Uri\\FeatureDetection' => __DIR__ . '/..' . '/league/uri-interfaces/FeatureDetection.php',
+        'League\\Uri\\HostFormat' => __DIR__ . '/..' . '/league/uri-interfaces/HostFormat.php',
+        'League\\Uri\\HostRecord' => __DIR__ . '/..' . '/league/uri-interfaces/HostRecord.php',
+        'League\\Uri\\HostType' => __DIR__ . '/..' . '/league/uri-interfaces/HostType.php',
         'League\\Uri\\Http' => __DIR__ . '/..' . '/league/uri/Http.php',
         'League\\Uri\\HttpFactory' => __DIR__ . '/..' . '/league/uri/HttpFactory.php',
         'League\\Uri\\IPv4\\BCMathCalculator' => __DIR__ . '/..' . '/league/uri-interfaces/IPv4/BCMathCalculator.php',
@@ -1472,10 +1565,16 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'League\\Uri\\Idna\\Option' => __DIR__ . '/..' . '/league/uri-interfaces/Idna/Option.php',
         'League\\Uri\\Idna\\Result' => __DIR__ . '/..' . '/league/uri-interfaces/Idna/Result.php',
         'League\\Uri\\KeyValuePair\\Converter' => __DIR__ . '/..' . '/league/uri-interfaces/KeyValuePair/Converter.php',
+        'League\\Uri\\QueryComposeMode' => __DIR__ . '/..' . '/league/uri-interfaces/QueryComposeMode.php',
+        'League\\Uri\\QueryExtractMode' => __DIR__ . '/..' . '/league/uri-interfaces/QueryExtractMode.php',
         'League\\Uri\\QueryString' => __DIR__ . '/..' . '/league/uri-interfaces/QueryString.php',
+        'League\\Uri\\SchemeType' => __DIR__ . '/..' . '/league/uri/SchemeType.php',
+        'League\\Uri\\StringCoercionMode' => __DIR__ . '/..' . '/league/uri-interfaces/StringCoercionMode.php',
         'League\\Uri\\Uri' => __DIR__ . '/..' . '/league/uri/Uri.php',
+        'League\\Uri\\UriComparisonMode' => __DIR__ . '/..' . '/league/uri-interfaces/UriComparisonMode.php',
         'League\\Uri\\UriInfo' => __DIR__ . '/..' . '/league/uri/UriInfo.php',
         'League\\Uri\\UriResolver' => __DIR__ . '/..' . '/league/uri/UriResolver.php',
+        'League\\Uri\\UriScheme' => __DIR__ . '/..' . '/league/uri/UriScheme.php',
         'League\\Uri\\UriString' => __DIR__ . '/..' . '/league/uri-interfaces/UriString.php',
         'League\\Uri\\UriTemplate' => __DIR__ . '/..' . '/league/uri/UriTemplate.php',
         'League\\Uri\\UriTemplate\\Expression' => __DIR__ . '/..' . '/league/uri/UriTemplate/Expression.php',
@@ -1484,6 +1583,8 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'League\\Uri\\UriTemplate\\TemplateCanNotBeExpanded' => __DIR__ . '/..' . '/league/uri/UriTemplate/TemplateCanNotBeExpanded.php',
         'League\\Uri\\UriTemplate\\VarSpecifier' => __DIR__ . '/..' . '/league/uri/UriTemplate/VarSpecifier.php',
         'League\\Uri\\UriTemplate\\VariableBag' => __DIR__ . '/..' . '/league/uri/UriTemplate/VariableBag.php',
+        'League\\Uri\\Urn' => __DIR__ . '/..' . '/league/uri/Urn.php',
+        'League\\Uri\\UrnComparisonMode' => __DIR__ . '/..' . '/league/uri-interfaces/UrnComparisonMode.php',
         'Minishlink\\WebPush\\Encryption' => __DIR__ . '/..' . '/minishlink/web-push/src/Encryption.php',
         'Minishlink\\WebPush\\MessageSentReport' => __DIR__ . '/..' . '/minishlink/web-push/src/MessageSentReport.php',
         'Minishlink\\WebPush\\Notification' => __DIR__ . '/..' . '/minishlink/web-push/src/Notification.php',
@@ -1530,6 +1631,32 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'ParagonIE\\ConstantTime\\Encoding' => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src/Encoding.php',
         'ParagonIE\\ConstantTime\\Hex' => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src/Hex.php',
         'ParagonIE\\ConstantTime\\RFC4648' => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src/RFC4648.php',
+        'ParagonIE\\Sodium\\Compat' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Compat.php',
+        'ParagonIE\\Sodium\\Core\\BLAKE2b' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/BLAKE2b.php',
+        'ParagonIE\\Sodium\\Core\\ChaCha20' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/ChaCha20.php',
+        'ParagonIE\\Sodium\\Core\\ChaCha20\\Ctx' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/ChaCha20/Ctx.php',
+        'ParagonIE\\Sodium\\Core\\ChaCha20\\IetfCtx' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/ChaCha20/IetfCtx.php',
+        'ParagonIE\\Sodium\\Core\\Curve25519' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/Curve25519.php',
+        'ParagonIE\\Sodium\\Core\\Curve25519\\Fe' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/Curve25519/Fe.php',
+        'ParagonIE\\Sodium\\Core\\Curve25519\\Ge\\Cached' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/Curve25519/Ge/Cached.php',
+        'ParagonIE\\Sodium\\Core\\Curve25519\\Ge\\P1p1' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/Curve25519/Ge/P1p1.php',
+        'ParagonIE\\Sodium\\Core\\Curve25519\\Ge\\P2' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/Curve25519/Ge/P2.php',
+        'ParagonIE\\Sodium\\Core\\Curve25519\\Ge\\P3' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/Curve25519/Ge/P3.php',
+        'ParagonIE\\Sodium\\Core\\Curve25519\\Ge\\Precomp' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/Curve25519/Ge/Precomp.php',
+        'ParagonIE\\Sodium\\Core\\Curve25519\\H' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/Curve25519/H.php',
+        'ParagonIE\\Sodium\\Core\\Ed25519' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/Ed25519.php',
+        'ParagonIE\\Sodium\\Core\\HChaCha20' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/HChaCha20.php',
+        'ParagonIE\\Sodium\\Core\\HSalsa20' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/HSalsa20.php',
+        'ParagonIE\\Sodium\\Core\\Poly1305' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/Poly1305.php',
+        'ParagonIE\\Sodium\\Core\\Poly1305\\State' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/Poly1305/State.php',
+        'ParagonIE\\Sodium\\Core\\Salsa20' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/Salsa20.php',
+        'ParagonIE\\Sodium\\Core\\SipHash' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/SipHash.php',
+        'ParagonIE\\Sodium\\Core\\Util' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/Util.php',
+        'ParagonIE\\Sodium\\Core\\X25519' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/X25519.php',
+        'ParagonIE\\Sodium\\Core\\XChaCha20' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/XChaCha20.php',
+        'ParagonIE\\Sodium\\Core\\Xsalsa20' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Core/Xsalsa20.php',
+        'ParagonIE\\Sodium\\Crypto' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/Crypto.php',
+        'ParagonIE\\Sodium\\File' => __DIR__ . '/..' . '/paragonie/sodium_compat/namespaced/File.php',
         'Parsedown' => __DIR__ . '/..' . '/erusev/parsedown/Parsedown.php',
         'Pelago\\Emogrifier\\Caching\\SimpleStringCache' => __DIR__ . '/..' . '/pelago/emogrifier/src/Caching/SimpleStringCache.php',
         'Pelago\\Emogrifier\\CssInliner' => __DIR__ . '/..' . '/pelago/emogrifier/src/CssInliner.php',
@@ -1543,7 +1670,6 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'Pelago\\Emogrifier\\Utilities\\ArrayIntersector' => __DIR__ . '/..' . '/pelago/emogrifier/src/Utilities/ArrayIntersector.php',
         'Pelago\\Emogrifier\\Utilities\\CssConcatenator' => __DIR__ . '/..' . '/pelago/emogrifier/src/Utilities/CssConcatenator.php',
         'Pelago\\Emogrifier\\Utilities\\DeclarationBlockParser' => __DIR__ . '/..' . '/pelago/emogrifier/src/Utilities/DeclarationBlockParser.php',
-        'Pelago\\Emogrifier\\Utilities\\Preg' => __DIR__ . '/..' . '/pelago/emogrifier/src/Utilities/Preg.php',
         'Psr\\Cache\\CacheException' => __DIR__ . '/..' . '/psr/cache/src/CacheException.php',
         'Psr\\Cache\\CacheItemInterface' => __DIR__ . '/..' . '/psr/cache/src/CacheItemInterface.php',
         'Psr\\Cache\\CacheItemPoolInterface' => __DIR__ . '/..' . '/psr/cache/src/CacheItemPoolInterface.php',
@@ -1588,14 +1714,17 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'Random\\Engine\\Secure' => __DIR__ . '/..' . '/symfony/polyfill-php82/Resources/stubs/Random/Engine/Secure.php',
         'Random\\RandomError' => __DIR__ . '/..' . '/symfony/polyfill-php82/Resources/stubs/Random/RandomError.php',
         'Random\\RandomException' => __DIR__ . '/..' . '/symfony/polyfill-php82/Resources/stubs/Random/RandomException.php',
+        'ReflectionConstant' => __DIR__ . '/..' . '/symfony/polyfill-php84/Resources/stubs/ReflectionConstant.php',
         'SQLite3Exception' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/SQLite3Exception.php',
         'Sabberworm\\CSS\\CSSElement' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/CSSElement.php',
         'Sabberworm\\CSS\\CSSList\\AtRuleBlockList' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/CSSList/AtRuleBlockList.php',
         'Sabberworm\\CSS\\CSSList\\CSSBlockList' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/CSSList/CSSBlockList.php',
         'Sabberworm\\CSS\\CSSList\\CSSList' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/CSSList/CSSList.php',
+        'Sabberworm\\CSS\\CSSList\\CSSListItem' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/CSSList/CSSListItem.php',
         'Sabberworm\\CSS\\CSSList\\Document' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/CSSList/Document.php',
         'Sabberworm\\CSS\\CSSList\\KeyFrame' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/CSSList/KeyFrame.php',
         'Sabberworm\\CSS\\Comment\\Comment' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/Comment/Comment.php',
+        'Sabberworm\\CSS\\Comment\\CommentContainer' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/Comment/CommentContainer.php',
         'Sabberworm\\CSS\\Comment\\Commentable' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/Comment/Commentable.php',
         'Sabberworm\\CSS\\OutputFormat' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/OutputFormat.php',
         'Sabberworm\\CSS\\OutputFormatter' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/OutputFormatter.php',
@@ -1614,9 +1743,11 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'Sabberworm\\CSS\\Property\\Import' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/Property/Import.php',
         'Sabberworm\\CSS\\Property\\KeyframeSelector' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/Property/KeyframeSelector.php',
         'Sabberworm\\CSS\\Property\\Selector' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/Property/Selector.php',
+        'Sabberworm\\CSS\\Property\\Selector\\SpecificityCalculator' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/Property/Selector/SpecificityCalculator.php',
         'Sabberworm\\CSS\\Renderable' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/Renderable.php',
         'Sabberworm\\CSS\\RuleSet\\AtRuleSet' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/RuleSet/AtRuleSet.php',
         'Sabberworm\\CSS\\RuleSet\\DeclarationBlock' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/RuleSet/DeclarationBlock.php',
+        'Sabberworm\\CSS\\RuleSet\\RuleContainer' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/RuleSet/RuleContainer.php',
         'Sabberworm\\CSS\\RuleSet\\RuleSet' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/RuleSet/RuleSet.php',
         'Sabberworm\\CSS\\Rule\\Rule' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/Rule/Rule.php',
         'Sabberworm\\CSS\\Settings' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/Settings.php',
@@ -1632,6 +1763,89 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'Sabberworm\\CSS\\Value\\URL' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/Value/URL.php',
         'Sabberworm\\CSS\\Value\\Value' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/Value/Value.php',
         'Sabberworm\\CSS\\Value\\ValueList' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/Value/ValueList.php',
+        'Safe\\DateTime' => __DIR__ . '/..' . '/thecodingmachine/safe/lib/DateTime.php',
+        'Safe\\DateTimeImmutable' => __DIR__ . '/..' . '/thecodingmachine/safe/lib/DateTimeImmutable.php',
+        'Safe\\Exceptions\\ApacheException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/ApacheException.php',
+        'Safe\\Exceptions\\ApcuException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/ApcuException.php',
+        'Safe\\Exceptions\\ArrayException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/ArrayException.php',
+        'Safe\\Exceptions\\Bzip2Exception' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/Bzip2Exception.php',
+        'Safe\\Exceptions\\CalendarException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/CalendarException.php',
+        'Safe\\Exceptions\\ClassobjException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/ClassobjException.php',
+        'Safe\\Exceptions\\ComException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/ComException.php',
+        'Safe\\Exceptions\\CubridException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/CubridException.php',
+        'Safe\\Exceptions\\CurlException' => __DIR__ . '/..' . '/thecodingmachine/safe/lib/Exceptions/CurlException.php',
+        'Safe\\Exceptions\\DatetimeException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/DatetimeException.php',
+        'Safe\\Exceptions\\DirException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/DirException.php',
+        'Safe\\Exceptions\\EioException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/EioException.php',
+        'Safe\\Exceptions\\ErrorfuncException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/ErrorfuncException.php',
+        'Safe\\Exceptions\\ExecException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/ExecException.php',
+        'Safe\\Exceptions\\FileinfoException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/FileinfoException.php',
+        'Safe\\Exceptions\\FilesystemException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/FilesystemException.php',
+        'Safe\\Exceptions\\FilterException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/FilterException.php',
+        'Safe\\Exceptions\\FpmException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/FpmException.php',
+        'Safe\\Exceptions\\FtpException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/FtpException.php',
+        'Safe\\Exceptions\\FunchandException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/FunchandException.php',
+        'Safe\\Exceptions\\GettextException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/GettextException.php',
+        'Safe\\Exceptions\\GmpException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/GmpException.php',
+        'Safe\\Exceptions\\GnupgException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/GnupgException.php',
+        'Safe\\Exceptions\\HashException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/HashException.php',
+        'Safe\\Exceptions\\IbaseException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/IbaseException.php',
+        'Safe\\Exceptions\\IbmDb2Exception' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/IbmDb2Exception.php',
+        'Safe\\Exceptions\\IconvException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/IconvException.php',
+        'Safe\\Exceptions\\ImageException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/ImageException.php',
+        'Safe\\Exceptions\\ImapException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/ImapException.php',
+        'Safe\\Exceptions\\InfoException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/InfoException.php',
+        'Safe\\Exceptions\\InotifyException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/InotifyException.php',
+        'Safe\\Exceptions\\JsonException' => __DIR__ . '/..' . '/thecodingmachine/safe/lib/Exceptions/JsonException.php',
+        'Safe\\Exceptions\\LdapException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/LdapException.php',
+        'Safe\\Exceptions\\LibxmlException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/LibxmlException.php',
+        'Safe\\Exceptions\\LzfException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/LzfException.php',
+        'Safe\\Exceptions\\MailparseException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/MailparseException.php',
+        'Safe\\Exceptions\\MbstringException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/MbstringException.php',
+        'Safe\\Exceptions\\MiscException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/MiscException.php',
+        'Safe\\Exceptions\\MysqlException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/MysqlException.php',
+        'Safe\\Exceptions\\MysqliException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/MysqliException.php',
+        'Safe\\Exceptions\\NetworkException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/NetworkException.php',
+        'Safe\\Exceptions\\Oci8Exception' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/Oci8Exception.php',
+        'Safe\\Exceptions\\OpcacheException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/OpcacheException.php',
+        'Safe\\Exceptions\\OpensslException' => __DIR__ . '/..' . '/thecodingmachine/safe/lib/Exceptions/OpensslException.php',
+        'Safe\\Exceptions\\OutcontrolException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/OutcontrolException.php',
+        'Safe\\Exceptions\\PcntlException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/PcntlException.php',
+        'Safe\\Exceptions\\PcreException' => __DIR__ . '/..' . '/thecodingmachine/safe/lib/Exceptions/PcreException.php',
+        'Safe\\Exceptions\\PgsqlException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/PgsqlException.php',
+        'Safe\\Exceptions\\PosixException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/PosixException.php',
+        'Safe\\Exceptions\\PsException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/PsException.php',
+        'Safe\\Exceptions\\PspellException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/PspellException.php',
+        'Safe\\Exceptions\\ReadlineException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/ReadlineException.php',
+        'Safe\\Exceptions\\RnpException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/RnpException.php',
+        'Safe\\Exceptions\\RpminfoException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/RpminfoException.php',
+        'Safe\\Exceptions\\RrdException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/RrdException.php',
+        'Safe\\Exceptions\\SafeExceptionInterface' => __DIR__ . '/..' . '/thecodingmachine/safe/lib/Exceptions/SafeExceptionInterface.php',
+        'Safe\\Exceptions\\SemException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/SemException.php',
+        'Safe\\Exceptions\\SessionException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/SessionException.php',
+        'Safe\\Exceptions\\ShmopException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/ShmopException.php',
+        'Safe\\Exceptions\\SimplexmlException' => __DIR__ . '/..' . '/thecodingmachine/safe/lib/Exceptions/SimplexmlException.php',
+        'Safe\\Exceptions\\SocketsException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/SocketsException.php',
+        'Safe\\Exceptions\\SodiumException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/SodiumException.php',
+        'Safe\\Exceptions\\SolrException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/SolrException.php',
+        'Safe\\Exceptions\\SplException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/SplException.php',
+        'Safe\\Exceptions\\SqlsrvException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/SqlsrvException.php',
+        'Safe\\Exceptions\\SsdeepException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/SsdeepException.php',
+        'Safe\\Exceptions\\Ssh2Exception' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/Ssh2Exception.php',
+        'Safe\\Exceptions\\StreamException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/StreamException.php',
+        'Safe\\Exceptions\\StringsException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/StringsException.php',
+        'Safe\\Exceptions\\SwooleException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/SwooleException.php',
+        'Safe\\Exceptions\\UodbcException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/UodbcException.php',
+        'Safe\\Exceptions\\UopzException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/UopzException.php',
+        'Safe\\Exceptions\\UrlException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/UrlException.php',
+        'Safe\\Exceptions\\VarException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/VarException.php',
+        'Safe\\Exceptions\\XdiffException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/XdiffException.php',
+        'Safe\\Exceptions\\XmlException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/XmlException.php',
+        'Safe\\Exceptions\\XmlrpcException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/XmlrpcException.php',
+        'Safe\\Exceptions\\YamlException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/YamlException.php',
+        'Safe\\Exceptions\\YazException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/YazException.php',
+        'Safe\\Exceptions\\ZipException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/ZipException.php',
+        'Safe\\Exceptions\\ZlibException' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/Exceptions/ZlibException.php',
         'ScssPhp\\ScssPhp\\Ast\\AstNode' => __DIR__ . '/..' . '/scssphp/scssphp/src/Ast/AstNode.php',
         'ScssPhp\\ScssPhp\\Ast\\Css\\CssAtRule' => __DIR__ . '/..' . '/scssphp/scssphp/src/Ast/Css/CssAtRule.php',
         'ScssPhp\\ScssPhp\\Ast\\Css\\CssComment' => __DIR__ . '/..' . '/scssphp/scssphp/src/Ast/Css/CssComment.php',
@@ -2298,9 +2512,6 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'Symfony\\Polyfill\\Php83\\Php83' => __DIR__ . '/..' . '/symfony/polyfill-php83/Php83.php',
         'Symfony\\Polyfill\\Php84\\Php84' => __DIR__ . '/..' . '/symfony/polyfill-php84/Php84.php',
         'Symfony\\Polyfill\\Php85\\Php85' => __DIR__ . '/..' . '/symfony/polyfill-php85/Php85.php',
-        'Webmozart\\Assert\\Assert' => __DIR__ . '/..' . '/webmozart/assert/src/Assert.php',
-        'Webmozart\\Assert\\InvalidArgumentException' => __DIR__ . '/..' . '/webmozart/assert/src/InvalidArgumentException.php',
-        'Webmozart\\Assert\\Mixin' => __DIR__ . '/..' . '/webmozart/assert/src/Mixin.php',
         'WoltLab\\WebpExif\\ChunkType' => __DIR__ . '/..' . '/woltlab/webp-exif/src/ChunkType.php',
         'WoltLab\\WebpExif\\Chunk\\Alph' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Alph.php',
         'WoltLab\\WebpExif\\Chunk\\Anim' => __DIR__ . '/..' . '/woltlab/webp-exif/src/Chunk/Anim.php',

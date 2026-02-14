@@ -76,7 +76,6 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker
                 WHERE   objectTypeID = ?
                     AND objectID = ?";
         $commentStatement = WCF::getDB()->prepare($sql);
-        $comments = [];
 
         // update article content
         $articleContentList = new ArticleContentList();
@@ -141,15 +140,32 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker
         $statement->execute($conditions->getParameters());
         $cumulativeLikes = $statement->fetchMap('objectID', 'cumulativeLikes');
 
+        $objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName(
+            'com.woltlab.wcf.attachment.objectType',
+            'com.woltlab.wcf.article',
+        );
+        \assert($objectTypeID !== null);
+
+        $conditions = new PreparedStatementConditionBuilder();
+        $conditions->add("objectTypeID = ?", [$objectTypeID]);
+        $conditions->add("objectID IN (?)", [
+            \array_column($this->getObjectList()->getObjects(), 'articleID')
+        ]);
+        $sql = "SELECT  objectID, COUNT(*) AS count
+                FROM    wcf1_attachment
+                {$conditions}
+                GROUP BY objectID";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($conditions->getParameters());
+        $attachments = $statement->fetchMap('objectID', 'count', true);
+
         foreach ($this->objectList as $article) {
-            $editor = new ArticleEditor($article);
-            $data = [];
+            $data = [
+                'attachments' => $attachments[$article->articleID] ?? 0,
+                'cumulativeLikes' => $cumulativeLikes[$article->articleID] ?? 0,
+            ];
 
-            // update cumulative likes
-            $data['cumulativeLikes'] = $cumulativeLikes[$article->articleID] ?? 0;
-
-            // update data
-            $editor->update($data);
+            (new ArticleEditor($article))->update($data);
         }
     }
 

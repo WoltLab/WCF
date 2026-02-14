@@ -23,6 +23,10 @@ class CurrencyColumnRenderer extends AbstractColumnRenderer
     #[\Override]
     public function render(mixed $value, DatabaseObject $row): string
     {
+        if ($value === null) {
+            return '';
+        }
+
         return \number_format(
             \round($value, 2),
             2,

@@ -28,6 +28,12 @@ class ReactionType extends DatabaseObject implements ITitledObject
     protected static $databaseTableIndexName = 'reactionTypeID';
 
     /**
+     * Cache for the rendered icons.
+     * @var array<int, string>
+     */
+    private array $renderedIcons = [];
+
+    /**
      * @inheritDoc
      */
     public function getTitle(): string
@@ -42,9 +48,13 @@ class ReactionType extends DatabaseObject implements ITitledObject
      */
     public function renderIcon()
     {
-        return WCF::getTPL()->render('wcf', 'reactionTypeImage', [
-            'reactionType' => $this,
-        ]);
+        if (!isset($this->renderedIcons[$this->reactionTypeID])) {
+            $this->renderedIcons[$this->reactionTypeID] =  WCF::getTPL()->render('wcf', 'reactionTypeImage', [
+                'reactionType' => $this,
+            ]);
+        }
+
+        return $this->renderedIcons[$this->reactionTypeID];
     }
 
     /**

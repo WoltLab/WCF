@@ -14,7 +14,7 @@ type Response = {
   template: string;
 };
 
-export async function getArticlePopover(articleId: number): Promise<string> {
+export async function getArticlePopover(articleId: number): Promise<Response> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/articles/${articleId}/popover`);
 
   return fromInfallibleApiRequest(() => {

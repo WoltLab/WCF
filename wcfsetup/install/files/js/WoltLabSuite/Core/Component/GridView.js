@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  */
-define(["require", "exports", "tslib", "../Api/Gridviews/GetRow", "../Api/Gridviews/GetRows", "../Api/Interactions/GetBulkContextMenuOptions", "../Dom/Change/Listener", "../Dom/Util", "../Helper/Selector", "../Ui/Dropdown/Simple", "./GridView/State"], function (require, exports, tslib_1, GetRow_1, GetRows_1, GetBulkContextMenuOptions_1, Listener_1, Util_1, Selector_1, Simple_1, State_1) {
+define(["require", "exports", "tslib", "../Api/GridViews/GetRow", "../Api/GridViews/GetRows", "../Api/Interactions/GetBulkContextMenuOptions", "../Dom/Change/Listener", "../Dom/Util", "../Helper/PromiseMutex", "../Helper/Selector", "../Ui/Dropdown/Simple", "./GridView/State"], function (require, exports, tslib_1, GetRow_1, GetRows_1, GetBulkContextMenuOptions_1, Listener_1, Util_1, PromiseMutex_1, Selector_1, Simple_1, State_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.GridView = void 0;
@@ -20,14 +20,14 @@ define(["require", "exports", "tslib", "../Api/Gridviews/GetRow", "../Api/Gridvi
         #noItemsNotice;
         #bulkInteractionProviderClassName;
         #gridViewParameters;
-        constructor(gridId, gridClassName, pageNo, baseUrl = "", sortField = "", sortOrder = "ASC", bulkInteractionProviderClassName, gridViewParameters) {
+        constructor(gridId, gridClassName, pageNo, baseUrl = "", sortField = "", sortOrder = "ASC", defaultSortField = "", defaultSortOrder = "ASC", bulkInteractionProviderClassName, gridViewParameters) {
             this.#gridClassName = gridClassName;
             this.#table = document.getElementById(`${gridId}_table`);
             this.#noItemsNotice = document.getElementById(`${gridId}_noItemsNotice`);
             this.#bulkInteractionProviderClassName = bulkInteractionProviderClassName;
             this.#gridViewParameters = gridViewParameters;
             this.#initInteractions();
-            this.#state = this.#setupState(gridId, pageNo, baseUrl, sortField, sortOrder);
+            this.#state = this.#setupState(gridId, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder);
             this.#initEventListeners();
         }
         async #loadRows(cause) {
@@ -39,19 +39,23 @@ define(["require", "exports", "tslib", "../Api/Gridviews/GetRow", "../Api/Gridvi
             Listener_1.default.trigger();
         }
         async #refreshRow(row) {
-            const { template } = await (0, GetRow_1.getRow)(this.#gridClassName, row.dataset.objectId, this.#gridViewParameters);
+            const { template } = await (0, GetRow_1.getRow)(this.#gridClassName, row.dataset.objectId, this.#state.getActiveFilters(), this.#gridViewParameters);
             row.replaceWith(Util_1.default.createFragmentFromHtml(template));
             this.#state.refreshSelection();
             Listener_1.default.trigger();
+            this.#checkEmptyTable();
         }
         #initInteractions() {
             (0, Selector_1.wheneverFirstSeen)(`#${this.#table.id} tbody tr`, (row) => {
+                const containers = [row];
                 row.querySelectorAll(".dropdownToggle").forEach((element) => {
-                    let dropdown = Simple_1.default.getDropdownMenu(element.dataset.target);
-                    if (!dropdown) {
-                        dropdown = element.closest(".dropdown").querySelector(".dropdownMenu");
+                    const dropdown = Simple_1.default.getDropdownMenu(element.dataset.target);
+                    if (dropdown) {
+                        containers.push(dropdown);
                     }
-                    dropdown?.querySelectorAll("[data-interaction]").forEach((element) => {
+                });
+                for (const container of containers) {
+                    container.querySelectorAll("[data-interaction]").forEach((element) => {
                         element.addEventListener("click", () => {
                             row.dispatchEvent(new CustomEvent("interaction:execute", {
                                 detail: element.dataset,
@@ -59,7 +63,7 @@ define(["require", "exports", "tslib", "../Api/Gridviews/GetRow", "../Api/Gridvi
                             }));
                         });
                     });
-                });
+                }
             });
         }
         #initEventListeners() {
@@ -71,20 +75,22 @@ define(["require", "exports", "tslib", "../Api/Gridviews/GetRow", "../Api/Gridvi
             });
             this.#table.addEventListener("interaction:remove", (event) => {
                 event.target.remove();
+                this.#state.removeSelection(parseInt(event.target.dataset.objectId));
                 this.#checkEmptyTable();
             });
             this.#table.addEventListener("interaction:reset-selection", () => {
                 this.#state.resetSelection();
             });
+            this.#table.addEventListener("interaction:bulk-completed", () => {
+                this.#checkEmptyTable();
+            });
         }
-        #setupState(gridId, pageNo, baseUrl, sortField, sortOrder) {
-            const state = new State_1.State(gridId, this.#table, pageNo, baseUrl, sortField, sortOrder);
+        #setupState(gridId, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder) {
+            const state = new State_1.State(gridId, this.#table, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder);
             state.addEventListener("grid-view:change", (event) => {
                 void this.#loadRows(event.detail.source);
             });
-            state.addEventListener("grid-view:get-bulk-interactions", (event) => {
-                void this.#loadBulkInteractions(event.detail.objectIds);
-            });
+            state.addEventListener("grid-view:get-bulk-interactions", (0, PromiseMutex_1.promiseMutex)((event) => this.#loadBulkInteractions(event.detail.objectIds)));
             return state;
         }
         async #loadBulkInteractions(objectIds) {

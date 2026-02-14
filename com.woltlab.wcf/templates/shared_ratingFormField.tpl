@@ -12,7 +12,7 @@
 	{/foreach}
 	{if $field->isNullable()}
 		<li class="ratingMetaButton" data-action="removeRating">
-			<button type="button" class="jsTooltip" title="{lang}wcf.form.field.rating.removeRating{/lang}">
+			<button type="button" class="jsTooltip button small" title="{lang}wcf.form.field.rating.removeRating{/lang}">
 				{icon size=24 name='xmark'}
 			</button>
 		</li>

@@ -2,9 +2,7 @@
 
 namespace wcf\system\html\node;
 
-use wcf\system\exception\SystemException;
 use wcf\system\html\IHtmlProcessor;
-use wcf\util\JSON;
 
 /**
  * Default implementation for html node processors.
@@ -308,12 +306,12 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
      */
     public function parseAttributes($attributes)
     {
-        if (!empty($attributes)) {
+        if ($attributes !== '') {
             $parsedAttributes = \base64_decode($attributes, true);
             if ($parsedAttributes !== false) {
                 try {
-                    $parsedAttributes = JSON::decode($parsedAttributes);
-                } catch (SystemException $e) {
+                    $parsedAttributes = \json_decode($parsedAttributes, true, flags: \JSON_THROW_ON_ERROR);
+                } catch (\JsonException) {
                     /* parse errors can occur if user provided malicious content - ignore them */
                     $parsedAttributes = [];
                 }
@@ -420,8 +418,9 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
      * Returns a randomly generated tagName+identifier pair for <wcfNode-*> tags.
      *
      * @return array{0: string, 1: string}
+     * @since 6.2
      */
-    public function getWcfNodeIdentifer(): array
+    public function getWcfNodeIdentifier(): array
     {
         static $counter = 0;
         static $prefix = null;
@@ -436,5 +435,16 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
         $identifier = $prefix . $counter++;
 
         return [$identifier, "wcfNode-{$identifier}"];
+    }
+
+    /**
+     * Returns a randomly generated tagName+identifier pair for <wcfNode-*> tags.
+     *
+     * @return array{0: string, 1: string}
+     * @deprecated 6.2 Use `getWcfNodeIdentifier` instead.
+     */
+    public function getWcfNodeIdentifer(): array
+    {
+        return $this->getWcfNodeIdentifier();
     }
 }

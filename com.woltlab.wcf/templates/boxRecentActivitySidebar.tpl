@@ -1,6 +1,10 @@
 <ol class="sidebarList">
 	{foreach from=$eventList item=event}
 		<li class="sidebarListItem{if $__wcf->getUserProfileHandler()->isIgnoredUser($event->getUserProfile()->userID, 2)} ignoredUserContent{/if}">
+			<div class="sidebarListItem__image">
+				{unsafe:$event->getUserProfile()->getAvatar()->getImageTag(24)}
+			</div>
+
 			<div class="sidebarListItem__content">
 				<h3 class="sidebarListItem__title">
 					{if $event->getLink()}
@@ -12,9 +16,6 @@
 			</div>
 
 			<div class="sidebarListItem__meta">
-				<div class="sidebarListItem__meta__item sidebarListItem__meta__avatar">
-					{unsafe:$event->getUserProfile()->getAvatar()->getImageTag(16)}
-				</div>
 				<div class="sidebarListItem__meta__item sidebarListItem__meta__author">
 					{unsafe:$event->getUserProfile()->getFormattedUsername()}
 				</div>

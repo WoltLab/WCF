@@ -24,6 +24,6 @@ class TwitterUserOptionOutput implements IUserOptionOutput
             return '';
         }
 
-        return StringUtil::getAnchorTag('https://twitter.com/' . $value, $value, true, true);
+        return StringUtil::getAnchorTag('https://x.com/' . $value, $value, true, true);
     }
 }

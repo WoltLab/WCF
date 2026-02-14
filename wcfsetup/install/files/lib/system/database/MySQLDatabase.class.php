@@ -30,9 +30,16 @@ class MySQLDatabase extends Database
 
         try {
             $driverOptions = $this->defaultDriverOptions;
-            $driverOptions[\PDO::MYSQL_ATTR_INIT_COMMAND] = "SET NAMES 'utf8mb4'";
+            $initCommand = "SET NAMES 'utf8mb4'";
             if (!$this->failsafeTest) {
-                $driverOptions[\PDO::MYSQL_ATTR_INIT_COMMAND] = "SET NAMES 'utf8mb4', SESSION sql_mode = 'ANSI,ONLY_FULL_GROUP_BY,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'";
+                $initCommand = "SET NAMES 'utf8mb4', SESSION sql_mode = 'ANSI,ONLY_FULL_GROUP_BY,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'";
+            }
+
+            if (\defined('\\Pdo\\Mysql::ATTR_INIT_COMMAND')) {
+                // @phpstan-ignore class.notFound
+                $driverOptions[\Pdo\Mysql::ATTR_INIT_COMMAND] = $initCommand;
+            } else {
+                $driverOptions[\PDO::MYSQL_ATTR_INIT_COMMAND] = $initCommand;
             }
 
             // disable prepared statement emulation since MySQL 5.1.17 is the minimum required version
@@ -81,7 +88,13 @@ class MySQLDatabase extends Database
     protected function setAttributes()
     {
         parent::setAttributes();
-        $this->pdo->setAttribute(\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
+
+        if (\defined('\\Pdo\\Mysql::ATTR_USE_BUFFERED_QUERY')) {
+            // @phpstan-ignore class.notFound
+            $this->pdo->setAttribute(\Pdo\Mysql::ATTR_USE_BUFFERED_QUERY, true);
+        } else {
+            $this->pdo->setAttribute(\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
+        }
     }
 
     /**

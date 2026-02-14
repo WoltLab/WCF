@@ -1,6 +1,6 @@
 <input
 	type="number"
-	id="{$field->getPrefixedId()}_from"
+	id="{$field->getPrefixedId()}"
 	name="{$field->getPrefixedId()}[from]"
 	value="{$field->getFromValue()}"
 	step="{$field->getDefaultStep()}"
@@ -9,6 +9,8 @@
 	{if $field->isAutofocused()} autofocus{/if}
 	{if $field->isRequired()} required{/if}
 	{if $field->isImmutable()} disabled{/if}
+	{if $field->getMinimum() !== null} min="{$field->getMinimum()}"{/if}
+	{if $field->getMaximum() !== null} max="{$field->getMaximum()}"{/if}
 	{foreach from=$field->getFieldAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}
 >
 <input
@@ -21,5 +23,7 @@
 	{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}
 	{if $field->isRequired()} required{/if}
 	{if $field->isImmutable()} disabled{/if}
+	{if $field->getMinimum() !== null} min="{$field->getMinimum()}"{/if}
+	{if $field->getMaximum() !== null} max="{$field->getMaximum()}"{/if}
 	{foreach from=$field->getFieldAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}
 >

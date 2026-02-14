@@ -11,7 +11,7 @@ if (isset($_GET['language']) && \in_array($_GET['language'], ['de', 'en'])) {
     $language = $_GET['language'];
 }
 
-const WSC_SRT_VERSION = '6.1.0';
+const WSC_SRT_VERSION = '6.2.0';
 $requiredExtensions = [
     'ctype',
     'dom',

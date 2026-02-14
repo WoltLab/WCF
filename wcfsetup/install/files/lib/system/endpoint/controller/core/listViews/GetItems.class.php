@@ -52,17 +52,27 @@ final class GetItems implements IController
             $view->setActiveFilters($parameters->filters);
         }
 
-        $filterLabels = [];
-        foreach (\array_keys($parameters->filters) as $key) {
-            $filterLabels[$key] = $view->getFilterLabel($key);
-        }
-
         return new JsonResponse([
             'template' => $view->renderItems(),
             'pages' => $view->countPages(),
             'totalItems' => $view->countItems(),
-            'filterLabels' => $filterLabels,
+            'filterLabels' => $this->getFilterLabels($view, \array_keys($parameters->filters)),
         ]);
+    }
+
+    /**
+     * @param list<string> $ids
+     * @return array<string, string>
+     * @phpstan-ignore missingType.generics
+     */
+    private function getFilterLabels(AbstractListView $view, array $ids): array
+    {
+        $filterLabels = [];
+        foreach ($ids as $id) {
+            $filterLabels[$id] = $view->getFilterLabel($id);
+        }
+
+        return $filterLabels;
     }
 }
 

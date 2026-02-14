@@ -69,7 +69,7 @@ final class UserProfileInteractions extends AbstractInteractionProvider
             },
             new class(
                 'homepage',
-                static fn(UserProfile $user) => $user->homepage && $user->homepage != 'http://'
+                static fn(UserProfile $user) => $user->homepage && $user->homepage != 'http://' && !$user->isProtected()
             ) extends AbstractInteraction {
                 #[\Override]
                 public function render(DatabaseObject $object): string
@@ -115,6 +115,10 @@ final class UserProfileInteractions extends AbstractInteractionProvider
                     );
                 }
             },
+            new ReportInteraction(
+                'com.woltlab.wcf.user',
+                'wcf.user.profile.report'
+            ),
         ]);
 
         EventHandler::getInstance()->fire(

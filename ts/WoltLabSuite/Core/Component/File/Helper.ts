@@ -97,11 +97,19 @@ export function insertFileInformation(container: HTMLElement, file: WoltlabCoreF
   filename.classList.add("fileList__item__filename");
   filename.textContent = file.filename || file.dataset.filename!;
 
+  const indicatorIcon = document.createElement("fa-icon");
+  indicatorIcon.setIcon("circle-check");
+  const fileIndicator = document.createElement("div");
+  fileIndicator.classList.add("fileList__item__indicator", "green", "jsTooltip");
+  fileIndicator.setAttribute("aria-hidden", "true");
+  fileIndicator.title = getPhrase("wcf.attachment.inserted");
+  fileIndicator.append(indicatorIcon);
+
   const fileSize = document.createElement("div");
   fileSize.classList.add("fileList__item__fileSize");
   fileSize.textContent = formatFilesize(file.fileSize || parseInt(file.dataset.fileSize!));
 
-  container.append(fileWrapper, filename, fileSize);
+  container.append(fileWrapper, filename, fileIndicator, fileSize);
 }
 
 export function updateFileInformation(container: HTMLElement, file: WoltlabCoreFileElement): void {

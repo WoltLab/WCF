@@ -46,7 +46,7 @@ export class AcpUiMenuItemHandler {
 
     UiPageSearchHandler.open(
       parseInt(selectedOption.value),
-      selectedOption.textContent!.trim(),
+      selectedOption.textContent.trim(),
       (objectId) => {
         this.#pageObjectId.value = objectId.toString();
       },

@@ -313,6 +313,7 @@ define(["require", "exports", "../../Language", "WoltLabSuite/Core/Component/Emo
                 },
                 emoji: {
                     definitionsUrl: (0, Localization_1.getDataSource)(key),
+                    dropdownLimit: 20,
                 },
                 toolbar: this.#getToolbar(),
                 ui: {

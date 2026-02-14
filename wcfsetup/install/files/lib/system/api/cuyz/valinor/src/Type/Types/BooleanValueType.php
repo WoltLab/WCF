@@ -21,9 +21,6 @@ final class BooleanValueType implements BooleanType, FixedType
 
     private static self $false;
 
-    /**
-     * @codeCoverageIgnore
-     */
     private function __construct(private bool $value) {}
 
     public static function true(): self
@@ -48,14 +45,12 @@ final class BooleanValueType implements BooleanType, FixedType
 
     public function matches(Type $other): bool
     {
-        if ($other instanceof UnionType) {
-            return $other->isMatchedBy($this);
-        }
+        return $other->accepts($this->value);
+    }
 
-        return $other === $this
-            || $other instanceof NativeBooleanType
-            || $other instanceof ScalarConcreteType
-            || $other instanceof MixedType;
+    public function inferGenericsFrom(Type $other, Generics $generics): Generics
+    {
+        return $generics;
     }
 
     public function canCast(mixed $value): bool

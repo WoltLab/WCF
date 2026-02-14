@@ -71,10 +71,11 @@ final class Exif extends Chunk
             as_arrays: $sectionsAsArrays,
         );
 
-        // There is no known case where the call to `\exif_read_data()` can fail
-        // hard, there may be warnings about garbage data but since the
-        // constructed host image is guaranteed to be valid, it is infallible.
-        \assert($exif !== false);
+        // Parsing the EXIF data can fail when processing malformed binary blobs
+        // and is non-recoverable.
+        if ($exif === false) {
+            return null;
+        }
 
         /** @var array<string, int|string> $exif */
         return $exif;

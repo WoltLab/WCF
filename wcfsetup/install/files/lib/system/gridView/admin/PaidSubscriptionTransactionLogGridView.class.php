@@ -13,10 +13,6 @@ use wcf\event\gridView\admin\PaidSubscriptionTransactionLogGridViewInitialized;
 use wcf\system\cache\builder\PaidSubscriptionCacheBuilder;
 use wcf\system\cache\runtime\UserRuntimeCache;
 use wcf\system\gridView\AbstractGridView;
-use wcf\system\gridView\filter\SelectFilter;
-use wcf\system\gridView\filter\TextFilter;
-use wcf\system\gridView\filter\TimeFilter;
-use wcf\system\gridView\filter\UserFilter;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\AbstractColumnRenderer;
@@ -30,6 +26,10 @@ use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\IInteractionProvider;
 use wcf\system\interaction\LinkInteraction;
 use wcf\system\request\LinkHandler;
+use wcf\system\view\filter\SelectFilter;
+use wcf\system\view\filter\TextFilter;
+use wcf\system\view\filter\TimeFilter;
+use wcf\system\view\filter\UserFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -55,7 +55,8 @@ final class PaidSubscriptionTransactionLogGridView extends AbstractGridView
             GridViewColumn::for('logMessage')
                 ->label('wcf.acp.paidSubscription.transactionLog.logMessage')
                 ->titleColumn()
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
+                ->unsafeDisableEncoding()
                 ->renderer(new TruncatedTextColumnRenderer())
                 ->sortable(),
             GridViewColumn::for('userID')
@@ -84,10 +85,14 @@ final class PaidSubscriptionTransactionLogGridView extends AbstractGridView
                         }
                     }
                 )
-                ->filter(new UserFilter()),
+                ->filter(UserFilter::class),
             GridViewColumn::for('paymentMethodObjectTypeID')
                 ->label('wcf.acp.paidSubscription.transactionLog.paymentMethod')
-                ->filter(new SelectFilter($this->getAvailablePaymentMethods()))
+                ->filter(new SelectFilter(
+                    $this->getAvailablePaymentMethods(),
+                    'paymentMethodObjectTypeID',
+                    'wcf.acp.paidSubscription.transactionLog.paymentMethod'
+                ))
                 ->renderer(
                     new class extends AbstractColumnRenderer {
                         #[\Override]
@@ -100,26 +105,29 @@ final class PaidSubscriptionTransactionLogGridView extends AbstractGridView
                     }
                 )
                 ->sortable(),
-            GridViewColumn::for('subscriptionID')
-                ->label('wcf.acp.paidSubscription.subscription')
-                ->filter(new SelectFilter($this->getAvailableSubscriptions()))
-                ->hidden(),
             GridViewColumn::for('transactionID')
                 ->label('wcf.acp.paidSubscription.transactionLog.transactionID')
                 ->renderer(new DefaultColumnRenderer())
-                ->filter(new TextFilter())
+                ->filter(TextFilter::class)
                 ->sortable(),
             GridViewColumn::for('logTime')
                 ->label('wcf.acp.paidSubscription.transactionLog.logTime')
                 ->renderer(new TimeColumnRenderer())
-                ->filter(new TimeFilter())
+                ->filter(TimeFilter::class)
                 ->sortable(),
         ]);
 
+        $this->addAvailableFilters([
+            new SelectFilter(
+                $this->getAvailableSubscriptions(),
+                'subscriptionID',
+                'wcf.acp.paidSubscription.subscription'
+            )
+        ]);
         $this->setInteractionProvider($this->getInteractions());
         $this->addRowLink(new GridViewRowLink(PaidSubscriptionTransactionLogPage::class));
-        $this->setSortField("logTime");
-        $this->setSortOrder("DESC");
+        $this->setDefaultSortField("logTime");
+        $this->setDefaultSortOrder("DESC");
     }
 
     /**

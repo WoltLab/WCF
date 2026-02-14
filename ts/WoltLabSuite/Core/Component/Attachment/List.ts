@@ -1,11 +1,13 @@
 import WoltlabCoreFileElement from "../File/woltlab-core-file";
 import { CkeditorDropEvent } from "../File/Upload";
-import { createAttachmentFromFile } from "./Entry";
+import { createAttachmentFromFile, FileProcessorData } from "./Entry";
 import { listenToCkeditor } from "../Ckeditor/Event";
 import { getTabMenu } from "../Message/MessageTabMenu";
 import Sortable from "sortablejs";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 import { postObject } from "WoltLabSuite/Core/Api/PostObject";
+import { debounce } from "WoltLabSuite/Core/Core";
+import { getCkeditor } from "../Ckeditor";
 
 function fileToAttachment(fileList: HTMLElement, file: WoltlabCoreFileElement, editor: HTMLElement): void {
   fileList.append(createAttachmentFromFile(file, editor));
@@ -22,9 +24,6 @@ export function setup(editorId: string): void {
   }
 
   const tabMenu = getTabMenu(editorId);
-  if (tabMenu === undefined) {
-    throw new Error("Unable to find the corresponding tab menu.");
-  }
 
   const editor = document.getElementById(editorId);
   if (editor === null) {
@@ -143,10 +142,57 @@ export function setup(editorId: string): void {
       }
     }
 
-    tabMenu.setTabCounter("attachments", counter);
+    tabMenu?.setTabCounter("attachments", counter);
   });
   observer.observe(fileList, {
     childList: true,
     subtree: true,
   });
+
+  listenToCkeditor(editor)
+    .changeData(
+      debounce(() => {
+        observeInsertedAttachments(editor, files);
+      }, 500),
+    )
+    .ready(() => {
+      observeInsertedAttachments(editor, files);
+    });
+}
+
+function observeInsertedAttachments(element: HTMLElement, files: HTMLCollectionOf<WoltlabCoreFileElement>): void {
+  const editor = getCkeditor(element);
+  if (editor === undefined) {
+    throw new Error(`Could not find the CKEditor for element '${element.id}'.`);
+  }
+
+  const embeddedAttachments: Set<number> = new Set();
+  editor.element.querySelectorAll(".woltlabAttachment[data-attachment-id]").forEach((img: HTMLImageElement) => {
+    const attachmentId = parseInt(img.dataset.attachmentId!);
+    embeddedAttachments.add(attachmentId);
+  });
+
+  const bbcodeMatches = editor.element.innerText.matchAll(/\[attach=(?:'|")?(\d+)(?:'|")?(?:,[^]]+?)?\]\[\/attach\]/g);
+  for (const match of bbcodeMatches) {
+    const attachmentId = parseInt(match[1]);
+    embeddedAttachments.add(attachmentId);
+  }
+
+  for (const file of files) {
+    if (file.isFailedUpload()) {
+      continue;
+    }
+
+    const wrapper = file.closest(".fileList__item");
+    if (wrapper === null) {
+      continue;
+    }
+
+    const { attachmentID } = file.data as FileProcessorData;
+    if (embeddedAttachments.has(attachmentID)) {
+      wrapper.classList.add("fileList__item--inserted");
+    } else {
+      wrapper.classList.remove("fileList__item--inserted");
+    }
+  }
 }

@@ -552,7 +552,7 @@ function renderGrid(day?: number, month?: number, year?: number): void {
     for (let i = 0; i < 37; i++) {
       const cell = _dateCells[i];
 
-      let active = +cell.textContent! === day;
+      let active = +cell.textContent === day;
       if (cell.classList.contains("otherMonth") || cell.classList.contains("disabled")) {
         active = false;
       }
@@ -625,7 +625,7 @@ function click(event: MouseEvent): void {
 
   _input!.dataset.empty = "false";
 
-  renderGrid(+target.textContent!);
+  renderGrid(+target.textContent);
 
   const data = _data.get(_input!) as DatePickerData;
   if (!data.isDateTime) {

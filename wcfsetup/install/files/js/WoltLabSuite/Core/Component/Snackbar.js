@@ -1,7 +1,7 @@
 /**
  * Shows snackbar like notifications.
  *
- * @author    Marcwl Werk
+ * @author    Marcel Werk
  * @copyright 2001-2025 WoltLab GmbH
  * @license   GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since     6.2
@@ -142,7 +142,7 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/H
             void snackbar.addEventListener("snackbar:close", () => {
                 const i = this.#snackbars.indexOf(snackbar);
                 if (i !== -1) {
-                    this.#snackbars = this.#snackbars.splice(i, 1);
+                    this.#snackbars.splice(i, 1);
                 }
             });
         }

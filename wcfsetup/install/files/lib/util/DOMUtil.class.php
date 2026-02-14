@@ -168,14 +168,15 @@ final class DOMUtil
     public static function getReadonlyParentTree(\DOMNode $node): array
     {
         $tree = [];
-        /** @var \DOMElement $parent */
         foreach (self::getParents($node) as $parent) {
             // do not include <body>, <html> and the document itself
             if ($parent->nodeName === 'body') {
                 break;
             }
 
-            $tree[] = $parent->cloneNode(false);
+            $clone = $parent->cloneNode(false);
+            \assert($clone instanceof \DOMElement);
+            $tree[] = $clone;
         }
 
         return $tree;

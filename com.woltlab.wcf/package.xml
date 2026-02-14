@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>6.2.0 dev 1</version>
-		<date>2025-03-24</date>
+		<version>6.2.0 RC 4</version>
+		<date>2026-02-05</date>
 	</packageinformation>
 
 	<authorinformation>
@@ -50,12 +50,59 @@
 		<instruction type="script">acp/install_com.woltlab.wcf_step2.php</instruction>
 	</instructions>
 
-	<!-- 
-	Required order of the following steps for the update to 6.2:
-	<instruction type="script">acp/update_com.woltlab.wcf_6.2_backgroundJob.php</instruction>
-	<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_62_step1.php</instruction>
-	<instruction type="script">acp/update_com.woltlab.wcf_6.2_contactOptions.php</instruction>
-	<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_62_step2.php</instruction>
-	<instruction type="script">acp/update_com.woltlab.wcf_6.2_option.php</instruction>
-	-->
+	<instructions type="update" fromversion="6.1.*">
+		<!--
+tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
+	acp/database/update_com.woltlab.wcf_6.2_step1.php \
+	acp/database/update_com.woltlab.wcf_6.2_step2.php \
+	acp/update_com.woltlab.wcf_6.2_backgroundJob.php \
+	acp/update_com.woltlab.wcf_6.2_checkSystemRequirements.php \
+	acp/update_com.woltlab.wcf_6.2_contactOptions.php \
+	acp/update_com.woltlab.wcf_6.2_styleVariables.php
+		-->
+		<instruction type="file">files_pre_check.tar</instruction>
+
+		<instruction type="script">acp/update_com.woltlab.wcf_6.2_checkSystemRequirements.php</instruction>
+		
+		<!-- The following scripts must be executed in this particular order. -->
+		<instruction type="script">acp/update_com.woltlab.wcf_6.2_backgroundJob.php</instruction>
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.2_step1.php</instruction>
+		<instruction type="script">acp/update_com.woltlab.wcf_6.2_contactOptions.php</instruction>
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.2_step2.php</instruction>
+		
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.2_styleVariables.php</instruction>
+
+		<instruction type="acpTemplate"/>
+		<instruction type="file"/>
+		<instruction type="template"/>
+
+		<instruction type="option"/>
+		<instruction type="script">acp/update_com.woltlab.wcf_6.2_option.php</instruction>
+		
+		<instruction type="language" run="standalone"/>
+
+		<instruction type="objectTypeDefinition"/>
+		<instruction type="objectType"/>
+		<instruction type="page"/>
+		<instruction type="acpMenu"/>
+		<instruction type="acpTemplateDelete"/>
+		<instruction type="clipboardAction"/>
+		<instruction type="coreObject"/>
+		<instruction type="fileDelete"/>
+		<instruction type="templateDelete"/>
+		<instruction type="userGroupOption"/>
+		<instruction type="userMenu"/>
+		<instruction type="userOption"/>
+
+		<instruction type="script">acp/update_com.woltlab.wcf_6.2_userCoverPhoto.php</instruction>
+		<instruction type="script">acp/update_com.woltlab.wcf_6.2_cleanUpDsStore.php</instruction>
+	</instructions>
+
+	<instructions type="update" fromversion="6.2.0 RC 3">
+		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		<instruction type="script">acp/update_com.woltlab.wcf_6.2_cleanUpDsStore.php</instruction>
+		<instruction type="language"/>
+		<instruction type="userGroupOption"/>
+	</instructions>
 </package>

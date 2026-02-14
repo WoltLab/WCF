@@ -283,7 +283,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                     for (let i = 0, length = checksums.length; i < length; i++) {
                         const result = checksums[i];
                         if (result.status === "fulfilled") {
-                            const exif = exifData.get(validFiles[i]) || null;
+                            const exif = exifData.get(validFiles[i]) || exifData.get(files[i]) || null;
                             void upload(element, validFiles[i], result.value, exif);
                         }
                         else {
@@ -337,6 +337,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                         promiseReject();
                         throw e;
                     }
+                })
+                    .catch((e) => {
+                    promiseReject();
+                    throw e;
                 });
             });
         });

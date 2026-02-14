@@ -30,7 +30,7 @@ final class ApplicationHandler extends SingletonFactory
     /**
      * @var string[]
      */
-    private array $pageURLs = [];
+    private array $pageURLs;
 
     /**
      * Initializes cache.
@@ -159,7 +159,7 @@ final class ApplicationHandler extends SingletonFactory
      */
     public function isInternalURL(string $url): bool
     {
-        if (empty($this->pageURLs)) {
+        if (!isset($this->pageURLs)) {
             $internalHostnames = ArrayUtil::trim(\explode("\n", StringUtil::unifyNewlines(\INTERNAL_HOSTNAMES)));
 
             $this->pageURLs = \array_unique([
@@ -199,6 +199,50 @@ final class ApplicationHandler extends SingletonFactory
     public function getDomainName(): string
     {
         return $this->getApplicationByID(1)->domainName;
+    }
+
+    /**
+     * Resolve the active package id based on the rewritten URL.
+     *
+     * @since 6.2
+     */
+    public function resolveActiveApplication(string $path): void
+    {
+        $rootApplicationID = $this->cache['rootApplicationID'];
+        \assert($rootApplicationID !== null);
+
+        $path = FileUtil::removeLeadingSlash($path);
+        $packageID = \array_find_key(
+            $this->cache['sortedPaths'],
+            static fn($prefix) => \str_starts_with($path, $prefix),
+        );
+
+        if ($packageID === null) {
+            $packageID = $rootApplicationID;
+        } else {
+            $prefix = $this->cache['sortedPaths'][$packageID];
+            $path = \mb_substr($path, \mb_strlen($prefix));
+        }
+
+        RouteHandler::overridePathInfo($path);
+
+        if (!\defined('PACKAGE_ID')) {
+            \define('PACKAGE_ID', $packageID);
+
+            if ($packageID !== 1) {
+                $application = ApplicationHandler::getInstance()->getApplicationByID($packageID);
+                \assert($application !== null);
+
+                // Include the `app.config.inc.php` of the primary app.
+                $pathname = FileUtil::addTrailingSlash(
+                    FileUtil::getRealPath(
+                        \WCF_DIR . $application->getPackage()->packageDir
+                    )
+                ) . 'app.config.inc.php';
+
+                require_once $pathname;
+            }
+        }
     }
 
     /**

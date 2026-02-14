@@ -2,14 +2,11 @@
 
 namespace wcf\system\form\option;
 
-use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\wysiwyg\WysiwygFormField;
 use wcf\system\form\option\formatter\IFormOptionFormatter;
 use wcf\system\form\option\formatter\WysiwygFormatter;
 use wcf\system\form\option\formatter\WysiwygPlainTextFormatter;
-use wcf\system\WCF;
 
 /**
  * Implementation of a form option using the WYSIWYG editor.
@@ -21,6 +18,10 @@ use wcf\system\WCF;
  */
 class WysiwygFormOption extends AbstractFormOption
 {
+    private string $objectType;
+
+    private int $objectID;
+
     #[\Override]
     public function getId(): string
     {
@@ -28,16 +29,14 @@ class WysiwygFormOption extends AbstractFormOption
     }
 
     #[\Override]
-    public function getFilterFormField(string $id, array $configuration = []): AbstractFormField
-    {
-        return TextFormField::create($id);
-    }
-
-    #[\Override]
     public function getFormField(string $id, array $configuration = []): AbstractFormField
     {
+        if (!isset($this->objectType)) {
+            throw new \RuntimeException("The WYSIWYG context has not been set.");
+        }
+
         return WysiwygFormField::create($id)
-            ->objectType('com.woltlab.wcf.genericFormOption');
+            ->objectType($this->objectType);
     }
 
     #[\Override]
@@ -47,20 +46,43 @@ class WysiwygFormOption extends AbstractFormOption
     }
 
     #[\Override]
-    public function applyFilter(DatabaseObjectList $list, string $columnName, mixed $value): void
-    {
-        $list->getConditionBuilder()->add("{$columnName} LIKE ?", ['%' . WCF::getDB()->escapeLikeValue($value) . '%']);
-    }
-
-    #[\Override]
     public function getFormatter(): IFormOptionFormatter
     {
-        return new WysiwygFormatter();
+        if (!isset($this->objectType)) {
+            throw new \RuntimeException("The WYSIWYG context has not been set.");
+        }
+
+        return new WysiwygFormatter($this->objectType, $this->objectID);
     }
 
     #[\Override]
     public function getPlainTextFormatter(): IFormOptionFormatter
     {
-        return new WysiwygPlainTextFormatter();
+        if (!isset($this->objectType)) {
+            throw new \RuntimeException("The WYSIWYG context has not been set.");
+        }
+
+        return new WysiwygPlainTextFormatter($this->objectType, $this->objectID);
+    }
+
+    #[\Override]
+    public function getFilterFormField(string $id, array $configuration = []): AbstractFormField
+    {
+        throw new \BadMethodCallException("WysiwygFormOption does not support filtering.");
+    }
+
+    #[\Override]
+    public function isFilterable(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Sets the context for the HTML processors.
+     */
+    public function setContext(string $objectType, int $objectID): void
+    {
+        $this->objectType = $objectType;
+        $this->objectID = $objectID;
     }
 }

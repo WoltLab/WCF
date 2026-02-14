@@ -15,13 +15,19 @@ export class Sorting extends EventTarget {
   #sortOrder: string;
   #table: HTMLTableElement;
 
-  constructor(table: HTMLTableElement, sortField: string, sortOrder: string) {
+  constructor(
+    table: HTMLTableElement,
+    sortField: string,
+    sortOrder: string,
+    defaultSortField: string,
+    defaultSortOrder: string,
+  ) {
     super();
 
     this.#sortField = sortField;
-    this.#defaultSortField = sortField;
+    this.#defaultSortField = defaultSortField;
     this.#sortOrder = sortOrder;
-    this.#defaultSortOrder = sortOrder;
+    this.#defaultSortOrder = defaultSortOrder;
     this.#table = table;
 
     this.#table
@@ -47,6 +53,14 @@ export class Sorting extends EventTarget {
   getQueryParameters(): [string, string][] {
     if (this.#sortField === "") {
       return [];
+    }
+
+    if (this.#sortField === this.#defaultSortField) {
+      if (this.#sortOrder !== this.#defaultSortOrder) {
+        return [["sortOrder", this.#sortOrder]];
+      } else {
+        return [];
+      }
     }
 
     return [

@@ -22,7 +22,7 @@ define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], 
         #sorting;
         #gridViewFooter;
         #pageNo;
-        constructor(gridId, table, pageNo, baseUrl, sortField, sortOrder) {
+        constructor(gridId, table, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder) {
             super();
             this.#baseUrl = baseUrl;
             this.#pageNo = pageNo;
@@ -35,7 +35,7 @@ define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], 
             this.#filter.addEventListener("grid-view:change", () => {
                 this.#switchPage(1, 0 /* StateChangeCause.Change */);
             });
-            this.#sorting = new Sorting_1.default(table, sortField, sortOrder);
+            this.#sorting = new Sorting_1.default(table, sortField, sortOrder, defaultSortField, defaultSortOrder);
             this.#sorting.addEventListener("grid-view:change", () => {
                 this.#switchPage(1, 0 /* StateChangeCause.Change */);
             });
@@ -75,6 +75,7 @@ define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], 
             if (cause === 0 /* StateChangeCause.Change */ || cause === 2 /* StateChangeCause.Pagination */) {
                 this.#updateQueryString();
             }
+            this.#updateGridViewFooter();
         }
         #switchPage(pageNo, source) {
             this.#pagination.page = pageNo;
@@ -135,13 +136,21 @@ define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], 
             this.#switchPage(pageNo, 1 /* StateChangeCause.History */);
         }
         #updateGridViewFooter() {
-            this.#gridViewFooter.hidden = this.#pagination.count < 2 && !this.#selection.selectionBarVisible();
+            const hasPagination = this.#pagination.count > 1;
+            this.#gridViewFooter.hidden = !hasPagination && !this.#selection.selectionBarVisible();
+            const paginationContainer = this.#pagination.closest(".gridView__pagination");
+            if (paginationContainer !== null) {
+                paginationContainer.hidden = !hasPagination;
+            }
         }
         setBulkInteractionContextMenuOptions(options) {
             this.#selection.setBulkInteractionContextMenuOptions(options);
         }
         resetSelection() {
             this.#selection.resetSelection();
+        }
+        removeSelection(objectId) {
+            this.#selection.removeSelection(objectId);
         }
         refreshSelection() {
             this.#selection.refresh();
