@@ -28,7 +28,7 @@ final class CheckSystemEnvironment implements MiddlewareInterface
     {
         if (!RequestHandler::getInstance()->isACPRequest()) {
             // @phpstan-ignore smallerOrEqual.alwaysTrue, smallerOrEqual.alwaysTrue, booleanAnd.alwaysTrue
-            if (!(80100 <= \PHP_VERSION_ID && \PHP_VERSION_ID <= 80499)) {
+            if (!(80300 <= \PHP_VERSION_ID && \PHP_VERSION_ID <= 80599)) {
                 return new HtmlResponse(
                     (new HtmlErrorRenderer())->render(
                         WCF::getLanguage()->getDynamicVariable('wcf.global.error.title'),
