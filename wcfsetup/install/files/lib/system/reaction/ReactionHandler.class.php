@@ -726,38 +726,6 @@ final class ReactionHandler extends SingletonFactory
     }
 
     /**
-     * Returns current like object status.
-     *
-     * @return array{
-     *  likes: int,
-     *  dislikes: int,
-     *  cumulativeLikes: int,
-     *  reactionTypeID: int,
-     *  likeValue: int
-     * }
-     */
-    private function loadLikeStatus(LikeObject $likeObject, User $user): array
-    {
-        $sql = "SELECT      like_object.likes, like_object.dislikes, like_object.cumulativeLikes,
-                            COALESCE(like_table.reactionTypeID, 0) AS reactionTypeID,
-                            COALESCE(like_table.likeValue, 0) AS liked
-                FROM        wcf1_like_object like_object
-                LEFT JOIN   wcf1_like like_table
-                ON          like_table.objectTypeID = ?
-                        AND like_table.objectID = like_object.objectID
-                        AND like_table.userID = ?
-                WHERE   like_object.likeObjectID = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            $likeObject->objectTypeID,
-            $user->userID,
-            $likeObject->likeObjectID,
-        ]);
-
-        return $statement->fetchArray();
-    }
-
-    /**
      * Returns the first available reaction type.
      */
     public function getFirstReactionType(): ReactionType|false
