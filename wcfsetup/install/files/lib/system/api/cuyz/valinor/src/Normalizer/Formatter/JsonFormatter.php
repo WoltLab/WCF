@@ -17,10 +17,12 @@ use function is_null;
 use function is_scalar;
 use function json_encode;
 
+use function str_repeat;
+
 use const JSON_FORCE_OBJECT;
 
 /** @internal */
-final class JsonFormatter
+final readonly class JsonFormatter
 {
     private bool $prettyPrint;
 
@@ -28,8 +30,8 @@ final class JsonFormatter
 
     public function __construct(
         /** @var resource */
-        private readonly mixed $resource,
-        private readonly int $jsonEncodingOptions,
+        private mixed $resource,
+        private int $jsonEncodingOptions,
     ) {
         $this->prettyPrint = (bool)($this->jsonEncodingOptions & JSON_PRETTY_PRINT);
         $this->forceObject = (bool)($this->jsonEncodingOptions & JSON_FORCE_OBJECT);

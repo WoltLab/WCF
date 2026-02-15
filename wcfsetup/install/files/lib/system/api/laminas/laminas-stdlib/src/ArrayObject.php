@@ -33,9 +33,12 @@ use function natsort;
 use function serialize;
 use function sprintf;
 use function str_starts_with;
+use function trigger_error;
 use function uasort;
 use function uksort;
 use function unserialize;
+
+use const E_USER_DEPRECATED;
 
 /**
  * Custom framework ArrayObject implementation
@@ -46,6 +49,7 @@ use function unserialize;
  * @template TValue
  * @template-implements IteratorAggregate<TKey, TValue>
  * @template-implements ArrayAccess<TKey, TValue>
+ * @psalm-no-seal-properties
  */
 #[AllowDynamicProperties]
 class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Countable
@@ -202,6 +206,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Exchange the array for another one.
      *
+     * Passing non-array values is deprecated and the next major version will add an array type hint
+     *
      * @param array<TKey, TValue>|ArrayObject<TKey, TValue>|ArrayIterator<TKey, TValue>|object $data
      * @return array<TKey, TValue>
      */
@@ -213,7 +219,17 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
             );
         }
 
-        if (is_object($data) && ($data instanceof self || $data instanceof \ArrayObject)) {
+        if (! is_array($data)) {
+            trigger_error(
+                sprintf(
+                    'Passing a non-array value to "%s" is deprecated and will be removed in the next major version',
+                    __METHOD__,
+                ),
+                E_USER_DEPRECATED,
+            );
+        }
+
+        if ($data instanceof self || $data instanceof \ArrayObject) {
             $data = $data->getArrayCopy();
         }
         if (! is_array($data)) {

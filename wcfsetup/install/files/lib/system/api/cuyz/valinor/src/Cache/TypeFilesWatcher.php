@@ -14,8 +14,10 @@ use CuyZ\Valinor\Utility\TypeHelper;
 use ReflectionFunction;
 
 use function array_filter;
+use function array_map;
 use function array_unique;
 use function array_values;
+use function is_string;
 
 /** @internal */
 final class TypeFilesWatcher
@@ -39,7 +41,7 @@ final class TypeFilesWatcher
      *
      * Example of returned value:
      *
-     * ```php
+     * ```
      * [
      *     // An entity representing a user
      *     '/root/path/src/Domain/User/User.php',

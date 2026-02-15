@@ -13,6 +13,7 @@ interface MessageInterface
      *
      * @param string|int|array|Traversable $spec
      * @param  mixed $value
+     * @return $this
      */
     public function setMetadata($spec, $value = null);
 

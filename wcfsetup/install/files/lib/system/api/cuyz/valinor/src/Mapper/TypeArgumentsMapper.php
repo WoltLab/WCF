@@ -6,13 +6,16 @@ namespace CuyZ\Valinor\Mapper;
 
 use CuyZ\Valinor\Definition\ParameterDefinition;
 use CuyZ\Valinor\Definition\Repository\FunctionDefinitionRepository;
+use CuyZ\Valinor\Mapper\Exception\MappingLogicalException;
 use CuyZ\Valinor\Mapper\Exception\TypeErrorDuringArgumentsMapping;
-use CuyZ\Valinor\Mapper\Tree\Exception\UnresolvableShellType;
 use CuyZ\Valinor\Mapper\Tree\RootNodeBuilder;
 use CuyZ\Valinor\Type\ObjectType;
 use CuyZ\Valinor\Type\Types\ShapedArrayElement;
 use CuyZ\Valinor\Type\Types\ShapedArrayType;
 use CuyZ\Valinor\Type\Types\StringValueType;
+
+use function array_map;
+use function count;
 
 /** @internal */
 final class TypeArgumentsMapper implements ArgumentsMapper
@@ -41,7 +44,7 @@ final class TypeArgumentsMapper implements ArgumentsMapper
 
         try {
             $node = $this->nodeBuilder->build($source, $type, $function->attributes);
-        } catch (UnresolvableShellType $exception) {
+        } catch (MappingLogicalException $exception) {
             throw new TypeErrorDuringArgumentsMapping($function, $exception);
         }
 

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace CuyZ\Valinor\Cache;
 
+use function assert;
 use function file_exists;
 use function filemtime;
+use function is_array;
 use function var_export;
 
 /**
@@ -18,7 +20,7 @@ use function var_export;
  * environment, where source files are often modified by developers.
  *
  * It should decorate the original cache implementation and should be given to
- * the mapper builder: @see \CuyZ\Valinor\MapperBuilder::withCache
+ * the mapper builder: {@see \CuyZ\Valinor\MapperBuilder::withCache()}
  *
  * @api
  *

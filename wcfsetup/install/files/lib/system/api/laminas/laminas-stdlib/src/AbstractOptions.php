@@ -7,9 +7,11 @@ namespace Laminas\Stdlib;
 use Traversable;
 
 use function array_shift;
+use function assert;
 use function get_object_vars;
 use function is_array;
 use function is_callable;
+use function is_string;
 use function method_exists;
 use function preg_replace_callback;
 use function sprintf;
@@ -20,6 +22,7 @@ use function ucwords;
 /**
  * @template TValue
  * @implements ParameterObjectInterface<string, TValue>
+ * @psalm-no-seal-properties This class has __get() magic. It exposes protected props when there is a matching method
  */
 abstract class AbstractOptions implements ParameterObjectInterface
 {
@@ -91,7 +94,7 @@ abstract class AbstractOptions implements ParameterObjectInterface
         $transform = static function (array $letters): string {
             /** @var list<string> $letters */
             $letter = array_shift($letters);
-            return '_' . strtolower($letter);
+            return '_' . strtolower((string) $letter);
         };
 
         /** @psalm-var TValue $value */
@@ -99,7 +102,8 @@ abstract class AbstractOptions implements ParameterObjectInterface
             if ($key === '__strictMode__') {
                 continue;
             }
-            $normalizedKey         = preg_replace_callback('/([A-Z])/', $transform, $key);
+            $normalizedKey = preg_replace_callback('/([A-Z])/', $transform, $key);
+            assert(is_string($normalizedKey));
             $array[$normalizedKey] = $value;
         }
 

@@ -13,6 +13,7 @@ use function iconv_strlen;
 use function iconv_strpos;
 use function iconv_substr;
 
+/** @final */
 class Iconv extends AbstractStringWrapper
 {
     /**

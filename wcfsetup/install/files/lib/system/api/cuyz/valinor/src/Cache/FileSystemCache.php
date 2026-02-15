@@ -12,6 +12,7 @@ use Error;
 use FilesystemIterator;
 
 use function bin2hex;
+use function chmod;
 use function file_exists;
 use function file_put_contents;
 use function is_dir;
@@ -79,7 +80,9 @@ final class FileSystemCache implements Cache
 
             @chmod($filename, 0666 & ~umask());
         } finally {
-            @unlink($tmpFilename);
+            if (file_exists($tmpFilename)) {
+                unlink($tmpFilename);
+            }
         }
     }
 

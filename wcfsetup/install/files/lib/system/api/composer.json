@@ -5,18 +5,18 @@
     "optimize-autoloader": true,
     "sort-packages": true,
     "platform": {
-      "php": "8.1.2",
+      "php": "8.3.30",
       "ext-gd": "0"
     }
   },
   "require": {
-    "cuyz/valinor": "^2.3.1",
-    "dragonmantank/cron-expression": "^3.5.0",
+    "cuyz/valinor": "^2.3.2",
+    "dragonmantank/cron-expression": "^3.6.0",
     "erusev/parsedown": "^1.7.4",
     "ezyang/htmlpurifier": "^4.19",
     "guzzlehttp/guzzle": "^7.10.0",
     "guzzlehttp/psr7": "^2.8.0",
-    "laminas/laminas-diactoros": "^3.7.0",
+    "laminas/laminas-diactoros": "^3.8.0",
     "laminas/laminas-httphandlerrunner": "^2.13.0",
     "laminas/laminas-progressbar": "^2.14.1",
     "minishlink/web-push": "^9.0.4",
@@ -31,8 +31,6 @@
     "psr/log": "^3.0.2",
     "scssphp/scssphp": "^2.1.0",
     "sebastian/diff": "^5.1.1",
-    "symfony/polyfill-php82": "^1.33.0",
-    "symfony/polyfill-php83": "^1.33",
     "symfony/polyfill-php84": "^1.33",
     "symfony/polyfill-php85": "^1.33",
     "willdurand/negotiation": "^3.1",

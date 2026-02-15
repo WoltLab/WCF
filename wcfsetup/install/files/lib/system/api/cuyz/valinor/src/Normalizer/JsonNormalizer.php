@@ -8,8 +8,13 @@ use CuyZ\Valinor\Normalizer\Formatter\JsonFormatter;
 use CuyZ\Valinor\Normalizer\Transformer\Transformer;
 use RuntimeException;
 
+use function fclose;
+use function fopen;
+
 use function get_debug_type;
 use function is_resource;
+use function rewind;
+use function stream_get_contents;
 
 use const JSON_FORCE_OBJECT;
 use const JSON_HEX_AMP;
@@ -81,7 +86,7 @@ final class JsonNormalizer implements Normalizer
      *
      * This can be achieved by passing these flags to this method:
      *
-     * ```php
+     * ```
      * $normalizer = (new \CuyZ\Valinor\NormalizerBuilder())
      *     ->normalizer(\CuyZ\Valinor\Normalizer\Format::json())
      *     ->withOptions(\JSON_PRESERVE_ZERO_FRACTION);
@@ -133,7 +138,7 @@ final class JsonNormalizer implements Normalizer
      * memory-efficient when using generators — for instance when querying a
      * database:
      *
-     * ```php
+     * ```
      * // In this example, we assume that the result of the query below is a
      * // generator, every entry will be yielded one by one, instead of
      * // everything being loaded in memory at once.

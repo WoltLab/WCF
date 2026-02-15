@@ -13,9 +13,12 @@ use CuyZ\Valinor\Type\Parser\Exception\Scalar\ReversedValuesForIntegerRange;
 use CuyZ\Valinor\Type\Parser\Exception\Scalar\SameValueForIntegerRange;
 use CuyZ\Valinor\Type\Type;
 
+use function assert;
+use function filter_var;
+use function is_bool;
+use function is_int;
 use function is_string;
 use function ltrim;
-use function preg_match;
 use function sprintf;
 
 /** @internal */
@@ -93,10 +96,8 @@ final class IntegerRangeType implements IntegerType
 
     public function canCast(mixed $value): bool
     {
-        if (is_string($value)) {
-            $value = preg_match('/^0+$/', $value)
-                ? '0'
-                : ltrim($value, '0');
+        if (is_string($value) && $value !== '') {
+            $value = ltrim($value, '0') ?: '0';
         }
 
         return ! is_bool($value)

@@ -83,6 +83,7 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
      *
      * @return array
      */
+    #[ReturnTypeWillChange]
     public function __serialize()
     {
         $clone = clone $this;
@@ -120,6 +121,7 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
      * @param array<array-key, mixed> $data Data array.
      * @return void
      */
+    #[ReturnTypeWillChange]
     public function __unserialize($data)
     {
         $this->serial = PHP_INT_MAX;

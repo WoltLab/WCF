@@ -11,6 +11,10 @@ use CuyZ\Valinor\Normalizer\Transformer\Compiler\TransformerDefinitionBuilder;
 use CuyZ\Valinor\Type\Type;
 use WeakMap;
 
+use function hash;
+use function preg_replace;
+use function strtolower;
+
 /** @internal */
 final class TraversableFormatter implements TypeFormatter
 {
@@ -36,7 +40,7 @@ final class TraversableFormatter implements TypeFormatter
      *
      * Generated code should look like:
      *
-     * ```php
+     * ```
      * if (is_array($value)) {
      *     return array_map(
      *         fn ($item) => $this->some_function($item),

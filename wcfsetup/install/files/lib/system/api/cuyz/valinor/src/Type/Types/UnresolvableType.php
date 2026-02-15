@@ -11,6 +11,7 @@ use CuyZ\Valinor\Type\VacantType;
 use CuyZ\Valinor\Utility\ValueDumper;
 use LogicException;
 
+use function array_map;
 use function implode;
 use function lcfirst;
 
@@ -189,6 +190,11 @@ final class UnresolvableType implements VacantType
     public function nativeType(): Type
     {
         throw new LogicException();
+    }
+
+    public static function forSuperfluousValue(string $key): self
+    {
+        return new self('*none*', "Unexpected key `$key`.");
     }
 
     public function message(): string

@@ -290,7 +290,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     #[ReturnTypeWillChange]
     public function valid()
     {
-        return isset($this->values[$this->maxPriority]);
+        return isset($this->values[$this->maxPriority ?? '']);
     }
 
     /**

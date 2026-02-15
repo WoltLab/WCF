@@ -82,7 +82,7 @@ class ConsoleHelper
         foreach ($this->highlightMap as $key => $color) {
             $pattern = sprintf('#<%s>(.*?)</%s>#s', $key, $key);
             $color   = $this->supportsColor ? $color : '';
-            $string  = preg_replace($pattern, $color . '$1' . $reset, $string);
+            $string  = (string) preg_replace($pattern, $color . '$1' . $reset, $string);
         }
         return $string;
     }
@@ -156,7 +156,7 @@ class ConsoleHelper
     private function formatNewlines($string)
     {
         $string = str_replace($this->eol, "\0PHP_EOL\0", $string);
-        $string = preg_replace("/(\r\n|\n|\r)/", $this->eol, $string);
+        $string = (string) preg_replace("/(\r\n|\n|\r)/", $this->eol, $string);
         return str_replace("\0PHP_EOL\0", $this->eol, $string);
     }
 }

@@ -5,9 +5,7 @@ namespace Safe;
 use Safe\Exceptions\FunchandException;
 
 /**
- *
- *
- * @param callable(): void $callback The function to register.
+ * @param callable(): void $callback
  * @param mixed $args
  * @throws FunchandException
  *

@@ -13,6 +13,7 @@ use function strpos;
 use function strtoupper;
 use function substr;
 
+/** @final */
 class Native extends AbstractStringWrapper
 {
     /**

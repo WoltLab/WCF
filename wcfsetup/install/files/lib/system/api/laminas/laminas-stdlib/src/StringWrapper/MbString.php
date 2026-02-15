@@ -15,6 +15,7 @@ use function mb_strlen;
 use function mb_strpos;
 use function mb_substr;
 
+/** @final */
 class MbString extends AbstractStringWrapper
 {
     /**

@@ -12,6 +12,10 @@ use CuyZ\Valinor\Type\IntegerType;
 use CuyZ\Valinor\Type\Type;
 use CuyZ\Valinor\Utility\IsSingleton;
 
+use function assert;
+use function filter_var;
+use function is_bool;
+use function is_int;
 use function is_string;
 use function ltrim;
 
@@ -53,8 +57,8 @@ final class NonNegativeIntegerType implements IntegerType
 
     public function canCast(mixed $value): bool
     {
-        if (is_string($value)) {
-            $value = ltrim($value, '0') . '0';
+        if (is_string($value) && $value !== '') {
+            $value = ltrim($value, '0') ?: '0';
         }
 
         return ! is_bool($value)

@@ -7,6 +7,8 @@ namespace CuyZ\Valinor\Mapper\Tree\Message\Formatter;
 use CuyZ\Valinor\Mapper\Tree\Message\DefaultMessage;
 use CuyZ\Valinor\Mapper\Tree\Message\NodeMessage;
 
+use function array_replace_recursive;
+
 /** @api */
 final class TranslationMessageFormatter implements MessageFormatter
 {
@@ -28,7 +30,7 @@ final class TranslationMessageFormatter implements MessageFormatter
     /**
      * Creates or overrides a single translation.
      *
-     * ```php
+     * ```
      * (TranslationMessageFormatter::default())->withTranslation(
      *     'fr',
      *     'Invalid value {source_value}.',
@@ -52,7 +54,7 @@ final class TranslationMessageFormatter implements MessageFormatter
      * The given array consists of messages to be translated and for each one a
      * list of locales with their associated translations.
      *
-     * ```php
+     * ```
      * $formatter = (TranslationMessageFormatter::default())->withTranslations([
      *     'Invalid value {source_value}.' => [
      *         'fr' => 'Valeur invalide {source_value}.',

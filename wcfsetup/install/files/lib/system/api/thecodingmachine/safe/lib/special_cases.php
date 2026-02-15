@@ -8,6 +8,8 @@
 
 namespace Safe;
 
+use Safe\Exceptions\ExecException;
+use Safe\Exceptions\FtpException;
 use Safe\Exceptions\MiscException;
 use Safe\Exceptions\PosixException;
 use Safe\Exceptions\SocketsException;
@@ -17,6 +19,7 @@ use Safe\Exceptions\OpensslException;
 use Safe\Exceptions\PcreException;
 use Safe\Exceptions\SimplexmlException;
 use Safe\Exceptions\FilesystemException;
+use Safe\Exceptions\HashException;
 
 use const PREG_NO_ERROR;
 
@@ -398,4 +401,177 @@ function fgetcsv($stream, ?int $length = null, string $separator = ",", string $
         throw FilesystemException::createFromPhpError();
     }
     return $safeResult;
+}
+
+/**
+ * The passthru function is similar to the
+ * exec function in that it executes a
+ * command. This function
+ * should be used in place of exec or
+ * system when the output from the Unix command
+ * is binary data which needs to be passed directly back to the
+ * browser.  A common use for this is to execute something like the
+ * pbmplus utilities that can output an image stream directly.  By
+ * setting the Content-type to image/gif and
+ * then calling a pbmplus program to output a gif, you can create
+ * PHP scripts that output images directly.
+ *
+ * @param string $command The command that will be executed.
+ * @param int|null $result_code If the result_code argument is present, the
+ * return status of the Unix command will be placed here.
+ * @throws ExecException
+ *
+ */
+function passthru(string $command, ?int &$result_code = null): void
+{
+    error_clear_last();
+
+    $safeResult = \passthru($command, $result_code);
+    if ($safeResult === false) {
+        throw ExecException::createFromPhpError();
+    }
+}
+
+/**
+ *
+ *
+ * @param string $algo Name of selected hashing algorithm (e.g. "sha256").
+ * For a list of supported algorithms see hash_algos.
+ * @param string $filename URL describing location of file to be hashed; Supports fopen wrappers.
+ * @param bool $binary When set to TRUE, outputs raw binary data.
+ * FALSE outputs lowercase hexits.
+ * @phpstan-param array<string, mixed> $options
+ * @param array $options An array of options for the various hashing algorithms.
+ * Currently, only the "seed" parameter is
+ * supported by the MurmurHash variants.
+ * @return non-falsy-string Returns a string containing the calculated message digest as lowercase hexits
+ * unless binary is set to true in which case the raw
+ * binary representation of the message digest is returned.
+ * @throws HashException
+ *
+ */
+function hash_file(string $algo, string $filename, bool $binary = false, array $options = []): string
+{
+    error_clear_last();
+    $safeResult = \hash_file($algo, $filename, $binary, $options);
+    if ($safeResult === false) {
+        throw HashException::createFromPhpError();
+    }
+    return $safeResult;
+}
+
+/**
+ *
+ *
+ * @param string $algo Name of selected hashing algorithm (e.g. "sha256").
+ * For a list of supported algorithms see hash_hmac_algos.
+ *
+ *
+ * Non-cryptographic hash functions are not allowed.
+ *
+ *
+ *
+ * Non-cryptographic hash functions are not allowed.
+ * @param string $filename URL describing location of file to be hashed; Supports fopen wrappers.
+ * @param string $key Shared secret key used for generating the HMAC variant of the message digest.
+ * @param bool $binary When set to TRUE, outputs raw binary data.
+ * FALSE outputs lowercase hexits.
+ * @return non-falsy-string Returns a string containing the calculated message digest as lowercase hexits
+ * unless binary is set to true in which case the raw
+ * binary representation of the message digest is returned.
+ * Returns FALSE if the file filename cannot be read.
+ * @throws HashException
+ *
+ */
+function hash_hmac_file(string $algo, string $filename, string $key, bool $binary = false): string
+{
+    error_clear_last();
+    $safeResult = \hash_hmac_file($algo, $filename, $key, $binary);
+    if ($safeResult === false) {
+        throw HashException::createFromPhpError();
+    }
+    return $safeResult;
+}
+
+/**
+ * Sends an arbitrary command to the FTP server.
+ *
+ * @param \FTP\Connection $ftp An FTP\Connection instance.
+ * @param string $command The command to execute.
+ * @phpstan-return string[]
+ * @return array Returns the server's response as an array of strings.
+ * No parsing is performed on the response string, nor does
+ * ftp_raw determine if the command succeeded.
+ * @throws FtpException
+ *
+ */
+function ftp_raw(\FTP\Connection $ftp, string $command): array
+{
+    error_clear_last();
+    $safeResult = \ftp_raw($ftp, $command);
+    if ($safeResult === null) {
+        throw FtpException::createFromPhpError();
+    }
+    return $safeResult;
+}
+
+/**
+ * Creates a PHP value from a stored representation
+ *
+ * @param string $data <p>
+ * The serialized string.
+ *
+ * If the variable being unserialized is an object, after successfully
+ * reconstructing the object PHP will automatically attempt to call the
+ * __wakeup member function (if it exists).
+ *
+ * unserialize_callback_func directive
+ *
+ * It's possible to set a callback-function which will be called,
+ * if an undefined class should be instantiated during unserializing.
+ * (to prevent getting an incomplete object "__PHP_Incomplete_Class".)
+ * Use your "php.ini", ini_set or ".htaccess"
+ * to define 'unserialize_callback_func'. Everytime an undefined class
+ * should be instantiated, it'll be called. To disable this feature just
+ * empty this setting.
+ *
+ * @param mixed[] $options [optional]
+ * Any options to be provided to unserialize(), as an associative array.
+ *
+ * The 'allowed_classes' option key may be set to a value that is
+ * either an array of class names which should be accepted, FALSE to
+ * accept no classes, or TRUE to accept all classes. If this option is defined
+ * and unserialize() encounters an object of a class that isn't to be accepted,
+ * then the object will be instantiated as __PHP_Incomplete_Class instead.
+ * Omitting this option is the same as defining it as TRUE: PHP will attempt
+ * to instantiate objects of any class.
+ *
+ * @return mixed The converted value is returned, and can be a boolean,
+ * integer, float, string, array or object.
+ *
+ * In case the passed value is not unserializeable, an \ErrorException will
+ * be thrown.
+ */
+function unserialize(string $data, array $options = []): mixed
+{
+    error_clear_last();
+
+    $previous = set_error_handler(function ($severity, $message, $file, $line) use (&$previous) {
+        $unserialize_error_msg_prefix = 'unserialize():';
+        if (str_starts_with($message, $unserialize_error_msg_prefix)) {
+            throw new \ErrorException($message, 0, $severity, $file, $line);
+        }
+
+        if (!$previous) {
+            return false;
+        }
+
+        return $previous($severity, $message, $file, $line);
+    });
+
+    try {
+        return \unserialize($data, $options);
+    } finally {
+        restore_error_handler();
+    }
 }

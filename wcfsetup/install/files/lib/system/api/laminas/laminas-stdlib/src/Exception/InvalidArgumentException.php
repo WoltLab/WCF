@@ -6,6 +6,8 @@ namespace Laminas\Stdlib\Exception;
 
 /**
  * Invalid Argument Exception
+ *
+ * @final
  */
 class InvalidArgumentException extends \InvalidArgumentException implements ExceptionInterface
 {

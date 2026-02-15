@@ -7,6 +7,10 @@ namespace CuyZ\Valinor\Utility\Reflection;
 use LogicException;
 use PhpToken;
 
+use function count;
+use function explode;
+use function strtolower;
+
 /**
  * @internal
  *
@@ -28,11 +32,25 @@ final class TokenParser
         $this->numTokens = count($this->tokens);
     }
 
+    public function getNamespace(): string
+    {
+        $currentNamespace = '';
+
+        while ($token = $this->next()) {
+            if ($token->is(T_NAMESPACE)) {
+                $currentNamespace = $this->parseNamespace();
+            }
+        }
+
+        return $currentNamespace;
+    }
+
     /**
      * @return array<string, string>
      */
     public function parseUseStatements(string $namespaceName): array
     {
+        $this->pointer = 0;
         $currentNamespace = '';
         $statements = [];
 
@@ -121,6 +139,8 @@ final class TokenParser
         while ($token = $this->next()) {
             if ($token->is([T_NAME_QUALIFIED, T_NAME_FULLY_QUALIFIED, T_STRING])) {
                 return (string)$token;
+            } elseif ($token->is('{')) {
+                return "";
             }
         }
 

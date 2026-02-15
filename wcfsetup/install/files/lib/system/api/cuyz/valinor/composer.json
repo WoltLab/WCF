@@ -1,7 +1,7 @@
 {
     "name": "cuyz/valinor",
     "type": "library",
-    "description": "Library that helps to map any input into a strongly-typed value object structure.",
+    "description": "Dependency free PHP library that helps to map any input into a strongly-typed structure.",
     "keywords": [
         "object", "tree", "mapper", "mapping", "hydrator", "array", "conversion", "json", "yaml"
     ],
@@ -15,8 +15,7 @@
         }
     ],
     "require": {
-        "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
-        "composer-runtime-api": "^2.0"
+        "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.5",
@@ -24,7 +23,7 @@
         "phpstan/phpstan": "^2.0",
         "phpstan/phpstan-strict-rules": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
-        "friendsofphp/php-cs-fixer": "^3.4",
+        "friendsofphp/php-cs-fixer": "^3.91",
         "marcocesarato/php-conventional-changelog": "^1.12",
         "vimeo/psalm": "^6.0",
         "mikey179/vfsstream": "^1.6.10",
@@ -47,12 +46,12 @@
             "@putenv XDEBUG_MODE=off",
             "phpunit",
             "phpstan",
+            "php-cs-fixer check --diff",
+            "rector --dry-run",
             "psalm --config=tests/StaticAnalysis/psalm-without-plugin.xml",
             "psalm --config=tests/StaticAnalysis/psalm-with-plugin.xml",
             "phpstan --configuration=tests/StaticAnalysis/phpstan-without-extension.neon.dist",
             "phpstan --configuration=tests/StaticAnalysis/phpstan-with-extension.neon.dist",
-            "php-cs-fixer fix --dry-run",
-            "rector --dry-run",
             "@check-todo"
         ],
         "check-todo": [
@@ -60,7 +59,7 @@
         ],
         "fix": [
             "@putenv XDEBUG_MODE=off",
-            "php-cs-fixer fix",
+            "php-cs-fixer fix --diff",
             "rector"
         ],
         "test": [

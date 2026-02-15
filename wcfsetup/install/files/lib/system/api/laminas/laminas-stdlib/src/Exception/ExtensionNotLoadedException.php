@@ -6,6 +6,8 @@ namespace Laminas\Stdlib\Exception;
 
 /**
  * Extension not loaded exception
+ *
+ * @final
  */
 class ExtensionNotLoadedException extends RuntimeException
 {

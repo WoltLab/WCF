@@ -11,6 +11,7 @@ use function grapheme_strlen;
 use function grapheme_strpos;
 use function grapheme_substr;
 
+/** @final */
 class Intl extends AbstractStringWrapper
 {
     /**
