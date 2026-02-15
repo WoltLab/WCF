@@ -5,6 +5,7 @@ namespace wcf\system\gridView\admin;
 use wcf\acp\form\BoxEditForm;
 use wcf\data\box\Box;
 use wcf\data\box\BoxList;
+use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
 use wcf\event\gridView\admin\BoxGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
@@ -12,6 +13,7 @@ use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\NumberColumnRenderer;
 use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
+use wcf\system\gridView\renderer\PhraseColumnRenderer;
 use wcf\system\interaction\admin\BoxInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
@@ -48,6 +50,15 @@ final class BoxGridView extends AbstractGridView
                 ->sortable(),
             GridViewColumn::for('boxType')
                 ->label('wcf.acp.box.type')
+                ->renderer(new class extends PhraseColumnRenderer {
+                    #[\Override]
+                    public function render(mixed $value, DatabaseObject $row): string
+                    {
+                        assert($row instanceof Box);
+
+                        return parent::render('wcf.acp.box.type.' . $value, $row);
+                    }
+                })
                 ->filter(
                     new SelectFilter(
                         \array_combine(
@@ -64,6 +75,15 @@ final class BoxGridView extends AbstractGridView
                 ->sortable(),
             GridViewColumn::for('position')
                 ->label('wcf.acp.box.position')
+                ->renderer(new class extends PhraseColumnRenderer {
+                    #[\Override]
+                    public function render(mixed $value, DatabaseObject $row): string
+                    {
+                        assert($row instanceof Box);
+
+                        return parent::render('wcf.acp.box.position.' . $value, $row);
+                    }
+                })
                 ->filter(
                     new SelectFilter(
                         \array_combine(
