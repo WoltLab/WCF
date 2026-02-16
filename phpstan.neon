@@ -5,8 +5,8 @@ includes:
 parameters:
     level: 6
     phpVersion:
-        min: 80102
-        max: 80499
+        min: 80330
+        max: 80599
     paths:
         - wcfsetup/install/files
     excludePaths:

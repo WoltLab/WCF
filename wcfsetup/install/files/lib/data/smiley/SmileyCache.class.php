@@ -12,52 +12,47 @@ use wcf\system\WCF;
 /**
  * Manages the smiley cache.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class SmileyCache extends SingletonFactory
+final class SmileyCache extends SingletonFactory
 {
     /**
-     * cached smilies
      * @var array<int, array<int, Smiley>>
      */
-    protected $cachedSmilies = [];
+    private $cachedSmilies = [];
 
     /**
-     * cached smilies with smiley code as key
      * @var array<string, Smiley>
      */
-    protected $cachedSmileyByCode = [];
+    private $cachedSmileyByCode = [];
 
     /**
-     * cached smiley categories
-     * @var array<int|string, SmileyCategory>
+     * @var array<int, SmileyCategory>
      */
-    protected $cachedCategories = [];
+    private $cachedCategories = [];
 
     /**
      * enabled smiley categories with at least one smiley
      * @var SmileyCategory[]
      */
-    protected $visibleCategories;
+    private $visibleCategories;
 
     /**
      * @var array<string, Smiley>
      */
-    protected array $emojis;
+    private array $emojis;
 
-    /**
-     * @inheritDoc
-     */
-    protected function init()
+    #[\Override]
+    protected function init(): void
     {
         // get smiley cache
         $this->cachedSmilies = SmileyCacheBuilder::getInstance()->getData([], 'smilies');
         $this->cachedSmileyByCode = SmileyCacheBuilder::getInstance()->getData([], 'codes');
         $smileyCategories = CategoryHandler::getInstance()->getCategories('com.woltlab.wcf.bbcode.smiley');
 
-        $this->cachedCategories[''] = new SmileyCategory(new Category(null, [
+        $this->cachedCategories[0] = new SmileyCategory(new Category(null, [
             'categoryID' => null,
             'parentCategoryID' => 0,
             'title' => 'wcf.acp.smiley.categoryID.default',
@@ -72,22 +67,14 @@ class SmileyCache extends SingletonFactory
     }
 
     /**
-     * Returns all smilies.
-     *
      * @return array<int, array<int, Smiley>>
      */
-    public function getSmilies()
+    public function getSmilies(): array
     {
         return $this->cachedSmilies;
     }
 
-    /**
-     * Returns the smiley with the given smiley code or `null` if no such smiley exists.
-     *
-     * @param string $code
-     * @return ?Smiley
-     */
-    public function getSmileyByCode($code)
+    public function getSmileyByCode(string $code): ?Smiley
     {
         return $this->cachedSmileyByCode[$code] ?? null;
     }
@@ -95,9 +82,9 @@ class SmileyCache extends SingletonFactory
     /**
      * Returns all smiley categories.
      *
-     * @return array<?int, SmileyCategory>
+     * @return array<int, SmileyCategory>
      */
-    public function getCategories()
+    public function getCategories(): array
     {
         return $this->cachedCategories;
     }
@@ -107,7 +94,7 @@ class SmileyCache extends SingletonFactory
      *
      * @return array<int, SmileyCategory>
      */
-    public function getVisibleCategories()
+    public function getVisibleCategories(): array
     {
         if ($this->visibleCategories === null) {
             $this->visibleCategories = [];
@@ -129,25 +116,17 @@ class SmileyCache extends SingletonFactory
     /**
      * Returns all the smilies of a category.
      *
-     * @param ?int $categoryID
      * @return array<int, Smiley>
      */
-    public function getCategorySmilies($categoryID = null)
+    public function getCategorySmilies(?int $categoryID = null): array
     {
-        if (isset($this->cachedSmilies[$categoryID])) {
-            return $this->cachedSmilies[$categoryID];
-        }
-
-        return [];
+        return $this->cachedSmilies[$categoryID ?? 0] ?? [];
     }
 
     /**
      * Assigns the smilies and their categories to the template.
-     *
-     * @return void
-     * @since 5.2
      */
-    public function assignVariables()
+    public function assignVariables(): void
     {
         if (!MODULE_SMILEY) {
             return;

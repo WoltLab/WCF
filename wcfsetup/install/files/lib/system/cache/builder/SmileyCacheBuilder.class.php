@@ -21,7 +21,6 @@ class SmileyCacheBuilder extends AbstractCacheBuilder
     {
         $data = ['codes' => [], 'smilies' => []];
 
-        // get smilies
         $sql = "SELECT      *
                 FROM        wcf1_smiley
                 ORDER BY    showOrder";
@@ -35,7 +34,7 @@ class SmileyCacheBuilder extends AbstractCacheBuilder
             // this call will cause the image height to be added to the cache
             $object->getHeight();
 
-            $data['smilies'][$object->categoryID][$object->smileyID] = $object;
+            $data['smilies'][$object->categoryID ?? 0][$object->smileyID] = $object;
 
             foreach ($object->smileyCodes as $smileyCode) {
                 $data['codes'][$smileyCode] = $object;
