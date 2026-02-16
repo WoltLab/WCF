@@ -796,6 +796,18 @@ final class DatabaseTableChangeProcessor
                 }
             }
 
+            if (isset($diff['type'])) {
+                // In MariaDB JSON is an alias for LONGTEXT COLLATE utf8mb4_bin
+                // introduced for compatibility reasons with MySQL's JSON data type.
+                if (
+                    $oldColumn->getType() === 'longtext'
+                    && $newColumn->getType() === 'json'
+                    && \stripos(WCF::getDB()->getVersion(), 'MariaDB') !== false
+                ) {
+                    unset($diff['type']);
+                }
+            }
+
             if ($diff !== []) {
                 return true;
             }
@@ -811,7 +823,7 @@ final class DatabaseTableChangeProcessor
         ) {
             \assert(
                 ($oldColumn instanceof IDefaultValueDatabaseTableColumn)
-                === ($newColumn instanceof IDefaultValueDatabaseTableColumn),
+                    === ($newColumn instanceof IDefaultValueDatabaseTableColumn),
                 "Default support must be identical, because different types have been rejected above."
             );
 
