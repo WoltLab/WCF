@@ -421,6 +421,7 @@ class WorkerCLICommand implements ICLICommand
             }
 
             $runtimeCache = \call_user_func([$className, 'getInstance']);
+            // @phpstan-ignore function.alreadyNarrowedType, instanceof.alwaysTrue
             \assert($runtimeCache instanceof AbstractRuntimeCache);
 
             $runtimeCache->removeObjects(

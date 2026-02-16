@@ -111,9 +111,10 @@ abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator
     /**
      * @return ?static
      */
-    public function getParentCategory()
+    public function getParentCategory(): ?static
     {
         if ($this->parentCategoryID && $this->parentCategory === null) {
+            // @phpstan-ignore assign.propertyType
             $this->parentCategory = new static($this->getDecoratedObject()->getParentCategory());
         }
 
@@ -132,13 +133,13 @@ abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator
      * Returns the decorated category with the given id or `null` if no such
      * category exists.
      *
-     * @param int $categoryID
      * @return ?static
      */
-    public static function getCategory($categoryID)
+    public static function getCategory(int $categoryID): ?static
     {
         $category = CategoryHandler::getInstance()->getCategory($categoryID);
         if ($category) {
+            // @phpstan-ignore return.type
             return new static($category);
         }
 

@@ -533,14 +533,6 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
     }
 
     /**
-     * @deprecated 6.3
-     */
-    public function validateToggle()
-    {
-        $this->validateUpdate();
-    }
-
-    /**
      * @deprecated 6.3 use the `EnablePage` or `DisablePage` commands instead.
      */
     public function toggle()

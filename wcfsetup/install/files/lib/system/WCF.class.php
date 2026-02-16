@@ -54,11 +54,9 @@ if (!\ini_get('date.timezone')) {
 // configured in php.ini.
 \error_reporting(\E_ALL);
 
-// Make stack traces more useful with PHP 8.2 (which has SensitiveParameter).
-if (\PHP_VERSION_ID >= 80200) {
-    @\ini_set('zend.exception_ignore_args', 0);
-    @\ini_set('zend.exception_string_param_max_len', 25);
-}
+// Make stack traces more useful
+@\ini_set('zend.exception_ignore_args', 0);
+@\ini_set('zend.exception_string_param_max_len', 25);
 @\ini_set('assert.exception', 1);
 
 // setting global gzip compression breaks output buffering

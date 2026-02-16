@@ -208,19 +208,19 @@ final class ApplicationHandler extends SingletonFactory
      */
     public function resolveActiveApplication(string $path): void
     {
-        $rootApplicationID = $this->cache['rootApplicationID'];
+        $rootApplicationID = $this->cache->rootApplicationID;
         \assert($rootApplicationID !== null);
 
         $path = FileUtil::removeLeadingSlash($path);
         $packageID = \array_find_key(
-            $this->cache['sortedPaths'],
+            $this->cache->sortedPaths,
             static fn($prefix) => \str_starts_with($path, $prefix),
         );
 
         if ($packageID === null) {
             $packageID = $rootApplicationID;
         } else {
-            $prefix = $this->cache['sortedPaths'][$packageID];
+            $prefix = $this->cache->sortedPaths[$packageID];
             $path = \mb_substr($path, \mb_strlen($prefix));
         }
 

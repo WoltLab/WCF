@@ -3,6 +3,7 @@
 namespace wcf\command\user;
 
 use wcf\data\user\User;
+use wcf\data\user\ignore\UserIgnore;
 use wcf\event\user\UserIgnored;
 use wcf\system\event\EventHandler;
 use wcf\system\user\command\Unfollow;

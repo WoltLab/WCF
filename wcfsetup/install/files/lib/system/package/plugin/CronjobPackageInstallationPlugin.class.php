@@ -111,7 +111,6 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
     {
         if (\class_exists(\Random\Engine\Xoshiro256StarStar::class, false)) {
             // Generate stable, but differing values for each (instance, cronjob) pair.
-            // @phpstan-ignore class.notFound
             $randomizer = new \Random\Randomizer(new \Random\Engine\Xoshiro256StarStar(
                 \hash('sha256', \sprintf(
                     '%s:%s:%d:%s',
@@ -121,7 +120,6 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
                     $name
                 ), true)
             ));
-            // @phpstan-ignore class.notFound
             $engine = static fn(int $min, int $max) => $randomizer->getInt($min, $max);
         } else {
             // A seedable engine is not available, use completely random values.

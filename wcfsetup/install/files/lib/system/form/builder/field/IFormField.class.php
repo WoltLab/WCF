@@ -76,6 +76,7 @@ interface IFormField extends IFormChildNode, IFormElement
      * Returns the validation errors of this field.
      *
      * @return IFormFieldValidationError[] field validation errors
+     * @phpstan-impure
      */
     public function getValidationErrors();
 

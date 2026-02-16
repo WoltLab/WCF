@@ -63,10 +63,7 @@ final class CronjobScheduler extends SingletonFactory
                 // Reset the memory usage for each cronjob, allowing to measure each individual
                 // cronjob's memory usage without a memory-heavy cronjob skewing the numbers for
                 // the following cronjobs.
-                if (\PHP_VERSION_ID >= 80200) {
-                    // @phpstan-ignore function.notFound
-                    \memory_reset_peak_usage();
-                }
+                \memory_reset_peak_usage();
 
                 // mark cronjob as being executed
                 $cronjobEditor->update([

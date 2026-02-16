@@ -121,8 +121,7 @@ trait TDecoratedCategoryLookupPageHandler
         $statement->execute($conditionBuilder->getParameters());
         $results = [];
         while ($categoryID = $statement->fetchColumn()) {
-            /** @var AbstractDecoratedCategory|ILinkableObject $category */
-            /** @noinspection PhpUndefinedMethodInspection */
+            /** @var (AbstractDecoratedCategory&ILinkableObject)|null $category */
             $category = $className::getCategory($categoryID);
 
             // build hierarchy
