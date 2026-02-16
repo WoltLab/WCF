@@ -54,8 +54,6 @@ final class BoxGridView extends AbstractGridView
                     #[\Override]
                     public function render(mixed $value, DatabaseObject $row): string
                     {
-                        assert($row instanceof Box);
-
                         return parent::render('wcf.acp.box.type.' . $value, $row);
                     }
                 })
@@ -79,8 +77,6 @@ final class BoxGridView extends AbstractGridView
                     #[\Override]
                     public function render(mixed $value, DatabaseObject $row): string
                     {
-                        assert($row instanceof Box);
-
                         return parent::render('wcf.acp.box.position.' . $value, $row);
                     }
                 })
