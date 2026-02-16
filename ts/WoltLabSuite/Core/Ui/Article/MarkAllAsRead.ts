@@ -9,22 +9,27 @@
 
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
 import { dboAction } from "../../Ajax";
+import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 
-async function markAllAsRead(): Promise<void> {
+async function markAllAsRead(listView?: HTMLElement): Promise<void> {
   await dboAction("markAllAsRead", "wcf\\data\\article\\ArticleAction").dispatch();
 
-  document.querySelectorAll(".contentItemList .contentItemBadgeNew").forEach((el: HTMLElement) => el.remove());
+  if (listView !== undefined) {
+    listView.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
+  }
+
   document.querySelectorAll(".boxMenu .active .badgeUpdate").forEach((el: HTMLElement) => el.remove());
 
   showDefaultSuccessSnackbar();
 }
 
-export function setup(): void {
+export function setup(listView?: HTMLElement): void {
   document.querySelectorAll(".markAllAsReadButton").forEach((el: HTMLElement) => {
-    el.addEventListener("click", (event) => {
-      event.preventDefault();
-
-      void markAllAsRead();
-    });
+    el.addEventListener(
+      "click",
+      promiseMutex(async () => {
+        await markAllAsRead(listView);
+      }),
+    );
   });
 }
