@@ -11,7 +11,7 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * Represents an interaction that call a rpc endpoint.
+ * Represents an interaction that call an RPC endpoint.
  *
  * @author      Marcel Werk
  * @copyright   2001-2024 WoltLab GmbH

@@ -1,5 +1,5 @@
 /**
- * Handles interactions that call a RPC endpoint.
+ * Handles interactions that call an RPC endpoint.
  *
  * @author Marcel Werk
  * @copyright 2001-2025 WoltLab GmbH
