@@ -13,7 +13,7 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Snackbar", "../../Aja
     async function markAllAsRead() {
         await (0, Ajax_1.dboAction)("markAllAsRead", "wcf\\data\\article\\ArticleAction").dispatch();
         document.querySelectorAll(".contentItemList .contentItemBadgeNew").forEach((el) => el.remove());
-        document.querySelectorAll(".boxMenu .active .badge").forEach((el) => el.remove());
+        document.querySelectorAll(".boxMenu .active .badgeUpdate").forEach((el) => el.remove());
         (0, Snackbar_1.showDefaultSuccessSnackbar)();
     }
     function setup() {

@@ -14,7 +14,7 @@ async function markAllAsRead(): Promise<void> {
   await dboAction("markAllAsRead", "wcf\\data\\article\\ArticleAction").dispatch();
 
   document.querySelectorAll(".contentItemList .contentItemBadgeNew").forEach((el: HTMLElement) => el.remove());
-  document.querySelectorAll(".boxMenu .active .badge").forEach((el: HTMLElement) => el.remove());
+  document.querySelectorAll(".boxMenu .active .badgeUpdate").forEach((el: HTMLElement) => el.remove());
 
   showDefaultSuccessSnackbar();
 }
