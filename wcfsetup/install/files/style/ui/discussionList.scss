@@ -208,16 +208,11 @@
 		inset: 0;
 		position: absolute;
 	}
-
-	&:hover,
-	&:focus {
-		color: inherit;
-	}
 }
 
 @media (hover: hover) {
-	.discussionList__item__link:hover,
-	.discussionList__item__link:focus {
+	.discussionList__item__link:hover {
+		color: inherit;
 		text-decoration: underline;
 		text-underline-offset: 3px;
 	}
@@ -248,16 +243,11 @@
 		inset: 0;
 		position: absolute;
 	}
-
-	&:hover,
-	&:focus {
-		color: inherit;
-	}
 }
 
 @media (hover: hover) {
-	.discussionList__item__lastPost__link:hover,
-	.discussionList__item__lastPost__link:focus {
+	.discussionList__item__lastPost__link:hover {
+		color: inherit;
 		text-decoration: underline;
 		text-underline-offset: 3px;
 	}

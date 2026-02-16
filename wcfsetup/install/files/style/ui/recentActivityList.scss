@@ -134,9 +134,10 @@
 		inset: 0;
 		position: absolute;
 	}
+}
 
-	&:hover,
-	&:focus {
+@media (hover: hover) {
+	.recentActivityListItem__link:hover {
 		color: inherit;
 		text-decoration: underline;
 		text-underline-offset: 3px;
