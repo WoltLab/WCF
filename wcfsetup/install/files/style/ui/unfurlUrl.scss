@@ -83,23 +83,17 @@ html[data-color-scheme="dark"] .unfurlUrlCard {
 	-webkit-line-clamp: 2;
 
 	&::before {
-		bottom: 0;
 		content: "";
-		left: 0;
+		inset: 0;
 		position: absolute;
-		right: 0;
-		top: 0;
-	}
-
-	&:hover,
-	&:focus {
-		color: inherit;
 	}
 }
 
-@media (pointer: fine) {
-	.unfurlUrlCard:hover .unfurlUrlTitle {
+@media (hover: hover) {
+	.unfurlUrlTitle:hover {
+		color: inherit;
 		text-decoration: underline;
+		text-underline-offset: 3px;
 	}
 }
 

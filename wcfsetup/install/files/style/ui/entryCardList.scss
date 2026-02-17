@@ -142,8 +142,7 @@ html:not(.touch) .entryCardList__item:hover .entryCardList__item__image__element
 		position: absolute;
 	}
 
-	&:hover,
-	&:focus {
+	&:hover {
 		color: inherit;
 	}
 }
