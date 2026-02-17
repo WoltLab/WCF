@@ -61,10 +61,9 @@ class PageNodeTree
         foreach ($pageList as $page) {
             $this->pages[$page->pageID] = $page;
 
-            if (!isset($this->pageStructure[$page->parentPageID])) {
-                $this->pageStructure[$page->parentPageID] = [];
-            }
-            $this->pageStructure[$page->parentPageID][] = $page->pageID;
+            $parentPageID = $page->parentPageID ?? 0;
+            $this->pageStructure[$parentPageID] ??= [];
+            $this->pageStructure[$parentPageID][] = $page->pageID;
         }
 
         // generate node tree
@@ -75,14 +74,13 @@ class PageNodeTree
     /**
      * Generates the node tree recursively.
      *
-     * @param int $parentID
-     * @param PageNode $parentNode
-     * @return  PageNode[]
+     * @return list<PageNode>
      */
-    protected function generateNodeTree($parentID, ?PageNode $parentNode = null)
+    protected function generateNodeTree(?int $parentID, ?PageNode $parentNode = null)
     {
         $nodes = [];
 
+        $parentID ??= 0;
         $pageIDs = ($this->pageStructure[$parentID] ?? []);
         foreach ($pageIDs as $pageID) {
             $page = $this->pages[$pageID];
