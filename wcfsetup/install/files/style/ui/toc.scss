@@ -1,72 +1,57 @@
-.tableOfContentsContainer {
+.tableOfContents__container {
 	border: 1px solid var(--wcfContentBorderInner);
 	/* The list numbers extend into the horizontal padding, 10px is not enough for double digit numbers. */
-	padding: 10px 20px;
+	padding: 20px;
+}
 
-	&.open .jsTableOfContentsShow {
-		display: none;
-	}
-
-	&:not(.open) {
-		.jsTableOfContentsHide,
-		.tableOfContents {
-			display: none;
-		}
+@include screen-sm-down {
+	.tableOfContents__container {
+		padding: 10px 20px;
 	}
 }
 
 @include screen-md-up {
-	.tableOfContentsWrapper {
+	.tableOfContents__wrapper {
 		float: right;
 		margin: 0 0 10px 10px;
 		max-width: 50%;
 	}
 
-	.htmlContent > .tableOfContentsWrapper + * {
+	.htmlContent > .tableOfContents__wrapper + * {
 		margin-top: 0 !important;
 	}
 }
 
+@include screen-lg {
+	.tableOfContents__wrapper {
+		max-width: 40%;
+	}
+}
+
 @include screen-sm-down {
-	.tableOfContentsWrapper {
+	.tableOfContents__wrapper {
 		margin-bottom: 10px;
 	}
-
-	.tableOfContentsContainer {
-		display: inline-block;
-
-		&.mobileForceHide {
-			.jsTableOfContentsShow {
-				display: initial !important;
-			}
-
-			.jsTableOfContentsHide,
-			.tableOfContents {
-				display: none;
-			}
-		}
-	}
 }
 
-.tableOfContentsHeader {
-	text-align: center;
+.tableOfContents__header {
+	align-items: center;
+	display: flex;
+	gap: 10px;
+	justify-content: center;
 }
 
-.tableOfContentsTitle {
+h2.tableOfContents__title {
+	@include wcfFontHeadline;
 	@include wcfFontBold;
+
+	margin: 0;
 }
 
 .htmlContent,
 .messageBody > .messageText {
 	.tableOfContents {
 		margin-left: 15px;
-
-		&.tocLevel2 {
-			list-style-type: lower-alpha;
-		}
-
-		&.tocLevel3 {
-			list-style-type: lower-roman;
-		}
+		margin-bottom: 0;
 	}
 }
