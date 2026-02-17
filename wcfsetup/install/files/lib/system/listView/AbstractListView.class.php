@@ -276,6 +276,10 @@ abstract class AbstractListView
                 }
             }
         }
+
+        if ($this->getPageNo() > 1 && $this->getPageNo() > $this->countPages()) {
+            $this->setPageNo($this->countPages() ?: 1);
+        }
     }
 
     protected function getSqlOrderBy(): string
