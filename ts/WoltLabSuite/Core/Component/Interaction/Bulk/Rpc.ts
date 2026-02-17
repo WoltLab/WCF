@@ -1,5 +1,5 @@
 /**
- * Handles bulk interactions that call a RPC endpoint.
+ * Handles bulk interactions that call an RPC endpoint.
  *
  * @author Marcel Werk
  * @copyright 2001-2025 WoltLab GmbH

@@ -54,7 +54,7 @@ final class PaidSubscriptionUserGridView extends AbstractGridView
                     $this->getAvailableSubscriptions(),
                     'title',
                     'wcf.acp.paidSubscription.subscription',
-                    'subscriptionID'
+                    'paid_subscription_user.subscriptionID'
                 ))
                 ->renderer(new PhraseColumnRenderer())
                 ->sortable(sortByDatabaseColumn: "paid_subscription.title"),

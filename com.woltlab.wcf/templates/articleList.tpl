@@ -39,7 +39,7 @@
 {if $__wcf->user->userID}
 	<script data-relocate="true">
 		require(['WoltLabSuite/Core/Ui/Article/MarkAllAsRead'], ({ setup }) => {
-			setup();
+			setup(document.getElementById('{unsafe:$listView->getID()|encodeJS}_items'));
 		});
 	</script>
 {/if}

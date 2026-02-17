@@ -6,22 +6,23 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "WoltLabSuite/Core/Component/Snackbar", "WoltLabSuite/Core/Api/Articles/MarkAllArticlesAsRead"], function (require, exports, Snackbar_1, MarkAllArticlesAsRead_1) {
+define(["require", "exports", "WoltLabSuite/Core/Component/Snackbar", "WoltLabSuite/Core/Api/Articles/MarkAllArticlesAsRead", "WoltLabSuite/Core/Helper/PromiseMutex"], function (require, exports, Snackbar_1, MarkAllArticlesAsRead_1, PromiseMutex_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
-    async function markAllAsRead() {
+    async function markAllAsRead(listView) {
         await (0, MarkAllArticlesAsRead_1.markAllArticlesAsRead)();
-        document.querySelectorAll(".contentItemList .contentItemBadgeNew").forEach((el) => el.remove());
-        document.querySelectorAll(".boxMenu .active .badge").forEach((el) => el.remove());
+        if (listView !== undefined) {
+            listView.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
+        }
+        document.querySelectorAll(".boxMenu .active .badgeUpdate").forEach((el) => el.remove());
         (0, Snackbar_1.showDefaultSuccessSnackbar)();
     }
-    function setup() {
+    function setup(listView) {
         document.querySelectorAll(".markAllAsReadButton").forEach((el) => {
-            el.addEventListener("click", (event) => {
-                event.preventDefault();
-                void markAllAsRead();
-            });
+            el.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(async () => {
+                await markAllAsRead(listView);
+            }));
         });
     }
 });

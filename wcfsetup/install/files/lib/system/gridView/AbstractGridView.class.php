@@ -768,6 +768,10 @@ abstract class AbstractGridView
         if ($titleColumn === null) {
             throw new \InvalidArgumentException("Missing title column in grid view with id '{$this->getID()}'.");
         }
+
+        if ($this->getPageNo() > 1 && $this->getPageNo() > $this->countPages()) {
+            $this->setPageNo($this->countPages() ?: 1);
+        }
     }
 
     /**

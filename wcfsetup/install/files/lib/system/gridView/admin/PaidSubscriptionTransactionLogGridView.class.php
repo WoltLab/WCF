@@ -73,6 +73,9 @@ final class PaidSubscriptionTransactionLogGridView extends AbstractGridView
                                 return parent::render($value, $row);
                             } else {
                                 $user = UserRuntimeCache::getInstance()->getObject($value);
+                                if ($user === null) {
+                                    return '';
+                                }
 
                                 return \sprintf(
                                     '<a href="%s">%s</a>',
@@ -86,6 +89,24 @@ final class PaidSubscriptionTransactionLogGridView extends AbstractGridView
                     }
                 )
                 ->filter(UserFilter::class),
+            GridViewColumn::for('subscriptionID')
+                ->label('wcf.acp.paidSubscription.subscription')
+                ->renderer(
+                    new class extends DefaultColumnRenderer {
+                        #[\Override]
+                        public function render(mixed $value, DatabaseObject $row): string
+                        {
+                            \assert($row instanceof PaidSubscriptionTransactionLog);
+
+                            if (!$row->subscriptionID) {
+                                return '';
+                            }
+
+                            $subscription = PaidSubscriptionCacheBuilder::getInstance()->getData()[$row->subscriptionID];
+                            return StringUtil::encodeHTML($subscription->getTitle());
+                        }
+                    }
+                ),
             GridViewColumn::for('paymentMethodObjectTypeID')
                 ->label('wcf.acp.paidSubscription.transactionLog.paymentMethod')
                 ->filter(new SelectFilter(

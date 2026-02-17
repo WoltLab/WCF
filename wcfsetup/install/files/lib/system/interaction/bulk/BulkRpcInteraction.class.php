@@ -11,7 +11,7 @@ use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
- * Represents a bulk interaction that calls a rpc endpoint.
+ * Represents a bulk interaction that calls an RPC endpoint.
  *
  * @author      Marcel Werk
  * @copyright   2001-2025 WoltLab GmbH

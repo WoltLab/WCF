@@ -55,7 +55,7 @@ class ArticleListView extends AbstractListView
         $this->setItemsPerPage(\ARTICLES_PER_PAGE);
         $this->setDefaultSortField('time');
         $this->setDefaultSortOrder(\ARTICLE_SORT_ORDER);
-        $this->setCssClassName('entryCardList');
+        $this->setCssClassName('entryCardList articleList');
         $this->setContainerCssClassName('entryCardList__container');
     }
 
