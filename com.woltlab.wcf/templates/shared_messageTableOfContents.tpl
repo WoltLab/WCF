@@ -1,38 +1,47 @@
-<div class="tableOfContentsWrapper">
-	<div class="tableOfContentsContainer open mobileForceHide" id="tocContainer-{$idPrefix}">
-		<div class="tableOfContentsHeader">
-			<span class="tableOfContentsTitle">{lang}wcf.message.toc{/lang}</span>
-			<span class="jsOnly">[<a href="#" class="jsTableOfContentsHide">{lang}wcf.message.toc.hide{/lang}</a><a href="#" class="jsTableOfContentsShow">{lang}wcf.message.toc.show{/lang}</a>]</span>
+<div class="tableOfContents__wrapper">
+	<nav class="tableOfContents__container" aria-labelledby="tocTitle-{$idPrefix}">
+		<div class="tableOfContents__header">
+			<h2 class="tableOfContents__title" id="tocTitle-{$idPrefix}">{lang}wcf.message.toc{/lang}</h2>
+			
+			<button type="button" 
+				aria-expanded="true" 
+				aria-controls="toc-{$idPrefix}" 
+				class="tableOfContents__toggle button small"
+				id="tocToggle-{$idPrefix}"
+			>
+				{lang}wcf.message.toc.hide{/lang}
+			</button>
 		</div>
-		<ol class="tableOfContents tocLevel1">
+		<ul class="tableOfContents tableOfContents--level1" id="toc-{$idPrefix}">
 			{foreach from=$items item=item}
 				<li>
-					<span class="tocItemTitle"><a href="#{$item->getID()}">{$item->getTitle()}</a></span>
+					<a class="tableOfContents__item" href="#{$item->getID()}">{$item->getTitle()}</a>
 					
-					{if $item->hasChildren()}<ol class="tableOfContents tocLevel{$item->getDepth() + 1}">{else}</li>{/if}
+					{if $item->hasChildren()}<ul class="tableOfContents tableOfContents--level{$item->getDepth() + 1}">{else}</li>{/if}
 					
 					{if !$item->hasChildren() && $item->isLastSibling()}
-						{unsafe:"</ol></li>"|str_repeat:$item->getOpenParentNodes()}
+						{unsafe:"</ul></li>"|str_repeat:$item->getOpenParentNodes()}
 					{/if}
 			{/foreach}
-		</ol>
-	</div>
-</div>
-<script data-relocate="true">
-	require(['Ui/Screen'], function(UiScreen) {
-		var container = elById('tocContainer-{$idPrefix}');
-		elBySelAll('.jsTableOfContentsHide, .jsTableOfContentsShow', container, function(button) {
-			button.addEventListener('click', function(event) {
-				event.preventDefault();
-				
-				container.classList.toggle('open');
+		</ul>
+	</nav>
+	<script>
+		{
+			const button = document.getElementById('tocToggle-{$idPrefix}');
+			button.addEventListener('click', () => {
+				toggle();
 			});
-		});
-		
-		if (UiScreen.is('screen-sm-down')) {
-			container.classList.remove('open');
+			
+			function toggle() {
+				const hidden = button.getAttribute('aria-expanded') === 'true';
+				button.setAttribute('aria-expanded', hidden ? 'false' : 'true');
+				button.textContent = hidden ? '{jslang}wcf.message.toc.show{/jslang}' : '{jslang}wcf.message.toc.hide{/jslang}';
+				document.getElementById(button.getAttribute('aria-controls')).hidden = hidden;
+			}
+			
+			if (window.matchMedia('(max-width: 768px)').matches) {
+				toggle();
+			}
 		}
-		
-		container.classList.remove('mobileForceHide');
-	});
-</script>
+	</script>
+</div>
