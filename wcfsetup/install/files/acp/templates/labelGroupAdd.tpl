@@ -23,7 +23,9 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $action == 'edit'}
-				<li><button type="button" class="button jsChangeShowOrder">{icon name='up-down'} <span>{lang}wcf.global.changeShowOrder{/lang}</span></button></li>
+				{if !$labelGroup->sortAlphabetically}
+					<li><button type="button" class="button jsChangeShowOrder">{icon name='up-down'} <span>{lang}wcf.global.changeShowOrder{/lang}</span></button></li>
+				{/if}
 				<li>
 					{unsafe:$interactionContextMenu->render()}
 				</li>
@@ -84,7 +86,12 @@
 					<dt></dt>
 					<dd><label><input type="checkbox" name="forceSelection" id="forceSelection" value="1"{if $labelForceSelection} checked{/if}> {lang}wcf.acp.label.group.forceSelection{/lang}</label></dd>
 				</dl>
-				
+
+				<dl>
+					<dt></dt>
+					<dd><label><input type="checkbox" name="sortAlphabetically" id="sortAlphabetically" value="1"{if $sortAlphabetically} checked{/if}> {lang}wcf.acp.label.group.sortAlphabetically{/lang}</label></dd>
+				</dl>
+
 				<dl id="groupPermissions">
 					<dt>{lang}wcf.acl.permissions{/lang}</dt>
 					<dd></dd>
@@ -125,7 +132,7 @@
 	</div>
 </form>
 
-{if $action == 'edit'}
+{if $action == 'edit' && !$labelGroup->sortAlphabetically}
 	<script data-relocate="true">
 		require(["WoltLabSuite/Core/Component/ChangeShowOrder"], ({ setup }) => {
 			{jsphrase name='wcf.global.changeShowOrder'}

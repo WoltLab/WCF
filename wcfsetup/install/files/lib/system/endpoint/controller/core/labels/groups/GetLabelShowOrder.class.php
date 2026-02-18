@@ -9,6 +9,7 @@ use wcf\data\label\Label;
 use wcf\http\Helper;
 use wcf\system\endpoint\GetRequest;
 use wcf\system\endpoint\IController;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\label\LabelHandler;
 use wcf\system\showOrder\ShowOrderHandler;
 use wcf\system\showOrder\ShowOrderItem;
@@ -30,6 +31,10 @@ final class GetLabelShowOrder implements IController
         WCF::getSession()->checkPermissions(['admin.content.label.canManageLabel']);
 
         $labelGroup = Helper::fetchObjectFromRequestParameter($variables['id'], LabelGroup::class);
+        if ($labelGroup->sortAlphabetically) {
+            throw new IllegalLinkException();
+        }
+
         $items = \array_map(
             static fn(Label $label) => new ShowOrderItem($label->labelID, $label->getTitle()),
             LabelHandler::getInstance()->getLabelGroup($labelGroup->groupID)->getLabels()

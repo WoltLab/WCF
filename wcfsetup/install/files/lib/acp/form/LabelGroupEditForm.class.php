@@ -83,6 +83,7 @@ class LabelGroupEditForm extends LabelGroupAddForm
             [
                 'data' => \array_merge($this->additionalFields, [
                     'forceSelection' => $this->forceSelection ? 1 : 0,
+                    'sortAlphabetically' => $this->sortAlphabetically ? 1 : 0,
                     'groupName' => $this->groupName,
                     'groupDescription' => $this->groupDescription,
                     'showOrder' => $this->showOrder,
@@ -119,6 +120,7 @@ class LabelGroupEditForm extends LabelGroupAddForm
             I18nHandler::getInstance()->setOptions('groupName', 1, $this->group->groupName, 'wcf.acp.label.group\d+');
 
             $this->forceSelection = ($this->group->forceSelection ? true : false);
+            $this->sortAlphabetically = ($this->group->sortAlphabetically ? true : false);
             $this->groupName = $this->group->groupName;
             $this->groupDescription = $this->group->groupDescription;
             $this->showOrder = $this->group->showOrder;
