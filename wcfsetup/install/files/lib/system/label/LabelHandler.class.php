@@ -381,7 +381,7 @@ class LabelHandler extends SingletonFactory
                 }
             }
 
-            $data[$groupID] = $this->labelGroups['groups'][$groupID];
+            $data[$groupID] = $this->getLabelGroup($groupID);
         }
 
         // @phpstan-ignore argument.type
@@ -413,9 +413,19 @@ class LabelHandler extends SingletonFactory
      * @param int $groupID
      * @return  ViewableLabelGroup|null
      */
-    public function getLabelGroup($groupID)
+    public function getLabelGroup($groupID): ?ViewableLabelGroup
     {
-        return $this->labelGroups['groups'][$groupID] ?? null;
+        if (!isset($this->labelGroups['groups'][$groupID])) {
+            return null;
+        }
+
+        $labelGroup = $this->labelGroups['groups'][$groupID];
+
+        if ($labelGroup->sortAlphabetically) {
+            $labelGroup->sortLabelsAlphabetically();
+        }
+
+        return $labelGroup;
     }
 
     /**

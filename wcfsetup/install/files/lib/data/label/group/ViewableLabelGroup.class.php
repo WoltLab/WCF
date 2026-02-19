@@ -264,6 +264,21 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
     }
 
     /**
+     * Sorts the labels alphabetically by their translated name using locale-aware comparison.
+     *
+     * @since 6.3
+     */
+    public function sortLabelsAlphabetically(): void
+    {
+        $collator = new \Collator(WCF::getLanguage()->getLocale());
+        \uasort(
+            $this->labels,
+            static fn(Label $a, Label $b) => $collator->compare($a->getTitle(), $b->getTitle())
+        );
+        $this->indexToObject = \array_values(\array_keys($this->labels));
+    }
+
+    /**
      * Returns true if any permissions have been set for this label group.
      *
      * @return  bool

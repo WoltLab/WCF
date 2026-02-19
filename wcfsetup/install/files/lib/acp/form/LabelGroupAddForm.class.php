@@ -40,6 +40,8 @@ class LabelGroupAddForm extends AbstractForm
      */
     public $forceSelection = false;
 
+    public bool $sortAlphabetically = false;
+
     /**
      * group name
      * @var string
@@ -113,6 +115,9 @@ class LabelGroupAddForm extends AbstractForm
         if (isset($_POST['forceSelection'])) {
             $this->forceSelection = true;
         }
+        if (isset($_POST['sortAlphabetically'])) {
+            $this->sortAlphabetically = true;
+        }
         if (isset($_POST['objectTypes']) && \is_array($_POST['objectTypes'])) {
             $this->objectTypes = $_POST['objectTypes'];
         }
@@ -179,6 +184,7 @@ class LabelGroupAddForm extends AbstractForm
         $this->objectAction = new LabelGroupAction([], 'create', [
             'data' => \array_merge($this->additionalFields, [
                 'forceSelection' => $this->forceSelection ? 1 : 0,
+                'sortAlphabetically' => $this->sortAlphabetically ? 1 : 0,
                 'groupName' => $this->groupName,
                 'groupDescription' => $this->groupDescription,
                 'showOrder' => $this->showOrder,
@@ -216,6 +222,7 @@ class LabelGroupAddForm extends AbstractForm
 
         // reset values
         $this->forceSelection = false;
+        $this->sortAlphabetically = false;
         $this->groupName = $this->groupDescription = '';
         $this->objectTypes = [];
         $this->showOrder = 0;
@@ -246,6 +253,7 @@ class LabelGroupAddForm extends AbstractForm
         WCF::getTPL()->assign([
             'action' => 'add',
             'forceSelection' => $this->forceSelection,
+            'sortAlphabetically' => $this->sortAlphabetically,
             'groupName' => $this->groupName,
             'groupDescription' => $this->groupDescription,
             'labelObjectTypeContainers' => $this->labelObjectTypeContainers,

@@ -47,8 +47,9 @@ class LabelCacheBuilder extends AbstractCacheBuilder
         $data['options'] = $permissions['options']->getObjects();
 
         // assign permissions for each label group
-        /** @var ViewableLabelGroup $group */
         foreach ($data['groups'] as $groupID => $group) {
+            \assert($group instanceof ViewableLabelGroup);
+
             // group permissions
             if (isset($permissions['group'][$groupID])) {
                 $group->setGroupPermissions($permissions['group'][$groupID]);
