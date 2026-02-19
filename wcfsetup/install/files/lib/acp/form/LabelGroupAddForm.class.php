@@ -2,27 +2,37 @@
 
 namespace wcf\acp\form;
 
+use wcf\data\label\group\LabelGroup;
 use wcf\data\label\group\LabelGroupAction;
 use wcf\data\label\group\LabelGroupEditor;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\form\AbstractForm;
+use wcf\form\AbstractFormBuilderForm;
 use wcf\system\acl\ACLHandler;
-use wcf\system\exception\UserInputException;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\container\TabFormContainer;
+use wcf\system\form\builder\container\TabMenuFormContainer;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
+use wcf\system\form\builder\field\acl\AclFormField;
+use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\IntegerFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\IFormDocument;
+use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\label\object\type\ILabelObjectTypeHandler;
 use wcf\system\label\object\type\LabelObjectTypeContainer;
 use wcf\system\language\I18nHandler;
-use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Shows the label group add form.
  *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Alexander Ebert, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @extends AbstractFormBuilderForm<LabelGroup>
  */
-class LabelGroupAddForm extends AbstractForm
+class LabelGroupAddForm extends AbstractFormBuilderForm
 {
     /**
      * @inheritDoc
@@ -35,103 +45,41 @@ class LabelGroupAddForm extends AbstractForm
     public $neededPermissions = ['admin.content.label.canManageLabel'];
 
     /**
-     * force users to select a label
-     * @var bool
+     * @inheritDoc
      */
-    public $forceSelection = false;
-
-    public bool $sortAlphabetically = false;
+    public $objectActionClass = LabelGroupAction::class;
 
     /**
-     * group name
-     * @var string
+     * @inheritDoc
      */
-    public $groupName = '';
-
-    /**
-     * group description
-     * @var string
-     */
-    public $groupDescription = '';
-
-    /**
-     * list of label object type handlers
-     * @var ILabelObjectTypeHandler[]
-     */
-    public $labelObjectTypes = [];
-
-    /**
-     * list of label object type containers
-     * @var LabelObjectTypeContainer[]
-     */
-    public $labelObjectTypeContainers = [];
+    public $objectEditLinkController = LabelGroupEditForm::class;
 
     /**
      * list of label group to object type relations
      * @var array<int, int[]>
      */
-    public $objectTypes = [];
+    public array $objectTypes = [];
 
     /**
-     * object type id
-     * @var int
+     * list of label object type handlers
+     * @var ILabelObjectTypeHandler[]
      */
-    public $objectTypeID = 0;
+    protected array $labelObjectTypes = [];
 
     /**
-     * show order
-     * @var int
+     * list of label object type containers
+     * @var LabelObjectTypeContainer[]
      */
-    public $showOrder = 0;
+    protected array $labelObjectTypeContainers = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
 
-        $this->objectTypeID = ACLHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.label');
-
-        I18nHandler::getInstance()->register('groupName');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function readFormParameters()
-    {
-        parent::readFormParameters();
-
-        I18nHandler::getInstance()->readValues();
-
-        if (I18nHandler::getInstance()->isPlainValue('groupName')) {
-            $this->groupName = I18nHandler::getInstance()->getValue('groupName');
-        }
-
-        if (isset($_POST['groupDescription'])) {
-            $this->groupDescription = StringUtil::trim($_POST['groupDescription']);
-        }
-        if (isset($_POST['forceSelection'])) {
-            $this->forceSelection = true;
-        }
-        if (isset($_POST['sortAlphabetically'])) {
-            $this->sortAlphabetically = true;
-        }
-        if (isset($_POST['objectTypes']) && \is_array($_POST['objectTypes'])) {
-            $this->objectTypes = $_POST['objectTypes'];
-        }
-        if (isset($_POST['showOrder'])) {
-            $this->showOrder = \intval($_POST['showOrder']);
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function readData()
-    {
-        // get label object type handlers
+        // Initialize label object types and containers before form building
+        // (which happens in checkPermissions), since the TemplateFormNode
+        // in createForm() needs the containers.
         $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.label.objectType');
         foreach ($objectTypes as $objectType) {
             $handler = $objectType->getProcessor();
@@ -142,30 +90,99 @@ class LabelGroupAddForm extends AbstractForm
             $this->labelObjectTypes[$objectType->objectTypeID] = $handler;
             $this->labelObjectTypeContainers[$objectType->objectTypeID] = $container;
         }
-
-        parent::readData();
-
-        // assign new values for object relations
-        $this->setObjectTypeRelations();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
+    protected function createForm()
+    {
+        parent::createForm();
+
+        $tabMenu = TabMenuFormContainer::create('tabMenu');
+        $tabMenu->appendChildren([
+            TabFormContainer::create('general')
+                ->label('wcf.global.form.data')
+                ->appendChildren([
+                    FormContainer::create('generalContainer')
+                        ->appendChildren([
+                            TextFormField::create('groupName')
+                                ->label('wcf.global.title')
+                                ->required()
+                                ->autoFocus()
+                                ->maximumLength(80)
+                                ->i18n()
+                                ->languageItemPattern('wcf.acp.label.group\d+'),
+                            TextFormField::create('groupDescription')
+                                ->label('wcf.global.description')
+                                ->description('wcf.acp.label.group.groupDescription.description')
+                                ->maximumLength(255),
+                            IntegerFormField::create('showOrder')
+                                ->label('wcf.global.showOrder')
+                                ->minimum(0)
+                                ->value(0),
+                            BooleanFormField::create('forceSelection')
+                                ->label('wcf.acp.label.group.forceSelection'),
+                            BooleanFormField::create('sortAlphabetically')
+                                ->label('wcf.acp.label.group.sortAlphabetically'),
+                            AclFormField::create('aclPermissions')
+                                ->label('wcf.acl.permissions')
+                                ->objectType('com.woltlab.wcf.label'),
+                        ]),
+                ]),
+            TabFormContainer::create('connect')
+                ->label('wcf.acp.label.group.category.connect')
+                ->appendChildren([
+                    FormContainer::create('connectElements')
+                        ->appendChildren([
+                            TemplateFormNode::create('labelObjectTypes')
+                                ->templateName('__labelGroupObjectTypes')
+                                ->variables([
+                                    'labelObjectTypeContainers' => $this->labelObjectTypeContainers,
+                                ])
+                        ]),
+                ]),
+        ]);
+
+        $this->form->appendChildren([$tabMenu]);
+    }
+
+    #[\Override]
+    protected function finalizeForm()
+    {
+        parent::finalizeForm();
+
+        // The groupName column is NOT NULL without a default. When i18n values
+        // are used, hasSaveValue() returns false and groupName would be missing
+        // from the data array. This processor ensures it's always present.
+        $this->form->getDataHandler()->addProcessor(
+            new CustomFormDataProcessor(
+                'groupNameFallback',
+                function (IFormDocument $document, array $parameters) {
+                    if (!isset($parameters['data']['groupName'])) {
+                        $parameters['data']['groupName'] = '';
+                    }
+
+                    return $parameters;
+                }
+            )
+        );
+    }
+
+    #[\Override]
+    public function readFormParameters()
+    {
+        parent::readFormParameters();
+
+        if (isset($_POST['objectTypes']) && \is_array($_POST['objectTypes'])) {
+            $this->objectTypes = $_POST['objectTypes'];
+        }
+    }
+
+    #[\Override]
     public function validate()
     {
         parent::validate();
 
-        // validate group name
-        if (!I18nHandler::getInstance()->validateValue('groupName')) {
-            if (I18nHandler::getInstance()->isPlainValue('groupName')) {
-                throw new UserInputException('groupName');
-            } else {
-                throw new UserInputException('groupName', 'multilingual');
-            }
-        }
-
-        // validate object type relations
+        // Sanitize object type relations.
         foreach ($this->objectTypes as $objectTypeID => $data) {
             if (!isset($this->labelObjectTypes[$objectTypeID])) {
                 unset($this->objectTypes[$objectTypeID]);
@@ -173,112 +190,78 @@ class LabelGroupAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function save()
+    #[\Override]
+    public function readData()
     {
-        parent::save();
+        parent::readData();
 
-        // save label
-        $this->objectAction = new LabelGroupAction([], 'create', [
-            'data' => \array_merge($this->additionalFields, [
-                'forceSelection' => $this->forceSelection ? 1 : 0,
-                'sortAlphabetically' => $this->sortAlphabetically ? 1 : 0,
-                'groupName' => $this->groupName,
-                'groupDescription' => $this->groupDescription,
-                'showOrder' => $this->showOrder,
-            ]),
-        ]);
-        $returnValues = $this->objectAction->executeAction();
+        $this->setObjectTypeRelations();
+    }
 
-        if (!I18nHandler::getInstance()->isPlainValue('groupName')) {
+    #[\Override]
+    public function saved()
+    {
+        $formData = $this->form->getData();
+
+        if ($this->formAction === 'create') {
+            $group = $this->objectAction->getReturnValues()['returnValues'];
+            \assert($group instanceof LabelGroup);
+            $groupID = $group->groupID;
+        } else {
+            $groupID = $this->formObject->groupID;
+        }
+
+        // Handle i18n groupName.
+        $languageItem = 'wcf.acp.label.group' . $groupID;
+        if (isset($formData['groupName_i18n'])) {
             I18nHandler::getInstance()->save(
-                'groupName',
-                'wcf.acp.label.group' . $returnValues['returnValues']->groupID,
+                $formData['groupName_i18n'],
+                $languageItem,
                 'wcf.acp.label',
                 1
             );
 
-            // update group name
-            $groupEditor = new LabelGroupEditor($returnValues['returnValues']);
-            $groupEditor->update([
-                'groupName' => 'wcf.acp.label.group' . $returnValues['returnValues']->groupID,
-            ]);
+            if ($this->formAction === 'create') {
+                (new LabelGroupEditor($group))->update(['groupName' => $languageItem]);
+            } else {
+                (new LabelGroupEditor($this->formObject))->update(['groupName' => $languageItem]);
+            }
+        } elseif ($this->formAction === 'edit') {
+            // Switched from i18n to plain value — remove old language items.
+            I18nHandler::getInstance()->remove($languageItem);
         }
 
-        // save acl
-        ACLHandler::getInstance()->save($returnValues['returnValues']->groupID, $this->objectTypeID);
-        ACLHandler::getInstance()->disableAssignVariables();
+        // Save ACL.
+        ACLHandler::getInstance()->save($groupID, $formData['aclPermissions_aclObjectTypeID']);
 
-        // save object type relations
-        $this->saveObjectTypeRelations($returnValues['returnValues']->groupID);
+        // Save object type relations.
+        $this->saveObjectTypeRelations($groupID);
 
         foreach ($this->labelObjectTypes as $labelObjectType) {
             $labelObjectType->save();
         }
 
-        $this->saved();
+        // Reset object type selections for create form.
+        if ($this->formAction === 'create') {
+            $this->objectTypes = [];
+            $this->setObjectTypeRelations();
+        }
 
-        // reset values
-        $this->forceSelection = false;
-        $this->sortAlphabetically = false;
-        $this->groupName = $this->groupDescription = '';
-        $this->objectTypes = [];
-        $this->showOrder = 0;
-        $this->setObjectTypeRelations();
-
-        // show success message
-        WCF::getTPL()->assign([
-            'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
-                LabelGroupEditForm::class,
-                ['id' => $returnValues['returnValues']->groupID]
-            ),
-        ]);
-
-        I18nHandler::getInstance()->reset();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function assignVariables()
-    {
-        parent::assignVariables();
-
-        ACLHandler::getInstance()->assignVariables($this->objectTypeID);
-        I18nHandler::getInstance()->assignVariables();
-
-        WCF::getTPL()->assign([
-            'action' => 'add',
-            'forceSelection' => $this->forceSelection,
-            'sortAlphabetically' => $this->sortAlphabetically,
-            'groupName' => $this->groupName,
-            'groupDescription' => $this->groupDescription,
-            'labelObjectTypeContainers' => $this->labelObjectTypeContainers,
-            'objectTypeID' => $this->objectTypeID,
-            'showOrder' => $this->showOrder,
-        ]);
+        parent::saved();
     }
 
     /**
      * Saves label group to object relations.
-     *
-     * @param ?int $groupID
-     * @return void
      */
-    protected function saveObjectTypeRelations($groupID)
+    protected function saveObjectTypeRelations(int $groupID): void
     {
         WCF::getDB()->beginTransaction();
 
         // remove old relations
-        if ($groupID !== null) {
-            $sql = "DELETE FROM wcf1_label_group_to_object
-                    WHERE       groupID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$groupID]);
-        }
+        $sql = "DELETE FROM wcf1_label_group_to_object
+                WHERE       groupID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([$groupID]);
 
         // insert new relations
         if (!empty($this->objectTypes)) {
@@ -310,9 +293,8 @@ class LabelGroupAddForm extends AbstractForm
      * Sets object type relations.
      *
      * @param ?array<int, int[]> $data
-     * @return void
      */
-    protected function setObjectTypeRelations($data = null)
+    protected function setObjectTypeRelations(?array $data = null): void
     {
         if (!empty($_POST)) {
             // use POST data

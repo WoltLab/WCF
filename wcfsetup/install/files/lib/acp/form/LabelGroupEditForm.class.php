@@ -2,24 +2,22 @@
 
 namespace wcf\acp\form;
 
+use CuyZ\Valinor\Mapper\MappingError;
 use wcf\acp\page\LabelGroupListPage;
 use wcf\data\label\group\LabelGroup;
-use wcf\data\label\group\LabelGroupAction;
-use wcf\form\AbstractForm;
-use wcf\system\acl\ACLHandler;
+use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\interaction\admin\LabelGroupInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
-use wcf\system\language\I18nHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
  * Shows the label group edit form.
  *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Alexander Ebert, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class LabelGroupEditForm extends LabelGroupAddForm
 {
@@ -31,127 +29,49 @@ class LabelGroupEditForm extends LabelGroupAddForm
     /**
      * @inheritDoc
      */
-    public $neededPermissions = ['admin.content.label.canManageLabel'];
+    public $formAction = 'edit';
 
-    /**
-     * group id
-     * @var int
-     */
-    public $groupID = 0;
-
-    /**
-     * label group object
-     * @var LabelGroup
-     */
-    public $group;
-
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->groupID = \intval($_REQUEST['id']);
+        try {
+            $queryParameters = Helper::mapQueryParameters(
+                $_GET,
+                <<<'EOT'
+                    array {
+                        id: positive-int
+                    }
+                    EOT
+            );
+        } catch (MappingError) {
+            throw new IllegalLinkException();
         }
-        $this->group = new LabelGroup($this->groupID);
-        if (!$this->group->groupID) {
+
+        $this->formObject = new LabelGroup($queryParameters['id']);
+
+        if (!$this->formObject->getObjectID()) {
             throw new IllegalLinkException();
         }
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function save()
-    {
-        AbstractForm::save();
-
-        $this->groupName = 'wcf.acp.label.group' . $this->group->groupID;
-        if (I18nHandler::getInstance()->isPlainValue('groupName')) {
-            I18nHandler::getInstance()->remove($this->groupName);
-            $this->groupName = I18nHandler::getInstance()->getValue('groupName');
-        } else {
-            I18nHandler::getInstance()->save('groupName', $this->groupName, 'wcf.acp.label', 1);
-        }
-
-        // update label
-        $this->objectAction = new LabelGroupAction(
-            [$this->groupID],
-            'update',
-            [
-                'data' => \array_merge($this->additionalFields, [
-                    'forceSelection' => $this->forceSelection ? 1 : 0,
-                    'sortAlphabetically' => $this->sortAlphabetically ? 1 : 0,
-                    'groupName' => $this->groupName,
-                    'groupDescription' => $this->groupDescription,
-                    'showOrder' => $this->showOrder,
-                ]),
-            ]
-        );
-        $this->objectAction->executeAction();
-
-        // update acl
-        ACLHandler::getInstance()->save($this->groupID, $this->objectTypeID);
-        ACLHandler::getInstance()->disableAssignVariables();
-
-        // update object type relations
-        $this->saveObjectTypeRelations($this->groupID);
-
-        foreach ($this->labelObjectTypes as $labelObjectType) {
-            $labelObjectType->save();
-        }
-
-        $this->saved();
-
-        // show success message
-        WCF::getTPL()->assign('success', true);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function readData()
-    {
-        parent::readData();
-
-        if (empty($_POST)) {
-            I18nHandler::getInstance()->setOptions('groupName', 1, $this->group->groupName, 'wcf.acp.label.group\d+');
-
-            $this->forceSelection = ($this->group->forceSelection ? true : false);
-            $this->sortAlphabetically = ($this->group->sortAlphabetically ? true : false);
-            $this->groupName = $this->group->groupName;
-            $this->groupDescription = $this->group->groupDescription;
-            $this->showOrder = $this->group->showOrder;
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
 
-        I18nHandler::getInstance()->assignVariables(!empty($_POST));
-
         WCF::getTPL()->assign([
-            'action' => 'edit',
-            'groupID' => $this->groupID,
-            'labelGroup' => $this->group,
             'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
                 new LabelGroupInteractions(),
-                $this->group,
+                $this->formObject,
                 LinkHandler::getInstance()->getControllerLink(LabelGroupListPage::class)
             ),
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
-    protected function setObjectTypeRelations($data = null)
+    #[\Override]
+    protected function setObjectTypeRelations(?array $data = null): void
     {
         if (empty($_POST)) {
             // read database values
@@ -159,7 +79,7 @@ class LabelGroupEditForm extends LabelGroupAddForm
                     FROM    wcf1_label_group_to_object
                     WHERE   groupID = ?";
             $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$this->groupID]);
+            $statement->execute([$this->formObject->groupID]);
 
             $data = [];
             while ($row = $statement->fetchArray()) {
