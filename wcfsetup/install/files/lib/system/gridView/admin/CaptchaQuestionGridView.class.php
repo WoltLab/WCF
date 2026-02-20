@@ -66,7 +66,11 @@ final class CaptchaQuestionGridView extends AbstractGridView
         $this->setBulkInteractionProvider(new CaptchaQuestionBulkInteractions());
 
         $this->addQuickInteraction(
-            new ToggleInteraction('enable', 'core/captchas/questions/%s/enable', 'core/captchas/questions/%s/disable')
+            new ToggleInteraction(
+                'enable',
+                'core/captchas/questions/%s/enable',
+                'core/captchas/questions/%s/disable'
+            )
         );
 
         $this->setDefaultSortField('questionID');

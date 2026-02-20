@@ -71,9 +71,9 @@ final class ContactOptionGridView extends AbstractGridView
 
         $this->addQuickInteraction(
             new ToggleInteraction(
-                "isDisabled",
-                "core/contact/options/%s/enable",
-                "core/contact/options/%s/disable"
+                'enable',
+                'core/contact/options/%s/enable',
+                'core/contact/options/%s/disable'
             )
         );
 
