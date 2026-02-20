@@ -130,9 +130,9 @@ final class LanguageGridView extends AbstractGridView
         $this->setInteractionProvider($provider);
         $this->addQuickInteraction(
             new ToggleInteraction(
-                "enable",
-                "core/languages/%s/enable",
-                "core/languages/%s/disable",
+                'enable',
+                'core/languages/%s/enable',
+                'core/languages/%s/disable',
                 isAvailableCallback: static function (Language $language) {
                     return !$language->isDefault;
                 }
