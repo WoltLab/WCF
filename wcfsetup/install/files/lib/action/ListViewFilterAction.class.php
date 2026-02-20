@@ -46,8 +46,16 @@ final class ListViewFilterAction implements RequestHandlerInterface
             throw new UserInputException('listView', 'invalid');
         }
 
-        /** @var AbstractListView<DatabaseObject, DatabaseObjectList<DatabaseObject>> $view */
-        $view = new $parameters['listView'](...$parameters['listViewParameters']);
+        try {
+            /** @var AbstractListView<DatabaseObject, DatabaseObjectList<DatabaseObject>> $view */
+            $view = new $parameters['listView'](...$parameters['listViewParameters']);
+        } catch (\ArgumentCountError $e) {
+            if (\ENABLE_DEBUG_MODE) {
+                throw $e;
+            } else {
+                throw new IllegalLinkException();
+            }
+        }
 
         if (!$view->isAccessible()) {
             throw new PermissionDeniedException();
