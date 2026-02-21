@@ -33,7 +33,7 @@ class UserProfileAction extends UserAction
     /**
      * @inheritDoc
      */
-    protected $allowGuestAccess = ['getUserProfile', 'getDetailedActivityPointList'];
+    protected $allowGuestAccess = ['getDetailedActivityPointList'];
 
     /**
      * @var User
