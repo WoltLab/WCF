@@ -2,6 +2,8 @@
 
 namespace wcf\data\article;
 
+use wcf\command\article\DisableI18n;
+use wcf\command\article\EnableI18n;
 use wcf\command\article\MarkAllArticlesAsRead;
 use wcf\command\article\MarkArticleAsRead;
 use wcf\command\article\PublishArticle;
@@ -15,8 +17,6 @@ use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\article\content\ArticleContentEditor;
 use wcf\data\language\Language;
-use wcf\system\article\command\DisableI18n;
-use wcf\system\article\command\EnableI18n;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\comment\CommentHandler;
