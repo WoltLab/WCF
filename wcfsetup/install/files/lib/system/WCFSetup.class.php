@@ -675,6 +675,11 @@ final class WCFSetup extends WCF
                 ['name' => 'sqlColumn', 'data' => ['type' => 'varchar', 'length' => 100, 'notNull' => true, 'default' => "''"]],
                 ['name' => 'sqlIndex', 'data' => ['type' => 'varchar', 'length' => 100, 'notNull' => true, 'default' => "''"]],
                 ['name' => 'isDone', 'data' => ['type' => 'tinyint', 'notNull' => true, 'default' => 1]],
+            ], [
+                [
+                    'name' => 'packageID',
+                    'data' => ['type' => 'UNIQUE', 'columns' => 'packageID,sqlTable,sqlColumn,sqlIndex'],
+                ]
             ]);
 
             $sql = "INSERT INTO wcf1_package_installation_sql_log
@@ -688,14 +693,13 @@ final class WCFSetup extends WCF
         $tables = require \TMP_DIR . 'setup/db/install_com.woltlab.wcf.php';
 
         $completed = false;
+        $processor = new DatabaseTableChangeProcessor(
+            $package,
+            null,
+            $dbEditor,
+        );
         for ($i = 0; $i < 50; $i++) {
-            try {
-                (new DatabaseTableChangeProcessor(
-                    $package,
-                    $tables,
-                    $dbEditor,
-                ))->process();
-            } catch (SplitNodeException) {
+            if ($processor->process($tables)) {
                 continue;
             }
 

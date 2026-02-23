@@ -181,6 +181,8 @@ final class DatabaseTableChangeProcessor
             $tableNames[] = $table->getName();
         }
 
+        $this->resetInternalState();
+
         $this->tables = $tables;
 
         $conditionBuilder = new PreparedStatementConditionBuilder();
@@ -206,6 +208,28 @@ final class DatabaseTableChangeProcessor
         }
     }
 
+    private function resetInternalState(): void
+    {
+        $this->columnPackageIDs = [];
+        $this->foreignKeyPackageIDs = [];
+        $this->indexPackageIDs = [];
+        $this->tablePackageIDs = [];
+
+        $this->columnsToAdd = [];
+        $this->columnsToAlter = [];
+        $this->columnsToDrop = [];
+
+        $this->foreignKeysToAdd = [];
+        $this->foreignKeysToDrop = [];
+
+        $this->indicesToAdd = [];
+        $this->indicesToDrop = [];
+
+        $this->tablesToCleanup = [];
+        $this->tablesToCreate = [];
+        $this->tablesToDrop = [];
+    }
+
     /**
      * Adds the given index to the table.
      */
@@ -224,10 +248,8 @@ final class DatabaseTableChangeProcessor
 
     /**
      * Applies all of the previously determined changes to achieve the desired database layout.
-     *
-     * @throws  SplitNodeException  if any change has been applied
      */
-    private function applyChanges(): void
+    private function applyChanges(): bool
     {
         $appliedAnyChange = false;
 
@@ -250,6 +272,8 @@ final class DatabaseTableChangeProcessor
                 $statement = \wcf\system\WCFSetup::getDB()->prepare($sql);
                 $statement->execute([1, 'com.woltlab.wcf']);
             }
+
+            $this->existingTableNames[] = $table->getName();
         }
 
         foreach ($this->tablesToDrop as $table) {
@@ -354,9 +378,7 @@ final class DatabaseTableChangeProcessor
             $this->invalidateCachedTable($tableName);
         }
 
-        if ($appliedAnyChange) {
-            throw new SplitNodeException($this->splitNodeMessage);
-        }
+        return $appliedAnyChange;
     }
 
     /**
@@ -1040,7 +1062,7 @@ final class DatabaseTableChangeProcessor
      */
     private function invalidateCachedTable(string $tableName): void
     {
-        unset($this->existingTableNames[$tableName]);
+        unset($this->existingTables[$tableName]);
     }
 
     /**
@@ -1136,8 +1158,9 @@ final class DatabaseTableChangeProcessor
      *
      * @param DatabaseTable[] $tables
      * @throws  \RuntimeException   if validation of the required layout changes fails
+     * @throws  SplitNodeException  if any change has been applied AND `$tables` was empty
      */
-    public function process(array $tables = []): void
+    public function process(array $tables = []): bool
     {
         if ($this->tables === null) {
             if ($tables === []) {
@@ -1163,9 +1186,19 @@ final class DatabaseTableChangeProcessor
 
         $this->calculateChanges();
 
-        $this->applyChanges();
+        $appliedAnyChange = $this->applyChanges();
 
         $this->tables = null;
+
+        if ($appliedAnyChange) {
+            if ($tables === []) {
+                throw new SplitNodeException($this->splitNodeMessage);
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
