@@ -97,7 +97,7 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
      * @return void
      * @since       5.2
      *
-     * @deprecated 6.3 use the `RegisterUserProfileVisitor` command instead.
+     * @deprecated 6.3 use the `TrackUserProfileVisitor` command instead.
      */
     public function registerVisitor()
     {
