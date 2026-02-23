@@ -231,6 +231,14 @@ final class DatabaseTableChangeProcessor
             $this->prepareTableLog($table);
             $this->createTable($table);
             $this->finalizeTableLog($table);
+
+            if (\PACKAGE_ID === 0 && $table->getName() === 'wcf1_package') {
+                $sql = "INSERT INTO wcf1_package
+                                    (packageID, package)
+                        VALUES      (?, ?)";
+                $statement = \wcf\system\WCFSetup::getDB()->prepare($sql);
+                $statement->execute([1, 'com.woltlab.wcf']);
+            }
         }
 
         foreach ($this->tablesToDrop as $table) {
@@ -1161,7 +1169,8 @@ final class DatabaseTableChangeProcessor
                         // If the prefix is known, the unknown table is deleted
                         // before it is created again (this is registered in self::calculateChanges()).
                         if (
-                            !\in_array(
+                            \PACKAGE_ID !== 0
+                            && !\in_array(
                                 $abbreviation,
                                 ApplicationHandler::getInstance()->getAbbreviations()
                             )

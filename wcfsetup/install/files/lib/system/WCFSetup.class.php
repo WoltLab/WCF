@@ -14,6 +14,7 @@ use wcf\system\cache\eager\LanguageCache;
 use wcf\system\database\Database;
 use wcf\system\database\exception\DatabaseException;
 use wcf\system\database\MySQLDatabase;
+use wcf\system\database\table\DatabaseTableChangeProcessor;
 use wcf\system\database\util\SQLParser;
 use wcf\system\devtools\DevtoolsSetup;
 use wcf\system\exception\SystemException;
@@ -23,6 +24,7 @@ use wcf\system\image\adapter\ImagickImageAdapter;
 use wcf\system\io\Tar;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageArchive;
+use wcf\system\package\SplitNodeException;
 use wcf\system\request\RouteHandler;
 use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
@@ -200,7 +202,7 @@ final class WCFSetup extends WCF
         \file_put_contents(\TMP_DIR . 'lastStep', $currentStep);
 
         // calculate progress
-        $progress = \round((100 / 22) * ++$currentStep, 0);
+        $progress = \round((100 / 14) * ++$currentStep, 0);
         self::getTPL()->assign(['progress' => $progress]);
     }
 
@@ -275,23 +277,23 @@ final class WCFSetup extends WCF
                 return $this->createDB();
 
             case 'unzipFiles':
-                $this->calcProgress(18);
+                $this->calcProgress(10);
                 $this->assertNotUnzipped();
 
                 return $this->unzipFiles();
 
             case 'installLanguage':
-                $this->calcProgress(19);
+                $this->calcProgress(11);
 
                 return $this->installLanguage();
 
             case 'createUser':
-                $this->calcProgress(20);
+                $this->calcProgress(12);
 
                 return $this->createUser();
 
             case 'installPackages':
-                $this->calcProgress(21);
+                $this->calcProgress(13);
 
                 return $this->installPackages();
 
@@ -663,33 +665,46 @@ final class WCFSetup extends WCF
     {
         $this->initDB();
 
-        // get content of the sql structure file
-        $sql = \file_get_contents(TMP_DIR . 'setup/db/install.sql');
+        $dbEditor = self::$dbObj->getEditor();
 
-        // split by offsets
-        $sqlData = \explode('/* SQL_PARSER_OFFSET */', $sql);
-        $offset = isset($_POST['offset']) ? \intval($_POST['offset']) : 0;
-        if (!isset($sqlData[$offset])) {
-            throw new SystemException("Offset for SQL parser is out of bounds, " . $offset . " was requested, but there are only " . \count($sqlData) . " sections");
-        }
-        $sql = $sqlData[$offset];
+        $tableNames = $dbEditor->getTableNames();
+        if (!\in_array('wcf1_package_installation_sql_log', $tableNames)) {
+            $dbEditor->createTable('wcf1_package_installation_sql_log', [
+                ['name' => 'packageID', 'data' => ['type' => 'int', 'notNull' => true]],
+                ['name' => 'sqlTable', 'data' => ['type' => 'varchar', 'length' => 100, 'notNull' => true, 'default' => "''"]],
+                ['name' => 'sqlColumn', 'data' => ['type' => 'varchar', 'length' => 100, 'notNull' => true, 'default' => "''"]],
+                ['name' => 'sqlIndex', 'data' => ['type' => 'varchar', 'length' => 100, 'notNull' => true, 'default' => "''"]],
+                ['name' => 'isDone', 'data' => ['type' => 'tinyint', 'notNull' => true, 'default' => 1]],
+            ]);
 
-        // execute sql queries
-        $parser = new SQLParser($sql);
-        $parser->execute();
-
-        // log sql queries
-        \preg_match_all("~CREATE\\s+TABLE\\s+(\\w+)~i", $sql, $matches);
-
-        $sql = "INSERT INTO wcf1_package_installation_sql_log
-                            (packageID, sqlTable)
-                VALUES      (?, ?)";
-        $statement = self::getDB()->prepare($sql);
-        foreach ($matches[1] as $tableName) {
-            $statement->execute([1, $tableName]);
+            $sql = "INSERT INTO wcf1_package_installation_sql_log
+                                (packageID, sqlTable, isDone)
+                    VALUES      (?, ?, ?)";
+            $statement = self::$dbObj->prepare($sql);
+            $statement->execute([1, 'wcf1_package_installation_sql_log', 1]);
         }
 
-        if ($offset < (\count($sqlData) - 1)) {
+        $package = new \wcf\data\package\Package(null, ['packageID' => 1]);
+        $tables = require \TMP_DIR . 'setup/db/install_com.woltlab.wcf.php';
+
+        $completed = false;
+        for ($i = 0; $i < 50; $i++) {
+            try {
+                (new DatabaseTableChangeProcessor(
+                    $package,
+                    $tables,
+                    $dbEditor,
+                ))->process();
+            } catch (SplitNodeException) {
+                continue;
+            }
+
+            $completed = true;
+            break;
+        }
+
+        if (!$completed) {
+            $offset = isset($_POST['offset']) ? \intval($_POST['offset']) : 0;
             WCF::getTPL()->assign([
                 '__additionalParameters' => [
                     'offset' => $offset + 1,
@@ -697,24 +712,14 @@ final class WCFSetup extends WCF
             ]);
 
             return $this->gotoNextStep('createDB');
-        } else {
-            /*
-             * Manually install PIPPackageInstallationPlugin since install.sql content is not escaped resulting
-            * in different behaviour in MySQL and MSSQL. You SHOULD NOT move this into install.sql!
-            */
-            $sql = "INSERT INTO wcf1_package_installation_plugin
-                                (packageID, pluginName, priority, className)
-                    VALUES      (?, ?, ?, ?)";
-            $statement = self::getDB()->prepare($sql);
-            $statement->execute([
-                1,
-                'packageInstallationPlugin',
-                1,
-                'wcf\system\package\plugin\PIPPackageInstallationPlugin',
-            ]);
-
-            return $this->gotoNextStep('unzipFiles');
         }
+
+        $sql = \file_get_contents(TMP_DIR . 'setup/db/install.sql');
+
+        $parser = new SQLParser($sql);
+        $parser->execute();
+
+        return $this->gotoNextStep('unzipFiles');
     }
 
     /**

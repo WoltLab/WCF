@@ -1,4 +1,3 @@
-
 <?php
 
 use wcf\system\database\table\DatabaseTable;
@@ -1549,7 +1548,8 @@ return [
     DatabaseTable::create('wcf1_flood_control')
         ->columns([
             BigintDatabaseTableColumn::create('logID')
-                ->notNull(),
+                ->notNull()
+                ->autoIncrement(),
             NotNullInt10DatabaseTableColumn::create('objectTypeID'),
             BinaryDatabaseTableColumn::create('identifier')
                 ->notNull()
@@ -2401,7 +2401,8 @@ return [
     DatabaseTable::create('wcf1_package_audit_log')
         ->columns([
             BigintDatabaseTableColumn::create('logID')
-                ->notNull(),
+                ->notNull()
+                ->autoIncrement(),
             MediumtextDatabaseTableColumn::create('payload')
                 ->notNull(),
             NotNullVarchar255DatabaseTableColumn::create('time'),
@@ -4766,41 +4767,6 @@ return [
     DatabaseTable::create('wcf1_user_option_value')
         ->columns([
             NotNullInt10DatabaseTableColumn::create('userID'),
-            TextDatabaseTableColumn::create('userOption1'),
-            CharDatabaseTableColumn::create('userOption2')
-                ->notNull()
-                ->length(10)
-                ->defaultValue('0000-00-00'),
-            TinyintDatabaseTableColumn::create('userOption3')
-                ->notNull()
-                ->defaultValue(0),
-            TextDatabaseTableColumn::create('userOption4'),
-            TextDatabaseTableColumn::create('userOption5'),
-            TextDatabaseTableColumn::create('userOption6'),
-            TextDatabaseTableColumn::create('userOption7'),
-            MediumtextDatabaseTableColumn::create('userOption8'),
-            TextDatabaseTableColumn::create('userOption9'),
-            TextDatabaseTableColumn::create('userOption10'),
-            TextDatabaseTableColumn::create('userOption11'),
-            TinyintDatabaseTableColumn::create('userOption12')
-                ->notNull()
-                ->defaultValue(0),
-            TextDatabaseTableColumn::create('userOption13'),
-            TextDatabaseTableColumn::create('userOption14'),
-            TinyintDatabaseTableColumn::create('userOption15')
-                ->notNull()
-                ->defaultValue(0),
-            TextDatabaseTableColumn::create('userOption16'),
-            TextDatabaseTableColumn::create('userOption17'),
-            TextDatabaseTableColumn::create('userOption18'),
-            TinyintDatabaseTableColumn::create('userOption19')
-                ->notNull()
-                ->defaultValue(0),
-            TextDatabaseTableColumn::create('userOption20'),
-            TinyintDatabaseTableColumn::create('userOption21')
-                ->notNull()
-                ->defaultValue(0),
-            TextDatabaseTableColumn::create('userOption22'),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
