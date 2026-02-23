@@ -665,7 +665,7 @@ final class WCFSetup extends WCF
     {
         $this->initDB();
 
-        $dbEditor = self::$dbObj->getEditor();
+        $dbEditor = self::getDB()->getEditor();
 
         $tableNames = $dbEditor->getTableNames();
         if (!\in_array('wcf1_package_installation_sql_log', $tableNames)) {
@@ -685,11 +685,12 @@ final class WCFSetup extends WCF
             $sql = "INSERT INTO wcf1_package_installation_sql_log
                                 (packageID, sqlTable, isDone)
                     VALUES      (?, ?, ?)";
-            $statement = self::$dbObj->prepare($sql);
+            $statement = self::getDB()->prepareUnmanaged($sql);
             $statement->execute([1, 'wcf1_package_installation_sql_log', 1]);
         }
 
-        $package = new \wcf\data\package\Package(null, ['packageID' => 1]);
+        $package = new \wcf\data\package\Package(null, ['packageID' => 1, 'package' => 'com.woltlab.wcf']);
+        $hasPackageTable = false;
         $tables = require \TMP_DIR . 'setup/db/install_com.woltlab.wcf.php';
 
         $completed = false;
@@ -699,6 +700,8 @@ final class WCFSetup extends WCF
             $dbEditor,
         );
         for ($i = 0; $i < 50; $i++) {
+            $this->createPseudoPackage();
+
             if ($processor->process($tables)) {
                 continue;
             }
@@ -724,6 +727,43 @@ final class WCFSetup extends WCF
         $parser->execute();
 
         return $this->gotoNextStep('unzipFiles');
+    }
+
+    /**
+     * Dynamically creates the pseudo row in `wcf1_package` after the table has
+     * been created. This step is necessary to preserve the integrity of the
+     * foreign key enforced on the SQL log and PIP table.
+     */
+    private function createPseudoPackage(): void
+    {
+        static $hasPseudoPackage = false;
+        if ($hasPseudoPackage) {
+            return;
+        }
+
+        $sql = "SHOW TABLES FROM " . self::getDB()->getDatabaseName() . " LIKE 'wcf1_package'";
+        $statement = self::getDB()->prepareUnmanaged($sql);
+        $statement->execute([]);
+        $hasTable = $statement->fetchSingleRow();
+        if ($hasTable === false) {
+            return;
+        }
+
+        $sql = "SELECT  *
+                FROM    wcf1_package
+                WHERE   packageID = ?";
+        $statement = self::getDB()->prepareUnmanaged($sql);
+        $statement->execute([1]);
+        $row = $statement->fetchSingleRow();
+        if ($row === false) {
+            $sql = "INSERT INTO wcf1_package
+                                (packageID, package)
+                    VALUES      (?, ?)";
+            $statement = self::getDB()->prepareUnmanaged($sql);
+            $statement->execute([1, 'com.woltlab.wcf']);
+        }
+
+        $hasPseudoPackage = true;
     }
 
     /**

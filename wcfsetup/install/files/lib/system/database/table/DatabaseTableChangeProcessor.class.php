@@ -265,14 +265,6 @@ final class DatabaseTableChangeProcessor
             $this->createTable($table);
             $this->finalizeTableLog($table);
 
-            if (\PACKAGE_ID === 0 && $table->getName() === 'wcf1_package') {
-                $sql = "INSERT INTO wcf1_package
-                                    (packageID, package)
-                        VALUES      (?, ?)";
-                $statement = \wcf\system\WCFSetup::getDB()->prepare($sql);
-                $statement->execute([1, 'com.woltlab.wcf']);
-            }
-
             $this->existingTableNames[] = $table->getName();
         }
 
