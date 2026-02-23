@@ -1181,7 +1181,7 @@ final class DatabaseTableChangeProcessor
                             ];
                         }
                     } else {
-                        $existingTable = DatabaseTable::createFromExistingTable($this->dbEditor, $table->getName());
+                        $existingTable = $this->getExistingTable($table->getName());
                         $existingColumns = $existingTable->getColumns();
                         $existingIndices = $existingTable->getIndices();
                         $existingForeignKeys = $existingTable->getForeignKeys();
