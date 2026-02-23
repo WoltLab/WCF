@@ -24,7 +24,6 @@ use wcf\system\image\adapter\ImagickImageAdapter;
 use wcf\system\io\Tar;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageArchive;
-use wcf\system\package\SplitNodeException;
 use wcf\system\request\RouteHandler;
 use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
@@ -721,10 +720,18 @@ final class WCFSetup extends WCF
             return $this->gotoNextStep('createDB');
         }
 
-        $sql = \file_get_contents(TMP_DIR . 'setup/db/install.sql');
+        $sql = \explode(
+            "\n",
+            \file_get_contents(TMP_DIR . 'setup/db/install.sql')
+        );
+        foreach ($sql as $line) {
+            $line = StringUtil::trim($line);
+            if ($line === '' || \str_starts_with($line, '-- ')) {
+                continue;
+            }
 
-        $parser = new SQLParser($sql);
-        $parser->execute();
+            WCF::getDB()->prepareUnmanaged($line)->execute();
+        }
 
         return $this->gotoNextStep('unzipFiles');
     }

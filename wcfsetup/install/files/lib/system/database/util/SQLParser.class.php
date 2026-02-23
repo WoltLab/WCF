@@ -18,6 +18,7 @@ use wcf\util\StringUtil;
  * @phpstan-import-type ColumnDefinition from DatabaseEditor
  * @phpstan-import-type ForeignKeyDefinition from DatabaseEditor
  * @phpstan-import-type IndexDefinition from DatabaseEditor
+ * @deprecated 6.3 Use the PHP-DDL instead.
  */
 class SQLParser
 {
