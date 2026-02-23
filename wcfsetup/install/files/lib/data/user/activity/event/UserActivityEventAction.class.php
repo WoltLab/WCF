@@ -37,6 +37,7 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction
      * Validates parameters to load recent activity entries.
      *
      * @return void
+     * @deprecated 6.3
      */
     public function validateLoad()
     {
@@ -70,6 +71,7 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction
      *  lastEventTime: int,
      *  template: string,
      * }|array{}
+     * @deprecated 6.3 Use `RenderUserActivityEvents` endpoint instead.
      */
     public function load()
     {
