@@ -1545,6 +1545,11 @@ return [
                 ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),
+    /*
+        As the flood control table can be a high traffic table and as it is
+        periodically emptied, there is no foreign key on the `objectTypeID`
+        to speed up insertions.
+    */
     DatabaseTable::create('wcf1_flood_control')
         ->columns([
             BigintDatabaseTableColumn::create('logID')
@@ -2437,6 +2442,11 @@ return [
     DatabaseTable::create('wcf1_package_installation_file_log')
         ->columns([
             NotNullInt10DatabaseTableColumn::create('packageID'),
+            /*
+                VARBINARY(765) roughly equals VARCHAR(255) and was picked to
+                store longer paths due to the restrictions of the total length
+                of the unique key.
+            */
             VarbinaryDatabaseTableColumn::create('filename')
                 ->notNull()
                 ->length(765),
@@ -3916,12 +3926,15 @@ return [
             NotNullInt10DatabaseTableColumn::create('trophyPoints')
                 ->defaultValue(0),
             IntDatabaseTableColumn::create('coverPhotoFileID'),
+            /** @deprecated 6.2 */
             CharDatabaseTableColumn::create('coverPhotoHash')
                 ->length(40),
+            /** @deprecated 6.2 */
             VarcharDatabaseTableColumn::create('coverPhotoExtension')
                 ->notNull()
                 ->length(4)
                 ->defaultValue(''),
+            /** @deprecated 6.2 */
             DefaultFalseBooleanDatabaseTableColumn::create('coverPhotoHasWebP'),
             TinyintDatabaseTableColumn::create('disableCoverPhoto')
                 ->notNull()
