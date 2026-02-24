@@ -7,6 +7,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\blacklist\status\BlacklistStatus;
 use wcf\data\blacklist\status\BlacklistStatusEditor;
+use wcf\http\error\ExceptionLogger;
 use wcf\system\io\HttpFactory;
 use wcf\system\WCF;
 use wcf\util\JSON;
@@ -52,7 +53,7 @@ class BlacklistEntryAction extends AbstractDatabaseObjectAction
         try {
             $response = $client->send($request);
         } catch (ClientExceptionInterface $e) {
-            \wcf\functions\exception\logThrowable($e);
+            ExceptionLogger::log($e);
 
             return;
         }

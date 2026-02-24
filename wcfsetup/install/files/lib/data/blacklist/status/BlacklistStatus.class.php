@@ -6,6 +6,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientExceptionInterface;
 use wcf\data\DatabaseObject;
+use wcf\http\error\ExceptionLogger;
 use wcf\system\exception\SystemException;
 use wcf\system\io\HttpFactory;
 use wcf\util\JSON;
@@ -104,7 +105,7 @@ class BlacklistStatus extends DatabaseObject
         try {
             $response = $client->send($request);
         } catch (ClientExceptionInterface $e) {
-            \wcf\functions\exception\logThrowable($e);
+            ExceptionLogger::log($e);
 
             return null;
         }

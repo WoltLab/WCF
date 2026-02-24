@@ -9,6 +9,7 @@ use wcf\data\IDatabaseObjectAction;
 use wcf\data\IFile;
 use wcf\data\IThumbnailFile;
 use wcf\system\event\EventHandler;
+use wcf\http\error\ExceptionLogger;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\ParentClassException;
 use wcf\system\exception\SystemException;
@@ -309,7 +310,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
         try {
             $adapter->loadFile($file->getLocation());
         } catch (\Exception $e) {
-            \wcf\functions\exception\logThrowable($e);
+            ExceptionLogger::log($e);
 
             return;
         }
@@ -340,7 +341,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
                         $sizeData['retainDimensions'] ?? true
                     );
                 } catch (\Exception $e) {
-                    \wcf\functions\exception\logThrowable($e);
+                    ExceptionLogger::log($e);
 
                     continue;
                 }

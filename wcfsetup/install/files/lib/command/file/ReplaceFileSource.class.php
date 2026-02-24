@@ -9,7 +9,7 @@ use wcf\system\file\processor\FileProcessor;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
-use function wcf\functions\exception\logThrowable;
+use wcf\http\error\ExceptionLogger;
 
 /**
  * Replaces the physical file of an entry with a new file. If there are any
@@ -199,7 +199,7 @@ final class ReplaceFileSource
             $file = FileProcessor::getInstance()->convertImageFormat($file);
             FileProcessor::getInstance()->generateThumbnails($file);
         } catch (DamagedImage $e) {
-            logThrowable($e);
+            ExceptionLogger::log($e);
         } finally {
             return $file;
         }

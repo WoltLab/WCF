@@ -11,7 +11,7 @@ use wcf\system\image\adapter\exception\ImageNotReadable;
 use wcf\system\image\ImageHandler;
 use wcf\util\FileUtil;
 
-use function wcf\functions\exception\logThrowable;
+use wcf\http\error\ExceptionLogger;
 
 /**
  * Provide functions to edit an unfurl url.
@@ -67,11 +67,11 @@ class UnfurlUrlEditor extends DatabaseObjectEditor
         } catch (SystemException | ImageNotReadable $e) {
             return null;
         } catch (ImageNotProcessable $e) {
-            logThrowable($e);
+            ExceptionLogger::log($e);
 
             return null;
         } catch (\Throwable $e) {
-            logThrowable($e);
+            ExceptionLogger::log($e);
             // Ignore any errors trying to save the file unless in debug mode.
             if (\ENABLE_DEBUG_MODE) {
                 throw $e;

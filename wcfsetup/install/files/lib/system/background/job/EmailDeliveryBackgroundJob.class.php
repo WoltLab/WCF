@@ -4,6 +4,7 @@ namespace wcf\system\background\job;
 
 use wcf\data\email\log\entry\EmailLogEntry;
 use wcf\data\email\log\entry\EmailLogEntryAction;
+use wcf\http\error\ExceptionLogger;
 use wcf\system\email\Email;
 use wcf\system\email\exception\UserDeleted;
 use wcf\system\email\IUserMailbox;
@@ -209,7 +210,7 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
             }
         } catch (PermanentFailure $e) {
             // no need for retrying. Eat Exception and log the error.
-            \wcf\functions\exception\logThrowable($e);
+            ExceptionLogger::log($e);
             $this->onFinalFailure();
 
             return;
@@ -221,7 +222,7 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
             $this->updateStatus(EmailLogEntry::STATUS_SUCCESS, $successMessage);
         } catch (\Throwable $e) {
             // Ignore all errors, otherwise we might deliver the email multiple times.
-            \wcf\functions\exception\logThrowable($e);
+            ExceptionLogger::log($e);
         }
     }
 }

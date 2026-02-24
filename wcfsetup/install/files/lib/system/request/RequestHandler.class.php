@@ -196,15 +196,11 @@ final class RequestHandler extends SingletonFactory
             }
 
             $emitter->emit($response);
-        } catch (IllegalLinkException | PermissionDeniedException | InvalidSecurityTokenException $e) {
+        } catch (IllegalLinkException | PermissionDeniedException | InvalidSecurityTokenException | NamedUserException $e) {
             throw new \LogicException(\sprintf(
                 "'%s' escaped from the middleware stack.",
                 $e::class
             ), 0, $e);
-        } catch (NamedUserException $e) {
-            $e->show();
-
-            exit;
         }
     }
 

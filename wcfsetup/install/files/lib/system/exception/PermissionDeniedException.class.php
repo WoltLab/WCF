@@ -2,11 +2,7 @@
 
 namespace wcf\system\exception;
 
-use wcf\system\box\BoxHandler;
-use wcf\system\notice\NoticeHandler;
-use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
-use wcf\system\WCFACP;
 
 /**
  * A PermissionDeniedException is thrown when a user has no permission to access
@@ -32,32 +28,9 @@ class PermissionDeniedException extends UserException
     }
 
     /**
-     * Prints a permission denied exception.
+     * @deprecated 6.3
      */
     public function show()
     {
-        if (!\class_exists(WCFACP::class, false)) {
-            BoxHandler::disablePageLayout();
-            NoticeHandler::disableNotices();
-        }
-        SessionHandler::getInstance()->disableTracking();
-
-        @\header('HTTP/1.1 403 Forbidden');
-
-        $name = static::class;
-        $exceptionClassName = \mb_substr($name, \mb_strrpos($name, '\\') + 1);
-
-        WCF::getTPL()->assign([
-            'name' => static::class,
-            'file' => $this->getFile(),
-            'line' => $this->getLine(),
-            'message' => $this->getMessage(),
-            'stacktrace' => $this->getTraceAsString(),
-            'templateName' => 'permissionDenied',
-            'templateNameApplication' => 'wcf',
-            'exceptionClassName' => $exceptionClassName,
-            'isFirstVisit' => SessionHandler::getInstance()->isFirstVisit(),
-        ]);
-        WCF::getTPL()->display('permissionDenied');
     }
 }

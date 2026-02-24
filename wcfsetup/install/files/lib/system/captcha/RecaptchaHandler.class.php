@@ -5,6 +5,7 @@ namespace wcf\system\captcha;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientExceptionInterface;
+use wcf\http\error\ExceptionLogger;
 use wcf\system\exception\UserInputException;
 use wcf\system\io\HttpFactory;
 use wcf\system\WCF;
@@ -146,7 +147,7 @@ class RecaptchaHandler implements ICaptchaHandler
             }
         } catch (ClientExceptionInterface $e) {
             // log error, but accept captcha
-            \wcf\functions\exception\logThrowable($e);
+            ExceptionLogger::log($e);
         }
 
         WCF::getSession()->register('recaptchaDone', true);

@@ -9,6 +9,7 @@ use wcf\data\file\File;
 use wcf\data\unfurl\url\UnfurlUrl;
 use wcf\data\unfurl\url\UnfurlUrlAction;
 use wcf\data\unfurl\url\UnfurlUrlEditor;
+use wcf\http\error\ExceptionLogger;
 use wcf\system\message\unfurl\exception\DownloadFailed;
 use wcf\system\message\unfurl\exception\ParsingFailed;
 use wcf\system\message\unfurl\exception\UrlInaccessible;
@@ -110,7 +111,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
             );
         } catch (UrlInaccessible | ParsingFailed $e) {
             if (\ENABLE_DEBUG_MODE) {
-                \wcf\functions\exception\logThrowable($e);
+                ExceptionLogger::log($e);
             }
 
             $this->save(UnfurlUrl::STATUS_REJECTED);

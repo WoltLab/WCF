@@ -4,7 +4,6 @@ namespace wcf\action;
 
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
-use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\util\StringUtil;
 
@@ -61,7 +60,7 @@ abstract class AbstractDialogAction extends AbstractSecureAction
 
         $methodName = 'step' . StringUtil::firstCharToUpperCase($this->step);
         if (!\method_exists($this, $methodName)) {
-            throw new AJAXException("Class '" . static::class . "' does not implement the required method '" . $methodName . "'");
+            throw new \LogicException("Class '" . static::class . "' does not implement the required method '" . $methodName . "'");
         }
 
         // execute step

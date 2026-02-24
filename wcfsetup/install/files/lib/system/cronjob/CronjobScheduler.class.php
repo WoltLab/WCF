@@ -6,6 +6,7 @@ use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobEditor;
 use wcf\data\cronjob\log\CronjobLogEditor;
 use wcf\data\user\User;
+use wcf\http\error\ExceptionLogger;
 use wcf\system\cache\builder\CronjobCacheBuilder;
 use wcf\system\exception\ClassNotFoundException;
 use wcf\system\exception\ImplementationException;
@@ -288,7 +289,7 @@ final class CronjobScheduler extends SingletonFactory
     private function logResult(CronjobLogEditor $logEditor, ?\Throwable $exception = null): void
     {
         if ($exception !== null) {
-            \wcf\functions\exception\logThrowable($exception);
+            ExceptionLogger::log($exception);
 
             $errString = \implode("\n", [
                 $exception->getMessage(),

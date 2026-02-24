@@ -6,6 +6,7 @@ use Throwable;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\JSON;
+use wcf\util\StacktraceUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -14,6 +15,7 @@ use wcf\util\StringUtil;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 The JSON response is now built in TAJAXException.
  */
 class AJAXException extends LoggedException
 {
@@ -54,14 +56,22 @@ class AJAXException extends LoggedException
     const INTERNAL_ERROR = 503;
 
     /**
-     * Throws a JSON-encoded error message
-     *
+     * @var array<string, mixed>
+     */
+    private readonly array $responseData;
+
+    /**
+     * @var string
+     */
+    private readonly string $statusHeader;
+
+    /**
      * @param string $message
      * @param int $errorType
-     * @param string $stacktrace
+     * @param string|null $stacktrace
      * @param mixed[] $returnValues
      * @param string $exceptionID
-     * @param \Exception|\Throwable $previous
+     * @param \Exception|\Throwable|null $previous
      * @param array<string, mixed> $extraInformation
      */
     public function __construct(
@@ -73,6 +83,8 @@ class AJAXException extends LoggedException
         $previous = null,
         array $extraInformation = [],
     ) {
+        parent::__construct($message);
+
         if ($stacktrace === null) {
             $stacktrace = self::getSanitizedTraceAsString($this);
         }
@@ -162,8 +174,7 @@ class AJAXException extends LoggedException
             default:
             case self::ILLEGAL_LINK:
             case self::INTERNAL_ERROR:
-                //header('HTTP/1.1 418 I\'m a Teapot');
-                \header('HTTP/1.1 503 Service Unavailable');
+                $statusHeader = 'HTTP/1.1 503 Service Unavailable';
 
                 $responseData['code'] = self::INTERNAL_ERROR;
                 $responseData['exceptionID'] = $exceptionID;
@@ -173,11 +184,29 @@ class AJAXException extends LoggedException
                 break;
         }
 
-        \header($statusHeader);
-        \header('Content-type: application/json; charset=UTF-8');
-        echo JSON::encode($responseData);
+        $this->responseData = $responseData;
+        $this->statusHeader = $statusHeader;
+    }
 
-        exit;
+    /**
+     * Returns the response data for this AJAX exception.
+     *
+     * @return array<string, mixed>
+     * @since 6.3
+     */
+    public function getResponseData(): array
+    {
+        return $this->responseData;
+    }
+
+    /**
+     * Returns the HTTP status header for this AJAX exception.
+     *
+     * @since 6.3
+     */
+    public function getStatusHeader(): string
+    {
+        return $this->statusHeader;
     }
 
     /**
@@ -185,7 +214,7 @@ class AJAXException extends LoggedException
      */
     public static function getSanitizedTraceAsString(\Throwable $e): string
     {
-        $trace = \wcf\functions\exception\sanitizeStacktrace($e);
+        $trace = StacktraceUtil::sanitize($e);
 
         $length = \count($trace);
         $maxWidth = \strlen((string)$length) + 1;
@@ -207,7 +236,7 @@ class AJAXException extends LoggedException
                             case 'NULL':
                                 return 'null';
                             case 'string':
-                                return "'" . StringUtil::encodeHTML(addcslashes($item, "\\'")) . "'";
+                                return "'" . StringUtil::encodeHTML(\addcslashes($item, "\\'")) . "'";
                             case 'boolean':
                                 return $item ? 'true' : 'false';
                             case 'array':

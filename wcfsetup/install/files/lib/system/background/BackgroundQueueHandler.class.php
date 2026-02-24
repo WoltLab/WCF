@@ -3,6 +3,7 @@
 namespace wcf\system\background;
 
 use wcf\data\user\User;
+use wcf\http\error\ExceptionLogger;
 use wcf\system\background\job\AbstractBackgroundJob;
 use wcf\system\background\job\AbstractUniqueBackgroundJob;
 use wcf\system\exception\ParentClassException;
@@ -131,13 +132,13 @@ final class BackgroundQueueHandler extends SingletonFactory
                 $this->enqueueIn($job, $job->retryAfter());
 
                 if (WCF::debugModeIsEnabled()) {
-                    \wcf\functions\exception\logThrowable($e);
+                    ExceptionLogger::log($e);
                 }
             } else {
                 $job->onFinalFailure();
 
                 // job failed too often: log
-                \wcf\functions\exception\logThrowable($e);
+                ExceptionLogger::log($e);
             }
         } finally {
             if (!WCF::debugModeIsEnabled()) {
@@ -211,7 +212,7 @@ final class BackgroundQueueHandler extends SingletonFactory
             }
         } catch (\Throwable $e) {
             // job is completely broken: log
-            \wcf\functions\exception\logThrowable($e);
+            ExceptionLogger::log($e);
         } finally {
             // remove entry of processed job
             $sql = "DELETE FROM wcf1_background_job

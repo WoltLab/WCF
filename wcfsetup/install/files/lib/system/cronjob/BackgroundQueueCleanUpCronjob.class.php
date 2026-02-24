@@ -3,6 +3,7 @@
 namespace wcf\system\cronjob;
 
 use wcf\data\cronjob\Cronjob;
+use wcf\http\error\ExceptionLogger;
 use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\background\job\AbstractUniqueBackgroundJob;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -65,7 +66,7 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob
                     }
                 } catch (\Exception $e) {
                     // job is completely broken: log
-                    \wcf\functions\exception\logThrowable($e);
+                    ExceptionLogger::log($e);
                 }
             }
 

@@ -4,6 +4,8 @@ namespace wcf\system\exception;
 
 // @codingStandardsIgnoreFile
 
+use wcf\http\error\ExceptionLogger;
+
 /**
  * A logged exceptions prevents information disclosures and provides an easy
  * way to log errors.
@@ -26,7 +28,7 @@ class LoggedException extends \Exception
     {
         if (empty($this->exceptionID)) {
             try {
-                \wcf\functions\exception\logThrowable($this);
+                ExceptionLogger::log($this);
             } catch (\Throwable $e) {
             }
             $this->exceptionID = '*MAYDAY*';

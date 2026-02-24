@@ -10,6 +10,7 @@ use ParagonIE\ConstantTime\Base64UrlSafe;
 use ParagonIE\ConstantTime\Hex;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
+use wcf\http\error\ExceptionLogger;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\io\HttpFactory;
@@ -272,7 +273,7 @@ abstract class AbstractOauth2Action extends AbstractAction
                 )
             ));
         } catch (\Exception $e) {
-            $exceptionID = \wcf\functions\exception\logThrowable($e);
+            $exceptionID = ExceptionLogger::log($e);
 
             $type = 'genericException';
             if ($e instanceof ClientExceptionInterface) {

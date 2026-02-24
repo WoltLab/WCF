@@ -3,6 +3,7 @@
 namespace wcf\data\user\notification\event;
 
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\http\error\ExceptionLogger;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\RequestHandler;
@@ -112,7 +113,7 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction
          * @return  string
          */
         $getRenderedException = static function ($e) {
-            \wcf\functions\exception\logThrowable($e);
+            ExceptionLogger::log($e);
 
             return $e->getMessage();
         };

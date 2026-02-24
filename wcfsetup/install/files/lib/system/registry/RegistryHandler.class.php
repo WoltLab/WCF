@@ -3,6 +3,7 @@
 namespace wcf\system\registry;
 
 use wcf\data\package\PackageCache;
+use wcf\http\error\ExceptionLogger;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -208,7 +209,7 @@ final class RegistryHandler extends SingletonFactory
 
                 // retry up to 2 times
                 if (++$i === 2) {
-                    \wcf\functions\exception\logThrowable($e);
+                    ExceptionLogger::log($e);
                     break;
                 }
 

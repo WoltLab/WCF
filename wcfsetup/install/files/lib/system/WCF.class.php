@@ -17,7 +17,6 @@ use wcf\system\cache\eager\CoreObjectCache;
 use wcf\system\database\MySQLDatabase;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\ErrorException;
-use wcf\system\exception\IPrintableException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
@@ -323,17 +322,10 @@ class WCF
     }
 
     /**
-     * Calls the show method on the given exception.
+     * Handles an uncaught exception by rendering the fatal exception page.
      */
     final public static function handleException(\Throwable $e): never
     {
-        // backwards compatibility
-        if ($e instanceof IPrintableException) {
-            $e->show();
-
-            exit;
-        }
-
         // discard any output generated before the exception occurred, prevents exception
         // being hidden inside HTML elements and therefore not visible in browser output
         //
@@ -344,7 +336,7 @@ class WCF
 
         @\header('HTTP/1.1 500 Internal Server Error');
         try {
-            \wcf\functions\exception\printThrowable($e);
+            \wcf\http\error\FatalExceptionRenderer::render($e);
 
             exit;
         } catch (\Throwable $e2) {

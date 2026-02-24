@@ -25,7 +25,7 @@ use wcf\system\request\RouteHandler;
 use wcf\util\FileUtil;
 
 use function FastRoute\cachedDispatcher;
-use function wcf\functions\exception\logThrowable;
+use wcf\http\error\ExceptionLogger;
 
 /**
  * Resolves and forwards API requests to the responsible controllers, exposing
@@ -103,7 +103,7 @@ final class ApiAction implements RequestHandlerInterface
         } catch (StringFormatterError) {
             return $this->toErrorResponse(RequestFailure::InternalError, 'malformed_utf8');
         } catch (\Throwable $e) {
-            logThrowable($e);
+            ExceptionLogger::log($e);
 
             return $this->toErrorResponse(RequestFailure::InternalError, 'unknown_exception', $e->getMessage());
         }

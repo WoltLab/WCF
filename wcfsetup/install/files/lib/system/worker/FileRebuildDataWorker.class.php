@@ -9,7 +9,7 @@ use wcf\system\file\processor\exception\DamagedImage;
 use wcf\system\file\processor\FileProcessor;
 use wcf\util\FileUtil;
 
-use function wcf\functions\exception\logThrowable;
+use wcf\http\error\ExceptionLogger;
 
 /**
  * Worker implementation for updating files.
@@ -56,7 +56,7 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
                 $file = FileProcessor::getInstance()->convertImageFormat($file);
                 FileProcessor::getInstance()->generateThumbnails($file);
             } catch (DamagedImage $e) {
-                logThrowable($e);
+                ExceptionLogger::log($e);
 
                 $damagedFileIDs[] = $e->fileID;
             }

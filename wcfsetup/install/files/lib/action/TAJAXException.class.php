@@ -2,6 +2,7 @@
 
 namespace wcf\action;
 
+use wcf\http\error\ExceptionLogger;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IExtraInformationException;
 use wcf\system\exception\IllegalLinkException;
@@ -11,7 +12,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\exception\ValidateActionException;
-use wcf\util\StringUtil;
+use wcf\util\JSON;
 
 /**
  * Default implementation for the AJAXException throw method.
@@ -43,7 +44,7 @@ trait TAJAXException
         } elseif ($e instanceof UserInputException) {
             // repackage as ValidationActionException
             $exception = new ValidateActionException($e->getField(), $e->getType(), $e->getVariables());
-            throw new AJAXException(
+            $ajaxException = new AJAXException(
                 $exception->getMessage(),
                 AJAXException::BAD_PARAMETERS,
                 $e->getTraceAsString(),
@@ -56,16 +57,18 @@ trait TAJAXException
                     'realErrorMessage' => $exception->getErrorMessage(),
                 ]
             );
+            self::sendAjaxResponse($ajaxException);
         } elseif ($e instanceof ValidateActionException) {
-            throw new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString(), [
+            $ajaxException = new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString(), [
                 'errorMessage' => $e->getMessage(),
                 'file' => $e->getFile(),
                 'fieldName' => $e->getFieldName(),
                 'line' => $e->getLine(),
                 'realErrorMessage' => $e->getErrorMessage(),
             ]);
+            self::sendAjaxResponse($ajaxException);
         } elseif ($e instanceof NamedUserException) {
-            throw new AJAXException(
+            $ajaxException = new AJAXException(
                 $e->getMessage(),
                 AJAXException::BAD_PARAMETERS,
                 AJAXException::getSanitizedTraceAsString($e),
@@ -74,6 +77,7 @@ trait TAJAXException
                     'line' => $e->getLine(),
                 ]
             );
+            self::sendAjaxResponse($ajaxException);
         } else {
             $returnValues = [
                 'file' => $e->getFile(),
@@ -85,15 +89,30 @@ trait TAJAXException
 
             $extraInformation = ($e instanceof IExtraInformationException) ? $e->getExtraInformation() : [];
 
-            throw new AJAXException(
+            $ajaxException = new AJAXException(
                 $e->getMessage(),
                 AJAXException::INTERNAL_ERROR,
                 AJAXException::getSanitizedTraceAsString($e),
                 $returnValues,
-                \wcf\functions\exception\logThrowable($e),
+                ExceptionLogger::log($e),
                 $e->getPrevious(),
                 $extraInformation,
             );
+            self::sendAjaxResponse($ajaxException);
         }
+    }
+
+    /**
+     * Sends the JSON response for the given AJAXException and terminates the request.
+     *
+     * @return never
+     */
+    private static function sendAjaxResponse(AJAXException $exception): never
+    {
+        \header($exception->getStatusHeader());
+        \header('Content-type: application/json; charset=UTF-8');
+        echo JSON::encode($exception->getResponseData());
+
+        exit;
     }
 }

@@ -26,7 +26,7 @@ use wcf\util\FileUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
 
-use function wcf\functions\exception\logThrowable;
+use wcf\http\error\ExceptionLogger;
 
 /**
  * @author Alexander Ebert
@@ -194,7 +194,7 @@ final class FileProcessor extends SingletonFactory
             } catch (SystemException | ImageNotReadable) {
                 throw new DamagedImage($file->fileID);
             } catch (ImageNotProcessable $e) {
-                logThrowable($e);
+                ExceptionLogger::log($e);
 
                 return $file;
             }
@@ -303,7 +303,7 @@ final class FileProcessor extends SingletonFactory
                     } catch (SystemException | ImageNotReadable $e) {
                         throw new DamagedImage($file->fileID, $e);
                     } catch (ImageNotProcessable $e) {
-                        logThrowable($e);
+                        ExceptionLogger::log($e);
 
                         return;
                     }
@@ -312,7 +312,7 @@ final class FileProcessor extends SingletonFactory
                 try {
                     $image = $imageAdapter->createThumbnail($format->width, $format->height, $format->retainDimensions);
                 } catch (\Throwable $e) {
-                    logThrowable($e);
+                    ExceptionLogger::log($e);
 
                     continue;
                 }

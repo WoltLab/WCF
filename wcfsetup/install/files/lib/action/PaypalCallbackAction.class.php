@@ -7,6 +7,7 @@ use Laminas\Diactoros\Response\EmptyResponse;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\http\error\ExceptionLogger;
 use wcf\system\io\HttpFactory;
 use wcf\system\payment\type\IPaymentType;
 
@@ -59,7 +60,7 @@ final class PaypalCallbackAction extends AbstractAction
                 throw new \Exception("PayPal IPN validation did not return 'VERIFIED'.");
             }
         } catch (\Exception $e) {
-            \wcf\functions\exception\logThrowable($e);
+            ExceptionLogger::log($e);
 
             return new EmptyResponse(500);
         }
@@ -132,7 +133,7 @@ final class PaypalCallbackAction extends AbstractAction
 
             $this->executed();
         } catch (\Exception $e) {
-            \wcf\functions\exception\logThrowable($e);
+            ExceptionLogger::log($e);
         }
 
         // Request was either successful or failed due to an error that cannot be fixed by

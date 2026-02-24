@@ -15,6 +15,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\data\user\User;
 use wcf\event\user\authentication\UserLoggedIn;
+use wcf\http\error\ExceptionLogger;
 use wcf\form\AccountManagementForm;
 use wcf\form\RegisterForm;
 use wcf\system\event\EventHandler;
@@ -80,7 +81,7 @@ abstract class AbstractOauth2AuthAction implements RequestHandlerInterface
                 )
             ));
         } catch (\Exception $e) {
-            $exceptionID = \wcf\functions\exception\logThrowable($e);
+            $exceptionID = ExceptionLogger::log($e);
 
             $type = 'genericException';
             if ($e instanceof ClientExceptionInterface) {

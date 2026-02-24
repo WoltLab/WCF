@@ -2,6 +2,7 @@
 
 namespace wcf\system\user\storage;
 
+use wcf\http\error\ExceptionLogger;
 use wcf\system\cache\CacheHandler;
 use wcf\system\cache\source\RedisCacheSource;
 use wcf\system\database\Redis;
@@ -318,7 +319,7 @@ final class UserStorageHandler extends SingletonFactory
 
                 // retry up to 2 times
                 if (++$i === 2) {
-                    \wcf\functions\exception\logThrowable($e);
+                    ExceptionLogger::log($e);
                     break;
                 }
 
