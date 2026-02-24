@@ -190,22 +190,18 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
                     ) {
                         $like->setIsAccessible();
 
-                        // short output
-                        $text = WCF::getLanguage()->getDynamicVariable(
+                        $like->setTitle(WCF::getLanguage()->getDynamicVariable(
                             'wcf.like.title.com.woltlab.wcf.articleComment',
                             [
                                 'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
                                 'comment' => $comment,
                                 'articleContent' => $articleContents[$comment->objectID],
                                 'reaction' => $like,
-                                // @deprecated 5.3 Use `$reaction` instead
-                                'like' => $like,
+                                'author' => $like->getUserProfile(),
                             ]
-                        );
-                        $like->setTitle($text);
-
-                        // output
-                        $like->setDescription($comment->getExcerpt());
+                        ));
+                        $like->setLink($comment->getLink());
+                        $like->setDescription(\strip_tags($comment->getExcerpt()));
                     }
                 }
             } else {
@@ -220,23 +216,18 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
                     ) {
                         $like->setIsAccessible();
 
-                        // short output
-                        $text = WCF::getLanguage()->getDynamicVariable(
+                        $like->setTitle(WCF::getLanguage()->getDynamicVariable(
                             'wcf.like.title.com.woltlab.wcf.articleComment.response',
                             [
-                                'responseAuthor' => $comment->userID ? $users[$response->userID] : null,
+                                'responseAuthor' => $response->userID ? $users[$response->userID] : null,
                                 'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
                                 'articleContent' => $articleContents[$comment->objectID],
                                 'reaction' => $like,
-                                // @deprecated 5.3 Use `$reaction` instead
-                                'like' => $like,
-                                'response' => $response,
+                                'author' => $like->getUserProfile(),
                             ]
-                        );
-                        $like->setTitle($text);
-
-                        // output
-                        $like->setDescription($response->getExcerpt());
+                        ));
+                        $like->setLink($response->getLink());
+                        $like->setDescription(\strip_tags($response->getExcerpt()));
                     }
                 }
             }
