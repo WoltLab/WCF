@@ -1,10 +1,10 @@
-<ul id="reactionList" class="containerList recentActivityList likeList"
+<div id="reactionList" class="recentActivityList recentActivityList--userProfileContent userProfileReactionList"
 	data-last-like-time="{$lastLikeTime}"
 	data-user-id="{$userID}"
 	data-target-type="received"
 	data-reaction-type-id="0"
 >
-	<li class="containerListButtonGroup likeTypeSelection">
+	<div class="userProfileReactionList__typeSelection">
 		<ul class="buttonGroup">
 			<li>
 				<button type="button" class="button small active" data-target-type="received">
@@ -35,10 +35,10 @@
 				{/foreach}
 			</ul>
 		{/if}
-	</li>
+	</div>
 
 	{include file='userProfileLikeItem'}
-</ul>
+</div>
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Component/User/Reaction/Loader'], ({ setup }) => {

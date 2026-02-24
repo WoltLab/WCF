@@ -24,25 +24,25 @@ async function loadMore(container: HTMLElement): Promise<void> {
   if ("template" in response) {
     container.dataset.lastLikeTime = response.lastLikeTime.toString();
 
-    const showMoreButton = container.querySelector(".likeList__showMoreButton")!;
+    const showMoreButton = container.querySelector(".recentActivityList__showMoreButton")!;
     const fragment = DomUtil.createFragmentFromHtml(response.template);
     container.insertBefore(fragment, showMoreButton);
 
     showMoreButton.querySelector("button")!.hidden = false;
     showMoreButton.querySelector("small")!.hidden = true;
   } else {
-    const showMoreButton = container.querySelector(".likeList__showMoreButton")!;
+    const showMoreButton = container.querySelector(".recentActivityList__showMoreButton")!;
     showMoreButton.querySelector("button")!.hidden = true;
     showMoreButton.querySelector("small")!.hidden = false;
   }
 }
 
 async function reload(container: HTMLElement): Promise<void> {
-  container.querySelectorAll(":scope > li:not(:first-child):not(:last-child)").forEach((el) => el.remove());
+  container.querySelectorAll(":scope > div:not(:first-child):not(:last-child)").forEach((el) => el.remove());
 
   container.dataset.lastLikeTime = "0";
 
-  const showMoreButton = container.querySelector(".likeList__showMoreButton");
+  const showMoreButton = container.querySelector(".recentActivityList__showMoreButton");
   if (showMoreButton !== null) {
     showMoreButton.querySelector("button")!.hidden = false;
     showMoreButton.querySelector("small")!.hidden = true;
@@ -52,26 +52,26 @@ async function reload(container: HTMLElement): Promise<void> {
 }
 
 function initShowMoreButton(container: HTMLElement): void {
-  if (container.querySelector(".likeList__showMoreButton")) {
+  if (container.querySelector(".recentActivityList__showMoreButton")) {
     return;
   }
 
-  const li = document.createElement("li");
-  li.classList.add("likeList__showMoreButton");
-  container.append(li);
+  const div = document.createElement("div");
+  div.classList.add("recentActivityList__showMoreButton");
+  container.append(div);
 
   const button = document.createElement("button");
   button.type = "button";
   button.classList.add("button", "small");
   button.textContent = getPhrase("wcf.like.reaction.more");
-  li.append(button);
+  div.append(button);
 
   const small = document.createElement("small");
   small.textContent = getPhrase("wcf.like.reaction.noMoreEntries");
   small.hidden = true;
-  li.append(small);
+  div.append(small);
 
-  const hasItems = container.querySelectorAll(":scope > li").length > 2;
+  const hasItems = container.querySelectorAll(":scope > div").length > 2;
   if (!hasItems) {
     button.hidden = true;
     small.hidden = false;
@@ -84,7 +84,7 @@ function initShowMoreButton(container: HTMLElement): void {
 }
 
 function initTargetTypeButtons(container: HTMLElement): void {
-  container.querySelectorAll<HTMLElement>("[data-target-type]").forEach((button) => {
+  container.querySelectorAll<HTMLElement>("button[data-target-type]").forEach((button) => {
     button.addEventListener(
       "click",
       promiseMutex(() => {
@@ -93,7 +93,7 @@ function initTargetTypeButtons(container: HTMLElement): void {
           return Promise.resolve();
         }
 
-        container.querySelector("[data-target-type].active")!.classList.remove("active");
+        container.querySelector("button[data-target-type].active")!.classList.remove("active");
         button.classList.add("active");
         container.dataset.targetType = targetType;
 
@@ -104,12 +104,12 @@ function initTargetTypeButtons(container: HTMLElement): void {
 }
 
 function initReactionTypeButtons(container: HTMLElement): void {
-  container.querySelectorAll<HTMLElement>("[data-reaction-type-id]").forEach((button) => {
+  container.querySelectorAll<HTMLElement>("button[data-reaction-type-id]").forEach((button) => {
     button.addEventListener(
       "click",
       promiseMutex(() => {
         const reactionTypeID = button.dataset.reactionTypeId!;
-        const activeButton = container.querySelector("[data-reaction-type-id].active");
+        const activeButton = container.querySelector("button[data-reaction-type-id].active");
 
         if (activeButton) {
           activeButton.classList.remove("active");

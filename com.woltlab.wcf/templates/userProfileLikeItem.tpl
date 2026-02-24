@@ -1,20 +1,29 @@
-{foreach from=$likeList item=like}
-	<li>
-		<div class="box48">
+{foreach from=$likeList item='like'}
+	<div class="
+		recentActivityListItem
+		recentActivityListItem--withDescription
+		{if $like->isIgnoredContent()}ignoredUserContent{/if}
+	">
+		<div class="recentActivityListItem__avatar">
 			{user object=$like->getUserProfile() type='avatar48' ariaHidden='true' tabindex='-1'}
-			
-			<div>
-				<div class="containerHeadline">
-					<h3>
-						{user object=$like->getUserProfile()}
-						<small class="separatorLeft">{time time=$like->time}</small>
-					</h3>
-					<div>{unsafe:$like->getTitle()}</div>
-					<small class="containerContentType">{$like->getObjectTypeDescription()}</small>
-				</div>
-				
-				<div class="containerContent">{unsafe:$like->getDescription()}</div>
-			</div>
 		</div>
-	</li>
+
+		<h3 class="recentActivityListItem__title">
+			{if $like->getLink()}
+				<a href="{$like->getLink()}" class="recentActivityListItem__link">{unsafe:$like->getTitle()}</a>
+			{else}
+				{unsafe:$like->getTitle()}
+			{/if}
+		</h3>
+
+		{if $like->getDescription()}
+			<div class="recentActivityListItem__description{if !$like->isRawHtml()} htmlContent{/if}">
+				{unsafe:$like->getDescription()}
+			</div>
+		{/if}
+
+		<div class="recentActivityListItem__time">
+			{time time=$like->time}
+		</div>
+	</div>
 {/foreach}

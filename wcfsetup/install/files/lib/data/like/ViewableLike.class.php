@@ -6,6 +6,7 @@ use wcf\data\DatabaseObjectDecorator;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\user\UserProfileHandler;
 use wcf\system\WCF;
 
 /**
@@ -54,8 +55,20 @@ class ViewableLike extends DatabaseObjectDecorator
      * description of the object type displayed in the list of likes
      * @var     string
      * @since   3.1
+     * @deprecated 6.3 No longer in use.
      */
     protected $objectTypeDescription;
+
+    /**
+     * true if event description contains raw html
+     * @var bool
+     */
+    protected $isRawHtml = false;
+
+    /**
+     * @since 6.3
+     */
+    protected string $link = '';
 
     /**
      * Marks this like as accessible for current user.
@@ -108,9 +121,10 @@ class ViewableLike extends DatabaseObjectDecorator
      * @param string $description
      * @return void
      */
-    public function setDescription($description)
+    public function setDescription($description, bool $isRawHtml = false)
     {
         $this->description = $description;
+        $this->isRawHtml = $isRawHtml;
     }
 
     /**
@@ -160,6 +174,7 @@ class ViewableLike extends DatabaseObjectDecorator
      * @param string $name
      * @return void
      * @since   3.1
+     * @deprecated 6.3 No longer in use.
      */
     public function setObjectTypeDescription($name)
     {
@@ -174,6 +189,7 @@ class ViewableLike extends DatabaseObjectDecorator
      *
      * @return  string
      * @since   3.1
+     * @deprecated 6.3 No longer in use.
      */
     public function getObjectTypeDescription()
     {
@@ -182,5 +198,37 @@ class ViewableLike extends DatabaseObjectDecorator
         }
 
         return WCF::getLanguage()->getDynamicVariable('wcf.like.objectType.' . $this->getObjectTypeName());
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function isRawHtml(): bool
+    {
+        return $this->isRawHtml;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function setLink(string $link): void
+    {
+        $this->link = $link;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getLink(): string
+    {
+        return $this->link;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function isIgnoredContent(): bool
+    {
+        return UserProfileHandler::getInstance()->getUserProfile()->isIgnoredUser($this->getUserProfile()->userID, 2);
     }
 }
