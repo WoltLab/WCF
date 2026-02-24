@@ -12,11 +12,10 @@ use wcf\system\WCF;
 /**
  * Provides methods for viewable likes.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @method  Like    getDecoratedObject()
  * @mixin   Like
  * @extends DatabaseObjectDecorator<Like>
  */
@@ -27,29 +26,9 @@ class ViewableLike extends DatabaseObjectDecorator
      */
     public static $baseClass = Like::class;
 
-    /**
-     * event text
-     * @var string
-     */
-    protected $description = '';
-
-    /**
-     * accessible by current user
-     * @var bool
-     */
-    protected $isAccessible = false;
-
-    /**
-     * event title
-     * @var string
-     */
-    protected $title = '';
-
-    /**
-     * user profile
-     * @var UserProfile
-     */
-    protected $userProfile;
+    protected string $description = '';
+    protected bool $isAccessible = false;
+    protected string $title = '';
 
     /**
      * description of the object type displayed in the list of likes
@@ -60,100 +39,47 @@ class ViewableLike extends DatabaseObjectDecorator
     protected $objectTypeDescription;
 
     /**
-     * true if event description contains raw html
-     * @var bool
-     */
-    protected $isRawHtml = false;
-
-    /**
      * @since 6.3
      */
     protected string $link = '';
 
     /**
      * Marks this like as accessible for current user.
-     *
-     * @return void
      */
-    public function setIsAccessible()
+    public function setIsAccessible(): void
     {
         $this->isAccessible = true;
     }
 
     /**
      * Returns true if like is accessible by current user.
-     *
-     * @return  bool
      */
-    public function isAccessible()
+    public function isAccessible(): bool
     {
         return $this->isAccessible;
     }
 
-    /**
-     * Sets user profile.
-     *
-     * @return void
-     * @deprecated  3.0
-     */
-    public function setUserProfile(UserProfile $userProfile)
+    public function getUserProfile(): ?UserProfile
     {
-        $this->userProfile = $userProfile;
+        return UserProfileRuntimeCache::getInstance()->getObject($this->userID);
     }
 
-    /**
-     * Returns user profile.
-     *
-     * @return  UserProfile
-     */
-    public function getUserProfile()
-    {
-        if ($this->userProfile === null) {
-            $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
-        }
-
-        return $this->userProfile;
-    }
-
-    /**
-     * Sets like description.
-     *
-     * @param string $description
-     * @return void
-     */
-    public function setDescription($description, bool $isRawHtml = false)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
-        $this->isRawHtml = $isRawHtml;
     }
 
-    /**
-     * Returns like description.
-     *
-     * @return  string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * Sets like title.
-     *
-     * @param string $title
-     * @return void
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * Returns like title.
-     *
-     * @return  string
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -162,6 +88,7 @@ class ViewableLike extends DatabaseObjectDecorator
      * Returns the object type name.
      *
      * @return  string
+     * @deprecated 6.3 No longer in use.
      */
     public function getObjectTypeName()
     {
@@ -198,14 +125,6 @@ class ViewableLike extends DatabaseObjectDecorator
         }
 
         return WCF::getLanguage()->getDynamicVariable('wcf.like.objectType.' . $this->getObjectTypeName());
-    }
-
-    /**
-     * @since 6.3
-     */
-    public function isRawHtml(): bool
-    {
-        return $this->isRawHtml;
     }
 
     /**

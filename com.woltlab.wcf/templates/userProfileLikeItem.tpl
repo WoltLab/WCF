@@ -17,7 +17,7 @@
 		</h3>
 
 		{if $like->getDescription()}
-			<div class="recentActivityListItem__description{if !$like->isRawHtml()} htmlContent{/if}">
+			<div class="recentActivityListItem__description">
 				{unsafe:$like->getDescription()}
 			</div>
 		{/if}
