@@ -4211,15 +4211,12 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.like.details"><![CDATA[Details]]></item>
 		<item name="wcf.like.details.like"><![CDATA[Reaktionen]]></item>
 		<item name="wcf.like.details.dislike"><![CDATA[Dislikes]]></item>
-		<item name="wcf.like.objectType.com.woltlab.wcf.comment"><![CDATA[Kommentar]]></item>
-		<item name="wcf.like.objectType.com.woltlab.wcf.comment.response"><![CDATA[Kommentar-Antwort]]></item>
 		<item name="wcf.like.likes.more"><![CDATA[Weitere Reaktionen]]></item>
 		<item name="wcf.like.likes.noMoreEntries"><![CDATA[Keine weiteren Reaktionen]]></item>
 		<item name="wcf.like.dislikes.more"><![CDATA[Weitere Dislikes]]></item>
 		<item name="wcf.like.dislikes.noMoreEntries"><![CDATA[Keine weiteren Dislikes]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment"><![CDATA[<strong>{$author}</strong> hat mit {unsafe:$reaction->render()} auf den Kommentar {if $commentAuthor}von <strong>{$commentAuthor->username}</strong>{else}eines Gasts{/if} an der Pinnwand von <strong>{$user->username}</strong> reagiert.]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[<strong>{$author}</strong> hat mit {unsafe:$reaction->render()} auf die Antwort {if $responseAuthor}von <strong>{$responseAuthor->username}</strong>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <strong{$commentAuthor->username}</strong>{else}eines Gasts{/if} an der Pinnwand von <strong>{$user->username}</strong> reagiert.]]></item>
-		<item name="wcf.like.objectType.com.woltlab.wcf.likeableArticle"><![CDATA[Artikel]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.articleComment"><![CDATA[<strong>{$author}</strong> hat mit {unsafe:$reaction->render()} auf den Kommentar {if $commentAuthor}von <strong>{$commentAuthor->username}</strong>{else}eines Gasts{/if} zum Artikel <strong>{$articleContent->getTitle()}</strong> reagiert.]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.articleComment.response"><![CDATA[<strong>{$author}</strong> hat mit {unsafe:$reaction->render()} auf die Antwort {if $responseAuthor}von <strong>{$responseAuthor->username}</strong>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <strong>{$commentAuthor->username}</strong>{else}eines Gasts{/if} zum Artikel <strong>{$articleContent->getTitle()}</strong> reagiert.]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.pageComment"><![CDATA[<strong>{$author}</strong> hat mit {unsafe:$reaction->render()} auf den Kommentar {if $commentAuthor}von <strong>{$commentAuthor->username}</strong>{else}eines Gasts{/if} zu der Seite <strong>{$page->getTitle()}</strong> reagiert.]]></item>
@@ -5727,5 +5724,8 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.user.avatar.type.none"/>
 	<item name="wcf.user.avatar.type.custom"/>
 	<item name="wcf.like.title.com.woltlab.wcf.likeableArticle"/>
+	<item name="wcf.like.objectType.com.woltlab.wcf.comment"/>
+	<item name="wcf.like.objectType.com.woltlab.wcf.comment.response"/>
+	<item name="wcf.like.objectType.com.woltlab.wcf.likeableArticle"/>
 </delete>
 </language>
