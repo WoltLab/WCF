@@ -1,40 +1,42 @@
 <?php
 
-namespace wcf\system\endpoint\controller\core\users\groups\assignment;
+namespace wcf\system\endpoint\controller\core\users\groups\assignments;
 
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\command\user\group\assignment\EnableUserGroupAssignment;
 use wcf\data\user\group\assignment\UserGroupAssignment;
-use wcf\data\user\group\assignment\UserGroupAssignmentAction;
 use wcf\http\Helper;
-use wcf\system\endpoint\DeleteRequest;
 use wcf\system\endpoint\IController;
+use wcf\system\endpoint\PostRequest;
 use wcf\system\WCF;
 
 /**
- * Deletes the user group assignments with the given ID.
+ * Enables the user group assignments with the given ID.
  *
  * @author      Olaf Braun
  * @copyright   2001-2025 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  */
-#[DeleteRequest("/core/users/groups/assignments/{id:\d+}")]
-final class DeleteAssignment implements IController
+#[PostRequest("/core/users/groups/assignments/{id:\d+}/enable")]
+final class EnableAssignment implements IController
 {
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
-        $this->assertAssignmentCanBeDeleted();
-
         $assignment = Helper::fetchObjectFromRequestParameter($variables['id'], UserGroupAssignment::class);
 
-        (new UserGroupAssignmentAction([$assignment], 'delete'))->executeAction();
+        $this->assertAssignmentCanBeEnabled();
+
+        if ($assignment->isDisabled) {
+            (new EnableUserGroupAssignment($assignment))();
+        }
 
         return new JsonResponse([]);
     }
 
-    private function assertAssignmentCanBeDeleted(): void
+    private function assertAssignmentCanBeEnabled(): void
     {
         WCF::getSession()->checkPermissions(['admin.management.canManageCronjob']);
     }

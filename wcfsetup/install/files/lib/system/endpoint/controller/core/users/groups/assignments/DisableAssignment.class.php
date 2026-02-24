@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\endpoint\controller\core\users\groups\assignment;
+namespace wcf\system\endpoint\controller\core\users\groups\assignments;
 
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;

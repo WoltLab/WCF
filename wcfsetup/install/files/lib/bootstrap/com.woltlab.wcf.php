@@ -234,9 +234,9 @@ return new class {
                 $event->register(new \wcf\system\endpoint\controller\core\paidSubscriptions\users\DeleteSubscriptionUser());
                 $event->register(new \wcf\system\endpoint\controller\core\templates\DeleteTemplate());
                 $event->register(new \wcf\system\endpoint\controller\core\tags\DeleteTag());
-                $event->register(new \wcf\system\endpoint\controller\core\users\groups\assignment\DeleteAssignment());
-                $event->register(new \wcf\system\endpoint\controller\core\users\groups\assignment\EnableAssignment());
-                $event->register(new \wcf\system\endpoint\controller\core\users\groups\assignment\DisableAssignment());
+                $event->register(new \wcf\system\endpoint\controller\core\users\groups\assignments\DeleteAssignment());
+                $event->register(new \wcf\system\endpoint\controller\core\users\groups\assignments\EnableAssignment());
+                $event->register(new \wcf\system\endpoint\controller\core\users\groups\assignments\DisableAssignment());
                 $event->register(new \wcf\system\endpoint\controller\core\users\groups\DeleteGroup());
                 $event->register(new \wcf\system\endpoint\controller\core\menus\DeleteMenu());
                 $event->register(new \wcf\system\endpoint\controller\core\trophies\EnableTrophy());
