@@ -194,6 +194,7 @@ return new class {
                 $event->register(new \wcf\system\endpoint\controller\core\articles\PublishArticle());
                 $event->register(new \wcf\system\endpoint\controller\core\articles\UnpublishArticle());
                 $event->register(new \wcf\system\endpoint\controller\core\articles\MarkAllArticlesAsRead());
+                $event->register(new \wcf\system\endpoint\controller\core\articles\MarkArticleAsRead());
                 $event->register(new \wcf\system\endpoint\controller\core\articles\contents\GetArticleContentHeaderTitle());
                 $event->register(new \wcf\system\endpoint\controller\core\attachments\DeleteAttachment());
                 $event->register(new \wcf\system\endpoint\controller\core\cronjobs\EnableCronjob());

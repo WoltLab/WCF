@@ -57,6 +57,7 @@ class ArticleListView extends AbstractListView
         $this->setDefaultSortOrder(\ARTICLE_SORT_ORDER);
         $this->setCssClassName('entryCardList articleList');
         $this->setContainerCssClassName('entryCardList__container');
+        $this->setMarkAsReadEndpoint('core/articles/%s/mark-as-read');
     }
 
     #[\Override]
@@ -183,5 +184,14 @@ class ArticleListView extends AbstractListView
     protected function getInitializedEvent(): ArticleListViewInitialized
     {
         return new ArticleListViewInitialized($this);
+    }
+
+    public function canMarkAsRead(): bool
+    {
+        if (!WCF::getUser()->userID) {
+            return false;
+        }
+
+        return ViewableArticle::getUnreadArticles() > 0;
     }
 }

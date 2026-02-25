@@ -32,7 +32,6 @@
 					{content}
 						{if $article->isDeleted}<span class="badge red">{lang}wcf.message.status.deleted{/lang}</span>{/if}
 						{if !$article->isPublished()}<span class="badge green">{lang}wcf.message.status.disabled{/lang}</span>{/if}
-						{if $article->isNew()}<span class="badge">{lang}wcf.message.new{/lang}</span>{/if}
 						
 						{event name='contentItemBadges'}{* deprecated: use badges instead *}
 						{event name='badges'}
@@ -51,6 +50,10 @@
 			{/if}
 			
 			<h2 class="entryCardList__item__title">
+				{if $article->isNew()}
+					{unsafe:$view->renderMarkAsReadButton($article)}
+				{/if}
+				
 				<a href="{$article->getLink()}" class="entryCardList__item__link">{$article->getTitle()}</a>
 			</h2>
 

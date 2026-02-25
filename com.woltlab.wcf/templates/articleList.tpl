@@ -17,8 +17,20 @@
 {/capture}
 
 {capture assign='contentInteractionButtons'}
-	{if $__wcf->user->userID}
-		<button type="button" class="markAllAsReadButton contentInteractionButton button small jsOnly">{icon name='check'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
+	{if $listView->canMarkAsRead()}
+		<button type="button" class="markAllArticlesAsReadButton contentInteractionButton button small jsOnly">
+			{icon name='check'}
+			<span>{lang}wcf.global.button.markAllAsRead{/lang}</span>
+		</button>
+
+		<script data-relocate="true">
+			require(['WoltLabSuite/Core/Component/Article/MarkAllArticlesAsRead'], ({ setup }) => {
+				setup(
+					document.querySelector('.markAllArticlesAsReadButton'),
+					document.getElementById('{unsafe:$listView->getID()|encodeJS}_items')
+				);
+			});
+		</script>
 	{/if}
 {/capture}
 
@@ -35,14 +47,6 @@
 <div class="section {$listView->getContainerCssClassName()}">
 	{unsafe:$listView->render()}
 </div>
-
-{if $__wcf->user->userID}
-	<script data-relocate="true">
-		require(['WoltLabSuite/Core/Ui/Article/MarkAllAsRead'], ({ setup }) => {
-			setup(document.getElementById('{unsafe:$listView->getID()|encodeJS}_items'));
-		});
-	</script>
-{/if}
 
 {if $canManageArticles}
 	{include file='shared_articleAddDialog'}
