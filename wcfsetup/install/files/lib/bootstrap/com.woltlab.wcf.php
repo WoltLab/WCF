@@ -238,6 +238,7 @@ return new class {
                 $event->register(new \wcf\system\endpoint\controller\core\users\groups\assignments\DeleteAssignment());
                 $event->register(new \wcf\system\endpoint\controller\core\users\groups\assignments\EnableAssignment());
                 $event->register(new \wcf\system\endpoint\controller\core\users\groups\assignments\DisableAssignment());
+                $event->register(new \wcf\system\endpoint\controller\core\users\activityEvents\RenderUserActivityEvents());
                 $event->register(new \wcf\system\endpoint\controller\core\users\groups\DeleteGroup());
                 $event->register(new \wcf\system\endpoint\controller\core\menus\DeleteMenu());
                 $event->register(new \wcf\system\endpoint\controller\core\trophies\EnableTrophy());

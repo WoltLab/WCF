@@ -8,29 +8,23 @@
  */
 
 import { dboAction } from "WoltLabSuite/Core/Ajax";
+import { renderUserActivityEvents } from "WoltLabSuite/Core/Api/Users/ActivityEvents/RenderUserActivityEvents";
 import { stringToBool } from "WoltLabSuite/Core/Core";
 import DomUtil from "WoltLabSuite/Core/Dom/Util";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 
-type ResponseLoadMore = {
-  lastEventID: number;
-  lastEventTime: number;
-  template: string;
-};
-
 async function loadMore(container: HTMLElement): Promise<void> {
-  const response = (await dboAction("load", "wcf\\data\\user\\activity\\event\\UserActivityEventAction")
-    .payload({
-      lastEventTime: container.dataset.lastEventTime,
-      lastEventID: container.dataset.lastEventId || 0,
-      userID: container.dataset.userId || 0,
-      boxID: container.dataset.boxId || 0,
-      filteredByFollowedUsers: stringToBool(container.dataset.filteredByFollowedUsers || ""),
-    })
-    .dispatch()) as ResponseLoadMore;
+  const result = await renderUserActivityEvents(
+    parseInt(container.dataset.lastEventTime || "0"),
+    parseInt(container.dataset.lastEventId || "0"),
+    parseInt(container.dataset.userId || "0"),
+    parseInt(container.dataset.boxId || "0"),
+    stringToBool(container.dataset.filteredByFollowedUsers || ""),
+  );
+  const response = result.unwrap();
 
-  if (response.template) {
+  if ("template" in response) {
     container.dataset.lastEventTime = response.lastEventTime.toString();
     container.dataset.lastEventId = response.lastEventID.toString();
 
