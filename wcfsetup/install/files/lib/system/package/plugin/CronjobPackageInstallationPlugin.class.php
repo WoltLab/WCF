@@ -109,22 +109,17 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 
     private function getRandomExpression(string $name, string $expression): CronExpression
     {
-        if (\class_exists(\Random\Engine\Xoshiro256StarStar::class, false)) {
-            // Generate stable, but differing values for each (instance, cronjob) pair.
-            $randomizer = new \Random\Randomizer(new \Random\Engine\Xoshiro256StarStar(
-                \hash('sha256', \sprintf(
-                    '%s:%s:%d:%s',
-                    \WCF_UUID,
-                    self::class,
-                    $this->installation->getPackageID(),
-                    $name
-                ), true)
-            ));
-            $engine = static fn(int $min, int $max) => $randomizer->getInt($min, $max);
-        } else {
-            // A seedable engine is not available, use completely random values.
-            $engine = \random_int(...);
-        }
+        // Generate stable, but differing values for each (instance, cronjob) pair.
+        $randomizer = new \Random\Randomizer(new \Random\Engine\Xoshiro256StarStar(
+            \hash('sha256', \sprintf(
+                '%s:%s:%d:%s',
+                \WCF_UUID,
+                self::class,
+                $this->installation->getPackageID(),
+                $name
+            ), true)
+        ));
+        $engine = $randomizer->getInt(...);
 
         return new CronExpression(match ($expression) {
             '@hourly' => \sprintf('%d * * * *', $engine(0, 59)),
