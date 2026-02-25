@@ -275,7 +275,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
             $this->labels,
             static fn(Label $a, Label $b) => $collator->compare($a->getTitle(), $b->getTitle())
         );
-        $this->indexToObject = \array_values(\array_keys($this->labels));
+        $this->indexToObject = \array_keys($this->labels);
     }
 
     /**

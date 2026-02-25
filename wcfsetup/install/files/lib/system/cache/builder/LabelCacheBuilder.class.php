@@ -48,6 +48,7 @@ class LabelCacheBuilder extends AbstractCacheBuilder
 
         // assign permissions for each label group
         foreach ($data['groups'] as $groupID => $group) {
+            // @phpstan-ignore function.impossibleType, instanceof.alwaysFalse
             \assert($group instanceof ViewableLabelGroup);
 
             // group permissions

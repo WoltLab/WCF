@@ -222,6 +222,7 @@ class LabelGroupAddForm extends AbstractFormBuilderForm
             );
 
             if ($this->formAction === 'create') {
+                \assert(isset($group));
                 (new LabelGroupEditor($group))->update(['groupName' => $languageItem]);
             } else {
                 (new LabelGroupEditor($this->formObject))->update(['groupName' => $languageItem]);
