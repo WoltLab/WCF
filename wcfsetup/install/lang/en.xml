@@ -100,7 +100,7 @@
 		<item name="wcf.acp.article.publicationStatus"><![CDATA[Status]]></item>
 		<item name="wcf.acp.article.publicationStatus.unpublished"><![CDATA[Unpublished]]></item>
 		<item name="wcf.acp.article.publicationStatus.published"><![CDATA[Published]]></item>
-		<item name="wcf.acp.article.publicationStatus.delayed"><![CDATA[Delayed publishing]]></item>
+		<item name="wcf.acp.article.publicationStatus.delayed"><![CDATA[Scheduled publication]]></item>
 		<item name="wcf.acp.article.setCategory"><![CDATA[Set Category]]></item>
 		<item name="wcf.acp.article.teaser"><![CDATA[Teaser]]></item>
 		<item name="wcf.acp.article.trash.notice"><![CDATA[This article has been moved to the trash bin and is currently hidden from view.]]></item>
