@@ -166,24 +166,12 @@ html[data-color-scheme="dark"] .reactionPopover {
 	}
 }
 
-#likeList .likeTypeSelection {
+.userProfileReactionList__typeSelection {
+	border-bottom: 1px solid var(--wcfContentBorderInner);
 	display: flex;
-	flex-wrap: wrap;
-	justify-content: flex-end;
-
-	.buttonGroup {
-		margin-bottom: 0;
-
-		li {
-			display: flex;
-			justify-content: stretch;
-
-			a {
-				display: flex;
-				align-items: center;
-			}
-		}
-	}
+	justify-content: end;
+	padding-bottom: 20px;
+	gap: 5px;
 }
 
 .topReactionFull,

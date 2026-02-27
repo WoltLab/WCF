@@ -241,6 +241,7 @@ class ReactionAction extends AbstractDatabaseObjectAction
      * Validates parameters to load reactions.
      *
      * @return void
+     * @deprecated 6.3
      */
     public function validateLoad()
     {
@@ -268,6 +269,7 @@ class ReactionAction extends AbstractDatabaseObjectAction
      * Loads a list of reactions.
      *
      * @return array{lastLikeTime: int, template: string}|array{}
+     * @deprecated 6.3 Use `RenderUserReactions` endpoint instead.
      */
     public function load()
     {

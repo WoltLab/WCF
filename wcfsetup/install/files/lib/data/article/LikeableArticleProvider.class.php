@@ -5,16 +5,16 @@ namespace wcf\data\article;
 use wcf\data\like\ILikeObjectTypeProvider;
 use wcf\data\like\object\ILikeObject;
 use wcf\data\object\type\AbstractObjectTypeProvider;
+use wcf\system\cache\runtime\ViewableArticleRuntimeCache;
 use wcf\system\like\IViewableLikeProvider;
 use wcf\system\WCF;
 
 /**
- * Like Object type provider for cms articles.
+ * Like object type provider for cms articles.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since   3.0
+ * @author      Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @extends AbstractObjectTypeProvider<LikeableArticle>
  * @implements ILikeObjectTypeProvider<LikeableArticle>
@@ -38,54 +38,42 @@ class LikeableArticleProvider extends AbstractObjectTypeProvider implements
      */
     public $decoratorClassName = LikeableArticle::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkPermissions(ILikeObject $object)
     {
-        /** @var LikeableArticle $object */
+        \assert($object instanceof LikeableArticle);
+
         return $object->articleID && $object->canRead();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function prepare(array $likes)
     {
-        $articleIDs = [];
+        $objectIDs = [];
         foreach ($likes as $like) {
-            $articleIDs[] = $like->objectID;
+            $objectIDs[] = $like->objectID;
         }
 
-        // fetch articles
-        $articleList = new ViewableArticleList();
-        $articleList->setObjectIDs($articleIDs);
-        $articleList->readObjects();
-        $articles = $articleList->getObjects();
+        ViewableArticleRuntimeCache::getInstance()->cacheObjectIDs($objectIDs);
 
-        // set message
         foreach ($likes as $like) {
-            if (isset($articles[$like->objectID])) {
-                $article = $articles[$like->objectID];
-
-                // check permissions
-                if (!$article->canRead()) {
-                    continue;
-                }
-                $like->setIsAccessible();
-
-                // short output
-                $text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.likeableArticle', [
-                    'article' => $article,
-                    'reaction' => $like,
-                    // @deprecated 5.3 Use `$reaction` instead
-                    'like' => $like,
-                ]);
-                $like->setTitle($text);
-
-                // output
-                $like->setDescription($article->getTeaser());
+            $article = ViewableArticleRuntimeCache::getInstance()->getObject($like->objectID);
+            if ($article === null || !$article->canRead()) {
+                continue;
             }
+
+            $like->setIsAccessible();
+
+            $like->setTitle(WCF::getLanguage()->getDynamicVariable(
+                'wcf.article.recentActivity.likedArticle',
+                [
+                    'article' => $article,
+                    'reactionType' => $like->getReactionType(),
+                    'author' => $like->getUserProfile(),
+                ]
+            ));
+            $like->setLink($article->getLink());
+            $like->setDescription(\strip_tags($article->getFormattedTeaser()));
         }
     }
 }
