@@ -516,6 +516,9 @@ class WCF
 
         // The autoscale quality setting for attachments was removed with version 6.2.
         \define('ATTACHMENT_IMAGE_AUTOSCALE_QUALITY', 80);
+
+        // The username character restriction is always set to 'suspicious' since version 6.3.
+        \define('REGISTER_USERNAME_FORCE_ASCII', 2);
     }
 
     /**

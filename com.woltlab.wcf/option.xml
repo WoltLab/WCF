@@ -1133,14 +1133,6 @@ block:wcf.acp.option.register_antispam_action.block]]></selectoptions>
 				<maxvalue>100</maxvalue>
 				<suffix>chars</suffix>
 			</option>
-			<option name="register_username_force_ascii">
-				<categoryname>user.register</categoryname>
-				<optiontype>radioButton</optiontype>
-				<defaultvalue>2</defaultvalue>
-				<selectoptions>0:wcf.acp.option.register_username_force_ascii.disabled
-1:wcf.acp.option.register_username_force_ascii.ascii
-2:wcf.acp.option.register_username_force_ascii.suspicious</selectoptions>
-			</option>
 			<option name="register_min_user_age">
 				<categoryname>user.register</categoryname>
 				<optiontype>integer</optiontype>
@@ -1641,5 +1633,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		<category name="security.blacklist.custom"/>
 
 		<option name="attachment_image_autoscale_quality"/>
+		<option name="register_username_force_ascii"/>
 	</delete>
 </data>
