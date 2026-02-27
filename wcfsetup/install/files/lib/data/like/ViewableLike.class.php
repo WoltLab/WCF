@@ -4,6 +4,7 @@ namespace wcf\data\like;
 
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\ignore\UserIgnore;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\user\UserProfileHandler;
@@ -148,6 +149,9 @@ class ViewableLike extends DatabaseObjectDecorator
      */
     public function isIgnoredContent(): bool
     {
-        return UserProfileHandler::getInstance()->getUserProfile()->isIgnoredUser($this->getUserProfile()->userID, 2);
+        return UserProfileHandler::getInstance()->getUserProfile()->isIgnoredUser(
+            $this->getUserProfile()->userID,
+            UserIgnore::TYPE_HIDE_MESSAGES
+        );
     }
 }
