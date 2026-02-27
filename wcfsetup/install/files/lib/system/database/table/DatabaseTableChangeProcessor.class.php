@@ -120,9 +120,9 @@ final class DatabaseTableChangeProcessor
 
     /**
      * layouts/layout changes of the relevant database table
-     * @var DatabaseTable[]
+     * @var DatabaseTable[]|null
      */
-    private array $tables;
+    private ?array $tables = null;
 
     /**
      * maps the registered database table names to the ids of the packages they belong to
@@ -153,12 +153,25 @@ final class DatabaseTableChangeProcessor
     /**
      * Creates a new instance of `DatabaseTableChangeProcessor`.
      *
-     * @param DatabaseTable[] $tables
+     * @param DatabaseTable[]|null $tables
      */
-    public function __construct(Package $package, array $tables, DatabaseEditor $dbEditor)
+    public function __construct(Package $package, ?array $tables, DatabaseEditor $dbEditor)
     {
         $this->package = $package;
+        $this->dbEditor = $dbEditor;
 
+        $this->existingTableNames = $dbEditor->getTableNames();
+
+        if ($tables !== null) {
+            $this->setTables($tables);
+        }
+    }
+
+    /**
+     * @param DatabaseTable[] $tables
+     */
+    private function setTables(array $tables): void
+    {
         $tableNames = [];
         foreach ($tables as $table) {
             if (!($table instanceof DatabaseTable)) {
@@ -168,10 +181,9 @@ final class DatabaseTableChangeProcessor
             $tableNames[] = $table->getName();
         }
 
-        $this->tables = $tables;
-        $this->dbEditor = $dbEditor;
+        $this->resetInternalState();
 
-        $this->existingTableNames = $dbEditor->getTableNames();
+        $this->tables = $tables;
 
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add('sqlTable IN (?)', [$tableNames]);
@@ -196,6 +208,28 @@ final class DatabaseTableChangeProcessor
         }
     }
 
+    private function resetInternalState(): void
+    {
+        $this->columnPackageIDs = [];
+        $this->foreignKeyPackageIDs = [];
+        $this->indexPackageIDs = [];
+        $this->tablePackageIDs = [];
+
+        $this->columnsToAdd = [];
+        $this->columnsToAlter = [];
+        $this->columnsToDrop = [];
+
+        $this->foreignKeysToAdd = [];
+        $this->foreignKeysToDrop = [];
+
+        $this->indicesToAdd = [];
+        $this->indicesToDrop = [];
+
+        $this->tablesToCleanup = [];
+        $this->tablesToCreate = [];
+        $this->tablesToDrop = [];
+    }
+
     /**
      * Adds the given index to the table.
      */
@@ -214,15 +248,14 @@ final class DatabaseTableChangeProcessor
 
     /**
      * Applies all of the previously determined changes to achieve the desired database layout.
-     *
-     * @throws  SplitNodeException  if any change has been applied
      */
-    private function applyChanges(): void
+    private function applyChanges(): bool
     {
         $appliedAnyChange = false;
 
         foreach ($this->tablesToCleanup as $table) {
             $this->dropTable($table);
+            $this->invalidateCachedTable($table->getName());
         }
 
         foreach ($this->tablesToCreate as $table) {
@@ -231,6 +264,8 @@ final class DatabaseTableChangeProcessor
             $this->prepareTableLog($table);
             $this->createTable($table);
             $this->finalizeTableLog($table);
+
+            $this->existingTableNames[] = $table->getName();
         }
 
         foreach ($this->tablesToDrop as $table) {
@@ -238,6 +273,8 @@ final class DatabaseTableChangeProcessor
 
             $this->dropTable($table);
             $this->deleteTableLog($table);
+
+            $this->invalidateCachedTable($table->getName());
         }
 
         $columnTables = \array_unique(\array_merge(
@@ -283,6 +320,8 @@ final class DatabaseTableChangeProcessor
             foreach ($columnsToDrop as $column) {
                 $this->deleteColumnLog($tableName, $column);
             }
+
+            $this->invalidateCachedTable($tableName);
         }
 
         foreach ($this->foreignKeysToDrop as $tableName => $foreignKeys) {
@@ -292,6 +331,8 @@ final class DatabaseTableChangeProcessor
                 $this->dropForeignKey($tableName, $foreignKey);
                 $this->deleteForeignKeyLog($tableName, $foreignKey);
             }
+
+            $this->invalidateCachedTable($tableName);
         }
 
         foreach ($this->foreignKeysToAdd as $tableName => $foreignKeys) {
@@ -302,6 +343,8 @@ final class DatabaseTableChangeProcessor
                 $this->addForeignKey($tableName, $foreignKey);
                 $this->finalizeForeignKeyLog($tableName, $foreignKey);
             }
+
+            $this->invalidateCachedTable($tableName);
         }
 
         foreach ($this->indicesToDrop as $tableName => $indices) {
@@ -311,6 +354,8 @@ final class DatabaseTableChangeProcessor
                 $this->dropIndex($tableName, $index);
                 $this->deleteIndexLog($tableName, $index);
             }
+
+            $this->invalidateCachedTable($tableName);
         }
 
         foreach ($this->indicesToAdd as $tableName => $indices) {
@@ -321,11 +366,11 @@ final class DatabaseTableChangeProcessor
                 $this->addIndex($tableName, $index);
                 $this->finalizeIndexLog($tableName, $index);
             }
+
+            $this->invalidateCachedTable($tableName);
         }
 
-        if ($appliedAnyChange) {
-            throw new SplitNodeException($this->splitNodeMessage);
-        }
+        return $appliedAnyChange;
     }
 
     /**
@@ -1003,6 +1048,16 @@ final class DatabaseTableChangeProcessor
     }
 
     /**
+     * Invalidates the cached state of an existing table. This allows multiple
+     * runs of the same processor within one request without causing issues by
+     * dealing with stale data.
+     */
+    private function invalidateCachedTable(string $tableName): void
+    {
+        unset($this->existingTables[$tableName]);
+    }
+
+    /**
      * Returns the id of the package to with the given foreign key belongs to. If there is no specific
      * log entry for the given foreign key, the table log is checked and the relevant package id of
      * the whole table is returned. If the package of the table is also unknown, `null` is returned.
@@ -1093,10 +1148,22 @@ final class DatabaseTableChangeProcessor
     /**
      * Processes all tables and updates the current table layouts to match the specified layouts.
      *
+     * @param DatabaseTable[] $tables
      * @throws  \RuntimeException   if validation of the required layout changes fails
+     * @throws  SplitNodeException  if any change has been applied AND `$tables` was empty
      */
-    public function process(): void
+    public function process(array $tables = []): bool
     {
+        if ($this->tables === null) {
+            if ($tables === []) {
+                throw new \InvalidArgumentException('No table definitions have been provided.');
+            } else {
+                $this->setTables($tables);
+            }
+        } else if ($tables !== []) {
+            throw new \InvalidArgumentException('Cannot provide table definitions both in the constructor and in process().');
+        }
+
         $this->checkPendingLogEntries();
 
         $errors = $this->validate();
@@ -1111,7 +1178,19 @@ final class DatabaseTableChangeProcessor
 
         $this->calculateChanges();
 
-        $this->applyChanges();
+        $appliedAnyChange = $this->applyChanges();
+
+        $this->tables = null;
+
+        if ($appliedAnyChange) {
+            if ($tables === []) {
+                throw new SplitNodeException($this->splitNodeMessage);
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -1161,7 +1240,8 @@ final class DatabaseTableChangeProcessor
                         // If the prefix is known, the unknown table is deleted
                         // before it is created again (this is registered in self::calculateChanges()).
                         if (
-                            !\in_array(
+                            \PACKAGE_ID !== 0
+                            && !\in_array(
                                 $abbreviation,
                                 ApplicationHandler::getInstance()->getAbbreviations()
                             )
@@ -1172,7 +1252,7 @@ final class DatabaseTableChangeProcessor
                             ];
                         }
                     } else {
-                        $existingTable = DatabaseTable::createFromExistingTable($this->dbEditor, $table->getName());
+                        $existingTable = $this->getExistingTable($table->getName());
                         $existingColumns = $existingTable->getColumns();
                         $existingIndices = $existingTable->getIndices();
                         $existingForeignKeys = $existingTable->getForeignKeys();

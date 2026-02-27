@@ -150,14 +150,12 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
             case 'boolean':
                 $column['notNull'] = true;
                 $column['default'] = 0;
-                $column['length'] = 1;
                 $column['type'] = 'tinyint';
                 break;
 
             case 'integer':
                 $column['notNull'] = true;
                 $column['default'] = 0;
-                $column['length'] = 10;
                 $column['type'] = 'int';
                 break;
 

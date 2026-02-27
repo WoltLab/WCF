@@ -81,7 +81,10 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
             $data['values'] = "'" . \implode("','", $values) . "'";
         }
 
-        if ($this instanceof ILengthDatabaseTableColumn) {
+        if ($this instanceof AbstractIntDatabaseTableColumn) {
+            // Actively discard the length of *INT columns.
+            unset($data['length']);
+        } else if ($this instanceof ILengthDatabaseTableColumn) {
             $data['length'] = $this->getLength();
         }
 
