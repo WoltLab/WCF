@@ -57,11 +57,8 @@ final class ApiAction implements RequestHandlerInterface
         }
 
         $dispatcher = cachedDispatcher(
-            static function (ConfigureRoutes $r) {
-                $event = new ControllerCollecting();
-                EventHandler::getInstance()->fire($event);
-
-                foreach ($event->getControllers() as $controller) {
+            function (ConfigureRoutes $r) {
+                foreach ($this->getControllers() as $controller) {
                     $reflectionClass = new \ReflectionClass($controller);
                     $attribute = current($reflectionClass->getAttributes(RequestType::class, \ReflectionAttribute::IS_INSTANCEOF));
                     \assert($attribute !== false);
@@ -138,5 +135,47 @@ final class ApiAction implements RequestHandlerInterface
             'message' => $message,
             'param' => $param,
         ], $reason->toStatusCode());
+    }
+
+    /**
+     * @return array<string, IController>
+     */
+    private function getControllers(): array
+    {
+        $controllers = [];
+        $directory = \WCF_DIR . 'lib/system/endpoint/controller/';
+        $iterator = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($directory, \FilesystemIterator::SKIP_DOTS)
+        );
+
+        foreach ($iterator as $file) {
+            if (!$file->isFile() || !\str_ends_with($file->getFilename(), '.class.php')) {
+                continue;
+            }
+
+            $relativePath = \substr($file->getPathname(), \strlen($directory));
+            $className = 'wcf\\system\\endpoint\\controller\\' . \str_replace('/', '\\', \substr($relativePath, 0, -\strlen('.class.php')));
+
+            if (!\class_exists($className)) {
+                continue;
+            }
+
+            $reflectionClass = new \ReflectionClass($className);
+            if ($reflectionClass->isInstantiable() && $reflectionClass->implementsInterface(IController::class)) {
+                $controllers[$className] = $reflectionClass->newInstance();
+            }
+        }
+
+        $event = new ControllerCollecting();
+        EventHandler::getInstance()->fire($event);
+
+        foreach ($event->getControllers() as $controller) {
+            $className = \get_class($controller);
+            if (!isset($controllers[$className])) {
+                $controllers[$className] = $controller;
+            }
+        }
+
+        return $controllers;
     }
 }
