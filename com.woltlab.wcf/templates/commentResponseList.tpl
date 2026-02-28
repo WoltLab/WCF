@@ -9,7 +9,6 @@
 			{unsafe:$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.comment.response', $response->responseID)}
 			data-can-edit="{if $response->isEditable()}true{else}false{/if}"
 			data-can-delete="{if $response->isDeletable()}true{else}false{/if}"
-			data-user-id="{$response->userID}"
 		>
 			<woltlab-core-comment-response class="commentResponse" response-id="{$response->responseID}" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
 				<div class="commentResponse__header">
