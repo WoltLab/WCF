@@ -195,9 +195,7 @@ return [
         ->columns([
             NotNullVarchar191DatabaseTableColumn::create('boxName'),
             NotNullInt10DatabaseTableColumn::create('userID'),
-            TinyintDatabaseTableColumn::create('enabled')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('enabled'),
             NotNullInt10DatabaseTableColumn::create('showOrder')
                 ->defaultValue(0),
         ])
@@ -429,9 +427,7 @@ return [
                 ->defaultValue(1),
             NotNullInt10DatabaseTableColumn::create('publicationDate')
                 ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('enableComments')
-                ->notNull()
-                ->defaultValue(1),
+            DefaultTrueBooleanDatabaseTableColumn::create('enableComments'),
             MediumintDatabaseTableColumn::create('views')
                 ->notNull()
                 ->defaultValue(0),
@@ -660,9 +656,7 @@ return [
                 ->defaultValue(''),
             DefaultFalseBooleanDatabaseTableColumn::create('isBlockElement'),
             DefaultFalseBooleanDatabaseTableColumn::create('isSourceCode'),
-            TinyintDatabaseTableColumn::create('showButton')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('showButton'),
             DefaultFalseBooleanDatabaseTableColumn::create('originIsSystem'),
         ])
         ->indices([
@@ -691,12 +685,8 @@ return [
                 ->defaultValue(''),
             NotNullVarchar255DatabaseTableColumn::create('validationPattern')
                 ->defaultValue(''),
-            TinyintDatabaseTableColumn::create('required')
-                ->notNull()
-                ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('useText')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('required'),
+            DefaultFalseBooleanDatabaseTableColumn::create('useText'),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
@@ -773,18 +763,10 @@ return [
         ->columns([
             DateDatabaseTableColumn::create('date')
                 ->notNull(),
-            TinyintDatabaseTableColumn::create('delta1')
-                ->notNull()
-                ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('delta2')
-                ->notNull()
-                ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('delta3')
-                ->notNull()
-                ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('delta4')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('delta1'),
+            DefaultFalseBooleanDatabaseTableColumn::create('delta2'),
+            DefaultFalseBooleanDatabaseTableColumn::create('delta3'),
+            DefaultFalseBooleanDatabaseTableColumn::create('delta4'),
         ])
         ->indices([
             DatabaseTableIndex::create('day')
@@ -801,17 +783,13 @@ return [
             NotNullVarchar255DatabaseTableColumn::create('position'),
             NotNullInt10DatabaseTableColumn::create('showOrder')
                 ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('visibleEverywhere')
-                ->notNull()
-                ->defaultValue(1),
+            DefaultTrueBooleanDatabaseTableColumn::create('visibleEverywhere'),
             DefaultFalseBooleanDatabaseTableColumn::create('isMultilingual'),
             NotNullInt10DatabaseTableColumn::create('lastUpdateTime')
                 ->defaultValue(0),
             NotNullVarchar255DatabaseTableColumn::create('cssClassName')
                 ->defaultValue(''),
-            TinyintDatabaseTableColumn::create('showHeader')
-                ->notNull()
-                ->defaultValue(1),
+            DefaultTrueBooleanDatabaseTableColumn::create('showHeader'),
             DefaultFalseBooleanDatabaseTableColumn::create('originIsSystem'),
             NotNullInt10DatabaseTableColumn::create('packageID'),
             IntDatabaseTableColumn::create('menuID'),
@@ -821,9 +799,7 @@ return [
             NotNullVarchar255DatabaseTableColumn::create('externalURL')
                 ->defaultValue(''),
             DefaultFalseBooleanDatabaseTableColumn::create('isDisabled'),
-            TinyintDatabaseTableColumn::create('invertPermissions')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('invertPermissions'),
             TextDatabaseTableColumn::create('additionalData'),
         ])
         ->indices([
@@ -947,9 +923,7 @@ return [
                 ->defaultValue(0),
             NotNullVarchar255DatabaseTableColumn::create('title'),
             TextDatabaseTableColumn::create('description'),
-            TinyintDatabaseTableColumn::create('descriptionUseHtml')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('descriptionUseHtml'),
             NotNullInt10DatabaseTableColumn::create('showOrder')
                 ->defaultValue(0),
             NotNullInt10DatabaseTableColumn::create('time')
@@ -1068,9 +1042,7 @@ return [
                 ->defaultValue(0),
             NotNullVarchar255DatabaseTableColumn::create('unfilteredResponseIDs')
                 ->defaultValue(''),
-            TinyintDatabaseTableColumn::create('enableHtml')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('enableHtml'),
             DefaultFalseBooleanDatabaseTableColumn::create('isDisabled'),
             DefaultFalseBooleanDatabaseTableColumn::create('hasEmbeddedObjects'),
         ])
@@ -1106,9 +1078,7 @@ return [
             NotNullVarchar255DatabaseTableColumn::create('username'),
             MediumtextDatabaseTableColumn::create('message')
                 ->notNull(),
-            TinyintDatabaseTableColumn::create('enableHtml')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('enableHtml'),
             DefaultFalseBooleanDatabaseTableColumn::create('isDisabled'),
             DefaultFalseBooleanDatabaseTableColumn::create('hasEmbeddedObjects'),
         ])
@@ -1249,12 +1219,8 @@ return [
             NotNullInt10DatabaseTableColumn::create('afterNextExec')
                 ->defaultValue(0),
             DefaultFalseBooleanDatabaseTableColumn::create('isDisabled'),
-            TinyintDatabaseTableColumn::create('canBeEdited')
-                ->notNull()
-                ->defaultValue(1),
-            TinyintDatabaseTableColumn::create('canBeDisabled')
-                ->notNull()
-                ->defaultValue(1),
+            DefaultTrueBooleanDatabaseTableColumn::create('canBeEdited'),
+            DefaultTrueBooleanDatabaseTableColumn::create('canBeDisabled'),
             TinyintDatabaseTableColumn::create('state')
                 ->notNull()
                 ->defaultValue(0),
@@ -1284,9 +1250,7 @@ return [
             NotNullInt10DatabaseTableColumn::create('cronjobID'),
             NotNullInt10DatabaseTableColumn::create('execTime')
                 ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('success')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('success'),
             TextDatabaseTableColumn::create('error'),
         ])
         ->indices([
@@ -1427,9 +1391,7 @@ return [
                 ->notNull()
                 ->length(200)
                 ->defaultValue(''),
-            TinyintDatabaseTableColumn::create('inherit')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('inherit'),
             TinyintDatabaseTableColumn::create('niceValue')
                 ->notNull()
                 ->defaultValue(0),
@@ -1623,12 +1585,8 @@ return [
                 ->length(80),
             NotNullVarchar255DatabaseTableColumn::create('groupDescription')
                 ->defaultValue(''),
-            TinyintDatabaseTableColumn::create('forceSelection')
-                ->notNull()
-                ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('sortAlphabetically')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('forceSelection'),
+            DefaultFalseBooleanDatabaseTableColumn::create('sortAlphabetically'),
             NotNullInt10DatabaseTableColumn::create('showOrder')
                 ->defaultValue(0),
         ])
@@ -1732,9 +1690,7 @@ return [
             MediumtextDatabaseTableColumn::create('languageItemValue')
                 ->notNull(),
             MediumtextDatabaseTableColumn::create('languageCustomItemValue'),
-            TinyintDatabaseTableColumn::create('languageUseCustomValue')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('languageUseCustomValue'),
             DefaultTrueBooleanDatabaseTableColumn::create('languageItemOriginIsSystem'),
             NotNullInt10DatabaseTableColumn::create('languageCategoryID'),
             NotNullInt10DatabaseTableColumn::create('packageID'),
@@ -1879,9 +1835,7 @@ return [
             NotNullVarchar255DatabaseTableColumn::create('username'),
             IntDatabaseTableColumn::create('languageID'),
             DefaultFalseBooleanDatabaseTableColumn::create('isMultilingual'),
-            TinyintDatabaseTableColumn::create('captionEnableHtml')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('captionEnableHtml'),
             DefaultFalseBooleanDatabaseTableColumn::create('isImage'),
             SmallintDatabaseTableColumn::create('width')
                 ->notNull()
@@ -2172,9 +2126,7 @@ return [
             VarcharDatabaseTableColumn::create('action')
                 ->notNull()
                 ->length(80),
-            TinyintDatabaseTableColumn::create('hidden')
-                ->notNull()
-                ->defaultValue(1),
+            DefaultTrueBooleanDatabaseTableColumn::create('hidden'),
             MediumtextDatabaseTableColumn::create('additionalData'),
         ])
         ->indices([
@@ -2202,9 +2154,7 @@ return [
             ObjectIdDatabaseTableColumn::create('noticeID'),
             NotNullVarchar255DatabaseTableColumn::create('noticeName'),
             MediumtextDatabaseTableColumn::create('notice'),
-            TinyintDatabaseTableColumn::create('noticeUseHtml')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('noticeUseHtml'),
             NotNullVarchar255DatabaseTableColumn::create('cssClassName')
                 ->defaultValue('info'),
             NotNullInt10DatabaseTableColumn::create('showOrder')
@@ -2313,17 +2263,11 @@ return [
             MediumtextDatabaseTableColumn::create('enableOptions'),
             NotNullInt10DatabaseTableColumn::create('showOrder')
                 ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('hidden')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('hidden'),
             TextDatabaseTableColumn::create('permissions'),
             TextDatabaseTableColumn::create('options'),
-            TinyintDatabaseTableColumn::create('supportI18n')
-                ->notNull()
-                ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('requireI18n')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('supportI18n'),
+            DefaultFalseBooleanDatabaseTableColumn::create('requireI18n'),
             MediumtextDatabaseTableColumn::create('additionalData'),
         ])
         ->indices([
@@ -2512,9 +2456,7 @@ return [
             NotNullVarchar255DatabaseTableColumn::create('nodeType'),
             TextDatabaseTableColumn::create('nodeData')
                 ->notNull(),
-            TinyintDatabaseTableColumn::create('done')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('done'),
         ])
         ->foreignKeys([
             DatabaseTableForeignKey::create()
@@ -2568,9 +2510,7 @@ return [
                     'uninstall',
                 ])
                 ->defaultValue('install'),
-            TinyintDatabaseTableColumn::create('done')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('done'),
             DefaultFalseBooleanDatabaseTableColumn::create('isApplication'),
         ])
         ->indices([
@@ -2830,31 +2770,19 @@ return [
                 ->defaultValue(''),
             NotNullVarchar255DatabaseTableColumn::create('controllerCustomURL')
                 ->defaultValue(''),
-            TinyintDatabaseTableColumn::create('requireObjectID')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('requireObjectID'),
             DefaultFalseBooleanDatabaseTableColumn::create('hasFixedParent'),
             NotNullInt10DatabaseTableColumn::create('lastUpdateTime')
                 ->defaultValue(0),
             NotNullVarchar255DatabaseTableColumn::create('cssClassName')
                 ->defaultValue(''),
-            TinyintDatabaseTableColumn::create('availableDuringOfflineMode')
-                ->notNull()
-                ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('allowSpidersToIndex')
-                ->notNull()
-                ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('excludeFromLandingPage')
-                ->notNull()
-                ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('enableShareButtons')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('availableDuringOfflineMode'),
+            DefaultFalseBooleanDatabaseTableColumn::create('allowSpidersToIndex'),
+            DefaultFalseBooleanDatabaseTableColumn::create('excludeFromLandingPage'),
+            DefaultFalseBooleanDatabaseTableColumn::create('enableShareButtons'),
             TextDatabaseTableColumn::create('permissions'),
             TextDatabaseTableColumn::create('options'),
-            TinyintDatabaseTableColumn::create('invertPermissions')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('invertPermissions'),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
@@ -3037,9 +2965,7 @@ return [
             NotNullInt10DatabaseTableColumn::create('endDate')
                 ->defaultValue(0),
             DefaultTrueBooleanDatabaseTableColumn::create('isActive'),
-            TinyintDatabaseTableColumn::create('sentExpirationNotification')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('sentExpirationNotification'),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
@@ -3079,12 +3005,8 @@ return [
                 ->defaultValue(0),
             DefaultFalseBooleanDatabaseTableColumn::create('isChangeable'),
             DefaultFalseBooleanDatabaseTableColumn::create('isPublic'),
-            TinyintDatabaseTableColumn::create('sortByVotes')
-                ->notNull()
-                ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('resultsRequireVote')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('sortByVotes'),
+            DefaultFalseBooleanDatabaseTableColumn::create('resultsRequireVote'),
             NotNullInt10DatabaseTableColumn::create('maxVotes')
                 ->defaultValue(1),
             NotNullInt10DatabaseTableColumn::create('votes')
@@ -3751,15 +3673,9 @@ return [
             VarcharDatabaseTableColumn::create('badgeColor')
                 ->length(255),
             DefaultFalseBooleanDatabaseTableColumn::create('isDisabled'),
-            TinyintDatabaseTableColumn::create('awardAutomatically')
-                ->notNull()
-                ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('revokeAutomatically')
-                ->notNull()
-                ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('trophyUseHtml')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('awardAutomatically'),
+            DefaultFalseBooleanDatabaseTableColumn::create('revokeAutomatically'),
+            DefaultFalseBooleanDatabaseTableColumn::create('trophyUseHtml'),
             NotNullInt10DatabaseTableColumn::create('showOrder')
                 ->defaultValue(0),
         ])
@@ -3858,9 +3774,7 @@ return [
                 ->defaultValue(0),
             NotNullInt10DatabaseTableColumn::create('styleID')
                 ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('banned')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('banned'),
             MediumtextDatabaseTableColumn::create('banReason'),
             NotNullInt10DatabaseTableColumn::create('banExpires')
                 ->defaultValue(0),
@@ -3890,19 +3804,13 @@ return [
             IntDatabaseTableColumn::create('avatarFileID'),
             VarcharDatabaseTableColumn::create('avatarPathname')
                 ->length(255),
-            TinyintDatabaseTableColumn::create('disableAvatar')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('disableAvatar'),
             TextDatabaseTableColumn::create('disableAvatarReason'),
             NotNullInt10DatabaseTableColumn::create('disableAvatarExpires')
                 ->defaultValue(0),
             TextDatabaseTableColumn::create('signature'),
-            TinyintDatabaseTableColumn::create('signatureEnableHtml')
-                ->notNull()
-                ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('disableSignature')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('signatureEnableHtml'),
+            DefaultFalseBooleanDatabaseTableColumn::create('disableSignature'),
             TextDatabaseTableColumn::create('disableSignatureReason'),
             NotNullInt10DatabaseTableColumn::create('disableSignatureExpires')
                 ->defaultValue(0),
@@ -3936,9 +3844,7 @@ return [
                 ->defaultValue(''),
             /** @deprecated 6.2 */
             DefaultFalseBooleanDatabaseTableColumn::create('coverPhotoHasWebP'),
-            TinyintDatabaseTableColumn::create('disableCoverPhoto')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('disableCoverPhoto'),
             TextDatabaseTableColumn::create('disableCoverPhotoReason'),
             NotNullInt10DatabaseTableColumn::create('disableCoverPhotoExpires')
                 ->defaultValue(0),
@@ -4215,15 +4121,9 @@ return [
                 ->defaultValue(0),
             NotNullVarchar255DatabaseTableColumn::create('userOnlineMarking')
                 ->defaultValue('%s'),
-            TinyintDatabaseTableColumn::create('showOnTeamPage')
-                ->notNull()
-                ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('allowMention')
-                ->notNull()
-                ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('requireMultifactor')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('showOnTeamPage'),
+            DefaultFalseBooleanDatabaseTableColumn::create('allowMention'),
+            DefaultFalseBooleanDatabaseTableColumn::create('requireMultifactor'),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
@@ -4265,9 +4165,7 @@ return [
                 ->defaultValue(0),
             TextDatabaseTableColumn::create('permissions'),
             TextDatabaseTableColumn::create('options'),
-            TinyintDatabaseTableColumn::create('usersOnly')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('usersOnly'),
             MediumtextDatabaseTableColumn::create('additionalData'),
         ])
         ->indices([
@@ -4520,9 +4418,7 @@ return [
             NotNullInt10DatabaseTableColumn::create('userID'),
             NotNullInt10DatabaseTableColumn::create('time')
                 ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('mailNotified')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('mailNotified'),
             NotNullInt10DatabaseTableColumn::create('confirmTime')
                 ->defaultValue(0),
             TextDatabaseTableColumn::create('additionalData'),
@@ -4594,9 +4490,7 @@ return [
                 ->defaultValue(''),
             TextDatabaseTableColumn::create('permissions'),
             TextDatabaseTableColumn::create('options'),
-            TinyintDatabaseTableColumn::create('preset')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('preset'),
             EnumDatabaseTableColumn::create('presetMailNotificationType')
                 ->notNull()
                 ->enumValues([
@@ -4707,12 +4601,8 @@ return [
             MediumtextDatabaseTableColumn::create('selectOptions'),
             MediumtextDatabaseTableColumn::create('enableOptions'),
             MediumtextDatabaseTableColumn::create('labeledUrl'),
-            TinyintDatabaseTableColumn::create('required')
-                ->notNull()
-                ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('askDuringRegistration')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('required'),
+            DefaultFalseBooleanDatabaseTableColumn::create('askDuringRegistration'),
             TinyintDatabaseTableColumn::create('editable')
                 ->notNull()
                 ->defaultValue(0),
@@ -4721,9 +4611,7 @@ return [
                 ->defaultValue(0),
             NotNullVarchar255DatabaseTableColumn::create('outputClass')
                 ->defaultValue(''),
-            TinyintDatabaseTableColumn::create('searchable')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('searchable'),
             NotNullInt10DatabaseTableColumn::create('showOrder')
                 ->defaultValue(0),
             DefaultFalseBooleanDatabaseTableColumn::create('isDisabled'),
@@ -4868,9 +4756,7 @@ return [
             TinyintDatabaseTableColumn::create('requiredGender')
                 ->notNull()
                 ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('hideTitle')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('hideTitle'),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
@@ -5021,12 +4907,8 @@ return [
             NotNullInt10DatabaseTableColumn::create('time')
                 ->defaultValue(0),
             MediumtextDatabaseTableColumn::create('description'),
-            TinyintDatabaseTableColumn::create('useCustomDescription')
-                ->notNull()
-                ->defaultValue(0),
-            TinyintDatabaseTableColumn::create('trophyUseHtml')
-                ->notNull()
-                ->defaultValue(0),
+            DefaultFalseBooleanDatabaseTableColumn::create('useCustomDescription'),
+            DefaultFalseBooleanDatabaseTableColumn::create('trophyUseHtml'),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
