@@ -2,7 +2,7 @@
     "name": "woltlab/wcf",
     "type": "project",
     "require-dev": {
-        "phpstan/phpstan": "^2.1"
+        "phpstan/phpstan": "^2.1.40"
     },
     "require": {}
 }
