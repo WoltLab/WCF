@@ -67,7 +67,7 @@
 	</script>
 	
 	<noscript>
-		<style type="text/css">
+		<style>
 			#profileContent > .tabMenu > ul > li:not(:first-child) {
 				display: none !important;
 			}
