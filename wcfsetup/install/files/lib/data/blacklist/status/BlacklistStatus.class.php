@@ -17,11 +17,11 @@ use wcf\util\JSON;
  * @copyright   2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read string $date ISO 8601 date (UTC)
- * @property-read int $delta1 Is 1 if the first delta (00:00-05:59 UTC) of the day has been fetched, otherwise 0
- * @property-read int $delta2 Is 1 if the second delta (06:00-11:59 UTC) of the day has been fetched, otherwise 0
- * @property-read int $delta3 Is 1 if the third delta (12:00-17:59 UTC) of the day has been fetched, otherwise 0
- * @property-read int $delta4 Is 1 if the fourth delta (18:00-23:59 UTC) of the day has been fetched, otherwise 0
+ * @property-read   string  $date       ISO 8601 date (UTC)
+ * @property-read   0|1     $delta1     Is `1` if the first delta (00:00-05:59 UTC) of the day has been fetched, otherwise `0`
+ * @property-read   0|1     $delta2     Is `1` if the second delta (06:00-11:59 UTC) of the day has been fetched, otherwise `0`
+ * @property-read   0|1     $delta3     Is `1` if the third delta (12:00-17:59 UTC) of the day has been fetched, otherwise `0`
+ * @property-read   0|1     $delta4     Is `1` if the fourth delta (18:00-23:59 UTC) of the day has been fetched, otherwise `0`
  * @since 5.2
  */
 class BlacklistStatus extends DatabaseObject

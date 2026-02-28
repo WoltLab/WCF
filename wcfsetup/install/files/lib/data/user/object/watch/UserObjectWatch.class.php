@@ -12,11 +12,11 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $watchID        unique id of the watched object
- * @property-read   int $objectTypeID       id of the `com.woltlab.wcf.user.objectWatch` object type
- * @property-read   int $objectID       id of the watched object of the specific object type
- * @property-read   int $userID         id of the user watching the object
- * @property-read   int $notification       is `1` if the user wants to receive notifications for the watched object, otherwise `0`
+ * @property-read   int     $watchID        unique id of the watched object
+ * @property-read   int     $objectTypeID   id of the `com.woltlab.wcf.user.objectWatch` object type
+ * @property-read   int     $objectID       id of the watched object of the specific object type
+ * @property-read   int     $userID         id of the user watching the object
+ * @property-read   int     $notification   is `1` if the user wants to receive notifications for the watched object, otherwise `0`
  */
 class UserObjectWatch extends DatabaseObject
 {

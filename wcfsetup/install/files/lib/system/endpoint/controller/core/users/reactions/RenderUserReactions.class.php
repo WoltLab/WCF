@@ -31,7 +31,7 @@ final class RenderUserReactions implements IController
             throw new IllegalLinkException();
         }
 
-        $user = UserProfileRuntimeCache::getInstance()->getObject($variables['id']);
+        $user = UserProfileRuntimeCache::getInstance()->getObject(\intval($variables['id']));
         if ($user === null) {
             throw new IllegalLinkException();
         }

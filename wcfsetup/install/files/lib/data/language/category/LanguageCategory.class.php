@@ -12,8 +12,8 @@ use wcf\data\ITitledObject;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $languageCategoryID unique id of the language category
- * @property-read   string $languageCategory   name and textual identifier of the language category
+ * @property-read   int     $languageCategoryID     unique id of the language category
+ * @property-read   string  $languageCategory       name and textual identifier of the language category
  */
 class LanguageCategory extends DatabaseObject implements ITitledObject
 {

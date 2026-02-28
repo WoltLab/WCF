@@ -12,15 +12,15 @@ use wcf\util\JSON;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.1
  *
- * @property-read string $identifier
- * @property-read int $time
- * @property-read string $filename
- * @property-read int $fileSize
- * @property-read string $fileHash
- * @property-read int|null $objectTypeID
- * @property-read string $context
- * @property-read string $chunks
- * @property-read string|null $exifData
+ * @property-read   string  $identifier
+ * @property-read   int     $time
+ * @property-read   string  $filename
+ * @property-read   int     $fileSize
+ * @property-read   string  $fileHash
+ * @property-read   ?int    $objectTypeID
+ * @property-read   ?string $context
+ * @property-read   string  $chunks
+ * @property-read   ?string $exifData
  */
 class FileTemporary extends DatabaseObject
 {

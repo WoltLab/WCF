@@ -14,11 +14,11 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  *
- * @property-read   int $reactionTypeID     unique id of the reaction type
- * @property-read   string $title
- * @property-read   int $showOrder      position of the reaction type in relation to the other reaction types
- * @property-read   string $iconFile       the file location of the icon
- * @property-read   bool $isAssignable       `1`, if the reaction can be assigned
+ * @property-read   int     $reactionTypeID unique id of the reaction type
+ * @property-read   string  $title
+ * @property-read   int     $showOrder      position of the reaction type in relation to the other reaction types
+ * @property-read   string  $iconFile       the file location of the icon
+ * @property-read   0|1     $isAssignable   `1`, if the reaction can be assigned, otherwise `0`
  */
 class ReactionType extends DatabaseObject implements ITitledObject
 {

@@ -12,9 +12,9 @@ use wcf\data\object\type\ObjectTypeCache;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $conditionID        unique id of the condition
- * @property-read   int $objectTypeID       id of the condition object type (of different condition object type definitions)
- * @property-read   int $objectID       id of the conditioned object of the object type represented by `$objectTypeID`
+ * @property-read   int     $conditionID        unique id of the condition
+ * @property-read   int     $objectTypeID       id of the condition object type (of different condition object type definitions)
+ * @property-read   int     $objectID           id of the conditioned object of the object type represented by `$objectTypeID`
  * @property-read   mixed[] $conditionData      array with the condition data with is processed by the condition object type's processor
  */
 class Condition extends DatabaseObject

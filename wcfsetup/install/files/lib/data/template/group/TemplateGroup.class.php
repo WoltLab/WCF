@@ -14,10 +14,10 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $templateGroupID        unique id of the template group
- * @property-read   int|null $parentTemplateGroupID      id of the template group's parent template group or `null` if the template group has no parent template group
- * @property-read   string $templateGroupName      name of the template group
- * @property-read   string $templateGroupFolderName    name of the folder containing the modified templates (relative to the normal template folder)
+ * @property-read   int     $templateGroupID            unique id of the template group
+ * @property-read   ?int    $parentTemplateGroupID      id of the template group's parent template group or `null` if the template group has no parent template group
+ * @property-read   string  $templateGroupName          name of the template group
+ * @property-read   string  $templateGroupFolderName    name of the folder containing the modified templates (relative to the normal template folder)
  */
 class TemplateGroup extends DatabaseObject implements ITitledObject
 {

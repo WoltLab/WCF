@@ -18,12 +18,14 @@ use wcf\util\Url;
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $providerID unique id of the bbcode media provider
- * @property-read   string $title      title of the bbcode media provider (shown in acp)
- * @property-read   string $regex      regular expression to recognize media elements/element urls
- * @property-read   string $html       html code used to render media elements
- * @property-read   string $className  callback class name
- * @property-read   int $isDisabled
+ * @property-read   int     $providerID     unique id of the bbcode media provider
+ * @property-read   string  $name           unique name of the bbcode media provider
+ * @property-read   int     $packageID
+ * @property-read   string  $title          title of the bbcode media provider (shown in acp)
+ * @property-read   string  $regex          regular expression to recognize media elements/element urls
+ * @property-read   string  $html           html code used to render media elements
+ * @property-read   string  $className      callback class name
+ * @property-read   0|1     $isDisabled
  */
 class BBCodeMediaProvider extends DatabaseObject implements IRouteController
 {

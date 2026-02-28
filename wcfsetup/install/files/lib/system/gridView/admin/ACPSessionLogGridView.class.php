@@ -91,7 +91,6 @@ final class ACPSessionLogGridView extends AbstractGridView
         $list = new ACPSessionLogList();
         $list->sqlSelects .= "
             user_table.username,
-            0 AS active,
             (
                 SELECT  COUNT(*)
                 FROM    wcf1_acp_session_access_log

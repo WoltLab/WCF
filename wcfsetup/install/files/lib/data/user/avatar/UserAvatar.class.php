@@ -14,14 +14,14 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read int $avatarID unique id of the user avatar
- * @property-read string $avatarName name of the original avatar file
- * @property-read string $avatarExtension extension of the avatar file
- * @property-read int $width width of the user avatar image
- * @property-read int $height height of the user avatar image
- * @property-read int|null $userID id of the user to which the user avatar belongs or null
- * @property-read string $fileHash SHA1 hash of the original avatar file
- * @property-read int $hasWebP `1` if there is a WebP variant, else `0`
+ * @property-read   int     $avatarID           unique id of the user avatar
+ * @property-read   string  $avatarName         name of the original avatar file
+ * @property-read   string  $avatarExtension    extension of the avatar file
+ * @property-read   int     $width              width of the user avatar image
+ * @property-read   int     $height             height of the user avatar image
+ * @property-read   ?int    $userID             id of the user to which the user avatar belongs or null
+ * @property-read   string  $fileHash           SHA1 hash of the original avatar file
+ * @property-read   0|1     $hasWebP            `1` if there is a WebP variant, else `0`
  *
  * @deprecated 6.2
  */

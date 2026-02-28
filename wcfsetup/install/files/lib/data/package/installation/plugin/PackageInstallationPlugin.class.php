@@ -12,10 +12,10 @@ use wcf\system\package\plugin\IPackageInstallationPlugin;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   string $pluginName unique name and textual identifier of the package installation plugin
- * @property-read   int|null $packageID  id of the package the which delivers the package installation plugin
- * @property-read   int $priority   priority in which the package installation plugins are installed, `1` for Core package installation plugins (executed first) and `0` for other package installation plugins
- * @property-read   string $className  name of the PHP class implementing `wcf\system\package\plugin\IPackageInstallationPlugin` handling installing and uninstalling handled data
+ * @property-read   string  $pluginName     unique name and textual identifier of the package installation plugin
+ * @property-read   int     $packageID      id of the package the which delivers the package installation plugin
+ * @property-read   int     $priority       priority in which the package installation plugins are installed, `1` for Core package installation plugins (executed first) and `0` for other package installation plugins
+ * @property-read   string  $className      name of the PHP class implementing `wcf\system\package\plugin\IPackageInstallationPlugin` handling installing and uninstalling handled data
  */
 class PackageInstallationPlugin extends DatabaseObject
 {

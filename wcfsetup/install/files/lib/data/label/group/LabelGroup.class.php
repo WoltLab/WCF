@@ -13,12 +13,12 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $groupID        unique id of the label group
- * @property-read   string $groupName      name of the label group or name of language item which contains the label text
- * @property-read   string $groupDescription   description of the label group (only shown in ACP)
- * @property-read   1|0 $forceSelection     is `1` if a label in the label group has to be selected when creating an object for which the label group is available, otherwise `0`
- * @property-read   1|0 $sortAlphabetically is `1` if labels in the label group are sorted alphabetically by their translated name, otherwise `0`
- * @property-read   int $showOrder      position of the label group in relation to the other label groups
+ * @property-read   int     $groupID            unique id of the label group
+ * @property-read   string  $groupName          name of the label group or name of language item which contains the label text
+ * @property-read   string  $groupDescription   description of the label group (only shown in ACP)
+ * @property-read   0|1     $forceSelection     is `1` if a label in the label group has to be selected when creating an object for which the label group is available, otherwise `0`
+ * @property-read   0|1     $sortAlphabetically is `1` if labels in the label group are sorted alphabetically by their translated name, otherwise `0`
+ * @property-read   int     $showOrder          position of the label group in relation to the other label groups
  */
 class LabelGroup extends DatabaseObject implements IRouteController
 {

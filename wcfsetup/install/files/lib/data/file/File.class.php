@@ -21,18 +21,18 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.1
  *
- * @property-read int $fileID
- * @property-read string $filename
- * @property-read int $fileSize
- * @property-read string $fileHash
- * @property-read string $fileExtension
- * @property-read int|null $objectTypeID
- * @property-read string $mimeType
- * @property-read int|null $width
- * @property-read int|null $height
- * @property-read string|null $fileHashWebp
- * @property-read int $uploadTime
- * @property-read string|null $exifData
+ * @property-read   int     $fileID
+ * @property-read   string  $filename
+ * @property-read   int     $fileSize
+ * @property-read   string  $fileHash
+ * @property-read   string  $fileExtension
+ * @property-read   ?int    $objectTypeID
+ * @property-read   string  $mimeType
+ * @property-read   ?int    $width
+ * @property-read   ?int    $height
+ * @property-read   ?string $fileHashWebp
+ * @property-read   ?int    $uploadTime
+ * @property-read   ?string $exifData
  */
 class File extends DatabaseObject implements ITitledLinkObject, IImageDataProvider
 {

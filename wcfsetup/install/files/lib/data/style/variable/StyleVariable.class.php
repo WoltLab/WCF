@@ -11,10 +11,10 @@ use wcf\data\DatabaseObject;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $variableID     unique id of the style variable
- * @property-read   string $variableName       name of the style variable
- * @property-read   string $defaultValue       default value of the style variable
- * @property-read string $defaultValueDarkMode
+ * @property-read   int     $variableID         unique id of the style variable
+ * @property-read   string  $variableName       name of the style variable
+ * @property-read   ?string $defaultValue       default value of the style variable
+ * @property-read   ?string $defaultValueDarkMode
  */
 class StyleVariable extends DatabaseObject
 {

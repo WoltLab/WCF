@@ -15,14 +15,14 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $languageID     unique id of the language
- * @property-read   string $languageCode       code of the language according to ISO 639-1
- * @property-read   string $languageName       name of the language within the language itself
- * @property-read   string $countryCode        code of the country using the language according to ISO 3166-1, used to determine the language's country flag
- * @property-read   int $isDefault      is `1` if the language is the default language, otherwise `0`
- * @property-read   int $hasContent     is `1` if the language can be selected when creating language-specific content, otherwise `0`
- * @property-read   int $isDisabled     is `1` if the language is disabled and thus not selectable, otherwise `0`
- * @property-read string $locale IETF language tag (BCP 47)
+ * @property-read   int     $languageID     unique id of the language
+ * @property-read   string  $languageCode   code of the language according to ISO 639-1
+ * @property-read   string  $languageName   name of the language within the language itself
+ * @property-read   string  $countryCode    code of the country using the language according to ISO 3166-1, used to determine the language's country flag
+ * @property-read   0|1     $isDefault      is `1` if the language is the default language, otherwise `0`
+ * @property-read   0|1     $hasContent     is `1` if the language can be selected when creating language-specific content, otherwise `0`
+ * @property-read   0|1     $isDisabled     is `1` if the language is disabled and thus not selectable, otherwise `0`
+ * @property-read   string  $locale         IETF language tag (BCP 47)
  */
 class Language extends DatabaseObject
 {

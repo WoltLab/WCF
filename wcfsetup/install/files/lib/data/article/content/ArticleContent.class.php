@@ -23,18 +23,18 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   3.0
  *
- * @property-read   int $articleContentID   unique id of the article content
- * @property-read   int $articleID      id of the article the article content belongs to
- * @property-read   ?int $languageID     id of the article content's language
- * @property-read   string $title          title of the article in the associated language
- * @property-read   ?string $content        actual content of the article in the associated language
- * @property-read   ?string $teaser         teaser of the article in the associated language or empty if no teaser exists
- * @property-read   ?int $imageID        id of the (image) media object used as article image for the associated language or `null` if no image is used
- * @property-read   ?int $teaserImageID          id of the (image) media object used as article teaser image for the associated language or `null` if no image is used
- * @property-read   int $hasEmbeddedObjects is `1` if there are embedded objects in the article content, otherwise `0`
- * @property-read       string $metaTitle              title of the article used in the title tag
- * @property-read       string $metaDescription        meta description of the article
- * @property-read   int $comments       number of comments
+ * @property-read   int     $articleContentID   unique id of the article content
+ * @property-read   int     $articleID          id of the article the article content belongs to
+ * @property-read   ?int    $languageID         id of the article content's language
+ * @property-read   string  $title              title of the article in the associated language
+ * @property-read   ?string $content            actual content of the article in the associated language
+ * @property-read   ?string $teaser             teaser of the article in the associated language or empty if no teaser exists
+ * @property-read   ?int    $imageID            id of the (image) media object used as article image for the associated language or `null` if no image is used
+ * @property-read   ?int    $teaserImageID      id of the (image) media object used as article teaser image for the associated language or `null` if no image is used
+ * @property-read   0|1     $hasEmbeddedObjects is `1` if there are embedded objects in the article content, otherwise `0`
+ * @property-read   string  $metaTitle          title of the article used in the title tag
+ * @property-read   string  $metaDescription    meta description of the article
+ * @property-read   int     $comments           number of comments
  */
 class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteController
 {

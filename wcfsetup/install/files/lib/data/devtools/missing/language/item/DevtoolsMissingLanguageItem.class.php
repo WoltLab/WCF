@@ -16,11 +16,11 @@ use wcf\util\JSON;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.3
  *
- * @property-read   int $itemID     unique id of the missing language item log entry
- * @property-read   ?int $languageID id of the language the missing language item was requested for
- * @property-read   string $languageItem   name of the missing language item
- * @property-read   int $lastTime   timestamp of the last time the missing language item was requested
- * @property-read   string $stackTrace stack trace of how the missing language item was requested for the last time
+ * @property-read   int     $itemID         unique id of the missing language item log entry
+ * @property-read   ?int    $languageID     id of the language the missing language item was requested for
+ * @property-read   string  $languageItem   name of the missing language item
+ * @property-read   int     $lastTime       timestamp of the last time the missing language item was requested
+ * @property-read   string  $stackTrace     stack trace of how the missing language item was requested for the last time
  */
 class DevtoolsMissingLanguageItem extends DatabaseObject
 {

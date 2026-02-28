@@ -16,16 +16,16 @@ use wcf\util\JSON;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $likeObjectID       unique id of the liked object
- * @property-read   int $objectTypeID       id of the `com.woltlab.wcf.like.likeableObject` object type
- * @property-read   int $objectID       id of the liked object
- * @property-read   ?int $objectUserID       id of the user who created the liked object or null if user has been deleted or object was created by guest
- * @property-read   int $likes          number of likes of the liked object
- * @property-read   int $dislikes       legacy column, not used anymore
- * @property-read   int $cumulativeLikes    number of likes of the liked object
+ * @property-read   int     $likeObjectID       unique id of the liked object
+ * @property-read   int     $objectTypeID       id of the `com.woltlab.wcf.like.likeableObject` object type
+ * @property-read   int     $objectID           id of the liked object
+ * @property-read   ?int    $objectUserID       id of the user who created the liked object or null if user has been deleted or object was created by guest
+ * @property-read   int     $likes              number of likes of the liked object
+ * @property-read   int     $dislikes           legacy column, not used anymore
+ * @property-read   int     $cumulativeLikes    number of likes of the liked object
  * @property-read   ?string $cachedUsers        serialized array with the ids and names of the three users who liked (+1) the object last
  * @property-read   ?string $cachedReactions    serialized array with the reactionTypeIDs and the count of the reactions
- * @property-read   int $reactionTypeID
+ * @property-read   int     $reactionTypeID
  * @phpstan-type ReactionData array{
  *  reactionCount: int,
  *  renderedReactionIcon: string,

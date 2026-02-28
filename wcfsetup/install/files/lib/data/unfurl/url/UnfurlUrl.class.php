@@ -18,22 +18,22 @@ use wcf\util\Url;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       5.4
  *
- * @property-read int $urlID
- * @property-read string $url
- * @property-read string $urlHash
- * @property-read string $title
- * @property-read ?string $description
- * @property-read string $imageHash
- * @property-read string $imageUrl
- * @property-read ?string $imageUrlHash
- * @property-read ?string $imageExtension
- * @property-read int $width
- * @property-read int $height
- * @property-read int $lastFetch
- * @property-read ?int $imageID
- * @property-read int $isStored
- * @property-read string $status
- * @property-read ?int $fileID
+ * @property-read   int     $urlID
+ * @property-read   string  $url
+ * @property-read   string  $urlHash
+ * @property-read   string  $title
+ * @property-read   ?string $description
+ * @property-read   string  $imageHash
+ * @property-read   string  $imageUrl
+ * @property-read   ?string $imageUrlHash
+ * @property-read   ?string $imageExtension
+ * @property-read   int     $width
+ * @property-read   int     $height
+ * @property-read   int     $lastFetch
+ * @property-read   ?int    $imageID
+ * @property-read   int     $isStored
+ * @property-read   string  $status
+ * @property-read   ?int    $fileID
  */
 class UnfurlUrl extends DatabaseObject
 {

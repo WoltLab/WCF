@@ -20,7 +20,7 @@ use wcf\util\ArrayUtil;
  *
  * @property-read   int     $groupID            unique id of the user group
  * @property-read   string  $groupName          name of the user group or name of language item which contains the name
- * @property-read   string  $groupDescription   description of the user group or name of language item which contains the description
+ * @property-read   ?string $groupDescription   description of the user group or name of language item which contains the description
  * @property-read   int     $groupType          identifier of the type of user group
  * @property-read   int     $priority           priority of the user group used to determine member's user rank and online marking
  * @property-read   string  $userOnlineMarking  HTML code used to print the formatted name of a user group member
