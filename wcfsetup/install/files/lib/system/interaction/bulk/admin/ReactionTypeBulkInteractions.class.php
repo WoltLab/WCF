@@ -42,7 +42,7 @@ final class ReactionTypeBulkInteractions extends AbstractBulkInteractionProvider
                 InteractionConfirmationType::None,
                 '',
                 function (ReactionType $reactionType): bool {
-                    return $reactionType->isAssignable;
+                    return !!$reactionType->isAssignable;
                 }
             ),
         ]);

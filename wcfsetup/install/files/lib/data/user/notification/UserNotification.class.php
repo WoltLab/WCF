@@ -12,19 +12,19 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $notificationID     unique id of the user notification
- * @property-read   int $packageID      deprecated
- * @property-read   int $eventID        id of the user notification event the user notification belongs to
- * @property-read   int $objectID       id of the object that triggered the user notification
- * @property-read   int $baseObjectID       id of a generic base object of object that triggered the user notification or 0 if there is no such base object
- * @property-read   string $eventHash      hash of the event the user notification represents, is used to stack notifications
- * @property-read   int|null $authorID       id of the user that triggered the user notification or null if there is no such user or the user was a guest
- * @property-read   int $timesTriggered     total number of times a stacked notification has been triggered by registered users and guests
- * @property-read   int $guestTimesTriggered    number of times a stacked notification has been triggered by guests
- * @property-read   int $userID         id of the user who receives the user notification
- * @property-read   int $time           timestamp at which the user notification has been created
- * @property-read   int $mailNotified       is 0 has not be notified by mail about the user notification, otherwise 1
- * @property-read   int $confirmTime        timestamp at which the user notification has been marked as confirmed/read
+ * @property-read   int     $notificationID     unique id of the user notification
+ * @property-read   int     $packageID          deprecated
+ * @property-read   int     $eventID            id of the user notification event the user notification belongs to
+ * @property-read   int     $objectID           id of the object that triggered the user notification
+ * @property-read   int     $baseObjectID       id of a generic base object of object that triggered the user notification or 0 if there is no such base object
+ * @property-read   string  $eventHash          hash of the event the user notification represents, is used to stack notifications
+ * @property-read   ?int    $authorID           id of the user that triggered the user notification or null if there is no such user or the user was a guest
+ * @property-read   int     $timesTriggered     total number of times a stacked notification has been triggered by registered users and guests
+ * @property-read   int     $guestTimesTriggered    number of times a stacked notification has been triggered by guests
+ * @property-read   int     $userID             id of the user who receives the user notification
+ * @property-read   int     $time               timestamp at which the user notification has been created
+ * @property-read   0|1     $mailNotified       is `1` if the user has been notified by email about the user notification, otherwise `0`
+ * @property-read   int     $confirmTime        timestamp at which the user notification has been marked as confirmed/read
  * @property-read   mixed[] $additionalData     array with additional data of the user notification event
  */
 class UserNotification extends DatabaseObject

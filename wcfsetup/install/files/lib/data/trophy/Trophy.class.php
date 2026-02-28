@@ -23,20 +23,20 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   3.1
  *
- * @property-read   int $trophyID           unique id for the trophy
- * @property-read   string $title              the trophy title
- * @property-read   string $description            the trophy description
- * @property-read   int $categoryID         the categoryID of the trophy
- * @property-read   int $type               the trophy type
- * @property-read   string $iconFile           the file location of the icon
- * @property-read   string $iconName           the icon name
- * @property-read   string $iconColor          the icon color
- * @property-read   string $badgeColor         the icon badge color
- * @property-read   int $isDisabled         `1` if the trophy is disabled
- * @property-read   int $awardAutomatically     `1` if the trophy is awarded automatically
- * @property-read   int $revokeAutomatically        `1` if the trophy should be automatically revoked once the conditions are no longer met.
- * @property-read   int $trophyUseHtml              `1` if the trophy use a html description
- * @property-read   int $showOrder              position of the trophy in relation to the other trophies at the same location
+ * @property-read   int     $trophyID               unique id for the trophy
+ * @property-read   ?string $title
+ * @property-read   ?string $description
+ * @property-read   int     $categoryID
+ * @property-read   ?int    $type
+ * @property-read   ?string $iconFile
+ * @property-read   ?string $iconName
+ * @property-read   ?string $iconColor
+ * @property-read   ?string $badgeColor
+ * @property-read   0|1     $isDisabled             `1` if the trophy is disabled, otherwise `0`
+ * @property-read   0|1     $awardAutomatically     `1` if the trophy is awarded automatically, otherwise `0`
+ * @property-read   0|1     $revokeAutomatically    `1` if the trophy should be automatically revoked once the conditions are no longer met, otherwise `0`
+ * @property-read   0|1     $trophyUseHtml          `1` if the trophy use a html description, otherwise `0`
+ * @property-read   int     $showOrder              position of the trophy in relation to the other trophies at the same location
  */
 class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteController
 {

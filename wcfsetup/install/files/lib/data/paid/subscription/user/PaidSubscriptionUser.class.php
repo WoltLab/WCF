@@ -14,13 +14,13 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $subscriptionUserID     unique id of the paid subscription-user-association
- * @property-read   int $subscriptionID         id of the paid subscription the paid subscription-user-association belongs to
- * @property-read   int $userID             id of the user the paid subscription-user-association belongs to
- * @property-read   int $startDate          timestamp at which the paid subscription started
- * @property-read   int $endDate            timestamp at which the paid subscription ended or will end
- * @property-read   int $isActive           is `1` if the user's paid subscription is currently active and thus not expired, otherwise `0`
- * @property-read   int $sentExpirationNotification is `1` if the user has been notified that the paid subscription is expiring
+ * @property-read   int     $subscriptionUserID         unique id of the paid subscription-user-association
+ * @property-read   int     $subscriptionID             id of the paid subscription the paid subscription-user-association belongs to
+ * @property-read   int     $userID                     id of the user the paid subscription-user-association belongs to
+ * @property-read   int     $startDate                  timestamp at which the paid subscription started
+ * @property-read   int     $endDate                    timestamp at which the paid subscription ended or will end
+ * @property-read   0|1     $isActive                   is `1` if the user's paid subscription is currently active and thus not expired, otherwise `0`
+ * @property-read   0|1     $sentExpirationNotification is `1` if the user has been notified that the paid subscription is expiring, otherwise `0`
  */
 class PaidSubscriptionUser extends DatabaseObject
 {

@@ -11,8 +11,8 @@ use wcf\data\option\Option;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   string $defaultValue       default value of the user option
- * @property-read   int $usersOnly          is `1` if the option only applies to user groups for registered users, otherwise `1`
+ * @property-read   string  $defaultValue   default value of the user option
+ * @property-read   0|1     $usersOnly      is `1` if the option only applies to user groups for registered users, otherwise `0`
  */
 class UserGroupOption extends Option
 {

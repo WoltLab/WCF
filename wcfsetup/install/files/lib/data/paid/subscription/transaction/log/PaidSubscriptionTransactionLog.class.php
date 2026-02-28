@@ -15,15 +15,15 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $logID              unique id of the paid subscription transaction log entry
- * @property-read   int|null $subscriptionUserID     id of the paid subscription-user-association or `null` if no such association exists
- * @property-read   int|null $userID             id of the user who caused the paid subscription transaction log entry or `null` if the user does not exist anymore
- * @property-read   int $subscriptionID         id of the paid subscription
- * @property-read   int $paymentMethodObjectTypeID  id of the `com.woltlab.wcf.payment.method` object type
- * @property-read   int $logTime            timestamp at which the log has been created
- * @property-read   string $transactionID          identifier of the paid subscription transaction
- * @property-read   string $transactionDetails     serialized details of the paid subscription transaction
- * @property-read   string $logMessage         log message describing the status of the paid subscription transaction
+ * @property-read   int     $logID                      unique id of the paid subscription transaction log entry
+ * @property-read   ?int    $subscriptionUserID         id of the paid subscription-user-association or `null` if no such association exists
+ * @property-read   ?int    $userID                     id of the user who caused the paid subscription transaction log entry or `null` if the user does not exist anymore
+ * @property-read   ?int    $subscriptionID             id of the paid subscription
+ * @property-read   int     $paymentMethodObjectTypeID  id of the `com.woltlab.wcf.payment.method` object type
+ * @property-read   int     $logTime                    timestamp at which the log has been created
+ * @property-read   string  $transactionID              identifier of the paid subscription transaction
+ * @property-read   ?string $transactionDetails         serialized details of the paid subscription transaction
+ * @property-read   string  $logMessage                 log message describing the status of the paid subscription transaction
  */
 class PaidSubscriptionTransactionLog extends DatabaseObject
 {

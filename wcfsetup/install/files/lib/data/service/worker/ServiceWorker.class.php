@@ -11,12 +11,12 @@ use wcf\data\DatabaseObject;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.1
  *
- * @property-read int $workerID
- * @property-read int $userID
- * @property-read string $endpoint
- * @property-read string $publicKey
- * @property-read string $authToken
- * @property-read string $contentEncoding
+ * @property-read   int     $workerID
+ * @property-read   int     $userID
+ * @property-read   string  $endpoint
+ * @property-read   string  $publicKey
+ * @property-read   string  $authToken
+ * @property-read   string  $contentEncoding
  */
 class ServiceWorker extends DatabaseObject implements SubscriptionInterface
 {

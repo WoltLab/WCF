@@ -28,30 +28,30 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   3.0
  *
- * @property-read   int $boxID          unique id of the box
- * @property-read   int|null $objectTypeID       id of the box controller object type
- * @property-read   string $identifier     unique textual identifier of the box
- * @property-read   string $name           monolingual name of the box shown in the ACP
- * @property-read   string $boxType        type of the box which determines the method of outputting its content (default box types are `text`, `html`, `tpl`, `system`)
- * @property-read   string $position       name of the position on the page at which the box is shown
- * @property-read   int $showOrder      position of the box in relation to its siblings
- * @property-read   int $visibleEverywhere  is `1` if the box is visible on every page, otherwise `0`
- * @property-read   int $isMultilingual     is `1` if the box content is available in multiple languages, otherwise `0`
- * @property-read   int $lastUpdateTime     timestamp at which the box has been updated the last time
- * @property-read   string $cssClassName       css class name(s) of the box
- * @property-read   int $showHeader     is `1` if the box header will be shown, otherwise `0`
- * @property-read   int $originIsSystem     is `1` if the box has been delivered by a package, otherwise `0` (i.e. the box has been created in the ACP)
- * @property-read   int $packageID      id of the package which delivers the box or `1` if it has been created in the ACP
- * @property-read   int|null $menuID         id of the menu whose menu items are shown in the contents if `$boxType = menu`, otherwise `null`
- * @property-read   int|null $linkPageID     id of the (internal) page the box image and box title are linking to or `null` if no internal page is linked
- * @property-read   int $linkPageObjectID   id of the object the (internal) page links refers to or `0` if no internal link is used or no specific object is linked
- * @property-read   string $externalURL        external link used to for the box image and box title or empty if no external link is set
+ * @property-read   int     $boxID              unique id of the box
+ * @property-read   ?int    $objectTypeID       id of the box controller object type
+ * @property-read   string  $identifier         unique textual identifier of the box
+ * @property-read   string  $name               monolingual name of the box shown in the ACP
+ * @property-read   string  $boxType            type of the box which determines the method of outputting its content (default box types are `text`, `html`, `tpl`, `system`)
+ * @property-read   string  $position           name of the position on the page at which the box is shown
+ * @property-read   int     $showOrder          position of the box in relation to its siblings
+ * @property-read   0|1     $visibleEverywhere  is `1` if the box is visible on every page, otherwise `0`
+ * @property-read   0|1     $isMultilingual     is `1` if the box content is available in multiple languages, otherwise `0`
+ * @property-read   int     $lastUpdateTime     timestamp at which the box has been updated the last time
+ * @property-read   string  $cssClassName       css class name(s) of the box
+ * @property-read   0|1     $showHeader         is `1` if the box header will be shown, otherwise `0`
+ * @property-read   0|1     $originIsSystem     is `1` if the box has been delivered by a package, otherwise `0` (i.e. the box has been created in the ACP)
+ * @property-read   int     $packageID          id of the package which delivers the box or `1` if it has been created in the ACP
+ * @property-read   ?int    $menuID             id of the menu whose menu items are shown in the contents if `$boxType = menu`, otherwise `null`
+ * @property-read   ?int    $linkPageID         id of the (internal) page the box image and box title are linking to or `null` if no internal page is linked
+ * @property-read   int     $linkPageObjectID   id of the object the (internal) page links refers to or `0` if no internal link is used or no specific object is linked
+ * @property-read   string  $externalURL        external link used to for the box image and box title or empty if no external link is set
  * @property-read   mixed[] $additionalData     array with additional data of the box
- * @property-read   int|null $limit          number of objects shown in the box for `AbstractDatabaseObjectListBoxController` controllers or `null` otherwise
- * @property-read   string|null $sortField      sort field of the objects shown in the box for `AbstractDatabaseObjectListBoxController` controllers or `null` otherwise
- * @property-read   string|null $sortOrder      sort order of the objects shown in the box for `AbstractDatabaseObjectListBoxController` controllers or `null` otherwise
- * @property-read   int $isDisabled     is `1` if the box is disabled and thus is not displayed, otherwise `0`
- * @property-read   int $invertPermissions     is `1` if the permissions are inverted
+ * @property-read   ?int    $limit              number of objects shown in the box for `AbstractDatabaseObjectListBoxController` controllers or `null` otherwise
+ * @property-read   ?string $sortField          sort field of the objects shown in the box for `AbstractDatabaseObjectListBoxController` controllers or `null` otherwise
+ * @property-read   ?string $sortOrder          sort order of the objects shown in the box for `AbstractDatabaseObjectListBoxController` controllers or `null` otherwise
+ * @property-read   0|1     $isDisabled         is `1` if the box is disabled and thus is not displayed, otherwise `0`
+ * @property-read   0|1     $invertPermissions  is `1` if the permissions are inverted
  */
 class Box extends DatabaseObject
 {

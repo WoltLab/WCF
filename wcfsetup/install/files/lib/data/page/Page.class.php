@@ -28,31 +28,31 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   3.0
  *
- * @property-read   int $pageID                 unique id of the page
- * @property-read   ?int $parentPageID               id of the page's parent page or `null` if it has no parent page
- * @property-read   string $identifier             unique textual identifier of the page
- * @property-read   string $name                   monolingual name of the page shown in the ACP
- * @property-read   string $pageType               type of the page, default types: `text`, `html`, `tpl` `system`
- * @property-read   int $isDisabled             is `1` if the page is disabled and thus cannot be accessed, otherwise `0`
- * @property-read   int $isMultilingual             is `1` if the page is available in different languages, otherwise `0`
- * @property-read   int $originIsSystem             is `1` if the page has been delivered by a package, otherwise `0` (i.e. the page has been created in the ACP)
- * @property-read   int $packageID              id of the package the which delivers the page or `1` if it has been created in the ACP
- * @property-read   ?int $applicationPackageID           id of the package of the application the pages belongs to
- * @property-read   ?int $overrideApplicationPackageID   id of the package of the application that the page virtually belongs to
- * @property-read   string $controller             name of the page controller class
- * @property-read   string $handler                name of the page handler class for `system` pages or empty
- * @property-read   string $controllerCustomURL            custom url of the page
- * @property-read   int $requireObjectID            is `1` if the page requires an object id parameter, otherwise `0`
- * @property-read   int $hasFixedParent             is `1` if the page's parent page cannot be changed, otherwise `0`
- * @property-read   int $lastUpdateTime             timestamp at which the page has been updated the last time
- * @property-read   string $cssClassName               css class name(s) of the page
- * @property-read   int $availableDuringOfflineMode     is `1` if the page is available during offline mode, otherwise `0`
- * @property-read   int $allowSpidersToIndex            is `1` if the page is accessible for search spiders, otherwise `0`
- * @property-read   int $excludeFromLandingPage         is `1` if the page can never be set as landing page, otherwise `0`
- * @property-read   int $enableShareButtons             is `1` if the page should display share buttons, otherwise `0`
+ * @property-read   int     $pageID                     unique id of the page
+ * @property-read   ?int    $parentPageID               id of the page's parent page or `null` if it has no parent page
+ * @property-read   string  $identifier                 unique textual identifier of the page
+ * @property-read   string  $name                       monolingual name of the page shown in the ACP
+ * @property-read   string  $pageType                   type of the page, default types: `text`, `html`, `tpl` `system`
+ * @property-read   0|1     $isDisabled                 is `1` if the page is disabled and thus cannot be accessed, otherwise `0`
+ * @property-read   0|1     $isMultilingual             is `1` if the page is available in different languages, otherwise `0`
+ * @property-read   0|1     $originIsSystem             is `1` if the page has been delivered by a package, otherwise `0` (i.e. the page has been created in the ACP)
+ * @property-read   int     $packageID                  id of the package the which delivers the page or `1` if it has been created in the ACP
+ * @property-read   ?int    $applicationPackageID       id of the package of the application the pages belongs to
+ * @property-read   ?int    $overrideApplicationPackageID   id of the package of the application that the page virtually belongs to
+ * @property-read   string  $controller                 name of the page controller class
+ * @property-read   string  $handler                    name of the page handler class for `system` pages or empty
+ * @property-read   string  $controllerCustomURL        custom url of the page
+ * @property-read   0|1     $requireObjectID            is `1` if the page requires an object id parameter, otherwise `0`
+ * @property-read   0|1     $hasFixedParent             is `1` if the page's parent page cannot be changed, otherwise `0`
+ * @property-read   int     $lastUpdateTime             timestamp at which the page has been updated the last time
+ * @property-read   string  $cssClassName               css class name(s) of the page
+ * @property-read   0|1     $availableDuringOfflineMode is `1` if the page is available during offline mode, otherwise `0`
+ * @property-read   0|1     $allowSpidersToIndex        is `1` if the page is accessible for search spiders, otherwise `0`
+ * @property-read   0|1     $excludeFromLandingPage     is `1` if the page can never be set as landing page, otherwise `0`
+ * @property-read   0|1     $enableShareButtons         is `1` if the page should display share buttons, otherwise `0`
  * @property-read   ?string $permissions                comma separated list of user group permissions of which the active user needs to have at least one to access the page
- * @property-read   ?string $options                comma separated list of options of which at least one needs to be enabled for the page to be accessible
- * @property-read   int $invertPermissions                is `1` if the permissions are inverted
+ * @property-read   ?string $options                    comma separated list of options of which at least one needs to be enabled for the page to be accessible
+ * @property-read   0|1     $invertPermissions          is `1` if the permissions are inverted, otherwise `0`
  */
 class Page extends DatabaseObject implements ILinkableObject, ITitledObject
 {
