@@ -30,7 +30,6 @@ class UserIntegerPropertyCondition extends AbstractIntegerCondition implements
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData): void
     {
         if (isset($conditionData['greaterThan'])) {
-            /** @noinspection PhpUndefinedFieldInspection */
             $objectList->getConditionBuilder()->add(
                 'user_table.' . $this->getDecoratedObject()->propertyname . ' > ?',
                 [$conditionData['greaterThan']]

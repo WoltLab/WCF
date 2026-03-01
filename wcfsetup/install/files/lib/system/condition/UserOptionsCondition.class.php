@@ -70,7 +70,6 @@ class UserOptionsCondition extends AbstractMultipleFieldsCondition implements
      */
     public function checkUser(Condition $condition, User $user)
     {
-        /** @noinspection PhpUndefinedFieldInspection */
         $optionValues = $condition->optionValues;
 
         $checkSuccess = true;

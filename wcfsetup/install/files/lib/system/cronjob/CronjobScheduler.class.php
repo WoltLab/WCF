@@ -117,7 +117,6 @@ final class CronjobScheduler extends SingletonFactory
     private function resetFailedCronjobs(): void
     {
         WCF::getDB()->beginTransaction();
-        /** @noinspection PhpUnusedLocalVariableInspection */
         $committed = false;
         try {
             $sql = "SELECT      *
@@ -209,7 +208,6 @@ final class CronjobScheduler extends SingletonFactory
     private function loadCronjobs(): array
     {
         WCF::getDB()->beginTransaction();
-        /** @noinspection PhpUnusedLocalVariableInspection */
         $committed = false;
         try {
             $sql = "SELECT      *

@@ -251,7 +251,6 @@ class ClipboardHandler extends SingletonFactory
             }
 
             if (!isset($data[$objectType->objectType])) {
-                /** @noinspection PhpUndefinedFieldInspection */
                 $listClassName = $objectType->listclassname;
                 if ($listClassName == '') {
                     throw new SystemException("Missing list class for object type '" . $objectType->objectType . "'");
@@ -281,7 +280,6 @@ class ClipboardHandler extends SingletonFactory
             // validate object ids against loaded items (check for zombie object ids)
             $indexName = $objectList->getDatabaseTableIndexName();
             foreach ($this->markedItems[$objectType] as $object) {
-                /** @noinspection PhpVariableVariableInspection */
                 $index = \array_search($object->{$indexName}, $objectData['objectIDs']);
                 unset($objectData['objectIDs'][$index]);
             }

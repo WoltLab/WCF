@@ -106,12 +106,10 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         $values = [];
         if (!empty($data[Like::LIKE])) {
             $values[Like::LIKE] = new GroupedUserList(WCF::getLanguage()->get('wcf.like.details.like'));
-            /** @noinspection PhpUndefinedMethodInspection */
             $values[Like::LIKE]->addUserIDs($data[Like::LIKE]);
         }
         if (!empty($data[Like::DISLIKE])) {
             $values[Like::DISLIKE] = new GroupedUserList(WCF::getLanguage()->get('wcf.like.details.dislike'));
-            /** @noinspection PhpUndefinedMethodInspection */
             $values[Like::DISLIKE]->addUserIDs($data[Like::DISLIKE]);
         }
 
@@ -300,12 +298,10 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         $values = [];
         if (!empty($data[Like::LIKE])) {
             $values[Like::LIKE] = new GroupedUserList(WCF::getLanguage()->get('wcf.like.details.like'));
-            /** @noinspection PhpUndefinedMethodInspection */
             $values[Like::LIKE]->addUserIDs($data[Like::LIKE]);
         }
         if (!empty($data[Like::DISLIKE])) {
             $values[Like::DISLIKE] = new GroupedUserList(WCF::getLanguage()->get('wcf.like.details.dislike'));
-            /** @noinspection PhpUndefinedMethodInspection */
             $values[Like::DISLIKE]->addUserIDs($data[Like::DISLIKE]);
         }
 

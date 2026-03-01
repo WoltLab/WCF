@@ -31,7 +31,6 @@ final class PaypalCallbackAction extends AbstractAction
         $processor = null;
         try {
             // post back to paypal to validate
-            /** @noinspection PhpUnusedLocalVariableInspection */
             $content = '';
             try {
                 $url = 'https://www.paypal.com/cgi-bin/webscr';

@@ -1,4 +1,5 @@
 <?php // @codingStandardsIgnoreFile
+
 /**
  * This script tries to find the temp folder and unzip all setup files into.
  *
@@ -532,7 +533,6 @@ set_error_handler(static function ($severity, $message, $file, $line) {
 	throw new ErrorException($message, 0, $severity, $file, $line);
 }, E_ALL);
 
-/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * A SystemException is thrown when an unexpected error occurs.
  *
@@ -573,9 +573,7 @@ class SystemException extends \Exception
 	 * Prints this exception.
 	 * This method is called by WCF::handleException().
 	 */
-	public function show()
-	{
-	}
+	public function show() {}
 }
 
 /**
@@ -633,7 +631,6 @@ function wcfDebug()
 	exit;
 }
 
-/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * BasicFileUtil contains file-related functions.
  *
@@ -760,7 +757,6 @@ class BasicFileUtil
 	}
 }
 
-/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * Opens tar or tar.gz archives.
  *
@@ -1124,7 +1120,6 @@ class Tar
 	}
 }
 
-/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * The File class handles all file operations.
  *
@@ -1185,7 +1180,6 @@ class File
 	}
 }
 
-/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * The File class handles all file operations on a zipped file.
  *
@@ -1193,7 +1187,6 @@ class File
  */
 final class GZipFile extends File
 {
-	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * Opens a gzip file.
 	 *

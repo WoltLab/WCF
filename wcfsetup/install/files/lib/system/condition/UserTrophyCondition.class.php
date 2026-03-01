@@ -182,7 +182,6 @@ HTML;
 
         $returnValue = "";
         foreach ($trophies as $trophy) {
-            /** @noinspection PhpVariableVariableInspection */
             $returnValue .= "<label><input type=\"checkbox\" name=\"" . $identifier . "[]\" value=\"" . $trophy->trophyID . "\"" . (\in_array(
                 $trophy->trophyID,
                 $this->{$identifier}

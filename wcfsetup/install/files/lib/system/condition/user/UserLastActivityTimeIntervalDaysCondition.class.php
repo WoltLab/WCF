@@ -170,13 +170,11 @@ HTML;
      */
     public function setData(Condition $condition)
     {
-        /** @noinspection PhpUndefinedFieldInspection */
         $endDays = $condition->endDays;
         if ($endDays) {
             $this->endDays = $endDays;
         }
 
-        /** @noinspection PhpUndefinedFieldInspection */
         $startDays = $condition->startDays;
         if ($startDays) {
             $this->startDays = $startDays;

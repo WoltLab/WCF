@@ -76,8 +76,6 @@ final class WCFSetup extends WCF
      */
     protected static $developerMode = 0;
 
-    /** @noinspection PhpMissingParentConstructorInspection */
-
     /**
      * Calls all init functions of the WCFSetup class and starts the setup process.
      */
@@ -1060,7 +1058,6 @@ final class WCFSetup extends WCF
 
             \rename($from, $to);
 
-            /** @noinspection PhpUndefinedVariableInspection */
             $queue = PackageInstallationQueueEditor::create([
                 'parentQueueID' => $queue->queueID,
                 'processNo' => $processNo,

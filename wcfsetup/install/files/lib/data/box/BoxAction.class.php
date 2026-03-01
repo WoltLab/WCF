@@ -74,7 +74,6 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
         if (!empty($this->parameters['content'])) {
             foreach ($this->parameters['content'] as $languageID => $content) {
                 if (!empty($content['htmlInputProcessor'])) {
-                    /** @noinspection PhpUndefinedMethodInspection */
                     $content['content'] = $content['htmlInputProcessor']->getHtml();
                 }
 
@@ -90,7 +89,6 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
 
                 // save embedded objects
                 if (!empty($content['htmlInputProcessor'])) {
-                    /** @noinspection PhpUndefinedMethodInspection */
                     $content['htmlInputProcessor']->setObjectID($boxContent->boxContentID);
                     if (MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
                         $boxContentEditor->update(['hasEmbeddedObjects' => 1]);
@@ -157,7 +155,6 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
 
                 foreach ($this->parameters['content'] as $languageID => $content) {
                     if (!empty($content['htmlInputProcessor'])) {
-                        /** @noinspection PhpUndefinedMethodInspection */
                         $content['content'] = $content['htmlInputProcessor']->getHtml();
                     }
 
@@ -195,7 +192,6 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
 
                     // save embedded objects
                     if (!empty($content['htmlInputProcessor'])) {
-                        /** @noinspection PhpUndefinedMethodInspection */
                         $content['htmlInputProcessor']->setObjectID($boxContent->boxContentID);
                         if ($boxContent->hasEmbeddedObjects != MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
                             $boxContentEditor->update(['hasEmbeddedObjects' => $boxContent->hasEmbeddedObjects ? 0 : 1]);
