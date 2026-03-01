@@ -30,8 +30,6 @@ class Template extends DatabaseObject
      */
     protected static $systemCriticalTemplates = ['headIncludeJavaScript', 'shared_wysiwyg', 'wysiwygToolbar'];
 
-    /** @noinspection PhpMissingParentConstructorInspection */
-
     /**
      * @inheritDoc
      */

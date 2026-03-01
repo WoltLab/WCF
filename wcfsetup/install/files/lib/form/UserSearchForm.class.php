@@ -83,7 +83,6 @@ class UserSearchForm extends UserOptionListForm
      */
     protected function initOptionHandler()
     {
-        /** @noinspection PhpUndefinedMethodInspection */
         $this->optionHandler->enableSearchMode();
         $this->optionHandler->init();
     }

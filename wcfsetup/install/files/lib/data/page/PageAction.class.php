@@ -85,7 +85,6 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
         if (!empty($this->parameters['content'])) {
             foreach ($this->parameters['content'] as $languageID => $content) {
                 if (!empty($content['htmlInputProcessor'])) {
-                    /** @noinspection PhpUndefinedMethodInspection */
                     $content['content'] = $content['htmlInputProcessor']->getHtml();
                 }
 
@@ -116,7 +115,6 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 
                 // save embedded objects
                 if (!empty($content['htmlInputProcessor'])) {
-                    /** @noinspection PhpUndefinedMethodInspection */
                     $content['htmlInputProcessor']->setObjectID($pageContent->pageContentID);
                     if (MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
                         $pageContentEditor->update(['hasEmbeddedObjects' => 1]);
@@ -175,7 +173,6 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 
                 foreach ($this->parameters['content'] as $languageID => $content) {
                     if (!empty($content['htmlInputProcessor'])) {
-                        /** @noinspection PhpUndefinedMethodInspection */
                         $content['content'] = $content['htmlInputProcessor']->getHtml();
                     }
 
@@ -232,7 +229,6 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 
                     // save embedded objects
                     if (!empty($content['htmlInputProcessor'])) {
-                        /** @noinspection PhpUndefinedMethodInspection */
                         $content['htmlInputProcessor']->setObjectID($pageContent->pageContentID);
                         if ($pageContent->hasEmbeddedObjects != MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
                             $pageContentEditor->update(['hasEmbeddedObjects' => $pageContent->hasEmbeddedObjects ? 0 : 1]);

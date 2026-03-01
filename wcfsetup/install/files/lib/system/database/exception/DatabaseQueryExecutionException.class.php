@@ -36,8 +36,6 @@ class DatabaseQueryExecutionException extends DatabaseQueryException implements 
      */
     protected $driverCode;
 
-    /** @noinspection PhpMissingParentConstructorInspection */
-
     /**
      * @param string $message
      * @param ParameterValues $parameters

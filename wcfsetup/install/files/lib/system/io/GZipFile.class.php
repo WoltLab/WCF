@@ -16,8 +16,6 @@ use wcf\system\exception\SystemException;
  */
 final class GZipFile extends File
 {
-    /** @noinspection PhpMissingParentConstructorInspection */
-
     /**
      * Opens a gzip file.
      *

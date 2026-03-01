@@ -43,8 +43,6 @@ class RemoteFile extends File
      */
     private static $hasSSLSupport;
 
-    /** @noinspection PhpMissingParentConstructorInspection */
-
     /**
      * Opens a new connection to a remote host.
      *
@@ -181,7 +179,5 @@ class RemoteFile extends File
      * @return void
      * @deprecated 6.0 See RemoteFile::supportsSSL(). The implementation is a noop.
      */
-    public static function disableSSL()
-    {
-    }
+    public static function disableSSL() {}
 }

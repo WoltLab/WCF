@@ -54,7 +54,6 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
                 $this->parameters['data']['endDate'] = 0;
             } else {
                 $d = DateUtil::getDateTimeByTimestamp($this->parameters['data']['startDate']);
-                /** @noinspection PhpUndefinedMethodInspection */
                 $d->add($this->parameters['subscription']->getDateInterval());
                 $this->parameters['data']['endDate'] = $d->getTimestamp();
             }

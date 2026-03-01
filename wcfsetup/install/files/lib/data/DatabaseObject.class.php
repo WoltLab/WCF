@@ -229,7 +229,6 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
     {
         $sortArray = $objects2 = [];
         foreach ($objects as $idx => $obj) {
-            /** @noinspection PhpVariableVariableInspection */
             $sortArray[$idx] = $obj->{$sortBy};
 
             // array_multisort will drop index association if key is not a string

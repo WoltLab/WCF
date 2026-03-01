@@ -127,7 +127,6 @@ final class WysiwygFormField extends AbstractFormField implements
      */
     public function getFieldHtml()
     {
-        /** @noinspection PhpUndefinedFieldInspection */
         $disallowedBBCodesPermission = $this->getObjectType()->disallowedBBCodesPermission;
         if ($disallowedBBCodesPermission === null) {
             $disallowedBBCodesPermission = 'user.message.disallowedBBCodes';
@@ -350,7 +349,6 @@ final class WysiwygFormField extends AbstractFormField implements
      */
     public function validate()
     {
-        /** @noinspection PhpUndefinedFieldInspection */
         $disallowedBBCodesPermission = $this->getObjectType()->disallowedBBCodesPermission;
         if ($disallowedBBCodesPermission === null) {
             $disallowedBBCodesPermission = 'user.message.disallowedBBCodes';

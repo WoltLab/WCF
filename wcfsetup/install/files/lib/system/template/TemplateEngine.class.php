@@ -664,7 +664,6 @@ class TemplateEngine extends SingletonFactory
      */
     public function getSourceContent($sourceFilename)
     {
-        /** @noinspection PhpUnusedLocalVariableInspection */
         $sourceContent = '';
         if (!\file_exists($sourceFilename) || (($sourceContent = @\file_get_contents($sourceFilename)) === false)) {
             throw new SystemException("Could not open template '{$sourceFilename}' for reading");

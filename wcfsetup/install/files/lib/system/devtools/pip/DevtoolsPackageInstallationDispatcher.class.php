@@ -95,7 +95,6 @@ class DevtoolsPackageInstallationDispatcher extends PackageInstallationDispatche
      */
     public function extractFiles($targetDir, $sourceArchive, $fileHandler = null)
     {
-        /** @noinspection PhpParamsInspection */
         return new DevtoolsInstaller($this->project, $targetDir, $sourceArchive, $fileHandler);
     }
 

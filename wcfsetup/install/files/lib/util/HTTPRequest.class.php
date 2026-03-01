@@ -121,7 +121,6 @@ final class HTTPRequest
                         \RecursiveIteratorIterator::SELF_FIRST
                     );
                     foreach ($iterator as $v) {
-                        /** @noinspection PhpUndefinedMethodInspection */
                         if (!$iterator->hasChildren()) {
                             $key = '';
                             for ($i = 0, $max = $iterator->getDepth(); $i <= $max; $i++) {
@@ -144,7 +143,6 @@ final class HTTPRequest
                     \RecursiveIteratorIterator::SELF_FIRST
                 );
                 foreach ($iterator as $k => $v) {
-                    /** @noinspection PhpUndefinedMethodInspection */
                     if (!$iterator->hasChildren()) {
                         $key = '';
                         for ($i = 0, $max = $iterator->getDepth(); $i <= $max; $i++) {

@@ -184,7 +184,6 @@ HTML;
 
         $returnValue = '<ul class="scrollableCheckboxList">';
         foreach ($userGroups as $userGroup) {
-            /** @noinspection PhpVariableVariableInspection */
             $returnValue .= "<li><label><input type=\"checkbox\" name=\"" . $identifier . "[]\" value=\"" . $userGroup->groupID . "\"" . (\in_array(
                 $userGroup->groupID,
                 $this->{$identifier}

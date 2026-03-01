@@ -98,13 +98,11 @@ class UserStateCondition extends AbstractSingleFieldCondition implements
      */
     public function checkUser(Condition $condition, User $user)
     {
-        /** @noinspection PhpUndefinedFieldInspection */
         $userIsBanned = $condition->userIsBanned;
         if ($userIsBanned !== null && $user->banned != $userIsBanned) {
             return false;
         }
 
-        /** @noinspection PhpUndefinedFieldInspection */
         $userIsEnabled = $condition->userIsEnabled;
         if ($userIsEnabled !== null) {
             if ($userIsEnabled && $user->pendingActivation()) {
@@ -114,7 +112,6 @@ class UserStateCondition extends AbstractSingleFieldCondition implements
             }
         }
 
-        /** @noinspection PhpUndefinedFieldInspection */
         $userIsEmailConfirmed = $condition->userIsEmailConfirmed;
         if ($userIsEmailConfirmed !== null) {
             if ($userIsEmailConfirmed && !$user->isEmailConfirmed()) {
@@ -165,7 +162,6 @@ class UserStateCondition extends AbstractSingleFieldCondition implements
      */
     protected function getCheckedAttribute($propertyName)
     {
-        /** @noinspection PhpVariableVariableInspection */
         if ($this->{$propertyName}) {
             return ' checked';
         }

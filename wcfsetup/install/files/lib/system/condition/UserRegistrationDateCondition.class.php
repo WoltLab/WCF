@@ -78,7 +78,6 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
      */
     public function checkUser(Condition $condition, User $user)
     {
-        /** @noinspection PhpUndefinedFieldInspection */
         $dateStart = $condition->registrationDateStart;
         if ($dateStart !== null) {
             $registrationDateStart = \DateTime::createFromFormat(
@@ -94,7 +93,6 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
             }
         }
 
-        /** @noinspection PhpUndefinedFieldInspection */
         $dateEnd = $condition->registrationDateEnd;
         if ($dateEnd !== null) {
             $registrationDateEnd = \DateTime::createFromFormat(
@@ -175,13 +173,11 @@ HTML;
      */
     public function setData(Condition $condition)
     {
-        /** @noinspection PhpUndefinedFieldInspection */
         $registrationDateEnd = $condition->registrationDateEnd;
         if ($registrationDateEnd) {
             $this->registrationDateEnd = $registrationDateEnd;
         }
 
-        /** @noinspection PhpUndefinedFieldInspection */
         $registrationDateStart = $condition->registrationDateStart;
         if ($registrationDateStart) {
             $this->registrationDateStart = $registrationDateStart;

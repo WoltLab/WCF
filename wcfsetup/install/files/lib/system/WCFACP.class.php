@@ -32,8 +32,6 @@ class WCFACP extends WCF
      */
     protected static string $rescueModePageURL;
 
-    /** @noinspection PhpMissingParentConstructorInspection */
-
     /**
      * Calls all init functions of the WCF and the WCFACP class.
      */

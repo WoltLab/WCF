@@ -34,7 +34,6 @@ abstract class AbstractMultiCategoryCondition extends AbstractMultiSelectConditi
      */
     protected function getFieldElement()
     {
-        /** @noinspection PhpUndefinedMethodInspection */
         $categoryTree = (new $this->nodeTreeClassname($this->objectType))->getIterator();
         $categoryCount = \iterator_count($categoryTree);
 

@@ -50,7 +50,6 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         $this->readBoolean('imagesOnly', true);
         $this->readInteger('categoryID', true);
 
-        /** @noinspection PhpUndefinedMethodInspection */
         $this->parameters['__files']->validateFiles(new MediaUploadFileValidationStrategy($this->parameters['imagesOnly']));
 
         if ($this->parameters['categoryID']) {
@@ -77,7 +76,6 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             'rotateImages' => true,
         ], $additionalData);
 
-        /** @noinspection PhpUndefinedMethodInspection */
         $this->parameters['__files']->saveFiles($saveStrategy);
 
         /** @var Media[] $mediaFiles */
@@ -106,7 +104,6 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         }
 
         /** @var UploadFile[] $files */
-        /** @noinspection PhpUndefinedMethodInspection */
         $files = $this->parameters['__files']->getFiles();
         foreach ($files as $file) {
             if ($file->getValidationErrorType()) {
@@ -480,11 +477,9 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
                         if (isset($this->parameters[$type])) {
                             if (\is_array($this->parameters[$type])) {
                                 if (isset($this->parameters[$type][$language->languageID])) {
-                                    /** @noinspection PhpVariableVariableInspection */
                                     ${$type} = $this->parameters[$type][$language->languageID];
                                 }
                             } else {
-                                /** @noinspection PhpVariableVariableInspection */
                                 ${$type} = $this->parameters[$type];
                             }
                         }
@@ -760,7 +755,6 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 
         $this->getSingleObject();
 
-        /** @noinspection PhpUndefinedMethodInspection */
         $this->parameters['__files']->validateFiles(
             new MediaReplaceUploadFileValidationStrategy($this->getSingleObject()->getDecoratedObject())
         );
@@ -809,7 +803,6 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             'largeThumbnailHeight' => 0,
         ]);
 
-        /** @noinspection PhpUndefinedMethodInspection */
         $this->parameters['__files']->saveFiles($saveStrategy);
 
         /** @var Media[] $mediaFiles */
@@ -838,7 +831,6 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         }
 
         /** @var UploadFile[] $files */
-        /** @noinspection PhpUndefinedMethodInspection */
         $files = $this->parameters['__files']->getFiles();
         foreach ($files as $file) {
             if ($file->getValidationErrorType()) {

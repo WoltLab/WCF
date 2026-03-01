@@ -99,7 +99,6 @@ class AJAXProxyAction extends AJAXInvokeAction
     {
         // add benchmark and debug data
         if (ENABLE_BENCHMARK) {
-            /** @noinspection PhpUndefinedMethodInspection */
             $this->response['benchmark'] = [
                 'executionTime' => WCF::getBenchmark()->getExecutionTime() . 's',
                 'memoryUsage' => WCF::getBenchmark()->getMemoryUsage(),
@@ -109,7 +108,6 @@ class AJAXProxyAction extends AJAXInvokeAction
             ];
 
             if (ENABLE_DEBUG_MODE) {
-                /** @noinspection PhpUndefinedMethodInspection */
                 $this->response['benchmark']['items'] = WCF::getBenchmark()->getItems();
             }
         }

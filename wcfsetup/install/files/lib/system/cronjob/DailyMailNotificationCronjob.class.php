@@ -143,7 +143,6 @@ class DailyMailNotificationCronjob extends AbstractCronjob
 
         // load objects associated with each object type
         foreach ($objectTypes as $objectType => $objectData) {
-            /** @noinspection PhpUndefinedMethodInspection */
             $objectTypes[$objectType]['objects'] = $objectData['objectType']->getObjectsByIDs($objectData['objectIDs']);
         }
 

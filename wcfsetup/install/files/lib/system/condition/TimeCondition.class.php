@@ -148,19 +148,16 @@ HTML;
      */
     public function setData(Condition $condition)
     {
-        /** @noinspection PhpUndefinedFieldInspection */
         $endTime = $condition->endTime;
         if ($endTime) {
             $this->endTime = $endTime;
         }
 
-        /** @noinspection PhpUndefinedFieldInspection */
         $startTime = $condition->startTime;
         if ($startTime) {
             $this->startTime = $startTime;
         }
 
-        /** @noinspection PhpUndefinedFieldInspection */
         $timezone = $condition->timezone;
         if ($timezone) {
             $this->timezone = $timezone;
@@ -217,13 +214,11 @@ HTML;
     public function showContent(Condition $condition)
     {
         $timezone = WCF::getUser()->getTimeZone();
-        /** @noinspection PhpUndefinedFieldInspection */
         $conditionTimezone = $condition->timezone;
         if ($conditionTimezone) {
             $timezone = new \DateTimeZone($conditionTimezone);
         }
 
-        /** @noinspection PhpUndefinedFieldInspection */
         $startTime = $condition->startTime;
         if ($startTime) {
             $dateTime = \DateTimeImmutable::createFromFormat('H:i', $startTime, $timezone);
@@ -232,7 +227,6 @@ HTML;
             }
         }
 
-        /** @noinspection PhpUndefinedFieldInspection */
         $endTime = $condition->endTime;
         if ($endTime) {
             $dateTime = \DateTimeImmutable::createFromFormat('H:i', $endTime, $timezone);

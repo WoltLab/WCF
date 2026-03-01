@@ -141,7 +141,6 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
                     throw new SystemException('invalid value of parameter objects given');
                 }
 
-                /** @noinspection PhpVariableVariableInspection */
                 $this->objectIDs[] = $object->{$indexName};
             } else {
                 $this->objectIDs[] = $object;

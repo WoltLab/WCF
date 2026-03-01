@@ -24,7 +24,6 @@ class CaptchaSelectOptionType extends AbstractOptionType
     {
         RecaptchaHandler::$forceIsAvailable = true;
         $selectOptions = CaptchaHandler::getInstance()->getCaptchaSelection();
-        /** @noinspection PhpUndefinedFieldInspection */
         if ($option->allowemptyvalue) {
             $selectOptions = \array_merge(
                 ['' => WCF::getLanguage()->get('wcf.captcha.useNoCaptcha')],

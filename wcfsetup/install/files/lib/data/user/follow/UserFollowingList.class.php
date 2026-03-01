@@ -16,8 +16,6 @@ class UserFollowingList extends UserFollowerList
      */
     public $useQualifiedShorthand = false;
 
-    /** @noinspection PhpMissingParentConstructorInspection */
-
     /**
      * @inheritDoc
      */
