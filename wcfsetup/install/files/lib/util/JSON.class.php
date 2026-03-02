@@ -7,14 +7,17 @@ use wcf\system\exception\SystemException;
 /**
  * Provides methods for JSON.
  *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Alexander Ebert
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated  6.2 Use `\json_encode($data, \JSON_THROW_ON_ERROR)` and `\json_decode($json, flags: \JSON_THROW_ON_ERROR)` instead.
  */
 final class JSON
 {
     /**
      * Returns the JSON representation of a value.
+     *
+     * @deprecated 6.2 Use `\json_encode($data, \JSON_THROW_ON_ERROR)` instead.
      */
     public static function encode(mixed $data, int $options = 0): string
     {
@@ -24,10 +27,11 @@ final class JSON
     /**
      * Decodes a JSON string.
      *
-     * @return mixed[]
+     * @return ($asArray is true ? mixed[] : \stdClass)
      * @throws  SystemException
+     * @deprecated 6.2 Use `\json_decode($json, flags: \JSON_THROW_ON_ERROR)` instead.
      */
-    public static function decode(string $json, bool $asArray = true): array
+    public static function decode(string $json, bool $asArray = true): array|\stdClass
     {
         $data = @\json_decode($json, $asArray);
 
