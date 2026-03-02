@@ -119,32 +119,32 @@ final class UserTrophyGridView extends AbstractGridView
 
     private function getTrophySelectFilter(): SelectFilter
     {
-        return new class([], 'trophyID', 'wcf.acp.trophy') extends SelectFilter {
+        $options = [];
+        foreach (TrophyCategoryCache::getInstance()->getCategories() as $category) {
+            $options['category_' . $category->categoryID] = [
+                "value" => 'category_' . $category->categoryID,
+                "label" => $category->getTitle(),
+                "depth" => 0,
+                "isSelectable" => false,
+            ];
+
+            foreach ($category->getTrophies() as $trophy) {
+                $options[$trophy->trophyID] = [
+                    "value" => $trophy->trophyID,
+                    "label" => $trophy->getTitle(),
+                    "depth" => 1,
+                    "isSelectable" => true,
+                ];
+            }
+        }
+
+        return new class($options, 'trophyID', 'wcf.acp.trophy') extends SelectFilter {
             #[\Override]
             public function getFormField(): SelectFormField
             {
-                $options = [];
-                foreach (TrophyCategoryCache::getInstance()->getCategories() as $category) {
-                    $options[] = [
-                        "value" => $category->categoryID,
-                        "label" => $category->getTitle(),
-                        "depth" => 0,
-                        "isSelectable" => false,
-                    ];
-
-                    foreach ($category->getTrophies() as $trophy) {
-                        $options[] = [
-                            "value" => $trophy->trophyID,
-                            "label" => $trophy->getTitle(),
-                            "depth" => 1,
-                            "isSelectable" => true,
-                        ];
-                    }
-                }
-
                 return SelectFormField::create($this->id)
                     ->label($this->languageItem)
-                    ->options($options, true, false);
+                    ->options($this->options, true, false);
             }
 
             #[\Override]

@@ -449,7 +449,6 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
      */
     public function saved()
     {
-        $formData = $this->form->getData();
         $processor = $this->getObjectTypeProcessor();
         $updateData = [];
 
@@ -460,28 +459,41 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
             $category = new Category($this->formObject->categoryID);
         }
 
-        if (isset($formData['title_i18n'])) {
-            $languageItem = "{$processor->getI18nLangVarPrefix()}.title.category{$category->getObjectID()}";
-            $updateData['title'] = $languageItem;
+        $titleField = $this->form->getFormField('title');
+        \assert($titleField instanceof TitleFormField);
+        $titleLanguageItem = "{$processor->getI18nLangVarPrefix()}.title.category{$category->getObjectID()}";
+
+        if ($titleField->hasPlainValue()) {
+            I18nHandler::getInstance()->remove($titleLanguageItem);
+        } else {
+            $updateData['title'] = $titleLanguageItem;
             I18nHandler::getInstance()->save(
-                $formData['title_i18n'],
-                $languageItem,
+                $titleField->getPrefixedId(),
+                $titleLanguageItem,
                 $processor->getTitleLangVarCategory(),
                 $category->getObjectType()->packageID
             );
         }
 
-        if (isset($formData['description_i18n'])) {
-            $languageItem = "{$processor->getI18nLangVarPrefix()}.description.category{$category->getObjectID()}";
-            $updateData['description'] = $languageItem;
-            I18nHandler::getInstance()->save(
-                $formData['description_i18n'],
-                $languageItem,
-                $processor->getDescriptionLangVarCategory(),
-                $category->getObjectType()->packageID
-            );
+        if ($processor->hasDescription()) {
+            $descriptionField = $this->form->getFormField('description');
+            \assert($descriptionField instanceof MultilineTextFormField);
+            $descriptionLanguageItem = "{$processor->getI18nLangVarPrefix()}.description.category{$category->getObjectID()}";
+
+            if ($descriptionField->hasPlainValue()) {
+                I18nHandler::getInstance()->remove($descriptionLanguageItem);
+            } else {
+                $updateData['description'] = $descriptionLanguageItem;
+                I18nHandler::getInstance()->save(
+                    $descriptionField->getPrefixedId(),
+                    $descriptionLanguageItem,
+                    $processor->getDescriptionLangVarCategory(),
+                    $category->getObjectType()->packageID
+                );
+            }
         }
 
+        $formData = $this->form->getData();
         if (isset($formData['aclPermissions_aclObjectTypeID'])) {
             ACLHandler::getInstance()->save(
                 $category->getObjectID(),
@@ -493,6 +505,8 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
         if (!empty($updateData)) {
             (new CategoryEditor($category))->update($updateData);
         }
+
+        CategoryEditor::resetCache();
 
         parent::saved();
     }

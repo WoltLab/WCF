@@ -80,9 +80,9 @@ final class UserGroupAssignmentGridView extends AbstractGridView
         $this->setInteractionProvider($provider);
         $this->addQuickInteraction(
             new ToggleInteraction(
-                "enabled",
-                "core/users/groups/assignments/%s/enable",
-                "core/users/groups/assignments/%s/disable"
+                'enable',
+                'core/users/groups/assignments/%s/enable',
+                'core/users/groups/assignments/%s/disable'
             )
         );
 

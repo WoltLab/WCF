@@ -51,8 +51,8 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
         $damagedFileIDs = [];
         foreach ($this->objectList->getObjects() as $file) {
             try {
-                $file = FileProcessor::getInstance()->generateWebpVariant($file);
                 $file = FileProcessor::getInstance()->stripExif($file);
+                $file = FileProcessor::getInstance()->generateWebpVariant($file);
                 $file = FileProcessor::getInstance()->convertImageFormat($file);
                 FileProcessor::getInstance()->generateThumbnails($file);
             } catch (DamagedImage $e) {

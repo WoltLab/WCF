@@ -246,11 +246,6 @@ abstract class AbstractListView
         $this->fireInitializedEvent();
         $this->validate();
 
-        $this->objectList->sqlLimit = $this->getFixedNumberOfItems() ?: $this->getItemsPerPage();
-        if (!$this->getFixedNumberOfItems()) {
-            $this->objectList->sqlOffset = ($this->getPageNo() - 1) * $this->getItemsPerPage();
-        }
-        $this->objectList->sqlOrderBy = $this->getSqlOrderBy();
         if ($this->getObjectIDFilter() !== null) {
             $this->objectList->getConditionBuilder()->add(
                 $this->objectList->getDatabaseTableAlias() . '.' . $this->objectList->getDatabaseTableIndexName() . ' = ?',
@@ -259,6 +254,16 @@ abstract class AbstractListView
         }
 
         $this->applyFilters();
+
+        if ($this->getPageNo() > 1 && $this->getPageNo() > $this->countPages()) {
+            $this->setPageNo($this->countPages() ?: 1);
+        }
+
+        $this->objectList->sqlLimit = $this->getFixedNumberOfItems() ?: $this->getItemsPerPage();
+        if (!$this->getFixedNumberOfItems()) {
+            $this->objectList->sqlOffset = ($this->getPageNo() - 1) * $this->getItemsPerPage();
+        }
+        $this->objectList->sqlOrderBy = $this->getSqlOrderBy();
     }
 
     protected function validate(): void
@@ -275,10 +280,6 @@ abstract class AbstractListView
                     $this->setSortField('');
                 }
             }
-        }
-
-        if ($this->getPageNo() > 1 && $this->getPageNo() > $this->countPages()) {
-            $this->setPageNo($this->countPages() ?: 1);
         }
     }
 

@@ -46,12 +46,8 @@ class WysiwygSmileyFormContainer extends TabTabMenuFormContainer implements IWys
         parent::populate();
 
         $smileyCategories = \array_values(SmileyCache::getInstance()->getVisibleCategories());
-        foreach ($smileyCategories as $index => $smileyCategory) {
-            // All smilies not in the first category are loaded via JavaScript.
-            $smilies = [];
-            if (!$index) {
-                $smilies = SmileyCache::getInstance()->getCategorySmilies($smileyCategory->categoryID ?: null);
-            }
+        foreach ($smileyCategories as $smileyCategory) {
+            $smilies = SmileyCache::getInstance()->getCategorySmilies($smileyCategory->categoryID ?: null);
 
             $this->appendChild(
                 TabFormContainer::create($this->getId() . '_smileyCategoryTab' . $smileyCategory->categoryID)

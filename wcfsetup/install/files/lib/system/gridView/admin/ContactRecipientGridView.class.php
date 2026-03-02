@@ -65,9 +65,9 @@ final class ContactRecipientGridView extends AbstractGridView
         $this->setInteractionProvider($provider);
         $this->addQuickInteraction(
             new ToggleInteraction(
-                "isDisabled",
-                "core/contact/recipients/%s/enable",
-                "core/contact/recipients/%s/disable"
+                'enable',
+                'core/contact/recipients/%s/enable',
+                'core/contact/recipients/%s/disable'
             )
         );
 

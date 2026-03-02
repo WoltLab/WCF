@@ -6,7 +6,7 @@
 		<ul>
 			{foreach from=$container item='child'}
 				{if $child->isAvailable()}
-					<li{if !$child->checkDependencies()} style="display: none;"{/if}><a{if $container->usesAnchors()} href="#{$child->getPrefixedId()|rawurlencode}Container"{/if}>{unsafe:$child->getLabel()}</a></li>
+					<li data-name="{$child->getPrefixedId()}"{if !$child->checkDependencies()} style="display: none;"{/if}><a{if $container->usesAnchors()} href="#{$child->getPrefixedId()|rawurlencode}Container"{/if}>{unsafe:$child->getLabel()}</a></li>
 				{/if}
 			{/foreach}
 		</ul>

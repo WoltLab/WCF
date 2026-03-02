@@ -1061,7 +1061,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.language.item.oldValue"><![CDATA[Ursprünglicher Inhalt]]></item>
 		<item name="wcf.acp.language.item.oldValue.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} veränderte Fassung basierte auf dem unten stehenden Stand{if $item->languageCustomItemDisableTime} vom {$item->languageCustomItemDisableTime|date}{/if}.]]></item>
 		<item name="wcf.acp.language.item.recentlyDisabledCustomValues"><![CDATA[Kürzlich deaktivierte Inhalte finden (Letzten 7 Tagen)]]></item>
-		<item name="wcf.acp.language.item.hasRecentlyDisabledCustomValues"><![CDATA[{if $recentlyDisabledCustomValues == 1}Eine{else}{#$recentlyDisabledCustomValues}{/if} individuell angepasste {if $recentlyDisabledCustomValues == 1}Sprachvariable wurde{else}Sprachvariablen wurden{/if} vor Kurzem <a href="{link controller='LanguageItemList' hasRecentlyDisabledCustomValue=1}{/link}">automatisch deaktiviert</a>.]]></item>
+		<item name="wcf.acp.language.item.hasRecentlyDisabledCustomValues"><![CDATA[{if $recentlyDisabledCustomValues == 1}Eine{else}{#$recentlyDisabledCustomValues}{/if} individuell angepasste {if $recentlyDisabledCustomValues == 1}Sprachvariable wurde{else}Sprachvariablen wurden{/if} vor Kurzem <a href="{link controller='LanguageItemList'}filters[hasRecentlyDisabledCustomValue]=1{/link}">automatisch deaktiviert</a>.]]></item>
 		<item name="wcf.acp.language.item.languageCategoryID"><![CDATA[Text-Kategorie]]></item>
 		<item name="wcf.acp.language.item.languageCategoryID.mode"><![CDATA[Text-Kategorie-Auswahl]]></item>
 		<item name="wcf.acp.language.item.languageCategoryID.mode.automatic"><![CDATA[Automatische Auswahl beruhend auf dem Text-Bezeichner]]></item>
@@ -1889,7 +1889,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.update.errorCode.401"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Angaben sind ungültig, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}überprüfe{else}überprüfen Sie{/if} {if $updateServer->requiresLicense()}Lizenz- und Seriennummer{else}Benutzername und Kennwort{/if}.]]></item>
 		<item name="wcf.acp.package.update.errorCode.402"><![CDATA[{if $updateServer->requiresLicense()}Lizenz- und Seriennummer{else}Benutzername und Kennwort{/if} wurden vom Server akzeptiert, aber es handelt sich um ein kommerzielles Produkt, auf das diese Zugangsdaten keinen Zugriff haben.]]></item>
 		<item name="wcf.acp.package.update.errorCode.403"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bist{else}Sie sind{/if} nicht berechtigt, auf dieses Paket zuzugreifen.]]></item>
-		<item name="wcf.acp.package.update.authInsufficient"><![CDATA[Die eingegebenen Zugangsdaten sind korrekt, aber berechtigen nicht zum Download dieses Pakets.]]></item>
+		<item name="wcf.acp.package.update.authInsufficient"><![CDATA[Die eingegebenen Zugangsdaten sind korrekt, aber berechtigen nicht zum Download {if $packageName}des Paketes „<strong>{$packageName}</strong>“{else}dieses Pakets{/if}.]]></item>
 		<item name="wcf.acp.package.update.licenseNo"><![CDATA[Lizenznummer]]></item>
 		<item name="wcf.acp.package.update.password"><![CDATA[Kennwort]]></item>
 		<item name="wcf.acp.package.update.saveCredentials"><![CDATA[Zugangsdaten speichern]]></item>

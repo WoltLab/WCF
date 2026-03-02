@@ -225,6 +225,7 @@
 \define('URL_UNFURLING_SAVE_IMAGES', 1);
 \define('SERVICE_WORKER_PRIVATE_KEY', '');
 \define('SERVICE_WORKER_PUBLIC_KEY', '');
+\define('RECAPTCHA_PUBLICKEY_V3', '');
 \define('RECAPTCHA_PRIVATEKEY_V3', '');
 \define('IMAGE_CONVERT_FORMAT', 'webp');
 \define('IMAGE_STRIP_EXIF', 1);

@@ -18,7 +18,7 @@
 		</script>
 		
 		<noscript>
-			<style type="text/css">
+			<style>
 				.paidSubscriptionList button {
 					display: none;
 				}

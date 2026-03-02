@@ -83,7 +83,11 @@ final class TrophyGridView extends AbstractGridView
         $this->setBulkInteractionProvider(new TrophyBulkInteractions());
 
         $this->addQuickInteraction(
-            new ToggleInteraction("enable", "core/trophies/%s/enable", "core/trophies/%s/disable")
+            new ToggleInteraction(
+                'enable',
+                'core/trophies/%s/enable',
+                'core/trophies/%s/disable'
+            )
         );
 
         $this->setDefaultSortField("showOrder");

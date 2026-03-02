@@ -171,10 +171,11 @@ final class ExceptionLogGridView extends AbstractGridView
     {
         $this->objectList = $this->createObjectList();
         $this->fireInitializedEvent();
-        $this->validate();
 
         $objects = $this->loadDataSource();
         $this->objectCount = \count($objects);
+        $this->validate();
+
         \uasort($objects, function (DatabaseObject $a, DatabaseObject $b) {
             if ($this->getSortOrder() === 'ASC') {
                 return \strcmp($a->__get($this->getSortField()), $b->__get($this->getSortField()));

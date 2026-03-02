@@ -293,7 +293,12 @@ final class ExifUtil
             return null;
         }
 
-        $img = new \Imagick($pathname);
+        try {
+            $img = new \Imagick($pathname);
+        } catch (\ImagickException) {
+            return null;
+        }
+
         $profiles = $img->getImageProfiles('icc', true);
         $img->stripImage();
         if ($profiles !== []) {

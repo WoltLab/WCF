@@ -86,7 +86,11 @@ final class UserOptionGridView extends AbstractGridView
         $this->setInteractionProvider($provider);
         $this->setBulkInteractionProvider(new UserOptionBulkInteractions());
         $this->addQuickInteraction(
-            new ToggleInteraction('enable', 'core/users/options/%s/enable', 'core/users/options/%s/disable')
+            new ToggleInteraction(
+                'enable',
+                'core/users/options/%s/enable',
+                'core/users/options/%s/disable'
+            )
         );
         $this->addRowLink(new GridViewRowLink(UserOptionEditForm::class));
         $this->setDefaultSortField('showOrder');

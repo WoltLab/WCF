@@ -92,7 +92,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory
      * @param bool $isBulk true for bulk operations
      * @return      bool                 true if at least one embedded object was found
      */
-    public function registerObjects(HtmlInputProcessor $htmlInputProcessor, $isBulk = false)
+    public function registerObjects(HtmlInputProcessor $htmlInputProcessor, $isBulk = false, bool $removeExistingObjects = true)
     {
         $context = $htmlInputProcessor->getContext();
 
@@ -101,13 +101,15 @@ class MessageEmbeddedObjectManager extends SingletonFactory
         $messageID = $context['objectID'];
 
         // delete existing assignments
-        if ($isBulk) {
-            if (!isset($this->bulkData['remove'][$messageObjectType])) {
-                $this->bulkData['remove'][$messageObjectType] = [];
+        if ($removeExistingObjects) {
+            if ($isBulk) {
+                if (!isset($this->bulkData['remove'][$messageObjectType])) {
+                    $this->bulkData['remove'][$messageObjectType] = [];
+                }
+                $this->bulkData['remove'][$messageObjectType][] = $messageID;
+            } else {
+                $this->removeObjects($messageObjectType, [$messageID]);
             }
-            $this->bulkData['remove'][$messageObjectType][] = $messageID;
-        } else {
-            $this->removeObjects($messageObjectType, [$messageID]);
         }
 
         $statement = null;

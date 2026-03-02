@@ -100,7 +100,7 @@
 		<item name="wcf.acp.article.publicationStatus"><![CDATA[Status]]></item>
 		<item name="wcf.acp.article.publicationStatus.unpublished"><![CDATA[Unpublished]]></item>
 		<item name="wcf.acp.article.publicationStatus.published"><![CDATA[Published]]></item>
-		<item name="wcf.acp.article.publicationStatus.delayed"><![CDATA[Delayed publishing]]></item>
+		<item name="wcf.acp.article.publicationStatus.delayed"><![CDATA[Scheduled publication]]></item>
 		<item name="wcf.acp.article.setCategory"><![CDATA[Set Category]]></item>
 		<item name="wcf.acp.article.teaser"><![CDATA[Teaser]]></item>
 		<item name="wcf.acp.article.trash.notice"><![CDATA[This article has been moved to the trash bin and is currently hidden from view.]]></item>
@@ -1037,7 +1037,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.language.item.oldValue"><![CDATA[Original Content]]></item>
 		<item name="wcf.acp.language.item.oldValue.description"><![CDATA[Your custom value was based on the original content that has changed{if $item->languageCustomItemDisableTime} on {$item->languageCustomItemDisableTime|date}{/if}.]]></item>
 		<item name="wcf.acp.language.item.recentlyDisabledCustomValues"><![CDATA[Recently disabled customized values (past 7 days)]]></item>
-		<item name="wcf.acp.language.item.hasRecentlyDisabledCustomValues"><![CDATA[{if $recentlyDisabledCustomValues == 1}One{else}{#$recentlyDisabledCustomValues}{/if} customized {if $recentlyDisabledCustomValues == 1}phrase has been{else}phrases have been{/if} <a href="{link controller='LanguageItemList' hasRecentlyDisabledCustomValue=1}{/link}">automatically disabled</a> recently.]]></item>
+		<item name="wcf.acp.language.item.hasRecentlyDisabledCustomValues"><![CDATA[{if $recentlyDisabledCustomValues == 1}One{else}{#$recentlyDisabledCustomValues}{/if} customized {if $recentlyDisabledCustomValues == 1}phrase has been{else}phrases have been{/if} <a href="{link controller='LanguageItemList'}filters[hasRecentlyDisabledCustomValue]=1{/link}">automatically disabled</a> recently.]]></item>
 		<item name="wcf.acp.language.item.languageCategoryID"><![CDATA[Language Category]]></item>
 		<item name="wcf.acp.language.item.languageCategoryID.mode"><![CDATA[Language Category Mode]]></item>
 		<item name="wcf.acp.language.item.languageCategoryID.mode.automatic"><![CDATA[Determined Automatically Based on Identifier]]></item>
@@ -1870,7 +1870,7 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.package.update.errorCode.401"><![CDATA[Your credentials are invalid, please verify {if $updateServer->requiresLicense()}license and serial number{else}username and password{/if}.]]></item>
 		<item name="wcf.acp.package.update.errorCode.402"><![CDATA[{if $updateServer->requiresLicense()}License and serial number{else}Username and password{/if} have been accepted by the server, but they do not grant you the permission to download this commercial product.]]></item>
 		<item name="wcf.acp.package.update.errorCode.403"><![CDATA[You are not allowed to access this package.]]></item>
-		<item name="wcf.acp.package.update.authInsufficient"><![CDATA[The credentials are valid, but do not allow the download of this package.]]></item>
+		<item name="wcf.acp.package.update.authInsufficient"><![CDATA[The credentials are valid, but do not allow the download of {if $packageName}the package “<strong>{$packageName}</strong>”{else}this package{/if}.]]></item>
 		<item name="wcf.acp.package.update.licenseNo"><![CDATA[License Number]]></item>
 		<item name="wcf.acp.package.update.password"><![CDATA[Password]]></item>
 		<item name="wcf.acp.package.update.saveCredentials"><![CDATA[Save Credentials]]></item>

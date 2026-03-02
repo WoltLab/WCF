@@ -13,7 +13,6 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\form\builder\container\FormContainer;
-use wcf\system\form\builder\container\RowFormContainer;
 use wcf\system\form\builder\Psr15DialogForm;
 use wcf\system\listView\AbstractListView;
 use wcf\system\WCF;
@@ -46,8 +45,16 @@ final class ListViewFilterAction implements RequestHandlerInterface
             throw new UserInputException('listView', 'invalid');
         }
 
-        /** @var AbstractListView<DatabaseObject, DatabaseObjectList<DatabaseObject>> $view */
-        $view = new $parameters['listView'](...$parameters['listViewParameters']);
+        try {
+            /** @var AbstractListView<DatabaseObject, DatabaseObjectList<DatabaseObject>> $view */
+            $view = new $parameters['listView'](...$parameters['listViewParameters']);
+        } catch (\ArgumentCountError $e) {
+            if (\ENABLE_DEBUG_MODE) {
+                throw $e;
+            } else {
+                throw new IllegalLinkException();
+            }
+        }
 
         if (!$view->isAccessible()) {
             throw new PermissionDeniedException();

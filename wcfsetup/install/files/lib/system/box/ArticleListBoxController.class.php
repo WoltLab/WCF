@@ -27,7 +27,6 @@ class ArticleListBoxController extends AbstractListViewBoxController
         'contentBottom',
         'top',
         'bottom',
-        'footerBoxes',
     ];
 
     /**

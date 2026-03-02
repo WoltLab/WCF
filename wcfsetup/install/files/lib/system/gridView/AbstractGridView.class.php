@@ -768,10 +768,6 @@ abstract class AbstractGridView
         if ($titleColumn === null) {
             throw new \InvalidArgumentException("Missing title column in grid view with id '{$this->getID()}'.");
         }
-
-        if ($this->getPageNo() > 1 && $this->getPageNo() > $this->countPages()) {
-            $this->setPageNo($this->countPages() ?: 1);
-        }
     }
 
     /**
@@ -852,6 +848,19 @@ abstract class AbstractGridView
         $this->fireInitializedEvent();
         $this->validate();
 
+        if ($this->getObjectIDFilter() !== null) {
+            $this->objectList->getConditionBuilder()->add(
+                $this->objectList->getDatabaseTableAlias() . '.' . $this->objectList->getDatabaseTableIndexName() . ' = ?',
+                [$this->getObjectIDFilter()]
+            );
+        }
+
+        $this->applyFilters();
+
+        if ($this->getPageNo() > 1 && $this->getPageNo() > $this->countPages()) {
+            $this->setPageNo($this->countPages() ?: 1);
+        }
+
         $this->objectList->sqlLimit = $this->getRowsPerPage();
         $this->objectList->sqlOffset = ($this->getPageNo() - 1) * $this->getRowsPerPage();
         if ($this->getSortField()) {
@@ -866,14 +875,6 @@ abstract class AbstractGridView
             $this->objectList->sqlOrderBy .= ',' . $this->objectList->getDatabaseTableAlias() .
                 '.' . $this->objectList->getDatabaseTableIndexName() . ' ' . $this->getSortOrder();
         }
-        if ($this->getObjectIDFilter() !== null) {
-            $this->objectList->getConditionBuilder()->add(
-                $this->objectList->getDatabaseTableAlias() . '.' . $this->objectList->getDatabaseTableIndexName() . ' = ?',
-                [$this->getObjectIDFilter()]
-            );
-        }
-
-        $this->applyFilters();
     }
 
     /**
