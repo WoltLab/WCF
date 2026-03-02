@@ -13,7 +13,6 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\form\builder\container\FormContainer;
-use wcf\system\form\builder\container\RowFormContainer;
 use wcf\system\form\builder\Psr15DialogForm;
 use wcf\system\listView\AbstractListView;
 use wcf\system\WCF;
