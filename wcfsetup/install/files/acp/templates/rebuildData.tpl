@@ -26,7 +26,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><button class="button jsRebuildAll">{icon name='down-long'} <span>{lang}wcf.acp.rebuildData.rebuildAll{/lang}</span></button></li>
+			<li><button type="button" class="button jsRebuildAll">{icon name='down-long'} <span>{lang}wcf.acp.rebuildData.rebuildAll{/lang}</span></button></li>
 			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>
@@ -49,9 +49,10 @@
 		<dl class="wide">
 			<dd>
 				<button
-				   class="button small jsRebuildDataWorker"
-				   data-nicevalue="{$offset}"
-				   data-class-name="{$worker->getClassName()}"
+					type="button"
+					class="button small jsRebuildDataWorker"
+					data-nicevalue="{$offset}"
+					data-class-name="{$worker->getClassName()}"
 				>{$worker->getName()}</button>
 				<small>{$worker->getDescription()}</small>
 			</dd>

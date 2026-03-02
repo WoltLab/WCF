@@ -8,7 +8,7 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			<li>
-				<button class="button jsButtonBoxAdd">
+				<button type="button" class="button jsButtonBoxAdd">
 					{icon name='plus'}
 					<span>{lang}wcf.acp.box.add{/lang}</span>
 				</button>
