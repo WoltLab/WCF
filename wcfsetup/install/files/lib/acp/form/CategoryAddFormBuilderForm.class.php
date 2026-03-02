@@ -506,6 +506,8 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
             (new CategoryEditor($category))->update($updateData);
         }
 
+        CategoryEditor::resetCache();
+
         parent::saved();
     }
 
