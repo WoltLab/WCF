@@ -10,7 +10,7 @@ use wcf\system\exception\SystemException;
  * @author      Alexander Ebert
  * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @deprecated  6.2 Use `\json_encode($data, \JSON_THROW_ON_ERROR)` and `\json_decode($json, flags: \JSON_THROW_ON_ERROR)` instead.
+ * @deprecated  6.2 Use `\json_encode($data, \JSON_THROW_ON_ERROR)` and `\json_decode($json, true, flags: \JSON_THROW_ON_ERROR)` instead.
  */
 final class JSON
 {
@@ -29,7 +29,7 @@ final class JSON
      *
      * @return ($asArray is true ? mixed[] : \stdClass)
      * @throws  SystemException
-     * @deprecated 6.2 Use `\json_decode($json, flags: \JSON_THROW_ON_ERROR)` instead.
+     * @deprecated 6.2 Use `\json_decode($json, true, flags: \JSON_THROW_ON_ERROR)` instead.
      */
     public static function decode(string $json, bool $asArray = true): array|\stdClass
     {
