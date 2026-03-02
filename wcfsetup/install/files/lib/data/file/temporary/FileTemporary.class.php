@@ -4,7 +4,6 @@ namespace wcf\data\file\temporary;
 
 use wcf\data\DatabaseObject;
 use wcf\system\file\processor\FileProcessor;
-use wcf\util\JSON;
 
 /**
  * @author Alexander Ebert
@@ -80,7 +79,7 @@ class FileTemporary extends DatabaseObject
      */
     public function getContext(): array
     {
-        return JSON::decode($this->context);
+        return \json_decode($this->context, true, flags: \JSON_THROW_ON_ERROR);
     }
 
     public static function getNumberOfChunks(int $fileSize): int

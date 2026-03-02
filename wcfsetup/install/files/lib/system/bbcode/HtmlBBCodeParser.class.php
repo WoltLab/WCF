@@ -5,7 +5,6 @@ namespace wcf\system\bbcode;
 use wcf\data\bbcode\attribute\BBCodeAttribute;
 use wcf\system\exception\SystemException;
 use wcf\util\DOMUtil;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -435,7 +434,7 @@ class HtmlBBCodeParser extends BBCodeParser
             }, $tag['attributes']);
 
             // uses base64 encoding to avoid an "escape" nightmare
-            $attributes = ' data-attributes="' . \base64_encode(JSON::encode($tag['attributes'])) . '"';
+            $attributes = ' data-attributes="' . \base64_encode(\json_encode($tag['attributes'], \JSON_THROW_ON_ERROR)) . '"';
 
             if (isset($tag['useText'])) {
                 $attributes .= ' data-use-text="' . $tag['useText'] . '"';

@@ -11,7 +11,6 @@ use wcf\system\file\processor\FileProcessor;
 use wcf\system\image\ImageHandler;
 use wcf\util\ExifUtil;
 use wcf\util\FileUtil;
-use wcf\util\JSON;
 
 /**
  * @author Alexander Ebert

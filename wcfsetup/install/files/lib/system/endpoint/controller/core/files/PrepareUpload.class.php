@@ -11,11 +11,9 @@ use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\FileProcessorPreflightResult;
-use wcf\util\JSON;
 use WoltLab\WebpExif\Chunk\Exif;
 
 /**
@@ -39,8 +37,8 @@ final class PrepareUpload implements IController
         }
 
         try {
-            $decodedContext = JSON::decode($parameters->context);
-        } catch (SystemException) {
+            $decodedContext = \json_decode($parameters->context, true, flags: \JSON_THROW_ON_ERROR);
+        } catch (\JsonException) {
             throw new UserInputException('context', 'invalid');
         }
 

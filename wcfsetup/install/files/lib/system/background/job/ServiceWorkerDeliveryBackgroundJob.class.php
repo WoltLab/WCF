@@ -13,7 +13,6 @@ use wcf\system\session\SessionHandler;
 use wcf\system\style\StyleHandler;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -114,7 +113,7 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
                 "icon" => $style->getFaviconAppleTouchIcon(),
             ];
 
-            $report = ServiceWorkerHandler::getInstance()->sendOneNotification($serviceWorker, JSON::encode($content));
+            $report = ServiceWorkerHandler::getInstance()->sendOneNotification($serviceWorker, \json_encode($content, \JSON_THROW_ON_ERROR));
             if (!$report->isSuccess()) {
                 (new ServiceWorkerEditor($serviceWorker))->delete();
             }

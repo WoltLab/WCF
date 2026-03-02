@@ -4,7 +4,6 @@ namespace wcf\system\bbcode;
 
 use wcf\data\bbcode\BBCodeCache;
 use wcf\system\SingletonFactory;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -146,12 +145,12 @@ final class DomBBCodeParser extends SingletonFactory
             }
 
             if ($node->hasAttribute('data-attributes')) {
-                $attributes = JSON::decode(\base64_decode($node->getAttribute('data-attributes')));
+                $attributes = \json_decode(\base64_decode($node->getAttribute('data-attributes')), true, flags: \JSON_THROW_ON_ERROR);
             } else {
                 $attributes = [];
             }
             $attributes[$attributeNo] = $text;
-            $node->setAttribute('data-attributes', \base64_encode(JSON::encode($attributes)));
+            $node->setAttribute('data-attributes', \base64_encode(\json_encode($attributes, \JSON_THROW_ON_ERROR)));
         }
         foreach ($nodes as $node) {
             $node->parentNode?->removeChild($node);
@@ -258,13 +257,13 @@ final class DomBBCodeParser extends SingletonFactory
             if ($attributes !== []) {
                 $metacodeMarker->setAttribute(
                     'data-attributes',
-                    \base64_encode(JSON::encode(\array_map(static function ($attribute) {
+                    \base64_encode(\json_encode(\array_map(static function ($attribute) {
                         if (\preg_match('~^([\'"])(?P<content>.*)(\1)$~', $attribute, $matches)) {
                             return $matches['content'];
                         }
 
                         return $attribute;
-                    }, $attributes)))
+                    }, $attributes), \JSON_THROW_ON_ERROR))
                 );
             }
         }

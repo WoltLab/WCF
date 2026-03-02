@@ -8,7 +8,6 @@ use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 use wcf\system\worker\IWorker;
-use wcf\util\JSON;
 
 /**
  * Handles worker actions.
@@ -143,7 +142,7 @@ final class WorkerProxyAction extends AJAXInvokeAction
 
         // send JSON-encoded response
         \header('Content-type: application/json; charset=UTF-8');
-        echo JSON::encode($returnValues);
+        echo \json_encode($returnValues, \JSON_THROW_ON_ERROR);
 
         exit;
     }

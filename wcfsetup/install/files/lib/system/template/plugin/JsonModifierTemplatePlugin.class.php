@@ -3,7 +3,6 @@
 namespace wcf\system\template\plugin;
 
 use wcf\system\template\TemplateEngine;
-use wcf\util\JSON;
 
 /**
  * JSON encodes the given value.
@@ -28,6 +27,6 @@ class JsonModifierTemplatePlugin implements IModifierTemplatePlugin
      */
     public function execute($tagArgs, TemplateEngine $tplObj)
     {
-        return JSON::encode($tagArgs[0]);
+        return \json_encode($tagArgs[0], \JSON_THROW_ON_ERROR);
     }
 }

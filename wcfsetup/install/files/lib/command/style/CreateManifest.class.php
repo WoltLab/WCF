@@ -7,7 +7,6 @@ use wcf\data\style\Style;
 use wcf\system\io\AtomicWriter;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
-use wcf\util\JSON;
 
 /**
  * Generate then `manifest-*.json` files for a style.
@@ -43,7 +42,7 @@ final class CreateManifest
                 "type" => "image/png"
             ];
         }
-        $icons = JSON::encode($icons);
+        $icons = \json_encode($icons, \JSON_THROW_ON_ERROR);
 
         $originalLanguage = WCF::getLanguage();
         try {
@@ -51,8 +50,8 @@ final class CreateManifest
                 // To get the correct landing page url, we need to change the language.
                 WCF::setLanguage($language->languageID);
 
-                $title = JSON::encode($language->get(PAGE_TITLE));
-                $startUrl = JSON::encode($landingPage->getLink());
+                $title = \json_encode($language->get(PAGE_TITLE), \JSON_THROW_ON_ERROR);
+                $startUrl = \json_encode($landingPage->getLink(), \JSON_THROW_ON_ERROR);
 
                 // update manifest.json
                 $manifest = <<<MANIFEST

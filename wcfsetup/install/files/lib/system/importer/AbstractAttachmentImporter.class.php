@@ -6,7 +6,6 @@ use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentEditor;
 use wcf\system\exception\SystemException;
 use wcf\util\FileUtil;
-use wcf\util\JSON;
 
 /**
  * Imports attachments.
@@ -127,12 +126,12 @@ class AbstractAttachmentImporter extends AbstractImporter
                 $base64Decoded = \base64_decode($matches['attributes']);
                 if ($base64Decoded) {
                     try {
-                        $attributes = JSON::decode($base64Decoded);
+                        $attributes = \json_decode($base64Decoded, true, flags: \JSON_THROW_ON_ERROR);
                         if ($attributes[0] == $oldID) {
                             $attributes[0] = $newID;
                         }
 
-                        $encodedAttributes = \base64_encode(JSON::encode($attributes));
+                        $encodedAttributes = \base64_encode(\json_encode($attributes, \JSON_THROW_ON_ERROR));
                     } catch (\Exception $e) {
                         $encodedAttributes = $matches['attributes'];
                     }

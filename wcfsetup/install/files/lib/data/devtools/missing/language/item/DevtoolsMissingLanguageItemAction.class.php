@@ -6,7 +6,6 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IDeleteAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -70,7 +69,7 @@ class DevtoolsMissingLanguageItemAction extends AbstractDatabaseObjectAction imp
             return $item;
         }, \wcf\functions\exception\sanitizeStacktrace(new \Exception(), true));
 
-        $stackTrace = JSON::encode($stackTraceData);
+        $stackTrace = \json_encode($stackTraceData, \JSON_THROW_ON_ERROR);
 
         $sql = "INSERT INTO             wcf1_devtools_missing_language_item
                                         (languageID, languageItem, lastTime, stackTrace)

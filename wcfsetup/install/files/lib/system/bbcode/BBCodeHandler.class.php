@@ -9,7 +9,6 @@ use wcf\system\package\license\LicenseApi;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -161,11 +160,11 @@ class BBCodeHandler extends SingletonFactory
     public function getHighlighterMeta()
     {
         if ($this->highlighterMeta === null) {
-            $this->highlighterMeta = JSON::decode(\preg_replace(
+            $this->highlighterMeta = \json_decode(\preg_replace(
                 '/.*\/\*!START\*\/\s*const\s*metadata\s*=\s*(.*)\s*;\s*\/\*!END\*\/.*/s',
                 '\\1',
                 \file_get_contents(WCF_DIR . 'js/WoltLabSuite/Core/prism-meta.js')
-            ));
+            ), true, flags: \JSON_THROW_ON_ERROR);
         }
 
         return $this->highlighterMeta;

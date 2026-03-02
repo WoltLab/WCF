@@ -4,7 +4,6 @@ namespace wcf\system\form\option;
 
 use wcf\system\form\builder\field\ISelectionFormField;
 use wcf\system\WCF;
-use wcf\util\JSON;
 
 /**
  * Provides helper methods for form options that use select options.
@@ -26,7 +25,7 @@ trait TSelectOptionsFormOption
         }
 
         $selectOptions = [];
-        foreach (JSON::decode($configuration['selectOptions']) as $selectOption) {
+        foreach (\json_decode($configuration['selectOptions'], true, flags: \JSON_THROW_ON_ERROR) as $selectOption) {
             if (isset($selectOption['value'][0])) {
                 $value = $selectOption['value'][0];
             } else if (isset($selectOption['value'][WCF::getLanguage()->languageID])) {

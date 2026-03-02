@@ -15,7 +15,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\JSON;
 
 /**
  * Handles ACL permissions.
@@ -81,7 +80,7 @@ class ACLHandler extends SingletonFactory
 
             $users = [];
             foreach ($values as $type => $optionData) {
-                $optionData = JSON::decode($optionData);
+                $optionData = \json_decode($optionData, true, flags: \JSON_THROW_ON_ERROR);
                 if ($type === 'user') {
                     $users = User::getUsers(\array_keys($optionData));
                 }
@@ -167,7 +166,7 @@ class ACLHandler extends SingletonFactory
                 if (isset($valuesSource[$type])) {
                     $this->__readValues[$objectTypeID][$type] = [];
 
-                    foreach (JSON::decode($valuesSource[$type]) as $typeID => $optionData) {
+                    foreach (\json_decode($valuesSource[$type], true, flags: \JSON_THROW_ON_ERROR) as $typeID => $optionData) {
                         $this->__readValues[$objectTypeID][$type][$typeID] = [];
 
                         foreach ($optionData as $optionID => $optionValue) {
@@ -177,7 +176,7 @@ class ACLHandler extends SingletonFactory
                         }
                     }
 
-                    $this->__readValues[$objectTypeID][$type] = JSON::encode($this->__readValues[$objectTypeID][$type]);
+                    $this->__readValues[$objectTypeID][$type] = \json_encode($this->__readValues[$objectTypeID][$type], \JSON_THROW_ON_ERROR);
                 }
             }
         }
@@ -282,9 +281,9 @@ class ACLHandler extends SingletonFactory
         // add new values if given
         $values = [];
         if (isset($this->__readValues[$objectTypeID]) && isset($this->__readValues[$objectTypeID][$type])) {
-            $values = JSON::decode($this->__readValues[$objectTypeID][$type]);
+            $values = \json_decode($this->__readValues[$objectTypeID][$type], true, flags: \JSON_THROW_ON_ERROR);
         } elseif (isset($_POST['aclValues']) && isset($_POST['aclValues'][$type])) {
-            $values = JSON::decode($_POST['aclValues'][$type]);
+            $values = \json_decode($_POST['aclValues'][$type], true, flags: \JSON_THROW_ON_ERROR);
         }
 
         $sql = "INSERT INTO wcf1_acl_option_to_" . $type . "

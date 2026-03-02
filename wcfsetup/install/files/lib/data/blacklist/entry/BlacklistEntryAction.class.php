@@ -9,7 +9,6 @@ use wcf\data\blacklist\status\BlacklistStatus;
 use wcf\data\blacklist\status\BlacklistStatusEditor;
 use wcf\system\io\HttpFactory;
 use wcf\system\WCF;
-use wcf\util\JSON;
 
 /**
  * Executes blacklist entry-related actions.
@@ -61,7 +60,7 @@ class BlacklistEntryAction extends AbstractDatabaseObjectAction
             return;
         }
 
-        $data = JSON::decode((string)$response->getBody());
+        $data = \json_decode((string)$response->getBody(), true, flags: \JSON_THROW_ON_ERROR);
         $sql = "INSERT INTO             wcf1_blacklist_entry
                                         (type, hash, lastSeen, occurrences)
                 VALUES                  (?, ?, ?, ?)

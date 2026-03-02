@@ -2,7 +2,7 @@
 
 namespace wcf\system\form\option\formatter;
 
-use wcf\util\JSON;
+
 use wcf\util\StringUtil;
 
 /**
@@ -20,7 +20,7 @@ final class SelectFormatter implements IFormOptionFormatter
     #[\Override]
     public function format(string $value, int $languageID, array $configuration): string
     {
-        foreach (JSON::decode($configuration['selectOptions']) as $selectOption) {
+        foreach (\json_decode($configuration['selectOptions'], true, flags: \JSON_THROW_ON_ERROR) as $selectOption) {
             if ($selectOption['key'] == $value) {
                 if (isset($selectOption['value'][0])) {
                     $value = $selectOption['value'][0];

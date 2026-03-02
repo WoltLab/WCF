@@ -7,7 +7,6 @@ use wcf\data\user\UserAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\PasswordFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -17,7 +16,6 @@ use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\HtmlString;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 use wcf\util\UserRegistrationUtil;
 
@@ -120,8 +118,8 @@ final class NewPasswordForm extends AbstractFormBuilderForm
     {
         if (isset($_POST['newPassword_passwordStrengthVerdict'])) {
             try {
-                $newPasswordStrengthVerdict = JSON::decode($_POST['newPassword_passwordStrengthVerdict']);
-            } catch (SystemException $e) {
+                $newPasswordStrengthVerdict = \json_decode($_POST['newPassword_passwordStrengthVerdict'], true, flags: \JSON_THROW_ON_ERROR);
+            } catch (\JsonException) {
                 // ignore
             }
         }

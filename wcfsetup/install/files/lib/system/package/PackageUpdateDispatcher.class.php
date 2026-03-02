@@ -19,7 +19,6 @@ use wcf\system\io\HttpFactory;
 use wcf\system\package\validation\PackageValidationException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 use wcf\util\XML;
 
@@ -151,7 +150,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
         try {
             $response = $client->send($request);
 
-            $reply = JSON::decode((string)$response->getBody());
+            $reply = \json_decode((string)$response->getBody(), true, flags: \JSON_THROW_ON_ERROR);
 
             if ($reply['status'] == 200) {
                 $this->hasAuthCode = true;
@@ -160,7 +159,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
                     'pluginstore' => ($reply['pluginstore'] ?? []),
                 ];
             }
-        } catch (ClientExceptionInterface | SystemException) {
+        } catch (ClientExceptionInterface | \JsonException) {
             // ignore
         }
     }

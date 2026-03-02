@@ -13,7 +13,6 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\util\FileUtil;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 use Zend\Console\Exception\RuntimeException as ArgvException;
 use Zend\Console\Getopt as ArgvParser;
@@ -285,7 +284,7 @@ class CLIWCF extends WCF
                 $command = CLICommandHandler::getCommand($line);
                 $command->execute(CLICommandHandler::getParameters($line));
             } catch (IllegalLinkException $e) {
-                Log::error('notFound:' . JSON::encode(['command' => $line]));
+                Log::error('notFound:' . \json_encode(['command' => $line], \JSON_THROW_ON_ERROR));
                 self::getReader()->println(WCF::getLanguage()->getDynamicVariable(
                     'wcf.cli.error.command.notFound',
                     ['command' => $line]

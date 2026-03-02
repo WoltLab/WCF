@@ -12,7 +12,6 @@ use wcf\system\Regex;
 use wcf\system\worker\IWorker;
 use wcf\util\CLIUtil;
 use wcf\util\DirectoryUtil;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 use Zend\Console\Exception\RuntimeException as ArgvException;
 use Zend\Console\Getopt as ArgvParser;
@@ -171,25 +170,25 @@ class WorkerCLICommand implements ICLICommand
                 $progress = $worker->getProgress();
                 $progressbar->update($progress);
                 if ($output) {
-                    $output->write(JSON::encode([
+                    $output->write(\json_encode([
                         'iteration' => $i,
                         'progress' => $progress,
-                    ]) . "\n");
+                    ], \JSON_THROW_ON_ERROR) . "\n");
                 }
             }
         } catch (\Exception $e) {
             if ($output) {
-                $output->write(JSON::encode([
+                $output->write(\json_encode([
                     'error' => (string)$e,
-                ]));
+                ], \JSON_THROW_ON_ERROR));
             }
             throw $e;
         }
         if ($output) {
-            $output->write(JSON::encode([
+            $output->write(\json_encode([
                 'finished' => true,
                 'progress' => $progress,
-            ]) . "\n");
+            ], \JSON_THROW_ON_ERROR) . "\n");
             $output->close();
         }
         $progressbar->update($progress);
@@ -324,7 +323,7 @@ class WorkerCLICommand implements ICLICommand
                     $statusPrefix = 'T' . $processData['threadId'] . ': ';
                     if ($line) {
                         // If a line could be read we update the progressbar with the data sent.
-                        $parsedLine = JSON::decode(StringUtil::trim($line));
+                        $parsedLine = \json_decode(StringUtil::trim($line), true, flags: \JSON_THROW_ON_ERROR);
 
                         if (!empty($parsedLine['error'])) {
                             \fwrite(\STDERR, \str_repeat("\n", -$cursorOffset + 1));

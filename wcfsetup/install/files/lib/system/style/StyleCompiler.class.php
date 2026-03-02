@@ -16,7 +16,6 @@ use wcf\system\SingletonFactory;
 use wcf\command\style\CreateManifest;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 use wcf\util\StyleUtil;
 use wcf\util\Url;
@@ -764,7 +763,7 @@ final class StyleCompiler extends SingletonFactory
         FileUtil::makeWritable($filePrefix . '-rtl.css');
 
         if ($preloadManifest) {
-            \file_put_contents($filePrefix . '-preload.json', JSON::encode($preloadManifest));
+            \file_put_contents($filePrefix . '-preload.json', \json_encode($preloadManifest, \JSON_THROW_ON_ERROR));
             FileUtil::makeWritable($filePrefix . '-preload.json');
         }
     }

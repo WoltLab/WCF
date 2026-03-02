@@ -252,11 +252,12 @@ final class UserUtil
      */
     public static function createGuestToken(string $username): string
     {
-        return CryptoUtil::createSignedString(JSON::encode(
+        return CryptoUtil::createSignedString(\json_encode(
             [
                 'username' => $username,
                 'time' => TIME_NOW,
-            ]
+            ],
+            \JSON_THROW_ON_ERROR
         ));
     }
 
@@ -278,7 +279,7 @@ final class UserUtil
         }
 
         try {
-            $data = JSON::decode($json);
+            $data = \json_decode($json, true, flags: \JSON_THROW_ON_ERROR);
         } catch (SystemException $e) {
             return null;
         }

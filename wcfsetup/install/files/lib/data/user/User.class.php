@@ -16,7 +16,6 @@ use wcf\system\user\authentication\password\algorithm\DoubleBcrypt;
 use wcf\system\user\authentication\password\PasswordAlgorithmManager;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
-use wcf\util\JSON;
 use wcf\util\UserUtil;
 
 /**
@@ -660,7 +659,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     public function getBlacklistMatches()
     {
         if ($this->pendingActivation() && $this->blacklistMatches) {
-            return JSON::decode($this->blacklistMatches);
+            return \json_decode($this->blacklistMatches, true, flags: \JSON_THROW_ON_ERROR);
         }
 
         return [];

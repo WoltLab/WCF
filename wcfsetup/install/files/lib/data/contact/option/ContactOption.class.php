@@ -8,7 +8,6 @@ use wcf\data\language\Language;
 use wcf\system\form\option\FormOptionHandler;
 use wcf\system\form\option\IFormOption;
 use wcf\system\WCF;
-use wcf\util\JSON;
 
 /**
  * Represents a contact option.
@@ -75,6 +74,6 @@ class ContactOption extends DatabaseObject implements ITitledObject
      */
     public function getConfiguration(): array
     {
-        return $this->configuration ? JSON::decode($this->configuration) : [];
+        return $this->configuration ? \json_decode($this->configuration, true, flags: \JSON_THROW_ON_ERROR) : [];
     }
 }

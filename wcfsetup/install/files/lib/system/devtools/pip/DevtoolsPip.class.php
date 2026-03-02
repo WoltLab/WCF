@@ -10,7 +10,6 @@ use wcf\system\package\plugin\DatabasePackageInstallationPlugin;
 use wcf\system\package\plugin\IPackageInstallationPlugin;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
-use wcf\util\JSON;
 
 /**
  * Wrapper class for package installation plugins for use with the sync feature.
@@ -114,7 +113,7 @@ class DevtoolsPip extends DatabaseObjectDecorator
     {
         $dependencies = \call_user_func([$this->getDecoratedObject()->className, 'getSyncDependencies']);
 
-        return ($toJson) ? JSON::encode($dependencies) : $dependencies;
+        return ($toJson) ? \json_encode($dependencies, \JSON_THROW_ON_ERROR) : $dependencies;
     }
 
     /**

@@ -41,7 +41,6 @@ use wcf\system\WCF;
 use wcf\util\CryptoUtil;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
-use wcf\util\JSON;
 
 /**
  * PackageInstallationDispatcher handles the whole installation process.
@@ -388,7 +387,7 @@ class PackageInstallationDispatcher
 
             $nodeData = \unserialize($node['nodeData']);
             foreach ($nodeData as $index => $value) {
-                $logEntry .= "\t" . $index . ': ' . (!\is_object($value) && !\is_array($value) ? $value : JSON::encode($value)) . "\n";
+                $logEntry .= "\t" . $index . ': ' . (!\is_object($value) && !\is_array($value) ? $value : \json_encode($value, \JSON_THROW_ON_ERROR)) . "\n";
             }
         }
 

@@ -23,7 +23,6 @@ use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\ExifUtil;
 use wcf\util\FileUtil;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 use function wcf\functions\exception\logThrowable;
@@ -129,11 +128,11 @@ final class FileProcessor extends SingletonFactory
                 ></woltlab-core-file-upload>
                 HTML,
             StringUtil::encodeHTML($fileProcessor->getObjectTypeName()),
-            StringUtil::encodeHTML(JSON::encode($context)),
+            StringUtil::encodeHTML(\json_encode($context, \JSON_THROW_ON_ERROR)),
             StringUtil::encodeHTML($allowedFileExtensions),
-            StringUtil::encodeHTML(JSON::encode($fileProcessor->getResizeConfiguration())),
+            StringUtil::encodeHTML(\json_encode($fileProcessor->getResizeConfiguration(), \JSON_THROW_ON_ERROR)),
             $cropperConfiguration === null ? ''
-                : 'data-cropper-configuration="' . StringUtil::encodeHTML(JSON::encode($cropperConfiguration)) . '"',
+                : 'data-cropper-configuration="' . StringUtil::encodeHTML(\json_encode($cropperConfiguration, \JSON_THROW_ON_ERROR)) . '"',
             $maximumCount,
             $maximumSize,
         );
@@ -375,7 +374,7 @@ final class FileProcessor extends SingletonFactory
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $this->getObjectType($fileProcessor->getObjectTypeName())->objectTypeID,
-            JSON::encode($context),
+            \json_encode($context, \JSON_THROW_ON_ERROR),
         ]);
         $numberOfTemporaryFiles = $statement->fetchSingleColumn();
         if ($existingFiles + $numberOfTemporaryFiles >= $maximumCount) {
