@@ -3,7 +3,6 @@
 namespace wcf\util;
 
 use wcf\system\email\Mailbox;
-use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
@@ -280,7 +279,7 @@ final class UserUtil
 
         try {
             $data = \json_decode($json, true, flags: \JSON_THROW_ON_ERROR);
-        } catch (SystemException $e) {
+        } catch (\JsonException) {
             return null;
         }
 
