@@ -8,7 +8,6 @@ use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\bbcode\BBCodeParser;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\DOMUtil;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -149,7 +148,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
 
         $newElement = $element->ownerDocument->createElement('woltlab-metacode');
         $newElement->setAttribute('data-name', 'attach');
-        $newElement->setAttribute('data-attributes', \base64_encode(JSON::encode($attributes)));
+        $newElement->setAttribute('data-attributes', \base64_encode(\json_encode($attributes, \JSON_THROW_ON_ERROR)));
         DOMUtil::replaceElement($replaceElement, $newElement, false);
     }
 
@@ -207,7 +206,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
 
         $newElement = $element->ownerDocument->createElement('woltlab-metacode');
         $newElement->setAttribute('data-name', 'wsm');
-        $newElement->setAttribute('data-attributes', \base64_encode(JSON::encode($attributes)));
+        $newElement->setAttribute('data-attributes', \base64_encode(\json_encode($attributes, \JSON_THROW_ON_ERROR)));
         DOMUtil::replaceElement($replaceElement, $newElement, false);
 
         // The media bbcode is a block element that may not be placed inside inline elements.

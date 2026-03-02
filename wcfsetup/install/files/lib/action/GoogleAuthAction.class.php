@@ -5,7 +5,6 @@ namespace wcf\action;
 use GuzzleHttp\Psr7\Request;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\oauth\User as OauthUser;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -35,7 +34,7 @@ final class GoogleAuthAction extends AbstractOauth2AuthAction
             $request = new Request('GET', 'https://accounts.google.com/.well-known/openid-configuration');
             $response = $this->getHttpClient()->send($request);
 
-            $this->configuration = JSON::decode((string)$response->getBody());
+            $this->configuration = \json_decode((string)$response->getBody(), true, flags: \JSON_THROW_ON_ERROR);
         }
 
         return $this->configuration;
@@ -91,7 +90,7 @@ final class GoogleAuthAction extends AbstractOauth2AuthAction
             'authorization' => \sprintf('Bearer %s', $accessToken['access_token']),
         ]);
         $response = $this->getHttpClient()->send($request);
-        $parsed = JSON::decode((string)$response->getBody());
+        $parsed = \json_decode((string)$response->getBody(), true, flags: \JSON_THROW_ON_ERROR);
 
         $parsed['__id'] = $parsed['sub'];
         $parsed['__username'] = $parsed['name'];

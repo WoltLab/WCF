@@ -7,7 +7,6 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\user\User;
 use wcf\system\WCF;
-use wcf\util\JSON;
 
 /**
  * Represents a liked object.
@@ -98,7 +97,7 @@ class LikeObject extends DatabaseObject
                         $this->reactions[$reactionTypeID] = [
                             'reactionCount' => $reactionCount,
                             'renderedReactionIcon' => $reactionType->renderIcon(),
-                            'renderedReactionIconEncoded' => JSON::encode($reactionType->renderIcon()),
+                            'renderedReactionIconEncoded' => \json_encode($reactionType->renderIcon(), \JSON_THROW_ON_ERROR),
                             'reactionTitle' => $reactionType->getTitle(),
                         ];
                     }
@@ -178,7 +177,7 @@ class LikeObject extends DatabaseObject
             ];
         }
 
-        return JSON::encode($data);
+        return \json_encode($data, \JSON_THROW_ON_ERROR);
     }
 
     /**

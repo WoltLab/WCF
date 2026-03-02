@@ -6,7 +6,7 @@
 
 use wcf\data\contact\option\ContactOptionEditor;
 use wcf\data\contact\option\ContactOptionList;
-use wcf\util\JSON;
+
 use wcf\util\OptionUtil;
 
 $contactOptionList = new ContactOptionList();
@@ -39,7 +39,7 @@ foreach ($contactOptionList as $contactOption) {
     $editor = new ContactOptionEditor($contactOption);
     $editor->update([
         'optionType' => $optionType,
-        'configuration' => JSON::encode($configuration),
+        'configuration' => \json_encode($configuration, \JSON_THROW_ON_ERROR),
     ]);
 }
 
@@ -57,5 +57,5 @@ function convertSelectOptions(string $selectOptions): string
         ];
     }
 
-    return JSON::encode($options);
+    return \json_encode($options, \JSON_THROW_ON_ERROR);
 }

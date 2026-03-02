@@ -5,7 +5,7 @@ namespace wcf\system\interaction\bulk;
 use wcf\data\DatabaseObject;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\JSON;
+
 use wcf\util\StringUtil;
 
 /**
@@ -40,7 +40,7 @@ class BulkFormBuilderDialogInteraction extends AbstractBulkInteraction
         );
 
         $jsonObjectIDs = StringUtil::encodeHTML(
-            JSON::encode($objectIDs)
+            \json_encode($objectIDs, \JSON_THROW_ON_ERROR)
         );
 
         return <<<HTML

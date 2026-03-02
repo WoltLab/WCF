@@ -30,7 +30,6 @@ use wcf\system\user\authentication\oauth\Success as OAuth2Success;
 use wcf\system\user\authentication\oauth\User as OauthUser;
 use wcf\system\WCF;
 use wcf\util\HtmlString;
-use wcf\util\JSON;
 
 /**
  * Generic implementation to handle the OAuth 2 flow.
@@ -163,7 +162,7 @@ abstract class AbstractOauth2AuthAction implements RequestHandlerInterface
             }
         }
 
-        $parsed = JSON::decode((string)$response->getBody());
+        $parsed = \json_decode((string)$response->getBody(), true, flags: \JSON_THROW_ON_ERROR);
 
         if (!empty($parsed['error'])) {
             throw new \Exception(

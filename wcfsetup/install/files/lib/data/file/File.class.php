@@ -12,7 +12,6 @@ use wcf\system\file\processor\IFileProcessor;
 use wcf\system\file\processor\IImageDataProvider;
 use wcf\system\file\processor\ImageData;
 use wcf\system\request\LinkHandler;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -220,8 +219,8 @@ class File extends DatabaseObject implements ITitledLinkObject, IImageDataProvid
             StringUtil::encodeHTML($this->filename),
             $this->fileSize,
             StringUtil::encodeHTML($this->mimeType),
-            StringUtil::encodeHTML(JSON::encode($thumbnails)),
-            $metaData === null ? "" : 'data-meta-data="' . StringUtil::encodeHTML(JSON::encode($metaData)) . '"',
+            StringUtil::encodeHTML(\json_encode($thumbnails, \JSON_THROW_ON_ERROR)),
+            $metaData === null ? "" : 'data-meta-data="' . StringUtil::encodeHTML(\json_encode($metaData, \JSON_THROW_ON_ERROR)) . '"',
             StringUtil::encodeHTML($this->getLink()),
         );
     }

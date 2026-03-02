@@ -5,7 +5,6 @@ namespace wcf\system\exception;
 use Throwable;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -175,7 +174,7 @@ class AJAXException extends LoggedException
 
         \header($statusHeader);
         \header('Content-type: application/json; charset=UTF-8');
-        echo JSON::encode($responseData);
+        echo \json_encode($responseData, \JSON_THROW_ON_ERROR);
 
         exit;
     }

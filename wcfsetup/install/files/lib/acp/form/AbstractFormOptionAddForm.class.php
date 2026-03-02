@@ -12,7 +12,6 @@ use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\option\FormOptionHandler;
 use wcf\system\form\option\SharedConfigurationFormFields;
-use wcf\util\JSON;
 
 /**
  * Default implementation for a form that adds custom options based on the form option system.
@@ -47,7 +46,7 @@ abstract class AbstractFormOptionAddForm extends AbstractFormBuilderForm
                         }
                     }
 
-                    $parameters['data']['configuration'] = JSON::encode($configuration);
+                    $parameters['data']['configuration'] = \json_encode($configuration, \JSON_THROW_ON_ERROR);
 
                     return $parameters;
                 },
@@ -56,7 +55,7 @@ abstract class AbstractFormOptionAddForm extends AbstractFormBuilderForm
 
                     // @phpstan-ignore property.notFound
                     if ($object->configuration) {
-                        $data = \array_merge($data, JSON::decode($object->configuration));
+                        $data = \array_merge($data, \json_decode($object->configuration, true, flags: \JSON_THROW_ON_ERROR));
                     }
 
                     return $data;

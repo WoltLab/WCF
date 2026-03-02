@@ -29,7 +29,6 @@ use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\HtmlString;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 use wcf\util\UserRegistrationUtil;
 use wcf\util\UserUtil;
@@ -169,10 +168,12 @@ class RegisterForm extends UserAddForm
         }
         if (isset($_POST[$this->randomFieldNames['password'] . '_passwordStrengthVerdict'])) {
             try {
-                $this->passwordStrengthVerdict = JSON::decode(
-                    $_POST[$this->randomFieldNames['password'] . '_passwordStrengthVerdict']
+                $this->passwordStrengthVerdict = \json_decode(
+                    $_POST[$this->randomFieldNames['password'] . '_passwordStrengthVerdict'],
+                    true,
+                    flags: \JSON_THROW_ON_ERROR
                 );
-            } catch (SystemException $e) {
+            } catch (\JsonException) {
                 // ignore
             }
         }
@@ -429,7 +430,7 @@ class RegisterForm extends UserAddForm
                 'username' => $this->username,
                 'email' => $this->email,
                 'password' => $this->password,
-                'blacklistMatches' => $this->spamCheckEvent->hasMatches() ? JSON::encode($this->spamCheckEvent->getMatches()) : '',
+                'blacklistMatches' => $this->spamCheckEvent->hasMatches() ? \json_encode($this->spamCheckEvent->getMatches(), \JSON_THROW_ON_ERROR) : '',
                 'signatureEnableHtml' => 1,
             ]),
             'groups' => $this->groupIDs,

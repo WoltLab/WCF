@@ -2,7 +2,7 @@
 
 namespace wcf\system\form\option\formatter;
 
-use wcf\util\JSON;
+
 use wcf\util\StringUtil;
 
 /**
@@ -23,7 +23,7 @@ final class MultipleSelectionFormatter implements IFormOptionFormatter
         };
 
         $keys = \explode(",", $value);
-        $selectOptions = JSON::decode($configuration['selectOptions']);
+        $selectOptions = \json_decode($configuration['selectOptions'], true, flags: \JSON_THROW_ON_ERROR);
         $html = '';
 
         foreach ($keys as $key) {

@@ -7,7 +7,6 @@ use wcf\system\style\FontAwesomeIcon;
 use wcf\system\style\FontAwesomeIconBrand;
 use wcf\system\style\IFontAwesomeIcon;
 use wcf\system\template\TemplateEngine;
-use wcf\util\JSON;
 
 /**
  * Template function plugin that embeds icons into the page. The
@@ -67,7 +66,7 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
         $html = $icon->toHtml($size);
 
         if ($encodeJson) {
-            return JSON::encode($html);
+            return \json_encode($html, \JSON_THROW_ON_ERROR);
         }
 
         return $html;

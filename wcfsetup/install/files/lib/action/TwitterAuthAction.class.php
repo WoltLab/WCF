@@ -17,7 +17,6 @@ use wcf\system\user\authentication\oauth\twitter\Failure as OAuth2TwitterFailure
 use wcf\system\user\authentication\oauth\twitter\Success as OAuth2TwitterSuccess;
 use wcf\system\user\authentication\oauth\User as OauthUser;
 use wcf\system\WCF;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -134,7 +133,7 @@ final class TwitterAuthAction extends AbstractOauth2AuthAction
         );
         $response = $this->getHttpClient()->send($request);
 
-        $parsed = JSON::decode((string)$response->getBody());
+        $parsed = \json_decode((string)$response->getBody(), true, flags: \JSON_THROW_ON_ERROR);
         $parsed['__id'] = $parsed['id'];
         $parsed['__username'] = $parsed['name'];
         if (!empty($parsed['email'])) {

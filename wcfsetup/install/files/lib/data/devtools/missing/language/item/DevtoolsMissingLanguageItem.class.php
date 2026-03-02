@@ -6,7 +6,6 @@ use wcf\data\DatabaseObject;
 use wcf\data\language\Language;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
-use wcf\util\JSON;
 
 /**
  * Represents a missing language item log entry.
@@ -47,7 +46,7 @@ class DevtoolsMissingLanguageItem extends DatabaseObject
      */
     public function getStackTrace()
     {
-        $stackTrace = JSON::decode($this->stackTrace);
+        $stackTrace = \json_decode($this->stackTrace, true, flags: \JSON_THROW_ON_ERROR);
 
         return WCF::getTPL()->render('wcf', '__devtoolsMissingLanguageItemStackTrace', [
             'stackTrace' => $stackTrace,

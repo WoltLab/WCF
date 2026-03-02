@@ -98,7 +98,7 @@ final class ExceptionLogUtil
             }
 
             try {
-                $item['stack'] = JSON::decode($item['stack']);
+                $item['stack'] = \json_decode($item['stack'], true, flags: \JSON_THROW_ON_ERROR);
             } catch (SystemException $e) {
                 throw new \InvalidArgumentException('The stack trace of the given entry is malformed.', 0, $e);
             }

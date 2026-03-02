@@ -11,7 +11,6 @@ use wcf\system\exception\UserInputException;
 use wcf\system\IAJAXInvokeAction;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -168,7 +167,7 @@ class AJAXInvokeAction extends AbstractSecureAction
     protected function sendResponse()
     {
         \header('Content-type: application/json; charset=UTF-8');
-        echo JSON::encode($this->response);
+        echo \json_encode($this->response, \JSON_THROW_ON_ERROR);
 
         exit;
     }

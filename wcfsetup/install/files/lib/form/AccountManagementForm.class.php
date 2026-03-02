@@ -9,12 +9,10 @@ use wcf\system\email\Email;
 use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\UserMailbox;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\user\authentication\configuration\UserAuthenticationConfigurationFactory;
 use wcf\system\WCF;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 use wcf\util\UserRegistrationUtil;
 
@@ -155,8 +153,8 @@ class AccountManagementForm extends AbstractForm
         }
         if (isset($_POST['newPassword_passwordStrengthVerdict'])) {
             try {
-                $this->newPasswordStrengthVerdict = JSON::decode($_POST['newPassword_passwordStrengthVerdict']);
-            } catch (SystemException $e) {
+                $this->newPasswordStrengthVerdict = \json_decode($_POST['newPassword_passwordStrengthVerdict'], true, flags: \JSON_THROW_ON_ERROR);
+            } catch (\JsonException) {
                 // ignore
             }
         }

@@ -6,7 +6,6 @@ use wcf\system\exception\AJAXException;
 use wcf\system\exception\UserInputException;
 use wcf\system\file\upload\UploadFile;
 use wcf\system\file\upload\UploadHandler;
-use wcf\util\JSON;
 
 /**
  * Copy of the default implementation for file uploads using the AJAX-API.
@@ -97,7 +96,7 @@ class AJAXFileDeleteAction extends AbstractSecureAction
      */
     protected function sendJsonResponse(array $data)
     {
-        $json = JSON::encode($data);
+        $json = \json_encode($data, \JSON_THROW_ON_ERROR);
 
         // send JSON response
         \header('Content-type: application/json; charset=UTF-8');

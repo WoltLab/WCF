@@ -4,7 +4,6 @@ namespace wcf\system\devtools;
 
 use wcf\system\SingletonFactory;
 use wcf\util\FileUtil;
-use wcf\util\JSON;
 
 /**
  * Enables the rapid deployment of new installations using a central configuration file
@@ -71,7 +70,7 @@ class DevtoolsSetup extends SingletonFactory
         $contents = \file_get_contents($docRoot . self::CONFIGURATION_FILE);
 
         // allow the exception to go rampage
-        $this->configuration = JSON::decode($contents);
+        $this->configuration = \json_decode($contents, true, flags: \JSON_THROW_ON_ERROR);
     }
 
     /**

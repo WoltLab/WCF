@@ -8,8 +8,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use wcf\system\exception\SystemException;
-use wcf\util\JSON;
 
 /**
  * Decodes requests containing a JSON body.
@@ -31,8 +29,8 @@ final class JsonBody implements MiddlewareInterface
         $hasValidJson = false;
         if ($this->contentTypeIsJson($request)) {
             try {
-                $data = JSON::decode($request->getBody());
-            } catch (SystemException $e) {
+                $data = \json_decode($request->getBody(), true, flags: \JSON_THROW_ON_ERROR);
+            } catch (\JsonException) {
                 return new TextResponse('Failed to decode the request body.', 400);
             }
 

@@ -9,7 +9,6 @@ use wcf\system\file\upload\UploadHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\ImageUtil;
-use wcf\util\JSON;
 
 /**
  * Copy of the default implementation for file uploads using the AJAX-API.
@@ -153,7 +152,7 @@ class AJAXFileUploadAction extends AbstractSecureAction
      */
     protected function sendJsonResponse(array $data)
     {
-        $json = JSON::encode($data);
+        $json = \json_encode($data, \JSON_THROW_ON_ERROR);
 
         // send JSON response
         \header('Content-type: application/json; charset=UTF-8');

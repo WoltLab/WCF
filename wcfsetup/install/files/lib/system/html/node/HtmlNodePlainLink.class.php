@@ -7,7 +7,6 @@ use wcf\data\bbcode\BBCode;
 use wcf\data\ITitledObject;
 use wcf\system\Regex;
 use wcf\util\DOMUtil;
-use wcf\util\JSON;
 
 /**
  * Wrapper for links that do not have a dedicated title and are most likely the result of
@@ -171,7 +170,7 @@ class HtmlNodePlainLink
         $metacodeElement->setAttribute('data-name', $bbcode->bbcodeTag);
         $metacodeElement->setAttribute(
             'data-attributes',
-            \base64_encode(JSON::encode([($overrideObjectID !== null ? $overrideObjectID : $this->objectID)]))
+            \base64_encode(\json_encode([($overrideObjectID !== null ? $overrideObjectID : $this->objectID)], \JSON_THROW_ON_ERROR))
         );
 
         if ($bbcode->isBlockElement) {

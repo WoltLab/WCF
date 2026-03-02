@@ -3,7 +3,6 @@
 namespace wcf\util;
 
 use wcf\system\email\Mailbox;
-use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
@@ -252,11 +251,12 @@ final class UserUtil
      */
     public static function createGuestToken(string $username): string
     {
-        return CryptoUtil::createSignedString(JSON::encode(
+        return CryptoUtil::createSignedString(\json_encode(
             [
                 'username' => $username,
                 'time' => TIME_NOW,
-            ]
+            ],
+            \JSON_THROW_ON_ERROR
         ));
     }
 
@@ -278,8 +278,8 @@ final class UserUtil
         }
 
         try {
-            $data = JSON::decode($json);
-        } catch (SystemException $e) {
+            $data = \json_decode($json, true, flags: \JSON_THROW_ON_ERROR);
+        } catch (\JsonException) {
             return null;
         }
 

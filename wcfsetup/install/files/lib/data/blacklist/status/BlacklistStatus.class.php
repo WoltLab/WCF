@@ -8,7 +8,6 @@ use Psr\Http\Client\ClientExceptionInterface;
 use wcf\data\DatabaseObject;
 use wcf\system\exception\SystemException;
 use wcf\system\io\HttpFactory;
-use wcf\util\JSON;
 
 /**
  * Represents a blacklist status.
@@ -113,7 +112,7 @@ class BlacklistStatus extends DatabaseObject
             return null;
         }
 
-        $data = JSON::decode((string)$response->getBody());
+        $data = \json_decode((string)$response->getBody(), true, flags: \JSON_THROW_ON_ERROR);
         $deltas = ['delta1', 'delta2', 'delta3', 'delta4'];
 
         // The array is ordered from "now" to "14 days ago".

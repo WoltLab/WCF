@@ -28,7 +28,6 @@ use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\activity\point\UserActivityPointHandler;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -89,7 +88,7 @@ class ReactionHandler extends SingletonFactory
             ];
         }
 
-        return JSON::encode($returnValues);
+        return \json_encode($returnValues, \JSON_THROW_ON_ERROR);
     }
 
     /**

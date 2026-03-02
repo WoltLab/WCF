@@ -10,7 +10,6 @@ use wcf\system\exception\SystemException;
 use wcf\system\request\RequestHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\JSON;
 
 /**
  * Handles styles.
@@ -287,7 +286,7 @@ class StyleHandler extends SingletonFactory
     public function getIcons($toJSON = false)
     {
         if ($toJSON) {
-            return JSON::encode([]);
+            return \json_encode([], \JSON_THROW_ON_ERROR);
         }
 
         return [];

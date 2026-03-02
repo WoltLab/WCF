@@ -7,7 +7,6 @@ use wcf\system\style\FontAwesomeIcon;
 use wcf\system\style\FontAwesomeIconBrand;
 use wcf\system\style\IFontAwesomeIcon;
 use wcf\system\template\TemplateScriptingCompiler;
-use wcf\util\JSON;
 
 /**
  * See IconFunctionTemplatePlugin.
@@ -41,7 +40,7 @@ final class IconPrefilterTemplatePlugin implements IPrefilterTemplatePlugin
                     $html = $this->getIcon($type, $name)->toHtml($size);
 
                     if ($encodeJson) {
-                        return JSON::encode($html);
+                        return \json_encode($html, \JSON_THROW_ON_ERROR);
                     }
 
                     return $html;

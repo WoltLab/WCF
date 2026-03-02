@@ -7,7 +7,7 @@ use wcf\data\DatabaseObject;
 use wcf\system\interaction\InteractionConfirmationType;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\JSON;
+
 use wcf\util\StringUtil;
 
 /**
@@ -42,8 +42,9 @@ class BulkRpcInteraction extends AbstractBulkInteraction
             LinkHandler::getInstance()->getControllerLink(ApiAction::class, ['id' => 'rpc']) . $this->endpoint
         );
         $objectIDs = StringUtil::encodeHTML(
-            JSON::encode(
-                \array_values(\array_map(fn(DatabaseObject $object) => $object->getObjectID(), $objects))
+            \json_encode(
+                \array_values(\array_map(fn(DatabaseObject $object) => $object->getObjectID(), $objects)),
+                \JSON_THROW_ON_ERROR
             )
         );
 

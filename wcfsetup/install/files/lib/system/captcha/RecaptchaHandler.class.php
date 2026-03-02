@@ -8,7 +8,6 @@ use Psr\Http\Client\ClientExceptionInterface;
 use wcf\system\exception\UserInputException;
 use wcf\system\io\HttpFactory;
 use wcf\system\WCF;
-use wcf\util\JSON;
 use wcf\util\UserUtil;
 
 /**
@@ -136,7 +135,7 @@ class RecaptchaHandler implements ICaptchaHandler
 
         try {
             $response = $this->getHttpClient()->send($request);
-            $data = JSON::decode((string)$response->getBody());
+            $data = \json_decode((string)$response->getBody(), true, flags: \JSON_THROW_ON_ERROR);
 
             if ($data['success']) {
                 // reCaptcha v3 score ranges from 1.0(very likely a good interaction) and 0.0(very likely a bot),

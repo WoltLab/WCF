@@ -9,7 +9,6 @@ use wcf\system\exception\UserInputException;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -655,8 +654,8 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
                     }
                 } else {
                     try {
-                        $target[$variableName] = JSON::decode($target[$variableName]);
-                    } catch (SystemException $e) {
+                        $target[$variableName] = \json_decode($target[$variableName], true, flags: \JSON_THROW_ON_ERROR);
+                    } catch (\JsonException) {
                         throw new UserInputException($variableName);
                     }
 
