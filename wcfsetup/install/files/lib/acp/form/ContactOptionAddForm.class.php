@@ -92,7 +92,7 @@ class ContactOptionAddForm extends AbstractFormOptionAddForm
     /**
      * @return array<int, string>
      */
-    private function getContactOptions(): array
+    protected function getContactOptions(): array
     {
         $optionList = new ContactOptionList();
         $optionList->sqlOrderBy = 'showOrder ASC';

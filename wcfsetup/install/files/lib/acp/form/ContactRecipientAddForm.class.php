@@ -81,12 +81,12 @@ class ContactRecipientAddForm extends AbstractFormBuilderForm
     /**
      * @return array<int, string>
      */
-    private function getContactRecipient(): array
+    protected function getContactRecipient(): array
     {
         $recipientList = new ContactRecipientList();
         $recipientList->sqlOrderBy = 'showOrder ASC';
         $recipientList->readObjects();
 
-        return \array_map(static fn ($recipient) => $recipient->getName(), $recipientList->getObjects());
+        return \array_map(static fn($recipient) => $recipient->getName(), $recipientList->getObjects());
     }
 }
