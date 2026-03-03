@@ -53,7 +53,7 @@ final class UserTrophyGridView extends AbstractGridView
                 ->titleColumn()
                 ->filter(UserFilter::class)
                 ->renderer(new UserLinkColumnRenderer(UserEditForm::class))
-                ->sortable(),
+                ->sortable(sortByDatabaseColumn: 'username'),
             GridViewColumn::for("image")
                 ->label("wcf.acp.trophy")
                 ->filter($this->getTrophySelectFilter())
@@ -165,7 +165,14 @@ final class UserTrophyGridView extends AbstractGridView
     #[\Override]
     protected function createObjectList(): UserTrophyList
     {
-        return new UserTrophyList();
+        $list = new UserTrophyList();
+        $list->sqlSelects .= "(
+            SELECT  username
+            FROM    wcf1_user
+            WHERE   userID = user_trophy.userID
+        ) AS username";
+
+        return $list;
     }
 
     #[\Override]
