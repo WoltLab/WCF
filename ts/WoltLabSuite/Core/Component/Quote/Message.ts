@@ -631,12 +631,13 @@ function getElementBoundaries(selection: Selection | null): ElementBoundaries {
   const rect = selection.getRangeAt(0).getBoundingClientRect();
 
   const scrollTop = window.scrollY;
+
   return {
     bottom: rect.bottom + scrollTop,
     height: rect.height,
     left: rect.left,
     right: rect.right,
     top: rect.top + scrollTop,
-    width: rect.height,
+    width: rect.width,
   };
 }

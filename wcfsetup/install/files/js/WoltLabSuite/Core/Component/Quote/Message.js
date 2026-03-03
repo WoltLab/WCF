@@ -462,7 +462,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
             left: rect.left,
             right: rect.right,
             top: rect.top + scrollTop,
-            width: rect.height,
+            width: rect.width,
         };
     }
 });
