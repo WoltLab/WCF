@@ -214,6 +214,6 @@ class RedisCacheSource implements ICacheSource
             return \TIME_NOW;
         }
 
-        return $ttl - $maxLifetime;
+        return \TIME_NOW - $maxLifetime + $ttl;
     }
 }
