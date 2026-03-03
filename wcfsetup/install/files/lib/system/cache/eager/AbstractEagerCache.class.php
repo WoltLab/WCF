@@ -48,7 +48,6 @@ abstract class AbstractEagerCache
     {
         if (!isset($this->cacheName)) {
             /* @see CacheHandler::getCacheName() */
-            $reflection = new \ReflectionClass($this);
             $this->cacheName = \str_replace(
                 ['\\', 'system_cache_eager_'],
                 ['_', ''],
