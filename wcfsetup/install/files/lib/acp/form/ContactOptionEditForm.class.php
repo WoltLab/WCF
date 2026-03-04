@@ -70,4 +70,14 @@ class ContactOptionEditForm extends ContactOptionAddForm
             ),
         ]);
     }
+
+    #[\Override]
+    protected function getContactOptions(): array
+    {
+        return \array_filter(
+            parent::getContactOptions(),
+            fn(int $key) => $key !== $this->formObject->getObjectID(),
+            \ARRAY_FILTER_USE_KEY
+        );
+    }
 }

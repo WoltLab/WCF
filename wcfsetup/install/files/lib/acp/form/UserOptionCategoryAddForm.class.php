@@ -61,18 +61,7 @@ class UserOptionCategoryAddForm extends AbstractFormBuilderForm
                         ->i18nRequired()
                         ->languageItemPattern('wcf.user.option.category.(category\d+|[\w\.]+)'),
                     ShowOrderFormField::create()
-                        ->options(function () {
-                            $categoryList = new UserOptionCategoryList();
-                            $categoryList->getConditionBuilder()->add('parentCategoryName = ?', ['profile']);
-                            $categoryList->readObjects();
-                            $categories = [];
-
-                            foreach ($categoryList->getObjects() as $category) {
-                                $categories[$category->categoryID] = $category->getTitle();
-                            }
-
-                            return $categories;
-                        }),
+                        ->options($this->getCategories()),
                 ]),
         ]);
     }
@@ -131,5 +120,20 @@ class UserOptionCategoryAddForm extends AbstractFormBuilderForm
         ]);
 
         parent::saved();
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    protected function getCategories(): array
+    {
+        $categoryList = new UserOptionCategoryList();
+        $categoryList->getConditionBuilder()->add('parentCategoryName = ?', ['profile']);
+        $categoryList->readObjects();
+
+        return \array_map(
+            static fn($category) => $category->getTitle(),
+            $categoryList->getObjects()
+        );
     }
 }

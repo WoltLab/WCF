@@ -67,4 +67,14 @@ class ContactRecipientEditForm extends ContactRecipientAddForm
             ),
         ]);
     }
+
+    #[\Override]
+    protected function getContactRecipient(): array
+    {
+        return \array_filter(
+            parent::getContactRecipient(),
+            fn(int $key) => $key !== $this->formObject->getObjectID(),
+            \ARRAY_FILTER_USE_KEY
+        );
+    }
 }
