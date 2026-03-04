@@ -3659,11 +3659,11 @@ return [
     DatabaseTable::create('wcf1_trophy')
         ->columns([
             ObjectIdDatabaseTableColumn::create('trophyID'),
-            VarcharDatabaseTableColumn::create('title')
-                ->length(255),
+            NotNullVarchar255DatabaseTableColumn::create('title'),
             MediumtextDatabaseTableColumn::create('description'),
             NotNullInt10DatabaseTableColumn::create('categoryID'),
             SmallintDatabaseTableColumn::create('type')
+                ->notNull()
                 ->defaultValue(1),
             MediumtextDatabaseTableColumn::create('iconFile'),
             VarcharDatabaseTableColumn::create('iconName')

@@ -24,10 +24,10 @@ use wcf\util\StringUtil;
  * @since   3.1
  *
  * @property-read   int     $trophyID               unique id for the trophy
- * @property-read   ?string $title
+ * @property-read   string  $title
  * @property-read   ?string $description
  * @property-read   int     $categoryID
- * @property-read   ?int    $type
+ * @property-read   int     $type
  * @property-read   ?string $iconFile
  * @property-read   ?string $iconName
  * @property-read   ?string $iconColor
