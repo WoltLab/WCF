@@ -39,7 +39,7 @@ final class SelectFormField extends AbstractFormField implements
     /**
      * @since 6.2
      */
-    private ?string $defaultValue = null;
+    private string|int|null $defaultValue = null;
 
     /**
      * @inheritDoc
@@ -117,7 +117,7 @@ final class SelectFormField extends AbstractFormField implements
      *
      * @since 6.2
      */
-    public function defaultValue(?string $defaultValue = null): self
+    public function defaultValue(string|int|null $defaultValue = null): self
     {
         if ($defaultValue !== null && !isset($this->getOptions()[$defaultValue])) {
             throw new \InvalidArgumentException("Unknown default value '{$defaultValue}' for field '{$this->getId()}'.");
