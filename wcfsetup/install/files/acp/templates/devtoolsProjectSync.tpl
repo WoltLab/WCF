@@ -10,7 +10,7 @@
 		<ul>
 			{if $object->validate() === ''}
 				<li>
-					<button class="button" id="devtoolsSyncAll">
+					<button type="button" class="button" id="devtoolsSyncAll">
 						{icon name='arrows-rotate' type='solid'}
 						{lang}wcf.acp.devtools.sync.syncAll{/lang}
 					</button>
