@@ -11,6 +11,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 use wcf\data\DatabaseObject;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\ParentClassException;
 use wcf\system\exception\UserInputException;
 use wcf\util\StringUtil;
@@ -192,6 +193,48 @@ final class Helper
             throw new UserInputException(
                 $dbo->getDatabaseTableIndexName(),
             );
+        }
+
+        return $dbo;
+    }
+
+    /**
+     * Fetches a database object using the `id` parameter from GET parameters.
+     *
+     * If the value does not resolve to an object, i.e. its object id is not
+     * truthy, a IllegalLinkException is thrown.
+     *
+     * @template T of object
+     * @param class-string<T> $className
+     * @return T
+     * @throws IllegalLinkException
+     * @throws ParentClassException
+     * @since 6.3
+     */
+    public static function fetchObjectFromQueryParameter(string $className): object
+    {
+        if (!\is_subclass_of($className, DatabaseObject::class)) {
+            throw new ParentClassException($className, DatabaseObject::class);
+        }
+
+        try {
+            $queryParameters = Helper::mapQueryParameters(
+                $_GET,
+                <<<'EOT'
+                    array {
+                        id: positive-int
+                    }
+                    EOT
+            );
+        } catch (MappingError) {
+            throw new IllegalLinkException();
+        }
+
+        /** @var DatabaseObject $dbo */
+        $dbo = new $className($queryParameters['id']);
+
+        if (!$dbo->getObjectID()) {
+            throw new IllegalLinkException();
         }
 
         return $dbo;
