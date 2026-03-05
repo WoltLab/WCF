@@ -43,8 +43,8 @@ trait TCollectionEmbeddedObjects
         \assert($this instanceof DatabaseObjectCollection);
 
         return \array_map(
-            static fn($object) => $object->getObjectID(),
-            \array_filter($this->getObjects(), fn($object) => $object->hasEmbeddedObjects === 1)
+            static fn(DatabaseObject $object) => $object->getObjectID(),
+            \array_filter($this->getObjects(), fn(DatabaseObject $object) => $object->hasEmbeddedObjects === 1)
         );
     }
 }
