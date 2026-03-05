@@ -375,16 +375,12 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 
     public function getFile(): ?File
     {
-        // This method is called within `__get()`, therefore we must dereference
-        // the data array directly to avoid recursion.
-        $fileID = $this->data['fileID'] ?? null;
-
-        if (!$fileID) {
+        if (!$this->fileID) {
             return null;
         }
 
         if (!isset($this->file)) {
-            $this->file = FileRuntimeCache::getInstance()->getObject($fileID);
+            $this->file = FileRuntimeCache::getInstance()->getObject($this->fileID);
         }
 
         return $this->file;
