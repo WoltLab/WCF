@@ -218,7 +218,7 @@ final class Helper
         }
 
         try {
-            $queryParameters = Helper::mapQueryParameters(
+            $queryParameters = self::mapQueryParameters(
                 $_GET,
                 <<<'EOT'
                     array {
