@@ -2,6 +2,8 @@
 
 namespace wcf\system\interaction;
 
+use wcf\data\DatabaseObject;
+
 /**
  * Represents a provider that provides interactions that can be applied to a specific type of DatabaseObject.
  *
@@ -41,6 +43,8 @@ interface IInteractionProvider
 
     /**
      * Returns the class name of the object that the interactions can be applied to.
+     *
+     * @return class-string<DatabaseObject>
      */
     public function getObjectClassName(): string;
 }
