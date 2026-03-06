@@ -12,6 +12,7 @@ use wcf\system\endpoint\IController;
  * @copyright 2001-2024 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.1
+ * @deprecated 6.3 Event is obsolete because endpoints are loaded automatically based on location.
  */
 final class ControllerCollecting implements IPsr14Event
 {
