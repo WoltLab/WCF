@@ -30,14 +30,14 @@ final class DeleteRecipient implements IController
     {
         $recipient = Helper::fetchObjectFromRequestParameter($variables['id'], ContactRecipient::class);
 
-        $this->assertOptionCanBeDeleted($recipient);
+        $this->assertRecipientCanBeDeleted($recipient);
 
         (new ContactRecipientAction([$recipient], 'delete'))->executeAction();
 
         return new JsonResponse([]);
     }
 
-    private function assertOptionCanBeDeleted(ContactRecipient $recipient): void
+    private function assertRecipientCanBeDeleted(ContactRecipient $recipient): void
     {
         if (!\MODULE_CONTACT_FORM) {
             throw new IllegalLinkException();

@@ -15,9 +15,7 @@ use wcf\system\WCF;
  */
 final class UserBirthdayCache extends AbstractTolerantCache
 {
-    public function __construct(public readonly int $month)
-    {
-    }
+    public function __construct(public readonly int $month) {}
 
     #[\Override]
     public function getLifetime(): int
@@ -42,10 +40,7 @@ final class UserBirthdayCache extends AbstractTolerantCache
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute(['%-' . ($this->month < 10 ? '0' : '') . $this->month . '-%']);
         while ($row = $statement->fetchArray()) {
-            [, , $day] = \explode('-', $row[$birthday]);
-            if (!isset($data[$day])) {
-                $data[$day] = [];
-            }
+            [,, $day] = \explode('-', $row[$birthday]);
             $data[\intval($day)][] = $row['userID'];
         }
 

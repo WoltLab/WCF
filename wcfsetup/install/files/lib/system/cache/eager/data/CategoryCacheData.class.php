@@ -12,13 +12,14 @@ use wcf\data\category\Category;
  */
 final class CategoryCacheData
 {
+    /**
+     * @param Category[] $categories
+     * @param array<string, list<int>> $objectTypeCategoryIDs
+     */
     public function __construct(
-        /** @var Category[] */
         public readonly array $categories,
-        /** @var array<int, list<int>> */
         public readonly array $objectTypeCategoryIDs
-    ) {
-    }
+    ) {}
 
     public function getCategory(int $categoryID): ?Category
     {

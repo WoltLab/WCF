@@ -16,12 +16,11 @@ use wcf\system\cache\tolerant\AbstractTolerantCache;
 final class TolerantCacheRebuildBackgroundJob extends AbstractUniqueBackgroundJob
 {
     public function __construct(
-        /** @var class-string<AbstractTolerantCache<array|object> */
+        /** @var class-string<AbstractTolerantCache<array|object>> */
         public readonly string $cacheClass,
         /** @var array<string, mixed> */
         public readonly array $parameters = []
-    ) {
-    }
+    ) {}
 
     public function identifier(): string
     {

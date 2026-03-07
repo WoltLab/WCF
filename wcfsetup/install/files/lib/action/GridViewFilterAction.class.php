@@ -45,8 +45,17 @@ final class GridViewFilterAction implements RequestHandlerInterface
             throw new UserInputException('gridView', 'invalid');
         }
 
-        /** @var AbstractGridView<DatabaseObject, DatabaseObjectList<DatabaseObject>> $view */
-        $view = new $parameters['gridView'](...$parameters['gridViewParameters']);
+        try {
+            /** @var AbstractGridView<DatabaseObject, DatabaseObjectList<DatabaseObject>> $view */
+            $view = new $parameters['gridView'](...$parameters['gridViewParameters']);
+            // @phpstan-ignore catch.neverThrown
+        } catch (\ArgumentCountError $e) {
+            if (\ENABLE_DEBUG_MODE) {
+                throw $e;
+            } else {
+                throw new IllegalLinkException();
+            }
+        }
 
         if (!$view->isAccessible()) {
             throw new PermissionDeniedException();

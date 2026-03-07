@@ -18,6 +18,7 @@ use wcf\system\gridView\renderer\UserLinkColumnRenderer;
 use wcf\system\interaction\bulk\user\ModerationQueueBulkInteractions;
 use wcf\system\interaction\user\ModerationQueueInteractions;
 use wcf\system\moderation\queue\ModerationQueueManager;
+use wcf\system\view\filter\exception\InvalidFilterValue;
 use wcf\system\view\filter\IntegerFilter;
 use wcf\system\view\filter\SelectFilter;
 use wcf\system\view\filter\TimeFilter;
@@ -233,6 +234,10 @@ final class ModerationQueueGridView extends AbstractGridView
             #[\Override]
             public function applyFilter(DatabaseObjectList $list, string $value): void
             {
+                if (!isset($this->options[$value])) {
+                    throw new InvalidFilterValue("Invalid value '{$value}' for filter '{$this->id}' given.");
+                }
+
                 $columnName = $this->getDatabaseColumnName($list);
 
                 $list->getConditionBuilder()->add("{$columnName} IN (?)", [

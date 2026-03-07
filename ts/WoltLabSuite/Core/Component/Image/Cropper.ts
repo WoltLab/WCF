@@ -357,7 +357,7 @@ class ExactImageCropper extends ImageCropper {
 
     if (sizes.length === 0) {
       const smallestSize =
-        this.configuration.sizes.length > 1 ? this.configuration.sizes[this.configuration.sizes.length - 1] : undefined;
+        this.configuration.sizes.length > 0 ? this.configuration.sizes[this.configuration.sizes.length - 1] : undefined;
       throw new Error(
         getPhrase("wcf.upload.error.image.tooSmall", {
           width: smallestSize?.width,

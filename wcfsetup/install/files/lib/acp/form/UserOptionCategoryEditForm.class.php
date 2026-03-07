@@ -63,4 +63,14 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm
 
         AbstractFormBuilderForm::saved();
     }
+
+    #[\Override]
+    protected function getCategories(): array
+    {
+        return \array_filter(
+            parent::getCategories(),
+            fn(int $key) => $key !== $this->formObject->getObjectID(),
+            \ARRAY_FILTER_USE_KEY
+        );
+    }
 }

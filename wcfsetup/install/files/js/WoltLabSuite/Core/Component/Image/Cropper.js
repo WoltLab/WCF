@@ -267,7 +267,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Image/Resizer", "WoltL
                 }
             });
             if (sizes.length === 0) {
-                const smallestSize = this.configuration.sizes.length > 1 ? this.configuration.sizes[this.configuration.sizes.length - 1] : undefined;
+                const smallestSize = this.configuration.sizes.length > 0 ? this.configuration.sizes[this.configuration.sizes.length - 1] : undefined;
                 throw new Error((0, Language_1.getPhrase)("wcf.upload.error.image.tooSmall", {
                     width: smallestSize?.width,
                     height: smallestSize?.height,

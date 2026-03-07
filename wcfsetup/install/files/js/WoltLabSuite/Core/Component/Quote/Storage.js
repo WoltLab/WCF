@@ -122,7 +122,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
         usedQuotes.get(editorId)?.forEach((uuid) => {
             for (const [key, quotes] of storage.quotes) {
                 const quote = quotes.get(uuid);
-                if (quote?.rawMessage !== null) {
+                if (quote !== undefined && quote.rawMessage !== null) {
                     fullQuotes.push(key);
                 }
                 quotes.delete(uuid);
@@ -149,7 +149,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
         }
         storage.messages.set(key, message);
         for (const [uuid, q] of storage.quotes.get(key)) {
-            if ((q.rawMessage !== null && q.rawMessage === null) || q.message === quote.message) {
+            if ((q.rawMessage !== null && q.rawMessage === quote.rawMessage) || q.message === quote.message) {
                 return uuid;
             }
         }

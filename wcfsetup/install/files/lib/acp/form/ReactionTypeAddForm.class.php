@@ -71,7 +71,7 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm
                     ->languageItemPattern('wcf.reactionType.title\d+'),
                 ShowOrderFormField::create()
                     ->required()
-                    ->options(new ReactionTypeList()),
+                    ->options($this->getReactionTypes()),
                 BooleanFormField::create('isAssignable')
                     ->label('wcf.acp.reactionType.isAssignable')
                     ->description('wcf.acp.reactionType.isAssignable.description')
@@ -93,5 +93,16 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm
             $dataContainer,
             $iconContainer,
         ]);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    protected function getReactionTypes(): array
+    {
+        $list = new ReactionTypeList();
+        $list->readObjects();
+
+        return \array_map(static fn($option) => $option->getTitle(), $list->getObjects());
     }
 }

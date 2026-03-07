@@ -58,4 +58,16 @@ class ReactionTypeEditForm extends ReactionTypeAddForm
             ),
         ]);
     }
+
+    /**
+     * @return array<int, string>
+     */
+    protected function getReactionTypes(): array
+    {
+        return \array_filter(
+            parent::getReactionTypes(),
+            fn(int $key) => $key !== $this->formObject->getObjectID(),
+            \ARRAY_FILTER_USE_KEY
+        );
+    }
 }

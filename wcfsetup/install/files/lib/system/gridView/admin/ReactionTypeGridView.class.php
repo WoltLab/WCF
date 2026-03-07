@@ -109,6 +109,7 @@ final class ReactionTypeGridView extends AbstractGridView
         return new I18nReactionTypeList();
     }
 
+    #[\Override]
     protected function getInitializedEvent(): ReactionTypeGridViewInitialized
     {
         return new ReactionTypeGridViewInitialized($this);
