@@ -84,7 +84,7 @@ class LikeableArticleProvider extends AbstractObjectTypeProvider implements
                 $like->setTitle($text);
 
                 // output
-                $like->setDescription($article->getTeaser());
+                $like->setDescription(StringUtil::encodeHTML($article->getTeaser()));
             }
         }
     }
