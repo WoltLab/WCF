@@ -7,6 +7,7 @@ use wcf\data\like\object\ILikeObject;
 use wcf\data\object\type\AbstractObjectTypeProvider;
 use wcf\system\like\IViewableLikeProvider;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Like Object type provider for cms articles.
