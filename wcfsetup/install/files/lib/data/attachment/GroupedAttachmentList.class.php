@@ -8,23 +8,18 @@ use wcf\data\object\type\ObjectTypeCache;
 /**
  * Represents a grouped list of attachments.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class GroupedAttachmentList extends AttachmentList
 {
     /**
-     * grouped objects
      * @var array<int, array<int, Attachment>>
      */
-    public $groupedObjects = [];
+    public array $groupedObjects = [];
 
-    /**
-     * object type
-     * @var ObjectType
-     */
-    protected $objectType;
+    protected ObjectType $objectType;
 
     /**
      * @inheritDoc
@@ -36,19 +31,19 @@ class GroupedAttachmentList extends AttachmentList
      */
     public $sqlOrderBy = 'attachment.showOrder';
 
-    /**
-     * Creates a new GroupedAttachmentList object.
-     *
-     * @param string $objectType
-     */
-    public function __construct($objectType)
+    public function __construct(string $objectType)
     {
         parent::__construct();
 
-        $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
+        $objectTypeObj = ObjectTypeCache::getInstance()->getObjectTypeByName(
             'com.woltlab.wcf.attachment.objectType',
             $objectType
         );
+        if ($objectType === null) {
+            throw new \BadMethodCallException("unknown attachment object type '{$objectType}'");
+        }
+
+        $this->objectType = $objectTypeObj;
         $this->getConditionBuilder()->add('attachment.objectTypeID = ?', [$this->objectType->objectTypeID]);
 
         $this->getConditionBuilder()->add(
@@ -70,10 +65,8 @@ class GroupedAttachmentList extends AttachmentList
         );
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function readObjects()
+    #[\Override]
+    public function readObjects(): void
     {
         parent::readObjects();
 
@@ -91,9 +84,8 @@ class GroupedAttachmentList extends AttachmentList
      * Sets the permissions for attachment access.
      *
      * @param array<string, bool> $permissions
-     * @return void
      */
-    public function setPermissions(array $permissions)
+    public function setPermissions(array $permissions): void
     {
         foreach ($this->objects as $attachment) {
             $attachment->setPermissions($permissions);
@@ -101,12 +93,11 @@ class GroupedAttachmentList extends AttachmentList
     }
 
     /**
-     * Returns the objects of the list.
+     * Returns the attachments associated with the given objectID.
      *
-     * @param int $objectID
-     * @return  Attachment[]
+     * @return Attachment[]
      */
-    public function getGroupedObjects($objectID)
+    public function getGroupedObjects(int $objectID): array
     {
         if (isset($this->groupedObjects[$objectID])) {
             return $this->groupedObjects[$objectID];
