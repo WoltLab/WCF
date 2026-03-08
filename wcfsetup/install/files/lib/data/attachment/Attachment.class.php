@@ -538,4 +538,16 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 
         return new ImageData($this->getLink(), $this->width, $this->height);
     }
+
+    /**
+     * @return string
+     */
+    public function getFancyboxTag(): string
+    {
+        return \sprintf(
+            'attachments-%s-%s',
+            ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID)->objectType,
+            $this->objectID
+        );
+    }
 }

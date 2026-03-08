@@ -1,14 +1,17 @@
-{if $attachmentList && $attachmentList->getGroupedObjects($objectID)|count}
+{if !$attachments|isset && $attachmentList && $attachmentList->getGroupedObjects($objectID)|count}
+	{assign var='attachments' value=$attachmentList->getGroupedObjects($objectID)}
+{/if}
+{if !$attachments|empty}
 	{hascontent}
 		<section class="entry__attachments__thumbnails">
 			<h2 class="entry__attachments__title">{lang}wcf.attachment.images{/lang}</h2>
 			
 			<ul class="inlineList">
 				{content}
-					{foreach from=$attachmentList->getGroupedObjects($objectID) item=attachment}
+					{foreach from=$attachments item=attachment}
 						{if $attachment->showAsImage() && !$attachment->isEmbedded()}
 							<li class="attachmentThumbnail" data-attachment-id="{$attachment->attachmentID}">
-								<a href="{$attachment->getLink()}"{if $attachment->canDownload()} data-type="image" data-fancybox="message-{$attachmentList->getObjectTypeName()}-{$objectID}" data-caption="{$attachment->filename}" aria-label="{lang}wcf.attachment.image.title{/lang}"{/if}>
+								<a href="{$attachment->getLink()}"{if $attachment->canDownload()} data-type="image" data-fancybox="{$attachment->getFancyboxTag()}" data-caption="{$attachment->filename}" aria-label="{lang}wcf.attachment.image.title{/lang}"{/if}>
 									<div class="attachmentThumbnailContainer">
 										<span class="attachmentThumbnailImage">
 											{if $attachment->hasThumbnail()}
@@ -66,7 +69,7 @@
 
 			<div class="messageAttachmentList">
 				{content}
-					{foreach from=$attachmentList->getGroupedObjects($objectID) item=attachment}
+					{foreach from=$attachments item=attachment}
 						{if $attachment->showAsFile() && !$attachment->isEmbedded()}
 							<a href="{$attachment->getLink()}" class="messageAttachment jsTooltip" title="{lang}wcf.attachment.file.title{/lang}">
 								<span class="messageAttachmentIcon">
