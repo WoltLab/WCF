@@ -304,7 +304,7 @@ export class WoltlabCoreDialogElement extends HTMLElement {
       }
 
       if (this.#shouldClose()) {
-        this.#detachDialog();
+        this.close();
       } else {
         // Prevent the browser from closing the dialog.
         event.preventDefault();

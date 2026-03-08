@@ -236,7 +236,7 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
                     return;
                 }
                 if (this.#shouldClose()) {
-                    this.#detachDialog();
+                    this.close();
                 }
                 else {
                     // Prevent the browser from closing the dialog.
