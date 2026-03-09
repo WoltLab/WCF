@@ -1,10 +1,5 @@
 # laminas-progressbar
 
-> [!CAUTION]
-> This package is **abandoned** and will receive no further development.
->
-> See the Technical Steering Committee [meeting minutes](https://github.com/laminas/technical-steering-committee/blob/main/meetings/minutes/2024-11-04-TSC-Minutes.md#archive--abandon-various-legacy-libraries).
-
 > ## 🇷🇺 Русским гражданам
 >
 > Мы, участники Laminas, родились и живем в разных странах. У многих из нас есть друзья, родственники и коллеги как в России, так и в Украине. Некоторые из нас родились в России. Некоторые из нас живут в России. У некоторых бабушки и дедушки сражались с фашистами во Второй мировой войне. Здесь никто не поддерживает фашизм.
@@ -20,6 +15,12 @@
 > One team member has a Ukrainian relative who fled her home with her son. The train was delayed due to bombing on the road ahead. We have friends who are hiding in bomb shelters. We anxiously follow up on them after the air raids, which indiscriminately fire at hospitals, schools, kindergartens and houses. We're not taking this from any media. These are our actual experiences.
 >
 > You trust us enough to use our software. We ask that you trust us to say the truth on this. We need your help. Go out and protest this unnecessary war. Stop the bloodshed. Say "stop the war!"
+
+> This package is considered feature-complete, and is now in **security-only** maintenance mode, following a [decision by the Technical Steering Committee](https://github.com/laminas/technical-steering-committee/blob/2b55453e172a1b8c9c4c212be7cf7e7a58b9352c/meetings/minutes/2020-08-03-TSC-Minutes.md#vote-on-components-to-mark-as-security-only).
+> If you have a security issue, please [follow our security reporting guidelines](https://getlaminas.org/security/).
+> If you wish to take on the role of maintainer, please [nominate yourself](https://github.com/laminas/technical-steering-committee/issues/new?assignees=&labels=Nomination&template=Maintainer_Nomination.md&title=%5BNOMINATION%5D%5BMAINTAINER%5D%3A+%7Bname+of+person+being+nominated%7D)
+
+[![Build Status](https://github.com/laminas/laminas-progressbar/workflows/Continuous%20Integration/badge.svg)](https://github.com/laminas/laminas-progressbar/actions?query=workflow%3A"Continuous+Integration")
 
 laminas-progressbar is a component to create and update progress bars in different
 environments. It consists of a single backend, which outputs the progress through
@@ -38,3 +39,9 @@ $ composer require laminas/laminas-progressbar
 ## Documentation
 
 Browse the documentation online at https://docs.laminas.dev/laminas-progressbar/
+
+## Support
+
+- [Issues](https://github.com/laminas/laminas-progressbar/issues/)
+- [Chat](https://laminas.dev/chat/)
+- [Forum](https://discourse.laminas.dev/)

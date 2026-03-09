@@ -828,71 +828,6 @@
             "install-path": "../laminas/laminas-httphandlerrunner"
         },
         {
-            "name": "laminas/laminas-progressbar",
-            "version": "2.14.1",
-            "version_normalized": "2.14.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laminas/laminas-progressbar.git",
-                "reference": "f5180549455495dc10f4a5f34bfeef2013b141a4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-progressbar/zipball/f5180549455495dc10f4a5f34bfeef2013b141a4",
-                "reference": "f5180549455495dc10f4a5f34bfeef2013b141a4",
-                "shasum": ""
-            },
-            "require": {
-                "laminas/laminas-stdlib": "^3.2.1",
-                "php": "~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0"
-            },
-            "conflict": {
-                "zendframework/zend-progressbar": "*"
-            },
-            "require-dev": {
-                "laminas/laminas-coding-standard": "~2.5.0",
-                "laminas/laminas-session": "^2.16",
-                "phpunit/phpunit": "^9.5.25"
-            },
-            "suggest": {
-                "laminas/laminas-session": "To support progressbar persistent"
-            },
-            "time": "2024-12-05T16:32:56+00:00",
-            "type": "library",
-            "installation-source": "dist",
-            "autoload": {
-                "psr-4": {
-                    "Laminas\\ProgressBar\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "Create and update progress bars in different environments",
-            "homepage": "https://laminas.dev",
-            "keywords": [
-                "laminas",
-                "progressbar"
-            ],
-            "support": {
-                "chat": "https://laminas.dev/chat",
-                "docs": "https://docs.laminas.dev/laminas-progressbar/",
-                "forum": "https://discourse.laminas.dev",
-                "issues": "https://github.com/laminas/laminas-progressbar/issues",
-                "rss": "https://github.com/laminas/laminas-progressbar/releases.atom",
-                "source": "https://github.com/laminas/laminas-progressbar"
-            },
-            "funding": [
-                {
-                    "url": "https://funding.communitybridge.org/projects/laminas-project",
-                    "type": "community_bridge"
-                }
-            ],
-            "abandoned": true,
-            "install-path": "../laminas/laminas-progressbar"
-        },
-        {
             "name": "laminas/laminas-stdlib",
             "version": "3.21.0",
             "version_normalized": "3.21.0.0",
@@ -3371,6 +3306,64 @@
                 "source": "https://github.com/willdurand/Negotiation/tree/3.1.0"
             },
             "install-path": "../willdurand/negotiation"
+        },
+        {
+            "name": "woltlab/laminas-progressbar",
+            "version": "2.99.1",
+            "version_normalized": "2.99.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/WoltLab/laminas-progressbar.git",
+                "reference": "f7a174848bdbd3858a60c65c45a901b82b816504"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/WoltLab/laminas-progressbar/zipball/f7a174848bdbd3858a60c65c45a901b82b816504",
+                "reference": "f7a174848bdbd3858a60c65c45a901b82b816504",
+                "shasum": ""
+            },
+            "require": {
+                "laminas/laminas-stdlib": "^3.2.1",
+                "php": "~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0"
+            },
+            "conflict": {
+                "zendframework/zend-progressbar": "*"
+            },
+            "require-dev": {
+                "laminas/laminas-coding-standard": "~2.5.0",
+                "laminas/laminas-session": "^2.16",
+                "phpunit/phpunit": "^9.5.25"
+            },
+            "suggest": {
+                "laminas/laminas-session": "To support progressbar persistent"
+            },
+            "time": "2026-03-09T23:04:24+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Laminas\\ProgressBar\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Create and update progress bars in different environments",
+            "homepage": "https://laminas.dev",
+            "keywords": [
+                "laminas",
+                "progressbar"
+            ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.laminas.dev/laminas-progressbar/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/laminas/laminas-progressbar/issues",
+                "rss": "https://github.com/laminas/laminas-progressbar/releases.atom",
+                "source": "https://github.com/laminas/laminas-progressbar"
+            },
+            "install-path": "../woltlab/laminas-progressbar"
         },
         {
             "name": "woltlab/webp-exif",

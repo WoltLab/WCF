@@ -1,5 +1,5 @@
 {
-    "name": "laminas/laminas-progressbar",
+    "name": "woltlab/laminas-progressbar",
     "description": "Create and update progress bars in different environments",
     "license": "BSD-3-Clause",
     "keywords": [
@@ -15,7 +15,6 @@
         "chat": "https://laminas.dev/chat",
         "forum": "https://discourse.laminas.dev"
     },
-    "abandoned": true,
     "config": {
         "sort-packages": true,
         "platform": {
@@ -26,7 +25,7 @@
         }
     },
     "require": {
-        "php": "~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
+        "php": "~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
         "laminas/laminas-stdlib": "^3.2.1"
     },
     "require-dev": {

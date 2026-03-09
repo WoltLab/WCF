@@ -31,7 +31,7 @@ return array(
     'Minishlink\\WebPush\\' => array($vendorDir . '/minishlink/web-push/src'),
     'League\\Uri\\' => array($vendorDir . '/league/uri', $vendorDir . '/league/uri-interfaces'),
     'Laminas\\Stdlib\\' => array($vendorDir . '/laminas/laminas-stdlib/src'),
-    'Laminas\\ProgressBar\\' => array($vendorDir . '/laminas/laminas-progressbar/src'),
+    'Laminas\\ProgressBar\\' => array($vendorDir . '/woltlab/laminas-progressbar/src'),
     'Laminas\\HttpHandlerRunner\\' => array($vendorDir . '/laminas/laminas-httphandlerrunner/src'),
     'Laminas\\Diactoros\\' => array($vendorDir . '/laminas/laminas-diactoros/src'),
     'Jose\\Component\\' => array($vendorDir . '/web-token/jwt-library'),
