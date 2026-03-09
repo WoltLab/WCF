@@ -401,7 +401,7 @@ class UiColorPicker implements DialogCallbackObject {
     this.oldColor!.style.backgroundColor = colorString;
     this.input.value = colorString;
 
-    if (!(this.element instanceof HTMLButtonElement)) {
+    if (!(this.element instanceof HTMLButtonElement) || this.element.classList.contains("colorPickerButton")) {
       const span = this.element.querySelector("span");
       if (span) {
         span.style.backgroundColor = colorString;
