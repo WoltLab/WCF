@@ -27,11 +27,12 @@
 }
 
 .colorPickerButton {
-	height: 32px;
+	border-radius: var(--wcfBorderRadius);
+	height: 50px;
 	width: 50px;
 
 	> span {
-		height: 32px;
+		height: 50px;
 	}
 }
 

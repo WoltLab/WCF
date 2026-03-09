@@ -321,7 +321,7 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
             const colorString = ColorUtil.rgbaToString(color);
             this.oldColor.style.backgroundColor = colorString;
             this.input.value = colorString;
-            if (!(this.element instanceof HTMLButtonElement)) {
+            if (!(this.element instanceof HTMLButtonElement) || this.element.classList.contains("colorPickerButton")) {
                 const span = this.element.querySelector("span");
                 if (span) {
                     span.style.backgroundColor = colorString;
