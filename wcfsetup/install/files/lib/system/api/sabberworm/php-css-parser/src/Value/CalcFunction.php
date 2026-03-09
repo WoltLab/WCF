@@ -8,16 +8,11 @@ use Sabberworm\CSS\Parsing\ParserState;
 use Sabberworm\CSS\Parsing\UnexpectedEOFException;
 use Sabberworm\CSS\Parsing\UnexpectedTokenException;
 
+use function Safe\preg_match;
+
 class CalcFunction extends CSSFunction
 {
-    /**
-     * @var int
-     */
     private const T_OPERAND = 1;
-
-    /**
-     * @var int
-     */
     private const T_OPERATOR = 2;
 
     /**
@@ -67,9 +62,8 @@ class CalcFunction extends CSSFunction
                 if (\in_array($parserState->peek(), $operators, true)) {
                     if (($parserState->comes('-') || $parserState->comes('+'))) {
                         if (
-                            $parserState->peek(1, -1) !== ' '
-                            || !($parserState->comes('- ')
-                                || $parserState->comes('+ '))
+                            preg_match('/\\s/', $parserState->peek(1, -1)) !== 1
+                            || preg_match('/\\s/', $parserState->peek(1, 1)) !== 1
                         ) {
                             throw new UnexpectedTokenException(
                                 " {$parserState->peek()} ",
@@ -101,5 +95,15 @@ class CalcFunction extends CSSFunction
             $parserState->consume(')');
         }
         return new CalcFunction($function, $list, ',', $parserState->currentLine());
+    }
+
+    /**
+     * @return array<string, bool|int|float|string|array<mixed>|null>
+     *
+     * @internal
+     */
+    public function getArrayRepresentation(): array
+    {
+        throw new \BadMethodCallException('`getArrayRepresentation` is not yet implemented for `' . self::class . '`');
     }
 }
