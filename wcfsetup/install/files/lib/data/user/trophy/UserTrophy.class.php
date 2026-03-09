@@ -20,13 +20,13 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   3.1
  *
- * @property-read   int $userTrophyID           unique id of the user trophy
- * @property-read   int $trophyID           trophy id
- * @property-read   int $userID             user id
- * @property-read   int $time               the time when the trophy was rewarded
- * @property-read   string $description            the custom trophy description
- * @property-read   int $useCustomDescription       `1`, if the trophy use a custom description
- * @property-read   int $trophyUseHtml              `1`, if the trophy use a html description
+ * @property-read   int     $userTrophyID           unique id of the user trophy
+ * @property-read   int     $trophyID
+ * @property-read   int     $userID
+ * @property-read   int     $time                   the time when the trophy was rewarded
+ * @property-read   ?string $description            the custom trophy description
+ * @property-read   0|1     $useCustomDescription   `1`, if the trophy use a custom description
+ * @property-read   0|1     $trophyUseHtml          `1`, if the trophy use a html description
  */
 class UserTrophy extends DatabaseObject
 {

@@ -19,15 +19,16 @@ use wcf\util\Url;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $packageUpdateServerID      unique id of the package update server
- * @property-read   string $serverURL          url of the package update server
- * @property-read   string $loginUsername          username used to login on the package update server
- * @property-read   string $loginPassword          password used to login on the package update server
- * @property-read   int $isDisabled         is `1` if the package update server is disabled and thus not considered for package updates, otherwise `0`
- * @property-read   int $lastUpdateTime         timestamp at which the data of the package update server has been fetched the last time
- * @property-read   string $status             status of the package update server (`online` or `offline`)
- * @property-read   string $errorMessage           error message if the package update server if offline or empty otherwise
- * @property-read   string $apiVersion         version of the supported package update server api (`2.0`, `2.1`)
+ * @property-read   int     $packageUpdateServerID  unique id of the package update server
+ * @property-read   string  $serverURL              url of the package update server
+ * @property-read   string  $loginUsername          username used to login on the package update server
+ * @property-read   string  $loginPassword          password used to login on the package update server
+ * @property-read   0|1     $isDisabled             is `1` if the package update server is disabled and thus not considered for package updates, otherwise `0`
+ * @property-read   int     $lastUpdateTime         timestamp at which the data of the package update server has been fetched the last time
+ * @property-read   string  $status                 status of the package update server (`online` or `offline`)
+ * @property-read   ?string $errorMessage           error message if the package update server if offline or empty otherwise
+ * @property-read   string  $apiVersion             version of the supported package update server api (`2.0`, `2.1`)
+ * @property-read   ?string $metaData
  */
 class PackageUpdateServer extends DatabaseObject implements ITitledObject
 {

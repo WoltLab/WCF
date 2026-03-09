@@ -20,15 +20,15 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $categoryID     unique id of the category
- * @property-read   int $objectTypeID       id of the `com.woltlab.wcf.category` object type
- * @property-read   int $parentCategoryID   id of the category's parent category or `0` if it has no parent category
- * @property-read   string $title          title of the category or name of language item which contains the title
- * @property-read   string $description        description of the category or name of language item which contains the description
- * @property-read   int $descriptionUseHtml is `1` if html is enabled in the description, otherwise `0`
- * @property-read   int $showOrder      position of the category in relation to its siblings
- * @property-read   int $time           timestamp at which the comment has been created
- * @property-read   int $isDisabled     is `1` if the category is disabled and thus neither accessible nor selectable, otherwise `0`
+ * @property-read   int     $categoryID         unique id of the category
+ * @property-read   int     $objectTypeID       id of the `com.woltlab.wcf.category` object type
+ * @property-read   int     $parentCategoryID   id of the category's parent category or `0` if it has no parent category
+ * @property-read   string  $title              title of the category or name of language item which contains the title
+ * @property-read   ?string $description        description of the category or name of language item which contains the description
+ * @property-read   0|1     $descriptionUseHtml is `1` if html is enabled in the description, otherwise `0`
+ * @property-read   int     $showOrder          position of the category in relation to its siblings
+ * @property-read   int     $time               timestamp at which the comment has been created
+ * @property-read   0|1     $isDisabled         is `1` if the category is disabled and thus neither accessible nor selectable, otherwise `0`
  * @property-read   mixed[] $additionalData     array with additional data of the category
  */
 class Category extends ProcessibleDatabaseObject implements IPermissionObject, IRouteController

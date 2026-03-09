@@ -19,15 +19,15 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $responseID unique id of the comment response
- * @property-read   int $commentID  id of the comment the comment response belongs to
- * @property-read   int $time       timestamp at which the comment response has been written
- * @property-read   int|null $userID     id of the user who wrote the comment response or `null` if the user does not exist anymore or if the comment response has been written by a guest
- * @property-read   string $username   name of the user or guest who wrote the comment response
- * @property-read   string $message    comment response message
- * @property-read       int $enableHtml     is 1 if HTML will rendered in the comment response, otherwise 0
- * @property-read   int $isDisabled is 1 if the comment response is disabled, otherwise 0
- * @property-read   int $hasEmbeddedObjects is `1` if there are embedded objects in the comment response, otherwise `0`
+ * @property-read   int     $responseID         unique id of the comment response
+ * @property-read   int     $commentID          id of the comment the comment response belongs to
+ * @property-read   int     $time               timestamp at which the comment response has been written
+ * @property-read   ?int    $userID             id of the user who wrote the comment response or `null` if the user does not exist anymore or if the comment response has been written by a guest
+ * @property-read   string  $username           name of the user or guest who wrote the comment response
+ * @property-read   string  $message            comment response message
+ * @property-read   0|1     $enableHtml         is `1` if HTML will rendered in the comment response, otherwise `0`
+ * @property-read   0|1     $isDisabled         is `1` if the comment response is disabled, otherwise `0`
+ * @property-read   0|1     $hasEmbeddedObjects is `1` if there are embedded objects in the comment response, otherwise `0`
  */
 class CommentResponse extends DatabaseObject implements IMessage
 {

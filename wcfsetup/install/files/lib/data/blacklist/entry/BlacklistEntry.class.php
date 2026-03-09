@@ -14,10 +14,10 @@ use wcf\util\IpAddress;
  * @copyright   2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read string $type One of 'email', 'ipv4', 'ipv6' or 'username'
- * @property-read string $hash SHA256 hash of the original value
- * @property-read int $lastSeen Timestamp of the last report, derivation is up to 24hrs
- * @property-read int $occurrences Number of times this value was reported, capped at 32,767
+ * @property-read   ?string $type           One of 'email', 'ipv4', 'ipv6' or 'username'
+ * @property-read   ?string $hash           SHA256 hash of the original value
+ * @property-read   string  $lastSeen       Timestamp of the last report, derivation is up to 24hrs
+ * @property-read   int     $occurrences    Number of times this value was reported, capped at 32,767
  * @since 5.2
  */
 class BlacklistEntry extends DatabaseObject

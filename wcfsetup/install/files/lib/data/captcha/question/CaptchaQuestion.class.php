@@ -15,10 +15,13 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $questionID unique id of the captcha question
- * @property-read   string $question   question of the captcha or name of language item which contains the question
- * @property-read   string $answers    newline-separated list of answers or name of language item which contains the answers
- * @property-read   int $isDisabled is `1` if the captcha question is disabled and thus not offered to answer, otherwise `0`
+ * @property-read   int     $questionID     unique id of the captcha question
+ * @property-read   string  $question       question of the captcha or name of language item which contains the question
+ * @property-read   ?string $answers        newline-separated list of answers or name of language item which contains the answers
+ * @property-read   0|1     $isDisabled     is `1` if the captcha question is disabled and thus not offered to answer, otherwise `0`
+ * @property-read   int     $views
+ * @property-read   int     $correctSubmissions
+ * @property-read   int     $incorrectSubmissions
  */
 class CaptchaQuestion extends DatabaseObject implements ITitledObject
 {

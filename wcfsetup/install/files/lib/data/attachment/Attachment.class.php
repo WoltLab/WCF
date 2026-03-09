@@ -23,33 +23,33 @@ use wcf\util\FileUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $attachmentID       unique id of the attachment
- * @property-read   int $objectTypeID       id of the `com.woltlab.wcf.attachment.objectType` object type
- * @property-read   int|null $objectID       id of the attachment container object the attachment belongs to
- * @property-read   int|null $userID         id of the user who uploaded the attachment or `null` if the user does not exist anymore or if the attachment has been uploaded by a guest
- * @property-read   string $tmpHash        temporary hash used to identify uploaded attachments but not associated with an object yet or empty if the attachment has been associated with an object
- * @property-read   string $filename       name of the physical attachment file
- * @property-read   int $filesize       size of the physical attachment file
- * @property-read   string $fileType       type of the physical attachment file
- * @property-read   string $fileHash       hash of the physical attachment file
- * @property-read   int $isImage        is `1` if the attachment is an image, otherwise `0`
- * @property-read   int $width          width of the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read   int $height         height of the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read   string $tinyThumbnailType  type of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise empty
- * @property-read   int $tinyThumbnailSize  size of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read   int $tinyThumbnailWidth width of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read   int $tinyThumbnailHeight    height of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read   string $thumbnailType  type of the thumbnail file for the attachment if `$isImage` is `1`, otherwise empty
- * @property-read   int $thumbnailSize  size of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read   int $downloads      number of times the attachment has been downloaded
- * @property-read   int $lastDownloadTime   timestamp at which the attachment has been downloaded the last time
- * @property-read   int $thumbnailWidth width of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read   int $thumbnailHeight    height of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read   int $uploadTime     timestamp at which the attachment has been uploaded
- * @property-read   int $showOrder      position of the attachment in relation to the other attachment to the same message
- * @property-read int|null $fileID
- * @property-read int|null $thumbnailID
- * @property-read int|null $tinyThumbnailID
+ * @property-read   int     $attachmentID       unique id of the attachment
+ * @property-read   int     $objectTypeID       id of the `com.woltlab.wcf.attachment.objectType` object type
+ * @property-read   ?int    $objectID           id of the attachment container object the attachment belongs to
+ * @property-read   ?int    $userID             id of the user who uploaded the attachment or `null` if the user does not exist anymore or if the attachment has been uploaded by a guest
+ * @property-read   string  $tmpHash            temporary hash used to identify uploaded attachments but not associated with an object yet or empty if the attachment has been associated with an object
+ * @property-read   string  $filename           name of the physical attachment file
+ * @property-read   int     $filesize           size of the physical attachment file
+ * @property-read   string  $fileType           type of the physical attachment file
+ * @property-read   string  $fileHash           hash of the physical attachment file
+ * @property-read   0|1     $isImage            is `1` if the attachment is an image, otherwise `0`
+ * @property-read   int     $width              width of the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read   int     $height             height of the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read   string  $tinyThumbnailType  type of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise empty
+ * @property-read   int     $tinyThumbnailSize  size of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read   int     $tinyThumbnailWidth width of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read   int     $tinyThumbnailHeight    height of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read   string  $thumbnailType      type of the thumbnail file for the attachment if `$isImage` is `1`, otherwise empty
+ * @property-read   int     $thumbnailSize      size of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read   int     $downloads          number of times the attachment has been downloaded
+ * @property-read   int     $lastDownloadTime   timestamp at which the attachment has been downloaded the last time
+ * @property-read   int     $thumbnailWidth     width of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read   int     $thumbnailHeight    height of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read   int     $uploadTime         timestamp at which the attachment has been uploaded
+ * @property-read   int     $showOrder          position of the attachment in relation to the other attachment to the same message
+ * @property-read   ?int    $fileID
+ * @property-read   ?int    $thumbnailID
+ * @property-read   ?int    $tinyThumbnailID
  */
 class Attachment extends DatabaseObject implements ILinkableObject, IRouteController, IThumbnailFile, IImageDataProvider
 {

@@ -88,7 +88,6 @@ final class TagFormField extends AbstractFormField implements IAttributeFormFiel
 
                 $languageIDs = [];
 
-                /** @noinspection PhpUndefinedFieldInspection */
                 if (isset($data['languageID'])) {
                     $languageIDs[] = $data['languageID'];
                 }

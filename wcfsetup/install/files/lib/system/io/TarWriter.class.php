@@ -26,8 +26,6 @@ class TarWriter extends Tar
      */
     protected $mode = 'wb+';
 
-    /** @noinspection PhpMissingParentConstructorInspection */
-
     /**
      * Creates a new TarWriter object.
      *

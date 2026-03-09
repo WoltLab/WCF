@@ -11,11 +11,11 @@ use wcf\data\DatabaseObject;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $providerID     unique id of the ACP search provider
- * @property-read   int $packageID      id of the package which delivers the ACP search provider
- * @property-read   string $providerName       textual identifier of the ACP search provider
- * @property-read   string $className      class name of the `wcf\system\search\acp\IACPSearchResultProvider` implementation executing the search
- * @property-read   int $showOrder      position of the grouped results of the ACP search provider within the result list
+ * @property-read   int     $providerID     unique id of the ACP search provider
+ * @property-read   int     $packageID      id of the package which delivers the ACP search provider
+ * @property-read   string  $providerName   textual identifier of the ACP search provider
+ * @property-read   string  $className      class name of the `wcf\system\search\acp\IACPSearchResultProvider` implementation executing the search
+ * @property-read   int     $showOrder      position of the grouped results of the ACP search provider within the result list
  */
 class ACPSearchProvider extends DatabaseObject
 {

@@ -102,7 +102,6 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
     public function getTemplate()
     {
         if ($this->getBox()->position == 'contentTop' || $this->getBox()->position == 'contentBottom') {
-            /** @noinspection PhpUndefinedMethodInspection */
             return WCF::getTPL()->render('wcf', 'boxRecentActivity', [
                 'boxID' => $this->getBox()->boxID,
                 'canFilterByFollowedUsers' => $this->canFilterByFollowedUsers,
@@ -167,7 +166,6 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
         parent::readObjects();
 
         // removes orphaned and non-accessible events
-        /** @noinspection PhpParamsInspection */
         UserActivityEventHandler::validateEvents($this->objectList);
 
         // remove unused items

@@ -26,7 +26,6 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob
         parent::execute($cronjob);
 
         WCF::getDB()->beginTransaction();
-        /** @noinspection PhpUnusedLocalVariableInspection */
         $committed = false;
         /** @var AbstractUniqueBackgroundJob[] $uniqueJobs */
         $uniqueJobs = [];

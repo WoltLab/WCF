@@ -70,7 +70,6 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm
 
             $conditions = $this->assignment->getConditions();
             foreach ($conditions as $condition) {
-                /** @noinspection PhpUndefinedMethodInspection */
                 $this->conditions[$condition->getObjectType()->conditiongroup][$condition->objectTypeID]->getProcessor()->setData($condition);
             }
         }

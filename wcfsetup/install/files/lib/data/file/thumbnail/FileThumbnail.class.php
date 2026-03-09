@@ -13,14 +13,14 @@ use wcf\system\file\processor\ThumbnailFormat;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.1
  *
- * @property-read int $thumbnailID
- * @property-read int $fileID
- * @property-read string $identifier
- * @property-read string $fileHash
- * @property-read string $fileExtension
- * @property-read int $width
- * @property-read int $height
- * @property-read ?string $formatChecksum
+ * @property-read   int     $thumbnailID
+ * @property-read   int     $fileID
+ * @property-read   string  $identifier
+ * @property-read   string  $fileHash
+ * @property-read   string  $fileExtension
+ * @property-read   int     $width
+ * @property-read   int     $height
+ * @property-read   ?string $formatChecksum
  */
 class FileThumbnail extends DatabaseObject implements ILinkableObject
 {

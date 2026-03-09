@@ -101,7 +101,6 @@ class HtmlToc
             }
             $heading->setDepth($depth);
 
-            /** @noinspection PhpParamsInspection */
             $lastItem->addChild($heading);
             $lastItem = $heading;
         }

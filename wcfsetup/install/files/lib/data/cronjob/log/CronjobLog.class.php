@@ -11,11 +11,11 @@ use wcf\data\DatabaseObject;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $cronjobLogID   unique id of the cronjob execution log
- * @property-read   int $cronjobID  id of the cronjob the log belongs to
- * @property-read   int $execTime   timestamp at which the cronjob has been executed
- * @property-read   int $success    is `1` if the cronjob has been successfully executed, otherwise `0`
- * @property-read   string $error      error message if the cronjob did not execute successfully, otherwise empty
+ * @property-read   int     $cronjobLogID   unique id of the cronjob execution log
+ * @property-read   int     $cronjobID      id of the cronjob the log belongs to
+ * @property-read   int     $execTime       timestamp at which the cronjob has been executed
+ * @property-read   0|1     $success        is `1` if the cronjob has been successfully executed, otherwise `0`
+ * @property-read   ?string $error          error message if the cronjob did not execute successfully, otherwise empty
  */
 class CronjobLog extends DatabaseObject
 {

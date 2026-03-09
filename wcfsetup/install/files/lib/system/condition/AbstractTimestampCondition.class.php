@@ -211,13 +211,11 @@ HTML;
      */
     public function setData(Condition $condition)
     {
-        /** @noinspection PhpUndefinedFieldInspection */
         $endTime = $condition->endTime;
         if ($endTime) {
             $this->endTime = $endTime;
         }
 
-        /** @noinspection PhpUndefinedFieldInspection */
         $startTime = $condition->startTime;
         if ($startTime) {
             $this->startTime = $startTime;

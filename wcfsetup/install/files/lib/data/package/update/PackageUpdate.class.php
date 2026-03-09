@@ -11,15 +11,15 @@ use wcf\data\DatabaseObject;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $packageUpdateID        unique id of the package update
- * @property-read   int $packageUpdateServerID      id of the package update server the package update is located on
- * @property-read   string $package            identifier of the package
- * @property-read   string $packageName            name of the package
- * @property-read   string $packageDescription     description of the package
- * @property-read   string $author             author of the package
- * @property-read   string $authorURL          external url to the website of the package author
- * @property-read   int $isApplication          is `1` if the package update belongs to an application, otherwise `0`
- * @property-read   int $pluginStoreFileID      file id for related package on pluginstore.woltlab.com, otherwise `0`
+ * @property-read   int     $packageUpdateID        unique id of the package update
+ * @property-read   int     $packageUpdateServerID      id of the package update server the package update is located on
+ * @property-read   string  $package            identifier of the package
+ * @property-read   string  $packageName            name of the package
+ * @property-read   string  $packageDescription     description of the package
+ * @property-read   string  $author             author of the package
+ * @property-read   string  $authorURL          external url to the website of the package author
+ * @property-read   0|1     $isApplication          is `1` if the package update belongs to an application, otherwise `0`
+ * @property-read   int     $pluginStoreFileID      file id for related package on pluginstore.woltlab.com, otherwise `0`
  */
 class PackageUpdate extends DatabaseObject
 {

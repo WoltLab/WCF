@@ -17,11 +17,11 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   3.0
  *
- * @property-read   int $menuID         unique id of the menu
- * @property-read   string $identifier     textual identifier of the menu
- * @property-read   string $title          title of the menu or name of language item which contains the title
- * @property-read   int $originIsSystem     is `1` if the menu has been delivered by a package, otherwise `0` (if the menu has been created by an admin in the ACP)
- * @property-read   int $packageID      id of the package the which delivers the menu or `1` if it has been created in the ACP
+ * @property-read   int     $menuID         unique id of the menu
+ * @property-read   string  $identifier     textual identifier of the menu
+ * @property-read   string  $title          title of the menu or name of language item which contains the title
+ * @property-read   0|1     $originIsSystem     is `1` if the menu has been delivered by a package, otherwise `0` (if the menu has been created by an admin in the ACP)
+ * @property-read   int     $packageID      id of the package the which delivers the menu or `1` if it has been created in the ACP
  */
 class Menu extends DatabaseObject implements ITitledObject
 {

@@ -9,11 +9,20 @@
  */
 
 use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
+use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
+use wcf\system\database\table\column\SmallintDatabaseTableColumn;
 use wcf\system\database\table\PartialDatabaseTable;
 
 return [
     PartialDatabaseTable::create('wcf1_label_group')
         ->columns([
             DefaultFalseBooleanDatabaseTableColumn::create('sortAlphabetically')
+        ]),
+    PartialDatabaseTable::create('wcf1_trophy')
+        ->columns([
+            NotNullVarchar255DatabaseTableColumn::create('title'),
+            SmallintDatabaseTableColumn::create('type')
+                ->notNull()
+                ->defaultValue(1),
         ]),
 ];

@@ -43,7 +43,6 @@ trait TDecoratedCategoryLookupPageHandler
         $className = $this->getDecoratedCategoryClass();
 
         /** @var AbstractDecoratedCategory $category */
-        /** @noinspection PhpUndefinedMethodInspection */
         $category = $className::getCategory($objectID);
 
         if ($category instanceof ILinkableObject) {
@@ -63,7 +62,6 @@ trait TDecoratedCategoryLookupPageHandler
     public function isValid($objectID = null)
     {
         $className = $this->getDecoratedCategoryClass();
-        /** @noinspection PhpUndefinedMethodInspection */
         $category = $className::getCategory($objectID);
         if ($category === null) {
             return false;

@@ -12,10 +12,10 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   int $followID       unique id of the following relation
- * @property-read   int $userID         id of the following user
- * @property-read   int $followUserID       id of the followed user
- * @property-read   int $time           time at which following relation has been established
+ * @property-read   int     $followID       unique id of the following relation
+ * @property-read   int     $userID         id of the following user
+ * @property-read   int     $followUserID   id of the followed user
+ * @property-read   int     $time           time at which following relation has been established
  */
 class UserFollow extends DatabaseObject
 {

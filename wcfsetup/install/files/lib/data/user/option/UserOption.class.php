@@ -14,16 +14,16 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   string $defaultValue       default value of the user option
- * @property-read   int $required       is `1` if the user option has to be filled out, otherwise `0`
- * @property-read   int $askDuringRegistration  is `1` if the user option will be shown during registration to be filled out, otherwise `0`
- * @property-read   int $editable       setting for who can edit the user option, see `UserOption::EDITABILITY_*` constants
- * @property-read   int $visible        setting for who can see the user option, see `UserOption::VISIBILITY_*` constants
- * @property-read   string $outputClass        name of the PHP class implementing `wcf\system\option\user\IUserOptionOutput` for outputting the user option in the user profile
- * @property-read   int $searchable     is `1` if the user option can be searched, otherwise `0`
- * @property-read   int $isDisabled     is `1` if the user option is disabled and thus neither shown nor editable, otherwise `0`
- * @property-read   int $originIsSystem     is `1` if the user option was created by the system and not manually by an administrator, otherwise `0`
- * @property-read   string $labeledUrl     the url, if the option type is `labeledUrl`
+ * @property-read   string  $defaultValue       default value of the user option
+ * @property-read   0|1     $required           is `1` if the user option has to be filled out, otherwise `0`
+ * @property-read   0|1     $askDuringRegistration  is `1` if the user option will be shown during registration to be filled out, otherwise `0`
+ * @property-read   int     $editable           setting for who can edit the user option, see `UserOption::EDITABILITY_*` constants
+ * @property-read   int     $visible            setting for who can see the user option, see `UserOption::VISIBILITY_*` constants
+ * @property-read   string  $outputClass        name of the PHP class implementing `wcf\system\option\user\IUserOptionOutput` for outputting the user option in the user profile
+ * @property-read   0|1     $searchable         is `1` if the user option can be searched, otherwise `0`
+ * @property-read   0|1     $isDisabled         is `1` if the user option is disabled and thus neither shown nor editable, otherwise `0`
+ * @property-read   0|1     $originIsSystem     is `1` if the user option was created by the system and not manually by an administrator, otherwise `0`
+ * @property-read   string  $labeledUrl         the url, if the option type is `labeledUrl`
  */
 class UserOption extends Option implements ITitledObject
 {

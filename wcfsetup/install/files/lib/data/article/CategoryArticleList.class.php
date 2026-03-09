@@ -15,8 +15,6 @@ use wcf\system\WCF;
  */
 class CategoryArticleList extends AccessibleArticleList
 {
-    /** @noinspection PhpMissingParentConstructorInspection */
-
     /**
      * Creates a new CategoryArticleList object.
      *
