@@ -37,7 +37,7 @@
 		  stylesheet = document.createElement("link");
 		  stylesheet.rel = "stylesheet";
 		  stylesheet.type = "text/css";
-		  stylesheet.href = "{$__wcf->getPath()}style/fancybox.css";
+		  stylesheet.href = "{$__wcf->getPath()}style/fancybox.css?t={LAST_UPDATE_TIME}";
 		  stylesheet.id = "fancybox-stylesheet";
 
 		  document.querySelector('link[rel="stylesheet"]').before(stylesheet);
