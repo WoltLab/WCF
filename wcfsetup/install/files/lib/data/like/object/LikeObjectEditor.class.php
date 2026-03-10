@@ -9,11 +9,11 @@ use wcf\system\WCF;
 /**
  * Extends the LikeObject object with functions to create, update and delete liked objects.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @mixin       LikeObject
+ * @mixin LikeObject
  * @extends DatabaseObjectEditor<LikeObject>
  */
 class LikeObjectEditor extends DatabaseObjectEditor
