@@ -22,7 +22,6 @@ use wcf\system\WCF;
  * @property-read   int     $likes              number of likes of the liked object
  * @property-read   int     $dislikes           legacy column, not used anymore
  * @property-read   int     $cumulativeLikes    number of likes of the liked object
- * @property-read   ?string $cachedUsers        serialized array with the ids and names of the three users who liked (+1) the object last
  * @property-read   ?string $cachedReactions    JSON array with the reactionTypeIDs and the count of the reactions
  * @property-read   int     $reactionTypeID
  * @phpstan-type ReactionData array{
@@ -46,12 +45,6 @@ class LikeObject extends DatabaseObject
     protected $likedObject;
 
     /**
-     * list of users who liked this object
-     * @var User[]
-     */
-    protected $users = [];
-
-    /**
      * An array with all reaction types, which were received for the object. As key, the reactionTypeID
      * is used. As value there is another array. If the object does not received any reaction yet,
      * an empty array is returned.
@@ -71,18 +64,6 @@ class LikeObject extends DatabaseObject
     protected function handleData($data)
     {
         parent::handleData($data);
-
-        // get user objects from cache
-        if (!empty($data['cachedUsers'])) {
-            $cachedUsers = @\unserialize($data['cachedUsers']);
-
-            if (\is_array($cachedUsers)) {
-                foreach ($cachedUsers as $cachedUserData) {
-                    $user = new User(null, $cachedUserData);
-                    $this->users[$user->userID] = $user;
-                }
-            }
-        }
 
         // get user objects from cache
         if (!empty($data['cachedReactions'])) {
