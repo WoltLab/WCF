@@ -23,7 +23,7 @@ use wcf\system\WCF;
  * @property-read   int     $dislikes           legacy column, not used anymore
  * @property-read   int     $cumulativeLikes    number of likes of the liked object
  * @property-read   ?string $cachedUsers        serialized array with the ids and names of the three users who liked (+1) the object last
- * @property-read   ?string $cachedReactions    serialized array with the reactionTypeIDs and the count of the reactions
+ * @property-read   ?string $cachedReactions    JSON array with the reactionTypeIDs and the count of the reactions
  * @property-read   int     $reactionTypeID
  * @phpstan-type ReactionData array{
  *  reactionCount: int,
