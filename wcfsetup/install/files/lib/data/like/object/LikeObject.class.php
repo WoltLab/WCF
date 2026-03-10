@@ -5,7 +5,6 @@ namespace wcf\data\like\object;
 use wcf\data\DatabaseObject;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\reaction\type\ReactionTypeCache;
-use wcf\data\user\User;
 use wcf\system\WCF;
 
 /**
@@ -20,8 +19,6 @@ use wcf\system\WCF;
  * @property-read   int     $objectID           id of the liked object
  * @property-read   ?int    $objectUserID       id of the user who created the liked object or null if user has been deleted or object was created by guest
  * @property-read   int     $likes              number of likes of the liked object
- * @property-read   int     $dislikes           legacy column, not used anymore
- * @property-read   int     $cumulativeLikes    number of likes of the liked object
  * @property-read   ?string $cachedReactions    JSON array with the reactionTypeIDs and the count of the reactions
  * @property-read   int     $reactionTypeID
  * @phpstan-type ReactionData array{
@@ -85,6 +82,9 @@ class LikeObject extends DatabaseObject
                 }
             }
         }
+
+        // Old property that is set for backward compatibility reasons.
+        $this->data['dislikes'] = 0;
     }
 
     /**

@@ -48,7 +48,6 @@ final class LikeRebuildDataWorker extends AbstractLinearRebuildDataWorker
             // reset like object data
             $sql = "UPDATE  wcf1_like_object
                     SET     likes = 0,
-                            dislikes = 0,
                             cumulativeLikes = 0,
                             cachedReactions = NULL";
             $statement = WCF::getDB()->prepare($sql);
@@ -113,7 +112,7 @@ final class LikeRebuildDataWorker extends AbstractLinearRebuildDataWorker
             $condition = new PreparedStatementConditionBuilder();
             $condition->add('objectTypeID = ?', [$objectTypeID]);
             $condition->add('objectID IN (?)', [\array_keys($objects)]);
-            $sql = "SELECT  objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes, cachedReactions
+            $sql = "SELECT  objectTypeID, objectID, objectUserID, likes, cumulativeLikes, cachedReactions
                     FROM    wcf1_like_object
                     " . $condition;
             $objectStatement = WCF::getDB()->prepare($sql);
@@ -124,14 +123,13 @@ final class LikeRebuildDataWorker extends AbstractLinearRebuildDataWorker
         }
 
         $sql = "INSERT INTO wcf1_like_object
-                            (objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes, cachedReactions)
+                            (objectTypeID, objectID, objectUserID, likes, cumulativeLikes, cachedReactions)
                 VALUES      (?, ?, ?, ?, ?, ?, ?)";
         $insertStatement = WCF::getDB()->prepare($sql);
 
         $sql = "UPDATE  wcf1_like_object
                 SET     objectUserID = ?,
                         likes = ?,
-                        dislikes = 0,
                         cumulativeLikes = ?,
                         cachedReactions = ?
                 WHERE   objectTypeID = ?

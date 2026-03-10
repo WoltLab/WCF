@@ -62,7 +62,7 @@ final class SetReaction
 
             $this->updateUserCounter($this->likeable, $like);
 
-            $this->likeable->updateLikeCounter($likeObject->cumulativeLikes + 1);
+            $this->likeable->updateLikeCounter($likeObject->likes + 1);
         } else {
             // update existing reaction
             $editor = new LikeEditor($like);

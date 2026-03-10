@@ -42,7 +42,7 @@ final class RevertReaction
 
         $this->updateUserCounter($this->likeable);
 
-        $this->likeable->updateLikeCounter($likeObject->cumulativeLikes - 1);
+        $this->likeable->updateLikeCounter($likeObject->likes - 1);
 
         LikeObjectEditor::rebuildLikeObjectData([$likeObject->getObjectID()]);
 
