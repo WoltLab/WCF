@@ -1719,8 +1719,63 @@
 		<name>GPTBot</name>
 		<url>https://openai.com/gptbot</url>
 	</spider>
+	<spider ident="OAI-SearchBot/">
+		<name>OAI-SearchBot</name>
+		<url>https://openai.com/searchbot</url>
+	</spider>
+	<spider ident="ChatGPT-User/">
+		<name>ChatGPT-User</name>
+		<url>https://openai.com/bot</url>
+	</spider>
 	<spider ident="PerplexityBot/">
 		<name>PerplexityBot</name>
 		<url>https://perplexity.ai/perplexitybot</url>
+	</spider>
+	<spider ident="Perplexity-User/">
+		<name>Perplexity-User</name>
+		<url>https://perplexity.ai/perplexity-user</url>
+	</spider>
+	<spider ident="meta-webindexer/">
+		<name>Meta-WebIndexer</name>
+		<url>https://developers.facebook.com/docs/sharing/webmasters/web-crawlers</url>
+	</spider>
+	<spider ident="meta-externalads/">
+		<name>Meta-ExternalAds</name>
+		<url>https://developers.facebook.com/docs/sharing/webmasters/web-crawlers</url>
+	</spider>
+	<spider ident="meta-externalagent/">
+		<name>Meta-ExternalAgent</name>
+		<url>https://developers.facebook.com/docs/sharing/webmasters/web-crawlers</url>
+	</spider>
+	<spider ident="meta-externalfetcher/">
+		<name>Meta-ExternalFetcher</name>
+		<url>https://developers.facebook.com/docs/sharing/webmasters/web-crawlers</url>
+	</spider>
+	<spider ident="Bytespider/">
+		<name>Bytespider</name>
+	</spider>
+	<spider ident="PlagAwareBot/">
+		<name>PlagAware</name>
+		<url>https://www.plagaware.com/bot</url>
+	</spider>
+	<spider ident="DuckAssistBot/">
+		<name>DuckAssistBot</name>
+		<url>https://duckduckgo.com/duckduckgo-help-pages/results/duckassistbot</url>
+	</spider>
+	<spider ident="CCBot/">
+		<name>Common Crawl Bot</name>
+		<url>https://commoncrawl.org/faq</url>
+	</spider>
+	<spider ident="DataForSeoBot/">
+		<name>DataForSEO Link Bot</name>
+		<url>https://dataforseo.com/dataforseo-bot</url>
+	</spider>
+	<spider ident="Gemini-Deep-Research/">
+		<name>Gemini Deep Research</name>
+		<url>https://gemini.google/overview/deep-research/</url>
+	</spider>
+	<spider ident="quillbot/">
+		<name>Quillbot</name>
+		<url>https://quillbot.com/</url>
 	</spider>
 </data>

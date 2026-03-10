@@ -55,6 +55,18 @@
 				{/if}
 				<li>
 					{unsafe:$interactionContextMenu->render()}
+					<script data-relocate="true">
+						{
+							const container = document.getElementById('{unsafe:$interactionContextMenu->getContainerID()|encodeJS}');
+							container.addEventListener('interaction:invalidate', (event) => {
+								if (event.detail.interaction === 'add-dark-mode') {
+									setTimeout(() => {
+										window.location.reload();
+									}, 2000);
+								}
+							});
+						}
+					</script>
 				</li>
 			{/if}
 			{event name='contentHeaderNavigation'}

@@ -10,6 +10,7 @@
  * @since 6.0
  */
 
+import { tabbable } from "tabbable";
 import DomUtil from "../Dom/Util";
 import { adoptPageOverlayContainer, releasePageOverlayContainer } from "../Helper/PageOverlay";
 import * as Language from "../Language";
@@ -74,6 +75,11 @@ export class WoltlabCoreDialogElement extends HTMLElement {
 
     adoptPageOverlayContainer(this.#dialog);
     scrollDisable();
+
+    const focusCandidates = tabbable(this.#dialog);
+    if (focusCandidates.length > 0) {
+      focusCandidates[0].focus();
+    }
   }
 
   close(): void {
@@ -304,7 +310,7 @@ export class WoltlabCoreDialogElement extends HTMLElement {
       }
 
       if (this.#shouldClose()) {
-        this.#detachDialog();
+        this.close();
       } else {
         // Prevent the browser from closing the dialog.
         event.preventDefault();
