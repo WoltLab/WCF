@@ -11,6 +11,7 @@ use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
 use wcf\system\database\table\column\DefaultTrueBooleanDatabaseTableColumn;
 use wcf\system\database\table\column\EnumDatabaseTableColumn;
 use wcf\system\database\table\column\IntDatabaseTableColumn;
+use wcf\system\database\table\column\JsonDatabaseTableColumn;
 use wcf\system\database\table\column\MediumblobDatabaseTableColumn;
 use wcf\system\database\table\column\MediumintDatabaseTableColumn;
 use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
@@ -1792,7 +1793,7 @@ return [
                 ->notNull()
                 ->defaultValue(0),
             TextDatabaseTableColumn::create('cachedUsers'),
-            TextDatabaseTableColumn::create('cachedReactions'),
+            JsonDatabaseTableColumn::create('cachedReactions'),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()

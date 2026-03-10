@@ -86,7 +86,7 @@ class LikeObject extends DatabaseObject
 
         // get user objects from cache
         if (!empty($data['cachedReactions'])) {
-            $cachedReactions = @\unserialize($data['cachedReactions']);
+            $cachedReactions = \json_decode($data['cachedReactions'], true, flags: \JSON_THROW_ON_ERROR);
 
             if (\is_array($cachedReactions)) {
                 foreach ($cachedReactions as $reactionTypeID => $reactionCount) {
@@ -178,6 +178,20 @@ class LikeObject extends DatabaseObject
         }
 
         return \json_encode($data, \JSON_THROW_ON_ERROR);
+    }
+
+    /**
+     * @return array<int, int>
+     * @since 6.3
+     */
+    public function getCachedReactions(): array
+    {
+        $data = [];
+        foreach ($this->reactions as $reactionTypeID => $value) {
+            $data[$reactionTypeID] = $value['reactionCount'];
+        }
+
+        return $data;
     }
 
     /**

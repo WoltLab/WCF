@@ -2,6 +2,7 @@
 
 namespace wcf\system\reaction;
 
+use wcf\command\reaction\SetReaction;
 use wcf\data\DatabaseObject;
 use wcf\data\like\ILikeObjectTypeProvider;
 use wcf\data\like\Like;
@@ -12,7 +13,6 @@ use wcf\data\like\object\LikeObjectAction;
 use wcf\data\like\object\LikeObjectList;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\reaction\object\IReactionObject;
 use wcf\data\reaction\ReactionAction;
 use wcf\data\reaction\type\ReactionType;
 use wcf\data\reaction\type\ReactionTypeCache;
@@ -64,11 +64,9 @@ final class ReactionHandler extends SingletonFactory
      */
     public function getReactionsJSVariable(): string
     {
-        $reactions = ReactionTypeCache::getInstance()->getReactionTypes();
-
         $returnValues = [];
 
-        foreach ($reactions as $reaction) {
+        foreach ($this->getReactionTypes() as $reaction) {
             $returnValues[$reaction->reactionTypeID] = [
                 'title' => $reaction->getTitle(),
                 'renderedIcon' => $reaction->renderIcon(),
@@ -270,6 +268,7 @@ final class ReactionHandler extends SingletonFactory
      *  likeObject: LikeObject|array{},
      *  cumulativeLikes: int,
      * }
+     * @deprecated 6.3 Use `SetReaction` command instead.
      */
     public function react(ILikeObject $likeable, User $user, int $reactionTypeID, int $time = \TIME_NOW): array
     {
@@ -286,213 +285,17 @@ final class ReactionHandler extends SingletonFactory
 
         $reaction = ReactionTypeCache::getInstance()->getReactionTypeByID($reactionTypeID);
 
-        try {
-            WCF::getDB()->beginTransaction();
+        (new SetReaction($likeable, $user, $reaction))();
 
-            $likeObjectData = $this->updateLikeObject($likeable, $likeObject, $like, $reaction);
-
-            // update owner's like counter
-            $this->updateUsersLikeCounter($likeable, $like, $reaction);
-
-            if (!$like->likeID) {
-                // save like
-                $sql = "INSERT INTO             wcf1_like
-                                                (objectID, objectTypeID, objectUserID, userID, time, likeValue, reactionTypeID)
-                        VALUES                  (?, ?, ?, ?, ?, ?, ?)
-                        ON DUPLICATE KEY UPDATE time = ?,
-                                                likeValue = ?,
-                                                reactionTypeID = ?";
-                $statement = WCF::getDB()->prepare($sql);
-                $statement->execute([
-                    $likeable->getObjectID(),
-                    $likeable->getObjectType()->objectTypeID,
-                    $likeable->getUserID() ?: null,
-                    $user->userID,
-                    $time,
-                    1,
-                    $reactionTypeID,
-                    $time,
-                    1,
-                    $reactionTypeID,
-                ]);
-                $like = new Like(WCF::getDB()->getInsertID("wcf1_like", "likeID"));
-
-                if ($likeable->getUserID()) {
-                    UserActivityPointHandler::getInstance()->fireEvent(
-                        'com.woltlab.wcf.like.activityPointEvent.receivedLikes',
-                        $like->likeID,
-                        $likeable->getUserID()
-                    );
-                }
-            } else {
-                (new ReactionAction([$like], 'update', [
-                    'data' => [
-                        'time' => $time,
-                        'likeValue' => 1,
-                        'reactionTypeID' => $reactionTypeID,
-                    ],
-                ]))->executeAction();
-
-                if ($like->reactionTypeID == $reactionTypeID) {
-                    if ($likeable->getUserID()) {
-                        UserActivityPointHandler::getInstance()->removeEvents(
-                            'com.woltlab.wcf.like.activityPointEvent.receivedLikes',
-                            [$likeable->getUserID() => 1]
-                        );
-                    }
-                }
-            }
-
-            // update object's like counter
-            $likeable->updateLikeCounter($likeObjectData['cumulativeLikes']);
-
-            // update recent activity
-            if (UserActivityEventHandler::getInstance()->getObjectTypeID($likeable->getObjectType()->objectType . '.recentActivityEvent')) {
-                $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
-                    'com.woltlab.wcf.user.recentActivityEvent',
-                    $likeable->getObjectType()->objectType . '.recentActivityEvent'
-                );
-
-                if ($objectType->supportsReactions) {
-                    if ($like->likeID) {
-                        UserActivityEventHandler::getInstance()->removeEvent(
-                            $likeable->getObjectType()->objectType . '.recentActivityEvent',
-                            $likeable->getObjectID(),
-                            $user->userID
-                        );
-                    }
-
-                    UserActivityEventHandler::getInstance()->fireEvent(
-                        $likeable->getObjectType()->objectType . '.recentActivityEvent',
-                        $likeable->getObjectID(),
-                        $likeable->getLanguageID(),
-                        $user->userID,
-                        TIME_NOW,
-                        [
-                            'reactionTypeID' => $reaction->reactionTypeID,
-                            /* @deprecated 6.1 use `reactionTypeID` */
-                            'reactionType' => $reaction,
-                        ]
-                    );
-                }
-            }
-
-            WCF::getDB()->commitTransaction();
-
-            // This interface should help to determine whether the plugin has been adapted to the API 5.2.
-            // If a LikeableObject does not implement this interface, no notification will be sent, because
-            // we assume, that the plugin has not been adapted to the new API.
-            if ($likeable instanceof IReactionObject) {
-                $likeable->sendNotification($like);
-            }
-
-            return [
-                'cachedReactions' => $likeObjectData['cachedReactions'],
-                'reactionTypeID' => $reactionTypeID,
-                'like' => $like,
-                'likeObject' => $likeObjectData['likeObject'],
-                'cumulativeLikes' => $likeObjectData['cumulativeLikes'],
-            ];
-        } catch (DatabaseQueryException $e) {
-            WCF::getDB()->rollBackTransaction();
-
-            throw $e;
-        }
-
-        // @phpstan-ignore deadCode.unreachable
-        throw new \LogicException('Unreachable');
-    }
-
-    /**
-     * Creates or updates a LikeObject for an likeable object.
-     *
-     * @return array{cumulativeLikes: int, cachedReactions: array<int, int>, likeObject: LikeObject}
-     */
-    private function updateLikeObject(
-        ILikeObject $likeable,
-        LikeObject $likeObject,
-        Like $like,
-        ReactionType $reactionType
-    ): array {
-        // update existing object
-        if ($likeObject->likeObjectID) {
-            $cumulativeLikes = $likeObject->cumulativeLikes;
-
-            if ($likeObject->cachedReactions !== null) {
-                $cachedReactions = @\unserialize($likeObject->cachedReactions);
-            } else {
-                $cachedReactions = [];
-            }
-
-            if (!\is_array($cachedReactions)) {
-                $cachedReactions = [];
-            }
-
-            if ($like->likeID) {
-                $cumulativeLikes--;
-
-                if (isset($cachedReactions[$like->getReactionType()->reactionTypeID])) {
-                    if (--$cachedReactions[$like->getReactionType()->reactionTypeID] == 0) {
-                        unset($cachedReactions[$like->getReactionType()->reactionTypeID]);
-                    }
-                }
-            }
-
-            $cumulativeLikes++;
-
-            if (isset($cachedReactions[$reactionType->reactionTypeID])) {
-                $cachedReactions[$reactionType->reactionTypeID]++;
-            } else {
-                $cachedReactions[$reactionType->reactionTypeID] = 1;
-            }
-
-            $cachedReactions = self::cleanUpCachedReactions($cachedReactions);
-
-            // build update date
-            $updateData = [
-                'likes' => $cumulativeLikes,
-                'dislikes' => 0,
-                'cumulativeLikes' => $cumulativeLikes,
-                'cachedReactions' => \serialize($cachedReactions),
-            ];
-
-            // update data
-            (new LikeObjectAction([$likeObject], 'update', ['data' => $updateData]))->executeAction();
-        } else {
-            $cumulativeLikes = 1;
-            $cachedReactions = [
-                $reactionType->reactionTypeID => 1,
-            ];
-
-            // create cache
-            $sql = "INSERT INTO             wcf1_like_object
-                                            (objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes, cachedReactions)
-                    VALUES                  (?, ?, ?, ?, ?, ?, ?)
-                    ON DUPLICATE KEY UPDATE likes = ?,
-                                            dislikes = ?,
-                                            cumulativeLikes = ?,
-                                            cachedReactions = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([
-                $likeable->getObjectType()->objectTypeID,
-                $likeable->getObjectID(),
-                $likeable->getUserID() ?: null,
-                $cumulativeLikes,
-                0,
-                $cumulativeLikes,
-                \serialize($cachedReactions),
-                $cumulativeLikes,
-                0,
-                $cumulativeLikes,
-                \serialize($cachedReactions),
-            ]);
-            $likeObject = new LikeObject(WCF::getDB()->getInsertID("wcf1_like_object", "likeObjectID"));
-        }
+        $like = Like::getLike($likeable->getObjectType()->objectTypeID, $likeable->getObjectID(), $user->userID);
+        $likeObject = LikeObject::getLikeObject($likeable->getObjectType()->objectTypeID, $likeable->getObjectID());
 
         return [
-            'cumulativeLikes' => $cumulativeLikes,
-            'cachedReactions' => $cachedReactions,
+            'cachedReactions' => $likeObject->getCachedReactions(),
+            'reactionTypeID' => $reactionTypeID,
+            'like' => $like,
             'likeObject' => $likeObject,
+            'cumulativeLikes' => $likeObject->cumulativeLikes,
         ];
     }
 
@@ -530,6 +333,7 @@ final class ReactionHandler extends SingletonFactory
      *  likeObject: LikeObject|array{},
      *  cumulativeLikes: ?int,
      * }
+     * @deprecated 6.3 Use `RevertReaction` command instead.
      */
     public function revertReact(Like $like, ILikeObject $likeable, LikeObject $likeObject, User $user): array
     {

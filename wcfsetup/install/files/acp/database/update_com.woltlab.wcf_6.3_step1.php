@@ -9,6 +9,7 @@
  */
 
 use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
+use wcf\system\database\table\column\JsonDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
 use wcf\system\database\table\column\SmallintDatabaseTableColumn;
 use wcf\system\database\table\PartialDatabaseTable;
@@ -25,4 +26,8 @@ return [
                 ->notNull()
                 ->defaultValue(1),
         ]),
+    PartialDatabaseTable::create('wcf1_like_object')
+        ->columns([
+            JsonDatabaseTableColumn::create('cachedReactions'),
+        ])
 ];
