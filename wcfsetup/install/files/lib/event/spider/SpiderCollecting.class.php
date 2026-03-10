@@ -641,6 +641,57 @@ final class SpiderCollecting implements IPsr14Event
         );
         $this->register(new Spider('360Spider', '360Spider'));
         $this->register(new Spider('GPTBot', 'GPTBot', 'https://openai.com/gptbot'));
+        $this->register(new Spider('OAI-SearchBot', 'OAI-SearchBot', 'https://openai.com/searchbot'));
+        $this->register(new Spider('ChatGPT-User', 'ChatGPT-User', 'https://openai.com/bot'));
+        $this->register(new Spider('PerplexityBot', 'PerplexityBot', 'https://perplexity.ai/perplexitybot'));
+        $this->register(new Spider('Perplexity-User', 'Perplexity-User', 'https://perplexity.ai/perplexity-user'));
+        $this->register(
+            new Spider(
+                'meta-webindexer', 
+                'Meta-WebIndexer', 
+                'https://developers.facebook.com/docs/sharing/webmasters/web-crawlers'
+            )
+        );
+        $this->register(
+            new Spider(
+                'meta-externalads',
+                'Meta-ExternalAds',
+                'https://developers.facebook.com/docs/sharing/webmasters/web-crawlers'
+            )
+        );
+        $this->register(
+            new Spider(
+                'meta-externalagent',
+                'Meta-ExternalAgent',
+                'https://developers.facebook.com/docs/sharing/webmasters/web-crawlers'
+            )
+        );
+        $this->register(
+            new Spider(
+                'meta-externalfetcher',
+                'Meta-ExternalFetcher',
+                'https://developers.facebook.com/docs/sharing/webmasters/web-crawlers'
+            )
+        );
+        $this->register(new Spider('Bytespider', 'Bytespider'));
+        $this->register(new Spider('PlagAwareBot', 'PlagAware', 'https://www.plagaware.com/bot'));
+        $this->register(
+            new Spider(
+                'DuckAssistBot',
+                'DuckAssistBot',
+                'https://duckduckgo.com/duckduckgo-help-pages/results/duckassistbot'
+            )
+        );
+        $this->register(new Spider('CCBot', 'Common Crawl Bot', 'https://commoncrawl.org/faq'));
+        $this->register(new Spider('DataForSeoBot', 'DataForSEO Link Bot', 'https://dataforseo.com/dataforseo-bot'));
+        $this->register(
+            new Spider(
+                'Gemini-Deep-Research',
+                'Gemini Deep Research',
+                'https://gemini.google/overview/deep-research/'
+            )
+        );
+        $this->register(new Spider('quillbot', 'Quillbot', 'https://quillbot.com/'));
     }
 
     /**
