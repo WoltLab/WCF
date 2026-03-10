@@ -16,9 +16,6 @@ use function Safe\preg_split;
  */
 class ParserState
 {
-    /**
-     * @var null
-     */
     public const EOF = null;
 
     /**
@@ -191,17 +188,25 @@ class ParserState
     }
 
     /**
-     * @return list<Comment>
+     * Consumes whitespace and/or comments until the next non-whitespace character that isn't a slash opening a comment.
+     *
+     * @param list<Comment> $comments Any comments consumed will be appended to this array.
+     *
+     * @return string the whitespace consumed, without the comments
      *
      * @throws UnexpectedEOFException
      * @throws UnexpectedTokenException
+     *
+     * @phpstan-impure
+     * This method may change the state of the object by advancing the internal position;
+     * it does not simply 'get' a value.
      */
-    public function consumeWhiteSpace(): array
+    public function consumeWhiteSpace(array &$comments = []): string
     {
-        $comments = [];
+        $consumed = '';
         do {
             while (preg_match('/\\s/isSu', $this->peek()) === 1) {
-                $this->consume(1);
+                $consumed .= $this->consume(1);
             }
             if ($this->parserSettings->usesLenientParsing()) {
                 try {
@@ -218,7 +223,7 @@ class ParserState
             }
         } while ($comment instanceof Comment);
 
-        return $comments;
+        return $consumed;
     }
 
     /**
@@ -283,6 +288,27 @@ class ParserState
     }
 
     /**
+     * If the possibly-expected next content is next, consume it.
+     *
+     * @param non-empty-string $nextContent
+     *
+     * @return bool whether the possibly-expected content was found and consumed
+     */
+    public function consumeIfComes(string $nextContent): bool
+    {
+        $length = $this->strlen($nextContent);
+        if (!$this->streql($this->substr($this->currentPosition, $length), $nextContent)) {
+            return false;
+        }
+
+        $numberOfLines = \substr_count($nextContent, "\n");
+        $this->lineNumber += $numberOfLines;
+        $this->currentPosition += $this->strlen($nextContent);
+
+        return true;
+    }
+
+    /**
      * @param string $expression
      * @param int<1, max>|null $maximumLength
      *
@@ -331,7 +357,7 @@ class ParserState
 
     /**
      * @param list<string|self::EOF>|string|self::EOF $stopCharacters
-     * @param array<int, Comment> $comments
+     * @param list<Comment> $comments
      *
      * @throws UnexpectedEOFException
      * @throws UnexpectedTokenException
@@ -346,6 +372,7 @@ class ParserState
         $consumedCharacters = '';
         $start = $this->currentPosition;
 
+        $comments = \array_merge($comments, $this->consumeComments());
         while (!$this->isEnd()) {
             $character = $this->consume(1);
             if (\in_array($character, $stopCharacters, true)) {
@@ -357,10 +384,7 @@ class ParserState
                 return $consumedCharacters;
             }
             $consumedCharacters .= $character;
-            $comment = $this->consumeComment();
-            if ($comment instanceof Comment) {
-                $comments[] = $comment;
-            }
+            $comments = \array_merge($comments, $this->consumeComments());
         }
 
         if (\in_array(self::EOF, $stopCharacters, true)) {
@@ -457,5 +481,22 @@ class ParserState
         }
 
         return $result;
+    }
+
+    /**
+     * @return list<Comment>
+     */
+    private function consumeComments(): array
+    {
+        $comments = [];
+
+        while (true) {
+            $comment = $this->consumeComment();
+            if ($comment instanceof Comment) {
+                $comments[] = $comment;
+            } else {
+                return $comments;
+            }
+        }
     }
 }

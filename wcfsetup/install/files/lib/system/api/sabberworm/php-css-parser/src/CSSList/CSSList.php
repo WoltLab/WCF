@@ -68,13 +68,19 @@ abstract class CSSList implements CSSElement, CSSListItem, Positionable
         $usesLenientParsing = $parserState->getSettings()->usesLenientParsing();
         $comments = [];
         while (!$parserState->isEnd()) {
-            $comments = \array_merge($comments, $parserState->consumeWhiteSpace());
+            $parserState->consumeWhiteSpace($comments);
             $listItem = null;
             if ($usesLenientParsing) {
                 try {
+                    $positionBeforeParse = $parserState->currentColumn();
                     $listItem = self::parseListItem($parserState, $list);
                 } catch (UnexpectedTokenException $e) {
                     $listItem = false;
+                    // If the failed parsing did not consume anything that was to come ...
+                    if ($parserState->currentColumn() === $positionBeforeParse && !$parserState->isEnd()) {
+                        // ... the unexpected token needs to be skipped, otherwise there'll be an infinite loop.
+                        $parserState->consume(1);
+                    }
                 }
             } else {
                 $listItem = self::parseListItem($parserState, $list);
@@ -87,7 +93,8 @@ abstract class CSSList implements CSSElement, CSSListItem, Positionable
                 $listItem->addComments($comments);
                 $list->append($listItem);
             }
-            $comments = $parserState->consumeWhiteSpace();
+            $comments = [];
+            $parserState->consumeWhiteSpace($comments);
         }
         $list->addComments($comments);
         if (!$isRoot && !$usesLenientParsing) {
@@ -133,7 +140,8 @@ abstract class CSSList implements CSSElement, CSSListItem, Positionable
         } elseif ($parserState->comes('}')) {
             if ($isRoot) {
                 if ($parserState->getSettings()->usesLenientParsing()) {
-                    return DeclarationBlock::parse($parserState) ?? false;
+                    $parserState->consume(1);
+                    return self::parseListItem($parserState, $list);
                 } else {
                     throw new SourceException('Unopened {', $parserState->currentLine());
                 }
@@ -214,7 +222,7 @@ abstract class CSSList implements CSSElement, CSSListItem, Positionable
                 }
             }
             $useRuleSet = true;
-            foreach (\explode('/', AtRule::BLOCK_RULES) as $blockRuleName) {
+            foreach (AtRule::BLOCK_RULES as $blockRuleName) {
                 if (self::identifierIs($identifier, $blockRuleName)) {
                     $useRuleSet = false;
                     break;
@@ -370,7 +378,7 @@ abstract class CSSList implements CSSElement, CSSListItem, Positionable
             if (!($item instanceof DeclarationBlock)) {
                 continue;
             }
-            if ($item->getSelectors() == $selectors) {
+            if (self::selectorsMatch($item->getSelectors(), $selectors)) {
                 unset($this->contents[$key]);
                 if (!$removeAll) {
                     return;
@@ -426,5 +434,45 @@ abstract class CSSList implements CSSElement, CSSListItem, Positionable
     public function getContents(): array
     {
         return $this->contents;
+    }
+
+    /**
+     * @return array<string, bool|int|float|string|array<mixed>|null>
+     *
+     * @internal
+     */
+    public function getArrayRepresentation(): array
+    {
+        throw new \BadMethodCallException('`getArrayRepresentation` is not yet implemented for `' . self::class . '`');
+    }
+
+    /**
+     * @param list<Selector> $selectors1
+     * @param list<Selector> $selectors2
+     */
+    private static function selectorsMatch(array $selectors1, array $selectors2): bool
+    {
+        $selectorStrings1 = self::getSelectorStrings($selectors1);
+        $selectorStrings2 = self::getSelectorStrings($selectors2);
+
+        \sort($selectorStrings1);
+        \sort($selectorStrings2);
+
+        return $selectorStrings1 === $selectorStrings2;
+    }
+
+    /**
+     * @param list<Selector> $selectors
+     *
+     * @return list<string>
+     */
+    private static function getSelectorStrings(array $selectors): array
+    {
+        return \array_map(
+            static function (Selector $selector): string {
+                return $selector->getSelector();
+            },
+            $selectors
+        );
     }
 }

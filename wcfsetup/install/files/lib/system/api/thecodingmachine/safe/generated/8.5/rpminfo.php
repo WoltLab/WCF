@@ -5,8 +5,6 @@ namespace Safe;
 use Safe\Exceptions\RpminfoException;
 
 /**
- *
- *
  * @param int $tag
  * @throws RpminfoException
  *
@@ -22,8 +20,6 @@ function rpmaddtag(int $tag): void
 
 
 /**
- *
- *
  * @param string $text
  * @throws RpminfoException
  *
