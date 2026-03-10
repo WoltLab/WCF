@@ -4209,8 +4209,6 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.like.dislikesGiven"><![CDATA[Vergebene Dislikes]]></item>
 		<item name="wcf.like.summary"><![CDATA[{literal}{if $others == 0}{@$users.slice(0, -1).join(", ")}{if $users.length > 1} und {/if}{@$users.slice(-1)[0]}{else}{@$users.join(", ")} und {if $others == 1}einem{else}{#$others}{/if} weiteren{/if} gefällt das.{/literal}]]></item>
 		<item name="wcf.like.details"><![CDATA[Details]]></item>
-		<item name="wcf.like.details.like"><![CDATA[Reaktionen]]></item>
-		<item name="wcf.like.details.dislike"><![CDATA[Dislikes]]></item>
 		<item name="wcf.like.likes.more"><![CDATA[Weitere Reaktionen]]></item>
 		<item name="wcf.like.likes.noMoreEntries"><![CDATA[Keine weiteren Reaktionen]]></item>
 		<item name="wcf.like.dislikes.more"><![CDATA[Weitere Dislikes]]></item>

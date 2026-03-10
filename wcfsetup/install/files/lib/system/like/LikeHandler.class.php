@@ -190,7 +190,7 @@ class LikeHandler extends SingletonFactory
      */
     protected function loadLikeStatus(LikeObject $likeObject, User $user)
     {
-        $sql = "SELECT      like_object.likes, like_object.dislikes, like_object.cumulativeLikes,
+        $sql = "SELECT      like_object.likes, 0 AS dislikes, like_object.cumulativeLikes,
                             CASE WHEN like_table.likeValue IS NOT NULL THEN like_table.likeValue ELSE 0 END AS liked
                 FROM        wcf1_like_object like_object
                 LEFT JOIN   wcf1_like like_table
