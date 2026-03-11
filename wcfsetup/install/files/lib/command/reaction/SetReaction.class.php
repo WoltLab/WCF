@@ -42,13 +42,13 @@ final class SetReaction
 
         $likeObject = LikeObjectEditor::getLikeObjectForUpdate($this->likeable);
 
-        $like = Like::getLike(
+        $originalLike = Like::getLike(
             $this->likeable->getObjectType()->objectTypeID,
             $this->likeable->getObjectID(),
             $this->user->userID
         );
 
-        if (!$like->likeID) {
+        if (!$originalLike->likeID) {
             // new reaction
             $like = LikeEditor::create([
                 'objectID' => $this->likeable->getObjectID(),
@@ -65,7 +65,7 @@ final class SetReaction
             $this->likeable->updateLikeCounter($likeObject->likes + 1);
         } else {
             // update existing reaction
-            $editor = new LikeEditor($like);
+            $editor = new LikeEditor($originalLike);
             $editor->update([
                 'time' => \TIME_NOW,
                 'likeValue' => 1,
@@ -73,18 +73,18 @@ final class SetReaction
             ]);
 
             // reload like object to avoid stale object (reaction type id)
-            $like = new Like($like->likeID);
+            $like = new Like($originalLike->likeID);
         }
 
         LikeObjectEditor::rebuildLikeObjectData([$likeObject->getObjectID()]);
 
         WCF::getDB()->commitTransaction();
 
-        $this->updateRecentActivities(
+        $this->updateUserActivityEvent(
             $this->likeable,
             $this->user,
             $this->reactionType,
-            $like,
+            $originalLike,
         );
 
         // This interface should help to determine whether the plugin has been adapted to the API 5.2.
@@ -118,11 +118,11 @@ final class SetReaction
         $userEditor->updateCounters(['likesReceived' => 1]);
     }
 
-    private function updateRecentActivities(
+    private function updateUserActivityEvent(
         ILikeObject $likeable,
         User $user,
         ReactionType $reactionType,
-        Like $like,
+        Like $originalLike,
     ): void {
         if (UserActivityEventHandler::getInstance()->getObjectTypeID($likeable->getObjectType()->objectType . '.recentActivityEvent')) {
             $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
@@ -131,7 +131,7 @@ final class SetReaction
             );
 
             if ($objectType->supportsReactions) {
-                if ($like->likeID) {
+                if ($originalLike->likeID) {
                     UserActivityEventHandler::getInstance()->removeEvent(
                         $likeable->getObjectType()->objectType . '.recentActivityEvent',
                         $likeable->getObjectID(),
