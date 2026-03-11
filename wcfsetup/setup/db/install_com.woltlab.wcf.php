@@ -1786,7 +1786,7 @@ return [
             MediumintDatabaseTableColumn::create('likes')
                 ->notNull()
                 ->defaultValue(0),
-            MediumintDatabaseTableColumn::create('dislikes')
+            MediumintDatabaseTableColumn::create('cumulativeLikes')
                 ->notNull()
                 ->defaultValue(0),
             JsonDatabaseTableColumn::create('cachedReactions'),
