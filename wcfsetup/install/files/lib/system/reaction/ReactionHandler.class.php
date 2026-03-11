@@ -465,10 +465,10 @@ final class ReactionHandler extends SingletonFactory
     /**
      * @return ?array{count: int, other: int, reaction: ?ReactionType}
      */
-    public function getTopReaction(?string $cachedReactions): ?array
+    public function getTopReaction(?string $cachedReactionsJson): ?array
     {
-        if ($cachedReactions) {
-            $cachedReactions = @\unserialize($cachedReactions);
+        if ($cachedReactionsJson) {
+            $cachedReactions = \json_decode($cachedReactionsJson, true, flags: \JSON_THROW_ON_ERROR);
 
             if (\is_array($cachedReactions)) {
                 $cachedReactions = self::cleanUpCachedReactions($cachedReactions);
