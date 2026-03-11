@@ -10,6 +10,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\event\reaction\ReactionReverted;
 use wcf\system\cache\runtime\UserRuntimeCache;
+use wcf\system\database\exception\DatabaseQueryException;
 use wcf\system\event\EventHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\activity\point\UserActivityPointHandler;
@@ -34,19 +35,25 @@ final class RevertReaction
     {
         LikeObjectEditor::createFromLikeable($this->likeable);
 
-        WCF::getDB()->beginTransaction();
+        try {
+            WCF::getDB()->beginTransaction();
 
-        $likeObject = LikeObjectEditor::getLikeObjectForUpdate($this->likeable);
+            $likeObject = LikeObjectEditor::getLikeObjectForUpdate($this->likeable);
 
-        (new LikeEditor($this->like))->delete();
+            (new LikeEditor($this->like))->delete();
 
-        $this->updateUserCounter($this->likeable);
+            $this->updateUserCounter($this->likeable);
 
-        $this->likeable->updateLikeCounter($likeObject->likes - 1);
+            $this->likeable->updateLikeCounter($likeObject->likes - 1);
 
-        LikeObjectEditor::rebuildLikeObjectData([$likeObject->getObjectID()]);
+            LikeObjectEditor::rebuildLikeObjectData([$likeObject->getObjectID()]);
 
-        WCF::getDB()->commitTransaction();
+            WCF::getDB()->commitTransaction();
+        } catch (DatabaseQueryException $e) {
+            WCF::getDB()->rollBackTransaction();
+
+            throw $e;
+        }
 
         $this->deleteUserActivityEvent(
             $this->likeable,

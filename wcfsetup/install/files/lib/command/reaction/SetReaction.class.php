@@ -13,6 +13,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\event\reaction\ReactionSet;
 use wcf\system\cache\runtime\UserRuntimeCache;
+use wcf\system\database\exception\DatabaseQueryException;
 use wcf\system\event\EventHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\activity\point\UserActivityPointHandler;
@@ -38,47 +39,53 @@ final class SetReaction
     {
         LikeObjectEditor::createFromLikeable($this->likeable);
 
-        WCF::getDB()->beginTransaction();
+        try {
+            WCF::getDB()->beginTransaction();
 
-        $likeObject = LikeObjectEditor::getLikeObjectForUpdate($this->likeable);
+            $likeObject = LikeObjectEditor::getLikeObjectForUpdate($this->likeable);
 
-        $originalLike = Like::getLike(
-            $this->likeable->getObjectType()->objectTypeID,
-            $this->likeable->getObjectID(),
-            $this->user->userID
-        );
+            $originalLike = Like::getLike(
+                $this->likeable->getObjectType()->objectTypeID,
+                $this->likeable->getObjectID(),
+                $this->user->userID
+            );
 
-        if (!$originalLike->likeID) {
-            // new reaction
-            $like = LikeEditor::create([
-                'objectID' => $this->likeable->getObjectID(),
-                'objectTypeID' => $this->likeable->getObjectType()->objectTypeID,
-                'objectUserID' => $this->likeable->getUserID() ?: null,
-                'userID' => $this->user->userID,
-                'time' => \TIME_NOW,
-                'likeValue' => 1,
-                'reactionTypeID' => $this->reactionType->reactionTypeID,
-            ]);
+            if (!$originalLike->likeID) {
+                // new reaction
+                $like = LikeEditor::create([
+                    'objectID' => $this->likeable->getObjectID(),
+                    'objectTypeID' => $this->likeable->getObjectType()->objectTypeID,
+                    'objectUserID' => $this->likeable->getUserID() ?: null,
+                    'userID' => $this->user->userID,
+                    'time' => \TIME_NOW,
+                    'likeValue' => 1,
+                    'reactionTypeID' => $this->reactionType->reactionTypeID,
+                ]);
 
-            $this->updateUserCounter($this->likeable, $like);
+                $this->updateUserCounter($this->likeable, $like);
 
-            $this->likeable->updateLikeCounter($likeObject->likes + 1);
-        } else {
-            // update existing reaction
-            $editor = new LikeEditor($originalLike);
-            $editor->update([
-                'time' => \TIME_NOW,
-                'likeValue' => 1,
-                'reactionTypeID' => $this->reactionType->reactionTypeID,
-            ]);
+                $this->likeable->updateLikeCounter($likeObject->likes + 1);
+            } else {
+                // update existing reaction
+                $editor = new LikeEditor($originalLike);
+                $editor->update([
+                    'time' => \TIME_NOW,
+                    'likeValue' => 1,
+                    'reactionTypeID' => $this->reactionType->reactionTypeID,
+                ]);
 
-            // reload like object to avoid stale object (reaction type id)
-            $like = new Like($originalLike->likeID);
+                // reload like object to avoid stale object (reaction type id)
+                $like = new Like($originalLike->likeID);
+            }
+
+            LikeObjectEditor::rebuildLikeObjectData([$likeObject->getObjectID()]);
+
+            WCF::getDB()->commitTransaction();
+        } catch (DatabaseQueryException $e) {
+            WCF::getDB()->rollBackTransaction();
+
+            throw $e;
         }
-
-        LikeObjectEditor::rebuildLikeObjectData([$likeObject->getObjectID()]);
-
-        WCF::getDB()->commitTransaction();
 
         $this->updateUserActivityEvent(
             $this->likeable,
