@@ -56,7 +56,7 @@ final class DeleteObjectReactions
                     $users[$likeObject->objectUserID] = 0;
                 }
 
-                $users[$likeObject->objectUserID] -= \count($likeObject->getReactions());
+                $users[$likeObject->objectUserID] -= $likeObject->likes;
             }
         }
 
