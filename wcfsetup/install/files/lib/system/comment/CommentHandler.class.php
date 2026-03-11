@@ -2,6 +2,7 @@
 
 namespace wcf\system\comment;
 
+use wcf\command\reaction\DeleteObjectReactions;
 use wcf\data\comment\CommentEditor;
 use wcf\data\comment\CommentList;
 use wcf\data\comment\response\CommentResponse;
@@ -18,7 +19,6 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\flood\FloodControl;
 use wcf\system\message\censorship\Censorship;
-use wcf\system\reaction\ReactionHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\UserNotificationHandler;
@@ -174,11 +174,11 @@ class CommentHandler extends SingletonFactory
             $notificationObjectTypes[] = $objectTypeObj->objectType . '.like.notification';
         }
 
-        ReactionHandler::getInstance()->removeReactions(
+        (new DeleteObjectReactions(
             'com.woltlab.wcf.comment',
             $commentIDs,
             $notificationObjectTypes
-        );
+        ))();
 
         // delete activity events
         if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.recentActivityEvent')) {
@@ -198,11 +198,11 @@ class CommentHandler extends SingletonFactory
                 $notificationObjectTypes[] = $objectTypeObj->objectType . '.response.like.notification';
             }
 
-            ReactionHandler::getInstance()->removeReactions(
+            (new DeleteObjectReactions(
                 'com.woltlab.wcf.comment.response',
                 $responseIDs,
                 $notificationObjectTypes
-            );
+            ))();
 
             // delete activity events (for responses)
             if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.response.recentActivityEvent')) {

@@ -2,30 +2,23 @@
 
 namespace wcf\system\reaction;
 
+use wcf\command\reaction\DeleteObjectReactions;
 use wcf\command\reaction\SetReaction;
 use wcf\command\reaction\RevertReaction;
 use wcf\data\DatabaseObject;
 use wcf\data\like\ILikeObjectTypeProvider;
 use wcf\data\like\Like;
-use wcf\data\like\LikeList;
 use wcf\data\like\object\ILikeObject;
 use wcf\data\like\object\LikeObject;
-use wcf\data\like\object\LikeObjectAction;
-use wcf\data\like\object\LikeObjectList;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\reaction\ReactionAction;
 use wcf\data\reaction\type\ReactionType;
 use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\ImplementationException;
 use wcf\system\SingletonFactory;
-use wcf\system\user\activity\event\UserActivityEventHandler;
-use wcf\system\user\activity\point\UserActivityPointHandler;
-use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -332,90 +325,15 @@ final class ReactionHandler extends SingletonFactory
      *
      * @param int[] $objectIDs
      * @param string[] $notificationObjectTypes
+     * @deprecated 6.3 Use `DeleteObjectReactions` command instead.
      */
     public function removeReactions(string $objectType, array $objectIDs, array $notificationObjectTypes = []): void
     {
-        $objectTypeObj = $this->getObjectType($objectType);
-
-        if ($objectTypeObj === null) {
-            throw new \InvalidArgumentException('Given objectType is invalid.');
-        }
-
-        // get like objects
-        $likeObjectList = new LikeObjectList();
-        $likeObjectList->getConditionBuilder()->add('like_object.objectTypeID = ?', [$objectTypeObj->objectTypeID]);
-        $likeObjectList->getConditionBuilder()->add('like_object.objectID IN (?)', [$objectIDs]);
-        $likeObjectList->readObjects();
-        $likeObjects = $likeObjectList->getObjects();
-        $likeObjectIDs = $likeObjectList->getObjectIDs();
-
-        // reduce count of received users
-        $users = [];
-        foreach ($likeObjects as $likeObject) {
-            if ($likeObject->likes && $likeObject->objectUserID) {
-                if (!isset($users[$likeObject->objectUserID])) {
-                    $users[$likeObject->objectUserID] = 0;
-                }
-
-                $users[$likeObject->objectUserID] -= \count($likeObject->getReactions());
-            }
-        }
-
-        foreach ($users as $userID => $reactionData) {
-            $userEditor = new UserEditor(new User(null, ['userID' => $userID]));
-            $userEditor->updateCounters([
-                'likesReceived' => $reactionData,
-            ]);
-        }
-
-        // get like ids
-        $likeList = new LikeList();
-        $likeList->getConditionBuilder()->add('like_table.objectTypeID = ?', [$objectTypeObj->objectTypeID]);
-        $likeList->getConditionBuilder()->add('like_table.objectID IN (?)', [$objectIDs]);
-        $likeList->readObjects();
-
-        if (\count($likeList)) {
-            $activityPoints = $likeData = [];
-            foreach ($likeList as $like) {
-                $likeData[$like->likeID] = $like->userID;
-
-                if ($like->objectUserID) {
-                    if (!isset($activityPoints[$like->objectUserID])) {
-                        $activityPoints[$like->objectUserID] = 0;
-                    }
-                    $activityPoints[$like->objectUserID]++;
-                }
-            }
-
-            // delete like notifications
-            if (!empty($notificationObjectTypes)) {
-                foreach ($notificationObjectTypes as $notificationObjectType) {
-                    UserNotificationHandler::getInstance()
-                        ->removeNotifications($notificationObjectType, $likeList->getObjectIDs());
-                }
-            } elseif (UserNotificationHandler::getInstance()->getObjectTypeID($objectType . '.notification')) {
-                UserNotificationHandler::getInstance()
-                    ->removeNotifications($objectType . '.notification', $likeList->getObjectIDs());
-            }
-
-            // revoke activity points
-            UserActivityPointHandler::getInstance()
-                ->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $activityPoints);
-
-            // delete likes
-            (new ReactionAction(\array_keys($likeData), 'delete'))->executeAction();
-        }
-
-        // delete like objects
-        if (!empty($likeObjectIDs)) {
-            (new LikeObjectAction($likeObjectIDs, 'delete'))->executeAction();
-        }
-
-        // delete activity events
-        if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.recentActivityEvent')) {
-            UserActivityEventHandler::getInstance()
-                ->removeEvents($objectTypeObj->objectType . '.recentActivityEvent', $objectIDs);
-        }
+        (new DeleteObjectReactions(
+            $objectType,
+            $objectIDs,
+            $notificationObjectTypes
+        ))();
     }
 
     /**

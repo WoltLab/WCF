@@ -12,6 +12,7 @@ use wcf\command\article\RestoreArticle;
 use wcf\command\article\SetArticleCategory;
 use wcf\command\article\SoftDeleteArticle;
 use wcf\command\article\UnpublishArticle;
+use wcf\command\reaction\DeleteObjectReactions;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;
@@ -24,7 +25,6 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
-use wcf\system\reaction\ReactionHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\tagging\TagEngine;
@@ -432,7 +432,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
 
         if (!empty($articleIDs)) {
             // delete like data
-            ReactionHandler::getInstance()->removeReactions('com.woltlab.wcf.likeableArticle', $articleIDs);
+            (new DeleteObjectReactions('com.woltlab.wcf.likeableArticle', $articleIDs))();
             // delete comments
             CommentHandler::getInstance()->deleteObjects('com.woltlab.wcf.articleComment', $articleContentIDs);
             // delete tag to object entries
