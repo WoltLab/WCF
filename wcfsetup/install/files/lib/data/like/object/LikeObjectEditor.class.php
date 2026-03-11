@@ -58,9 +58,13 @@ class LikeObjectEditor extends DatabaseObjectEditor
      */
     public static function createFromLikeable(ILikeObject $likeable): void
     {
-        $sql = "INSERT IGNORE INTO wcf1_like_object (objectTypeID, objectID) VALUES (?, ?)";
+        $sql = "INSERT IGNORE INTO wcf1_like_object (objectTypeID, objectID, objectUserID) VALUES (?, ?, ?)";
         $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([$likeable->getObjectType()->objectTypeID, $likeable->getObjectID()]);
+        $statement->execute([
+            $likeable->getObjectType()->objectTypeID,
+            $likeable->getObjectID(),
+            $likeable->getUserID(),
+        ]);
     }
 
     /**
