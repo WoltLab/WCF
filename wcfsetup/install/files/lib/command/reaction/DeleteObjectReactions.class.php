@@ -23,6 +23,10 @@ use wcf\system\user\notification\UserNotificationHandler;
  */
 final class DeleteObjectReactions
 {
+    /**
+     * @param int[] $objectIDs
+     * @param string[] $notificationObjectTypes
+     */
     public function __construct(
         private readonly string $objectType,
         private readonly array $objectIDs,
@@ -103,7 +107,7 @@ final class DeleteObjectReactions
 
         // delete like objects
         if ($likeObjectIDs !== []) {
-            LikeObjectEditor::deleteAll(\array_keys($likeData));
+            LikeObjectEditor::deleteAll($likeObjectIDs);
         }
 
         // delete activity events
