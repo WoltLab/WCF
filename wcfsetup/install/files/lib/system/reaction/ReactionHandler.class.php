@@ -3,6 +3,7 @@
 namespace wcf\system\reaction;
 
 use wcf\command\reaction\SetReaction;
+use wcf\command\reaction\RevertReaction;
 use wcf\data\DatabaseObject;
 use wcf\data\like\ILikeObjectTypeProvider;
 use wcf\data\like\Like;
@@ -18,8 +19,6 @@ use wcf\data\reaction\type\ReactionType;
 use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
-use wcf\system\cache\runtime\UserRuntimeCache;
-use wcf\system\database\exception\DatabaseQueryException;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\ImplementationException;
@@ -300,31 +299,6 @@ final class ReactionHandler extends SingletonFactory
     }
 
     /**
-     * Updates the like counter for a user.
-     */
-    private function updateUsersLikeCounter(
-        ILikeObject $likeable,
-        Like $like,
-        ?ReactionType $reactionType = null
-    ): void {
-        if ($likeable->getUserID()) {
-            $likesReceived = 0;
-            if ($like->likeID) {
-                $likesReceived--;
-            }
-
-            if ($reactionType !== null) {
-                $likesReceived++;
-            }
-
-            if ($likesReceived !== 0) {
-                $userEditor = new UserEditor(UserRuntimeCache::getInstance()->getObject($likeable->getUserID()));
-                $userEditor->updateCounters(['likesReceived' => $likesReceived]);
-            }
-        }
-    }
-
-    /**
      * Reverts a reaction for an object.
      *
      * @return array{
@@ -341,100 +315,15 @@ final class ReactionHandler extends SingletonFactory
             throw new \InvalidArgumentException('The given parameter $like is invalid.');
         }
 
-        try {
-            WCF::getDB()->beginTransaction();
+        (new RevertReaction($like, $likeable))();
 
-            $likeObjectData = $this->revertLikeObject($likeObject, $like);
-
-            // update owner's like counter
-            $this->updateUsersLikeCounter($likeable, $like, null);
-
-            (new ReactionAction([$like], 'delete'))->executeAction();
-
-            if ($likeable->getUserID()) {
-                UserActivityPointHandler::getInstance()->removeEvents(
-                    'com.woltlab.wcf.like.activityPointEvent.receivedLikes',
-                    [$likeable->getUserID() => 1]
-                );
-            }
-
-            // update object's like counter
-            $likeable->updateLikeCounter($likeObjectData['cumulativeLikes']);
-
-            // delete recent activity
-            if (UserActivityEventHandler::getInstance()->getObjectTypeID($likeable->getObjectType()->objectType . '.recentActivityEvent')) {
-                UserActivityEventHandler::getInstance()->removeEvent(
-                    $likeable->getObjectType()->objectType . '.recentActivityEvent',
-                    $likeable->getObjectID(),
-                    $user->userID
-                );
-            }
-
-            WCF::getDB()->commitTransaction();
-
-            return [
-                'cachedReactions' => $likeObjectData['cachedReactions'],
-                'reactionTypeID' => null,
-                'likeObject' => $likeObjectData['likeObject'],
-                'cumulativeLikes' => $likeObjectData['cumulativeLikes'],
-            ];
-        } catch (DatabaseQueryException $e) {
-            WCF::getDB()->rollBackTransaction();
-        }
+        $likeObject = LikeObject::getLikeObject($likeable->getObjectType()->objectTypeID, $likeable->getObjectID());
 
         return [
-            'cachedReactions' => [],
+            'cachedReactions' => $likeObject->getCachedReactions(),
             'reactionTypeID' => null,
-            'likeObject' => [],
-            'cumulativeLikes' => null,
-        ];
-    }
-
-    /**
-     * Creates or updates a LikeObject for an likable object.
-     *
-     * @return array{cumulativeLikes: int, cachedReactions: array<int, int>, likeObject: LikeObject}
-     */
-    private function revertLikeObject(LikeObject $likeObject, Like $like): array
-    {
-        if (!$likeObject->likeObjectID) {
-            throw new \InvalidArgumentException('The given parameter $likeObject is invalid.');
-        }
-
-        // update existing object
-        $cumulativeLikes = $likeObject->cumulativeLikes;
-        $cachedReactions = @\unserialize($likeObject->cachedReactions);
-        if (!\is_array($cachedReactions)) {
-            $cachedReactions = [];
-        }
-
-        if ($like->likeID) {
-            $cumulativeLikes--;
-
-            if (isset($cachedReactions[$like->getReactionType()->reactionTypeID])) {
-                if (--$cachedReactions[$like->getReactionType()->reactionTypeID] == 0) {
-                    unset($cachedReactions[$like->getReactionType()->reactionTypeID]);
-                }
-            }
-
-            $cachedReactions = self::cleanUpCachedReactions($cachedReactions);
-
-            // build update date
-            $updateData = [
-                'likes' => $cumulativeLikes,
-                'dislikes' => 0,
-                'cumulativeLikes' => $cumulativeLikes,
-                'cachedReactions' => \serialize($cachedReactions),
-            ];
-
-            // update data
-            (new LikeObjectAction([$likeObject], 'update', ['data' => $updateData]))->executeAction();
-        }
-
-        return [
-            'cumulativeLikes' => $cumulativeLikes,
-            'cachedReactions' => $cachedReactions,
             'likeObject' => $likeObject,
+            'cumulativeLikes' => $likeObject->cumulativeLikes,
         ];
     }
 

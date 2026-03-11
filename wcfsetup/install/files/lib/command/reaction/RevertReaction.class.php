@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\command\reaction\type;
+namespace wcf\command\reaction;
 
 use wcf\data\like\Like;
 use wcf\data\like\LikeEditor;
