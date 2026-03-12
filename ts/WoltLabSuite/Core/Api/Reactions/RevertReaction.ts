@@ -9,26 +9,19 @@
  */
 
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
-import { ApiResult, apiResultFromError, apiResultFromValue } from "../Result";
+import { fromInfallibleApiRequest } from "../Result";
 
 type Response = {
   reactions: Record<number, number>;
 };
 
-export async function revertReaction(objectType: string, objectID: number): Promise<ApiResult<Response>> {
-  const url = new URL(`${window.WSC_RPC_API_URL}core/reactions/revert`);
-
-  let response: Response;
-  try {
-    response = (await prepareRequest(url)
+export async function revertReaction(objectType: string, objectID: number): Promise<Response> {
+  return fromInfallibleApiRequest(() => {
+    return prepareRequest(`${window.WSC_RPC_API_URL}core/reactions/revert`)
       .post({
         objectType,
         objectID,
       })
-      .fetchAsJson()) as Response;
-  } catch (e) {
-    return apiResultFromError(e);
-  }
-
-  return apiResultFromValue(response);
+      .fetchAsJson();
+  });
 }
