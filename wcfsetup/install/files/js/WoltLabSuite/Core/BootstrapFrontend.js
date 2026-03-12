@@ -120,5 +120,8 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Ui
         (0, LazyLoader_1.whenFirstSeen)("[data-report-content]", () => {
             void new Promise((resolve_11, reject_11) => { require(["./Ui/Moderation/Report"], resolve_11, reject_11); }).then(tslib_1.__importStar).then(({ setup }) => setup(options.reportEndpoint));
         });
+        (0, LazyLoader_1.whenFirstSeen)("[data-reaction-object-type]", () => {
+            void new Promise((resolve_12, reject_12) => { require(["./Component/Reaction/Button"], resolve_12, reject_12); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+        });
     }
 });

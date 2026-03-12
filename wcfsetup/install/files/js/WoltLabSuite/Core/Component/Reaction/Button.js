@@ -1,0 +1,177 @@
+/**
+ * Handles the reactions buttons.
+ *
+ * @author Marcel Werk
+ * @copyright 2001-2026 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.3
+ * @woltlabExcludeBundle tiny
+ */
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertReaction", "WoltLabSuite/Core/Api/Reactions/SetReaction", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Dom/Change/Listener", "focus-trap", "WoltLabSuite/Core/Ui/Alignment", "WoltLabSuite/Core/Ui/Screen", "WoltLabSuite/Core/Ui/CloseOverlay"], function (require, exports, tslib_1, RevertReaction_1, SetReaction_1, Selector_1, Listener_1, focus_trap_1, UiAlignment, UiScreen, CloseOverlay_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.setup = setup;
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    UiAlignment = tslib_1.__importStar(UiAlignment);
+    UiScreen = tslib_1.__importStar(UiScreen);
+    CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
+    const availableReactions = Object.values(window.REACTION_TYPES);
+    class ReactionPopover {
+        #resolve;
+        #popover;
+        #focusTrap;
+        open(button) {
+            if (this.#resolve !== undefined) {
+                this.#resolve({ ok: false });
+            }
+            this.#showPopover(button);
+            return new Promise((resolve) => {
+                this.#resolve = resolve;
+            });
+        }
+        cancel() {
+            if (this.#resolve !== undefined) {
+                this.#resolve({ ok: false });
+            }
+            this.#resolve = undefined;
+            this.#hidePopover();
+        }
+        #click(reactionTypeId) {
+            if (this.#resolve !== undefined) {
+                this.#resolve({ ok: true, reactionTypeId });
+            }
+            this.#resolve = undefined;
+            this.#hidePopover();
+        }
+        #createPopover() {
+            if (this.#popover !== undefined) {
+                return;
+            }
+            this.#popover = document.createElement("div");
+            this.#popover.className = "reactionPopover forceHide";
+            const popoverContent = document.createElement("div");
+            popoverContent.className = "reactionPopoverContent";
+            this.#getSortedReactionTypes().forEach((reactionType) => {
+                const reactionTypeButton = document.createElement("button");
+                reactionTypeButton.type = "button";
+                reactionTypeButton.tabIndex = 0;
+                reactionTypeButton.className = "reactionTypeButton jsTooltip";
+                reactionTypeButton.title = reactionType.title;
+                reactionTypeButton.dataset.reactionTypeId = reactionType.reactionTypeID.toString();
+                reactionTypeButton.dataset.isAssignable = reactionType.isAssignable.toString();
+                reactionTypeButton.innerHTML = reactionType.renderedIcon;
+                reactionTypeButton.addEventListener("click", () => this.#click(reactionType.reactionTypeID));
+                //reactionTypeItem.addEventListener("keydown", (ev) => this.keydown(ev));
+                if (!reactionType.isAssignable) {
+                    reactionTypeButton.hidden = true;
+                }
+                popoverContent.appendChild(reactionTypeButton);
+            });
+            this.#popover.appendChild(popoverContent);
+            document.body.appendChild(this.#popover);
+            CloseOverlay_1.default.add("WoltLabSuite/Core/Component/Reaction/Button", () => this.cancel());
+            Listener_1.default.trigger();
+        }
+        #showPopover(button) {
+            const popover = this.#getPopover();
+            UiAlignment.set(popover, button, {
+                horizontal: "center",
+                vertical: UiScreen.is("screen-xs") ? "bottom" : "top",
+            });
+            // The popover could be rendered below the input field on mobile, in which case
+            // the "first" button is displayed at the bottom and thus farthest away. Reversing
+            // the display order will restore the logic by placing the "first" button as close
+            // to the react button as possible.
+            const inverseOrder = popover.style.getPropertyValue("bottom") === "auto";
+            if (inverseOrder) {
+                popover.classList.add("inverseOrder");
+            }
+            else {
+                popover.classList.remove("inverseOrder");
+            }
+            popover.querySelectorAll(".reactionTypeButton.active").forEach((element) => {
+                element.classList.remove("active");
+            });
+            if (parseInt(button.dataset.reactionTypeId)) {
+                const reactionTypeButton = popover.querySelector(`.reactionTypeButton[data-reaction-type-id="${button.dataset.reactionTypeId}"]`);
+                reactionTypeButton.classList.add("active");
+                reactionTypeButton.hidden = false;
+            }
+            popover.classList.remove("forceHide");
+            popover.classList.add("active");
+            this.#getFocusTrap().activate();
+        }
+        #hidePopover() {
+            const popover = this.#getPopover();
+            popover.classList.remove("active");
+            popover
+                .querySelectorAll('.reactionTypeButton[data-is-assignable="0"]')
+                .forEach((button) => (button.hidden = true));
+            this.#getFocusTrap().deactivate();
+        }
+        #getSortedReactionTypes() {
+            return availableReactions.sort((a, b) => a.showOrder - b.showOrder);
+        }
+        #getPopover() {
+            if (this.#popover === undefined) {
+                this.#createPopover();
+            }
+            return this.#popover;
+        }
+        #getFocusTrap() {
+            if (this.#focusTrap === undefined) {
+                this.#focusTrap = (0, focus_trap_1.createFocusTrap)(this.#getPopover(), {
+                    allowOutsideClick: true,
+                    escapeDeactivates: () => {
+                        this.#hidePopover();
+                        return false;
+                    },
+                    preventScroll: true,
+                });
+            }
+            return this.#focusTrap;
+        }
+    }
+    function updateReactionSummary(objectType, objectId, cachedReactions, selectedReaction) {
+        const reactions = new Map();
+        Object.entries(cachedReactions).forEach(([key, value]) => {
+            reactions.set(parseInt(key), value);
+        });
+        const component = document.querySelector(`woltlab-core-reaction-summary[object-type="${objectType}"][object-id="${objectId}"]`);
+        component?.setData(reactions, selectedReaction);
+    }
+    function setup() {
+        const reactionPopover = new ReactionPopover();
+        (0, Selector_1.wheneverFirstSeen)("[data-reaction-object-type]", (button) => {
+            let isOpen = false;
+            button.addEventListener("click", (event) => {
+                event.stopPropagation(); // Necessary so that `Ui/CloseOverlay` does not close the popover immediately
+                if (isOpen) {
+                    reactionPopover.cancel();
+                    isOpen = false;
+                    return;
+                }
+                isOpen = true;
+                void reactionPopover.open(button).then(async (result) => {
+                    isOpen = false;
+                    if (!result.ok) {
+                        return;
+                    }
+                    const oldReactionTypeId = parseInt(button.dataset.reactionTypeId);
+                    if (result.reactionTypeId == oldReactionTypeId) {
+                        const response = await (0, RevertReaction_1.revertReaction)(button.dataset.reactionObjectType, parseInt(button.dataset.objectId));
+                        button.dataset.reactionTypeId = "0";
+                        button.classList.remove("active");
+                        updateReactionSummary(button.dataset.reactionObjectType, parseInt(button.dataset.objectId), response.unwrap().reactions, result.reactionTypeId);
+                    }
+                    else {
+                        const response = await (0, SetReaction_1.setReaction)(button.dataset.reactionObjectType, parseInt(button.dataset.objectId), result.reactionTypeId);
+                        button.dataset.reactionTypeId = result.reactionTypeId.toString();
+                        button.classList.add("active");
+                        updateReactionSummary(button.dataset.reactionObjectType, parseInt(button.dataset.objectId), response.unwrap().reactions, result.reactionTypeId);
+                    }
+                });
+            });
+        });
+    }
+});
