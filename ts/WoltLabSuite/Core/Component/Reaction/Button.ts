@@ -83,7 +83,6 @@ class ReactionPopover {
       reactionTypeButton.dataset.isAssignable = reactionType.isAssignable.toString();
       reactionTypeButton.innerHTML = reactionType.renderedIcon;
       reactionTypeButton.addEventListener("click", () => this.#click(reactionType.reactionTypeID));
-      //reactionTypeItem.addEventListener("keydown", (ev) => this.keydown(ev));
 
       if (!reactionType.isAssignable) {
         reactionTypeButton.hidden = true;
@@ -97,6 +96,14 @@ class ReactionPopover {
     document.body.appendChild(this.#popover);
 
     UiCloseOverlay.add("WoltLabSuite/Core/Component/Reaction/Button", () => this.cancel());
+
+    window.addEventListener(
+      "resize",
+      () => {
+        this.cancel();
+      },
+      { passive: true },
+    );
 
     DomChangeListener.trigger();
   }
