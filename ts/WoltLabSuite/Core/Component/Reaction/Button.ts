@@ -18,6 +18,7 @@ import * as UiAlignment from "WoltLabSuite/Core/Ui/Alignment";
 import * as UiScreen from "WoltLabSuite/Core/Ui/Screen";
 import UiCloseOverlay from "WoltLabSuite/Core/Ui/CloseOverlay";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 
 type Result =
   | {
@@ -70,12 +71,17 @@ class ReactionPopover {
 
     this.#popover = document.createElement("div");
     this.#popover.className = "reactionPopover forceHide";
+    this.#popover.setAttribute("role", "listbox");
+    this.#popover.setAttribute("aria-orientation", "horizontal");
+    this.#popover.setAttribute("aria-label", getPhrase("wcf.reactions.react"));
 
     const popoverContent = document.createElement("div");
     popoverContent.className = "reactionPopoverContent";
 
     this.#getSortedReactionTypes().forEach((reactionType) => {
       const reactionTypeButton = document.createElement("button");
+      reactionTypeButton.setAttribute("role", "option");
+      reactionTypeButton.setAttribute("aria-selected", "false");
       reactionTypeButton.type = "button";
       reactionTypeButton.tabIndex = 0;
       reactionTypeButton.className = "reactionTypeButton jsTooltip";
@@ -130,6 +136,7 @@ class ReactionPopover {
 
     popover.querySelectorAll(".reactionTypeButton.active").forEach((element: HTMLElement) => {
       element.classList.remove("active");
+      element.setAttribute("aria-selected", "false");
     });
 
     if (parseInt(button.dataset.reactionTypeId!)) {
@@ -137,6 +144,7 @@ class ReactionPopover {
         `.reactionTypeButton[data-reaction-type-id="${button.dataset.reactionTypeId}"]`,
       ) as HTMLButtonElement;
       reactionTypeButton.classList.add("active");
+      reactionTypeButton.setAttribute("aria-selected", "true");
       reactionTypeButton.hidden = false;
     }
 
@@ -239,6 +247,8 @@ function setupPopoverButton(): void {
 
   wheneverFirstSeen("[data-reaction-object-type]", (button: HTMLButtonElement) => {
     let isOpen = false;
+    button.setAttribute("aria-haspopup", "listbox");
+    button.setAttribute("aria-expanded", "false");
     button.addEventListener("click", (event) => {
       event.stopPropagation(); // Necessary so that `Ui/CloseOverlay` does not close the popover immediately
 
@@ -249,8 +259,11 @@ function setupPopoverButton(): void {
       }
 
       isOpen = true;
+      button.setAttribute("aria-expanded", "true");
+
       void reactionPopover.open(button).then(async (result: Result) => {
         isOpen = false;
+        button.setAttribute("aria-expanded", "false");
 
         if (!result.ok) {
           return;

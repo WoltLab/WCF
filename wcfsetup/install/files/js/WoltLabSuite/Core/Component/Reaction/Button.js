@@ -7,7 +7,7 @@
  * @since 6.3
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertReaction", "WoltLabSuite/Core/Api/Reactions/SetReaction", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Dom/Change/Listener", "focus-trap", "WoltLabSuite/Core/Ui/Alignment", "WoltLabSuite/Core/Ui/Screen", "WoltLabSuite/Core/Ui/CloseOverlay", "WoltLabSuite/Core/Helper/PromiseMutex"], function (require, exports, tslib_1, RevertReaction_1, SetReaction_1, Selector_1, Listener_1, focus_trap_1, UiAlignment, UiScreen, CloseOverlay_1, PromiseMutex_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertReaction", "WoltLabSuite/Core/Api/Reactions/SetReaction", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Dom/Change/Listener", "focus-trap", "WoltLabSuite/Core/Ui/Alignment", "WoltLabSuite/Core/Ui/Screen", "WoltLabSuite/Core/Ui/CloseOverlay", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Language"], function (require, exports, tslib_1, RevertReaction_1, SetReaction_1, Selector_1, Listener_1, focus_trap_1, UiAlignment, UiScreen, CloseOverlay_1, PromiseMutex_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -49,10 +49,15 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
             }
             this.#popover = document.createElement("div");
             this.#popover.className = "reactionPopover forceHide";
+            this.#popover.setAttribute("role", "listbox");
+            this.#popover.setAttribute("aria-orientation", "horizontal");
+            this.#popover.setAttribute("aria-label", (0, Language_1.getPhrase)("wcf.reactions.react"));
             const popoverContent = document.createElement("div");
             popoverContent.className = "reactionPopoverContent";
             this.#getSortedReactionTypes().forEach((reactionType) => {
                 const reactionTypeButton = document.createElement("button");
+                reactionTypeButton.setAttribute("role", "option");
+                reactionTypeButton.setAttribute("aria-selected", "false");
                 reactionTypeButton.type = "button";
                 reactionTypeButton.tabIndex = 0;
                 reactionTypeButton.className = "reactionTypeButton jsTooltip";
@@ -93,10 +98,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
             }
             popover.querySelectorAll(".reactionTypeButton.active").forEach((element) => {
                 element.classList.remove("active");
+                element.setAttribute("aria-selected", "false");
             });
             if (parseInt(button.dataset.reactionTypeId)) {
                 const reactionTypeButton = popover.querySelector(`.reactionTypeButton[data-reaction-type-id="${button.dataset.reactionTypeId}"]`);
                 reactionTypeButton.classList.add("active");
+                reactionTypeButton.setAttribute("aria-selected", "true");
                 reactionTypeButton.hidden = false;
             }
             popover.classList.remove("forceHide");
@@ -171,6 +178,8 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
         const reactionPopover = new ReactionPopover();
         (0, Selector_1.wheneverFirstSeen)("[data-reaction-object-type]", (button) => {
             let isOpen = false;
+            button.setAttribute("aria-haspopup", "listbox");
+            button.setAttribute("aria-expanded", "false");
             button.addEventListener("click", (event) => {
                 event.stopPropagation(); // Necessary so that `Ui/CloseOverlay` does not close the popover immediately
                 if (isOpen) {
@@ -179,8 +188,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
                     return;
                 }
                 isOpen = true;
+                button.setAttribute("aria-expanded", "true");
                 void reactionPopover.open(button).then(async (result) => {
                     isOpen = false;
+                    button.setAttribute("aria-expanded", "false");
                     if (!result.ok) {
                         return;
                     }
