@@ -7,7 +7,7 @@
  * @since 6.3
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertReaction", "WoltLabSuite/Core/Api/Reactions/SetReaction", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Dom/Change/Listener", "focus-trap", "WoltLabSuite/Core/Ui/Alignment", "WoltLabSuite/Core/Ui/Screen", "WoltLabSuite/Core/Ui/CloseOverlay"], function (require, exports, tslib_1, RevertReaction_1, SetReaction_1, Selector_1, Listener_1, focus_trap_1, UiAlignment, UiScreen, CloseOverlay_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertReaction", "WoltLabSuite/Core/Api/Reactions/SetReaction", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Dom/Change/Listener", "focus-trap", "WoltLabSuite/Core/Ui/Alignment", "WoltLabSuite/Core/Ui/Screen", "WoltLabSuite/Core/Ui/CloseOverlay", "WoltLabSuite/Core/Helper/PromiseMutex"], function (require, exports, tslib_1, RevertReaction_1, SetReaction_1, Selector_1, Listener_1, focus_trap_1, UiAlignment, UiScreen, CloseOverlay_1, PromiseMutex_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -142,7 +142,32 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
         const component = document.querySelector(`woltlab-core-reaction-summary[object-type="${objectType}"][object-id="${objectId}"]`);
         component?.setData(reactions, selectedReaction);
     }
-    function setup() {
+    function setupToggleButton() {
+        (0, Selector_1.wheneverFirstSeen)("[data-reaction-object-type]", (button) => {
+            button.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(() => toggleButton(button)));
+        });
+    }
+    async function toggleButton(button) {
+        const objectId = parseInt(button.dataset.objectId);
+        const objectType = button.dataset.reactionObjectType;
+        let reactionTypeId = 0;
+        let reactions;
+        if (button.classList.contains("active")) {
+            reactions = (await (0, RevertReaction_1.revertReaction)(objectType, objectId)).reactions;
+            button.dataset.reactionTypeId = "0";
+            button.classList.remove("active");
+            button.setAttribute("aria-pressed", "false");
+        }
+        else {
+            reactionTypeId = availableReactions[0].reactionTypeID;
+            reactions = (await (0, SetReaction_1.setReaction)(objectType, objectId, reactionTypeId)).reactions;
+            button.dataset.reactionTypeId = reactionTypeId.toString();
+            button.classList.add("active");
+            button.setAttribute("aria-pressed", "true");
+        }
+        updateReactionSummary(objectType, objectId, reactions, reactionTypeId);
+    }
+    function setupPopoverButton() {
         const reactionPopover = new ReactionPopover();
         (0, Selector_1.wheneverFirstSeen)("[data-reaction-object-type]", (button) => {
             let isOpen = false;
@@ -160,20 +185,34 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
                         return;
                     }
                     const oldReactionTypeId = parseInt(button.dataset.reactionTypeId);
+                    const objectId = parseInt(button.dataset.objectId);
+                    const objectType = button.dataset.reactionObjectType;
+                    let reactionTypeId = 0;
+                    let reactions;
                     if (result.reactionTypeId == oldReactionTypeId) {
-                        const response = await (0, RevertReaction_1.revertReaction)(button.dataset.reactionObjectType, parseInt(button.dataset.objectId));
+                        reactions = (await (0, RevertReaction_1.revertReaction)(objectType, objectId)).reactions;
                         button.dataset.reactionTypeId = "0";
                         button.classList.remove("active");
-                        updateReactionSummary(button.dataset.reactionObjectType, parseInt(button.dataset.objectId), response.unwrap().reactions, result.reactionTypeId);
+                        button.setAttribute("aria-pressed", "false");
                     }
                     else {
-                        const response = await (0, SetReaction_1.setReaction)(button.dataset.reactionObjectType, parseInt(button.dataset.objectId), result.reactionTypeId);
-                        button.dataset.reactionTypeId = result.reactionTypeId.toString();
+                        reactionTypeId = result.reactionTypeId;
+                        reactions = (await (0, SetReaction_1.setReaction)(objectType, objectId, reactionTypeId)).reactions;
+                        button.dataset.reactionTypeId = reactionTypeId.toString();
                         button.classList.add("active");
-                        updateReactionSummary(button.dataset.reactionObjectType, parseInt(button.dataset.objectId), response.unwrap().reactions, result.reactionTypeId);
+                        button.setAttribute("aria-pressed", "true");
                     }
+                    updateReactionSummary(objectType, objectId, reactions, reactionTypeId);
                 });
             });
         });
+    }
+    function setup() {
+        if (availableReactions.length === 1) {
+            setupToggleButton();
+        }
+        else {
+            setupPopoverButton();
+        }
     }
 });

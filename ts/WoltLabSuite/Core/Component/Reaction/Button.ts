@@ -17,6 +17,7 @@ import { createFocusTrap, FocusTrap } from "focus-trap";
 import * as UiAlignment from "WoltLabSuite/Core/Ui/Alignment";
 import * as UiScreen from "WoltLabSuite/Core/Ui/Screen";
 import UiCloseOverlay from "WoltLabSuite/Core/Ui/CloseOverlay";
+import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 
 type Result =
   | {
@@ -202,7 +203,38 @@ function updateReactionSummary(
   component?.setData(reactions, selectedReaction);
 }
 
-export function setup(): void {
+function setupToggleButton(): void {
+  wheneverFirstSeen("[data-reaction-object-type]", (button: HTMLButtonElement) => {
+    button.addEventListener(
+      "click",
+      promiseMutex(() => toggleButton(button)),
+    );
+  });
+}
+
+async function toggleButton(button: HTMLButtonElement): Promise<void> {
+  const objectId = parseInt(button.dataset.objectId!);
+  const objectType = button.dataset.reactionObjectType!;
+  let reactionTypeId: number = 0;
+  let reactions: Record<number, number>;
+
+  if (button.classList.contains("active")) {
+    reactions = (await revertReaction(objectType, objectId)).reactions;
+    button.dataset.reactionTypeId = "0";
+    button.classList.remove("active");
+    button.setAttribute("aria-pressed", "false");
+  } else {
+    reactionTypeId = availableReactions[0].reactionTypeID;
+    reactions = (await setReaction(objectType, objectId, reactionTypeId)).reactions;
+    button.dataset.reactionTypeId = reactionTypeId.toString();
+    button.classList.add("active");
+    button.setAttribute("aria-pressed", "true");
+  }
+
+  updateReactionSummary(objectType, objectId, reactions, reactionTypeId);
+}
+
+function setupPopoverButton(): void {
   const reactionPopover = new ReactionPopover();
 
   wheneverFirstSeen("[data-reaction-object-type]", (button: HTMLButtonElement) => {
@@ -225,35 +257,34 @@ export function setup(): void {
         }
 
         const oldReactionTypeId = parseInt(button.dataset.reactionTypeId!);
+        const objectId = parseInt(button.dataset.objectId!);
+        const objectType = button.dataset.reactionObjectType!;
+        let reactionTypeId: number = 0;
+        let reactions: Record<number, number>;
 
         if (result.reactionTypeId == oldReactionTypeId) {
-          const response = await revertReaction(button.dataset.reactionObjectType!, parseInt(button.dataset.objectId!));
+          reactions = (await revertReaction(objectType, objectId)).reactions;
           button.dataset.reactionTypeId = "0";
           button.classList.remove("active");
-
-          updateReactionSummary(
-            button.dataset.reactionObjectType!,
-            parseInt(button.dataset.objectId!),
-            response.unwrap().reactions,
-            result.reactionTypeId,
-          );
+          button.setAttribute("aria-pressed", "false");
         } else {
-          const response = await setReaction(
-            button.dataset.reactionObjectType!,
-            parseInt(button.dataset.objectId!),
-            result.reactionTypeId,
-          );
-          button.dataset.reactionTypeId = result.reactionTypeId.toString();
+          reactionTypeId = result.reactionTypeId;
+          reactions = (await setReaction(objectType, objectId, reactionTypeId)).reactions;
+          button.dataset.reactionTypeId = reactionTypeId.toString();
           button.classList.add("active");
-
-          updateReactionSummary(
-            button.dataset.reactionObjectType!,
-            parseInt(button.dataset.objectId!),
-            response.unwrap().reactions,
-            result.reactionTypeId,
-          );
+          button.setAttribute("aria-pressed", "true");
         }
+
+        updateReactionSummary(objectType, objectId, reactions, reactionTypeId);
       });
     });
   });
+}
+
+export function setup(): void {
+  if (availableReactions.length === 1) {
+    setupToggleButton();
+  } else {
+    setupPopoverButton();
+  }
 }
