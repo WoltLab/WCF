@@ -79,6 +79,9 @@ class ReactionPopover {
     const popoverContent = document.createElement("div");
     popoverContent.className = "reactionPopoverContent";
 
+    const popoverButtonList = document.createElement("div");
+    popoverButtonList.className = "reactionTypeButtonList";
+
     this.#getSortedReactionTypes().forEach((reactionType) => {
       const reactionTypeButton = document.createElement("button");
       reactionTypeButton.setAttribute("role", "option");
@@ -89,15 +92,22 @@ class ReactionPopover {
       reactionTypeButton.dataset.reactionTypeId = reactionType.reactionTypeID.toString();
       reactionTypeButton.dataset.isAssignable = reactionType.isAssignable.toString();
       reactionTypeButton.innerHTML = reactionType.renderedIcon;
+
+      const reactionTypeButtonTitle = document.createElement("span");
+      reactionTypeButtonTitle.className = "reactionTypeButtonTitle";
+      reactionTypeButtonTitle.innerHTML = reactionType.title;
+      reactionTypeButton.appendChild(reactionTypeButtonTitle);
+
       reactionTypeButton.addEventListener("click", () => this.#click(reactionType.reactionTypeID));
 
       if (!reactionType.isAssignable) {
         reactionTypeButton.hidden = true;
       }
 
-      popoverContent.appendChild(reactionTypeButton);
+      popoverButtonList.appendChild(reactionTypeButton);
     });
 
+    popoverContent.appendChild(popoverButtonList);
     this.#popover.appendChild(popoverContent);
 
     document.body.appendChild(this.#popover);
@@ -186,7 +196,7 @@ class ReactionPopover {
       this.#focusTrap = createFocusTrap(this.#getPopover(), {
         allowOutsideClick: true,
         escapeDeactivates: (): boolean => {
-          this.#hidePopover();
+          this.cancel();
 
           return false;
         },
