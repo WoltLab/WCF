@@ -25,6 +25,8 @@ final class DisableReactionType
             'isAssignable' => 0,
         ]);
 
+        ReactionTypeEditor::resetCache();
+
         $event = new ReactionTypeDisabled($this->reactionType);
         EventHandler::getInstance()->fire($event);
     }
