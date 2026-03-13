@@ -52,6 +52,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
             this.#popover.setAttribute("role", "listbox");
             this.#popover.setAttribute("aria-orientation", "horizontal");
             this.#popover.setAttribute("aria-label", (0, Language_1.getPhrase)("wcf.reactions.react"));
+            this.#popover.tabIndex = 0;
             const popoverContent = document.createElement("div");
             popoverContent.className = "reactionPopoverContent";
             this.#getSortedReactionTypes().forEach((reactionType) => {
@@ -59,7 +60,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
                 reactionTypeButton.setAttribute("role", "option");
                 reactionTypeButton.setAttribute("aria-selected", "false");
                 reactionTypeButton.type = "button";
-                reactionTypeButton.tabIndex = 0;
                 reactionTypeButton.className = "reactionTypeButton jsTooltip";
                 reactionTypeButton.title = reactionType.title;
                 reactionTypeButton.dataset.reactionTypeId = reactionType.reactionTypeID.toString();
@@ -77,6 +77,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
             window.addEventListener("resize", () => {
                 this.cancel();
             }, { passive: true });
+            this.#popover.addEventListener("keydown", (event) => {
+                this.#handleKeydown(event);
+            });
             Listener_1.default.trigger();
         }
         #showPopover(button) {
@@ -139,6 +142,45 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
                 });
             }
             return this.#focusTrap;
+        }
+        #handleKeydown(event) {
+            const element = event.target;
+            if (!(element instanceof HTMLElement)) {
+                return;
+            }
+            const buttons = Array.from(document.querySelectorAll('.reactionTypeButton[data-is-assignable="1"]'));
+            if (!buttons.length) {
+                return;
+            }
+            switch (event.key) {
+                case "Left":
+                case "ArrowLeft": {
+                    event.preventDefault();
+                    const index = buttons.indexOf(element);
+                    if (index - 1 >= 0) {
+                        buttons[index - 1].focus();
+                    }
+                    break;
+                }
+                case "Right":
+                case "ArrowRight": {
+                    event.preventDefault();
+                    event.preventDefault();
+                    const index = buttons.indexOf(element);
+                    if (index + 1 < buttons.length) {
+                        buttons[index + 1].focus();
+                    }
+                    break;
+                }
+                case "Home":
+                    event.preventDefault();
+                    buttons[0].focus();
+                    break;
+                case "End":
+                    event.preventDefault();
+                    buttons[buttons.length - 1].focus();
+                    break;
+            }
         }
     }
     function updateReactionSummary(objectType, objectId, cachedReactions, selectedReaction) {

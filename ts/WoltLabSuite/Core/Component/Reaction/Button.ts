@@ -74,6 +74,7 @@ class ReactionPopover {
     this.#popover.setAttribute("role", "listbox");
     this.#popover.setAttribute("aria-orientation", "horizontal");
     this.#popover.setAttribute("aria-label", getPhrase("wcf.reactions.react"));
+    this.#popover.tabIndex = 0;
 
     const popoverContent = document.createElement("div");
     popoverContent.className = "reactionPopoverContent";
@@ -83,7 +84,6 @@ class ReactionPopover {
       reactionTypeButton.setAttribute("role", "option");
       reactionTypeButton.setAttribute("aria-selected", "false");
       reactionTypeButton.type = "button";
-      reactionTypeButton.tabIndex = 0;
       reactionTypeButton.className = "reactionTypeButton jsTooltip";
       reactionTypeButton.title = reactionType.title;
       reactionTypeButton.dataset.reactionTypeId = reactionType.reactionTypeID.toString();
@@ -111,6 +111,10 @@ class ReactionPopover {
       },
       { passive: true },
     );
+
+    this.#popover.addEventListener("keydown", (event) => {
+      this.#handleKeydown(event);
+    });
 
     DomChangeListener.trigger();
   }
@@ -191,6 +195,51 @@ class ReactionPopover {
     }
 
     return this.#focusTrap;
+  }
+
+  #handleKeydown(event: KeyboardEvent): void {
+    const element = event.target;
+    if (!(element instanceof HTMLElement)) {
+      return;
+    }
+
+    const buttons = Array.from(document.querySelectorAll<HTMLElement>('.reactionTypeButton[data-is-assignable="1"]'));
+    if (!buttons.length) {
+      return;
+    }
+
+    switch (event.key) {
+      case "Left":
+      case "ArrowLeft": {
+        event.preventDefault();
+        const index = buttons.indexOf(element);
+        if (index - 1 >= 0) {
+          buttons[index - 1].focus();
+        }
+        break;
+      }
+
+      case "Right":
+      case "ArrowRight": {
+        event.preventDefault();
+        event.preventDefault();
+        const index = buttons.indexOf(element);
+        if (index + 1 < buttons.length) {
+          buttons[index + 1].focus();
+        }
+        break;
+      }
+
+      case "Home":
+        event.preventDefault();
+        buttons[0].focus();
+        break;
+
+      case "End":
+        event.preventDefault();
+        buttons[buttons.length - 1].focus();
+        break;
+    }
   }
 }
 
