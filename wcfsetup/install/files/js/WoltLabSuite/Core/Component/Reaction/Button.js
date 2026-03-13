@@ -172,7 +172,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
                 case "Right":
                 case "ArrowRight": {
                     event.preventDefault();
-                    event.preventDefault();
                     const index = buttons.indexOf(element);
                     if (index + 1 < buttons.length) {
                         buttons[index + 1].focus();

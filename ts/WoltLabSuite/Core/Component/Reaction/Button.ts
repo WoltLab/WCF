@@ -232,7 +232,6 @@ class ReactionPopover {
       case "Right":
       case "ArrowRight": {
         event.preventDefault();
-        event.preventDefault();
         const index = buttons.indexOf(element);
         if (index + 1 < buttons.length) {
           buttons[index + 1].focus();

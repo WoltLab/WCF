@@ -2,7 +2,6 @@
 
 namespace wcf\data\article;
 
-use filebase\data\license\License;
 use wcf\data\DatabaseObjectCollection;
 use wcf\data\TCollectionReactions;
 
