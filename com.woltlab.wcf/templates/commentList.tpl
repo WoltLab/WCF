@@ -103,9 +103,7 @@
 				<div class="comment__footer">
 					<div class="comment__reactions">
 						{if MODULE_LIKE && $commentManager->supportsLike() && $likeData|isset}
-							{include file="reactionSummaryList" isTiny=true reactionData=$likeData[comment] objectType="com.woltlab.wcf.comment" objectID=$comment->commentID}
-						{else}
-							<a href="#" class="reactionSummaryList reactionSummaryListTiny" data-object-type="com.woltlab.wcf.comment" data-object-id="{$comment->commentID}" title="{lang}wcf.reactions.summary.listReactions{/lang}" style="display: none;"></a>
+							{include file="reactionSummaryList" reactionData=$likeData[comment] objectType="com.woltlab.wcf.comment" objectID=$comment->commentID}
 						{/if}
 					</div>
 
@@ -122,12 +120,14 @@
 						{if MODULE_LIKE && $commentManager->supportsLike() && $__wcf->session->getPermission('user.like.canLike') && $comment->userID != $__wcf->user->userID}
 							<button
 								type="button"
-								class="comment__button comment__button--react jsTooltip button small {if $likeData[comment][$comment->commentID]|isset && $likeData[comment][$comment->commentID]->reactionTypeID} active{/if}"
+								class="reactionButton comment__button comment__button--react jsTooltip button small{if $likeData[comment][$comment->commentID]|isset && $likeData[comment][$comment->commentID]->reactionTypeID} active{/if}"
 								title="{lang}wcf.reactions.react{/lang}"
+								aria-pressed="{if $likeData[comment][$comment->commentID]|isset && $likeData[comment][$comment->commentID]->reactionTypeID}true{else}false{/if}"
 								data-reaction-type-id="{if $likeData[comment][$comment->commentID]|isset && $likeData[comment][$comment->commentID]->reactionTypeID}{$likeData[comment][$comment->commentID]->reactionTypeID}{else}0{/if}"
+								data-reaction-object-type="com.woltlab.wcf.comment"
+								data-object-id="{$comment->commentID}"
 							>
 								{icon name='face-smile'}
-								<span class="invisible">{lang}wcf.reactions.react{/lang}</span>
 							</button>
 						{/if}
 

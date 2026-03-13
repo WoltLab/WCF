@@ -14,7 +14,6 @@ import { getPhrase } from "../../Language";
 import { CommentAdd } from "./Add";
 import { CommentResponseAdd } from "./Response/Add";
 import * as UiScroll from "../../Ui/Scroll";
-import UiReactionHandler from "../../Ui/Reaction/Handler";
 
 import type WoltlabCoreCommentElement from "./woltlab-core-comment";
 import type WoltlabCoreCommentResponseElement from "./Response/woltlab-core-comment-response";
@@ -35,23 +34,6 @@ class CommentList {
     this.#initLoadNextComments();
     this.#initCommentAdd();
     this.#initHashHandling();
-    this.#initReactions();
-  }
-
-  #initReactions(): void {
-    if (this.#container.dataset.enableReactions !== "true") {
-      return;
-    }
-
-    new UiReactionHandler("com.woltlab.wcf.comment", {
-      containerSelector: `#${this.#container.id} .commentList__item`,
-      buttonSelector: ".comment__button--react",
-    });
-
-    new UiReactionHandler("com.woltlab.wcf.comment.response", {
-      containerSelector: `#${this.#container.id} .commentResponseList__item`,
-      buttonSelector: ".commentResponse__button--react",
-    });
   }
 
   #initHashHandling(): void {

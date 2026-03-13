@@ -6,14 +6,13 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/Util", "../../Helper/Selector", "../../Language", "./Add", "./Response/Add", "../../Ui/Scroll", "../../Ui/Reaction/Handler", "WoltLabSuite/Core/Api/Comments/RenderComment", "WoltLabSuite/Core/Api/Comments/RenderComments", "WoltLabSuite/Core/Api/Comments/Responses/RenderResponse", "WoltLabSuite/Core/Api/Comments/Responses/RenderResponses"], function (require, exports, tslib_1, Listener_1, Util_1, Selector_1, Language_1, Add_1, Add_2, UiScroll, Handler_1, RenderComment_1, RenderComments_1, RenderResponse_1, RenderResponses_1) {
+define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/Util", "../../Helper/Selector", "../../Language", "./Add", "./Response/Add", "../../Ui/Scroll", "WoltLabSuite/Core/Api/Comments/RenderComment", "WoltLabSuite/Core/Api/Comments/RenderComments", "WoltLabSuite/Core/Api/Comments/Responses/RenderResponse", "WoltLabSuite/Core/Api/Comments/Responses/RenderResponses"], function (require, exports, tslib_1, Listener_1, Util_1, Selector_1, Language_1, Add_1, Add_2, UiScroll, RenderComment_1, RenderComments_1, RenderResponse_1, RenderResponses_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Util_1 = tslib_1.__importDefault(Util_1);
     UiScroll = tslib_1.__importStar(UiScroll);
-    Handler_1 = tslib_1.__importDefault(Handler_1);
     class CommentList {
         #container;
         #commentResponseAdd;
@@ -24,20 +23,6 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
             this.#initLoadNextComments();
             this.#initCommentAdd();
             this.#initHashHandling();
-            this.#initReactions();
-        }
-        #initReactions() {
-            if (this.#container.dataset.enableReactions !== "true") {
-                return;
-            }
-            new Handler_1.default("com.woltlab.wcf.comment", {
-                containerSelector: `#${this.#container.id} .commentList__item`,
-                buttonSelector: ".comment__button--react",
-            });
-            new Handler_1.default("com.woltlab.wcf.comment.response", {
-                containerSelector: `#${this.#container.id} .commentResponseList__item`,
-                buttonSelector: ".commentResponse__button--react",
-            });
         }
         #initHashHandling() {
             window.addEventListener("hashchange", () => {
