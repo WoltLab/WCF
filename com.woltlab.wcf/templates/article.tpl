@@ -67,7 +67,6 @@
 
 <div
 	class="section entry article"
-	{unsafe:$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.likeableArticle', $article->articleID)}
 >
 	{if $articleContent->getImage() && $articleContent->getImage()->hasThumbnail('large')}
 		<div
@@ -122,7 +121,7 @@
 	<footer class="entry__footer">
 		{if MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canViewLike')}
 			<div class="article__reactionSummary">
-				{include file="reactionSummaryList" reactionData=$articleLikeData objectType="com.woltlab.wcf.likeableArticle" objectID=$article->articleID}
+				{include file="reactionSummary" reactionData=$article->getReactionData()}
 			</div>
 		{/if}
 		
@@ -140,15 +139,8 @@
 							{icon name='triangle-exclamation'}
 						</button>
 					{/if}
-					{if MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canLike') && $article->userID != $__wcf->user->userID}
-						<button
-							type="button"
-							class="button jsTooltip reactButton{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID} active{/if}"
-							title="{lang}wcf.reactions.react{/lang}"
-							data-reaction-type-id="{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID}{$articleLikeData[$article->articleID]->reactionTypeID}{else}0{/if}"
-						>
-							{icon name='face-smile'}
-						</button>
+					{if $article->canReact()}
+						{include file="reactionButton" reactionData=$article->getReactionData()}
 					{/if}
 					
 					{event name='articleLikeButtons'}{* deprecated: use footerButtons instead *}
@@ -263,20 +255,5 @@
 {event name='beforeComments'}
 
 {unsafe:$article->getDiscussionProvider()->renderDiscussions()}
-
-{if MODULE_LIKE && ARTICLE_ENABLE_LIKE}
-	<script data-relocate="true">
-		require(['WoltLabSuite/Core/Ui/Reaction/Handler'], function(UiReactionHandler) {
-			new UiReactionHandler('com.woltlab.wcf.likeableArticle', {
-				// permissions
-				canReact: {if $__wcf->getUser()->userID}true{else}false{/if},
-				canReactToOwnContent: false,
-				
-				// selectors
-				containerSelector: '.article',
-			});
-		});
-	</script>
-{/if}
 
 {include file='footer'}
