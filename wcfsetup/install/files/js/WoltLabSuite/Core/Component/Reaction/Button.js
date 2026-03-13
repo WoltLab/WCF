@@ -15,7 +15,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
     UiAlignment = tslib_1.__importStar(UiAlignment);
     UiScreen = tslib_1.__importStar(UiScreen);
     CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
-    const availableReactions = Object.values(window.REACTION_TYPES);
+    const availableReactions = Object.values(window.REACTION_TYPES).sort((a, b) => a.showOrder - b.showOrder);
     class ReactionPopover {
         #resolve;
         #popover;
@@ -57,7 +57,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
             popoverContent.className = "reactionPopoverContent";
             const popoverButtonList = document.createElement("div");
             popoverButtonList.className = "reactionTypeButtonList";
-            this.#getSortedReactionTypes().forEach((reactionType) => {
+            availableReactions.forEach((reactionType) => {
                 const reactionTypeButton = document.createElement("button");
                 reactionTypeButton.setAttribute("role", "option");
                 reactionTypeButton.setAttribute("aria-selected", "false");
@@ -127,9 +127,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
                 .querySelectorAll('.reactionTypeButton[data-is-assignable="0"]')
                 .forEach((button) => (button.hidden = true));
             this.#getFocusTrap().deactivate();
-        }
-        #getSortedReactionTypes() {
-            return availableReactions.sort((a, b) => a.showOrder - b.showOrder);
         }
         #getPopover() {
             if (this.#popover === undefined) {

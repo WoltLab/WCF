@@ -11,7 +11,6 @@
 import { revertReaction } from "WoltLabSuite/Core/Api/Reactions/RevertReaction";
 import { setReaction } from "WoltLabSuite/Core/Api/Reactions/SetReaction";
 import { wheneverFirstSeen } from "WoltLabSuite/Core/Helper/Selector";
-import { Reaction } from "WoltLabSuite/Core/Ui/Reaction/Data";
 import DomChangeListener from "WoltLabSuite/Core/Dom/Change/Listener";
 import { createFocusTrap, FocusTrap } from "focus-trap";
 import * as UiAlignment from "WoltLabSuite/Core/Ui/Alignment";
@@ -29,7 +28,7 @@ type Result =
       ok: false;
     };
 
-const availableReactions = Object.values(window.REACTION_TYPES);
+const availableReactions = Object.values(window.REACTION_TYPES).sort((a, b) => a.showOrder - b.showOrder);
 
 class ReactionPopover {
   #resolve?: (value: Result) => void;
@@ -82,7 +81,7 @@ class ReactionPopover {
     const popoverButtonList = document.createElement("div");
     popoverButtonList.className = "reactionTypeButtonList";
 
-    this.#getSortedReactionTypes().forEach((reactionType) => {
+    availableReactions.forEach((reactionType) => {
       const reactionTypeButton = document.createElement("button");
       reactionTypeButton.setAttribute("role", "option");
       reactionTypeButton.setAttribute("aria-selected", "false");
@@ -177,10 +176,6 @@ class ReactionPopover {
       .forEach((button: HTMLButtonElement) => (button.hidden = true));
 
     this.#getFocusTrap().deactivate();
-  }
-
-  #getSortedReactionTypes(): Reaction[] {
-    return availableReactions.sort((a, b) => a.showOrder - b.showOrder);
   }
 
   #getPopover(): HTMLElement {
