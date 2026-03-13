@@ -25,6 +25,8 @@ final class EnableStyle
             'isDisabled' => 0,
         ]);
 
+        StyleEditor::resetCache();
+
         $event = new StyleEnabled($this->style);
         EventHandler::getInstance()->fire($event);
     }

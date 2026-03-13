@@ -25,6 +25,8 @@ final class EnablePaidSubscription
             'isDisabled' => 0,
         ]);
 
+        PaidSubscriptionEditor::resetCache();
+
         $event = new PaidSubscriptionEnabled($this->subscription);
         EventHandler::getInstance()->fire($event);
     }

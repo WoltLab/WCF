@@ -25,6 +25,8 @@ final class DisablePage
             'isDisabled' => 1,
         ]);
 
+        PageEditor::resetCache();
+
         $event = new PageDisabled($this->page);
         EventHandler::getInstance()->fire($event);
     }

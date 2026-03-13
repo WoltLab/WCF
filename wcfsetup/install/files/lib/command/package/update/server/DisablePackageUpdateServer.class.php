@@ -25,6 +25,8 @@ final class DisablePackageUpdateServer
             'isDisabled' => 1,
         ]);
 
+        PackageUpdateServerEditor::resetCache();
+
         $event = new PackageUpdateServerDisabled($this->server);
         EventHandler::getInstance()->fire($event);
     }

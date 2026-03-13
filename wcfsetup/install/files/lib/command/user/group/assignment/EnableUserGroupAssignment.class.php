@@ -25,6 +25,8 @@ final class EnableUserGroupAssignment
             'isDisabled' => 0,
         ]);
 
+        UserGroupAssignmentEditor::resetCache();
+
         $event = new UserGroupAssignmentEnabled($this->assignment);
         EventHandler::getInstance()->fire($event);
     }

@@ -26,6 +26,8 @@ final class DisableCronjob implements IPsr14Event
             'isDisabled' => 1,
         ]);
 
+        CronjobEditor::resetCache();
+
         $event = new CronjobDisabled($this->cronjob);
         EventHandler::getInstance()->fire($event);
     }

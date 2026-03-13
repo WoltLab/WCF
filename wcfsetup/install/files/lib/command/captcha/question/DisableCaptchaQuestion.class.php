@@ -27,6 +27,8 @@ final class DisableCaptchaQuestion
             'isDisabled' => 1,
         ]);
 
+        CaptchaQuestionEditor::resetCache();
+
         $event = new CaptchaQuestionDisabled($this->captchaQuestion);
         EventHandler::getInstance()->fire($event);
     }

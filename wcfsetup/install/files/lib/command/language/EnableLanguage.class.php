@@ -25,6 +25,8 @@ final class EnableLanguage
             'isDisabled' => 0,
         ]);
 
+        LanguageEditor::resetCache();
+
         $event = new LanguageEnabled($this->language);
         EventHandler::getInstance()->fire($event);
     }

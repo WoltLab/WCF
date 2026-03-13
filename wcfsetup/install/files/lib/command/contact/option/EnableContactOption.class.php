@@ -27,6 +27,8 @@ final class EnableContactOption
             'isDisabled' => 0,
         ]);
 
+        ContactOptionEditor::resetCache();
+
         $event = new ContactOptionEnabled($this->contactOption);
         EventHandler::getInstance()->fire($event);
     }

@@ -29,6 +29,8 @@ final class DisableTrophy
             'isDisabled' => 1,
         ]);
 
+        TrophyEditor::resetCache();
+
         $this->deleteSpecialTrophies($this->trophy->trophyID);
         $this->updateTrophyPoints($this->trophy->trophyID);
         $this->resetUserStorage();

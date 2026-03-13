@@ -25,6 +25,8 @@ final class EnablePage
             'isDisabled' => 0,
         ]);
 
+        PageEditor::resetCache();
+
         $event = new PageEnabled($this->page);
         EventHandler::getInstance()->fire($event);
     }

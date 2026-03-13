@@ -25,6 +25,8 @@ final class DisableBBCodeMediaProvider
             'isDisabled' => 1,
         ]);
 
+        BBCodeMediaProviderEditor::resetCache();
+
         $event = new BBCodeMediaProviderDisabled($this->mediaProvider);
         EventHandler::getInstance()->fire($event);
     }

@@ -18,12 +18,14 @@ use wcf\system\event\EventHandler;
 final class DisableNotice
 {
     public function __construct(private readonly Notice $notice) {}
-    
+
     public function __invoke(): void
     {
         (new NoticeEditor($this->notice))->update([
             'isDisabled' => 1,
         ]);
+
+        NoticeEditor::resetCache();
 
         $event = new NoticeDisabled($this->notice);
         EventHandler::getInstance()->fire($event);

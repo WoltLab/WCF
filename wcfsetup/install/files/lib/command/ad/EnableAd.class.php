@@ -27,6 +27,8 @@ final class EnableAd
             'isDisabled' => 0,
         ]);
 
+        AdEditor::resetCache();
+
         $event = new AdEnabled($this->ad);
         EventHandler::getInstance()->fire($event);
     }

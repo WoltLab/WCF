@@ -25,6 +25,8 @@ final class EnableNotice
             'isDisabled' => 0,
         ]);
 
+        NoticeEditor::resetCache();
+
         $event = new NoticeEnabled($this->notice);
         EventHandler::getInstance()->fire($event);
     }
