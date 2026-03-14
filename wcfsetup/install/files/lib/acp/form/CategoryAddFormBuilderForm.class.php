@@ -23,6 +23,7 @@ use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\acl\AclFormField;
 use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\ShowOrderFormField;
@@ -243,6 +244,23 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
             $categoryNodeTree->setMaxDepth($maximumNestingLevel - 1);
         }
 
+        $positionFormField = null;
+        if ($maximumNestingLevel === 0) {
+            $positionFormField = ShowOrderFormField::create()
+                ->description($processor->getLanguageVariable('showOrder.description', true))
+                ->options($categoryNodeTree, true)
+                ->nullable()
+                ->required();
+        } else {
+            // Provide a simple integer input instead because we cannot
+            // dynamically filter the list of categories in the position field.
+            $positionFormField = IntegerFormField::create('showOrder')
+                ->label('wcf.form.field.showOrder')
+                ->description($processor->getLanguageVariable('showOrder.description', true))
+                ->minimum(0)
+                ->required();
+        }
+
         return [
             SelectFormField::create('parentCategoryID')
                 ->label($processor->getLanguageVariable('parentCategoryID'))
@@ -336,11 +354,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
                         }
                     )
                 ),
-            ShowOrderFormField::create()
-                ->description($processor->getLanguageVariable('showOrder.description', true))
-                ->options($categoryNodeTree, true)
-                ->nullable()
-                ->required(),
+            $positionFormField,
         ];
     }
 
