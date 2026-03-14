@@ -5,25 +5,22 @@ namespace wcf\data\like\object;
 use wcf\data\DatabaseObject;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\reaction\type\ReactionTypeCache;
-use wcf\data\user\User;
 use wcf\system\WCF;
 
 /**
  * Represents a liked object.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @property-read   int     $likeObjectID       unique id of the liked object
  * @property-read   int     $objectTypeID       id of the `com.woltlab.wcf.like.likeableObject` object type
  * @property-read   int     $objectID           id of the liked object
  * @property-read   ?int    $objectUserID       id of the user who created the liked object or null if user has been deleted or object was created by guest
  * @property-read   int     $likes              number of likes of the liked object
- * @property-read   int     $dislikes           legacy column, not used anymore
- * @property-read   int     $cumulativeLikes    number of likes of the liked object
- * @property-read   ?string $cachedUsers        serialized array with the ids and names of the three users who liked (+1) the object last
- * @property-read   ?string $cachedReactions    serialized array with the reactionTypeIDs and the count of the reactions
+ * @property-read   int     $cumulativeLikes    number of likes of the liked object (copy of $likes)
+ * @property-read   ?string $cachedReactions    JSON array with the reactionTypeIDs and the count of the reactions
  * @property-read   int     $reactionTypeID
  * @phpstan-type ReactionData array{
  *  reactionCount: int,
@@ -39,17 +36,7 @@ class LikeObject extends DatabaseObject
      */
     protected static $databaseTableIndexName = 'likeObjectID';
 
-    /**
-     * liked object
-     * @var ILikeObject
-     */
-    protected $likedObject;
-
-    /**
-     * list of users who liked this object
-     * @var User[]
-     */
-    protected $users = [];
+    protected ?ILikeObject $likedObject = null;
 
     /**
      * An array with all reaction types, which were received for the object. As key, the reactionTypeID
@@ -57,36 +44,16 @@ class LikeObject extends DatabaseObject
      * an empty array is returned.
      * @var array<int, ReactionData>
      */
-    protected $reactions = [];
+    protected array $reactions = [];
 
-    /**
-     * The reputation for the current object.
-     * @var int
-     */
-    protected $reputation;
-
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleData($data)
     {
         parent::handleData($data);
 
         // get user objects from cache
-        if (!empty($data['cachedUsers'])) {
-            $cachedUsers = @\unserialize($data['cachedUsers']);
-
-            if (\is_array($cachedUsers)) {
-                foreach ($cachedUsers as $cachedUserData) {
-                    $user = new User(null, $cachedUserData);
-                    $this->users[$user->userID] = $user;
-                }
-            }
-        }
-
-        // get user objects from cache
         if (!empty($data['cachedReactions'])) {
-            $cachedReactions = @\unserialize($data['cachedReactions']);
+            $cachedReactions = \json_decode($data['cachedReactions'], true, flags: \JSON_THROW_ON_ERROR);
 
             if (\is_array($cachedReactions)) {
                 foreach ($cachedReactions as $reactionTypeID => $reactionCount) {
@@ -104,44 +71,12 @@ class LikeObject extends DatabaseObject
                 }
             }
         }
+
+        // Old property that is set for backward compatibility reasons.
+        $this->data['dislikes'] = 0;
     }
 
-    /**
-     * Since version 5.2, this method returns all reactionCounts for the different reactionTypes,
-     * instead of the user (as the method name suggests). This behavior is intentional and helps
-     * to establish backward compatibility.
-     *
-     * @return mixed[]
-     * @deprecated since 5.2
-     */
-    public function getUsers()
-    {
-        $returnValues = [];
-
-        foreach ($this->getReactions() as $reactionID => $reaction) {
-            $returnValues[] = (object)[
-                'userID' => $reactionID,
-                'username' => $reaction['reactionCount'],
-            ];
-        }
-
-        // this value is only set, if the object was loaded over the ReactionHandler::loadLikeObjects()
-        if ($this->reactionTypeID) {
-            $returnValues[] = (object)[
-                'userID' => 'reactionTypeID',
-                'username' => $this->reactionTypeID,
-            ];
-        }
-
-        return $returnValues;
-    }
-
-    /**
-     * Returns the liked object.
-     *
-     * @return ILikeObject
-     */
-    public function getLikedObject()
+    public function getLikedObject(): ?ILikeObject
     {
         if ($this->likedObject === null) {
             $this->likedObject = ObjectTypeCache::getInstance()
@@ -159,7 +94,7 @@ class LikeObject extends DatabaseObject
      * @return array<int, ReactionData>
      * @since 5.2
      */
-    public function getReactions()
+    public function getReactions(): array
     {
         return $this->reactions;
     }
@@ -181,23 +116,23 @@ class LikeObject extends DatabaseObject
     }
 
     /**
-     * Sets the liked object.
-     *
-     * @return void
+     * @return array<int, int>
+     * @since 6.3
      */
-    public function setLikedObject(ILikeObject $likedObject)
+    public function getCachedReactions(): array
     {
-        $this->likedObject = $likedObject;
+        $data = [];
+        foreach ($this->reactions as $reactionTypeID => $value) {
+            $data[$reactionTypeID] = $value['reactionCount'];
+        }
+
+        return $data;
     }
 
     /**
      * Returns the like object with the given type and object id.
-     *
-     * @param int $objectTypeID
-     * @param int $objectID
-     * @return  LikeObject
      */
-    public static function getLikeObject($objectTypeID, $objectID)
+    public static function getLikeObject(int $objectTypeID, int $objectID): LikeObject
     {
         $sql = "SELECT  *
                 FROM    wcf1_like_object

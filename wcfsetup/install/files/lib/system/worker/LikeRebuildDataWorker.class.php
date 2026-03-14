@@ -48,7 +48,6 @@ final class LikeRebuildDataWorker extends AbstractLinearRebuildDataWorker
             // reset like object data
             $sql = "UPDATE  wcf1_like_object
                     SET     likes = 0,
-                            dislikes = 0,
                             cumulativeLikes = 0,
                             cachedReactions = NULL";
             $statement = WCF::getDB()->prepare($sql);
@@ -113,7 +112,7 @@ final class LikeRebuildDataWorker extends AbstractLinearRebuildDataWorker
             $condition = new PreparedStatementConditionBuilder();
             $condition->add('objectTypeID = ?', [$objectTypeID]);
             $condition->add('objectID IN (?)', [\array_keys($objects)]);
-            $sql = "SELECT  objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes, cachedReactions
+            $sql = "SELECT  objectTypeID, objectID, objectUserID, likes, cumulativeLikes, cachedReactions
                     FROM    wcf1_like_object
                     " . $condition;
             $objectStatement = WCF::getDB()->prepare($sql);
@@ -124,14 +123,13 @@ final class LikeRebuildDataWorker extends AbstractLinearRebuildDataWorker
         }
 
         $sql = "INSERT INTO wcf1_like_object
-                            (objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes, cachedReactions)
-                VALUES      (?, ?, ?, ?, ?, ?, ?)";
+                            (objectTypeID, objectID, objectUserID, likes, cumulativeLikes, cachedReactions)
+                VALUES      (?, ?, ?, ?, ?, ?)";
         $insertStatement = WCF::getDB()->prepare($sql);
 
         $sql = "UPDATE  wcf1_like_object
                 SET     objectUserID = ?,
                         likes = ?,
-                        dislikes = 0,
                         cumulativeLikes = ?,
                         cachedReactions = ?
                 WHERE   objectTypeID = ?
@@ -148,12 +146,10 @@ final class LikeRebuildDataWorker extends AbstractLinearRebuildDataWorker
                         $data['objectUserID'],
                         $existingRow['likes'] + $data['likes'],
                         $existingRow['cumulativeLikes'] + $data['cumulativeLikes'],
-                        \serialize(
-                            $this->mergeCachedReactions(
-                                @\unserialize($existingRow['cachedReactions']),
-                                $data['cachedReactions']
-                            )
-                        ),
+                        \json_encode($this->mergeCachedReactions(
+                            $existingRow['cachedReactions'] ? \json_decode($existingRow['cachedReactions'], true, flags: \JSON_THROW_ON_ERROR) : null,
+                            $data['cachedReactions']
+                        ), \JSON_THROW_ON_ERROR),
                         $objectTypeID,
                         $objectID,
                     ]);
@@ -163,9 +159,8 @@ final class LikeRebuildDataWorker extends AbstractLinearRebuildDataWorker
                         $objectID,
                         $data['objectUserID'],
                         $data['likes'],
-                        0,
                         $data['cumulativeLikes'],
-                        \serialize($data['cachedReactions']),
+                        \json_encode($data['cachedReactions'], \JSON_THROW_ON_ERROR)
                     ]);
                 }
             }
@@ -176,11 +171,11 @@ final class LikeRebuildDataWorker extends AbstractLinearRebuildDataWorker
     /**
      * Merges two cached reaction objects into one object.
      *
-     * @param int[]|null $oldCachedReactions
-     * @param int[] $newCachedReactions
-     * @return int[]
+     * @param ?array<int, int> $oldCachedReactions
+     * @param array<int, int> $newCachedReactions
+     * @return array<int, int>
      */
-    private function mergeCachedReactions($oldCachedReactions, array $newCachedReactions)
+    private function mergeCachedReactions(?array $oldCachedReactions, array $newCachedReactions): array
     {
         if (!\is_array($oldCachedReactions)) {
             $oldCachedReactions = [];

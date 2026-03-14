@@ -9,8 +9,11 @@
  */
 
 use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
+use wcf\system\database\table\column\JsonDatabaseTableColumn;
+use wcf\system\database\table\column\MediumintDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
 use wcf\system\database\table\column\SmallintDatabaseTableColumn;
+use wcf\system\database\table\column\TextDatabaseTableColumn;
 use wcf\system\database\table\PartialDatabaseTable;
 
 return [
@@ -25,4 +28,14 @@ return [
                 ->notNull()
                 ->defaultValue(1),
         ]),
+    PartialDatabaseTable::create('wcf1_like_object')
+        ->columns([
+            TextDatabaseTableColumn::create('cachedUsers')
+                ->drop(),
+            MediumintDatabaseTableColumn::create('dislikes')
+                ->notNull()
+                ->defaultValue(0)
+                ->drop(),
+            JsonDatabaseTableColumn::create('cachedReactions'),
+        ])
 ];

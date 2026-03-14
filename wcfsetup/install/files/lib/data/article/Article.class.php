@@ -34,7 +34,7 @@ use wcf\system\WCF;
  * @property-read   int     $publicationDate    timestamp at which the article will be automatically published or `0` if it has already been published
  * @property-read   0|1     $enableComments     is `1` if comments are enabled for the article, otherwise `0`
  * @property-read   int     $views              number of times the article has been viewed
- * @property-read   int     $cumulativeLikes    cumulative result of likes (counting `+1`) and dislikes (counting `-1`) for the article
+ * @property-read   int     $cumulativeLikes    cumulative result of likes for the article
  * @property-read   int     $attachments        number of attachments in the article descriptions
  * @property-read   0|1     $isDeleted          is 1 if the article is in trash bin, otherwise 0
  * @property-read   0|1     $hasLabels          is `1` if labels are assigned to the article

@@ -10,10 +10,10 @@ use wcf\event\comment\CommentsDeleted;
 use wcf\system\comment\CommentHandler;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\command\comment\response\DeleteResponses;
+use wcf\command\reaction\DeleteObjectReactions;
 use wcf\system\event\EventHandler;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\moderation\queue\ModerationQueueManager;
-use wcf\system\reaction\ReactionHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\UserNotificationHandler;
 
@@ -89,13 +89,13 @@ final class DeleteComments
 
     private function deleteReactions(): void
     {
-        ReactionHandler::getInstance()->removeReactions(
+        (new DeleteObjectReactions(
             'com.woltlab.wcf.comment',
             $this->commentIDs,
             UserNotificationHandler::getInstance()->getObjectTypeID($this->objectType->objectType . '.like.notification')
                 ? [$this->objectType->objectType . '.like.notification']
                 : []
-        );
+        ))();
     }
 
     private function deleteResponses(): void
