@@ -1,6 +1,6 @@
 <button
 	type="button"
-	class="reactionButton jsTooltip button{if $reactionData->reactionTypeID} active{/if}"
+	class="reactionButton jsTooltip button small{if $reactionData->reactionTypeID} active{/if}"
 	title="{lang}wcf.reactions.react{/lang}"
 	aria-pressed="{if $reactionData->reactionTypeID}true{else}false{/if}"
 	data-reaction-type-id="{$reactionData->reactionTypeID}"
