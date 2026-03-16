@@ -163,4 +163,18 @@ class AbstractCommentResponseModerationQueueHandler extends AbstractCommentComme
             $responseAction->executeAction();
         }
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function canRemoveContent(ModerationQueue $queue)
+    {
+        if ($this->isValid($queue->objectID)) {
+            $response = $this->getResponse($queue->objectID);
+
+            return $this->getCommentManager($response->getComment())->canDeleteResponse($response);
+        }
+
+        return false;
+    }
 }
