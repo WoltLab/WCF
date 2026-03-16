@@ -150,6 +150,20 @@ class ConfirmationPrefab {
 
     dialog.content.append(dl);
 
+    if (!isOptional) {
+      dialog.addEventListener("validate", (event) => {
+        if (reason.value.trim() === "") {
+          event.preventDefault();
+
+          dl.classList.add("formError");
+          DomUtil.innerError(reason, getPhrase("wcf.global.form.error.empty"));
+        } else {
+          dl.classList.remove("formError");
+          DomUtil.innerError(reason, false);
+        }
+      });
+    }
+
     dialog.show(question);
 
     return new Promise<ResultConfirmationWithReason>((resolve) => {

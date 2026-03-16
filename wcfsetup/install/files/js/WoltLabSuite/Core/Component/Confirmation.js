@@ -117,6 +117,19 @@ define(["require", "exports", "tslib", "./Dialog", "../Language", "../Dom/Util",
     `;
             const reason = dl.querySelector("textarea");
             dialog.content.append(dl);
+            if (!isOptional) {
+                dialog.addEventListener("validate", (event) => {
+                    if (reason.value.trim() === "") {
+                        event.preventDefault();
+                        dl.classList.add("formError");
+                        DomUtil.innerError(reason, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
+                    }
+                    else {
+                        dl.classList.remove("formError");
+                        DomUtil.innerError(reason, false);
+                    }
+                });
+            }
             dialog.show(question);
             return new Promise((resolve) => {
                 dialog.addEventListener("primary", () => {
