@@ -147,6 +147,20 @@ class AbstractCommentCommentModerationQueueHandler extends AbstractModerationQue
     /**
      * @inheritDoc
      */
+    public function canRemoveContent(ModerationQueue $queue)
+    {
+        if ($this->isValid($queue->objectID)) {
+            $comment = $this->getComment($queue->objectID);
+
+            return $this->getCommentManager($comment)->canDeleteComment($comment);
+        }
+
+        return false;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function removeContent(ModerationQueue $queue, $message)
     {
         if ($this->isValid($queue->objectID)) {

@@ -190,4 +190,18 @@ class AbstractCommentResponseModerationQueueHandler extends AbstractCommentComme
             UserProfileRuntimeCache::getInstance()->getObject($userID)
         );
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function canRemoveContent(ModerationQueue $queue)
+    {
+        if ($this->isValid($queue->objectID)) {
+            $response = $this->getResponse($queue->objectID);
+
+            return $this->getCommentManager($response->getComment())->canDeleteResponse($response);
+        }
+
+        return false;
+    }
 }
