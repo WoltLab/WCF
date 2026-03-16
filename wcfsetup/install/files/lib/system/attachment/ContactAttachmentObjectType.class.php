@@ -67,14 +67,6 @@ class ContactAttachmentObjectType extends AbstractAttachmentObjectType
     /**
      * @inheritDoc
      */
-    public function canViewPreview($objectID)
-    {
-        return $this->canDownload($objectID);
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function canUpload($objectID, $parentObjectID = 0)
     {
         if (!CONTACT_FORM_ENABLE_ATTACHMENTS) {

@@ -50,14 +50,6 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType
     /**
      * @inheritDoc
      */
-    public function canViewPreview($objectID)
-    {
-        return $this->canDownload($objectID);
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function canUpload($objectID, $parentObjectID = 0)
     {
         if (!MODULE_USER_SIGNATURE) {
