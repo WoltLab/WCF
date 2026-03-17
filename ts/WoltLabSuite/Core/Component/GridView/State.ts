@@ -69,9 +69,11 @@ export class State extends EventTarget {
       this.#updateGridViewFooter();
     });
 
-    window.addEventListener("popstate", () => {
-      this.#handlePopState();
-    });
+    if (this.#baseUrl) {
+      window.addEventListener("popstate", () => {
+        this.#handlePopState();
+      });
+    }
 
     this.#updatePaginationUrl();
     this.#updateGridViewFooter();
