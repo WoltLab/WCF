@@ -1519,7 +1519,6 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime.description"><![CDATA[Profile visitors will be removed after the following days.]]></item>
 		<item name="wcf.acp.option.category.message.general.likes"><![CDATA[Reactions]]></item>
 		<item name="wcf.acp.option.module_like"><![CDATA[Reactions]]></item>
-		<item name="wcf.acp.option.like_show_summary"><![CDATA[Display reaction summary]]></item>
 		<item name="wcf.acp.option.module_user_profile_wall"><![CDATA[User profile wall]]></item>
 		<item name="wcf.acp.option.category.message.sidebar"><![CDATA[Sidebar]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_online_status"><![CDATA[Display author’s online status]]></item>

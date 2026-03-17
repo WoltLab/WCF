@@ -271,7 +271,6 @@
 				// permissions
 				canReact: {if $__wcf->getUser()->userID}true{else}false{/if},
 				canReactToOwnContent: false,
-				canViewReactions: {if LIKE_SHOW_SUMMARY}true{else}false{/if},
 				
 				// selectors
 				containerSelector: '.article',
