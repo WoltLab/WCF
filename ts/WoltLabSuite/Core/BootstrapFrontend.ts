@@ -20,6 +20,7 @@ import { whenFirstSeen } from "./LazyLoader";
 import { prepareRequest } from "./Ajax/Backend";
 import { setup as serviceWorkerSetup } from "./Notification/ServiceWorker";
 import { getArticlePopover } from "./Api/Articles/GetArticlePopover";
+import { getUserPopover } from "./Api/Users/GetUserPopover";
 
 interface BootstrapOptions {
   backgroundQueue: {
@@ -33,7 +34,6 @@ interface BootstrapOptions {
     notificationLastReadTime: number;
   };
   dynamicColorScheme: boolean;
-  endpointUserPopover: string;
   executeCronjobs: string | undefined;
   shareButtonProviders?: ShareProvider[];
   styleChanger: boolean;
@@ -45,15 +45,11 @@ interface BootstrapOptions {
 /**
  * Initializes user profile popover.
  */
-function setupUserPopover(endpoint: string): void {
-  if (endpoint === "") {
-    return;
-  }
-
+function setupUserPopover(): void {
   whenFirstSeen(".userLink", () => {
     void import("./Component/Popover").then(({ setupFor }) => {
       setupFor({
-        endpoint,
+        endpoint: (objectId) => getUserPopover(objectId).then((response) => response.template),
         identifier: "com.woltlab.wcf.user",
         selector: ".userLink",
       });
@@ -109,7 +105,7 @@ export function setup(options: BootstrapOptions): void {
     });
   }
 
-  setupUserPopover(options.endpointUserPopover);
+  setupUserPopover();
   setupArticlePopover();
 
   if (options.executeCronjobs !== undefined) {
