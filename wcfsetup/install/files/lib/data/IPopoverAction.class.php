@@ -9,6 +9,7 @@ namespace wcf\data;
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.3
+ * @deprecated 6.3 No longer in use.
  */
 interface IPopoverAction
 {
