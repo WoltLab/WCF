@@ -9,6 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\http\Helper;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
@@ -23,6 +24,10 @@ final class UserPopoverAction implements RequestHandlerInterface
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        if (!WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
+            throw new PermissionDeniedException();
+        }
+
         $parameters = Helper::mapQueryParameters(
             $request->getQueryParams(),
             <<<'EOT'
