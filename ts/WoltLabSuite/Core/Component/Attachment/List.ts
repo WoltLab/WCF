@@ -71,6 +71,7 @@ export function setup(editorId: string): void {
         .map((file) => file.data?.attachmentID)
         .filter((attachmentID) => attachmentID !== undefined);
       const context = JSON.parse(uploadButton.dataset.context!);
+      delete context.showOrder;
 
       await postObject(`${window.WSC_RPC_API_URL}core/attachments/show-order`, { ...context, attachmentIDs });
     }),

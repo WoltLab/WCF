@@ -55,6 +55,7 @@ define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Messa
                     .map((file) => file.data?.attachmentID)
                     .filter((attachmentID) => attachmentID !== undefined);
                 const context = JSON.parse(uploadButton.dataset.context);
+                delete context.showOrder;
                 await (0, PostObject_1.postObject)(`${window.WSC_RPC_API_URL}core/attachments/show-order`, { ...context, attachmentIDs });
             }),
         });

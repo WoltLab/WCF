@@ -46,9 +46,11 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "./F
             this.#selection.addEventListener("list-view:update-selection", () => {
                 this.#updateListViewFooter();
             });
-            window.addEventListener("popstate", () => {
-                this.#handlePopState();
-            });
+            if (this.#baseUrl) {
+                window.addEventListener("popstate", () => {
+                    this.#handlePopState();
+                });
+            }
             (0, Selector_1.wheneverFirstSeen)(`#${viewId}_items .listView__item__markAsRead`, (button) => {
                 button.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(async () => {
                     await (0, PostObject_1.postObject)(button.dataset.endpoint);

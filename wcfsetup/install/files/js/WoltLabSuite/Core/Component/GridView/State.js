@@ -46,9 +46,11 @@ define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], 
             this.#selection.addEventListener("grid-view:update-selection", () => {
                 this.#updateGridViewFooter();
             });
-            window.addEventListener("popstate", () => {
-                this.#handlePopState();
-            });
+            if (this.#baseUrl) {
+                window.addEventListener("popstate", () => {
+                    this.#handlePopState();
+                });
+            }
             this.#updatePaginationUrl();
             this.#updateGridViewFooter();
         }

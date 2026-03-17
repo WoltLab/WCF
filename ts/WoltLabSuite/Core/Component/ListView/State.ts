@@ -78,9 +78,11 @@ export class State extends EventTarget {
       this.#updateListViewFooter();
     });
 
-    window.addEventListener("popstate", () => {
-      this.#handlePopState();
-    });
+    if (this.#baseUrl) {
+      window.addEventListener("popstate", () => {
+        this.#handlePopState();
+      });
+    }
 
     wheneverFirstSeen(`#${viewId}_items .listView__item__markAsRead`, (button: HTMLButtonElement) => {
       button.addEventListener(
