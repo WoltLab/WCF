@@ -48,7 +48,7 @@ define(["require", "exports", "tslib", "../../Dom/Util"], function (require, exp
         getElements(type, items) {
             const elements = [];
             items.forEach((item) => {
-                let element = null;
+                let element;
                 if (typeof item === "string") {
                     element = document.querySelector(item);
                     if (element === null) {

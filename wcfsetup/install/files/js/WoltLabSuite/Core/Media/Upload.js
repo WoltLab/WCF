@@ -27,6 +27,7 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                 multiple: options.mediaManager ? true : false,
                 singleFileRequests: true,
             }, options || {}));
+            // eslint-disable-next-line no-useless-assignment
             options = options || {};
             this._elementTagSize = 144;
             if (this._options.elementTagSize) {

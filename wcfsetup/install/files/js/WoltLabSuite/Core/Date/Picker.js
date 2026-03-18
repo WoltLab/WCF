@@ -800,7 +800,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
             const data = _data.get(element);
             element.dataset.value = date.getTime().toString();
             element.dataset.empty = "false";
-            let format = "";
+            let format;
             let value;
             if (data.isDateTime) {
                 if (data.isTimeOnly) {
