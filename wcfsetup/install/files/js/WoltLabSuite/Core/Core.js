@@ -28,7 +28,6 @@ define(["require", "exports"], function (require, exports) {
         }
         return variable;
     };
-    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
     const _cloneObject = function (obj) {
         if (!obj) {
             return null;
@@ -44,7 +43,6 @@ define(["require", "exports"], function (require, exports) {
     /**
      * Deep clones an object.
      */
-    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
     function clone(obj) {
         return _clone(obj);
     }

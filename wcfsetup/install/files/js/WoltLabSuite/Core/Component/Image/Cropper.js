@@ -71,6 +71,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Image/Resizer", "WoltL
             const { image, exif } = await this.resizer.loadFile(this.file);
             this.image = image;
             this.exif = exif;
+            // eslint-disable-next-line @typescript-eslint/await-thenable
             const tags = await exifreader_1.default.load(this.file);
             if (tags.Orientation) {
                 switch (tags.Orientation.value) {

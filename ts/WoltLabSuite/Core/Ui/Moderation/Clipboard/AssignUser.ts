@@ -36,7 +36,7 @@ class UiModerationClipboardAssignUser implements AjaxCallbackObject, DialogCallb
 
   public _ajaxFailure(data: ResponseData): boolean {
     if (data.returnValues?.fieldName === "assignedUsername") {
-      let errorMessage = "";
+      let errorMessage: string;
 
       const dialog = UiDialog.getDialog(this)!.content;
       const assignedUsername = dialog.querySelector("input[name=assignedUsername]") as HTMLInputElement;

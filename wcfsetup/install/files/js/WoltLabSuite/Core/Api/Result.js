@@ -80,7 +80,7 @@ define(["require", "exports", "../Ajax/Error", "../Component/Dialog", "../Core",
         }
     }
     function showErrorDialog(apiError) {
-        let html = "";
+        let html;
         if ((!window.ENABLE_DEBUG_MODE && apiError.code === "permission_denied") || apiError.code === "assertion_failed") {
             html = (0, Language_1.getPhrase)(apiError.code === "permission_denied" ? "wcf.ajax.error.permissionDenied" : "wcf.ajax.error.illegalLink");
         }

@@ -44,6 +44,7 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
       ),
     );
 
+    // eslint-disable-next-line no-useless-assignment
     options = options || {};
 
     this._elementTagSize = 144;

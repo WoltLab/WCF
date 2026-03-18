@@ -27,7 +27,7 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../../User"
         queueIds = [];
         _ajaxFailure(data) {
             if (data.returnValues?.fieldName === "assignedUsername") {
-                let errorMessage = "";
+                let errorMessage;
                 const dialog = Dialog_1.default.getDialog(this).content;
                 const assignedUsername = dialog.querySelector("input[name=assignedUsername]");
                 const errorType = data.returnValues.errorType;

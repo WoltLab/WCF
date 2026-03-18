@@ -105,7 +105,7 @@ export async function fromInfallibleApiRequest<T = unknown>(request: () => Promi
 }
 
 function showErrorDialog(apiError: ApiError): void {
-  let html = "";
+  let html: string;
   if ((!window.ENABLE_DEBUG_MODE && apiError.code === "permission_denied") || apiError.code === "assertion_failed") {
     html = getPhrase(
       apiError.code === "permission_denied" ? "wcf.ajax.error.permissionDenied" : "wcf.ajax.error.illegalLink",

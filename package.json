@@ -4,9 +4,11 @@
     "bundle-web-components": "npx esbuild ts/WoltLabSuite/WebComponent/index.ts --minify --bundle --watch --outfile=wcfsetup/install/files/js/WoltLabSuite/WebComponent.min.js"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^8.57.0",
-    "@typescript-eslint/parser": "^8.57.0",
-    "esbuild": "^0.27.3",
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^10.0.1",
+    "@typescript-eslint/eslint-plugin": "^8.57.1",
+    "@typescript-eslint/parser": "^8.57.1",
+    "esbuild": "^0.27.4",
     "eslint": "^10.0.3",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.8.1",
@@ -29,7 +31,7 @@
     "@woltlab/visual-dom-diff": "git+https://github.com/WoltLab/visual-dom-diff.git#e5b51fce3157d1eda310566fc1f86101341d1fea",
     "@woltlab/zxcvbn": "git+https://github.com/WoltLab/zxcvbn.git#5b582b24e437f1883ccad3c37dae7c3c5f1e7da3",
     "cropperjs": "2.1.0",
-    "exifreader": "^4.36.2",
+    "exifreader": "^4.37.0",
     "focus-trap": "^8.0.0",
     "hash-wasm": "^4.12.0",
     "html-parsed-element": "^0.4.1",
