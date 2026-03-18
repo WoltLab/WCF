@@ -100,6 +100,10 @@ class MessageEmbeddedObjectManager extends SingletonFactory
         $messageObjectTypeID = $context['objectTypeID'];
         $messageID = $context['objectID'];
 
+        if (!$messageID) {
+            throw new \BadMethodCallException("No 'messageID' was set.");
+        }
+
         // delete existing assignments
         if ($removeExistingObjects) {
             if ($isBulk) {
@@ -195,6 +199,10 @@ class MessageEmbeddedObjectManager extends SingletonFactory
      */
     public function registerSimpleObjects($messageObjectType, $messageID, array $embeddedContent)
     {
+        if (!$messageID) {
+            throw new \BadMethodCallException("No 'messageID' was given.");
+        }
+
         $messageObjectTypeID = ObjectTypeCache::getInstance()
             ->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);
 
