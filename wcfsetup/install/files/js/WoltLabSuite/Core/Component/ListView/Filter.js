@@ -1,12 +1,12 @@
 /**
- * Handles the filterung of list views.
+ * Handles the filtering of list views.
  *
  * @author Marcel Werk
  * @copyright 2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  */
-define(["require", "exports", "WoltLabSuite/Core/Language", "../../Helper/PromiseMutex", "../Dialog"], function (require, exports, Language_1, PromiseMutex_1, Dialog_1) {
+define(["require", "exports", "WoltLabSuite/Core/Language", "../../Helper/PromiseMutex", "../Dialog", "WoltLabSuite/Core/StringUtil"], function (require, exports, Language_1, PromiseMutex_1, Dialog_1, StringUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Filter = void 0;
@@ -51,9 +51,9 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "../../Helper/Promis
             for (const key of this.#filters.keys()) {
                 const button = document.createElement("button");
                 button.type = "button";
-                button.title = (0, Language_1.getPhrase)("wcf.page.removeFilterTooltip", {
+                button.title = (0, StringUtil_1.unescapeHTML)((0, Language_1.getPhrase)("wcf.page.removeFilterTooltip", {
                     filterLabel: labels[key],
-                });
+                }));
                 button.classList.add("button", "small", "jsTooltip");
                 button.dataset.filter = key;
                 button.dataset.filterValue = this.#filters.get(key);

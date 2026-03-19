@@ -1,5 +1,5 @@
 /**
- * Handles the filterung of grid views.
+ * Handles the filtering of grid views.
  *
  * @author Marcel Werk
  * @copyright 2001-2025 WoltLab GmbH
@@ -10,6 +10,7 @@
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import { promiseMutex } from "../../Helper/PromiseMutex";
 import { dialogFactory } from "../Dialog";
+import { unescapeHTML } from "WoltLabSuite/Core/StringUtil";
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class Filter extends EventTarget {
@@ -64,9 +65,11 @@ export class Filter extends EventTarget {
     for (const key of this.#filters.keys()) {
       const button = document.createElement("button");
       button.type = "button";
-      button.title = getPhrase("wcf.page.removeFilterTooltip", {
-        filterLabel: labels[key],
-      });
+      button.title = unescapeHTML(
+        getPhrase("wcf.page.removeFilterTooltip", {
+          filterLabel: labels[key],
+        }),
+      );
       button.classList.add("button", "small", "jsTooltip");
       button.dataset.filter = key;
       button.dataset.filterValue = this.#filters.get(key);
