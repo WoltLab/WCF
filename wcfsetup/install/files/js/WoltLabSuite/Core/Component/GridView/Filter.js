@@ -84,11 +84,9 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "../../Helper/Promis
         }
         async #showFilterDialog() {
             const url = new URL(this.#filterButton.dataset.endpoint);
-            if (this.#filters) {
-                this.#filters.forEach((value, key) => {
-                    url.searchParams.set(`filters[${key}]`, value);
-                });
-            }
+            this.#filters.forEach((value, key) => {
+                url.searchParams.set(`filters[${key}]`, value);
+            });
             const { ok, result } = await (0, Dialog_1.dialogFactory)().usingFormBuilder().fromEndpoint(url.toString());
             if (ok) {
                 this.#filters = new Map(Object.entries(result));

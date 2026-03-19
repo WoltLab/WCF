@@ -109,11 +109,9 @@ export class Filter extends EventTarget {
 
   async #showFilterDialog(): Promise<void> {
     const url = new URL(this.#filterButton!.dataset.endpoint!);
-    if (this.#filters) {
-      this.#filters.forEach((value, key) => {
-        url.searchParams.set(`filters[${key}]`, value);
-      });
-    }
+    this.#filters.forEach((value, key) => {
+      url.searchParams.set(`filters[${key}]`, value);
+    });
 
     const { ok, result } = await dialogFactory().usingFormBuilder().fromEndpoint(url.toString());
 
