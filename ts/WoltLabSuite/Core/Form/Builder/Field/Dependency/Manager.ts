@@ -92,7 +92,7 @@ function _show(node: HTMLElement): void {
       });
   }
 
-  node.querySelectorAll("input, select").forEach((validatedField: HTMLInputElement | HTMLSelectElement) => {
+  node.querySelectorAll("input, select, textarea").forEach((validatedField: HTMLInputElement | HTMLSelectElement) => {
     // if a container is shown, ignore all fields that
     // have a hidden parent element within the container
     let parentNode = validatedField.parentNode! as HTMLElement;
