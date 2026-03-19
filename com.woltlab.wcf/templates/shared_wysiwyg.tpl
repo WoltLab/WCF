@@ -52,7 +52,7 @@
 		{jsphrase name='wcf.editor.restoreDraft.restoreOrDiscard'}
 
 		{if $__wcf->language->languageCode !== 'en'}
-		window.CKEDITOR_TRANSLATIONS['{unsafe:$__wcf->language->getFixedLanguageCode()|strtolower|encodeJS}'].dictionary["Single line code"] = '{jslang}wcf.editor.button.code{/jslang}';
+		window.CKEDITOR_TRANSLATIONS['{unsafe:$__wcf->getBBCodeHandler()->getEditorLocalization(true)|strtolower|encodeJS}'].dictionary["Single line code"] = '{jslang}wcf.editor.button.code{/jslang}';
 		{/if}
 
 		const element = document.getElementById('{unsafe:$wysiwygSelector|encodeJS}');
