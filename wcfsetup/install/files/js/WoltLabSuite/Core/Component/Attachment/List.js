@@ -76,7 +76,10 @@ define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Messa
             if (messageTabMenu === null) {
                 return;
             }
-            (0, MessageTabMenu_1.getTabMenu)(editorId)?.setActiveTab("attachments");
+            const menu = (0, MessageTabMenu_1.getTabMenu)(editorId);
+            if (menu !== undefined && menu.activeTabName !== "attachments") {
+                menu.setActiveTab("attachments");
+            }
         })
             .collectMetaData((payload) => {
             let context = undefined;
