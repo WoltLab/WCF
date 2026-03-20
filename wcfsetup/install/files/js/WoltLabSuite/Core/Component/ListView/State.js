@@ -21,6 +21,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "./F
         #selection;
         #sorting;
         #listViewFooter;
+        #lastUrl;
         #pageNo;
         constructor(viewId, viewElement, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder) {
             super();
@@ -59,6 +60,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "./F
                         ?.dispatchEvent(new CustomEvent("interaction:invalidate", { bubbles: true }));
                 }));
             });
+            this.#updateLastUrl();
             this.#updatePaginationUrl();
             this.#updateListViewFooter();
         }
@@ -82,6 +84,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "./F
             this.#pagination.count = count;
             this.#updatePaginationUrl();
             this.#selection.refresh();
+            this.#updateLastUrl();
             if (cause === 0 /* StateChangeCause.Change */ || cause === 2 /* StateChangeCause.Pagination */) {
                 this.#updateQueryString();
             }
@@ -96,9 +99,20 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "./F
             if (!this.#baseUrl) {
                 return;
             }
+            const url = this.#getUrl();
+            window.history.pushState({}, document.title, url.toString());
+        }
+        #updatePaginationUrl() {
+            if (!this.#baseUrl) {
+                return;
+            }
+            const url = this.#getUrl(false);
+            this.#pagination.url = url.toString();
+        }
+        #getUrl(withPageNo = true) {
             const url = new URL(this.#baseUrl);
             const parameters = [];
-            if (this.#pageNo > 1) {
+            if (withPageNo && this.#pageNo > 1) {
                 parameters.push(["pageNo", this.#pageNo.toString()]);
             }
             for (const parameter of this.#sorting.getQueryParameters()) {
@@ -111,39 +125,34 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "./F
                 url.search += url.search !== "" ? "&" : "?";
                 url.search += new URLSearchParams(parameters).toString();
             }
-            window.history.pushState({}, document.title, url.toString());
-        }
-        #updatePaginationUrl() {
-            if (!this.#baseUrl) {
-                return;
-            }
-            const url = new URL(this.#baseUrl);
-            const parameters = [];
-            for (const parameter of this.#sorting.getQueryParameters()) {
-                parameters.push(parameter);
-            }
-            for (const parameter of this.#filter.getQueryParameters()) {
-                parameters.push(parameter);
-            }
-            if (parameters.length > 0) {
-                url.search += url.search !== "" ? "&" : "?";
-                url.search += new URLSearchParams(parameters).toString();
-            }
-            this.#pagination.url = url.toString();
+            return url;
         }
         #handlePopState() {
+            const url = new URL(window.location.href);
+            if (this.#isOnlyHashChange(url)) {
+                return;
+            }
             let pageNo = 1;
-            const { searchParams } = new URL(window.location.href);
-            const value = searchParams.get("pageNo");
+            const value = url.searchParams.get("pageNo");
             if (value !== null) {
                 pageNo = parseInt(value);
                 if (Number.isNaN(pageNo) || pageNo < 1) {
                     pageNo = 1;
                 }
             }
-            this.#filter.updateFromSearchParams(searchParams);
-            this.#sorting.updateFromSearchParams(searchParams);
+            this.#filter.updateFromSearchParams(url.searchParams);
+            this.#sorting.updateFromSearchParams(url.searchParams);
             this.#switchPage(pageNo, 1 /* StateChangeCause.History */);
+        }
+        #updateLastUrl() {
+            if (!this.#baseUrl) {
+                return;
+            }
+            const url = this.#getUrl();
+            this.#lastUrl = url.pathname + url.search;
+        }
+        #isOnlyHashChange(url) {
+            return url.pathname + url.search === this.#lastUrl;
         }
         #updateListViewFooter() {
             const hasPagination = this.#pagination.count > 1;

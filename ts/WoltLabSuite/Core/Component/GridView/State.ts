@@ -25,6 +25,7 @@ export class State extends EventTarget {
   readonly #selection: Selection;
   readonly #sorting: Sorting;
   readonly #gridViewFooter: HTMLElement;
+  #lastUrl: string;
   #pageNo: number;
 
   constructor(
@@ -75,6 +76,7 @@ export class State extends EventTarget {
       });
     }
 
+    this.#updateLastUrl();
     this.#updatePaginationUrl();
     this.#updateGridViewFooter();
   }
@@ -104,6 +106,7 @@ export class State extends EventTarget {
     this.#pagination.count = count;
     this.#updatePaginationUrl();
     this.#selection.refresh();
+    this.#updateLastUrl();
 
     if (cause === StateChangeCause.Change || cause === StateChangeCause.Pagination) {
       this.#updateQueryString();
@@ -124,10 +127,24 @@ export class State extends EventTarget {
       return;
     }
 
+    const url = this.#getUrl();
+    window.history.pushState({}, document.title, url.toString());
+  }
+
+  #updatePaginationUrl(): void {
+    if (!this.#baseUrl) {
+      return;
+    }
+
+    const url = this.#getUrl(false);
+    this.#pagination.url = url.toString();
+  }
+
+  #getUrl(withPageNo: boolean = true): URL {
     const url = new URL(this.#baseUrl);
 
     const parameters: [string, string][] = [];
-    if (this.#pageNo > 1) {
+    if (withPageNo && this.#pageNo > 1) {
       parameters.push(["pageNo", this.#pageNo.toString()]);
     }
 
@@ -144,38 +161,19 @@ export class State extends EventTarget {
       url.search += new URLSearchParams(parameters).toString();
     }
 
-    window.history.pushState({}, document.title, url.toString());
-  }
-
-  #updatePaginationUrl(): void {
-    if (!this.#baseUrl) {
-      return;
-    }
-
-    const url = new URL(this.#baseUrl);
-
-    const parameters: [string, string][] = [];
-    for (const parameter of this.#sorting.getQueryParameters()) {
-      parameters.push(parameter);
-    }
-
-    for (const parameter of this.#filter.getQueryParameters()) {
-      parameters.push(parameter);
-    }
-
-    if (parameters.length > 0) {
-      url.search += url.search !== "" ? "&" : "?";
-      url.search += new URLSearchParams(parameters).toString();
-    }
-
-    this.#pagination.url = url.toString();
+    return url;
   }
 
   #handlePopState(): void {
+    const url = new URL(window.location.href);
+
+    if (this.#isOnlyHashChange(url)) {
+      return;
+    }
+
     let pageNo = 1;
 
-    const { searchParams } = new URL(window.location.href);
-    const value = searchParams.get("pageNo");
+    const value = url.searchParams.get("pageNo");
     if (value !== null) {
       pageNo = parseInt(value);
       if (Number.isNaN(pageNo) || pageNo < 1) {
@@ -183,10 +181,23 @@ export class State extends EventTarget {
       }
     }
 
-    this.#filter.updateFromSearchParams(searchParams);
-    this.#sorting.updateFromSearchParams(searchParams);
+    this.#filter.updateFromSearchParams(url.searchParams);
+    this.#sorting.updateFromSearchParams(url.searchParams);
 
     this.#switchPage(pageNo, StateChangeCause.History);
+  }
+
+  #updateLastUrl(): void {
+    if (!this.#baseUrl) {
+      return;
+    }
+
+    const url = this.#getUrl();
+    this.#lastUrl = url.pathname + url.search;
+  }
+
+  #isOnlyHashChange(url: URL): boolean {
+    return url.pathname + url.search === this.#lastUrl;
   }
 
   #updateGridViewFooter(): void {
