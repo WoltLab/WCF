@@ -34,6 +34,7 @@ final class EnableStyle implements IController
             (new StyleEditor($style))->update([
                 'isDisabled' => 0,
             ]);
+            StyleEditor::resetCache();
         }
 
         return new JsonResponse([]);
