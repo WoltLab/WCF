@@ -98,7 +98,10 @@ export function setup(editorId: string): void {
         return;
       }
 
-      getTabMenu(editorId)?.setActiveTab("attachments");
+      const menu = getTabMenu(editorId);
+      if (menu !== undefined && menu.activeTabName !== "attachments") {
+        menu.setActiveTab("attachments");
+      }
     })
     .collectMetaData((payload) => {
       let context: Context | undefined = undefined;
