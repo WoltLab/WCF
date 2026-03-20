@@ -32,7 +32,7 @@ abstract class AbstractSecureAction extends AbstractAction
      */
     protected function checkSecurityToken()
     {
-        if (!isset($_REQUEST['t']) || !WCF::getSession()->checkSecurityToken($_REQUEST['t'])) {
+        if (!isset($_REQUEST['t']) || !\is_string($_REQUEST['t']) || !WCF::getSession()->checkSecurityToken($_REQUEST['t'])) {
             throw new InvalidSecurityTokenException();
         }
     }
