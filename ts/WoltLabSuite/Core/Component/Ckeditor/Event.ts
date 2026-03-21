@@ -59,6 +59,8 @@ type SubmitOnEnterPayload = {
   html: string;
 };
 
+const initializedEditors: WeakMap<HTMLElement, ReadyEventPayload> = new WeakMap();
+
 class EventDispatcher {
   readonly #element: HTMLElement;
 
@@ -116,6 +118,8 @@ class EventDispatcher {
         detail: payload,
       }),
     );
+
+    initializedEditors.set(this.#element, payload);
   }
 
   removeAttachment(payload: RemoveAttachmentPayload): void {
@@ -250,6 +254,13 @@ class EventListener {
   }
 
   ready(callback: (payload: ReadyEventPayload) => void): this {
+    const result = initializedEditors.get(this.#element);
+    if (result !== undefined) {
+      callback(result);
+
+      return this;
+    }
+
     this.#element.addEventListener(
       EventNames.Ready,
       (event: CustomEvent<ReadyEventPayload>) => {

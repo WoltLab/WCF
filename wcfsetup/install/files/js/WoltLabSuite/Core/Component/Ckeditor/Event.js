@@ -12,6 +12,7 @@ define(["require", "exports"], function (require, exports) {
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.dispatchToCkeditor = dispatchToCkeditor;
     exports.listenToCkeditor = listenToCkeditor;
+    const initializedEditors = new WeakMap();
     class EventDispatcher {
         #element;
         constructor(element) {
@@ -50,6 +51,7 @@ define(["require", "exports"], function (require, exports) {
             this.#element.dispatchEvent(new CustomEvent("ckeditor5:ready" /* EventNames.Ready */, {
                 detail: payload,
             }));
+            initializedEditors.set(this.#element, payload);
         }
         removeAttachment(payload) {
             this.#element.dispatchEvent(new CustomEvent("ckeditor5:remove-attachment" /* EventNames.RemoveAttachment */, {
@@ -141,6 +143,11 @@ define(["require", "exports"], function (require, exports) {
             return this;
         }
         ready(callback) {
+            const result = initializedEditors.get(this.#element);
+            if (result !== undefined) {
+                callback(result);
+                return this;
+            }
             this.#element.addEventListener("ckeditor5:ready" /* EventNames.Ready */, (event) => {
                 callback(event.detail);
             }, { once: true });
