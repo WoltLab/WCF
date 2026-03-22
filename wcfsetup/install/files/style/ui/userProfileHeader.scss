@@ -132,15 +132,15 @@ body[data-page-identifier="com.woltlab.wcf.User"] .userProfileContent:first-chil
 }
 
 .userProfileHeader__statItem {
-	flex: 0 0 auto;
-	padding: 10px 20px;
-	display: flex;
-	flex-direction: column;
 	background-color: var(--wcfSidebarBackground);
 	border-radius: 5px;
-	text-align: center;
+	color: var(--wcfSidebarText);
+	display: flex;
+	flex-direction: column;
+	flex: 0 0 auto;
 	font-size: 12px;
-	color: inherit;
+	padding: 10px 20px;
+	text-align: center;
 }
 
 .userProfileHeader__statItem:hover {
@@ -148,7 +148,7 @@ body[data-page-identifier="com.woltlab.wcf.User"] .userProfileContent:first-chil
 }
 
 .userProfileHeader__statTitle {
-	color: var(--wcfContentDimmedText);
+	color: var(--wcfSidebarDimmedText);
 }
 
 .userProfileHeader__onlineIndicator {
