@@ -16,10 +16,7 @@ interface IEventListener
     /**
      * Executes this action.
      *
-     * @param mixed $eventObj
-     * @param string $className
-     * @param string $eventName
      * @return void
      */
-    public function execute($eventObj, $className, $eventName);
+    public function execute(mixed $eventObj, string $className, string $eventName);
 }

@@ -25,7 +25,7 @@ class JsonModifierTemplatePlugin implements IModifierTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         return \json_encode($tagArgs[0], \JSON_THROW_ON_ERROR);
     }

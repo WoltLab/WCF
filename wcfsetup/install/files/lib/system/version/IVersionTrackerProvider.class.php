@@ -52,10 +52,9 @@ interface IVersionTrackerProvider extends IObjectTypeProvider
     /**
      * Returns the label for provided property.
      *
-     * @param string $property property name
      * @return      string          property label
      */
-    public function getPropertyLabel($property);
+    public function getPropertyLabel(string $property);
 
     /**
      * Returns an array containing the values that should be stored in the database.

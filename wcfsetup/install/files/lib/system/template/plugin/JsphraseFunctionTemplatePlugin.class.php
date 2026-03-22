@@ -22,7 +22,7 @@ final class JsphraseFunctionTemplatePlugin implements IFunctionTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         $name = $tagArgs['name'] ?? '';
         if ($name === '') {

@@ -14,12 +14,11 @@ interface IImporter
     /**
      * Imports a data set.
      *
-     * @param mixed $oldID
      * @param mixed[] $data
      * @param mixed[] $additionalData
      * @return  mixed       new id
      */
-    public function import($oldID, array $data, array $additionalData = []);
+    public function import(mixed $oldID, array $data, array $additionalData = []);
 
     /**
      * Returns database object class name.

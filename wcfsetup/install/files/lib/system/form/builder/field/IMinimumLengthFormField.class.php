@@ -26,19 +26,16 @@ interface IMinimumLengthFormField extends IFormField
      * Sets the minimum length of the values of this field. If `null` is passed, the
      * minimum length is removed.
      *
-     * @param ?int $minimumLength minimum field value length
      * @return static this field
      *
      * @throws \InvalidArgumentException if the given minimum length is no int or otherwise invalid
      */
-    public function minimumLength($minimumLength = null);
+    public function minimumLength(?int $minimumLength = null);
 
     /**
      * Validates the minimum length of the given text.
      *
-     * @param string $text validated text
-     * @param ?Language $language language of the validated text
      * @return void
      */
-    public function validateMinimumLength($text, ?Language $language = null);
+    public function validateMinimumLength(string $text, ?Language $language = null);
 }

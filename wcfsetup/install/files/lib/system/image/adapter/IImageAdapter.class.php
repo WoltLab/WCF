@@ -16,140 +16,98 @@ interface IImageAdapter
      * Loads an image resource.
      *
      * @param T $image
-     * @param int $type
      * @return void
      */
-    public function load($image, $type = 0);
+    public function load(object $image, int $type = 0);
 
     /**
      * Loads an image from file.
      *
-     * @param string $file
      * @return void
      */
-    public function loadFile($file);
+    public function loadFile(string $file);
 
     /**
      * Creates a new empty image.
      *
-     * @param int $width
-     * @param int $height
      * @return void
      */
-    public function createEmptyImage($width, $height);
+    public function createEmptyImage(int $width, int $height);
 
     /**
      * Creates a thumbnail from previously loaded image.
      *
-     * @param int $maxWidth
-     * @param int $maxHeight
-     * @param bool $preserveAspectRatio
      * @return mixed
      */
-    public function createThumbnail($maxWidth, $maxHeight, $preserveAspectRatio = true);
+    public function createThumbnail(int $maxWidth, int $maxHeight, bool $preserveAspectRatio = true);
 
     /**
      * Clips a part of currently loaded image, overwrites image resource within instance.
      *
-     * @param int $originX
-     * @param int $originY
-     * @param int $width
-     * @param int $height
      * @return void
      * @see \wcf\system\image\adapter\IImageAdapter::getImage()
      */
-    public function clip($originX, $originY, $width, $height);
+    public function clip(int $originX, int $originY, int $width, int $height);
 
     /**
      * Resizes an image with optional scaling, overwrites image resource within instance.
      *
-     * @param int $originX
-     * @param int $originY
-     * @param int $originWidth
-     * @param int $originHeight
-     * @param int $targetWidth
-     * @param int $targetHeight
      * @return void
      * @see \wcf\system\image\adapter\IImageAdapter::getImage()
      */
-    public function resize($originX, $originY, $originWidth, $originHeight, $targetWidth, $targetHeight);
+    public function resize(int $originX, int $originY, int $originWidth, int $originHeight, int $targetWidth, int $targetHeight);
 
     /**
      * Draws a rectangle, overwrites image resource within instance.
      *
-     * @param int $startX
-     * @param int $startY
-     * @param int $endX
-     * @param int $endY
      * @return void
      * @see \wcf\system\image\adapter\IImageAdapter::getImage()
      * @see \wcf\system\image\adapter\IImageAdapter::setColor()
      */
-    public function drawRectangle($startX, $startY, $endX, $endY);
+    public function drawRectangle(int $startX, int $startY, int $endX, int $endY);
 
     /**
      * Draws a line of text, overwrites image resource within instance.
      *
-     * @param string $text
-     * @param int $x
-     * @param int $y
      * @param string $font path to TrueType font file
-     * @param int $size font size
-     * @param float $opacity
      * @return void
      * @see \wcf\system\image\adapter\IImageAdapter::getImage()
      * @see \wcf\system\image\adapter\IImageAdapter::setColor()
      */
-    public function drawText($text, $x, $y, $font, $size, $opacity = 1.0);
+    public function drawText(string $text, int $x, int $y, string $font, int $size, float $opacity = 1.0);
 
     /**
      * Draws (multiple lines of) text on the image at the given relative position
      * with a certain margin to the image border.
      *
-     * @param string $text
-     * @param string $position
-     * @param int $margin in pixels
-     * @param int $offsetX
-     * @param int $offsetY
      * @param string $font path to TrueType font file
-     * @param int $size font size
-     * @param float $opacity
      * @return void
      */
-    public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1.0);
+    public function drawTextRelative(string $text, string $position, int $margin, int $offsetX, int $offsetY, string $font, int $size, float $opacity = 1.0);
 
     /**
      * Returns true if the given text fits the image.
      *
-     * @param string $text
-     * @param int $margin
      * @param string $font path to TrueType font file
-     * @param int $size font size
      * @return bool
      */
-    public function textFitsImage($text, $margin, $font, $size);
+    public function textFitsImage(string $text, int $margin, string $font, int $size);
 
     /**
      * Adjusts the given font size so that the given text fits on the current
      * image. Returns 0 if no appropriate font size could be determined.
      *
-     * @param string $text
-     * @param int $margin
      * @param string $font path to TrueType font file
-     * @param int $size font size
      * @return int
      */
-    public function adjustFontSize($text, $margin, $font, $size);
+    public function adjustFontSize(string $text, int $margin, string $font, int $size);
 
     /**
      * Sets active color.
      *
-     * @param int $red
-     * @param int $green
-     * @param int $blue
      * @return void
      */
-    public function setColor($red, $green, $blue);
+    public function setColor(int $red, int $green, int $blue);
 
     /**
      * Returns true if a color has been set.
@@ -161,21 +119,17 @@ interface IImageAdapter
     /**
      * Sets a color to be transparent with alpha 0.
      *
-     * @param int $red
-     * @param int $green
-     * @param int $blue
      * @return void
      */
-    public function setTransparentColor($red, $green, $blue);
+    public function setTransparentColor(int $red, int $green, int $blue);
 
     /**
      * Writes an image to disk.
      *
      * @param T|string $image
-     * @param ?string $filename
      * @return void
      */
-    public function writeImage($image, $filename);
+    public function writeImage(object|string $image, ?string $filename);
 
     /**
      * Returns image resource.
@@ -211,37 +165,28 @@ interface IImageAdapter
      * @param float $degrees number of degrees to rotate the image clockwise
      * @return  mixed
      */
-    public function rotate($degrees);
+    public function rotate(float $degrees);
 
     /**
      * Overlays the given image at an absolute position.
      *
-     * @param string $file
-     * @param int $x
-     * @param int $y
-     * @param float $opacity
      * @return void
      */
-    public function overlayImage($file, $x, $y, $opacity);
+    public function overlayImage(string $file, int $x, int $y, float $opacity);
 
     /**
      * Overlays the given image at a relative position.
      *
-     * @param string $file
-     * @param string $position
-     * @param int $margin
-     * @param float $opacity
      * @return void
      */
-    public function overlayImageRelative($file, $position, $margin, $opacity);
+    public function overlayImageRelative(string $file, string $position, int $margin, float $opacity);
 
     /**
      * Saves an image using a different file type.
      *
-     * @param T $image
      * @since 5.4
      */
-    public function saveImageAs($image, string $filename, string $type, int $quality = 100): void;
+    public function saveImageAs(object $image, string $filename, string $type, int $quality = 100): void;
 
     /**
      * Determines if an image adapter is supported.

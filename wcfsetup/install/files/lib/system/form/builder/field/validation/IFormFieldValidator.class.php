@@ -17,17 +17,13 @@ interface IFormFieldValidator
     /**
      * Initializes a new validator.
      *
-     * @param string $id id of the validator
-     * @param callable $validator validation function
-     *
      * @throws \InvalidArgumentException if the given id is invalid
      */
-    public function __construct($id, callable $validator);
+    public function __construct(string $id, callable $validator);
 
     /**
      * Validates the value of the given field.
      *
-     * @param IFormField $field validated field
      * @return void
      */
     public function __invoke(IFormField $field);

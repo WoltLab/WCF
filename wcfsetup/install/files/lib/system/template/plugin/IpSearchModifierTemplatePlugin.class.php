@@ -31,7 +31,7 @@ class IpSearchModifierTemplatePlugin implements IModifierTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         $domain = Url::parse(IP_ADDRESS_SEARCH_ENGINE ?: self::SEARCH_ENGINE_URL_DEFAULT)['host'];
         $ipAddress = StringUtil::trim(MessageUtil::stripCrap($tagArgs[0]));

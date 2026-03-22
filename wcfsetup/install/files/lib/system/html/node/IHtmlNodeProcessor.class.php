@@ -39,10 +39,9 @@ interface IHtmlNodeProcessor
      * Loads a HTML string for processing.
      *
      * @param IHtmlProcessor $htmlProcessor html processor
-     * @param string $html HTML string
      * @return void
      */
-    public function load(IHtmlProcessor $htmlProcessor, $html);
+    public function load(IHtmlProcessor $htmlProcessor, string $html);
 
     /**
      * Processes the HTML and transforms it depending on the output type.

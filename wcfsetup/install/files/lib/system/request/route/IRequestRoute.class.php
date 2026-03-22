@@ -45,8 +45,7 @@ interface IRequestRoute
     /**
      * Returns true if given request url matches this route.
      *
-     * @param string $requestURL
      * @return  bool
      */
-    public function matches($requestURL);
+    public function matches(string $requestURL);
 }

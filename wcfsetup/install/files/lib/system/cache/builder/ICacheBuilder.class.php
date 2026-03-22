@@ -15,10 +15,9 @@ interface ICacheBuilder
      * Returns the data that ought to be cached.
      *
      * @param mixed[] $parameters
-     * @param string $arrayIndex
      * @return mixed
      */
-    public function getData(array $parameters = [], $arrayIndex = '');
+    public function getData(array $parameters = [], string $arrayIndex = '');
 
     /**
      * Returns maximum lifetime for cache resource.

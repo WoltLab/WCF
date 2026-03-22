@@ -24,7 +24,7 @@ class CurrencyModifierTemplatePlugin implements IModifierTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         $decimals = \intval($tagArgs[1] ?? 2);
 

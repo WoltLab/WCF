@@ -49,12 +49,11 @@ interface IFormFieldDependency
      * This method should only be used before building the form as afterwards,
      * the actual field is no automatically set.
      *
-     * @param string $fieldId field id
      * @return  static              this dependency
      *
      * @throws  \BadMethodCallException     if the field has already been set
      */
-    public function fieldId($fieldId);
+    public function fieldId(string $fieldId);
 
     /**
      * Returns the node whose availability depends on the value of a field.

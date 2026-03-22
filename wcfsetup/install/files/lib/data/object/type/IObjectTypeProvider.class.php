@@ -19,10 +19,9 @@ interface IObjectTypeProvider
     /**
      * Returns an object by its ID.
      *
-     * @param int $objectID
      * @return TDatabaseObject
      */
-    public function getObjectByID($objectID);
+    public function getObjectByID(int $objectID);
 
     /**
      * Returns objects by their IDs.

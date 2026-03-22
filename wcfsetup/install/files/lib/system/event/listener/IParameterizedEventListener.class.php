@@ -23,5 +23,5 @@ interface IParameterizedEventListener
      * @param mixed[] &$parameters given parameters
      * @return void
      */
-    public function execute($eventObj, $className, $eventName, array &$parameters);
+    public function execute(mixed $eventObj, string $className, string $eventName, array &$parameters);
 }

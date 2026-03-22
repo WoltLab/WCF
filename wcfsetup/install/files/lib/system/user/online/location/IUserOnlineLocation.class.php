@@ -17,7 +17,6 @@ interface IUserOnlineLocation
     /**
      * Caches the information of a page location.
      *
-     * @param UserOnline $user
      * @return void
      */
     public function cache(UserOnline $user);
@@ -25,9 +24,7 @@ interface IUserOnlineLocation
     /**
      * Returns the information of a page location.
      *
-     * @param UserOnline $user
-     * @param string $languageVariable
      * @return  string
      */
-    public function get(UserOnline $user, $languageVariable = '');
+    public function get(UserOnline $user, string $languageVariable = '');
 }

@@ -30,7 +30,7 @@ class HtmlCheckboxesFunctionTemplatePlugin implements IFunctionTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         // get options
         if (isset($tagArgs['output']) && \is_array($tagArgs['output'])) {

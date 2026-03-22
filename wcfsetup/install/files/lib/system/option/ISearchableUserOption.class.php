@@ -17,19 +17,14 @@ interface ISearchableUserOption
     /**
      * Returns the html code for the search form element of this option.
      *
-     * @param Option $option
-     * @param mixed $value
      * @return  string      html
      */
-    public function getSearchFormElement(Option $option, $value);
+    public function getSearchFormElement(Option $option, mixed $value);
 
     /**
      * Returns a condition for search sql query.
      *
-     * @param PreparedStatementConditionBuilder $conditions
-     * @param Option $option
-     * @param mixed $value
      * @return  bool
      */
-    public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value);
+    public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, mixed $value);
 }

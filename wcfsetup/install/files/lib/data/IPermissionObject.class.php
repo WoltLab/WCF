@@ -26,8 +26,7 @@ interface IPermissionObject
      * Returns the permission value of the given permission for this object
      * and the active user.
      *
-     * @param string $permission
      * @return mixed
      */
-    public function getPermission($permission);
+    public function getPermission(string $permission);
 }

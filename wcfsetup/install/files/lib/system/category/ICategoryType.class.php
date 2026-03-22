@@ -78,10 +78,9 @@ interface ICategoryType
      * Returns the name of the object type of the definition with the given
      * name for categories of this type or `null` if no such object type exists.
      *
-     * @param string $definitionName
      * @return ?string
      */
-    public function getObjectTypeName($definitionName);
+    public function getObjectTypeName(string $definitionName);
 
     /**
      * Returns the language variable category for the description language
@@ -107,11 +106,9 @@ interface ICategoryType
      * a fallback to the default variables (in this example "wcf.category.list")
      * is used.
      *
-     * @param string $name
-     * @param bool $optional
      * @return string
      */
-    public function getLanguageVariable($name, $optional = false);
+    public function getLanguageVariable(string $name, bool $optional = false);
 
     /**
      * Returns the maximum category nesting level for this type. "-1" means

@@ -14,8 +14,7 @@ interface IACPSearchResultProvider
     /**
      * Returns a list of search results for given query.
      *
-     * @param string $query
      * @return  ACPSearchResult[]
      */
-    public function search($query);
+    public function search(string $query);
 }

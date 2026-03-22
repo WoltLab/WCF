@@ -32,17 +32,16 @@ interface IGuiPackageInstallationPlugin extends IIdempotentPackageInstallationPl
      *
      * @throws  \InvalidArgumentException   if no such entry exists or delete instruction should be added but is not supported
      */
-    public function deleteEntry($identifier, $addDeleteInstruction);
+    public function deleteEntry(string $identifier, bool $addDeleteInstruction);
 
     /**
      * Edits the entry of this pip with the given identifier based on the data
      * provided by the given form and returns the new identifier of the entry
      * (or the old identifier if it has not changed).
      *
-     * @param string $identifier
      * @return string new identifier
      */
-    public function editEntry(IFormDocument $form, $identifier);
+    public function editEntry(IFormDocument $form, string $identifier);
 
     /**
      * Returns additional template code for the form to add and edit entries.
@@ -62,22 +61,20 @@ interface IGuiPackageInstallationPlugin extends IIdempotentPackageInstallationPl
      * Informs the pip of the identifier of the edited entry if the form to
      * edit that entry has been submitted.
      *
-     * @param string $identifier
      * @return void
      *
      * @throws \InvalidArgumentException if no such entry exists
      */
-    public function setEditedEntryIdentifier($identifier);
+    public function setEditedEntryIdentifier(string $identifier);
 
     /**
      * Adds the data of the pip entry with the given identifier into the
      * given form and returns `true`. If no entry with the given identifier
      * exists, `false` is returned.
      *
-     * @param string $identifier
      * @return bool
      */
-    public function setEntryData($identifier, IFormDocument $document);
+    public function setEntryData(string $identifier, IFormDocument $document);
 
     /**
      * Returns the list of available entry types. If only one entry type is
@@ -106,7 +103,7 @@ interface IGuiPackageInstallationPlugin extends IIdempotentPackageInstallationPl
      *
      * @throws \InvalidArgumentException if the given entry type is invalid (see `getEntryTypes()` method)
      */
-    public function setEntryType($entryType);
+    public function setEntryType(string $entryType);
 
     /**
      * Returns `true` if this package installation plugin supports delete

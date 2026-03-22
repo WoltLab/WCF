@@ -14,18 +14,16 @@ interface IUserAvatar
     /**
      * Returns the url to this avatar.
      *
-     * @param int $size
      * @return  string
      */
-    public function getURL($size = null);
+    public function getURL(?int $size = null);
 
     /**
      * Returns the html code to display this avatar.
      *
-     * @param int $size
      * @return  string
      */
-    public function getImageTag($size = null);
+    public function getImageTag(?int $size = null);
 
     /**
      * Returns the width of this avatar.

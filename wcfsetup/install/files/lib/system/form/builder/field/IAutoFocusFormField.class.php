@@ -15,10 +15,9 @@ interface IAutoFocusFormField extends IFormField
     /**
      * Sets whether this field is auto-focused and returns this field.
      *
-     * @param bool $autoFocus determines if field is auto-focused
      * @return  static              this field
      */
-    public function autoFocus($autoFocus = true);
+    public function autoFocus(bool $autoFocus = true);
 
     /**
      * Returns `true` if this field is auto-focused and returns `false` otherwise.

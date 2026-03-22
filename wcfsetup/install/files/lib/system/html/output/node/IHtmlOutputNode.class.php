@@ -17,8 +17,7 @@ interface IHtmlOutputNode extends IHtmlNode
     /**
      * Sets the desired output type.
      *
-     * @param string $outputType desired output type
      * @return void
      */
-    public function setOutputType($outputType);
+    public function setOutputType(string $outputType);
 }

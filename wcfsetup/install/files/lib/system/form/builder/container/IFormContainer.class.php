@@ -34,9 +34,8 @@ interface IFormContainer extends IFormChildNode, IFormElement, IFormParentNode
      *
      * @param mixed[] $data data from which the values are extracted
      * @param IStorableObject $object object the data belongs to
-     * @param bool $loadValues
      *
      * @return static this container
      */
-    public function updatedObject(array $data, IStorableObject $object, $loadValues = true);
+    public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true);
 }

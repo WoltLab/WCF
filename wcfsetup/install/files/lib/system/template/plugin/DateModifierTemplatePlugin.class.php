@@ -27,7 +27,7 @@ class DateModifierTemplatePlugin implements IModifierTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         $value = $tagArgs[0];
         if ($value instanceof \DateTime || $value instanceof \DateTimeImmutable) {

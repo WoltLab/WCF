@@ -29,5 +29,5 @@ interface ISuffixedFormField extends IFormField
      *
      * @throws \InvalidArgumentException if the given language item is invalid
      */
-    public function suffix($languageItem = null, array $variables = []);
+    public function suffix(?string $languageItem = null, array $variables = []);
 }

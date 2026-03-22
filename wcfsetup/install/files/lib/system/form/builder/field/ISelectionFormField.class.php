@@ -58,7 +58,7 @@ interface ISelectionFormField extends IFormField
      * @throws \InvalidArgumentException if given options are no array or callable or otherwise invalid
      * @throws \UnexpectedValueException if callable does not return an array
      */
-    public function options($options, $nestedOptions = false, $labelLanguageItems = true);
+    public function options(array|callable|DatabaseObjectList $options, bool $nestedOptions = false, bool $labelLanguageItems = true);
 
     /**
      * Returns `true` if the field class supports nested options and `false` otherwise.

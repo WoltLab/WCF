@@ -30,7 +30,7 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         $size = \intval($tagArgs['size'] ?? 16);
         $name = $tagArgs['name'] ?? '';

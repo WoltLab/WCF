@@ -30,7 +30,7 @@ final class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         // needed params: controller, link, page, pages
         if (!isset($tagArgs['link'])) {

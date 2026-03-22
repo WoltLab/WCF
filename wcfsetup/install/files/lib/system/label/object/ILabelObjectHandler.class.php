@@ -34,39 +34,32 @@ interface ILabelObjectHandler
      * Returns true, if all given label ids are valid and accessible.
      *
      * @param int[] $labelIDs
-     * @param string $optionName
-     * @param bool $legacyReturnValue
      * @return mixed
      */
-    public function validateLabelIDs(array $labelIDs, $optionName = '', $legacyReturnValue = true);
+    public function validateLabelIDs(array $labelIDs, string $optionName = '', bool $legacyReturnValue = true);
 
     /**
      * Assigns labels to an object.
      *
      * @param int[] $labelIDs
-     * @param int $objectID
-     * @param bool $validatePermissions
      * @return void
      * @see     \wcf\system\label\LabelHandler::setLabels()
      */
-    public function setLabels(array $labelIDs, $objectID, $validatePermissions = true);
+    public function setLabels(array $labelIDs, int $objectID, bool $validatePermissions = true);
 
     /**
      * Removes all assigned labels.
      *
-     * @param int $objectID
-     * @param bool $validatePermissions
      * @return void
      * @see     \wcf\system\label\LabelHandler::removeLabels()
      */
-    public function removeLabels($objectID, $validatePermissions = true);
+    public function removeLabels(int $objectID, bool $validatePermissions = true);
 
     /**
      * Returns a list of assigned labels.
      *
      * @param int[] $objectIDs
-     * @param bool $validatePermissions
      * @return Label[][]
      */
-    public function getAssignedLabels(array $objectIDs, $validatePermissions = true);
+    public function getAssignedLabels(array $objectIDs, bool $validatePermissions = true);
 }

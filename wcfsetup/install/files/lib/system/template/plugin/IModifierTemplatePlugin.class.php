@@ -21,5 +21,5 @@ interface IModifierTemplatePlugin
      * @param TemplateEngine $tplObj
      * @return  string
      */
-    public function execute($tagArgs, TemplateEngine $tplObj);
+    public function execute(array $tagArgs, TemplateEngine $tplObj);
 }

@@ -20,10 +20,9 @@ interface IRuntimeCache
      * Caches the given object id so that during the next object fetch, the object with
      * this id will also be fetched.
      *
-     * @param int $objectID
      * @return void
      */
-    public function cacheObjectID($objectID);
+    public function cacheObjectID(int $objectID);
 
     /**
      * Caches the given object ids so that during the next object fetch, the objects with
@@ -46,10 +45,9 @@ interface IRuntimeCache
      * If the given object id should not have been cached before, it will be cached
      * during this method call and the object, if existing, will be returned.
      *
-     * @param int $objectID
      * @return ?TDatabaseObject
      */
-    public function getObject($objectID);
+    public function getObject(int $objectID);
 
     /**
      * Returns the objects with the given ids. If an object does not exist, the array element
@@ -65,10 +63,9 @@ interface IRuntimeCache
     /**
      * Removes the object with the given id from the runtime cache if it has already been loaded.
      *
-     * @param int $objectID
      * @return void
      */
-    public function removeObject($objectID);
+    public function removeObject(int $objectID);
 
     /**
      * Removes the objects with the given ids from the runtime cache if they have already been loaded.

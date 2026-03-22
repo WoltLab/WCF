@@ -15,9 +15,8 @@ interface IBBCodeMediaProvider
     /**
      * Parses given media url and returns output html.
      *
-     * @param string $url media url
      * @param string[] $matches
      * @return      string          output html
      */
-    public function parse($url, array $matches = []);
+    public function parse(string $url, array $matches = []);
 }

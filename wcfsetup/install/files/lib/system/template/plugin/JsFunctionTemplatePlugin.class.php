@@ -54,7 +54,7 @@ class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         // needed arguments: application and lib/file
         if (empty($tagArgs['application'])) {

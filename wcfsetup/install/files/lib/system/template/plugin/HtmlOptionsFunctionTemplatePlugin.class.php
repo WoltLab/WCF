@@ -34,7 +34,7 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         if (isset($tagArgs['object']) && ($tagArgs['object'] instanceof DatabaseObjectList)) {
             $tagArgs['options'] = $tagArgs['object'];

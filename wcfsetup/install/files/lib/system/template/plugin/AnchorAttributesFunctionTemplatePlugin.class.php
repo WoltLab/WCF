@@ -30,7 +30,7 @@ class AnchorAttributesFunctionTemplatePlugin implements IFunctionTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         if (empty($tagArgs['url'])) {
             throw new \InvalidArgumentException("Missing 'url' attribute.");

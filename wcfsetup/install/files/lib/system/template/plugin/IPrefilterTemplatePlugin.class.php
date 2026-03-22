@@ -16,10 +16,7 @@ interface IPrefilterTemplatePlugin
     /**
      * Executes this prefilter.
      *
-     * @param string $templateName
-     * @param string $sourceContent
-     * @param TemplateScriptingCompiler $compiler
      * @return  string
      */
-    public function execute($templateName, $sourceContent, TemplateScriptingCompiler $compiler);
+    public function execute(string $templateName, string $sourceContent, TemplateScriptingCompiler $compiler);
 }

@@ -33,7 +33,7 @@ class DateIntervalFunctionTemplatePlugin implements IFunctionTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         // read start and end time, each defaulting to current time
         $start = $end = TIME_NOW;

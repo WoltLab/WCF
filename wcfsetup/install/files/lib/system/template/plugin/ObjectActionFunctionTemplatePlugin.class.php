@@ -51,7 +51,7 @@ class ObjectActionFunctionTemplatePlugin implements IFunctionTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         if (!isset($tagArgs['action'])) {
             throw new \InvalidArgumentException("Missing 'action' argument.");
