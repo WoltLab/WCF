@@ -67,7 +67,7 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractCommentRes
     /**
      * @inheritDoc
      */
-    public function getEmailMessage($notificationType = 'instant')
+    public function getEmailMessage(string $notificationType = 'instant')
     {
         $comment = CommentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->commentID);
         $owner = UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID']);

@@ -74,7 +74,7 @@ abstract class AbstractFileDiskUsageStatDailyHandler implements IStatDailyHandle
     }
 
     #[\Override]
-    public function getFormattedCounter($counter)
+    public function getFormattedCounter(int $counter)
     {
         return \round($counter / 1000, 2); // return mb
     }

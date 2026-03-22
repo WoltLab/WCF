@@ -25,10 +25,9 @@ interface IModerationQueueHandler
     /**
      * Returns the container id for current object id, may return 0.
      *
-     * @param int $objectID
      * @return int
      */
-    public function getContainerID($objectID);
+    public function getContainerID(int $objectID);
 
     /**
      * Validates object ids and returns orphaned queue ids.
@@ -41,10 +40,9 @@ interface IModerationQueueHandler
     /**
      * Returns true if given object id is valid.
      *
-     * @param int $objectID
      * @return bool
      */
-    public function isValid($objectID);
+    public function isValid(int $objectID);
 
     /**
      * Populates object properties for viewing.
@@ -59,10 +57,9 @@ interface IModerationQueueHandler
      * soft-delete the content or remove it permanently.
      *
      * @param ModerationQueue $queue
-     * @param string $message
      * @return void
      */
-    public function removeContent(ModerationQueue $queue, $message);
+    public function removeContent(ModerationQueue $queue, string $message);
 
     /**
      * Returns true if the affected content may be removed.
@@ -85,10 +82,9 @@ interface IModerationQueueHandler
      * Returns true, if given user is affected by given queue entry.
      *
      * @param ModerationQueue $queue
-     * @param int $userID
      * @return bool
      */
-    public function isAffectedUser(ModerationQueue $queue, $userID);
+    public function isAffectedUser(ModerationQueue $queue, int $userID);
 
     /**
      * Returns the prefix of language items for notifications for comments

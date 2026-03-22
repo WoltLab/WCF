@@ -25,7 +25,7 @@ abstract class AbstractMenuPageHandler implements IMenuPageHandler
     /**
      * @inheritDoc
      */
-    public function getOutstandingItemCount($objectID = null)
+    public function getOutstandingItemCount(?int $objectID = null)
     {
         return 0;
     }
@@ -33,7 +33,7 @@ abstract class AbstractMenuPageHandler implements IMenuPageHandler
     /**
      * @inheritDoc
      */
-    public function isVisible($objectID = null)
+    public function isVisible(?int $objectID = null)
     {
         return true;
     }
@@ -41,9 +41,7 @@ abstract class AbstractMenuPageHandler implements IMenuPageHandler
     /**
      * @inheritDoc
      */
-    public function cacheObject(int $objectID): void
-    {
-    }
+    public function cacheObject(int $objectID): void {}
 
     /**
      * @inheritDoc

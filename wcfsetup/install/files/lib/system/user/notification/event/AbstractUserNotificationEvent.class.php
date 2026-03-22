@@ -161,7 +161,7 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
     /**
      * @inheritDoc
      */
-    public function getEmailMessage($notificationType = 'instant')
+    public function getEmailMessage(string $notificationType = 'instant')
     {
         return $this->getMessage();
     }

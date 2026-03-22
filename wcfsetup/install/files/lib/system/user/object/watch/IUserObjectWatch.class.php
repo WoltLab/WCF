@@ -14,11 +14,10 @@ interface IUserObjectWatch
     /**
      * Validates the given object id. Throws an exception on error.
      *
-     * @param int $objectID
      * @return void
      * @throws  \wcf\system\exception\UserException
      */
-    public function validateObjectID($objectID);
+    public function validateObjectID(int $objectID);
 
     /**
      * Resets the user storage for given users.

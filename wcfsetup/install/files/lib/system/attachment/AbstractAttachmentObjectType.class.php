@@ -49,7 +49,7 @@ abstract class AbstractAttachmentObjectType implements IAttachmentObjectType
     /**
      * @inheritDoc
      */
-    public function canViewPreview($objectID)
+    public function canViewPreview(int $objectID)
     {
         return $this->canDownload($objectID);
     }
@@ -57,7 +57,7 @@ abstract class AbstractAttachmentObjectType implements IAttachmentObjectType
     /**
      * @inheritDoc
      */
-    public function getObject($objectID)
+    public function getObject(int $objectID)
     {
         return $this->cachedObjects[$objectID] ?? null;
     }

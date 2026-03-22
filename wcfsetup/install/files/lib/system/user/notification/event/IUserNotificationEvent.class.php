@@ -67,11 +67,17 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor, ILinkableObje
      * - Return an ['template' => ..., 'application' => ..., 'variables' => ...] array
      *   to be included into the summary email.
      *
-     * @param string $notificationType
-     * @return  mixed
+     * @return  string|array{
+     *  template: string,
+     *  application: string,
+     *  variables?: mixed[],
+     *  message-id?: string,
+     *  in-reply-to?: string[],
+     *  references?: string[]
+     * }
      * @see     \wcf\system\email\Email
      */
-    public function getEmailMessage($notificationType = 'instant');
+    public function getEmailMessage(string $notificationType = 'instant');
 
     /**
      * Returns the author id for this notification event.

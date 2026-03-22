@@ -21,7 +21,7 @@ interface IUserContent extends ITitledLinkObject
     /**
      * Returns author's user id.
      *
-     * @return int
+     * @return ?int
      */
     public function getUserID();
 

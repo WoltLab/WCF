@@ -34,7 +34,7 @@ abstract class AbstractLikeObject extends DatabaseObjectDecorator implements ILi
     /**
      * @inheritDoc
      */
-    public function updateLikeCounter($cumulativeLikes)
+    public function updateLikeCounter(int $cumulativeLikes)
     {
         // individual implementations can override this method to update like counter
     }

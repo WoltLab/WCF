@@ -18,10 +18,9 @@ interface IModerationQueueReportHandler extends IModerationQueueHandler
     /**
      * Returns true if current user can report given content.
      *
-     * @param int $objectID
      * @return  bool
      */
-    public function canReport($objectID);
+    public function canReport(int $objectID);
 
     /**
      * Returns rendered template for reported content.
@@ -34,8 +33,7 @@ interface IModerationQueueReportHandler extends IModerationQueueHandler
     /**
      * Returns reported object.
      *
-     * @param int $objectID
      * @return  ?IUserContent
      */
-    public function getReportedObject($objectID);
+    public function getReportedObject(int $objectID);
 }

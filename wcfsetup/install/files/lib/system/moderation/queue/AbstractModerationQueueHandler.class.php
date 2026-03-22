@@ -116,7 +116,7 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
     /**
      * @inheritDoc
      */
-    public function isAffectedUser(ModerationQueue $queue, $userID)
+    public function isAffectedUser(ModerationQueue $queue, int $userID)
     {
         $userProfile = UserProfileRuntimeCache::getInstance()->getObject($userID);
 

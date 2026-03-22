@@ -27,7 +27,7 @@ interface ILikeObject extends IDatabaseObjectProcessor, IIDObject, ITitledObject
     /**
      * Returns the user id of the owner of this object.
      *
-     * @return int
+     * @return ?int
      */
     public function getUserID();
 
@@ -41,10 +41,9 @@ interface ILikeObject extends IDatabaseObjectProcessor, IIDObject, ITitledObject
     /**
      * Updates the cumulative likes for this object.
      *
-     * @param int $cumulativeLikes
      * @return void
      */
-    public function updateLikeCounter($cumulativeLikes);
+    public function updateLikeCounter(int $cumulativeLikes);
 
     /**
      * Sets the likable object type.

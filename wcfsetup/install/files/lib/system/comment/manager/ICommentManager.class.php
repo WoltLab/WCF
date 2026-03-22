@@ -17,18 +17,16 @@ interface ICommentManager
     /**
      * Returns true if the current user may add comments or responses.
      *
-     * @param int $objectID
      * @return bool
      */
-    public function canAdd($objectID);
+    public function canAdd(int $objectID);
 
     /**
      * Returns true if a comment requires approval.
      *
-     * @param int $objectID
      * @return bool
      */
-    public function canAddWithoutApproval($objectID);
+    public function canAddWithoutApproval(int $objectID);
 
     /**
      * Returns true if the current user may edit given comment.
@@ -62,12 +60,10 @@ interface ICommentManager
      * Returns true if the current user may moderated content identified by
      * object type id and object id.
      *
-     * @param int $objectTypeID
-     * @param int $objectID
      * @return bool
      * @deprecated 6.1 use `ICommentPermissionManager::canModerateObject()` instead
      */
-    public function canModerate($objectTypeID, $objectID);
+    public function canModerate(int $objectTypeID, int $objectID);
 
     /**
      * Returns the amount of comments per page.
@@ -79,11 +75,9 @@ interface ICommentManager
     /**
      * Returns a link to the commented object with the given object type id and object id.
      *
-     * @param int $objectTypeID
-     * @param int $objectID
      * @return string
      */
-    public function getLink($objectTypeID, $objectID);
+    public function getLink(int $objectTypeID, int $objectID);
 
     /**
      * Returns the link to the given comment.
@@ -102,31 +96,24 @@ interface ICommentManager
     /**
      * Returns the title for a comment or response.
      *
-     * @param int $objectTypeID
-     * @param int $objectID
-     * @param bool $isResponse
      * @return string
      */
-    public function getTitle($objectTypeID, $objectID, $isResponse = false);
+    public function getTitle(int $objectTypeID, int $objectID, bool $isResponse = false);
 
     /**
      * Returns true if comments and responses for given object id are accessible
      * by current user.
      *
-     * @param int $objectID
-     * @param bool $validateWritePermission
      * @return bool
      */
-    public function isAccessible($objectID, $validateWritePermission = false);
+    public function isAccessible(int $objectID, bool $validateWritePermission = false);
 
     /**
      * Updates total count of comments (includes responses).
      *
-     * @param int $objectID
-     * @param int $value
      * @return void
      */
-    public function updateCounter($objectID, $value);
+    public function updateCounter(int $objectID, int $value);
 
     /**
      * Returns true if this comment type supports likes.
@@ -153,8 +140,7 @@ interface ICommentManager
      * Returns whether the given Comment or CommentResponse was created by
      * the content's author.
      *
-     * @param Comment|CommentResponse $commentOrResponse
      * @return bool
      */
-    public function isContentAuthor($commentOrResponse);
+    public function isContentAuthor(Comment|CommentResponse $commentOrResponse);
 }

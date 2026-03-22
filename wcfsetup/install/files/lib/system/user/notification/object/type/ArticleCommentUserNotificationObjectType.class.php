@@ -39,7 +39,7 @@ class ArticleCommentUserNotificationObjectType extends AbstractUserNotificationO
     /**
      * @inheritDoc
      */
-    public function getOwnerID($objectID)
+    public function getOwnerID(int $objectID)
     {
         $sql = "SELECT      article.userID
                 FROM        wcf1_comment comment
