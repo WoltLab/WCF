@@ -8,6 +8,7 @@ use wcf\event\package\PackageListChanged;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\PackageCacheBuilder;
 use wcf\command\cache\ClearCache;
+use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\event\package\PackageUninstallationStarted;
 use wcf\system\event\EventHandler;
@@ -62,8 +63,8 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
                 case 'start':
                     $step = $this->handleStartMarker($nodeData);
 
-                    $package = PackageCache::getInstance()->getPackage($this->queue->packageID);
-                    \assert($package !== null);
+                    $package = new Package($this->queue->packageID);
+                    \assert($package->packageID !== 0);
                     $event = new PackageUninstallationStarted($package);
                     EventHandler::getInstance()->fire($event);
                     break;
