@@ -53,7 +53,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
             this.#popover.setAttribute("role", "listbox");
             this.#popover.setAttribute("aria-orientation", "horizontal");
             this.#popover.setAttribute("aria-label", (0, Language_1.getPhrase)("wcf.reactions.react"));
-            this.#popover.tabIndex = 0;
             const popoverContent = document.createElement("div");
             popoverContent.className = "reactionPopoverContent";
             const popoverButtonList = document.createElement("div");

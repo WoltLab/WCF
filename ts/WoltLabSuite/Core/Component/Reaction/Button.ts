@@ -75,7 +75,6 @@ class ReactionPopover {
     this.#popover.setAttribute("role", "listbox");
     this.#popover.setAttribute("aria-orientation", "horizontal");
     this.#popover.setAttribute("aria-label", getPhrase("wcf.reactions.react"));
-    this.#popover.tabIndex = 0;
 
     const popoverContent = document.createElement("div");
     popoverContent.className = "reactionPopoverContent";
