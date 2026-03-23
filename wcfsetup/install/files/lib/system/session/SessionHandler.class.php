@@ -746,6 +746,25 @@ final class SessionHandler extends SingletonFactory
     }
 
     /**
+     * Returns true if the active user has the given permission.
+     * Only works for boolean permisions.
+     *
+     * @throws \BadMethodCallException
+     * @since 6.3
+     */
+    public function hasPermission(string $permission): bool
+    {
+        $result = $this->getPermission($permission);
+        if ($result === true || $result === 1 || $result === '1') {
+            return true;
+        } else if ($result === false || $result === 0 || $result === '0') {
+            return false;
+        }
+
+        throw new \BadMethodCallException("'{$permission}' is not a boolean permission");
+    }
+
+    /**
      * Returns true if a permission was set to 'Never'. This is required to preserve
      * compatibility, while preventing ACLs from overruling a 'Never' setting.
      */
