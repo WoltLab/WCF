@@ -96,7 +96,7 @@ class AbstractCommentResponseModerationQueueHandler extends AbstractCommentComme
     /**
      * @inheritDoc
      */
-    public function isValid($objectID)
+    public function isValid(int $objectID)
     {
         if ($this->getResponse($objectID) === null) {
             return false;
@@ -155,7 +155,7 @@ class AbstractCommentResponseModerationQueueHandler extends AbstractCommentComme
     /**
      * @inheritDoc
      */
-    public function removeContent(ModerationQueue $queue, $message)
+    public function removeContent(ModerationQueue $queue, string $message)
     {
         if ($this->isValid($queue->objectID)) {
             (new \wcf\command\comment\response\DeleteResponses([$this->getResponse($queue->objectID)]))();
@@ -163,7 +163,7 @@ class AbstractCommentResponseModerationQueueHandler extends AbstractCommentComme
     }
 
     #[\Override]
-    public function isAffectedUser(ModerationQueue $queue, $userID)
+    public function isAffectedUser(ModerationQueue $queue, int $userID)
     {
         if (!AbstractModerationQueueHandler::isAffectedUser($queue, $userID)) {
             return false;

@@ -71,7 +71,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     /**
      * @inheritDoc
      */
-    public function load($image, $type = 0)
+    public function load($image, int $type = 0)
     {
         // @phpstan-ignore instanceof.alwaysTrue
         if (!($image instanceof \Imagick)) {
@@ -86,7 +86,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     /**
      * @inheritDoc
      */
-    public function loadFile($file)
+    public function loadFile(string $file)
     {
         try {
             $this->imagick->clear();
@@ -137,7 +137,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     /**
      * @inheritDoc
      */
-    public function createEmptyImage($width, $height)
+    public function createEmptyImage(int $width, int $height)
     {
         $this->imagick->newImage($width, $height, 'white');
 
@@ -148,11 +148,8 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     /**
      * @inheritDoc
      */
-    public function createThumbnail($maxWidth, $maxHeight, $preserveAspectRatio = true)
+    public function createThumbnail(int $maxWidth, int $maxHeight, bool $preserveAspectRatio = true)
     {
-        $maxHeight = (int)$maxHeight;
-        $maxWidth = (int)$maxWidth;
-
         $thumbnail = clone $this->imagick;
 
         if (\in_array($thumbnail->getImageFormat(), self::$animatedFormats)) {
@@ -179,7 +176,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     /**
      * @inheritDoc
      */
-    public function clip($originX, $originY, $width, $height)
+    public function clip(int $originX, int $originY, int $width, int $height)
     {
         if (\in_array($this->imagick->getImageFormat(), self::$animatedFormats)) {
             $this->imagick = $this->imagick->coalesceImages();
@@ -196,7 +193,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     /**
      * @inheritDoc
      */
-    public function resize($originX, $originY, $originWidth, $originHeight, $targetWidth, $targetHeight)
+    public function resize(int $originX, int $originY, int $originWidth, int $originHeight, int $targetWidth, int $targetHeight)
     {
         if (\in_array($this->imagick->getImageFormat(), self::$animatedFormats)) {
             $image = $this->imagick->coalesceImages();
@@ -218,7 +215,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     /**
      * @inheritDoc
      */
-    public function drawRectangle($startX, $startY, $endX, $endY)
+    public function drawRectangle(int $startX, int $startY, int $endX, int $endY)
     {
         $draw = new \ImagickDraw();
         $draw->setFillColor($this->color);
@@ -231,7 +228,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     /**
      * @inheritDoc
      */
-    public function drawText($text, $x, $y, $font, $size, $opacity = 1.0)
+    public function drawText(string $text, int $x, int $y, $font, int $size, float $opacity = 1.0)
     {
         $draw = new \ImagickDraw();
         $draw->setFillColor($this->color);
@@ -257,7 +254,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     /**
      * @inheritDoc
      */
-    public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1.0)
+    public function drawTextRelative(string $text, string $position, int $margin, int $offsetX, int $offsetY, $font, int $size, float $opacity = 1.0)
     {
         // split text into multiple lines
         $lines = \explode("\n", StringUtil::unifyNewlines($text));
@@ -322,7 +319,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     /**
      * @inheritDoc
      */
-    public function textFitsImage($text, $margin, $font, $size)
+    public function textFitsImage(string $text, int $margin, $font, int $size)
     {
         $draw = new \ImagickDraw();
         $draw->setFont($font);
@@ -335,7 +332,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     /**
      * @inheritDoc
      */
-    public function adjustFontSize($text, $margin, $font, $size)
+    public function adjustFontSize(string $text, int $margin, $font, int $size)
     {
         return 0;
     }
@@ -343,7 +340,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     /**
      * @inheritDoc
      */
-    public function setColor($red, $green, $blue)
+    public function setColor(int $red, int $green, int $blue)
     {
         $this->color = new \ImagickPixel();
         $this->color->setColor('rgb(' . $red . ',' . $green . ',' . $blue . ')');
@@ -364,7 +361,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     /**
      * @inheritDoc
      */
-    public function setTransparentColor($red, $green, $blue)
+    public function setTransparentColor(int $red, int $green, int $blue)
     {
         $color = 'rgb(' . $red . ',' . $green . ',' . $blue . ')';
         $this->imagick->paintTransparentImage($color, 0.0, 0);
@@ -381,7 +378,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     /**
      * @inheritDoc
      */
-    public function writeImage($image, $filename)
+    public function writeImage($image, ?string $filename)
     {
         if (!($image instanceof \Imagick)) {
             throw new SystemException("Given image is not a valid Imagick-object.");
@@ -438,7 +435,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     /**
      * @inheritDoc
      */
-    public function overlayImage($file, $x, $y, $opacity)
+    public function overlayImage(string $file, int $x, int $y, float $opacity)
     {
         try {
             $overlayImage = new \Imagick($file);
@@ -469,7 +466,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     /**
      * @inheritDoc
      */
-    public function overlayImageRelative($file, $position, $margin, $opacity)
+    public function overlayImageRelative(string $file, string $position, int $margin, float $opacity)
     {
         // does nothing
     }
@@ -514,9 +511,8 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     /**
      * @inheritDoc
      */
-    public function saveImageAs($image, string $filename, string $type, int $quality = 100): void
+    public function saveImageAs(object $image, string $filename, string $type, int $quality = 100): void
     {
-        // @phpstan-ignore instanceof.alwaysTrue
         if (!($image instanceof \Imagick)) {
             throw new \InvalidArgumentException("Given image is not a valid Imagick-object.");
         }

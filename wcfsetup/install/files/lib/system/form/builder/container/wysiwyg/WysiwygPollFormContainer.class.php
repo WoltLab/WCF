@@ -254,7 +254,7 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
     /**
      * @inheritDoc
      */
-    public function updatedObject(array $data, IStorableObject $object, $loadValues = true)
+    public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true)
     {
         if ($loadValues && $object instanceof IPollContainer && $object->getPollID() !== null) {
             $this->poll = new Poll($object->getPollID());

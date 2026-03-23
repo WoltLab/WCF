@@ -12,7 +12,7 @@ namespace wcf\system\stat;
 final class AttachmentDiskUsageStatDailyHandler extends AbstractFileDiskUsageStatDailyHandler
 {
     #[\Override]
-    public function getData($date)
+    public function getData(int $date)
     {
         return [
             'counter' => $this->getCounter($date, 'wcf1_attachment', 'uploadTime'),

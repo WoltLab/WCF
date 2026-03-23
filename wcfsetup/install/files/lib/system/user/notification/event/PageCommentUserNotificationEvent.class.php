@@ -65,7 +65,7 @@ class PageCommentUserNotificationEvent extends AbstractCommentUserNotificationEv
     /**
      * @inheritDoc
      */
-    public function getEmailMessage($notificationType = 'instant')
+    public function getEmailMessage(string $notificationType = 'instant'): array
     {
         return [
             'message-id' => 'com.woltlab.wcf.user.pageComment.notification/' . $this->getUserNotificationObject()->commentID,

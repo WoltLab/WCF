@@ -116,7 +116,7 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
     /**
      * @inheritDoc
      */
-    public function getThumbnailLink($size)
+    public function getThumbnailLink(string $size)
     {
         if (!isset(self::$thumbnailSizes[$size])) {
             throw new \InvalidArgumentException("Unknown thumbnail size '" . $size . "'");
@@ -176,7 +176,7 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
     /**
      * @inheritDoc
      */
-    public function getThumbnailLocation($size)
+    public function getThumbnailLocation(string $size)
     {
         if (!isset(self::$thumbnailSizes[$size])) {
             throw new \InvalidArgumentException("Unknown thumbnail size '" . $size . "'");

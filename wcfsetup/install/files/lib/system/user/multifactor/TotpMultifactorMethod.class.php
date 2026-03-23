@@ -54,7 +54,7 @@ final class TotpMultifactorMethod implements IMultifactorMethod
     /**
      * @inheritDoc
      */
-    public function createManagementForm(IFormDocument $form, ?Setup $setup, $returnData = null): void
+    public function createManagementForm(IFormDocument $form, ?Setup $setup, mixed $returnData = null): void
     {
         if ($returnData !== null) {
             \assert(\is_array($returnData));

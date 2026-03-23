@@ -334,7 +334,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * @inheritDoc
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         return $this->data[$name] ?? $this->getUserOption($name);
     }
@@ -592,7 +592,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * @inheritDoc
      */
-    public function getUserID()
+    public function getUserID(): int
     {
         return $this->userID;
     }

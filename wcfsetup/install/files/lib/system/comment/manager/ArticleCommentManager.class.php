@@ -5,6 +5,8 @@ namespace wcf\system\comment\manager;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\article\content\ArticleContentEditor;
 use wcf\data\article\content\ArticleContentList;
+use wcf\data\comment\Comment;
+use wcf\data\comment\response\CommentResponse;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
@@ -61,7 +63,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
     /**
      * @inheritDoc
      */
-    public function isAccessible($objectID, $validateWritePermission = false)
+    public function isAccessible(int $objectID, bool $validateWritePermission = false)
     {
         // check object id
         $articleContent = new ArticleContent($objectID);
@@ -89,7 +91,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
     /**
      * @inheritDoc
      */
-    public function getLink($objectTypeID, $objectID)
+    public function getLink(int $objectTypeID, int $objectID)
     {
         $articleContent = ViewableArticleContentRuntimeCache::getInstance()->getObject($objectID);
         if ($articleContent) {
@@ -102,7 +104,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
     /**
      * @inheritDoc
      */
-    public function getTitle($objectTypeID, $objectID, $isResponse = false)
+    public function getTitle(int $objectTypeID, int $objectID, bool $isResponse = false)
     {
         if ($isResponse) {
             return WCF::getLanguage()->get('wcf.article.commentResponse');
@@ -114,7 +116,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
     /**
      * @inheritDoc
      */
-    public function updateCounter($objectID, $value)
+    public function updateCounter(int $objectID, int $value)
     {
         $editor = new ArticleContentEditor(new ArticleContent($objectID));
         $editor->updateCounters([
@@ -237,7 +239,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
     /**
      * @inheritDoc
      */
-    public function isContentAuthor($commentOrResponse)
+    public function isContentAuthor(Comment|CommentResponse $commentOrResponse)
     {
         $articleContent = ViewableArticleContentRuntimeCache::getInstance()
             ->getObject($this->getObjectID($commentOrResponse));

@@ -21,7 +21,7 @@ class LineBreakSeparatedTextUserGroupOptionType extends LineBreakSeparatedTextOp
     /**
      * @inheritDoc
      */
-    public function merge($defaultValue, $groupValue)
+    public function merge(mixed $defaultValue, mixed $groupValue)
     {
         $defaultValue = empty($defaultValue) ? [] : \explode("\n", StringUtil::unifyNewlines($defaultValue));
         $groupValue = empty($groupValue) ? [] : \explode("\n", StringUtil::unifyNewlines($groupValue));

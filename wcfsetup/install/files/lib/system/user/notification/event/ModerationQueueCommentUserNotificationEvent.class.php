@@ -65,7 +65,7 @@ class ModerationQueueCommentUserNotificationEvent extends AbstractCommentUserNot
     /**
      * @inheritDoc
      */
-    public function getEmailMessage($notificationType = 'instant')
+    public function getEmailMessage(string $notificationType = 'instant'): array
     {
         return [
             'message-id' => 'com.woltlab.wcf.moderation.queue.notification/' . $this->getUserNotificationObject()->commentID,
@@ -128,9 +128,7 @@ class ModerationQueueCommentUserNotificationEvent extends AbstractCommentUserNot
     /**
      * @inheritDoc
      */
-    protected function prepare()
-    {
-    }
+    protected function prepare() {}
 
     /**
      * @inheritDoc

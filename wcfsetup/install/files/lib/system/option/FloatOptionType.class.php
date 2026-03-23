@@ -24,7 +24,7 @@ class FloatOptionType extends TextOptionType
     /**
      * @inheritDoc
      */
-    public function getFormElement(Option $option, $value)
+    public function getFormElement(Option $option, mixed $value)
     {
         $value = \str_replace('.', WCF::getLanguage()->get('wcf.global.decimalPoint'), $value);
 
@@ -34,7 +34,7 @@ class FloatOptionType extends TextOptionType
     /**
      * @inheritDoc
      */
-    public function getData(Option $option, $newValue)
+    public function getData(Option $option, mixed $newValue)
     {
         // @phpstan-ignore return.type
         return $this->toFloat($newValue);
@@ -43,7 +43,7 @@ class FloatOptionType extends TextOptionType
     /**
      * @inheritDoc
      */
-    public function compare($value1, $value2)
+    public function compare(mixed $value1, mixed $value2)
     {
         if ($value1 == $value2) {
             return 0;
@@ -55,7 +55,7 @@ class FloatOptionType extends TextOptionType
     /**
      * @inheritDoc
      */
-    public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value)
+    public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, mixed $value)
     {
         if (!isset($_POST['searchOptions'][$option->optionName])) {
             return false;

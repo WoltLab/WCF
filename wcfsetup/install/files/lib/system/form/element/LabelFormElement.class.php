@@ -43,7 +43,7 @@ class LabelFormElement extends AbstractFormElement
     /**
      * @inheritDoc
      */
-    public function getHTML($formName)
+    public function getHTML(string $formName)
     {
         return <<<HTML
 <dl>

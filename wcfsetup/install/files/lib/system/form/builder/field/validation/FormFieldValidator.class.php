@@ -29,7 +29,7 @@ final class FormFieldValidator implements IFormFieldValidator
     /**
      * @inheritDoc
      */
-    public function __construct($id, callable $validator)
+    public function __construct(string $id, callable $validator)
     {
         static::validateId($id);
 

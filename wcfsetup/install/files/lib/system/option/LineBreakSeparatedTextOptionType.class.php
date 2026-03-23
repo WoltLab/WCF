@@ -20,7 +20,7 @@ class LineBreakSeparatedTextOptionType extends TextareaOptionType
     /**
      * @inheritDoc
      */
-    public function getFormElement(Option $option, $value)
+    public function getFormElement(Option $option, mixed $value)
     {
         $values = ArrayUtil::trim(\explode("\n", StringUtil::unifyNewlines($value ?? '')));
         \uasort($values, 'strnatcmp');

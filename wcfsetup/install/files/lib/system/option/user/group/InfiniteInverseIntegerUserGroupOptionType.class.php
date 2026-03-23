@@ -17,7 +17,7 @@ class InfiniteInverseIntegerUserGroupOptionType extends InverseIntegerUserGroupO
     /**
      * @inheritDoc
      */
-    public function merge($defaultValue, $groupValue)
+    public function merge(mixed $defaultValue, mixed $groupValue)
     {
         if ($groupValue == -1 || $defaultValue == $groupValue) {
             return;
@@ -33,7 +33,7 @@ class InfiniteInverseIntegerUserGroupOptionType extends InverseIntegerUserGroupO
     /**
      * @inheritDoc
      */
-    public function compare($value1, $value2)
+    public function compare(mixed $value1, mixed $value2)
     {
         if ($value1 == $value2) {
             return 0;

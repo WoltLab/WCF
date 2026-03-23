@@ -49,7 +49,7 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
     /**
      * @inheritDoc
      */
-    public function setLoopCount($loopCount)
+    public function setLoopCount(int $loopCount)
     {
         parent::setLoopCount($loopCount);
 

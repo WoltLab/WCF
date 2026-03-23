@@ -22,14 +22,12 @@ abstract class AbstractOptionType implements IOptionType
     /**
      * @inheritDoc
      */
-    public function validate(Option $option, $newValue)
-    {
-    }
+    public function validate(Option $option, mixed $newValue) {}
 
     /**
      * @inheritDoc
      */
-    public function getData(Option $option, $newValue)
+    public function getData(Option $option, mixed $newValue)
     {
         return $newValue;
     }
@@ -53,7 +51,7 @@ abstract class AbstractOptionType implements IOptionType
     /**
      * @inheritDoc
      */
-    public function compare($value1, $value2)
+    public function compare(mixed $value1, mixed $value2)
     {
         return 0;
     }
@@ -69,7 +67,7 @@ abstract class AbstractOptionType implements IOptionType
     /**
      * @inheritDoc
      */
-    public function getDisabledOptionNames($value, $enableOptions)
+    public function getDisabledOptionNames(mixed $value, string $enableOptions)
     {
         return [];
     }

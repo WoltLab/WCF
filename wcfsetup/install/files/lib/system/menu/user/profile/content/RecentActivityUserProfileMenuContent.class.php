@@ -19,7 +19,7 @@ class RecentActivityUserProfileMenuContent extends SingletonFactory implements I
     /**
      * @inheritDoc
      */
-    public function getContent($userID)
+    public function getContent(int $userID)
     {
         $eventList = new ViewableUserActivityEventList();
 
@@ -45,7 +45,7 @@ class RecentActivityUserProfileMenuContent extends SingletonFactory implements I
     /**
      * @inheritDoc
      */
-    public function isVisible($userID)
+    public function isVisible(int $userID)
     {
         return true;
     }

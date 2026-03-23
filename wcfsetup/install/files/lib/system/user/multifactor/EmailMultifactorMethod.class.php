@@ -45,7 +45,7 @@ final class EmailMultifactorMethod implements IMultifactorMethod
     /**
      * @inheritDoc
      */
-    public function createManagementForm(IFormDocument $form, ?Setup $setup, $returnData = null): void
+    public function createManagementForm(IFormDocument $form, ?Setup $setup, mixed $returnData = null): void
     {
         $form->addDefaultButton(false);
         $form->successMessage('wcf.user.security.multifactor.email.success');

@@ -14,7 +14,7 @@ class GroupFormElementContainer extends AbstractFormElementContainer
     /**
      * @inheritDoc
      */
-    public function getHTML($formName)
+    public function getHTML(string $formName)
     {
         $content = '';
         foreach ($this->children as $element) {

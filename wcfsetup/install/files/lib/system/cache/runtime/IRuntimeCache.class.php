@@ -22,7 +22,7 @@ interface IRuntimeCache
      *
      * @return void
      */
-    public function cacheObjectID(int $objectID);
+    public function cacheObjectID(?int $objectID);
 
     /**
      * Caches the given object ids so that during the next object fetch, the objects with
@@ -47,7 +47,7 @@ interface IRuntimeCache
      *
      * @return ?TDatabaseObject
      */
-    public function getObject(int $objectID);
+    public function getObject(?int $objectID);
 
     /**
      * Returns the objects with the given ids. If an object does not exist, the array element
@@ -65,7 +65,7 @@ interface IRuntimeCache
      *
      * @return void
      */
-    public function removeObject(int $objectID);
+    public function removeObject(?int $objectID);
 
     /**
      * Removes the objects with the given ids from the runtime cache if they have already been loaded.

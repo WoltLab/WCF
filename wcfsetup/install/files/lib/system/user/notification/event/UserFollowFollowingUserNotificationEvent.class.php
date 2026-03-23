@@ -69,7 +69,7 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
     /**
      * @inheritDoc
      */
-    public function getEmailMessage($notificationType = 'instant')
+    public function getEmailMessage(string $notificationType = 'instant')
     {
         return [
             'template' => 'email_notification_userFollowFollowing',

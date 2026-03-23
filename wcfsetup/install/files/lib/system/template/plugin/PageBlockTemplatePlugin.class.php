@@ -46,7 +46,7 @@ class PageBlockTemplatePlugin implements IBlockTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute(array $tagArgs, $blockContent, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, string $blockContent, TemplateEngine $tplObj)
     {
         $pageID = null;
         if (!empty($tagArgs['pageID'])) {

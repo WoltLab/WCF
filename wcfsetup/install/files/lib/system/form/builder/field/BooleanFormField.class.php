@@ -77,7 +77,7 @@ class BooleanFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    public function value($value)
+    public function value(mixed $value)
     {
         if (\is_string($value) && \in_array($value, ['0', '1', 'true', 'false'])) {
             $value = ($value === '1' || $value === 'true');

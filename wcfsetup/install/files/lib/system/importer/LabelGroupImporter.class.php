@@ -23,7 +23,7 @@ class LabelGroupImporter extends AbstractImporter
     /**
      * @inheritDoc
      */
-    public function import($oldID, array $data, array $additionalData = [])
+    public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         // save label group
         $labelGroup = LabelGroupEditor::create($data);

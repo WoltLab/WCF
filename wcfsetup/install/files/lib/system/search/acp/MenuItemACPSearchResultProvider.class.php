@@ -18,7 +18,7 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
     /**
      * @inheritDoc
      */
-    public function search($query)
+    public function search(string $query)
     {
         $results = [];
         $menuItems = ACPMenu::getInstance()->menuItemList;

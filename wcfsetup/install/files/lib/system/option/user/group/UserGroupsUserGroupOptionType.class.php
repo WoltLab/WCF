@@ -21,7 +21,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
     /**
      * @inheritDoc
      */
-    public function getFormElement(Option $option, $value)
+    public function getFormElement(Option $option, mixed $value)
     {
         // get selected group
         $selectedGroups = \explode(',', $value ?? '');
@@ -44,7 +44,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
     /**
      * @inheritDoc
      */
-    public function validate(Option $option, $newValue)
+    public function validate(Option $option, mixed $newValue)
     {
         // get all groups
         $groups = UserGroup::getGroupsByType();
@@ -66,7 +66,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
     /**
      * @inheritDoc
      */
-    public function getData(Option $option, $newValue)
+    public function getData(Option $option, mixed $newValue)
     {
         if (!\is_array($newValue)) {
             $newValue = [];
@@ -80,7 +80,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
     /**
      * @inheritDoc
      */
-    public function merge($defaultValue, $groupValue)
+    public function merge(mixed $defaultValue, mixed $groupValue)
     {
         $defaultValue = empty($defaultValue) ? [] : \explode(',', StringUtil::unifyNewlines($defaultValue));
         $groupValue = empty($groupValue) ? [] : \explode(',', StringUtil::unifyNewlines($groupValue));
@@ -91,7 +91,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
     /**
      * @inheritDoc
      */
-    public function compare($value1, $value2)
+    public function compare(mixed $value1, mixed $value2)
     {
         $value1 = $value1 ? \explode(',', $value1) : [];
         $value2 = $value2 ? \explode(',', $value2) : [];

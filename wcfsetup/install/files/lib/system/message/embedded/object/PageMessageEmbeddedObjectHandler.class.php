@@ -51,7 +51,7 @@ class PageMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObje
     /**
      * @inheritDoc
      */
-    public function validateValues($objectType, $objectID, array $values)
+    public function validateValues(string $objectType, int $objectID, array $values)
     {
         // Pages can be referenced as `123#Some Text`, where everything after the number
         // is a comment for better readability. Converting the values to integers via
@@ -66,7 +66,7 @@ class PageMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObje
     /**
      * @inheritDoc
      */
-    public function replaceSimple($objectType, $objectID, $value, array $attributes)
+    public function replaceSimple(string $objectType, int $objectID, string|int $value, array $attributes)
     {
         $page = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.page', $value);
         if ($page === null) {

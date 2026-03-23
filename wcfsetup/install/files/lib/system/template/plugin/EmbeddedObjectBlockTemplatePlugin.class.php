@@ -26,7 +26,7 @@ class EmbeddedObjectBlockTemplatePlugin implements IBlockTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute(array $tagArgs, $blockContent, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, string $blockContent, TemplateEngine $tplObj)
     {
         $data = \unserialize(\base64_decode($blockContent));
 

@@ -18,7 +18,7 @@ final class GroupBBCode extends AbstractBBCode
     /**
      * @inheritDoc
      */
-    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser): string
+    public function getParsedTag(array $openingTag, string $content, array $closingTag, BBCodeParser $parser): string
     {
         $content = $openingTag['attributes'][0];
         if (!\str_starts_with($content, '@')) {

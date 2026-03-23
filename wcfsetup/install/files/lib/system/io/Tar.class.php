@@ -179,7 +179,7 @@ class Tar implements IArchive
     /**
      * @inheritDoc
      */
-    public function getIndexByFilename($filename)
+    public function getIndexByFilename(string $filename)
     {
         foreach ($this->contentList as $index => $file) {
             if ($file['filename'] == $filename) {
@@ -260,7 +260,7 @@ class Tar implements IArchive
     /**
      * @inheritDoc
      */
-    public function extract($index, $destination)
+    public function extract($index, string $destination)
     {
         if (!$this->read) {
             $this->open();

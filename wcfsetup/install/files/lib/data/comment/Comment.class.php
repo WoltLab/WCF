@@ -140,7 +140,7 @@ class Comment extends DatabaseObject implements IMessage
     /**
      * @inheritDoc
      */
-    public function getExcerpt($maxLength = 255)
+    public function getExcerpt(int $maxLength = 255)
     {
         return StringUtil::truncateHTML($this->getSimplifiedFormattedMessage(), $maxLength);
     }

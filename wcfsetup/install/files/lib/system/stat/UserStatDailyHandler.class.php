@@ -14,7 +14,7 @@ class UserStatDailyHandler extends AbstractStatDailyHandler
     /**
      * @inheritDoc
      */
-    public function getData($date)
+    public function getData(int $date)
     {
         return [
             'counter' => $this->getCounter($date, 'wcf1_user', 'registrationDate'),

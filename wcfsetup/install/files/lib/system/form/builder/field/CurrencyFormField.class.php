@@ -27,7 +27,7 @@ class CurrencyFormField extends AbstractNumericFormField
     }
 
     #[\Override]
-    public function value($value)
+    public function value(mixed $value)
     {
         parent::value($value);
 

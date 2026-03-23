@@ -119,7 +119,7 @@ final class CaptchaFormField extends AbstractFormField implements IObjectTypeFor
     /**
      * @inheritDoc
      */
-    public function objectType($objectType)
+    public function objectType(string $objectType)
     {
         // ignore empty object type which is the case if no captcha has been set
         if ($objectType === '') {

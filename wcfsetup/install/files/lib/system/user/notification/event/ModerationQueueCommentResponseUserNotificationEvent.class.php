@@ -68,7 +68,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractCommen
     /**
      * @inheritDoc
      */
-    public function getEmailMessage($notificationType = 'instant')
+    public function getEmailMessage(string $notificationType = 'instant'): array
     {
         $comment = CommentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->commentID);
         if ($comment->userID) {

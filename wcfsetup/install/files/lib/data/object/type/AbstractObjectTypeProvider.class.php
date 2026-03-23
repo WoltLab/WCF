@@ -39,7 +39,7 @@ abstract class AbstractObjectTypeProvider implements IObjectTypeProvider
     /**
      * @inheritDoc
      */
-    public function getObjectByID($objectID)
+    public function getObjectByID(int $objectID)
     {
         $object = new $this->className($objectID);
         if ($this->decoratorClassName) {

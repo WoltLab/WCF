@@ -145,7 +145,7 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
     /**
      * @inheritDoc
      */
-    public function getObjectTypeName($definitionName)
+    public function getObjectTypeName(string $definitionName)
     {
         return $this->objectTypes[$definitionName] ?? null;
     }
@@ -169,7 +169,7 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
     /**
      * @inheritDoc
      */
-    public function getLanguageVariable($name, $optional = false)
+    public function getLanguageVariable(string $name, bool $optional = false)
     {
         if ($this->langVarPrefix) {
             $value = WCF::getLanguage()->getDynamicVariable($this->langVarPrefix . '.' . $name, [], true);

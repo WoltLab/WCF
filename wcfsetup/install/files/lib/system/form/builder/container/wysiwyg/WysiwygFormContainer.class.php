@@ -434,7 +434,7 @@ class WysiwygFormContainer extends FormContainer
     /**
      * @inheritDoc
      */
-    public function updatedObject(array $data, IStorableObject $object, $loadValues = true)
+    public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true)
     {
         $this->objectId = $object->{$object::getDatabaseTableIndexName()};
 

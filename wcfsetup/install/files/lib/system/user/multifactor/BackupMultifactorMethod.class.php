@@ -83,7 +83,7 @@ final class BackupMultifactorMethod implements IMultifactorMethod
     /**
      * @inheritDoc
      */
-    public function createManagementForm(IFormDocument $form, ?Setup $setup, $returnData = null): void
+    public function createManagementForm(IFormDocument $form, ?Setup $setup, mixed $returnData = null): void
     {
         $form->addDefaultButton(false);
         $form->successMessage('wcf.user.security.multifactor.backup.success');

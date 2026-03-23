@@ -34,7 +34,7 @@ class MessageOptionType extends TextareaOptionType
     /**
      * @inheritDoc
      */
-    public function getData(Option $option, $newValue)
+    public function getData(Option $option, mixed $newValue)
     {
         $this->initMessageObjectType($option);
 
@@ -56,7 +56,7 @@ class MessageOptionType extends TextareaOptionType
     /**
      * @inheritDoc
      */
-    public function getFormElement(Option $option, $value)
+    public function getFormElement(Option $option, mixed $value)
     {
         $permission = $option->disallowedbbcodepermission ?: 'user.message.disallowedBBCodes';
         BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
@@ -78,7 +78,7 @@ class MessageOptionType extends TextareaOptionType
     /**
      * @inheritDoc
      */
-    public function validate(Option $option, $newValue)
+    public function validate(Option $option, mixed $newValue)
     {
         parent::validate($option, $newValue);
 
@@ -97,8 +97,8 @@ class MessageOptionType extends TextareaOptionType
         if (empty($this->messageObjectType)) {
             throw new \RuntimeException(
                 "Message object type '" .
-                $option->optionName .
-                "' requires an object type for definition 'com.woltlab.wcf.message'."
+                    $option->optionName .
+                    "' requires an object type for definition 'com.woltlab.wcf.message'."
             );
         }
     }

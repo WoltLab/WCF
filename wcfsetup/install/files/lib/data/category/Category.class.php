@@ -78,7 +78,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
     /**
      * @inheritDoc
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         // forward 'className' property requests to object type
         if ($name == 'className') {
@@ -100,7 +100,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
     /**
      * @inheritDoc
      */
-    public function __isset($name)
+    public function __isset(string $name)
     {
         return parent::__isset($name) || isset($this->data['additionalData'][$name]);
     }
@@ -209,7 +209,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
     /**
      * @inheritDoc
      */
-    public function getPermission($permission, ?User $user = null)
+    public function getPermission(string $permission, ?User $user = null)
     {
         if ($user === null) {
             $user = WCF::getUser();

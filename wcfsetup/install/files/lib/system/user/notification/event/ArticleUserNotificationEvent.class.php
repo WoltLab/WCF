@@ -43,7 +43,7 @@ class ArticleUserNotificationEvent extends AbstractUserNotificationEvent impleme
     /**
      * @inheritDoc
      */
-    public function getEmailMessage($notificationType = 'instant')
+    public function getEmailMessage(string $notificationType = 'instant'): array
     {
         if ($this->getUserNotificationObject()->isMultilingual) {
             $articleContent = $this->getUserNotificationObject()

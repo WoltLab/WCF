@@ -48,7 +48,7 @@ class AbstractACLImporter extends AbstractImporter
     /**
      * @inheritDoc
      */
-    public function import($oldID, array $data, array $additionalData = [])
+    public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         if (!isset($this->options[$additionalData['optionName']])) {
             return 0;

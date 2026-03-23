@@ -78,7 +78,7 @@ final class PollOptionsFormField extends AbstractFormField
     /**
      * @inheritDoc
      */
-    public function value($value)
+    public function value(mixed $value)
     {
         $pollOptions = [];
 

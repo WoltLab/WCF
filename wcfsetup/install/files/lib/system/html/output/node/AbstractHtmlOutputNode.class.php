@@ -33,7 +33,7 @@ abstract class AbstractHtmlOutputNode extends AbstractHtmlNode implements IHtmlO
     /**
      * @inheritDoc
      */
-    public function setOutputType($outputType)
+    public function setOutputType(string $outputType)
     {
         $this->outputType = $outputType;
     }

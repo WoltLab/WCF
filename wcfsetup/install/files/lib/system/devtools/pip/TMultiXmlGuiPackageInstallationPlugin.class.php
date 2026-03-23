@@ -146,7 +146,7 @@ trait TMultiXmlGuiPackageInstallationPlugin
      * @inheritDoc
      * @return void
      */
-    public function setEditedEntryIdentifier($identifier)
+    public function setEditedEntryIdentifier(string $identifier)
     {
         $editedEntries = [];
         foreach ($this->getProjectXmls() as $xml) {

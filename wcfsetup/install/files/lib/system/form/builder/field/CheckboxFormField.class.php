@@ -56,7 +56,7 @@ class CheckboxFormField extends BooleanFormField implements INullableFormField
     }
 
     #[\Override]
-    public function value($value)
+    public function value(mixed $value)
     {
         if ($this->isNullable() && $value === null) {
             $value = 0;

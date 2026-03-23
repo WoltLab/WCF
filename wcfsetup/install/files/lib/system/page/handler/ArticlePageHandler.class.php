@@ -24,7 +24,7 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
     /**
      * @inheritDoc
      */
-    public function getLink($objectID)
+    public function getLink(int $objectID)
     {
         return ViewableArticleRuntimeCache::getInstance()->getObject($objectID)->getLink();
     }
@@ -32,7 +32,7 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
     /**
      * @inheritDoc
      */
-    public function isValid($objectID)
+    public function isValid(?int $objectID)
     {
         return ViewableArticleRuntimeCache::getInstance()->getObject($objectID) !== null;
     }
@@ -40,7 +40,7 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
     /**
      * @inheritDoc
      */
-    public function isVisible($objectID = null)
+    public function isVisible(?int $objectID = null)
     {
         $article = ViewableArticleRuntimeCache::getInstance()->getObject($objectID);
 
@@ -50,7 +50,7 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
     /**
      * @inheritDoc
      */
-    public function lookup($searchString)
+    public function lookup(string $searchString)
     {
         $articleList = new ViewableArticleList();
         $articleList->sqlSelects = "(

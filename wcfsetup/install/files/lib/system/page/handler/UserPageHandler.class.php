@@ -20,7 +20,7 @@ class UserPageHandler extends AbstractLookupPageHandler implements IOnlineLocati
     /**
      * @inheritDoc
      */
-    public function getLink($objectID)
+    public function getLink(int $objectID)
     {
         return UserRuntimeCache::getInstance()->getObject($objectID)->getLink();
     }

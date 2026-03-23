@@ -24,7 +24,7 @@ interface IMultifactorMethod
     /**
      * Populates the form to set-up and manage this method.
      */
-    public function createManagementForm(IFormDocument $form, ?Setup $setup, ?mixed $returnData = null): void;
+    public function createManagementForm(IFormDocument $form, ?Setup $setup, mixed $returnData = null): void;
 
     /**
      * Updates the database information based on the data received in the management form.

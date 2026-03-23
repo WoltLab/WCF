@@ -47,7 +47,7 @@ abstract class DatabaseObjectDecorator extends DatabaseObject
     /**
      * @inheritDoc
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         return $this->object->__get($name);
     }
@@ -55,7 +55,7 @@ abstract class DatabaseObjectDecorator extends DatabaseObject
     /**
      * @inheritDoc
      */
-    public function __isset($name)
+    public function __isset(string $name)
     {
         return $this->object->__isset($name);
     }

@@ -56,7 +56,7 @@ class DevtoolsTar extends Tar
     /**
      * @inheritDoc
      */
-    public function getIndexByFilename($filename)
+    public function getIndexByFilename(string $filename)
     {
         return isset($this->files[$filename]) ? $filename : false;
     }
@@ -78,7 +78,7 @@ class DevtoolsTar extends Tar
     /**
      * @inheritDoc
      */
-    public function extract($index, $destination)
+    public function extract($index, string $destination)
     {
         // The source file is empty, if the file is a symlink, which yield to an error.
         if (empty($this->files[$index])) {

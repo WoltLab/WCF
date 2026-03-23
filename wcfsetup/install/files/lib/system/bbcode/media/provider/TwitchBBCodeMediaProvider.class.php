@@ -23,7 +23,7 @@ class TwitchBBCodeMediaProvider implements IBBCodeMediaProvider
     /**
      * @inheritDoc
      */
-    public function parse($url, array $matches = [])
+    public function parse(string $url, array $matches = [])
     {
         $src = '';
         if (!empty($matches['CLIP'])) {

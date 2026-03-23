@@ -52,7 +52,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     /**
      * @inheritDoc
      */
-    public function load($image, $type = 0)
+    public function load($image, int $type = 0)
     {
         $this->adapter->load($image, $type);
     }
@@ -60,7 +60,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     /**
      * @inheritDoc
      */
-    public function loadFile($file)
+    public function loadFile(string $file)
     {
         if (!\file_exists($file) || !\is_readable($file)) {
             throw new SystemException("Image '" . $file . "' is not readable or does not exists.");
@@ -88,7 +88,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     /**
      * @inheritDoc
      */
-    public function createEmptyImage($width, $height)
+    public function createEmptyImage(int $width, int $height)
     {
         $this->adapter->createEmptyImage($width, $height);
     }
@@ -96,7 +96,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     /**
      * @inheritDoc
      */
-    public function createThumbnail($maxWidth, $maxHeight, $preserveAspectRatio = true)
+    public function createThumbnail(int $maxWidth, int $maxHeight, bool $preserveAspectRatio = true)
     {
         if ($maxWidth > $this->getWidth() && $maxHeight > $this->getHeight()) {
             throw new SystemException(
@@ -119,7 +119,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     /**
      * @inheritDoc
      */
-    public function clip($originX, $originY, $width, $height)
+    public function clip(int $originX, int $originY, int $width, int $height)
     {
         // validate if coordinates and size are within bounds
         if ($originX < 0 || $originY < 0) {
@@ -140,7 +140,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     /**
      * @inheritDoc
      */
-    public function resize($originX, $originY, $originWidth, $originHeight, $targetWidth, $targetHeight)
+    public function resize(int $originX, int $originY, int $originWidth, int $originHeight, int $targetWidth, int $targetHeight)
     {
         // use origin dimensions if target dimensions are both zero
         if ($targetWidth == 0 && $targetHeight == 0) {
@@ -154,7 +154,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     /**
      * @inheritDoc
      */
-    public function drawRectangle($startX, $startY, $endX, $endY)
+    public function drawRectangle(int $startX, int $startY, int $endX, int $endY)
     {
         if (!$this->adapter->hasColor()) {
             throw new SystemException("Cannot draw a rectangle unless a color has been specified with setColor().");
@@ -166,7 +166,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     /**
      * @inheritDoc
      */
-    public function drawText($text, $x, $y, $font, $size, $opacity = 1.0)
+    public function drawText(string $text, int $x, int $y, $font, int $size, float $opacity = 1.0)
     {
         if (!$this->adapter->hasColor()) {
             throw new SystemException("Cannot draw text unless a color has been specified with setColor().");
@@ -183,7 +183,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     /**
      * @inheritDoc
      */
-    public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1.0)
+    public function drawTextRelative(string $text, string $position, int $margin, int $offsetX, int $offsetY, $font, int $size, float $opacity = 1.0)
     {
         if (!$this->adapter->hasColor()) {
             throw new SystemException("Cannot draw text unless a color has been specified with setColor().");
@@ -210,7 +210,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     /**
      * @inheritDoc
      */
-    public function textFitsImage($text, $margin, $font, $size)
+    public function textFitsImage(string $text, int $margin, $font, int $size)
     {
         return $this->adapter->textFitsImage($text, $margin, $font, $size);
     }
@@ -218,7 +218,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     /**
      * @inheritDoc
      */
-    public function adjustFontSize($text, $margin, $font, $size)
+    public function adjustFontSize(string $text, int $margin, $font, int $size)
     {
         // adjust font size
         while ($size && !$this->textFitsImage($text, $margin, $font, $size)) {
@@ -231,7 +231,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     /**
      * @inheritDoc
      */
-    public function setColor($red, $green, $blue)
+    public function setColor(int $red, int $green, int $blue)
     {
         $this->adapter->setColor($red, $green, $blue);
     }
@@ -247,7 +247,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     /**
      * @inheritDoc
      */
-    public function setTransparentColor($red, $green, $blue)
+    public function setTransparentColor(int $red, int $green, int $blue)
     {
         $this->adapter->setTransparentColor($red, $green, $blue);
     }
@@ -255,7 +255,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     /**
      * @inheritDoc
      */
-    public function writeImage($image, $filename = null)
+    public function writeImage($image, ?string $filename = null)
     {
         if ($filename === null) {
             $filename = $image;
@@ -312,7 +312,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     /**
      * @inheritDoc
      */
-    public function overlayImage($file, $x, $y, $opacity)
+    public function overlayImage(string $file, int $x, int $y, float $opacity)
     {
         // validate file
         if (!\file_exists($file)) {
@@ -330,7 +330,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     /**
      * @inheritDoc
      */
-    public function overlayImageRelative($file, $position, $margin, $opacity)
+    public function overlayImageRelative(string $file, string $position, int $margin, float $opacity)
     {
         // validate file
         if (!\file_exists($file)) {
@@ -410,7 +410,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     /**
      * @inheritDoc
      */
-    public function checkMemoryLimit($width, $height, $mimeType)
+    public function checkMemoryLimit(int $width, int $height, string $mimeType)
     {
         if ($this->adapter instanceof IMemoryAwareImageAdapter) {
             return $this->adapter->checkMemoryLimit($width, $height, $mimeType);
@@ -424,7 +424,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     /**
      * @inheritDoc
      */
-    public function saveImageAs($image, string $filename, string $type, int $quality = 100): void
+    public function saveImageAs(object $image, string $filename, string $type, int $quality = 100): void
     {
         switch ($type) {
             case "gif":

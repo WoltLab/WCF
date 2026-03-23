@@ -148,7 +148,7 @@ class OptionHandler implements IOptionHandler
     /**
      * @inheritDoc
      */
-    public function __construct($supportI18n, $languageItemPattern = '', $categoryName = '')
+    public function __construct(bool $supportI18n, string $languageItemPattern = '', string $categoryName = '')
     {
         $this->categoryName = $categoryName;
         $this->languageItemPattern = $languageItemPattern;
@@ -204,7 +204,7 @@ class OptionHandler implements IOptionHandler
     /**
      * @inheritDoc
      */
-    public function getOptionTree($parentCategoryName = '', $level = 0)
+    public function getOptionTree(string $parentCategoryName = '', int $level = 0)
     {
         $tree = [];
 
@@ -242,7 +242,7 @@ class OptionHandler implements IOptionHandler
     /**
      * @inheritDoc
      */
-    public function getCategoryOptions($categoryName = '', $inherit = true)
+    public function getCategoryOptions(string $categoryName = '', bool $inherit = true)
     {
         $children = [];
 
@@ -323,7 +323,7 @@ class OptionHandler implements IOptionHandler
     /**
      * @inheritDoc
      */
-    public function save($categoryName = null, $optionPrefix = null)
+    public function save(?string $categoryName = null, ?string $optionPrefix = null)
     {
         $saveOptions = [];
 

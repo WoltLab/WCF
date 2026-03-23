@@ -24,7 +24,7 @@ class UserGroupImporter extends AbstractImporter
     /**
      * @inheritDoc
      */
-    public function import($oldID, array $data, array $additionalData = [])
+    public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         if ($data['groupType'] < 4) {
             $newGroupID = UserGroup::getGroupByType($data['groupType'])->groupID;

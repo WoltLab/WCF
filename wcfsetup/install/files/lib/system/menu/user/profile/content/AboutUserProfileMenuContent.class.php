@@ -26,7 +26,7 @@ class AboutUserProfileMenuContent extends SingletonFactory implements IUserProfi
     /**
      * @inheritDoc
      */
-    public function getContent($userID)
+    public function getContent(int $userID)
     {
         if ($this->optionHandler === null) {
             $this->optionHandler = new UserOptionHandler(false, '', 'profile');
@@ -47,7 +47,7 @@ class AboutUserProfileMenuContent extends SingletonFactory implements IUserProfi
     /**
      * @inheritDoc
      */
-    public function isVisible($userID)
+    public function isVisible(int $userID)
     {
         return true;
     }

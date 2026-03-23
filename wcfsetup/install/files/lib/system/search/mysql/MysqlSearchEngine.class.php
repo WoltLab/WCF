@@ -39,13 +39,13 @@ class MysqlSearchEngine extends AbstractSearchEngine
      * @inheritDoc
      */
     public function search(
-        $q,
+        string $q,
         array $objectTypes,
-        $subjectOnly = false,
+        bool $subjectOnly = false,
         ?PreparedStatementConditionBuilder $searchIndexCondition = null,
         array $additionalConditions = [],
-        $orderBy = 'time DESC',
-        $limit = 1000
+        string $orderBy = 'time DESC',
+        int $limit = 1000
     ) {
         if (empty($objectTypes)) {
             throw new \InvalidArgumentException('The $objectTypes parameter must not be empty.');
@@ -134,12 +134,12 @@ class MysqlSearchEngine extends AbstractSearchEngine
      * @inheritDoc
      */
     public function getInnerJoin(
-        $objectTypeName,
-        $q,
-        $subjectOnly = false,
+        string $objectTypeName,
+        string $q,
+        bool $subjectOnly = false,
         ?PreparedStatementConditionBuilder $searchIndexCondition = null,
-        $orderBy = 'time DESC',
-        $limit = 1000
+        string $orderBy = 'time DESC',
+        int $limit = 1000
     ) {
         $fulltextCondition = null;
         $relevanceCalc = '';

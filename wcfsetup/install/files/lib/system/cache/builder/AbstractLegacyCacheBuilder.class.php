@@ -24,7 +24,7 @@ abstract class AbstractLegacyCacheBuilder extends SingletonFactory implements IC
     private array $cache = [];
 
     #[\Override]
-    public function getData(array $parameters = [], $arrayIndex = '')
+    public function getData(array $parameters = [], string $arrayIndex = '')
     {
         $index = CacheHandler::getInstance()->getCacheIndex($parameters);
         if (isset($this->cache[$index])) {

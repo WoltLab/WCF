@@ -39,8 +39,12 @@ abstract class AbstractRuntimeCache extends SingletonFactory implements IRuntime
     protected $objects = [];
 
     #[\Override]
-    public function cacheObjectID($objectID)
+    public function cacheObjectID(?int $objectID)
     {
+        if ($objectID === null) {
+            return;
+        }
+
         $this->cacheObjectIDs([$objectID]);
     }
 
@@ -83,8 +87,12 @@ abstract class AbstractRuntimeCache extends SingletonFactory implements IRuntime
     }
 
     #[\Override]
-    public function getObject($objectID)
+    public function getObject(?int $objectID)
     {
+        if ($objectID === null) {
+            return null;
+        }
+
         if (\array_key_exists($objectID, $this->objects)) {
             return $this->objects[$objectID];
         }
@@ -134,8 +142,12 @@ abstract class AbstractRuntimeCache extends SingletonFactory implements IRuntime
     }
 
     #[\Override]
-    public function removeObject($objectID)
+    public function removeObject(?int $objectID)
     {
+        if ($objectID === null) {
+            return;
+        }
+
         $this->removeObjects([$objectID]);
     }
 

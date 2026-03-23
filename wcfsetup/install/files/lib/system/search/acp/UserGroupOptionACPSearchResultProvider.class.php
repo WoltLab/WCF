@@ -39,7 +39,7 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
     /**
      * @inheritDoc
      */
-    public function search($query)
+    public function search(string $query)
     {
         if (!WCF::getSession()->getPermission('admin.user.canEditGroup')) {
             return [];

@@ -23,7 +23,7 @@ class UserTrophyImporter extends AbstractImporter
     /**
      * @inheritDoc
      */
-    public function import($oldID, array $data, array $additionalData = [])
+    public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         if (isset($data['trophyID'])) {
             $data['trophyID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.trophy', $data['trophyID']);

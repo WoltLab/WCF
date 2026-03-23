@@ -29,7 +29,7 @@ class HascontentPrefilterTemplatePlugin implements IPrefilterTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($templateName, $sourceContent, TemplateScriptingCompiler $compiler)
+    public function execute(string $templateName, string $sourceContent, TemplateScriptingCompiler $compiler)
     {
         $ldq = \preg_quote($compiler->getLeftDelimiter(), '~');
         $rdq = \preg_quote($compiler->getRightDelimiter(), '~');

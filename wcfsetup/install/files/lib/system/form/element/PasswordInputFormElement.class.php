@@ -14,7 +14,7 @@ class PasswordInputFormElement extends AbstractNamedFormElement
     /**
      * @inheritDoc
      */
-    public function getHTML($formName)
+    public function getHTML(string $formName)
     {
         return <<<HTML
 <dl{$this->getErrorClass()}>

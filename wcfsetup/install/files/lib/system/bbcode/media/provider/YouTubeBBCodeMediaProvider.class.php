@@ -17,7 +17,7 @@ class YouTubeBBCodeMediaProvider implements IBBCodeMediaProvider
     /**
      * @inheritDoc
      */
-    public function parse($url, array $matches = [])
+    public function parse(string $url, array $matches = [])
     {
         $parsedUrl = Url::parse($url);
         \parse_str($parsedUrl['query'], $queryString);

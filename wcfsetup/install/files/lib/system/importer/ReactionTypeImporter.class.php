@@ -23,7 +23,7 @@ class ReactionTypeImporter extends AbstractImporter
     /**
      * @inheritDoc
      */
-    public function import($oldID, array $data, array $additionalData = [])
+    public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         // copy reaction type image
         $data['iconFile'] = \basename($additionalData['fileLocation']);

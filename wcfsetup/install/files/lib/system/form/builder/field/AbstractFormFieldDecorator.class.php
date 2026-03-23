@@ -108,7 +108,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @inheritDoc
      */
-    public function hasValidator($validatorId)
+    public function hasValidator(string $validatorId)
     {
         return $this->field->hasValidator($validatorId);
     }
@@ -162,7 +162,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @inheritDoc
      */
-    public function removeValidator($validatorId)
+    public function removeValidator(string $validatorId)
     {
         $this->field->removeValidator($validatorId);
 
@@ -182,7 +182,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @inheritDoc
      */
-    public function value($value)
+    public function value(mixed $value)
     {
         $this->field->value($value);
 
@@ -350,7 +350,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @inheritDoc
      */
-    public function hasAttribute($name)
+    public function hasAttribute(string $name)
     {
         return $this->field->hasAttribute($name);
     }
@@ -358,7 +358,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @inheritDoc
      */
-    public function hasClass($class)
+    public function hasClass(string $class)
     {
         return $this->field->hasClass($class);
     }
@@ -366,7 +366,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @inheritDoc
      */
-    public function hasDependency($dependencyId)
+    public function hasDependency(string $dependencyId)
     {
         return $this->field->hasDependency($dependencyId);
     }
@@ -374,7 +374,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @inheritDoc
      */
-    public function id($id)
+    public function id(string $id)
     {
         $this->field->id($id);
 
@@ -402,7 +402,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @inheritDoc
      */
-    public function removeAttribute($name)
+    public function removeAttribute(string $name)
     {
         $this->field->removeAttribute($name);
 
@@ -412,7 +412,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @inheritDoc
      */
-    public function removeClass($class)
+    public function removeClass(string $class)
     {
         $this->field->removeClass($class);
 
@@ -422,7 +422,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @inheritDoc
      */
-    public function removeDependency($dependencyId)
+    public function removeDependency(string $dependencyId)
     {
         $this->field->removeDependency($dependencyId);
 

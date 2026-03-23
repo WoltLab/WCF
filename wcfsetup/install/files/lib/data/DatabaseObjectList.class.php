@@ -403,7 +403,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
     /**
      * @inheritDoc
      */
-    public function seekTo($objectID)
+    public function seekTo(int $objectID)
     {
         $this->index = \array_search($objectID, $this->indexToObject);
 
@@ -415,7 +415,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
     /**
      * @inheritDoc
      */
-    public function search($objectID)
+    public function search(int $objectID)
     {
         try {
             $this->seekTo($objectID);

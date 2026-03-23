@@ -30,7 +30,7 @@ class CategoryArticleListPageHandler extends AbstractLookupPageHandler implement
      * @inheritDoc
      * @since       5.2
      */
-    public function getOutstandingItemCount($objectID = null)
+    public function getOutstandingItemCount(?int $objectID = null)
     {
         return ViewableArticle::getUnreadArticlesForCategory($objectID);
     }

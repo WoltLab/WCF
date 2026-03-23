@@ -21,7 +21,7 @@ class UserCoverPhotoImporter extends AbstractFileImporter
     protected string $objectType = 'com.woltlab.wcf.user.coverPhoto';
 
     #[\Override]
-    public function import($oldID, array $data, array $additionalData = [])
+    public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         $data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
         if (!$data['userID']) {

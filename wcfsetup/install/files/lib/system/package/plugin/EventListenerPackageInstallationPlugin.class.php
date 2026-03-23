@@ -306,7 +306,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
     /**
      * Shows options and permissions if already specified.
      */
-    public function setEntryData($identifier, IFormDocument $document): bool
+    public function setEntryData(string $identifier, IFormDocument $document): bool
     {
         $options = $document->getFormField('options');
         $permissions = $document->getFormField('permissions');
@@ -328,7 +328,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
     /**
      * Shows options and permissions if already specified.
      */
-    public function editEntry(IFormDocument $form, $identifier)
+    public function editEntry(IFormDocument $form, string $identifier)
     {
         $options = $form->getFormField('options');
         $permissions = $form->getFormField('permissions');

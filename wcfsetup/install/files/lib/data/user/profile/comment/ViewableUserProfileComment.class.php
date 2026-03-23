@@ -22,7 +22,7 @@ class ViewableUserProfileComment extends ViewableComment
     /**
      * @inheritDoc
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         if ($name === 'title') {
             return WCF::getLanguage()->getDynamicVariable(

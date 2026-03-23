@@ -41,7 +41,7 @@ class FileOptionType extends AbstractOptionType
     /**
      * @inheritDoc
      */
-    public function getData(Option $option, $newValue)
+    public function getData(Option $option, mixed $newValue)
     {
         $this->createUploadHandler($option);
         if ($this->uploadHandlers[$option->optionName] === null) {
@@ -84,7 +84,7 @@ class FileOptionType extends AbstractOptionType
     /**
      * @inheritDoc
      */
-    public function getFormElement(Option $option, $value)
+    public function getFormElement(Option $option, mixed $value)
     {
         return WCF::getTPL()->render('wcf', 'fileOptionType', [
             'option' => $option,
@@ -95,7 +95,7 @@ class FileOptionType extends AbstractOptionType
     /**
      * @inheritDoc
      */
-    public function validate(Option $option, $newValue)
+    public function validate(Option $option, mixed $newValue)
     {
         $this->createUploadHandler($option);
         if ($this->uploadHandlers[$option->optionName] === null) {

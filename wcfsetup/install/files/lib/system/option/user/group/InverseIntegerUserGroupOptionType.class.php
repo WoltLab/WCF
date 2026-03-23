@@ -18,7 +18,7 @@ class InverseIntegerUserGroupOptionType extends IntegerOptionType implements IUs
     /**
      * @inheritDoc
      */
-    public function merge($defaultValue, $groupValue)
+    public function merge(mixed $defaultValue, mixed $groupValue)
     {
         if ($defaultValue < $groupValue) {
             return;
@@ -30,7 +30,7 @@ class InverseIntegerUserGroupOptionType extends IntegerOptionType implements IUs
     /**
      * @inheritDoc
      */
-    public function compare($value1, $value2)
+    public function compare(mixed $value1, mixed $value2)
     {
         if ($value1 == $value2) {
             return 0;

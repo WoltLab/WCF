@@ -40,7 +40,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
     /**
      * @inheritDoc
      */
-    public function getFormElement(Option $option, $value)
+    public function getFormElement(Option $option, mixed $value)
     {
         return WCF::getTPL()->render('wcf', 'textOptionType', [
             'option' => $option,
@@ -53,7 +53,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
     /**
      * @inheritDoc
      */
-    public function getSearchFormElement(Option $option, $value)
+    public function getSearchFormElement(Option $option, mixed $value)
     {
         return WCF::getTPL()->render('wcf', 'textSearchableOptionType', [
             'option' => $option,
@@ -67,7 +67,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
     /**
      * @inheritDoc
      */
-    public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value)
+    public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, mixed $value)
     {
         if (!isset($_POST['searchOptions'][$option->optionName])) {
             return false;
@@ -89,7 +89,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
     /**
      * @inheritDoc
      */
-    public function validate(Option $option, $newValue)
+    public function validate(Option $option, mixed $newValue)
     {
         $newValue = $this->getContent($option, $newValue);
 
@@ -104,7 +104,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
     /**
      * @inheritDoc
      */
-    public function getData(Option $option, $newValue)
+    public function getData(Option $option, mixed $newValue)
     {
         return $this->getContent($option, $newValue);
     }
@@ -131,7 +131,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
     /**
      * @inheritDoc
      */
-    public function addCondition(UserList $userList, Option $option, $value)
+    public function addCondition(UserList $userList, Option $option, mixed $value)
     {
         $value = StringUtil::trim($value);
         if ($value == '') {
@@ -147,7 +147,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
     /**
      * @inheritDoc
      */
-    public function checkUser(User $user, Option $option, $value)
+    public function checkUser(User $user, Option $option, mixed $value)
     {
         $value = StringUtil::trim($value);
         if ($value == '') {
@@ -160,7 +160,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
     /**
      * @inheritDoc
      */
-    public function getConditionData(Option $option, $newValue)
+    public function getConditionData(Option $option, mixed $newValue)
     {
         return $newValue;
     }

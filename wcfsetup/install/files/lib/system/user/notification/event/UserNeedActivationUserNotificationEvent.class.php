@@ -49,7 +49,7 @@ class UserNeedActivationUserNotificationEvent extends AbstractUserNotificationEv
     }
 
     #[\Override]
-    public function getEmailMessage($notificationType = 'instant')
+    public function getEmailMessage(string $notificationType = 'instant')
     {
         return [
             'template' => 'email_notification_userNeedActivation',

@@ -16,7 +16,7 @@ class LikeStatDailyHandler extends AbstractStatDailyHandler
     /**
      * @inheritDoc
      */
-    public function getData($date)
+    public function getData(int $date)
     {
         $sql = "SELECT  COUNT(*)
                 FROM    wcf1_like

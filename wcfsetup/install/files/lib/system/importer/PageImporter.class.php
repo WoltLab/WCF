@@ -25,7 +25,7 @@ class PageImporter extends AbstractImporter
     /**
      * @inheritDoc
      */
-    public function import($oldID, array $data, array $additionalData = [])
+    public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         $contents = [];
         foreach ($additionalData['contents'] as $languageCode => $contentData) {

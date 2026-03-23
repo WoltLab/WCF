@@ -60,15 +60,15 @@ class PaypalPaymentMethod extends AbstractPaymentMethod
      * @inheritDoc
      */
     public function getPurchaseButton(
-        $cost,
-        $currency,
-        $name,
-        $token,
-        $returnURL,
-        $cancelReturnURL,
-        $isRecurring = false,
-        $subscriptionLength = 0,
-        $subscriptionLengthUnit = ''
+        float $cost,
+        string $currency,
+        string $name,
+        string $token,
+        string $returnURL,
+        string $cancelReturnURL,
+        bool $isRecurring = false,
+        int $subscriptionLength = 0,
+        string $subscriptionLengthUnit = ''
     ) {
         if ($isRecurring) {
             // subscribe button

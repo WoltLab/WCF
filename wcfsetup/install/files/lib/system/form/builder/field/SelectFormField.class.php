@@ -81,7 +81,7 @@ final class SelectFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    public function value($value)
+    public function value(mixed $value)
     {
         if ($value !== null && $value !== '') {
             if (!isset($this->getOptions()[$value])) {

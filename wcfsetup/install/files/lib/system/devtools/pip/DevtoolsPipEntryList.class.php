@@ -107,7 +107,7 @@ class DevtoolsPipEntryList implements IDevtoolsPipEntryList
     /**
      * @inheritDoc
      */
-    public function getEntries($startIndex = null, $entryCount = null)
+    public function getEntries(?int $startIndex = null, ?int $entryCount = null)
     {
         if ($startIndex !== null && $entryCount !== null) {
             return \array_slice($this->entries, $startIndex, $entryCount);

@@ -19,7 +19,7 @@ class ModerationQueueCommentManager extends AbstractCommentManager implements IC
     /**
      * @inheritDoc
      */
-    public function isAccessible($objectID, $validateWritePermission = false)
+    public function isAccessible(int $objectID, bool $validateWritePermission = false)
     {
         $entry = new ModerationQueue($objectID);
 
@@ -37,7 +37,7 @@ class ModerationQueueCommentManager extends AbstractCommentManager implements IC
     /**
      * @inheritDoc
      */
-    public function canAddWithoutApproval($objectID)
+    public function canAddWithoutApproval(int $objectID)
     {
         return true;
     }
@@ -45,7 +45,7 @@ class ModerationQueueCommentManager extends AbstractCommentManager implements IC
     /**
      * @inheritDoc
      */
-    public function getLink($objectTypeID, $objectID)
+    public function getLink(int $objectTypeID, int $objectID)
     {
         $entry = new ViewableModerationQueue(new ModerationQueue($objectID));
 
@@ -55,7 +55,7 @@ class ModerationQueueCommentManager extends AbstractCommentManager implements IC
     /**
      * @inheritDoc
      */
-    public function getTitle($objectTypeID, $objectID, $isResponse = false)
+    public function getTitle(int $objectTypeID, int $objectID, bool $isResponse = false)
     {
         return '';
     }
@@ -63,7 +63,7 @@ class ModerationQueueCommentManager extends AbstractCommentManager implements IC
     /**
      * @inheritDoc
      */
-    public function updateCounter($objectID, $value)
+    public function updateCounter(int $objectID, int $value)
     {
         $entry = new ModerationQueue($objectID);
         $editor = new ModerationQueueEditor($entry);
@@ -78,7 +78,7 @@ class ModerationQueueCommentManager extends AbstractCommentManager implements IC
     /**
      * @inheritDoc
      */
-    public function canAdd($objectID)
+    public function canAdd(int $objectID)
     {
         if (!$this->isAccessible($objectID, true)) {
             return false;
@@ -90,7 +90,7 @@ class ModerationQueueCommentManager extends AbstractCommentManager implements IC
     /**
      * @inheritDoc
      */
-    protected function canEdit($isOwner)
+    protected function canEdit(bool $isOwner)
     {
         return $isOwner;
     }
@@ -98,7 +98,7 @@ class ModerationQueueCommentManager extends AbstractCommentManager implements IC
     /**
      * @inheritDoc
      */
-    protected function canDelete($isOwner)
+    protected function canDelete(bool $isOwner)
     {
         return $isOwner;
     }

@@ -23,7 +23,7 @@ class CommentResponseModerationQueueReportHandler extends AbstractCommentRespons
     /**
      * @inheritDoc
      */
-    public function canReport($objectID)
+    public function canReport(int $objectID)
     {
         if (!$this->isValid($objectID)) {
             return false;
@@ -49,7 +49,7 @@ class CommentResponseModerationQueueReportHandler extends AbstractCommentRespons
     /**
      * @inheritDoc
      */
-    public function getReportedObject($objectID)
+    public function getReportedObject(int $objectID)
     {
         return $this->getResponse($objectID);
     }

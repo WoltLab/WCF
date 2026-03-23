@@ -19,7 +19,7 @@ class TrophyPageHandler extends AbstractLookupPageHandler
     /**
      * @inheritDoc
      */
-    public function getLink($objectID)
+    public function getLink(int $objectID)
     {
         return TrophyCache::getInstance()->getTrophyByID($objectID)->getLink();
     }
@@ -27,7 +27,7 @@ class TrophyPageHandler extends AbstractLookupPageHandler
     /**
      * @inheritDoc
      */
-    public function isValid($objectID)
+    public function isValid(?int $objectID)
     {
         return TrophyCache::getInstance()->getTrophyByID($objectID) !== null;
     }
@@ -35,7 +35,7 @@ class TrophyPageHandler extends AbstractLookupPageHandler
     /**
      * @inheritDoc
      */
-    public function isVisible($objectID = null)
+    public function isVisible(?int $objectID = null)
     {
         return WCF::getSession()->getPermission('user.profile.trophy.canSeeTrophies');
     }
@@ -43,7 +43,7 @@ class TrophyPageHandler extends AbstractLookupPageHandler
     /**
      * @inheritDoc
      */
-    public function lookup($searchString)
+    public function lookup(string $searchString)
     {
         $trophyList = new TrophyList();
         if (!empty($trophyList->sqlJoins)) {

@@ -187,7 +187,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      * @inheritDoc
      * @deprecated 6.1 This will no longer be required once the attachments have been migrated.
      */
-    public function getThumbnailLocation($size = '')
+    public function getThumbnailLocation(string $size = '')
     {
         if ($size == 'tiny') {
             $location = self::getStorage() . \substr(
@@ -255,7 +255,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
     /**
      * @inheritDoc
      */
-    public function getThumbnailLink($size = '')
+    public function getThumbnailLink(string $size = '')
     {
         $file = $this->getFile();
         if ($file === null) {
@@ -394,7 +394,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
     }
 
     #[\Override]
-    public function __get($name)
+    public function __get(string $name)
     {
         if ($name === 'downloads' || $name === 'lastDownloadTime') {
             // Static files are no longer served through PHP but the web server

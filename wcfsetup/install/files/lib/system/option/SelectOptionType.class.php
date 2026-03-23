@@ -22,7 +22,7 @@ class SelectOptionType extends RadioButtonOptionType
     /**
      * @inheritDoc
      */
-    public function getFormElement(Option $option, $value)
+    public function getFormElement(Option $option, mixed $value)
     {
         $options = $this->parseEnableOptions($option);
 
@@ -39,7 +39,7 @@ class SelectOptionType extends RadioButtonOptionType
     /**
      * @inheritDoc
      */
-    public function getSearchFormElement(Option $option, $value)
+    public function getSearchFormElement(Option $option, mixed $value)
     {
         $options = $this->parseEnableOptions($option);
 

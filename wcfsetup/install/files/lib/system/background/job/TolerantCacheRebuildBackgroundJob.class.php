@@ -15,10 +15,12 @@ use wcf\system\cache\tolerant\AbstractTolerantCache;
  */
 final class TolerantCacheRebuildBackgroundJob extends AbstractUniqueBackgroundJob
 {
+    /**
+     * @param class-string<AbstractTolerantCache<mixed[]|object>> $cacheClass
+     * @param array<string, mixed> $parameters
+     */
     public function __construct(
-        /** @var class-string<AbstractTolerantCache<array|object>> */
         public readonly string $cacheClass,
-        /** @var array<string, mixed> */
         public readonly array $parameters = []
     ) {}
 
@@ -52,8 +54,6 @@ final class TolerantCacheRebuildBackgroundJob extends AbstractUniqueBackgroundJo
         }
 
         $asyncCache = new $this->cacheClass(...$this->parameters);
-        \assert($asyncCache instanceof AbstractTolerantCache);
-
         $asyncCache->rebuild();
     }
 }

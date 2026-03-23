@@ -26,7 +26,7 @@ final class LookupRequestRoute implements IRequestRoute
     /**
      * @inheritDoc
      */
-    public function matches($requestURL): bool
+    public function matches(string $requestURL): bool
     {
         $requestURL = FileUtil::removeLeadingSlash($requestURL);
 

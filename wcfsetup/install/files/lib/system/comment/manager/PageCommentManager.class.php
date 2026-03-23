@@ -60,7 +60,7 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
     /**
      * @inheritDoc
      */
-    public function isAccessible($objectID, $validateWritePermission = false)
+    public function isAccessible(int $objectID, bool $validateWritePermission = false)
     {
         // check object id
         $page = new Page($objectID);
@@ -88,7 +88,7 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
     /**
      * @inheritDoc
      */
-    public function getLink($objectTypeID, $objectID)
+    public function getLink(int $objectTypeID, int $objectID)
     {
         return LinkHandler::getInstance()->getCmsLink($objectID);
     }
@@ -96,7 +96,7 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
     /**
      * @inheritDoc
      */
-    public function getTitle($objectTypeID, $objectID, $isResponse = false)
+    public function getTitle(int $objectTypeID, int $objectID, bool $isResponse = false)
     {
         if ($isResponse) {
             return WCF::getLanguage()->get('wcf.page.commentResponse');
@@ -108,9 +108,7 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
     /**
      * @inheritDoc
      */
-    public function updateCounter($objectID, $value)
-    {
-    }
+    public function updateCounter(int $objectID, int $value) {}
 
     /**
      * @inheritDoc

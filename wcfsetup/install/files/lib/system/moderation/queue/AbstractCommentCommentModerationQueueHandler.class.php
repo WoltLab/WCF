@@ -77,7 +77,7 @@ class AbstractCommentCommentModerationQueueHandler extends AbstractModerationQue
     /**
      * @inheritDoc
      */
-    public function getContainerID($objectID)
+    public function getContainerID(int $objectID)
     {
         return 0;
     }
@@ -85,7 +85,7 @@ class AbstractCommentCommentModerationQueueHandler extends AbstractModerationQue
     /**
      * @inheritDoc
      */
-    public function isValid($objectID)
+    public function isValid(int $objectID)
     {
         if ($this->getComment($objectID) === null) {
             return false;
@@ -181,7 +181,7 @@ class AbstractCommentCommentModerationQueueHandler extends AbstractModerationQue
     }
 
     #[\Override]
-    public function isAffectedUser(ModerationQueue $queue, $userID)
+    public function isAffectedUser(ModerationQueue $queue, int $userID)
     {
         if (!parent::isAffectedUser($queue, $userID)) {
             return false;
