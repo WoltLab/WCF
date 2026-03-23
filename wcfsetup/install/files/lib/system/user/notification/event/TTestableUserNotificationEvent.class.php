@@ -39,7 +39,7 @@ trait TTestableUserNotificationEvent
     /**
      * @see ITestableUserNotificationEvent::setTestCaseDescription()
      */
-    public function setTestCaseDescription($description)
+    public function setTestCaseDescription(string $description)
     {
         $this->testCaseDescription = $description;
     }

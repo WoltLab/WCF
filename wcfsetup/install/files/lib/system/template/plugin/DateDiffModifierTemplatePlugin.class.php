@@ -24,7 +24,7 @@ class DateDiffModifierTemplatePlugin implements IModifierTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         if (!isset($tagArgs[1])) {
             $tagArgs[1] = TIME_NOW;

@@ -14,10 +14,9 @@ interface IMessage extends IUserContent
     /**
      * Returns a simplified message (only inline codes), truncated to 255 characters by default.
      *
-     * @param int $maxLength
      * @return  string
      */
-    public function getExcerpt($maxLength = 255);
+    public function getExcerpt(int $maxLength = 255);
 
     /**
      * Returns formatted message text.

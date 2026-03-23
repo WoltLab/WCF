@@ -44,7 +44,7 @@ class SearchResultArticleContent extends ViewableArticleContent implements ISear
     /**
      * @inheritDoc
      */
-    public function getLink($query = ''): string
+    public function getLink(string $query = ''): string
     {
         $parameters = [
             'object' => $this->getDecoratedObject(),

@@ -27,7 +27,7 @@ class DateOptionType extends TextOptionType
     /**
      * @inheritDoc
      */
-    public function validate(Option $option, $newValue)
+    public function validate(Option $option, mixed $newValue)
     {
         if (empty($newValue)) {
             return;
@@ -45,7 +45,7 @@ class DateOptionType extends TextOptionType
     /**
      * @inheritDoc
      */
-    public function compare($value1, $value2)
+    public function compare(mixed $value1, mixed $value2)
     {
         if ($value1 == $value2) {
             return 0;
@@ -57,7 +57,7 @@ class DateOptionType extends TextOptionType
     /**
      * @inheritDoc
      */
-    public function getFormElement(Option $option, $value)
+    public function getFormElement(Option $option, mixed $value)
     {
         if ($value == '0000-00-00') {
             $value = '';

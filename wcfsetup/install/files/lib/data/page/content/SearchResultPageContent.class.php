@@ -53,7 +53,7 @@ class SearchResultPageContent extends DatabaseObjectDecorator implements ISearch
     /**
      * @inheritDoc
      */
-    public function getLink($query = '')
+    public function getLink(string $query = '')
     {
         return LinkHandler::getInstance()->getCmsLink(
             $this->getDecoratedObject()->pageID,

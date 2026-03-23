@@ -18,19 +18,17 @@ interface IMenuPageHandler
      * Returns the number of outstanding items for this page for display as a badge, optionally
      * specifying a corresponding object id to limit the scope.
      *
-     * @param int|null $objectID optional page object id
      * @return  int     number of outstanding items
      */
-    public function getOutstandingItemCount($objectID = null);
+    public function getOutstandingItemCount(?int $objectID = null);
 
     /**
      * Returns false if this page should be hidden from menus, but does not control the accessibility
      * of the page itself. The visibility can optionally be scoped to the given object id.
      *
-     * @param int|null $objectID optional page object id
      * @return  bool        false if the page should be hidden from menus
      */
-    public function isVisible($objectID = null);
+    public function isVisible(?int $objectID = null);
 
     /**
      * Caches the given object id to save SQL queries if multiple objects of the same type are queried in the menu.

@@ -37,7 +37,7 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
     /**
      * @inheritDoc
      */
-    public function canReport($objectID)
+    public function canReport(int $objectID)
     {
         if (!$this->isValid($objectID)) {
             return false;
@@ -66,7 +66,7 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
      *
      * @return      ViewableArticle|null
      */
-    public function getReportedObject($objectID)
+    public function getReportedObject(int $objectID)
     {
         if ($this->isValid($objectID)) {
             return $this->getArticle($objectID);
@@ -118,7 +118,7 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
     /**
      * @inheritDoc
      */
-    public function getContainerID($objectID)
+    public function getContainerID(int $objectID)
     {
         if ($this->isValid($objectID)) {
             return $this->getArticle($objectID)->getCategory()->categoryID;
@@ -130,7 +130,7 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
     /**
      * @inheritDoc
      */
-    public function isValid($objectID)
+    public function isValid(int $objectID)
     {
         if ($this->getArticle($objectID) === null) {
             return false;
@@ -174,7 +174,7 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
     /**
      * @inheritDoc
      */
-    public function removeContent(ModerationQueue $queue, $message)
+    public function removeContent(ModerationQueue $queue, string $message)
     {
         if ($this->isValid($queue->objectID)) {
             (new ArticleAction([$this->getArticle($queue->objectID)->getDecoratedObject()], 'trash'))->executeAction();
@@ -182,7 +182,7 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
     }
 
     #[\Override]
-    public function isAffectedUser(ModerationQueue $queue, $userID)
+    public function isAffectedUser(ModerationQueue $queue, int $userID)
     {
         if (!parent::isAffectedUser($queue, $userID)) {
             return false;

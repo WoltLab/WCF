@@ -30,7 +30,7 @@ class CommentUserProfileMenuContent extends SingletonFactory implements IUserPro
     /**
      * @inheritDoc
      */
-    public function getContent($userID)
+    public function getContent(int $userID)
     {
         if ($this->commentManager === null) {
             $this->objectTypeID = CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user.profileComment');
@@ -57,7 +57,7 @@ class CommentUserProfileMenuContent extends SingletonFactory implements IUserPro
     /**
      * @inheritDoc
      */
-    public function isVisible($userID)
+    public function isVisible(int $userID)
     {
         return true;
     }

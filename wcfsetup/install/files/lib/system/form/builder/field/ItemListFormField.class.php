@@ -202,7 +202,7 @@ class ItemListFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    public function value($value)
+    public function value(mixed $value)
     {
         switch ($this->getSaveValueType()) {
             case self::SAVE_VALUE_TYPE_ARRAY:

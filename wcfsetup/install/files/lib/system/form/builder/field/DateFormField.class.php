@@ -444,7 +444,7 @@ class DateFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    public function value($value)
+    public function value(mixed $value)
     {
         parent::value($value);
 

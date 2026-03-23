@@ -37,7 +37,7 @@ class AbstractCategoryImporter extends AbstractImporter
     /**
      * @inheritDoc
      */
-    public function import($oldID, array $data, array $additionalData = [])
+    public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         if (!empty($data['parentCategoryID'])) {
             $data['parentCategoryID'] = ImportHandler::getInstance()

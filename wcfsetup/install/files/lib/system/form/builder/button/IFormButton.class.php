@@ -19,11 +19,10 @@ interface IFormButton extends IFormChildNode, IFormElement
      * Sets the access key for this form button and returns this form button. If `null` is passed,
      * the previously set access key is unset.
      *
-     * @param ?string $accessKey button access key
      * @return static this form button
      * @throws \InvalidArgumentException if the given access key is invalid
      */
-    public function accessKey($accessKey = null);
+    public function accessKey(?string $accessKey = null);
 
     /**
      * Returns the access key for this form button or `null` if no access key has been set.
@@ -45,8 +44,7 @@ interface IFormButton extends IFormChildNode, IFormElement
     /**
      * Sets whether this button is an `input[type=submit]` element or a `button` element.
      *
-     * @param bool $submit
      * @return static this form button
      */
-    public function submit($submit = true);
+    public function submit(bool $submit = true);
 }

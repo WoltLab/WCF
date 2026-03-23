@@ -95,7 +95,7 @@ final class ShowOrderFormField extends SingleSelectionFormField
     /**
      * @inheritDoc
      */
-    public function value($value)
+    public function value(mixed $value)
     {
         $keys = \array_keys($this->getOptions());
 

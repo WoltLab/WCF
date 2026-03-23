@@ -41,7 +41,7 @@ class Zip extends File implements IArchive
     /**
      * @inheritDoc
      */
-    public function getIndexByFilename($filename)
+    public function getIndexByFilename(string $filename)
     {
         if (isset($this->centralDirectory['files'][$filename])) {
             return $this->centralDirectory['files'][$filename]['offset'];
@@ -116,7 +116,7 @@ class Zip extends File implements IArchive
     /**
      * @inheritDoc
      */
-    public function extract($index, $destination)
+    public function extract($index, string $destination)
     {
         if (!\is_int($index)) {
             $index = $this->getIndexByFilename($index);

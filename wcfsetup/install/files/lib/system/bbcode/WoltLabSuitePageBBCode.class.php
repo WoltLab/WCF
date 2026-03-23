@@ -20,7 +20,7 @@ final class WoltLabSuitePageBBCode extends AbstractBBCode
     /**
      * @inheritDoc
      */
-    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser): string
+    public function getParsedTag(array $openingTag, string $content, array $closingTag, BBCodeParser $parser): string
     {
         $pageID = (!empty($openingTag['attributes'][0])) ? \intval($openingTag['attributes'][0]) : 0;
         if (!$pageID) {

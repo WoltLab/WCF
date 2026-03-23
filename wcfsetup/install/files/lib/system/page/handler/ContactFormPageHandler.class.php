@@ -16,7 +16,7 @@ class ContactFormPageHandler extends AbstractMenuPageHandler
     /**
      * @inheritDoc
      */
-    public function isVisible($objectID = null)
+    public function isVisible(?int $objectID = null)
     {
         return true;
     }

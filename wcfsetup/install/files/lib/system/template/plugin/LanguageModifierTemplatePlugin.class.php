@@ -20,7 +20,7 @@ class LanguageModifierTemplatePlugin implements IModifierTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         if ($tagArgs[0] === null) {
             return '';

@@ -38,12 +38,13 @@ class DefaultUserAuthentication extends AbstractUserAuthentication
      * @inheritDoc
      */
     public function loginManually(
-        $username,
+        string $username,
         #[\SensitiveParameter]
-        $password,
-        $userClassname = User::class
+        string $password,
+        string $userClassname = User::class
     ) {
         $user = $this->getUserByLogin($username);
+        // @phpstan-ignore argument.type
         $userSession = (\get_class($user) == $userClassname ? $user : new $userClassname(null, null, $user));
 
         if ($userSession->userID == 0) {
@@ -64,9 +65,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication
      * @return void
      * @deprecated 5.4 - This method always returns null, as user sessions are long-lived now.
      */
-    public function loginAutomatically($persistent = false, $userClassname = User::class)
-    {
-    }
+    public function loginAutomatically($persistent = false, $userClassname = User::class) {}
 
     /**
      * Returns a user object by given login name.
@@ -86,9 +85,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication
      * @return void
      * @deprecated 5.4 - This method always returns null, as user sessions are long-lived now.
      */
-    protected function getUserAutomatically($userID, $password, $userClassname = User::class)
-    {
-    }
+    protected function getUserAutomatically($userID, $password, $userClassname = User::class) {}
 
     /**
      * @param string $user

@@ -19,30 +19,22 @@ interface ISearchableConditionUserOption extends ISearchableUserOption
      * Adds the condition to the given user list to fetch the users which have
      * the given value for the given option.
      *
-     * @param UserList $userList
-     * @param Option $option
-     * @param mixed $value
      * @return void
      */
-    public function addCondition(UserList $userList, Option $option, $value);
+    public function addCondition(UserList $userList, Option $option, mixed $value);
 
     /**
      * Returns true if given the user option of the given user matches a certain
      * value.
      *
-     * @param User $user
-     * @param Option $option
-     * @param mixed $value
      * @return  bool
      */
-    public function checkUser(User $user, Option $option, $value);
+    public function checkUser(User $user, Option $option, mixed $value);
 
     /**
      * Returns the data of the condition or `null` if the option should be ignored.
      *
-     * @param Option $option
-     * @param mixed $newValue
      * @return  mixed
      */
-    public function getConditionData(Option $option, $newValue);
+    public function getConditionData(Option $option, mixed $newValue);
 }

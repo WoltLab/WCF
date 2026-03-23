@@ -20,7 +20,7 @@ class UserACPSearchResultProvider implements IACPSearchResultProvider
     /**
      * @inheritDoc
      */
-    public function search($query)
+    public function search(string $query)
     {
         if (!WCF::getSession()->getPermission('admin.user.canEditUser')) {
             return [];

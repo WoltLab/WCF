@@ -235,7 +235,7 @@ final class UserFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    public function value($value)
+    public function value(mixed $value)
     {
         // ensure array value for form fields that actually support multiple values;
         // allows enabling support for multiple values for existing fields

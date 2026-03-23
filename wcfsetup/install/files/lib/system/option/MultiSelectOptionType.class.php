@@ -34,7 +34,7 @@ class MultiSelectOptionType extends SelectOptionType
     /**
      * @inheritDoc
      */
-    public function getFormElement(Option $option, $value)
+    public function getFormElement(Option $option, mixed $value)
     {
         return WCF::getTPL()->render('wcf', $this->formElementTemplate, [
             'option' => $option,
@@ -46,7 +46,7 @@ class MultiSelectOptionType extends SelectOptionType
     /**
      * @inheritDoc
      */
-    public function getSearchFormElement(Option $option, $value)
+    public function getSearchFormElement(Option $option, mixed $value)
     {
         return WCF::getTPL()->render('wcf', $this->searchableFormElementTemplate, [
             'option' => $option,
@@ -59,7 +59,7 @@ class MultiSelectOptionType extends SelectOptionType
     /**
      * @inheritDoc
      */
-    public function validate(Option $option, $newValue)
+    public function validate(Option $option, mixed $newValue)
     {
         if (!\is_array($newValue)) {
             $newValue = [];
@@ -75,7 +75,7 @@ class MultiSelectOptionType extends SelectOptionType
     /**
      * @inheritDoc
      */
-    public function getData(Option $option, $newValue)
+    public function getData(Option $option, mixed $newValue)
     {
         if (!\is_array($newValue)) {
             $newValue = [];
@@ -87,7 +87,7 @@ class MultiSelectOptionType extends SelectOptionType
     /**
      * @inheritDoc
      */
-    public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value)
+    public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, mixed $value)
     {
         if (!isset($_POST['searchOptions'][$option->optionName])) {
             return false;
@@ -122,7 +122,7 @@ class MultiSelectOptionType extends SelectOptionType
     /**
      * @inheritDoc
      */
-    public function addCondition(UserList $userList, Option $option, $value)
+    public function addCondition(UserList $userList, Option $option, mixed $value)
     {
         if (!\is_array($value) || empty($value)) {
             return;
@@ -151,7 +151,7 @@ class MultiSelectOptionType extends SelectOptionType
     /**
      * @inheritDoc
      */
-    public function checkUser(User $user, Option $option, $value)
+    public function checkUser(User $user, Option $option, mixed $value)
     {
         if (!\is_array($value) || empty($value)) {
             return false;
@@ -166,7 +166,7 @@ class MultiSelectOptionType extends SelectOptionType
     /**
      * @inheritDoc
      */
-    public function getConditionData(Option $option, $newValue)
+    public function getConditionData(Option $option, mixed $newValue)
     {
         return $newValue;
     }

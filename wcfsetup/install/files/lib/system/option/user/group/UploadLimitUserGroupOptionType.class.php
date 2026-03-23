@@ -18,7 +18,7 @@ use wcf\system\file\processor\FileProcessor;
 final class UploadLimitUserGroupOptionType extends FileSizeUserGroupOptionType
 {
     #[\Override]
-    public function validate(Option $option, $newValue)
+    public function validate(Option $option, mixed $newValue)
     {
         $newValue = $this->getContent($option, $newValue);
 

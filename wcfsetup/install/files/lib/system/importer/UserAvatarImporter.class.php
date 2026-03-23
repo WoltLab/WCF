@@ -20,7 +20,7 @@ class UserAvatarImporter extends AbstractFileImporter
     protected string $objectType = 'com.woltlab.wcf.user.avatar';
 
     #[\Override]
-    public function import($oldID, array $data, array $additionalData = [])
+    public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         // get user id
         $data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);

@@ -27,7 +27,7 @@ class BirthdayOptionType extends DateOptionType
     /**
      * @inheritDoc
      */
-    public function validate(Option $option, $newValue)
+    public function validate(Option $option, mixed $newValue)
     {
         parent::validate($option, $newValue);
 
@@ -44,7 +44,7 @@ class BirthdayOptionType extends DateOptionType
     /**
      * @inheritDoc
      */
-    public function getData(Option $option, $newValue)
+    public function getData(Option $option, mixed $newValue)
     {
         return $newValue;
     }
@@ -52,7 +52,7 @@ class BirthdayOptionType extends DateOptionType
     /**
      * @inheritDoc
      */
-    public function getSearchFormElement(Option $option, $value)
+    public function getSearchFormElement(Option $option, mixed $value)
     {
         $ageFrom = $ageTo = '';
         if (!empty($value['ageFrom'])) {
@@ -72,7 +72,7 @@ class BirthdayOptionType extends DateOptionType
     /**
      * @inheritDoc
      */
-    public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value)
+    public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, mixed $value)
     {
         if (empty($value['ageFrom']) && empty($value['ageTo'])) {
             return false;
@@ -115,7 +115,7 @@ class BirthdayOptionType extends DateOptionType
     /**
      * @inheritDoc
      */
-    public function addCondition(UserList $userList, Option $option, $value)
+    public function addCondition(UserList $userList, Option $option, mixed $value)
     {
         $ageFrom = \intval($value['ageFrom']);
         $ageTo = \intval($value['ageTo']);
@@ -156,7 +156,7 @@ class BirthdayOptionType extends DateOptionType
     /**
      * @inheritDoc
      */
-    public function checkUser(User $user, Option $option, $value)
+    public function checkUser(User $user, Option $option, mixed $value)
     {
         if (!$user->birthdayShowYear || !$user->birthday) {
             return false;
@@ -179,7 +179,7 @@ class BirthdayOptionType extends DateOptionType
     /**
      * @inheritDoc
      */
-    public function getConditionData(Option $option, $newValue)
+    public function getConditionData(Option $option, mixed $newValue)
     {
         if (!$newValue['ageFrom'] && !$newValue['ageTo']) {
             return;

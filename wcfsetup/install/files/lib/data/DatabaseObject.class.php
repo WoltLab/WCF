@@ -96,7 +96,7 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
     /**
      * @inheritDoc
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         return $this->data[$name] ?? null;
     }
@@ -114,7 +114,7 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
     /**
      * @inheritDoc
      */
-    public function __isset($name)
+    public function __isset(string $name)
     {
         return isset($this->data[$name]);
     }

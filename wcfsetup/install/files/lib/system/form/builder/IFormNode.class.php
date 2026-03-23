@@ -170,44 +170,40 @@ interface IFormNode
      * Returns `true` if an additional attribute with the given name exists and returns
      * `false` otherwise.
      *
-     * @param string $name attribute name
      * @return bool
      *
      * @throws \InvalidArgumentException if the given attribute name is invalid
      */
-    public function hasAttribute($name);
+    public function hasAttribute(string $name);
 
     /**
      * Returns `true` if a CSS class with the given name exists and returns `false` otherwise.
      *
-     * @param string $class checked CSS class
      * @return bool
      *
      * @throws \InvalidArgumentException if the given class is invalid
      */
-    public function hasClass($class);
+    public function hasClass(string $class);
 
     /**
      * Returns `true` if this node has a dependency with the given id and
      * returns `false` otherwise.
      *
-     * @param string $dependencyId id of the checked dependency
      * @return bool
      *
      * @throws \InvalidArgumentException if the given id is invalid
      */
-    public function hasDependency($dependencyId);
+    public function hasDependency(string $dependencyId);
 
     /**
      * Sets the id of the node.
      *
-     * @param string $id new id of node
      * @return static this node
      *
      * @throws \BadMethodCallException if id has already been set
      * @throws \InvalidArgumentException if the given id is invalid
      */
-    public function id($id);
+    public function id(string $id);
 
     /**
      * Returns `true` if this node is available and returns `false` otherwise.
@@ -238,12 +234,11 @@ interface IFormNode
      * If this node does not have the given attribute, this method silently
      * ignores that fact.
      *
-     * @param string $name removed attribute
      * @return static this node
      *
      * @throws  \InvalidArgumentException   if the given attribute is invalid
      */
-    public function removeAttribute($name);
+    public function removeAttribute(string $name);
 
     /**
      * Removes the given CSS class and returns this node.
@@ -251,22 +246,20 @@ interface IFormNode
      * If this node does not have the given CSS class, this method silently
      * ignores that fact.
      *
-     * @param string $class removed CSS class
      * @return static this node
      *
      * @throws \InvalidArgumentException if the given class is invalid
      */
-    public function removeClass($class);
+    public function removeClass(string $class);
 
     /**
      * Removes the dependency with the given id and returns this node.
      *
-     * @param string $dependencyId id of the removed dependency
      * @return static this node
      *
      * @throws \InvalidArgumentException if the given id is invalid or no such dependency exists
      */
-    public function removeDependency($dependencyId);
+    public function removeDependency(string $dependencyId);
 
     /**
      * Validates the node.

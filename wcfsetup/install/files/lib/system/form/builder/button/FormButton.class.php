@@ -39,7 +39,7 @@ class FormButton implements IFormButton
     /**
      * @inheritDoc
      */
-    public function accessKey($accessKey = null)
+    public function accessKey(?string $accessKey = null)
     {
         // the value [of the accesskey attribute] must be an ordered set of unique
         // space-separated tokens that are case-sensitive, each of which must be exactly
@@ -94,7 +94,7 @@ class FormButton implements IFormButton
     /**
      * @inheritDoc
      */
-    public function submit($submit = true)
+    public function submit(bool $submit = true)
     {
         $this->submit = $submit;
 

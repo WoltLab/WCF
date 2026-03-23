@@ -134,7 +134,7 @@ class DateRangeFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    public function value($value)
+    public function value(mixed $value)
     {
         $values = \explode(';', $value);
         if (\count($values) !== 2) {

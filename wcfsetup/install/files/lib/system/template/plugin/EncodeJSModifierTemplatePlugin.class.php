@@ -22,7 +22,7 @@ class EncodeJSModifierTemplatePlugin implements IModifierTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         return StringUtil::encodeJS($tagArgs[0]);
     }

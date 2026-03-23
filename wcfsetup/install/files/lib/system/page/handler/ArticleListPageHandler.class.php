@@ -18,7 +18,7 @@ class ArticleListPageHandler extends AbstractMenuPageHandler
     /**
      * @inheritDoc
      */
-    public function getOutstandingItemCount($objectID = null)
+    public function getOutstandingItemCount(?int $objectID = null)
     {
         return ViewableArticle::getUnreadArticles();
     }
@@ -27,7 +27,7 @@ class ArticleListPageHandler extends AbstractMenuPageHandler
      * @inheritDoc
      * @since   5.2
      */
-    public function isVisible($objectID = null)
+    public function isVisible(?int $objectID = null)
     {
         return !empty(ArticleCategory::getAccessibleCategoryIDs());
     }

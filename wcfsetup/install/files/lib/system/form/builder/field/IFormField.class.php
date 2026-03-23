@@ -98,12 +98,11 @@ interface IFormField extends IFormChildNode, IFormElement
      * Returns `true` if this field has a validator with the given id and
      * returns `false` otherwise.
      *
-     * @param string $validatorId id of the checked validator
      * @return bool
      *
      * @throws \InvalidArgumentException if the given id is invalid
      */
-    public function hasValidator($validatorId);
+    public function hasValidator(string $validatorId);
 
     /**
      * Returns `true` if this field provides a value that can simply be stored
@@ -138,7 +137,7 @@ interface IFormField extends IFormChildNode, IFormElement
      * @param bool $loadValues indicates if object data is loaded
      * @return static this field
      */
-    public function updatedObject(array $data, IStorableObject $object, $loadValues = true);
+    public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true);
 
     /**
      * Sets the name of the object property this field represents. If an empty
@@ -155,7 +154,7 @@ interface IFormField extends IFormChildNode, IFormElement
      *
      * @throws \InvalidArgumentException if the passed object property is no valid id
      */
-    public function objectProperty($objectProperty);
+    public function objectProperty(string $objectProperty);
 
     /**
      * Reads the value of this field from request data and return this field.
@@ -167,12 +166,11 @@ interface IFormField extends IFormChildNode, IFormElement
     /**
      * Removes the field value validator with the given id and returns this field.
      *
-     * @param string $validatorId id of the removed validator
      * @return static this field
      *
      * @throws \InvalidArgumentException if the given id is invalid or no such validator exists
      */
-    public function removeValidator($validatorId);
+    public function removeValidator(string $validatorId);
 
     /**
      * Sets whether it is required to fill out this field and returns this field.
@@ -180,15 +178,14 @@ interface IFormField extends IFormChildNode, IFormElement
      * @param bool $required determines if field has to be filled out
      * @return static this field
      */
-    public function required($required = true);
+    public function required(bool $required = true);
 
     /**
      * Sets the value of this field and returns this field.
      *
-     * @param mixed $value new field value
      * @return static this field
      *
      * @throws  \InvalidArgumentException   if the given value is of an invalid type or otherwise is invalid
      */
-    public function value($value);
+    public function value(mixed $value);
 }

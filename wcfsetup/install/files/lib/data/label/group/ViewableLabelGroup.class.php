@@ -240,7 +240,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
     /**
      * @inheritDoc
      */
-    public function seekTo($objectID)
+    public function seekTo(int $objectID)
     {
         $this->index = \array_search($objectID, $this->indexToObject);
 
@@ -252,7 +252,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
     /**
      * @inheritDoc
      */
-    public function search($objectID)
+    public function search(int $objectID)
     {
         try {
             $this->seekTo($objectID);

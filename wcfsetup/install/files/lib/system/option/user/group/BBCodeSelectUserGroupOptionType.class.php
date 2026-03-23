@@ -53,7 +53,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
     /**
      * @inheritDoc
      */
-    public function getData(Option $option, $newValue)
+    public function getData(Option $option, mixed $newValue)
     {
         if (!\is_array($newValue)) {
             $newValue = [];
@@ -65,7 +65,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
     /**
      * @inheritDoc
      */
-    public function getFormElement(Option $option, $value)
+    public function getFormElement(Option $option, mixed $value)
     {
         if ($this->bbCodes === null) {
             $this->loadBBCodeSelection();
@@ -94,7 +94,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
     /**
      * @inheritDoc
      */
-    public function merge($defaultValue, $groupValue)
+    public function merge(mixed $defaultValue, mixed $groupValue)
     {
         if ($this->bbCodes === null) {
             $this->loadBBCodeSelection();
@@ -121,7 +121,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
     /**
      * @inheritDoc
      */
-    public function validate(Option $option, $newValue)
+    public function validate(Option $option, mixed $newValue)
     {
         if (!\is_array($newValue)) {
             $newValue = [];
@@ -141,7 +141,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
     /**
      * @inheritDoc
      */
-    public function compare($value1, $value2)
+    public function compare(mixed $value1, mixed $value2)
     {
         // handle special case where no disallowed BBCodes have been set
         if (empty($value1)) {

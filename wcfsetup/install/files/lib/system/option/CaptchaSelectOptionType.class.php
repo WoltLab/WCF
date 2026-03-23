@@ -20,7 +20,7 @@ class CaptchaSelectOptionType extends AbstractOptionType
     /**
      * @inheritDoc
      */
-    public function getFormElement(Option $option, $value)
+    public function getFormElement(Option $option, mixed $value)
     {
         RecaptchaHandler::$forceIsAvailable = true;
         $selectOptions = CaptchaHandler::getInstance()->getCaptchaSelection();
@@ -84,7 +84,7 @@ class CaptchaSelectOptionType extends AbstractOptionType
     /**
      * @inheritDoc
      */
-    public function validate(Option $option, $newValue)
+    public function validate(Option $option, mixed $newValue)
     {
         if (!$newValue) {
             return;

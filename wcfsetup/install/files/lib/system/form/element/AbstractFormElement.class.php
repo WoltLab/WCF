@@ -50,7 +50,7 @@ abstract class AbstractFormElement implements IFormElement
     /**
      * @inheritDoc
      */
-    public function setDescription($description)
+    public function setDescription(string $description)
     {
         $this->description = StringUtil::trim($description);
     }
@@ -66,7 +66,7 @@ abstract class AbstractFormElement implements IFormElement
     /**
      * @inheritDoc
      */
-    public function setLabel($label)
+    public function setLabel(string $label)
     {
         $this->label = StringUtil::trim($label);
     }
@@ -90,7 +90,7 @@ abstract class AbstractFormElement implements IFormElement
     /**
      * @inheritDoc
      */
-    public function setError($error)
+    public function setError(string $error)
     {
         $this->error = $error;
     }

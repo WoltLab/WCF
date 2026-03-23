@@ -62,7 +62,7 @@ class LikeableArticle extends AbstractLikeObject implements IReactionObject
     /**
      * @inheritDoc
      */
-    public function updateLikeCounter($cumulativeLikes)
+    public function updateLikeCounter(int $cumulativeLikes)
     {
         // update cumulative likes
         $editor = new ArticleEditor($this->getDecoratedObject());

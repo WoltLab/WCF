@@ -18,7 +18,7 @@ class PageACPSearchResultProvider implements IACPSearchResultProvider
     /**
      * @inheritDoc
      */
-    public function search($query)
+    public function search(string $query)
     {
         if (!WCF::getSession()->getPermission('admin.content.cms.canManagePage')) {
             return [];

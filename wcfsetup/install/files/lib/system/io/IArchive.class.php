@@ -35,7 +35,7 @@ interface IArchive
      * @param mixed $index index or name of the requested file
      * @return FileInfo
      */
-    public function getFileInfo($index);
+    public function getFileInfo(mixed $index);
 
     /**
      * Extracts a specific file and returns the content as string. Returns
@@ -44,24 +44,22 @@ interface IArchive
      * @param mixed $index index or name of the requested file
      * @return string|false content of the requested file
      */
-    public function extractToString($index);
+    public function extractToString(mixed $index);
 
     /**
      * Extracts a specific file and writes its content to the file specified
      * with $destination.
      *
      * @param mixed $index index or name of the requested file
-     * @param string $destination
      * @return bool
      */
-    public function extract($index, $destination);
+    public function extract(mixed $index, string $destination);
 
     /**
      * Searchs a file in the archive and returns the numeric file index.
      * Returns false if not found.
      *
-     * @param string $filename
      * @return int|false index of the requested file
      */
-    public function getIndexByFilename($filename);
+    public function getIndexByFilename(string $filename);
 }

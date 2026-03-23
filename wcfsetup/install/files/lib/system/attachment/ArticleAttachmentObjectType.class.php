@@ -21,7 +21,7 @@ class ArticleAttachmentObjectType extends AbstractAttachmentObjectType
     /**
      * @inheritDoc
      */
-    public function canDownload($objectID)
+    public function canDownload(int $objectID)
     {
         if ($objectID) {
             return (new Article($objectID))->canRead();
@@ -33,7 +33,7 @@ class ArticleAttachmentObjectType extends AbstractAttachmentObjectType
     /**
      * @inheritDoc
      */
-    public function canUpload($objectID, $parentObjectID = 0)
+    public function canUpload(int $objectID, int $parentObjectID = 0)
     {
         if ($objectID) {
             return (new Article($objectID))->canEdit();
@@ -46,7 +46,7 @@ class ArticleAttachmentObjectType extends AbstractAttachmentObjectType
     /**
      * @inheritDoc
      */
-    public function canDelete($objectID)
+    public function canDelete(int $objectID)
     {
         return $this->canUpload($objectID);
     }

@@ -90,7 +90,7 @@ final class Psr15DialogForm extends FormDocument
     /**
      * @inheritDoc
      */
-    public function ajax($ajax = true)
+    public function ajax(bool $ajax = true)
     {
         /* This implementation forces `$ajax = true`. */
 

@@ -43,7 +43,7 @@ class AnchorFunctionTemplatePlugin implements IFunctionTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         $link = $content = $object = null;
         if (isset($tagArgs['object'])) {

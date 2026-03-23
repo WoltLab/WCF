@@ -19,7 +19,7 @@ class AboutMeOptionType extends MessageOptionType
     /**
      * @inheritDoc
      */
-    public function validate(Option $option, $newValue)
+    public function validate(Option $option, mixed $newValue)
     {
         parent::validate($option, $newValue);
 

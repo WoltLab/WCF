@@ -182,7 +182,7 @@ final class FileProcessorFormField extends AbstractFormField
     }
 
     #[\Override]
-    public function value($value)
+    public function value(mixed $value)
     {
         $fileIDs = [];
         if ($this->isSingleFileUpload()) {

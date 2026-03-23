@@ -279,7 +279,7 @@ class DynamicRequestRoute implements IRequestRoute
     /**
      * @inheritDoc
      */
-    public function matches($requestURL)
+    public function matches(string $requestURL)
     {
         if (\preg_match($this->pattern, $requestURL, $matches)) {
             foreach ($matches as $key => $value) {

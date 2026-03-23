@@ -156,7 +156,7 @@ class FormDocument implements IFormDocument
     /**
      * @inheritDoc
      */
-    public function action($action)
+    public function action(string $action)
     {
         $this->action = $action;
 
@@ -182,7 +182,7 @@ class FormDocument implements IFormDocument
     /**
      * @inheritDoc
      */
-    public function addDefaultButton($addDefaultButton = true)
+    public function addDefaultButton(bool $addDefaultButton = true)
     {
         if ($this->isBuilt) {
             throw new \BadMethodCallException("After the form document has already been built, changing whether the default button is added is no possible anymore.");
@@ -196,7 +196,7 @@ class FormDocument implements IFormDocument
     /**
      * @inheritDoc
      */
-    public function ajax($ajax = true)
+    public function ajax(bool $ajax = true)
     {
         $this->ajax = $ajax;
 
@@ -310,7 +310,7 @@ class FormDocument implements IFormDocument
     /**
      * @inheritDoc
      */
-    public function formMode($formMode)
+    public function formMode(string $formMode)
     {
         if ($this->formMode !== null) {
             throw new \BadMethodCallException("Form mode has already been set");
@@ -340,7 +340,7 @@ class FormDocument implements IFormDocument
     /**
      * @inheritDoc
      */
-    public function getButton($buttonId)
+    public function getButton(string $buttonId)
     {
         if (!$this->hasButton($buttonId)) {
             throw new \InvalidArgumentException("Unknown button with id '{$buttonId}'.");
@@ -511,7 +511,7 @@ class FormDocument implements IFormDocument
     /**
      * @inheritDoc
      */
-    public function hasButton($buttonId)
+    public function hasButton(string $buttonId)
     {
         return isset($this->buttons[$buttonId]);
     }
@@ -549,7 +549,7 @@ class FormDocument implements IFormDocument
     /**
      * @inheritDoc
      */
-    public function invalid($invalid = true)
+    public function invalid(bool $invalid = true)
     {
         $this->invalid = $invalid;
 
@@ -658,7 +658,7 @@ class FormDocument implements IFormDocument
     /**
      * @inheritDoc
      */
-    public function method($method)
+    public function method(string $method)
     {
         if ($method !== 'get' && $method !== 'post') {
             throw new \InvalidArgumentException("Invalid method '{$method}' given.");
@@ -672,7 +672,7 @@ class FormDocument implements IFormDocument
     /**
      * @inheritDoc
      */
-    public function prefix($prefix)
+    public function prefix(string $prefix)
     {
         static::validateId($prefix);
 
@@ -712,7 +712,7 @@ class FormDocument implements IFormDocument
     /**
      * @inheritDoc
      */
-    public function showErrorMessage($showErrorMessage = true)
+    public function showErrorMessage(bool $showErrorMessage = true)
     {
         $this->showErrorMessage = $showErrorMessage;
 
@@ -722,7 +722,7 @@ class FormDocument implements IFormDocument
     /**
      * @inheritDoc
      */
-    public function showSuccessMessage($showSuccessMessage = true)
+    public function showSuccessMessage(bool $showSuccessMessage = true)
     {
         $this->showSuccessMessage = $showSuccessMessage;
 

@@ -393,7 +393,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
             /**
              * @inheritDoc
              */
-            public function getCategoryOptions($categoryName = '', $inherit = true)
+            public function getCategoryOptions(string $categoryName = '', bool $inherit = true)
             {
                 // we just need to ensure that the category is not empty
                 return [new Option(null, [])];

@@ -17,7 +17,7 @@ class NewlineToBreakModifierTemplatePlugin implements IModifierTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         return \nl2br(StringUtil::encodeHTML($tagArgs[0]), false);
     }

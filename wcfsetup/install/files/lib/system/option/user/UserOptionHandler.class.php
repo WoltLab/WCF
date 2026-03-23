@@ -353,7 +353,7 @@ class UserOptionHandler extends OptionHandler
     /**
      * @inheritDoc
      */
-    public function save($categoryName = null, $optionPrefix = null)
+    public function save(?string $categoryName = null, ?string $optionPrefix = null)
     {
         $options = parent::save($categoryName, $optionPrefix);
 

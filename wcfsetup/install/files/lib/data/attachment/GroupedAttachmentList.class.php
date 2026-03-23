@@ -39,7 +39,7 @@ class GroupedAttachmentList extends AttachmentList
             'com.woltlab.wcf.attachment.objectType',
             $objectType
         );
-        if ($objectType === null) {
+        if ($objectTypeObj === null) {
             throw new \BadMethodCallException("unknown attachment object type '{$objectType}'");
         }
 

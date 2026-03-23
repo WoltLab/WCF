@@ -30,7 +30,7 @@ abstract class AbstractCacheBuilder extends SingletonFactory implements ICacheBu
     /**
      * @inheritDoc
      */
-    public function getData(array $parameters = [], $arrayIndex = '')
+    public function getData(array $parameters = [], string $arrayIndex = '')
     {
         $index = CacheHandler::getInstance()->getCacheIndex($parameters);
 

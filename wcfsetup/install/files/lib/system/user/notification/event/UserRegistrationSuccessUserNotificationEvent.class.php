@@ -49,7 +49,7 @@ class UserRegistrationSuccessUserNotificationEvent extends AbstractUserNotificat
     }
 
     #[\Override]
-    public function getEmailMessage($notificationType = 'instant')
+    public function getEmailMessage(string $notificationType = 'instant')
     {
         return [
             'template' => 'email_notification_userRegistrationSuccess',

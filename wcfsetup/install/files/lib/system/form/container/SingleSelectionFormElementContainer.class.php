@@ -33,7 +33,7 @@ class SingleSelectionFormElementContainer extends SelectionFormElementContainer
     /**
      * @inheritDoc
      */
-    public function getValue($key)
+    public function getValue(string $key)
     {
         return $this->value;
     }
@@ -41,7 +41,7 @@ class SingleSelectionFormElementContainer extends SelectionFormElementContainer
     /**
      * @inheritDoc
      */
-    public function getHTML($formName)
+    public function getHTML(string $formName)
     {
         $content = '';
         foreach ($this->getChildren() as $element) {

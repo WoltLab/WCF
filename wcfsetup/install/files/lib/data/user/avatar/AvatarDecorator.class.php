@@ -53,7 +53,7 @@ final class AvatarDecorator implements IUserAvatar, ISafeFormatAvatar
     /**
      * @inheritDoc
      */
-    public function getURL($size = null)
+    public function getURL(?int $size = null)
     {
         if ($this->avatar instanceof File) {
             $thumbnail = $this->avatar->getThumbnail((string)UserAvatarFileProcessor::AVATAR_SIZE_2X)
@@ -71,7 +71,7 @@ final class AvatarDecorator implements IUserAvatar, ISafeFormatAvatar
     /**
      * @inheritDoc
      */
-    public function getImageTag($size = null, bool $lazyLoading = true)
+    public function getImageTag(?int $size = null, bool $lazyLoading = true)
     {
         if ($this->avatar instanceof File) {
             return \sprintf(

@@ -27,7 +27,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
     /**
      * @inheritDoc
      */
-    public function getFormElement(Option $option, $value)
+    public function getFormElement(Option $option, mixed $value)
     {
         $options = Option::parseEnableOptions($option->enableOptions);
 
@@ -42,7 +42,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
     /**
      * @inheritDoc
      */
-    public function getData(Option $option, $newValue)
+    public function getData(Option $option, mixed $newValue)
     {
         if ($newValue == 1) {
             // @phpstan-ignore return.type
@@ -56,7 +56,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
     /**
      * @inheritDoc
      */
-    public function getSearchFormElement(Option $option, $value)
+    public function getSearchFormElement(Option $option, mixed $value)
     {
         $options = Option::parseEnableOptions($option->enableOptions);
 
@@ -72,7 +72,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
     /**
      * @inheritDoc
      */
-    public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value)
+    public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, mixed $value)
     {
         if (!isset($_POST['searchOptions'][$option->optionName])) {
             return false;
@@ -86,7 +86,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
     /**
      * @inheritDoc
      */
-    public function addCondition(UserList $userList, Option $option, $value)
+    public function addCondition(UserList $userList, Option $option, mixed $value)
     {
         $userList->getConditionBuilder()->add(
             'user_option_value.userOption' . $option->optionID . ' = ?',
@@ -97,7 +97,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
     /**
      * @inheritDoc
      */
-    public function checkUser(User $user, Option $option, $value)
+    public function checkUser(User $user, Option $option, mixed $value)
     {
         if (!$value) {
             return false;
@@ -109,7 +109,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
     /**
      * @inheritDoc
      */
-    public function getConditionData(Option $option, $newValue)
+    public function getConditionData(Option $option, mixed $newValue)
     {
         return $newValue;
     }
@@ -117,7 +117,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
     /**
      * @inheritDoc
      */
-    public function compare($value1, $value2)
+    public function compare(mixed $value1, mixed $value2)
     {
         if ($value1 == $value2) {
             return 0;
@@ -129,7 +129,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
     /**
      * @inheritDoc
      */
-    public function getDisabledOptionNames($value, $enableOptions)
+    public function getDisabledOptionNames(mixed $value, string $enableOptions)
     {
         $options = ArrayUtil::trim(\explode(',', $enableOptions));
         $result = [];

@@ -14,22 +14,16 @@ interface IPaymentType
     /**
      * Processes the given transaction.
      *
-     * @param int $paymentMethodObjectTypeID
-     * @param string $token
-     * @param float $amount
-     * @param string $currency
-     * @param string $transactionID
-     * @param string $status
      * @param mixed[] $transactionDetails
      * @return void
      */
     public function processTransaction(
-        $paymentMethodObjectTypeID,
-        $token,
-        $amount,
-        $currency,
-        $transactionID,
-        $status,
-        $transactionDetails
+        int $paymentMethodObjectTypeID,
+        string $token,
+        float $amount,
+        string $currency,
+        string $transactionID,
+        string $status,
+        array $transactionDetails
     );
 }

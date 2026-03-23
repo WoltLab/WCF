@@ -27,7 +27,7 @@ class LinkBlockTemplatePlugin implements IBlockTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, $blockContent, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, string $blockContent, TemplateEngine $tplObj)
     {
         if (!\array_key_exists('controller', $tagArgs)) {
             $tagArgs['controller'] = null;

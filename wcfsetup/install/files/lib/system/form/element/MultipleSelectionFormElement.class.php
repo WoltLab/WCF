@@ -60,7 +60,7 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement
     /**
      * @inheritDoc
      */
-    public function getHTML($formName)
+    public function getHTML(string $formName)
     {
         $disabled = '';
         if ($this->disabledMessage) {

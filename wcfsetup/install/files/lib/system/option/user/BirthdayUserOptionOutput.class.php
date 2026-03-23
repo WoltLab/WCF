@@ -18,7 +18,7 @@ class BirthdayUserOptionOutput extends DateUserOptionOutput
     /**
      * @inheritDoc
      */
-    public function getOutput(User $user, UserOption $option, $value)
+    public function getOutput(User $user, UserOption $option, string $value)
     {
         $profile = new UserProfile($user);
 

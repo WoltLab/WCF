@@ -57,7 +57,7 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
     /**
      * @inheritDoc
      */
-    public function canReport($objectID)
+    public function canReport(int $objectID)
     {
         if (!$this->isValid($objectID)) {
             return false;
@@ -69,7 +69,7 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
     /**
      * @inheritDoc
      */
-    public function getContainerID($objectID)
+    public function getContainerID(int $objectID)
     {
         return 0;
     }
@@ -90,7 +90,7 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
     /**
      * @inheritDoc
      */
-    public function getReportedObject($objectID)
+    public function getReportedObject(int $objectID)
     {
         if ($this->isValid($objectID)) {
             return $this->getUser($objectID);
@@ -102,7 +102,7 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
     /**
      * @inheritDoc
      */
-    public function isValid($objectID)
+    public function isValid(int $objectID)
     {
         if ($this->getUser($objectID) === null) {
             return false;
@@ -153,7 +153,7 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
     /**
      * @inheritDoc
      */
-    public function removeContent(ModerationQueue $queue, $message)
+    public function removeContent(ModerationQueue $queue, string $message)
     {
         throw new SystemException("it's not allowed to delete users using the moderation");
     }

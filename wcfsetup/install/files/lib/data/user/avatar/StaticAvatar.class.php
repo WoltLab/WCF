@@ -24,7 +24,7 @@ final class StaticAvatar implements IUserAvatar, ISafeFormatAvatar
     }
 
     #[\Override]
-    public function getImageTag($size = null)
+    public function getImageTag(?int $size = null)
     {
         if ($size === null) {
             $size = UserAvatarFileProcessor::AVATAR_SIZE;
@@ -46,7 +46,7 @@ final class StaticAvatar implements IUserAvatar, ISafeFormatAvatar
     }
 
     #[\Override]
-    public function getURL($size = null)
+    public function getURL(?int $size = null)
     {
         return $this->src;
     }

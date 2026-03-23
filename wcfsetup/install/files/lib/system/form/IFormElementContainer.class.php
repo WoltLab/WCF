@@ -21,10 +21,9 @@ interface IFormElementContainer
     /**
      * Sets form element container description.
      *
-     * @param string $description
      * @return void
      */
-    public function setDescription($description);
+    public function setDescription(string $description);
 
     /**
      * Returns label.
@@ -36,18 +35,16 @@ interface IFormElementContainer
     /**
      * Sets label.
      *
-     * @param string $label
      * @return void
      */
-    public function setLabel($label);
+    public function setLabel(string $label);
 
     /**
      * Returns the value of child element with given name.
      *
-     * @param string $key
      * @return mixed
      */
-    public function getValue($key);
+    public function getValue(string $key);
 
     /**
      * Returns a list of child elements.
@@ -83,17 +80,14 @@ interface IFormElementContainer
     /**
      * Returns HTML-representation of current form element container.
      *
-     * @param string $formName
      * @return string
      */
-    public function getHTML($formName);
+    public function getHTML(string $formName);
 
     /**
      * Sets localized error message for named element.
      *
-     * @param string $name
-     * @param string $error
      * @return void
      */
-    public function setError($name, $error);
+    public function setError(string $name, string $error);
 }

@@ -85,7 +85,7 @@ abstract class AbstractVersionTrackerProvider extends AbstractObjectTypeProvider
     /**
      * @inheritDoc
      */
-    public function getPropertyLabel($property)
+    public function getPropertyLabel(string $property)
     {
         if (isset(static::$propertyLabels[$property])) {
             return WCF::getLanguage()->get(static::$propertyLabels[$property]);

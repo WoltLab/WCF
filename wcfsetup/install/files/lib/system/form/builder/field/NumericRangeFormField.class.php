@@ -81,7 +81,7 @@ class NumericRangeFormField extends AbstractFormField implements
     }
 
     #[\Override]
-    public function value($value)
+    public function value(mixed $value)
     {
         $values = \explode(';', $value);
         if (\count($values) !== 2) {

@@ -148,7 +148,7 @@ final class TagFormField extends AbstractFormField implements IAttributeFormFiel
     /**
      * @inheritDoc
      */
-    public function value($value)
+    public function value(mixed $value)
     {
         if (!\is_array($value)) {
             throw new InvalidFormFieldValue($this, 'array', \gettype($value));

@@ -28,27 +28,17 @@ interface IPaymentMethod
     /**
      * Returns the HTML code of the purchase button.
      *
-     * @param float $cost
-     * @param string $currency ISO 4217 code
-     * @param string $name product/item name
-     * @param string $token custom token
-     * @param string $returnURL
-     * @param string $cancelReturnURL
-     * @param bool $isRecurring
-     * @param int $subscriptionLength
-     * @param string $subscriptionLengthUnit
-     *
      * @return  string
      */
     public function getPurchaseButton(
-        $cost,
-        $currency,
-        $name,
-        $token,
-        $returnURL,
-        $cancelReturnURL,
-        $isRecurring = false,
-        $subscriptionLength = 0,
-        $subscriptionLengthUnit = ''
+        float $cost,
+        string $currency,
+        string $name,
+        string $token,
+        string $returnURL,
+        string $cancelReturnURL,
+        bool $isRecurring = false,
+        int $subscriptionLength = 0,
+        string $subscriptionLengthUnit = ''
     );
 }

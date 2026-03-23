@@ -18,7 +18,7 @@ class LikesUserProfileMenuContent extends SingletonFactory implements IUserProfi
     /**
      * @inheritDoc
      */
-    public function getContent($userID)
+    public function getContent(int $userID)
     {
         $likeList = new ViewableLikeList();
         $likeList->getConditionBuilder()->add("like_table.objectUserID = ?", [$userID]);
@@ -34,7 +34,7 @@ class LikesUserProfileMenuContent extends SingletonFactory implements IUserProfi
     /**
      * @inheritDoc
      */
-    public function isVisible($userID)
+    public function isVisible(int $userID)
     {
         if (!WCF::getSession()->getPermission('user.like.canViewLike')) {
             return false;

@@ -22,15 +22,15 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager
      * @inheritDoc
      */
     public function set(
-        $objectType,
-        $objectID,
-        $message,
-        $subject,
-        $time,
-        $userID,
-        $username,
-        $languageID = null,
-        $metaData = ''
+        string $objectType,
+        int $objectID,
+        string $message,
+        string $subject,
+        int $time,
+        ?int $userID,
+        string $username,
+        ?int $languageID = null,
+        string $metaData = ''
     ) {
         if ($languageID === null) {
             $languageID = 0;
@@ -47,7 +47,7 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager
     /**
      * @inheritDoc
      */
-    public function delete($objectType, array $objectIDs)
+    public function delete(string $objectType, array $objectIDs)
     {
         $itemsPerLoop = 1000;
         $loopCount = \ceil(\count($objectIDs) / $itemsPerLoop);
@@ -71,7 +71,7 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager
     /**
      * @inheritDoc
      */
-    public function reset($objectType)
+    public function reset(string $objectType)
     {
         $this->createSearchIndex(SearchIndexManager::getInstance()->getObjectType($objectType));
 

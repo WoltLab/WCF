@@ -26,11 +26,10 @@ interface ILabelObjectTypeHandler
     /**
      * Sets object type id.
      *
-     * @param int $objectTypeID
      * @return void
      * @deprecated 6.2 Use `getContainerForObjectType()` instead.
      */
-    public function setObjectTypeID($objectTypeID);
+    public function setObjectTypeID(int $objectTypeID);
 
     /**
      * Returns object type id.

@@ -24,7 +24,7 @@ class PasswordOptionType extends TextOptionType
     /**
      * @inheritDoc
      */
-    public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value)
+    public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, mixed $value)
     {
         return false;
     }
@@ -32,7 +32,7 @@ class PasswordOptionType extends TextOptionType
     /**
      * @inheritDoc
      */
-    public function addCondition(UserList $userList, Option $option, $value)
+    public function addCondition(UserList $userList, Option $option, mixed $value)
     {
         // does nothing
     }
@@ -40,7 +40,7 @@ class PasswordOptionType extends TextOptionType
     /**
      * @inheritDoc
      */
-    public function checkUser(User $user, Option $option, $value)
+    public function checkUser(User $user, Option $option, mixed $value)
     {
         return false;
     }
@@ -48,7 +48,7 @@ class PasswordOptionType extends TextOptionType
     /**
      * @inheritDoc
      */
-    public function getConditionData(Option $option, $newValue)
+    public function getConditionData(Option $option, mixed $newValue)
     {
         return $newValue;
     }

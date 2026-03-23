@@ -19,7 +19,7 @@ class SelectOptionsUserOptionOutput implements IUserOptionOutput
     /**
      * @inheritDoc
      */
-    public function getOutput(User $user, UserOption $option, $value)
+    public function getOutput(User $user, UserOption $option, string $value)
     {
         $result = self::getResult($option, $value);
 

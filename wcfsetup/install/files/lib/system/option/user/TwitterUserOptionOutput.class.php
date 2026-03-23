@@ -18,7 +18,7 @@ class TwitterUserOptionOutput implements IUserOptionOutput
     /**
      * @inheritDoc
      */
-    public function getOutput(User $user, UserOption $option, $value)
+    public function getOutput(User $user, UserOption $option, string $value)
     {
         if (empty($value)) {
             return '';

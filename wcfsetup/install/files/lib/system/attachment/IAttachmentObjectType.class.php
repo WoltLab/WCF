@@ -17,36 +17,31 @@ interface IAttachmentObjectType
     /**
      * Returns true if the active user has the permission to download attachments.
      *
-     * @param int $objectID
      * @return bool
      */
-    public function canDownload($objectID);
+    public function canDownload(int $objectID);
 
     /**
      * Returns true if the active user has the permission to view attachment
      * previews (thumbnails).
      *
-     * @param int $objectID
      * @return bool
      */
-    public function canViewPreview($objectID);
+    public function canViewPreview(int $objectID);
 
     /**
      * Returns true if the active user has the permission to upload attachments.
      *
-     * @param int $objectID
-     * @param int $parentObjectID
      * @return bool
      */
-    public function canUpload($objectID, $parentObjectID = 0);
+    public function canUpload(int $objectID, int $parentObjectID = 0);
 
     /**
      * Returns true if the active user has the permission to delete attachments.
      *
-     * @param int $objectID
      * @return bool
      */
-    public function canDelete($objectID);
+    public function canDelete(int $objectID);
 
     /**
      * Returns the maximum filesize for an attachment.
@@ -75,7 +70,7 @@ interface IAttachmentObjectType
      * @param int $objectID
      * @return ?T
      */
-    public function getObject($objectID);
+    public function getObject(int $objectID);
 
     /**
      * Caches the data of the given container objects.

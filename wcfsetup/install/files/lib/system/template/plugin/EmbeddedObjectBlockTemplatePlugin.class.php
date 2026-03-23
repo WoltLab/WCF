@@ -26,7 +26,7 @@ class EmbeddedObjectBlockTemplatePlugin implements IBlockTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, $blockContent, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, string $blockContent, TemplateEngine $tplObj)
     {
         $data = \unserialize(\base64_decode($blockContent));
 
@@ -36,7 +36,7 @@ class EmbeddedObjectBlockTemplatePlugin implements IBlockTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function init($tagArgs, TemplateEngine $tplObj)
+    public function init(array $tagArgs, TemplateEngine $tplObj)
     {
         $this->counter = 0;
     }

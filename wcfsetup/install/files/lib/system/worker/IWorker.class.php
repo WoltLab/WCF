@@ -21,10 +21,9 @@ interface IWorker
     /**
      * Sets current loop count.
      *
-     * @param int $loopCount
      * @return void
      */
-    public function setLoopCount($loopCount);
+    public function setLoopCount(int $loopCount);
 
     /**
      * Returns current process of the worker, an int between 0 and 100.

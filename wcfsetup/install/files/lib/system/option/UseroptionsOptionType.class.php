@@ -24,7 +24,7 @@ class UseroptionsOptionType extends AbstractOptionType
     /**
      * @inheritDoc
      */
-    public function validate(Option $option, $newValue)
+    public function validate(Option $option, mixed $newValue)
     {
         if (!\is_array($newValue)) {
             $newValue = [];
@@ -40,7 +40,7 @@ class UseroptionsOptionType extends AbstractOptionType
     /**
      * @inheritDoc
      */
-    public function getData(Option $option, $newValue)
+    public function getData(Option $option, mixed $newValue)
     {
         if (!\is_array($newValue)) {
             return '';
@@ -52,7 +52,7 @@ class UseroptionsOptionType extends AbstractOptionType
     /**
      * @inheritDoc
      */
-    public function getFormElement(Option $option, $value)
+    public function getFormElement(Option $option, mixed $value)
     {
         $userOptions = self::getUserOptions();
         if ($option->issortable && $value) {

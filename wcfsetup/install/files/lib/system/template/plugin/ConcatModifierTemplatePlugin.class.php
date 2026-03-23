@@ -21,7 +21,7 @@ class ConcatModifierTemplatePlugin implements IModifierTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         if (\count($tagArgs) < 2) {
             throw new SystemException("concat modifier needs two or more arguments");

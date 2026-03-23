@@ -123,7 +123,7 @@ class MultipleSelectionFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    public function value($value)
+    public function value(mixed $value)
     {
         // ignore `null` as value which can be passed either for nullable
         // fields or as value if no options are available

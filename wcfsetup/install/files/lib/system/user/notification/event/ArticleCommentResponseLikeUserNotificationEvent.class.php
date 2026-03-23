@@ -108,9 +108,10 @@ class ArticleCommentResponseLikeUserNotificationEvent extends AbstractSharedUser
     /**
      * @inheritDoc
      */
-    public function getEmailMessage($notificationType = 'instant')
+    public function getEmailMessage(string $notificationType = 'instant'): string
     {
         // not supported
+        return '';
     }
 
     /**

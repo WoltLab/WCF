@@ -111,7 +111,7 @@ class StaticRequestRoute extends DynamicRequestRoute
     /**
      * @inheritDoc
      */
-    public function matches($requestURL)
+    public function matches(string $requestURL)
     {
         if (parent::matches($requestURL)) {
             $controller = ControllerMap::getInstance()->lookup(

@@ -100,15 +100,15 @@ class SearchIndexManager extends SingletonFactory implements IContextAwareSearch
      * @inheritDoc
      */
     public function set(
-        $objectType,
-        $objectID,
-        $message,
-        $subject,
-        $time,
-        $userID,
-        $username,
-        $languageID = null,
-        $metaData = ''
+        string $objectType,
+        int $objectID,
+        string $message,
+        string $subject,
+        int $time,
+        ?int $userID,
+        string $username,
+        ?int $languageID = null,
+        string $metaData = ''
     ): void {
         // Inserts a whitespace after certain tags to prevent words from adjacent
         // lines to be effectively be glued together when the tags are removed.
@@ -179,7 +179,7 @@ class SearchIndexManager extends SingletonFactory implements IContextAwareSearch
     /**
      * @inheritDoc
      */
-    public function delete($objectType, array $objectIDs): void
+    public function delete(string $objectType, array $objectIDs): void
     {
         $this->getSearchIndexManager()->delete($objectType, $objectIDs);
     }
@@ -187,7 +187,7 @@ class SearchIndexManager extends SingletonFactory implements IContextAwareSearch
     /**
      * @inheritDoc
      */
-    public function reset($objectType): void
+    public function reset(string $objectType): void
     {
         $this->getSearchIndexManager()->reset($objectType);
     }

@@ -92,7 +92,7 @@ class ViewableMedia extends DatabaseObjectDecorator
     /**
      * @inheritDoc
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         if ($this->forceLanguageID !== null && isset($this->localizedContent[$this->forceLanguageID][$name])) {
             return $this->localizedContent[$this->forceLanguageID][$name];

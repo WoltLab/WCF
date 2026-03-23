@@ -78,7 +78,7 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
     /**
      * @inheritDoc
      */
-    public function validateLabelIDs(array $labelIDs, $optionName = '', $legacyReturnValue = true)
+    public function validateLabelIDs(array $labelIDs, string $optionName = '', bool $legacyReturnValue = true)
     {
         $optionID = 0;
         if (!empty($optionName)) {
@@ -150,7 +150,7 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
     /**
      * @inheritDoc
      */
-    public function setLabels(array $labelIDs, $objectID, $validatePermissions = true)
+    public function setLabels(array $labelIDs, int $objectID, bool $validatePermissions = true)
     {
         LabelHandler::getInstance()->setLabels($labelIDs, $this->objectTypeID, $objectID, $validatePermissions);
     }
@@ -158,7 +158,7 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
     /**
      * @inheritDoc
      */
-    public function removeLabels($objectID, $validatePermissions = true)
+    public function removeLabels(int $objectID, bool $validatePermissions = true)
     {
         // @phpstan-ignore function.impossibleType
         $objectIDs = (\is_array($objectID)) ? $objectID : [$objectID];
@@ -168,7 +168,7 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
     /**
      * @inheritDoc
      */
-    public function getAssignedLabels(array $objectIDs, $validatePermissions = true)
+    public function getAssignedLabels(array $objectIDs, bool $validatePermissions = true)
     {
         return LabelHandler::getInstance()->getAssignedLabels($this->objectTypeID, $objectIDs, $validatePermissions);
     }

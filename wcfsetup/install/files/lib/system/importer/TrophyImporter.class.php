@@ -32,7 +32,7 @@ class TrophyImporter extends AbstractImporter
     /**
      * @inheritDoc
      */
-    public function import($oldID, array $data, array $additionalData = [])
+    public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         if (isset($data['categoryID'])) {
             $data['categoryID'] = ImportHandler::getInstance()

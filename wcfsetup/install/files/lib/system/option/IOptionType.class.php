@@ -18,30 +18,27 @@ interface IOptionType
      * option type.
      *
      * @param Option $option
-     * @param mixed $value
      * @return  string
      */
-    public function getFormElement(Option $option, $value);
+    public function getFormElement(Option $option, mixed $value);
 
     /**
      * Validates the input for the given option of this option type and throws
      * a wcf\system\exception\UserInputException if the validation should fail.
      *
      * @param Option $option
-     * @param mixed $newValue
      * @return void
      */
-    public function validate(Option $option, $newValue);
+    public function validate(Option $option, mixed $newValue);
 
     /**
      * Returns the value of the given option of this option type which will
      * be saved in the database.
      *
      * @param Option $option
-     * @param mixed $newValue
      * @return  string
      */
-    public function getData(Option $option, $newValue);
+    public function getData(Option $option, mixed $newValue);
 
     /**
      * Returns the css class name for this option type.
@@ -65,11 +62,9 @@ interface IOptionType
      *   $value1 > $value2  => 1
      *
      *
-     * @param mixed $value1
-     * @param mixed $value2
      * @return  int
      */
-    public function compare($value1, $value2);
+    public function compare(mixed $value1, mixed $value2);
 
     /**
      * Returns true if option's label is hidden in search form.
@@ -81,10 +76,8 @@ interface IOptionType
     /**
      * Determines disabled options by given option value.
      *
-     * @param mixed $value
-     * @param string $enableOptions
      * @return      string[]
      * @since       5.2
      */
-    public function getDisabledOptionNames($value, $enableOptions);
+    public function getDisabledOptionNames(mixed $value, string $enableOptions);
 }

@@ -37,7 +37,7 @@ abstract class AbstractFormElementContainer implements IFormElementContainer
     /**
      * @inheritDoc
      */
-    public function setDescription($description)
+    public function setDescription(string $description)
     {
         $this->description = StringUtil::trim($description);
     }
@@ -53,7 +53,7 @@ abstract class AbstractFormElementContainer implements IFormElementContainer
     /**
      * @inheritDoc
      */
-    public function setLabel($label)
+    public function setLabel(string $label)
     {
         $this->label = StringUtil::trim($label);
     }
@@ -93,7 +93,7 @@ abstract class AbstractFormElementContainer implements IFormElementContainer
     /**
      * @inheritDoc
      */
-    public function getValue($key)
+    public function getValue(string $key)
     {
         foreach ($this->children as $element) {
             if ($element instanceof AbstractNamedFormElement) {
@@ -123,7 +123,7 @@ abstract class AbstractFormElementContainer implements IFormElementContainer
     /**
      * @inheritDoc
      */
-    public function setError($name, $error)
+    public function setError(string $name, string $error)
     {
         foreach ($this->children as $element) {
             if (!($element instanceof AbstractNamedFormElement)) {

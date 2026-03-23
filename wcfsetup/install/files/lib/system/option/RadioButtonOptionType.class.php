@@ -37,7 +37,7 @@ class RadioButtonOptionType extends AbstractOptionType implements
     /**
      * @inheritDoc
      */
-    public function getFormElement(Option $option, $value)
+    public function getFormElement(Option $option, mixed $value)
     {
         $availableOptions = $option->parseMultipleEnableOptions();
         $options = [
@@ -70,7 +70,7 @@ class RadioButtonOptionType extends AbstractOptionType implements
     /**
      * @inheritDoc
      */
-    public function validate(Option $option, $newValue)
+    public function validate(Option $option, mixed $newValue)
     {
         if (!empty($newValue)) {
             $options = $this->getSelectOptions($option);
@@ -83,7 +83,7 @@ class RadioButtonOptionType extends AbstractOptionType implements
     /**
      * @inheritDoc
      */
-    public function getSearchFormElement(Option $option, $value)
+    public function getSearchFormElement(Option $option, mixed $value)
     {
         $this->templateName = 'shared_radioButtonSearchableOptionType';
         WCF::getTPL()->assign(
@@ -97,7 +97,7 @@ class RadioButtonOptionType extends AbstractOptionType implements
     /**
      * @inheritDoc
      */
-    public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value)
+    public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, mixed $value)
     {
         if (!isset($_POST['searchOptions'][$option->optionName])) {
             return false;
@@ -111,7 +111,7 @@ class RadioButtonOptionType extends AbstractOptionType implements
     /**
      * @inheritDoc
      */
-    public function addCondition(UserList $userList, Option $option, $value)
+    public function addCondition(UserList $userList, Option $option, mixed $value)
     {
         $userList->getConditionBuilder()->add(
             'user_option_value.userOption' . $option->optionID . ' = ?',
@@ -122,7 +122,7 @@ class RadioButtonOptionType extends AbstractOptionType implements
     /**
      * @inheritDoc
      */
-    public function checkUser(User $user, Option $option, $value)
+    public function checkUser(User $user, Option $option, mixed $value)
     {
         return \mb_strtolower($user->getUserOption($option->optionName)) == \mb_strtolower(StringUtil::trim($value));
     }
@@ -130,7 +130,7 @@ class RadioButtonOptionType extends AbstractOptionType implements
     /**
      * @inheritDoc
      */
-    public function getConditionData(Option $option, $newValue)
+    public function getConditionData(Option $option, mixed $newValue)
     {
         return $newValue;
     }
@@ -157,7 +157,7 @@ class RadioButtonOptionType extends AbstractOptionType implements
     /**
      * @inheritDoc
      */
-    public function getDisabledOptionNames($value, $enableOptions)
+    public function getDisabledOptionNames(mixed $value, string $enableOptions)
     {
         $valueToOptions = \explode("\n", StringUtil::trim(StringUtil::unifyNewlines($enableOptions)));
 

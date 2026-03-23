@@ -50,7 +50,7 @@ class ContactAttachmentObjectType extends AbstractAttachmentObjectType
     /**
      * @inheritDoc
      */
-    public function canDownload($objectID)
+    public function canDownload(int $objectID)
     {
         if (!CONTACT_FORM_ENABLE_ATTACHMENTS) {
             return false;
@@ -67,7 +67,15 @@ class ContactAttachmentObjectType extends AbstractAttachmentObjectType
     /**
      * @inheritDoc
      */
-    public function canUpload($objectID, $parentObjectID = 0)
+    public function canViewPreview(int $objectID)
+    {
+        return $this->canDownload($objectID);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function canUpload(int $objectID, int $parentObjectID = 0)
     {
         if (!CONTACT_FORM_ENABLE_ATTACHMENTS) {
             return false;
@@ -79,7 +87,7 @@ class ContactAttachmentObjectType extends AbstractAttachmentObjectType
     /**
      * @inheritDoc
      */
-    public function canDelete($objectID)
+    public function canDelete(int $objectID)
     {
         return $this->canUpload($objectID);
     }

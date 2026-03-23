@@ -21,7 +21,7 @@ class SimpleEmbeddedObjectPrefilterTemplatePlugin implements IPrefilterTemplateP
     /**
      * @inheritDoc
      */
-    public function execute($templateName, $sourceContent, TemplateScriptingCompiler $compiler)
+    public function execute(string $templateName, string $sourceContent, TemplateScriptingCompiler $compiler)
     {
         return HtmlSimpleParser::getInstance()->parseTemplate($sourceContent);
     }

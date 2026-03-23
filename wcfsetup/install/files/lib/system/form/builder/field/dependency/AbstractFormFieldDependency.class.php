@@ -77,7 +77,7 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency
     /**
      * @inheritDoc
      */
-    public function fieldId($fieldId)
+    public function fieldId(string $fieldId)
     {
         if ($this->getField() !== null) {
             throw new \BadMethodCallException("Cannot set field id after field has been set.");

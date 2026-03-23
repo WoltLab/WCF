@@ -14,45 +14,34 @@ interface ISearchIndexManager
     /**
      * Adds or updates an entry.
      *
-     * @param string $objectType
-     * @param int $objectID
-     * @param string $message
-     * @param string $subject
-     * @param int $time
-     * @param ?int $userID
-     * @param string $username
-     * @param int $languageID
-     * @param string $metaData
      * @return void
      */
     public function set(
-        $objectType,
-        $objectID,
-        $message,
-        $subject,
-        $time,
-        $userID,
-        $username,
-        $languageID = null,
-        $metaData = ''
+        string $objectType,
+        int $objectID,
+        string $message,
+        string $subject,
+        int $time,
+        ?int $userID,
+        string $username,
+        ?int $languageID = null,
+        string $metaData = ''
     );
 
     /**
      * Deletes search index entries.
      *
-     * @param string $objectType
      * @param int[] $objectIDs
      * @return void
      */
-    public function delete($objectType, array $objectIDs);
+    public function delete(string $objectType, array $objectIDs);
 
     /**
      * Resets the search index.
      *
-     * @param string $objectType
      * @return void
      */
-    public function reset($objectType);
+    public function reset(string $objectType);
 
     /**
      * Creates the search index for all searchable objects.

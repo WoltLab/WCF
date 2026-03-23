@@ -29,7 +29,7 @@ abstract class AbstractLabelObjectTypeHandler extends SingletonFactory implement
     public $objectTypeID = 0;
 
     #[\Override]
-    public function setObjectTypeID($objectTypeID)
+    public function setObjectTypeID(int $objectTypeID)
     {
         $this->objectTypeID = $objectTypeID;
     }

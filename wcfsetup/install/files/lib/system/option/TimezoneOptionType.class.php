@@ -19,7 +19,7 @@ class TimezoneOptionType extends AbstractOptionType
     /**
      * @inheritDoc
      */
-    public function getFormElement(Option $option, $value)
+    public function getFormElement(Option $option, mixed $value)
     {
         $timezoneOptions = [];
         foreach (DateUtil::getAvailableTimezones() as $timezone) {
@@ -41,7 +41,7 @@ class TimezoneOptionType extends AbstractOptionType
     /**
      * @inheritDoc
      */
-    public function validate(Option $option, $newValue)
+    public function validate(Option $option, mixed $newValue)
     {
         if (!\in_array($newValue, DateUtil::getAvailableTimezones())) {
             throw new UserInputException($option->optionName, 'validationFailed');

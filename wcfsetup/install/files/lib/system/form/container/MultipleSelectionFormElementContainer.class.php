@@ -31,7 +31,7 @@ class MultipleSelectionFormElementContainer extends SelectionFormElementContaine
     /**
      * @inheritDoc
      */
-    public function getHTML($formName)
+    public function getHTML(string $formName)
     {
         $content = '';
         foreach ($this->getChildren() as $element) {

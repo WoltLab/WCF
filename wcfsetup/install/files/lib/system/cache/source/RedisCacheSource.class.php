@@ -39,7 +39,7 @@ class RedisCacheSource implements ICacheSource
     /**
      * @inheritDoc
      */
-    public function flush($cacheName, $useWildcard)
+    public function flush(string $cacheName, bool $useWildcard)
     {
         $parts = \explode('-', $cacheName, 2);
 
@@ -76,7 +76,7 @@ class RedisCacheSource implements ICacheSource
     /**
      * @inheritDoc
      */
-    public function get($cacheName, $maxLifetime)
+    public function get(string $cacheName, int $maxLifetime)
     {
         $parts = \explode('-', $cacheName, 2);
 
@@ -120,7 +120,7 @@ class RedisCacheSource implements ICacheSource
     /**
      * @inheritDoc
      */
-    public function set($cacheName, $value, $maxLifetime)
+    public function set(string $cacheName, mixed $value, int $maxLifetime)
     {
         // split parameterized cache entry names into cache name and cache index
         $parts = \explode('-', $cacheName, 2);

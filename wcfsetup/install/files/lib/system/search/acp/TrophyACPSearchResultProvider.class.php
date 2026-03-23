@@ -19,7 +19,7 @@ class TrophyACPSearchResultProvider implements IACPSearchResultProvider
     /**
      * @inheritDoc
      */
-    public function search($query)
+    public function search(string $query)
     {
         if (!MODULE_TROPHY || !WCF::getSession()->getPermission('admin.trophy.canManageTrophy')) {
             return [];

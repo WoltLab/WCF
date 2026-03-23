@@ -17,7 +17,7 @@ final class MediaBBCode extends AbstractBBCode
     /**
      * @inheritDoc
      */
-    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser): string
+    public function getParsedTag(array $openingTag, string $content, array $closingTag, BBCodeParser $parser): string
     {
         $content = StringUtil::trim($openingTag['attributes'][0]);
         $alignment = $openingTag['attributes'][1] ?? 'none';

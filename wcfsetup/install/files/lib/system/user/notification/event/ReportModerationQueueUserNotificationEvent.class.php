@@ -57,7 +57,7 @@ final class ReportModerationQueueUserNotificationEvent extends AbstractUserNotif
     }
 
     #[\Override]
-    public function getEmailMessage($notificationType = 'instant')
+    public function getEmailMessage(string $notificationType = 'instant'): array
     {
         return [
             'message-id' => 'com.woltlab.wcf.moderation.queue.notification/'

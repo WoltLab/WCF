@@ -87,7 +87,7 @@ SVG;
     /**
      * @inheritDoc
      */
-    public function getURL($size = null)
+    public function getURL(?int $size = null)
     {
         return $this->src;
     }
@@ -95,7 +95,7 @@ SVG;
     /**
      * @inheritDoc
      */
-    public function getImageTag($size = null)
+    public function getImageTag(?int $size = null)
     {
         if ($size === null) {
             $size = $this->size;

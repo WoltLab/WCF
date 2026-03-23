@@ -448,7 +448,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
      * @inheritDoc
      * @since   5.2
      */
-    public function setEntryData($identifier, IFormDocument $document)
+    public function setEntryData(string $identifier, IFormDocument $document)
     {
         if ($this->defaultSetEntryData($identifier, $document)) {
             $options = $document->getFormField('options');
@@ -490,7 +490,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
     /**
      * Shows options and permissions if already specified.
      */
-    public function editEntry(IFormDocument $form, $identifier)
+    public function editEntry(IFormDocument $form, string $identifier)
     {
         $options = $form->getFormField('options');
         $permissions = $form->getFormField('permissions');

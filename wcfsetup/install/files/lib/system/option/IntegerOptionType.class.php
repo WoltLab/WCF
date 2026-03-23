@@ -23,7 +23,7 @@ class IntegerOptionType extends TextOptionType
     /**
      * @inheritDoc
      */
-    public function getFormElement(Option $option, $value)
+    public function getFormElement(Option $option, mixed $value)
     {
         return WCF::getTPL()->render('wcf', 'integerOptionType', [
             'option' => $option,
@@ -35,7 +35,7 @@ class IntegerOptionType extends TextOptionType
     /**
      * @inheritDoc
      */
-    public function getData(Option $option, $newValue)
+    public function getData(Option $option, mixed $newValue)
     {
         // @phpstan-ignore return.type
         return \intval($newValue);
@@ -44,7 +44,7 @@ class IntegerOptionType extends TextOptionType
     /**
      * @inheritDoc
      */
-    public function validate(Option $option, $newValue)
+    public function validate(Option $option, mixed $newValue)
     {
         // Safeguard against values outside of 32 bit integers.
         // Use the PHP constants once we have migrated to 64 bit only.
@@ -66,7 +66,7 @@ class IntegerOptionType extends TextOptionType
     /**
      * @inheritDoc
      */
-    public function compare($value1, $value2)
+    public function compare(mixed $value1, mixed $value2)
     {
         if ($value1 == $value2) {
             return 0;

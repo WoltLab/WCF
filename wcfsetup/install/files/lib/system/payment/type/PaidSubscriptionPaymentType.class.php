@@ -26,12 +26,12 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType
      * @inheritDoc
      */
     public function processTransaction(
-        $paymentMethodObjectTypeID,
-        $token,
-        $amount,
-        $currency,
-        $transactionID,
-        $status,
+        int $paymentMethodObjectTypeID,
+        string $token,
+        float $amount,
+        string $currency,
+        string $transactionID,
+        string $status,
         $transactionDetails
     ) {
         $userSubscription = $user = $subscription = null;

@@ -16,7 +16,7 @@ class CsrfTokenPrefilterTemplatePlugin implements IPrefilterTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($templateName, $sourceContent, TemplateScriptingCompiler $compiler)
+    public function execute(string $templateName, string $sourceContent, TemplateScriptingCompiler $compiler)
     {
         $getToken = '$__wcf->session->getSecurityToken()';
 

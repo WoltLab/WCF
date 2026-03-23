@@ -74,7 +74,7 @@ class ArticleMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedO
     /**
      * @inheritDoc
      */
-    public function validateValues($objectType, $objectID, array $values)
+    public function validateValues(string $objectType, int $objectID, array $values)
     {
         $articleList = new AccessibleArticleList();
         $articleList->getConditionBuilder()->add('article.articleID IN (?)', [$values]);
@@ -89,7 +89,7 @@ class ArticleMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedO
     /**
      * @inheritDoc
      */
-    public function replaceSimple($objectType, $objectID, $value, array $attributes)
+    public function replaceSimple(string $objectType, int $objectID, string|int $value, array $attributes)
     {
         $article = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.article', $value);
         if ($article === null) {

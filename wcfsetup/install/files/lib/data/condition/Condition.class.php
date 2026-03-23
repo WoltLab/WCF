@@ -22,7 +22,7 @@ class Condition extends DatabaseObject
     /**
      * @inheritDoc
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         $value = parent::__get($name);
 

@@ -14,22 +14,17 @@ interface ISimpleMessageEmbeddedObjectHandler extends IMessageEmbeddedObjectHand
     /**
      * Validates the provided values for existence and returns the filtered list.
      *
-     * @param string $objectType object type identifier
-     * @param int $objectID object id
      * @param int[] $values list of value ids
      * @return int[] filtered list
      */
-    public function validateValues($objectType, $objectID, array $values);
+    public function validateValues(string $objectType, int $objectID, array $values);
 
     /**
      * Returns replacement string for simple placeholders. Must return `null`
      * if no replacement should be performed due to invalid or missing arguments.
      *
-     * @param string $objectType object type identifier
-     * @param int $objectID object id
-     * @param string|int $value value id
      * @param array<string, string> $attributes list of additional attributes
      * @return ?string replacement string or null if value id is unknown
      */
-    public function replaceSimple($objectType, $objectID, $value, array $attributes);
+    public function replaceSimple(string $objectType, int $objectID, string|int $value, array $attributes);
 }

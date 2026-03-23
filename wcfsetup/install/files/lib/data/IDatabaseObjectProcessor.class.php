@@ -16,26 +16,23 @@ interface IDatabaseObjectProcessor
     /**
      * Delegates accesses to inaccessible object properties the processed object.
      *
-     * @param string $name
      * @return mixed
      */
-    public function __get($name);
+    public function __get(string $name);
 
     /**
      * Delegates isset calls for inaccessible object properties to the processed
      * object.
      *
-     * @param string $name
      * @return bool
      */
-    public function __isset($name);
+    public function __isset(string $name);
 
     /**
      * Delegates inaccessible method calls to the processed database object.
      *
-     * @param string $name
      * @param mixed[] $arguments
      * @return mixed
      */
-    public function __call($name, $arguments);
+    public function __call(string $name, array $arguments);
 }

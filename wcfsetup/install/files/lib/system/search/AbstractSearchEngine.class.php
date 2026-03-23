@@ -38,7 +38,7 @@ abstract class AbstractSearchEngine extends SingletonFactory implements ISearchE
     /**
      * @inheritDoc
      */
-    public function removeSpecialCharacters($string)
+    public function removeSpecialCharacters(string $string)
     {
         if (!empty($this->specialCharacters)) {
             return \str_replace($this->specialCharacters, '', $string);

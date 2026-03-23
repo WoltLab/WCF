@@ -23,10 +23,9 @@ interface IUserAuthentication
     /**
      * Does a manual user login or `null` if login was unsuccessful.
      *
-     * @param string $username
-     * @param string $password
-     * @param string $userClassname class name of user class
-     * @return  User|null
+     * @template T of User
+     * @param class-string<T> $userClassname class name of user class
+     * @return ?T
      */
-    public function loginManually($username, $password, $userClassname = User::class);
+    public function loginManually(string $username, string $password, string $userClassname = User::class);
 }

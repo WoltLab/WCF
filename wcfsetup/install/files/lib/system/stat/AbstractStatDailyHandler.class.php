@@ -65,7 +65,7 @@ abstract class AbstractStatDailyHandler implements IStatDailyHandler
     /**
      * @inheritDoc
      */
-    public function getFormattedCounter($counter)
+    public function getFormattedCounter(int $counter)
     {
         return $counter;
     }

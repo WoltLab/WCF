@@ -70,7 +70,7 @@ class FileSizeOptionType extends TextOptionType
     /**
      * @inheritDoc
      */
-    public function getFormElement(Option $option, $value)
+    public function getFormElement(Option $option, mixed $value)
     {
         $value = FileUtil::formatFilesize(\intval($value));
 
@@ -80,7 +80,7 @@ class FileSizeOptionType extends TextOptionType
     /**
      * @inheritDoc
      */
-    public function compare($value1, $value2)
+    public function compare(mixed $value1, mixed $value2)
     {
         if ($value1 == $value2) {
             return 0;

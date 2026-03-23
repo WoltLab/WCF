@@ -216,7 +216,7 @@ abstract class AbstractNumericFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    public function value($value)
+    public function value(mixed $value)
     {
         if ($value !== null) {
             if (\is_string($value) && \is_numeric($value)) {

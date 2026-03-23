@@ -38,7 +38,7 @@ class AbstractLikeImporter extends AbstractImporter
     /**
      * @inheritDoc
      */
-    public function import($oldID, array $data, array $additionalData = [])
+    public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         if ($data['objectUserID']) {
             $data['objectUserID'] = ImportHandler::getInstance()

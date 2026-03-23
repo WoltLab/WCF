@@ -22,7 +22,7 @@ class BooleanUserGroupOptionType extends BooleanOptionType implements IUserGroup
     /**
      * @inheritDoc
      */
-    public function getFormElement(Option $option, $value)
+    public function getFormElement(Option $option, mixed $value)
     {
         $options = Option::parseEnableOptions($option->enableOptions);
 
@@ -38,7 +38,7 @@ class BooleanUserGroupOptionType extends BooleanOptionType implements IUserGroup
     /**
      * @inheritDoc
      */
-    public function getData(Option $option, $newValue)
+    public function getData(Option $option, mixed $newValue)
     {
         return ($newValue == -1) ? -1 : parent::getData($option, $newValue);
     }
@@ -46,7 +46,7 @@ class BooleanUserGroupOptionType extends BooleanOptionType implements IUserGroup
     /**
      * @inheritDoc
      */
-    public function merge($defaultValue, $groupValue)
+    public function merge(mixed $defaultValue, mixed $groupValue)
     {
         // force value for 'Never'
         if ($defaultValue == -1 || $groupValue == -1) {
@@ -64,7 +64,7 @@ class BooleanUserGroupOptionType extends BooleanOptionType implements IUserGroup
     /**
      * @inheritDoc
      */
-    public function compare($value1, $value2)
+    public function compare(mixed $value1, mixed $value2)
     {
         if ($value1 == $value2) {
             return 0;

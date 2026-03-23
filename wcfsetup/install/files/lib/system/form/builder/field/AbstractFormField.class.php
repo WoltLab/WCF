@@ -188,7 +188,7 @@ abstract class AbstractFormField implements IFormField
     /**
      * @inheritDoc
      */
-    public function hasValidator($validatorId)
+    public function hasValidator(string $validatorId)
     {
         FormFieldValidator::validateId($validatorId);
 
@@ -247,7 +247,7 @@ abstract class AbstractFormField implements IFormField
     /**
      * @inheritDoc
      */
-    public function removeValidator($validatorId)
+    public function removeValidator(string $validatorId)
     {
         if (!$this->hasValidator($validatorId)) {
             throw new \InvalidArgumentException("Unknown validator with id '{$validatorId}' for field '{$this->getId()}'.");
@@ -272,7 +272,7 @@ abstract class AbstractFormField implements IFormField
     /**
      * @inheritDoc
      */
-    public function value($value)
+    public function value(mixed $value)
     {
         $this->value = $value;
 

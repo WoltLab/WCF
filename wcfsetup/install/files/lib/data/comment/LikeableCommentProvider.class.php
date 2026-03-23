@@ -89,7 +89,7 @@ class LikeableCommentProvider extends AbstractObjectTypeProvider implements
     }
 
     #[\Override]
-    public function getObjectByID($objectID)
+    public function getObjectByID(int $objectID)
     {
         return new LikeableComment(CommentRuntimeCache::getInstance()->getObject($objectID));
     }

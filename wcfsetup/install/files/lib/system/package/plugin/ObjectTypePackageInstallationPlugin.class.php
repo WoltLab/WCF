@@ -1230,7 +1230,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
      * @inheritDoc
      * @since   5.2
      */
-    public function setEntryData($identifier, IFormDocument $document)
+    public function setEntryData(string $identifier, IFormDocument $document)
     {
         $returnValue = $this->defaultSetEntryData($identifier, $document);
 

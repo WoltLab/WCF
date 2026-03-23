@@ -113,7 +113,7 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
     /**
      * @inheritDoc
      */
-    public function getEmailMessage($notificationType = 'instant')
+    public function getEmailMessage(string $notificationType = 'instant')
     {
         throw new \LogicException('Unreachable');
     }

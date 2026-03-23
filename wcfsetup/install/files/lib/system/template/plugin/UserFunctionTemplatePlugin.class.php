@@ -37,7 +37,7 @@ class UserFunctionTemplatePlugin implements IFunctionTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         if (!isset($tagArgs['object'])) {
             throw new \InvalidArgumentException("Missing 'object' attribute.");

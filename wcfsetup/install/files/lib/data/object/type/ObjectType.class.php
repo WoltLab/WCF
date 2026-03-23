@@ -40,7 +40,7 @@ class ObjectType extends ProcessibleDatabaseObject
     /**
      * @inheritDoc
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         $value = parent::__get($name);
 

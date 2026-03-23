@@ -44,7 +44,7 @@ abstract class CustomOption extends Option implements ITitledObject
     /**
      * @inheritDoc
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         // Some options support empty values, such as "select", but the code checks for the
         // property `allowEmptyValue`, which is the inverse value of `required`.

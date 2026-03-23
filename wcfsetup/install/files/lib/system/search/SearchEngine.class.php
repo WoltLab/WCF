@@ -98,13 +98,13 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
      * @inheritDoc
      */
     public function search(
-        $q,
+        string $q,
         array $objectTypes,
-        $subjectOnly = false,
+        bool $subjectOnly = false,
         ?PreparedStatementConditionBuilder $searchIndexCondition = null,
         array $additionalConditions = [],
-        $orderBy = 'time DESC',
-        $limit = 1000
+        string $orderBy = 'time DESC',
+        int $limit = 1000
     ) {
         return $this->getSearchEngine()
             ->search($q, $objectTypes, $subjectOnly, $searchIndexCondition, $additionalConditions, $orderBy, $limit);
@@ -152,12 +152,12 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
      * @inheritDoc
      */
     public function getInnerJoin(
-        $objectTypeName,
-        $q,
-        $subjectOnly = false,
+        string $objectTypeName,
+        string $q,
+        bool $subjectOnly = false,
         ?PreparedStatementConditionBuilder $searchIndexCondition = null,
-        $orderBy = 'time DESC',
-        $limit = 1000
+        string $orderBy = 'time DESC',
+        int $limit = 1000
     ) {
         $conditionBuilderClassName = $this->getConditionBuilderClassName();
         if ($searchIndexCondition !== null && !($searchIndexCondition instanceof $conditionBuilderClassName)) {
@@ -219,7 +219,7 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
     /**
      * @inheritDoc
      */
-    public function removeSpecialCharacters($string)
+    public function removeSpecialCharacters(string $string)
     {
         return $this->getSearchEngine()->removeSpecialCharacters($string);
     }

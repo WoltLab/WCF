@@ -14,16 +14,14 @@ interface IStatDailyHandler
     /**
      * Returns the stats.
      *
-     * @param int $date
      * @return array{counter: int, total: int}
      */
-    public function getData($date);
+    public function getData(int $date);
 
     /**
      * Returns a formatted counter value.
      *
-     * @param int $counter
      * @return  mixed
      */
-    public function getFormattedCounter($counter);
+    public function getFormattedCounter(int $counter);
 }

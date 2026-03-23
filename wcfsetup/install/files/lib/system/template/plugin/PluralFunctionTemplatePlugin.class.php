@@ -38,7 +38,7 @@ final class PluralFunctionTemplatePlugin implements IFunctionTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         if (!isset($tagArgs['value'])) {
             if (!\array_key_exists('value', $tagArgs)) {

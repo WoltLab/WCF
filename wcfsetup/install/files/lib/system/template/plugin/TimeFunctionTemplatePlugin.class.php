@@ -26,7 +26,7 @@ use wcf\system\WCF;
  */
 final class TimeFunctionTemplatePlugin implements IFunctionTemplatePlugin
 {
-    public function execute($tagArgs, TemplateEngine $tplObj): string
+    public function execute(array $tagArgs, TemplateEngine $tplObj): string
     {
         if (!isset($tagArgs['time'])) {
             throw new \InvalidArgumentException("Missing parameter 'time'.");

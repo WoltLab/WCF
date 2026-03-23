@@ -18,7 +18,7 @@ class IntegerUserGroupOptionType extends IntegerOptionType implements IUserGroup
     /**
      * @inheritDoc
      */
-    public function merge($defaultValue, $groupValue)
+    public function merge(mixed $defaultValue, mixed $groupValue)
     {
         if ($groupValue > $defaultValue) {
             return $groupValue;

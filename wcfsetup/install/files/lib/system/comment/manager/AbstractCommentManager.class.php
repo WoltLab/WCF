@@ -74,7 +74,7 @@ abstract class AbstractCommentManager implements ICommentManager
     /**
      * @inheritDoc
      */
-    public function canAdd($objectID)
+    public function canAdd(int $objectID)
     {
         if (VISITOR_USE_TINY_BUILD && !WCF::getUser()->userID) {
             return false;
@@ -90,7 +90,7 @@ abstract class AbstractCommentManager implements ICommentManager
     /**
      * @inheritDoc
      */
-    public function canAddWithoutApproval($objectID)
+    public function canAddWithoutApproval(int $objectID)
     {
         if (VISITOR_USE_TINY_BUILD && !WCF::getUser()->userID) {
             return false;
@@ -154,7 +154,7 @@ abstract class AbstractCommentManager implements ICommentManager
     /**
      * @inheritDoc
      */
-    public function canModerate($objectTypeID, $objectID)
+    public function canModerate(int $objectTypeID, int $objectID)
     {
         return WCF::getSession()->getPermission($this->permissionCanModerate) ? true : false;
     }
@@ -162,10 +162,9 @@ abstract class AbstractCommentManager implements ICommentManager
     /**
      * Returns true if the current user may edit a comment/response.
      *
-     * @param bool $isOwner
      * @return  bool
      */
-    protected function canEdit($isOwner)
+    protected function canEdit(bool $isOwner)
     {
         // disallow guests
         if (!WCF::getUser()->userID) {
@@ -188,10 +187,9 @@ abstract class AbstractCommentManager implements ICommentManager
     /**
      * Returns true if the current user may delete a comment/response.
      *
-     * @param bool $isOwner
      * @return  bool
      */
-    protected function canDelete($isOwner)
+    protected function canDelete(bool $isOwner)
     {
         // disallow guests
         if (!WCF::getUser()->userID) {
@@ -255,7 +253,7 @@ abstract class AbstractCommentManager implements ICommentManager
     /**
      * @inheritDoc
      */
-    public function isContentAuthor($commentOrResponse)
+    public function isContentAuthor(Comment|CommentResponse $commentOrResponse)
     {
         return false;
     }

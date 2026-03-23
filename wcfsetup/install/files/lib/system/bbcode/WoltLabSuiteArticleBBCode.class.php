@@ -21,7 +21,7 @@ final class WoltLabSuiteArticleBBCode extends AbstractBBCode
     /**
      * @inheritDoc
      */
-    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser): string
+    public function getParsedTag(array $openingTag, string $content, array $closingTag, BBCodeParser $parser): string
     {
         $articleID = 0;
         if (isset($openingTag['attributes'][0])) {

@@ -30,7 +30,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
     /**
      * @inheritDoc
      */
-    public function assignQueues($objectTypeID, array $queues)
+    public function assignQueues(int $objectTypeID, array $queues)
     {
         ModerationQueueManager::getInstance()
             ->getProcessor($this->definitionName, null, $objectTypeID)
@@ -40,7 +40,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
     /**
      * @inheritDoc
      */
-    public function isValid($objectType, $objectID = null)
+    public function isValid(string $objectType, ?int $objectID = null)
     {
         return ModerationQueueManager::getInstance()->isValid($this->definitionName, $objectType);
     }
@@ -48,7 +48,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
     /**
      * @inheritDoc
      */
-    public function getObjectTypeID($objectType)
+    public function getObjectTypeID(string $objectType)
     {
         return ModerationQueueManager::getInstance()->getObjectTypeID($this->definitionName, $objectType);
     }
@@ -56,7 +56,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
     /**
      * @inheritDoc
      */
-    public function getProcessor($objectType, $objectTypeID = null)
+    public function getProcessor(?string $objectType, ?int $objectTypeID = null)
     {
         return ModerationQueueManager::getInstance()->getProcessor($this->definitionName, $objectType, $objectTypeID);
     }
@@ -64,7 +64,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
     /**
      * @inheritDoc
      */
-    public function populate($objectTypeID, array $objects)
+    public function populate(int $objectTypeID, array $objects)
     {
         ModerationQueueManager::getInstance()
             ->getProcessor($this->definitionName, null, $objectTypeID)
@@ -82,7 +82,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
     /**
      * @inheritDoc
      */
-    public function removeContent(ModerationQueue $queue, $message = '')
+    public function removeContent(ModerationQueue $queue, string $message = '')
     {
         $this->getProcessor(null, $queue->objectTypeID)->removeContent($queue, $message);
     }
@@ -277,7 +277,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
     }
 
     #[\Override]
-    public function getLink($queueID)
+    public function getLink(int $queueID)
     {
         return LinkHandler::getInstance()->getControllerLink($this->getController(), [
             'id' => $queueID,

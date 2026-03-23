@@ -72,7 +72,7 @@ class Application extends DatabaseObject
     /**
      * @inheritDoc
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         if (ENABLE_ENTERPRISE_MODE && \defined('ENTERPRISE_MODE_DOMAIN_OVERRIDE') && \PHP_SAPI !== 'cli') {
             if (ENTERPRISE_MODE_DOMAIN_OVERRIDE === $_SERVER['HTTP_HOST']) {

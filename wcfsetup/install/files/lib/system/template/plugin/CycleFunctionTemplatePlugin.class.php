@@ -26,7 +26,7 @@ class CycleFunctionTemplatePlugin implements IFunctionTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         // get params
         $name = $tagArgs['name'] ?? 'default';

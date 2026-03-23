@@ -78,7 +78,7 @@ class MediaMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObj
     /**
      * @inheritDoc
      */
-    public function validateValues($objectType, $objectID, array $values)
+    public function validateValues(string $objectType, int $objectID, array $values)
     {
         $mediaList = new MediaList();
         $mediaList->getConditionBuilder()->add("media.mediaID IN (?)", [$values]);
@@ -90,7 +90,7 @@ class MediaMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObj
     /**
      * @inheritDoc
      */
-    public function replaceSimple($objectType, $objectID, $value, array $attributes)
+    public function replaceSimple(string $objectType, int $objectID, string|int $value, array $attributes)
     {
         /** @var ?Media $media */
         $media = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.media', $value);

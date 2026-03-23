@@ -23,7 +23,7 @@ class CsrfTokenFunctionTemplatePlugin implements IFunctionTemplatePlugin
     /**
      * @inheritDoc
      */
-    public function execute($tagArgs, TemplateEngine $tplObj)
+    public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         $token = WCF::getSession()->getSecurityToken();
         $type = $tagArgs['type'] ?? 'form';

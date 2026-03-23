@@ -21,7 +21,7 @@ interface IFilterableSelectionFormField extends ISelectionFormField
      * @param bool $filterable determines if field's options are filterable by user
      * @return  static          this node
      */
-    public function filterable($filterable = true);
+    public function filterable(bool $filterable = true);
 
     /**
      * Returns `true` if the selection options can be filtered by the user so

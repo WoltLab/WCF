@@ -53,7 +53,7 @@ class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNoti
     /**
      * @inheritDoc
      */
-    public function getEmailMessage($notificationType = 'instant')
+    public function getEmailMessage(string $notificationType = 'instant'): array
     {
         return [
             'template' => 'email_notification_expiringPaidSubscription',

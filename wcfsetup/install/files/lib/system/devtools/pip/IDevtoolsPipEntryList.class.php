@@ -22,7 +22,7 @@ interface IDevtoolsPipEntryList
      * @return void
      * @throws \BadMethodCallException if no keys have been set
      */
-    public function addEntry($id, array $entry);
+    public function addEntry(string $id, array $entry);
 
     /**
      * Internally filters the entries using the given filter.
@@ -36,16 +36,14 @@ interface IDevtoolsPipEntryList
      * @param string|array<string, mixed> $filter either a string that is used to search all entry elements or filter map `key => searchString`
      * @return void
      */
-    public function filterEntries($filter);
+    public function filterEntries(string|array $filter);
 
     /**
      * Returns all entries in the list.
      *
-     * @param ?int $startIndex
-     * @param ?int $entryCount
      * @return array<string, mixed>
      */
-    public function getEntries($startIndex = null, $entryCount = null);
+    public function getEntries(?int $startIndex = null, ?int $entryCount = null);
 
     /**
      * Returns the expected keys of the entries that can be used to display the
@@ -65,7 +63,7 @@ interface IDevtoolsPipEntryList
      * @param string $id unique entry identifier
      * @return bool
      */
-    public function hasEntry($id);
+    public function hasEntry(string $id);
 
     /**
      * Sets the keys of the entries that can be used to display the entry list

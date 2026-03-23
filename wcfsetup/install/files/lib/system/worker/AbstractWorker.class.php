@@ -46,7 +46,7 @@ abstract class AbstractWorker implements IWorker
     /**
      * @inheritDoc
      */
-    public function setLoopCount($loopCount)
+    public function setLoopCount(int $loopCount)
     {
         $this->loopCount = $loopCount;
     }

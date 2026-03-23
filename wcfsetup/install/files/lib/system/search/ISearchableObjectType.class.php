@@ -28,15 +28,14 @@ interface ISearchableObjectType
     /**
      * Returns the object with the given object id.
      *
-     * @param int $objectID
      * @return  ISearchResultObject
      */
-    public function getObject($objectID);
+    public function getObject(int $objectID);
 
     /**
      * Shows the form part of this object type.
      *
-     * @param IForm $form instance of the form class where the search has taken place
+     * @param ?IForm $form instance of the form class where the search has taken place
      * @return void
      */
     public function show(?IForm $form = null);
@@ -51,7 +50,6 @@ interface ISearchableObjectType
     /**
      * Returns the search conditions of this message type or `null` if no special search conditions are necessary.
      *
-     * @param IForm $form
      * @return  PreparedStatementConditionBuilder|null
      */
     public function getConditions(?IForm $form = null);
@@ -123,13 +121,10 @@ interface ISearchableObjectType
      * Replaces the outer SQL query with a custom version. Querying the search index requires the
      * placeholder {WCF_SEARCH_INNER_JOIN} within an empty INNER JOIN() statement.
      *
-     * @param string $q
-     * @param PreparedStatementConditionBuilder $searchIndexConditions
-     * @param PreparedStatementConditionBuilder $additionalConditions
      * @return  string
      */
     public function getOuterSQLQuery(
-        $q,
+        string $q,
         ?PreparedStatementConditionBuilder &$searchIndexConditions = null,
         ?PreparedStatementConditionBuilder &$additionalConditions = null
     );

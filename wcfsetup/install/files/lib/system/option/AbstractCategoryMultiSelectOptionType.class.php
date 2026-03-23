@@ -33,7 +33,7 @@ abstract class AbstractCategoryMultiSelectOptionType extends AbstractOptionType
     /**
      * @inheritDoc
      */
-    public function getFormElement(Option $option, $value)
+    public function getFormElement(Option $option, mixed $value)
     {
         /** @var CategoryNodeTree $categoryTree */
         $categoryTree = new $this->nodeTreeClassname($this->objectType);
@@ -49,7 +49,7 @@ abstract class AbstractCategoryMultiSelectOptionType extends AbstractOptionType
     /**
      * @inheritDoc
      */
-    public function validate(Option $option, $newValue)
+    public function validate(Option $option, mixed $newValue)
     {
         if (!\is_array($newValue)) {
             $newValue = [];
@@ -70,7 +70,7 @@ abstract class AbstractCategoryMultiSelectOptionType extends AbstractOptionType
     /**
      * @inheritDoc
      */
-    public function getData(Option $option, $newValue)
+    public function getData(Option $option, mixed $newValue)
     {
         if (!\is_array($newValue)) {
             $newValue = [];

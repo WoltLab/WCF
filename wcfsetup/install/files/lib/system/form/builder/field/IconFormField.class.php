@@ -95,7 +95,7 @@ class IconFormField extends AbstractFormField implements IImmutableFormField
     /**
      * @inheritDoc
      */
-    public function value($value)
+    public function value(mixed $value)
     {
         if (\str_starts_with($value, 'fa-')) {
             $value = '';

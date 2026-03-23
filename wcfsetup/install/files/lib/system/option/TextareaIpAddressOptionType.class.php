@@ -22,7 +22,7 @@ class TextareaIpAddressOptionType extends TextOptionType
     /**
      * @inheritDoc
      */
-    public function getFormElement(Option $option, $value)
+    public function getFormElement(Option $option, mixed $value)
     {
         if (!empty($value)) {
             $ips = \explode("\n", $value);
@@ -43,7 +43,7 @@ class TextareaIpAddressOptionType extends TextOptionType
     /**
      * @inheritDoc
      */
-    public function validate(Option $option, $newValue)
+    public function validate(Option $option, mixed $newValue)
     {
         if (!empty($newValue)) {
             $ips = \explode("\n", $newValue);
@@ -61,7 +61,7 @@ class TextareaIpAddressOptionType extends TextOptionType
     /**
      * @inheritDoc
      */
-    public function getData(Option $option, $newValue)
+    public function getData(Option $option, mixed $newValue)
     {
         if (!empty($newValue)) {
             $ips = \explode("\n", $newValue);

@@ -20,7 +20,7 @@ interface ICompilerTemplatePlugin
      * @param TemplateScriptingCompiler $compiler
      * @return  string
      */
-    public function executeStart($tagArgs, TemplateScriptingCompiler $compiler);
+    public function executeStart(array $tagArgs, TemplateScriptingCompiler $compiler);
 
     /**
      * Executes the end tag of this compiler function.

@@ -30,7 +30,7 @@ class AbstractAttachmentImporter extends AbstractImporter
     /**
      * @inheritDoc
      */
-    public function import($oldID, array $data, array $additionalData = [])
+    public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         // check file location
         if (!\is_readable($additionalData['fileLocation'])) {

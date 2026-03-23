@@ -20,7 +20,7 @@ class ArticleCategoryUserObjectWatch extends AbstractObjectTypeProcessor impleme
     /**
      * @inheritDoc
      */
-    public function validateObjectID($objectID)
+    public function validateObjectID(int $objectID)
     {
         $category = ArticleCategory::getCategory($objectID);
         if ($category === null) {

@@ -13,14 +13,7 @@ use wcf\data\option\Option;
  */
 interface IOptionHandler
 {
-    /**
-     * Creates a new option handler instance.
-     *
-     * @param bool $supportI18n
-     * @param string $languageItemPattern
-     * @param string $categoryName
-     */
-    public function __construct($supportI18n, $languageItemPattern = '', $categoryName = '');
+    public function __construct(bool $supportI18n, string $languageItemPattern = '', string $categoryName = '');
 
     /**
      * Reads user input from given source array.
@@ -40,20 +33,16 @@ interface IOptionHandler
     /**
      * Returns the tree of options.
      *
-     * @param string $parentCategoryName
-     * @param int $level
      * @return mixed[]
      */
-    public function getOptionTree($parentCategoryName = '', $level = 0);
+    public function getOptionTree(string $parentCategoryName = '', int $level = 0);
 
     /**
      * Returns a list with the options of a specific option category.
      *
-     * @param string $categoryName
-     * @param bool $inherit
      * @return list<Option>
      */
-    public function getCategoryOptions($categoryName = '', $inherit = true);
+    public function getCategoryOptions(string $categoryName = '', bool $inherit = true);
 
     /**
      * Initializes i18n support.
@@ -65,11 +54,9 @@ interface IOptionHandler
     /**
      * Saves i18n variables and returns the updated option values.
      *
-     * @param string $categoryName
-     * @param string $optionPrefix
      * @return array<int, mixed>
      */
-    public function save($categoryName = null, $optionPrefix = null);
+    public function save(?string $categoryName = null, ?string $optionPrefix = null);
 
     /**
      * Initializes active options.
