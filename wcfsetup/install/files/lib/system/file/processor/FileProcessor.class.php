@@ -164,6 +164,8 @@ final class FileProcessor extends SingletonFactory
                 (new FileEditor($file))->update([
                     'fileHashWebp' => null,
                 ]);
+
+                return new File($file->fileID);
             }
 
             return $file;
