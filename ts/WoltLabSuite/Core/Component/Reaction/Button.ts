@@ -18,6 +18,7 @@ import * as UiScreen from "WoltLabSuite/Core/Ui/Screen";
 import UiCloseOverlay from "WoltLabSuite/Core/Ui/CloseOverlay";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 import { getPhrase } from "WoltLabSuite/Core/Language";
+import { getUniqueId } from "WoltLabSuite/Core/Dom/Util";
 
 type Result =
   | {
@@ -69,6 +70,7 @@ class ReactionPopover {
     }
 
     this.#popover = document.createElement("div");
+    this.#popover.id = getUniqueId();
     this.#popover.className = "reactionPopover forceHide";
     this.#popover.setAttribute("role", "listbox");
     this.#popover.setAttribute("aria-orientation", "horizontal");
@@ -130,6 +132,8 @@ class ReactionPopover {
 
   #showPopover(button: HTMLButtonElement): void {
     const popover = this.#getPopover();
+
+    button.setAttribute("aria-owns", popover.id);
 
     UiAlignment.set(popover, button, {
       horizontal: "center",
@@ -317,6 +321,7 @@ function setupPopoverButton(): void {
       void reactionPopover.open(button).then(async (result: Result) => {
         isOpen = false;
         button.setAttribute("aria-expanded", "false");
+        button.removeAttribute("aria-owns");
 
         if (!result.ok) {
           return;

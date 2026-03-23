@@ -7,7 +7,7 @@
  * @since 6.3
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertReaction", "WoltLabSuite/Core/Api/Reactions/SetReaction", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Dom/Change/Listener", "focus-trap", "WoltLabSuite/Core/Ui/Alignment", "WoltLabSuite/Core/Ui/Screen", "WoltLabSuite/Core/Ui/CloseOverlay", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Language"], function (require, exports, tslib_1, RevertReaction_1, SetReaction_1, Selector_1, Listener_1, focus_trap_1, UiAlignment, UiScreen, CloseOverlay_1, PromiseMutex_1, Language_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertReaction", "WoltLabSuite/Core/Api/Reactions/SetReaction", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Dom/Change/Listener", "focus-trap", "WoltLabSuite/Core/Ui/Alignment", "WoltLabSuite/Core/Ui/Screen", "WoltLabSuite/Core/Ui/CloseOverlay", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Dom/Util"], function (require, exports, tslib_1, RevertReaction_1, SetReaction_1, Selector_1, Listener_1, focus_trap_1, UiAlignment, UiScreen, CloseOverlay_1, PromiseMutex_1, Language_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -48,6 +48,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
                 return;
             }
             this.#popover = document.createElement("div");
+            this.#popover.id = (0, Util_1.getUniqueId)();
             this.#popover.className = "reactionPopover forceHide";
             this.#popover.setAttribute("role", "listbox");
             this.#popover.setAttribute("aria-orientation", "horizontal");
@@ -91,6 +92,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
         }
         #showPopover(button) {
             const popover = this.#getPopover();
+            button.setAttribute("aria-owns", popover.id);
             UiAlignment.set(popover, button, {
                 horizontal: "center",
                 vertical: UiScreen.is("screen-xs") ? "bottom" : "top",
@@ -237,6 +239,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
                 void reactionPopover.open(button).then(async (result) => {
                     isOpen = false;
                     button.setAttribute("aria-expanded", "false");
+                    button.removeAttribute("aria-owns");
                     if (!result.ok) {
                         return;
                     }
