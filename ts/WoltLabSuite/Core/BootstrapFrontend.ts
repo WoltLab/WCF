@@ -165,4 +165,7 @@ export function setup(options: BootstrapOptions): void {
   whenFirstSeen("[data-report-content]", () => {
     void import("./Ui/Moderation/Report").then(({ setup }) => setup(options.reportEndpoint));
   });
+  whenFirstSeen("[data-reaction-object-type]", () => {
+    void import("./Component/Reaction/Button").then(({ setup }) => setup());
+  });
 }

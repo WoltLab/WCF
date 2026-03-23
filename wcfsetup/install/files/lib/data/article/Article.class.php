@@ -5,6 +5,7 @@ namespace wcf\data\article;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\attachment\GroupedAttachmentList;
+use wcf\data\CollectionDatabaseObject;
 use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\IPopoverObject;
@@ -14,6 +15,7 @@ use wcf\data\user\UserProfile;
 use wcf\system\article\discussion\CommentArticleDiscussionProvider;
 use wcf\system\article\discussion\IArticleDiscussionProvider;
 use wcf\system\article\discussion\VoidArticleDiscussionProvider;
+use wcf\system\reaction\ReactionData;
 use wcf\system\WCF;
 
 /**
@@ -38,8 +40,10 @@ use wcf\system\WCF;
  * @property-read   int     $attachments        number of attachments in the article descriptions
  * @property-read   0|1     $isDeleted          is 1 if the article is in trash bin, otherwise 0
  * @property-read   0|1     $hasLabels          is `1` if labels are assigned to the article
+ *
+ * @extends CollectionDatabaseObject<ArticleCollection>
  */
-class Article extends DatabaseObject implements ILinkableObject, IPopoverObject, IUserContent
+class Article extends CollectionDatabaseObject implements ILinkableObject, IPopoverObject, IUserContent
 {
     /**
      * indicates that article is unpublished
@@ -449,5 +453,25 @@ class Article extends DatabaseObject implements ILinkableObject, IPopoverObject,
     public function getPopoverLinkClass()
     {
         return 'articleLink';
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function canReact(): bool
+    {
+        return \MODULE_LIKE
+            && \ARTICLE_ENABLE_LIKE
+            && WCF::getUser()->userID
+            && $this->userID != WCF::getUser()->userID
+            && WCF::getSession()->getPermission('user.like.canLike');
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getReactionData(): ReactionData
+    {
+        return $this->getCollection()->getReactionData($this);
     }
 }

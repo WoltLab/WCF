@@ -100,9 +100,7 @@
 				<div class="commentResponse__footer">
 					<div class="commentResponse__reactions">
 						{if MODULE_LIKE && $commentManager->supportsLike() && $likeData|isset}
-							{include file="reactionSummaryList" isTiny=true reactionData=$likeData[response] objectType="com.woltlab.wcf.comment.response" objectID=$response->responseID}
-						{else}
-							<a href="#" class="reactionSummaryList reactionSummaryListTiny jsOnly" data-object-type="com.woltlab.wcf.comment.response" data-object-id="{$response->responseID}" title="{lang}wcf.reactions.summary.listReactions{/lang}" style="display: none;"></a>
+							{include file="reactionSummaryList" reactionData=$likeData[response] objectType="com.woltlab.wcf.comment.response" objectID=$response->responseID}
 						{/if}
 					</div>
 
@@ -110,15 +108,17 @@
 						{if MODULE_LIKE && $commentManager->supportsLike() && $__wcf->session->getPermission('user.like.canLike') && $response->userID != $__wcf->user->userID}
 							<button
 								type="button"
-								class="commentResponse__button commentResponse__button--react jsTooltip button small {if $likeData[response][$response->responseID]|isset && $likeData[response][$response->responseID]->reactionTypeID} active{/if}"
+								class="reactionButton commentResponse__button commentResponse__button--react jsTooltip button small{if $likeData[response][$response->responseID]|isset && $likeData[response][$response->responseID]->reactionTypeID} active{/if}"
 								title="{lang}wcf.reactions.react{/lang}"
+								aria-pressed="{if $likeData[response][$response->responseID]|isset && $likeData[response][$response->responseID]->reactionTypeID}true{else}false{/if}"
 								data-reaction-type-id="{if $likeData[response][$response->responseID]|isset && $likeData[response][$response->responseID]->reactionTypeID}{$likeData[response][$response->responseID]->reactionTypeID}{else}0{/if}"
+								data-reaction-object-type="com.woltlab.wcf.comment.response"
+								data-object-id="{$response->responseID}"
 							>
 								{icon name='face-smile'}
-								<span class="invisible">{lang}wcf.reactions.react{/lang}</span>
 							</button>
 						{/if}
-						
+
 						{event name='commentResponseButtons'}
 					</div>
 

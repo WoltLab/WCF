@@ -5,13 +5,11 @@ namespace wcf\page;
 use wcf\data\article\CategoryArticleList;
 use wcf\data\article\ViewableArticle;
 use wcf\data\comment\StructuredCommentList;
-use wcf\data\like\object\LikeObject;
 use wcf\system\comment\CommentHandler;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\interaction\user\ArticleInteractions;
 use wcf\system\MetaTagHandler;
-use wcf\system\reaction\ReactionHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -55,12 +53,6 @@ class ArticlePage extends AbstractArticlePage
      * @var StructuredCommentList
      */
     public $commentList;
-
-    /**
-     * like data for the article
-     * @var LikeObject[]
-     */
-    public $articleLikeData = [];
 
     /**
      * @inheritDoc
@@ -114,13 +106,6 @@ class ArticlePage extends AbstractArticlePage
         $articleList->readObjects();
         foreach ($articleList as $article) {
             $this->previousArticle = $article;
-        }
-
-        // fetch likes
-        if (MODULE_LIKE) {
-            $objectType = ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.likeableArticle');
-            ReactionHandler::getInstance()->loadLikeObjects($objectType, [$this->article->articleID]);
-            $this->articleLikeData = ReactionHandler::getInstance()->getLikeObjects($objectType);
         }
 
         // add meta/og tags
@@ -205,7 +190,6 @@ class ArticlePage extends AbstractArticlePage
         WCF::getTPL()->assign([
             'previousArticle' => $this->previousArticle,
             'nextArticle' => $this->nextArticle,
-            'articleLikeData' => $this->articleLikeData,
             'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentInteractionButton(
                 new ArticleInteractions(),
                 $this->article,
@@ -220,6 +204,7 @@ class ArticlePage extends AbstractArticlePage
             'commentObjectTypeID' => 0,
             'lastCommentTime' => 0,
             'likeData' => [],
+            'articleLikeData' => [],
         ]);
     }
 }
