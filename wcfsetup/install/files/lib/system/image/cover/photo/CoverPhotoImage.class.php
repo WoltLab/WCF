@@ -102,16 +102,19 @@ class CoverPhotoImage
     {
         if (self::$defaultCoverPhotoImage === null) {
             self::$defaultCoverPhotoImage = new class implements ICoverPhotoImage {
+                #[\Override]
                 public function getCoverPhotoCaption()
                 {
                     return '';
                 }
 
+                #[\Override]
                 public function getCoverPhotoLocation()
                 {
                     return StyleHandler::getInstance()->getStyle()->getCoverPhotoLocation();
                 }
 
+                #[\Override]
                 public function getCoverPhotoUrl()
                 {
                     return StyleHandler::getInstance()->getStyle()->getCoverPhotoUrl();

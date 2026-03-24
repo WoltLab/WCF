@@ -88,6 +88,7 @@ class Style extends DatabaseObject implements ITitledObject
     /**
      * Returns the name of this style.
      */
+    #[\Override]
     public function __toString(): string
     {
         return $this->styleName;

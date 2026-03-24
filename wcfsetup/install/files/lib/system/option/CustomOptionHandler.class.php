@@ -25,6 +25,7 @@ abstract class CustomOptionHandler extends OptionHandler
     /**
      * Gets all options and option categories from cache.
      */
+    #[\Override]
     protected function readCache()
     {
         throw new NotImplementedException();
@@ -33,6 +34,7 @@ abstract class CustomOptionHandler extends OptionHandler
     /**
      * Initializes active options.
      */
+    #[\Override]
     public function init()
     {
         if (!$this->didInit) {

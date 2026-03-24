@@ -20,7 +20,6 @@ class RowFormContainer extends FormContainer
      */
     protected $templateName = 'shared_rowFormContainer';
 
-    #[\Override]
     public function __construct()
     {
         $this->addClasses(['row', 'rowColGap', 'formGrid']);

@@ -293,7 +293,6 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
     /**
      * @return void
      */
-    #[\Override]
     protected function insertNewXmlElement(XML $xml, \DOMElement $newElement)
     {
         $delete = $xml->xpath()->query('/ns:data/ns:delete')->item(0);
@@ -327,7 +326,6 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
     /**
      * @return null
      */
-    #[\Override]
     final protected function prepareDeleteXmlElement(\DOMElement $element)
     {
         return null;
@@ -336,7 +334,6 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
     /**
      * @return void
      */
-    #[\Override]
     protected function saveObject(\DOMElement $newElement, ?\DOMElement $oldElement = null)
     {
         $newElementData = $this->getElementData($newElement, true);
@@ -353,7 +350,6 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
      *
      * @return void
      */
-    #[\Override]
     final protected function deleteObject(\DOMElement $element)
     {
         // Reverting file deletions is not supported. Use the `file` PIP instead.
@@ -368,7 +364,6 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
     /**
      * @return string
      */
-    #[\Override]
     protected function getEmptyXml()
     {
         $xsdFilename = $this->getXsdFilename();

@@ -24,7 +24,6 @@ class RowFormFieldContainer extends FormContainer
      */
     protected $templateName = 'shared_rowFormFieldContainer';
 
-    #[\Override]
     public function __construct()
     {
         // does nothing

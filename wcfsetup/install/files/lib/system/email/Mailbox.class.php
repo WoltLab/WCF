@@ -172,6 +172,7 @@ class Mailbox
     /**
      * Returns a string representation for use in a RFC 5322 message.
      */
+    #[\Override]
     public function __toString(): string
     {
         if (

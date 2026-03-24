@@ -27,6 +27,7 @@ use WoltLab\WebpExif\Chunk\Exif;
 #[PostRequest('/core/files/upload')]
 final class PrepareUpload implements IController
 {
+    #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $parameters = Helper::mapApiParameters($request, PostUploadParameters::class);

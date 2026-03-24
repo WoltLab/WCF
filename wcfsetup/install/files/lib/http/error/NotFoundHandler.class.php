@@ -26,6 +26,7 @@ final class NotFoundHandler implements RequestHandlerInterface
 {
     private const STATUS_CODE = 404;
 
+    #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $errorDetail = ErrorDetail::fromRequest($request);

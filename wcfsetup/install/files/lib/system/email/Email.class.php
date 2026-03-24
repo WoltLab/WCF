@@ -742,6 +742,7 @@ class Email
     /**
      * @see Email::getEmail()
      */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getEmail();

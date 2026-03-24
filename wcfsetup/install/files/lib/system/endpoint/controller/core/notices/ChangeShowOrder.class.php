@@ -25,6 +25,7 @@ use wcf\system\WCF;
 #[PostRequest('/core/notices/show-order')]
 final class ChangeShowOrder implements IController
 {
+    #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         WCF::getSession()->checkPermissions(['admin.notice.canManageNotice']);

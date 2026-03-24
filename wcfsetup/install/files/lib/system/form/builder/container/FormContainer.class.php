@@ -41,7 +41,6 @@ class FormContainer implements IFormContainer
      */
     protected $templateApplication = 'wcf';
 
-    #[\Override]
     public function __construct()
     {
         $this->addClass('section');

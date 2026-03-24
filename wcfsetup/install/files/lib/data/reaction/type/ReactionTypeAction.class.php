@@ -197,6 +197,7 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggle
     /**
      * @deprecated 6.3
      */
+    #[\Override]
     public function validateToggle()
     {
         $this->validateUpdate();

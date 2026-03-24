@@ -27,6 +27,7 @@ class FileThumbnailEditor extends DatabaseObjectEditor
         @\unlink($this->getPath() . $this->getSourceFilename());
     }
 
+    #[\Override]
     public static function deleteAll(array $objectIDs = [])
     {
         $thumbnailList = new FileThumbnailList();

@@ -137,6 +137,7 @@ class GroupedUserList implements \Countable, \Iterator
      *
      * @see \Iterator::key()
      */
+    #[\Override]
     public function key(): int
     {
         return $this->userIDs[$this->index];

@@ -45,6 +45,7 @@ class NotificationUnsubscribeForm extends AbstractForm
     /**
      * Disable security token validation.
      */
+    #[\Override]
     protected function validateSecurityToken()
     {
         // Do not validate the security token, the request is authenticated by

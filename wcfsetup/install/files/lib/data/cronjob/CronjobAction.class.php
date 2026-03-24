@@ -242,6 +242,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
     /**
      * @deprecated 6.3 use the `EnableCronjob` or `DisableCronjob` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->objects as $editor) {

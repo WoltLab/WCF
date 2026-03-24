@@ -26,6 +26,7 @@ class PreparedStatementConditionBuilder extends ConditionBuilder
      * @param array<int, mixed> $parameters
      * @return void
      */
+    #[\Override]
     public function add($condition, array $parameters = [])
     {
         if (!empty($parameters)) {

@@ -40,7 +40,6 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
      */
     public $userGroupIDs = [];
 
-    #[\Override]
     public function __construct(DatabaseObject $object)
     {
         parent::__construct($object);

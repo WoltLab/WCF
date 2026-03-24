@@ -23,6 +23,7 @@ use wcf\system\WCF;
 #[PostRequest("/core/ads/{id:\d+}/enable")]
 class EnableAd implements IController
 {
+    #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $ad = Helper::fetchObjectFromRequestParameter($variables['id'], Ad::class);

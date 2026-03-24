@@ -352,7 +352,6 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
      * @return ?\DOMElement
      * @since   5.2
      */
-    #[\Override]
     protected function prepareDeleteXmlElement(\DOMElement $element)
     {
         $clipboardAction = $element->ownerDocument->createElement($this->tagName);
@@ -370,7 +369,6 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
      * @return void
      * @since   5.2
      */
-    #[\Override]
     protected function deleteObject(\DOMElement $element)
     {
         $actionClassName = $element->getElementsByTagName('actionclassname')->item(0)->nodeValue;

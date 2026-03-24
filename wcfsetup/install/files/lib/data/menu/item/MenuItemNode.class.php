@@ -90,6 +90,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements IObjectTreeNode
     /**
      * Returns node depth.
      */
+    #[\Override]
     public function getDepth(): int
     {
         return $this->depth;

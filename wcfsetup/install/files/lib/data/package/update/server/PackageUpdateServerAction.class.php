@@ -76,6 +76,7 @@ class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements 
     /**
      * @deprecated 6.3 use the `EnablePackageUpdateServer` or `DisablePackageUpdateServer` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->objects as $editor) {

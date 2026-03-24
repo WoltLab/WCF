@@ -24,6 +24,7 @@ use wcf\system\WCF;
 #[PostRequest("/core/contact/options/{id:\d+}/disable")]
 final class DisableOption implements IController
 {
+    #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $this->assertOptionCanBeDisabled();

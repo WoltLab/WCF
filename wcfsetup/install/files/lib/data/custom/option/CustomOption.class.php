@@ -78,6 +78,7 @@ abstract class CustomOption extends Option implements ITitledObject
      *
      * @return  bool
      */
+    #[\Override]
     public function isVisible()
     {
         return !$this->isDisabled;

@@ -234,6 +234,7 @@ class HtmlBBCodeParser extends BBCodeParser
     /**
      * Builds the parsed string.
      */
+    #[\Override]
     public function buildParsedString()
     {
         // reset parsed text

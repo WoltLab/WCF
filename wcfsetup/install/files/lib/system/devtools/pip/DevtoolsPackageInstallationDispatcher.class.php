@@ -23,7 +23,6 @@ class DevtoolsPackageInstallationDispatcher extends PackageInstallationDispatche
      */
     protected $project;
 
-    #[\Override]
     public function __construct(DevtoolsProject $project, ?PackageInstallationQueue $queue = null)
     {
         $this->queue = $queue;
@@ -32,6 +31,7 @@ class DevtoolsPackageInstallationDispatcher extends PackageInstallationDispatche
         }
 
         $this->nodeBuilder = new class($this) extends PackageInstallationNodeBuilder {
+            #[\Override]
             protected function buildOptionalNodes()
             {
                 // does nothing; optional packages are not supported

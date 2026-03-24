@@ -142,6 +142,7 @@ class ContactOptionAction extends AbstractDatabaseObjectAction implements ISorta
     /**
      * @deprecated 6.3
      */
+    #[\Override]
     public function validateToggle()
     {
         $this->validateUpdate();
@@ -150,6 +151,7 @@ class ContactOptionAction extends AbstractDatabaseObjectAction implements ISorta
     /**
      * @deprecated 6.3 use the `EnableContactOption` or `DisableContactOption` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->objects as $editor) {

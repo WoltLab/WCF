@@ -179,6 +179,7 @@ class QuotedMessage implements \Countable, \Iterator
      *
      * @see \Iterator::key()
      */
+    #[\Override]
     public function key(): string
     {
         return $this->indexToObject[$this->index];

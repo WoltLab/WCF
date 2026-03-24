@@ -26,6 +26,7 @@ class UserOptionCategory extends DatabaseObject implements ITitledObject
     /**
      * Returns the title of this category.
      */
+    #[\Override]
     public function __toString(): string
     {
         return $this->categoryName;

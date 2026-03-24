@@ -139,7 +139,6 @@ class PasswordFormField extends AbstractFormField implements
     /**
      * @return string[]
      */
-    #[\Override]
     protected function getValidAutoCompleteTokens(): array
     {
         return ['new-password', 'current-password'];

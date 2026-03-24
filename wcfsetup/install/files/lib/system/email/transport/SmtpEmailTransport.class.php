@@ -103,7 +103,6 @@ final class SmtpEmailTransport implements IStatusReportingEmailTransport
         }
     }
 
-    #[\Override]
     public function __destruct()
     {
         $this->disconnect();
@@ -448,6 +447,7 @@ final class SmtpEmailTransport implements IStatusReportingEmailTransport
      * @throws \Exception
      * @throws PermanentFailure
      */
+    #[\Override]
     public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo): string
     {
         // delivery is locked

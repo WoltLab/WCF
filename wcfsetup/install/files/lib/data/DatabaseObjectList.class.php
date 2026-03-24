@@ -354,6 +354,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
      *
      * @see \Iterator::key()
      */
+    #[\Override]
     #[\ReturnTypeWillChange]
     public function key()
     {

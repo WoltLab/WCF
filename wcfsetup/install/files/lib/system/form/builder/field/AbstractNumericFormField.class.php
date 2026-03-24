@@ -233,7 +233,6 @@ abstract class AbstractNumericFormField extends AbstractFormField implements
      * @return string[]
      * @since       5.4
      */
-    #[\Override]
     protected static function getReservedFieldAttributes(): array
     {
         return \array_merge(

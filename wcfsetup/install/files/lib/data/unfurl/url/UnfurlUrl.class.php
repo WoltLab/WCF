@@ -56,7 +56,6 @@ class UnfurlUrl extends DatabaseObject
     public const THUMBNAIL_WIDTH = 800;
     public const THUMBNAIL_HEIGHT = 400;
 
-    #[\Override]
     public function __construct($id, $row = null, ?DatabaseObject $object = null)
     {
         if ($id !== null) {

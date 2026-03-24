@@ -12,6 +12,7 @@ class HTMLPurifier_URIScheme_steam extends HTMLPurifier_URIScheme
      * @param HTMLPurifier_Context $context
      * @return bool
      */
+    #[\Override]
     public function doValidate(&$uri, $config, $context)
     {
         $uri->userinfo = null;

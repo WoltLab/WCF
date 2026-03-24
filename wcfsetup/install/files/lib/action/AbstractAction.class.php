@@ -36,7 +36,6 @@ abstract class AbstractAction implements IAction
      */
     public $neededPermissions = [];
 
-    #[\Override]
     final public function __construct() {}
 
     #[\Override]

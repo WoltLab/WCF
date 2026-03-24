@@ -40,6 +40,7 @@ final class GZipFile extends File
      * @return  mixed
      * @throws  SystemException
      */
+    #[\Override]
     public function __call($function, $arguments)
     {
         if (\function_exists('gz' . $function)) {

@@ -70,6 +70,7 @@ class UserOptionHandler extends OptionHandler
      */
     public $conditionMode = false;
 
+    #[\Override]
     public function init()
     {
         parent::init();

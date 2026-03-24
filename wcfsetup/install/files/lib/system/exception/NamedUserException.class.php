@@ -40,6 +40,7 @@ class NamedUserException extends UserException
     /**
      * Shows a styled page with the given error message.
      */
+    #[\Override]
     public function show()
     {
         if (!\class_exists(WCFACP::class, false)) {

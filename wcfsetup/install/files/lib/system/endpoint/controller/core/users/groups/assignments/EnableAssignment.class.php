@@ -23,6 +23,7 @@ use wcf\system\WCF;
 #[PostRequest("/core/users/groups/assignments/{id:\d+}/enable")]
 final class EnableAssignment implements IController
 {
+    #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $assignment = Helper::fetchObjectFromRequestParameter($variables['id'], UserGroupAssignment::class);

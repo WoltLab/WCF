@@ -21,11 +21,13 @@ use wcf\system\request\RequestHandler;
  */
 class ArticleCategoriesBoxController extends AbstractCategoriesBoxController
 {
+    #[\Override]
     protected function getNodeTree(): CategoryNodeTree
     {
         return new ArticleCategoryNodeTree('com.woltlab.wcf.article.category');
     }
 
+    #[\Override]
     protected function getActiveCategory(): ?AbstractDecoratedCategory
     {
         $activeCategory = null;
@@ -40,6 +42,7 @@ class ArticleCategoriesBoxController extends AbstractCategoriesBoxController
         return $activeCategory;
     }
 
+    #[\Override]
     protected function getResetFilterLink(): string
     {
         return LinkHandler::getInstance()->getControllerLink(ArticleListPage::class);

@@ -28,6 +28,7 @@ final class UserLoggedIn extends \wcf\system\user\authentication\event\UserLogge
         $this->userID = (int)$user->userID;
     }
 
+    #[\Override]
     public function getUser(): User
     {
         return UserRuntimeCache::getInstance()->getObject($this->userID);

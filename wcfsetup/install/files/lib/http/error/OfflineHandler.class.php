@@ -25,6 +25,7 @@ final class OfflineHandler implements RequestHandlerInterface
 {
     private const STATUS_CODE = 503;
 
+    #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         BoxHandler::disablePageLayout();

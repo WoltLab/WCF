@@ -62,6 +62,7 @@ class AdAction extends AbstractDatabaseObjectAction implements IToggleAction
     /**
      * @deprecated 6.3
      */
+    #[\Override]
     public function validateToggle()
     {
         $this->validateUpdate();
@@ -70,6 +71,7 @@ class AdAction extends AbstractDatabaseObjectAction implements IToggleAction
     /**
      * @deprecated 6.3 use the `EnableAd` or `DisableAd` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->objects as $adEditor) {

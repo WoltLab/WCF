@@ -34,7 +34,6 @@ abstract class I18nDatabaseObjectList extends DatabaseObjectList
      * @param ?int $languageID id of the language that should be used
      * @throws \DomainException
      */
-    #[\Override]
     public function __construct($languageID = null)
     {
         parent::__construct();

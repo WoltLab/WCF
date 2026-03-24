@@ -91,7 +91,6 @@ class DebugPreparedStatement extends PreparedStatement
         return parent::fetchMap($keyColumn, $valueColumn, $uniqueKey);
     }
 
-    #[\Override]
     protected function debugThrowIfNotExecutedBefore(): void
     {
         if (!$this->debugDidExecuteOnce) {

@@ -14,6 +14,7 @@ use wcf\system\WCF;
  */
 class ReauthenticationForm extends \wcf\form\ReauthenticationForm
 {
+    #[\Override]
     public function __run()
     {
         WCF::getTPL()->assign([

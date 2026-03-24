@@ -514,6 +514,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
     /**
      * @deprecated 6.3 use the `EnablePage` or `DisablePage` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->objects as $editor) {

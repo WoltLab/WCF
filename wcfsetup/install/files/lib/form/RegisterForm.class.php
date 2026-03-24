@@ -269,6 +269,7 @@ class RegisterForm extends UserAddForm
     /**
      * Reads option tree on page init.
      */
+    #[\Override]
     protected function readOptionTree()
     {
         $this->optionTree = $this->optionHandler->getOptionTree('profile');

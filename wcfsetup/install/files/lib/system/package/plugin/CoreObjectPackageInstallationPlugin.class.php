@@ -184,7 +184,6 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
      * @return ?\DOMElement
      * @since   5.2
      */
-    #[\Override]
     protected function prepareDeleteXmlElement(\DOMElement $element)
     {
         $coreObject = $element->ownerDocument->createElement($this->tagName);
@@ -200,7 +199,6 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
      * @return void
      * @since   5.2
      */
-    #[\Override]
     protected function deleteObject(\DOMElement $element)
     {
         $name = $element->getElementsByTagName('objectname')->item(0)->nodeValue;

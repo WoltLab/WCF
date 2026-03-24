@@ -629,6 +629,7 @@ BROWSERCONFIG;
     /**
      * @deprecated 6.3
      */
+    #[\Override]
     public function validateToggle()
     {
         $this->validateUpdate();
@@ -637,6 +638,7 @@ BROWSERCONFIG;
     /**
      * @deprecated 6.3 use the `EnableStyle` or `DisableStyle` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->objects as $editor) {

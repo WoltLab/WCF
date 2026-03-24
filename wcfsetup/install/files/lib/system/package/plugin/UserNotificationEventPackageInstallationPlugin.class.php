@@ -408,7 +408,6 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
      * @return ?\DOMElement
      * @since   5.2
      */
-    #[\Override]
     protected function prepareDeleteXmlElement(\DOMElement $element)
     {
         $userNotificationEvent = $element->ownerDocument->createElement($this->tagName);
@@ -427,7 +426,6 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
      * @return void
      * @since   5.2
      */
-    #[\Override]
     protected function deleteObject(\DOMElement $element)
     {
         $elements = [];

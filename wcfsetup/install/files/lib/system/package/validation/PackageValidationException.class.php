@@ -310,7 +310,6 @@ class PackageValidationException extends SystemException
     /**
      * @return void
      */
-    #[\Override]
     protected function logError()
     {
         // do not log errors

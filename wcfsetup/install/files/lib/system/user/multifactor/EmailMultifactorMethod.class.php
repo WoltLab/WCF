@@ -37,6 +37,7 @@ final class EmailMultifactorMethod implements IMultifactorMethod
     /**
      * Returns an empty string.
      */
+    #[\Override]
     public function getStatusText(Setup $setup): string
     {
         return '';

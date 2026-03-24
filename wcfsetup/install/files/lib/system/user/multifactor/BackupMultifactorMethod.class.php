@@ -65,6 +65,7 @@ final class BackupMultifactorMethod implements IMultifactorMethod
     /**
      * Returns the number of remaining codes.
      */
+    #[\Override]
     public function getStatusText(Setup $setup): string
     {
         $sql = "SELECT  COUNT(*) - COUNT(useTime) AS count,

@@ -15,7 +15,6 @@ use wcf\util\XML;
  */
 final class SetupLanguage extends Language
 {
-    #[\Override]
     public function __construct(string $languageCode)
     {
         parent::__construct(null, ['languageCode' => $languageCode], null);

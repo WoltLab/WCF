@@ -26,6 +26,7 @@ use wcf\system\WCF;
 #[GetRequest('/core/smilies/categories/{id:\d+}/show-order')]
 final class GetSmileyShowOrder implements IController
 {
+    #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $smileyCategory = Helper::fetchObjectFromRequestParameter($variables['id'], Category::class);

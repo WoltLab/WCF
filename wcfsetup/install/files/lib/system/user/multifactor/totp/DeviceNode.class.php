@@ -65,6 +65,7 @@ class DeviceNode implements IFormChildNode, IFormParentNode
     /**
      * Returns true once device data has been set.
      */
+    #[\Override]
     public function isAvailable(): bool
     {
         return $this->data !== null;

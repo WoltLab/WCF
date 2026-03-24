@@ -119,7 +119,6 @@ class Application extends DatabaseObject
         return $this->pageURL;
     }
 
-    #[\Override]
     public function __wakeup()
     {
         if (ENABLE_ENTERPRISE_MODE && \defined('ENTERPRISE_MODE_DOMAIN_OVERRIDE') && ENTERPRISE_MODE_DOMAIN_OVERRIDE === $_SERVER['HTTP_HOST']) {

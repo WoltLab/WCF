@@ -72,7 +72,6 @@ class ItemListFormField extends AbstractFormField implements
      */
     const SAVE_VALUE_TYPE_SSV = 'ssv';
 
-    #[\Override]
     public function __construct()
     {
         $this->multiple();

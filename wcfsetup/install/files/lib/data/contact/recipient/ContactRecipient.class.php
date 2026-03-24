@@ -42,7 +42,6 @@ class ContactRecipient extends DatabaseObject implements ITitledObject
         return $this->getName();
     }
 
-    #[\Override]
     public function __wakeup()
     {
         // update the administrator's email address on de-serialization, avoids outdated caches

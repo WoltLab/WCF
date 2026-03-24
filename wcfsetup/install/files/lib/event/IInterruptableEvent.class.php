@@ -24,10 +24,12 @@ interface IInterruptableEvent extends IPsr14Event, \wcf\system\event\IInterrupta
      * All event listeners will be invoked, even if an event listener in the middle
      * of the stack calls `preventDefault()`.
      */
+    #[\Override]
     public function preventDefault(): void;
 
     /**
      * Returns whether preventDefault() was called.
      */
+    #[\Override]
     public function defaultPrevented(): bool;
 }

@@ -24,7 +24,6 @@ class DevtoolsInstaller extends Installer
      */
     protected $project;
 
-    #[\Override]
     public function __construct(DevtoolsProject $project, $targetDir, $source, $fileHandler = null, $folder = '')
     {
         $this->project = $project;

@@ -906,7 +906,6 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
      * @return list<string>
      * @since   5.2
      */
-    #[\Override]
     public function getEntryTypes()
     {
         return ['options', 'categories'];
@@ -968,7 +967,6 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
      * @return void
      * @since   5.2
      */
-    #[\Override]
     protected function saveObject(\DOMElement $newElement, ?\DOMElement $oldElement = null)
     {
         switch ($this->entryType) {
@@ -1084,7 +1082,6 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
      * @return void
      * @since   5.2
      */
-    #[\Override]
     protected function insertNewXmlElement(XML $xml, \DOMElement $newElement)
     {
         $import = $xml->xpath()->query('/ns:data/ns:import')->item(0);
@@ -1205,7 +1202,6 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
      * @return ?\DOMElement
      * @since   5.2
      */
-    #[\Override]
     protected function prepareDeleteXmlElement(\DOMElement $element)
     {
         $elementName = 'option';
@@ -1224,7 +1220,6 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
      * @return void
      * @since   5.2
      */
-    #[\Override]
     protected function deleteObject(\DOMElement $element)
     {
         $name = $element->getAttribute('name');
@@ -1270,7 +1265,6 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
      * @return void
      * @since   5.2
      */
-    #[\Override]
     protected function addDeleteElement(\DOMElement $element)
     {
         $this->defaultAddDeleteElement($element);
@@ -1306,7 +1300,6 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
      * @return bool
      * @since   5.2
      */
-    #[\Override]
     protected function sanitizeXmlFileAfterDeleteEntry(\DOMDocument $document)
     {
         $xpath = new \DOMXPath($document);

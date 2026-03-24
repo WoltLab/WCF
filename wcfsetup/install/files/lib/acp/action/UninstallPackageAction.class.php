@@ -74,6 +74,7 @@ final class UninstallPackageAction extends AbstractSecureAction
         }
     }
 
+    #[\Override]
     public function execute(): ResponseInterface
     {
         parent::execute();
@@ -172,7 +173,6 @@ final class UninstallPackageAction extends AbstractSecureAction
         ]);
     }
 
-    #[\Override]
     protected function getCurrentAction(?int $queueID, PackageInstallationQueue $queue): string
     {
         if ($queueID === null) {

@@ -57,7 +57,6 @@ abstract class AbstractCommentListBoxController extends AbstractDatabaseObjectLi
      */
     public $validSortFields = ['time'];
 
-    #[\Override]
     public function __construct()
     {
         $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(

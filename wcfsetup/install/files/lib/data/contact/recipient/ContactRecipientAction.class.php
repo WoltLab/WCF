@@ -134,6 +134,7 @@ class ContactRecipientAction extends AbstractDatabaseObjectAction implements ITo
     /**
      * @deprecated 6.3 use the `EnableContactRecipient` or `DisableContactRecipient` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->objects as $editor) {

@@ -43,6 +43,7 @@ final class DebugFolderEmailTransport implements IStatusReportingEmailTransport
     /**
      * Writes the given $email into the folder.
      */
+    #[\Override]
     public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo): string
     {
         $eml = "Return-Path: <" . $envelopeFrom->getAddress() . ">\r\n";

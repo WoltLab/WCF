@@ -229,7 +229,6 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
      * @return ?\DOMElement
      * @since   5.2
      */
-    #[\Override]
     protected function prepareDeleteXmlElement(\DOMElement $element)
     {
         $objectTypeDefinition = $element->ownerDocument->createElement($this->tagName);
@@ -245,7 +244,6 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
      * @return void
      * @since   5.2
      */
-    #[\Override]
     protected function deleteObject(\DOMElement $element)
     {
         $this->handleDelete([

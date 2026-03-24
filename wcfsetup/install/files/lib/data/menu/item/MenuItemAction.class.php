@@ -53,6 +53,7 @@ class MenuItemAction extends AbstractDatabaseObjectAction implements ISortableAc
      */
     protected $requireACP = ['create', 'delete', 'toggle', 'update'];
 
+    #[\Override]
     public function create()
     {
         // `title` column doesn't have a default value

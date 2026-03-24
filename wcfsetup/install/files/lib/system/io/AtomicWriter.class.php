@@ -61,7 +61,6 @@ class AtomicWriter extends File
         }
     }
 
-    #[\Override]
     public function __destruct()
     {
         $this->close();

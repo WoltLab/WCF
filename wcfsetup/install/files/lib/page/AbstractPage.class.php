@@ -101,7 +101,6 @@ abstract class AbstractPage implements IPage
      */
     private $psr7Response;
 
-    #[\Override]
     final public function __construct()
     {
     }

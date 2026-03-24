@@ -95,6 +95,7 @@ class TemplateEditor extends DatabaseObjectEditor
      *
      * @return void
      */
+    #[\Override]
     public function delete()
     {
         $this->deleteFile();

@@ -112,6 +112,7 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
     /**
      * @deprecated 6.3
      */
+    #[\Override]
     public function validateToggle()
     {
         $this->validateUpdate();
@@ -120,6 +121,7 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
     /**
      * @deprecated 6.3 use the `EnableNotice` or `DisableNotice` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->objects as $editor) {

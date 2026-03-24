@@ -39,7 +39,6 @@ class ViewableArticleList extends ArticleList
      */
     protected $embeddedObjectLoading = true;
 
-    #[\Override]
     public function __construct()
     {
         parent::__construct();

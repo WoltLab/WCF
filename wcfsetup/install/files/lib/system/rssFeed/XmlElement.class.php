@@ -12,6 +12,7 @@ namespace wcf\system\rssFeed;
  */
 final class XmlElement extends \SimpleXMLElement
 {
+    #[\Override]
     public function addChild(string $name, ?string $value = null, ?string $namespace = null): ?self
     {
         if ($value !== null) {

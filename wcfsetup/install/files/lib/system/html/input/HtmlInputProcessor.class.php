@@ -195,6 +195,7 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
      *
      * @return string parsed html
      */
+    #[\Override]
     public function getHtml()
     {
         return $this->getHtmlInputNodeProcessor()->getHtml();

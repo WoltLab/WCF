@@ -31,6 +31,7 @@ final class PreloadPhrasesCollecting extends \wcf\system\language\preload\event\
      * Registers the name of a phrases that should
      * be added to the list of preloaded values.
      */
+    #[\Override]
     public function preload(string $phrase): void
     {
         $this->phrases[] = $phrase;
@@ -39,6 +40,7 @@ final class PreloadPhrasesCollecting extends \wcf\system\language\preload\event\
     /**
      * @return string[]
      */
+    #[\Override]
     public function getPhrases(): array
     {
         return $this->phrases;

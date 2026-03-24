@@ -57,6 +57,7 @@ class NotificationEmailDeliveryBackgroundJob extends AbstractBackgroundJob
     /**
      * Pass the failure along to the inner job to benefit from the retryAfter() logic.
      */
+    #[\Override]
     public function onFailure()
     {
         $this->job->fail();
@@ -65,6 +66,7 @@ class NotificationEmailDeliveryBackgroundJob extends AbstractBackgroundJob
     /**
      * Inherit the retryAfter logic of the inner job.
      */
+    #[\Override]
     public function retryAfter()
     {
         return $this->job->retryAfter();

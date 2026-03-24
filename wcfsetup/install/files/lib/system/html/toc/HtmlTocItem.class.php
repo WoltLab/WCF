@@ -133,6 +133,7 @@ class HtmlTocItem implements \Countable, \RecursiveIterator
     /**
      * Returns the number of children.
      */
+    #[\Override]
     public function count(): int
     {
         return \count($this->children);
@@ -201,6 +202,7 @@ class HtmlTocItem implements \Countable, \RecursiveIterator
     /**
      * @return \RecursiveIterator<int, self>
      */
+    #[\Override]
     public function getChildren(): \RecursiveIterator
     {
         return $this->children[$this->position];

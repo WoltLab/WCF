@@ -75,6 +75,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      *
      * @return void
      */
+    #[\Override]
     public function validateCreate()
     {
         $this->readString('password', false, 'data');
@@ -123,6 +124,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
     /**
      * Validates permissions and parameters.
      */
+    #[\Override]
     public function validateDelete()
     {
         // read and validate user objects
@@ -163,6 +165,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      *
      * @return void
      */
+    #[\Override]
     public function validateUpdate()
     {
         // read objects

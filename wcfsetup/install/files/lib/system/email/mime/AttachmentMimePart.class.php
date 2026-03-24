@@ -78,6 +78,7 @@ class AttachmentMimePart extends AbstractMimePart
      *
      * @see \wcf\system\email\mime\AbstractMimePart::getAdditionalHeaders()
      */
+    #[\Override]
     public function getAdditionalHeaders()
     {
         if (StringUtil::isASCII($this->filename)) {

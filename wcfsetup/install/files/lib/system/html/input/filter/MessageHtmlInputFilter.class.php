@@ -25,6 +25,7 @@ class MessageHtmlInputFilter implements IHtmlInputFilter
      * @param string $html unsafe HTML
      * @return      string  sanitized HTML
      */
+    #[\Override]
     public function apply($html)
     {
         // work-around for a libxml bug that causes a single space between

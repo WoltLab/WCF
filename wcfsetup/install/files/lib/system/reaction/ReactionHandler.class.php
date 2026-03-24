@@ -46,6 +46,7 @@ final class ReactionHandler extends SingletonFactory
      */
     private array $likeableObjectsCache = [];
 
+    #[\Override]
     protected function init(): void
     {
         $this->cache = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.like.likeableObject');

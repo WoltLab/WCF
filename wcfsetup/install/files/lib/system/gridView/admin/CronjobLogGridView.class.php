@@ -57,6 +57,7 @@ final class CronjobLogGridView extends AbstractGridView
                          */
                         public function __construct(private readonly array $availableCronjobs) {}
 
+                        #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
                             return $this->availableCronjobs[$value];
@@ -81,6 +82,7 @@ final class CronjobLogGridView extends AbstractGridView
                 ))
                 ->renderer([
                     new class extends DefaultColumnRenderer {
+                        #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
                             \assert($row instanceof CronjobLog);

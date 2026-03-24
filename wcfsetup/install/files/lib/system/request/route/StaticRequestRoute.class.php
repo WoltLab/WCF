@@ -38,6 +38,7 @@ class StaticRequestRoute extends DynamicRequestRoute
      * @param boolean $isACP
      * @return void
      */
+    #[\Override]
     public function setIsACP($isACP)
     {
         throw new \BadMethodCallException('Calling setIsAcp() is not allowed.');
@@ -46,6 +47,7 @@ class StaticRequestRoute extends DynamicRequestRoute
     /**
      * Always returns false.
      */
+    #[\Override]
     public function isACP()
     {
         return false;

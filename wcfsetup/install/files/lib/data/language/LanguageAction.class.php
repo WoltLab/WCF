@@ -116,6 +116,7 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
     /**
      * @deprecated 6.3 use the `EnableLanguage` or `DisableLanguage` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->objects as $editor) {

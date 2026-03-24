@@ -35,6 +35,7 @@ class DevicesContainer extends FormContainer
      *
      * @return $this
      */
+    #[\Override]
     public function appendChild(IFormChildNode $child): static
     {
         if (!($child instanceof DeviceNode)) {

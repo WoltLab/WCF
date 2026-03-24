@@ -374,6 +374,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
      * @throws  PermissionDeniedException
      * @throws  UserInputException
      */
+    #[\Override]
     public function validateDelete()
     {
         if (empty($this->objects)) {

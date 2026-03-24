@@ -63,7 +63,6 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
      */
     protected static $supportedPositions = ['contentTop', 'contentBottom', 'sidebarLeft', 'sidebarRight'];
 
-    #[\Override]
     public function __construct()
     {
         if (WCF::getUser()->userID && \count(UserProfileHandler::getInstance()->getFollowingUsers())) {

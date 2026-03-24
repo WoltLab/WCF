@@ -17,7 +17,6 @@ use wcf\system\cache\runtime\FileRuntimeCache;
  */
 class UnfurlUrlList extends DatabaseObjectList
 {
-    #[\Override]
     public function __construct()
     {
         parent::__construct();

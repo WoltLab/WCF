@@ -17,7 +17,6 @@ trait TTextAutoCompleteFormField
     /**
      * @return string[]
      */
-    #[\Override]
     protected function getValidAutoCompleteTokens(): array
     {
         return [

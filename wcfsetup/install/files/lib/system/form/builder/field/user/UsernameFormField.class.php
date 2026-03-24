@@ -80,7 +80,6 @@ final class UsernameFormField extends AbstractFormField implements
      * @return string[]
      * @since       5.4
      */
-    #[\Override]
     protected function getValidAutoCompleteTokens(): array
     {
         return ['username'];

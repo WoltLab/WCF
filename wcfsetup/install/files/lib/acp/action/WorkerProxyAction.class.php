@@ -116,6 +116,7 @@ final class WorkerProxyAction extends AJAXInvokeAction
      * @param string $proceedURL
      * @return void
      */
+    #[\Override]
     protected function sendResponse($progress = 0, ?array $parameters = null, $proceedURL = '')
     {
         if ($parameters === null) {

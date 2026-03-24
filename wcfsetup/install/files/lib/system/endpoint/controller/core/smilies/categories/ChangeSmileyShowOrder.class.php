@@ -28,6 +28,7 @@ use wcf\system\WCF;
 #[PostRequest('/core/smilies/categories/{id:\d+}/show-order')]
 final class ChangeSmileyShowOrder implements IController
 {
+    #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $smileyCategory = Helper::fetchObjectFromRequestParameter($variables['id'], Category::class);

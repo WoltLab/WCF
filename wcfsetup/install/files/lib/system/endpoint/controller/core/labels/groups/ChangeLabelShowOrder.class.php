@@ -28,6 +28,7 @@ use wcf\system\WCF;
 #[PostRequest('/core/labels/groups/{id:\d+}/labels/show-order')]
 final class ChangeLabelShowOrder implements IController
 {
+    #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         WCF::getSession()->checkPermissions(['admin.content.label.canManageLabel']);

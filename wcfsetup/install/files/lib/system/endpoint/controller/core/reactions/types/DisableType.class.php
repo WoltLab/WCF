@@ -24,6 +24,7 @@ use wcf\system\WCF;
 #[PostRequest("/core/reactions/types/{id:\d+}/disable")]
 final class DisableType implements IController
 {
+    #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $reactionType = Helper::fetchObjectFromRequestParameter($variables['id'], ReactionType::class);

@@ -44,7 +44,6 @@ class ErrorException extends SystemException
     /**
      * @return int
      */
-    #[\Override]
     public function getSeverity()
     {
         return $this->severity;

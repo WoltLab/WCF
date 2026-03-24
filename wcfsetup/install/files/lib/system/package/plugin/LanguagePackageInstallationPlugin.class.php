@@ -306,6 +306,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      * @see \wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
      * @since   3.0
      */
+    #[\Override]
     public static function getDefaultFilename()
     {
         return 'language/*.xml';
@@ -564,6 +565,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      *
      * @return  IDevtoolsPipEntryList
      */
+    #[\Override]
     public function getEntryList()
     {
         $entryList = new DevtoolsPipEntryList();
@@ -624,7 +626,6 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      * @return string
      * @since   5.2
      */
-    #[\Override]
     protected function getEmptyXml($languageCode)
     {
         $xsdFilename = $this->getXsdFilename();
@@ -647,6 +648,7 @@ XML;
      * @param bool $createXmlFiles if `true` and if a relevant XML file does not exist, it is created
      * @return  XML[]
      */
+    #[\Override]
     protected function getProjectXmls($createXmlFiles = false)
     {
         $xmls = [];
@@ -690,7 +692,6 @@ XML;
      * @return void
      * @since   5.2
      */
-    #[\Override]
     protected function saveObject(\DOMElement $newElement, ?\DOMElement $oldElement = null)
     {
         $newElementData = $this->getElementData($newElement, true);
@@ -843,7 +844,6 @@ XML;
      * @return \DOMElement
      * @since   5.2
      */
-    #[\Override]
     protected function createAndInsertNewXmlElement(XML $xml, IFormDocument $form)
     {
         return $this->createXmlElement($xml->getDocument(), $form);
@@ -854,7 +854,6 @@ XML;
      * @return \DOMElement
      * @since   5.2
      */
-    #[\Override]
     protected function replaceXmlElement(XML $xml, IFormDocument $form, $identifier)
     {
         $newElement = $this->createXmlElement($xml->getDocument(), $form);
@@ -876,7 +875,6 @@ XML;
      * @return void
      * @since   5.2
      */
-    #[\Override]
     protected function deleteObject(\DOMElement $element)
     {
         $sql = "DELETE FROM wcf1_language_item
@@ -893,7 +891,6 @@ XML;
      * @return bool
      * @since   5.2
      */
-    #[\Override]
     protected function sanitizeXmlFileAfterDeleteEntry(\DOMDocument $document)
     {
         $language = $document->getElementsByTagName('language')->item(0);

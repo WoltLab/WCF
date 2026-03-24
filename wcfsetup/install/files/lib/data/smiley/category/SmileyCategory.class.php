@@ -75,6 +75,7 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
      *
      * @see \Iterator::key()
      */
+    #[\Override]
     #[\ReturnTypeWillChange]
     public function key()
     {
@@ -137,6 +138,7 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
     /**
      * Returns the category's name.
      */
+    #[\Override]
     public function __toString(): string
     {
         return WCF::getLanguage()->get($this->title);

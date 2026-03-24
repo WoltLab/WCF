@@ -130,6 +130,7 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
      *
      * @return  int between 15 minutes and 24 hours
      */
+    #[\Override]
     public function retryAfter()
     {
         $lookup = [

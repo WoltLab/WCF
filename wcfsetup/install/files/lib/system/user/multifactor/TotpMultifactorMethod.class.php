@@ -36,6 +36,7 @@ final class TotpMultifactorMethod implements IMultifactorMethod
     /**
      * Returns the number of devices the user set up.
      */
+    #[\Override]
     public function getStatusText(Setup $setup): string
     {
         $sql = "SELECT  COUNT(*) AS count,

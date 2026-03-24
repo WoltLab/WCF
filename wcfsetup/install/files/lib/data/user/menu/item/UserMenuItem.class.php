@@ -142,6 +142,7 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, I
     /**
      * Returns the menu item name.
      */
+    #[\Override]
     public function __toString(): string
     {
         return WCF::getLanguage()->getDynamicVariable($this->menuItem);

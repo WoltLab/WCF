@@ -41,6 +41,7 @@ class BBCodeMediaProviderAction extends AbstractDatabaseObjectAction implements 
     /**
      * @deprecated 6.3
      */
+    #[\Override]
     public function validateToggle()
     {
         $this->validateUpdate();
@@ -49,6 +50,7 @@ class BBCodeMediaProviderAction extends AbstractDatabaseObjectAction implements 
     /**
      * @deprecated 6.3 use the `EnableBBCodeMediaProvider` or `DisableBBCodeMediaProvider` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->objects as $editor) {

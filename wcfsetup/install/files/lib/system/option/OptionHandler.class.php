@@ -413,7 +413,6 @@ class OptionHandler implements IOptionHandler
      * @param string $type
      * @return string
      */
-    #[\Override]
     protected function getFormElement($type, Option $option)
     {
         return $this->getTypeObject($type)->getFormElement($option, ($this->optionValues[$option->optionName] ?? null));

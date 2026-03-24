@@ -27,6 +27,7 @@ class ReactionUserContentProvider extends AbstractDatabaseUserContentProvider
     /**
      * @inheritdoc
      */
+    #[\Override]
     public static function getDatabaseObjectClass()
     {
         return Like::class;
@@ -35,6 +36,7 @@ class ReactionUserContentProvider extends AbstractDatabaseUserContentProvider
     /**
      * @inheritdoc
      */
+    #[\Override]
     public function deleteContent(array $objectIDs)
     {
         $likeList = new LikeList();

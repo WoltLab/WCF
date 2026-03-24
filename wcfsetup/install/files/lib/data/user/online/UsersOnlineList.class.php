@@ -45,7 +45,6 @@ class UsersOnlineList extends SessionList
      */
     public $usersOnlineMarkings;
 
-    #[\Override]
     public function __construct()
     {
         parent::__construct();

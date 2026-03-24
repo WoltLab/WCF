@@ -23,6 +23,7 @@ use wcf\system\WCF;
 #[PostRequest("/core/trophies/{id:\d+}/disable")]
 final class DisableTrophy implements IController
 {
+    #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $trophy = Helper::fetchObjectFromRequestParameter($variables['id'], Trophy::class);

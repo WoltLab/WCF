@@ -50,6 +50,7 @@ class MultipartAlternativeMimePart extends AbstractMultipartMimePart
      * @throws  \DomainException
      */
     // @codingStandardsIgnoreStart
+    #[\Override]
     public function addMimePart(AbstractMimePart $part, $data = 1000)
     {
         parent::addMimePart($part, $data);

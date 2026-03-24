@@ -13,7 +13,6 @@ use wcf\data\user\UserList;
  */
 class UserNotificationEventRecipientList extends UserList
 {
-    #[\Override]
     public function __construct()
     {
         $this->sqlJoins = "

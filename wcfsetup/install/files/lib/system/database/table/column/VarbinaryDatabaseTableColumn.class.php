@@ -34,7 +34,6 @@ final class VarbinaryDatabaseTableColumn extends AbstractDatabaseTableColumn imp
         return $this->traitGetLength();
     }
 
-    #[\Override]
     public function getMaximumLength(): int
     {
         return 65535;

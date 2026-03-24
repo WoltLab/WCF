@@ -310,6 +310,7 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
     /**
      * @deprecated 6.3
      */
+    #[\Override]
     public function validateToggle()
     {
         $this->validateUpdate();
@@ -318,6 +319,7 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
     /**
      * @deprecated 6.3 use the `EnableBox` or `DisableBox` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->objects as $editor) {

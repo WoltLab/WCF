@@ -67,6 +67,7 @@ class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements ITo
     /**
      * @deprecated 6.3
      */
+    #[\Override]
     public function validateToggle()
     {
         $this->validateUpdate();
@@ -75,6 +76,7 @@ class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements ITo
     /**
      * @deprecated 6.3 use the `EnablePaidSubscription` or `DisablePaidSubscription` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->objects as $editor) {

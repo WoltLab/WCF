@@ -37,6 +37,7 @@ final class FontAwesomeIcon implements IFontAwesomeIcon, \Stringable
      * Serializes the icon name and the use of the solid style into a
      * semicolon separated string that is understood by `fromString`.
      */
+    #[\Override]
     public function __toString(): string
     {
         return \sprintf(

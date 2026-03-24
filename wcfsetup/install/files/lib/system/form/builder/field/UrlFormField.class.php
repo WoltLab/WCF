@@ -41,6 +41,7 @@ class UrlFormField extends TextFormField
     /**
      * @return string[]
      */
+    #[\Override]
     protected function getValidInputModes(): array
     {
         return ['url'];

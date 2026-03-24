@@ -27,6 +27,7 @@ final class OperationNotPermittedHandler implements RequestHandlerInterface
 {
     private const STATUS_CODE = 403;
 
+    #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $errorDetail = ErrorDetail::fromRequest($request);

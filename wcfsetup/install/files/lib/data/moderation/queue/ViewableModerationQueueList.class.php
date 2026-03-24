@@ -32,7 +32,6 @@ class ViewableModerationQueueList extends ModerationQueueList
      */
     public $useQualifiedShorthand = false;
 
-    #[\Override]
     public function __construct(?User $target = null)
     {
         parent::__construct();
@@ -106,6 +105,7 @@ class ViewableModerationQueueList extends ModerationQueueList
      *
      * @return  string
      */
+    #[\Override]
     public function getDatabaseTableName()
     {
         return parent::getDatabaseTableName() . '_to_user';
@@ -116,6 +116,7 @@ class ViewableModerationQueueList extends ModerationQueueList
      *
      * @return  string
      */
+    #[\Override]
     public function getDatabaseTableAlias()
     {
         return parent::getDatabaseTableAlias() . '_to_user';

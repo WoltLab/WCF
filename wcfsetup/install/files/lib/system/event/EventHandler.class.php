@@ -61,6 +61,7 @@ final class EventHandler extends SingletonFactory
     /**
      * Loads all registered actions of the active package.
      */
+    #[\Override]
     protected function init(): void
     {
         $environment = ((\class_exists('wcf\system\WCFACP', false) || \class_exists(

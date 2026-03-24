@@ -108,6 +108,7 @@ final class MetaTagHandler extends SingletonFactory implements \Countable, \Iter
      *
      * @see \Iterator::key()
      */
+    #[\Override]
     public function key(): string
     {
         return $this->indexToObject[$this->index];

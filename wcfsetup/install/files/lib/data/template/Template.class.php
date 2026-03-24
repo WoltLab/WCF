@@ -30,7 +30,6 @@ class Template extends DatabaseObject
      */
     protected static $systemCriticalTemplates = ['headIncludeJavaScript', 'shared_wysiwyg', 'wysiwygToolbar'];
 
-    #[\Override]
     public function __construct($id, $row = null, ?DatabaseObject $object = null)
     {
         if ($id !== null) {

@@ -21,7 +21,6 @@ abstract class AbstractIntDatabaseTableColumn extends AbstractDatabaseTableColum
         length as private traitLength;
     }
 
-    #[\Override]
     public function getMinimumLength(): int
     {
         return 1;

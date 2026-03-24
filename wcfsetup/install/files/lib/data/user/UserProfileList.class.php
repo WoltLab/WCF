@@ -25,7 +25,6 @@ class UserProfileList extends UserList
      */
     public $decoratorClassName = UserProfile::class;
 
-    #[\Override]
     public function __construct()
     {
         parent::__construct();

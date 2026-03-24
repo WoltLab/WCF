@@ -57,6 +57,7 @@ final class ArticleGridView extends AbstractGridView
                 ->label('wcf.acp.article.teaserImage')
                 ->renderer([
                     new class extends DefaultColumnRenderer {
+                        #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
                             \assert($row instanceof ViewableArticle);
@@ -97,6 +98,7 @@ final class ArticleGridView extends AbstractGridView
                 })
                 ->renderer([
                     new class extends DefaultColumnRenderer {
+                        #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
                             \assert($row instanceof ViewableArticle);

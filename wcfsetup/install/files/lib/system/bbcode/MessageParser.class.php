@@ -79,6 +79,7 @@ class MessageParser extends BBCodeParser
      * @param bool $doKeywordHighlighting
      * @return string parsed message
      */
+    #[\Override]
     public function parse(
         $text,
         $enableSmilies = true,

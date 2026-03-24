@@ -46,6 +46,7 @@ class Notice extends DatabaseObject implements IRouteController
      *
      * @since   3.0
      */
+    #[\Override]
     public function __toString(): string
     {
         // replace `{$username}` with the active user's name and `{$email}`

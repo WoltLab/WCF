@@ -29,6 +29,7 @@ class MultipartMixedMimePart extends AbstractMultipartMimePart
      * @throws \DomainException
      */
     // @codingStandardsIgnoreStart
+    #[\Override]
     public function addMimePart(AbstractMimePart $part, $data = null)
     {
         parent::addMimePart($part, $data);

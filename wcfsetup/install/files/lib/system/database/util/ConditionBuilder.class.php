@@ -65,6 +65,7 @@ class ConditionBuilder
     /**
      * Returns the build condition.
      */
+    #[\Override]
     public function __toString(): string
     {
         return (($this->addWhereKeyword && $this->conditions) ? 'WHERE ' : '') . $this->conditions;

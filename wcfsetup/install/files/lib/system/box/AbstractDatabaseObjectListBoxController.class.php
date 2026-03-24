@@ -385,6 +385,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
      * @param bool $setConditionData if true, the condition object types are populated with the box conditions' data
      * @return void
      */
+    #[\Override]
     public function setBox(Box $box, $setConditionData = true)
     {
         parent::setBox($box);

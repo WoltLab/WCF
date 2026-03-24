@@ -32,7 +32,6 @@ class UserProfileVisitorList extends DatabaseObjectList
      */
     public $sqlOrderBy = 'user_profile_visitor.time DESC';
 
-    #[\Override]
     public function __construct()
     {
         parent::__construct();

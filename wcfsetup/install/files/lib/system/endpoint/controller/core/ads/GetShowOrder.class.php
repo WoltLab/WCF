@@ -24,6 +24,7 @@ use wcf\system\WCF;
 #[GetRequest('/core/ads/show-order')]
 final class GetShowOrder implements IController
 {
+    #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $this->assertAdCanBeSorted();

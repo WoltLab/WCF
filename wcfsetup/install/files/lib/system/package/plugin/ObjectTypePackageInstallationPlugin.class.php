@@ -1251,7 +1251,6 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
      * @return ?\DOMElement
      * @since   5.2
      */
-    #[\Override]
     protected function prepareDeleteXmlElement(\DOMElement $element)
     {
         $objectType = $element->ownerDocument->createElement($this->tagName);
@@ -1272,7 +1271,6 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
      * @return void
      * @since   5.2
      */
-    #[\Override]
     protected function deleteObject(\DOMElement $element)
     {
         $name = $element->getElementsByTagName('name')->item(0)->nodeValue;

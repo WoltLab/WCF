@@ -91,6 +91,7 @@ class CaptchaQuestionAction extends AbstractDatabaseObjectAction implements ITog
     /**
      * @deprecated 6.3
      */
+    #[\Override]
     public function validateToggle()
     {
         $this->validateUpdate();
@@ -99,6 +100,7 @@ class CaptchaQuestionAction extends AbstractDatabaseObjectAction implements ITog
     /**
      * @deprecated 6.3 use the `EnableCaptchaQuestion` or `DisableCaptchaQuestion` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->objects as $editor) {

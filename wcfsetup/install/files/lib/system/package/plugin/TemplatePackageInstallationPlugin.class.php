@@ -56,6 +56,7 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
     /**
      * Uninstalls the templates of this package.
      */
+    #[\Override]
     public function uninstall()
     {
         // fetch templates from log
@@ -96,6 +97,7 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
      * @see \wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
      * @since   3.0
      */
+    #[\Override]
     public static function getDefaultFilename()
     {
         return 'templates.tar';

@@ -32,7 +32,6 @@ abstract class AbstractCheckboxCondition extends AbstractSingleFieldCondition
     /**
      * @throws  SystemException
      */
-    #[\Override]
     public function __construct(DatabaseObject $object)
     {
         parent::__construct($object);

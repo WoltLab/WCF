@@ -333,7 +333,6 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
      * @return string
      * @since   5.2
      */
-    #[\Override]
     protected function getXsdFilename()
     {
         return 'bbcode';

@@ -139,16 +139,19 @@ class UserRankAction extends AbstractDatabaseObjectAction
     /**
      * @return array<string, string>
      */
+    #[\Override]
     public function getI18nSaveTypes(): array
     {
         return ['rankTitle' => 'wcf.user.rank.userRank\d+'];
     }
 
+    #[\Override]
     public function getLanguageCategory(): string
     {
         return 'wcf.user.rank';
     }
 
+    #[\Override]
     public function getPackageID(): int
     {
         return PACKAGE_ID;

@@ -25,6 +25,7 @@ class AJAXUploadAction extends AJAXProxyAction
     /**
      * @return mixed
      */
+    #[\Override]
     protected function sendResponse()
     {
         if (!isset($_POST['isFallback'])) {

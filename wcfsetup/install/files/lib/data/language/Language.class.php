@@ -59,6 +59,7 @@ class Language extends DatabaseObject
     /**
      * Returns the name of this language.
      */
+    #[\Override]
     public function __toString(): string
     {
         return $this->languageName;

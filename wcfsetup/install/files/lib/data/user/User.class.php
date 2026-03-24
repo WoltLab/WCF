@@ -116,7 +116,6 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
     const REGISTER_ACTIVATION_USER_AND_ADMIN = self::REGISTER_ACTIVATION_USER | self::REGISTER_ACTIVATION_ADMIN;
 
-    #[\Override]
     public function __construct($id, $row = null, ?DatabaseObject $object = null)
     {
         if ($id !== null) {
@@ -494,6 +493,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns username.
      */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getTitle();

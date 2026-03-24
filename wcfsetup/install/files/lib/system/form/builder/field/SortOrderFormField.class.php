@@ -17,7 +17,6 @@ final class SortOrderFormField extends SingleSelectionFormField
 {
     use TDefaultIdFormField;
 
-    #[\Override]
     public function __construct()
     {
         $this->label('wcf.global.showOrder');

@@ -116,6 +116,7 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm
         $this->processor->createAuthenticationForm($this->form, $this->setup);
     }
 
+    #[\Override]
     public function save()
     {
         AbstractForm::save();

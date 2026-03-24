@@ -106,7 +106,6 @@ trait TPhpass
         return $output;
     }
 
-    #[\Override]
     public function verify(
         #[\SensitiveParameter]
         string $password,

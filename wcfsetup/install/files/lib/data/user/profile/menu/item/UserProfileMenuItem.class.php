@@ -81,6 +81,7 @@ class UserProfileMenuItem extends DatabaseObject
         return $this->contentManager;
     }
 
+    #[\Override]
     public function __toString(): string
     {
         return WCF::getLanguage()->get('wcf.user.profile.menu.' . $this->menuItem);

@@ -22,7 +22,6 @@ class UserList extends DatabaseObjectList
      */
     public $className = User::class;
 
-    #[\Override]
     public function __construct()
     {
         parent::__construct();

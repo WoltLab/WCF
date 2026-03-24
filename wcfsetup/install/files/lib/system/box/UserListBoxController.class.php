@@ -76,7 +76,6 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
         'registrationDate',
     ];
 
-    #[\Override]
     public function __construct()
     {
         $this->cacheHandlers = [

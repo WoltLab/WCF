@@ -16,7 +16,6 @@ class UserFollowingList extends UserFollowerList
      */
     public $useQualifiedShorthand = false;
 
-    #[\Override]
     public function __construct()
     {
         UserFollowList::__construct();

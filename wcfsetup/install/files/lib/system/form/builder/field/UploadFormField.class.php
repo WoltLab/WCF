@@ -621,7 +621,6 @@ class UploadFormField extends AbstractFormField
      * @return static
      * @throws \LogicException if the field has already been initialized
      */
-    #[\Override]
     public function maximum($maximum = null)
     {
         if ($this->isRegistered()) {

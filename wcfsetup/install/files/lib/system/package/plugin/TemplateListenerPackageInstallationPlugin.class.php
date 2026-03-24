@@ -482,6 +482,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
     /**
      * Shows options and permissions if already specified.
      */
+    #[\Override]
     public function editEntry(IFormDocument $form, string $identifier)
     {
         $options = $form->getFormField('options');
@@ -549,7 +550,6 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
      * @return ?\DOMElement
      * @since   5.2
      */
-    #[\Override]
     protected function prepareDeleteXmlElement(\DOMElement $element)
     {
         $templateListener = $element->ownerDocument->createElement($this->tagName);
@@ -569,7 +569,6 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
      * @return void
      * @since   5.2
      */
-    #[\Override]
     protected function deleteObject(\DOMElement $element)
     {
         $elements = [];

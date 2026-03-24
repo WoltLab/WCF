@@ -93,6 +93,7 @@ final class ApplicationManagementForm extends AbstractForm
         }
     }
 
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -151,6 +152,7 @@ final class ApplicationManagementForm extends AbstractForm
         $this->cookieDomain = $core->cookieDomain;
     }
 
+    #[\Override]
     public function save()
     {
         parent::save();

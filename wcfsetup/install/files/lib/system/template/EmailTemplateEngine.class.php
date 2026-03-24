@@ -43,6 +43,7 @@ class EmailTemplateEngine extends TemplateEngine
      * @param int $templateGroupID
      * @throws  \BadMethodCallException
      */
+    #[\Override]
     public function setTemplateGroupID($templateGroupID)
     {
         throw new \BadMethodCallException("You may not change the template group of the email template engine");

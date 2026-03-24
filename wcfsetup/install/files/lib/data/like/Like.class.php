@@ -43,6 +43,7 @@ class Like extends DatabaseObject
      *
      * @since       5.3
      */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getReactionType()->getTitle();

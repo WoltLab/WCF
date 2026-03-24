@@ -27,7 +27,6 @@ abstract class CustomOptionList extends DatabaseObjectList
      */
     public $sqlOrderBy = 'showOrder';
 
-    #[\Override]
     public function __construct()
     {
         parent::__construct();

@@ -33,7 +33,6 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
      */
     public $tagName = '';
 
-    #[\Override]
     public function __construct(PackageInstallationDispatcher $installation, $instruction = [])
     {
         parent::__construct($installation, $instruction);
@@ -461,6 +460,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
      * @see \wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
      * @since   3.0
      */
+    #[\Override]
     public static function getDefaultFilename()
     {
         $classParts = \explode('\\', static::class);

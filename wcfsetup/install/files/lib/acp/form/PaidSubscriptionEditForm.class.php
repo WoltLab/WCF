@@ -75,6 +75,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
     /**
      * @return void
      */
+    #[\Override]
     protected function getAvailableSubscriptions()
     {
         $subscriptionList = new PaidSubscriptionList();

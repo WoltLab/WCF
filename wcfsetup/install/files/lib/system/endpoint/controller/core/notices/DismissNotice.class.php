@@ -22,6 +22,7 @@ use wcf\system\exception\PermissionDeniedException;
 #[PostRequest('/core/notices/{id:\d+}/dismiss')]
 final class DismissNotice implements IController
 {
+    #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $notice = Helper::fetchObjectFromRequestParameter($variables['id'], Notice::class);

@@ -23,6 +23,7 @@ final class PhpEmailTransport implements IEmailTransport
      *
      * @throws  TransientFailure
      */
+    #[\Override]
     public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo): void
     {
         $headers = \array_filter($email->getHeaders(), static function ($item) {

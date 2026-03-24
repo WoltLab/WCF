@@ -40,7 +40,6 @@ class UserFollowerList extends UserFollowList
      */
     public $sqlOrderBy = 'user_follow.time DESC';
 
-    #[\Override]
     public function __construct()
     {
         parent::__construct();

@@ -72,6 +72,7 @@ final class RouteHandler extends SingletonFactory
     /**
      * Sets default routes.
      */
+    #[\Override]
     protected function init()
     {
         $route = new DynamicRequestRoute();
