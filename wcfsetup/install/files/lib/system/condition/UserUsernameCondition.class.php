@@ -34,9 +34,7 @@ class UserUsernameCondition extends AbstractTextCondition implements
      */
     protected $label = 'wcf.user.username';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
     {
         $objectList->getConditionBuilder()->add(
@@ -45,17 +43,13 @@ class UserUsernameCondition extends AbstractTextCondition implements
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkUser(Condition $condition, User $user)
     {
         return \str_contains($user->username, $condition->username);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showContent(Condition $condition)
     {
         if (!WCF::getUser()->userID) {

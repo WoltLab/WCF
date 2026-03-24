@@ -55,18 +55,14 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
         EventHandler::getInstance()->fireAction($this, 'construct');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function install()
     {
         // call 'install' event
         EventHandler::getInstance()->fireAction($this, 'install');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         // call 'update' event
@@ -75,9 +71,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
         return $this->install();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasUninstall()
     {
         // call 'hasUninstall' event
@@ -92,9 +86,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
         return $statement->fetchSingleColumn() > 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function uninstall()
     {
         // call 'uninstall' event
@@ -115,9 +107,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function isValid(PackageArchive $packageArchive, $instruction)
     {
         return true;

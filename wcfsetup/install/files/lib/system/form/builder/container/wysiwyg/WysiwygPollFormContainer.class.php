@@ -166,9 +166,7 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
         return $this->maxVotesField;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectTypeDefinition()
     {
         return 'com.woltlab.wcf.poll';
@@ -243,17 +241,13 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
         return $this->sortByVotesField;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAvailable()
     {
         return parent::isAvailable() && $this->objectType !== null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true)
     {
         if ($loadValues && $object instanceof IPollContainer && $object->getPollID() !== null) {
@@ -278,9 +272,7 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
         return parent::updatedObject($data, $object);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function populate()
     {
         parent::populate();

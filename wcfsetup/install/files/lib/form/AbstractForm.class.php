@@ -50,9 +50,7 @@ abstract class AbstractForm extends AbstractPage implements IForm
      */
     public $additionalFields = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function submit()
     {
         // call submit event
@@ -88,9 +86,7 @@ abstract class AbstractForm extends AbstractPage implements IForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         // call readFormParameters event
@@ -101,9 +97,7 @@ abstract class AbstractForm extends AbstractPage implements IForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         // call validate event
@@ -126,9 +120,7 @@ abstract class AbstractForm extends AbstractPage implements IForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         // call save event
@@ -146,9 +138,7 @@ abstract class AbstractForm extends AbstractPage implements IForm
         EventHandler::getInstance()->fireAction($this, 'saved');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         if (!empty($_POST) || !empty($_FILES)) {
@@ -158,9 +148,7 @@ abstract class AbstractForm extends AbstractPage implements IForm
         parent::readData();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

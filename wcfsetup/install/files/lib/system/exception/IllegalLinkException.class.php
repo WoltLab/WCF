@@ -21,9 +21,7 @@ class IllegalLinkException extends NamedUserException
         parent::__construct(WCF::getLanguage()->getDynamicVariable('wcf.page.error.illegalLink'));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         @\header('HTTP/1.1 404 Not Found');

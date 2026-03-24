@@ -148,9 +148,7 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function addEntry($objectTypeID, $objectID, $containerID = 0, array $additionalData = [])
     {
         $sql = "SELECT  queueID

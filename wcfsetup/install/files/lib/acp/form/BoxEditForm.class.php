@@ -41,9 +41,7 @@ class BoxEditForm extends BoxAddForm
      */
     public $box;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -64,17 +62,13 @@ class BoxEditForm extends BoxAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function readBoxType()
     {
         // not required for editing
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validateName()
     {
         if (\mb_strtolower($this->name) != \mb_strtolower($this->box->name)) {
@@ -82,9 +76,7 @@ class BoxEditForm extends BoxAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();
@@ -198,9 +190,7 @@ class BoxEditForm extends BoxAddForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         if (!empty($_POST) && !WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
@@ -279,9 +269,7 @@ class BoxEditForm extends BoxAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

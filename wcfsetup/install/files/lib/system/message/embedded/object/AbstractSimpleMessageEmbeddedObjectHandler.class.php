@@ -14,9 +14,7 @@ use wcf\system\html\input\HtmlInputProcessor;
 abstract class AbstractSimpleMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHandler implements
     ISimpleMessageEmbeddedObjectHandler
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function parse(HtmlInputProcessor $htmlInputProcessor, array $embeddedData)
     {
         // this default implementation allows for embedded object handlers that

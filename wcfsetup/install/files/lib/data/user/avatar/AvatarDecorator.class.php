@@ -22,9 +22,7 @@ final class AvatarDecorator implements IUserAvatar, ISafeFormatAvatar
         $this->avatar = $avatar;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSafeURL(?int $size = null): string
     {
         if ($this->avatar instanceof File) {
@@ -36,9 +34,7 @@ final class AvatarDecorator implements IUserAvatar, ISafeFormatAvatar
         return $this->avatar->getURL($size);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSafeImageTag(?int $size = null): string
     {
         if ($this->avatar instanceof File) {
@@ -50,9 +46,7 @@ final class AvatarDecorator implements IUserAvatar, ISafeFormatAvatar
         return $this->avatar->getImageTag($size);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getURL(?int $size = null)
     {
         if ($this->avatar instanceof File) {
@@ -68,9 +62,7 @@ final class AvatarDecorator implements IUserAvatar, ISafeFormatAvatar
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getImageTag(?int $size = null, bool $lazyLoading = true)
     {
         if ($this->avatar instanceof File) {
@@ -87,9 +79,7 @@ final class AvatarDecorator implements IUserAvatar, ISafeFormatAvatar
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getWidth()
     {
         if ($this->avatar instanceof File) {
@@ -99,9 +89,7 @@ final class AvatarDecorator implements IUserAvatar, ISafeFormatAvatar
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHeight()
     {
         if ($this->avatar instanceof File) {

@@ -168,41 +168,31 @@ class HtmlTocItem implements \Countable, \RecursiveIterator
         return $i;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rewind(): void
     {
         $this->position = 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function valid(): bool
     {
         return isset($this->children[$this->position]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function next(): void
     {
         $this->position++;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function current(): self
     {
         return $this->children[$this->position];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function key(): int
     {
         return $this->position;
@@ -216,9 +206,7 @@ class HtmlTocItem implements \Countable, \RecursiveIterator
         return $this->children[$this->position];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasChildren(): bool
     {
         return \count($this->children) > 0;

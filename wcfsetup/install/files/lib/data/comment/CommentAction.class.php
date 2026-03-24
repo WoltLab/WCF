@@ -818,9 +818,9 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     }
 
     /**
-     * @inheritDoc
      * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
+    #[\Override]
     public function validateBeginEdit()
     {
         $this->comment = $this->getSingleObject()->getDecoratedObject();
@@ -835,9 +835,9 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     }
 
     /**
-     * @inheritDoc
      * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
+    #[\Override]
     public function beginEdit()
     {
         $upcastProcessor = new HtmlUpcastProcessor();
@@ -854,9 +854,9 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     }
 
     /**
-     * @inheritDoc
      * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
+    #[\Override]
     public function validateSave()
     {
         $this->validateBeginEdit();
@@ -865,9 +865,9 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     }
 
     /**
-     * @inheritDoc
      * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
+    #[\Override]
     public function save()
     {
         /** @var HtmlInputProcessor $htmlInputProcessor */

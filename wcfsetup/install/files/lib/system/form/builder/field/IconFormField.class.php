@@ -34,9 +34,7 @@ class IconFormField extends AbstractFormField implements IImmutableFormField
      */
     protected static $includeJavaScript = true;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtmlVariables()
     {
         $value = static::$includeJavaScript;
@@ -49,9 +47,7 @@ class IconFormField extends AbstractFormField implements IImmutableFormField
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSaveValue()
     {
         if ($this->getValue()) {
@@ -61,9 +57,7 @@ class IconFormField extends AbstractFormField implements IImmutableFormField
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
@@ -73,9 +67,7 @@ class IconFormField extends AbstractFormField implements IImmutableFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -92,9 +84,7 @@ class IconFormField extends AbstractFormField implements IImmutableFormField
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function value(mixed $value)
     {
         if (\str_starts_with($value, 'fa-')) {

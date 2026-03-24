@@ -50,9 +50,7 @@ class TrophyEditForm extends TrophyAddForm
      */
     public $trophy;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         if (!empty($_REQUEST['id'])) {
@@ -67,9 +65,7 @@ class TrophyEditForm extends TrophyAddForm
         parent::readParameters();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -117,9 +113,7 @@ class TrophyEditForm extends TrophyAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validateType()
     {
         switch ($this->type) {
@@ -145,9 +139,7 @@ class TrophyEditForm extends TrophyAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractAcpForm::save();
@@ -248,9 +240,7 @@ class TrophyEditForm extends TrophyAddForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

@@ -28,9 +28,6 @@ final class RequestHandlerMiddleware implements RequestHandlerInterface
         $this->handler = $handler;
     }
 
-    /**
-     * @inheritDoc
-     */
     #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {

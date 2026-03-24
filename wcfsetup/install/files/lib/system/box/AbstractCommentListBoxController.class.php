@@ -57,9 +57,7 @@ abstract class AbstractCommentListBoxController extends AbstractDatabaseObjectLi
      */
     public $validSortFields = ['time'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct()
     {
         $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
@@ -84,9 +82,7 @@ abstract class AbstractCommentListBoxController extends AbstractDatabaseObjectLi
      */
     abstract protected function applyObjectTypeFilters(ViewableCommentList $commentList);
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getObjectList()
     {
         $commentList = new ViewableCommentList();
@@ -105,9 +101,7 @@ abstract class AbstractCommentListBoxController extends AbstractDatabaseObjectLi
         return $commentList;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getTemplate()
     {
         return WCF::getTPL()->render('wcf', 'boxSidebarCommentList', [

@@ -28,33 +28,25 @@ class LikeableCommentResponse extends AbstractLikeObject implements IReactionObj
      */
     protected static $baseClass = CommentResponse::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->message;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getURL()
     {
         return $this->getLink();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getUserID()
     {
         return $this->userID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function sendNotification(Like $like)
     {
         $comment = new Comment($this->getDecoratedObject()->commentID);

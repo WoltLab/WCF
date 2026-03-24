@@ -21,9 +21,7 @@ class TextareaI18nOptionType extends TextareaOptionType implements II18nOptionTy
      */
     protected $supportI18n = true;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         I18nHandler::getInstance()->assignVariables(!empty($_POST));
@@ -34,9 +32,7 @@ class TextareaI18nOptionType extends TextareaOptionType implements II18nOptionTy
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(Option $option, mixed $newValue)
     {
         if (!I18nHandler::getInstance()->validateValue($option->optionName, (bool)$option->requireI18n, true)) {

@@ -19,9 +19,7 @@ use wcf\util\ArrayUtil;
  */
 class MediaMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObjectHandler
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function parse(HtmlInputProcessor $htmlInputProcessor, array $embeddedData)
     {
         $mediaIDs = [];
@@ -40,9 +38,7 @@ class MediaMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObj
         return \array_unique($mediaIDs);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function loadObjects(array $objectIDs)
     {
         $viewableMedia = ViewableMediaRuntimeCache::getInstance()->getObjects($objectIDs);
@@ -75,9 +71,7 @@ class MediaMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObj
         return $viewableMedia;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateValues(string $objectType, int $objectID, array $values)
     {
         $mediaList = new MediaList();
@@ -87,9 +81,7 @@ class MediaMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObj
         return $mediaList->getObjectIDs();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function replaceSimple(string $objectType, int $objectID, string|int $value, array $attributes)
     {
         /** @var ?Media $media */

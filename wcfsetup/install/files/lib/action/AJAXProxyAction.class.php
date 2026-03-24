@@ -45,9 +45,7 @@ class AJAXProxyAction extends AJAXInvokeAction
      */
     protected $parameters = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -63,9 +61,7 @@ class AJAXProxyAction extends AJAXInvokeAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function invoke()
     {
         try {
@@ -92,9 +88,7 @@ class AJAXProxyAction extends AJAXInvokeAction
         $this->response = $this->objectAction->executeAction();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function sendResponse()
     {
         // add benchmark and debug data

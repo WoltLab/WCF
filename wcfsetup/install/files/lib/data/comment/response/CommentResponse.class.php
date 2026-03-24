@@ -39,9 +39,7 @@ class CommentResponse extends DatabaseObject implements IMessage
      */
     protected $comment;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormattedMessage()
     {
         $processor = new HtmlOutputProcessor();
@@ -101,17 +99,13 @@ class CommentResponse extends DatabaseObject implements IMessage
         throw new \LogicException('Unreachable');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getExcerpt(int $maxLength = 255)
     {
         return StringUtil::truncateHTML($this->getSimplifiedFormattedMessage(), $maxLength);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMessage()
     {
         return $this->message;
@@ -143,9 +137,7 @@ class CommentResponse extends DatabaseObject implements IMessage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         /** @var ICommentManager $processor */
@@ -154,9 +146,7 @@ class CommentResponse extends DatabaseObject implements IMessage
         return $processor->getResponseLink($this);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return CommentHandler::getInstance()->getObjectType($this->getComment()->objectTypeID)->getProcessor()->getTitle(
@@ -166,17 +156,13 @@ class CommentResponse extends DatabaseObject implements IMessage
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isVisible()
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getFormattedMessage();

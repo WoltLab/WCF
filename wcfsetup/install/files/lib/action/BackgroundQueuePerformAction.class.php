@@ -21,9 +21,7 @@ final class BackgroundQueuePerformAction extends AbstractAction
      */
     public static int $jobsPerRun = 10;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(): JsonResponse
     {
         parent::execute();

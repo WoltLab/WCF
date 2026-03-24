@@ -26,9 +26,7 @@ final class FormFieldValidator implements IFormFieldValidator
      */
     protected $validator;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct(string $id, callable $validator)
     {
         static::validateId($id);
@@ -62,17 +60,13 @@ final class FormFieldValidator implements IFormFieldValidator
         $this->validator = $validator;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __invoke(IFormField $field)
     {
         \call_user_func($this->validator, $field);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getId()
     {
         return $this->id;

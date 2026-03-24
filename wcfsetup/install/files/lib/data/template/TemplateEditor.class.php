@@ -25,9 +25,7 @@ class TemplateEditor extends DatabaseObjectEditor
      */
     protected static $baseClass = Template::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function create(array $parameters = [])
     {
         // obtain default values
@@ -121,9 +119,7 @@ class TemplateEditor extends DatabaseObjectEditor
         $this->deleteCompiledFiles();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function deleteAll(array $objectIDs = [])
     {
         $list = new TemplateList();

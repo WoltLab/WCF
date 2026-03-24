@@ -33,9 +33,7 @@ class UserActivityPointHandler extends SingletonFactory
      */
     protected $objectTypeNames = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.user.activityPointEvent');

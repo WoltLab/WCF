@@ -42,9 +42,7 @@ final class EmailMultifactorMethod implements IMultifactorMethod
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function createManagementForm(IFormDocument $form, ?Setup $setup, mixed $returnData = null): void
     {
         $form->addDefaultButton(false);
@@ -79,9 +77,7 @@ final class EmailMultifactorMethod implements IMultifactorMethod
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function processManagementForm(IFormDocument $form, Setup $setup): void
     {
         $formData = $form->getData();
@@ -147,9 +143,7 @@ final class EmailMultifactorMethod implements IMultifactorMethod
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function createAuthenticationForm(IFormDocument $form, Setup $setup): void
     {
         $sql = "SELECT  code, createTime
@@ -237,9 +231,7 @@ final class EmailMultifactorMethod implements IMultifactorMethod
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function processAuthenticationForm(IFormDocument $form, Setup $setup): void
     {
         $this->invalidateUsedCode(

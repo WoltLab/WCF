@@ -18,9 +18,7 @@ use wcf\util\StringUtil;
  */
 class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserGroupOptionType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         // get selected group
@@ -41,9 +39,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
         return $html;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(Option $option, mixed $newValue)
     {
         // get all groups
@@ -63,9 +59,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData(Option $option, mixed $newValue)
     {
         if (!\is_array($newValue)) {
@@ -77,9 +71,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
         return \implode(',', $newValue);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function merge(mixed $defaultValue, mixed $groupValue)
     {
         $defaultValue = empty($defaultValue) ? [] : \explode(',', StringUtil::unifyNewlines($defaultValue));
@@ -88,9 +80,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
         return \implode(',', \array_unique(\array_merge($defaultValue, $groupValue)));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function compare(mixed $value1, mixed $value2)
     {
         $value1 = $value1 ? \explode(',', $value1) : [];
@@ -112,9 +102,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
         return 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCSSClassName()
     {
         return 'checkboxList';

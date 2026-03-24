@@ -81,9 +81,7 @@ class UserTrophyAddForm extends AbstractAcpForm
      */
     public $trophy;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -98,9 +96,7 @@ class UserTrophyAddForm extends AbstractAcpForm
         $this->registerI18nValue($descriptionI18n);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -152,9 +148,7 @@ class UserTrophyAddForm extends AbstractAcpForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -180,9 +174,7 @@ class UserTrophyAddForm extends AbstractAcpForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -205,9 +197,7 @@ class UserTrophyAddForm extends AbstractAcpForm
         $this->reset();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         parent::reset();
@@ -218,9 +208,7 @@ class UserTrophyAddForm extends AbstractAcpForm
         $this->useCustomDescription = $this->trophyUseHtml = 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

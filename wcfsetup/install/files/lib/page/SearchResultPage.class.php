@@ -74,9 +74,7 @@ class SearchResultPage extends MultipleLinkPage
      */
     public $resultListApplication = 'wcf';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -118,9 +116,7 @@ class SearchResultPage extends MultipleLinkPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -189,9 +185,7 @@ class SearchResultPage extends MultipleLinkPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function countItems()
     {
         // call countItems event
@@ -200,19 +194,13 @@ class SearchResultPage extends MultipleLinkPage
         return \count($this->searchData['results']);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initObjectList() {}
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function readObjects() {}
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __run()
     {
         throw new IllegalLinkException();

@@ -29,9 +29,7 @@ class ACPSessionLog extends DatabaseObject
      */
     protected static $databaseTableIndexName = 'sessionLogID';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct($id, ?array $row = null, ?DatabaseObject $object = null)
     {
         if ($id !== null) {

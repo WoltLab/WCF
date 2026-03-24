@@ -22,9 +22,7 @@ use wcf\util\FileUtil;
  */
 class RoutingCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function rebuild(array $parameters)
     {
         $data = [

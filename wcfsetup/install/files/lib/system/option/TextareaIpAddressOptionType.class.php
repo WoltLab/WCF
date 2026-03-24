@@ -19,9 +19,7 @@ use wcf\util\UserUtil;
  */
 class TextareaIpAddressOptionType extends TextOptionType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         if (!empty($value)) {
@@ -40,9 +38,7 @@ class TextareaIpAddressOptionType extends TextOptionType
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(Option $option, mixed $newValue)
     {
         if (!empty($newValue)) {
@@ -58,9 +54,7 @@ class TextareaIpAddressOptionType extends TextOptionType
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData(Option $option, mixed $newValue)
     {
         if (!empty($newValue)) {

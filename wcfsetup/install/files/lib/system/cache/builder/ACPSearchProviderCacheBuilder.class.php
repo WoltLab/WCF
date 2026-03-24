@@ -13,9 +13,7 @@ use wcf\data\acp\search\provider\ACPSearchProviderList;
  */
 class ACPSearchProviderCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rebuild(array $parameters)
     {
         $providerList = new ACPSearchProviderList();

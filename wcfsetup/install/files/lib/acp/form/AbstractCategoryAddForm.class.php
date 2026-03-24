@@ -117,9 +117,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm
      */
     public $templateName = 'categoryAdd';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __run()
     {
         $classNameParts = \explode('\\', static::class);
@@ -139,9 +137,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm
         return parent::__run();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -193,9 +189,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm
         $this->categoryNodeTree = new UncachedCategoryNodeTree($this->objectType->objectType, 0, true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         $this->objectType = CategoryHandler::getInstance()->getObjectTypeByName($this->objectTypeName);
@@ -227,9 +221,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm
         $this->readCategories();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -253,9 +245,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -331,9 +321,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();

@@ -94,9 +94,7 @@ class UserGroupAddForm extends AbstractOptionListForm
      */
     protected $requireMultifactor = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -105,9 +103,7 @@ class UserGroupAddForm extends AbstractOptionListForm
         I18nHandler::getInstance()->register('groupDescription');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -138,9 +134,7 @@ class UserGroupAddForm extends AbstractOptionListForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         // validate dynamic options
@@ -167,9 +161,7 @@ class UserGroupAddForm extends AbstractOptionListForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -236,9 +228,7 @@ class UserGroupAddForm extends AbstractOptionListForm
         I18nHandler::getInstance()->reset();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -249,9 +239,7 @@ class UserGroupAddForm extends AbstractOptionListForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

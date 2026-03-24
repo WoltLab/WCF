@@ -333,17 +333,13 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
         return \call_user_func([$this->className, 'getDatabaseTableAlias']);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function count(): int
     {
         return \count($this->objects);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     #[\ReturnTypeWillChange]
     public function current()
     {
@@ -364,33 +360,25 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
         return $this->indexToObject[$this->index];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function next(): void
     {
         $this->index++;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rewind(): void
     {
         $this->index = 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function valid(): bool
     {
         return isset($this->indexToObject[$this->index]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function seek($offset): void
     {
         $this->index = $offset;
@@ -400,9 +388,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function seekTo(int $objectID)
     {
         $this->index = \array_search($objectID, $this->indexToObject);
@@ -412,9 +398,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function search(int $objectID)
     {
         try {

@@ -13,17 +13,13 @@ use wcf\system\SingletonFactory;
  */
 abstract class AbstractPollHandler extends SingletonFactory implements IPollHandler
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canStartPublicPoll()
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canVote()
     {
         return true;

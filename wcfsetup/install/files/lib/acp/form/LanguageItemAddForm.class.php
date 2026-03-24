@@ -57,9 +57,7 @@ class LanguageItemAddForm extends AbstractFormBuilderForm
      */
     public $objectActionName = 'createLanguageItems';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function createForm()
     {
         parent::createForm();
@@ -224,9 +222,7 @@ class LanguageItemAddForm extends AbstractFormBuilderForm
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function saved()
     {
         parent::saved();

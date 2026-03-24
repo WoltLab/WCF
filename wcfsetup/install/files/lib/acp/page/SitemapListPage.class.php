@@ -39,9 +39,7 @@ class SitemapListPage extends AbstractPage
      */
     private $sitemapData = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -72,9 +70,7 @@ class SitemapListPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

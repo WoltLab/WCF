@@ -27,9 +27,7 @@ abstract class AbstractCacheBuilder extends SingletonFactory implements ICacheBu
      */
     protected $maxLifetime = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData(array $parameters = [], string $arrayIndex = '')
     {
         $index = CacheHandler::getInstance()->getCacheIndex($parameters);
@@ -56,17 +54,13 @@ abstract class AbstractCacheBuilder extends SingletonFactory implements ICacheBu
         return $this->cache[$index];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMaxLifetime()
     {
         return $this->maxLifetime;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset(array $parameters = [])
     {
         CacheHandler::getInstance()->flush($this, $parameters);

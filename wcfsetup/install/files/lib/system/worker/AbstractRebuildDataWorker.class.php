@@ -38,17 +38,13 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
      */
     protected $objectList;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectList()
     {
         return $this->objectList;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setLoopCount(int $loopCount)
     {
         parent::setLoopCount($loopCount);
@@ -56,17 +52,13 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
         $this->initObjectList();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         WCF::getSession()->checkPermissions(['admin.management.canRebuildData']);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function countObjects()
     {
         if ($this->count === null) {
@@ -78,9 +70,7 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         $this->objectList->readObjects();
@@ -90,9 +80,7 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
         EventHandler::getInstance()->fireAction($this, 'execute');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getProceedURL()
     {
         return LinkHandler::getInstance()->getLink('RebuildData');
@@ -190,9 +178,7 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
         return $userPermissions[$userID][$permission];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function finalize()
     {
         SearchIndexManager::getInstance()->commitBulkOperation();

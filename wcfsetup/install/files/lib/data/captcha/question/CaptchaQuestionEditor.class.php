@@ -24,9 +24,7 @@ class CaptchaQuestionEditor extends DatabaseObjectEditor implements IEditableCac
      */
     protected static $baseClass = CaptchaQuestion::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         CaptchaQuestionCacheBuilder::getInstance()->reset();

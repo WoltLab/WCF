@@ -31,9 +31,7 @@ class MessageOptionType extends TextareaOptionType
      */
     protected $messageObjectType = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData(Option $option, mixed $newValue)
     {
         $this->initMessageObjectType($option);
@@ -53,9 +51,7 @@ class MessageOptionType extends TextareaOptionType
         return parent::getData($option, $this->htmlInputProcessor->getHtml());
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         $permission = $option->disallowedbbcodepermission ?: 'user.message.disallowedBBCodes';
@@ -75,9 +71,7 @@ class MessageOptionType extends TextareaOptionType
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(Option $option, mixed $newValue)
     {
         parent::validate($option, $newValue);

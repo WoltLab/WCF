@@ -19,54 +19,40 @@ abstract class AbstractOptionType implements IOptionType
      */
     protected $supportI18n = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(Option $option, mixed $newValue) {}
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData(Option $option, mixed $newValue)
     {
         return $newValue;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCSSClassName()
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function supportI18n()
     {
         return $this->supportI18n;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function compare(mixed $value1, mixed $value2)
     {
         return 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hideLabelInSearch()
     {
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDisabledOptionNames(mixed $value, string $enableOptions)
     {
         return [];

@@ -66,9 +66,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
      */
     public $tagName = 'menu';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items)
     {
         $sql = "DELETE FROM wcf1_menu
@@ -95,9 +93,9 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
     }
 
     /**
-     * @inheritDoc
      * @throws  SystemException
      */
+    #[\Override]
     protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element)
     {
         $nodeValue = $element->nodeValue;
@@ -146,9 +144,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         $identifier = $data['attributes']['identifier'];
@@ -191,17 +187,13 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getNameByData(array $data): string
     {
         return $data['identifier'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
@@ -219,9 +211,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function import(array $row, array $data)
     {
         // updating menus is not supported because the only modifiable data is the
@@ -233,9 +223,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
         return parent::import($row, $data);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function postImport()
     {
         if (empty($this->boxData)) {
@@ -318,28 +306,28 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return ['language'];
     }
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     public function getAdditionalTemplateCode()
     {
         return WCF::getTPL()->render('wcf', '__menuPipGui', []);
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         /** @var FormContainer $dataContainer */
@@ -443,11 +431,11 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = [
@@ -540,20 +528,20 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         return $element->getAttribute('identifier');
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $entryList->setKeys([
@@ -562,10 +550,10 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $formData = $form->getData();

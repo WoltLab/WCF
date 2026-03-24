@@ -50,9 +50,7 @@ class ContactOptionAction extends AbstractDatabaseObjectAction implements ISorta
      */
     protected $requireACP = ['create', 'delete', 'update', 'updatePosition', 'toggle'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateUpdatePosition()
     {
         WCF::getSession()->checkPermissions($this->permissionsUpdate);
@@ -68,9 +66,7 @@ class ContactOptionAction extends AbstractDatabaseObjectAction implements ISorta
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updatePosition()
     {
         $sql = "UPDATE  wcf1_contact_option

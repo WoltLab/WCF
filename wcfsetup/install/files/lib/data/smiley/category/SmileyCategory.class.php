@@ -51,18 +51,16 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function count(): int
     {
         return \count($this->smilies);
     }
 
     /**
-     * @inheritDoc
      * @return  Smiley
      */
+    #[\Override]
     #[\ReturnTypeWillChange]
     public function current()
     {
@@ -83,33 +81,25 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
         return $this->indexToObject[$this->index];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function next(): void
     {
         $this->index++;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rewind(): void
     {
         $this->index = 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function valid(): bool
     {
         return isset($this->indexToObject[$this->index]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function seek($offset): void
     {
         $this->index = $offset;
@@ -119,9 +109,7 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function seekTo(int $objectID)
     {
         $this->index = \array_search($objectID, $this->indexToObject);
@@ -132,9 +120,9 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
     }
 
     /**
-     * @inheritDoc
      * @return  Smiley|null
      */
+    #[\Override]
     public function search(int $objectID)
     {
         try {

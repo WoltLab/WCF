@@ -28,9 +28,7 @@ abstract class AbstractUserActionRenameListener implements IParameterizedEventLi
      */
     protected $databaseTables = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute($eventObj, $className, $eventName, array &$parameters)
     {
         /** @var UserAction $eventObj */

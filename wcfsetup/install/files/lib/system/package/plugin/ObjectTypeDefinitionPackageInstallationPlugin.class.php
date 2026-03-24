@@ -39,9 +39,7 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
      */
     public $tagName = 'definition';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items)
     {
         $sql = "DELETE FROM wcf1_" . $this->tableName . "
@@ -56,9 +54,7 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         return [
@@ -68,17 +64,13 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getNameByData(array $data): string
     {
         return $data['definitionName'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
@@ -93,19 +85,19 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return [];
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         /** @var FormContainer $dataContainer */
@@ -167,11 +159,11 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = [
@@ -190,20 +182,20 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         return $element->getElementsByTagName('name')->item(0)->nodeValue;
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $entryList->setKeys([
@@ -213,10 +205,10 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $definition = $document->createElement($this->tagName);
@@ -234,10 +226,10 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
     }
 
     /**
-     * @inheritDoc
      * @return ?\DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareDeleteXmlElement(\DOMElement $element)
     {
         $objectTypeDefinition = $element->ownerDocument->createElement($this->tagName);
@@ -250,10 +242,10 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function deleteObject(\DOMElement $element)
     {
         $this->handleDelete([

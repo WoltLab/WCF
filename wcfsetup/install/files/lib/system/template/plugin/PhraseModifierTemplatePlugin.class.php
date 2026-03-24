@@ -18,9 +18,7 @@ use wcf\system\WCF;
  */
 class PhraseModifierTemplatePlugin implements IModifierTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         if ($tagArgs[0] === null) {

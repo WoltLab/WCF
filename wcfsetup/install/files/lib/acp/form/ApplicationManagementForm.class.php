@@ -66,9 +66,7 @@ final class ApplicationManagementForm extends AbstractForm
      */
     public $pageNodeList;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -76,9 +74,7 @@ final class ApplicationManagementForm extends AbstractForm
         $this->pageNodeList = (new PageNodeTree())->getNodeList();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -142,9 +138,7 @@ final class ApplicationManagementForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -201,9 +195,7 @@ final class ApplicationManagementForm extends AbstractForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

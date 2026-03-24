@@ -15,9 +15,7 @@ use wcf\system\exception\SystemException;
  */
 class ConditionCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rebuild(array $parameters)
     {
         if (!isset($parameters['definitionID'])) {

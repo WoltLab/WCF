@@ -38,9 +38,7 @@ class AdministrativeAttachmentList extends AttachmentList
         $this->sqlConditionJoins = $join;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readObjects()
     {
         parent::readObjects();

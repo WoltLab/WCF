@@ -20,17 +20,13 @@ trait TUserGroupOptionType
      */
     protected $userGroup;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setUserGroup(UserGroup $group)
     {
         $this->userGroup = $group;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getUserGroup()
     {
         return $this->userGroup;

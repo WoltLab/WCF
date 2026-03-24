@@ -33,9 +33,7 @@ class UserMobileBrowserCondition extends AbstractSingleFieldCondition implements
      */
     protected $usesNoMobileBrowser = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         if ($this->usesMobileBrowser || $this->usesNoMobileBrowser) {
@@ -49,9 +47,7 @@ class UserMobileBrowserCondition extends AbstractSingleFieldCondition implements
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFieldElement()
     {
         $usesMobileBrowserLabel = WCF::getLanguage()->get('wcf.user.condition.mobileBrowser.usesMobileBrowser');
@@ -72,9 +68,7 @@ class UserMobileBrowserCondition extends AbstractSingleFieldCondition implements
 HTML;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (isset($_POST['usesMobileBrowser'])) {
@@ -85,27 +79,21 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         $this->usesMobileBrowser = 0;
         $this->usesNoMobileBrowser = 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setData(Condition $condition)
     {
         $this->usesMobileBrowser = $condition->usesMobileBrowser;
         $this->usesNoMobileBrowser = $condition->usesMobileBrowser ? 0 : 1;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if ($this->usesMobileBrowser && $this->usesNoMobileBrowser) {
@@ -115,9 +103,7 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showContent(Condition $condition)
     {
         return ($condition->usesMobileBrowser && UserUtil::usesMobileBrowser()) || (!$condition->usesMobileBrowser && !UserUtil::usesMobileBrowser());

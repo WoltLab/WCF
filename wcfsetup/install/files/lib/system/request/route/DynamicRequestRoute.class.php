@@ -143,9 +143,7 @@ class DynamicRequestRoute implements IRequestRoute
         $this->requireComponents = $requiredComponents;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function buildLink(array $components)
     {
         $application = $components['application'] ?? null;
@@ -240,9 +238,7 @@ class DynamicRequestRoute implements IRequestRoute
         return $link;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canHandle(array $components)
     {
         if (!empty($this->requireComponents)) {
@@ -260,25 +256,19 @@ class DynamicRequestRoute implements IRequestRoute
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getRouteData()
     {
         return $this->routeData;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isACP()
     {
         return $this->isACP;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function matches(string $requestURL)
     {
         if (\preg_match($this->pattern, $requestURL, $matches)) {

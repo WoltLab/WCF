@@ -32,9 +32,7 @@ abstract class AbstractUserMergeListener implements IParameterizedEventListener
      */
     protected $databaseTables = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute($eventObj, $className, $eventName, array &$parameters)
     {
         \assert($eventObj instanceof UserMergeForm);

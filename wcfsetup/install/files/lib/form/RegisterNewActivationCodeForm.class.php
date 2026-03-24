@@ -33,9 +33,7 @@ final class RegisterNewActivationCodeForm extends AbstractFormBuilderForm
 {
     public User $user;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function createForm()
     {
         parent::createForm();
@@ -147,9 +145,7 @@ final class RegisterNewActivationCodeForm extends AbstractFormBuilderForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();
@@ -204,9 +200,7 @@ final class RegisterNewActivationCodeForm extends AbstractFormBuilderForm
         exit;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         if (!((int)REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {

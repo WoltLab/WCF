@@ -68,9 +68,7 @@ class ValidateActionException extends \Exception
         return $this->fieldName;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __toString(): string
     {
         return $this->message;

@@ -18,9 +18,7 @@ use wcf\system\template\TemplateScriptingCompiler;
  */
 class JslangCompilerTemplatePlugin implements ICompilerTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function executeStart($tagArgs, TemplateScriptingCompiler $compiler)
     {
         $compiler->pushTag('jslang');
@@ -33,9 +31,7 @@ class JslangCompilerTemplatePlugin implements ICompilerTemplatePlugin
 			?>";
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function executeEnd(TemplateScriptingCompiler $compiler)
     {
         $compiler->popTag('jslang');

@@ -18,9 +18,7 @@ final class CoreRewriteTestAction extends AbstractAction
 {
     const AVAILABLE_DURING_OFFLINE_MODE = true;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(): ResponseInterface
     {
         parent::execute();

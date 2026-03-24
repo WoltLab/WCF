@@ -19,17 +19,13 @@ use wcf\system\WCF;
  */
 abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements IEditableObject
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function create(array $parameters = [])
     {
         return new static::$baseClass(static::fastCreate($parameters));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update(array $parameters = [])
     {
         if (empty($parameters)) {
@@ -54,9 +50,7 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
         $statement->execute($statementParameters);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updateCounters(array $counters = [])
     {
         if (empty($counters)) {
@@ -81,17 +75,13 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
         $statement->execute($statementParameters);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         static::deleteAll([$this->getObjectID()]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function deleteAll(array $objectIDs = [])
     {
         $affectedCount = 0;

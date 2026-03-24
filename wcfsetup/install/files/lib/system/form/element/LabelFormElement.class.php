@@ -40,9 +40,7 @@ class LabelFormElement extends AbstractFormElement
         return $this->text;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHTML(string $formName)
     {
         return <<<HTML

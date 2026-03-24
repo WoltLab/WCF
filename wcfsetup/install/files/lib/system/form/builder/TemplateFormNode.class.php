@@ -74,9 +74,7 @@ class TemplateFormNode implements IFormChildNode
         return $this->application;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtml()
     {
         return WCF::getTPL()->render(
@@ -127,9 +125,7 @@ class TemplateFormNode implements IFormChildNode
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         // does nothing

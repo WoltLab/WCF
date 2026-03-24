@@ -21,17 +21,13 @@ class ArticleUserNotificationEvent extends AbstractUserNotificationEvent impleme
     use TTestableArticleUserNotificationEvent;
     use TTestableCategorizedUserNotificationEvent;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->getLanguage()->get('wcf.user.notification.article.title');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMessage()
     {
         return $this->getLanguage()->getDynamicVariable('wcf.user.notification.article.message', [
@@ -40,9 +36,7 @@ class ArticleUserNotificationEvent extends AbstractUserNotificationEvent impleme
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEmailMessage(string $notificationType = 'instant'): array
     {
         if ($this->getUserNotificationObject()->isMultilingual) {
@@ -66,34 +60,28 @@ class ArticleUserNotificationEvent extends AbstractUserNotificationEvent impleme
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return $this->getUserNotificationObject()->getLink();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkAccess()
     {
         return $this->getUserNotificationObject()->canRead();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function canBeTriggeredByGuests()
     {
         return true;
     }
 
     /**
-     * @inheritDoc
      * @return  ArticleUserNotificationObject[]
      */
+    #[\Override]
     public static function getTestObjects(UserProfile $recipient, UserProfile $author)
     {
         return [

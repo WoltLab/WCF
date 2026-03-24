@@ -19,17 +19,13 @@ use wcf\data\DatabaseObjectList;
  */
 abstract class AbstractSitemapObjectObjectType implements ISitemapObjectObjectType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectListClass()
     {
         return $this->getObjectClass() . 'List';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectList()
     {
         $className = $this->getObjectListClass();
@@ -37,25 +33,19 @@ abstract class AbstractSitemapObjectObjectType implements ISitemapObjectObjectTy
         return new $className();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLastModifiedColumn()
     {
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canView(DatabaseObject $object)
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAvailableType()
     {
         return true;

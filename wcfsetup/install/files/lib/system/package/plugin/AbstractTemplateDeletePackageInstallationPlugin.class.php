@@ -22,18 +22,16 @@ abstract class AbstractTemplateDeletePackageInstallationPlugin extends AbstractF
      */
     public $tagName = 'template';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getFilenameTableColumn(): string
     {
         return 'templateName';
     }
 
     /**
-     * @inheritDoc
      * @return void
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         parent::addFormFields($form);

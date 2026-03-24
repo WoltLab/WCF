@@ -15,17 +15,13 @@ use wcf\util\StringUtil;
  */
 class PaypalPaymentMethod extends AbstractPaymentMethod
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function supportsRecurringPayments()
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSupportedCurrencies()
     {
         return [
@@ -56,9 +52,7 @@ class PaypalPaymentMethod extends AbstractPaymentMethod
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getPurchaseButton(
         float $cost,
         string $currency,

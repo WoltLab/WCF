@@ -16,9 +16,7 @@ use wcf\util\ArrayUtil;
  */
 class PageMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObjectHandler
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function parse(HtmlInputProcessor $htmlInputProcessor, array $embeddedData)
     {
         $pageIDs = [];
@@ -31,9 +29,7 @@ class PageMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObje
         return \array_unique($pageIDs);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function loadObjects(array $objectIDs)
     {
         $pages = [];
@@ -48,9 +44,7 @@ class PageMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObje
         return $pages;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateValues(string $objectType, int $objectID, array $values)
     {
         // Pages can be referenced as `123#Some Text`, where everything after the number
@@ -63,9 +57,7 @@ class PageMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObje
         });
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function replaceSimple(string $objectType, int $objectID, string|int $value, array $attributes)
     {
         $page = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.page', $value);

@@ -24,9 +24,7 @@ class DevicesContainer extends FormContainer
      */
     protected $templateName = '__multifactorTotpDevicesContainer';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'devices';

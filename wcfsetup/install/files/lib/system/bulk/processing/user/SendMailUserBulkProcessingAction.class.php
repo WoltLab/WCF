@@ -41,9 +41,7 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction
      */
     public $text = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function executeAction(DatabaseObjectList $objectList)
     {
         if (\count($objectList)) {
@@ -67,9 +65,7 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHTML()
     {
         return WCF::getTPL()->render('wcf', 'sendMailUserBulkProcessing', [
@@ -80,9 +76,7 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (isset($_POST['enableHTML'])) {
@@ -96,9 +90,7 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if (empty($this->subject)) {

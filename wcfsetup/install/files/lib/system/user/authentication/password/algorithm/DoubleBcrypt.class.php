@@ -29,9 +29,7 @@ final class DoubleBcrypt implements IPasswordAlgorithm
      */
     private const BCRYPT_TYPE = '2a';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function verify(
         #[\SensitiveParameter]
         string $password,
@@ -40,9 +38,7 @@ final class DoubleBcrypt implements IPasswordAlgorithm
         return \hash_equals($hash, self::getDoubleSaltedHash($password, $hash));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hash(
         #[\SensitiveParameter]
         string $password
@@ -50,9 +46,7 @@ final class DoubleBcrypt implements IPasswordAlgorithm
         return self::getDoubleSaltedHash($password);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function needsRehash(string $hash): bool
     {
         return self::isDifferentBlowfish($hash);

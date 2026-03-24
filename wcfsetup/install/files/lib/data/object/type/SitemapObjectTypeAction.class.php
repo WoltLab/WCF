@@ -32,9 +32,7 @@ class SitemapObjectTypeAction extends ObjectTypeAction implements IToggleAction
      */
     protected $requireACP = ['toggle'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->getObjects() as $objectEditor) {
@@ -63,9 +61,7 @@ class SitemapObjectTypeAction extends ObjectTypeAction implements IToggleAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateToggle()
     {
         if (empty($this->objects)) {

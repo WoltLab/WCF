@@ -34,9 +34,7 @@ class RadioButtonOptionType extends AbstractOptionType implements
      */
     public $forceSearchOption = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         $availableOptions = $option->parseMultipleEnableOptions();
@@ -67,9 +65,7 @@ class RadioButtonOptionType extends AbstractOptionType implements
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(Option $option, mixed $newValue)
     {
         if (!empty($newValue)) {
@@ -80,9 +76,7 @@ class RadioButtonOptionType extends AbstractOptionType implements
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSearchFormElement(Option $option, mixed $value)
     {
         $this->templateName = 'shared_radioButtonSearchableOptionType';
@@ -94,9 +88,7 @@ class RadioButtonOptionType extends AbstractOptionType implements
         return $this->getFormElement($option, $value);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, mixed $value)
     {
         if (!isset($_POST['searchOptions'][$option->optionName])) {
@@ -108,9 +100,7 @@ class RadioButtonOptionType extends AbstractOptionType implements
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addCondition(UserList $userList, Option $option, mixed $value)
     {
         $userList->getConditionBuilder()->add(
@@ -119,17 +109,13 @@ class RadioButtonOptionType extends AbstractOptionType implements
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkUser(User $user, Option $option, mixed $value)
     {
         return \mb_strtolower($user->getUserOption($option->optionName)) == \mb_strtolower(StringUtil::trim($value));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionData(Option $option, mixed $newValue)
     {
         return $newValue;
@@ -146,17 +132,13 @@ class RadioButtonOptionType extends AbstractOptionType implements
         return $option->parseSelectOptions();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCSSClassName()
     {
         return 'checkboxList';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDisabledOptionNames(mixed $value, string $enableOptions)
     {
         $valueToOptions = \explode("\n", StringUtil::trim(StringUtil::unifyNewlines($enableOptions)));

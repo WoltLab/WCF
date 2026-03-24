@@ -14,9 +14,7 @@ use wcf\data\reaction\type\ReactionTypeList;
  */
 class ReactionTypeCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rebuild(array $parameters)
     {
         $reactionTypeList = new ReactionTypeList();

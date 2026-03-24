@@ -22,9 +22,9 @@ class PackageUpdateList extends DatabaseObjectList
     public $className = PackageUpdate::class;
 
     /**
-     * @inheritDoc
      * @param bool $useSqlOr
      */
+    #[\Override]
     public function __construct($useSqlOr = false)
     {
         parent::__construct();

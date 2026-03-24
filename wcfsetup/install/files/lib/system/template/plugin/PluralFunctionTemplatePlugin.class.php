@@ -35,9 +35,7 @@ final class PluralFunctionTemplatePlugin implements IFunctionTemplatePlugin
      */
     private const CATEGORIES = ['zero', 'one', 'two', 'few', 'many', 'other'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         if (!isset($tagArgs['value'])) {

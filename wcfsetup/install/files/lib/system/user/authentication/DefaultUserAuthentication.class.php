@@ -34,9 +34,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication
         // Does nothing
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function loginManually(
         string $username,
         #[\SensitiveParameter]

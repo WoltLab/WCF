@@ -18,9 +18,7 @@ use wcf\util\StringUtil;
  */
 final class WoltLabSuiteArticleBBCode extends AbstractBBCode
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getParsedTag(array $openingTag, string $content, array $closingTag, BBCodeParser $parser): string
     {
         $articleID = 0;

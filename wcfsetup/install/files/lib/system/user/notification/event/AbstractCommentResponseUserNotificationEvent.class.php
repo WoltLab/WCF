@@ -22,17 +22,13 @@ abstract class AbstractCommentResponseUserNotificationEvent extends AbstractShar
      */
     protected $stackable = true;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepare()
     {
         CommentRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->commentID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         $count = \count($this->getAuthors());
@@ -49,9 +45,7 @@ abstract class AbstractCommentResponseUserNotificationEvent extends AbstractShar
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEmailTitle()
     {
         $count = \count($this->getAuthors());
@@ -65,9 +59,7 @@ abstract class AbstractCommentResponseUserNotificationEvent extends AbstractShar
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEventHash()
     {
         return \sha1($this->eventID . '-' . $this->getUserNotificationObject()->commentID);

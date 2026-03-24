@@ -58,9 +58,7 @@ class UserGroupOptionHandler extends OptionHandler
         $this->group = $group;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTypeObject($type)
     {
         $objectType = parent::getTypeObject($type);
@@ -72,9 +70,7 @@ class UserGroupOptionHandler extends OptionHandler
         return $objectType;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function checkOption(Option $option)
     {
         if (parent::checkOption($option)) {
@@ -89,9 +85,7 @@ class UserGroupOptionHandler extends OptionHandler
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getClassName($optionType)
     {
         $className = 'wcf\system\option\user\group\\' . \ucfirst($optionType) . 'UserGroupOptionType';
@@ -107,9 +101,7 @@ class UserGroupOptionHandler extends OptionHandler
         return $className;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         $defaultGroup = UserGroup::getGroupByType(UserGroup::EVERYONE);
@@ -155,9 +147,7 @@ class UserGroupOptionHandler extends OptionHandler
         return $this->isOwner;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validateOption(Option $option)
     {
         parent::validateOption($option);

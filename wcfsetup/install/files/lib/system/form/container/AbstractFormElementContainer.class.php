@@ -34,65 +34,49 @@ abstract class AbstractFormElementContainer implements IFormElementContainer
      */
     protected $label = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setDescription(string $description)
     {
         $this->description = StringUtil::trim($description);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDescription()
     {
         return $this->description;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setLabel(string $label)
     {
         $this->label = StringUtil::trim($label);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLabel()
     {
         return $this->label;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function appendChild(IFormElement $element)
     {
         $this->children[] = $element;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function prependChild(IFormElement $element)
     {
         \array_unshift($this->children, $element);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getChildren()
     {
         return $this->children;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getValue(string $key)
     {
         foreach ($this->children as $element) {
@@ -104,9 +88,7 @@ abstract class AbstractFormElementContainer implements IFormElementContainer
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function handleRequest(array $variables)
     {
         foreach ($this->children as $element) {
@@ -120,9 +102,7 @@ abstract class AbstractFormElementContainer implements IFormElementContainer
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setError(string $name, string $error)
     {
         foreach ($this->children as $element) {

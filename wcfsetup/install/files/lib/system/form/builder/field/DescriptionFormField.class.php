@@ -23,9 +23,9 @@ class DescriptionFormField extends MultilineTextFormField
     }
 
     /**
-     * @inheritDoc
      * @return string
      */
+    #[\Override]
     protected static function getDefaultId()
     {
         return 'description';

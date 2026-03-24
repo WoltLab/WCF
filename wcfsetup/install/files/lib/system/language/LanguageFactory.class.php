@@ -33,9 +33,7 @@ class LanguageFactory extends SingletonFactory
      */
     protected $scriptingCompiler;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->loadCache();

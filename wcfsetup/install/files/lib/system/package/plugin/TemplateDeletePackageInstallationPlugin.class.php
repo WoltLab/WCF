@@ -14,17 +14,13 @@ use wcf\data\application\Application;
  */
 final class TemplateDeletePackageInstallationPlugin extends AbstractTemplateDeletePackageInstallationPlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getLogTableName(): string
     {
         return 'wcf1_template';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getFilePath(string $filename, string $application): string
     {
         return \sprintf(

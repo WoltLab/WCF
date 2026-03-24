@@ -21,9 +21,6 @@ final class StaticResponseHandler implements RequestHandlerInterface
     ) {
     }
 
-    /**
-     * @inheritDoc
-     */
     #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {

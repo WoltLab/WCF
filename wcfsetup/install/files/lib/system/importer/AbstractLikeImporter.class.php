@@ -35,9 +35,7 @@ class AbstractLikeImporter extends AbstractImporter
      */
     protected static $dislikeReactionTypeID;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         if ($data['objectUserID']) {

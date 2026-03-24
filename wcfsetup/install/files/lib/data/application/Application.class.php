@@ -55,9 +55,7 @@ class Application extends DatabaseObject
      */
     protected static $directories;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleData($data)
     {
         if (isset($data['domainPath'])) {
@@ -69,9 +67,7 @@ class Application extends DatabaseObject
         parent::handleData($data);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __get(string $name)
     {
         if (ENABLE_ENTERPRISE_MODE && \defined('ENTERPRISE_MODE_DOMAIN_OVERRIDE') && \PHP_SAPI !== 'cli') {
@@ -123,9 +119,7 @@ class Application extends DatabaseObject
         return $this->pageURL;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __wakeup()
     {
         if (ENABLE_ENTERPRISE_MODE && \defined('ENTERPRISE_MODE_DOMAIN_OVERRIDE') && ENTERPRISE_MODE_DOMAIN_OVERRIDE === $_SERVER['HTTP_HOST']) {

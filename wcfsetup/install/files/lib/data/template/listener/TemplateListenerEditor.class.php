@@ -26,9 +26,9 @@ class TemplateListenerEditor extends DatabaseObjectEditor implements IEditableCa
     protected static $baseClass = TemplateListener::class;
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     public static function resetCache()
     {
         TemplateListenerCodeCacheBuilder::getInstance()->reset();

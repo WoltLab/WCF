@@ -26,9 +26,7 @@ use wcf\system\WCF;
  */
 final class HandleAccessToken implements MiddlewareInterface
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (!$this->handleAccessToken($request->getQueryParams()['at'] ?? '')) {

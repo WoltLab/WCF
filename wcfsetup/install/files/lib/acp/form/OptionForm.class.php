@@ -46,9 +46,7 @@ class OptionForm extends AbstractOptionListForm
      */
     protected $languageItemPattern = 'wcf.acp.option.option\d+';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         if (isset($_REQUEST['id'])) {
@@ -63,9 +61,7 @@ class OptionForm extends AbstractOptionListForm
         parent::readParameters();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -85,9 +81,7 @@ class OptionForm extends AbstractOptionListForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -103,9 +97,7 @@ class OptionForm extends AbstractOptionListForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -117,9 +109,7 @@ class OptionForm extends AbstractOptionListForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         // set active menu item

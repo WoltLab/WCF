@@ -886,9 +886,7 @@ class Tar
 		}
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	#[\Override]
 	public function getContentList()
 	{
 		if (!$this->read) {
@@ -898,9 +896,7 @@ class Tar
 		return $this->contentList;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	#[\Override]
 	public function getFileInfo($fileIndex)
 	{
 		if (!is_int($fileIndex)) {
@@ -913,9 +909,7 @@ class Tar
 		return $this->contentList[$fileIndex];
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	#[\Override]
 	public function getIndexByFilename($filename)
 	{
 		foreach ($this->contentList as $index => $file) {
@@ -926,9 +920,7 @@ class Tar
 		return false;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	#[\Override]
 	public function extractToString($index)
 	{
 		if (!$this->read) {
@@ -955,9 +947,7 @@ class Tar
 		return $content;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	#[\Override]
 	public function extract($index, $destination)
 	{
 		if (!$this->read) {

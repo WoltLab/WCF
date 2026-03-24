@@ -42,9 +42,7 @@ class StyleGlobalValuesForm extends AbstractForm
      */
     public $styleTestFileDir;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -57,9 +55,7 @@ class StyleGlobalValuesForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -72,9 +68,7 @@ class StyleGlobalValuesForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -111,9 +105,7 @@ class StyleGlobalValuesForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -167,9 +159,7 @@ class StyleGlobalValuesForm extends AbstractForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

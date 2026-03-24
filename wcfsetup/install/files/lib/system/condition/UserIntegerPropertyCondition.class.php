@@ -24,9 +24,7 @@ class UserIntegerPropertyCondition extends AbstractIntegerCondition implements
 {
     use TObjectListUserCondition;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData): void
     {
         if (isset($conditionData['greaterThan'])) {
@@ -43,9 +41,7 @@ class UserIntegerPropertyCondition extends AbstractIntegerCondition implements
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkUser(Condition $condition, User $user): bool
     {
         if (
@@ -64,25 +60,19 @@ class UserIntegerPropertyCondition extends AbstractIntegerCondition implements
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getIdentifier(): string
     {
         return 'user_' . $this->getDecoratedObject()->propertyname;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getLabel(): string
     {
         return WCF::getLanguage()->get('wcf.user.condition.' . $this->getDecoratedObject()->propertyname);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showContent(Condition $condition): bool
     {
         if (!WCF::getUser()->userID) {

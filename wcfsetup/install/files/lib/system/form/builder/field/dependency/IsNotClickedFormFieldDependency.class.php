@@ -23,9 +23,7 @@ class IsNotClickedFormFieldDependency extends AbstractFormFieldDependency
      */
     protected $templateName = 'shared_isNotClickedFormFieldDependency';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkDependency()
     {
         $form = $this->getField()->getDocument();
@@ -40,9 +38,7 @@ class IsNotClickedFormFieldDependency extends AbstractFormFieldDependency
         return $form->getRequestData($this->getField()->getPrefixedId()) !== $this->getField()->getValue();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function field(IFormField $field)
     {
         if (!($field instanceof ButtonFormField)) {

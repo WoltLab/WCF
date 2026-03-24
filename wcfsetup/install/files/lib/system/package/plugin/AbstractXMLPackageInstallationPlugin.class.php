@@ -33,9 +33,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
      */
     public $tagName = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct(PackageInstallationDispatcher $installation, $instruction = [])
     {
         parent::__construct($installation, $instruction);
@@ -51,9 +49,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function install()
     {
         parent::install();
@@ -74,9 +70,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
         $this->cleanup();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function uninstall()
     {
         parent::uninstall();
@@ -474,9 +468,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
         return \lcfirst(\str_replace('PackageInstallationPlugin', '', \array_pop($classParts))) . '.xml';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function isValid(PackageArchive $packageArchive, $instruction)
     {
         if (!$instruction) {

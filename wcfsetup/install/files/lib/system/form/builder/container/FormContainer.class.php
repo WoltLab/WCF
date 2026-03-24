@@ -41,17 +41,13 @@ class FormContainer implements IFormContainer
      */
     protected $templateApplication = 'wcf';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct()
     {
         $this->addClass('section');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtml()
     {
         return WCF::getTPL()->render(
@@ -64,17 +60,15 @@ class FormContainer implements IFormContainer
     }
 
     /**
-     * @inheritDoc
      * @since   5.3
      */
+    #[\Override]
     public function markAsRequired()
     {
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true)
     {
         // does nothing
@@ -82,9 +76,7 @@ class FormContainer implements IFormContainer
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateChild(IFormChildNode $child): void
     {
         $this->defaultValidateChild($child);
@@ -93,7 +85,7 @@ class FormContainer implements IFormContainer
             if (!($child instanceof ITabFormContainer)) {
                 throw new \InvalidArgumentException(
                     "Cannot append non-tab container " . \get_class($child)
-                    . "('{$child->getId()}') to container '{$this->getId()}'"
+                        . "('{$child->getId()}') to container '{$this->getId()}'"
                 );
             }
 
@@ -113,7 +105,7 @@ class FormContainer implements IFormContainer
         if ($this instanceof ITabFormContainer && !($child instanceof IFormContainer)) {
             throw new \InvalidArgumentException(
                 "Child " . \get_class($child)
-                . "('{$child->getId()}') has to be a form container to be appended to tab container '{$this->getId()}'."
+                    . "('{$child->getId()}') has to be a form container to be appended to tab container '{$this->getId()}'."
             );
         }
 

@@ -52,9 +52,7 @@ class LanguageAddForm extends AbstractFormBuilderForm
      */
     public array $locales;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -73,9 +71,7 @@ class LanguageAddForm extends AbstractFormBuilderForm
         $collator->asort($this->locales, \Collator::SORT_STRING);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function createForm()
     {
         parent::createForm();
@@ -164,9 +160,7 @@ class LanguageAddForm extends AbstractFormBuilderForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function buildForm()
     {
         parent::buildForm();

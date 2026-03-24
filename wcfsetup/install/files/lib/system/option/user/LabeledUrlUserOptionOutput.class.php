@@ -16,9 +16,7 @@ use wcf\util\StringUtil;
  */
 class LabeledUrlUserOptionOutput implements IUserOptionOutput
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getOutput(User $user, UserOption $option, string $value)
     {
         if ($value) {

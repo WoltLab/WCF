@@ -57,9 +57,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
      */
     protected static $baseClass = Style::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update(array $parameters = [])
     {
         if (isset($parameters['variablesDarkMode'])) {
@@ -93,9 +91,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         $sql = "DELETE FROM wcf1_style
@@ -123,9 +119,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         $statement->execute(['wcf.style.styleDescription' . $this->styleID]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function deleteAll(array $objectIDs = [])
     {
         $styleList = new StyleList();
@@ -1302,9 +1296,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         StyleCompiler::getInstance()->compile($this->getDecoratedObject());
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function create(array $parameters = [])
     {
         $variables = [];
@@ -1363,9 +1355,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         return $style;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         StyleCacheBuilder::getInstance()->reset();

@@ -26,9 +26,7 @@ class PruneIpAddressesCronjob extends AbstractCronjob
      */
     public $columns = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(Cronjob $cronjob)
     {
         if (!PRUNE_IP_ADDRESS) {

@@ -52,9 +52,7 @@ class UserOptionImporter extends AbstractImporter
         $this->languageCategoryID = $row['languageCategoryID'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         $data['packageID'] = 1;

@@ -17,9 +17,7 @@ class DebugPreparedStatement extends PreparedStatement
      */
     protected $debugDidExecuteOnce = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __call($name, $arguments)
     {
         if ($name === 'fetchAll' || $name === 'fetchColumn') {
@@ -29,9 +27,7 @@ class DebugPreparedStatement extends PreparedStatement
         return parent::__call($name, $arguments);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $parameters = [])
     {
         $this->debugDidExecuteOnce = true;
@@ -39,9 +35,7 @@ class DebugPreparedStatement extends PreparedStatement
         parent::execute($parameters);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function fetchArray($type = null)
     {
         $this->debugThrowIfNotExecutedBefore();
@@ -49,9 +43,7 @@ class DebugPreparedStatement extends PreparedStatement
         return parent::fetchArray($type);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function fetchSingleRow($type = null)
     {
         $this->debugThrowIfNotExecutedBefore();
@@ -59,9 +51,7 @@ class DebugPreparedStatement extends PreparedStatement
         return parent::fetchSingleRow($type);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function fetchSingleColumn($columnNumber = 0)
     {
         $this->debugThrowIfNotExecutedBefore();
@@ -69,9 +59,7 @@ class DebugPreparedStatement extends PreparedStatement
         return parent::fetchSingleColumn($columnNumber);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function fetchObject($className)
     {
         $this->debugThrowIfNotExecutedBefore();
@@ -79,9 +67,7 @@ class DebugPreparedStatement extends PreparedStatement
         return parent::fetchObject($className);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function fetchSingleObject($className)
     {
         $this->debugThrowIfNotExecutedBefore();
@@ -89,9 +75,7 @@ class DebugPreparedStatement extends PreparedStatement
         return parent::fetchSingleObject($className);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function fetchObjects($className, $keyProperty = null)
     {
         $this->debugThrowIfNotExecutedBefore();
@@ -99,9 +83,7 @@ class DebugPreparedStatement extends PreparedStatement
         return parent::fetchObjects($className, $keyProperty);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function fetchMap($keyColumn, $valueColumn, $uniqueKey = true)
     {
         $this->debugThrowIfNotExecutedBefore();
@@ -109,9 +91,7 @@ class DebugPreparedStatement extends PreparedStatement
         return parent::fetchMap($keyColumn, $valueColumn, $uniqueKey);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function debugThrowIfNotExecutedBefore(): void
     {
         if (!$this->debugDidExecuteOnce) {

@@ -42,9 +42,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
         $this->urlID = $url->urlID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function retryAfter()
     {
         switch ($this->getFailures()) {
@@ -62,9 +60,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
         return 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function perform()
     {
         $unfurlUrl = new UnfurlUrl($this->urlID);
@@ -311,9 +307,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
         $urlAction->executeAction();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function onFinalFailure()
     {
         $this->save(UnfurlUrl::STATUS_REJECTED);

@@ -17,9 +17,6 @@ final class TinyintDatabaseTableColumn extends AbstractIntDatabaseTableColumn
      */
     protected string $type = 'tinyint';
 
-    /**
-     * @inheritDoc
-     */
     #[\Override]
     public function getMaximumLength(): int
     {

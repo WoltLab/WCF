@@ -31,9 +31,7 @@ class AbstractPollOptionImporter extends AbstractImporter
      */
     protected $pollObjectTypeName = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         $data['pollID'] = ImportHandler::getInstance()->getNewID($this->pollObjectTypeName, $data['pollID']);

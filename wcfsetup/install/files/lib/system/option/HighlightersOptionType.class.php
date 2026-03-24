@@ -14,9 +14,7 @@ use wcf\system\bbcode\BBCodeHandler;
  */
 class HighlightersOptionType extends MultiSelectOptionType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getSelectOptions(Option $option)
     {
         $meta = BBCodeHandler::getInstance()->getHighlighterMeta();

@@ -20,9 +20,7 @@ class TrophyImageUploadFileValidationStrategy implements IUploadFileValidationSt
      */
     const MIN_TROPHY_IMAGE_SIZE = 64;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(UploadFile $uploadFile)
     {
         if ($uploadFile->getErrorCode()) {

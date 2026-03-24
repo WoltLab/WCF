@@ -55,9 +55,7 @@ class NotificationPresetSettingsForm extends AbstractForm
      */
     protected static $validMailNotificationTypes = ['none', 'instant', 'daily'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -65,9 +63,7 @@ class NotificationPresetSettingsForm extends AbstractForm
         $this->events = UserNotificationHandler::getInstance()->getAvailableEvents();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -80,9 +76,7 @@ class NotificationPresetSettingsForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -123,9 +117,7 @@ class NotificationPresetSettingsForm extends AbstractForm
         unset($settings);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -143,9 +135,7 @@ class NotificationPresetSettingsForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -176,9 +166,7 @@ class NotificationPresetSettingsForm extends AbstractForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();

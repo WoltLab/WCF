@@ -29,9 +29,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
         $this->field = $field;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addValidationError(IFormFieldValidationError $error)
     {
         $this->field->addValidationError($error);
@@ -39,9 +37,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addValidator(IFormFieldValidator $validator)
     {
         $this->field->addValidator($validator);
@@ -49,89 +45,67 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFieldHtml()
     {
         return $this->field->getFieldHtml();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getJavaScriptDataHandlerModule()
     {
         return $this->field->getJavaScriptDataHandlerModule();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectProperty()
     {
         return $this->field->getObjectProperty();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSaveValue()
     {
         return $this->field->getSaveValue();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getValidationErrors()
     {
         return $this->field->getValidationErrors();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getValidators()
     {
         return $this->field->getValidators();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getValue()
     {
         return $this->field->getValue();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasValidator(string $validatorId)
     {
         return $this->field->hasValidator($validatorId);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasSaveValue()
     {
         return $this->field->hasSaveValue();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isRequired()
     {
         return $this->field->isRequired();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updatedObject(array $data, IStorableObject $object, $loadValues = true)
     {
         $this->field->updatedObject($data, $object, $loadValues);
@@ -139,9 +113,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function objectProperty($objectProperty)
     {
         $this->field->objectProperty($objectProperty);
@@ -149,9 +121,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         $this->field->readValue();
@@ -159,9 +129,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function removeValidator(string $validatorId)
     {
         $this->field->removeValidator($validatorId);
@@ -169,9 +137,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function required($required = true)
     {
         $this->field->required($required);
@@ -179,9 +145,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function value(mixed $value)
     {
         $this->field->value($value);
@@ -189,17 +153,13 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getParent()
     {
         return $this->field->getParent();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function parent(IFormParentNode $parentNode)
     {
         $this->field->parent($parentNode);
@@ -207,9 +167,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addClass(string $class): static
     {
         $this->field->addClass($class);
@@ -217,9 +175,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addClasses(array $classes): static
     {
         $this->field->addClasses($classes);
@@ -227,9 +183,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addDependency(IFormFieldDependency $dependency): static
     {
         $this->field->addDependency($dependency);
@@ -237,9 +191,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function attribute(string $name, ?string $value = null): static
     {
         $this->field->attribute($name, $value);
@@ -247,9 +199,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function available(bool $available = true): static
     {
         $this->field->available($available);
@@ -257,9 +207,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function cleanup(): static
     {
         $this->field->cleanup();
@@ -267,113 +215,85 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkDependencies(): bool
     {
         return $this->field->checkDependencies();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getAttribute(string $name): mixed
     {
         return $this->field->getAttribute($name);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getAttributes(): array
     {
         return $this->field->getAttributes();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getClasses(): array
     {
         return $this->field->getClasses();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDependencies()
     {
         return $this->field->getDependencies();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDocument()
     {
         return $this->field->getDocument();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtml()
     {
         return $this->field->getHtml();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtmlVariables()
     {
         return $this->field->getHtmlVariables();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getId()
     {
         return $this->field->getId();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getPrefixedId()
     {
         return $this->field->getPrefixedId();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasAttribute(string $name)
     {
         return $this->field->hasAttribute($name);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasClass(string $class)
     {
         return $this->field->hasClass($class);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasDependency(string $dependencyId)
     {
         return $this->field->hasDependency($dependencyId);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function id(string $id)
     {
         $this->field->id($id);
@@ -381,17 +301,13 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAvailable()
     {
         return $this->field->isAvailable();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function populate()
     {
         $this->field->populate();
@@ -399,9 +315,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function removeAttribute(string $name)
     {
         $this->field->removeAttribute($name);
@@ -409,9 +323,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function removeClass(string $class)
     {
         $this->field->removeClass($class);
@@ -419,9 +331,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function removeDependency(string $dependencyId)
     {
         $this->field->removeDependency($dependencyId);
@@ -429,17 +339,13 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         $this->field->validate();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function description($languageItem = null, array $variables = [])
     {
         $this->field->description($languageItem, $variables);
@@ -447,25 +353,19 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDescription()
     {
         return $this->field->getDescription();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLabel()
     {
         return $this->field->getLabel();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function label($languageItem = null, array $variables = [])
     {
         $this->field->label($languageItem, $variables);
@@ -473,9 +373,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function requiresLabel()
     {
         return $this->field->requiresLabel();

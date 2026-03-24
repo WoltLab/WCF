@@ -27,9 +27,7 @@ class AbstractAttachmentImporter extends AbstractImporter
      */
     protected $objectTypeID = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         // check file location

@@ -20,9 +20,7 @@ use wcf\system\WCF;
  */
 final class CacheClearAction implements RequestHandlerInterface
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         if (!WCF::getSession()->getPermission('admin.management.canRebuildData')) {

@@ -27,9 +27,7 @@ final class Vb5Argon2 implements IPasswordAlgorithm
         $this->argon2 = new Argon2();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function verify(
         #[\SensitiveParameter]
         string $password,
@@ -38,9 +36,7 @@ final class Vb5Argon2 implements IPasswordAlgorithm
         return $this->argon2->verify(\md5($password), $hash);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hash(
         #[\SensitiveParameter]
         string $password
@@ -48,9 +44,7 @@ final class Vb5Argon2 implements IPasswordAlgorithm
         return $this->argon2->hash(\md5($password));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function needsRehash(string $hash): bool
     {
         return $this->argon2->needsRehash($hash);

@@ -80,9 +80,7 @@ abstract class AbstractSingleFieldCondition extends AbstractCondition
      */
     abstract protected function getFieldElement();
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHTML()
     {
         return <<<HTML

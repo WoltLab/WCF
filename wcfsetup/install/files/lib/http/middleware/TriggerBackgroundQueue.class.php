@@ -31,9 +31,7 @@ final class TriggerBackgroundQueue implements MiddlewareInterface
         $this->requestHandler = RequestHandler::getInstance();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if ($this->requestHandler->isACPRequest()) {

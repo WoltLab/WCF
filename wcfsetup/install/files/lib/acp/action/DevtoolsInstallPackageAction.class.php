@@ -25,18 +25,16 @@ final class DevtoolsInstallPackageAction extends InstallPackageAction
      */
     public DevtoolsProject $project;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getRedirectLink(): string
     {
         return LinkHandler::getInstance()->getLink('DevtoolsProjectList');
     }
 
     /**
-     * @inheritDoc
      * @throws  IllegalLinkException
      */
+    #[\Override]
     public function readParameters()
     {
         AbstractSecureAction::readParameters();

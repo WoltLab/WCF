@@ -62,9 +62,7 @@ class PackageStartInstallForm extends AbstractForm
      */
     public $stylePackageImportLocation = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -75,9 +73,7 @@ class PackageStartInstallForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -89,9 +85,7 @@ class PackageStartInstallForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -190,9 +184,7 @@ class PackageStartInstallForm extends AbstractForm
         $this->package = PackageValidationManager::getInstance()->getPackageValidationArchive()->getPackage();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -235,9 +227,7 @@ class PackageStartInstallForm extends AbstractForm
         exit;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -251,9 +241,7 @@ class PackageStartInstallForm extends AbstractForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         if (!WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage') && !WCF::getSession()->getPermission('admin.configuration.package.canUpdatePackage')) {

@@ -34,9 +34,7 @@ class AbstractCategoryImporter extends AbstractImporter
      */
     protected $objectTypeName = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         if (!empty($data['parentCategoryID'])) {

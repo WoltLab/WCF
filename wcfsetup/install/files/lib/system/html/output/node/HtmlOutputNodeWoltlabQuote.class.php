@@ -26,9 +26,7 @@ class HtmlOutputNodeWoltlabQuote extends AbstractHtmlOutputNode
      */
     protected $tagName = 'woltlab-quote';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         /** @var \DOMElement $element */
@@ -80,9 +78,7 @@ class HtmlOutputNodeWoltlabQuote extends AbstractHtmlOutputNode
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function replaceTag(array $data)
     {
         $externalQuoteLink = false;

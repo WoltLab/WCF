@@ -164,9 +164,7 @@ final class SessionHandler extends SingletonFactory
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->isACP = (\class_exists(WCFACP::class, false) || !PACKAGE_ID);

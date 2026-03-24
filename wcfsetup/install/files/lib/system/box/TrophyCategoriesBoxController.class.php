@@ -30,9 +30,7 @@ class TrophyCategoriesBoxController extends AbstractBoxController
         'footer',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function loadContent()
     {
         $categories = TrophyCategoryCache::getInstance()->getEnabledCategories();

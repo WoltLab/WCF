@@ -33,9 +33,7 @@ class ImageHandler extends SingletonFactory
      */
     protected $adapterClassName = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         if (!isset($this->imageAdapters[IMAGE_ADAPTER_TYPE])) {

@@ -384,6 +384,7 @@ final class UserAgent
     /**
      * @see UserAgent::getUserAgent()
      */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getUserAgent();

@@ -57,9 +57,7 @@ class UsersOnlineListPage extends SortablePage
      */
     public $locations = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -80,9 +78,7 @@ class UsersOnlineListPage extends SortablePage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initObjectList()
     {
         parent::initObjectList();
@@ -104,9 +100,7 @@ class UsersOnlineListPage extends SortablePage
         $this->objectList->sqlSelects .= ", CASE WHEN session.spiderIdentifier IS NOT NULL THEN 1 ELSE 0 END AS userIsRobot";
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -131,9 +125,7 @@ class UsersOnlineListPage extends SortablePage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function readObjects()
     {
         if ($this->sqlOrderBy) {

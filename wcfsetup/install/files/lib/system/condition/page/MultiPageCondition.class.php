@@ -39,9 +39,7 @@ class MultiPageCondition extends AbstractMultiSelectCondition implements IConten
      */
     protected $reverseLogic = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         if (!empty($this->fieldValue)) {
@@ -54,9 +52,7 @@ class MultiPageCondition extends AbstractMultiSelectCondition implements IConten
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getFieldElement()
     {
         return WCF::getTPL()->render('wcf', 'shared_scrollablePageCheckboxList', [
@@ -67,9 +63,7 @@ class MultiPageCondition extends AbstractMultiSelectCondition implements IConten
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHTML()
     {
         return WCF::getTPL()->render('wcf', 'shared_multiPageCondition', [
@@ -80,17 +74,13 @@ class MultiPageCondition extends AbstractMultiSelectCondition implements IConten
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getOptions()
     {
         return [];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -100,18 +90,14 @@ class MultiPageCondition extends AbstractMultiSelectCondition implements IConten
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         $this->fieldValue = [];
         $this->reverseLogic = false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setData(Condition $condition)
     {
         parent::setData($condition);
@@ -121,9 +107,7 @@ class MultiPageCondition extends AbstractMultiSelectCondition implements IConten
         $this->reverseLogic = $condition->conditionData[$this->fieldName . '_reverseLogic'] ?? false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showContent(Condition $condition)
     {
         $pageID = RequestHandler::getInstance()->getActivePageID();
@@ -144,9 +128,7 @@ class MultiPageCondition extends AbstractMultiSelectCondition implements IConten
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         foreach ($this->fieldValue as $value) {

@@ -54,9 +54,7 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
         return Application::getDirectory($application) . $filename;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items)
     {
         $groupedFiles = [];
@@ -170,51 +168,39 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     final protected function import(array $row, array $data)
     {
         // Does nothing, imports are not supported.
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     final protected function prepareImport(array $data)
     {
         return $data;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     final protected function findExistingItem(array $data)
     {
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return [];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasUninstall()
     {
         // File deletions cannot be reverted.
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function uninstall()
     {
         // File deletions cannot be reverted.
@@ -232,9 +218,9 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
     }
 
     /**
-     * @inheritDoc
      * @return void
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         /** @var FormContainer $dataContainer */
@@ -268,10 +254,10 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         return [
@@ -282,9 +268,9 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
     }
 
     /**
-     * @inheritDoc
      * @return string
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         $app = $element->getAttribute('application') ?: 'wcf';
@@ -293,9 +279,9 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
     }
 
     /**
-     * @inheritDoc
      * @return void
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $entryList->setKeys([
@@ -305,9 +291,9 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
     }
 
     /**
-     * @inheritDoc
      * @return void
      */
+    #[\Override]
     protected function insertNewXmlElement(XML $xml, \DOMElement $newElement)
     {
         $delete = $xml->xpath()->query('/ns:data/ns:delete')->item(0);
@@ -322,9 +308,9 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $file = $document->createElement($this->tagName);
@@ -339,18 +325,18 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
     }
 
     /**
-     * @inheritDoc
      * @return null
      */
+    #[\Override]
     final protected function prepareDeleteXmlElement(\DOMElement $element)
     {
         return null;
     }
 
     /**
-     * @inheritDoc
      * @return void
      */
+    #[\Override]
     protected function saveObject(\DOMElement $newElement, ?\DOMElement $oldElement = null)
     {
         $newElementData = $this->getElementData($newElement, true);
@@ -364,27 +350,25 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
     }
 
     /**
-     * @inheritDoc
      *
      * @return void
      */
+    #[\Override]
     final protected function deleteObject(\DOMElement $element)
     {
         // Reverting file deletions is not supported. Use the `file` PIP instead.
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getImportElements(\DOMXPath $xpath)
     {
         return $xpath->query('/ns:data/ns:delete/ns:' . $this->tagName);
     }
 
     /**
-     * @inheritDoc
      * @return string
      */
+    #[\Override]
     protected function getEmptyXml()
     {
         $xsdFilename = $this->getXsdFilename();

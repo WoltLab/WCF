@@ -24,9 +24,7 @@ class ArticleContentAction extends AbstractDatabaseObjectAction
      */
     protected $className = ArticleContentEditor::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         $articleContentIDs = [];

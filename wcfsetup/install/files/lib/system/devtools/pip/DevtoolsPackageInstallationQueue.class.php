@@ -16,9 +16,7 @@ use wcf\system\WCF;
  */
 class DevtoolsPackageInstallationQueue extends PackageInstallationQueue
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct(DevtoolsProject $project)
     {
         parent::__construct(null, [

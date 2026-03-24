@@ -17,9 +17,7 @@ use wcf\util\HeaderUtil;
  */
 class ArticleAddForm extends \wcf\acp\form\ArticleAddForm
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();

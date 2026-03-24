@@ -22,25 +22,19 @@ class CommentResponseUserNotificationObject extends DatabaseObjectDecorator impl
      */
     protected static $baseClass = CommentResponse::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getURL()
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getAuthorID()
     {
         return $this->userID;

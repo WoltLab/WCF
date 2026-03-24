@@ -138,9 +138,7 @@ class SearchForm extends AbstractCaptchaForm
      */
     public $userIDs = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -244,9 +242,7 @@ class SearchForm extends AbstractCaptchaForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -266,9 +262,7 @@ class SearchForm extends AbstractCaptchaForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -358,9 +352,7 @@ class SearchForm extends AbstractCaptchaForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function submit()
     {
         try {
@@ -370,9 +362,7 @@ class SearchForm extends AbstractCaptchaForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -445,9 +435,7 @@ class SearchForm extends AbstractCaptchaForm
         exit;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -477,9 +465,7 @@ class SearchForm extends AbstractCaptchaForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         if (\count($_POST) == 1 && $this->submit) {
@@ -568,9 +554,7 @@ class SearchForm extends AbstractCaptchaForm
         return $this->userIDs;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __run()
     {
         throw new IllegalLinkException();

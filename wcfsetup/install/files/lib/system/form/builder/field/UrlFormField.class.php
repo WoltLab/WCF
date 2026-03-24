@@ -25,10 +25,10 @@ class UrlFormField extends TextFormField
     }
 
     /**
-     * @inheritDoc
      * @return string[]
      * @since       5.4
      */
+    #[\Override]
     protected function getValidAutoCompleteTokens(): array
     {
         return [
@@ -46,9 +46,7 @@ class UrlFormField extends TextFormField
         return ['url'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validateText($text, ?Language $language = null)
     {
         if ($this->isRequired() && ($this->getValue() === null || $this->getValue() === '')) {
@@ -70,9 +68,7 @@ class UrlFormField extends TextFormField
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getInputType(): string
     {
         return 'url';

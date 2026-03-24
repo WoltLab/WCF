@@ -63,9 +63,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm
      */
     public $templateName = 'bulkProcessing';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -82,9 +80,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         // read bulk processable object type
@@ -146,9 +142,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -164,9 +158,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         $action = $this->actions[$this->action]->getProcessor();
@@ -241,9 +233,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();

@@ -45,9 +45,7 @@ class AbstractACLImporter extends AbstractImporter
         $this->options = $statement->fetchMap('optionName', 'optionID');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         if (!isset($this->options[$additionalData['optionName']])) {

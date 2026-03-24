@@ -15,9 +15,7 @@ use wcf\util\StringUtil;
  */
 class URLUserOptionOutput implements IUserOptionOutput
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getOutput(User $user, UserOption $option, string $value)
     {
         if (empty($value) || $value == 'http://') {

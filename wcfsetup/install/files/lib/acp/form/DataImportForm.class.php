@@ -125,9 +125,7 @@ class DataImportForm extends AbstractForm
      */
     public $userMergeMode = UserImporter::MERGE_MODE_EMAIL;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -177,9 +175,7 @@ class DataImportForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -214,9 +210,7 @@ class DataImportForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function submit()
     {
         if (!isset($_POST['sourceSelection'])) {
@@ -224,9 +218,7 @@ class DataImportForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -281,9 +273,7 @@ class DataImportForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -310,9 +300,7 @@ class DataImportForm extends AbstractForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -335,9 +323,7 @@ class DataImportForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

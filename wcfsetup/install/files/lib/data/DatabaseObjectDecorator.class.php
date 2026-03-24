@@ -44,33 +44,25 @@ abstract class DatabaseObjectDecorator extends DatabaseObject
         $this->object = $object;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __get(string $name)
     {
         return $this->object->__get($name);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __isset(string $name)
     {
         return $this->object->__isset($name);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectID()
     {
         return $this->object->getObjectID();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         return $this->object->getData();
@@ -93,33 +85,25 @@ abstract class DatabaseObjectDecorator extends DatabaseObject
         return \call_user_func_array([$this->object, $name], $arguments);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getDatabaseTableAlias()
     {
         return \call_user_func([static::$baseClass, 'getDatabaseTableAlias']);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getDatabaseTableName()
     {
         return \call_user_func([static::$baseClass, 'getDatabaseTableName']);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getDatabaseTableIndexIsIdentity()
     {
         return \call_user_func([static::$baseClass, 'getDatabaseTableIndexIsIdentity']);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getDatabaseTableIndexName()
     {
         return \call_user_func([static::$baseClass, 'getDatabaseTableIndexName']);

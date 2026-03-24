@@ -43,9 +43,7 @@ class PaidSubscriptionUserEditForm extends PaidSubscriptionUserAddForm
      */
     public $endDateTime;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         AbstractForm::readParameters();
@@ -60,16 +58,12 @@ class PaidSubscriptionUserEditForm extends PaidSubscriptionUserAddForm
         $this->subscription = $this->subscriptionUser->getSubscription();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validateUsername()
     {
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();
@@ -87,9 +81,7 @@ class PaidSubscriptionUserEditForm extends PaidSubscriptionUserAddForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         AbstractForm::readData();
@@ -100,9 +92,7 @@ class PaidSubscriptionUserEditForm extends PaidSubscriptionUserAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

@@ -15,9 +15,7 @@ use wcf\system\WCF;
  */
 class FollowUserActivityEvent extends SingletonFactory implements IUserActivityEvent
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function prepare(array $events)
     {
         if (!WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {

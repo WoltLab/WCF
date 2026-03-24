@@ -18,9 +18,7 @@ class EmailTemplateEngine extends TemplateEngine
      */
     protected $environment = 'email';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTemplateGroupID()
     {
         static $initialized = false;

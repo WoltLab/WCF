@@ -24,9 +24,7 @@ class SmileyEditor extends DatabaseObjectEditor implements IEditableCachedObject
      */
     public static $baseClass = Smiley::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         SmileyCacheBuilder::getInstance()->reset();

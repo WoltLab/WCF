@@ -126,9 +126,7 @@ final class UserExportGdprAction extends AbstractAction
      */
     public $userID = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -147,9 +145,7 @@ final class UserExportGdprAction extends AbstractAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(): ResponseInterface
     {
         // you MUST NOT use the `execute` event to provide data, use `export` (see below) instead!

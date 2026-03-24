@@ -46,9 +46,7 @@ final class FontAwesomeIcon implements IFontAwesomeIcon, \Stringable
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function toHtml(int $size = 16): string
     {
         if (!\in_array($size, self::SIZES)) {

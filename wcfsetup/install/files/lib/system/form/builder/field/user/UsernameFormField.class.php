@@ -77,18 +77,16 @@ final class UsernameFormField extends AbstractFormField implements
     }
 
     /**
-     * @inheritDoc
      * @return string[]
      * @since       5.4
      */
+    #[\Override]
     protected function getValidAutoCompleteTokens(): array
     {
         return ['username'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSaveValue()
     {
         if ($this->getValue() === null && !$this->isNullable()) {
@@ -98,9 +96,7 @@ final class UsernameFormField extends AbstractFormField implements
         return parent::getSaveValue();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
@@ -114,9 +110,7 @@ final class UsernameFormField extends AbstractFormField implements
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if ($this->getValue() === '' || $this->getValue() === null) {
@@ -145,9 +139,7 @@ final class UsernameFormField extends AbstractFormField implements
         parent::validate();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'username';

@@ -29,9 +29,7 @@ final class EmailActivationForm extends AbstractFormBuilderForm
 {
     public User $user;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function createForm()
     {
         parent::createForm();
@@ -106,9 +104,7 @@ final class EmailActivationForm extends AbstractFormBuilderForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         if (!((int)REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
@@ -124,9 +120,7 @@ final class EmailActivationForm extends AbstractFormBuilderForm
         parent::show();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();

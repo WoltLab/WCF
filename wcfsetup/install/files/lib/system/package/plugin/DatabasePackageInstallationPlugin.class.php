@@ -19,9 +19,7 @@ class DatabasePackageInstallationPlugin extends AbstractPackageInstallationPlugi
 {
     public const SCRIPT_DIR = 'acp/database/';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function install()
     {
         parent::install();
@@ -55,34 +53,26 @@ class DatabasePackageInstallationPlugin extends AbstractPackageInstallationPlugi
         ))->process();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasUninstall()
     {
         // Database scripts cannot be uninstalled.
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function uninstall()
     {
         // does nothing
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getDefaultFilename()
     {
         return static::SCRIPT_DIR . '*.php';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return ['file'];

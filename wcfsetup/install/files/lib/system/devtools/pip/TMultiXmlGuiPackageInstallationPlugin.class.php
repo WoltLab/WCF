@@ -143,9 +143,9 @@ trait TMultiXmlGuiPackageInstallationPlugin
     abstract protected function getProjectXmls($createXmlFiles = false);
 
     /**
-     * @inheritDoc
      * @return void
      */
+    #[\Override]
     public function setEditedEntryIdentifier(string $identifier)
     {
         $editedEntries = [];
@@ -253,9 +253,9 @@ trait TMultiXmlGuiPackageInstallationPlugin
     }
 
     /**
-     * @inheritDoc
      * @return void
      */
+    #[\Override]
     protected function deleteObject(\DOMElement $element)
     {
         $sql = "DELETE FROM wcf1_language_item

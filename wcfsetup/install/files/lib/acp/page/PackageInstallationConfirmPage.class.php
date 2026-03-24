@@ -54,9 +54,7 @@ class PackageInstallationConfirmPage extends AbstractPage
      */
     public $installingImportedStyle = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -81,9 +79,7 @@ class PackageInstallationConfirmPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -94,9 +90,7 @@ class PackageInstallationConfirmPage extends AbstractPage
         $this->validationPassed = PackageValidationManager::getInstance()->validate($this->queue->archive, true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

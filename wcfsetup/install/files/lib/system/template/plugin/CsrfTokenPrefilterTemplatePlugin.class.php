@@ -13,9 +13,7 @@ use wcf\system\template\TemplateScriptingCompiler;
  */
 class CsrfTokenPrefilterTemplatePlugin implements IPrefilterTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(string $templateName, string $sourceContent, TemplateScriptingCompiler $compiler)
     {
         $getToken = '$__wcf->session->getSecurityToken()';

@@ -145,9 +145,7 @@ class OptionHandler implements IOptionHandler
      */
     public $didInit = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct(bool $supportI18n, string $languageItemPattern = '', string $categoryName = '')
     {
         $this->categoryName = $categoryName;
@@ -158,9 +156,7 @@ class OptionHandler implements IOptionHandler
         $this->readCache();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readUserInput(array &$source)
     {
         if (isset($source['values']) && \is_array($source['values'])) {
@@ -183,9 +179,7 @@ class OptionHandler implements IOptionHandler
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         $errors = [];
@@ -201,9 +195,7 @@ class OptionHandler implements IOptionHandler
         return $errors;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getOptionTree(string $parentCategoryName = '', int $level = 0)
     {
         $tree = [];
@@ -239,9 +231,7 @@ class OptionHandler implements IOptionHandler
         return $tree;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCategoryOptions(string $categoryName = '', bool $inherit = true)
     {
         $children = [];
@@ -300,9 +290,7 @@ class OptionHandler implements IOptionHandler
         return $count;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         foreach ($this->options as $option) {
@@ -320,9 +308,7 @@ class OptionHandler implements IOptionHandler
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save(?string $categoryName = null, ?string $optionPrefix = null)
     {
         $saveOptions = [];
@@ -424,11 +410,10 @@ class OptionHandler implements IOptionHandler
     }
 
     /**
-     * @inheritDoc
-     *
      * @param string $type
      * @return string
      */
+    #[\Override]
     protected function getFormElement($type, Option $option)
     {
         return $this->getTypeObject($type)->getFormElement($option, ($this->optionValues[$option->optionName] ?? null));
@@ -522,9 +507,7 @@ class OptionHandler implements IOptionHandler
         EventHandler::getInstance()->fireAction($this, 'afterReadCache');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function init()
     {
         if (!$this->didInit) {

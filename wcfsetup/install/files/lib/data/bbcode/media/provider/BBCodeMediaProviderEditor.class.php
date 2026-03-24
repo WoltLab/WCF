@@ -24,9 +24,7 @@ class BBCodeMediaProviderEditor extends DatabaseObjectEditor implements IEditabl
      */
     public static $baseClass = BBCodeMediaProvider::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         BBCodeMediaProviderCacheBuilder::getInstance()->reset();

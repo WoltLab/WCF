@@ -24,10 +24,10 @@ class MultilineTextFormField extends TextFormField
     protected $templateName = 'shared_multilineTextFormField';
 
     /**
-     * @inheritDoc
      * @return string[]
      * @since       5.4
      */
+    #[\Override]
     protected function getValidAutoCompleteTokens(): array
     {
         return \array_merge(
@@ -67,9 +67,9 @@ class MultilineTextFormField extends TextFormField
     }
 
     /**
-     * @inheritDoc
      * @since       5.4
      */
+    #[\Override]
     protected static function getReservedFieldAttributes(): array
     {
         return \array_merge(

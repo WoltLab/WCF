@@ -29,9 +29,7 @@ use wcf\system\WCF;
  */
 class UserNotification extends DatabaseObject
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __get(string $name)
     {
         $value = parent::__get($name);
@@ -44,9 +42,7 @@ class UserNotification extends DatabaseObject
         return $value;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleData($data)
     {
         parent::handleData($data);

@@ -80,25 +80,19 @@ class UserAvatar extends DatabaseObject implements IUserAvatar, ISafeFormatAvata
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getURL(?int $size = null)
     {
         return WCF::getPath() . 'images/avatars/' . $this->getFilename();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSafeURL(?int $size = null): string
     {
         return WCF::getPath() . 'images/avatars/' . $this->getFilename(null, false);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getImageTag(?int $size = null, bool $lazyLoading = true)
     {
         return \sprintf(
@@ -110,25 +104,19 @@ class UserAvatar extends DatabaseObject implements IUserAvatar, ISafeFormatAvata
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSafeImageTag(?int $size = null): string
     {
         return '<img src="' . StringUtil::encodeHTML($this->getSafeURL($size)) . '" width="' . $size . '" height="' . $size . '" alt="" class="userAvatarImage">';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getWidth()
     {
         return $this->width;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHeight()
     {
         return $this->height;

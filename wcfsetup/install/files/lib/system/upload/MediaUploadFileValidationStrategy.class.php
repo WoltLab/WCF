@@ -28,9 +28,7 @@ class MediaUploadFileValidationStrategy implements IUploadFileValidationStrategy
         $this->imagesOnly = $imagesOnly;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(UploadFile $uploadFile)
     {
         if ($uploadFile->getErrorCode()) {

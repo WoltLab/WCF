@@ -25,9 +25,7 @@ class AttachmentEditor extends DatabaseObjectEditor
      */
     public static $baseClass = Attachment::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         $sql = "DELETE FROM wcf1_attachment
@@ -38,9 +36,7 @@ class AttachmentEditor extends DatabaseObjectEditor
         $this->deleteFiles();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function deleteAll(array $objectIDs = [])
     {
         // delete files first

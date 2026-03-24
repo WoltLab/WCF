@@ -42,9 +42,7 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
      */
     protected $registrationDateStart = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
     {
         if (isset($conditionData['registrationDateEnd'])) {
@@ -73,9 +71,7 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkUser(Condition $condition, User $user)
     {
         $dateStart = $condition->registrationDateStart;
@@ -111,9 +107,7 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         $data = [];
@@ -132,9 +126,7 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getFieldElement()
     {
         $start = WCF::getLanguage()->get('wcf.date.period.start');
@@ -146,9 +138,7 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
 HTML;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (isset($_POST['registrationDateEnd'])) {
@@ -159,18 +149,14 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         $this->registrationDateEnd = '';
         $this->registrationDateStart = '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setData(Condition $condition)
     {
         $registrationDateEnd = $condition->registrationDateEnd;
@@ -184,9 +170,7 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         $registrationDateEnd = $registrationDateStart = null;
@@ -226,9 +210,7 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showContent(Condition $condition)
     {
         if (!WCF::getUser()->userID) {

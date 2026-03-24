@@ -22,9 +22,7 @@ class CommentCommentModerationQueueActivationHandler extends AbstractCommentComm
      */
     protected $definitionName = 'com.woltlab.wcf.moderation.activation';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function enableContent(ModerationQueue $queue)
     {
         if ($this->isValid($queue->objectID) && $this->getComment($queue->objectID)->isDisabled) {
@@ -33,9 +31,7 @@ class CommentCommentModerationQueueActivationHandler extends AbstractCommentComm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDisabledContent(ViewableModerationQueue $queue)
     {
         return $this->getRelatedContent($queue);

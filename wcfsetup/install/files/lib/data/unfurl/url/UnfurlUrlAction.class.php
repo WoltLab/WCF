@@ -20,9 +20,7 @@ use wcf\system\WCF;
  */
 class UnfurlUrlAction extends AbstractDatabaseObjectAction
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function create()
     {
         if (isset($this->parameters['imageData']) && !empty($this->parameters['imageData'])) {
@@ -41,9 +39,7 @@ class UnfurlUrlAction extends AbstractDatabaseObjectAction
         return $object;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         if (isset($this->parameters['imageData']) && !empty($this->parameters['imageData'])) {

@@ -21,9 +21,7 @@ trait TReasonedBulkProcessingAction
      */
     protected $reason = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHTML()
     {
         return WCF::getTPL()->render('wcf', 'reasonedBulkProcessingAction', [
@@ -39,9 +37,7 @@ trait TReasonedBulkProcessingAction
      */
     abstract protected function getReasonFieldName();
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (isset($_POST[$this->getReasonFieldName()])) {
@@ -49,9 +45,7 @@ trait TReasonedBulkProcessingAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         $this->reason = '';

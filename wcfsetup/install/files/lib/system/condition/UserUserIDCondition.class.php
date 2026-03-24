@@ -34,25 +34,19 @@ class UserUserIDCondition extends AbstractSingleFieldCondition implements
      */
     protected $userID;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
     {
         $objectList->getConditionBuilder()->add('user_table.userID = ?', [$conditionData['userID']]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkUser(Condition $condition, User $user)
     {
         return $user->userID == $condition->userID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showContent(Condition $condition)
     {
         if (!WCF::getUser()->userID) {
@@ -62,17 +56,13 @@ class UserUserIDCondition extends AbstractSingleFieldCondition implements
         return $this->checkUser($condition, WCF::getUser());
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getFieldElement()
     {
         return '<input type="number" name="userID" value="' . $this->userID . '" class="small">';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (!empty($_POST['userID'])) {
@@ -80,9 +70,7 @@ class UserUserIDCondition extends AbstractSingleFieldCondition implements
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         if ($this->userID !== null) {
@@ -92,9 +80,7 @@ class UserUserIDCondition extends AbstractSingleFieldCondition implements
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setData(Condition $condition)
     {
         $this->userID = $condition->conditionData['userID'];

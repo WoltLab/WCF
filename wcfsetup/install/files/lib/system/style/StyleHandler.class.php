@@ -32,9 +32,7 @@ class StyleHandler extends SingletonFactory
      */
     protected $style;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         // load cache

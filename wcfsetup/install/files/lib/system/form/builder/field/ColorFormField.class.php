@@ -26,9 +26,7 @@ final class ColorFormField extends AbstractFormField implements IImmutableFormFi
      */
     protected $templateName = 'shared_colorFormField';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if (
@@ -45,9 +43,7 @@ final class ColorFormField extends AbstractFormField implements IImmutableFormFi
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();

@@ -40,9 +40,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
     // class
     use TXmlGuiPackageInstallationPlugin;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items)
     {
         $sql = "DELETE FROM " . $this->application . "1_" . $this->tableName . "
@@ -57,9 +55,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         // adjust show order
@@ -79,9 +75,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validateImport(array $data)
     {
         if (empty($data['parentMenuItem'])) {
@@ -99,9 +93,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
@@ -120,19 +112,19 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return [];
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         /** @var IFormContainer $dataContainer */
@@ -328,11 +320,11 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = [
@@ -392,10 +384,10 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         return $element->getAttribute('name');
@@ -463,10 +455,10 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $entryList->setKeys([
@@ -476,10 +468,10 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $formData = $form->getData()['data'];

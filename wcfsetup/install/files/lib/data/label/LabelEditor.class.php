@@ -25,9 +25,7 @@ class LabelEditor extends DatabaseObjectEditor implements IEditableCachedObject
      */
     protected static $baseClass = Label::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         LabelCacheBuilder::getInstance()->reset();

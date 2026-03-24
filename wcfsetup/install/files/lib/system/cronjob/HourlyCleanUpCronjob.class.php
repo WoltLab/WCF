@@ -15,9 +15,7 @@ use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
  */
 class HourlyCleanUpCronjob extends AbstractCronjob
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(Cronjob $cronjob)
     {
         parent::execute($cronjob);

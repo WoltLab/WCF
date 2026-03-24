@@ -79,9 +79,7 @@ class TrophyPage extends MultipleLinkPage
      */
     public $category;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -120,9 +118,7 @@ class TrophyPage extends MultipleLinkPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -147,9 +143,7 @@ class TrophyPage extends MultipleLinkPage
         ], ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : ''));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readObjects()
     {
         parent::readObjects();
@@ -163,9 +157,7 @@ class TrophyPage extends MultipleLinkPage
         UserProfileRuntimeCache::getInstance()->cacheObjectIDs(\array_unique($userIDs));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initObjectList()
     {
         parent::initObjectList();
@@ -217,9 +209,7 @@ class TrophyPage extends MultipleLinkPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

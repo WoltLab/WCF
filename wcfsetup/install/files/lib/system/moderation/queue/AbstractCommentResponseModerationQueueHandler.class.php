@@ -33,9 +33,7 @@ class AbstractCommentResponseModerationQueueHandler extends AbstractCommentComme
      */
     protected $objectType = 'com.woltlab.wcf.comment.response';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignQueues(array $queues)
     {
         $assignments = [];
@@ -83,9 +81,7 @@ class AbstractCommentResponseModerationQueueHandler extends AbstractCommentComme
         ModerationQueueManager::getInstance()->setAssignment($assignments);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getRelatedContent(ViewableModerationQueue $queue)
     {
         return WCF::getTPL()->render('wcf', 'moderationComment', [
@@ -93,9 +89,7 @@ class AbstractCommentResponseModerationQueueHandler extends AbstractCommentComme
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isValid(int $objectID)
     {
         if ($this->getResponse($objectID) === null) {
@@ -116,9 +110,7 @@ class AbstractCommentResponseModerationQueueHandler extends AbstractCommentComme
         return CommentResponseRuntimeCache::getInstance()->getObject($objectID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function populate(array $queues)
     {
         $objectIDs = [];
@@ -152,9 +144,7 @@ class AbstractCommentResponseModerationQueueHandler extends AbstractCommentComme
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function removeContent(ModerationQueue $queue, string $message)
     {
         if ($this->isValid($queue->objectID)) {
@@ -188,9 +178,7 @@ class AbstractCommentResponseModerationQueueHandler extends AbstractCommentComme
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canRemoveContent(ModerationQueue $queue)
     {
         if ($this->isValid($queue->objectID)) {

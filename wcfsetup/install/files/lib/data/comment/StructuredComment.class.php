@@ -169,49 +169,37 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
         return $this->editable;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function count(): int
     {
         return \count($this->responses);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function current(): StructuredCommentResponse
     {
         return $this->responses[$this->position];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function key(): int
     {
         return $this->position;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function next(): void
     {
         $this->position++;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rewind(): void
     {
         $this->position = 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function valid(): bool
     {
         return isset($this->responses[$this->position]);

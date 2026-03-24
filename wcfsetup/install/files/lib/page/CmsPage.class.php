@@ -42,10 +42,7 @@ class CmsPage extends AbstractPage
      */
     public $pageID;
 
-    /**
-     * @inheritDoc
-     * @throws  IllegalLinkException
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -90,9 +87,7 @@ class CmsPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -116,9 +111,7 @@ class CmsPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

@@ -40,9 +40,7 @@ final class LinkHandler extends SingletonFactory
      */
     protected $titleReplace = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->controllerRegex = new Regex(

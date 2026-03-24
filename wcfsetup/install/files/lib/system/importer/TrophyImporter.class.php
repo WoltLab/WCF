@@ -29,9 +29,7 @@ class TrophyImporter extends AbstractImporter
      */
     private $importCategoryID = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         if (isset($data['categoryID'])) {

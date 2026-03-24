@@ -78,9 +78,7 @@ class CombinedTaggedPage extends MultipleLinkPage
      */
     public $itemsPerType = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -147,17 +145,13 @@ class CombinedTaggedPage extends MultipleLinkPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initObjectList()
     {
         $this->objectList = $this->processor->getObjectListFor($this->tags);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -165,9 +159,7 @@ class CombinedTaggedPage extends MultipleLinkPage
         $this->tagCloud = new TypedTagCloud($this->objectType->objectType);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

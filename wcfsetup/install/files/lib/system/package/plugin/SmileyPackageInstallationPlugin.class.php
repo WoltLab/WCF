@@ -47,9 +47,7 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
      */
     public $tagName = 'smiley';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items)
     {
         $sql = "DELETE FROM wcf1_" . $this->tableName . "
@@ -64,9 +62,7 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         $showOrder = $this->getShowOrder($data['elements']['showorder'] ?? null);
@@ -81,17 +77,13 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getNameByData(array $data): string
     {
         return $data['smileyCode'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
@@ -110,19 +102,19 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return [];
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         /** @var FormContainer $dataContainer */
@@ -263,11 +255,11 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = [
@@ -305,20 +297,20 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         return $element->getAttribute('name');
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $entryList->setKeys([
@@ -328,10 +320,10 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $data = $form->getData()['data'];

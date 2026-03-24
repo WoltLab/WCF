@@ -22,17 +22,13 @@ class ACPSearchProviderAction extends AbstractDatabaseObjectAction implements IS
      */
     protected $requireACP = ['getSearchResultList'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateGetSearchResultList()
     {
         $this->readString('searchString', false, 'data');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSearchResultList()
     {
         $data = [];

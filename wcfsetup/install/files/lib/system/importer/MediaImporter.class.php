@@ -23,9 +23,7 @@ class MediaImporter extends AbstractImporter
      */
     protected $className = Media::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         // check file location

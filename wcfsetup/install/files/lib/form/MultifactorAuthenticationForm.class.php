@@ -61,9 +61,7 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm
      */
     private $setup;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -110,9 +108,7 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm
         $this->processor = $this->method->getProcessor();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function createForm()
     {
         parent::createForm();
@@ -140,9 +136,7 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm
         $this->saved();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function saved()
     {
         AbstractForm::saved();
@@ -162,9 +156,7 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm
         exit;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function setFormAction()
     {
         $this->form->action(LinkHandler::getInstance()->getControllerLink(static::class, [
@@ -172,9 +164,7 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm
         ]));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

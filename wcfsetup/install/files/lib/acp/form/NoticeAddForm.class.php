@@ -83,9 +83,7 @@ class NoticeAddForm extends AbstractForm
      */
     public $showOrder = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -106,9 +104,7 @@ class NoticeAddForm extends AbstractForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.condition.notice');
@@ -135,9 +131,7 @@ class NoticeAddForm extends AbstractForm
         parent::readData();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -179,9 +173,7 @@ class NoticeAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -189,9 +181,7 @@ class NoticeAddForm extends AbstractForm
         I18nHandler::getInstance()->register('notice');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -263,9 +253,7 @@ class NoticeAddForm extends AbstractForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();

@@ -46,9 +46,7 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
      */
     protected $requiredPermission = 'mod.general.canUseModeration';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function identifyOrphans(array $queues)
     {
         if (
@@ -77,9 +75,7 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
         return \array_values($queues);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function removeQueues(array $objectIDs)
     {
         $objectTypeID = ModerationQueueManager::getInstance()
@@ -105,17 +101,13 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canRemoveContent(ModerationQueue $queue)
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAffectedUser(ModerationQueue $queue, int $userID)
     {
         $userProfile = UserProfileRuntimeCache::getInstance()->getObject($userID);
@@ -124,9 +116,9 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
     }
 
     /**
-     * @inheritDoc
      * @since   3.0
      */
+    #[\Override]
     public function getCommentNotificationLanguageItemPrefix()
     {
         // this implementation exists to provide backwards compatibility;
@@ -141,9 +133,7 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
         return 'wcf.moderation.notification';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCommentNotificationTypeNameLanguageItem(): string
     {
         if ($this instanceof IModerationQueueActivationHandler) {

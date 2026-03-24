@@ -39,9 +39,7 @@ class LabelHandler extends SingletonFactory
      */
     protected $labelGroups;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->cache = [

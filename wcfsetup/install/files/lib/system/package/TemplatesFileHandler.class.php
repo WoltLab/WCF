@@ -24,9 +24,7 @@ class TemplatesFileHandler extends ACPTemplatesFileHandler
      */
     protected $tableName = 'template';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function logFiles(array $files)
     {
         $packageID = $this->packageInstallation->getPackageID();

@@ -66,9 +66,7 @@ class UserSearchForm extends UserOptionListForm
      */
     public $optionTree = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -78,18 +76,14 @@ class UserSearchForm extends UserOptionListForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initOptionHandler()
     {
         $this->optionHandler->enableSearchMode();
         $this->optionHandler->init();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -112,9 +106,7 @@ class UserSearchForm extends UserOptionListForm
         $this->optionTree = $this->optionHandler->getOptionTree();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -125,9 +117,7 @@ class UserSearchForm extends UserOptionListForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -151,9 +141,7 @@ class UserSearchForm extends UserOptionListForm
         exit;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         AbstractForm::validate();

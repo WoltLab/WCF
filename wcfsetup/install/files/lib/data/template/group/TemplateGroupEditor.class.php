@@ -28,9 +28,7 @@ class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCache
      */
     protected static $baseClass = TemplateGroup::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update(array $parameters = [])
     {
         parent::update($parameters);
@@ -60,9 +58,7 @@ class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCache
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function deleteAll(array $objectIDs = [])
     {
         $list = new TemplateGroupList();
@@ -104,9 +100,7 @@ class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCache
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         TemplateGroupCacheBuilder::getInstance()->reset();

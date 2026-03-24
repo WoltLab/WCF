@@ -23,9 +23,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin
      */
     public $tableName = 'package_installation_sql_log';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function install()
     {
         parent::install();
@@ -62,9 +60,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function uninstall()
     {
         // get logged sql tables/columns
@@ -142,17 +138,13 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin
         return $this->installation->getArchive()->getTar()->extractToString($fileindex);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getDefaultFilename()
     {
         return 'install.sql';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function isValid(PackageArchive $packageArchive, $instruction)
     {
         if (!$instruction) {

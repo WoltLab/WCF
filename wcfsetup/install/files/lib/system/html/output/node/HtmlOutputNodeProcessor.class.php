@@ -78,9 +78,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
         return $this->outputType;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process()
     {
         EventHandler::getInstance()->fireAction($this, 'beforeProcess');
@@ -181,9 +179,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtml()
     {
         $toc = '';
@@ -297,9 +293,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function invokeHtmlNode(IHtmlNode $htmlNode)
     {
         /** @var IHtmlOutputNode $htmlNode */

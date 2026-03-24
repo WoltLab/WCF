@@ -22,9 +22,7 @@ class TeamList extends UserProfileList
      */
     protected $teams = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function countObjects()
     {
         $sql = "SELECT  COUNT(*)
@@ -38,9 +36,7 @@ class TeamList extends UserProfileList
         return $statement->fetchSingleColumn();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readObjectIDs()
     {
         $this->objectIDs = [];
@@ -57,9 +53,7 @@ class TeamList extends UserProfileList
         $this->objectIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readObjects()
     {
         parent::readObjects();

@@ -170,17 +170,13 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
         return $this->labels[$labelID] ?? null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function count(): int
     {
         return \count($this->labels);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     #[\ReturnTypeWillChange]
     public function current()
     {
@@ -192,42 +188,33 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
     /**
      * CAUTION: This methods does not return the current iterator index,
      * rather than the object key which maps to that index.
-     *
-     * @inheritDoc
      */
+    #[\Override]
     #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->indexToObject[$this->index];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function next(): void
     {
         $this->index++;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rewind(): void
     {
         $this->index = 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function valid(): bool
     {
         return isset($this->indexToObject[$this->index]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function seek($offset): void
     {
         $this->index = $offset;
@@ -237,9 +224,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function seekTo(int $objectID)
     {
         $this->index = \array_search($objectID, $this->indexToObject);
@@ -249,9 +234,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function search(int $objectID)
     {
         try {

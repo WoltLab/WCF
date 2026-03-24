@@ -41,9 +41,7 @@ final class DashboardConfigureAction implements RequestHandlerInterface
         $this->userConfiguration = $this->dashboard->getUserConfiguration();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         if (!WCF::getSession()->getPermission('admin.general.canUseAcp')) {

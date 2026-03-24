@@ -27,17 +27,13 @@ class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNoti
 {
     use TTestableUserNotificationEvent;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink('PaidSubscriptionList', ['forceFrontend' => true]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMessage()
     {
         return $this->getLanguage()->getDynamicVariable(
@@ -50,9 +46,7 @@ class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNoti
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEmailMessage(string $notificationType = 'instant'): array
     {
         return [
@@ -65,17 +59,13 @@ class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNoti
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->getLanguage()->get('wcf.paidSubscription.expiringSubscription.notification.title');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isVisible()
     {
         $userSubscriptionList = new PaidSubscriptionUserList();
@@ -86,10 +76,10 @@ class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNoti
     }
 
     /**
-     * @inheritDoc
      * @return  PaidSubscriptionUserUserNotificationObject[]
      * @since   3.1
      */
+    #[\Override]
     public static function getTestObjects(UserProfile $recipient, UserProfile $author)
     {
         /** @var PaidSubscription $paidSubscription */

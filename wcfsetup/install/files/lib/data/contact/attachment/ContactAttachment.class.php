@@ -57,17 +57,13 @@ class ContactAttachment extends DatabaseObject implements ITitledLinkObject
         return StringUtil::getRandomID();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->getAttachment()->getTitle();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink('ContactAttachment', [
@@ -76,9 +72,7 @@ class ContactAttachment extends DatabaseObject implements ITitledLinkObject
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getTitle();

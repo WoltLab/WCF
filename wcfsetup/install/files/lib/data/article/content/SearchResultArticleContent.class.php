@@ -17,33 +17,25 @@ use wcf\system\search\SearchResultTextParser;
  */
 class SearchResultArticleContent extends ViewableArticleContent implements ISearchResultObject
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getUserProfile()
     {
         return $this->getArticle()->getUserProfile();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSubject()
     {
         return $this->getDecoratedObject()->getTitle();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTime()
     {
         return $this->getArticle()->time;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(string $query = ''): string
     {
         $parameters = [
@@ -58,17 +50,13 @@ class SearchResultArticleContent extends ViewableArticleContent implements ISear
         return LinkHandler::getInstance()->getLink('Article', $parameters);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectTypeName()
     {
         return 'com.woltlab.wcf.article';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormattedMessage()
     {
         $processor = new HtmlOutputProcessor();
@@ -89,17 +77,13 @@ class SearchResultArticleContent extends ViewableArticleContent implements ISear
         return $message;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContainerTitle()
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContainerLink()
     {
         return '';

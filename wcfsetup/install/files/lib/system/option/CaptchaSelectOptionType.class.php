@@ -17,9 +17,7 @@ use wcf\system\WCF;
  */
 class CaptchaSelectOptionType extends AbstractOptionType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         RecaptchaHandler::$forceIsAvailable = true;
@@ -81,9 +79,7 @@ class CaptchaSelectOptionType extends AbstractOptionType
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(Option $option, mixed $newValue)
     {
         if (!$newValue) {

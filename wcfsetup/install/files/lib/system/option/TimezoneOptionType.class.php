@@ -16,9 +16,7 @@ use wcf\util\DateUtil;
  */
 class TimezoneOptionType extends AbstractOptionType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         $timezoneOptions = [];
@@ -38,9 +36,7 @@ class TimezoneOptionType extends AbstractOptionType
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(Option $option, mixed $newValue)
     {
         if (!\in_array($newValue, DateUtil::getAvailableTimezones())) {

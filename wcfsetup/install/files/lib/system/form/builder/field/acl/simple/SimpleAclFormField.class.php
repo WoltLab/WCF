@@ -35,9 +35,7 @@ final class SimpleAclFormField extends AbstractFormField
      */
     protected $supportInvertedPermissions = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtmlVariables()
     {
         return [
@@ -49,17 +47,13 @@ final class SimpleAclFormField extends AbstractFormField
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasSaveValue()
     {
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function populate()
     {
         parent::populate();
@@ -78,9 +72,7 @@ final class SimpleAclFormField extends AbstractFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {

@@ -250,9 +250,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
         return $this->form;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateDelete()
     {
         // read objects
@@ -272,9 +270,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         $userIDs = \array_map(function ($ignore) {

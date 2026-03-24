@@ -36,9 +36,7 @@ final class UninstallPackageAction extends AbstractSecureAction
 
     protected int $packageID = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -174,9 +172,7 @@ final class UninstallPackageAction extends AbstractSecureAction
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getCurrentAction(?int $queueID, PackageInstallationQueue $queue): string
     {
         if ($queueID === null) {

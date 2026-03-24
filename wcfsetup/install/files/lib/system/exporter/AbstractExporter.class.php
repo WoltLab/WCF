@@ -87,9 +87,7 @@ abstract class AbstractExporter implements IExporter
      */
     protected $selectedData = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setData(
         $databaseHost,
         $databaseUser,
@@ -109,9 +107,7 @@ abstract class AbstractExporter implements IExporter
         $this->additionalData = $additionalData;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function init()
     {
         $host = $this->databaseHost;
@@ -131,25 +127,19 @@ abstract class AbstractExporter implements IExporter
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateDatabaseAccess()
     {
         $this->init();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDefaultDatabasePrefix()
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function countLoops($objectType)
     {
         if (!isset($this->methods[$objectType]) || !\method_exists($this, 'count' . $this->methods[$objectType])) {
@@ -162,9 +152,7 @@ abstract class AbstractExporter implements IExporter
         return (int)\ceil($count / $limit);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function exportData($objectType, $loopCount = 0)
     {
         if (!isset($this->methods[$objectType]) || !\method_exists($this, 'export' . $this->methods[$objectType])) {
@@ -175,9 +163,7 @@ abstract class AbstractExporter implements IExporter
         \call_user_func([$this, 'export' . $this->methods[$objectType]], $loopCount * $limit, $limit);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateSelectedData(array $selectedData)
     {
         $this->selectedData = $selectedData;

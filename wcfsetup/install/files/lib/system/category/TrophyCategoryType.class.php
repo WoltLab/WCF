@@ -32,33 +32,25 @@ class TrophyCategoryType extends AbstractCategoryType
      */
     protected $forceDescription = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canAddCategory()
     {
         return $this->canEditCategory();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canDeleteCategory()
     {
         return $this->canEditCategory();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canEditCategory()
     {
         return WCF::getSession()->getPermission('admin.trophy.canManageTrophy');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function beforeDeletion(CategoryEditor $categoryEditor)
     {
         // update user trophyPoints
@@ -82,9 +74,9 @@ class TrophyCategoryType extends AbstractCategoryType
     }
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     public function supportsHtmlDescription()
     {
         return true;

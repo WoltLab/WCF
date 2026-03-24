@@ -80,9 +80,7 @@ final class Breadcrumbs extends SingletonFactory implements \Countable, \Iterato
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function count(): int
     {
         if (!isset($this->items)) {
@@ -92,41 +90,31 @@ final class Breadcrumbs extends SingletonFactory implements \Countable, \Iterato
         return \count($this->items);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function current(): Breadcrumb
     {
         return $this->items[$this->index];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function key(): int
     {
         return $this->index;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function valid(): bool
     {
         return isset($this->items[$this->index]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rewind(): void
     {
         $this->index = 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function next(): void
     {
         $this->index++;

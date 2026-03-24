@@ -36,9 +36,7 @@ class DeviceNode implements IFormChildNode, IFormParentNode
      */
     protected $templateName = '__multifactorTotpDeviceNode';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtml(): string
     {
         return WCF::getTPL()->render(
@@ -72,9 +70,7 @@ class DeviceNode implements IFormChildNode, IFormParentNode
         return $this->data !== null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkDependencies(): bool
     {
         if (!empty($this->dependencies)) {

@@ -21,17 +21,13 @@ use wcf\system\exception\PermissionDeniedException;
  */
 class SimplePageSitemapObject extends AbstractSitemapObjectObjectType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectClass()
     {
         return Page::class;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectList()
     {
         $pageList = parent::getObjectList();
@@ -41,9 +37,7 @@ class SimplePageSitemapObject extends AbstractSitemapObjectObjectType
         return $pageList;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canView(DatabaseObject $object)
     {
         if ($object->requireObjectID) {

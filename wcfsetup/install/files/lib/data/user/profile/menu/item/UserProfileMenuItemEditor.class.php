@@ -25,10 +25,7 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
      */
     protected static $baseClass = UserProfileMenuItem::class;
 
-    /**
-     * @inheritDoc
-     * @return  UserProfileMenuItem
-     */
+    #[\Override]
     public static function create(array $parameters = [])
     {
         $parameters['showOrder'] = self::getShowOrder($parameters['showOrder'] ?? 0);
@@ -38,9 +35,7 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
         return $object;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update(array $parameters = [])
     {
         if (isset($parameters['showOrder'])) {
@@ -50,9 +45,7 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
         parent::update($parameters);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         // update show order
@@ -129,9 +122,7 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
         return $showOrder;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         UserProfileMenuCacheBuilder::getInstance()->reset();

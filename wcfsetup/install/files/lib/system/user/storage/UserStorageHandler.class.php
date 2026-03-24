@@ -34,6 +34,7 @@ final class UserStorageHandler extends SingletonFactory
     /**
      * Checks whether Redis is available.
      */
+    #[\Override]
     protected function init()
     {
         $cacheSource = CacheHandler::getInstance()->getCacheSource();

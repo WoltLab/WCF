@@ -41,9 +41,7 @@ class NotificationSettingsForm extends AbstractForm
      */
     protected static $validMailNotificationTypes = ['none', 'instant', 'daily'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -64,9 +62,7 @@ class NotificationSettingsForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -76,9 +72,7 @@ class NotificationSettingsForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -117,9 +111,7 @@ class NotificationSettingsForm extends AbstractForm
         unset($settings);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -149,9 +141,7 @@ class NotificationSettingsForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -179,9 +169,7 @@ class NotificationSettingsForm extends AbstractForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         // set active tab
@@ -190,9 +178,7 @@ class NotificationSettingsForm extends AbstractForm
         parent::show();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();

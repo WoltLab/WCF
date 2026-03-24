@@ -11,9 +11,7 @@ namespace wcf\system\stat;
  */
 class AttachmentStatDailyHandler extends AbstractStatDailyHandler
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData(int $date)
     {
         return [

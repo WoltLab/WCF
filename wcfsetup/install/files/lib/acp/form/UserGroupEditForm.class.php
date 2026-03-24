@@ -51,9 +51,7 @@ class UserGroupEditForm extends UserGroupAddForm
      */
     public $isUnmentionableGroup = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -78,18 +76,14 @@ class UserGroupEditForm extends UserGroupAddForm
         $this->isUnmentionableGroup = $this->group->isUnmentionableGroup();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initOptionHandler()
     {
         // does nothing, we call OptionHandler::init() after we set the
         // user group
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -99,9 +93,7 @@ class UserGroupEditForm extends UserGroupAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         if (empty($_POST)) {
@@ -124,9 +116,7 @@ class UserGroupEditForm extends UserGroupAddForm
         parent::readData();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -164,9 +154,7 @@ class UserGroupEditForm extends UserGroupAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();

@@ -21,25 +21,19 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
 {
     use TOnlineLocationPageHandler;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(int $objectID)
     {
         return ViewableArticleRuntimeCache::getInstance()->getObject($objectID)->getLink();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isValid(?int $objectID)
     {
         return ViewableArticleRuntimeCache::getInstance()->getObject($objectID) !== null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isVisible(?int $objectID = null)
     {
         $article = ViewableArticleRuntimeCache::getInstance()->getObject($objectID);
@@ -47,9 +41,7 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
         return $article !== null && $article->canRead();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function lookup(string $searchString)
     {
         $articleList = new ViewableArticleList();
@@ -89,9 +81,7 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
         return $results;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getOnlineLocation(Page $page, UserOnline $user)
     {
         if ($user->pageObjectID === null) {
@@ -109,9 +99,7 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function prepareOnlineLocation(Page $page, UserOnline $user)
     {
         if ($user->pageObjectID !== null) {
@@ -119,9 +107,7 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function cacheObject(int $objectID): void
     {
         ViewableArticleRuntimeCache::getInstance()->cacheObjectID($objectID);

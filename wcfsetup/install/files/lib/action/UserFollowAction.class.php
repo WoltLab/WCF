@@ -25,9 +25,7 @@ use wcf\system\WCF;
  */
 final class UserFollowAction implements RequestHandlerInterface
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $parameters = Helper::mapQueryParameters(

@@ -28,9 +28,7 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
      */
     protected $tagName = 'a';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         // Find links that are nested inside other links.

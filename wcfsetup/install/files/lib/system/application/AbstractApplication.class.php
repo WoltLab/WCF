@@ -52,9 +52,7 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
      */
     protected $primaryController = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     final protected function init()
     {
         if (empty($this->abbreviation)) {
@@ -72,33 +70,25 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
         $this->packageID = $application->packageID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __run()
     {
         // does nothing
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isActiveApplication()
     {
         return $this->packageID == ApplicationHandler::getInstance()->getActiveApplication()->packageID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEvaluationEndDate()
     {
         return $this->evaluationEndDate;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEvaluationPluginStoreID()
     {
         return $this->evaluationPluginStoreID;
@@ -114,9 +104,7 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
         return PackageCache::getInstance()->getPackage($this->packageID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getPrimaryController()
     {
         return $this->primaryController;
@@ -131,9 +119,7 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
     {
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function __callStatic($method, array $arguments)
     {
         return \call_user_func_array([WCF::class, $method], $arguments);

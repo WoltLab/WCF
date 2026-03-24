@@ -13,9 +13,7 @@ use wcf\system\WCF;
  */
 class CronjobCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rebuild(array $parameters)
     {
         $sql = "SELECT  MIN(nextExec) AS nextExec,

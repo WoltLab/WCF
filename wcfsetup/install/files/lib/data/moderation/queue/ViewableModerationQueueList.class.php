@@ -32,9 +32,7 @@ class ViewableModerationQueueList extends ModerationQueueList
      */
     public $useQualifiedShorthand = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct(?User $target = null)
     {
         parent::__construct();
@@ -56,9 +54,7 @@ class ViewableModerationQueueList extends ModerationQueueList
         $this->getConditionBuilder()->add("moderation_queue_to_user.isAffected = ?", [1]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readObjects()
     {
         parent::readObjects();

@@ -78,9 +78,7 @@ class StaticRequestRoute extends DynamicRequestRoute
         $this->requireComponents['controller'] = '~^' . $this->staticController . '$~';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function buildLink(array $components)
     {
         if ($this->matchController) {
@@ -94,9 +92,7 @@ class StaticRequestRoute extends DynamicRequestRoute
         return $this->buildRoute($components, '', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canHandle(array $components)
     {
         if (isset($components['application']) && $components['application'] == $this->staticApplication) {
@@ -108,9 +104,7 @@ class StaticRequestRoute extends DynamicRequestRoute
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function matches(string $requestURL)
     {
         if (parent::matches($requestURL)) {

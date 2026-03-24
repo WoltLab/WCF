@@ -47,9 +47,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
      */
     public $className = TemplateListenerEditor::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items)
     {
         $sql = "DELETE FROM wcf1_" . $this->tableName . "
@@ -70,9 +68,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         $niceValue = isset($data['elements']['nice']) ? \intval($data['elements']['nice']) : 0;
@@ -94,9 +90,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
@@ -120,9 +114,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function cleanup()
     {
         // clear cache immediately
@@ -130,19 +122,19 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return [];
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         $ldq = \preg_quote(WCF::getTPL()->getCompiler()->getLeftDelimiter(), '~');
@@ -394,11 +386,11 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = [
@@ -430,10 +422,10 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         return \sha1(
@@ -445,9 +437,9 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
     }
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     public function setEntryData(string $identifier, IFormDocument $document)
     {
         if ($this->defaultSetEntryData($identifier, $document)) {
@@ -508,10 +500,10 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $entryList->setKeys([
@@ -523,10 +515,10 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $data = $form->getData()['data'];
@@ -554,10 +546,10 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
     }
 
     /**
-     * @inheritDoc
      * @return ?\DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareDeleteXmlElement(\DOMElement $element)
     {
         $templateListener = $element->ownerDocument->createElement($this->tagName);
@@ -574,10 +566,10 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function deleteObject(\DOMElement $element)
     {
         $elements = [];

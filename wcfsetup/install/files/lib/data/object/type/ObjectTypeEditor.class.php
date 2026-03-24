@@ -23,9 +23,7 @@ class ObjectTypeEditor extends DatabaseObjectEditor implements IEditableCachedOb
      */
     protected static $baseClass = ObjectType::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         ObjectTypeCache::getInstance()->resetCache();

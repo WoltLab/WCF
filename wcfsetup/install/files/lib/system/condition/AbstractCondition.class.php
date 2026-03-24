@@ -15,17 +15,13 @@ use wcf\data\object\type\AbstractObjectTypeProcessor;
  */
 abstract class AbstractCondition extends AbstractObjectTypeProcessor implements ICondition
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         // does nothing
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         // does nothing

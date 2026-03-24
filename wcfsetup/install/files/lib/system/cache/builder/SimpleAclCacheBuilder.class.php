@@ -14,9 +14,7 @@ use wcf\system\WCF;
  */
 class SimpleAclCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rebuild(array $parameters)
     {
         $data = [];

@@ -17,17 +17,13 @@ final class FileDeletePackageInstallationPlugin extends AbstractFileDeletePackag
      */
     public $tagName = 'file';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getLogTableName(): string
     {
         return 'wcf1_package_installation_file_log';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getFilenameTableColumn(): string
     {
         return 'filename';

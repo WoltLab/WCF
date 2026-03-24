@@ -48,9 +48,7 @@ class PageBoxOrderPage extends AbstractPage
      */
     public $pageID = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -65,9 +63,7 @@ class PageBoxOrderPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -75,9 +71,7 @@ class PageBoxOrderPage extends AbstractPage
         $this->boxes = BoxHandler::loadBoxes($this->pageID, false);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

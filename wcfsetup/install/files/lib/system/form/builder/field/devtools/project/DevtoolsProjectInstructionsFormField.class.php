@@ -79,9 +79,7 @@ final class DevtoolsProjectInstructionsFormField extends AbstractFormField
         return $this->applications;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtml()
     {
         if ($this->requiresLabel() && $this->getLabel() === null) {
@@ -121,9 +119,7 @@ final class DevtoolsProjectInstructionsFormField extends AbstractFormField
         return $this->packageInstallationPlugins;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if (
@@ -138,9 +134,7 @@ final class DevtoolsProjectInstructionsFormField extends AbstractFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         // everything is already validated by JavaScript thus we skip
@@ -219,9 +213,7 @@ final class DevtoolsProjectInstructionsFormField extends AbstractFormField
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'instructions';

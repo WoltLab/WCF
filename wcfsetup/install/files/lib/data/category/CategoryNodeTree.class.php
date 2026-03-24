@@ -147,9 +147,9 @@ class CategoryNodeTree implements \IteratorAggregate
     }
 
     /**
-     * @inheritDoc
      * @return \RecursiveIteratorIterator<CategoryNode>
      */
+    #[\Override]
     public function getIterator(): \Traversable
     {
         if ($this->parentNode === null) {

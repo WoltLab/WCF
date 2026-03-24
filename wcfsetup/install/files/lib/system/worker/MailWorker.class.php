@@ -41,9 +41,7 @@ class MailWorker extends AbstractWorker
      */
     protected $mailData;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         WCF::getSession()->checkPermissions(['admin.user.canMailUser']);
@@ -69,9 +67,7 @@ class MailWorker extends AbstractWorker
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function countObjects()
     {
         $this->conditions = new PreparedStatementConditionBuilder();
@@ -102,9 +98,7 @@ class MailWorker extends AbstractWorker
         $this->count = $statement->fetchSingleColumn();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getProgress()
     {
         $progress = parent::getProgress();
@@ -123,9 +117,7 @@ class MailWorker extends AbstractWorker
         return $progress;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         $email = new Email();
@@ -185,9 +177,7 @@ class MailWorker extends AbstractWorker
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getProceedURL()
     {
         return LinkHandler::getInstance()->getLink('UserList');

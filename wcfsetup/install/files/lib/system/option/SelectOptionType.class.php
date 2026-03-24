@@ -19,9 +19,7 @@ class SelectOptionType extends RadioButtonOptionType
      */
     protected $allowEmptyValue = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         $options = $this->parseEnableOptions($option);
@@ -36,9 +34,7 @@ class SelectOptionType extends RadioButtonOptionType
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSearchFormElement(Option $option, mixed $value)
     {
         $options = $this->parseEnableOptions($option);
@@ -92,17 +88,13 @@ class SelectOptionType extends RadioButtonOptionType
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hideLabelInSearch()
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCSSClassName()
     {
         return '';

@@ -39,9 +39,7 @@ class AdEditForm extends AdAddForm
      */
     public $adObject;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -57,9 +55,7 @@ class AdEditForm extends AdAddForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -99,9 +95,7 @@ class AdEditForm extends AdAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -115,9 +109,7 @@ class AdEditForm extends AdAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();

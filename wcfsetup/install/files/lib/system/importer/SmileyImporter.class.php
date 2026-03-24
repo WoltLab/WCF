@@ -50,9 +50,7 @@ class SmileyImporter extends AbstractImporter
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         // copy smiley

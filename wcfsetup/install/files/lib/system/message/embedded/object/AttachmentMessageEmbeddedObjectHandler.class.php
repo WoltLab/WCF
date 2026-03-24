@@ -18,9 +18,7 @@ use wcf\system\html\input\HtmlInputProcessor;
  */
 class AttachmentMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHandler
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function parse(HtmlInputProcessor $htmlInputProcessor, array $embeddedData)
     {
         if (empty($embeddedData['attach'])) {
@@ -48,9 +46,7 @@ class AttachmentMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObje
         return [];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function loadObjects(array $objectIDs)
     {
         $attachmentList = new AttachmentList();

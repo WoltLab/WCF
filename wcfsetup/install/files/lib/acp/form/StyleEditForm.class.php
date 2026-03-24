@@ -47,9 +47,7 @@ class StyleEditForm extends StyleAddForm
 
     public bool $isDarkMode = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         if (isset($_REQUEST['id'])) {
@@ -67,9 +65,7 @@ class StyleEditForm extends StyleAddForm
         parent::readParameters();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -79,9 +75,7 @@ class StyleEditForm extends StyleAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateIndividualScss()
     {
         // If the style has a dark mode then `$variables` contains either the
@@ -154,9 +148,7 @@ class StyleEditForm extends StyleAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function enforcePackageNameRestriction()
     {
         if ($this->style->isTainted) {
@@ -164,9 +156,7 @@ class StyleEditForm extends StyleAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function readStyleVariables()
     {
         $this->variables = $this->style->getVariables();
@@ -230,9 +220,7 @@ class StyleEditForm extends StyleAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function setVariables()
     {
         parent::setVariables();
@@ -244,9 +232,7 @@ class StyleEditForm extends StyleAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -331,9 +317,7 @@ class StyleEditForm extends StyleAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();
@@ -438,9 +422,7 @@ class StyleEditForm extends StyleAddForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

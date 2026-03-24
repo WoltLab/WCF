@@ -62,9 +62,7 @@ class BBCodeParser extends SingletonFactory
      */
     protected $sourceCodeRegEx = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         // get bbcodes

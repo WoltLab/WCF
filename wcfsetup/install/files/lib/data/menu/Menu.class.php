@@ -72,9 +72,9 @@ class Menu extends DatabaseObject implements ITitledObject
     }
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->title);

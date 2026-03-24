@@ -19,9 +19,7 @@ use wcf\system\WCF;
  */
 final class VaryAcceptLanguage implements MiddlewareInterface
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         // Do not set the header with a regular `\header()` call, because:

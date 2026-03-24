@@ -34,9 +34,7 @@ class DevtoolsNotificationTestPage extends AbstractPage
      */
     public $neededPermissions = ['admin.configuration.package.canInstallPackage'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -78,9 +76,7 @@ class DevtoolsNotificationTestPage extends AbstractPage
         $this->events = $groupedEvents;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

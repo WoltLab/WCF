@@ -51,9 +51,7 @@ class MimePartFacade extends AbstractMimePart implements IRecipientAwareMimePart
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setRecipient(?Mailbox $mailbox = null)
     {
         if ($this->mimePart instanceof IRecipientAwareMimePart) {
@@ -61,25 +59,19 @@ class MimePartFacade extends AbstractMimePart implements IRecipientAwareMimePart
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContentType()
     {
         return $this->mimePart->getContentType();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContentTransferEncoding()
     {
         return $this->mimePart->getContentTransferEncoding();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContent()
     {
         return $this->mimePart->getContent();

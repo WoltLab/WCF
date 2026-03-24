@@ -101,57 +101,43 @@ class ACPSearchResultList implements \Countable, \Iterator
         return $this->title;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __toString(): string
     {
         return $this->title;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function count(): int
     {
         return \count($this->results);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function current(): ACPSearchResult
     {
         return $this->results[$this->index];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function key(): int
     {
         return $this->index;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function next(): void
     {
         $this->index++;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rewind(): void
     {
         $this->index = 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function valid(): bool
     {
         return isset($this->results[$this->index]);

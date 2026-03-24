@@ -41,9 +41,7 @@ class LikeableCommentResponseProvider extends AbstractObjectTypeProvider impleme
      */
     public $listClassName = CommentResponseList::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkPermissions(ILikeObject $object)
     {
         \assert($object instanceof LikeableCommentResponse);
@@ -61,9 +59,7 @@ class LikeableCommentResponseProvider extends AbstractObjectTypeProvider impleme
         return CommentHandler::getInstance()->getCommentManager($objectType->objectType)->isAccessible($comment->objectID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function prepare(array $likes)
     {
         $responseIDs = [];

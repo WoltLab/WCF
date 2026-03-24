@@ -57,9 +57,7 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
      */
     protected $permissionCanModerate = 'mod.page.canModerateComment';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAccessible(int $objectID, bool $validateWritePermission = false)
     {
         // check object id
@@ -85,17 +83,13 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
         return (bool)$user->getPermission($this->permissionCanModerate);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(int $objectTypeID, int $objectID)
     {
         return LinkHandler::getInstance()->getCmsLink($objectID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(int $objectTypeID, int $objectID, bool $isResponse = false)
     {
         if ($isResponse) {
@@ -105,14 +99,10 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
         return WCF::getLanguage()->getDynamicVariable('wcf.page.comment');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updateCounter(int $objectID, int $value) {}
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function prepare(array $likes)
     {
         $commentLikeObjectType = ObjectTypeCache::getInstance()

@@ -30,9 +30,7 @@ class UserCollapsibleContentHandler extends SingletonFactory
      */
     protected $collapsedContent = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->cache = [

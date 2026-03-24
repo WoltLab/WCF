@@ -22,9 +22,7 @@ use wcf\system\exception\SystemException;
  */
 class PaidSubscriptionPaymentType extends AbstractPaymentType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function processTransaction(
         int $paymentMethodObjectTypeID,
         string $token,

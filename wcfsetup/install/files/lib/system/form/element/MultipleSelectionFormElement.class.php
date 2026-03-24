@@ -22,9 +22,7 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement
      */
     protected $disabledMessage = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setValue($value)
     {
         if (!\is_array($value)) {
@@ -45,9 +43,7 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement
         $this->disabledMessage = $message;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDescription()
     {
         if ($this->disabledMessage) {
@@ -57,9 +53,7 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement
         return parent::getDescription();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHTML(string $formName)
     {
         $disabled = '';

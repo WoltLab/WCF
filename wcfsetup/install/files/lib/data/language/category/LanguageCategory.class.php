@@ -22,9 +22,7 @@ class LanguageCategory extends DatabaseObject implements ITitledObject
      */
     protected static $databaseTableIndexName = 'languageCategoryID';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->languageCategory;

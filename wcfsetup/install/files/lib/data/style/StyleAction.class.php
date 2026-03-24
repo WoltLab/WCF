@@ -66,9 +66,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
      */
     public $styleEditor;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function create()
     {
         $style = parent::create();
@@ -91,9 +89,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
         return $style;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         parent::update();

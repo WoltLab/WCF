@@ -49,9 +49,9 @@ class MenuItem extends DatabaseObject implements ITitledObject
     protected $page;
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->title);

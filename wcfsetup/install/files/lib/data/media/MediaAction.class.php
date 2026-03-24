@@ -40,9 +40,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
      */
     const ITEMS_PER_MANAGER_DIALOG_PAGE = 50;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateUpload()
     {
         WCF::getSession()->checkPermissions(['admin.content.cms.canManageMedia']);
@@ -60,9 +58,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function upload()
     {
         $additionalData = ['username' => WCF::getUser()->username];
@@ -356,9 +352,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateUpdate()
     {
         WCF::getSession()->checkPermissions(['admin.content.cms.canManageMedia']);
@@ -416,9 +410,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         if (isset($this->parameters['data']['categoryID']) && $this->parameters['data']['categoryID'] === 0) {
@@ -505,9 +497,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateGetSearchResultList()
     {
         if (!WCF::getSession()->getPermission('admin.content.cms.canManageMedia') && !WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
@@ -533,9 +523,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSearchResultList()
     {
         $mediaList = new MediaList();
@@ -589,9 +577,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateDelete()
     {
         WCF::getSession()->checkPermissions(['admin.content.cms.canManageMedia']);
@@ -613,9 +599,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         if (empty($this->objects)) {

@@ -21,9 +21,7 @@ class BBCodeCache extends SingletonFactory
      */
     protected $cachedBBCodes = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->cachedBBCodes = BBCodeCacheBuilder::getInstance()->getData([], 'bbcodes');

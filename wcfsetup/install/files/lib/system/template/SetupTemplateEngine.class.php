@@ -11,33 +11,25 @@ namespace wcf\system\template;
  */
 class SetupTemplateEngine extends TemplateEngine
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function loadTemplateGroupCache()
     {
         // does nothing
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSourceFilename($templateName, $application)
     {
         return $this->compileDir . 'setup/template/' . $templateName . '.tpl';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCompiledFilename($templateName, $application)
     {
         return $this->compileDir . 'setup/template/compiled/' . $this->languageID . '_' . $templateName . '.php';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMetaDataFilename($templateName)
     {
         return $this->compileDir . 'setup/template/compiled/' . $this->languageID . '_' . $templateName . '.meta.php';

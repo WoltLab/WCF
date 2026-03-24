@@ -91,9 +91,7 @@ final class RatingFormField extends AbstractFormField implements
         return $this->traitMinimum($minimum);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
@@ -109,17 +107,13 @@ final class RatingFormField extends AbstractFormField implements
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'rating';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if ($this->getValue() !== null) {

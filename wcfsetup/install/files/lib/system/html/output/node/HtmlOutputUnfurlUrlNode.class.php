@@ -30,9 +30,7 @@ class HtmlOutputUnfurlUrlNode extends AbstractHtmlOutputNode
      */
     protected $tagName = 'a';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         if ($this->outputType !== 'text/html') {
@@ -76,9 +74,7 @@ class HtmlOutputUnfurlUrlNode extends AbstractHtmlOutputNode
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function replaceTag(array $data)
     {
         return $this->getUnfurlUrl($data['urlId'])->render($data['enableUgc']);

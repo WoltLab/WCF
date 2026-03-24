@@ -29,9 +29,7 @@ class ArticleCommentImporter extends AbstractCommentImporter
         $this->objectTypeID = $objectType->objectTypeID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         $articleID = ImportHandler::getInstance()

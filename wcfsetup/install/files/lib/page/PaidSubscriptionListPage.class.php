@@ -45,9 +45,7 @@ class PaidSubscriptionListPage extends AbstractPage
      */
     public $userSubscriptionList;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkPermissions()
     {
         parent::checkPermissions();
@@ -57,9 +55,7 @@ class PaidSubscriptionListPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -92,9 +88,7 @@ class PaidSubscriptionListPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -105,9 +99,7 @@ class PaidSubscriptionListPage extends AbstractPage
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         // set active tab

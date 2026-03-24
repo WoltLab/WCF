@@ -32,9 +32,7 @@ final class ValueIntervalFormFieldDependency extends AbstractFormFieldDependency
      */
     protected $templateName = 'shared_valueIntervalFormFieldDependency';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkDependency()
     {
         $value = $this->getField()->getValue();

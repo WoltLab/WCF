@@ -18,9 +18,7 @@ use wcf\util\StringUtil;
  */
 final class AttachmentBBCode extends AbstractBBCode
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getParsedTag(array $openingTag, string $content, array $closingTag, BBCodeParser $parser): string
     {
         $attachmentID = \intval($openingTag['attributes'][0] ?? 0);

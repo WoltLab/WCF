@@ -76,9 +76,7 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
         'registrationDate',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct()
     {
         $this->cacheHandlers = [
@@ -110,9 +108,7 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
         parent::__construct();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         if (MODULE_MEMBERS_LIST) {
@@ -127,9 +123,7 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getObjectList()
     {
         // use specialized cache builders
@@ -158,9 +152,7 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
         return new UserProfileList();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getTemplate()
     {
         $templateName = 'boxUserList';
@@ -188,9 +180,7 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasContent()
     {
         $hasContent = parent::hasContent();
@@ -202,17 +192,13 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
         return $hasContent;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasLink()
     {
         return MODULE_MEMBERS_LIST == 1;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readObjects()
     {
         if ($this->userIDs === null) {

@@ -19,9 +19,7 @@ use wcf\http\LegacyPlaceholderResponse;
  */
 final class EnforceCacheControlPrivate implements MiddlewareInterface
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $response = $handler->handle($request);

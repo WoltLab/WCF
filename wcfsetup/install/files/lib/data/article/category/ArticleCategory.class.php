@@ -49,9 +49,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
      */
     protected static $subscribedCategories;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAccessible(?User $user = null)
     {
         if ($this->getObjectType()->objectType != self::OBJECT_TYPE_NAME) {
@@ -100,9 +98,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink('CategoryArticleList', [
@@ -111,9 +107,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->title);

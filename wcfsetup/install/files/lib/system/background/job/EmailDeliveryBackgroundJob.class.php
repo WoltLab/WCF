@@ -113,17 +113,13 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
         ]))->executeAction();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function onFailure()
     {
         $this->updateStatus(EmailLogEntry::STATUS_TRANSIENT_FAILURE, $this->lastErrorMessage);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function onFinalFailure()
     {
         $this->updateStatus(EmailLogEntry::STATUS_PERMANENT_FAILURE, $this->lastErrorMessage);
@@ -172,9 +168,7 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
         return $result * 60;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function perform()
     {
         if (self::$transport === null) {

@@ -31,9 +31,7 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController imp
 
     protected bool $showChildCategories = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function loadContent()
     {
         $categoryTree = $this->getNodeTree();
@@ -65,9 +63,7 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController imp
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readConditions(): void
     {
         if (!empty($_POST['showChildCategories'])) {
@@ -75,32 +71,22 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController imp
         }
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function validateConditions(): void
-    {
-    }
+    #[\Override]
+    public function validateConditions(): void {}
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionDefinition(): string
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionObjectTypes(): array
     {
         return [];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionsTemplate(): string
     {
         return WCF::getTPL()->render('wcf', 'boxCategoryConditions', [
@@ -108,9 +94,7 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController imp
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getAdditionalData(): array
     {
         return [
@@ -119,9 +103,9 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController imp
     }
 
     /**
-     * @inheritDoc
      * @param bool $setConditionData
      */
+    #[\Override]
     public function setBox(Box $box, $setConditionData = true): void
     {
         parent::setBox($box);

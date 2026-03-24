@@ -15,9 +15,7 @@ use wcf\system\WCF;
  */
 class BoxACPSearchResultProvider implements IACPSearchResultProvider
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function search(string $query)
     {
         if (!WCF::getSession()->getPermission('admin.content.cms.canManageBox')) {

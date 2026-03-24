@@ -51,9 +51,7 @@ final class LostPasswordForm extends AbstractFormBuilderForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function createForm()
     {
         parent::createForm();
@@ -110,9 +108,7 @@ final class LostPasswordForm extends AbstractFormBuilderForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         $requests = FloodControl::getInstance()->countContent(
@@ -128,9 +124,7 @@ final class LostPasswordForm extends AbstractFormBuilderForm
         parent::validate();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();

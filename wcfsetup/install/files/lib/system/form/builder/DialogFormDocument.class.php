@@ -48,9 +48,7 @@ class DialogFormDocument extends FormDocument
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function createDefaultButton()
     {
         parent::createDefaultButton();

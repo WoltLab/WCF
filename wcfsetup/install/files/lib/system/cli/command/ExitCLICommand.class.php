@@ -11,17 +11,13 @@ namespace wcf\system\cli\command;
  */
 class ExitCLICommand implements ICLICommand
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $parameters)
     {
         exit;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canAccess()
     {
         // everyone may access this command

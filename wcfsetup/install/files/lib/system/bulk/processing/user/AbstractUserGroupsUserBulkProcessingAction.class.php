@@ -40,9 +40,7 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
      */
     public $userGroupIDs = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct(DatabaseObject $object)
     {
         parent::__construct($object);
@@ -53,9 +51,7 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function executeAction(DatabaseObjectList $objectList)
     {
         $users = $this->getAccessibleUsers($objectList);
@@ -79,9 +75,7 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
      */
     abstract protected function executeUserAction(UserEditor $user);
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHTML()
     {
         return WCF::getTPL()->render('wcf', 'userGroupListUserBulkProcessing', [
@@ -91,17 +85,13 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAvailable()
     {
         return !empty($this->availableUserGroups);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (isset($_POST[$this->inputName])) {
@@ -109,17 +99,13 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         $this->userGroupIDs = [];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if (empty($this->userGroupIDs)) {

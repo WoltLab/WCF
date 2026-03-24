@@ -21,9 +21,7 @@ class UserGroupImporter extends AbstractImporter
      */
     protected $className = UserGroup::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         if ($data['groupType'] < 4) {

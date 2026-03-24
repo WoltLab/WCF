@@ -41,9 +41,7 @@ final class SelectFormField extends AbstractFormField implements
      */
     private string|int|null $defaultValue = null;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
@@ -57,9 +55,7 @@ final class SelectFormField extends AbstractFormField implements
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if ($this->getValue() === null) {
@@ -78,9 +74,7 @@ final class SelectFormField extends AbstractFormField implements
         parent::validate();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function value(mixed $value)
     {
         if ($value !== null && $value !== '') {

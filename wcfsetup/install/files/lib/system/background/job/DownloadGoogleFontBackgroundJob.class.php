@@ -37,9 +37,7 @@ final class DownloadGoogleFontBackgroundJob extends AbstractBackgroundJob
         return 10 * 60;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function perform()
     {
         FontManager::getInstance()->downloadFamily($this->family);

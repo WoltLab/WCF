@@ -63,9 +63,7 @@ class UserMergeForm extends AbstractForm
      */
     protected $objectTypeID;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -87,9 +85,7 @@ class UserMergeForm extends AbstractForm
         $this->userIDs = \array_keys($this->users);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -99,9 +95,7 @@ class UserMergeForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -111,9 +105,7 @@ class UserMergeForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         foreach ($this->userIDs as $userID) {
@@ -317,9 +309,7 @@ class UserMergeForm extends AbstractForm
         exit;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

@@ -25,9 +25,7 @@ abstract class AbstractImporter implements IImporter
      */
     protected $className = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getClassName()
     {
         return $this->className;

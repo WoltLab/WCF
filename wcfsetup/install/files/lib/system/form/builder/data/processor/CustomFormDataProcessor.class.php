@@ -152,9 +152,7 @@ final class CustomFormDataProcessor extends AbstractFormDataProcessor
         return $this->id;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function processFormData(IFormDocument $document, array $parameters)
     {
         if ($this->formDataProcessor === null) {
@@ -170,9 +168,7 @@ final class CustomFormDataProcessor extends AbstractFormDataProcessor
         return $parameters;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function processObjectData(IFormDocument $document, array $data, IStorableObject $object)
     {
         if ($this->objectDataProcessor === null) {

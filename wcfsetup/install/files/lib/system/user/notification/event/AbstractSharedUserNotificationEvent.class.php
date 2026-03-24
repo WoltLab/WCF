@@ -15,9 +15,7 @@ use wcf\system\user\notification\object\IUserNotificationObject;
  */
 abstract class AbstractSharedUserNotificationEvent extends AbstractUserNotificationEvent
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setObject(
         UserNotification $notification,
         IUserNotificationObject $object,

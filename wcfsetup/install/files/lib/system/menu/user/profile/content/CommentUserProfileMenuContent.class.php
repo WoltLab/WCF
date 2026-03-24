@@ -27,9 +27,7 @@ class CommentUserProfileMenuContent extends SingletonFactory implements IUserPro
      */
     public $objectTypeID = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContent(int $userID)
     {
         if ($this->commentManager === null) {
@@ -54,9 +52,7 @@ class CommentUserProfileMenuContent extends SingletonFactory implements IUserPro
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isVisible(int $userID)
     {
         return true;

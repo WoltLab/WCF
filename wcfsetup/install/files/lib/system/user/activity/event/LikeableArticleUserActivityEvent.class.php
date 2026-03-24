@@ -17,9 +17,7 @@ use wcf\system\WCF;
  */
 class LikeableArticleUserActivityEvent extends SingletonFactory implements IUserActivityEvent
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function prepare(array $events)
     {
         if (!\MODULE_ARTICLE) {

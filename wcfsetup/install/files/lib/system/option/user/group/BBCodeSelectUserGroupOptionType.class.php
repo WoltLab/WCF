@@ -50,9 +50,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
         'wsp',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData(Option $option, mixed $newValue)
     {
         if (!\is_array($newValue)) {
@@ -62,9 +60,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
         return \implode(',', $newValue);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         if ($this->bbCodes === null) {
@@ -91,9 +87,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
         \asort($this->bbCodes);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function merge(mixed $defaultValue, mixed $groupValue)
     {
         if ($this->bbCodes === null) {
@@ -118,9 +112,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
         return \implode(',', $newValue);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(Option $option, mixed $newValue)
     {
         if (!\is_array($newValue)) {
@@ -138,9 +130,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function compare(mixed $value1, mixed $value2)
     {
         // handle special case where no disallowed BBCodes have been set
@@ -173,9 +163,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
         return 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCSSClassName()
     {
         return 'checkboxList';

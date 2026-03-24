@@ -133,9 +133,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm
         'select',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -161,9 +159,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm
         $this->registerI18nValue($optionDescription);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -202,9 +198,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -220,9 +214,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         if ($this->action === 'edit' && empty($_POST)) {
@@ -271,9 +263,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm
         return [];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -303,9 +293,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         parent::reset();
@@ -316,9 +304,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm
         $this->required = $this->showOrder = $this->isDisabled = 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

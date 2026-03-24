@@ -18,9 +18,7 @@ use wcf\http\LegacyPlaceholderResponse;
  */
 final class PreventMimeSniffing implements MiddlewareInterface
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         // Also set the headers using the regular `\header()` call, because we might receive a

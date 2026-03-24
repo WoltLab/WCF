@@ -41,10 +41,7 @@ class TemplateAction extends AbstractDatabaseObjectAction
      */
     protected $requireACP = ['create', 'delete', 'update'];
 
-    /**
-     * @inheritDoc
-     * @return  Template
-     */
+    #[\Override]
     public function create()
     {
         /** @var Template $template */
@@ -58,9 +55,7 @@ class TemplateAction extends AbstractDatabaseObjectAction
         return $template;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         $count = parent::delete();
@@ -70,9 +65,7 @@ class TemplateAction extends AbstractDatabaseObjectAction
         return $count;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         parent::update();

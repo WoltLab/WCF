@@ -13,9 +13,7 @@ use wcf\data\template\listener\TemplateListenerList;
  */
 class TemplateListenerCodeCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rebuild(array $parameters)
     {
         // get template codes for specified template

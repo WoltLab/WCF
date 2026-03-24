@@ -53,9 +53,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractCommen
      */
     protected string $typeName;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkAccess()
     {
         if (!WCF::getSession()->getPermission('mod.general.canUseModeration')) {
@@ -65,9 +63,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractCommen
         return $this->getModerationQueue()->canEdit();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEmailMessage(string $notificationType = 'instant'): array
     {
         $comment = CommentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->commentID);
@@ -95,25 +91,19 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractCommen
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEventHash()
     {
         return \sha1($this->eventID . '-' . $this->getModerationQueue()->queueID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return $this->getModerationQueue()->getLink() . '#comment' . $this->getUserNotificationObject()->commentID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMessage()
     {
         $authors = $this->getAuthors();
@@ -187,9 +177,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractCommen
         return $this->languageItemPrefix;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepare()
     {
         CommentRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->commentID);
@@ -197,16 +185,15 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractCommen
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     public static function canBeTriggeredByGuests()
     {
         return false;
     }
 
     /**
-     * @inheritDoc
      * @return array{objectID: int, objectTypeID: ?int}
      * @since   3.1
      */
@@ -218,9 +205,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractCommen
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getTypeName(): string
     {
         if (!isset($this->typeName)) {
@@ -233,9 +218,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractCommen
         return $this->typeName;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getObjectTitle(): string
     {
         return $this->moderationQueue->getTitle();

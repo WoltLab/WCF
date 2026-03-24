@@ -15,9 +15,7 @@ use wcf\system\user\authentication\password\IPasswordAlgorithm;
  */
 final class CryptMD5 implements IPasswordAlgorithm
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function verify(
         #[\SensitiveParameter]
         string $password,
@@ -30,9 +28,7 @@ final class CryptMD5 implements IPasswordAlgorithm
         return \hash_equals($hash, $this->hashWithSalt($password, $hash));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hash(
         #[\SensitiveParameter]
         string $password
@@ -53,9 +49,7 @@ final class CryptMD5 implements IPasswordAlgorithm
         return \crypt($password, $salt);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function needsRehash(string $hash): bool
     {
         return false;

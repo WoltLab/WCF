@@ -230,9 +230,7 @@ class BoxAddForm extends AbstractForm
      */
     public $groupedConditionObjectTypes = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -323,9 +321,7 @@ class BoxAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -438,9 +434,7 @@ class BoxAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -595,9 +589,7 @@ class BoxAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -703,9 +695,7 @@ class BoxAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes(Box::VISIBILITY_CONDITIONS_OBJECT_TYPE_NAME);
@@ -819,9 +809,7 @@ class BoxAddForm extends AbstractForm
         return $returnList;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

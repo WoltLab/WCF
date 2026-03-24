@@ -16,33 +16,25 @@ use wcf\system\WCF;
  */
 class TrophyPageHandler extends AbstractLookupPageHandler
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(int $objectID)
     {
         return TrophyCache::getInstance()->getTrophyByID($objectID)->getLink();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isValid(?int $objectID)
     {
         return TrophyCache::getInstance()->getTrophyByID($objectID) !== null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isVisible(?int $objectID = null)
     {
         return WCF::getSession()->getPermission('user.profile.trophy.canSeeTrophies');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function lookup(string $searchString)
     {
         $trophyList = new TrophyList();

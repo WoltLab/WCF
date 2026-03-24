@@ -61,25 +61,19 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
      */
     public $validSortFields = ['username', 'lastActivityTime', 'requestURI'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink('UsersOnlineList');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getObjectList()
     {
         return new UsersOnlineList();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function readObjects()
     {
         EventHandler::getInstance()->fireAction($this, 'readObjects');
@@ -99,9 +93,7 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
         $this->objectList->readObjects();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getTemplate()
     {
         $templateName = 'boxUsersOnlineSidebar';
@@ -116,9 +108,7 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasContent()
     {
         if (!MODULE_USERS_ONLINE || !WCF::getSession()->getPermission('user.profile.canViewUsersOnlineList')) {
@@ -131,17 +121,13 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
         return $this->objectList->stats['total'] > 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasLink()
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle()
     {
         return $this->title;

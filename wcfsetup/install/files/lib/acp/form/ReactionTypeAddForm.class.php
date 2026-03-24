@@ -54,9 +54,7 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm
      */
     public $objectEditLinkController = ReactionTypeEditForm::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function createForm()
     {
         parent::createForm();

@@ -29,17 +29,13 @@ final class BBCodeAttributesFormField extends AbstractFormField
      */
     protected $value = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'attributes';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if (
@@ -52,9 +48,7 @@ final class BBCodeAttributesFormField extends AbstractFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         foreach ($this->getValue() as $attributeNumber => $attributeData) {

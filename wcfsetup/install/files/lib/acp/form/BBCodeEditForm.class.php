@@ -64,9 +64,7 @@ class BBCodeEditForm extends BBCodeAddForm
         'table',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         AbstractForm::readParameters();
@@ -84,9 +82,7 @@ class BBCodeEditForm extends BBCodeAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function readButtonLabelFormParameter()
     {
         if (!\in_array($this->bbcode->bbcodeTag, self::$nativeBBCodes)) {
@@ -94,9 +90,7 @@ class BBCodeEditForm extends BBCodeAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validateBBCodeTagUsage()
     {
         if ($this->bbcodeTag != $this->bbcode->bbcodeTag) {
@@ -104,9 +98,7 @@ class BBCodeEditForm extends BBCodeAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();
@@ -163,9 +155,7 @@ class BBCodeEditForm extends BBCodeAddForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -191,9 +181,7 @@ class BBCodeEditForm extends BBCodeAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

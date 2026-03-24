@@ -59,25 +59,19 @@ class TodaysBirthdaysBoxController extends AbstractDatabaseObjectListBoxControll
         'registrationDate',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getObjectList()
     {
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getTemplate()
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasContent()
     {
         parent::hasContent();
@@ -85,9 +79,7 @@ class TodaysBirthdaysBoxController extends AbstractDatabaseObjectListBoxControll
         return AbstractBoxController::hasContent();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function loadContent()
     {
         // get current date

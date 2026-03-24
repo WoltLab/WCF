@@ -54,9 +54,7 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency
      */
     protected $templateNameApplication = 'wcf';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function dependentNode(IFormNode $node)
     {
         $this->dependentNode = $node;
@@ -64,9 +62,7 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function field(IFormField $field)
     {
         $this->field = $field;
@@ -74,9 +70,7 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function fieldId(string $fieldId)
     {
         if ($this->getField() !== null) {
@@ -88,9 +82,7 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDependentNode()
     {
         if ($this->dependentNode === null) {
@@ -100,17 +92,13 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency
         return $this->dependentNode;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getField()
     {
         return $this->field;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFieldId()
     {
         if ($this->getField() !== null) {
@@ -124,17 +112,13 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency
         return $this->fieldId;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtml()
     {
         if ($this->templateName === null) {

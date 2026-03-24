@@ -15,9 +15,7 @@ namespace wcf\system\option\user\group;
  */
 class InfiniteIntegerUserGroupOptionType extends IntegerUserGroupOptionType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function merge(mixed $defaultValue, mixed $groupValue)
     {
         if ($defaultValue == -1) {
@@ -29,9 +27,7 @@ class InfiniteIntegerUserGroupOptionType extends IntegerUserGroupOptionType
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function compare(mixed $value1, mixed $value2)
     {
         if ($value1 == $value2) {

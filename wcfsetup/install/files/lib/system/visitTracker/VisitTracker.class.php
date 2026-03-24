@@ -41,9 +41,7 @@ class VisitTracker extends SingletonFactory
      */
     protected $userVisits;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         // get available object types

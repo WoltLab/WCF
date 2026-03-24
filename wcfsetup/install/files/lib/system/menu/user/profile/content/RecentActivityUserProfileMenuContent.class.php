@@ -16,9 +16,7 @@ use wcf\system\WCF;
  */
 class RecentActivityUserProfileMenuContent extends SingletonFactory implements IUserProfileMenuContent
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContent(int $userID)
     {
         $eventList = new ViewableUserActivityEventList();
@@ -42,9 +40,7 @@ class RecentActivityUserProfileMenuContent extends SingletonFactory implements I
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isVisible(int $userID)
     {
         return true;

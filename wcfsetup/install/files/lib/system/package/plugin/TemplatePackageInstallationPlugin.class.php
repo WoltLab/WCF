@@ -26,9 +26,7 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
      */
     public $tableName = 'template';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function install()
     {
         parent::install();
@@ -103,9 +101,7 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
         return 'templates.tar';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function isValid(PackageArchive $packageArchive, $instruction)
     {
         if (!$instruction) {
@@ -128,9 +124,7 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return [];

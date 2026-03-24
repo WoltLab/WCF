@@ -22,9 +22,7 @@ abstract class AbstractCommentStatDailyHandler extends AbstractStatDailyHandler
      */
     protected $objectType = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData(int $date)
     {
         $objectTypeID = CommentHandler::getInstance()->getObjectTypeID($this->objectType);
@@ -85,9 +83,9 @@ abstract class AbstractCommentStatDailyHandler extends AbstractStatDailyHandler
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     protected function addConditions(PreparedStatementConditionBuilder $conditionBuilder)
     {
         throw new \BadMethodCallException(__CLASS__ . " does not support addConditions().");

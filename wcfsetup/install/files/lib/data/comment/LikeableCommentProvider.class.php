@@ -39,9 +39,7 @@ class LikeableCommentProvider extends AbstractObjectTypeProvider implements
      */
     public $listClassName = CommentList::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkPermissions(ILikeObject $object)
     {
         \assert($object instanceof LikeableComment);
@@ -55,9 +53,7 @@ class LikeableCommentProvider extends AbstractObjectTypeProvider implements
         return CommentHandler::getInstance()->getCommentManager($objectType->objectType)->isAccessible($object->objectID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function prepare(array $likes)
     {
         $commentIDs = [];

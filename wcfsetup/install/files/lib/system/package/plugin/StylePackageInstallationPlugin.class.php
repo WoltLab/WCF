@@ -22,9 +22,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin
      */
     public $className = StyleEditor::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function install()
     {
         parent::install();
@@ -47,9 +45,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin
         @\unlink($filename);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function uninstall()
     {
         // call uninstall event

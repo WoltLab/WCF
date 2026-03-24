@@ -52,9 +52,7 @@ class PackageUpdateServer extends DatabaseObject implements ITitledObject
      */
     private static $secureMode = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleData($data)
     {
         if (!empty($data['metaData'])) {

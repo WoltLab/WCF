@@ -90,9 +90,7 @@ class Like extends DatabaseObject
         return new self(null, $row);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getDatabaseTableAlias()
     {
         return 'like_table';

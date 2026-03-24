@@ -25,9 +25,7 @@ class PageSearch extends AbstractSearchProvider
      */
     private $messageCache = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function cacheObjects(array $objectIDs, ?array $additionalData = null): void
     {
         $list = new SearchResultPageContentList();
@@ -38,57 +36,43 @@ class PageSearch extends AbstractSearchProvider
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObject(int $objectID): ?ISearchResultObject
     {
         return $this->messageCache[$objectID] ?? null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTableName(): string
     {
         return 'wcf1_page_content';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getIDFieldName(): string
     {
         return $this->getTableName() . '.pageContentID';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSubjectFieldName(): string
     {
         return $this->getTableName() . '.title';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getUsernameFieldName(): string
     {
         return "''";
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTimeFieldName(): string
     {
         return 'wcf1_page_content.pageContentID';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionBuilder(array $parameters): ?PreparedStatementConditionBuilder
     {
         $conditionBuilder = new PreparedStatementConditionBuilder();
@@ -142,9 +126,7 @@ class PageSearch extends AbstractSearchProvider
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getJoins(): string
     {
         return '
@@ -152,9 +134,7 @@ class PageSearch extends AbstractSearchProvider
             ON          wcf1_page.pageID = ' . $this->getTableName() . '.pageID';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAccessible(): bool
     {
         return !!SEARCH_ENABLE_PAGES;

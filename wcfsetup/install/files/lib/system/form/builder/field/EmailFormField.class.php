@@ -52,9 +52,7 @@ class EmailFormField extends AbstractFormField implements
      */
     protected $templateName = 'shared_emailFormField';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct()
     {
         $this->label('wcf.form.field.email');
@@ -63,10 +61,10 @@ class EmailFormField extends AbstractFormField implements
     }
 
     /**
-     * @inheritDoc
      * @return string[]
      * @since 5.4
      */
+    #[\Override]
     protected function getValidAutoCompleteTokens(): array
     {
         return \array_merge(['email'], \array_map(static function (string $context): string {
@@ -82,9 +80,7 @@ class EmailFormField extends AbstractFormField implements
         return ['email'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if ($this->isI18n()) {
@@ -134,10 +130,10 @@ class EmailFormField extends AbstractFormField implements
     }
 
     /**
-     * @inheritDoc
      * @return string[]
      * @since 5.4
      */
+    #[\Override]
     protected static function getReservedFieldAttributes(): array
     {
         return \array_merge(

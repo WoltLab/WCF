@@ -66,9 +66,7 @@ class UserEmailAddressExportForm extends AbstractForm
      */
     protected $objectTypeID;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -91,9 +89,7 @@ class UserEmailAddressExportForm extends AbstractForm
         $this->users = $users;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -109,9 +105,7 @@ class UserEmailAddressExportForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -165,9 +159,7 @@ class UserEmailAddressExportForm extends AbstractForm
         exit;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

@@ -23,9 +23,7 @@ class ProfileCommentListBoxController extends AbstractCommentListBoxController
      */
     protected $objectTypeName = 'com.woltlab.wcf.user.profileComment';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function applyObjectTypeFilters(ViewableCommentList $commentList)
     {
         $commentList->decoratorClassName = ViewableUserProfileComment::class;

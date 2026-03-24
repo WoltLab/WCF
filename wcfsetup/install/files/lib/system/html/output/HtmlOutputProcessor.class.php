@@ -93,9 +93,7 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor
         $this->outputType = $outputType;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtml()
     {
         $context = $this->getContext();

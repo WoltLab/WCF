@@ -16,9 +16,7 @@ use wcf\util\OptionUtil;
  */
 class SelectOptionsUserOptionOutput implements IUserOptionOutput
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getOutput(User $user, UserOption $option, string $value)
     {
         $result = self::getResult($option, $value);

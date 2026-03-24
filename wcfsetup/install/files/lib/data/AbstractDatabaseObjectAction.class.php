@@ -169,9 +169,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
         // does nothing
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateAction()
     {
         // validate if user is logged in
@@ -204,9 +202,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
         EventHandler::getInstance()->fireAction($this, 'validateAction');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function executeAction()
     {
         // execute action
@@ -239,17 +235,13 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getActionName()
     {
         return $this->action;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectIDs()
     {
         return $this->objectIDs;
@@ -272,17 +264,13 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getParameters()
     {
         return $this->parameters;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getReturnValues()
     {
         return [
@@ -307,9 +295,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateDelete()
     {
         // validate permissions
@@ -363,9 +349,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
         return \call_user_func([$this->className, 'create'], $this->parameters['data']);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         if (empty($this->objects)) {

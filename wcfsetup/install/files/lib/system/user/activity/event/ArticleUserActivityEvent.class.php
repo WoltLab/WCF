@@ -15,9 +15,7 @@ use wcf\system\WCF;
  */
 class ArticleUserActivityEvent extends SingletonFactory implements IUserActivityEvent
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function prepare(array $events)
     {
         if (!\MODULE_ARTICLE) {

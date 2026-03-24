@@ -21,9 +21,7 @@ class HtmlInputNodeSmall extends AbstractHtmlInputNode
      */
     protected $tagName = 'small';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAllowed(AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         if (BBCodeHandler::getInstance()->isAvailableBBCode('size')) {
@@ -33,9 +31,7 @@ class HtmlInputNodeSmall extends AbstractHtmlInputNode
         return ['size'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         /** @var \DOMElement $element */

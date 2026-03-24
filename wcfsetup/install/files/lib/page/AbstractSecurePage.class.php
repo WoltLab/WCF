@@ -10,9 +10,7 @@ use wcf\system\WCF;
  */
 abstract class AbstractSecurePage extends AbstractPage
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();

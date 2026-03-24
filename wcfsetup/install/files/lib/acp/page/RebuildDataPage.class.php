@@ -32,9 +32,7 @@ final class RebuildDataPage extends AbstractPage
      */
     private iterable $workers;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -46,9 +44,7 @@ final class RebuildDataPage extends AbstractPage
         $this->workers = $event->getWorkers();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

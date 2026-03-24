@@ -14,9 +14,7 @@ use wcf\system\upload\UploadHandler;
  */
 class AJAXUploadAction extends AJAXProxyAction
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();

@@ -53,9 +53,7 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
      */
     protected $requireACP = ['create', 'delete', 'setAsDefault', 'update'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function create()
     {
         $object = parent::create();
@@ -101,10 +99,9 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
     }
 
     /**
-     * @inheritDoc
-     *
      * @deprecated 6.3
      */
+    #[\Override]
     public function validateToggle()
     {
         parent::validateUpdate();
@@ -130,9 +127,7 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateDelete()
     {
         parent::validateDelete();

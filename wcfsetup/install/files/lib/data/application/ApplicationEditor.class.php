@@ -24,9 +24,7 @@ class ApplicationEditor extends DatabaseObjectEditor implements IEditableCachedO
      */
     protected static $baseClass = Application::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         (new ApplicationCache())->rebuild();

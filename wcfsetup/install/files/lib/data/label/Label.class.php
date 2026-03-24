@@ -31,9 +31,7 @@ class Label extends DatabaseObject implements IRouteController
         return $this->getTitle();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->label);

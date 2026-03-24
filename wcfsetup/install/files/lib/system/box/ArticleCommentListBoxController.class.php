@@ -22,9 +22,7 @@ class ArticleCommentListBoxController extends AbstractCommentListBoxController
      */
     protected $objectTypeName = 'com.woltlab.wcf.articleComment';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function applyObjectTypeFilters(ViewableCommentList $commentList)
     {
         $accessibleCategoryIDs = ArticleCategory::getAccessibleCategoryIDs();

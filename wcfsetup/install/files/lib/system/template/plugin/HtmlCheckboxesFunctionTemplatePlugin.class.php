@@ -27,9 +27,7 @@ class HtmlCheckboxesFunctionTemplatePlugin implements IFunctionTemplatePlugin
      */
     protected $disableEncoding = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         // get options

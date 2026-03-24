@@ -11,9 +11,7 @@ namespace wcf\system\form\element;
  */
 class TextInputFormElement extends AbstractNamedFormElement
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHTML(string $formName)
     {
         return <<<HTML

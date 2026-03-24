@@ -12,13 +12,13 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.1
  */
-final class ContentNotVisibleView
+final class ContentNotVisibleView implements \Stringable
 {
     public function __construct(
         private readonly string $message,
-    ) {
-    }
+    ) {}
 
+    #[\Override]
     public function __toString(): string
     {
         return WCF::getTPL()->render('wcf', 'shared_contentNotVisible', [

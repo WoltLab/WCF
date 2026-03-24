@@ -19,9 +19,7 @@ use wcf\util\StringUtil;
  */
 class JslangPrefilterTemplatePlugin implements IPrefilterTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(string $templateName, string $sourceContent, TemplateScriptingCompiler $compiler)
     {
         $ldq = \preg_quote($compiler->getLeftDelimiter(), '~');

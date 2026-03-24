@@ -15,9 +15,7 @@ use wcf\system\WCF;
  */
 class PackageACPSearchResultProvider implements IACPSearchResultProvider
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function search(string $query)
     {
         if (

@@ -22,25 +22,19 @@ class UserTrophyNotificationObject extends DatabaseObjectDecorator implements IU
      */
     protected static $baseClass = UserTrophy::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->getDecoratedObject()->getTrophy()->getTitle();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getURL()
     {
         return $this->getDecoratedObject()->getTrophy()->getLink();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getAuthorID()
     {
         return $this->getDecoratedObject()->userID;

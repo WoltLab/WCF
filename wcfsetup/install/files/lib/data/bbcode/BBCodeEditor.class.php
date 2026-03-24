@@ -24,9 +24,7 @@ class BBCodeEditor extends DatabaseObjectEditor implements IEditableCachedObject
      */
     public static $baseClass = BBCode::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         BBCodeCacheBuilder::getInstance()->reset();

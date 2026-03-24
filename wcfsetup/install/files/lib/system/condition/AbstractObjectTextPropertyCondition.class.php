@@ -41,9 +41,7 @@ abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition
      */
     protected $propertyName = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
     {
         $className = $this->getListClassName();
@@ -64,9 +62,7 @@ abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkObject(DatabaseObject $object, array $conditionData)
     {
         $className = $this->getClassName();
@@ -87,9 +83,7 @@ abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition
         return $this->className;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         $value = parent::getData();
@@ -122,9 +116,7 @@ abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition
         return $this->propertyName;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setData(Condition $condition)
     {
         parent::setData($condition);

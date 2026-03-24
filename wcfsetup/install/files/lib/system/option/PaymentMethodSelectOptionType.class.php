@@ -16,9 +16,7 @@ use wcf\system\WCF;
  */
 class PaymentMethodSelectOptionType extends AbstractOptionType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         $selectOptions = PaymentMethodHandler::getInstance()->getPaymentMethodSelection();
@@ -30,9 +28,7 @@ class PaymentMethodSelectOptionType extends AbstractOptionType
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(Option $option, mixed $newValue)
     {
         if (!\is_array($newValue)) {
@@ -47,9 +43,7 @@ class PaymentMethodSelectOptionType extends AbstractOptionType
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData(Option $option, mixed $newValue)
     {
         if (!\is_array($newValue)) {

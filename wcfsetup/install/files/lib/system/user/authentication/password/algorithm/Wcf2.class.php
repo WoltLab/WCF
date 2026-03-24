@@ -27,9 +27,7 @@ final class Wcf2 implements IPasswordAlgorithm
         $this->doubleBcrypt = new DoubleBcrypt();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function verify(
         #[\SensitiveParameter]
         string $password,
@@ -38,9 +36,7 @@ final class Wcf2 implements IPasswordAlgorithm
         return $this->doubleBcrypt->verify($password, $hash);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hash(
         #[\SensitiveParameter]
         string $password
@@ -48,9 +44,7 @@ final class Wcf2 implements IPasswordAlgorithm
         return $this->doubleBcrypt->hash($password);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function needsRehash(string $hash): bool
     {
         return $this->doubleBcrypt->needsRehash($hash);

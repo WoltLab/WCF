@@ -38,9 +38,7 @@ class Option extends DatabaseObject
     use TDatabaseObjectOptions;
     use TDatabaseObjectPermissions;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __get(string $name)
     {
         $value = $this->data[$name] ?? null;
@@ -55,9 +53,7 @@ class Option extends DatabaseObject
         return $value;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleData($data)
     {
         parent::handleData($data);
@@ -196,9 +192,7 @@ class Option extends DatabaseObject
         return !$this->hidden;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getDatabaseTableAlias()
     {
         return 'option_table';

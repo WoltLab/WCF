@@ -27,9 +27,7 @@ class MediaRebuildDataWorker extends AbstractRebuildDataWorker
      */
     protected $limit = 10;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initObjectList()
     {
         parent::initObjectList();
@@ -38,9 +36,7 @@ class MediaRebuildDataWorker extends AbstractRebuildDataWorker
         $this->objectList->getConditionBuilder()->add('media.isImage = ?', [1]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         parent::execute();

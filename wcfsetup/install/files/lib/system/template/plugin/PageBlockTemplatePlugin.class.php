@@ -43,9 +43,7 @@ class PageBlockTemplatePlugin implements IBlockTemplatePlugin
      */
     protected $counter = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, string $blockContent, TemplateEngine $tplObj)
     {
         $pageID = null;
@@ -78,17 +76,13 @@ class PageBlockTemplatePlugin implements IBlockTemplatePlugin
         return $link;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function init($tagArgs, TemplateEngine $tplObj)
     {
         $this->counter = 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function next(TemplateEngine $tplObj)
     {
         if ($this->counter == 0) {

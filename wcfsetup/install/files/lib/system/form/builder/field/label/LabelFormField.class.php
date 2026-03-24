@@ -63,17 +63,13 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
         return $this->labelGroup;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectTypeDefinition()
     {
         return 'com.woltlab.wcf.label.object';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasSaveValue()
     {
         return false;
@@ -99,9 +95,7 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updatedObject(array $data, IStorableObject $object, $loadValues = true)
     {
         if ($loadValues) {
@@ -131,9 +125,7 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function populate()
     {
         parent::populate();
@@ -157,9 +149,7 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
@@ -169,9 +159,7 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if ($this->isRequired()) {

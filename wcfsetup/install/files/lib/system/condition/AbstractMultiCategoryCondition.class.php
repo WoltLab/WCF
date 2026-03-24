@@ -29,9 +29,7 @@ abstract class AbstractMultiCategoryCondition extends AbstractMultiSelectConditi
      */
     public $nodeTreeClassname = CategoryNodeTree::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getFieldElement()
     {
         $categoryTree = (new $this->nodeTreeClassname($this->objectType))->getIterator();
@@ -54,9 +52,7 @@ abstract class AbstractMultiCategoryCondition extends AbstractMultiSelectConditi
         return $fieldElement;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getOptions()
     {
         return CategoryHandler::getInstance()->getCategories($this->objectType);

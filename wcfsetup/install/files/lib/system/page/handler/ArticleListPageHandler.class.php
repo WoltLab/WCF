@@ -15,18 +15,16 @@ use wcf\data\article\ViewableArticle;
  */
 class ArticleListPageHandler extends AbstractMenuPageHandler
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getOutstandingItemCount(?int $objectID = null)
     {
         return ViewableArticle::getUnreadArticles();
     }
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     public function isVisible(?int $objectID = null)
     {
         return !empty(ArticleCategory::getAccessibleCategoryIDs());

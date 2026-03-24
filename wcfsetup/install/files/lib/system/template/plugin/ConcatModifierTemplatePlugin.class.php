@@ -18,9 +18,7 @@ use wcf\system\template\TemplateEngine;
  */
 class ConcatModifierTemplatePlugin implements IModifierTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         if (\count($tagArgs) < 2) {

@@ -30,9 +30,7 @@ abstract class AbstractCategoryMultiSelectOptionType extends AbstractOptionType
      */
     public $nodeTreeClassname = CategoryNodeTree::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         /** @var CategoryNodeTree $categoryTree */
@@ -46,9 +44,7 @@ abstract class AbstractCategoryMultiSelectOptionType extends AbstractOptionType
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(Option $option, mixed $newValue)
     {
         if (!\is_array($newValue)) {
@@ -67,9 +63,7 @@ abstract class AbstractCategoryMultiSelectOptionType extends AbstractOptionType
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData(Option $option, mixed $newValue)
     {
         if (!\is_array($newValue)) {

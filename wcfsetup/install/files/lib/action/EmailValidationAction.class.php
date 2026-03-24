@@ -21,9 +21,7 @@ use wcf\util\UserRegistrationUtil;
  */
 final class EmailValidationAction implements RequestHandlerInterface
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         if ($request->getMethod() === 'GET') {

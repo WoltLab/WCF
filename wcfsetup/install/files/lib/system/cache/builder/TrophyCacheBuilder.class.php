@@ -14,9 +14,7 @@ use wcf\data\trophy\TrophyList;
  */
 class TrophyCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rebuild(array $parameters)
     {
         $trophyList = new TrophyList();

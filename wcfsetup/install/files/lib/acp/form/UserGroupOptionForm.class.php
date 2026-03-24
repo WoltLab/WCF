@@ -78,9 +78,7 @@ class UserGroupOptionForm extends AbstractForm
      */
     public $userGroupOptionID = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -138,9 +136,7 @@ class UserGroupOptionForm extends AbstractForm
         $this->optionType = new $className();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -150,9 +146,7 @@ class UserGroupOptionForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -216,9 +210,7 @@ class UserGroupOptionForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -251,9 +243,7 @@ class UserGroupOptionForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -271,9 +261,7 @@ class UserGroupOptionForm extends AbstractForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

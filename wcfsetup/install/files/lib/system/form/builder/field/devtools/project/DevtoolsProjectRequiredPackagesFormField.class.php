@@ -28,9 +28,7 @@ final class DevtoolsProjectRequiredPackagesFormField extends AbstractFormField
      */
     protected $value = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if (
@@ -45,9 +43,7 @@ final class DevtoolsProjectRequiredPackagesFormField extends AbstractFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         // everything is already validated by JavaScript thus we skip
@@ -86,9 +82,7 @@ final class DevtoolsProjectRequiredPackagesFormField extends AbstractFormField
         $this->value($requiredPackages);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'requiredPackages';

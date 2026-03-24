@@ -62,9 +62,7 @@ class TemplateDiffPage extends AbstractPage
      */
     public $templateGroupHierarchy = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -87,9 +85,7 @@ class TemplateDiffPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -140,9 +136,7 @@ class TemplateDiffPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

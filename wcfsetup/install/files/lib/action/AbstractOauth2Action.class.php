@@ -35,9 +35,7 @@ abstract class AbstractOauth2Action extends AbstractAction
 
     private ClientInterface $httpClient;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -244,9 +242,7 @@ abstract class AbstractOauth2Action extends AbstractAction
         return new RedirectResponse($url);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         parent::execute();

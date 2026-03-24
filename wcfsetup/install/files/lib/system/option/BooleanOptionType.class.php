@@ -24,9 +24,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
      */
     public $forceSearchOption = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         $options = Option::parseEnableOptions($option->enableOptions);
@@ -39,9 +37,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData(Option $option, mixed $newValue)
     {
         if ($newValue == 1) {
@@ -53,9 +49,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
         return 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSearchFormElement(Option $option, mixed $value)
     {
         $options = Option::parseEnableOptions($option->enableOptions);
@@ -69,9 +63,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, mixed $value)
     {
         if (!isset($_POST['searchOptions'][$option->optionName])) {
@@ -83,9 +75,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addCondition(UserList $userList, Option $option, mixed $value)
     {
         $userList->getConditionBuilder()->add(
@@ -94,9 +84,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkUser(User $user, Option $option, mixed $value)
     {
         if (!$value) {
@@ -106,17 +94,13 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
         return $user->getUserOption($option->optionName);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionData(Option $option, mixed $newValue)
     {
         return $newValue;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function compare(mixed $value1, mixed $value2)
     {
         if ($value1 == $value2) {
@@ -126,9 +110,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
         return $value1 ? 1 : -1;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDisabledOptionNames(mixed $value, string $enableOptions)
     {
         $options = ArrayUtil::trim(\explode(',', $enableOptions));

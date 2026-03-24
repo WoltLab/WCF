@@ -63,9 +63,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
      */
     protected static $supportedPositions = ['contentTop', 'contentBottom', 'sidebarLeft', 'sidebarRight'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct()
     {
         if (WCF::getUser()->userID && \count(UserProfileHandler::getInstance()->getFollowingUsers())) {
@@ -79,26 +77,22 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
         parent::__construct();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink('RecentActivityList');
     }
 
     /**
-     * @inheritDoc
      * @return ViewableUserActivityEventList
      */
+    #[\Override]
     protected function getObjectList()
     {
         return new ViewableUserActivityEventList();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTemplate()
     {
         if ($this->getBox()->position == 'contentTop' || $this->getBox()->position == 'contentBottom') {
@@ -117,17 +111,13 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasLink()
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasContent()
     {
         $hasContent = parent::hasContent();
@@ -142,9 +132,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
         return $hasContent;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function readObjects()
     {
         // apply filter

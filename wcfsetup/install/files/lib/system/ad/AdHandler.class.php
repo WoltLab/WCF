@@ -145,9 +145,7 @@ class AdHandler extends SingletonFactory
         return $selection;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->ads = AdCacheBuilder::getInstance()->getData();

@@ -64,9 +64,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
      */
     protected $attributes = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items)
     {
         $sql = "DELETE FROM wcf1_" . $this->tableName . "
@@ -81,9 +79,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element)
     {
         $nodeValue = $element->nodeValue;
@@ -116,9 +112,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         $elements[$element->tagName] = $nodeValue;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         $data = [
@@ -141,17 +135,13 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         return $data;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getNameByData(array $data): string
     {
         return $data['bbcodeTag'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validateImport(array $data)
     {
         // check if bbcode tag already exists
@@ -165,9 +155,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
@@ -181,9 +169,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function import(array $row, array $data)
     {
         // extract attributes
@@ -206,9 +192,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         return $bbcode;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function postImport()
     {
         $condition = new PreparedStatementConditionBuilder();
@@ -241,29 +225,29 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
     }
 
     /**
-     * @inheritDoc
      * @since   3.0
      */
+    #[\Override]
     public static function getDefaultFilename()
     {
         return 'bbcode.xml';
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return [];
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = [
@@ -336,30 +320,30 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         return $element->getAttribute('name');
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     protected function getXsdFilename()
     {
         return 'bbcode';
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         /** @var FormContainer $dataContainer */
@@ -535,10 +519,10 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $entryList->setKeys([
@@ -549,10 +533,10 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $data = $form->getData()['data'];

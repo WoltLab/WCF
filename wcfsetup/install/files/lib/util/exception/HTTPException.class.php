@@ -25,9 +25,6 @@ class HTTPException extends SystemException implements IExtraInformationExceptio
      */
     protected $http;
 
-    /**
-     * @inheritDoc
-     */
     public function __construct(HTTPRequest $http, $message, $code = 0, $previous = null)
     {
         parent::__construct($message, $code, '', $previous);
@@ -35,9 +32,7 @@ class HTTPException extends SystemException implements IExtraInformationExceptio
         $this->http = $http;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getExtraInformation()
     {
         $reply = $this->http->getReply();

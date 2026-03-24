@@ -31,9 +31,7 @@ class DevtoolsPackageArchive extends PackageArchive
         $this->packageXmlPath = $packageXmlPath;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function openArchive()
     {
         if ($this->tar) {
@@ -125,9 +123,7 @@ class DevtoolsPackageArchive extends PackageArchive
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function extractTar($filename, $tempPrefix = 'package_')
     {
         return $filename;

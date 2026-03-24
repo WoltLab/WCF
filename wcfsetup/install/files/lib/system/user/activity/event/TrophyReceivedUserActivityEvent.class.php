@@ -15,9 +15,7 @@ use wcf\system\WCF;
  */
 class TrophyReceivedUserActivityEvent extends SingletonFactory implements IUserActivityEvent
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function prepare(array $events)
     {
         if (!MODULE_TROPHY || !WCF::getSession()->getPermission('user.profile.trophy.canSeeTrophies')) {

@@ -25,65 +25,49 @@ class FeedArticle extends ViewableArticle implements IFeedEntryWithEnclosure
      */
     protected $enclosure;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return $this->getDecoratedObject()->getLink();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->getDecoratedObject()->getTitle();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormattedMessage()
     {
         return $this->getDecoratedObject()->getFormattedContent();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMessage()
     {
         return $this->getDecoratedObject()->getTeaser();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getExcerpt(int $maxLength = 255)
     {
         return StringUtil::truncateHTML($this->getDecoratedObject()->getFormattedTeaser(), $maxLength);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getMessage();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getComments()
     {
         return $this->getArticleContent()->comments;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCategories()
     {
         $categories = [];
@@ -98,17 +82,13 @@ class FeedArticle extends ViewableArticle implements IFeedEntryWithEnclosure
         return $categories;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isVisible()
     {
         return $this->canRead();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEnclosure()
     {
         if ($this->enclosure === null) {

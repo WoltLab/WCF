@@ -31,9 +31,7 @@ class AbstractPollImporter extends AbstractImporter
      */
     protected $objectTypeName = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         $poll = PollEditor::create(\array_merge($data, ['objectTypeID' => $this->objectTypeID]));

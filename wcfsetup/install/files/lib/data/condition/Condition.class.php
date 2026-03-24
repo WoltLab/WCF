@@ -19,9 +19,7 @@ use wcf\data\object\type\ObjectTypeCache;
  */
 class Condition extends DatabaseObject
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __get(string $name)
     {
         $value = parent::__get($name);
@@ -44,9 +42,7 @@ class Condition extends DatabaseObject
         return ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleData($data)
     {
         parent::handleData($data);
@@ -58,9 +54,7 @@ class Condition extends DatabaseObject
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getDatabaseTableAlias()
     {
         return 'condition_table';

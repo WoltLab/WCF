@@ -25,6 +25,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor, ILinkableObje
     /**
      * Returns a short title used for the notification overlay, e.g. "New follower".
      */
+    #[\Override]
     public function getTitle(): string;
 
     /**
@@ -37,6 +38,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor, ILinkableObje
     /**
      * Returns object link.
      */
+    #[\Override]
     public function getLink(): string;
 
     /**

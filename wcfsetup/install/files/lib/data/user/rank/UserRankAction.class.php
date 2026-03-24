@@ -30,9 +30,7 @@ class UserRankAction extends AbstractDatabaseObjectAction
      */
     protected $requireACP = ['delete'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function create()
     {
         /** @var UserRank $rank */
@@ -70,9 +68,7 @@ class UserRankAction extends AbstractDatabaseObjectAction
         return $rank;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         $removedFiles = $this->parameters['rankImageFile__removedFiles'] ?? [];

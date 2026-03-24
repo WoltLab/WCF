@@ -59,9 +59,7 @@ final class LicenseEditForm extends AbstractFormBuilderForm
 
     private bool $failedValidation = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -76,9 +74,7 @@ final class LicenseEditForm extends AbstractFormBuilderForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function createForm()
     {
         parent::createForm();
@@ -165,9 +161,7 @@ final class LicenseEditForm extends AbstractFormBuilderForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function setFormAction()
     {
         if (!isset($this->url)) {
@@ -182,9 +176,7 @@ final class LicenseEditForm extends AbstractFormBuilderForm
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();

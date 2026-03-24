@@ -24,9 +24,7 @@ class DateModifierTemplatePlugin implements IModifierTemplatePlugin
     /** @var array<string, \IntlDateFormatter> */
     private array $dateFormatter = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         $value = $tagArgs[0];

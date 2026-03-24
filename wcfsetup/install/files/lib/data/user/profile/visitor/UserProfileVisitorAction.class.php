@@ -34,9 +34,7 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
      */
     public $userProfile;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateGetGroupedUserList()
     {
         $this->readInteger('pageNo');
@@ -55,9 +53,7 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getGroupedUserList()
     {
         // resolve page count

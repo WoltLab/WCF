@@ -39,9 +39,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
      */
     protected $requireACP = ['create', 'delete', 'update'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function create()
     {
         $this->parameters['data']['subscriptionID'] = $this->parameters['subscription']->subscriptionID;
@@ -72,9 +70,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
         return $subscriptionUser;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateCreate()
     {
         parent::validateCreate();
@@ -115,9 +111,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         $this->revoke();

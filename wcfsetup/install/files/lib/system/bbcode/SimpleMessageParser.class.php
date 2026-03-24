@@ -46,9 +46,7 @@ class SimpleMessageParser extends SingletonFactory
      */
     public $message = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         parent::init();

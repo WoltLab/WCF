@@ -132,17 +132,13 @@ class PageContent extends DatabaseObject implements ITitledLinkObject
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return LinkHandler::getInstance()->getCmsLink($this->pageID, $this->languageID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->title;

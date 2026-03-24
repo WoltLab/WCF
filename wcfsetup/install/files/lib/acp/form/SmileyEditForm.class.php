@@ -44,9 +44,7 @@ class SmileyEditForm extends SmileyAddForm
      */
     public $smiley;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -60,9 +58,7 @@ class SmileyEditForm extends SmileyAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();
@@ -99,9 +95,7 @@ class SmileyEditForm extends SmileyAddForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -119,9 +113,7 @@ class SmileyEditForm extends SmileyAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

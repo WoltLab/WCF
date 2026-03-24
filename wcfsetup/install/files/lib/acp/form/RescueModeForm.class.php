@@ -75,9 +75,9 @@ final class RescueModeForm extends AbstractForm
     private const ALLOWED_ATTEMPTS_PER_1D_GLOBAL = 30;
 
     /**
-     * @inheritDoc
      * @phpstan-ignore return.unusedType
      */
+    #[\Override]
     public function __run()
     {
         if (!WCFACP::inRescueMode()) {
@@ -94,9 +94,7 @@ final class RescueModeForm extends AbstractForm
         return parent::__run();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -146,9 +144,7 @@ final class RescueModeForm extends AbstractForm
         $this->applications = $applicationList->getObjects();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -251,9 +247,7 @@ final class RescueModeForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function submit()
     {
         parent::submit();
@@ -285,17 +279,13 @@ final class RescueModeForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validateSecurityToken()
     {
         // The XSRF validation is not functional in this very slimmed down template.
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -314,9 +304,7 @@ final class RescueModeForm extends AbstractForm
         $this->validateApplications();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -345,9 +333,7 @@ final class RescueModeForm extends AbstractForm
         exit;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -361,9 +347,7 @@ final class RescueModeForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

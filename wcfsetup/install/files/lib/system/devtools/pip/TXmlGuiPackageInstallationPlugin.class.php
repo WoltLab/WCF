@@ -458,10 +458,9 @@ XML;
     }
 
     /**
-     * @inheritDoc
-     *
      * @return \DOMNodeList<\DOMElement>
      */
+    #[\Override]
     protected function getImportElements(\DOMXPath $xpath)
     {
         if ($this->entryType !== null) {

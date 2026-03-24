@@ -29,9 +29,7 @@ class ImportWorker extends AbstractWorker
      */
     protected $exporter;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         WCF::getSession()->checkPermissions(['admin.management.canImportData']);
@@ -95,17 +93,13 @@ class ImportWorker extends AbstractWorker
         return $this->exporter;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function countObjects()
     {
         $this->count = $this->getExporter()->countLoops($this->parameters['objectType']);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getProgress()
     {
         $this->countObjects();
@@ -122,9 +116,7 @@ class ImportWorker extends AbstractWorker
         return (int)\floor($progress);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         if (!$this->count) {
@@ -139,9 +131,7 @@ class ImportWorker extends AbstractWorker
         $this->getExporter()->exportData($this->parameters['objectType'], $this->loopCount);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getProceedURL()
     {
         return '';

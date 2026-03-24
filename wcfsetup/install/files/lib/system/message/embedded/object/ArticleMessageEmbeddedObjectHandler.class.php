@@ -17,9 +17,7 @@ use wcf\system\html\input\HtmlInputProcessor;
  */
 class ArticleMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObjectHandler
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function parse(HtmlInputProcessor $htmlInputProcessor, array $embeddedData)
     {
         $articleIDs = [];
@@ -32,9 +30,7 @@ class ArticleMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedO
         return \array_unique($articleIDs);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function loadObjects(array $objectIDs)
     {
         // Do not use `ViewableArticleRuntimeCache` to avoid recursively loading embedded objects.
@@ -71,9 +67,7 @@ class ArticleMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedO
         return $articles;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateValues(string $objectType, int $objectID, array $values)
     {
         $articleList = new AccessibleArticleList();
@@ -86,9 +80,7 @@ class ArticleMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedO
         });
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function replaceSimple(string $objectType, int $objectID, string|int $value, array $attributes)
     {
         $article = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.article', $value);

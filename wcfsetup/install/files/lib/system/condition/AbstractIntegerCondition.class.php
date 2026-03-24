@@ -45,9 +45,7 @@ abstract class AbstractIntegerCondition extends AbstractSingleFieldCondition
      */
     protected $propertyName = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         $data = [];
@@ -66,9 +64,7 @@ abstract class AbstractIntegerCondition extends AbstractSingleFieldCondition
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getErrorMessageElement()
     {
         if ($this->errorMessage) {
@@ -108,9 +104,7 @@ abstract class AbstractIntegerCondition extends AbstractSingleFieldCondition
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFieldElement()
     {
         $greaterThanPlaceHolder = WCF::getLanguage()->get('wcf.condition.greaterThan');
@@ -184,9 +178,7 @@ HTML;
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (
@@ -203,27 +195,21 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         $this->lessThan = null;
         $this->greaterThan = null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setData(Condition $condition)
     {
         $this->lessThan = $condition->lessThan;
         $this->greaterThan = $condition->greaterThan;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if ($this->lessThan !== null) {

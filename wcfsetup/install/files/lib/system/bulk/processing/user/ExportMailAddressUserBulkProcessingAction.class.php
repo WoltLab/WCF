@@ -40,9 +40,7 @@ class ExportMailAddressUserBulkProcessingAction extends AbstractUserBulkProcessi
      */
     private $executed = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function executeAction(DatabaseObjectList $objectList)
     {
         $this->executed = true;
@@ -72,9 +70,7 @@ class ExportMailAddressUserBulkProcessingAction extends AbstractUserBulkProcessi
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHTML()
     {
         return WCF::getTPL()->render('wcf', 'exportMailAddressUserBulkProcessing', [
@@ -84,9 +80,7 @@ class ExportMailAddressUserBulkProcessingAction extends AbstractUserBulkProcessi
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectList()
     {
         $userList = parent::getObjectList();
@@ -96,9 +90,7 @@ class ExportMailAddressUserBulkProcessingAction extends AbstractUserBulkProcessi
         return $userList;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (isset($_POST['fileType']) && $_POST['fileType'] == 'xml') {
@@ -112,9 +104,7 @@ class ExportMailAddressUserBulkProcessingAction extends AbstractUserBulkProcessi
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         if (!$this->executed) {

@@ -24,9 +24,6 @@ final class VarcharDatabaseTableColumn extends AbstractDatabaseTableColumn imple
      */
     protected string $type = 'varchar';
 
-    /**
-     * @inheritDoc
-     */
     #[\Override]
     public function getLength(): int
     {
@@ -37,17 +34,13 @@ final class VarcharDatabaseTableColumn extends AbstractDatabaseTableColumn imple
         return $this->traitGetLength();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMaximumLength(): int
     {
         return 65535;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMinimumLength(): int
     {
         return 1;

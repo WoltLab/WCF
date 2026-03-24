@@ -18,9 +18,7 @@ use wcf\data\object\type\AbstractObjectTypeProcessor;
  */
 abstract class AbstractTaggable extends AbstractObjectTypeProcessor implements ITaggable
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getApplication()
     {
         $classParts = \explode('\\', static::class);

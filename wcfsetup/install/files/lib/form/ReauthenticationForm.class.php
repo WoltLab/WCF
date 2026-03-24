@@ -37,9 +37,7 @@ class ReauthenticationForm extends AbstractFormBuilderForm
      */
     public $redirectUrl;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -59,9 +57,7 @@ class ReauthenticationForm extends AbstractFormBuilderForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function createForm()
     {
         parent::createForm();
@@ -76,9 +72,7 @@ class ReauthenticationForm extends AbstractFormBuilderForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();
@@ -88,9 +82,7 @@ class ReauthenticationForm extends AbstractFormBuilderForm
         $this->saved();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function saved()
     {
         AbstractForm::saved();
@@ -120,9 +112,7 @@ class ReauthenticationForm extends AbstractFormBuilderForm
         return new RedirectResponse($this->redirectUrl);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function setFormAction()
     {
         $this->form->action(LinkHandler::getInstance()->getControllerLink(static::class, [
@@ -130,9 +120,7 @@ class ReauthenticationForm extends AbstractFormBuilderForm
         ]));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

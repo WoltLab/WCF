@@ -80,9 +80,7 @@ final class BackupMultifactorMethod implements IMultifactorMethod
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function createManagementForm(IFormDocument $form, ?Setup $setup, mixed $returnData = null): void
     {
         $form->addDefaultButton(false);
@@ -200,9 +198,9 @@ final class BackupMultifactorMethod implements IMultifactorMethod
     }
 
     /**
-     * @inheritDoc
      * @return array<int, string>
      */
+    #[\Override]
     public function processManagementForm(IFormDocument $form, Setup $setup): array
     {
         $formData = $form->getData();
@@ -257,9 +255,7 @@ final class BackupMultifactorMethod implements IMultifactorMethod
         return $result;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function createAuthenticationForm(IFormDocument $form, Setup $setup): void
     {
         $sql = "SELECT  *
@@ -312,9 +308,7 @@ final class BackupMultifactorMethod implements IMultifactorMethod
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function processAuthenticationForm(IFormDocument $form, Setup $setup): void
     {
         $userCode = \preg_replace('/\s+/', '', $form->getData()['data']['code']);

@@ -21,9 +21,7 @@ final class JsonBody implements MiddlewareInterface
 {
     public const HAS_VALID_JSON_ATTRIBUTE = self::class . "\0hasValidJson";
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $hasValidJson = false;

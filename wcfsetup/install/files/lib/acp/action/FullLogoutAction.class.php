@@ -16,9 +16,7 @@ use wcf\system\WCF;
  */
 final class FullLogoutAction extends LogoutAction
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(): RedirectResponse
     {
         AbstractSecureAction::execute();

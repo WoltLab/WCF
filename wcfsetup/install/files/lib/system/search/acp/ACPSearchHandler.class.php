@@ -29,9 +29,7 @@ class ACPSearchHandler extends SingletonFactory
      */
     protected $cache;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->cache = ACPSearchProviderCacheBuilder::getInstance()->getData();

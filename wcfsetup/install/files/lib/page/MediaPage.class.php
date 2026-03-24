@@ -71,9 +71,7 @@ class MediaPage extends AbstractPage
         'image/webp',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -111,9 +109,7 @@ class MediaPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -145,9 +141,7 @@ class MediaPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         parent::show();

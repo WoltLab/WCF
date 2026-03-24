@@ -141,9 +141,9 @@ class WysiwygFormContainer extends FormContainer
     protected WysiwygQuoteFormContainer $quoteContainer;
 
     /**
-     * @inheritDoc
      * @return  static
      */
+    #[\Override]
     public static function create($id)
     {
         // the actual id is used for the form field containing the text
@@ -359,9 +359,7 @@ class WysiwygFormContainer extends FormContainer
         return $this->wysiwygField;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function id($id)
     {
         $this->wysiwygId(\substr($id, 0, -\strlen('Container')));
@@ -395,8 +393,8 @@ class WysiwygFormContainer extends FormContainer
 
     /**
      * @since   5.3
-     * @inheritDoc
      */
+    #[\Override]
     public function markAsRequired()
     {
         return $this->getWysiwygField()->isRequired();
@@ -431,9 +429,7 @@ class WysiwygFormContainer extends FormContainer
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true)
     {
         $this->objectId = $object->{$object::getDatabaseTableIndexName()};
@@ -469,9 +465,7 @@ class WysiwygFormContainer extends FormContainer
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function populate()
     {
         parent::populate();

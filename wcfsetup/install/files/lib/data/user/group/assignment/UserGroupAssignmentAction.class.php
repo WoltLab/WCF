@@ -34,9 +34,7 @@ class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements 
      */
     protected $requireACP = ['create', 'delete', 'toggle', 'update'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         ConditionHandler::getInstance()->deleteConditions(

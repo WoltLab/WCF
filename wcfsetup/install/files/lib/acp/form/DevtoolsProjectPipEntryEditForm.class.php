@@ -27,9 +27,7 @@ class DevtoolsProjectPipEntryEditForm extends DevtoolsProjectPipEntryAddForm
      */
     public $identifier = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -39,9 +37,7 @@ class DevtoolsProjectPipEntryEditForm extends DevtoolsProjectPipEntryAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         $pip = $this->pipObject->getPip();
@@ -60,9 +56,7 @@ class DevtoolsProjectPipEntryEditForm extends DevtoolsProjectPipEntryAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function addPipFormFields()
     {
         $this->form->formMode(IFormDocument::FORM_MODE_UPDATE);
@@ -70,9 +64,7 @@ class DevtoolsProjectPipEntryEditForm extends DevtoolsProjectPipEntryAddForm
         parent::addPipFormFields();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setFormAction()
     {
         $this->form->action(LinkHandler::getInstance()->getLink('DevtoolsProjectPipEntryEdit', [
@@ -83,9 +75,7 @@ class DevtoolsProjectPipEntryEditForm extends DevtoolsProjectPipEntryAddForm
         ]));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();
@@ -114,9 +104,7 @@ class DevtoolsProjectPipEntryEditForm extends DevtoolsProjectPipEntryAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function saved()
     {
         AbstractForm::saved();
@@ -124,9 +112,7 @@ class DevtoolsProjectPipEntryEditForm extends DevtoolsProjectPipEntryAddForm
         $this->form->showSuccessMessage(true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

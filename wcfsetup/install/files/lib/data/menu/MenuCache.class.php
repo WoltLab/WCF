@@ -26,9 +26,7 @@ class MenuCache extends SingletonFactory
      */
     protected $cachedMenuItems;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->cachedMenus = MenuCacheBuilder::getInstance()->getData([], 'menus');

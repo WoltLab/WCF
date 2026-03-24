@@ -37,25 +37,19 @@ class TextMimePart extends AbstractMimePart
         $this->content = $content;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContentType()
     {
         return $this->mimeType . "; charset=UTF-8";
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContentTransferEncoding()
     {
         return 'quoted-printable';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContent()
     {
         return $this->content;

@@ -12,9 +12,7 @@ namespace wcf\system\email\mime;
  */
 class MultipartMixedMimePart extends AbstractMultipartMimePart
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContentType()
     {
         return "multipart/mixed;\r\n   boundary=\"" . $this->boundary . "\"";

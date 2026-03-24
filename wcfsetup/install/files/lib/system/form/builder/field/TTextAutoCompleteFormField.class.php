@@ -15,9 +15,9 @@ trait TTextAutoCompleteFormField
     use TAutoCompleteFormField;
 
     /**
-     * @inheritDoc
      * @return string[]
      */
+    #[\Override]
     protected function getValidAutoCompleteTokens(): array
     {
         return [

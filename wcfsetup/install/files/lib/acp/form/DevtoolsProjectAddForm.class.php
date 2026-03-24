@@ -85,9 +85,7 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
      */
     public $projectFields = ['name', 'path'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function createForm()
     {
         parent::createForm();
@@ -964,9 +962,7 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
         });
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();

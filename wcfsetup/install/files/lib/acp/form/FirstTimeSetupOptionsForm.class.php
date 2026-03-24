@@ -44,9 +44,7 @@ final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
         'timezone',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -56,9 +54,7 @@ final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initOptionHandler()
     {
         parent::initOptionHandler();
@@ -66,9 +62,7 @@ final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
         $this->optionHandler->filterOptions($this->optionNames);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -78,9 +72,7 @@ final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -99,9 +91,7 @@ final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
         exit;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

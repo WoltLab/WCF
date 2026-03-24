@@ -13,9 +13,7 @@ use wcf\data\user\group\assignment\UserGroupAssignmentList;
  */
 class UserGroupAssignmentCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function rebuild(array $parameters)
     {
         $assignmentList = new UserGroupAssignmentList();

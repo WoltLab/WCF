@@ -28,9 +28,7 @@ class PaymentMethodHandler extends SingletonFactory
      */
     protected $objectTypes = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $availablePaymentMethods = \explode(',', AVAILABLE_PAYMENT_METHODS);

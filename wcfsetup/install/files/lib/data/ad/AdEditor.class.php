@@ -69,9 +69,7 @@ class AdEditor extends DatabaseObjectEditor implements IEditableCachedObject
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         AdCacheBuilder::getInstance()->reset();

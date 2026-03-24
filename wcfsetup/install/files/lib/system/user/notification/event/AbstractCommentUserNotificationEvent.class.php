@@ -21,9 +21,7 @@ abstract class AbstractCommentUserNotificationEvent extends AbstractSharedUserNo
      */
     protected $stackable = true;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         $count = \count($this->getAuthors());
@@ -40,9 +38,7 @@ abstract class AbstractCommentUserNotificationEvent extends AbstractSharedUserNo
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEmailTitle()
     {
         $count = \count($this->getAuthors());

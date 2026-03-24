@@ -43,9 +43,7 @@ class HtmlInputNodeFont extends AbstractHtmlInputNode
         '+4' => '48px',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAllowed(AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         $allowColor = BBCodeHandler::getInstance()->isAvailableBBCode('color');
@@ -71,9 +69,7 @@ class HtmlInputNodeFont extends AbstractHtmlInputNode
         return \array_unique($matches);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         /** @var \DOMElement $element */

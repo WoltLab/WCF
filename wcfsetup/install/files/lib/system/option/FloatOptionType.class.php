@@ -21,9 +21,7 @@ class FloatOptionType extends TextOptionType
      */
     protected $inputClass = 'short textRight';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         $value = \str_replace('.', WCF::getLanguage()->get('wcf.global.decimalPoint'), $value);
@@ -31,18 +29,14 @@ class FloatOptionType extends TextOptionType
         return parent::getFormElement($option, $value);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData(Option $option, mixed $newValue)
     {
         // @phpstan-ignore return.type
         return $this->toFloat($newValue);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function compare(mixed $value1, mixed $value2)
     {
         if ($value1 == $value2) {
@@ -52,9 +46,7 @@ class FloatOptionType extends TextOptionType
         return ($value1 > $value2) ? 1 : -1;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, mixed $value)
     {
         if (!isset($_POST['searchOptions'][$option->optionName])) {

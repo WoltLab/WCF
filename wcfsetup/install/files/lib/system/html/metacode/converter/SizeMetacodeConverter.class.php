@@ -17,9 +17,7 @@ class SizeMetacodeConverter extends AbstractMetacodeConverter
      */
     protected $sizes = [8, 10, 12, 14, 18, 24, 36];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function convert(\DOMDocumentFragment $fragment, array $attributes)
     {
         $element = $fragment->ownerDocument->createElement('span');
@@ -29,9 +27,7 @@ class SizeMetacodeConverter extends AbstractMetacodeConverter
         return $element;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateAttributes(array $attributes)
     {
         if (\count($attributes) !== 1) {

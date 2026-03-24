@@ -125,9 +125,7 @@ class AccountManagementForm extends AbstractForm
      */
     public $googleDisconnect = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -135,9 +133,7 @@ class AccountManagementForm extends AbstractForm
         $this->quitStarted = WCF::getUser()->quitStarted;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -196,9 +192,7 @@ class AccountManagementForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -276,9 +270,7 @@ class AccountManagementForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -290,9 +282,7 @@ class AccountManagementForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -318,9 +308,7 @@ class AccountManagementForm extends AbstractForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         // set active tab
@@ -329,9 +317,7 @@ class AccountManagementForm extends AbstractForm
         parent::show();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();

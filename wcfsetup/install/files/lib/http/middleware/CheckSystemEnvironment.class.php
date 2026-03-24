@@ -21,9 +21,7 @@ use wcf\system\WCF;
  */
 final class CheckSystemEnvironment implements MiddlewareInterface
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         // @phpstan-ignore smallerOrEqual.alwaysTrue, smallerOrEqual.alwaysTrue, booleanAnd.alwaysTrue

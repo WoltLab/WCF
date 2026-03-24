@@ -21,9 +21,7 @@ class UserBirthdayCondition extends AbstractCondition implements IContentConditi
      */
     protected $birthdayToday = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         if ($this->birthdayToday) {
@@ -33,9 +31,7 @@ class UserBirthdayCondition extends AbstractCondition implements IContentConditi
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHTML()
     {
         $label = WCF::getLanguage()->get('wcf.user.birthdayToday');
@@ -54,9 +50,7 @@ class UserBirthdayCondition extends AbstractCondition implements IContentConditi
 HTML;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (isset($_POST['birthdayToday'])) {
@@ -64,25 +58,19 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         $this->birthdayToday = 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setData(Condition $condition)
     {
         $this->birthdayToday = $condition->birthdayToday;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showContent(Condition $condition)
     {
         if (!WCF::getUser()->userID) {

@@ -15,9 +15,7 @@ use wcf\system\category\CategoryHandler;
  */
 class CategoryACLOptionCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rebuild(array $parameters)
     {
         $data = [];

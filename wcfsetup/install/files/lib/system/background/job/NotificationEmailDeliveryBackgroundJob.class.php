@@ -70,9 +70,7 @@ class NotificationEmailDeliveryBackgroundJob extends AbstractBackgroundJob
         return $this->job->retryAfter();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function perform()
     {
         // see UserNotificationHandler::fetchNotifications()

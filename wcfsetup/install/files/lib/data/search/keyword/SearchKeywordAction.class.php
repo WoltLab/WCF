@@ -28,9 +28,7 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
      */
     protected $allowGuestAccess = ['getSearchResultList'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateGetSearchResultList()
     {
         if (FORCE_LOGIN && !WCF::getUser()->userID) {
@@ -40,9 +38,7 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
         $this->readString('searchString', false, 'data');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSearchResultList()
     {
         $list = [];

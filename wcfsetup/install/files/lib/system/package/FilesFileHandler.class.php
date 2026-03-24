@@ -17,9 +17,7 @@ use wcf\system\WCF;
  */
 class FilesFileHandler extends PackageInstallationFileHandler
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkFiles(array $files)
     {
         if ($this->packageInstallation->getPackage()->package != 'com.woltlab.wcf') {
@@ -52,9 +50,7 @@ class FilesFileHandler extends PackageInstallationFileHandler
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function logFiles(array $files)
     {
         if (empty($files)) {

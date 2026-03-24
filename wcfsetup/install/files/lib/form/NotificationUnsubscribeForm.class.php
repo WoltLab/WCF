@@ -51,9 +51,7 @@ class NotificationUnsubscribeForm extends AbstractForm
         // the mail token.
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -87,9 +85,7 @@ class NotificationUnsubscribeForm extends AbstractForm
         $this->isOneClick = (isset($_POST['List-Unsubscribe']) && $_POST['List-Unsubscribe'] === 'One-Click');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -136,9 +132,7 @@ class NotificationUnsubscribeForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

@@ -93,9 +93,7 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
         $this->data = $data;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __get(string $name)
     {
         return $this->data[$name] ?? null;
@@ -111,25 +109,19 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
         return $this->data[static::getDatabaseTableIndexName()];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __isset(string $name)
     {
         return isset($this->data[$name]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         return $this->data;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getDatabaseTableName()
     {
         $className = static::class;
@@ -155,9 +147,7 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
         return $databaseTableNames[$className];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getDatabaseTableAlias()
     {
         if (static::$databaseTableName !== '') {
@@ -182,17 +172,13 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
         return $databaseTableAliases[$className];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getDatabaseTableIndexIsIdentity()
     {
         return static::$databaseTableIndexIsIdentity;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getDatabaseTableIndexName()
     {
         if (static::$databaseTableIndexName !== '') {

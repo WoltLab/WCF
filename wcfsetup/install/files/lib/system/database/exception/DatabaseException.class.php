@@ -12,9 +12,7 @@ namespace wcf\system\database\exception;
  */
 class DatabaseException extends \wcf\system\database\DatabaseException
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct($message, ?\PDOException $previous = null)
     {
         \Exception::__construct($message, 0, $previous);

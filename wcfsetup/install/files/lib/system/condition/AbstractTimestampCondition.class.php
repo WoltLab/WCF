@@ -48,9 +48,7 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
      */
     protected $startTime = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
     {
         $className = $this->getListClassName();
@@ -78,9 +76,7 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkObject(DatabaseObject $object, array $conditionData)
     {
         $className = $this->getClassName();
@@ -114,9 +110,7 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
         return $this->className;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         $data = [];
@@ -135,9 +129,7 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getFieldElement()
     {
         $start = WCF::getLanguage()->get('wcf.date.period.start');
@@ -149,9 +141,7 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
 HTML;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getLabel()
     {
         return WCF::getLanguage()->get($this->getLanguageItemPrefix() . '.' . $this->getPropertyName());
@@ -184,9 +174,7 @@ HTML;
         return $this->propertyName;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (isset($_POST[$this->getPropertyName() . 'EndTime'])) {
@@ -197,18 +185,14 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         $this->endTime = '';
         $this->startTime = '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setData(Condition $condition)
     {
         $endTime = $condition->endTime;
@@ -222,9 +206,7 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         $endTime = $startTime = null;

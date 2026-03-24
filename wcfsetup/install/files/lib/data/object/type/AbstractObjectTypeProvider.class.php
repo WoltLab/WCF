@@ -36,9 +36,7 @@ abstract class AbstractObjectTypeProvider implements IObjectTypeProvider
      */
     public $listClassName = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectByID(int $objectID)
     {
         $object = new $this->className($objectID);
@@ -49,9 +47,7 @@ abstract class AbstractObjectTypeProvider implements IObjectTypeProvider
         return $object;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectsByIDs(array $objectIDs)
     {
         $tableAlias = \call_user_func([$this->className, 'getDatabaseTableAlias']);

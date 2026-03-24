@@ -15,9 +15,7 @@ use wcf\util\XML;
  */
 final class SetupLanguage extends Language
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct(string $languageCode)
     {
         parent::__construct(null, ['languageCode' => $languageCode], null);
@@ -36,9 +34,7 @@ final class SetupLanguage extends Language
         return TMP_DIR . 'setup/lang/setup_' . $this->languageCode . '.xml';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function loadCategory(string $category): bool
     {
         if ($category !== 'wcf.global') {

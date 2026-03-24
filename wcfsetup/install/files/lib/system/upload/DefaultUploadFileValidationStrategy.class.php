@@ -47,9 +47,7 @@ class DefaultUploadFileValidationStrategy implements IUploadFileValidationStrate
         $this->fileExtensionRegex = '/(' . $extensions . ')$/i';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(UploadFile $uploadFile)
     {
         if ($uploadFile->getErrorCode() != 0) {

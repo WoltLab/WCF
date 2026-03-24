@@ -19,25 +19,19 @@ use wcf\system\WCF;
  */
 class UserSitemapObject extends AbstractSitemapObjectObjectType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectClass()
     {
         return User::class;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLastModifiedColumn()
     {
         return 'lastActivityTime';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAvailableType()
     {
         if (!WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {

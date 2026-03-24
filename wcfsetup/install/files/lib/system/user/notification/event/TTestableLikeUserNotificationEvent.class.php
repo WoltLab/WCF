@@ -28,9 +28,7 @@ use wcf\system\WCF;
  */
 trait TTestableLikeUserNotificationEvent
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function canBeTriggeredByGuests()
     {
         return false;
@@ -64,9 +62,9 @@ trait TTestableLikeUserNotificationEvent
     }
 
     /**
-     * @inheritDoc
      * @return  LikeUserNotificationObject[]
      */
+    #[\Override]
     public static function getTestObjects(UserProfile $recipient, UserProfile $author)
     {
         /** @var ILikeObject $likeObject */

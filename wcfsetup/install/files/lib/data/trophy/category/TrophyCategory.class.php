@@ -42,9 +42,7 @@ class TrophyCategory extends AbstractDecoratedCategory implements ITitledLinkObj
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink('CategoryTrophyList', [
@@ -53,9 +51,7 @@ class TrophyCategory extends AbstractDecoratedCategory implements ITitledLinkObj
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->title);

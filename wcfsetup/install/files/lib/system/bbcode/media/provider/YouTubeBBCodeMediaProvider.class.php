@@ -14,9 +14,7 @@ use wcf\util\Url;
  */
 class YouTubeBBCodeMediaProvider implements IBBCodeMediaProvider
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function parse(string $url, array $matches = [])
     {
         $parsedUrl = Url::parse($url);

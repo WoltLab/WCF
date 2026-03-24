@@ -36,9 +36,7 @@ class RedisCacheSource implements ICacheSource
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function flush(string $cacheName, bool $useWildcard)
     {
         $parts = \explode('-', $cacheName, 2);
@@ -60,9 +58,7 @@ class RedisCacheSource implements ICacheSource
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function flushAll()
     {
         // set flush key to current time if it does not exist yet
@@ -73,9 +69,7 @@ class RedisCacheSource implements ICacheSource
         $this->redis->incr('cache:_flush');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function get(string $cacheName, int $maxLifetime)
     {
         $parts = \explode('-', $cacheName, 2);
@@ -117,9 +111,7 @@ class RedisCacheSource implements ICacheSource
         return 60 * 60 * 24 * 3;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function set(string $cacheName, mixed $value, int $maxLifetime)
     {
         // split parameterized cache entry names into cache name and cache index

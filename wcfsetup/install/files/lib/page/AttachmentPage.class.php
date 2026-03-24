@@ -83,9 +83,7 @@ class AttachmentPage extends AbstractPage
      */
     public $controllerName = 'Attachment';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -111,9 +109,7 @@ class AttachmentPage extends AbstractPage
         $this->canonicalURL = LinkHandler::getInstance()->getLink($this->controllerName, $parameters);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkPermissions()
     {
         parent::checkPermissions();
@@ -134,9 +130,7 @@ class AttachmentPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -211,9 +205,7 @@ class AttachmentPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         parent::show();

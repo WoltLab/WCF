@@ -48,10 +48,7 @@ class MenuAction extends AbstractDatabaseObjectAction
      */
     protected $requireACP = ['create', 'delete', 'update'];
 
-    /**
-     * @inheritDoc
-     * @return  Menu
-     */
+    #[\Override]
     public function create()
     {
         // `title` column doesn't have a default value
@@ -93,9 +90,7 @@ class MenuAction extends AbstractDatabaseObjectAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateDelete()
     {
         parent::validateDelete();

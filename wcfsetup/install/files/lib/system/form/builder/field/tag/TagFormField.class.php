@@ -53,25 +53,19 @@ final class TagFormField extends AbstractFormField implements IAttributeFormFiel
         $this->label('wcf.tagging.tags');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectTypeDefinition()
     {
         return 'com.woltlab.wcf.tagging.taggableObject';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasSaveValue()
     {
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updatedObject(array $data, IStorableObject $object, $loadValues = true)
     {
         if ($loadValues) {
@@ -108,9 +102,7 @@ final class TagFormField extends AbstractFormField implements IAttributeFormFiel
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function populate()
     {
         parent::populate();
@@ -129,9 +121,7 @@ final class TagFormField extends AbstractFormField implements IAttributeFormFiel
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
@@ -145,9 +135,7 @@ final class TagFormField extends AbstractFormField implements IAttributeFormFiel
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function value(mixed $value)
     {
         if (!\is_array($value)) {
@@ -192,9 +180,7 @@ final class TagFormField extends AbstractFormField implements IAttributeFormFiel
         return parent::value($stringTags);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'tags';

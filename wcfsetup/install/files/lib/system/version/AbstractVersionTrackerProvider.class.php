@@ -58,33 +58,25 @@ abstract class AbstractVersionTrackerProvider extends AbstractObjectTypeProvider
      */
     public $permissionCanAccess = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canAccess()
     {
         return WCF::getSession()->getPermission($this->permissionCanAccess);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getActiveMenuItem()
     {
         return $this->activeMenuItem;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDefaultProperty()
     {
         return static::$defaultProperty;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getPropertyLabel(string $property)
     {
         if (isset(static::$propertyLabels[$property])) {
@@ -94,17 +86,13 @@ abstract class AbstractVersionTrackerProvider extends AbstractObjectTypeProvider
         return '(void)';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTrackedProperties()
     {
         return static::$trackedProperties;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isI18n(IVersionTrackerObject $object)
     {
         return $this->isI18n;

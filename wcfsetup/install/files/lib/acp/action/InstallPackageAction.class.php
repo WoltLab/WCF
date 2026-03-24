@@ -31,9 +31,7 @@ class InstallPackageAction extends AbstractSecureAction
 
     private string $redirectLocation = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();

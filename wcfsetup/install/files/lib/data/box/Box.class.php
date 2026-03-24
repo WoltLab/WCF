@@ -150,9 +150,7 @@ class Box extends DatabaseObject
         'footer',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __get(string $name)
     {
         $value = parent::__get($name);
@@ -164,9 +162,7 @@ class Box extends DatabaseObject
         return $value;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleData($data)
     {
         parent::handleData($data);

@@ -19,25 +19,19 @@ use wcf\data\page\PageCache;
  */
 class ArticleSitemapObject extends AbstractSitemapObjectObjectType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectClass()
     {
         return ArticleContent::class;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canView(DatabaseObject $object)
     {
         return $object->getArticle()->canRead();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAvailableType()
     {
         if (!MODULE_ARTICLE) {

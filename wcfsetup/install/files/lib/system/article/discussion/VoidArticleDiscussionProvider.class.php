@@ -15,41 +15,31 @@ use wcf\data\article\Article;
  */
 class VoidArticleDiscussionProvider extends AbstractArticleDiscussionProvider
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDiscussionCount()
     {
         return 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDiscussionCountPhrase()
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDiscussionLink()
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function renderDiscussions()
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function isResponsible(Article $article)
     {
         return true;

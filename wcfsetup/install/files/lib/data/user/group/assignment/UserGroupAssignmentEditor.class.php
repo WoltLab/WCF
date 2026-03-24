@@ -26,9 +26,7 @@ class UserGroupAssignmentEditor extends DatabaseObjectEditor implements IEditabl
      */
     protected static $baseClass = UserGroupAssignment::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         UserGroupAssignmentCacheBuilder::getInstance()->reset();

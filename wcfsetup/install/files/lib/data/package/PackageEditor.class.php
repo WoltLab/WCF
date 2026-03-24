@@ -24,9 +24,7 @@ class PackageEditor extends DatabaseObjectEditor implements IEditableCachedObjec
      */
     protected static $baseClass = Package::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         PackageCacheBuilder::getInstance()->reset();

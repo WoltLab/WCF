@@ -20,18 +20,16 @@ use wcf\data\page\PageCache;
  */
 class ArticleCategorySitemapObject extends AbstractSitemapObjectObjectType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectClass()
     {
         throw new \LogicException('Unreachable');
     }
 
     /**
-     * @inheritDoc
      * @return CategoryList
      */
+    #[\Override]
     public function getObjectList()
     {
         $categoryList = new CategoryList();
@@ -44,18 +42,14 @@ class ArticleCategorySitemapObject extends AbstractSitemapObjectObjectType
         return $categoryList;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canView(DatabaseObject $object)
     {
         /** @var ArticleCategory $object */
         return $object->isAccessible();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAvailableType()
     {
         if (!MODULE_ARTICLE) {

@@ -44,9 +44,7 @@ class BBCodeHandler extends SingletonFactory
      */
     protected $highlighterMeta;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         foreach (BBCodeCache::getInstance()->getBBCodes() as $bbcode) {

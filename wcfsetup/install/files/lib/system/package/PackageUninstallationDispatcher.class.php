@@ -145,9 +145,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
         return $step;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function executePIP(array $nodeData): PackageInstallationStep
     {
         /** @var IPackageInstallationPlugin $pip */

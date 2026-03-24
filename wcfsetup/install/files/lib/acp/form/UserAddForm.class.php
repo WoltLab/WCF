@@ -156,9 +156,7 @@ class UserAddForm extends UserOptionListForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -204,9 +202,7 @@ class UserAddForm extends UserOptionListForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         // validate static user options
@@ -295,9 +291,7 @@ class UserAddForm extends UserOptionListForm
         parent::validate();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();
@@ -417,9 +411,7 @@ class UserAddForm extends UserOptionListForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         $this->attachmentHandler = new AttachmentHandler(
@@ -454,9 +446,7 @@ class UserAddForm extends UserOptionListForm
         $this->optionTree = $this->optionHandler->getOptionTree();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -488,9 +478,7 @@ class UserAddForm extends UserOptionListForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         // get the default language id

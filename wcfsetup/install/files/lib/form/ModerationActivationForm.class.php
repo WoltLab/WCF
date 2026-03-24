@@ -17,9 +17,7 @@ use wcf\system\WCF;
  */
 class ModerationActivationForm extends AbstractModerationForm
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -30,9 +28,7 @@ class ModerationActivationForm extends AbstractModerationForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

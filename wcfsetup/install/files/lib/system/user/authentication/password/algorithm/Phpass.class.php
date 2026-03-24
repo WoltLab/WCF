@@ -19,9 +19,7 @@ final class Phpass implements IPasswordAlgorithm
 
     private const COSTS = 10;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hash(
         #[\SensitiveParameter]
         string $password
@@ -31,9 +29,7 @@ final class Phpass implements IPasswordAlgorithm
         return $this->hashPhpass($password, $this->getSettings() . $salt) . ':';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function needsRehash(string $hash): bool
     {
         return !\str_starts_with($hash, $this->getSettings());

@@ -32,9 +32,7 @@ final class Drupal8 implements IPasswordAlgorithm
         return \mb_substr($output, 0, 55, '8bit');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function verify(
         #[\SensitiveParameter]
         string $password,
@@ -47,9 +45,7 @@ final class Drupal8 implements IPasswordAlgorithm
         return \hash_equals($hash, $this->hashDrupal($password, $hash));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hash(
         #[\SensitiveParameter]
         string $password
@@ -59,9 +55,7 @@ final class Drupal8 implements IPasswordAlgorithm
         return $this->hashDrupal($password, $this->getSettings() . $salt) . ':';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function needsRehash(string $hash): bool
     {
         return !\str_starts_with($hash, $this->getSettings());

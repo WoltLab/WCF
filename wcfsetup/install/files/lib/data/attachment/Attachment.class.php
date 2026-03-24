@@ -67,9 +67,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 
     protected File $file;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         $file = $this->getFile();
@@ -160,9 +158,9 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
     }
 
     /**
-     * @inheritDoc
      * @deprecated 6.1 This will no longer be required once the attachments have been migrated.
      */
+    #[\Override]
     public function getLocation()
     {
         return $this->getLocationHelper(self::getStorage() . \substr(
@@ -184,9 +182,9 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
     }
 
     /**
-     * @inheritDoc
      * @deprecated 6.1 This will no longer be required once the attachments have been migrated.
      */
+    #[\Override]
     public function getThumbnailLocation(string $size = '')
     {
         if ($size == 'tiny') {
@@ -252,9 +250,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
         return $location . '.bin';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getThumbnailLink(string $size = '')
     {
         $file = $this->getFile();
@@ -274,9 +270,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
         return $thumbnail->getLink();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->filename;
@@ -476,9 +470,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
         return WCF_DIR . 'attachments/';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getThumbnailSizes()
     {
         return [

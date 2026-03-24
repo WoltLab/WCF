@@ -33,9 +33,7 @@ class Censorship extends SingletonFactory
      */
     protected $words = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         // get words which should be censored

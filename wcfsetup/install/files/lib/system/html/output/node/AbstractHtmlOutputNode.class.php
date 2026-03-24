@@ -21,18 +21,14 @@ abstract class AbstractHtmlOutputNode extends AbstractHtmlNode implements IHtmlO
      */
     protected $outputType = 'text/html';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAllowed(AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         // there is no validation for output nodes
         return [];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setOutputType(string $outputType)
     {
         $this->outputType = $outputType;

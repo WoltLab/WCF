@@ -79,9 +79,9 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
     ];
 
     /**
-     * @inheritDoc
      * @param array<string, string|int|null> $category
      */
+    #[\Override]
     protected function saveCategory($category)
     {
         // use for create and update
@@ -112,9 +112,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function saveOption($option, $categoryName, $existingOptionID = 0)
     {
         // default values
@@ -230,9 +228,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function uninstall()
     {
         // get optionsIDs from package
@@ -253,10 +249,10 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         parent::addFormFields($form);
@@ -398,11 +394,11 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = parent::fetchElementData($element, $saveData);
@@ -448,35 +444,29 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
     }
 
     /**
-     * @inheritDoc
      * @return UserOptionHandler
      * @since   5.2
      */
+    #[\Override]
     protected function getSortOptionHandler()
     {
         // reuse UserGroupOptionHandler
         return new class(true) extends UserOptionHandler {
-            /**
-             * @inheritDoc
-             */
+            #[\Override]
             protected function checkCategory(OptionCategory $category)
             {
                 // we do not care for category checks here
                 return true;
             }
 
-            /**
-             * @inheritDoc
-             */
+            #[\Override]
             protected function checkOption(Option $option)
             {
                 // we do not care for option checks here
                 return true;
             }
 
-            /**
-             * @inheritDoc
-             */
+            #[\Override]
             public function getCategoryOptions(string $categoryName = '', bool $inherit = true)
             {
                 // we just need to ensure that the category is not empty
@@ -486,10 +476,10 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $option = parent::prepareXmlElement($document, $form);

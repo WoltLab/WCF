@@ -12,9 +12,7 @@ namespace wcf\system\html\metacode\converter;
  */
 class ColorMetacodeConverter extends AbstractMetacodeConverter
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function convert(\DOMDocumentFragment $fragment, array $attributes)
     {
         $element = $fragment->ownerDocument->createElement('span');
@@ -24,9 +22,7 @@ class ColorMetacodeConverter extends AbstractMetacodeConverter
         return $element;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateAttributes(array $attributes)
     {
         if (\count($attributes) !== 1) {

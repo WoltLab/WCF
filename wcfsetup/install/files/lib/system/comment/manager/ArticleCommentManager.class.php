@@ -60,9 +60,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
      */
     protected $permissionCanModerate = 'mod.article.canModerateComment';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAccessible(int $objectID, bool $validateWritePermission = false)
     {
         // check object id
@@ -88,9 +86,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
         return (bool)$user->getPermission($this->permissionCanModerate);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(int $objectTypeID, int $objectID)
     {
         $articleContent = ViewableArticleContentRuntimeCache::getInstance()->getObject($objectID);
@@ -101,9 +97,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(int $objectTypeID, int $objectID, bool $isResponse = false)
     {
         if ($isResponse) {
@@ -113,9 +107,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
         return WCF::getLanguage()->getDynamicVariable('wcf.article.comment');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updateCounter(int $objectID, int $value)
     {
         $editor = new ArticleContentEditor(new ArticleContent($objectID));
@@ -124,9 +116,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function prepare(array $likes)
     {
         $commentLikeObjectType = ObjectTypeCache::getInstance()
@@ -236,9 +226,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isContentAuthor(Comment|CommentResponse $commentOrResponse)
     {
         $articleContent = ViewableArticleContentRuntimeCache::getInstance()

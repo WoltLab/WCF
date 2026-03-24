@@ -30,17 +30,13 @@ class SingleSelectionFormElementContainer extends SelectionFormElementContainer
         $this->value = StringUtil::trim($value);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getValue(string $key)
     {
         return $this->value;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHTML(string $formName)
     {
         $content = '';

@@ -42,9 +42,9 @@ class ErrorException extends SystemException
     }
 
     /**
-     * @inheritDoc
      * @return int
      */
+    #[\Override]
     public function getSeverity()
     {
         return $this->severity;

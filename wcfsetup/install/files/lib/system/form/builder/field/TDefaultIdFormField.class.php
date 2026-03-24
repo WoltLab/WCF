@@ -17,9 +17,9 @@ namespace wcf\system\form\builder\field;
 trait TDefaultIdFormField
 {
     /**
-     * @inheritDoc
      * @return  static
      */
+    #[\Override]
     public static function create($id = null)
     {
         if ($id === null) {

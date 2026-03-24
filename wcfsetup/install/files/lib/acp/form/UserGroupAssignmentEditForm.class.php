@@ -39,9 +39,7 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm
      */
     public $assignmentID = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -57,9 +55,7 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -75,9 +71,7 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -91,9 +85,7 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();

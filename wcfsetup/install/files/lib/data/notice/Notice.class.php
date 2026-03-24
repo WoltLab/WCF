@@ -72,9 +72,7 @@ class Notice extends DatabaseObject implements IRouteController
         return ConditionHandler::getInstance()->getConditions('com.woltlab.wcf.condition.notice', $this->noticeID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->noticeName;

@@ -15,9 +15,7 @@ use wcf\data\menu\MenuList;
  */
 class MenuCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function rebuild(array $parameters)
     {
         $data = [

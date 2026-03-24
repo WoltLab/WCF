@@ -110,9 +110,7 @@ class AttachmentHandler implements \Countable
         return $this->attachmentList;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function count(): int
     {
         return \count($this->getAttachmentList());

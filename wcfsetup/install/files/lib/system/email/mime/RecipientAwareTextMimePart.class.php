@@ -57,17 +57,13 @@ class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAware
         $this->application = $application;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setRecipient(?Mailbox $mailbox = null)
     {
         $this->mailbox = $mailbox;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContent()
     {
         $language = WCF::getLanguage();

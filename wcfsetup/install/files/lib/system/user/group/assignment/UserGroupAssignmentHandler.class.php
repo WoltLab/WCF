@@ -125,9 +125,7 @@ class UserGroupAssignmentHandler extends SingletonFactory
         return $userList->getObjects();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.condition.userGroupAssignment');

@@ -27,9 +27,7 @@ final class Vb5Bcrypt implements IPasswordAlgorithm
         $this->bcrypt = new Bcrypt();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function verify(
         #[\SensitiveParameter]
         string $password,
@@ -38,9 +36,7 @@ final class Vb5Bcrypt implements IPasswordAlgorithm
         return $this->bcrypt->verify(\md5($password), $hash);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hash(
         #[\SensitiveParameter]
         string $password
@@ -48,9 +44,7 @@ final class Vb5Bcrypt implements IPasswordAlgorithm
         return $this->bcrypt->hash(\md5($password));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function needsRehash(string $hash): bool
     {
         return $this->bcrypt->needsRehash($hash);

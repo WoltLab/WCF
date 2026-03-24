@@ -20,10 +20,10 @@ class IntegerFormField extends AbstractNumericFormField
     protected $integerValues = true;
 
     /**
-     * @inheritDoc
      * @return string[]
      * @since       5.4
      */
+    #[\Override]
     protected function getValidAutoCompleteTokens(): array
     {
         return [

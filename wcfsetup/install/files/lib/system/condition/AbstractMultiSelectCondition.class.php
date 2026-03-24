@@ -23,9 +23,7 @@ abstract class AbstractMultiSelectCondition extends AbstractSelectCondition
      */
     protected $fieldValue = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         if (!empty($this->fieldValue)) {
@@ -35,9 +33,7 @@ abstract class AbstractMultiSelectCondition extends AbstractSelectCondition
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getFieldElement()
     {
         $options = $this->getOptions();
@@ -58,9 +54,7 @@ abstract class AbstractMultiSelectCondition extends AbstractSelectCondition
         return $fieldElement;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getOptionCode($value, $label)
     {
         return '<option value="' . $value . '"' . (\in_array(
@@ -69,9 +63,7 @@ abstract class AbstractMultiSelectCondition extends AbstractSelectCondition
         ) ? ' selected' : '') . '>' . StringUtil::encodeHTML(WCF::getLanguage()->get($label)) . '</option>';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (isset($_POST[$this->fieldName]) && \is_array($_POST[$this->fieldName])) {
@@ -79,17 +71,13 @@ abstract class AbstractMultiSelectCondition extends AbstractSelectCondition
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         $this->fieldValue = [];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         $options = $this->getOptions();

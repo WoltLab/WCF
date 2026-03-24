@@ -24,9 +24,7 @@ class FormDataHandler implements IFormDataHandler
      */
     protected $processors = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addProcessor(IFormDataProcessor $processor)
     {
         $this->processors[] = $processor;
@@ -34,9 +32,7 @@ class FormDataHandler implements IFormDataHandler
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormData(IFormDocument $document)
     {
         $parameters = [];
@@ -56,9 +52,7 @@ class FormDataHandler implements IFormDataHandler
         return $parameters;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectData(IFormDocument $document, IStorableObject $object)
     {
         $data = $object->getData();

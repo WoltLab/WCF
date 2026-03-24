@@ -17,9 +17,7 @@ use wcf\system\request\LinkHandler;
  */
 class ArticleAmpPage extends AbstractArticlePage
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();

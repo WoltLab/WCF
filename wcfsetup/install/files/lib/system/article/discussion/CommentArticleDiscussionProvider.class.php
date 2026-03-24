@@ -85,9 +85,7 @@ class CommentArticleDiscussionProvider extends AbstractArticleDiscussionProvider
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function isResponsible(Article $article)
     {
         return !!$article->enableComments;

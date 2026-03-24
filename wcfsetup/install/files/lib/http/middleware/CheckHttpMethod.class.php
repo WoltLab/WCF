@@ -33,9 +33,7 @@ final class CheckHttpMethod implements MiddlewareInterface
         $this->requestHandler = RequestHandler::getInstance();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (\in_array($request->getMethod(), self::ALWAYS_ACCEPTABLE, true)) {

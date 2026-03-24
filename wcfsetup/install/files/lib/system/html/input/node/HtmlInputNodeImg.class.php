@@ -31,9 +31,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
      */
     protected $tagName = 'img';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAllowed(AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         if (BBCodeHandler::getInstance()->isAvailableBBCode('img')) {
@@ -59,9 +57,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         return ['img'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         $this->smiliesFound = 0;

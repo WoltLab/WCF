@@ -41,9 +41,7 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker
      */
     protected $htmlInputProcessor;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initObjectList()
     {
         parent::initObjectList();
@@ -51,9 +49,7 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker
         $this->objectList->sqlOrderBy = 'article.articleID';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         parent::execute();

@@ -197,9 +197,7 @@ class ACLHandler extends SingletonFactory
         $this->__readValues[$objectTypeID] = null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->availableObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.acl');

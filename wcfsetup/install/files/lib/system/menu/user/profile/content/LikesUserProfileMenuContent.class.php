@@ -15,9 +15,7 @@ use wcf\system\WCF;
  */
 class LikesUserProfileMenuContent extends SingletonFactory implements IUserProfileMenuContent
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContent(int $userID)
     {
         $likeList = new ViewableLikeList();
@@ -31,9 +29,7 @@ class LikesUserProfileMenuContent extends SingletonFactory implements IUserProfi
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isVisible(int $userID)
     {
         if (!WCF::getSession()->getPermission('user.like.canViewLike')) {

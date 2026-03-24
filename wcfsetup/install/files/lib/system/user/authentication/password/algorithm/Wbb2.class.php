@@ -14,9 +14,7 @@ use wcf\system\user\authentication\password\IPasswordAlgorithm;
  */
 final class Wbb2 implements IPasswordAlgorithm
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function verify(
         #[\SensitiveParameter]
         string $password,
@@ -31,9 +29,7 @@ final class Wbb2 implements IPasswordAlgorithm
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hash(
         #[\SensitiveParameter]
         string $password
@@ -41,9 +37,7 @@ final class Wbb2 implements IPasswordAlgorithm
         return \sha1($password);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function needsRehash(string $hash): bool
     {
         return false;

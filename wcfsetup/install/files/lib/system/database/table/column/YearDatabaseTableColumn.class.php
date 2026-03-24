@@ -22,9 +22,7 @@ final class YearDatabaseTableColumn extends AbstractDatabaseTableColumn implemen
      */
     protected string $type = 'year';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validateLength(int $length): void
     {
         if ($length !== 4) {

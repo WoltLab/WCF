@@ -23,9 +23,7 @@ class TabMenuFormContainer extends FormContainer implements ITabMenuFormContaine
      */
     protected $useAnchors = true;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct()
     {
         $this->addClass('section')

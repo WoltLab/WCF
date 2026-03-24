@@ -19,9 +19,7 @@ use wcf\util\FileUtil;
  */
 class DailyCleanUpCronjob extends AbstractCronjob
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(Cronjob $cronjob)
     {
         parent::execute($cronjob);

@@ -33,9 +33,7 @@ abstract class TreeMenu extends SingletonFactory
      */
     public $menuItems;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         // get menu items from cache

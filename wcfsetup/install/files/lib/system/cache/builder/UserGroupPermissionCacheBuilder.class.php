@@ -27,9 +27,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
      */
     protected $typeObjects = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rebuild(array $parameters)
     {
         $data = $excludedInTinyBuild = [];

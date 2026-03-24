@@ -79,9 +79,7 @@ abstract class AbstractModerationForm extends AbstractForm
      */
     public $commentList;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -111,9 +109,7 @@ abstract class AbstractModerationForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -141,9 +137,7 @@ abstract class AbstractModerationForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

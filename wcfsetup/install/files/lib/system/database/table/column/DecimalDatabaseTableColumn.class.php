@@ -17,9 +17,6 @@ final class DecimalDatabaseTableColumn extends AbstractDecimalDatabaseTableColum
      */
     protected string $type = 'decimal';
 
-    /**
-     * @inheritDoc
-     */
     #[\Override]
     public function decimals(?int $decimals): static
     {
@@ -30,27 +27,18 @@ final class DecimalDatabaseTableColumn extends AbstractDecimalDatabaseTableColum
         return parent::decimals($decimals);
     }
 
-    /**
-     * @inheritDoc
-     */
     #[\Override]
     public function getMaximumDecimals(): int
     {
         return 30;
     }
 
-    /**
-     * @inheritDoc
-     */
     #[\Override]
     public function getMaximumLength(): int
     {
         return 65;
     }
 
-    /**
-     * @inheritDoc
-     */
     #[\Override]
     public function getMinimumLength(): int
     {

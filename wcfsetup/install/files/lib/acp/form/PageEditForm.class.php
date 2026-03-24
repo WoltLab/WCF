@@ -56,11 +56,7 @@ class PageEditForm extends PageAddForm
      */
     public bool $supportsCustomUrl = true;
 
-    /**
-     * @inheritDoc
-     *
-     * @throws  IllegalLinkException
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -77,17 +73,13 @@ class PageEditForm extends PageAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function readPageType()
     {
         // not required for editing
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -108,9 +100,7 @@ class PageEditForm extends PageAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -133,9 +123,7 @@ class PageEditForm extends PageAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validateName()
     {
         if (\mb_strtolower($this->name) != \mb_strtolower($this->page->name)) {
@@ -143,17 +131,13 @@ class PageEditForm extends PageAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validatePageType()
     {
         // type is immutable
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validateParentPageID()
     {
         if ($this->page->hasFixedParent) {
@@ -179,9 +163,7 @@ class PageEditForm extends PageAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validateCustomUrl($languageID, $customURL)
     {
         if (!$this->supportsCustomUrl) {
@@ -199,9 +181,7 @@ class PageEditForm extends PageAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();
@@ -299,9 +279,7 @@ class PageEditForm extends PageAddForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -354,9 +332,7 @@ class PageEditForm extends PageAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

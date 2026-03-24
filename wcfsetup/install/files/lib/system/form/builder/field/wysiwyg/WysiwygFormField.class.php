@@ -122,9 +122,7 @@ final class WysiwygFormField extends AbstractFormField implements
         return $this->autosaveId;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFieldHtml()
     {
         $disallowedBBCodesPermission = $this->getObjectType()->disallowedBBCodesPermission;
@@ -140,9 +138,7 @@ final class WysiwygFormField extends AbstractFormField implements
         return parent::getFieldHtml();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectTypeDefinition()
     {
         return 'com.woltlab.wcf.message';
@@ -179,9 +175,7 @@ final class WysiwygFormField extends AbstractFormField implements
         return "";
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSaveValue()
     {
         return $this->htmlInputProcessor->getHtml();
@@ -200,9 +194,7 @@ final class WysiwygFormField extends AbstractFormField implements
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function populate()
     {
         parent::populate();
@@ -244,9 +236,7 @@ final class WysiwygFormField extends AbstractFormField implements
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
@@ -344,9 +334,7 @@ final class WysiwygFormField extends AbstractFormField implements
         return $this->supportQuotes;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         $disallowedBBCodesPermission = $this->getObjectType()->disallowedBBCodesPermission;
@@ -389,10 +377,10 @@ final class WysiwygFormField extends AbstractFormField implements
     }
 
     /**
-     * @inheritDoc
      * @return string[]
      * @since 5.4
      */
+    #[\Override]
     protected static function getReservedFieldAttributes(): array
     {
         return \array_merge(

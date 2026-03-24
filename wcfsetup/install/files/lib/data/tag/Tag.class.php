@@ -64,9 +64,7 @@ class Tag extends DatabaseObject implements IRouteController
         return \implode($separator, $tags);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->name;

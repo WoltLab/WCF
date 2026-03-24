@@ -191,9 +191,7 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         if ($this->getArticleContent() !== null) {
@@ -203,9 +201,7 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         if ($this->getArticleContent() !== null) {
@@ -407,27 +403,27 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
     }
 
     /**
-     * @inheritDoc
      * @since       5.2
      */
+    #[\Override]
     public function getTime()
     {
         return $this->time;
     }
 
     /**
-     * @inheritDoc
      * @since       5.2
      */
+    #[\Override]
     public function getUserID()
     {
         return $this->userID;
     }
 
     /**
-     * @inheritDoc
      * @since       5.2
      */
+    #[\Override]
     public function getUsername()
     {
         return $this->username;

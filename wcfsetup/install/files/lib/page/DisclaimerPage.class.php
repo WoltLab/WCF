@@ -23,9 +23,7 @@ final class DisclaimerPage extends AbstractPage
      */
     public $neededModules = ['REGISTER_ENABLE_DISCLAIMER'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();

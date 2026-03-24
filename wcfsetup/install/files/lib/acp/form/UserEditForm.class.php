@@ -164,9 +164,7 @@ class UserEditForm extends UserAddForm
      */
     public string $colorScheme = 'system';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         if (isset($_REQUEST['id'])) {
@@ -186,17 +184,13 @@ class UserEditForm extends UserAddForm
         parent::readParameters();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initOptionHandler()
     {
         $this->optionHandler->setUser($this->user->getDecoratedObject());
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -271,9 +265,7 @@ class UserEditForm extends UserAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         if (empty($_POST)) {
@@ -359,9 +351,7 @@ class UserEditForm extends UserAddForm
         $this->colorScheme = $this->user->getUserOption('colorScheme');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -396,9 +386,7 @@ class UserEditForm extends UserAddForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();
@@ -527,9 +515,7 @@ class UserEditForm extends UserAddForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validateUsername($username)
     {
         try {
@@ -566,9 +552,7 @@ class UserEditForm extends UserAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if ($this->user->userID == WCF::getUser()->userID && WCF::getUser()->hasOwnerAccess()) {

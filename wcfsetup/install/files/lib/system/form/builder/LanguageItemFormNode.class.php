@@ -29,9 +29,7 @@ class LanguageItemFormNode implements IFormChildNode
      */
     protected $variables = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtml()
     {
         return WCF::getLanguage()->getDynamicVariable($this->getLanguageItem(), $this->getVariables());
@@ -73,9 +71,7 @@ class LanguageItemFormNode implements IFormChildNode
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         // does nothing

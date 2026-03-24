@@ -36,9 +36,7 @@ class ArticleCommentUserNotificationObjectType extends AbstractUserNotificationO
      */
     protected static $objectListClassName = CommentList::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getOwnerID(int $objectID)
     {
         $sql = "SELECT      article.userID
@@ -54,9 +52,7 @@ class ArticleCommentUserNotificationObjectType extends AbstractUserNotificationO
         return $statement->fetchSingleColumn() ?: 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getRecipientIDs(Comment $comment)
     {
         $articleContent = new ArticleContent($comment->objectID);

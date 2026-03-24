@@ -21,9 +21,7 @@ abstract class AbstractDiskUsageStatDailyHandler extends AbstractStatDailyHandle
      */
     protected $columnName = 'filesize';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getCounter($date, $tableName, $dateColumnName)
     {
         $conditionBuilder = new PreparedStatementConditionBuilder();
@@ -40,9 +38,7 @@ abstract class AbstractDiskUsageStatDailyHandler extends AbstractStatDailyHandle
         return $statement->fetchSingleColumn();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getTotal($date, $tableName, $dateColumnName)
     {
         $conditionBuilder = new PreparedStatementConditionBuilder();
@@ -59,9 +55,7 @@ abstract class AbstractDiskUsageStatDailyHandler extends AbstractStatDailyHandle
         return $statement->fetchSingleColumn();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormattedCounter(int $counter)
     {
         return \round($counter / 1000, 2); // return mb

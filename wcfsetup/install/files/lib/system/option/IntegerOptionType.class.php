@@ -20,9 +20,7 @@ class IntegerOptionType extends TextOptionType
      */
     protected $inputClass = 'short';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         return WCF::getTPL()->render('wcf', 'integerOptionType', [
@@ -32,18 +30,14 @@ class IntegerOptionType extends TextOptionType
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData(Option $option, mixed $newValue)
     {
         // @phpstan-ignore return.type
         return \intval($newValue);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(Option $option, mixed $newValue)
     {
         // Safeguard against values outside of 32 bit integers.
@@ -63,9 +57,7 @@ class IntegerOptionType extends TextOptionType
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function compare(mixed $value1, mixed $value2)
     {
         if ($value1 == $value2) {

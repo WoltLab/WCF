@@ -47,9 +47,7 @@ final class MessageQuoteManager extends SingletonFactory
 
     private const LEGACY_QUOTE_MARKER = '@@@legacy_quote@@@';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         // load stored quotes from session

@@ -38,17 +38,13 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements
      */
     protected $languageIDs = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
     {
         $objectList->getConditionBuilder()->add('user_table.languageID IN (?)', [$conditionData['languageIDs']]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkUser(Condition $condition, User $user)
     {
         if (
@@ -61,9 +57,7 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         if (!empty($this->languageIDs)) {
@@ -75,9 +69,7 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getFieldElement()
     {
         $returnValue = "";
@@ -91,9 +83,7 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements
         return $returnValue;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (isset($_POST['languageIDs']) && \is_array($_POST['languageIDs'])) {
@@ -101,17 +91,13 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         $this->languageIDs = [];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setData(Condition $condition)
     {
         if (!empty($condition->conditionData['languageIDs'])) {
@@ -119,9 +105,7 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         foreach ($this->languageIDs as $languageID) {
@@ -133,9 +117,7 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showContent(Condition $condition)
     {
         if (WCF::getUser()->userID) {

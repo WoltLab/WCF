@@ -38,9 +38,7 @@ abstract class AbstractEventListener implements IParameterizedEventListener
         'validateAction',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     final public function execute($eventObj, $className, $eventName, array &$parameters)
     {
         $methodName = 'on' . \ucfirst($eventName);

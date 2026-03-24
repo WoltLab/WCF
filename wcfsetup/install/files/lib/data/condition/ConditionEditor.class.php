@@ -24,9 +24,7 @@ class ConditionEditor extends DatabaseObjectEditor implements IEditableCachedObj
      */
     protected static $baseClass = Condition::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         ConditionCacheBuilder::getInstance()->reset();

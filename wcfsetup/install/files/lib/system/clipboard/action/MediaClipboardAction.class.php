@@ -34,9 +34,7 @@ class MediaClipboardAction extends AbstractClipboardAction
         'setCategory',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $objects, ClipboardAction $action)
     {
         $item = parent::execute($objects, $action);
@@ -63,17 +61,13 @@ class MediaClipboardAction extends AbstractClipboardAction
         return $item;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getClassName()
     {
         return MediaAction::class;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTypeName()
     {
         return 'com.woltlab.wcf.media';

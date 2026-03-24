@@ -22,9 +22,7 @@ final class HiddenFormField extends AbstractFormField
      */
     protected $templateName = 'shared_hiddenFormField';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {

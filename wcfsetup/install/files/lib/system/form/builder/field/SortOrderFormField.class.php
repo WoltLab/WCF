@@ -17,9 +17,7 @@ final class SortOrderFormField extends SingleSelectionFormField
 {
     use TDefaultIdFormField;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct()
     {
         $this->label('wcf.global.showOrder');
@@ -29,9 +27,7 @@ final class SortOrderFormField extends SingleSelectionFormField
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'sortOrder';

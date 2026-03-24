@@ -20,9 +20,7 @@ class FileSizeOptionType extends TextOptionType
      */
     protected $inputClass = 'short textRight';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContent(Option $option, $newValue)
     {
         $number = \str_replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $newValue);
@@ -67,9 +65,7 @@ class FileSizeOptionType extends TextOptionType
         return $number;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         $value = FileUtil::formatFilesize(\intval($value));
@@ -77,9 +73,7 @@ class FileSizeOptionType extends TextOptionType
         return parent::getFormElement($option, $value);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function compare(mixed $value1, mixed $value2)
     {
         if ($value1 == $value2) {

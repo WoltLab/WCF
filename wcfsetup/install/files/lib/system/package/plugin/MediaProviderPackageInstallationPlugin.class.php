@@ -45,9 +45,7 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
      */
     public $tagName = 'provider';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items)
     {
         $sql = "DELETE FROM wcf1_" . $this->tableName . "
@@ -62,9 +60,7 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         return [
@@ -76,17 +72,13 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getNameByData(array $data): string
     {
         return $data['name'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
@@ -104,28 +96,24 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function cleanup()
     {
         // clear cache immediately
         BBCodeMediaProviderCacheBuilder::getInstance()->reset();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return [];
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         /** @var FormContainer $dataContainer */
@@ -221,11 +209,11 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = [
@@ -253,20 +241,20 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         return $element->getAttribute('name');
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $entryList->setKeys([
@@ -276,10 +264,10 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $data = $form->getData()['data'];

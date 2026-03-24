@@ -60,9 +60,7 @@ class PaidSubscriptionEditor extends DatabaseObjectEditor implements IEditableCa
         $this->update(['showOrder' => $newShowOrder]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         PaidSubscriptionCacheBuilder::getInstance()->reset();

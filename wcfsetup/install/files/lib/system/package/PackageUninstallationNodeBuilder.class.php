@@ -13,9 +13,7 @@ use wcf\system\WCF;
  */
 class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function buildNodes()
     {
         if (!empty($this->parentNode)) {
@@ -103,9 +101,7 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function buildPackageNode()
     {
         $this->parentNode = $this->node;

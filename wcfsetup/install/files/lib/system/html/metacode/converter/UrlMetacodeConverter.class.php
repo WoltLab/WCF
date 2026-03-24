@@ -20,9 +20,7 @@ class UrlMetacodeConverter extends AbstractMetacodeConverter
      */
     public static $allowedSchemes = ['http', 'https', 'mailto', 'ftp', 'nntp', 'news', 'tel', 'steam', 'ts3server'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function convert(\DOMDocumentFragment $fragment, array $attributes)
     {
         $element = $fragment->ownerDocument->createElement('a');
@@ -71,9 +69,7 @@ class UrlMetacodeConverter extends AbstractMetacodeConverter
         return $element;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateAttributes(array $attributes)
     {
         if (\count($attributes) > 1) {

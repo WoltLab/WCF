@@ -18,9 +18,7 @@ use wcf\util\FileUtil;
  */
 class FilesizeModifierTemplatePlugin implements IModifierTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         return FileUtil::formatFilesize($tagArgs[0]);

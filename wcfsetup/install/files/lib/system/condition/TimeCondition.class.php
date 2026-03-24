@@ -43,9 +43,7 @@ class TimeCondition extends AbstractMultipleFieldsCondition implements IContentC
      */
     protected $timezone = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         $data = [];
@@ -68,9 +66,7 @@ class TimeCondition extends AbstractMultipleFieldsCondition implements IContentC
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHTML()
     {
         $start = WCF::getLanguage()->get('wcf.date.period.start');
@@ -117,9 +113,7 @@ HTML;
         return $fieldElement;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (isset($_POST['endTime'])) {
@@ -133,9 +127,7 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         $this->endTime = '00:00';
@@ -143,9 +135,7 @@ HTML;
         $this->timezone = '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setData(Condition $condition)
     {
         $endTime = $condition->endTime;
@@ -164,9 +154,7 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if ($this->startTime == '00:00' && $this->endTime == '00:00') {
@@ -208,9 +196,7 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showContent(Condition $condition)
     {
         $timezone = WCF::getUser()->getTimeZone();

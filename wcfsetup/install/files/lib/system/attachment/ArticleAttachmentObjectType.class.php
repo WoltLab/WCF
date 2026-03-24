@@ -18,9 +18,7 @@ use wcf\system\WCF;
  */
 class ArticleAttachmentObjectType extends AbstractAttachmentObjectType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canDownload(int $objectID)
     {
         if ($objectID) {
@@ -30,9 +28,7 @@ class ArticleAttachmentObjectType extends AbstractAttachmentObjectType
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canUpload(int $objectID, int $parentObjectID = 0)
     {
         if ($objectID) {
@@ -43,17 +39,13 @@ class ArticleAttachmentObjectType extends AbstractAttachmentObjectType
             || WCF::getSession()->getPermission('admin.content.article.canContributeArticle');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canDelete(int $objectID)
     {
         return $this->canUpload($objectID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function cacheObjects(array $objectIDs)
     {
         $articleList = new ArticleList();

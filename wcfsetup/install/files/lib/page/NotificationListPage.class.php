@@ -29,27 +29,19 @@ class NotificationListPage extends MultipleLinkPage
      */
     public $notifications = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function countItems()
     {
         return UserNotificationHandler::getInstance()->countAllNotifications();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initObjectList() {}
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function readObjects() {}
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -61,9 +53,7 @@ class NotificationListPage extends MultipleLinkPage
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

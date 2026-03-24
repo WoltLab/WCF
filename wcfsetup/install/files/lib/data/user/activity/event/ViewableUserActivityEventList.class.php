@@ -42,9 +42,7 @@ class ViewableUserActivityEventList extends UserActivityEventList
      */
     public $sqlOrderBy = 'user_activity_event.time DESC, user_activity_event.eventID DESC';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct()
     {
         parent::__construct();
@@ -57,9 +55,7 @@ class ViewableUserActivityEventList extends UserActivityEventList
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readObjects()
     {
         parent::readObjects();

@@ -39,9 +39,7 @@ class ViewableArticleList extends ArticleList
      */
     protected $embeddedObjectLoading = true;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct()
     {
         parent::__construct();
@@ -69,9 +67,7 @@ class ViewableArticleList extends ArticleList
                     AND like_object.objectID = article.articleID";
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readObjects()
     {
         parent::readObjects();

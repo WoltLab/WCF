@@ -106,9 +106,7 @@ trait TPhpass
         return $output;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function verify(
         #[\SensitiveParameter]
         string $password,

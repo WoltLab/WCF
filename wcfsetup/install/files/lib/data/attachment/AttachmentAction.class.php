@@ -37,9 +37,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction
      */
     public $eventData = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateDelete()
     {
         WCF::getSession()->checkPermissions(['admin.attachment.canManageAttachment']);

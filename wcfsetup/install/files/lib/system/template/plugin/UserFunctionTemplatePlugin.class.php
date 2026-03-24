@@ -34,9 +34,7 @@ use wcf\util\StringUtil;
  */
 class UserFunctionTemplatePlugin implements IFunctionTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         if (!isset($tagArgs['object'])) {

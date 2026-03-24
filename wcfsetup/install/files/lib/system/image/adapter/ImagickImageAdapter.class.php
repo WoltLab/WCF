@@ -68,9 +68,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function load($image, int $type = 0)
     {
         // @phpstan-ignore instanceof.alwaysTrue
@@ -83,9 +81,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         $this->readImageDimensions();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function loadFile(string $file)
     {
         try {
@@ -134,9 +130,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function createEmptyImage(int $width, int $height)
     {
         $this->imagick->newImage($width, $height, 'white');
@@ -145,9 +139,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         $this->height = $height;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function createThumbnail(int $maxWidth, int $maxHeight, bool $preserveAspectRatio = true)
     {
         $thumbnail = clone $this->imagick;
@@ -173,9 +165,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         return $thumbnail;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function clip(int $originX, int $originY, int $width, int $height)
     {
         if (\in_array($this->imagick->getImageFormat(), self::$animatedFormats)) {
@@ -190,9 +180,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function resize(int $originX, int $originY, int $originWidth, int $originHeight, int $targetWidth, int $targetHeight)
     {
         if (\in_array($this->imagick->getImageFormat(), self::$animatedFormats)) {
@@ -212,9 +200,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function drawRectangle(int $startX, int $startY, int $endX, int $endY)
     {
         $draw = new \ImagickDraw();
@@ -225,9 +211,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         $this->imagick->drawImage($draw);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function drawText(string $text, int $x, int $y, $font, int $size, float $opacity = 1.0)
     {
         $draw = new \ImagickDraw();
@@ -251,9 +235,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function drawTextRelative(string $text, string $position, int $margin, int $offsetX, int $offsetY, $font, int $size, float $opacity = 1.0)
     {
         // split text into multiple lines
@@ -316,9 +298,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         $this->drawText($text, $x + $offsetX, $y + $offsetY, $font, $size, $opacity);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function textFitsImage(string $text, int $margin, $font, int $size)
     {
         $draw = new \ImagickDraw();
@@ -329,26 +309,20 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         return $metrics['textWidth'] + 2 * $margin <= $this->getWidth() && $metrics['textHeight'] + 2 * $margin <= $this->getHeight();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function adjustFontSize(string $text, int $margin, $font, int $size)
     {
         return 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setColor(int $red, int $green, int $blue)
     {
         $this->color = new \ImagickPixel();
         $this->color->setColor('rgb(' . $red . ',' . $green . ',' . $blue . ')');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasColor()
     {
         if ($this->color instanceof \ImagickPixel) {
@@ -358,26 +332,20 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setTransparentColor(int $red, int $green, int $blue)
     {
         $color = 'rgb(' . $red . ',' . $green . ',' . $blue . ')';
         $this->imagick->paintTransparentImage($color, 0.0, 0);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getImage()
     {
         return $this->imagick;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function writeImage($image, ?string $filename)
     {
         if (!($image instanceof \Imagick)) {
@@ -397,33 +365,25 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         $image->writeImages($filename, true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHeight()
     {
         return $this->height;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getWidth()
     {
         return $this->width;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getType()
     {
         return 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rotate($degrees)
     {
         $image = clone $this->imagick;
@@ -432,9 +392,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         return $image;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function overlayImage(string $file, int $x, int $y, float $opacity)
     {
         try {
@@ -463,9 +421,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function overlayImageRelative(string $file, string $position, int $margin, float $opacity)
     {
         // does nothing
@@ -490,9 +446,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         return $filter;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function isSupported()
     {
         return \class_exists('\Imagick', false);
@@ -508,9 +462,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         return $match['version'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function saveImageAs(object $image, string $filename, string $type, int $quality = 100): void
     {
         if (!($image instanceof \Imagick)) {
@@ -571,9 +523,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         return \version_compare($version, '6.3.6') >= 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function supportsWebp(): bool
     {
         return \in_array('WEBP', \Imagick::queryFormats());

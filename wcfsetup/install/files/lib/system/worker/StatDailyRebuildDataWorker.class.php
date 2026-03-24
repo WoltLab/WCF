@@ -29,17 +29,13 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker
      */
     protected $startDate = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initObjectList()
     {
         // does nothing
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function countObjects()
     {
         $this->getStartDate();
@@ -47,9 +43,7 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker
         $this->count = (int)\ceil((TIME_NOW - $this->startDate) / 86400);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         EventHandler::getInstance()->fireAction($this, 'execute');

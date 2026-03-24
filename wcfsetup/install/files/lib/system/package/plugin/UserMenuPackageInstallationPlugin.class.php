@@ -39,9 +39,7 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
      */
     public $tagName = 'usermenuitem';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         $result = parent::prepareImport($data);
@@ -58,9 +56,7 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
         return $result;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element)
     {
         if ($element->tagName === 'iconclassname') {
@@ -76,10 +72,10 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         parent::addFormFields($form);
@@ -141,11 +137,11 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = parent::fetchElementData($element, $saveData);
@@ -175,10 +171,10 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $menuItem = parent::prepareXmlElement($document, $form);

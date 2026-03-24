@@ -57,35 +57,29 @@ final class UserPasswordField extends AbstractFormField implements
         $this->label('wcf.user.password');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'password';
     }
 
     /**
-     * @inheritDoc
      * @return string[]
      * @since       5.4
      */
+    #[\Override]
     protected function getValidAutoCompleteTokens(): array
     {
         return ['current-password'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAvailable()
     {
         return WCF::getUser()->userID != 0 && !WCF::getUser()->authData && parent::isAvailable();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
@@ -95,9 +89,7 @@ final class UserPasswordField extends AbstractFormField implements
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if ($this->isRequired() && !$this->getValue()) {

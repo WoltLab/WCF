@@ -19,9 +19,7 @@ abstract class AbstractSessionHandler extends SingletonFactory
      */
     protected $sessionHandler;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     final protected function init()
     {
         $this->sessionHandler = SessionHandler::getInstance();

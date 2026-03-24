@@ -22,17 +22,13 @@ class DefaultUserMenuItemProvider extends DatabaseObjectDecorator implements IUs
      */
     protected static $baseClass = UserMenuItem::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isVisible()
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         // explicit call to satisfy our interface

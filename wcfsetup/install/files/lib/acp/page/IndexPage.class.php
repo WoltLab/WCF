@@ -25,17 +25,13 @@ class IndexPage extends AbstractPage
      */
     public $neededPermissions = ['admin.general.canUseAcp'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -46,9 +42,7 @@ class IndexPage extends AbstractPage
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         // check package installation queue

@@ -26,33 +26,25 @@ class SearchResultPageContent extends DatabaseObjectDecorator implements ISearch
      */
     protected static $baseClass = PageContent::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getUserProfile()
     {
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSubject()
     {
         return $this->getDecoratedObject()->title;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTime()
     {
         return 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(string $query = '')
     {
         return LinkHandler::getInstance()->getCmsLink(
@@ -61,17 +53,13 @@ class SearchResultPageContent extends DatabaseObjectDecorator implements ISearch
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectTypeName()
     {
         return 'com.woltlab.wcf.page';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormattedMessage()
     {
         $page = new Page($this->pageID);
@@ -84,17 +72,13 @@ class SearchResultPageContent extends DatabaseObjectDecorator implements ISearch
         return $message;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContainerTitle()
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContainerLink()
     {
         return '';

@@ -34,9 +34,9 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
     protected $objectTypeName = '';
 
     /**
-     * @inheritDoc
      * @throws  SystemException
      */
+    #[\Override]
     protected function init()
     {
         $this->objectType = ObjectTypeCache::getInstance()

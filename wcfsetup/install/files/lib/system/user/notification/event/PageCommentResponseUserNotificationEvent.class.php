@@ -26,17 +26,13 @@ class PageCommentResponseUserNotificationEvent extends AbstractCommentResponseUs
     use TTestableCommentResponseUserNotificationEvent;
     use TTestablePageUserNotificationEvent;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepare()
     {
         CommentRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->commentID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMessage()
     {
         $authors = $this->getAuthors();
@@ -70,9 +66,7 @@ class PageCommentResponseUserNotificationEvent extends AbstractCommentResponseUs
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEmailMessage(string $notificationType = 'instant'): array
     {
         $messageID = '<com.woltlab.wcf.user.pageComment.notification/' . $this->getUserNotificationObject()->commentID . '@' . Email::getHost() . '>';
@@ -108,32 +102,25 @@ class PageCommentResponseUserNotificationEvent extends AbstractCommentResponseUs
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return PageCache::getInstance()->getPage($this->additionalData['objectID'])->getLink() . '#comment' . $this->getUserNotificationObject()->commentID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getTypeName(): string
     {
         return $this->getLanguage()->get('wcf.search.object.com.woltlab.wcf.page');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getObjectTitle(): string
     {
         return PageCache::getInstance()->getPage($this->additionalData['objectID'])->getTitle();
     }
 
     /**
-     * @inheritDoc
      * @return array{objectID: int, objectTypeID: ?int}
      */
     protected static function getTestCommentObjectData(UserProfile $recipient, UserProfile $author)

@@ -27,17 +27,13 @@ class ArticleCommentLikeUserNotificationEvent extends AbstractSharedUserNotifica
      */
     protected $stackable = true;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepare()
     {
         ViewableArticleContentRuntimeCache::getInstance()->cacheObjectID($this->additionalData['objectID']);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         $count = \count($this->getAuthors());
@@ -51,9 +47,7 @@ class ArticleCommentLikeUserNotificationEvent extends AbstractSharedUserNotifica
         return $this->getLanguage()->get('wcf.user.notification.articleComment.like.title');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMessage()
     {
         $article = ViewableArticleContentRuntimeCache::getInstance()->getObject($this->additionalData['objectID']);
@@ -89,34 +83,26 @@ class ArticleCommentLikeUserNotificationEvent extends AbstractSharedUserNotifica
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEmailMessage(string $notificationType = 'instant'): string
     {
         // not supported
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return ViewableArticleContentRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink() . '#comment' . $this->getCommentID();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEventHash()
     {
         return \sha1($this->eventID . '-' . $this->getCommentID());
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function supportsEmailNotification()
     {
         return false;

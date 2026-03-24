@@ -33,9 +33,7 @@ class UserOptionsCondition extends AbstractMultipleFieldsCondition implements
      */
     protected $optionHandler;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct(DatabaseObject $object)
     {
         parent::__construct($object);
@@ -45,9 +43,7 @@ class UserOptionsCondition extends AbstractMultipleFieldsCondition implements
         $this->optionHandler->init();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
     {
         $optionValues = $conditionData['optionValues'];
@@ -65,9 +61,7 @@ class UserOptionsCondition extends AbstractMultipleFieldsCondition implements
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkUser(Condition $condition, User $user)
     {
         $optionValues = $condition->optionValues;
@@ -93,9 +87,7 @@ class UserOptionsCondition extends AbstractMultipleFieldsCondition implements
         return $checkSuccess;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         $optionValues = $this->optionHandler->getOptionValues();
@@ -122,9 +114,7 @@ class UserOptionsCondition extends AbstractMultipleFieldsCondition implements
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHTML()
     {
         return WCF::getTPL()->render('wcf', 'shared_userOptionsCondition', [
@@ -132,33 +122,25 @@ class UserOptionsCondition extends AbstractMultipleFieldsCondition implements
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         $this->optionHandler->readUserInput($_POST);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         $this->optionHandler->setOptionValues([]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setData(Condition $condition)
     {
         $this->optionHandler->setOptionValues($condition->conditionData['optionValues']);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showContent(Condition $condition)
     {
         if (!WCF::getUser()->userID) {

@@ -26,9 +26,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
      */
     public static $forceFrontendLinks = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getParsedTag(array $openingTag, string $content, array $closingTag, BBCodeParser $parser): string
     {
         $mediaID = (!empty($openingTag['attributes'][0])) ? \intval($openingTag['attributes'][0]) : 0;

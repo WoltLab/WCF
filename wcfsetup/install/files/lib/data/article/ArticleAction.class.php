@@ -89,9 +89,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
      */
     protected $allowGuestAccess = ['markAllAsRead'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function create()
     {
         if (!empty($this->parameters['attachmentHandler'])) {
@@ -183,9 +181,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
         return $article;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         if (!empty($this->parameters['attachmentHandler'])) {
@@ -399,9 +395,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         if (empty($this->objects)) {

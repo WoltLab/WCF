@@ -14,25 +14,19 @@ use wcf\data\condition\Condition;
  */
 class MultiPageControllerCondition extends AbstractMultiSelectCondition implements IContentCondition
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getFieldElement()
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getOptions()
     {
         return [];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showContent(Condition $condition)
     {
         return false;

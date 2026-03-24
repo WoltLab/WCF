@@ -21,9 +21,7 @@ class LogoutAction extends AbstractSecureAction
      */
     public $loginRequired = true;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         parent::execute();

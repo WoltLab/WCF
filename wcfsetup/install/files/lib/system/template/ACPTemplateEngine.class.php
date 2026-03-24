@@ -18,9 +18,7 @@ class ACPTemplateEngine extends TemplateEngine
      */
     protected $environment = 'admin';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         parent::init();
@@ -44,9 +42,7 @@ class ACPTemplateEngine extends TemplateEngine
         self::deleteCompiledTemplates($compileDir);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCompiledFilename($templateName, $application)
     {
         $abbreviation = 'wcf';
@@ -68,9 +64,7 @@ class ACPTemplateEngine extends TemplateEngine
         throw new \BadMethodCallException("You may not change the template group of the acp template engine");
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTemplateListenerCode($templateName, $eventName)
     {
         // skip template listeners within WCFSetup

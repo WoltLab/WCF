@@ -30,9 +30,7 @@ final class FormFieldValidationError implements IFormFieldValidationError
      */
     private string $type;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct($type, $languageItem = null, array $information = [])
     {
         if ($languageItem === null) {
@@ -48,9 +46,7 @@ final class FormFieldValidationError implements IFormFieldValidationError
         $this->information = $information;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtml()
     {
         return WCF::getTPL()->render('wcf', 'shared_formFieldError', [
@@ -58,25 +54,19 @@ final class FormFieldValidationError implements IFormFieldValidationError
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getInformation()
     {
         return $this->information;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMessage()
     {
         return WCF::getLanguage()->getDynamicVariable($this->languageItem, $this->information);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getType()
     {
         return $this->type;

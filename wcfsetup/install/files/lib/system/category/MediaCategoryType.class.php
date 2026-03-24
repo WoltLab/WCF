@@ -29,25 +29,19 @@ class MediaCategoryType extends AbstractCategoryType
      */
     protected $maximumNestingLevel = 2;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canAddCategory()
     {
         return WCF::getSession()->getPermission('admin.content.cms.canManageMedia');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canDeleteCategory()
     {
         return WCF::getSession()->getPermission('admin.content.cms.canManageMedia');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canEditCategory()
     {
         return WCF::getSession()->getPermission('admin.content.cms.canManageMedia');

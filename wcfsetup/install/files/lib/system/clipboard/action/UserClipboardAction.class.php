@@ -44,9 +44,7 @@ class UserClipboardAction extends AbstractClipboardAction
         'unconfirmEmail',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $objects, ClipboardAction $action)
     {
         $item = parent::execute($objects, $action);
@@ -101,17 +99,13 @@ class UserClipboardAction extends AbstractClipboardAction
         return $item;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getClassName()
     {
         return UserAction::class;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTypeName()
     {
         return 'com.woltlab.wcf.user';

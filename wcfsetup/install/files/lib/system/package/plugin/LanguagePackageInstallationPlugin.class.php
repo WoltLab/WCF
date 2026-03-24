@@ -67,9 +67,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      */
     public $tagName = 'item';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function install()
     {
         AbstractPackageInstallationPlugin::install();
@@ -174,9 +172,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function uninstall()
     {
         parent::uninstall();
@@ -282,33 +278,25 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items)
     {
         // does nothing
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         return $data;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function findExistingItem(array $data)
     {
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function postImport()
     {
         LanguageFactory::getInstance()->deleteLanguageCache();
@@ -323,28 +311,26 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         return 'language/*.xml';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function isValid(PackageArchive $packageArchive, $instruction)
     {
         return true;
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return [];
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         /** @var FormContainer $dataContainer */
@@ -518,11 +504,11 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = [
@@ -564,10 +550,10 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         return $element->getAttribute('name');
@@ -625,20 +611,20 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     }
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     protected function getImportElements(\DOMXPath $xpath)
     {
         return $xpath->query('/ns:language/ns:import/ns:category/ns:item');
     }
 
     /**
-     * @inheritDoc
      * @param string $languageCode
      * @return string
      * @since   5.2
      */
+    #[\Override]
     protected function getEmptyXml($languageCode)
     {
         $xsdFilename = $this->getXsdFilename();
@@ -701,10 +687,10 @@ XML;
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function saveObject(\DOMElement $newElement, ?\DOMElement $oldElement = null)
     {
         $newElementData = $this->getElementData($newElement, true);
@@ -756,10 +742,10 @@ XML;
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $keys = [
@@ -775,10 +761,10 @@ XML;
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $data = $form->getData()['data'];
@@ -854,21 +840,21 @@ XML;
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function createAndInsertNewXmlElement(XML $xml, IFormDocument $form)
     {
         return $this->createXmlElement($xml->getDocument(), $form);
     }
 
     /**
-     * @inheritDoc
      * @param string $identifier
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function replaceXmlElement(XML $xml, IFormDocument $form, $identifier)
     {
         $newElement = $this->createXmlElement($xml->getDocument(), $form);
@@ -887,10 +873,10 @@ XML;
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function deleteObject(\DOMElement $element)
     {
         $sql = "DELETE FROM wcf1_language_item
@@ -904,10 +890,10 @@ XML;
     }
 
     /**
-     * @inheritDoc
      * @return bool
      * @since   5.2
      */
+    #[\Override]
     protected function sanitizeXmlFileAfterDeleteEntry(\DOMDocument $document)
     {
         $language = $document->getElementsByTagName('language')->item(0);

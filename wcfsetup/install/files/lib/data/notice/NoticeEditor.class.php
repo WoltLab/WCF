@@ -62,9 +62,7 @@ class NoticeEditor extends DatabaseObjectEditor implements IEditableCachedObject
         $this->update(['showOrder' => $newShowOrder]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         NoticeCacheBuilder::getInstance()->reset();

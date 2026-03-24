@@ -103,9 +103,7 @@ final class SmtpEmailTransport implements IStatusReportingEmailTransport
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __destruct()
     {
         $this->disconnect();

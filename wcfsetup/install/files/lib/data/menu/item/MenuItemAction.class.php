@@ -84,9 +84,7 @@ class MenuItemAction extends AbstractDatabaseObjectAction implements ISortableAc
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateToggle()
     {
         parent::validateUpdate();
@@ -98,9 +96,7 @@ class MenuItemAction extends AbstractDatabaseObjectAction implements ISortableAc
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateUpdatePosition()
     {
         WCF::getSession()->checkPermissions(['admin.content.cms.canManageMenu']);
@@ -143,9 +139,7 @@ class MenuItemAction extends AbstractDatabaseObjectAction implements ISortableAc
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updatePosition()
     {
         $sql = "UPDATE  wcf1_menu_item

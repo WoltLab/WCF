@@ -32,9 +32,7 @@ class TrophyConditionHandler extends SingletonFactory
      */
     protected $groupedObjectTypes = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes(self::CONDITION_DEFINITION_NAME);

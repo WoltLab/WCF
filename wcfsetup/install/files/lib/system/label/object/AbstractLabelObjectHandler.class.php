@@ -35,9 +35,7 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
      */
     protected $objectTypeID = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->labelGroups = LabelHandler::getInstance()->getLabelGroups();
@@ -49,18 +47,16 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
         $this->objectTypeID = $objectType->objectTypeID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLabelGroupIDs(array $parameters = [])
     {
         return \array_keys($this->labelGroups);
     }
 
     /**
-     * @inheritDoc
      * @return  ViewableLabelGroup[]
      */
+    #[\Override]
     public function getLabelGroups(array $parameters = [])
     {
         $groupIDs = $this->getLabelGroupIDs($parameters);
@@ -75,9 +71,7 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
         return $data;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateLabelIDs(array $labelIDs, string $optionName = '', bool $legacyReturnValue = true)
     {
         $optionID = 0;
@@ -147,17 +141,13 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setLabels(array $labelIDs, int $objectID, bool $validatePermissions = true)
     {
         LabelHandler::getInstance()->setLabels($labelIDs, $this->objectTypeID, $objectID, $validatePermissions);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function removeLabels(int $objectID, bool $validatePermissions = true)
     {
         // @phpstan-ignore function.impossibleType
@@ -165,9 +155,7 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
         LabelHandler::getInstance()->removeLabels($this->objectTypeID, $objectIDs);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getAssignedLabels(array $objectIDs, bool $validatePermissions = true)
     {
         return LabelHandler::getInstance()->getAssignedLabels($this->objectTypeID, $objectIDs, $validatePermissions);

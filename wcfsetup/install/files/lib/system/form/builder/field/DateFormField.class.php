@@ -130,9 +130,7 @@ class DateFormField extends AbstractFormField implements
         return $this->earliestDate;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtmlVariables()
     {
         // the date picker JavaScript code requires the `min` and `max` value to have a
@@ -224,9 +222,7 @@ class DateFormField extends AbstractFormField implements
         return $dateTime;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSaveValue()
     {
         if ($this->getValue() === null) {
@@ -282,9 +278,7 @@ class DateFormField extends AbstractFormField implements
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if (
@@ -383,9 +377,7 @@ class DateFormField extends AbstractFormField implements
         return $this->supportsTime;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if ($this->getValue() === null) {
@@ -441,9 +433,7 @@ class DateFormField extends AbstractFormField implements
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function value(mixed $value)
     {
         parent::value($value);
@@ -469,10 +459,10 @@ class DateFormField extends AbstractFormField implements
     }
 
     /**
-     * @inheritDoc
      * @return string[]
      * @since 5.4
      */
+    #[\Override]
     protected static function getReservedFieldAttributes(): array
     {
         return \array_merge(

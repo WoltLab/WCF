@@ -44,9 +44,7 @@ class BoxHandler extends SingletonFactory
      */
     protected static $disablePageLayout = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $pageID = 0;

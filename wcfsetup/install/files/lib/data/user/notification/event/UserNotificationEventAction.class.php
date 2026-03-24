@@ -33,10 +33,7 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction
      */
     protected $userNotificationEvent;
 
-    /**
-     * @inheritDoc
-     * @return  UserNotificationEvent
-     */
+    #[\Override]
     public function create()
     {
         /** @var UserNotificationEvent $event */

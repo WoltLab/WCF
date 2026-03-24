@@ -16,9 +16,7 @@ use wcf\system\WCF;
  */
 trait TMultiRecipientPageCommentUserNotificationObjectType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getRecipientIDs(Comment $comment)
     {
         // find all userIDs with the permission to manage pages

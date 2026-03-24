@@ -44,9 +44,7 @@ class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements 
      */
     protected $requireACP = ['create', 'delete', 'toggle', 'update'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateDelete()
     {
         parent::validateDelete();
@@ -60,10 +58,9 @@ class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements 
     }
 
     /**
-     * @inheritDoc
-     *
      * @deprecated 6.3
      */
+    #[\Override]
     public function validateToggle()
     {
         $this->validateUpdate();

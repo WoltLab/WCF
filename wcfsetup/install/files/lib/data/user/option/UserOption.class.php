@@ -116,9 +116,7 @@ class UserOption extends Option implements ITitledObject
      */
     public $user;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return WCF::getLanguage()->get('wcf.user.option.' . $this->optionName);
@@ -135,9 +133,7 @@ class UserOption extends Option implements ITitledObject
         $this->user = $user;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isVisible()
     {
         if ($this->isDisabled) {

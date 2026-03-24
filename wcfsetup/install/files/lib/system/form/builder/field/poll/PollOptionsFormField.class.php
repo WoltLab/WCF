@@ -47,9 +47,7 @@ final class PollOptionsFormField extends AbstractFormField
             ->addClass('pollOptionContainer');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if (
@@ -75,9 +73,7 @@ final class PollOptionsFormField extends AbstractFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function value(mixed $value)
     {
         $pollOptions = [];
@@ -103,9 +99,7 @@ final class PollOptionsFormField extends AbstractFormField
         return parent::value($pollOptions);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();

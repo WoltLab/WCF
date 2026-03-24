@@ -14,9 +14,7 @@ use wcf\system\session\SessionHandler;
  */
 class SessionCleanUpCronjob extends AbstractCronjob
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(Cronjob $cronjob)
     {
         parent::execute($cronjob);

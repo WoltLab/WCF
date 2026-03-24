@@ -53,9 +53,7 @@ class DevtoolsSetup extends SingletonFactory
      */
     protected $configuration = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         if (empty($_SERVER['DOCUMENT_ROOT'])) {

@@ -25,9 +25,7 @@ use wcf\system\WCF;
  */
 class ContactRecipient extends DatabaseObject implements ITitledObject
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleData($data)
     {
         // dynamically set email address for the administrator
@@ -38,17 +36,13 @@ class ContactRecipient extends DatabaseObject implements ITitledObject
         parent::handleData($data);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getName();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __wakeup()
     {
         // update the administrator's email address on de-serialization, avoids outdated caches

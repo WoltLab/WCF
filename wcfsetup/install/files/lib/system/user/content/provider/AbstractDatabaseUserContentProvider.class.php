@@ -49,9 +49,7 @@ abstract class AbstractDatabaseUserContentProvider implements IUserContentProvid
         return static::getDatabaseObjectClass() . 'Action';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContentListForUser(User $user)
     {
         if ($user->userID == 0) {
@@ -72,9 +70,7 @@ abstract class AbstractDatabaseUserContentProvider implements IUserContentProvid
         return $databaseObjectList;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function deleteContent(array $objectIDs)
     {
         $className = self::getDatabaseObjectActionClass();

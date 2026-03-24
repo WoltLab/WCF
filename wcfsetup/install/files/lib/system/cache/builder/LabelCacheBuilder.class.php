@@ -21,9 +21,7 @@ use wcf\system\acl\ACLHandler;
  */
 class LabelCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function rebuild(array $parameters)
     {
         $data = [

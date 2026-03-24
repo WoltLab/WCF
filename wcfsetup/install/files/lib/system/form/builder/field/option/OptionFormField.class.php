@@ -36,9 +36,7 @@ final class OptionFormField extends ItemListFormField implements IPackagesFormFi
         $this->label('wcf.form.field.option');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -81,9 +79,7 @@ final class OptionFormField extends ItemListFormField implements IPackagesFormFi
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'options';

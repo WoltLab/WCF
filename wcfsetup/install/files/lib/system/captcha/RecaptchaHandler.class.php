@@ -37,9 +37,7 @@ class RecaptchaHandler implements ICaptchaHandler
      */
     public static $forceIsAvailable = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement()
     {
         if (WCF::getSession()->getVar('recaptchaDone')) {
@@ -51,9 +49,7 @@ class RecaptchaHandler implements ICaptchaHandler
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAvailable()
     {
         if (RECAPTCHA_PUBLICKEY_V3 && RECAPTCHA_PRIVATEKEY_V3) {
@@ -73,9 +69,7 @@ class RecaptchaHandler implements ICaptchaHandler
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (isset($_POST['recaptcha-type'])) {
@@ -90,17 +84,13 @@ class RecaptchaHandler implements ICaptchaHandler
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         WCF::getSession()->unregister('recaptchaDone');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if (WCF::getSession()->getVar('recaptchaDone')) {

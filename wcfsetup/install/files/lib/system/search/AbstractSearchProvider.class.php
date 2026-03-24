@@ -15,16 +15,12 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  */
 abstract class AbstractSearchProvider extends AbstractObjectTypeProcessor implements ISearchProvider
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables(): void
     {
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getApplication(): string
     {
         $classParts = \explode('\\', static::class);
@@ -32,97 +28,73 @@ abstract class AbstractSearchProvider extends AbstractObjectTypeProcessor implem
         return $classParts[0];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionBuilder(array $parameters): ?PreparedStatementConditionBuilder
     {
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getJoins(): string
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSubjectFieldName(): string
     {
         return $this->getTableName() . '.subject';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getUsernameFieldName(): string
     {
         return $this->getTableName() . '.username';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTimeFieldName(): string
     {
         return $this->getTableName() . '.time';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getAdditionalData(): ?array
     {
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAccessible(): bool
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormTemplateName(): string
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getResultListTemplateName(): string
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCustomSortField(string $sortField): string
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFetchObjectsQuery(?PreparedStatementConditionBuilder $additionalConditions = null): string
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCustomIconName(): ?string
     {
         return null;

@@ -36,9 +36,6 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
      */
     protected string $type;
 
-    /**
-     * @inheritDoc
-     */
     #[\Override]
     public function getData(): array
     {
@@ -94,7 +91,6 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
     }
 
     /**
-     * @inheritDoc
      * @since       5.4
      */
     #[\Override]
@@ -103,9 +99,6 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
         return $this->newName;
     }
 
-    /**
-     * @inheritDoc
-     */
     #[\Override]
     public function getName(): string
     {
@@ -116,9 +109,6 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
         return $this->name;
     }
 
-    /**
-     * @inheritDoc
-     */
     #[\Override]
     public function getType(): string
     {
@@ -131,18 +121,12 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
         return $this->type;
     }
 
-    /**
-     * @inheritDoc
-     */
     #[\Override]
     public function isNotNull(): bool
     {
         return $this->notNull;
     }
 
-    /**
-     * @inheritDoc
-     */
     #[\Override]
     public function name(string $name): static
     {
@@ -155,9 +139,6 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
     #[\Override]
     public function notNull(bool $notNull = true): static
     {
@@ -167,7 +148,6 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
     }
 
     /**
-     * @inheritDoc
      * @since       5.4
      */
     #[\Override]
@@ -183,17 +163,15 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
     }
 
     /**
-     * @inheritDoc
      * @return  static
      */
+    #[\Override]
     public static function create(string $name): static
     {
         return (new static())->name($name);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function createFromData(string $name, array $data): static
     {
         $column = static::create($name)

@@ -61,10 +61,7 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
      */
     public $boxController;
 
-    /**
-     * @inheritDoc
-     * @return  Box
-     */
+    #[\Override]
     public function create()
     {
         /** @var Box $box */
@@ -138,9 +135,7 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
         return $box;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         parent::update();
@@ -246,9 +241,7 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateDelete()
     {
         parent::validateDelete();
@@ -260,9 +253,7 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         $boxContentIDs = [];

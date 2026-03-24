@@ -16,9 +16,7 @@ use wcf\data\user\UserProfile;
  */
 class ModerationQueueCommentManager extends AbstractCommentManager implements ICommentPermissionManager
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAccessible(int $objectID, bool $validateWritePermission = false)
     {
         $entry = new ModerationQueue($objectID);
@@ -34,17 +32,13 @@ class ModerationQueueCommentManager extends AbstractCommentManager implements IC
         return $entry->canEdit($user->getDecoratedObject());
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canAddWithoutApproval(int $objectID)
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(int $objectTypeID, int $objectID)
     {
         $entry = new ViewableModerationQueue(new ModerationQueue($objectID));
@@ -52,17 +46,13 @@ class ModerationQueueCommentManager extends AbstractCommentManager implements IC
         return $entry->getLink();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(int $objectTypeID, int $objectID, bool $isResponse = false)
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updateCounter(int $objectID, int $value)
     {
         $entry = new ModerationQueue($objectID);
@@ -75,9 +65,7 @@ class ModerationQueueCommentManager extends AbstractCommentManager implements IC
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canAdd(int $objectID)
     {
         if (!$this->isAccessible($objectID, true)) {
@@ -87,33 +75,25 @@ class ModerationQueueCommentManager extends AbstractCommentManager implements IC
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function canEdit(bool $isOwner)
     {
         return $isOwner;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function canDelete(bool $isOwner)
     {
         return $isOwner;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function supportsLike()
     {
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function supportsReport()
     {
         return false;

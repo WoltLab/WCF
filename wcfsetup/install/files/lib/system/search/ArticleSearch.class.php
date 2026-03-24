@@ -31,9 +31,7 @@ class ArticleSearch extends AbstractSearchProvider
      */
     private $messageCache = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function cacheObjects(array $objectIDs, ?array $additionalData = null): void
     {
         $list = new SearchResultArticleContentList();
@@ -44,57 +42,43 @@ class ArticleSearch extends AbstractSearchProvider
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObject(int $objectID): ?ISearchResultObject
     {
         return $this->messageCache[$objectID] ?? null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTableName(): string
     {
         return 'wcf1_article_content';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getIDFieldName(): string
     {
         return $this->getTableName() . '.articleContentID';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSubjectFieldName(): string
     {
         return $this->getTableName() . '.title';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getUsernameFieldName(): string
     {
         return 'wcf1_article.username';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTimeFieldName(): string
     {
         return 'wcf1_article.time';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionBuilder(array $parameters): ?PreparedStatementConditionBuilder
     {
         if (!empty($parameters['articleCategoryID'])) {
@@ -141,9 +125,7 @@ class ArticleSearch extends AbstractSearchProvider
         return $categoryIDs;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getJoins(): string
     {
         return '
@@ -151,33 +133,25 @@ class ArticleSearch extends AbstractSearchProvider
             ON          wcf1_article.articleID = ' . $this->getTableName() . '.articleID';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormTemplateName(): string
     {
         return 'searchArticle';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getAdditionalData(): ?array
     {
         return ['articleCategoryID' => $this->articleCategoryID];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAccessible(): bool
     {
         return MODULE_ARTICLE && SEARCH_ENABLE_ARTICLES;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables(): void
     {
         WCF::getTPL()->assign([

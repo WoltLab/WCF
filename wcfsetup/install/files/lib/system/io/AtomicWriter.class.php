@@ -61,9 +61,7 @@ class AtomicWriter extends File
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __destruct()
     {
         $this->close();
@@ -119,11 +117,11 @@ class AtomicWriter extends File
     }
 
     /**
-     * @inheritDoc
      * @param string $function
      * @param mixed[] $arguments
      * @return mixed
      */
+    #[\Override]
     public function __call($function, $arguments)
     {
         if ($this->isFlushed) {

@@ -45,9 +45,7 @@ final class FirstTimeSetupOptionsEmailForm extends AbstractOptionListForm
         'module_contact_form',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -57,9 +55,7 @@ final class FirstTimeSetupOptionsEmailForm extends AbstractOptionListForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initOptionHandler()
     {
         parent::initOptionHandler();
@@ -67,9 +63,7 @@ final class FirstTimeSetupOptionsEmailForm extends AbstractOptionListForm
         $this->optionHandler->filterOptions($this->optionNames);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -79,9 +73,7 @@ final class FirstTimeSetupOptionsEmailForm extends AbstractOptionListForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -100,9 +92,7 @@ final class FirstTimeSetupOptionsEmailForm extends AbstractOptionListForm
         exit;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

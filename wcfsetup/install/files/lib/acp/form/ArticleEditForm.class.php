@@ -50,9 +50,7 @@ class ArticleEditForm extends ArticleAddForm
      */
     public $article;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -75,17 +73,13 @@ class ArticleEditForm extends ArticleAddForm
         $this->attachmentObjectID = $this->article->articleID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function readMultilingualSetting()
     {
         // not required for editing
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();
@@ -162,9 +156,7 @@ class ArticleEditForm extends ArticleAddForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         if (!empty($_POST) && !WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
@@ -226,9 +218,7 @@ class ArticleEditForm extends ArticleAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

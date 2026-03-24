@@ -43,9 +43,7 @@ class UserMultifactorCondition extends AbstractSingleFieldCondition implements
      */
     protected $multifactorNotActive = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         if ($this->multifactorActive || $this->multifactorNotActive) {
@@ -59,9 +57,7 @@ class UserMultifactorCondition extends AbstractSingleFieldCondition implements
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFieldElement()
     {
         $multifactorActiveLabel = WCF::getLanguage()->get('wcf.user.condition.multifactor.multifactorActive');
@@ -82,9 +78,7 @@ class UserMultifactorCondition extends AbstractSingleFieldCondition implements
 HTML;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (isset($_POST['multifactorActive'])) {
@@ -95,26 +89,20 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         $this->multifactorActive = $this->multifactorNotActive = 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setData(Condition $condition)
     {
         $this->multifactorActive = $condition->multifactorActive;
         $this->multifactorNotActive = $condition->multifactorActive ? 0 : 1;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if ($this->multifactorActive && $this->multifactorNotActive) {
@@ -124,9 +112,7 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showContent(Condition $condition)
     {
         if (!WCF::getUser()->userID) {
@@ -136,9 +122,7 @@ HTML;
         return $this->checkUser($condition, WCF::getUser());
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
     {
         if (isset($conditionData['multifactorActive'])) {
@@ -149,9 +133,7 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkUser(Condition $condition, User $user)
     {
         if ($condition->multifactorActive !== null && $user->multifactorActive != $condition->multifactorActive) {

@@ -14,9 +14,7 @@ use wcf\system\WCF;
  */
 class MultifactorAuthenticationForm extends \wcf\form\MultifactorAuthenticationForm
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function saved()
     {
         WCF::getSession()->registerReauthentication();

@@ -77,9 +77,7 @@ class PollManager extends SingletonFactory
      */
     protected $pollOptions = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.poll');

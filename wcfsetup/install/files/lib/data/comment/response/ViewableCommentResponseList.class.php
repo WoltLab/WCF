@@ -25,9 +25,7 @@ class ViewableCommentResponseList extends CommentResponseList
      */
     public $decoratorClassName = ViewableCommentResponse::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readObjects()
     {
         parent::readObjects();

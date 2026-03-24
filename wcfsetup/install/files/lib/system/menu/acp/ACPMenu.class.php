@@ -30,9 +30,9 @@ class ACPMenu extends TreeMenu
     ];
 
     /**
-     * @inheritDoc
      * @param AcpMenuItem $item
      */
+    #[\Override]
     protected function checkMenuItem(ITreeMenuItem $item)
     {
         if (
@@ -46,9 +46,7 @@ class ACPMenu extends TreeMenu
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function loadCache()
     {
         parent::loadCache();

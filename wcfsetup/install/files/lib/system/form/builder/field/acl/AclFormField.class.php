@@ -89,9 +89,7 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
         return $this->categoryName;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtmlVariables()
     {
         ACLHandler::getInstance()->assignVariables($this->getObjectType()->objectTypeID);
@@ -116,25 +114,19 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
         return $this->objectID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectTypeDefinition()
     {
         return 'com.woltlab.wcf.acl';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasSaveValue()
     {
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updatedObject(array $data, IStorableObject $object, $loadValues = true)
     {
         $this->objectID = $object->{$object::getDatabaseTableIndexName()};
@@ -148,9 +140,7 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function populate()
     {
         parent::populate();
@@ -167,9 +157,7 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         $valueSource = $_POST[$this->getPrefixedId()] ?? [];
@@ -188,9 +176,7 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function cleanup(): static
     {
         ACLHandler::getInstance()->resetValues($this->getObjectType()->objectTypeID);

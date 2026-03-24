@@ -98,9 +98,7 @@ class StructuredCommentList extends CommentList
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readObjects()
     {
         parent::readObjects();

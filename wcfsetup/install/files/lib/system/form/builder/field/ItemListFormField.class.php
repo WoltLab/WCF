@@ -72,18 +72,14 @@ class ItemListFormField extends AbstractFormField implements
      */
     const SAVE_VALUE_TYPE_SSV = 'ssv';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct()
     {
         $this->multiple();
         $this->addFieldClass('long');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSaveValue()
     {
         switch ($this->getSaveValueType()) {
@@ -120,18 +116,14 @@ class ItemListFormField extends AbstractFormField implements
         return $this->saveValueType;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasSaveValue()
     {
         // arrays cannot be returned as a simple save value
         return $this->getSaveValueType() !== self::SAVE_VALUE_TYPE_ARRAY;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function populate()
     {
         parent::populate();
@@ -153,9 +145,7 @@ class ItemListFormField extends AbstractFormField implements
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
@@ -199,9 +189,7 @@ class ItemListFormField extends AbstractFormField implements
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function value(mixed $value)
     {
         switch ($this->getSaveValueType()) {
@@ -252,9 +240,7 @@ class ItemListFormField extends AbstractFormField implements
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if (\is_array($this->getValue())) {

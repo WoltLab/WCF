@@ -19,9 +19,7 @@ use wcf\system\WCF;
  */
 class ViewableUserProfileComment extends ViewableComment
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __get(string $name)
     {
         if ($name === 'title') {

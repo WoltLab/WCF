@@ -24,9 +24,7 @@ class PackageUpdateServerEditor extends DatabaseObjectEditor implements IEditabl
      */
     protected static $baseClass = PackageUpdateServer::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         PackageUpdateCacheBuilder::getInstance()->reset();

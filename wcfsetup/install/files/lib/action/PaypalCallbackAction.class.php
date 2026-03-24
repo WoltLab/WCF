@@ -20,9 +20,7 @@ use wcf\system\payment\type\IPaymentType;
  */
 final class PaypalCallbackAction extends AbstractAction
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(): ResponseInterface
     {
         parent::execute();

@@ -22,9 +22,7 @@ class NewDeviceContainer extends FormContainer
      */
     protected $templateName = '__multifactorTotpNewDeviceContainer';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'newDevice';

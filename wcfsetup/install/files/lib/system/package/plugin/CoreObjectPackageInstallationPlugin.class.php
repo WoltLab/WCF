@@ -33,9 +33,7 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
      */
     public $className = CoreObjectEditor::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items)
     {
         $sql = "DELETE FROM wcf1_" . $this->tableName . "
@@ -50,9 +48,7 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         return [
@@ -60,9 +56,7 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
@@ -80,28 +74,26 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function cleanup()
     {
         (new CoreObjectCache())->rebuild();
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return [];
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         /** @var FormContainer $dataContainer */
@@ -139,11 +131,11 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         return [
@@ -153,20 +145,20 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         return \sha1($element->getElementsByTagName('objectname')->item(0)->nodeValue);
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $entryList->setKeys([
@@ -175,10 +167,10 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $coreObject = $document->createElement($this->tagName);
@@ -189,10 +181,10 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
     }
 
     /**
-     * @inheritDoc
      * @return ?\DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareDeleteXmlElement(\DOMElement $element)
     {
         $coreObject = $element->ownerDocument->createElement($this->tagName);
@@ -205,10 +197,10 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function deleteObject(\DOMElement $element)
     {
         $name = $element->getElementsByTagName('objectname')->item(0)->nodeValue;

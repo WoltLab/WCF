@@ -15,10 +15,10 @@ namespace wcf\system\form\builder\field;
 class FloatFormField extends AbstractNumericFormField
 {
     /**
-     * @inheritDoc
      * @return string[]
      * @since       5.4
      */
+    #[\Override]
     protected function getValidAutoCompleteTokens(): array
     {
         return [

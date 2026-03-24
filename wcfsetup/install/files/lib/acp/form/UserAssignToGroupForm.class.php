@@ -65,9 +65,7 @@ class UserAssignToGroupForm extends AbstractForm
      */
     protected $objectTypeID;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -88,9 +86,7 @@ class UserAssignToGroupForm extends AbstractForm
         $this->userIDs = \array_keys($this->users);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -100,9 +96,7 @@ class UserAssignToGroupForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -123,9 +117,7 @@ class UserAssignToGroupForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -169,9 +161,7 @@ class UserAssignToGroupForm extends AbstractForm
         exit;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -179,9 +169,7 @@ class UserAssignToGroupForm extends AbstractForm
         $this->readGroups();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

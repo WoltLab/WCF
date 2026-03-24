@@ -28,17 +28,13 @@ class UserProfileCommentLikeUserNotificationEvent extends AbstractSharedUserNoti
      */
     protected $stackable = true;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepare()
     {
         UserProfileRuntimeCache::getInstance()->cacheObjectID($this->additionalData['objectID']);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         $count = \count($this->getAuthors());
@@ -52,9 +48,7 @@ class UserProfileCommentLikeUserNotificationEvent extends AbstractSharedUserNoti
         return $this->getLanguage()->get('wcf.user.notification.comment.like.title');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMessage()
     {
         $authors = \array_values($this->getAuthors());
@@ -94,17 +88,13 @@ class UserProfileCommentLikeUserNotificationEvent extends AbstractSharedUserNoti
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEmailMessage(string $notificationType = 'instant')
     {
         throw new \LogicException('Unreachable');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         $owner = WCF::getUser();
@@ -115,17 +105,13 @@ class UserProfileCommentLikeUserNotificationEvent extends AbstractSharedUserNoti
         return $owner->getLink() . '#wall/comment' . $this->getCommentID();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEventHash()
     {
         return \sha1($this->eventID . '-' . $this->getCommentID());
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function supportsEmailNotification()
     {
         return false;
@@ -143,7 +129,6 @@ class UserProfileCommentLikeUserNotificationEvent extends AbstractSharedUserNoti
     }
 
     /**
-     * @inheritDoc
      * @return array{objectID: int, objectTypeID: ?int}
      * @since   3.1
      */

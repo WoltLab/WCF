@@ -18,9 +18,7 @@ use wcf\system\WCF;
  */
 class EventListenerCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rebuild(array $parameters)
     {
         $actions = [

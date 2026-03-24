@@ -26,9 +26,7 @@ abstract class AbstractTextCondition extends AbstractSingleFieldCondition
      */
     protected $fieldValue = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         if (\mb_strlen($this->fieldValue)) {
@@ -38,17 +36,13 @@ abstract class AbstractTextCondition extends AbstractSingleFieldCondition
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getFieldElement()
     {
         return '<input type="text" name="' . $this->fieldName . '" value="' . StringUtil::encodeHTML($this->fieldValue) . '" class="long">';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (isset($_POST[$this->fieldName])) {
@@ -56,17 +50,13 @@ abstract class AbstractTextCondition extends AbstractSingleFieldCondition
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         $this->fieldValue = '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setData(Condition $condition)
     {
         $this->fieldValue = $condition->conditionData[$this->fieldName];

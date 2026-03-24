@@ -57,9 +57,7 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, I
      */
     protected $controller;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getProcessor()
     {
         if (parent::getProcessor() === null) {
@@ -69,9 +67,7 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, I
         return $this->processor;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         // external link
@@ -89,9 +85,9 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, I
     }
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->menuItem);

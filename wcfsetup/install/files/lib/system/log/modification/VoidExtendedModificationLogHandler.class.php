@@ -13,25 +13,19 @@ namespace wcf\system\log\modification;
  */
 class VoidExtendedModificationLogHandler extends AbstractExtendedModificationLogHandler
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getAvailableActions()
     {
         return [];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function includeInLogList()
     {
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function processItems(array $items)
     {
         throw new \BadMethodCallException("Cannot process items.");
