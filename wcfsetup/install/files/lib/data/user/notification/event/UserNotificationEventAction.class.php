@@ -29,7 +29,6 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction
     /**
      * currently tested user notification event
      * @var UserNotificationEvent
-     * @since   3.1
      */
     protected $userNotificationEvent;
 
@@ -60,7 +59,6 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction
      * @return void
      * @throws  PermissionDeniedException
      * @throws  UserInputException
-     * @since   3.1
      */
     public function validateTestEvent()
     {
@@ -88,7 +86,6 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction
      *  eventID: int,
      *  template: string,
      * }
-     * @since 3.1
      */
     public function testEvent()
     {

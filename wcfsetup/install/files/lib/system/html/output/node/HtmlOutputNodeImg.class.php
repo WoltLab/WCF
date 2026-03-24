@@ -22,7 +22,6 @@ use wcf\util\Url;
  * @author      Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since       3.0
  */
 class HtmlOutputNodeImg extends AbstractHtmlOutputNode
 {
@@ -220,7 +219,6 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
      *
      * @param string $link
      * @return string
-     * @since 3.0
      */
     protected function getProxyLink($link)
     {

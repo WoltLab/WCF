@@ -461,7 +461,6 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
      * @param bool $allowEmpty
      * @param string $arrayIndex
      * @return void
-     * @since 3.0
      */
     protected function readIntegerArray($variableName, $allowEmpty = false, $arrayIndex = '')
     {
@@ -488,7 +487,6 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
      * @param bool $allowEmpty
      * @param string $arrayIndex
      * @return void
-     * @since 3.0
      */
     protected function readStringArray($variableName, $allowEmpty = false, $arrayIndex = '')
     {

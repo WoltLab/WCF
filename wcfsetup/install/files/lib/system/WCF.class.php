@@ -752,8 +752,6 @@ class WCF
 
     /**
      * Returns the invoked application.
-     *
-     * @since   3.1
      */
     public static function getActiveApplication(): Application
     {
@@ -1100,8 +1098,6 @@ class WCF
 
     /**
      * Returns box handler.
-     *
-     * @since   3.0
      */
     public function getBoxHandler(): BoxHandler
     {

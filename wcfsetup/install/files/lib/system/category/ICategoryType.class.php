@@ -23,7 +23,6 @@ interface ICategoryType
     /**
      * Is called before the given category is deleted.
      *
-     * @since 3.1
      * @return void
      */
     public function beforeDeletion(CategoryEditor $categoryEditor);

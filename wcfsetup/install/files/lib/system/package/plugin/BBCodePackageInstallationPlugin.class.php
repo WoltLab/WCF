@@ -225,7 +225,6 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
     }
 
     /**
-     * @since   3.0
      */
     #[\Override]
     public static function getDefaultFilename()
@@ -233,9 +232,6 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         return 'bbcode.xml';
     }
 
-    /**
-     * @since   3.1
-     */
     #[\Override]
     public static function getSyncDependencies()
     {

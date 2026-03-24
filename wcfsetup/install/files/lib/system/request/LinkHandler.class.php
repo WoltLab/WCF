@@ -264,7 +264,6 @@ final class LinkHandler extends SingletonFactory
      * @param int $pageID page id
      * @param int $languageID language id, optional
      * @return  string      full URL of empty string if `$pageID` is invalid
-     * @since   3.0
      */
     public function getCmsLink($pageID, $languageID = -1): string
     {

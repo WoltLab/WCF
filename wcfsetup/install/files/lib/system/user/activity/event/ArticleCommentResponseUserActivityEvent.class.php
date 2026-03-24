@@ -13,7 +13,6 @@ use wcf\util\StringUtil;
  * @author  Marcel Werk
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since   3.0
  */
 class ArticleCommentResponseUserActivityEvent extends SingletonFactory implements IUserActivityEvent
 {

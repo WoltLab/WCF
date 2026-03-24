@@ -57,7 +57,6 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
      *
      * @param string[] $descriptions
      * @return void
-     * @since   3.0
      */
     protected function saveDescriptions(array $descriptions)
     {

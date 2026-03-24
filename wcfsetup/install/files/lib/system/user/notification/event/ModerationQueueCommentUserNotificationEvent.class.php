@@ -20,7 +20,6 @@ use wcf\system\WCF;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since   3.0
  *
  * @method  CommentUserNotificationObject   getUserNotificationObject()
  */
@@ -142,9 +141,6 @@ class ModerationQueueCommentUserNotificationEvent extends AbstractCommentUserNot
         $this->typeName = $this->getLanguage()->get($moderationHandler->getCommentNotificationTypeNameLanguageItem());
     }
 
-    /**
-     * @since   3.1
-     */
     #[\Override]
     public static function canBeTriggeredByGuests()
     {
@@ -153,7 +149,6 @@ class ModerationQueueCommentUserNotificationEvent extends AbstractCommentUserNot
 
     /**
      * @return array{objectID: int, objectTypeID: ?int}
-     * @since   3.1
      */
     protected static function getTestCommentObjectData(UserProfile $recipient, UserProfile $author)
     {

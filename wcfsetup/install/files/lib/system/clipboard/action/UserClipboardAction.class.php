@@ -267,7 +267,6 @@ class UserClipboardAction extends AbstractClipboardAction
      * Returns the ids of the users which can be enabled.
      *
      * @return  int[]
-     * @since   3.0
      */
     protected function validateEnable()
     {
@@ -291,7 +290,6 @@ class UserClipboardAction extends AbstractClipboardAction
      * Returns the ids of the users which can be merge.
      *
      * @return  int[]
-     * @since   3.0
      */
     protected function validateMerge()
     {

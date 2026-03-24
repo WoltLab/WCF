@@ -18,7 +18,6 @@ use wcf\system\WCF;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since   3.1
  *
  * @method  PaidSubscriptionUserUserNotificationObject  getUserNotificationObject()
  */
@@ -77,7 +76,6 @@ class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNoti
 
     /**
      * @return  PaidSubscriptionUserUserNotificationObject[]
-     * @since   3.1
      */
     #[\Override]
     public static function getTestObjects(UserProfile $recipient, UserProfile $author)

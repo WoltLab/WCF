@@ -243,7 +243,6 @@ class StyleHandler extends SingletonFactory
      * @param string $packageName style package name
      * @param bool $skipTainted ignore tainted styles
      * @return  StyleEditor|null
-     * @since   3.0
      */
     public function getStyleByName($packageName, $skipTainted = false)
     {

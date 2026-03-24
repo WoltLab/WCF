@@ -221,7 +221,6 @@ class UserGroup extends DatabaseObject implements ITitledObject
      * Returns true if this is the 'Everyone' group.
      *
      * @return  bool
-     * @since   3.0
      */
     public function isEveryone()
     {
@@ -232,7 +231,6 @@ class UserGroup extends DatabaseObject implements ITitledObject
      * Returns true if this is the 'Users' group.
      *
      * @return      bool
-     * @since       3.1
      */
     public function isUsers()
     {

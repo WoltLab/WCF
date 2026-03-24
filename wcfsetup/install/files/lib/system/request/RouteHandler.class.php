@@ -229,7 +229,6 @@ final class RouteHandler extends SingletonFactory
      *
      * @param string $customUrl url to perform sanity checks on
      * @return  bool    true if `$customUrl` passes the sanity check
-     * @since   3.0
      */
     public static function isValidCustomUrl($customUrl): bool
     {

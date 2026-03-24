@@ -1112,7 +1112,6 @@ class PackageInstallationDispatcher
      * Returns current package name.
      *
      * @return  string      package name
-     * @since   3.0
      */
     public function getPackageName()
     {

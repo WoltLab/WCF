@@ -195,7 +195,6 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator
      * Returns true if event description contains raw html.
      *
      * @return bool
-     * @since 3.1
      */
     public function isRawHtml()
     {

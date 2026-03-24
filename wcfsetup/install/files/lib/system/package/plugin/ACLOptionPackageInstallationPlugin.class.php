@@ -330,18 +330,12 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
         return $this->optionTypeIDs[$optionType];
     }
 
-    /**
-     * @since   3.0
-     */
     #[\Override]
     public static function getDefaultFilename()
     {
         return 'aclOption.xml';
     }
 
-    /**
-     * @since   3.1
-     */
     #[\Override]
     public static function getSyncDependencies()
     {

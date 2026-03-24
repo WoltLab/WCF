@@ -229,7 +229,6 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
      * @param string[] $values list of values by language code
      * @param bool $singleValueOnly true to return only the best matching value
      * @return  string[]|string matching i18n values controller by `$singleValueOnly`
-     * @since   3.0
      */
     protected function getI18nValues(array $values, $singleValueOnly = false)
     {
@@ -458,7 +457,6 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 
     /**
      * @see \wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
-     * @since   3.0
      */
     #[\Override]
     public static function getDefaultFilename()

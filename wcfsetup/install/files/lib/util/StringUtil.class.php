@@ -789,8 +789,6 @@ final class StringUtil
      * Normalizes a string representing comma-separated values by making sure
      * that the separator is just a comma, not a combination of whitespace and
      * a comma.
-     *
-     * @since   3.1
      */
     public static function normalizeCsv(string $string): string
     {

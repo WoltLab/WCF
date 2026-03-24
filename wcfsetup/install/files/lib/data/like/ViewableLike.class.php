@@ -34,7 +34,6 @@ class ViewableLike extends DatabaseObjectDecorator
     /**
      * description of the object type displayed in the list of likes
      * @var     string
-     * @since   3.1
      * @deprecated 6.3 No longer in use.
      */
     protected $objectTypeDescription;
@@ -101,7 +100,6 @@ class ViewableLike extends DatabaseObjectDecorator
      *
      * @param string $name
      * @return void
-     * @since   3.1
      * @deprecated 6.3 No longer in use.
      */
     public function setObjectTypeDescription($name)
@@ -116,7 +114,6 @@ class ViewableLike extends DatabaseObjectDecorator
      * is returned.
      *
      * @return  string
-     * @since   3.1
      * @deprecated 6.3 No longer in use.
      */
     public function getObjectTypeDescription()

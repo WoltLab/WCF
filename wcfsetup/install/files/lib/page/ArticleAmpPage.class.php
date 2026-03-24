@@ -12,7 +12,6 @@ use wcf\system\request\LinkHandler;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since   3.0
  * @deprecated 5.5 Support for AMP was removed in 6.0
  */
 class ArticleAmpPage extends AbstractArticlePage

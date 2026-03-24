@@ -200,7 +200,6 @@ class PackageValidationManager extends SingletonFactory
      *
      * @param string $pip
      * @return  string|null
-     * @since   3.1
      */
     public function getDefaultFilenameForPackageInstallationPlugin($pip)
     {

@@ -101,9 +101,6 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         ];
     }
 
-    /**
-     * @since   3.1
-     */
     #[\Override]
     public static function getSyncDependencies()
     {

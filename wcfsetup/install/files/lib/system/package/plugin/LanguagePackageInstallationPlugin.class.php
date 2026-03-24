@@ -304,7 +304,6 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 
     /**
      * @see \wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
-     * @since   3.0
      */
     #[\Override]
     public static function getDefaultFilename()
@@ -318,9 +317,6 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         return true;
     }
 
-    /**
-     * @since   3.1
-     */
     #[\Override]
     public static function getSyncDependencies()
     {

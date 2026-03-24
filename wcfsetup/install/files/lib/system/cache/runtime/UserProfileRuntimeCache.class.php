@@ -11,7 +11,6 @@ use wcf\data\user\UserProfileList;
  * @author  Alexander Ebert, Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since   3.0
  *
  * @extends AbstractRuntimeCache<UserProfile, UserProfileList>
  */
@@ -27,7 +26,6 @@ class UserProfileRuntimeCache extends AbstractRuntimeCache
      * not be used on a regular basis.
      *
      * @return void
-     * @since 3.1
      */
     public function addUserProfile(UserProfile $profile)
     {

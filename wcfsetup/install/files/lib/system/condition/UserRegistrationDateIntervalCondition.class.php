@@ -86,7 +86,6 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
     }
 
     /**
-     * @since   3.0
      */
     #[\Override]
     protected function validateConflictingValues(): void

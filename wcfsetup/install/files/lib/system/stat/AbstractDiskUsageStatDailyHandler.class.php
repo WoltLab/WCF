@@ -17,7 +17,6 @@ abstract class AbstractDiskUsageStatDailyHandler extends AbstractStatDailyHandle
     /**
      * name of the filesize database table column
      * @var string
-     * @since   3.1
      */
     protected $columnName = 'filesize';
 

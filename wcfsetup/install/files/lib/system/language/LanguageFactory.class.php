@@ -204,7 +204,6 @@ class LanguageFactory extends SingletonFactory
 
     /**
      * Returns the default language object.
-     * @since 3.0
      */
     public function getDefaultLanguage(): Language
     {
@@ -243,7 +242,6 @@ class LanguageFactory extends SingletonFactory
      * Returns the list of content language ids.
      *
      * @return int[]
-     * @since 3.1
      */
     public function getContentLanguageIDs(): array
     {

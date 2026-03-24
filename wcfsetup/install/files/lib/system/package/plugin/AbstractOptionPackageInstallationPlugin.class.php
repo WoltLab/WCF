@@ -409,9 +409,6 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
         return null;
     }
 
-    /**
-     * @since   3.1
-     */
     #[\Override]
     public static function getSyncDependencies()
     {

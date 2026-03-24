@@ -91,7 +91,6 @@ interface IModerationQueueHandler
      * and comment responses on moderation queues of this type.
      *
      * @return string
-     * @since 3.0
      */
     public function getCommentNotificationLanguageItemPrefix();
 

@@ -133,7 +133,6 @@ interface ISearchableObjectType
      * Sets the location in menu/breadcrumbs.
      *
      * @return void
-     * @since   3.0
      */
     public function setLocation();
 

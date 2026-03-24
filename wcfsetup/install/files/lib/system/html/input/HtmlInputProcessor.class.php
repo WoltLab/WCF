@@ -15,7 +15,6 @@ use wcf\util\StringUtil;
  * @author      Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since       3.0
  */
 class HtmlInputProcessor extends AbstractHtmlProcessor
 {
@@ -96,7 +95,6 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
      * @param string $objectType object type identifier
      * @param int $objectID object id
      * @return void
-     * @since 3.1
      */
     public function reprocess($html, $objectType, $objectID)
     {

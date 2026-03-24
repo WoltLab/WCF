@@ -243,7 +243,6 @@ HTML;
      *
      * @return void
      * @throws  UserInputException      if values for `greaterThan` and `lessThan` are conflicting
-     * @since   3.0
      */
     protected function validateConflictingValues()
     {

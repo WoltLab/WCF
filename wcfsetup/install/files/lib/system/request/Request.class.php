@@ -79,7 +79,6 @@ final class Request implements RequestHandlerInterface
      * Returns request meta data.
      *
      * @return array{cms?: array{pageID: int, languageID: int}}
-     * @since 3.0
      */
     public function getMetaData(): array
     {
