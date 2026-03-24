@@ -25,10 +25,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
      */
     protected static $baseClass = UserOption::class;
 
-    /**
-     * @inheritDoc
-     * @return  UserOption
-     */
+    #[\Override]
     public static function create(array $parameters = [])
     {
         /** @var UserOption $userOption */
@@ -52,9 +49,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
         return $userOption;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update(array $parameters = [])
     {
         parent::update($parameters);
@@ -70,9 +65,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         $sql = "DELETE FROM wcf1_user_option
@@ -83,9 +76,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
         WCF::getDB()->getEditor()->dropColumn('wcf1_user_option_value', 'userOption' . $this->optionID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function deleteAll(array $objectIDs = [])
     {
         $returnValue = parent::deleteAll($objectIDs);
@@ -181,9 +172,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
         return $column;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         UserOptionCacheBuilder::getInstance()->reset();

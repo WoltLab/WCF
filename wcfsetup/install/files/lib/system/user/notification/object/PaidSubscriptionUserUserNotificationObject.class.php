@@ -24,25 +24,19 @@ class PaidSubscriptionUserUserNotificationObject extends DatabaseObjectDecorator
      */
     protected static $baseClass = PaidSubscriptionUser::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getAuthorID()
     {
         return 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->getSubscription()->getTitle();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getURL()
     {
         return LinkHandler::getInstance()->getLink('PaidSubscriptionList', ['forceFrontend' => true]);

@@ -30,7 +30,6 @@ abstract class AbstractCheckboxCondition extends AbstractSingleFieldCondition
     protected $fieldValue = 0;
 
     /**
-     * @inheritDoc
      * @throws  SystemException
      */
     public function __construct(DatabaseObject $object)
@@ -42,9 +41,7 @@ abstract class AbstractCheckboxCondition extends AbstractSingleFieldCondition
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         if ($this->fieldValue) {
@@ -54,25 +51,19 @@ abstract class AbstractCheckboxCondition extends AbstractSingleFieldCondition
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFieldElement()
     {
         return '<label><input type="checkbox" name="' . $this->fieldName . '" id="' . $this->fieldName . '"' . ($this->fieldValue ? ' checked' : '') . '> ' . WCF::getLanguage()->get($this->label) . '</label>';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getLabel()
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (!empty($_POST[$this->fieldName])) {
@@ -82,17 +73,13 @@ abstract class AbstractCheckboxCondition extends AbstractSingleFieldCondition
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         $this->fieldValue = 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setData(Condition $condition)
     {
         $this->fieldValue = $condition->{$this->fieldName};

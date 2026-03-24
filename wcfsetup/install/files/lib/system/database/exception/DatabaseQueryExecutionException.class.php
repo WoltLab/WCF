@@ -84,9 +84,7 @@ class DatabaseQueryExecutionException extends DatabaseQueryException implements 
         return $this->parameters;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getExtraInformation()
     {
         $i = 0;

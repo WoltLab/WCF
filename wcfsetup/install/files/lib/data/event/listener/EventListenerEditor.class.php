@@ -25,9 +25,9 @@ class EventListenerEditor extends DatabaseObjectEditor implements IEditableCache
     protected static $baseClass = EventListener::class;
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     public static function resetCache()
     {
         EventListenerCacheBuilder::getInstance()->reset();

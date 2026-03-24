@@ -20,9 +20,7 @@ final class Argon2 implements IPasswordAlgorithm
         'threads' => 1,
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function verify(
         #[\SensitiveParameter]
         string $password,
@@ -31,9 +29,7 @@ final class Argon2 implements IPasswordAlgorithm
         return \password_verify($password, $hash);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hash(
         #[\SensitiveParameter]
         string $password
@@ -41,9 +37,7 @@ final class Argon2 implements IPasswordAlgorithm
         return \password_hash($password, \PASSWORD_ARGON2I, self::OPTIONS);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function needsRehash(string $hash): bool
     {
         return \password_needs_rehash($hash, \PASSWORD_ARGON2I, self::OPTIONS);

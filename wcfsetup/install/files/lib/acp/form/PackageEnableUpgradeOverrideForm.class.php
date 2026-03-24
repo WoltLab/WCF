@@ -43,9 +43,7 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
 
     private bool $isEnabled;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -56,9 +54,7 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function createForm()
     {
         parent::createForm();
@@ -282,9 +278,7 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();
@@ -316,9 +310,7 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
         $this->saved();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

@@ -33,9 +33,7 @@ class OptionCacheBuilder extends AbstractCacheBuilder
      */
     protected $application = 'wcf';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rebuild(array $parameters)
     {
         $data = [

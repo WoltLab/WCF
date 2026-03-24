@@ -97,9 +97,7 @@ abstract class MultipleLinkPage extends AbstractPage
      */
     public $sqlOrderBy = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -110,9 +108,7 @@ abstract class MultipleLinkPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -244,9 +240,7 @@ abstract class MultipleLinkPage extends AbstractPage
         return $this->items == $this->endIndex;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

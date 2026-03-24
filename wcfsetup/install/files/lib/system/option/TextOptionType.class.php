@@ -37,9 +37,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
      */
     public $forceSearchOption = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         return WCF::getTPL()->render('wcf', 'textOptionType', [
@@ -50,9 +48,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSearchFormElement(Option $option, mixed $value)
     {
         return WCF::getTPL()->render('wcf', 'textSearchableOptionType', [
@@ -64,9 +60,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, mixed $value)
     {
         if (!isset($_POST['searchOptions'][$option->optionName])) {
@@ -86,9 +80,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(Option $option, mixed $newValue)
     {
         $newValue = $this->getContent($option, $newValue);
@@ -101,9 +93,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData(Option $option, mixed $newValue)
     {
         return $this->getContent($option, $newValue);
@@ -128,9 +118,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
         return $newValue;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addCondition(UserList $userList, Option $option, mixed $value)
     {
         $value = StringUtil::trim($value);
@@ -144,9 +132,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkUser(User $user, Option $option, mixed $value)
     {
         $value = StringUtil::trim($value);
@@ -157,17 +143,13 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionData(Option $option, mixed $newValue)
     {
         return $newValue;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hideLabelInSearch()
     {
         return true;

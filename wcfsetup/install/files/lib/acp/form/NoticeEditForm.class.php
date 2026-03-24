@@ -47,9 +47,7 @@ class NoticeEditForm extends NoticeAddForm
      */
     public $resetIsDismissed = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -68,9 +66,7 @@ class NoticeEditForm extends NoticeAddForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -112,9 +108,7 @@ class NoticeEditForm extends NoticeAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -124,9 +118,7 @@ class NoticeEditForm extends NoticeAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -140,9 +132,7 @@ class NoticeEditForm extends NoticeAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();

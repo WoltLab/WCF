@@ -37,6 +37,7 @@ abstract class AbstractNamedFormElement extends AbstractFormElement
      * @param string $description
      * @return void
      */
+    #[\Override]
     public function setDescription($description)
     {
         $this->description = $description;
@@ -47,6 +48,7 @@ abstract class AbstractNamedFormElement extends AbstractFormElement
      *
      * @return string
      */
+    #[\Override]
     public function getDescription()
     {
         return $this->description;

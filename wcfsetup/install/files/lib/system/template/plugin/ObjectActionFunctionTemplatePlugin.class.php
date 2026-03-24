@@ -48,9 +48,7 @@ class ObjectActionFunctionTemplatePlugin implements IFunctionTemplatePlugin
         'toggle',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         if (!isset($tagArgs['action'])) {

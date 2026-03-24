@@ -15,9 +15,7 @@ use wcf\system\WCF;
  */
 class UserMenuCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function rebuild(array $parameters)
     {
         $data = [];

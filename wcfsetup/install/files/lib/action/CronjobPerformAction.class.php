@@ -18,6 +18,7 @@ use wcf\system\WCF;
  */
 final class CronjobPerformAction implements RequestHandlerInterface
 {
+    #[\Override]
     public function handle(ServerRequestInterface $request): EmptyResponse
     {
         CronjobScheduler::getInstance()->executeCronjobs();

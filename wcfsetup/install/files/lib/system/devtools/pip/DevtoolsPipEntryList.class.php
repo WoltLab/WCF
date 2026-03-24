@@ -26,9 +26,7 @@ class DevtoolsPipEntryList implements IDevtoolsPipEntryList
      */
     protected $keys;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addEntry($id, array $entry)
     {
         if ($this->keys === null) {
@@ -54,9 +52,7 @@ class DevtoolsPipEntryList implements IDevtoolsPipEntryList
         $this->entries[$id] = $entry;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function filterEntries($filter)
     {
         $filterType = \gettype($filter);
@@ -104,9 +100,7 @@ class DevtoolsPipEntryList implements IDevtoolsPipEntryList
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEntries(?int $startIndex = null, ?int $entryCount = null)
     {
         if ($startIndex !== null && $entryCount !== null) {
@@ -116,9 +110,7 @@ class DevtoolsPipEntryList implements IDevtoolsPipEntryList
         return $this->entries;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getKeys()
     {
         if ($this->keys === null) {
@@ -128,17 +120,13 @@ class DevtoolsPipEntryList implements IDevtoolsPipEntryList
         return $this->keys;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasEntry($id)
     {
         return isset($this->entries[$id]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setKeys(array $keys)
     {
         if ($this->keys !== null) {

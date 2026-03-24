@@ -33,9 +33,7 @@ class ReactionType extends DatabaseObject implements ITitledObject
      */
     private array $renderedIcons = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->title);

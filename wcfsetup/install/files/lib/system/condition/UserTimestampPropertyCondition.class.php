@@ -25,25 +25,19 @@ class UserTimestampPropertyCondition extends AbstractTimestampCondition implemen
      */
     protected $className = User::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getLanguageItemPrefix()
     {
         return 'wcf.user.condition';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getPropertyName()
     {
         return $this->getDecoratedObject()->propertyname;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showContent(Condition $condition)
     {
         if (!WCF::getUser()->userID) {

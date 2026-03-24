@@ -21,9 +21,7 @@ use wcf\system\WCF;
  */
 class CurrencyModifierTemplatePlugin implements IModifierTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         $decimals = \intval($tagArgs[1] ?? 2);

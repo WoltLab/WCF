@@ -42,7 +42,6 @@ class ErrorException extends SystemException
     }
 
     /**
-     * @inheritDoc
      * @return int
      */
     public function getSeverity()

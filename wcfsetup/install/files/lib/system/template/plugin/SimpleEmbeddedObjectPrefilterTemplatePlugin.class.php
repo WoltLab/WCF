@@ -18,9 +18,7 @@ use wcf\system\template\TemplateScriptingCompiler;
  */
 class SimpleEmbeddedObjectPrefilterTemplatePlugin implements IPrefilterTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(string $templateName, string $sourceContent, TemplateScriptingCompiler $compiler)
     {
         return HtmlSimpleParser::getInstance()->parseTemplate($sourceContent);

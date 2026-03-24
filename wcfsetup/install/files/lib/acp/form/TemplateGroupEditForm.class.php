@@ -32,9 +32,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm
      */
     public $formAction = 'edit';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();

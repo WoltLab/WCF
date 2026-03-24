@@ -15,9 +15,7 @@ use wcf\util\StringUtil;
  */
 class ListMetacodeConverter extends AbstractMetacodeConverter
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function convert(\DOMDocumentFragment $fragment, array $attributes)
     {
         $tagName = 'ul';

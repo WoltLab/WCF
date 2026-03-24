@@ -71,9 +71,7 @@ abstract class AbstractFormField implements IFormField
      */
     protected $value;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addValidationError(IFormFieldValidationError $error)
     {
         if (empty($this->validationErrors)) {
@@ -85,9 +83,7 @@ abstract class AbstractFormField implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addValidator(IFormFieldValidator $validator)
     {
         if ($this->hasValidator($validator->getId())) {
@@ -99,9 +95,7 @@ abstract class AbstractFormField implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFieldHtml()
     {
         if ($this->templateName === null) {
@@ -117,9 +111,7 @@ abstract class AbstractFormField implements IFormField
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtml()
     {
         if ($this->requiresLabel() && $this->getLabel() === null) {
@@ -133,17 +125,13 @@ abstract class AbstractFormField implements IFormField
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getJavaScriptDataHandlerModule()
     {
         return $this->javaScriptDataHandlerModule;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectProperty()
     {
         if ($this->objectProperty !== null) {
@@ -153,41 +141,31 @@ abstract class AbstractFormField implements IFormField
         return $this->getId();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSaveValue()
     {
         return $this->getValue();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getValidationErrors()
     {
         return $this->validationErrors;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getValidators()
     {
         return $this->validators;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getValue()
     {
         return $this->value;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasValidator(string $validatorId)
     {
         FormFieldValidator::validateId($validatorId);
@@ -195,25 +173,19 @@ abstract class AbstractFormField implements IFormField
         return isset($this->validators[$validatorId]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasSaveValue()
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isRequired()
     {
         return $this->required;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updatedObject(array $data, IStorableObject $object, $loadValues = true)
     {
         if ($this instanceof IImmutableFormField && $this->isImmutable()) {
@@ -228,9 +200,9 @@ abstract class AbstractFormField implements IFormField
     }
 
     /**
-     * @inheritDoc
      * @return  static
      */
+    #[\Override]
     public function objectProperty($objectProperty)
     {
         if ($objectProperty === '') {
@@ -244,9 +216,7 @@ abstract class AbstractFormField implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function removeValidator(string $validatorId)
     {
         if (!$this->hasValidator($validatorId)) {
@@ -259,9 +229,9 @@ abstract class AbstractFormField implements IFormField
     }
 
     /**
-     * @inheritDoc
      * @return  static
      */
+    #[\Override]
     public function required($required = true)
     {
         $this->required = $required;
@@ -269,9 +239,7 @@ abstract class AbstractFormField implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function value(mixed $value)
     {
         $this->value = $value;
@@ -279,9 +247,7 @@ abstract class AbstractFormField implements IFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         // does nothing

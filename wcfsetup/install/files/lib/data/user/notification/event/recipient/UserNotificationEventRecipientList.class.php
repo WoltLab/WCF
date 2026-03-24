@@ -13,9 +13,6 @@ use wcf\data\user\UserList;
  */
 class UserNotificationEventRecipientList extends UserList
 {
-    /**
-     * @inheritDoc
-     */
     public function __construct()
     {
         $this->sqlJoins = "
@@ -26,17 +23,13 @@ class UserNotificationEventRecipientList extends UserList
         parent::__construct();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDatabaseTableName()
     {
         return 'wcf1_user_notification_event_to_user';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDatabaseTableAlias()
     {
         return 'event_to_user';

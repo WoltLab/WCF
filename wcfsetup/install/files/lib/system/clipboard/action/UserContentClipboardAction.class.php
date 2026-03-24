@@ -24,9 +24,7 @@ class UserContentClipboardAction extends AbstractClipboardAction
      */
     protected $supportedActions = ['revertContentChanges'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $objects, ClipboardAction $action)
     {
         $item = parent::execute($objects, $action);
@@ -45,17 +43,13 @@ class UserContentClipboardAction extends AbstractClipboardAction
         return $item;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getClassName()
     {
         return UserContentAction::class;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTypeName()
     {
         return 'com.woltlab.wcf.user';

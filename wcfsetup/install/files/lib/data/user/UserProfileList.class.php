@@ -25,9 +25,6 @@ class UserProfileList extends UserList
      */
     public $decoratorClassName = UserProfile::class;
 
-    /**
-     * @inheritDoc
-     */
     public function __construct()
     {
         parent::__construct();
@@ -43,9 +40,7 @@ class UserProfileList extends UserList
             ON          session.userID = user_table.userID";
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readObjects()
     {
         if ($this->objectIDs === null) {

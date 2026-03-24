@@ -229,9 +229,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
         return $data;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getAdditionalData()
     {
         return [
@@ -241,25 +239,19 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionDefinition()
     {
         return $this->conditionDefinition;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionObjectTypes()
     {
         return $this->conditionObjectTypes;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionsTemplate()
     {
         if ($this->defaultLimit !== null || !empty($this->validSortFields) || !empty($this->conditionObjectTypes)) {
@@ -294,9 +286,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
      */
     abstract protected function getTemplate();
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasContent()
     {
         EventHandler::getInstance()->fireAction($this, 'hasContent');
@@ -308,9 +298,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
         return $this->objectList !== null && \count($this->objectList) > 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function loadContent()
     {
         EventHandler::getInstance()->fireAction($this, 'beforeLoadContent');
@@ -343,9 +331,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
         EventHandler::getInstance()->fireAction($this, 'afterLoadContent');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readConditions()
     {
         if (isset($_POST['limit'])) {
@@ -375,9 +361,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
         $this->objectList->readObjects();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function saveAdditionalData()
     {
         parent::saveAdditionalData();
@@ -401,6 +385,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
      * @param bool $setConditionData if true, the condition object types are populated with the box conditions' data
      * @return void
      */
+    #[\Override]
     public function setBox(Box $box, $setConditionData = true)
     {
         parent::setBox($box);
@@ -430,9 +415,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateConditions()
     {
         if ($this->defaultLimit !== null) {

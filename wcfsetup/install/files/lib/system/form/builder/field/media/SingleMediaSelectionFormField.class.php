@@ -95,9 +95,7 @@ final class SingleMediaSelectionFormField extends AbstractFormField implements I
         return $this->imageOnly;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
@@ -111,9 +109,7 @@ final class SingleMediaSelectionFormField extends AbstractFormField implements I
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();

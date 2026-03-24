@@ -102,9 +102,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
         return $this->objects;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save(UploadFile $uploadFile)
     {
         $data = \array_merge([

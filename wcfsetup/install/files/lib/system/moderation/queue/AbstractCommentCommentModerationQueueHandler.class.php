@@ -38,9 +38,7 @@ class AbstractCommentCommentModerationQueueHandler extends AbstractModerationQue
      */
     protected static $commentManagers = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignQueues(array $queues)
     {
         $assignments = [];
@@ -74,17 +72,13 @@ class AbstractCommentCommentModerationQueueHandler extends AbstractModerationQue
         ModerationQueueManager::getInstance()->setAssignment($assignments);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContainerID(int $objectID)
     {
         return 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isValid(int $objectID)
     {
         if ($this->getComment($objectID) === null) {
@@ -122,9 +116,7 @@ class AbstractCommentCommentModerationQueueHandler extends AbstractModerationQue
         return self::$commentManagers[$comment->objectTypeID];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function populate(array $queues)
     {
         $objectIDs = [];
@@ -143,9 +135,7 @@ class AbstractCommentCommentModerationQueueHandler extends AbstractModerationQue
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canRemoveContent(ModerationQueue $queue)
     {
         if ($this->isValid($queue->objectID)) {
@@ -157,10 +147,8 @@ class AbstractCommentCommentModerationQueueHandler extends AbstractModerationQue
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function removeContent(ModerationQueue $queue, $message)
+    #[\Override]
+    public function removeContent(ModerationQueue $queue, string $message)
     {
         if ($this->isValid($queue->objectID)) {
             (new \wcf\command\comment\DeleteComments([$this->getComment($queue->objectID)]))();

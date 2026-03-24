@@ -40,9 +40,7 @@ final class NotificationConfirmAction extends AbstractAction
      */
     public $notificationID = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -61,9 +59,7 @@ final class NotificationConfirmAction extends AbstractAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(): RedirectResponse
     {
         parent::execute();

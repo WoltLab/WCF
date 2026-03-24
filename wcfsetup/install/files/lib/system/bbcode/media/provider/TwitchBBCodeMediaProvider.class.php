@@ -20,9 +20,7 @@ class TwitchBBCodeMediaProvider implements IBBCodeMediaProvider
      */
     private static $parent;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function parse(string $url, array $matches = [])
     {
         $src = '';

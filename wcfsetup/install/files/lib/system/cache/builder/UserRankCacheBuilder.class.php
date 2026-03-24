@@ -15,9 +15,7 @@ use wcf\data\user\rank\UserRankList;
  */
 final class UserRankCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rebuild(array $parameters)
     {
         $list = new UserRankList();

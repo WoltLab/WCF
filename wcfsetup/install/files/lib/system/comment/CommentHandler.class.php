@@ -42,9 +42,7 @@ class CommentHandler extends SingletonFactory
      */
     protected $cache;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->cache = [

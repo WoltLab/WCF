@@ -183,9 +183,7 @@ final class ClassNameFormField extends TextFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validateText($text, ?Language $language = null)
     {
         parent::validateText($text, $language);
@@ -251,9 +249,7 @@ final class ClassNameFormField extends TextFormField
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'className';

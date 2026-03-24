@@ -79,9 +79,7 @@ class UserPage extends AbstractPage
      */
     public $visitorList;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -105,9 +103,7 @@ class UserPage extends AbstractPage
         $this->canonicalURL = $this->user->getLink();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -168,9 +164,7 @@ class UserPage extends AbstractPage
         MetaTagHandler::getInstance()->addTag('og:image', 'og:image', $this->user->getAvatar()->getURL(), true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -194,9 +188,7 @@ class UserPage extends AbstractPage
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         // update profile hits

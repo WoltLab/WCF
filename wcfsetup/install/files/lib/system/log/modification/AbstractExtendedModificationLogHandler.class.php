@@ -14,9 +14,7 @@ namespace wcf\system\log\modification;
 abstract class AbstractExtendedModificationLogHandler extends AbstractModificationLogHandler implements
     IExtendedModificationLogHandler
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function includeInLogList()
     {
         return true;

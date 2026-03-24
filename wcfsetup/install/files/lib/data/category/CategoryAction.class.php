@@ -40,9 +40,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
      */
     protected $requireACP = ['create', 'delete', 'toggle', 'update', 'updatePosition'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         // call category types
@@ -101,9 +99,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
         return $returnValue;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         // check if showOrder needs to be recalculated
@@ -142,9 +138,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updatePosition()
     {
         $objectType = null;
@@ -179,9 +173,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateCreate()
     {
         $this->readInteger('objectTypeID', false, 'data');
@@ -195,9 +187,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateDelete()
     {
         // read objects
@@ -216,9 +206,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateUpdate()
     {
         // read objects
@@ -237,9 +225,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateUpdatePosition()
     {
         // validate 'structure' parameter

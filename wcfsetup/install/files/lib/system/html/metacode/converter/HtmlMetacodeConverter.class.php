@@ -15,9 +15,7 @@ use wcf\util\StringUtil;
  */
 class HtmlMetacodeConverter extends AbstractMetacodeConverter
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function convert(\DOMDocumentFragment $fragment, array $attributes)
     {
         $element = $fragment->ownerDocument->createElement('pre');

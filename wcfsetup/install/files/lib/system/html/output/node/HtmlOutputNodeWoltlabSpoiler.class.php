@@ -21,9 +21,7 @@ class HtmlOutputNodeWoltlabSpoiler extends AbstractHtmlOutputNode
      */
     protected $tagName = 'woltlab-spoiler';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         /** @var \DOMElement $element */
@@ -50,9 +48,7 @@ class HtmlOutputNodeWoltlabSpoiler extends AbstractHtmlOutputNode
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function replaceTag(array $data)
     {
         return WCF::getTPL()->render('wcf', 'shared_spoilerMetaCode', [

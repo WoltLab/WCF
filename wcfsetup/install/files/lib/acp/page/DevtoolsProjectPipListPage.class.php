@@ -44,9 +44,7 @@ class DevtoolsProjectPipListPage extends AbstractPage
      */
     public $projectID = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -60,9 +58,7 @@ class DevtoolsProjectPipListPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

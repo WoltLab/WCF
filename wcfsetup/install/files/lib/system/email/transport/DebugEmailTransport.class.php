@@ -38,6 +38,7 @@ final class DebugEmailTransport implements IEmailTransport
     /**
      * Writes the given $email into the mbox.
      */
+    #[\Override]
     public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo): void
     {
         $this->mbox->write(\sprintf(

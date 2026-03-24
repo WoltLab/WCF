@@ -65,9 +65,7 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements
      */
     protected $userGroups;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
     {
         $tableName = 'user_table';
@@ -99,9 +97,7 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkUser(Condition $condition, User $user)
     {
         $groupIDs = $user->getGroupIDs();
@@ -122,9 +118,7 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         $data = [];
@@ -143,9 +137,7 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHTML()
     {
         if (!empty($this->getUserGroups())) {
@@ -216,9 +208,7 @@ HTML;
         return $this->userGroups;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (isset($_POST['groupIDs'])) {
@@ -229,18 +219,14 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         $this->groupIDs = [];
         $this->notGroupIDs = [];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setData(Condition $condition)
     {
         if ($condition->groupIDs !== null) {
@@ -262,9 +248,7 @@ HTML;
         $this->userGroups = $userGroups;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         $userGroups = $this->getUserGroups();
@@ -290,9 +274,7 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showContent(Condition $condition)
     {
         return $this->checkUser($condition, WCF::getUser());

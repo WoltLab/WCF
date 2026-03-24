@@ -14,9 +14,7 @@ use wcf\util\StringUtil;
  */
 final class MediaBBCode extends AbstractBBCode
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getParsedTag(array $openingTag, string $content, array $closingTag, BBCodeParser $parser): string
     {
         $content = StringUtil::trim($openingTag['attributes'][0]);

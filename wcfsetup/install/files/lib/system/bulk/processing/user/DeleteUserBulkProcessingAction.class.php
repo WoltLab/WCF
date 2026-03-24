@@ -16,9 +16,7 @@ use wcf\system\WCF;
  */
 class DeleteUserBulkProcessingAction extends AbstractUserBulkProcessingAction
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function executeAction(DatabaseObjectList $objectList)
     {
         $users = $this->getAccessibleUsers($objectList);
@@ -29,9 +27,7 @@ class DeleteUserBulkProcessingAction extends AbstractUserBulkProcessingAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectList()
     {
         $userList = parent::getObjectList();

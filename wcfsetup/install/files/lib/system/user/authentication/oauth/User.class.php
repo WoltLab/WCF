@@ -64,17 +64,13 @@ final class User implements \ArrayAccess
         return $this['__email'] ?? null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function offsetGet($offset): mixed
     {
         return $this->data[$offset] ?? null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function offsetSet($offset, $value): void
     {
         if ($offset === '__id') {
@@ -87,9 +83,7 @@ final class User implements \ArrayAccess
         $this->data[$offset] = $value;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function offsetUnset($offset): void
     {
         if ($offset === '__id') {
@@ -102,9 +96,7 @@ final class User implements \ArrayAccess
         unset($this->data[$offset]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function offsetExists($offset): bool
     {
         return isset($this->data[$offset]);

@@ -39,10 +39,7 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
      */
     protected $requireACP = ['delete', 'update', 'updatePosition'];
 
-    /**
-     * @inheritDoc
-     * @return  Smiley
-     */
+    #[\Override]
     public function create()
     {
         /** @var Smiley $smiley */
@@ -78,9 +75,7 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
         return $smiley;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         if (empty($this->objects)) {
@@ -113,9 +108,7 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
         parent::update();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateUpdatePosition()
     {
         // validate permissions
@@ -132,9 +125,7 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
         $this->readInteger('offset', true, 'data');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updatePosition()
     {
         $smileyList = new SmileyList();

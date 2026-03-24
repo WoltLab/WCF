@@ -93,9 +93,7 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor
         $this->outputType = $outputType;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtml()
     {
         $context = $this->getContext();
@@ -114,6 +112,7 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor
      * @inheritdoc
      * @throws \InvalidArgumentException
      */
+    #[\Override]
     public function setContext($objectType, $objectID)
     {
         parent::setContext($objectType, $objectID);

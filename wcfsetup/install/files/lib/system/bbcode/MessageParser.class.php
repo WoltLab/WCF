@@ -44,9 +44,7 @@ class MessageParser extends BBCodeParser
      */
     public $message = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         parent::init();
@@ -81,6 +79,7 @@ class MessageParser extends BBCodeParser
      * @param bool $doKeywordHighlighting
      * @return string parsed message
      */
+    #[\Override]
     public function parse(
         $text,
         $enableSmilies = true,
@@ -233,9 +232,7 @@ class MessageParser extends BBCodeParser
         return $text;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function isValidTagAttribute(array $tagAttributes, BBCodeAttribute $definedTagAttribute)
     {
         if (!parent::isValidTagAttribute($tagAttributes, $definedTagAttribute)) {

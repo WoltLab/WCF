@@ -27,9 +27,7 @@ class NoticeHandler extends SingletonFactory
      */
     protected static $disableNotices = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->notices = NoticeCacheBuilder::getInstance()->getData();

@@ -19,9 +19,7 @@ use wcf\system\form\builder\IFormParentNode;
  */
 final class DefaultFormDataProcessor extends AbstractFormDataProcessor
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function processFormData(IFormDocument $document, array $parameters)
     {
         $parameters['data'] = [];

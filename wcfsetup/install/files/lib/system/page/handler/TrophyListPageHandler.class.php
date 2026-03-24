@@ -17,9 +17,9 @@ class TrophyListPageHandler extends AbstractLookupPageHandler
     use TDecoratedCategoryOnlineLocationLookupPageHandler;
 
     /**
-     * @inheritDoc
      * @return string
      */
+    #[\Override]
     protected function getDecoratedCategoryClass()
     {
         return TrophyCategory::class;

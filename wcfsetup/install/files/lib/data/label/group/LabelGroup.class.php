@@ -22,9 +22,7 @@ use wcf\system\WCF;
  */
 class LabelGroup extends DatabaseObject implements IRouteController
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->groupName);
@@ -33,6 +31,7 @@ class LabelGroup extends DatabaseObject implements IRouteController
     /**
      * Returns label group title.
      */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getTitle();

@@ -20,9 +20,7 @@ class PackageCache extends SingletonFactory
      */
     protected array $packages;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->packages = PackageCacheBuilder::getInstance()->getData();

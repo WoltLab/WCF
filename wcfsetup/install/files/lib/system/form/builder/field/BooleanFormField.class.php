@@ -34,17 +34,13 @@ class BooleanFormField extends AbstractFormField implements
      */
     protected $templateName = 'shared_booleanFormField';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSaveValue()
     {
         return $this->value ? 1 : 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
@@ -54,17 +50,13 @@ class BooleanFormField extends AbstractFormField implements
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function requiresLabel()
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if ($this->isRequired() && !$this->getValue()) {
@@ -74,9 +66,7 @@ class BooleanFormField extends AbstractFormField implements
         parent::validate();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function value(mixed $value)
     {
         if (\is_string($value) && \in_array($value, ['0', '1', 'true', 'false'])) {

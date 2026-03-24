@@ -67,9 +67,7 @@ class UserStateCondition extends AbstractSingleFieldCondition implements
      */
     protected $userIsNotEmailConfirmed = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
     {
         if (isset($conditionData['userIsBanned'])) {
@@ -93,9 +91,7 @@ class UserStateCondition extends AbstractSingleFieldCondition implements
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkUser(Condition $condition, User $user)
     {
         $userIsBanned = $condition->userIsBanned;
@@ -124,9 +120,7 @@ class UserStateCondition extends AbstractSingleFieldCondition implements
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         $data = [];
@@ -169,9 +163,7 @@ class UserStateCondition extends AbstractSingleFieldCondition implements
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getFieldElement()
     {
         $userIsNotBanned = WCF::getLanguage()->get('wcf.user.condition.state.isNotBanned');
@@ -191,9 +183,7 @@ class UserStateCondition extends AbstractSingleFieldCondition implements
 HTML;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (isset($_POST['userIsBanned'])) {
@@ -216,9 +206,7 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         $this->userIsBanned = 0;
@@ -229,9 +217,7 @@ HTML;
         $this->userIsNotEmailConfirmed = 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setData(Condition $condition)
     {
         /** @var ?int $userIsBanned */
@@ -256,9 +242,7 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if ($this->userIsBanned && $this->userIsNotBanned) {
@@ -280,9 +264,7 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showContent(Condition $condition)
     {
         if (!WCF::getUser()->userID) {

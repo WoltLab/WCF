@@ -31,9 +31,7 @@ final class FontManager extends SingletonFactory
 
     private TreeMapper $mapper;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->http = HttpFactory::makeClient([

@@ -17,9 +17,6 @@ final class IntDatabaseTableColumn extends AbstractIntDatabaseTableColumn
      */
     protected string $type = 'int';
 
-    /**
-     * @inheritDoc
-     */
     #[\Override]
     public function getMaximumLength(): int
     {

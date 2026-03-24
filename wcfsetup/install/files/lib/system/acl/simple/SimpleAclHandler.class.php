@@ -27,9 +27,7 @@ class SimpleAclHandler extends SingletonFactory
      */
     protected $objectTypes = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.acl.simple');

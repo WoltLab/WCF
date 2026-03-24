@@ -20,9 +20,7 @@ class CommentCommentModerationQueueReportHandler extends AbstractCommentCommentM
      */
     protected $definitionName = 'com.woltlab.wcf.moderation.report';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canReport(int $objectID)
     {
         if (!$this->isValid($objectID)) {
@@ -37,17 +35,13 @@ class CommentCommentModerationQueueReportHandler extends AbstractCommentCommentM
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getReportedContent(ViewableModerationQueue $queue)
     {
         return $this->getRelatedContent($queue);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getReportedObject(int $objectID)
     {
         return $this->getComment($objectID);

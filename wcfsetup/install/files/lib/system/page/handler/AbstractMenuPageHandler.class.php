@@ -22,38 +22,28 @@ abstract class AbstractMenuPageHandler implements IMenuPageHandler
      */
     private MenuItem $menuItem;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getOutstandingItemCount(?int $objectID = null)
     {
         return 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isVisible(?int $objectID = null)
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function cacheObject(int $objectID): void {}
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setMenuItem(MenuItem $menuItem): void
     {
         $this->menuItem = $menuItem;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMenuItem(): ?MenuItem
     {
         return $this->menuItem ?? null;

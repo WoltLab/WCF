@@ -24,9 +24,7 @@ class UserRankEditor extends DatabaseObjectEditor implements IEditableCachedObje
      */
     protected static $baseClass = UserRank::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         UserRankCacheBuilder::getInstance()->reset();

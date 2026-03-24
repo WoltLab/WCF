@@ -60,9 +60,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
         return $manager->getNameFromAlgorithm($algorithm) . ':' . $algorithm->hash($password);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function create(array $parameters = [])
     {
         if ($parameters['password'] !== '') {
@@ -86,9 +84,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
         return $user;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function deleteAll(array $objectIDs = [])
     {
         // unmark users
@@ -100,9 +96,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
         return parent::deleteAll($objectIDs);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update(array $parameters = [])
     {
         if (\array_key_exists('password', $parameters) && $parameters['password'] !== '') {
@@ -295,9 +289,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache(): void
     {
         UserStorageHandler::getInstance()->resetAll('groupIDs');

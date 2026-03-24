@@ -33,9 +33,7 @@ class TrophyCache extends SingletonFactory
      */
     protected $categorySortedTrophies;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function init()
     {
         $this->trophies = TrophyCacheBuilder::getInstance()->getData();

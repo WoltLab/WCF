@@ -86,9 +86,7 @@ final class CodeFormField extends TextFormField
         return $this->chunkLength;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'code';

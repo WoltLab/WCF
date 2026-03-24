@@ -20,6 +20,7 @@ final class ListViewSortField
         public readonly string $sortByDatabaseColumn = ''
     ) {}
 
+    #[\Override]
     public function __toString(): string
     {
         return WCF::getLanguage()->get($this->languageItem);

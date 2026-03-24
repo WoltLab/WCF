@@ -17,9 +17,6 @@ class TabTabMenuFormContainer extends TabMenuFormContainer implements ITabFormCo
      */
     protected $templateName = 'shared_tabTabMenuFormContainer';
 
-    /**
-     * @inheritDoc
-     */
     public function __construct()
     {
         $this->addClasses(['tabMenuContainer', 'tabMenuContent']);

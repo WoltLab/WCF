@@ -31,9 +31,7 @@ class ContactAttachmentPage extends AttachmentPage
      */
     public $controllerName = 'ContactAttachment';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -45,9 +43,7 @@ class ContactAttachmentPage extends AttachmentPage
         $this->contactAttachment = new ContactAttachment($this->attachment->attachmentID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkPermissions()
     {
         AbstractPage::checkPermissions();

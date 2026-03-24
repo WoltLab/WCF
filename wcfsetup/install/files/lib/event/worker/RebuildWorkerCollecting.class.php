@@ -42,6 +42,7 @@ final class RebuildWorkerCollecting extends \wcf\system\worker\event\RebuildWork
      *
      * @param $nicevalue The worker's priority. Lower values indicate earlier execution.
      */
+    #[\Override]
     public function register(string $classname, int $nicevalue): void
     {
         $this->queue->insert(new RegisteredWorker($classname), -$nicevalue);
@@ -50,6 +51,7 @@ final class RebuildWorkerCollecting extends \wcf\system\worker\event\RebuildWork
     /**
      * @return iterable<RegisteredWorker>
      */
+    #[\Override]
     public function getWorkers(): iterable
     {
         yield from clone $this->queue;

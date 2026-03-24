@@ -45,9 +45,7 @@ class LabelGroupAction extends AbstractDatabaseObjectAction
      */
     protected $requireACP = ['create', 'delete', 'update'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         // remove labels and their potential language variables

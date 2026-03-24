@@ -23,17 +23,13 @@ use wcf\system\language\LanguageFactory;
  */
 class MultilingualPageSitemapObject extends AbstractSitemapObjectObjectType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectClass()
     {
         return PageContent::class;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectList()
     {
         $pageList = parent::getObjectList();
@@ -53,9 +49,7 @@ class MultilingualPageSitemapObject extends AbstractSitemapObjectObjectType
         return $pageList;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canView(DatabaseObject $object)
     {
         $page = new Page($object->pageID);

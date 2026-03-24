@@ -17,9 +17,7 @@ use wcf\system\WCF;
  */
 abstract class AbstractSearchIndexManager extends SingletonFactory implements ISearchIndexManager
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function createSearchIndices()
     {
         // get definition id
@@ -46,17 +44,13 @@ abstract class AbstractSearchIndexManager extends SingletonFactory implements IS
      */
     abstract protected function createSearchIndex(ObjectType $objectType);
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function beginBulkOperation()
     {
         // does nothing
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function commitBulkOperation()
     {
         // does nothing

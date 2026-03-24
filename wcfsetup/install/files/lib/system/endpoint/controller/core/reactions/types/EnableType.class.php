@@ -24,6 +24,7 @@ use wcf\system\WCF;
 #[PostRequest("/core/reactions/types/{id:\d+}/enable")]
 final class EnableType implements IController
 {
+    #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $reactionType = Helper::fetchObjectFromRequestParameter($variables['id'], ReactionType::class);

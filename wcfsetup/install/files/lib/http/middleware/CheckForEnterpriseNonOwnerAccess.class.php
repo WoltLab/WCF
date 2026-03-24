@@ -20,9 +20,7 @@ use wcf\system\WCF;
  */
 final class CheckForEnterpriseNonOwnerAccess implements MiddlewareInterface
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $requestHandler = RequestHandler::getInstance();

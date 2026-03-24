@@ -37,9 +37,7 @@ class SearchIndexManager extends SingletonFactory implements IContextAwareSearch
      */
     protected $searchIndexManager;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         // get available object types
@@ -96,9 +94,7 @@ class SearchIndexManager extends SingletonFactory implements IContextAwareSearch
         return $this->searchIndexManager;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function set(
         string $objectType,
         int $objectID,
@@ -127,9 +123,9 @@ class SearchIndexManager extends SingletonFactory implements IContextAwareSearch
     }
 
     /**
-     * @inheritDoc
      * @since 6.0
      */
+    #[\Override]
     public function setWithContext(
         string $objectType,
         int $objectID,
@@ -176,41 +172,31 @@ class SearchIndexManager extends SingletonFactory implements IContextAwareSearch
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete(string $objectType, array $objectIDs): void
     {
         $this->getSearchIndexManager()->delete($objectType, $objectIDs);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset(string $objectType): void
     {
         $this->getSearchIndexManager()->reset($objectType);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function createSearchIndices(): void
     {
         $this->getSearchIndexManager()->createSearchIndices();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function beginBulkOperation(): void
     {
         $this->getSearchIndexManager()->beginBulkOperation();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function commitBulkOperation(): void
     {
         $this->getSearchIndexManager()->commitBulkOperation();

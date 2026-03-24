@@ -22,9 +22,7 @@ class PageImporter extends AbstractImporter
      */
     protected $className = Page::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         $contents = [];

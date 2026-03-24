@@ -53,17 +53,13 @@ class DevtoolsTar extends Tar
         $this->files[$filename] = $fullPath;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getIndexByFilename(string $filename)
     {
         return isset($this->files[$filename]) ? $filename : false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function extractToString($index)
     {
         if (!isset($this->files[$index])) {
@@ -75,9 +71,7 @@ class DevtoolsTar extends Tar
         return \file_get_contents($this->files[$index]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function extract($index, string $destination)
     {
         // The source file is empty, if the file is a symlink, which yield to an error.
@@ -90,9 +84,7 @@ class DevtoolsTar extends Tar
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContentList()
     {
         if (!$this->read) {

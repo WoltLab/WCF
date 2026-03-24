@@ -17,9 +17,7 @@ use wcf\util\StringUtil;
  */
 class ShortUnitModifierTemplatePlugin implements IModifierTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         return StringUtil::getShortUnit($tagArgs[0]);

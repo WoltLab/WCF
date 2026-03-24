@@ -37,9 +37,7 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggle
      */
     protected $requireACP = ['delete', 'update'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function create()
     {
         if (isset($this->parameters['data']['showOrder'])) {
@@ -100,9 +98,7 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggle
         return $reactionType;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         parent::update();
@@ -175,9 +171,7 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggle
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         $returnValues = parent::delete();
@@ -203,16 +197,16 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggle
     /**
      * @deprecated 6.3
      */
+    #[\Override]
     public function validateToggle()
     {
         $this->validateUpdate();
     }
 
     /**
-     * @inheritDoc
-     *
      * @deprecated 6.3 use the `DisableReactionType` or `EnableReactionType` command instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->getObjects() as $editor) {

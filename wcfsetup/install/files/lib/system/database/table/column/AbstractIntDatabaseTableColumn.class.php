@@ -21,17 +21,11 @@ abstract class AbstractIntDatabaseTableColumn extends AbstractDatabaseTableColum
         length as private traitLength;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getMinimumLength(): int
     {
         return 1;
     }
 
-    /**
-     * @inheritDoc
-     */
     #[\Override]
     public static function createFromData(string $name, array $data): static
     {

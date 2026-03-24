@@ -37,9 +37,7 @@ final class Bcrypt implements IPasswordAlgorithm
         $this->cost = $cost;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function verify(
         #[\SensitiveParameter]
         string $password,
@@ -48,9 +46,7 @@ final class Bcrypt implements IPasswordAlgorithm
         return \password_verify($password, $hash);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hash(
         #[\SensitiveParameter]
         string $password
@@ -58,9 +54,7 @@ final class Bcrypt implements IPasswordAlgorithm
         return \password_hash($password, \PASSWORD_BCRYPT, $this->getOptions());
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function needsRehash(string $hash): bool
     {
         return \password_needs_rehash($hash, \PASSWORD_BCRYPT, $this->getOptions());

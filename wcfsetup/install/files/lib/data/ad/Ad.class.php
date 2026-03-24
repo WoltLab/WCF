@@ -54,9 +54,7 @@ class Ad extends DatabaseObject implements IRouteController
         return $location;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->adName;

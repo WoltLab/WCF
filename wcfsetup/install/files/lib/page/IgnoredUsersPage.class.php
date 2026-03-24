@@ -32,9 +32,7 @@ class IgnoredUsersPage extends MultipleLinkPage
      */
     public $sqlOrderBy = 'user_ignore.time DESC';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initObjectList()
     {
         parent::initObjectList();
@@ -42,9 +40,7 @@ class IgnoredUsersPage extends MultipleLinkPage
         $this->objectList->getConditionBuilder()->add("user_ignore.userID = ?", [WCF::getUser()->userID]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         // set active tab

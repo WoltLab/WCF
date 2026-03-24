@@ -62,9 +62,7 @@ class TrophyEditor extends DatabaseObjectEditor implements IEditableCachedObject
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         TrophyCache::getInstance()->clearCache();

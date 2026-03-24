@@ -36,14 +36,9 @@ abstract class AbstractAction implements IAction
      */
     public $neededPermissions = [];
 
-    /**
-     * @inheritDoc
-     */
     final public function __construct() {}
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __run()
     {
         $result = $this->readParameters();
@@ -57,18 +52,14 @@ abstract class AbstractAction implements IAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         // call readParameters event
         EventHandler::getInstance()->fireAction($this, 'readParameters');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkModules()
     {
         // call checkModules event
@@ -82,9 +73,7 @@ abstract class AbstractAction implements IAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkPermissions()
     {
         // call checkPermissions event
@@ -96,9 +85,7 @@ abstract class AbstractAction implements IAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         // check if active user is logged in

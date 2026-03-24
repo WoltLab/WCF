@@ -142,9 +142,7 @@ class WCFACP extends WCF
         self::$overrideDebugMode = true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initSession(): void
     {
         self::$sessionObj = SessionHandler::getInstance();
@@ -153,9 +151,7 @@ class WCFACP extends WCF
         $factory->load();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initTPL(): void
     {
         self::$tplObj = ACPTemplateEngine::getInstance();
@@ -163,9 +159,7 @@ class WCFACP extends WCF
         $this->assignDefaultTemplateVariables();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function assignDefaultTemplateVariables(): void
     {
         parent::assignDefaultTemplateVariables();

@@ -25,9 +25,7 @@ class UserAvatarEditor extends DatabaseObjectEditor
      */
     protected static $baseClass = UserAvatar::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         $sql = "DELETE FROM wcf1_user_avatar
@@ -38,9 +36,7 @@ class UserAvatarEditor extends DatabaseObjectEditor
         $this->deleteFiles();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function deleteAll(array $objectIDs = [])
     {
         $sql = "SELECT  *

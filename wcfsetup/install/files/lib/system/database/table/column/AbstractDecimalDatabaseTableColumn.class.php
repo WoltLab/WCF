@@ -19,9 +19,6 @@ abstract class AbstractDecimalDatabaseTableColumn extends AbstractDatabaseTableC
         getDefaultValue as private traitGetDefaultValue;
     }
 
-    /**
-     * @inheritDoc
-     */
     #[\Override]
     public function getDefaultValue(): string|null
     {

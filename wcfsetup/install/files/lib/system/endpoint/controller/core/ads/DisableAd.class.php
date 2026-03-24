@@ -23,6 +23,7 @@ use wcf\system\WCF;
 #[PostRequest("/core/ads/{id:\d+}/disable")]
 final class DisableAd implements IController
 {
+    #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $ad = Helper::fetchObjectFromRequestParameter($variables['id'], Ad::class);

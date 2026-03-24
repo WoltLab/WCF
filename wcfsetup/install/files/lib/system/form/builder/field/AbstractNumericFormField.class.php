@@ -84,9 +84,7 @@ abstract class AbstractNumericFormField extends AbstractFormField implements
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSaveValue()
     {
         if ($this->getValue() === null && !$this->isNullable()) {
@@ -130,9 +128,7 @@ abstract class AbstractNumericFormField extends AbstractFormField implements
         return ['decimal'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
@@ -185,9 +181,7 @@ abstract class AbstractNumericFormField extends AbstractFormField implements
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if ($this->getValue() === null) {
@@ -213,9 +207,7 @@ abstract class AbstractNumericFormField extends AbstractFormField implements
         parent::validate();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function value(mixed $value)
     {
         if ($value !== null) {
@@ -238,7 +230,6 @@ abstract class AbstractNumericFormField extends AbstractFormField implements
     }
 
     /**
-     * @inheritDoc
      * @return string[]
      * @since       5.4
      */

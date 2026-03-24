@@ -108,9 +108,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
         return $row['definitionID'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items)
     {
         $sql = "DELETE FROM wcf1_" . $this->tableName . "
@@ -127,9 +125,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         $additionalData = [];
@@ -147,9 +143,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function import(array $row, array $data)
     {
         if ($row !== []) {
@@ -168,9 +162,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
         return parent::import($row, $data);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
@@ -190,18 +182,16 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return ['objectTypeDefinition'];
     }
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     public function getAdditionalTemplateCode()
     {
         return WCF::getTPL()->render('wcf', '__objectTypePipGui', [
@@ -211,11 +201,11 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = [
@@ -250,10 +240,10 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         // read available object type definitions
@@ -839,10 +829,10 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         return \sha1(
@@ -852,9 +842,9 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     }
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     public function getEntryList()
     {
         $xml = $this->getProjectXml();
@@ -875,10 +865,10 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $entryList->setKeys([
@@ -921,10 +911,10 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $data = $form->getData()['data'];
@@ -1227,9 +1217,9 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     }
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     public function setEntryData(string $identifier, IFormDocument $document)
     {
         $returnValue = $this->defaultSetEntryData($identifier, $document);
@@ -1258,7 +1248,6 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     }
 
     /**
-     * @inheritDoc
      * @return ?\DOMElement
      * @since   5.2
      */
@@ -1279,7 +1268,6 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */

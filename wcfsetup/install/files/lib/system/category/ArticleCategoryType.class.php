@@ -39,9 +39,7 @@ class ArticleCategoryType extends AbstractCategoryType
         'com.woltlab.wcf.user.objectWatch' => 'com.woltlab.wcf.article.category',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function beforeDeletion(CategoryEditor $categoryEditor)
     {
         parent::beforeDeletion($categoryEditor);
@@ -62,34 +60,28 @@ class ArticleCategoryType extends AbstractCategoryType
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canAddCategory()
     {
         return $this->canEditCategory();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canDeleteCategory()
     {
         return $this->canEditCategory();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canEditCategory()
     {
         return WCF::getSession()->getPermission('admin.content.article.canManageCategory');
     }
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     public function supportsHtmlDescription()
     {
         return true;

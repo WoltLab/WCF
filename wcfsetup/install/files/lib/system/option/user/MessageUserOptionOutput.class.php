@@ -19,9 +19,7 @@ use wcf\util\StringUtil;
  */
 class MessageUserOptionOutput implements IUserOptionOutput
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getOutput(User $user, UserOption $option, string $value)
     {
         if ($value === null) {

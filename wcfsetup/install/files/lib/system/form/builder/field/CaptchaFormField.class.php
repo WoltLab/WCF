@@ -45,9 +45,7 @@ final class CaptchaFormField extends AbstractFormField implements IObjectTypeFor
      */
     protected $validationError;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function cleanup(): static
     {
         try {
@@ -62,9 +60,7 @@ final class CaptchaFormField extends AbstractFormField implements IObjectTypeFor
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtmlVariables()
     {
         $variables = [
@@ -92,33 +88,25 @@ final class CaptchaFormField extends AbstractFormField implements IObjectTypeFor
         return $variables;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectTypeDefinition()
     {
         return 'com.woltlab.wcf.captcha';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAvailable()
     {
         return $this->objectType !== null && parent::isAvailable();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasSaveValue()
     {
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function objectType(string $objectType)
     {
         // ignore empty object type which is the case if no captcha has been set
@@ -139,9 +127,7 @@ final class CaptchaFormField extends AbstractFormField implements IObjectTypeFor
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         /** @var ICaptchaHandler $captcha */
@@ -166,9 +152,7 @@ final class CaptchaFormField extends AbstractFormField implements IObjectTypeFor
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         /** @var ICaptchaHandler $captcha */
@@ -183,9 +167,7 @@ final class CaptchaFormField extends AbstractFormField implements IObjectTypeFor
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'captcha';

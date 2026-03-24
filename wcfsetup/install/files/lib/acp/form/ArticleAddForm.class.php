@@ -231,9 +231,7 @@ class ArticleAddForm extends AbstractForm
 
     protected CategoryNodeTree $categoryNodeTree;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -292,9 +290,7 @@ class ArticleAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -396,9 +392,7 @@ class ArticleAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -520,9 +514,7 @@ class ArticleAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -619,9 +611,7 @@ class ArticleAddForm extends AbstractForm
         $this->setDefaultValues();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         $this->attachmentHandler = new AttachmentHandler(
@@ -675,9 +665,7 @@ class ArticleAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

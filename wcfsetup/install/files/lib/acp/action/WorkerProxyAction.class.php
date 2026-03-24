@@ -46,9 +46,7 @@ final class WorkerProxyAction extends AJAXInvokeAction
      */
     public static $allowInvoke = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         AbstractSecureAction::readParameters();
@@ -82,9 +80,7 @@ final class WorkerProxyAction extends AJAXInvokeAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         AbstractSecureAction::execute();
@@ -120,6 +116,7 @@ final class WorkerProxyAction extends AJAXInvokeAction
      * @param string $proceedURL
      * @return void
      */
+    #[\Override]
     protected function sendResponse($progress = 0, ?array $parameters = null, $proceedURL = '')
     {
         if ($parameters === null) {

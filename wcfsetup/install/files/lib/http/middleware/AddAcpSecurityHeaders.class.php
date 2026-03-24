@@ -19,9 +19,7 @@ use wcf\system\request\RequestHandler;
  */
 final class AddAcpSecurityHeaders implements MiddlewareInterface
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (!RequestHandler::getInstance()->isACPRequest()) {

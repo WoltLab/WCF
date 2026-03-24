@@ -70,9 +70,7 @@ class LanguageImportForm extends AbstractForm
      */
     public $packageID = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -80,9 +78,7 @@ class LanguageImportForm extends AbstractForm
         $this->languages = LanguageFactory::getInstance()->getLanguages();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -98,9 +94,7 @@ class LanguageImportForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -144,9 +138,7 @@ class LanguageImportForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -166,9 +158,7 @@ class LanguageImportForm extends AbstractForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

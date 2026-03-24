@@ -41,9 +41,7 @@ class ModerationQueue extends DatabaseObject
 
     const STATUS_CONFIRMED = 4;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __get(string $name)
     {
         $value = parent::__get($name);
@@ -58,9 +56,7 @@ class ModerationQueue extends DatabaseObject
         return $value;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleData($data)
     {
         parent::handleData($data);

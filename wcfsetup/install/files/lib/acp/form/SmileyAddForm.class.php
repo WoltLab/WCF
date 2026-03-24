@@ -126,9 +126,7 @@ class SmileyAddForm extends AbstractForm
      */
     public $uploadedFilename2x = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -150,9 +148,7 @@ class SmileyAddForm extends AbstractForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -160,9 +156,7 @@ class SmileyAddForm extends AbstractForm
         $this->categoryNodeTree = new CategoryNodeTree('com.woltlab.wcf.bbcode.smiley', 0, true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -170,9 +164,7 @@ class SmileyAddForm extends AbstractForm
         I18nHandler::getInstance()->register('smileyTitle');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -215,9 +207,7 @@ class SmileyAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -272,9 +262,7 @@ class SmileyAddForm extends AbstractForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();

@@ -15,9 +15,7 @@ use wcf\system\WCF;
  */
 class BBCodeCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function rebuild(array $parameters)
     {
         $attributes = [];

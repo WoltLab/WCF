@@ -51,9 +51,7 @@ class UserAvatarCondition extends AbstractSelectCondition implements
      */
     const GRAVATAR = 2;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
     {
         switch ($conditionData['userAvatar']) {
@@ -71,9 +69,7 @@ class UserAvatarCondition extends AbstractSelectCondition implements
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkUser(Condition $condition, User $user)
     {
         switch ($condition->userAvatar) {
@@ -90,9 +86,7 @@ class UserAvatarCondition extends AbstractSelectCondition implements
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getOptions()
     {
         return [
@@ -102,9 +96,7 @@ class UserAvatarCondition extends AbstractSelectCondition implements
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showContent(Condition $condition)
     {
         if (!WCF::getUser()->userID) {

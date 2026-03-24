@@ -23,9 +23,7 @@ final class LookupRequestRoute implements IRequestRoute
      */
     private array $routeData = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function matches(string $requestURL): bool
     {
         $requestURL = FileUtil::removeLeadingSlash($requestURL);
@@ -86,18 +84,16 @@ final class LookupRequestRoute implements IRequestRoute
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getRouteData(): array
     {
         return $this->routeData;
     }
 
     /**
-     * @inheritDoc
      * @throws  \BadMethodCallException
      */
+    #[\Override]
     public function buildLink(array $components): string
     {
         throw new \BadMethodCallException(
@@ -105,18 +101,14 @@ final class LookupRequestRoute implements IRequestRoute
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canHandle(array $components): bool
     {
         // this route cannot build routes, it is a one-way resolver
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isACP(): bool
     {
         // lookups are not supported for ACP requests

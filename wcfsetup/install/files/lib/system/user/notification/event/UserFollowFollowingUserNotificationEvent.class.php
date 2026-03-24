@@ -27,9 +27,7 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
      */
     protected $stackable = true;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         $count = \count($this->getAuthors());
@@ -43,9 +41,7 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
         return $this->getLanguage()->get('wcf.user.notification.follow.title');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMessage()
     {
         $authors = \array_values($this->getAuthors());
@@ -66,9 +62,7 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEmailMessage(string $notificationType = 'instant')
     {
         return [
@@ -77,27 +71,23 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return $this->author->getLink();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEventHash()
     {
         return \sha1($this->eventID . '-' . $this->getUserNotificationObject()->followUserID);
     }
 
     /**
-     * @inheritDoc
      * @return  UserFollowUserNotificationObject[]
      * @since   3.1
      */
+    #[\Override]
     public static function getTestObjects(UserProfile $recipient, UserProfile $author)
     {
         $follow = UserFollow::getFollow($recipient->userID, $author->userID);
@@ -115,9 +105,9 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     public static function getTestAdditionalData(IUserNotificationObject $object)
     {
         /** @var UserFollowUserNotificationObject $object */

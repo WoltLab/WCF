@@ -31,9 +31,7 @@ class InstallPackageAction extends AbstractSecureAction
 
     private string $redirectLocation = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -72,6 +70,7 @@ class InstallPackageAction extends AbstractSecureAction
         $this->installation = new PackageInstallationDispatcher($this->queue);
     }
 
+    #[\Override]
     public function execute()
     {
         parent::execute();

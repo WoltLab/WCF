@@ -23,9 +23,7 @@ class CounterFunctionTemplatePlugin implements IFunctionTemplatePlugin
      */
     protected $counters = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         if (!isset($tagArgs['name'])) {

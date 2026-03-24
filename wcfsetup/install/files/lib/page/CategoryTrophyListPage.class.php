@@ -31,9 +31,7 @@ class CategoryTrophyListPage extends TrophyListPage
      */
     public $category;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -57,9 +55,7 @@ class CategoryTrophyListPage extends TrophyListPage
         ], ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : ''));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initObjectList()
     {
         MultipleLinkPage::initObjectList();
@@ -73,9 +69,7 @@ class CategoryTrophyListPage extends TrophyListPage
         $this->objectList->getConditionBuilder()->add('categoryID = ?', [$this->categoryID]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

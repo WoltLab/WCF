@@ -104,9 +104,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
         'title' => '',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __run()
     {
         $this->autosetControllers();
@@ -148,9 +146,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -162,9 +158,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function createForm()
     {
         parent::createForm();
@@ -384,9 +378,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
         return $this->objectType->getProcessor();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -415,9 +407,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function finalizeForm()
     {
         parent::finalizeForm();
@@ -458,9 +448,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function saved()
     {
         $processor = $this->getObjectTypeProcessor();
@@ -525,9 +513,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
         parent::saved();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkPermissions()
     {
         AbstractForm::checkPermissions();

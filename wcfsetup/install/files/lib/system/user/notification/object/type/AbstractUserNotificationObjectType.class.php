@@ -33,9 +33,7 @@ class AbstractUserNotificationObjectType extends AbstractObjectTypeProcessor imp
      */
     protected static $objectListClassName = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectsByIDs(array $objectIDs)
     {
         $indexName = \call_user_func([static::$objectClassName, 'getDatabaseTableIndexName']);

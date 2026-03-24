@@ -32,16 +32,19 @@ final class UserAssigned extends \wcf\system\moderation\queue\event\UserAssigned
         $this->oldAssigneeId = $oldAssignee?->userID;
     }
 
+    #[\Override]
     public function getModerationQueue(): ModerationQueue
     {
         return new ModerationQueue($this->moderationQueueId);
     }
 
+    #[\Override]
     public function getNewAssignee(): ?User
     {
         return $this->newAssigneeId !== null ? new User($this->newAssigneeId) : null;
     }
 
+    #[\Override]
     public function getOldAssignee(): ?User
     {
         return $this->oldAssigneeId !== null ? new User($this->oldAssigneeId) : null;

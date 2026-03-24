@@ -21,9 +21,7 @@ class ReactionTypeCache extends SingletonFactory
      */
     protected $reactionTypes;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->reactionTypes = ReactionTypeCacheBuilder::getInstance()->getData();

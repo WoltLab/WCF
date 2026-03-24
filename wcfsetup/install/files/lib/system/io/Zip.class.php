@@ -28,9 +28,6 @@ class Zip extends File implements IArchive
      */
     protected $centralDirectory;
 
-    /**
-     * @inheritDoc
-     */
     public function __construct($filename)
     {
         parent::__construct($filename, 'rb');
@@ -38,9 +35,7 @@ class Zip extends File implements IArchive
         $this->centralDirectory = $this->readCentralDirectory();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getIndexByFilename(string $filename)
     {
         if (isset($this->centralDirectory['files'][$filename])) {
@@ -50,17 +45,13 @@ class Zip extends File implements IArchive
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContentList()
     {
         return $this->centralDirectory['files'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFileInfo($index)
     {
         if (!\is_int($index)) {
@@ -92,9 +83,7 @@ class Zip extends File implements IArchive
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function extractToString($index)
     {
         if (!\is_int($index)) {
@@ -113,9 +102,7 @@ class Zip extends File implements IArchive
         return $file['content'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function extract($index, string $destination)
     {
         if (!\is_int($index)) {

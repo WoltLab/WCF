@@ -109,9 +109,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateDelete()
     {
         // read objects
@@ -131,9 +129,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         $returnValues = parent::delete();
@@ -155,9 +151,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
         return $returnValues;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateGetGroupedUserList()
     {
         $this->readInteger('pageNo');
@@ -176,9 +170,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getGroupedUserList()
     {
         // resolve page count

@@ -40,9 +40,7 @@ class AccountSecurityPage extends AbstractPage
      */
     private $enabledMultifactorMethods;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -68,9 +66,7 @@ class AccountSecurityPage extends AbstractPage
         });
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -83,9 +79,7 @@ class AccountSecurityPage extends AbstractPage
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         // set active tab

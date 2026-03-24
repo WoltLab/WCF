@@ -38,9 +38,7 @@ class WysiwygSmileyFormContainer extends TabTabMenuFormContainer implements IWys
             ->attribute('data-collapsible', 'false');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function populate()
     {
         parent::populate();

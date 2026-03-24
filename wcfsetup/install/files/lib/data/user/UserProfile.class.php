@@ -128,9 +128,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
 
     const ACCESS_NOBODY = 3;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getDecoratedObject()->__toString();
@@ -1145,17 +1143,13 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
         return '<a href="' . $this->getLink() . '" class="userLink" data-object-id="' . $this->userID . '">' . StringUtil::encodeHTML($this->username) . '</a>';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return $this->getDecoratedObject()->getLink();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->getDecoratedObject()->getTitle();

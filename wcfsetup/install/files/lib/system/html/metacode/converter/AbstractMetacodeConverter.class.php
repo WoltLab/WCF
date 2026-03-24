@@ -12,9 +12,7 @@ namespace wcf\system\html\metacode\converter;
  */
 abstract class AbstractMetacodeConverter implements IMetacodeConverter
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateAttributes(array $attributes)
     {
         return true;

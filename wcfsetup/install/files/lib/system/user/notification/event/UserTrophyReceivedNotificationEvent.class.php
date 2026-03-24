@@ -32,17 +32,13 @@ class UserTrophyReceivedNotificationEvent extends AbstractUserNotificationEvent 
     use TTestableCategorizedUserNotificationEvent;
     use TTestableUserNotificationEvent;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->getLanguage()->get('wcf.user.notification.trophy.received.title');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMessage()
     {
         return $this->getLanguage()->getDynamicVariable('wcf.user.notification.trophy.received.message', [
@@ -51,35 +47,29 @@ class UserTrophyReceivedNotificationEvent extends AbstractUserNotificationEvent 
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function supportsEmailNotification()
     {
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return $this->getUserNotificationObject()->getTrophy()->getLink();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkAccess()
     {
         return $this->getUserNotificationObject()->getDecoratedObject()->canSee();
     }
 
     /**
-     * @inheritDoc
      * @return  UserTrophyNotificationObject[]
      * @since   3.1
      */
+    #[\Override]
     public static function getTestObjects(UserProfile $recipient, UserProfile $author)
     {
         /** @var Trophy $trophy */

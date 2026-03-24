@@ -82,9 +82,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
      */
     public $selectOptionOptionTypes = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function install()
     {
         AbstractPackageInstallationPlugin::install();
@@ -104,9 +102,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
         $this->importOptions($xpath);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function deleteItems(\DOMXPath $xpath)
     {
         // delete options
@@ -254,9 +250,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasUninstall()
     {
         $hasUninstallOptions = parent::hasUninstall();
@@ -269,9 +263,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
         return $hasUninstallOptions || $statement->fetchSingleColumn() > 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function uninstall()
     {
         // delete options
@@ -402,41 +394,35 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items) {}
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         return $data;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function findExistingItem(array $data)
     {
         return null;
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return [];
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         /** @var IFormContainer $dataContainer */
@@ -751,11 +737,11 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = [];
@@ -907,17 +893,16 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         return $element->getAttribute('name');
     }
 
     /**
-     * @inheritDoc
      * @return list<string>
      * @since   5.2
      */
@@ -979,7 +964,6 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
@@ -1007,10 +991,10 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         switch ($this->entryType) {
@@ -1035,10 +1019,10 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $formData = $form->getData()['data'];
@@ -1095,7 +1079,6 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
@@ -1216,7 +1199,6 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
     }
 
     /**
-     * @inheritDoc
      * @return ?\DOMElement
      * @since   5.2
      */
@@ -1235,7 +1217,6 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
@@ -1281,7 +1262,6 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
@@ -1317,7 +1297,6 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
     }
 
     /**
-     * @inheritDoc
      * @return bool
      * @since   5.2
      */

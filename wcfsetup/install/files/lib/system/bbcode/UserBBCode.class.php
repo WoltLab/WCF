@@ -16,9 +16,7 @@ use wcf\system\WCF;
  */
 final class UserBBCode extends AbstractBBCode
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getParsedTag(array $openingTag, string $content, array $closingTag, BBCodeParser $parser): string
     {
         $content = $openingTag['attributes'][0];

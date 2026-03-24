@@ -27,9 +27,7 @@ class UserAuthenticationFactory extends SingletonFactory
      */
     protected $userAuthentication;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         // call loadInstance event

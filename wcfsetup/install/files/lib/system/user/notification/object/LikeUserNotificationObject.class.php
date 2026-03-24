@@ -22,25 +22,19 @@ class LikeUserNotificationObject extends DatabaseObjectDecorator implements IUse
      */
     protected static $baseClass = Like::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getURL()
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getAuthorID()
     {
         return $this->userID;

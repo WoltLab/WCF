@@ -20,9 +20,7 @@ class UserTrophyImporter extends AbstractImporter
      */
     protected $className = UserTrophy::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         if (isset($data['trophyID'])) {

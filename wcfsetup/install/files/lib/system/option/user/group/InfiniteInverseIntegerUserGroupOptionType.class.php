@@ -14,9 +14,7 @@ namespace wcf\system\option\user\group;
  */
 class InfiniteInverseIntegerUserGroupOptionType extends InverseIntegerUserGroupOptionType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function merge(mixed $defaultValue, mixed $groupValue)
     {
         if ($groupValue == -1 || $defaultValue == $groupValue) {
@@ -30,9 +28,7 @@ class InfiniteInverseIntegerUserGroupOptionType extends InverseIntegerUserGroupO
         return \min($defaultValue, $groupValue);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function compare(mixed $value1, mixed $value2)
     {
         if ($value1 == $value2) {

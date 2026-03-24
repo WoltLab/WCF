@@ -205,9 +205,7 @@ class StyleAddForm extends AbstractForm
      */
     public $customAssets = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -311,9 +309,7 @@ class StyleAddForm extends AbstractForm
         $handler->registerUploadField($field);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -442,9 +438,7 @@ class StyleAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -700,9 +694,7 @@ class StyleAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -842,9 +834,7 @@ class StyleAddForm extends AbstractForm
         $this->variables = $statement->fetchMap('variableName', 'defaultValue');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -928,9 +918,7 @@ class StyleAddForm extends AbstractForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

@@ -33,9 +33,7 @@ class ArticleFeedPage extends AbstractFeedPage
      */
     public $categoryID = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -54,9 +52,7 @@ class ArticleFeedPage extends AbstractFeedPage
         $this->redirectToNewPage(ArticleRssFeedPage::class);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -75,9 +71,7 @@ class ArticleFeedPage extends AbstractFeedPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

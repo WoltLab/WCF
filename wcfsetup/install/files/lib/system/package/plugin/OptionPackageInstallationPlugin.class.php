@@ -66,9 +66,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
         'requirei18n',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function saveOption($option, $categoryName, $existingOptionID = 0)
     {
         // default values
@@ -178,10 +176,10 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         parent::addFormFields($form);
@@ -317,11 +315,11 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = parent::fetchElementData($element, $saveData);
@@ -348,34 +346,28 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
     }
 
     /**
-     * @inheritDoc
      * @return OptionHandler<Option, OptionCategory>
      * @since 5.2
      */
+    #[\Override]
     protected function getSortOptionHandler()
     {
         return new class(true) extends OptionHandler {
-            /**
-             * @inheritDoc
-             */
+            #[\Override]
             protected function checkCategory(OptionCategory $category)
             {
                 // we do not care for category checks here
                 return true;
             }
 
-            /**
-             * @inheritDoc
-             */
+            #[\Override]
             protected function checkOption(Option $option)
             {
                 // we do not care for option checks here
                 return true;
             }
 
-            /**
-             * @inheritDoc
-             */
+            #[\Override]
             public function getCategoryOptions(string $categoryName = '', bool $inherit = true)
             {
                 // we just need to ensure that the category is not empty
@@ -385,10 +377,10 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $option = parent::prepareXmlElement($document, $form);

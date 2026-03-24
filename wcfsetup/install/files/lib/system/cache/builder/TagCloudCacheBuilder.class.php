@@ -39,9 +39,7 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder
      */
     protected $objectTypeIDs = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function rebuild(array $parameters)
     {
         $this->languageIDs = $this->parseLanguageIDs($parameters);

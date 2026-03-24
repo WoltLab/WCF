@@ -64,17 +64,13 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
         $this->affectedObject = $object;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return ModerationQueueManager::getInstance()->getLink($this->objectTypeID, $this->queueID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->affectedObject === null ? '' : $this->affectedObject->getTitle();
@@ -155,9 +151,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
         $this->isOrphaned = true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getTitle();

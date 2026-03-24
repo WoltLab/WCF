@@ -24,6 +24,7 @@ use wcf\system\file\processor\FileProcessor;
 #[PostRequest('/core/files/{id:\d+}/generate-thumbnails')]
 final class GenerateThumbnails implements IController
 {
+    #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $file = Helper::fetchObjectFromRequestParameter($variables['id'], File::class);

@@ -40,9 +40,7 @@ abstract class AbstractBulkProcessableObjectType extends AbstractObjectTypeProce
      */
     protected $templateName = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getActionObjectTypeDefinition()
     {
         if (empty($this->actionObjectTypeDefinition)) {
@@ -52,17 +50,13 @@ abstract class AbstractBulkProcessableObjectType extends AbstractObjectTypeProce
         return $this->actionObjectTypeDefinition;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionHTML()
     {
         return WCF::getTPL()->render(\explode('\\', static::class)[0], $this->templateName, []);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionObjectTypeDefinition()
     {
         if (empty($this->conditionObjectTypeDefinition)) {
@@ -72,9 +66,7 @@ abstract class AbstractBulkProcessableObjectType extends AbstractObjectTypeProce
         return $this->conditionObjectTypeDefinition;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLanguageItemPrefix()
     {
         if (empty($this->languageItemPrefix)) {

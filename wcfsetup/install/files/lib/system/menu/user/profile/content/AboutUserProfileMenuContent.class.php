@@ -23,9 +23,7 @@ class AboutUserProfileMenuContent extends SingletonFactory implements IUserProfi
      */
     public $optionHandler;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContent(int $userID)
     {
         if ($this->optionHandler === null) {
@@ -44,9 +42,7 @@ class AboutUserProfileMenuContent extends SingletonFactory implements IUserProfi
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isVisible(int $userID)
     {
         return true;

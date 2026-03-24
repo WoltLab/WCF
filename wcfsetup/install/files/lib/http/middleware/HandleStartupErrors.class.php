@@ -19,9 +19,7 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 final class HandleStartupErrors implements MiddlewareInterface
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (\defined('WCF_STARTUP_ERROR')) {

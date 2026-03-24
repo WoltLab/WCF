@@ -26,14 +26,13 @@ class Label extends DatabaseObject implements IRouteController
      * Returns the label's textual representation if a label is treated as a
      * string.
      */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getTitle();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->label);

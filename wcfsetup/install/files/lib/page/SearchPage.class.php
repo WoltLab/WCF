@@ -21,9 +21,7 @@ final class SearchPage extends AbstractPage
      */
     public $extended = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -33,9 +31,7 @@ final class SearchPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

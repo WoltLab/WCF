@@ -11,9 +11,7 @@ namespace wcf\system\form\container;
  */
 class GroupFormElementContainer extends AbstractFormElementContainer
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHTML(string $formName)
     {
         $content = '';

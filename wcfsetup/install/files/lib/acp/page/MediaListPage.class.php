@@ -90,9 +90,7 @@ class MediaListPage extends SortablePage
         'lastDownloadTime',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -106,9 +104,7 @@ class MediaListPage extends SortablePage
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initObjectList()
     {
         parent::initObjectList();
@@ -135,9 +131,7 @@ class MediaListPage extends SortablePage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -146,9 +140,7 @@ class MediaListPage extends SortablePage
         $this->categoryList->setMaxDepth(0);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -183,9 +175,7 @@ class MediaListPage extends SortablePage
         $this->canonicalURL = LinkHandler::getInstance()->getLink('MediaList', $parameters);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function readObjects()
     {
         if ($this->sqlOrderBy && $this->sortField == 'mediaID') {

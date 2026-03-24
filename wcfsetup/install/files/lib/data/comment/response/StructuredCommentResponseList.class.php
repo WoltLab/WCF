@@ -68,9 +68,7 @@ class StructuredCommentResponseList extends CommentResponseList
         $this->getConditionBuilder()->add("comment_response.commentID = ?", [$this->comment->commentID]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readObjects()
     {
         parent::readObjects();

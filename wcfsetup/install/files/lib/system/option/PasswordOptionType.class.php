@@ -21,33 +21,25 @@ class PasswordOptionType extends TextOptionType
      */
     protected $inputType = 'password';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, mixed $value)
     {
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addCondition(UserList $userList, Option $option, mixed $value)
     {
         // does nothing
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkUser(User $user, Option $option, mixed $value)
     {
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionData(Option $option, mixed $newValue)
     {
         return $newValue;

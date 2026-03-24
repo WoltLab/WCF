@@ -72,9 +72,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
         return (\is_resource($image) && \get_resource_type($image) === 'gd') || (\is_object($image) && $image instanceof \GdImage);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function load($image, int $type = 0)
     {
         if (!$this->isImage($image)) {
@@ -92,9 +90,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
         $this->width = \imagesx($this->image);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function loadFile(string $file)
     {
         [$this->width, $this->height, $this->type] = \getimagesize($file);
@@ -137,9 +133,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function createEmptyImage(int $width, int $height)
     {
         $this->image = \imagecreate($width, $height);
@@ -151,9 +145,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
         $this->height = $height;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function createThumbnail(int $maxWidth, int $maxHeight, bool $preserveAspectRatio = true)
     {
         $x = $y = 0;
@@ -203,9 +195,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
         return $image;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function clip(int $originX, int $originY, int $width, int $height)
     {
         $image = \imagecreatetruecolor($width, $height);
@@ -218,9 +208,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
         $this->load($image, $this->type);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function resize(int $originX, int $originY, int $originWidth, int $originHeight, int $targetWidth = 0, int $targetHeight = 0)
     {
         $image = \imagecreatetruecolor($targetWidth, $targetHeight);
@@ -244,17 +232,13 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
         $this->load($image, $this->type);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function drawRectangle(int $startX, int $startY, int $endX, int $endY)
     {
         \imagefilledrectangle($this->image, $startX, $startY, $endX, $endY, $this->color);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function drawText(string $text, int $x, int $y, $font, int $size, float $opacity = 1.0)
     {
         // set opacity
@@ -270,9 +254,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
         \imagettftext($this->image, $size, 0, $x, $y, $color, $font, $text);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function drawTextRelative(string $text, string $position, int $margin, int $offsetX, int $offsetY, $font, int $size, float $opacity = 1.0)
     {
         // split text into multiple lines
@@ -332,9 +314,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
         $this->drawText($text, $x + $offsetX, $y + $offsetY, $font, $size, $opacity);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function textFitsImage(string $text, int $margin, $font, int $size)
     {
         $box = \imagettfbbox($size, 0, $font, $text);
@@ -345,17 +325,13 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
         return $textWidth + 2 * $margin <= $this->getWidth() && $textHeight + 2 * $margin <= $this->getHeight();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function adjustFontSize(string $text, int $margin, $font, int $size)
     {
         return 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setColor(int $red, int $green, int $blue)
     {
         $this->color = \imagecolorallocate($this->image, $red, $green, $blue);
@@ -368,17 +344,13 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasColor()
     {
         return $this->color !== null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setTransparentColor(int $red, int $green, int $blue)
     {
         if ($this->type == \IMAGETYPE_PNG) {
@@ -387,9 +359,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function writeImage($image, ?string $filename)
     {
         if (!$this->isImage($image)) {
@@ -420,50 +390,38 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
         \file_put_contents($filename, $stream);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getWidth()
     {
         return $this->width;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHeight()
     {
         return $this->height;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getType()
     {
         return $this->type;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getImage()
     {
         return $this->image;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rotate($degrees)
     {
         // imagerotate interpretes degrees as counter-clockwise
         return \imagerotate($this->image, 360.0 - $degrees, ($this->color ?: 0));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function overlayImage(string $file, int $x, int $y, float $opacity)
     {
         $overlayImage = new self();
@@ -558,17 +516,13 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function overlayImageRelative(string $file, string $position, int $margin, float $opacity)
     {
         // does nothing
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function saveImageAs(object $image, string $filename, string $type, int $quality = 100): void
     {
         if (!$this->isImage($image)) {
@@ -611,17 +565,13 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
         \file_put_contents($filename, $stream);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function isSupported()
     {
         return \function_exists('gd_info');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function supportsWebp(): bool
     {
         return !empty(\gd_info()['WebP Support']);

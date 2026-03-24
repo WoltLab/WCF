@@ -23,9 +23,7 @@ class PageCommentListBoxController extends AbstractDatabaseObjectListBoxControll
      */
     protected static $supportedPositions = ['contentTop', 'contentBottom'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getObjectList()
     {
         $commentObjectTypeID = CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.page');
@@ -39,9 +37,7 @@ class PageCommentListBoxController extends AbstractDatabaseObjectListBoxControll
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getTemplate()
     {
         return WCF::getTPL()->render('wcf', 'boxPageComments', [
@@ -54,9 +50,7 @@ class PageCommentListBoxController extends AbstractDatabaseObjectListBoxControll
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasContent()
     {
         return RequestHandler::getInstance()->getActiveRequest() && (WCF::getSession()->getPermission('user.page.canAddComment') || parent::hasContent());

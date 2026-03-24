@@ -16,9 +16,7 @@ use wcf\util\DateUtil;
  */
 class StatDailyBuilderCronjob extends AbstractCronjob
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(Cronjob $cronjob)
     {
         parent::execute($cronjob);

@@ -28,9 +28,7 @@ class IpSearchModifierTemplatePlugin implements IModifierTemplatePlugin
      */
     const SEARCH_ENGINE_URL_DEFAULT = 'https://www.google.com/search?q=%s';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         $domain = Url::parse(IP_ADDRESS_SEARCH_ENGINE ?: self::SEARCH_ENGINE_URL_DEFAULT)['host'];

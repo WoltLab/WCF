@@ -39,17 +39,13 @@ class ParentPageLocation implements ITitledLinkObject
         $this->link = $link;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return $this->link;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->title;

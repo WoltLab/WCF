@@ -23,9 +23,7 @@ class CycleFunctionTemplatePlugin implements IFunctionTemplatePlugin
      */
     protected $cycles = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         // get params

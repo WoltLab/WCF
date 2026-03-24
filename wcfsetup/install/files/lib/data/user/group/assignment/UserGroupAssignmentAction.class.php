@@ -34,9 +34,7 @@ class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements 
      */
     protected $requireACP = ['create', 'delete', 'toggle', 'update'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         ConditionHandler::getInstance()->deleteConditions(
@@ -50,6 +48,7 @@ class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements 
     /**
      * @deprecated 6.3
      */
+    #[\Override]
     public function validateToggle()
     {
         $this->validateUpdate();
@@ -58,6 +57,7 @@ class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements 
     /**
      * @deprecated 6.3 use the `EnableUserGroupAssignment` or `DisableUserGroupAssignment` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->objects as $editor) {

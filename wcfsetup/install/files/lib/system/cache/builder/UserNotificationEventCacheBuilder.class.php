@@ -14,9 +14,7 @@ use wcf\system\WCF;
  */
 class UserNotificationEventCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function rebuild(array $parameters)
     {
         $data = [];

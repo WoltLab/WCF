@@ -54,9 +54,7 @@ class ArticlePage extends AbstractArticlePage
      */
     public $commentList;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -64,9 +62,7 @@ class ArticlePage extends AbstractArticlePage
         $this->canonicalURL = $this->articleContent->getLink();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -180,9 +176,7 @@ class ArticlePage extends AbstractArticlePage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

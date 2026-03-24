@@ -53,9 +53,7 @@ class MultifactorDisableForm extends AbstractFormBuilderForm
      */
     private $setups;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -79,9 +77,7 @@ class MultifactorDisableForm extends AbstractFormBuilderForm
         \assert($this->method->getDefinition()->definitionName === 'com.woltlab.wcf.multifactor');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkPermissions()
     {
         parent::checkPermissions();
@@ -96,9 +92,7 @@ class MultifactorDisableForm extends AbstractFormBuilderForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function createForm()
     {
         parent::createForm();
@@ -146,9 +140,7 @@ class MultifactorDisableForm extends AbstractFormBuilderForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();
@@ -180,9 +172,7 @@ class MultifactorDisableForm extends AbstractFormBuilderForm
         $this->saved();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function saved()
     {
         AbstractForm::saved();
@@ -245,9 +235,7 @@ class MultifactorDisableForm extends AbstractFormBuilderForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function setFormAction()
     {
         $this->form->action(LinkHandler::getInstance()->getControllerLink(static::class, [
@@ -255,9 +243,7 @@ class MultifactorDisableForm extends AbstractFormBuilderForm
         ]));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -268,9 +254,7 @@ class MultifactorDisableForm extends AbstractFormBuilderForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         UserMenu::getInstance()->setActiveMenuItem('wcf.user.menu.profile.security');

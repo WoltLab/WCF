@@ -20,6 +20,7 @@ class CommentUserContentProvider extends AbstractDatabaseUserContentProvider
     /**
      * @inheritdoc
      */
+    #[\Override]
     public static function getDatabaseObjectClass()
     {
         return Comment::class;

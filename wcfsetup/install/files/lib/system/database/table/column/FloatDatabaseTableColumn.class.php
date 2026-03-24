@@ -17,18 +17,12 @@ final class FloatDatabaseTableColumn extends AbstractDecimalDatabaseTableColumn
      */
     protected string $type = 'float';
 
-    /**
-     * @inheritDoc
-     */
     #[\Override]
     public function getMaximumDecimals(): int
     {
         return 30;
     }
 
-    /**
-     * @inheritDoc
-     */
     #[\Override]
     public function getMaximumLength(): int
     {

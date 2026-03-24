@@ -98,9 +98,7 @@ class BBCodeAddForm extends AbstractForm
      */
     public $wysiwygIcon = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -108,9 +106,7 @@ class BBCodeAddForm extends AbstractForm
         I18nHandler::getInstance()->register('buttonLabel');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -167,9 +163,7 @@ class BBCodeAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -239,9 +233,7 @@ class BBCodeAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -306,9 +298,7 @@ class BBCodeAddForm extends AbstractForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

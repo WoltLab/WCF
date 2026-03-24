@@ -54,9 +54,9 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction
     protected $pip;
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     public function create()
     {
         $this->parameters['data']['path'] = FileUtil::addTrailingSlash($this->parameters['data']['path']);
@@ -69,9 +69,7 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction
         return $project;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateDelete()
     {
         if (!ENABLE_DEVELOPER_TOOLS) {

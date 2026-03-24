@@ -40,10 +40,7 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
      */
     protected $requireACP = ['create', 'delete', 'toggle', 'update', 'updatePosition'];
 
-    /**
-     * @inheritDoc
-     * @return  Notice
-     */
+    #[\Override]
     public function create()
     {
         $showOrder = 0;
@@ -60,9 +57,7 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
         return new Notice($notice->noticeID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         ConditionHandler::getInstance()->deleteConditions('com.woltlab.wcf.condition.notice', $this->objectIDs);
@@ -100,9 +95,7 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
         $this->getSingleObject();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         parent::update();
@@ -119,6 +112,7 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
     /**
      * @deprecated 6.3
      */
+    #[\Override]
     public function validateToggle()
     {
         $this->validateUpdate();
@@ -127,6 +121,7 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
     /**
      * @deprecated 6.3 use the `EnableNotice` or `DisableNotice` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->objects as $editor) {

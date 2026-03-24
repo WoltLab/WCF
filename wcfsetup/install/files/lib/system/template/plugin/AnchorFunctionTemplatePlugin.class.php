@@ -40,9 +40,7 @@ use wcf\util\StringUtil;
  */
 class AnchorFunctionTemplatePlugin implements IFunctionTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         $link = $content = $object = null;

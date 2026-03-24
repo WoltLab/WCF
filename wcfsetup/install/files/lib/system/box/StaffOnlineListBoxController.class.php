@@ -22,9 +22,7 @@ class StaffOnlineListBoxController extends AbstractDatabaseObjectListBoxControll
      */
     protected static $supportedPositions = ['sidebarLeft', 'sidebarRight'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getObjectList()
     {
         $objectList = new UsersOnlineList();
@@ -44,17 +42,13 @@ class StaffOnlineListBoxController extends AbstractDatabaseObjectListBoxControll
         return $objectList;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getTemplate()
     {
         return WCF::getTPL()->render('wcf', 'boxStaffOnline', ['usersOnlineList' => $this->objectList]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasContent()
     {
         if (!MODULE_USERS_ONLINE || !WCF::getSession()->getPermission('user.profile.canViewUsersOnlineList')) {

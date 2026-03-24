@@ -37,9 +37,7 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlInputNode
      */
     protected $tagName = 'woltlab-metacode';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAllowed(AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         $bbcodes = [];
@@ -62,9 +60,7 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlInputNode
         return $disallowedBBCodes;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         /** @var IMetacodeConverter[] $converters */
@@ -167,9 +163,7 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlInputNode
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function replaceTag(array $data)
     {
         return $data['parsedTag'];

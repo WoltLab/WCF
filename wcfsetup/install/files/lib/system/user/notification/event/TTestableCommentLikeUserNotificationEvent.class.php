@@ -25,7 +25,6 @@ trait TTestableCommentLikeUserNotificationEvent
     }
 
     /**
-     * @inheritDoc
      * @return LikeableComment
      */
     protected static function createTestLikeObject(UserProfile $recipient, UserProfile $author)
@@ -33,9 +32,7 @@ trait TTestableCommentLikeUserNotificationEvent
         return new LikeableComment(self::createTestComment($recipient, $author));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getTestAdditionalData(IUserNotificationObject $object)
     {
         /** @var LikeableComment $likedObject */
@@ -48,7 +45,6 @@ trait TTestableCommentLikeUserNotificationEvent
     }
 
     /**
-     * @inheritDoc
      * @return string
      */
     protected static function getTestLikeableObjectTypeName()

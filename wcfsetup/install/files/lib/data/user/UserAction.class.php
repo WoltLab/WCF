@@ -75,6 +75,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      *
      * @return void
      */
+    #[\Override]
     public function validateCreate()
     {
         $this->readString('password', false, 'data');
@@ -123,6 +124,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
     /**
      * Validates permissions and parameters.
      */
+    #[\Override]
     public function validateDelete()
     {
         // read and validate user objects
@@ -131,9 +133,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         $this->__validateAccessibleGroups();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         if (empty($this->objects)) {
@@ -165,6 +165,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      *
      * @return void
      */
+    #[\Override]
     public function validateUpdate()
     {
         // read objects
@@ -285,9 +286,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function create()
     {
         /** @var User $user */
@@ -334,9 +333,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         return $user;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         if (isset($this->parameters['data']) || isset($this->parameters['counters'])) {
@@ -530,9 +527,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateGetSearchResultList()
     {
         $this->readBoolean('includeUserGroups', false, 'data');
@@ -551,9 +546,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSearchResultList()
     {
         $searchString = $this->parameters['data']['searchString'];
@@ -631,17 +624,13 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         return $list;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateUnmarkAll()
     {
         // does nothing
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function unmarkAll()
     {
         ClipboardHandler::getInstance()->removeItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
@@ -856,9 +845,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         $this->unmarkItems();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function readObjects()
     {
         if (empty($this->objectIDs)) {

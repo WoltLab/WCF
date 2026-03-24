@@ -47,9 +47,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm
      */
     public $missingElements = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -60,9 +58,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function buildForm()
     {
         parent::buildForm();
@@ -74,9 +70,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -94,9 +88,9 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm
     }
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     public function saved()
     {
         parent::saved();
@@ -109,9 +103,9 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm
     }
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     protected function setFormObjectData()
     {
         parent::setFormObjectData();
@@ -357,9 +351,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function writePackageXml(DevtoolsProject $project, array $data)
     {
         if (!$this->hasBrokenPath) {

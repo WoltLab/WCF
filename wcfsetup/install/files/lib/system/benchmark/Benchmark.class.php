@@ -60,6 +60,7 @@ class Benchmark extends SingletonFactory
     /**
      * Creates a new Benchmark object.
      */
+    #[\Override]
     protected function init()
     {
         $this->startTime = self::getMicrotime();

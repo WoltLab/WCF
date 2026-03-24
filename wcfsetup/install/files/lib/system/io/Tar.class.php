@@ -147,9 +147,7 @@ class Tar implements IArchive
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContentList()
     {
         if (!$this->read) {
@@ -160,9 +158,7 @@ class Tar implements IArchive
         return $this->contentList;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFileInfo($index)
     {
         if (!\is_int($index)) {
@@ -176,9 +172,7 @@ class Tar implements IArchive
         return $this->contentList[$index];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getIndexByFilename(string $filename)
     {
         foreach ($this->contentList as $index => $file) {
@@ -190,9 +184,7 @@ class Tar implements IArchive
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function extractToString($index)
     {
         if (!$this->read) {
@@ -257,9 +249,7 @@ class Tar implements IArchive
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function extract($index, string $destination)
     {
         if (!$this->read) {

@@ -20,9 +20,7 @@ class HtmlOutputNodeWoltlabMetacode extends AbstractHtmlOutputNode
      */
     protected $tagName = 'woltlab-metacode';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         /** @var \DOMElement $element */
@@ -42,9 +40,7 @@ class HtmlOutputNodeWoltlabMetacode extends AbstractHtmlOutputNode
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function replaceTag(array $data)
     {
         HtmlBBCodeParser::getInstance()->setOutputType($this->outputType);

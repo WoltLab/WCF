@@ -17,9 +17,7 @@ use wcf\system\template\TemplateScriptingCompiler;
  */
 class AppendCompilerTemplatePlugin implements ICompilerTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function executeStart($tagArgs, TemplateScriptingCompiler $compiler)
     {
         if (!isset($tagArgs['var'])) {
@@ -44,9 +42,7 @@ class AppendCompilerTemplatePlugin implements ICompilerTemplatePlugin
         return "<?php \$this->append(" . $tagArgs['var'] . ", " . $tagArgs['value'] . "); ?>";
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function executeEnd(TemplateScriptingCompiler $compiler)
     {
         throw new SystemException(

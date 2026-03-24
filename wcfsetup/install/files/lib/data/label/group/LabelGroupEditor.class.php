@@ -25,9 +25,7 @@ class LabelGroupEditor extends DatabaseObjectEditor implements IEditableCachedOb
      */
     protected static $baseClass = LabelGroup::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function deleteAll(array $objectIDs = [])
     {
         $count = parent::deleteAll($objectIDs);
@@ -39,9 +37,7 @@ class LabelGroupEditor extends DatabaseObjectEditor implements IEditableCachedOb
         return $count;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         LabelCacheBuilder::getInstance()->reset();

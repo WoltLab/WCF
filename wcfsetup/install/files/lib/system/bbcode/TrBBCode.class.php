@@ -11,9 +11,7 @@ namespace wcf\system\bbcode;
  */
 final class TrBBCode extends AbstractBBCode
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getParsedTag(array $openingTag, string $content, array $closingTag, BBCodeParser $parser): string
     {
         // ignore these tags as they occur outside of a table

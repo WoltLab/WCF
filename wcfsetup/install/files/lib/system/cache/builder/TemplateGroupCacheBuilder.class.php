@@ -13,9 +13,7 @@ use wcf\data\template\group\TemplateGroupList;
  */
 class TemplateGroupCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rebuild(array $parameters)
     {
         $templateGroupList = new TemplateGroupList();

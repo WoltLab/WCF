@@ -64,9 +64,7 @@ class CategoryPermissionHandler extends SingletonFactory
         return $permissions;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->categoryPermissions = CategoryACLOptionCacheBuilder::getInstance()->getData();

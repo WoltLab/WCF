@@ -36,6 +36,7 @@ final class TotpMultifactorMethod implements IMultifactorMethod
     /**
      * Returns the number of devices the user set up.
      */
+    #[\Override]
     public function getStatusText(Setup $setup): string
     {
         $sql = "SELECT  COUNT(*) AS count,
@@ -51,9 +52,7 @@ final class TotpMultifactorMethod implements IMultifactorMethod
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function createManagementForm(IFormDocument $form, ?Setup $setup, mixed $returnData = null): void
     {
         if ($returnData !== null) {
@@ -155,9 +154,9 @@ final class TotpMultifactorMethod implements IMultifactorMethod
     }
 
     /**
-     * @inheritDoc
      * @return array{action: string, deviceName: string}
      */
+    #[\Override]
     public function processManagementForm(IFormDocument $form, Setup $setup): array
     {
         $formData = $form->getData();
@@ -250,9 +249,7 @@ final class TotpMultifactorMethod implements IMultifactorMethod
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function createAuthenticationForm(IFormDocument $form, Setup $setup): void
     {
         $sql = "SELECT      *
@@ -355,9 +352,7 @@ final class TotpMultifactorMethod implements IMultifactorMethod
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function processAuthenticationForm(IFormDocument $form, Setup $setup): void
     {
         $formData = $form->getData();

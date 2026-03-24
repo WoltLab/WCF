@@ -25,9 +25,7 @@ class ContactOptionEditor extends DatabaseObjectEditor implements IEditableCache
      */
     protected static $baseClass = ContactOption::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         ContactOptionCacheBuilder::getInstance()->reset();

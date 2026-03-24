@@ -29,9 +29,7 @@ class SearchResultTextParser extends SingletonFactory
      */
     protected $searchQuery = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         if (isset($_GET['highlight'])) {

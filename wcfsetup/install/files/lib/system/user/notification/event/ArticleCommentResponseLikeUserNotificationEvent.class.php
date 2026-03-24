@@ -29,18 +29,14 @@ class ArticleCommentResponseLikeUserNotificationEvent extends AbstractSharedUser
      */
     protected $stackable = true;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepare()
     {
         ViewableArticleContentRuntimeCache::getInstance()->cacheObjectID($this->additionalData['objectID']);
         UserRuntimeCache::getInstance()->cacheObjectID($this->additionalData['commentUserID']);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         $count = \count($this->getAuthors());
@@ -57,9 +53,7 @@ class ArticleCommentResponseLikeUserNotificationEvent extends AbstractSharedUser
         return $this->getLanguage()->get('wcf.user.notification.articleComment.response.like.title');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMessage()
     {
         $article = ViewableArticleContentRuntimeCache::getInstance()->getObject($this->additionalData['objectID']);
@@ -105,35 +99,27 @@ class ArticleCommentResponseLikeUserNotificationEvent extends AbstractSharedUser
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEmailMessage(string $notificationType = 'instant'): string
     {
         // not supported
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return ViewableArticleContentRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink()
             . '#comment' . $this->additionalData['commentID'] . '/response' . $this->getUserNotificationObject()->objectID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEventHash()
     {
         return \sha1($this->eventID . '-' . $this->getUserNotificationObject()->objectID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function supportsEmailNotification()
     {
         return false;

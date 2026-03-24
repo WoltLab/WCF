@@ -21,9 +21,7 @@ use wcf\data\DatabaseObject;
  */
 class UserActivityEvent extends DatabaseObject
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __get(string $name)
     {
         $value = parent::__get($name);
@@ -36,9 +34,7 @@ class UserActivityEvent extends DatabaseObject
         return $value;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleData($data)
     {
         parent::handleData($data);

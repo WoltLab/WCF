@@ -31,9 +31,7 @@ class ArticleVersionTracker extends DatabaseObjectDecorator implements IVersionT
      */
     protected $content = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectID()
     {
         return $this->getDecoratedObject()->articleID;
@@ -71,49 +69,37 @@ class ArticleVersionTracker extends DatabaseObjectDecorator implements IVersionT
         return $this->content;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return $this->getDecoratedObject()->getLink();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getUsername()
     {
         return $this->getDecoratedObject()->username;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getUserID()
     {
         return $this->getDecoratedObject()->userID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTime()
     {
         return $this->getDecoratedObject()->time;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->getDecoratedObject()->getTitle();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEditLink()
     {
         return LinkHandler::getInstance()->getLink(

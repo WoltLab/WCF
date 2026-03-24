@@ -61,17 +61,13 @@ class AttachmentMimePart extends AbstractMimePart
         $this->content = \file_get_contents($this->path);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContentType()
     {
         return $this->mimeType;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContentTransferEncoding()
     {
         return 'base64';
@@ -82,6 +78,7 @@ class AttachmentMimePart extends AbstractMimePart
      *
      * @see \wcf\system\email\mime\AbstractMimePart::getAdditionalHeaders()
      */
+    #[\Override]
     public function getAdditionalHeaders()
     {
         if (StringUtil::isASCII($this->filename)) {
@@ -103,9 +100,7 @@ class AttachmentMimePart extends AbstractMimePart
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContent()
     {
         return $this->content;

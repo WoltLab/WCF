@@ -67,9 +67,7 @@ class UserNotificationHandler extends SingletonFactory
      */
     protected $objectTypes = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         // get available object types

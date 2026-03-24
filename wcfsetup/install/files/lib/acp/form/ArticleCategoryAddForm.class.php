@@ -39,9 +39,7 @@ class ArticleCategoryAddForm extends CategoryAddFormBuilderForm
      */
     public $objectEditLinkController = ArticleCategoryEditForm::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getGeneralFormFields(): array
     {
         $formFields = parent::getGeneralFormFields();
@@ -62,9 +60,7 @@ class ArticleCategoryAddForm extends CategoryAddFormBuilderForm
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function finalizeForm()
     {
         $this->form->getDataHandler()->addProcessor(

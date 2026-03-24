@@ -56,9 +56,7 @@ final class I18nHandler extends SingletonFactory
      */
     protected $regex;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->availableLanguages = LanguageFactory::getInstance()->getLanguages();

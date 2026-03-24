@@ -15,9 +15,7 @@ use wcf\system\WCF;
  */
 class UserQuitCronjob extends AbstractCronjob
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(Cronjob $cronjob)
     {
         parent::execute($cronjob);

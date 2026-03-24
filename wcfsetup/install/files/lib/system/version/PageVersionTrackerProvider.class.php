@@ -65,9 +65,7 @@ class PageVersionTrackerProvider extends AbstractVersionTrackerProvider
      */
     public static $trackedProperties = ['title', 'content', 'metaDescription', 'customURL'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCurrentVersion(IVersionTrackerObject $object)
     {
         \assert($object instanceof PageVersionTracker);
@@ -90,9 +88,7 @@ class PageVersionTrackerProvider extends AbstractVersionTrackerProvider
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTrackedData(IVersionTrackerObject $object)
     {
         \assert($object instanceof PageVersionTracker);
@@ -110,18 +106,14 @@ class PageVersionTrackerProvider extends AbstractVersionTrackerProvider
         return $data;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isI18n(IVersionTrackerObject $object)
     {
         \assert($object instanceof Page);
         return $object->isMultilingual == 1;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function revert(IVersionTrackerObject $object, VersionTrackerEntry $entry)
     {
         /** @var PageVersionTracker $object */

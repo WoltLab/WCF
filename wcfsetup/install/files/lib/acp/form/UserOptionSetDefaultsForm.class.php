@@ -38,9 +38,7 @@ class UserOptionSetDefaultsForm extends AbstractForm
      */
     public $applyChangesToExistingUsers = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -49,9 +47,7 @@ class UserOptionSetDefaultsForm extends AbstractForm
         $this->optionHandler->init();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -63,9 +59,7 @@ class UserOptionSetDefaultsForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -73,9 +67,7 @@ class UserOptionSetDefaultsForm extends AbstractForm
         $this->optionHandler->validate();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -125,9 +117,7 @@ class UserOptionSetDefaultsForm extends AbstractForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -137,9 +127,7 @@ class UserOptionSetDefaultsForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

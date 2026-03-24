@@ -48,9 +48,9 @@ class LabelAction extends AbstractDatabaseObjectAction implements ISortableActio
     protected $requireACP = ['create', 'delete', 'update', 'updatePosition'];
 
     /**
-     * @inheritDoc
      * @return  Label
      */
+    #[\Override]
     public function create()
     {
         $showOrder = 0;
@@ -71,9 +71,7 @@ class LabelAction extends AbstractDatabaseObjectAction implements ISortableActio
         return $label;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         parent::update();
@@ -98,9 +96,7 @@ class LabelAction extends AbstractDatabaseObjectAction implements ISortableActio
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         $count = parent::delete();
@@ -110,9 +106,7 @@ class LabelAction extends AbstractDatabaseObjectAction implements ISortableActio
         return $count;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateUpdatePosition()
     {
         WCF::getSession()->checkPermissions(['admin.content.label.canManageLabel']);
@@ -140,9 +134,7 @@ class LabelAction extends AbstractDatabaseObjectAction implements ISortableActio
         $this->readInteger('offset', true, 'data');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updatePosition()
     {
         $sql = "UPDATE  wcf1_label

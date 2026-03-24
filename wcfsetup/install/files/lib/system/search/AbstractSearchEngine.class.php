@@ -27,17 +27,13 @@ abstract class AbstractSearchEngine extends SingletonFactory implements ISearchE
      */
     protected $specialCharacters = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionBuilderClassName()
     {
         return $this->conditionBuilderClassName;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function removeSpecialCharacters(string $string)
     {
         if (!empty($this->specialCharacters)) {

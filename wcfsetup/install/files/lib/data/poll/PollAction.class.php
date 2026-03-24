@@ -40,10 +40,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
      */
     protected $poll;
 
-    /**
-     * @inheritDoc
-     * @return  Poll
-     */
+    #[\Override]
     public function create()
     {
         if (!isset($this->parameters['data']['time'])) {
@@ -72,9 +69,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         return $poll;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         parent::update();
@@ -304,9 +299,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateGetGroupedUserList()
     {
         $this->readInteger('pollID');
@@ -393,9 +386,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         $this->poll->setRelatedObject($relatedObject);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getGroupedUserList()
     {
         // get options

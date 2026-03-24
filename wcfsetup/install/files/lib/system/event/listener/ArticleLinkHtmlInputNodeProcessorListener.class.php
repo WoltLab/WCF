@@ -18,9 +18,7 @@ use wcf\system\request\LinkHandler;
  */
 class ArticleLinkHtmlInputNodeProcessorListener extends AbstractHtmlInputNodeProcessorListener
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute($eventObj, $className, $eventName, array &$parameters)
     {
         /** @var HtmlInputNodeProcessor $eventObj */

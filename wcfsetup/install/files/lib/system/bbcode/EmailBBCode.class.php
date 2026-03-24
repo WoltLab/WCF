@@ -13,9 +13,7 @@ use wcf\util\StringUtil;
  */
 final class EmailBBCode extends AbstractBBCode
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getParsedTag(array $openingTag, string $content, array $closingTag, BBCodeParser $parser): string
     {
         $email = '';

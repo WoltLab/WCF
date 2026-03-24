@@ -19,9 +19,7 @@ class ArticleCommentResponseUserActivityEvent extends SingletonFactory implement
 {
     use TCommentResponseUserActivityEvent;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function prepare(array $events)
     {
         if (!\MODULE_ARTICLE) {

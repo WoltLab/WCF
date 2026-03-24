@@ -48,9 +48,7 @@ class DeletedContentListPage extends MultipleLinkPage
      */
     private array $providers = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -93,17 +91,13 @@ class DeletedContentListPage extends MultipleLinkPage
         $this->providers = $event->getProviders();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initObjectList()
     {
         $this->objectList = $this->objectType->getProcessor()->getObjectList();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

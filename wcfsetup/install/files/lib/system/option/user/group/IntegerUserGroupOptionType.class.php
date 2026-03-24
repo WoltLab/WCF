@@ -15,9 +15,7 @@ use wcf\system\option\IntegerOptionType;
  */
 class IntegerUserGroupOptionType extends IntegerOptionType implements IUserGroupOptionType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function merge(mixed $defaultValue, mixed $groupValue)
     {
         if ($groupValue > $defaultValue) {

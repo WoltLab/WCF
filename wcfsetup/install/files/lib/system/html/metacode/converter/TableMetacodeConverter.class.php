@@ -15,9 +15,7 @@ use wcf\util\StringUtil;
  */
 class TableMetacodeConverter extends AbstractMetacodeConverter
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function convert(\DOMDocumentFragment $fragment, array $attributes)
     {
         $element = $fragment->ownerDocument->createElement('table');

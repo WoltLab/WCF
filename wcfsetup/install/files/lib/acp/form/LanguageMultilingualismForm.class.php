@@ -53,9 +53,7 @@ class LanguageMultilingualismForm extends AbstractForm
      */
     const BLACKLISTED_IN_ENTERPRISE_MODE = true;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -63,9 +61,7 @@ class LanguageMultilingualismForm extends AbstractForm
         $this->languages = LanguageFactory::getInstance()->getLanguages();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -78,9 +74,7 @@ class LanguageMultilingualismForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -105,9 +99,7 @@ class LanguageMultilingualismForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -123,9 +115,7 @@ class LanguageMultilingualismForm extends AbstractForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -151,9 +141,7 @@ class LanguageMultilingualismForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

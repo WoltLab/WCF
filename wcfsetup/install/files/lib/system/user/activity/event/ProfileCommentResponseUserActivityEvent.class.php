@@ -18,9 +18,7 @@ class ProfileCommentResponseUserActivityEvent extends SingletonFactory implement
 {
     use TCommentResponseUserActivityEvent;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function prepare(array $events)
     {
         if (!WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {

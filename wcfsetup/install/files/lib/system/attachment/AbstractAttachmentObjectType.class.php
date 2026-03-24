@@ -22,41 +22,31 @@ abstract class AbstractAttachmentObjectType implements IAttachmentObjectType
      */
     protected $cachedObjects = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMaxSize()
     {
         return WCF::getSession()->getPermission('user.attachment.maxSize');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getAllowedExtensions()
     {
         return ArrayUtil::trim(\explode("\n", WCF::getSession()->getPermission('user.attachment.allowedExtensions')));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMaxCount()
     {
         return WCF::getSession()->getPermission('user.attachment.maxCount');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canViewPreview(int $objectID)
     {
         return $this->canDownload($objectID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObject(int $objectID)
     {
         return $this->cachedObjects[$objectID] ?? null;
@@ -73,14 +63,10 @@ abstract class AbstractAttachmentObjectType implements IAttachmentObjectType
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function cacheObjects(array $objectIDs) {}
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setPermissions(array $attachments)
     {
         foreach ($attachments as $attachment) {

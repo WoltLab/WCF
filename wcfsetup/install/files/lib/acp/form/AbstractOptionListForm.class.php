@@ -60,9 +60,7 @@ abstract class AbstractOptionListForm extends AbstractForm
      */
     public $supportI18n = true;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -85,9 +83,7 @@ abstract class AbstractOptionListForm extends AbstractForm
         $this->optionHandler->init();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -95,9 +91,7 @@ abstract class AbstractOptionListForm extends AbstractForm
         $this->optionHandler->readUserInput($_POST);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         $this->errorType = \array_merge($this->optionHandler->validate(), $this->errorType);
@@ -109,9 +103,7 @@ abstract class AbstractOptionListForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();

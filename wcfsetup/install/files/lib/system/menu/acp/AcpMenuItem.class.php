@@ -39,6 +39,7 @@ final class AcpMenuItem implements ITreeMenuItem
         return $this->icon;
     }
 
+    #[\Override]
     public function __toString()
     {
         return $this->title ?: WCF::getLanguage()->get($this->menuItem);

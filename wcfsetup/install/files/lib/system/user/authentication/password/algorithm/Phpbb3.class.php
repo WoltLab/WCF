@@ -19,6 +19,7 @@ final class Phpbb3 implements IPasswordAlgorithm
         verify as phpassVerify;
     }
 
+    #[\Override]
     public function verify(
         #[\SensitiveParameter]
         string $password,
@@ -67,11 +68,13 @@ final class Phpbb3 implements IPasswordAlgorithm
         return \hash_equals($hash, $password);
     }
 
+    #[\Override]
     public function needsRehash(string $hash): bool
     {
         return false;
     }
 
+    #[\Override]
     public function hash(
         #[\SensitiveParameter]
         string $password

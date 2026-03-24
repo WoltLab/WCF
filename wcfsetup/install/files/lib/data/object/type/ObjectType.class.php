@@ -37,9 +37,7 @@ class ObjectType extends ProcessibleDatabaseObject
      */
     protected static $databaseTableIndexName = 'objectTypeID';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __get(string $name)
     {
         $value = parent::__get($name);
@@ -66,9 +64,7 @@ class ObjectType extends ProcessibleDatabaseObject
         return ['data'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleData($data)
     {
         parent::handleData($data);
@@ -79,9 +75,7 @@ class ObjectType extends ProcessibleDatabaseObject
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getProcessor()
     {
         if ($this->processor === null) {

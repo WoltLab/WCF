@@ -45,9 +45,7 @@ abstract class AbstractClipboardAction implements IClipboardAction
      */
     protected $supportedActions = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $objects, ClipboardAction $action)
     {
         if (!\in_array($action->actionName, $this->supportedActions)) {
@@ -79,9 +77,7 @@ abstract class AbstractClipboardAction implements IClipboardAction
         return $item;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEditorLabel(array $objects)
     {
         return WCF::getLanguage()->getDynamicVariable('wcf.clipboard.label.' . $this->getTypeName() . '.marked', [
@@ -89,9 +85,7 @@ abstract class AbstractClipboardAction implements IClipboardAction
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getReloadPageOnSuccess()
     {
         return $this->reloadPageOnSuccess;

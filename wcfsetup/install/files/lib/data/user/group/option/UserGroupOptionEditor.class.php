@@ -24,9 +24,7 @@ class UserGroupOptionEditor extends DatabaseObjectEditor implements IEditableCac
      */
     protected static $baseClass = UserGroupOption::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         UserGroupOptionCacheBuilder::getInstance()->reset();

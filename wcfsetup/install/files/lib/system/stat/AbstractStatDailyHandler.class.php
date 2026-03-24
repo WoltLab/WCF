@@ -62,9 +62,7 @@ abstract class AbstractStatDailyHandler implements IStatDailyHandler
         return $statement->fetchSingleColumn();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormattedCounter(int $counter)
     {
         return $counter;

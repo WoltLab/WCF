@@ -35,6 +35,7 @@ final class ApplicationHandler extends SingletonFactory
     /**
      * Initializes cache.
      */
+    #[\Override]
     protected function init()
     {
         $this->cache = (new ApplicationCache())->getCache();

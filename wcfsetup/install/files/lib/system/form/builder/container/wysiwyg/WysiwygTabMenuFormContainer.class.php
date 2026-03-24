@@ -30,9 +30,7 @@ class WysiwygTabMenuFormContainer extends TabMenuFormContainer
             ->addClass('messageTabMenu');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function appendChild(IFormChildNode $child): static
     {
         $child->removeClass('tabMenuContent')

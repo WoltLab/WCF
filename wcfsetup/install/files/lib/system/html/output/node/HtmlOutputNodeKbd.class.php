@@ -20,9 +20,7 @@ class HtmlOutputNodeKbd extends AbstractHtmlOutputNode
      */
     protected $tagName = 'kbd';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         /** @var \DOMElement $element */

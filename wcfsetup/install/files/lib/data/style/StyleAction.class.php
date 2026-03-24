@@ -66,9 +66,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
      */
     public $styleEditor;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function create()
     {
         $style = parent::create();
@@ -91,9 +89,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
         return $style;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         parent::update();
@@ -633,6 +629,7 @@ BROWSERCONFIG;
     /**
      * @deprecated 6.3
      */
+    #[\Override]
     public function validateToggle()
     {
         $this->validateUpdate();
@@ -641,6 +638,7 @@ BROWSERCONFIG;
     /**
      * @deprecated 6.3 use the `EnableStyle` or `DisableStyle` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->objects as $editor) {

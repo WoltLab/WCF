@@ -14,9 +14,7 @@ use wcf\util\StringUtil;
  */
 class ImgMetacodeConverter extends AbstractMetacodeConverter
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function convert(\DOMDocumentFragment $fragment, array $attributes)
     {
         $element = $fragment->ownerDocument->createElement('img');
@@ -29,9 +27,7 @@ class ImgMetacodeConverter extends AbstractMetacodeConverter
         return $element;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateAttributes(array $attributes)
     {
         $count = \count($attributes);

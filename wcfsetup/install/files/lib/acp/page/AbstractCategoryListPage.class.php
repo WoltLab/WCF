@@ -61,9 +61,7 @@ abstract class AbstractCategoryListPage extends AbstractPage
      */
     public $templateName = 'categoryList';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __run()
     {
         $classNameParts = \explode('\\', static::class);
@@ -80,9 +78,7 @@ abstract class AbstractCategoryListPage extends AbstractPage
         return parent::__run();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -121,9 +117,7 @@ abstract class AbstractCategoryListPage extends AbstractPage
         $this->categoryNodeTree = new CategoryNodeTree($this->objectType->objectType, 0, true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         $this->objectType = CategoryHandler::getInstance()->getObjectTypeByName($this->objectTypeName);

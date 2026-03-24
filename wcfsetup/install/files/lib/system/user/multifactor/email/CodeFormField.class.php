@@ -38,9 +38,7 @@ final class CodeFormField extends TextFormField
         $this->placeholder($placeholder);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'code';

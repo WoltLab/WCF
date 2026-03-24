@@ -22,9 +22,7 @@ use wcf\system\template\TemplateEngine;
  */
 class JsonModifierTemplatePlugin implements IModifierTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         return \json_encode($tagArgs[0], \JSON_THROW_ON_ERROR);

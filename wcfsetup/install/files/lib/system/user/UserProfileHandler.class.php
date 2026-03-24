@@ -24,9 +24,7 @@ class UserProfileHandler extends SingletonFactory
      */
     protected $userProfile;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->userProfile = new UserProfile(WCF::getUser());

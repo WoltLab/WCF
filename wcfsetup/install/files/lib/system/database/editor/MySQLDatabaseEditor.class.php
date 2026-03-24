@@ -17,9 +17,7 @@ use wcf\system\Regex;
  */
 class MySQLDatabaseEditor extends DatabaseEditor
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTableNames()
     {
         $existingTables = [];
@@ -33,9 +31,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
         return $existingTables;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getColumns($tableName)
     {
         $columns = [];
@@ -103,9 +99,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
         return $columns;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getForeignKeys($tableName)
     {
         $sql = "SELECT  CONSTRAINT_NAME, DELETE_RULE, UPDATE_RULE
@@ -167,9 +161,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
         return $foreignKeys;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getIndexInformation($tableName)
     {
         $sql = "SHOW    INDEX
@@ -202,9 +194,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
         return $indexInformation;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getIndices($tableName)
     {
         $indices = [];
@@ -218,9 +208,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
         return \array_unique($indices);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function createTable($tableName, $columns, $indices = [])
     {
         $columnDefinition = $indexDefinition = '';
@@ -251,9 +239,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
         $statement->execute();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function dropTable($tableName)
     {
         $sql = "DROP TABLE IF EXISTS `" . $tableName . "`";
@@ -261,9 +247,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
         $statement->execute();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addColumn($tableName, $columnName, $columnData)
     {
         $sql = "ALTER TABLE `" . $tableName . "` ADD COLUMN " . $this->buildColumnDefinition($columnName, $columnData);
@@ -271,9 +255,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
         $statement->execute();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function alterColumn($tableName, $oldColumnName, $newColumnName, $newColumnData)
     {
         $sql = "ALTER TABLE `" . $tableName . "` CHANGE COLUMN `" . $oldColumnName . "` " . $this->buildColumnDefinition(
@@ -284,9 +266,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
         $statement->execute();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function alterColumns($tableName, $alterData)
     {
         $queries = "";
@@ -320,9 +300,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
         $this->dbObj->prepare("ALTER TABLE `{$tableName}` " . \rtrim($queries, ','))->execute();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function dropColumn($tableName, $columnName)
     {
         try {
@@ -339,9 +317,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addIndex($tableName, $indexName, $indexData)
     {
         $sql = "ALTER TABLE `" . $tableName . "` ADD " . $this->buildIndexDefinition($indexName, $indexData);
@@ -349,9 +325,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
         $statement->execute();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addForeignKey($tableName, $indexName, $indexData)
     {
         $sql = "ALTER TABLE `" . $tableName . "` ADD";
@@ -385,9 +359,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
         $statement->execute();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function dropIndex($tableName, $indexName)
     {
         try {
@@ -404,9 +376,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function dropPrimaryKey($tableName)
     {
         try {
@@ -423,9 +393,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function dropForeignKey($tableName, $indexName)
     {
         try {

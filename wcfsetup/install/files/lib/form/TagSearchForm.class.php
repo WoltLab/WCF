@@ -58,9 +58,7 @@ class TagSearchForm extends AbstractCaptchaForm
      */
     public $tags;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -68,9 +66,7 @@ class TagSearchForm extends AbstractCaptchaForm
         $this->availableContentLanguages = LanguageFactory::getInstance()->getContentLanguages();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -83,9 +79,7 @@ class TagSearchForm extends AbstractCaptchaForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -117,9 +111,7 @@ class TagSearchForm extends AbstractCaptchaForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         if (empty($_POST)) {
@@ -131,9 +123,7 @@ class TagSearchForm extends AbstractCaptchaForm
         $this->tagCloud = new TagCloud();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -153,9 +143,7 @@ class TagSearchForm extends AbstractCaptchaForm
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

@@ -14,9 +14,7 @@ class NoticeFormNode extends LanguageItemFormNode
 {
     protected NoticeFormNodeType $type = NoticeFormNodeType::Info;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtml()
     {
         return '<woltlab-core-notice type="' . $this->getType()->toString() . '">' . parent::getHtml() . '</woltlab-core-notice>';

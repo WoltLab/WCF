@@ -34,9 +34,7 @@ class ArticleCategoryCondition extends AbstractMultiCategoryCondition implements
      */
     protected $label = 'wcf.global.category';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
     {
         $objectList->getConditionBuilder()->add('article.categoryID IN (?)', [$conditionData[$this->fieldName]]);

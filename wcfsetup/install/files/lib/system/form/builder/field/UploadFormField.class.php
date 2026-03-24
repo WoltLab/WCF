@@ -157,10 +157,10 @@ class UploadFormField extends AbstractFormField
     }
 
     /**
-     * @inheritDoc
      * @return      UploadFile[]
      * @throws      \BadMethodCallException         if the method is called, before the field is populated
      */
+    #[\Override]
     public function getValue()
     {
         if (!$this->isPopulated) {
@@ -199,9 +199,9 @@ class UploadFormField extends AbstractFormField
     }
 
     /**
-     * @inheritDoc
      * @throws      \BadMethodCallException         if the method is called, before the field is populated
      */
+    #[\Override]
     public function readValue()
     {
         if (!$this->isPopulated) {
@@ -213,9 +213,7 @@ class UploadFormField extends AbstractFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -346,9 +344,9 @@ class UploadFormField extends AbstractFormField
     }
 
     /**
-     * @inheritDoc
      * @throws      \BadMethodCallException         if the method is called, before the field is populated
      */
+    #[\Override]
     public function getHtml()
     {
         if (!$this->isPopulated) {
@@ -365,9 +363,9 @@ class UploadFormField extends AbstractFormField
     }
 
     /**
-     * @inheritDoc
      * @throws      \BadMethodCallException         if the method is called, before the field is populated
      */
+    #[\Override]
     public function getFieldHtml()
     {
         if (!$this->isPopulated) {
@@ -384,10 +382,10 @@ class UploadFormField extends AbstractFormField
     }
 
     /**
-     * @inheritDoc
      *
      * @throws \InvalidArgumentException    If the getter for the value or the object's property provides invalid values.
      */
+    #[\Override]
     public function updatedObject(array $data, IStorableObject $object, $loadValues = true)
     {
         if ($loadValues) {
@@ -526,13 +524,13 @@ class UploadFormField extends AbstractFormField
     }
 
     /**
-     * @inheritDoc
      *
      * @param UploadFile[] $value
      *
      * @throws      \InvalidArgumentException       if the value is not an array
      * @throws      \InvalidArgumentException       if the value contains objects, which are not an instance of UploadFile
      */
+    #[\Override]
     public function value($value)
     {
         if (!\is_array($value)) {
@@ -556,17 +554,13 @@ class UploadFormField extends AbstractFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasSaveValue()
     {
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function cleanup(): static
     {
         if (!$this->cleaned) {
@@ -577,9 +571,7 @@ class UploadFormField extends AbstractFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function populate()
     {
         parent::populate();
@@ -624,7 +616,6 @@ class UploadFormField extends AbstractFormField
     }
 
     /**
-     * @inheritDoc
      *
      * @param ?int $maximum
      * @return static

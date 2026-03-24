@@ -36,9 +36,7 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
      */
     public $tagName = 'pip';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items)
     {
         $sql = "DELETE FROM wcf1_" . $this->tableName . "
@@ -53,9 +51,7 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         return [
@@ -69,14 +65,13 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
      * @see \wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
      * @since   3.0
      */
+    #[\Override]
     public static function getDefaultFilename()
     {
         return 'packageInstallationPlugin.xml';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
@@ -94,19 +89,17 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return [];
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         /** @var FormContainer $dataContainer */
@@ -154,11 +147,11 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         return [
@@ -169,20 +162,20 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         return $element->getAttribute('name');
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $entryList->setKeys([
@@ -192,10 +185,10 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $data = $form->getData()['data'];

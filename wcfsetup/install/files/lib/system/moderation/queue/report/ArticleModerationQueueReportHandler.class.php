@@ -34,9 +34,7 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
      */
     protected $objectType = 'com.woltlab.wcf.article';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canReport(int $objectID)
     {
         if (!$this->isValid($objectID)) {
@@ -50,9 +48,7 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getReportedContent(ViewableModerationQueue $queue)
     {
         return WCF::getTPL()->render('wcf', 'moderationArticle', [
@@ -62,10 +58,9 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
     }
 
     /**
-     * @inheritDoc
-     *
      * @return      ViewableArticle|null
      */
+    #[\Override]
     public function getReportedObject(int $objectID)
     {
         if ($this->isValid($objectID)) {
@@ -84,9 +79,7 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
         return ViewableArticleRuntimeCache::getInstance()->getObject($articleID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignQueues(array $queues)
     {
         $assignments = $orphanedQueueIDs = [];
@@ -115,9 +108,7 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
         ModerationQueueManager::getInstance()->setAssignment($assignments);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContainerID(int $objectID)
     {
         if ($this->isValid($objectID)) {
@@ -127,9 +118,7 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
         return 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isValid(int $objectID)
     {
         if ($this->getArticle($objectID) === null) {
@@ -139,9 +128,7 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function populate(array $queues)
     {
         // first cache all articles
@@ -159,9 +146,7 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canRemoveContent(ModerationQueue $queue)
     {
         if ($this->isValid($queue->objectID)) {
@@ -171,9 +156,7 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function removeContent(ModerationQueue $queue, string $message)
     {
         if ($this->isValid($queue->objectID)) {

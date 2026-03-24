@@ -257,9 +257,7 @@ class TemplateEngine extends SingletonFactory
 
     private int $sharedTemplateGroupID;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->templatePaths = ['wcf' => WCF_DIR . 'templates/'];

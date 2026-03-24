@@ -15,9 +15,7 @@ use wcf\system\WCF;
  */
 class PageACPSearchResultProvider implements IACPSearchResultProvider
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function search(string $query)
     {
         if (!WCF::getSession()->getPermission('admin.content.cms.canManagePage')) {

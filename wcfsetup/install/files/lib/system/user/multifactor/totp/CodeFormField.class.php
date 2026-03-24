@@ -55,9 +55,9 @@ final class CodeFormField extends TextFormField
     }
 
     /**
-     * @inheritDoc
      * @return array{value: mixed, minCounter: number}
      */
+    #[\Override]
     public function getSaveValue(): array
     {
         if ($this->minCounter === null) {
@@ -70,9 +70,7 @@ final class CodeFormField extends TextFormField
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'onetimecode';

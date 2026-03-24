@@ -46,9 +46,7 @@ class MenuItemListPage extends AbstractPage
      */
     public $menu;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -62,9 +60,7 @@ class MenuItemListPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -72,9 +68,7 @@ class MenuItemListPage extends AbstractPage
         $this->menuItems = new MenuItemNodeTree($this->menuID, null, false);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

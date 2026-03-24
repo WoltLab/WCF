@@ -15,9 +15,7 @@ use wcf\system\cache\CacheHandler;
  */
 class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function install()
     {
         parent::install();
@@ -55,18 +53,14 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin
         return include($scriptPath);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasUninstall()
     {
         // scripts can't be uninstalled
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function uninstall()
     {
         // does nothing

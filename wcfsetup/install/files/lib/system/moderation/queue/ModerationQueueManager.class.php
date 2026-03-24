@@ -50,9 +50,7 @@ class ModerationQueueManager extends SingletonFactory
      */
     protected $objectTypes = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $moderationTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.moderation.type');

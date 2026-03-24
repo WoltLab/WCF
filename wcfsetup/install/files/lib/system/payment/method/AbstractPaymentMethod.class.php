@@ -11,9 +11,7 @@ namespace wcf\system\payment\method;
  */
 abstract class AbstractPaymentMethod implements IPaymentMethod
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function supportsRecurringPayments()
     {
         return false;

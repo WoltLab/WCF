@@ -26,9 +26,7 @@ class AbstractWatchedObjectImporter extends AbstractImporter
      */
     protected $objectTypeID = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         $data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);

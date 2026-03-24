@@ -19,3 +19,4 @@ parameters:
         - identifier: method.unused
         - identifier: new.static
         - identifier: trait.unused
+    checkMissingOverrideMethodAttribute: true

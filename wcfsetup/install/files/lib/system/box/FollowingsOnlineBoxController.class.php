@@ -28,9 +28,7 @@ class FollowingsOnlineBoxController extends AbstractDatabaseObjectListBoxControl
      */
     protected static $supportedPositions = ['sidebarLeft', 'sidebarRight'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getObjectList()
     {
         $objectList = new UsersOnlineList();
@@ -42,17 +40,13 @@ class FollowingsOnlineBoxController extends AbstractDatabaseObjectListBoxControl
         return $objectList;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getTemplate()
     {
         return WCF::getTPL()->render('wcf', 'boxFollowingsOnline', ['usersOnlineList' => $this->objectList]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasContent()
     {
         if (!MODULE_USERS_ONLINE || !WCF::getSession()->getPermission('user.profile.canViewUsersOnlineList') || empty(UserProfileHandler::getInstance()->getFollowingUsers())) {

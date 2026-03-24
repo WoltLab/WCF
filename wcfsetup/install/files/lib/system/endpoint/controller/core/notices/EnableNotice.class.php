@@ -22,6 +22,7 @@ use wcf\system\WCF;
 #[PostRequest("/core/notices/{id:\d+}/enable")]
 final class EnableNotice implements IController
 {
+    #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $notice = Helper::fetchObjectFromRequestParameter($variables['id'], Notice::class);

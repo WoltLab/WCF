@@ -35,17 +35,13 @@ abstract class AbstractWorker implements IWorker
      */
     protected $parameters = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct(array $parameters)
     {
         $this->parameters = $parameters;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setLoopCount(int $loopCount)
     {
         $this->loopCount = $loopCount;
@@ -58,9 +54,7 @@ abstract class AbstractWorker implements IWorker
      */
     abstract protected function countObjects();
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getProgress()
     {
         $this->countObjects();
@@ -77,17 +71,13 @@ abstract class AbstractWorker implements IWorker
         return (int)\floor($progress);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getParameters()
     {
         return $this->parameters;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function finalize()
     {
         // does nothing

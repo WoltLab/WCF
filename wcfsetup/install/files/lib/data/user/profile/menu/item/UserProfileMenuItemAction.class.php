@@ -83,9 +83,7 @@ class UserProfileMenuItemAction extends AbstractDatabaseObjectAction implements 
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateUpdatePosition()
     {
         WCF::getSession()->checkPermissions(['admin.user.canManageUserOption']);
@@ -117,9 +115,7 @@ class UserProfileMenuItemAction extends AbstractDatabaseObjectAction implements 
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updatePosition()
     {
         $sql = "UPDATE  wcf1_user_profile_menu_item

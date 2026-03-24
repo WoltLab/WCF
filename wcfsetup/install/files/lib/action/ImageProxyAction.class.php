@@ -45,9 +45,7 @@ final class ImageProxyAction extends AbstractAction
      */
     const MAX_SIZE = (10 * (1 << 20));
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -75,9 +73,7 @@ final class ImageProxyAction extends AbstractAction
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(): RedirectResponse
     {
         parent::execute();

@@ -24,9 +24,7 @@ class ACPMenuItemEditor extends DatabaseObjectEditor implements IEditableCachedO
      */
     protected static $baseClass = ACPMenuItem::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         ACPMenuCacheBuilder::getInstance()->reset();

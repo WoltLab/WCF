@@ -31,9 +31,7 @@ abstract class AbstractDialogAction extends AbstractSecureAction
      */
     public $data = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -52,9 +50,7 @@ abstract class AbstractDialogAction extends AbstractSecureAction
         $this->validateStep();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     final public function execute(): ResponseInterface
     {
         parent::execute();

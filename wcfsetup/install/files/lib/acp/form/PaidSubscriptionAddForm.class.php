@@ -136,9 +136,7 @@ class PaidSubscriptionAddForm extends AbstractForm
      */
     public $availableSubscriptions = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -183,9 +181,7 @@ class PaidSubscriptionAddForm extends AbstractForm
         $this->availableSubscriptions = $subscriptionList->getObjects();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -235,9 +231,7 @@ class PaidSubscriptionAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -294,9 +288,7 @@ class PaidSubscriptionAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -366,9 +358,7 @@ class PaidSubscriptionAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

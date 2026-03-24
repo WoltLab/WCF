@@ -72,9 +72,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm
      */
     private $backupForm;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -97,9 +95,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm
         $this->setup = Setup::find($this->method, WCF::getUser());
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkPermissions()
     {
         parent::checkPermissions();
@@ -114,9 +110,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function createForm()
     {
         parent::createForm();
@@ -124,9 +118,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm
         $this->processor->createManagementForm($this->form, $this->setup, $this->returnData);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();
@@ -304,9 +296,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function saved()
     {
         AbstractForm::saved();
@@ -317,9 +307,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm
         $this->form->showSuccessMessage(true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function setFormAction()
     {
         $this->form->action(LinkHandler::getInstance()->getControllerLink(static::class, [
@@ -327,9 +315,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm
         ]));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -340,9 +326,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         UserMenu::getInstance()->setActiveMenuItem('wcf.user.menu.profile.security');

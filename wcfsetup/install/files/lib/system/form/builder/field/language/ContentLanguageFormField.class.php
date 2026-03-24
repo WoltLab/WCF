@@ -46,9 +46,7 @@ final class ContentLanguageFormField extends AbstractFormField implements IImmut
         return LanguageFactory::getInstance()->getContentLanguages();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAvailable()
     {
         return LanguageFactory::getInstance()->multilingualismEnabled()
@@ -56,9 +54,7 @@ final class ContentLanguageFormField extends AbstractFormField implements IImmut
             && parent::isAvailable();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
@@ -72,9 +68,7 @@ final class ContentLanguageFormField extends AbstractFormField implements IImmut
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if ($this->isRequired() && LanguageFactory::getInstance()->getLanguage($this->getValue()) === null) {
@@ -85,9 +79,7 @@ final class ContentLanguageFormField extends AbstractFormField implements IImmut
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'languageID';

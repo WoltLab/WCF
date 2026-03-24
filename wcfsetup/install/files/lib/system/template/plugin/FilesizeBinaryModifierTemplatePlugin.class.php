@@ -18,9 +18,7 @@ use wcf\util\FileUtil;
  */
 class FilesizeBinaryModifierTemplatePlugin implements IModifierTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         return FileUtil::formatFilesizeBinary($tagArgs[0]);

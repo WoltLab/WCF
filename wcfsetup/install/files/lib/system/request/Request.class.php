@@ -39,9 +39,7 @@ final class Request implements RequestHandlerInterface
         $this->isLandingPage = $isLandingPage;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         if (!isset($this->requestObject)) {

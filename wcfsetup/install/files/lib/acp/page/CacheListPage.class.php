@@ -56,17 +56,13 @@ class CacheListPage extends AbstractPage
      */
     public $cacheData = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -162,9 +158,7 @@ class CacheListPage extends AbstractPage
         $this->caches[$cacheType][$cacheDir] = $data;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

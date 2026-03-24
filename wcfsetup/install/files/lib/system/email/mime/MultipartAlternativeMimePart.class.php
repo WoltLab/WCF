@@ -12,17 +12,13 @@ namespace wcf\system\email\mime;
  */
 class MultipartAlternativeMimePart extends AbstractMultipartMimePart
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContentType()
     {
         return "multipart/alternative;\r\n   boundary=\"" . $this->boundary . "\"";
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getConcatenatedParts($parts)
     {
         \assert($parts instanceof \SplObjectStorage);
@@ -54,6 +50,7 @@ class MultipartAlternativeMimePart extends AbstractMultipartMimePart
      * @throws  \DomainException
      */
     // @codingStandardsIgnoreStart
+    #[\Override]
     public function addMimePart(AbstractMimePart $part, $data = 1000)
     {
         parent::addMimePart($part, $data);

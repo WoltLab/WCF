@@ -15,9 +15,9 @@ class IsDisabledFormField extends BooleanFormField
     use TDefaultIdFormField;
 
     /**
-     * @inheritDoc
      * @return string
      */
+    #[\Override]
     protected static function getDefaultId()
     {
         return 'isDisabled';

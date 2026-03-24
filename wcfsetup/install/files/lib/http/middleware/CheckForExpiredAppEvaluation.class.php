@@ -22,9 +22,7 @@ use wcf\system\WCF;
  */
 final class CheckForExpiredAppEvaluation implements MiddlewareInterface
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         [$abbreviation] = \explode('\\', RequestHandler::getInstance()->getActiveRequest()->getClassName(), 2);

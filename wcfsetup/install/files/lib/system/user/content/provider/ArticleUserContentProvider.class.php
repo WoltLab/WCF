@@ -20,6 +20,7 @@ class ArticleUserContentProvider extends AbstractDatabaseUserContentProvider
     /**
      * @inheritdoc
      */
+    #[\Override]
     public static function getDatabaseObjectClass()
     {
         return Article::class;

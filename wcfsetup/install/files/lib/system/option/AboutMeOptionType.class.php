@@ -16,9 +16,7 @@ use wcf\system\WCF;
  */
 class AboutMeOptionType extends MessageOptionType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(Option $option, mixed $newValue)
     {
         parent::validate($option, $newValue);

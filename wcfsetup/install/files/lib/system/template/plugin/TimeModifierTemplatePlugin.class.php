@@ -23,9 +23,7 @@ class TimeModifierTemplatePlugin implements IModifierTemplatePlugin
     /** @var array<string, \IntlDateFormatter> */
     private array $dateFormatter = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         if ($tagArgs[0] instanceof \DateTimeInterface) {

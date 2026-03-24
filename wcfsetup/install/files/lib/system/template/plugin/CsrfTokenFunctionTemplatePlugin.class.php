@@ -20,9 +20,7 @@ use wcf\system\WCF;
  */
 class CsrfTokenFunctionTemplatePlugin implements IFunctionTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         $token = WCF::getSession()->getSecurityToken();

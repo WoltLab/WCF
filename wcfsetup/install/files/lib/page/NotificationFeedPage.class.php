@@ -19,9 +19,7 @@ use wcf\system\WCF;
  */
 class NotificationFeedPage extends AbstractFeedPage
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -35,9 +33,7 @@ class NotificationFeedPage extends AbstractFeedPage
         $this->redirectToNewPage(NotificationRssFeedPage::class);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();

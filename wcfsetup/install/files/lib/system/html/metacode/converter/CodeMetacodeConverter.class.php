@@ -15,9 +15,7 @@ use wcf\util\StringUtil;
  */
 class CodeMetacodeConverter extends AbstractMetacodeConverter
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function convert(\DOMDocumentFragment $fragment, array $attributes)
     {
         $element = $fragment->ownerDocument->createElement('pre');
@@ -134,9 +132,7 @@ class CodeMetacodeConverter extends AbstractMetacodeConverter
         return $element;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateAttributes(array $attributes)
     {
         // 0-3 attributes

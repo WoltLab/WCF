@@ -21,9 +21,7 @@ use wcf\util\StringUtil;
  */
 class ExceptionMailerCronjob extends AbstractCronjob
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(Cronjob $cronjob)
     {
         parent::execute($cronjob);

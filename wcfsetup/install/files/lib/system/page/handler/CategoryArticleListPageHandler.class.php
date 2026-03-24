@@ -21,15 +21,16 @@ class CategoryArticleListPageHandler extends AbstractLookupPageHandler implement
      * @return string
      * @see TDecoratedCategoryLookupPageHandler::getDecoratedCategoryClass()
      */
+    #[\Override]
     protected function getDecoratedCategoryClass()
     {
         return ArticleCategory::class;
     }
 
     /**
-     * @inheritDoc
      * @since       5.2
      */
+    #[\Override]
     public function getOutstandingItemCount(?int $objectID = null)
     {
         return ViewableArticle::getUnreadArticlesForCategory($objectID);

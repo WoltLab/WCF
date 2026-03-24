@@ -31,9 +31,7 @@ use wcf\system\WCF;
  */
 final class UserIgnoreAction implements RequestHandlerInterface
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $parameters = Helper::mapQueryParameters(

@@ -69,9 +69,7 @@ final class UserQuickSearchAction extends AbstractAction
      */
     public $maxResults = 2000;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -81,9 +79,7 @@ final class UserQuickSearchAction extends AbstractAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(): RedirectResponse
     {
         ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.user.search');

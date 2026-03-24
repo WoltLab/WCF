@@ -22,9 +22,7 @@ class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractCommentRe
     use TTestableCommentResponseUserNotificationEvent;
     use TTestableArticleCommentUserNotificationEvent;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepare()
     {
         parent::prepare();
@@ -32,9 +30,7 @@ class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractCommentRe
         ViewableArticleContentRuntimeCache::getInstance()->cacheObjectID($this->additionalData['objectID']);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMessage()
     {
         $authors = $this->getAuthors();
@@ -71,9 +67,7 @@ class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractCommentRe
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEmailMessage(string $notificationType = 'instant'): array
     {
         $messageID = '<com.woltlab.wcf.user.articleComment.notification/' . $this->getUserNotificationObject()->commentID . '@' . Email::getHost() . '>';
@@ -110,25 +104,19 @@ class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractCommentRe
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return ViewableArticleContentRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink() . '#comment' . $this->getUserNotificationObject()->commentID . '/response' . $this->getUserNotificationObject()->responseID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getTypeName(): string
     {
         return $this->getLanguage()->get('wcf.user.recentActivity.com.woltlab.wcf.article.recentActivityEvent');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getObjectTitle(): string
     {
         return ViewableArticleContentRuntimeCache::getInstance()

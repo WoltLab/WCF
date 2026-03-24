@@ -16,9 +16,7 @@ use wcf\system\WCF;
  */
 class TrophyACPSearchResultProvider implements IACPSearchResultProvider
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function search(string $query)
     {
         if (!MODULE_TROPHY || !WCF::getSession()->getPermission('admin.trophy.canManageTrophy')) {

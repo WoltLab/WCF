@@ -51,9 +51,7 @@ class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin
      */
     protected $includedFiles = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         // needed arguments: application and lib/file

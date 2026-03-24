@@ -57,9 +57,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
      */
     protected $presetEventIDs = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items)
     {
         $sql = "DELETE FROM wcf1_" . $this->tableName . "
@@ -76,9 +74,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         $presetMailNotificationType = 'none';
@@ -97,9 +93,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function import(array $row, array $data)
     {
         /** @var UserNotificationEvent $event */
@@ -112,9 +106,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
         return $event;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function cleanup()
     {
         if (empty($this->presetEventIDs)) {
@@ -133,9 +125,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
         WCF::getDB()->commitTransaction();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
@@ -182,19 +172,19 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return ['objectType'];
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         /** @var FormContainer $dataContainer */
@@ -310,11 +300,11 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = [
@@ -363,10 +353,10 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         return \sha1(
@@ -376,10 +366,10 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $entryList->setKeys([
@@ -389,10 +379,10 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $event = $document->createElement($this->tagName);
@@ -415,7 +405,6 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
     }
 
     /**
-     * @inheritDoc
      * @return ?\DOMElement
      * @since   5.2
      */
@@ -434,7 +423,6 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */

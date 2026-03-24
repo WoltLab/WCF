@@ -208,9 +208,7 @@ class PageAddForm extends AbstractForm
      */
     public $invertPermissions = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -278,9 +276,7 @@ class PageAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -351,9 +347,7 @@ class PageAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -610,9 +604,7 @@ class PageAddForm extends AbstractForm
         return $boxToPage;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -738,9 +730,7 @@ class PageAddForm extends AbstractForm
         $this->boxIDs = $this->getDefaultBoxIDs();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -817,9 +807,7 @@ class PageAddForm extends AbstractForm
         return $boxIDs;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

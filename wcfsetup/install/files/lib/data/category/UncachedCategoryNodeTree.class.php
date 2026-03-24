@@ -25,9 +25,7 @@ class UncachedCategoryNodeTree extends CategoryNodeTree
      */
     protected $categoryStructureCache = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function buildTree()
     {
         $categoryList = new CategoryList();
@@ -49,17 +47,13 @@ class UncachedCategoryNodeTree extends CategoryNodeTree
         parent::buildTree();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getCategory(int $categoryID)
     {
         return $this->categoryCache[$categoryID];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getChildCategories(CategoryNode $parentNode)
     {
         $categories = [];

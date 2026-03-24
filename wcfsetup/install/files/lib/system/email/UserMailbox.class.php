@@ -37,6 +37,7 @@ class UserMailbox extends Mailbox implements IUserMailbox
     /**
      * Returns the User object belonging to this Mailbox.
      */
+    #[\Override]
     public function getUser(): User
     {
         $user = UserRuntimeCache::getInstance()->getObject($this->userID);

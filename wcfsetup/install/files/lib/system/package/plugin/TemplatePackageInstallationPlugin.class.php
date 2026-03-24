@@ -26,9 +26,7 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
      */
     public $tableName = 'template';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function install()
     {
         parent::install();
@@ -58,6 +56,7 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
     /**
      * Uninstalls the templates of this package.
      */
+    #[\Override]
     public function uninstall()
     {
         // fetch templates from log
@@ -98,14 +97,13 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
      * @see \wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
      * @since   3.0
      */
+    #[\Override]
     public static function getDefaultFilename()
     {
         return 'templates.tar';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function isValid(PackageArchive $packageArchive, $instruction)
     {
         if (!$instruction) {
@@ -128,9 +126,7 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return [];

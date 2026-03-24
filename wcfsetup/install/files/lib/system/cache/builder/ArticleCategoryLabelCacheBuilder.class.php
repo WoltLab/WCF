@@ -17,9 +17,7 @@ use wcf\system\WCF;
  */
 class ArticleCategoryLabelCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function rebuild(array $parameters)
     {
         $conditionBuilder = new PreparedStatementConditionBuilder();

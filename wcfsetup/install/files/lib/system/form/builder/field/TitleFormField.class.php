@@ -24,9 +24,7 @@ class TitleFormField extends TextFormField
         $this->label('wcf.global.title');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'title';

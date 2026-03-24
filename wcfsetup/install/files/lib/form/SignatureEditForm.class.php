@@ -66,9 +66,7 @@ class SignatureEditForm extends MessageForm
      */
     public $neededPermissions = ['user.signature.canEditSignature'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -78,9 +76,7 @@ class SignatureEditForm extends MessageForm
         $this->attachmentObjectID = WCF::getUser()->userID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if (WCF::getUser()->disableSignature) {
@@ -97,9 +93,7 @@ class SignatureEditForm extends MessageForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -112,9 +106,7 @@ class SignatureEditForm extends MessageForm
         $this->signatureCache = SignatureCache::getInstance()->getSignature(WCF::getUser());
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -124,9 +116,7 @@ class SignatureEditForm extends MessageForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         // set active tab
@@ -135,9 +125,7 @@ class SignatureEditForm extends MessageForm
         parent::show();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();

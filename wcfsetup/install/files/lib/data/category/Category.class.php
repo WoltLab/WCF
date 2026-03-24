@@ -75,9 +75,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
      */
     protected static $processorInterface = ICategoryType::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __get(string $name)
     {
         // forward 'className' property requests to object type
@@ -97,17 +95,13 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
         return $value;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __isset(string $name)
     {
         return parent::__isset($name) || isset($this->data['additionalData'][$name]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkPermissions(array $permissions)
     {
         foreach ($permissions as $permission) {
@@ -206,9 +200,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
         return \in_array($category, $this->getParentCategories());
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getPermission(string $permission, ?User $user = null)
     {
         if ($user === null) {
@@ -235,9 +227,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
         return $this->defaultPermission;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->title);
@@ -257,9 +247,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleData($data)
     {
         // handle additional data
@@ -275,9 +263,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
         parent::handleData($data);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getTitle();

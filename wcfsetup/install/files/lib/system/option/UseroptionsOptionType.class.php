@@ -21,9 +21,7 @@ class UseroptionsOptionType extends AbstractOptionType
      */
     protected static $userOptions;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(Option $option, mixed $newValue)
     {
         if (!\is_array($newValue)) {
@@ -37,9 +35,7 @@ class UseroptionsOptionType extends AbstractOptionType
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData(Option $option, mixed $newValue)
     {
         if (!\is_array($newValue)) {
@@ -49,9 +45,7 @@ class UseroptionsOptionType extends AbstractOptionType
         return \implode(',', $newValue);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         $userOptions = self::getUserOptions();

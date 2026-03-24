@@ -25,6 +25,7 @@ use wcf\system\WCF;
  */
 final class UserPopoverAction implements RequestHandlerInterface
 {
+    #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         if (!WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {

@@ -15,9 +15,7 @@ use wcf\system\WCF;
  */
 class DateUserOptionOutput implements IUserOptionOutput
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getOutput(User $user, UserOption $option, string $value)
     {
         if (empty($value) || $value == '0000-00-00') {

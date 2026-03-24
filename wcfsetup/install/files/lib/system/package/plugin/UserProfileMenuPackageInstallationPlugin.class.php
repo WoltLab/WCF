@@ -48,9 +48,7 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
      */
     public $tagName = 'userprofilemenuitem';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items)
     {
         $sql = "DELETE FROM wcf1_" . $this->tableName . "
@@ -65,9 +63,7 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         // adjust show order
@@ -84,17 +80,13 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getNameByData(array $data): string
     {
         return $data['menuItem'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
@@ -113,19 +105,19 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return [];
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         /** @var FormContainer $dataContainer */
@@ -198,11 +190,11 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = [
@@ -238,20 +230,20 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         return $element->getAttribute('name');
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $entryList->setKeys([
@@ -261,10 +253,10 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $data = $form->getData()['data'];

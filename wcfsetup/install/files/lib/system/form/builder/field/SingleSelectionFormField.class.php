@@ -35,9 +35,7 @@ class SingleSelectionFormField extends AbstractFormField implements
      */
     protected $templateName = 'shared_singleSelectionFormField';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSaveValue()
     {
         if (
@@ -51,9 +49,7 @@ class SingleSelectionFormField extends AbstractFormField implements
         return parent::getSaveValue();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function filterable($filterable = true)
     {
         if ($filterable) {
@@ -65,9 +61,7 @@ class SingleSelectionFormField extends AbstractFormField implements
         return $this->traitFilterable($filterable);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
@@ -81,9 +75,7 @@ class SingleSelectionFormField extends AbstractFormField implements
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if (!isset($this->getOptions()[$this->getValue()])) {
@@ -96,9 +88,7 @@ class SingleSelectionFormField extends AbstractFormField implements
         parent::validate();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function value(mixed $value)
     {
         // ignore `null` as value which can be passed either for nullable

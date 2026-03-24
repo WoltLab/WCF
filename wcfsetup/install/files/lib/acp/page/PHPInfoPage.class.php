@@ -32,9 +32,7 @@ class PHPInfoPage extends AbstractPage
      */
     const BLACKLISTED_IN_ENTERPRISE_MODE = true;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

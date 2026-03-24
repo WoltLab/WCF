@@ -20,9 +20,7 @@ class PackageUpdateServerList extends DatabaseObjectList
      */
     public $className = PackageUpdateServer::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readObjects()
     {
         if (!empty($this->sqlSelects)) {

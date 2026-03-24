@@ -25,6 +25,7 @@ abstract class CustomOptionHandler extends OptionHandler
     /**
      * Gets all options and option categories from cache.
      */
+    #[\Override]
     protected function readCache()
     {
         throw new NotImplementedException();
@@ -33,6 +34,7 @@ abstract class CustomOptionHandler extends OptionHandler
     /**
      * Initializes active options.
      */
+    #[\Override]
     public function init()
     {
         if (!$this->didInit) {
@@ -63,9 +65,7 @@ abstract class CustomOptionHandler extends OptionHandler
         return $parsedOptions;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         foreach ($this->options as $option) {
@@ -106,9 +106,7 @@ abstract class CustomOptionHandler extends OptionHandler
         $this->optionValues = $values;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getOption($optionName)
     {
         $optionData = parent::getOption($optionName);
@@ -120,9 +118,7 @@ abstract class CustomOptionHandler extends OptionHandler
         return $optionData;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validateOption(Option $option)
     {
         parent::validateOption($option);

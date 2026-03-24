@@ -23,9 +23,7 @@ class EmbeddedObjectBlockTemplatePlugin implements IBlockTemplatePlugin
      */
     protected $counter = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, string $blockContent, TemplateEngine $tplObj)
     {
         $data = \unserialize(\base64_decode($blockContent));
@@ -33,17 +31,13 @@ class EmbeddedObjectBlockTemplatePlugin implements IBlockTemplatePlugin
         return HtmlSimpleParser::getInstance()->replaceTag($data);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function init(array $tagArgs, TemplateEngine $tplObj)
     {
         $this->counter = 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function next(TemplateEngine $tplObj)
     {
         if ($this->counter == 0) {

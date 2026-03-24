@@ -63,33 +63,25 @@ final class Psr15DialogForm extends FormDocument
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addButton(IFormButton $button)
     {
         throw new \LogicException(self::class . ' does not support custom buttons.');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         $this->traitValidate();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function createDefaultButton()
     {
         /* Buttons are implicitly added by the dialog API. */
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function ajax(bool $ajax = true)
     {
         /* This implementation forces `$ajax = true`. */

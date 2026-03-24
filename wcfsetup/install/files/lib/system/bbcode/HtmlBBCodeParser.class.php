@@ -71,9 +71,7 @@ class HtmlBBCodeParser extends BBCodeParser
      */
     protected $validBBCodePattern = '~^[a-z](?:[a-z0-9\-_]+)?$~';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function parse($text)
     {
         $codeBlocks = [];
@@ -236,6 +234,7 @@ class HtmlBBCodeParser extends BBCodeParser
     /**
      * Builds the parsed string.
      */
+    #[\Override]
     public function buildParsedString()
     {
         // reset parsed text
@@ -403,11 +402,11 @@ class HtmlBBCodeParser extends BBCodeParser
         return $this->buildOpeningTag($openingTag) . $content . $this->buildClosingTag($closingTag);
     }
 
-    /**
-     * @inheritDoc
+/**
      * @param BBCodeTag $tag
      */
-    protected function buildOpeningTag(array $tag)
+    #[\Override]
+protected function buildOpeningTag(array $tag)
     {
         $name = \strtolower($tag['name']);
         if (!$this->isValidBBCodeName($name)) {
@@ -444,9 +443,7 @@ class HtmlBBCodeParser extends BBCodeParser
         return '<woltlab-metacode-marker data-name="' . $name . '" data-uuid="' . $uuid . '" data-source="' . \base64_encode($tag['source']) . '"' . $attributes . ' />';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function buildClosingTag(array $tag)
     {
         $name = \strtolower($tag['name']);
@@ -479,9 +476,7 @@ class HtmlBBCodeParser extends BBCodeParser
         return \preg_match($this->validBBCodePattern, $name) === 1;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function isValidTagAttribute(array $tagAttributes, BBCodeAttribute $definedTagAttribute)
     {
         // work-around for the broken `[wsm]` conversion in earlier versions

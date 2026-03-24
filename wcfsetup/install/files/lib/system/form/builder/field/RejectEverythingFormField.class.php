@@ -16,49 +16,37 @@ final class RejectEverythingFormField extends AbstractFormField
 {
     use TDefaultIdFormField;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFieldHtml(): string
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtml(): string
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         $this->addValidationError(new FormFieldValidationError('rejectEverything'));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSaveValue(): void
     {
         throw new \BadMethodCallException("Form field '{$this->getId()}' rejects everything.");
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'rejectEverything';

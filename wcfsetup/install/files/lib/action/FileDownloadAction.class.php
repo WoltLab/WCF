@@ -30,6 +30,7 @@ use wcf\util\FileUtil;
  */
 final class FileDownloadAction implements RequestHandlerInterface
 {
+    #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $parameters = Helper::mapQueryParameters(

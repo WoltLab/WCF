@@ -88,9 +88,7 @@ class DevtoolsMissingLanguageItemAction extends AbstractDatabaseObjectAction imp
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateDelete()
     {
         if (!ENABLE_DEVELOPER_TOOLS) {

@@ -44,9 +44,7 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
      */
     public $userProfile;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function create()
     {
         /** @var UserTrophy $userTrophy */
@@ -106,9 +104,7 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
         return $userTrophy;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateDelete()
     {
         parent::validateDelete();
@@ -121,9 +117,7 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         if (empty($this->objects)) {

@@ -13,9 +13,7 @@ use wcf\data\contact\option\ContactOptionList;
  */
 class ContactOptionCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rebuild(array $parameters)
     {
         $list = new ContactOptionList();

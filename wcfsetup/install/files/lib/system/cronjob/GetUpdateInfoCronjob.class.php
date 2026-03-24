@@ -14,9 +14,7 @@ use wcf\system\package\PackageUpdateDispatcher;
  */
 class GetUpdateInfoCronjob extends AbstractCronjob
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(Cronjob $cronjob)
     {
         parent::execute($cronjob);

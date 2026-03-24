@@ -141,9 +141,7 @@ class I18nValue
         return PackageCache::getInstance()->getPackageID($this->languageItemPackage);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getFieldName();

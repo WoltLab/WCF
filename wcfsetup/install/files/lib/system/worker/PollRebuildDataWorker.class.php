@@ -27,9 +27,7 @@ class PollRebuildDataWorker extends AbstractRebuildDataWorker
      */
     protected $limit = 10;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initObjectList()
     {
         parent::initObjectList();
@@ -37,9 +35,7 @@ class PollRebuildDataWorker extends AbstractRebuildDataWorker
         $this->objectList->sqlOrderBy = 'poll.pollID';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         parent::execute();

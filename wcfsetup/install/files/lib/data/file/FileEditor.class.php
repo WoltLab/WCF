@@ -38,6 +38,7 @@ class FileEditor extends DatabaseObjectEditor
         }
     }
 
+    #[\Override]
     public static function deleteAll(array $objectIDs = [])
     {
         $fileList = new FileList();

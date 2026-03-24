@@ -147,9 +147,7 @@ class TrophyAddForm extends AbstractAcpForm
      */
     public $showOrder = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         $this->conditions = TrophyConditionHandler::getInstance()->getGroupedObjectTypes();
@@ -157,9 +155,7 @@ class TrophyAddForm extends AbstractAcpForm
         parent::readData();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -182,9 +178,7 @@ class TrophyAddForm extends AbstractAcpForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -237,9 +231,7 @@ class TrophyAddForm extends AbstractAcpForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -316,9 +308,7 @@ class TrophyAddForm extends AbstractAcpForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -372,9 +362,7 @@ class TrophyAddForm extends AbstractAcpForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         parent::reset();
@@ -394,9 +382,7 @@ class TrophyAddForm extends AbstractAcpForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

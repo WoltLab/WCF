@@ -40,10 +40,7 @@ class BBCodeAction extends AbstractDatabaseObjectAction
      */
     protected $requireACP = ['delete', 'update'];
 
-    /**
-     * @inheritDoc
-     * @return  BBCode
-     */
+    #[\Override]
     public function create()
     {
         /** @var BBCode $bbCode */
@@ -98,9 +95,7 @@ class BBCodeAction extends AbstractDatabaseObjectAction
         return $bbCode;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateDelete()
     {
         parent::validateDelete();

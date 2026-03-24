@@ -63,9 +63,7 @@ class BoxVersionTrackerProvider extends AbstractVersionTrackerProvider
      */
     public static $trackedProperties = ['title', 'content'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCurrentVersion(IVersionTrackerObject $object)
     {
         \assert($object instanceof BoxVersionTracker);
@@ -88,9 +86,7 @@ class BoxVersionTrackerProvider extends AbstractVersionTrackerProvider
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTrackedData(IVersionTrackerObject $object)
     {
         \assert($object instanceof BoxVersionTracker);
@@ -108,18 +104,14 @@ class BoxVersionTrackerProvider extends AbstractVersionTrackerProvider
         return $data;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isI18n(IVersionTrackerObject $object)
     {
         \assert($object instanceof Box);
         return $object->isMultilingual == 1;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function revert(IVersionTrackerObject $object, VersionTrackerEntry $entry)
     {
         /** @var BoxVersionTracker $object */

@@ -21,9 +21,7 @@ final class FirstTimeSetupCompletedPage extends AbstractPage
      */
     public $neededPermissions = ['admin.general.canUseAcp'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();

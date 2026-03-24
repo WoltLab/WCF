@@ -43,6 +43,7 @@ class Like extends DatabaseObject
      *
      * @since       5.3
      */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getReactionType()->getTitle();
@@ -90,9 +91,7 @@ class Like extends DatabaseObject
         return new self(null, $row);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getDatabaseTableAlias()
     {
         return 'like_table';

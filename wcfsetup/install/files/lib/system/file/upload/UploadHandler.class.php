@@ -49,9 +49,7 @@ class UploadHandler extends SingletonFactory
      */
     protected $fields = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->cleanupStorage();

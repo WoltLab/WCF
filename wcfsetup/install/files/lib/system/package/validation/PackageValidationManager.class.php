@@ -52,9 +52,7 @@ class PackageValidationManager extends SingletonFactory
      */
     const VALIDATION_EXCLUSION = 2;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $pipList = new PackageInstallationPluginList();

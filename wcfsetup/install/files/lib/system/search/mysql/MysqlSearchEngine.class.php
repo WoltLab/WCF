@@ -35,9 +35,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
      */
     protected $specialCharacters = ['(', ')', '@', '+', '-', '"', '<', '>', '~', '*'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function search(
         string $q,
         array $objectTypes,
@@ -130,9 +128,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
         return $messages;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getInnerJoin(
         string $objectTypeName,
         string $q,

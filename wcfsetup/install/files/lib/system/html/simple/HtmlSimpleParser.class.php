@@ -37,9 +37,7 @@ class HtmlSimpleParser extends SingletonFactory
      */
     protected $regexHandlers = '~\{\{ ((?:[a-z][a-zA-Z]+="(?:\\\\"|[^"])+" ?)*) \}\}~';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->handlers = MessageEmbeddedObjectManager::getInstance()->getSimpleMessageEmbeddedObjectHandlers();

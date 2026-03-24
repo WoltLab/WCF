@@ -49,17 +49,13 @@ class WhoWasOnlineBoxController extends AbstractDatabaseObjectListBoxController
      */
     public $users = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getObjectList()
     {
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getTemplate()
     {
         return WCF::getTPL()->render('wcf', 'boxWhoWasOnline', [
@@ -68,9 +64,7 @@ class WhoWasOnlineBoxController extends AbstractDatabaseObjectListBoxController
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasContent()
     {
         if (!MODULE_USERS_ONLINE || !WCF::getSession()->getPermission('user.profile.canViewUsersOnlineList')) {
@@ -82,9 +76,7 @@ class WhoWasOnlineBoxController extends AbstractDatabaseObjectListBoxController
         return \count($this->users) > 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function loadContent()
     {
         $this->readObjects();
@@ -92,9 +84,7 @@ class WhoWasOnlineBoxController extends AbstractDatabaseObjectListBoxController
         $this->content = $this->getTemplate();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function readObjects()
     {
         EventHandler::getInstance()->fireAction($this, 'readObjects');

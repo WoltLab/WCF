@@ -18,9 +18,7 @@ use wcf\data\cronjob\Cronjob;
  */
 class ArticlePublicationCronjob extends AbstractCronjob
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(Cronjob $cronjob)
     {
         parent::execute($cronjob);

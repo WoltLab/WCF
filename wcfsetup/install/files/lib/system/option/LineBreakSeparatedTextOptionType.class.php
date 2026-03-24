@@ -17,9 +17,7 @@ use wcf\util\StringUtil;
  */
 class LineBreakSeparatedTextOptionType extends TextareaOptionType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         $values = ArrayUtil::trim(\explode("\n", StringUtil::unifyNewlines($value ?? '')));

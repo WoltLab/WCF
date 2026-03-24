@@ -15,9 +15,7 @@ use wcf\system\trophy\condition\TrophyConditionHandler;
  */
 class AssignTrophiesCronjob extends AbstractCronjob
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(Cronjob $cronjob)
     {
         parent::execute($cronjob);

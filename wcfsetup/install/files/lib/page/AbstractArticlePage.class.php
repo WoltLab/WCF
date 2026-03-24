@@ -72,9 +72,7 @@ abstract class AbstractArticlePage extends AbstractPage
 
     public RelatedArticleListView $relatedArticleListView;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -111,9 +109,7 @@ abstract class AbstractArticlePage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -199,9 +195,7 @@ abstract class AbstractArticlePage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

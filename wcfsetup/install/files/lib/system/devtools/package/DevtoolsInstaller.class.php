@@ -24,9 +24,6 @@ class DevtoolsInstaller extends Installer
      */
     protected $project;
 
-    /**
-     * @inheritDoc
-     */
     public function __construct(DevtoolsProject $project, $targetDir, $source, $fileHandler = null, $folder = '')
     {
         $this->project = $project;
@@ -34,9 +31,7 @@ class DevtoolsInstaller extends Installer
         parent::__construct($targetDir, $source, $fileHandler, $folder);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTar($source)
     {
         $directory = null;

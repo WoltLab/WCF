@@ -17,9 +17,7 @@ class EmptyFormFieldDependency extends AbstractFormFieldDependency
      */
     protected $templateName = 'shared_emptyFormFieldDependency';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkDependency()
     {
         return empty($this->getField()->getValue());

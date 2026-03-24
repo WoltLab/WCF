@@ -18,9 +18,7 @@ use wcf\util\StringUtil;
  */
 class PageCommentUserActivityEvent extends SingletonFactory implements IUserActivityEvent
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function prepare(array $events)
     {
         $commentIDs = [];

@@ -72,10 +72,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
         'updatePosition',
     ];
 
-    /**
-     * @inheritDoc
-     * @return  Page
-     */
+    #[\Override]
     public function create()
     {
         /** @var Page $page */
@@ -158,9 +155,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
         return $page;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         parent::update();
@@ -284,9 +279,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateDelete()
     {
         parent::validateDelete();
@@ -299,10 +292,10 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
     }
 
     /**
-     * @inheritDoc
      *
      * @deprecated 6.3
      */
+    #[\Override]
     public function validateToggle()
     {
         parent::validateUpdate();
@@ -314,9 +307,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateGetSearchResultList()
     {
         $this->pageEditor = $this->getSingleObject();
@@ -327,9 +318,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
         $this->readString('searchString', false, 'data');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSearchResultList()
     {
         $pageHandler = $this->pageEditor->getHandler();
@@ -384,9 +373,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
         return $pages;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         $pageContentIDs = [];
@@ -422,9 +409,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
         return $count;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateUpdatePosition()
     {
         WCF::getSession()->checkPermissions(['admin.content.cms.canManagePage']);
@@ -473,9 +458,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updatePosition()
     {
         $pageID = $this->pageEditor->getDecoratedObject()->pageID;
@@ -531,6 +514,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
     /**
      * @deprecated 6.3 use the `EnablePage` or `DisablePage` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->objects as $editor) {

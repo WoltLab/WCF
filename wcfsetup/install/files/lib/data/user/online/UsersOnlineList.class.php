@@ -45,9 +45,6 @@ class UsersOnlineList extends SessionList
      */
     public $usersOnlineMarkings;
 
-    /**
-     * @inheritDoc
-     */
     public function __construct()
     {
         parent::__construct();
@@ -68,9 +65,7 @@ class UsersOnlineList extends SessionList
         $this->getConditionBuilder()->add('session.lastActivityTime > ?', [TIME_NOW - USER_ONLINE_TIMEOUT]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readObjects()
     {
         parent::readObjects();

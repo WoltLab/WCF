@@ -47,9 +47,7 @@ final class CheckForForceLogin implements MiddlewareInterface
         \wcf\page\DisclaimerPage::class,
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (

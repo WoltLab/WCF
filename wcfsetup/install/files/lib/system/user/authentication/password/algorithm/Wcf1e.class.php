@@ -50,9 +50,7 @@ final class Wcf1e implements IPasswordAlgorithm
         $this->encryptBeforeSalting = (bool)$matches[4];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function verify(
         #[\SensitiveParameter]
         string $password,
@@ -65,9 +63,7 @@ final class Wcf1e implements IPasswordAlgorithm
         return \hash_equals($hash, $this->hashWithSalt($password, $salt));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hash(
         #[\SensitiveParameter]
         string $password
@@ -131,9 +127,7 @@ final class Wcf1e implements IPasswordAlgorithm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function needsRehash(string $hash): bool
     {
         return false;

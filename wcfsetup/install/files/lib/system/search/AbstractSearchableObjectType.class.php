@@ -16,16 +16,12 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  */
 abstract class AbstractSearchableObjectType extends AbstractObjectTypeProcessor implements ISearchableObjectType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show(?IForm $form = null)
     {
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getApplication()
     {
         $classParts = \explode('\\', static::class);
@@ -33,72 +29,54 @@ abstract class AbstractSearchableObjectType extends AbstractObjectTypeProcessor 
         return $classParts[0];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditions(?IForm $form = null)
     {
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getJoins()
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSubjectFieldName()
     {
         return $this->getTableName() . '.subject';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getUsernameFieldName()
     {
         return $this->getTableName() . '.username';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTimeFieldName()
     {
         return $this->getTableName() . '.time';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getAdditionalData()
     {
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAccessible()
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormTemplateName()
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getOuterSQLQuery(
         string $q,
         ?PreparedStatementConditionBuilder &$searchIndexConditions = null,
@@ -107,16 +85,12 @@ abstract class AbstractSearchableObjectType extends AbstractObjectTypeProcessor 
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setLocation()
     {
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getActiveMenuItem()
     {
         return '';

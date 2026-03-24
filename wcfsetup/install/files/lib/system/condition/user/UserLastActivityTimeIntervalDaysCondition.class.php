@@ -46,9 +46,7 @@ class UserLastActivityTimeIntervalDaysCondition extends AbstractSingleFieldCondi
      */
     protected $startDays = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
     {
         if ($this->object->ignoreZeroTime) {
@@ -68,9 +66,7 @@ class UserLastActivityTimeIntervalDaysCondition extends AbstractSingleFieldCondi
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkObject(DatabaseObject $object, array $conditionData)
     {
         if (!($object instanceof User) && !ClassUtil::isDecoratedInstanceOf($object, User::class)) {
@@ -101,9 +97,7 @@ class UserLastActivityTimeIntervalDaysCondition extends AbstractSingleFieldCondi
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         $data = [];
@@ -122,9 +116,7 @@ class UserLastActivityTimeIntervalDaysCondition extends AbstractSingleFieldCondi
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getFieldElement()
     {
         $start = WCF::getLanguage()->get('wcf.date.period.start');
@@ -143,9 +135,7 @@ class UserLastActivityTimeIntervalDaysCondition extends AbstractSingleFieldCondi
 HTML;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (isset($_POST['userLastActivityTimeIntervalEndDays'])) {
@@ -156,18 +146,14 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         $this->endDays = '';
         $this->startDays = '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setData(Condition $condition)
     {
         $endDays = $condition->endDays;
@@ -181,9 +167,7 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         $endDays = $startDays = null;

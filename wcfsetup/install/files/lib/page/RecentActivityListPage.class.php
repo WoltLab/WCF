@@ -25,9 +25,7 @@ class RecentActivityListPage extends AbstractPage
      */
     public $eventList;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -35,9 +33,7 @@ class RecentActivityListPage extends AbstractPage
         $this->canonicalURL = LinkHandler::getInstance()->getLink('RecentActivityList');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -62,9 +58,7 @@ class RecentActivityListPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

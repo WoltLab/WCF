@@ -24,10 +24,7 @@ class UserOptionCategoryEditor extends DatabaseObjectEditor implements IEditable
      */
     protected static $baseClass = UserOptionCategory::class;
 
-    /**
-     * @inheritDoc
-     * @return  UserOptionCategory
-     */
+    #[\Override]
     public static function create(array $parameters = [])
     {
         // obtain default values
@@ -38,9 +35,7 @@ class UserOptionCategoryEditor extends DatabaseObjectEditor implements IEditable
         return parent::create($parameters);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         UserOptionCacheBuilder::getInstance()->reset();

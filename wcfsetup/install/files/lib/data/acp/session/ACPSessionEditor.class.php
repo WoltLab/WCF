@@ -25,9 +25,7 @@ class ACPSessionEditor extends DatabaseObjectEditor
      */
     protected static $baseClass = ACPSession::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function create(array $parameters = [])
     {
         if (isset($parameters['userID']) && !$parameters['userID']) {
@@ -37,9 +35,7 @@ class ACPSessionEditor extends DatabaseObjectEditor
         return parent::create($parameters);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update(array $parameters = [])
     {
         if (isset($parameters['userID']) && !$parameters['userID']) {

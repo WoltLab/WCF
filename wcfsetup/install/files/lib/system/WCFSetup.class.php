@@ -127,6 +127,7 @@ final class WCFSetup extends WCF
     /**
      * Initialises the language engine.
      */
+    #[\Override]
     protected function initLanguage(): void
     {
         self::$languageObj = new SetupLanguage(self::$selectedLanguageCode);
@@ -135,6 +136,7 @@ final class WCFSetup extends WCF
     /**
      * Initialises the template engine.
      */
+    #[\Override]
     protected function initTPL(): void
     {
         self::$tplObj = SetupTemplateEngine::getInstance();

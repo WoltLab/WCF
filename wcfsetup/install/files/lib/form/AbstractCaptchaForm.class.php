@@ -41,9 +41,7 @@ abstract class AbstractCaptchaForm extends AbstractForm
      */
     public $forceCaptcha = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -54,9 +52,7 @@ abstract class AbstractCaptchaForm extends AbstractForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         if ((!WCF::getUser()->userID || $this->forceCaptcha) && $this->useCaptcha && $this->captchaObjectTypeName) {
@@ -73,9 +69,7 @@ abstract class AbstractCaptchaForm extends AbstractForm
         parent::readData();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -85,9 +79,7 @@ abstract class AbstractCaptchaForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -97,9 +89,7 @@ abstract class AbstractCaptchaForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();

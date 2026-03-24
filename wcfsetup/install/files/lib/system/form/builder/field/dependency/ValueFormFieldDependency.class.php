@@ -33,9 +33,7 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency
      */
     protected $templateName = 'shared_valueFormFieldDependency';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkDependency()
     {
         if (\is_array($this->getField()->getValue())) {

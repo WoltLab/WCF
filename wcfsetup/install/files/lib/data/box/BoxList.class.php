@@ -29,9 +29,7 @@ class BoxList extends DatabaseObjectList
      */
     protected $contentLoading = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readObjects()
     {
         parent::readObjects();

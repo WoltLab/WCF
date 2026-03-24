@@ -78,9 +78,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
      */
     protected static $requirements;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return LinkHandler::getInstance()->getControllerLink(PackagePage::class, [
@@ -88,9 +86,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->getName();
@@ -132,9 +128,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
         return WCF::getLanguage()->get($this->packageName);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getName();

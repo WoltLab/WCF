@@ -76,9 +76,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
      */
     private $sitemapData = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function initObjectList()
     {
         // This rebuild worker has no database object list
@@ -86,9 +84,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
         // the parent method, that it does not throw an exception.
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function countObjects()
     {
         // changes session owner to 'System' during the building of sitemaps
@@ -141,9 +137,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         // changes session owner to 'System' during the building of sitemaps
@@ -462,17 +456,13 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         WCF::getSession()->checkPermissions(['admin.management.canRebuildData']);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getProceedURL()
     {
         return LinkHandler::getInstance()->getLink('SitemapList', [

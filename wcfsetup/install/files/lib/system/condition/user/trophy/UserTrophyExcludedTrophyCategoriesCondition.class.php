@@ -35,17 +35,13 @@ class UserTrophyExcludedTrophyCategoriesCondition extends AbstractMultiSelectCon
      */
     protected $label = 'wcf.user.trophy.condition.excludedTrophyCategories';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
     {
         $objectList->getConditionBuilder()->add('trophy.categoryID NOT IN (?)', [$conditionData[$this->fieldName]]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getOptions()
     {
         $categories = TrophyCategoryCache::getInstance()->getCategories();

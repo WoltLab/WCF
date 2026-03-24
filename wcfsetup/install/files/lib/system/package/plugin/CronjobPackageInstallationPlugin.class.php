@@ -41,9 +41,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
      */
     public $className = CronjobEditor::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element)
     {
         switch ($element->tagName) {
@@ -66,9 +64,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items)
     {
         // read cronjobs from database because deleting the language items requires the
@@ -129,9 +125,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
         });
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         if (isset($data['elements']['expression'])) {
@@ -166,17 +160,13 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getNameByData(array $data): string
     {
         return $data['cronjobName'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validateImport(array $data)
     {
         // The constructor will throw if the expression is not valid.
@@ -190,9 +180,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
         ));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
@@ -210,9 +198,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareCreate(array &$data)
     {
         parent::prepareCreate($data);
@@ -244,19 +230,19 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return [];
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         /** @var IFormContainer $dataContainer */
@@ -342,11 +328,11 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, mixed>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = [
@@ -465,20 +451,20 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         return $element->getAttribute('name');
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $entryList->setKeys([
@@ -488,10 +474,10 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $data = $form->getData();

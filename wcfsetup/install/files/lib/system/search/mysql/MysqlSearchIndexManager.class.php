@@ -18,9 +18,7 @@ use wcf\system\WCF;
  */
 class MysqlSearchIndexManager extends AbstractSearchIndexManager
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function set(
         string $objectType,
         int $objectID,
@@ -44,9 +42,7 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager
         $statement->execute([$objectID, $subject, $message, $time, $userID, $username, $languageID, $metaData]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete(string $objectType, array $objectIDs)
     {
         $itemsPerLoop = 1000;
@@ -68,9 +64,7 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager
         WCF::getDB()->commitTransaction();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset(string $objectType)
     {
         $this->createSearchIndex(SearchIndexManager::getInstance()->getObjectType($objectType));
@@ -80,9 +74,7 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager
         $statement->execute();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function createSearchIndex(ObjectType $objectType)
     {
         $tableName = SearchIndexManager::getTableName($objectType);

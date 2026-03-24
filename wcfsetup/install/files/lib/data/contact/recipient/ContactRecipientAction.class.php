@@ -48,9 +48,7 @@ class ContactRecipientAction extends AbstractDatabaseObjectAction implements ITo
      */
     protected $requireACP = ['create', 'delete', 'toggle', 'update'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateDelete()
     {
         parent::validateDelete();
@@ -63,9 +61,9 @@ class ContactRecipientAction extends AbstractDatabaseObjectAction implements ITo
     }
 
     /**
-     * @inheritDoc
      * @deprecated 6.3
      */
+    #[\Override]
     public function validateToggle()
     {
         parent::validateUpdate();
@@ -136,6 +134,7 @@ class ContactRecipientAction extends AbstractDatabaseObjectAction implements ITo
     /**
      * @deprecated 6.3 use the `EnableContactRecipient` or `DisableContactRecipient` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->objects as $editor) {

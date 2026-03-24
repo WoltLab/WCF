@@ -36,9 +36,7 @@ class UserActivityEventExcludedObjectTypeCondition extends AbstractMultiSelectCo
      */
     protected $label = 'wcf.user.recentActivity.condition.excludedObjectType';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
     {
         $objectList->getConditionBuilder()->add(
@@ -47,9 +45,7 @@ class UserActivityEventExcludedObjectTypeCondition extends AbstractMultiSelectCo
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getOptions()
     {
         $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.user.recentActivityEvent');

@@ -46,6 +46,7 @@ final class UserOptionGridView extends AbstractGridView
                 ->titleColumn()
                 ->renderer([
                     new class extends DefaultColumnRenderer {
+                        #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
                             \assert($row instanceof UserOption);
@@ -59,6 +60,7 @@ final class UserOptionGridView extends AbstractGridView
                 ->sortable()
                 ->renderer([
                     new class extends DefaultColumnRenderer {
+                        #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
                             \assert($row instanceof UserOption);

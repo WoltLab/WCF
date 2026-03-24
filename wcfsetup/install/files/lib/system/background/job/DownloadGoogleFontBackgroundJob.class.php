@@ -32,14 +32,13 @@ final class DownloadGoogleFontBackgroundJob extends AbstractBackgroundJob
     /**
      * @return  int every 10 minutes
      */
+    #[\Override]
     public function retryAfter()
     {
         return 10 * 60;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function perform()
     {
         FontManager::getInstance()->downloadFamily($this->family);

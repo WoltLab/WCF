@@ -19,9 +19,7 @@ class AssignToUserGroupsUserBulkProcessingAction extends AbstractUserGroupsUserB
      */
     public $inputName = 'assignToUserGroupIDs';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function executeUserAction(UserEditor $user)
     {
         $user->addToGroups($this->userGroupIDs, false, false);

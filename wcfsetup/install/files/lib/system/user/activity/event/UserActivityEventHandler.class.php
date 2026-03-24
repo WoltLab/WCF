@@ -26,9 +26,7 @@ class UserActivityEventHandler extends SingletonFactory
      */
     protected $objectTypes = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         // load object types

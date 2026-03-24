@@ -13,9 +13,7 @@ use wcf\data\acp\menu\item\ACPMenuItemList;
  */
 class ACPMenuCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rebuild(array $parameters)
     {
         $data = [];

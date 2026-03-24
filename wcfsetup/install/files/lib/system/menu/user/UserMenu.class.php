@@ -26,9 +26,7 @@ class UserMenu extends TreeMenu
      */
     protected $optionHandler;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function loadCache()
     {
         parent::loadCache();
@@ -38,9 +36,7 @@ class UserMenu extends TreeMenu
         $this->optionHandler->setUser(WCF::getUser());
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function checkMenuItem(ITreeMenuItem $item)
     {
         /** @var UserMenuItem $item */

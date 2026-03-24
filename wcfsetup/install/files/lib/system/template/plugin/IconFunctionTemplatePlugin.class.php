@@ -27,9 +27,7 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
 
     private const TYPES = ['brand', 'solid'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         $size = \intval($tagArgs['size'] ?? 16);

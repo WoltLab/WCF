@@ -24,9 +24,7 @@ class DateOptionType extends TextOptionType
      */
     protected $inputClass = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(Option $option, mixed $newValue)
     {
         if (empty($newValue)) {
@@ -42,9 +40,7 @@ class DateOptionType extends TextOptionType
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function compare(mixed $value1, mixed $value2)
     {
         if ($value1 == $value2) {
@@ -54,9 +50,7 @@ class DateOptionType extends TextOptionType
         return (\strtotime($value1) > \strtotime($value2)) ? 1 : -1;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         if ($value == '0000-00-00') {

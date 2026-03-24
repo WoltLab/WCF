@@ -20,9 +20,7 @@ use wcf\util\ArrayUtil;
  */
 class SignatureAttachmentObjectType extends AbstractAttachmentObjectType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canDownload(int $objectID)
     {
         if (!MODULE_USER_SIGNATURE) {
@@ -47,17 +45,13 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType
         return $this->canAddUser();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canViewPreview(int $objectID)
     {
         return $this->canDownload($objectID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canUpload(int $objectID, int $parentObjectID = 0)
     {
         if (!MODULE_USER_SIGNATURE) {
@@ -86,33 +80,25 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canDelete(int $objectID)
     {
         return $this->canUpload($objectID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function cacheObjects(array $objectIDs)
     {
         $this->setCachedObjects(UserProfileRuntimeCache::getInstance()->getObjects($objectIDs));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMaxSize()
     {
         return WCF::getSession()->getPermission('user.signature.attachment.maxSize');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getAllowedExtensions()
     {
         return ArrayUtil::trim(\explode(
@@ -121,17 +107,13 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType
         ));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMaxCount()
     {
         return WCF::getSession()->getPermission('user.signature.attachment.maxCount');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setPermissions(array $attachments)
     {
         $objectIDs = [];

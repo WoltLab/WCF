@@ -64,9 +64,7 @@ final class UserFormField extends AbstractFormField implements
         return $this->users;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSaveValue()
     {
         if ($this->allowsMultiple()) {
@@ -84,9 +82,7 @@ final class UserFormField extends AbstractFormField implements
         return \current($this->getUsers())->userID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function populate()
     {
         parent::populate();
@@ -107,9 +103,7 @@ final class UserFormField extends AbstractFormField implements
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
@@ -143,9 +137,7 @@ final class UserFormField extends AbstractFormField implements
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if ($this->isRequired()) {
@@ -232,9 +224,7 @@ final class UserFormField extends AbstractFormField implements
         parent::validate();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function value(mixed $value)
     {
         // ensure array value for form fields that actually support multiple values;

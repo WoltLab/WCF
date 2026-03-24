@@ -63,9 +63,7 @@ abstract class AbstractAcpForm extends AbstractForm
         return $this->i18nValues[$fieldName] ?? null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -81,9 +79,7 @@ abstract class AbstractAcpForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -212,9 +208,7 @@ abstract class AbstractAcpForm extends AbstractForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

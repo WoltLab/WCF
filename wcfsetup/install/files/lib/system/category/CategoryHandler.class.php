@@ -133,9 +133,7 @@ final class CategoryHandler extends SingletonFactory
         return $this->objectTypes;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.category');

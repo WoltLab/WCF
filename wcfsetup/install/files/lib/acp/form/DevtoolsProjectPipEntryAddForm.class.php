@@ -71,9 +71,7 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm
      */
     public $pipObject;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -122,9 +120,7 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function createForm()
     {
         parent::createForm();
@@ -151,9 +147,7 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm
         EventHandler::getInstance()->fireAction($this, 'addPipFormFields');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();
@@ -167,9 +161,7 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setFormAction()
     {
         $this->form->action(LinkHandler::getInstance()->getLink('DevtoolsProjectPipEntryAdd', [
@@ -179,9 +171,7 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm
         ]));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

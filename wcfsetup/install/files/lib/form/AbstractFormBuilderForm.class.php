@@ -78,9 +78,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm
      */
     public $objectEditLinkApplication = 'wcf';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -142,9 +140,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm
         // does nothing
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         if ($this->formObject !== null) {
@@ -158,9 +154,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm
         $this->setFormAction();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -168,9 +162,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm
         $this->form->readValues();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -209,9 +201,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function saved()
     {
         parent::saved();
@@ -259,9 +249,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm
         $this->form->updatedObject($this->formObject, empty($_POST));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkPermissions()
     {
         parent::checkPermissions();
@@ -269,9 +257,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm
         $this->buildForm();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -283,9 +269,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validateSecurityToken()
     {
         // does nothing, is handled by `IFormDocument` object

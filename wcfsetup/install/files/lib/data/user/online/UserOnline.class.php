@@ -49,6 +49,7 @@ class UserOnline extends UserProfile
      *
      * @return  string
      */
+    #[\Override]
     public function getFormattedUsername()
     {
         $username = StringUtil::encodeHTML($this->username);

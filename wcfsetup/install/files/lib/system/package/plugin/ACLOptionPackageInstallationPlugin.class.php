@@ -53,9 +53,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
      */
     public $tagName = 'option';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function deleteItems(\DOMXPath $xpath)
     {
         // delete options
@@ -130,9 +128,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function importCategories(\DOMXPath $xpath)
     {
         $elements = $xpath->query('/ns:data/ns:import/ns:categories/ns:category');
@@ -152,9 +148,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function saveCategory($category)
     {
         if (isset($category['objectTypeID'])) {
@@ -222,6 +216,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
      * @param \DOMXPath $xpath
      * @throws  SystemException
      */
+    #[\Override]
     protected function importOptions(\DOMXPath $xpath)
     {
         $elements = $xpath->query('/ns:data/ns:import/ns:options/ns:option');
@@ -264,9 +259,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function saveOption($option, $categoryName, $existingOptionID = 0)
     {
         // check for option existence
@@ -338,28 +331,28 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
     }
 
     /**
-     * @inheritDoc
      * @since   3.0
      */
+    #[\Override]
     public static function getDefaultFilename()
     {
         return 'aclOption.xml';
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return ['objectType'];
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         $objectTypes = [];
@@ -520,20 +513,20 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
     }
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     public function getEntryTypes()
     {
         return ['options', 'categories'];
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = [
@@ -573,10 +566,10 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         $elementData = $this->getElementData($element);
@@ -585,19 +578,19 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
     }
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     protected function getXsdFilename()
     {
         return 'aclOption';
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $entryList->setKeys([
@@ -607,10 +600,10 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $formData = $form->getData()['data'];
@@ -644,10 +637,10 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
     }
 
     /**
-     * @inheritDoc
      * @return ?\DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareDeleteXmlElement(\DOMElement $element)
     {
         $deleteElement = parent::prepareDeleteXmlElement($element);
@@ -661,10 +654,10 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function deleteObject(\DOMElement $element)
     {
         $name = $element->getAttribute('name');
@@ -714,9 +707,9 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
     }
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     protected function addDeleteElement(\DOMElement $element)
     {
         $this->defaultAddDeleteElement($element);

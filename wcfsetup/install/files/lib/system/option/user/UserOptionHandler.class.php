@@ -70,6 +70,7 @@ class UserOptionHandler extends OptionHandler
      */
     public $conditionMode = false;
 
+    #[\Override]
     public function init()
     {
         parent::init();
@@ -205,9 +206,7 @@ class UserOptionHandler extends OptionHandler
         $this->optionValues = $values;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getOption($optionName)
     {
         $optionData = parent::getOption($optionName);
@@ -228,9 +227,7 @@ class UserOptionHandler extends OptionHandler
         return $optionData;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getFormElement($type, Option $option)
     {
         if ($this->searchMode) {
@@ -259,9 +256,7 @@ class UserOptionHandler extends OptionHandler
         return parent::getFormElement($type, $option);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validateOption(Option $option)
     {
         /** @var UserOption $option */
@@ -291,9 +286,7 @@ class UserOptionHandler extends OptionHandler
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function checkCategory(OptionCategory $category)
     {
         if ($category->categoryName == 'hidden') {
@@ -303,9 +296,7 @@ class UserOptionHandler extends OptionHandler
         return parent::checkCategory($category);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function checkVisibility(Option $option)
     {
         /** @var UserOption $option */
@@ -350,9 +341,7 @@ class UserOptionHandler extends OptionHandler
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save(?string $categoryName = null, ?string $optionPrefix = null)
     {
         $options = parent::save($categoryName, $optionPrefix);
@@ -375,9 +364,7 @@ class UserOptionHandler extends OptionHandler
         return $options;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         foreach ($this->options as $option) {
@@ -388,10 +375,10 @@ class UserOptionHandler extends OptionHandler
     }
 
     /**
-     * @inheritDoc
      * @param mixed[] $source
      * @return void
      */
+    #[\Override]
     public function readUserInput(array &$source)
     {
         parent::readUserInput($source);

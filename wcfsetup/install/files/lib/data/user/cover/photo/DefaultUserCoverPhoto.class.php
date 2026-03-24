@@ -13,33 +13,25 @@ use wcf\system\style\StyleHandler;
  */
 class DefaultUserCoverPhoto implements IUserCoverPhoto
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         /* NOP */
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLocation(?bool $forceWebP = null): string
     {
         return StyleHandler::getInstance()->getStyle()->getCoverPhotoLocation($forceWebP);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getURL(?bool $forceWebP = null): string
     {
         return StyleHandler::getInstance()->getStyle()->getCoverPhotoUrl($forceWebP);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFilename(?bool $forceWebP = null): string
     {
         return StyleHandler::getInstance()->getStyle()->getCoverPhoto($forceWebP);

@@ -19,9 +19,7 @@ class SignedInAsBoxController extends AbstractBoxController
      */
     protected static $supportedPositions = ['sidebarLeft', 'sidebarRight'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function loadContent()
     {
         if (WCF::getUser()->userID) {

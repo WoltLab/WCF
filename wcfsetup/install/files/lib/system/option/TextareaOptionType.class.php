@@ -15,9 +15,7 @@ use wcf\util\StringUtil;
  */
 class TextareaOptionType extends TextOptionType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         return WCF::getTPL()->render('wcf', 'textareaOptionType', [
@@ -26,9 +24,7 @@ class TextareaOptionType extends TextOptionType
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSearchFormElement(Option $option, mixed $value)
     {
         return WCF::getTPL()->render('wcf', 'textareaSearchableOptionType', [
@@ -38,9 +34,7 @@ class TextareaOptionType extends TextOptionType
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData(Option $option, mixed $newValue)
     {
         $newValue = StringUtil::unifyNewlines(parent::getData($option, $newValue));
@@ -56,9 +50,7 @@ class TextareaOptionType extends TextOptionType
         return $newValue;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function compare(mixed $value1, mixed $value2)
     {
         $value1 = \explode("\n", StringUtil::unifyNewlines($value1));

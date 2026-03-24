@@ -48,9 +48,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
      */
     public $tagName = 'action';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items)
     {
         $sql = "DELETE FROM wcf1_" . $this->tableName . "
@@ -67,9 +65,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element)
     {
         $nodeValue = $element->nodeValue;
@@ -87,9 +83,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
         $elements[$element->tagName] = $nodeValue;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         $showOrder = isset($data['elements']['showorder']) ? \intval($data['elements']['showorder']) : null;
@@ -103,9 +97,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
@@ -125,9 +117,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function import(array $row, array $data)
     {
         // extract pages
@@ -143,9 +133,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
         return $action;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function postImport()
     {
         if ($this->pages === []) {
@@ -179,19 +167,19 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return [];
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         /** @var FormContainer $dataContainer */
@@ -265,11 +253,11 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, mixed>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = [
@@ -303,10 +291,10 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         return \sha1(
@@ -316,10 +304,10 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $entryList->setKeys([
@@ -329,10 +317,10 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $formData = $form->getData();
@@ -361,7 +349,6 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
     }
 
     /**
-     * @inheritDoc
      * @return ?\DOMElement
      * @since   5.2
      */
@@ -379,7 +366,6 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */

@@ -29,9 +29,7 @@ final class CronjobScheduler extends SingletonFactory
      */
     private array $cache;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->loadCache();

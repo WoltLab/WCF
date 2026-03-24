@@ -36,9 +36,7 @@ class FormButton implements IFormButton
      */
     protected $templateName = 'shared_formButton';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function accessKey(?string $accessKey = null)
     {
         // the value [of the accesskey attribute] must be an ordered set of unique
@@ -61,17 +59,13 @@ class FormButton implements IFormButton
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getAccessKey()
     {
         return $this->accessKey;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtml()
     {
         return WCF::getTPL()->render(
@@ -83,17 +77,13 @@ class FormButton implements IFormButton
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isSubmit()
     {
         return $this->submit;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function submit(bool $submit = true)
     {
         $this->submit = $submit;
@@ -105,9 +95,7 @@ class FormButton implements IFormButton
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         // does nothing

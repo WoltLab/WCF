@@ -127,9 +127,7 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->title;

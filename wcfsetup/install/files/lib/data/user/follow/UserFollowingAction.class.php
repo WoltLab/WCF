@@ -22,9 +22,7 @@ class UserFollowingAction extends UserFollowAction
      */
     protected $className = UserFollowEditor::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateGetGroupedUserList()
     {
         $this->readInteger('pageNo');
@@ -43,9 +41,7 @@ class UserFollowingAction extends UserFollowAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getGroupedUserList()
     {
         // resolve page count

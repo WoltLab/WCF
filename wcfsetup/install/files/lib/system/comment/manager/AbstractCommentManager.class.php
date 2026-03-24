@@ -71,9 +71,7 @@ abstract class AbstractCommentManager implements ICommentManager
      */
     protected $permissionDisallowedBBCodes = 'user.comment.disallowedBBCodes';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canAdd(int $objectID)
     {
         if (VISITOR_USE_TINY_BUILD && !WCF::getUser()->userID) {
@@ -87,9 +85,7 @@ abstract class AbstractCommentManager implements ICommentManager
         return WCF::getSession()->getPermission($this->permissionAdd) ? true : false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canAddWithoutApproval(int $objectID)
     {
         if (VISITOR_USE_TINY_BUILD && !WCF::getUser()->userID) {
@@ -108,9 +104,7 @@ abstract class AbstractCommentManager implements ICommentManager
         return WCF::getSession()->getPermission($this->permissionAddWithoutModeration) ? true : false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setDisallowedBBCodes()
     {
         BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
@@ -119,41 +113,31 @@ abstract class AbstractCommentManager implements ICommentManager
         ));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canEditComment(Comment $comment)
     {
         return $this->canEdit($comment->userID == WCF::getUser()->userID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canEditResponse(CommentResponse $response)
     {
         return $this->canEdit($response->userID == WCF::getUser()->userID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canDeleteComment(Comment $comment)
     {
         return $this->canDelete($comment->userID == WCF::getUser()->userID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canDeleteResponse(CommentResponse $response)
     {
         return $this->canDelete($response->userID == WCF::getUser()->userID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canModerate(int $objectTypeID, int $objectID)
     {
         return WCF::getSession()->getPermission($this->permissionCanModerate) ? true : false;
@@ -209,50 +193,38 @@ abstract class AbstractCommentManager implements ICommentManager
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCommentsPerPage()
     {
         return $this->commentsPerPage;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function supportsLike()
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function supportsReport()
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCommentLink(Comment $comment)
     {
         return $this->getLink($comment->objectTypeID, $comment->objectID) . '#comment' . $comment->commentID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getResponseLink(CommentResponse $response)
     {
         return $this->getLink($response->getComment()->objectTypeID, $response->getComment()->objectID)
             . '#comment' . $response->commentID . '/response' . $response->responseID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isContentAuthor(Comment|CommentResponse $commentOrResponse)
     {
         return false;

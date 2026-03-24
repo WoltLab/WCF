@@ -23,6 +23,7 @@ use wcf\system\WCF;
 #[DeleteRequest("/core/users/groups/assignments/{id:\d+}")]
 final class DeleteAssignment implements IController
 {
+    #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $this->assertAssignmentCanBeDeleted();

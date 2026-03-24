@@ -26,9 +26,7 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
      */
     public $tableName = 'acp_template';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function install()
     {
         parent::install();
@@ -56,9 +54,7 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
         @\unlink($sourceFile);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function uninstall()
     {
         // fetch ACP templates from log
@@ -96,14 +92,13 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
      * @see \wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
      * @since   3.0
      */
+    #[\Override]
     public static function getDefaultFilename()
     {
         return 'acptemplates.tar';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function isValid(PackageArchive $packageArchive, $instruction)
     {
         if (!$instruction) {
@@ -126,9 +121,7 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return [];

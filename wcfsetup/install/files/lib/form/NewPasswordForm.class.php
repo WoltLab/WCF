@@ -36,9 +36,7 @@ final class NewPasswordForm extends AbstractFormBuilderForm
     public string $lostPasswordKey;
     public User $user;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -86,9 +84,7 @@ final class NewPasswordForm extends AbstractFormBuilderForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function createForm()
     {
         // We have to create the form manually here to avoid the form getting the ID 'newPassword'.
@@ -134,9 +130,7 @@ final class NewPasswordForm extends AbstractFormBuilderForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -146,9 +140,7 @@ final class NewPasswordForm extends AbstractFormBuilderForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();

@@ -29,9 +29,7 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
      */
     private static $codeIDs = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         /** @var \DOMElement $element */
@@ -79,9 +77,7 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function replaceTag(array $data)
     {
         // HTML bbcode

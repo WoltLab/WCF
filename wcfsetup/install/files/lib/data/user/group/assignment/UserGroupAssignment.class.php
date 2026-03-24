@@ -35,9 +35,7 @@ class UserGroupAssignment extends DatabaseObject implements IRouteController
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->title;

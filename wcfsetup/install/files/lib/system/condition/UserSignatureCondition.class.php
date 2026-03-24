@@ -47,9 +47,7 @@ class UserSignatureCondition extends AbstractSelectCondition implements
      */
     const SIGNATURE = 1;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
     {
         switch ($conditionData['userSignature']) {
@@ -69,9 +67,7 @@ class UserSignatureCondition extends AbstractSelectCondition implements
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkUser(Condition $condition, User $user)
     {
         switch ($condition->userSignature) {
@@ -85,9 +81,7 @@ class UserSignatureCondition extends AbstractSelectCondition implements
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getOptions()
     {
         return [
@@ -97,9 +91,7 @@ class UserSignatureCondition extends AbstractSelectCondition implements
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showContent(Condition $condition)
     {
         if (!WCF::getUser()->userID) {

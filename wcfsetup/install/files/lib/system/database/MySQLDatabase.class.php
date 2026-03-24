@@ -19,9 +19,7 @@ class MySQLDatabase extends Database
      */
     protected $editorClassName = MySQLDatabaseEditor::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function connect()
     {
         if (!$this->port) {
@@ -74,17 +72,13 @@ class MySQLDatabase extends Database
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function isSupported()
     {
         return \extension_loaded('PDO') && \extension_loaded('pdo_mysql');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function setAttributes()
     {
         parent::setAttributes();
@@ -97,9 +91,7 @@ class MySQLDatabase extends Database
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getVersion()
     {
         try {

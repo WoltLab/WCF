@@ -17,9 +17,7 @@ use wcf\system\template\TemplateScriptingCompiler;
  */
 class LangCompilerTemplatePlugin implements ICompilerTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function executeStart($tagArgs, TemplateScriptingCompiler $compiler)
     {
         $compiler->pushTag('lang');
@@ -32,9 +30,7 @@ class LangCompilerTemplatePlugin implements ICompilerTemplatePlugin
 			?>";
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function executeEnd(TemplateScriptingCompiler $compiler)
     {
         $compiler->popTag('lang');

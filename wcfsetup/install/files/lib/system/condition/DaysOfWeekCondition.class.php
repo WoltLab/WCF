@@ -30,9 +30,7 @@ class DaysOfWeekCondition extends AbstractMultiSelectCondition implements IConte
      */
     protected $label = 'wcf.date.daysOfWeek';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getOptions()
     {
         $options = [];
@@ -45,9 +43,7 @@ class DaysOfWeekCondition extends AbstractMultiSelectCondition implements IConte
         return $options;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showContent(Condition $condition)
     {
         $date = DateUtil::getDateTimeByTimestamp(TIME_NOW);

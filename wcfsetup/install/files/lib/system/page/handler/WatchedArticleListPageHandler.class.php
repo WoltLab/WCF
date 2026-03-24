@@ -15,17 +15,13 @@ use wcf\data\article\ViewableArticle;
  */
 class WatchedArticleListPageHandler extends AbstractMenuPageHandler
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getOutstandingItemCount(?int $objectID = null)
     {
         return ViewableArticle::getWatchedUnreadArticles();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isVisible(?int $objectID = null)
     {
         return !empty(ArticleCategory::getSubscribedCategoryIDs());

@@ -66,9 +66,7 @@ class TrophyListPage extends MultipleLinkPage
      */
     public $category;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -84,9 +82,7 @@ class TrophyListPage extends MultipleLinkPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initObjectList()
     {
         parent::initObjectList();
@@ -104,9 +100,7 @@ class TrophyListPage extends MultipleLinkPage
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

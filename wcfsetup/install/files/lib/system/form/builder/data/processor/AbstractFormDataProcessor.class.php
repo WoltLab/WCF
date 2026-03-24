@@ -18,17 +18,13 @@ use wcf\system\form\builder\IFormDocument;
  */
 abstract class AbstractFormDataProcessor implements IFormDataProcessor
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function processFormData(IFormDocument $document, array $parameters)
     {
         return $parameters;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function processObjectData(IFormDocument $document, array $data, IStorableObject $object)
     {
         return $data;

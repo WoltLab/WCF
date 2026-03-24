@@ -49,9 +49,7 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject
         WCF::resetZendOpcache($filename);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         RoutingCacheBuilder::getInstance()->reset();

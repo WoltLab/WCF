@@ -24,7 +24,7 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  */
-final class UserProfileHeaderView
+final class UserProfileHeaderView implements \Stringable
 {
     /**
      * @var UserProfileStatItem[]
@@ -48,6 +48,7 @@ final class UserProfileHeaderView
         $this->initManagementContextMenu();
     }
 
+    #[\Override]
     public function __toString(): string
     {
         return WCF::getTPL()->render('wcf', 'userProfileHeader', [

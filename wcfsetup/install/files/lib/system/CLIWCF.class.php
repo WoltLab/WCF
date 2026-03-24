@@ -83,9 +83,7 @@ class CLIWCF extends WCF
         $this->initCommands();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function destruct(): void
     {
         if (empty($_ENV['WCF_SESSION_ID'])) {

@@ -68,33 +68,25 @@ SVG;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSafeURL(?int $size = null): string
     {
         return WCF::getPath() . 'images/avatars/avatar-default.png';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSafeImageTag(?int $size = null): string
     {
         return '<img src="' . StringUtil::encodeHTML($this->getSafeURL($size)) . '" width="' . $size . '" height="' . $size . '" alt="" class="userAvatarImage">';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getURL(?int $size = null)
     {
         return $this->src;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getImageTag(?int $size = null)
     {
         if ($size === null) {
@@ -104,17 +96,13 @@ SVG;
         return '<img src="' . StringUtil::encodeHTML($this->getURL($size)) . '" width="' . $size . '" height="' . $size . '" alt="" class="userAvatarImage">';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getWidth()
     {
         return $this->size;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHeight()
     {
         return $this->size;

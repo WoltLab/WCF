@@ -54,9 +54,7 @@ class AJAXInvokeAction extends AbstractSecureAction
      */
     protected $response;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __run()
     {
         try {
@@ -70,9 +68,7 @@ class AJAXInvokeAction extends AbstractSecureAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -97,9 +93,7 @@ class AJAXInvokeAction extends AbstractSecureAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         parent::execute();

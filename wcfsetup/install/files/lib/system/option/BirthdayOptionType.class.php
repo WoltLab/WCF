@@ -24,9 +24,7 @@ class BirthdayOptionType extends DateOptionType
      */
     protected $inputClass = 'birthday';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(Option $option, mixed $newValue)
     {
         parent::validate($option, $newValue);
@@ -41,17 +39,13 @@ class BirthdayOptionType extends DateOptionType
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData(Option $option, mixed $newValue)
     {
         return $newValue;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSearchFormElement(Option $option, mixed $value)
     {
         $ageFrom = $ageTo = '';
@@ -69,9 +63,7 @@ class BirthdayOptionType extends DateOptionType
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, mixed $value)
     {
         if (empty($value['ageFrom']) && empty($value['ageTo'])) {
@@ -112,9 +104,7 @@ class BirthdayOptionType extends DateOptionType
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addCondition(UserList $userList, Option $option, mixed $value)
     {
         $ageFrom = \intval($value['ageFrom']);
@@ -153,9 +143,7 @@ class BirthdayOptionType extends DateOptionType
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkUser(User $user, Option $option, mixed $value)
     {
         if (!$user->birthdayShowYear || !$user->birthday) {
@@ -176,9 +164,7 @@ class BirthdayOptionType extends DateOptionType
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionData(Option $option, mixed $newValue)
     {
         if (!$newValue['ageFrom'] && !$newValue['ageTo']) {
@@ -188,9 +174,7 @@ class BirthdayOptionType extends DateOptionType
         return $newValue;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hideLabelInSearch()
     {
         return false;

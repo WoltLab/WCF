@@ -125,9 +125,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         // reset cache

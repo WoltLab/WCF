@@ -21,9 +21,7 @@ use wcf\system\WCF;
  */
 abstract class AbstractUserBulkProcessingAction extends AbstractBulkProcessingAction
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectList()
     {
         return new UserList();

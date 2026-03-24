@@ -47,9 +47,7 @@ class UserCoverPhotoCondition extends AbstractSelectCondition implements
      */
     const COVER_PHOTO = 1;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
     {
         switch ($conditionData['userCoverPhoto']) {
@@ -67,9 +65,7 @@ class UserCoverPhotoCondition extends AbstractSelectCondition implements
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkUser(Condition $condition, User $user)
     {
         switch ($condition->userCoverPhoto) {
@@ -83,9 +79,7 @@ class UserCoverPhotoCondition extends AbstractSelectCondition implements
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getOptions()
     {
         return [
@@ -95,9 +89,7 @@ class UserCoverPhotoCondition extends AbstractSelectCondition implements
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showContent(Condition $condition)
     {
         if (!WCF::getUser()->userID) {

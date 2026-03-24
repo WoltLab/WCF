@@ -153,9 +153,7 @@ class FormDocument implements IFormDocument
         $this->cleanup();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function action(string $action)
     {
         $this->action = $action;
@@ -163,9 +161,7 @@ class FormDocument implements IFormDocument
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addButton(IFormButton $button)
     {
         if (isset($this->buttons[$button->getId()])) {
@@ -179,9 +175,7 @@ class FormDocument implements IFormDocument
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addDefaultButton(bool $addDefaultButton = true)
     {
         if ($this->isBuilt) {
@@ -193,9 +187,7 @@ class FormDocument implements IFormDocument
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function ajax(bool $ajax = true)
     {
         $this->ajax = $ajax;
@@ -203,9 +195,7 @@ class FormDocument implements IFormDocument
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function build()
     {
         if ($this->isBuilt) {
@@ -273,17 +263,13 @@ class FormDocument implements IFormDocument
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function didReadValues()
     {
         return $this->didReadValues;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function errorMessage($languageItem = null, array $variables = [])
     {
         if ($languageItem === null) {
@@ -307,9 +293,7 @@ class FormDocument implements IFormDocument
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function formMode(string $formMode)
     {
         if ($this->formMode !== null) {
@@ -325,9 +309,7 @@ class FormDocument implements IFormDocument
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getAction()
     {
         if ($this->action === null && !$this->isAjax()) {
@@ -337,9 +319,7 @@ class FormDocument implements IFormDocument
         return $this->action;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getButton(string $buttonId)
     {
         if (!$this->hasButton($buttonId)) {
@@ -349,17 +329,13 @@ class FormDocument implements IFormDocument
         return $this->buttons[$buttonId];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getButtons()
     {
         return $this->buttons;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         if (!$this->didReadValues()) {
@@ -369,9 +345,7 @@ class FormDocument implements IFormDocument
         return $this->getDataHandler()->getFormData($this);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDataHandler()
     {
         if ($this->dataHandler === null) {
@@ -382,17 +356,13 @@ class FormDocument implements IFormDocument
         return $this->dataHandler;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDocument()
     {
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEnctype()
     {
         if ($this->enctype === '') {
@@ -411,9 +381,7 @@ class FormDocument implements IFormDocument
         return $this->enctype;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getErrorMessage()
     {
         if ($this->errorMessage === null) {
@@ -423,9 +391,7 @@ class FormDocument implements IFormDocument
         return $this->errorMessage;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormMode()
     {
         if ($this->formMode === null) {
@@ -435,9 +401,7 @@ class FormDocument implements IFormDocument
         return $this->formMode;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtml()
     {
         if (!$this->isBuilt) {
@@ -451,17 +415,13 @@ class FormDocument implements IFormDocument
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMethod()
     {
         return $this->method;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getPrefix()
     {
         if ($this->prefix === null) {
@@ -471,9 +431,7 @@ class FormDocument implements IFormDocument
         return $this->prefix . '_';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getRequestData($index = null)
     {
         if ($this->requestData === null) {
@@ -491,9 +449,7 @@ class FormDocument implements IFormDocument
         return $this->requestData;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSuccessMessage()
     {
         if ($this->successMessage === null) {
@@ -508,33 +464,25 @@ class FormDocument implements IFormDocument
         return $this->successMessage;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasButton(string $buttonId)
     {
         return isset($this->buttons[$buttonId]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasDefaultButton()
     {
         return $this->addDefaultButton;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasValidationErrors(): bool
     {
         return $this->isInvalid() || $this->traitHasValidationErrors();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasRequestData($index = null)
     {
         $requestData = $this->getRequestData();
@@ -546,9 +494,7 @@ class FormDocument implements IFormDocument
         return !empty($requestData);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function invalid(bool $invalid = true)
     {
         $this->invalid = $invalid;
@@ -556,26 +502,22 @@ class FormDocument implements IFormDocument
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAjax()
     {
         return $this->ajax;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isInvalid()
     {
         return $this->invalid;
     }
 
     /**
-     * @inheritDoc
      * @since       5.4
      */
+    #[\Override]
     public function markRequiredFields(bool $markRequiredFields = true)
     {
         $this->markRequiredFields = $markRequiredFields;
@@ -584,18 +526,18 @@ class FormDocument implements IFormDocument
     }
 
     /**
-     * @inheritDoc
      * @since       5.4
      */
+    #[\Override]
     public function marksRequiredFields(): bool
     {
         return $this->markRequiredFields;
     }
 
     /**
-     * @inheritDoc
      * @since   5.3
      */
+    #[\Override]
     public function needsRequiredFieldsInfo()
     {
         if (!$this->marksRequiredFields()) {
@@ -620,9 +562,7 @@ class FormDocument implements IFormDocument
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updatedObject(IStorableObject $object, $loadValues = true)
     {
         if ($this->formMode === null) {
@@ -655,9 +595,7 @@ class FormDocument implements IFormDocument
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function method(string $method)
     {
         if ($method !== 'get' && $method !== 'post') {
@@ -669,9 +607,7 @@ class FormDocument implements IFormDocument
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function prefix(string $prefix)
     {
         static::validateId($prefix);
@@ -681,9 +617,7 @@ class FormDocument implements IFormDocument
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValues(): static
     {
         if ($this->requestData === null) {
@@ -695,9 +629,7 @@ class FormDocument implements IFormDocument
         return $this->traitReadValues();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function requestData(array $requestData)
     {
         if ($this->requestData !== null) {
@@ -709,9 +641,7 @@ class FormDocument implements IFormDocument
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showErrorMessage(bool $showErrorMessage = true)
     {
         $this->showErrorMessage = $showErrorMessage;
@@ -719,9 +649,7 @@ class FormDocument implements IFormDocument
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showSuccessMessage(bool $showSuccessMessage = true)
     {
         $this->showSuccessMessage = $showSuccessMessage;
@@ -729,25 +657,19 @@ class FormDocument implements IFormDocument
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showsErrorMessage()
     {
         return $this->showErrorMessage;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showsSuccessMessage()
     {
         return $this->showSuccessMessage;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function successMessage($languageItem = null, array $variables = [])
     {
         if ($languageItem === null) {
@@ -771,9 +693,7 @@ class FormDocument implements IFormDocument
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         // check security token
@@ -786,9 +706,7 @@ class FormDocument implements IFormDocument
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormField(string $nodeId): ?IFormField
     {
         $node = $this->getNodeById($nodeId);

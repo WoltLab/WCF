@@ -42,9 +42,9 @@ class Smiley extends DatabaseObject implements ITitledObject
     public $smileyCodes;
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->smileyTitle);

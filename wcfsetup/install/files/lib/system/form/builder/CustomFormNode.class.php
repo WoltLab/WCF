@@ -46,17 +46,13 @@ class CustomFormNode implements IFormChildNode
         return $this->content;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtml()
     {
         return $this->getContent();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         // does nothing

@@ -36,9 +36,7 @@ final class UserGroupOptionFormField extends ItemListFormField implements IPacka
         $this->label('wcf.form.field.userGroupOption');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -71,9 +69,7 @@ final class UserGroupOptionFormField extends ItemListFormField implements IPacka
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'permissions';

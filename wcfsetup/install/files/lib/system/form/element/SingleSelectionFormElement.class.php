@@ -15,9 +15,7 @@ use wcf\system\form\container\SingleSelectionFormElementContainer;
  */
 class SingleSelectionFormElement extends AbstractNamedFormElement
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHTML(string $formName)
     {
         return <<<HTML

@@ -27,9 +27,7 @@ class VersionTracker extends SingletonFactory
      */
     protected $availableObjectTypes = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         // get available object types

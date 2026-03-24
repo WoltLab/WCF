@@ -390,9 +390,7 @@ class UserGroup extends DatabaseObject implements ITitledObject
         return self::isAccessibleGroup([$this->groupID]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getName();
@@ -509,9 +507,7 @@ class UserGroup extends DatabaseObject implements ITitledObject
         return $this->groupOptions[$name] ?? null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->groupName);

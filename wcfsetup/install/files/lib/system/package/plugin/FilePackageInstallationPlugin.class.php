@@ -28,9 +28,7 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin im
      */
     public $tableName = 'package_installation_file_log';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function install()
     {
         parent::install();
@@ -90,9 +88,7 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin im
         StyleHandler::resetStylesheets(true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function uninstall()
     {
         // fetch files from log
@@ -113,17 +109,13 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin im
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getDefaultFilename()
     {
         return 'files.tar';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function isValid(PackageArchive $packageArchive, $instruction)
     {
         if (!$instruction) {
@@ -146,9 +138,7 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin im
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return ['option'];

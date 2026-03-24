@@ -49,6 +49,7 @@ final class Setup implements IIDObject
     /**
      * @see Setup::getId()
      */
+    #[\Override]
     public function getObjectID(): int
     {
         if ($this->isDeleted) {

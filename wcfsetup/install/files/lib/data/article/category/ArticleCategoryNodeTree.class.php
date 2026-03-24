@@ -21,9 +21,7 @@ class ArticleCategoryNodeTree extends CategoryNodeTree
      */
     protected $nodeClassName = ArticleCategoryNode::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isIncluded(CategoryNode $categoryNode): bool
     {
         \assert($categoryNode instanceof ArticleCategoryNode);

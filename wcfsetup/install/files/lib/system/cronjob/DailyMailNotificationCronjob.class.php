@@ -31,9 +31,7 @@ use wcf\system\WCF;
  */
 class DailyMailNotificationCronjob extends AbstractCronjob
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(Cronjob $cronjob)
     {
         parent::execute($cronjob);

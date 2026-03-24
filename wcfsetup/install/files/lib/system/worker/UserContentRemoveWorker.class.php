@@ -51,9 +51,7 @@ class UserContentRemoveWorker extends AbstractWorker
      */
     public $contentProviders;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if (isset($this->parameters['userID']) && !isset($this->parameters['userIDs'])) {
@@ -197,17 +195,13 @@ class UserContentRemoveWorker extends AbstractWorker
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function countObjects()
     {
         $this->count = $this->data['count'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         if (empty($this->data['provider'])) {
@@ -236,9 +230,7 @@ class UserContentRemoveWorker extends AbstractWorker
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function finalize()
     {
         parent::finalize();
@@ -259,9 +251,7 @@ class UserContentRemoveWorker extends AbstractWorker
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getProceedURL()
     {
         return LinkHandler::getInstance()->getLink('UserList');

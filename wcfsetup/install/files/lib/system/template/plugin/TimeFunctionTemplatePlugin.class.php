@@ -26,6 +26,7 @@ use wcf\system\WCF;
  */
 final class TimeFunctionTemplatePlugin implements IFunctionTemplatePlugin
 {
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj): string
     {
         if (!isset($tagArgs['time'])) {

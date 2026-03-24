@@ -13,9 +13,7 @@ use wcf\system\WCF;
  */
 class LikeStatDailyHandler extends AbstractStatDailyHandler
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData(int $date)
     {
         $sql = "SELECT  COUNT(*)

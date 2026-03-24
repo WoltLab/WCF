@@ -32,9 +32,7 @@ class PackageUpdatePage extends AbstractPage
      */
     public $neededPermissions = ['admin.configuration.package.canUpdatePackage'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -49,9 +47,7 @@ class PackageUpdatePage extends AbstractPage
         unset($update);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

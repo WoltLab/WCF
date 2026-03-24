@@ -58,9 +58,7 @@ class UserContentRevertChangesForm extends AbstractForm
      */
     protected $objectTypeID;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -76,9 +74,7 @@ class UserContentRevertChangesForm extends AbstractForm
         $this->userIDs = \array_keys($this->users);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -88,9 +84,7 @@ class UserContentRevertChangesForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();
@@ -100,9 +94,7 @@ class UserContentRevertChangesForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -120,9 +112,7 @@ class UserContentRevertChangesForm extends AbstractForm
         exit;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

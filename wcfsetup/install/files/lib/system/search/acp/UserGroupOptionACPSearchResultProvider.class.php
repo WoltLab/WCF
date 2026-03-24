@@ -36,9 +36,7 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
         'admin.management.canImportData',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function search(string $query)
     {
         if (!WCF::getSession()->getPermission('admin.user.canEditGroup')) {

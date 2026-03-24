@@ -107,9 +107,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function create(array $parameters = [])
     {
         // default values
@@ -132,9 +130,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
         return parent::create($parameters);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function deleteAll(array $objectIDs = [])
     {
         // update positions

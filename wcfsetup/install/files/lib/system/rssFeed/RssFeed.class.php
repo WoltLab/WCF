@@ -54,6 +54,7 @@ final class RssFeed
         return $dom->saveXML();
     }
 
+    #[\Override]
     public function __toString(): string
     {
         return $this->render();

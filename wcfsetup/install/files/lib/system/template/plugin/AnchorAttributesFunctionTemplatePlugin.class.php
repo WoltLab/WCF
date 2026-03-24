@@ -27,9 +27,7 @@ use wcf\util\StringUtil;
  */
 class AnchorAttributesFunctionTemplatePlugin implements IFunctionTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         if (empty($tagArgs['url'])) {

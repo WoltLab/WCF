@@ -50,10 +50,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction
      */
     protected $requireACP = ['copy', 'create', 'delete', 'update'];
 
-    /**
-     * @inheritDoc
-     * @return  UserGroup
-     */
+    #[\Override]
     public function create()
     {
         /** @var UserGroup $group */
@@ -67,9 +64,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction
         return $group;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         if (empty($this->objects)) {

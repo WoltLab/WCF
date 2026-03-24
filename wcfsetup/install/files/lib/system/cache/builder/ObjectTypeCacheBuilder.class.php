@@ -15,9 +15,7 @@ use wcf\system\WCF;
  */
 class ObjectTypeCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rebuild(array $parameters)
     {
         $data = [

@@ -31,41 +31,31 @@ abstract class AbstractLikeObject extends DatabaseObjectDecorator implements ILi
      */
     protected $objectType;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updateLikeCounter(int $cumulativeLikes)
     {
         // individual implementations can override this method to update like counter
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectType()
     {
         return $this->objectType;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setObjectType(ObjectType $objectType)
     {
         $this->objectType = $objectType;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function sendNotification(Like $like)
     {
         // individual implementations can override this method to provide notifications
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLanguageID()
     {
         return null;

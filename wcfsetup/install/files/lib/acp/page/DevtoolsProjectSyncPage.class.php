@@ -44,9 +44,7 @@ class DevtoolsProjectSyncPage extends AbstractPage
      */
     public $object;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -60,9 +58,7 @@ class DevtoolsProjectSyncPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

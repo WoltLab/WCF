@@ -55,9 +55,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
      */
     protected $requireACP = ['create', 'delete', 'update', 'toggle', 'execute'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateDelete()
     {
         parent::validateDelete();
@@ -69,9 +67,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateUpdate()
     {
         parent::validateUpdate();
@@ -84,10 +80,9 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
     }
 
     /**
-     * @inheritDoc
-     *
      * @deprecated 6.3
      */
+    #[\Override]
     public function validateToggle()
     {
         parent::validateUpdate();
@@ -247,6 +242,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
     /**
      * @deprecated 6.3 use the `EnableCronjob` or `DisableCronjob` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->objects as $editor) {

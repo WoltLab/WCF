@@ -67,9 +67,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      */
     public $tagName = 'item';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function install()
     {
         AbstractPackageInstallationPlugin::install();
@@ -174,9 +172,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function uninstall()
     {
         parent::uninstall();
@@ -282,33 +278,25 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items)
     {
         // does nothing
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         return $data;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function findExistingItem(array $data)
     {
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function postImport()
     {
         LanguageFactory::getInstance()->deleteLanguageCache();
@@ -318,33 +306,32 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      * @see \wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
      * @since   3.0
      */
+    #[\Override]
     public static function getDefaultFilename()
     {
         return 'language/*.xml';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function isValid(PackageArchive $packageArchive, $instruction)
     {
         return true;
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return [];
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         /** @var FormContainer $dataContainer */
@@ -518,11 +505,11 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = [
@@ -564,10 +551,10 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         return $element->getAttribute('name');
@@ -578,6 +565,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      *
      * @return  IDevtoolsPipEntryList
      */
+    #[\Override]
     public function getEntryList()
     {
         $entryList = new DevtoolsPipEntryList();
@@ -625,16 +613,15 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     }
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     protected function getImportElements(\DOMXPath $xpath)
     {
         return $xpath->query('/ns:language/ns:import/ns:category/ns:item');
     }
 
     /**
-     * @inheritDoc
      * @param string $languageCode
      * @return string
      * @since   5.2
@@ -661,6 +648,7 @@ XML;
      * @param bool $createXmlFiles if `true` and if a relevant XML file does not exist, it is created
      * @return  XML[]
      */
+    #[\Override]
     protected function getProjectXmls($createXmlFiles = false)
     {
         $xmls = [];
@@ -701,7 +689,6 @@ XML;
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
@@ -756,10 +743,10 @@ XML;
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $keys = [
@@ -775,10 +762,10 @@ XML;
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $data = $form->getData()['data'];
@@ -854,7 +841,6 @@ XML;
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
@@ -864,7 +850,6 @@ XML;
     }
 
     /**
-     * @inheritDoc
      * @param string $identifier
      * @return \DOMElement
      * @since   5.2
@@ -887,7 +872,6 @@ XML;
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
@@ -904,7 +888,6 @@ XML;
     }
 
     /**
-     * @inheritDoc
      * @return bool
      * @since   5.2
      */

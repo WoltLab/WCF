@@ -53,9 +53,7 @@ abstract class AbstractFeedPage extends AbstractAuthedPage
      */
     public $title = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -67,9 +65,7 @@ abstract class AbstractFeedPage extends AbstractAuthedPage
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -85,9 +81,7 @@ abstract class AbstractFeedPage extends AbstractAuthedPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         parent::show();

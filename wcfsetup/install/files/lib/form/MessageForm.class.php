@@ -125,9 +125,7 @@ abstract class MessageForm extends AbstractCaptchaForm
      */
     public $tmpHash = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -157,9 +155,7 @@ abstract class MessageForm extends AbstractCaptchaForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -177,9 +173,7 @@ abstract class MessageForm extends AbstractCaptchaForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         // subject
@@ -282,9 +276,7 @@ abstract class MessageForm extends AbstractCaptchaForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -292,9 +284,7 @@ abstract class MessageForm extends AbstractCaptchaForm
         $this->text = $this->htmlInputProcessor->getHtml();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         // get attachments
@@ -332,9 +322,7 @@ abstract class MessageForm extends AbstractCaptchaForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

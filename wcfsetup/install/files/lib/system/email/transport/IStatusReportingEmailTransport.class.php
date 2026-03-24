@@ -15,8 +15,6 @@ use wcf\system\email\Mailbox;
  */
 interface IStatusReportingEmailTransport extends IEmailTransport
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo): string;
 }

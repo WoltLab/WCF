@@ -76,9 +76,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
      */
     public $tagName = 'page';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items)
     {
         $pages = [];
@@ -95,9 +93,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element)
     {
         $nodeValue = $element->nodeValue;
@@ -128,9 +124,9 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
     }
 
     /**
-     * @inheritDoc
      * @throws  SystemException
      */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         $pageType = $data['elements']['pageType'];
@@ -272,17 +268,13 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getNameByData(array $data): string
     {
         return $data['identifier'];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
@@ -300,9 +292,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function import(array $row, array $data)
     {
         // extract content
@@ -348,9 +338,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
         return $page;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function postImport()
     {
         if (!empty($this->content)) {
@@ -427,19 +415,19 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return ['language'];
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         $tabContainter = TabMenuFormContainer::create('tabMenu');
@@ -644,11 +632,11 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = [
@@ -797,20 +785,20 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         return $element->getAttribute('identifier');
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $entryList->setKeys([
@@ -820,10 +808,10 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $formData = $form->getData();

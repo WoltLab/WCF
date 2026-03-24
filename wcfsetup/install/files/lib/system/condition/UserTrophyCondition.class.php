@@ -64,9 +64,7 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements
      */
     protected $trophies;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
     {
         if (isset($conditionData['userTrophyIDs'])) {
@@ -93,9 +91,7 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkUser(Condition $condition, User $user)
     {
         $userTrophies = UserTrophyList::getUserTrophies([$user->getObjectID()], false)[$user->getObjectID()];
@@ -120,9 +116,7 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         $data = [];
@@ -141,9 +135,7 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHTML()
     {
         if (!\count($this->getTrophies())) {
@@ -213,9 +205,7 @@ HTML;
         return $this->trophies;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (isset($_POST['userTrophyIDs'])) {
@@ -226,18 +216,14 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         $this->userTrophyIDs = [];
         $this->notUserTrophyIDs = [];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setData(Condition $condition)
     {
         if ($condition->userTrophyIDs !== null) {
@@ -248,9 +234,7 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         $trophies = $this->getTrophies();
@@ -276,9 +260,7 @@ HTML;
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function showContent(Condition $condition)
     {
         return $this->checkUser($condition, WCF::getUser());

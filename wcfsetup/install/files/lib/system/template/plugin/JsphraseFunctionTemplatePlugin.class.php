@@ -19,9 +19,7 @@ use wcf\system\template\TemplateEngine;
  */
 final class JsphraseFunctionTemplatePlugin implements IFunctionTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         $name = $tagArgs['name'] ?? '';

@@ -34,9 +34,7 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition
      */
     const NO_SELECTION_VALUE = '-1';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData()
     {
         if ($this->fieldValue != self::NO_SELECTION_VALUE) {
@@ -46,9 +44,7 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getFieldElement()
     {
         $options = $this->getOptions();
@@ -66,9 +62,7 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition
         return $fieldElement;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHTML()
     {
         if (empty($this->getOptions())) {
@@ -115,9 +109,7 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition
      */
     abstract protected function getOptions();
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (isset($_POST[$this->fieldName])) {
@@ -125,25 +117,19 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         $this->fieldValue = self::NO_SELECTION_VALUE;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setData(Condition $condition)
     {
         $this->fieldValue = ($condition->conditionData[$this->fieldName] ?? self::NO_SELECTION_VALUE);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if ($this->fieldValue != self::NO_SELECTION_VALUE) {

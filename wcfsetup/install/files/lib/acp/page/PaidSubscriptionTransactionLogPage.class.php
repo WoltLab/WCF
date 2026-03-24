@@ -43,9 +43,7 @@ class PaidSubscriptionTransactionLogPage extends AbstractPage
      */
     public $log;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -59,9 +57,7 @@ class PaidSubscriptionTransactionLogPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

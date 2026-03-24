@@ -29,9 +29,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
      */
     protected static $baseClass = UserGroup::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function create(array $parameters = [])
     {
         $group = parent::create($parameters);
@@ -41,9 +39,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
         return $group;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function deleteAll(array $objectIDs = [])
     {
         $returnValue = parent::deleteAll($objectIDs);
@@ -198,9 +194,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         // Clear group cache.

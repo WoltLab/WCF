@@ -15,9 +15,7 @@ use CuyZ\Valinor\Mapper\Tree\Message\NodeMessage;
  */
 final class PrependPath implements MessageFormatter
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function format(NodeMessage $m): NodeMessage
     {
         return $m->withBody("{$m->path()}: {$m->body()}");

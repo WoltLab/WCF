@@ -44,9 +44,7 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
      */
     protected $requireACP = ['toggle', 'delete'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function create()
     {
         $showOrder = 0;
@@ -67,9 +65,7 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
         return new Trophy($trophy->trophyID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         // update trophy points
@@ -104,9 +100,7 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
         return $returnValues;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         parent::update();
@@ -127,15 +121,16 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
     /**
      * @deprecated 6.3
      */
+    #[\Override]
     public function validateToggle()
     {
         $this->validateUpdate();
     }
 
     /**
-     * @inheritDoc
      * @deprecated 6.3 use the `EnableTrophy` or `DisableTrophy` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->getObjects() as $editor) {
@@ -147,9 +142,7 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateUpload()
     {
         WCF::getSession()->checkPermissions(['admin.trophy.canManageTrophy']);
@@ -182,9 +175,7 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function upload()
     {
         $fileName = WCF_DIR . 'images/trophy/tmp_' . $this->parameters['tmpHash'] . '.' . $this->parameters['file']->getFileExtension();

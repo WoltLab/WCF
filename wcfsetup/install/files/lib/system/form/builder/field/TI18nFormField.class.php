@@ -273,9 +273,7 @@ trait TI18nFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updatedObject(array $data, IStorableObject $object, $loadValues = true)
     {
         if ($this instanceof IImmutableFormField && $this->isImmutable()) {

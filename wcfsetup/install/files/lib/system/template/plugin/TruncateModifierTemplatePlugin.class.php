@@ -17,9 +17,7 @@ use wcf\util\StringUtil;
  */
 class TruncateModifierTemplatePlugin implements IModifierTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         // default values

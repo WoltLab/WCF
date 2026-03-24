@@ -80,9 +80,7 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
      */
     protected static $periods = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setAuthors(array $authors)
     {
         $this->authors = $authors;
@@ -103,9 +101,7 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
         });
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setObject(
         UserNotification $notification,
         IUserNotificationObject $object,
@@ -118,65 +114,49 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
         $this->additionalData = $additionalData;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getAuthorID()
     {
         return $this->author->userID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getAuthor()
     {
         return $this->author;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getAuthors()
     {
         return $this->authors;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isVisible()
     {
         return $this->getDecoratedObject()->validateOptions() && $this->getDecoratedObject()->validatePermissions();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEmailTitle()
     {
         return $this->getTitle();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEmailMessage(string $notificationType = 'instant')
     {
         return $this->getMessage();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEventHash()
     {
         return \sha1($this->eventID . '-' . $this->userNotificationObject->getObjectID());
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setLanguage(Language $language)
     {
         $this->language = $language;
@@ -196,9 +176,7 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
         return WCF::getLanguage();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isStackable()
     {
         return $this->stackable;
@@ -243,65 +221,49 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
         return WCF::getLanguage()->get('wcf.date.period.older');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function supportsEmailNotification()
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkAccess()
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function deleteNoAccessNotification()
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isConfirmed()
     {
         return $this->notification->confirmTime > 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getNotification()
     {
         return $this->notification;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getUserNotificationObject()
     {
         return $this->userNotificationObject;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getComments()
     {
         return 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCategories()
     {
         return [
@@ -309,49 +271,37 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getExcerpt(int $maxLength = 255)
     {
         return StringUtil::truncateHTML($this->getFormattedMessage(), $maxLength);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormattedMessage()
     {
         return $this->getMessage();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getFormattedMessage();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTime()
     {
         return $this->getNotification()->time;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getUserID()
     {
         return $this->getAuthorID();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getUsername()
     {
         return $this->getAuthor()->username;

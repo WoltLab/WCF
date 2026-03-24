@@ -26,6 +26,7 @@ final class XsrfValidationFailedHandler implements RequestHandlerInterface
 {
     private const STATUS_CODE = 400;
 
+    #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $errorDetail = ErrorDetail::fromRequest($request);

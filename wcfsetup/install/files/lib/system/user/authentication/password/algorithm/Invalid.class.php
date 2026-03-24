@@ -14,9 +14,7 @@ use wcf\system\user\authentication\password\IPasswordAlgorithm;
  */
 final class Invalid implements IPasswordAlgorithm
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function verify(
         #[\SensitiveParameter]
         string $password,
@@ -25,9 +23,7 @@ final class Invalid implements IPasswordAlgorithm
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hash(
         #[\SensitiveParameter]
         string $password
@@ -35,9 +31,7 @@ final class Invalid implements IPasswordAlgorithm
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function needsRehash(string $hash): bool
     {
         return false;

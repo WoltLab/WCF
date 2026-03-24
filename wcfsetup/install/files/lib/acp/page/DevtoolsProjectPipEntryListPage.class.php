@@ -126,10 +126,7 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage
      */
     public $startIndex = 0;
 
-    /**
-     * @inheritDoc
-     * @throws  IllegalLinkException
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -203,9 +200,7 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage
         ], $this->linkParameters);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -238,9 +233,7 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

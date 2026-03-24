@@ -35,16 +35,19 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
         return $this->getMessages() !== [];
     }
 
+    #[\Override]
     public function getTitle(): string
     {
         return WCF::getLanguage()->get('wcf.acp.dashboard.box.statusMessage');
     }
 
+    #[\Override]
     public function getContent(): string
     {
         return WCF::getTPL()->render('wcf', 'statusMessageAcpDashboardBox', ['messages' => $this->getMessages()]);
     }
 
+    #[\Override]
     public function getName(): string
     {
         return 'com.woltlab.wcf.statusMessage';

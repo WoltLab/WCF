@@ -41,9 +41,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
      */
     protected static $baseClass = Language::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         parent::delete();
@@ -980,9 +978,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         LanguageFactory::getInstance()->clearCache();

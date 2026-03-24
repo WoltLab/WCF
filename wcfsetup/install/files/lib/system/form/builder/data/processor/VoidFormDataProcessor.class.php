@@ -36,9 +36,7 @@ final class VoidFormDataProcessor extends AbstractFormDataProcessor
         $this->isDataProperty = $isDataProperty;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function processFormData(IFormDocument $document, array $parameters)
     {
         if ($this->isDataProperty) {

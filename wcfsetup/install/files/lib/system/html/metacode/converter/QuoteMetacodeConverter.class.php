@@ -14,9 +14,7 @@ use wcf\util\StringUtil;
  */
 class QuoteMetacodeConverter extends AbstractMetacodeConverter
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function convert(\DOMDocumentFragment $fragment, array $attributes)
     {
         $element = $fragment->ownerDocument->createElement('woltlab-quote');
@@ -27,9 +25,7 @@ class QuoteMetacodeConverter extends AbstractMetacodeConverter
         return $element;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateAttributes(array $attributes)
     {
         // 0, 1 or 2 attributes

@@ -35,25 +35,19 @@ class UserActivityPointUpdateEventsWorker extends AbstractWorker
         $this->objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.user.activityPointEvent');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         WCF::getSession()->checkPermissions(['admin.user.canEditActivityPoints']);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function countObjects()
     {
         $this->count = \count($this->objectTypes);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         $i = 0;
@@ -73,9 +67,7 @@ class UserActivityPointUpdateEventsWorker extends AbstractWorker
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getProceedURL()
     {
         return LinkHandler::getInstance()->getLink('UserActivityPointOption');

@@ -14,9 +14,7 @@ use wcf\system\WCF;
  */
 final class DiskCacheSource implements ICacheSource
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function flush(string $cacheName, bool $useWildcard)
     {
         if ($useWildcard) {
@@ -54,9 +52,7 @@ final class DiskCacheSource implements ICacheSource
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function flushAll()
     {
         $iterator = new \DirectoryIterator(WCF_DIR . 'cache/');
@@ -74,9 +70,7 @@ final class DiskCacheSource implements ICacheSource
         WCF::resetZendOpcache();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function get(string $cacheName, int $maxLifetime)
     {
         $filename = $this->getFilename($cacheName);
@@ -92,9 +86,7 @@ final class DiskCacheSource implements ICacheSource
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function set(string $cacheName, mixed $value, int $maxLifetime)
     {
         $writer = new AtomicWriter($this->getFilename($cacheName));

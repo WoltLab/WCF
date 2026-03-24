@@ -137,9 +137,7 @@ class UserListPage extends SortablePage
         'likesReceived',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -161,9 +159,7 @@ class UserListPage extends SortablePage
         $this->readUserOptions();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateSortField()
     {
         // add options to valid sort fields
@@ -177,9 +173,7 @@ class UserListPage extends SortablePage
         parent::validateSortField();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -209,9 +203,7 @@ class UserListPage extends SortablePage
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -227,9 +219,7 @@ class UserListPage extends SortablePage
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         $this->activeMenuItem = 'wcf.acp.menu.link.user.' . ($this->searchID ? 'search' : 'list');
@@ -237,9 +227,7 @@ class UserListPage extends SortablePage
         parent::show();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function countItems()
     {
         // call countItems event
@@ -438,17 +426,13 @@ class UserListPage extends SortablePage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initObjectList()
     {
         // does nothing
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function readObjects()
     {
         // does nothing

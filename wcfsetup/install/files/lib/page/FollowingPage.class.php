@@ -32,9 +32,7 @@ class FollowingPage extends MultipleLinkPage
      */
     public $sqlOrderBy = 'user_follow.time DESC';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initObjectList()
     {
         parent::initObjectList();
@@ -42,9 +40,7 @@ class FollowingPage extends MultipleLinkPage
         $this->objectList->getConditionBuilder()->add("user_follow.userID = ?", [WCF::getUser()->userID]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         // set active tab

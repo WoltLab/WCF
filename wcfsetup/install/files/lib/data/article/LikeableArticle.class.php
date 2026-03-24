@@ -27,41 +27,31 @@ class LikeableArticle extends AbstractLikeObject implements IReactionObject
      */
     protected static $baseClass = Article::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->getDecoratedObject()->getTitle();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getURL()
     {
         return $this->getDecoratedObject()->getLink();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getUserID()
     {
         return $this->userID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectID()
     {
         return $this->articleID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updateLikeCounter(int $cumulativeLikes)
     {
         // update cumulative likes
@@ -69,17 +59,13 @@ class LikeableArticle extends AbstractLikeObject implements IReactionObject
         $editor->update(['cumulativeLikes' => $cumulativeLikes]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLanguageID()
     {
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function sendNotification(Like $like)
     {
         if ($this->getDecoratedObject()->userID != WCF::getUser()->userID) {

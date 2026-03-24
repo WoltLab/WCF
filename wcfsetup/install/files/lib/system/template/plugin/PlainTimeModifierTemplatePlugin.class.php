@@ -20,9 +20,7 @@ use wcf\system\WCF;
  */
 class PlainTimeModifierTemplatePlugin implements IModifierTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         if ($tagArgs[0] instanceof \DateTimeInterface) {

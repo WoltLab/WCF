@@ -23,9 +23,7 @@ use wcf\util\UserUtil;
  */
 final class GuestTokenDialogAction implements RequestHandlerInterface
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         if (WCF::getUser()->userID) {

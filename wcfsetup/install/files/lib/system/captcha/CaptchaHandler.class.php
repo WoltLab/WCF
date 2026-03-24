@@ -63,9 +63,7 @@ class CaptchaHandler extends SingletonFactory
         return ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.captcha', $objectType);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.captcha');

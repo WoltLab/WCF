@@ -41,9 +41,7 @@ abstract class CustomOption extends Option implements ITitledObject
      */
     protected $optionValue = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __get(string $name)
     {
         // Some options support empty values, such as "select", but the code checks for the
@@ -56,9 +54,9 @@ abstract class CustomOption extends Option implements ITitledObject
     }
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->optionTitle);
@@ -80,14 +78,13 @@ abstract class CustomOption extends Option implements ITitledObject
      *
      * @return  bool
      */
+    #[\Override]
     public function isVisible()
     {
         return !$this->isDisabled;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getDatabaseTableAlias()
     {
         throw new NotImplementedException();

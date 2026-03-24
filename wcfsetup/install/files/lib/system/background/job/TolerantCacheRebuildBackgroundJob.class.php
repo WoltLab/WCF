@@ -24,6 +24,7 @@ final class TolerantCacheRebuildBackgroundJob extends AbstractUniqueBackgroundJo
         public readonly array $parameters = []
     ) {}
 
+    #[\Override]
     public function identifier(): string
     {
         $identifier = $this->cacheClass;

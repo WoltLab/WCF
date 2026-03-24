@@ -37,17 +37,13 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
         $this->parts = new \SplObjectStorage();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContentTransferEncoding()
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setRecipient(?Mailbox $mailbox = null)
     {
         foreach ($this->parts as $part) {
@@ -103,9 +99,7 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
         return $content;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContent()
     {
         $content = "";

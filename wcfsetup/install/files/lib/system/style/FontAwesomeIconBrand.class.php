@@ -23,9 +23,7 @@ final class FontAwesomeIconBrand implements IFontAwesomeIcon
         self::validateName($name);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function toHtml(int $size = 16): string
     {
         if (!\in_array($size, self::SIZES)) {

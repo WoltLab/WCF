@@ -30,9 +30,7 @@ use wcf\util\DateUtil;
  */
 class DateIntervalFunctionTemplatePlugin implements IFunctionTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         // read start and end time, each defaulting to current time

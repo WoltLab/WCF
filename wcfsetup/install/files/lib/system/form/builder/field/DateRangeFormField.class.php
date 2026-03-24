@@ -45,9 +45,7 @@ class DateRangeFormField extends AbstractFormField implements
 
     const TIME_FORMAT = 'Y-m-d\TH:i:sP';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSaveValue()
     {
         if (!$this->getFromValue() && !$this->getToValue() && $this->isNullable()) {
@@ -57,9 +55,7 @@ class DateRangeFormField extends AbstractFormField implements
         return $this->getFromValue() . ';' . $this->getToValue();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if (
@@ -101,9 +97,7 @@ class DateRangeFormField extends AbstractFormField implements
         return $this->supportsTime;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if ($this->isRequired() && (!$this->getFromValue() || !$this->getToValue())) {
@@ -131,9 +125,7 @@ class DateRangeFormField extends AbstractFormField implements
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function value(mixed $value)
     {
         $values = \explode(';', $value);

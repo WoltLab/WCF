@@ -42,9 +42,7 @@ abstract class AbstractBoxController implements IBoxController
         EventHandler::getInstance()->fireAction($this, '__construct');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContent()
     {
         if ($this->content === null) {
@@ -60,57 +58,43 @@ abstract class AbstractBoxController implements IBoxController
         return $this->content;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasContent()
     {
         return !empty($this->getContent());
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getImage()
     {
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasLink()
     {
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getBox()
     {
         return $this->box;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setBox(Box $box)
     {
         $this->box = $box;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function saveAdditionalData()
     {
         // always write additional data to make sure that the additional data of the previous box controller
@@ -120,9 +104,7 @@ abstract class AbstractBoxController implements IBoxController
         ]))->executeAction();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle()
     {
         return null;
@@ -138,9 +120,7 @@ abstract class AbstractBoxController implements IBoxController
         return [];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getSupportedPositions()
     {
         if (!empty(static::$supportedPositions)) {

@@ -118,6 +118,7 @@ class PaidSubscription extends DatabaseObject implements ITitledObject
      * @see     ITitledObject::getTitle()
      * @since   3.1
      */
+    #[\Override]
     public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->title);

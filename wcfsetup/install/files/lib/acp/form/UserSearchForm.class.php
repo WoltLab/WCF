@@ -91,9 +91,7 @@ class UserSearchForm extends UserOptionListForm
      */
     public $groupID = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -131,9 +129,7 @@ class UserSearchForm extends UserOptionListForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -162,9 +158,7 @@ class UserSearchForm extends UserOptionListForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.condition.userSearch');
@@ -188,9 +182,7 @@ class UserSearchForm extends UserOptionListForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -205,9 +197,7 @@ class UserSearchForm extends UserOptionListForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -238,9 +228,7 @@ class UserSearchForm extends UserOptionListForm
         exit;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         AbstractForm::validate();

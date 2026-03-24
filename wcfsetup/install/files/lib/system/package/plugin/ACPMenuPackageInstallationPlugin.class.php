@@ -28,9 +28,7 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
      */
     public $className = ACPMenuItemEditor::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         $returnValue = parent::prepareImport($data);
@@ -47,9 +45,7 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
         // Since menu items can now also be added at runtime, this check is no longer reliable.
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element)
     {
         if ($element->tagName === 'icon') {
@@ -65,28 +61,28 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
     }
 
     /**
-     * @inheritDoc
      * @since   3.0
      */
+    #[\Override]
     public static function getDefaultFilename()
     {
         return 'acpMenu.xml';
     }
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     protected function getXsdFilename()
     {
         return 'acpMenu';
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         parent::addFormFields($form);
@@ -168,11 +164,11 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = parent::fetchElementData($element, $saveData);
@@ -195,10 +191,10 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $menuItem = parent::prepareXmlElement($document, $form);

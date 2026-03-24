@@ -19,9 +19,7 @@ class HtmlOutputNodeTable extends AbstractHtmlOutputNode
      */
     protected $tagName = 'table';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         if ($this->outputType === 'text/html' || $this->outputType === 'text/simplified-html') {

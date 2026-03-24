@@ -34,10 +34,7 @@ class AdAction extends AbstractDatabaseObjectAction implements IToggleAction
      */
     protected $requireACP = ['create', 'delete', 'toggle', 'update', 'updatePosition'];
 
-    /**
-     * @inheritDoc
-     * @return  Ad
-     */
+    #[\Override]
     public function create()
     {
         $showOrder = 0;
@@ -54,9 +51,7 @@ class AdAction extends AbstractDatabaseObjectAction implements IToggleAction
         return new Ad($ad->adID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function delete()
     {
         ConditionHandler::getInstance()->deleteConditions('com.woltlab.wcf.condition.ad', $this->objectIDs);
@@ -67,6 +62,7 @@ class AdAction extends AbstractDatabaseObjectAction implements IToggleAction
     /**
      * @deprecated 6.3
      */
+    #[\Override]
     public function validateToggle()
     {
         $this->validateUpdate();
@@ -75,6 +71,7 @@ class AdAction extends AbstractDatabaseObjectAction implements IToggleAction
     /**
      * @deprecated 6.3 use the `EnableAd` or `DisableAd` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->objects as $adEditor) {

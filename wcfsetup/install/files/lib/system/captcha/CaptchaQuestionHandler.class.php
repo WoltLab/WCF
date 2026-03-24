@@ -45,17 +45,13 @@ final class CaptchaQuestionHandler implements ICaptchaHandler
         $this->questions = CaptchaQuestionCacheBuilder::getInstance()->getData();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAvailable()
     {
         return \count($this->questions) > 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement()
     {
         if (!isset($this->question)) {
@@ -77,9 +73,7 @@ final class CaptchaQuestionHandler implements ICaptchaHandler
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         if (isset($_POST['captchaQuestion'])) {
@@ -94,9 +88,7 @@ final class CaptchaQuestionHandler implements ICaptchaHandler
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function reset()
     {
         WCF::getSession()->unregister('captchaQuestion_' . $this->captchaQuestion);
@@ -118,9 +110,7 @@ final class CaptchaQuestionHandler implements ICaptchaHandler
         WCF::getSession()->register('captchaQuestion_' . $this->captchaQuestion, $questionID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         $questionID = WCF::getSession()->getVar('captchaQuestion_' . $this->captchaQuestion);

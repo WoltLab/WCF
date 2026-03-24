@@ -62,6 +62,7 @@ class ReactionTypeEditForm extends ReactionTypeAddForm
     /**
      * @return array<int, string>
      */
+    #[\Override]
     protected function getReactionTypes(): array
     {
         return \array_filter(

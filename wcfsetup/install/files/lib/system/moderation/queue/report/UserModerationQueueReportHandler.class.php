@@ -36,9 +36,7 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
      */
     protected $objectType = 'com.woltlab.wcf.user';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignQueues(array $queues)
     {
         $assignments = [];
@@ -54,9 +52,7 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
         ModerationQueueManager::getInstance()->setAssignment($assignments);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canReport(int $objectID)
     {
         if (!$this->isValid($objectID)) {
@@ -66,17 +62,13 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getContainerID(int $objectID)
     {
         return 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getReportedContent(ViewableModerationQueue $queue)
     {
         $user = $queue->getAffectedObject();
@@ -87,9 +79,7 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getReportedObject(int $objectID)
     {
         if ($this->isValid($objectID)) {
@@ -99,9 +89,7 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isValid(int $objectID)
     {
         if ($this->getUser($objectID) === null) {
@@ -122,9 +110,7 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
         return UserRuntimeCache::getInstance()->getObject($objectID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function populate(array $queues)
     {
         $objectIDs = [];
@@ -142,17 +128,13 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canRemoveContent(ModerationQueue $queue)
     {
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function removeContent(ModerationQueue $queue, string $message)
     {
         throw new SystemException("it's not allowed to delete users using the moderation");

@@ -32,6 +32,7 @@ final class SaveChunk implements IController
      */
     private const FREAD_BUFFER_SIZE = 10 * 1_024 * 1_024;
 
+    #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $fileTemporary = Helper::fetchObjectFromRequestParameter($variables['identifier'], FileTemporary::class);

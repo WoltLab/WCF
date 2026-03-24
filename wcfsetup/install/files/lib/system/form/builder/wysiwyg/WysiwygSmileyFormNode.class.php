@@ -30,9 +30,7 @@ class WysiwygSmileyFormNode implements IFormChildNode
      */
     protected $smilies = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtml()
     {
         return WCF::getTPL()->render('wcf', 'shared_wysiwygSmileyFormNode', [
@@ -93,9 +91,7 @@ class WysiwygSmileyFormNode implements IFormChildNode
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         // does nothing

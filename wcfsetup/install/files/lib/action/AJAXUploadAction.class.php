@@ -14,9 +14,7 @@ use wcf\system\upload\UploadHandler;
  */
 class AJAXUploadAction extends AJAXProxyAction
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -27,6 +25,7 @@ class AJAXUploadAction extends AJAXProxyAction
     /**
      * @return mixed
      */
+    #[\Override]
     protected function sendResponse()
     {
         if (!isset($_POST['isFallback'])) {

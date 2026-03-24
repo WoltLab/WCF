@@ -44,9 +44,7 @@ class UserTrophyEditForm extends UserTrophyAddForm
      */
     public $userTrophy;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         if (!empty($_REQUEST['id'])) {
@@ -65,9 +63,7 @@ class UserTrophyEditForm extends UserTrophyAddForm
         parent::readParameters();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         // the user can't change these values
@@ -86,9 +82,7 @@ class UserTrophyEditForm extends UserTrophyAddForm
         parent::readData();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractAcpForm::save();
@@ -110,9 +104,7 @@ class UserTrophyEditForm extends UserTrophyAddForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

@@ -46,9 +46,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      */
     public $user;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function create()
     {
         if (!isset($this->parameters['data']['lastChangeTime'])) {
@@ -58,9 +56,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
         return parent::create();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         if (!isset($this->parameters['data']['lastChangeTime'])) {

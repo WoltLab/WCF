@@ -39,65 +39,49 @@ abstract class AbstractFormElement implements IFormElement
      */
     protected $parent;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __construct(IFormElementContainer $parent)
     {
         $this->parent = $parent;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setDescription(string $description)
     {
         $this->description = StringUtil::trim($description);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDescription()
     {
         return $this->description;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setLabel(string $label)
     {
         $this->label = StringUtil::trim($label);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLabel()
     {
         return $this->label;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getParent()
     {
         return $this->parent;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function setError(string $error)
     {
         $this->error = $error;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getError()
     {
         return $this->error;

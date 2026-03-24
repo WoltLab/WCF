@@ -179,6 +179,7 @@ final class IpAddress
     /**
      * @see IpAddress::getIpAddress()
      */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getIpAddress();

@@ -24,9 +24,7 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
      */
     protected $listClassName = OptionCategoryList::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function search(string $query)
     {
         if (!WCF::getSession()->getPermission('admin.configuration.canEditOption')) {

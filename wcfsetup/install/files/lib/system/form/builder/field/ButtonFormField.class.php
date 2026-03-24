@@ -60,9 +60,7 @@ class ButtonFormField extends AbstractFormField implements IAttributeFormField, 
         return $this->buttonLabel;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtml()
     {
         if ($this->buttonLabel === null) {
@@ -72,17 +70,13 @@ class ButtonFormField extends AbstractFormField implements IAttributeFormField, 
         return parent::getHtml();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasSaveValue()
     {
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function populate()
     {
         parent::populate();
@@ -101,9 +95,7 @@ class ButtonFormField extends AbstractFormField implements IAttributeFormField, 
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         // The value of the button is set when setting up the form and has to be unset

@@ -17,9 +17,7 @@ use wcf\system\user\storage\UserStorageHandler;
  */
 class ArticleCategoryUserObjectWatch extends AbstractObjectTypeProcessor implements IUserObjectWatch
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateObjectID(int $objectID)
     {
         $category = ArticleCategory::getCategory($objectID);
@@ -31,9 +29,7 @@ class ArticleCategoryUserObjectWatch extends AbstractObjectTypeProcessor impleme
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function resetUserStorage(array $userIDs)
     {
         UserStorageHandler::getInstance()->reset($userIDs, 'unreadWatchedArticles');

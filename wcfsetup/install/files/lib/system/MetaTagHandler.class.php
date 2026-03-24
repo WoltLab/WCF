@@ -32,9 +32,7 @@ final class MetaTagHandler extends SingletonFactory implements \Countable, \Iter
      */
     private array $objects = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init(): void
     {
         // set default tags
@@ -90,17 +88,13 @@ final class MetaTagHandler extends SingletonFactory implements \Countable, \Iter
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function count(): int
     {
         return \count($this->objects);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function current(): string
     {
         $tag = $this->objects[$this->indexToObject[$this->index]];
@@ -114,30 +108,25 @@ final class MetaTagHandler extends SingletonFactory implements \Countable, \Iter
      *
      * @see \Iterator::key()
      */
+    #[\Override]
     public function key(): string
     {
         return $this->indexToObject[$this->index];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function next(): void
     {
         $this->index++;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rewind(): void
     {
         $this->index = 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function valid(): bool
     {
         return isset($this->indexToObject[$this->index]);

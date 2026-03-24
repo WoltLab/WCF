@@ -13,9 +13,7 @@ use wcf\data\acl\option\category\ACLOptionCategoryList;
  */
 class ACLOptionCategoryCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rebuild(array $parameters)
     {
         $list = new ACLOptionCategoryList();

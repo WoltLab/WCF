@@ -16,9 +16,7 @@ use wcf\util\StringUtil;
  */
 class QuoteMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHandler
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function parse(HtmlInputProcessor $htmlInputProcessor, array $embeddedData)
     {
         $usernames = [];
@@ -45,9 +43,7 @@ class QuoteMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHan
         return [];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function loadObjects(array $objectIDs)
     {
         return UserProfileRuntimeCache::getInstance()->getObjects($objectIDs);

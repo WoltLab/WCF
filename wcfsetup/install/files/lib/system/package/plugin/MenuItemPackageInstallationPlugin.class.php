@@ -51,9 +51,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      */
     public $tagName = 'item';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items)
     {
         $sql = "DELETE FROM wcf1_menu_item
@@ -80,9 +78,9 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     }
 
     /**
-     * @inheritDoc
      * @throws  SystemException
      */
+    #[\Override]
     protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element)
     {
         $nodeValue = $element->nodeValue;
@@ -105,9 +103,9 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     }
 
     /**
-     * @inheritDoc
      * @throws  SystemException
      */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         $menuID = null;
@@ -178,9 +176,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getNameByData(array $data): string
     {
         return $data['identifier'];
@@ -222,9 +218,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         return $statement->fetchSingleColumn();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
@@ -242,9 +236,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function import(array $row, array $data)
     {
         // updating menu items is not supported because all fields that could be modified
@@ -280,19 +272,19 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return ['language', 'menu', 'page'];
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         $menuList = new MenuList();
@@ -462,11 +454,11 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = [
@@ -552,20 +544,20 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         return $element->getAttribute('identifier');
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $entryList->setKeys([
@@ -575,10 +567,10 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $formData = $form->getData();

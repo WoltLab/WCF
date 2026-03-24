@@ -64,9 +64,7 @@ class ArticleVersionTrackerProvider extends AbstractVersionTrackerProvider
      */
     public static $trackedProperties = ['title', 'teaser', 'content'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCurrentVersion(IVersionTrackerObject $object)
     {
         \assert($object instanceof ArticleVersionTracker);
@@ -89,9 +87,7 @@ class ArticleVersionTrackerProvider extends AbstractVersionTrackerProvider
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTrackedData(IVersionTrackerObject $object)
     {
         \assert($object instanceof ArticleVersionTracker);
@@ -109,18 +105,14 @@ class ArticleVersionTrackerProvider extends AbstractVersionTrackerProvider
         return $data;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isI18n(IVersionTrackerObject $object)
     {
         \assert($object instanceof Article);
         return $object->isMultilingual == 1;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function revert(IVersionTrackerObject $object, VersionTrackerEntry $entry)
     {
         /** @var ArticleVersionTracker $object */

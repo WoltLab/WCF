@@ -31,9 +31,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
      */
     protected $tagName = 'img';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         /** @var \DOMElement $element */

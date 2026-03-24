@@ -51,9 +51,7 @@ class WysiwygPreviewFormButton extends FormButton implements IObjectTypeFormNode
         return $this->objectId;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectTypeDefinition()
     {
         return 'com.woltlab.wcf.message';

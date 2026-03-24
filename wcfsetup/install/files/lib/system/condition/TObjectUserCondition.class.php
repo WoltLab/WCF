@@ -15,9 +15,7 @@ use wcf\data\user\User;
  */
 trait TObjectUserCondition
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkUser(Condition $condition, User $user)
     {
         return $this->checkObject($user, $condition->conditionData);

@@ -71,9 +71,7 @@ class ACPSearchResult
         return $this->subtitle;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getTitle();

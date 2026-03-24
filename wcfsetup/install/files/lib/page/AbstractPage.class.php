@@ -101,16 +101,11 @@ abstract class AbstractPage implements IPage
      */
     private $psr7Response;
 
-    /**
-     * @inheritDoc
-     */
     final public function __construct()
     {
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __run()
     {
         $this->maybeSetPsr7Response(
@@ -128,9 +123,7 @@ abstract class AbstractPage implements IPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         // call readParameters event
@@ -142,9 +135,7 @@ abstract class AbstractPage implements IPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         // call readData event
@@ -181,9 +172,7 @@ abstract class AbstractPage implements IPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         // call assignVariables event
@@ -198,9 +187,7 @@ abstract class AbstractPage implements IPage
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkModules()
     {
         // call checkModules event
@@ -214,9 +201,7 @@ abstract class AbstractPage implements IPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkPermissions()
     {
         // call checkPermissions event
@@ -238,9 +223,7 @@ abstract class AbstractPage implements IPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         // check if active user is logged in

@@ -113,9 +113,7 @@ class RegisterForm extends UserAddForm
      */
     private RegistrationSpamChecking $spamCheckEvent;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -141,9 +139,7 @@ class RegisterForm extends UserAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -188,18 +184,14 @@ class RegisterForm extends UserAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initOptionHandler()
     {
         $this->optionHandler->setInRegistration();
         parent::initOptionHandler();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         // validate captcha first
@@ -231,9 +223,7 @@ class RegisterForm extends UserAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         if ($this->useCaptcha && $this->captchaObjectTypeName) {
@@ -279,14 +269,13 @@ class RegisterForm extends UserAddForm
     /**
      * Reads option tree on page init.
      */
+    #[\Override]
     protected function readOptionTree()
     {
         $this->optionTree = $this->optionHandler->getOptionTree('profile');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -302,9 +291,7 @@ class RegisterForm extends UserAddForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function show()
     {
         AbstractForm::show();
@@ -324,9 +311,7 @@ class RegisterForm extends UserAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validateUsername($username)
     {
         parent::validateUsername($username);
@@ -362,9 +347,7 @@ class RegisterForm extends UserAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();

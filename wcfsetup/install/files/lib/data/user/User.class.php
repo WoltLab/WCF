@@ -116,9 +116,6 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
     const REGISTER_ACTIVATION_USER_AND_ADMIN = self::REGISTER_ACTIVATION_USER | self::REGISTER_ACTIVATION_ADMIN;
 
-    /**
-     * @inheritDoc
-     */
     public function __construct($id, $row = null, ?DatabaseObject $object = null)
     {
         if ($id !== null) {
@@ -331,9 +328,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
         return self::$userOptions[$name]->optionID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __get(string $name)
     {
         return $this->data[$name] ?? $this->getUserOption($name);
@@ -498,22 +493,19 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns username.
      */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getTitle();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getDatabaseTableAlias()
     {
         return 'user_table';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->username ?: '';
@@ -589,33 +581,25 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getUserID(): int
     {
         return $this->userID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getUsername()
     {
         return $this->username;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTime()
     {
         return $this->registrationDate;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink('User', [
@@ -756,9 +740,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getPopoverLinkClass()
     {
         return 'userLink';

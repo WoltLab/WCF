@@ -169,9 +169,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         if ($this->controller) {
@@ -196,9 +194,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
         return LinkHandler::getInstance()->getCmsLink($this->pageID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return PageCache::getInstance()->getPageTitle($this->pageID);
@@ -304,6 +300,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
     /**
      * Returns the page's internal name.
      */
+    #[\Override]
     public function __toString(): string
     {
         return $this->name;

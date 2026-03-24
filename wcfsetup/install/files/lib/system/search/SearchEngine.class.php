@@ -35,9 +35,7 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
      */
     protected $searchEngine;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         // get available object types
@@ -94,9 +92,7 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
         return $this->searchEngine;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function search(
         string $q,
         array $objectTypes,
@@ -110,9 +106,7 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
             ->search($q, $objectTypes, $subjectOnly, $searchIndexCondition, $additionalConditions, $orderBy, $limit);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function searchWithContext(
         string $q,
         array $objectTypes,
@@ -148,9 +142,7 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getInnerJoin(
         string $objectTypeName,
         string $q,
@@ -168,9 +160,7 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
             ->getInnerJoin($objectTypeName, $q, $subjectOnly, $searchIndexCondition, $orderBy, $limit);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getInnerJoinWithContext(
         string $objectTypeName,
         string $q,
@@ -208,17 +198,13 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionBuilderClassName()
     {
         return $this->getSearchEngine()->getConditionBuilderClassName();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function removeSpecialCharacters(string $string)
     {
         return $this->getSearchEngine()->removeSpecialCharacters($string);

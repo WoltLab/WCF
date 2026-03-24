@@ -17,9 +17,7 @@ use wcf\system\WCF;
  */
 class UserACPSearchResultProvider implements IACPSearchResultProvider
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function search(string $query)
     {
         if (!WCF::getSession()->getPermission('admin.user.canEditUser')) {

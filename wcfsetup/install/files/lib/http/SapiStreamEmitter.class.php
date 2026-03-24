@@ -32,6 +32,7 @@ class SapiStreamEmitter implements EmitterInterface
      * Emits the status line and headers via the header() function, and the
      * body content via the output buffer.
      */
+    #[\Override]
     public function emit(ResponseInterface $response): bool
     {
         $this->assertNoPreviousOutput();

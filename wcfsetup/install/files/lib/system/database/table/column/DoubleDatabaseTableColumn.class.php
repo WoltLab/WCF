@@ -17,18 +17,12 @@ final class DoubleDatabaseTableColumn extends AbstractDecimalDatabaseTableColumn
      */
     protected string $type = 'double';
 
-    /**
-     * @inheritDoc
-     */
     #[\Override]
     public function getMaximumDecimals(): int
     {
         return 30;
     }
 
-    /**
-     * @inheritDoc
-     */
     #[\Override]
     public function getMaximumLength(): int
     {

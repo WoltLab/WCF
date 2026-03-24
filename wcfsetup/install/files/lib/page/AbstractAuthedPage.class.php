@@ -25,9 +25,7 @@ abstract class AbstractAuthedPage extends AbstractPage
      */
     public const AVAILABLE_DURING_OFFLINE_MODE = \FORCE_LOGIN;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();

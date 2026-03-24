@@ -26,9 +26,7 @@ use wcf\system\WCF;
  */
 trait TMultiRecipientModerationQueueCommentUserNotificationObjectType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getRecipientIDs(Comment $comment)
     {
         $objectTypeID = CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue');

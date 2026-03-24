@@ -76,9 +76,7 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController
         $this->attributes = $attributes;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->bbcodeTag;

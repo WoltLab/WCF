@@ -13,9 +13,7 @@ use wcf\data\notice\NoticeList;
  */
 class NoticeCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function rebuild(array $parameters)
     {
         $noticeList = new NoticeList();

@@ -104,17 +104,13 @@ final class WysiwygAttachmentFormField extends AbstractFormField
         return $this->attachmentHandler;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasSaveValue()
     {
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAvailable()
     {
         return parent::isAvailable()
@@ -122,9 +118,7 @@ final class WysiwygAttachmentFormField extends AbstractFormField
             && $this->getAttachmentHandler()->canUpload();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function populate()
     {
         parent::populate();
@@ -143,9 +137,7 @@ final class WysiwygAttachmentFormField extends AbstractFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId() . '_tmpHash')) {

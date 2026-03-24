@@ -22,9 +22,6 @@ class UserList extends DatabaseObjectList
      */
     public $className = User::class;
 
-    /**
-     * @inheritDoc
-     */
     public function __construct()
     {
         parent::__construct();

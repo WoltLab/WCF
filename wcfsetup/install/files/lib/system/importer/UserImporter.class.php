@@ -75,9 +75,7 @@ class UserImporter extends AbstractImporter
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         $targetUser = null;

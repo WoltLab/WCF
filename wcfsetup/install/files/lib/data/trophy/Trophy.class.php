@@ -62,22 +62,19 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
      *
      * @since       5.3
      */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getTitle();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->title);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink('Trophy', [

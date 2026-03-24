@@ -28,9 +28,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler
      */
     protected $tableName = 'acp_template';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkFiles(array $files)
     {
         if ($this->packageInstallation->getPackage()->package != 'com.woltlab.wcf') {
@@ -79,9 +77,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function logFiles(array $files)
     {
         if ($files === []) {

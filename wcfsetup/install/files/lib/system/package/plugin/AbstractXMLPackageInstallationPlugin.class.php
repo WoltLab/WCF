@@ -33,9 +33,6 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
      */
     public $tagName = '';
 
-    /**
-     * @inheritDoc
-     */
     public function __construct(PackageInstallationDispatcher $installation, $instruction = [])
     {
         parent::__construct($installation, $instruction);
@@ -51,9 +48,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function install()
     {
         parent::install();
@@ -74,9 +69,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
         $this->cleanup();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function uninstall()
     {
         parent::uninstall();
@@ -467,6 +460,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
      * @see \wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
      * @since   3.0
      */
+    #[\Override]
     public static function getDefaultFilename()
     {
         $classParts = \explode('\\', static::class);
@@ -474,9 +468,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
         return \lcfirst(\str_replace('PackageInstallationPlugin', '', \array_pop($classParts))) . '.xml';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function isValid(PackageArchive $packageArchive, $instruction)
     {
         if (!$instruction) {

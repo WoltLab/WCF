@@ -28,9 +28,7 @@ class MultipleSelectionFormElementContainer extends SelectionFormElementContaine
         $this->value = $value;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHTML(string $formName)
     {
         $content = '';

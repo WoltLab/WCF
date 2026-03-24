@@ -20,9 +20,7 @@ class StatisticsBoxController extends AbstractBoxController
      */
     protected static $supportedPositions = ['sidebarLeft', 'sidebarRight'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function loadContent()
     {
         if (WCF::getSession()->getPermission('user.profile.canViewStatistics')) {

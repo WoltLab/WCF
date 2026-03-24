@@ -23,9 +23,6 @@ class DevtoolsPackageInstallationDispatcher extends PackageInstallationDispatche
      */
     protected $project;
 
-    /**
-     * @inheritDoc
-     */
     public function __construct(DevtoolsProject $project, ?PackageInstallationQueue $queue = null)
     {
         $this->queue = $queue;
@@ -34,6 +31,7 @@ class DevtoolsPackageInstallationDispatcher extends PackageInstallationDispatche
         }
 
         $this->nodeBuilder = new class($this) extends PackageInstallationNodeBuilder {
+            #[\Override]
             protected function buildOptionalNodes()
             {
                 // does nothing; optional packages are not supported
@@ -46,9 +44,9 @@ class DevtoolsPackageInstallationDispatcher extends PackageInstallationDispatche
     }
 
     /**
-     * @inheritDoc
      * @since   5.2
      */
+    #[\Override]
     protected function createPackage(array $packageData)
     {
         $package = parent::createPackage($packageData);
@@ -58,41 +56,31 @@ class DevtoolsPackageInstallationDispatcher extends PackageInstallationDispatche
         return $package;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getArchive()
     {
         return $this->project->getPackageArchive();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getPackage()
     {
         return $this->project->getPackage();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getPackageID()
     {
         return $this->project->getPackage()->packageID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getPackageName()
     {
         return $this->project->getPackage()->getName();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function extractFiles($targetDir, $sourceArchive, $fileHandler = null)
     {
         return new DevtoolsInstaller($this->project, $targetDir, $sourceArchive, $fileHandler);

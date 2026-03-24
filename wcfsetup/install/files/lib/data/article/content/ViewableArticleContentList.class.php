@@ -36,9 +36,7 @@ class ViewableArticleContentList extends ArticleContentList
      */
     protected bool $articleLoading = true;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readObjects()
     {
         parent::readObjects();

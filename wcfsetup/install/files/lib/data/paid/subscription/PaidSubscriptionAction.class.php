@@ -33,10 +33,7 @@ class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements ITo
      */
     protected $requireACP = ['create', 'delete', 'toggle', 'update'];
 
-    /**
-     * @inheritDoc
-     * @return  PaidSubscription
-     */
+    #[\Override]
     public function create()
     {
         $showOrder = 0;
@@ -53,9 +50,7 @@ class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements ITo
         return new PaidSubscription($subscription->subscriptionID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         parent::update();
@@ -72,6 +67,7 @@ class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements ITo
     /**
      * @deprecated 6.3
      */
+    #[\Override]
     public function validateToggle()
     {
         $this->validateUpdate();
@@ -80,6 +76,7 @@ class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements ITo
     /**
      * @deprecated 6.3 use the `EnablePaidSubscription` or `DisablePaidSubscription` commands instead.
      */
+    #[\Override]
     public function toggle()
     {
         foreach ($this->objects as $editor) {

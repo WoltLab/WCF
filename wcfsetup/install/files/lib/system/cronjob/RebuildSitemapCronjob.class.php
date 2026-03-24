@@ -15,9 +15,7 @@ use wcf\system\worker\SitemapRebuildWorker;
  */
 class RebuildSitemapCronjob extends AbstractCronjob
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(Cronjob $cronjob)
     {
         parent::execute($cronjob);

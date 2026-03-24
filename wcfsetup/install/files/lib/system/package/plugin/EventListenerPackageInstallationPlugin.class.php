@@ -53,9 +53,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
      */
     public $tagName = 'eventlistener';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items)
     {
         $sql = "DELETE FROM wcf1_" . $this->tableName . "
@@ -91,9 +89,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         $nice = isset($data['elements']['nice']) ? \intval($data['elements']['nice']) : 0;
@@ -121,9 +117,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
@@ -141,9 +135,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function uninstall()
     {
         parent::uninstall();
@@ -152,28 +144,26 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
         EventListenerCacheBuilder::getInstance()->reset();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getNameByData(array $data): string
     {
         return $data['listenerName'];
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return [];
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         /** @var FormContainer $dataContainer */
@@ -306,6 +296,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
     /**
      * Shows options and permissions if already specified.
      */
+    #[\Override]
     public function setEntryData(string $identifier, IFormDocument $document): bool
     {
         $options = $document->getFormField('options');
@@ -328,6 +319,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
     /**
      * Shows options and permissions if already specified.
      */
+    #[\Override]
     public function editEntry(IFormDocument $form, string $identifier)
     {
         $options = $form->getFormField('options');
@@ -346,11 +338,11 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $eventName = EventHandler::DEFAULT_EVENT_NAME;
@@ -400,20 +392,20 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         return $element->getAttribute('name');
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $entryList->setKeys([
@@ -424,10 +416,10 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $data = $form->getData()['data'];

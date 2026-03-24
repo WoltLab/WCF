@@ -45,9 +45,7 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
         MediaPage::class,
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (!RequestHandler::getInstance()->isACPRequest()) {

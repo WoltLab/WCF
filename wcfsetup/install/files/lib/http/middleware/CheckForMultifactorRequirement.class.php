@@ -29,9 +29,7 @@ final class CheckForMultifactorRequirement implements MiddlewareInterface
         MultifactorManageForm::class,
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (

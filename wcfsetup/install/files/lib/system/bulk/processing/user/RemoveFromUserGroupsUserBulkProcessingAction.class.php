@@ -20,17 +20,13 @@ class RemoveFromUserGroupsUserBulkProcessingAction extends AbstractUserGroupsUse
      */
     public $inputName = 'removeFromUserGroupIDs';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function executeUserAction(UserEditor $user)
     {
         $user->removeFromGroups($this->userGroupIDs);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectList()
     {
         $userList = parent::getObjectList();

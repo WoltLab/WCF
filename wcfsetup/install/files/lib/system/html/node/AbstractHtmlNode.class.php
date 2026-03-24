@@ -24,17 +24,13 @@ abstract class AbstractHtmlNode implements IHtmlNode
      */
     const PLACEHOLDER = '<!-- META_CODE_INNER_CONTENT -->';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTagName()
     {
         return $this->tagName;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function replaceTag(array $data)
     {
         throw new \BadMethodCallException("Method replaceTag() is not supported by " . static::class);

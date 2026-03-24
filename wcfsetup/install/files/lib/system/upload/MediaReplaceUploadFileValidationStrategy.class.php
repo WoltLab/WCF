@@ -30,9 +30,7 @@ class MediaReplaceUploadFileValidationStrategy extends MediaUploadFileValidation
         $this->media = $media;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(UploadFile $uploadFile)
     {
         if (!parent::validate($uploadFile)) {

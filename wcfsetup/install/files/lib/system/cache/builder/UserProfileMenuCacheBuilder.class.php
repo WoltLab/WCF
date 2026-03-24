@@ -13,9 +13,7 @@ use wcf\data\user\profile\menu\item\UserProfileMenuItemList;
  */
 class UserProfileMenuCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function rebuild(array $parameters)
     {
         $itemList = new UserProfileMenuItemList();

@@ -88,9 +88,7 @@ class PasswordFormField extends AbstractFormField implements
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
@@ -100,9 +98,7 @@ class PasswordFormField extends AbstractFormField implements
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         $value = $this->getValue();
@@ -132,16 +128,15 @@ class PasswordFormField extends AbstractFormField implements
     }
 
     /**
-     * @inheritDoc
      * @return string
      */
+    #[\Override]
     protected static function getDefaultId()
     {
         return 'password';
     }
 
     /**
-     * @inheritDoc
      * @return string[]
      */
     protected function getValidAutoCompleteTokens(): array

@@ -26,9 +26,7 @@ class TodaysFollowingBirthdaysBoxController extends TodaysBirthdaysBoxController
      */
     protected $templateName = 'boxTodaysFollowingBirthdays';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function filterUserIDs(&$userIDs)
     {
         $userIDs = \array_intersect($userIDs, UserProfileHandler::getInstance()->getFollowingUsers());

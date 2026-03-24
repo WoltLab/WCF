@@ -30,9 +30,7 @@ class UserRankAction extends AbstractDatabaseObjectAction
      */
     protected $requireACP = ['delete'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function create()
     {
         /** @var UserRank $rank */
@@ -70,9 +68,7 @@ class UserRankAction extends AbstractDatabaseObjectAction
         return $rank;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update()
     {
         $removedFiles = $this->parameters['rankImageFile__removedFiles'] ?? [];
@@ -143,16 +139,19 @@ class UserRankAction extends AbstractDatabaseObjectAction
     /**
      * @return array<string, string>
      */
+    #[\Override]
     public function getI18nSaveTypes(): array
     {
         return ['rankTitle' => 'wcf.user.rank.userRank\d+'];
     }
 
+    #[\Override]
     public function getLanguageCategory(): string
     {
         return 'wcf.user.rank';
     }
 
+    #[\Override]
     public function getPackageID(): int
     {
         return PACKAGE_ID;

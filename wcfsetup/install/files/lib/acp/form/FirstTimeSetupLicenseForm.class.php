@@ -45,9 +45,7 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
 
     private LicenseData $licenseData;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -57,9 +55,7 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function createForm()
     {
         parent::createForm();
@@ -120,9 +116,7 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();

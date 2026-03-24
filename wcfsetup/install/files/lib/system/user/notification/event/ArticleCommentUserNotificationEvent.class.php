@@ -21,17 +21,13 @@ class ArticleCommentUserNotificationEvent extends AbstractCommentUserNotificatio
     use TTestableCommentUserNotificationEvent;
     use TTestableArticleCommentUserNotificationEvent;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepare()
     {
         ViewableArticleContentRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->objectID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMessage()
     {
         $authors = $this->getAuthors();
@@ -61,9 +57,7 @@ class ArticleCommentUserNotificationEvent extends AbstractCommentUserNotificatio
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEmailMessage(string $notificationType = 'instant'): array
     {
         return [
@@ -79,25 +73,19 @@ class ArticleCommentUserNotificationEvent extends AbstractCommentUserNotificatio
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return ViewableArticleContentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID)->getLink() . '#comment' . $this->getUserNotificationObject()->commentID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getTypeName(): string
     {
         return $this->getLanguage()->get('wcf.user.recentActivity.com.woltlab.wcf.article.recentActivityEvent');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getObjectTitle(): string
     {
         return ViewableArticleContentRuntimeCache::getInstance()

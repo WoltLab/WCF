@@ -13,17 +13,13 @@ use wcf\system\WCF;
  */
 class SetupFileHandler implements IFileHandler
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkFiles(array $files)
     {
         /* does nothing */
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function logFiles(array $files)
     {
         $acpTemplateInserts = $fileInserts = [];

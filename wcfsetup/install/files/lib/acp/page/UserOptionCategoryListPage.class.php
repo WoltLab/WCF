@@ -41,9 +41,7 @@ class UserOptionCategoryListPage extends SortablePage
      */
     public $validSortFields = ['categoryID', 'categoryName', 'showOrder', 'userOptions'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initObjectList()
     {
         parent::initObjectList();

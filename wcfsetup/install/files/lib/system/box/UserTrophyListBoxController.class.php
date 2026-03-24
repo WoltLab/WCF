@@ -62,9 +62,7 @@ class UserTrophyListBoxController extends AbstractDatabaseObjectListBoxControlle
      */
     protected $conditionDefinition = 'com.woltlab.wcf.box.userTrophyList.condition';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getObjectList()
     {
         $list = new UserTrophyList();
@@ -137,9 +135,7 @@ class UserTrophyListBoxController extends AbstractDatabaseObjectListBoxControlle
         return $list;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTemplate()
     {
         $userIDs = [];

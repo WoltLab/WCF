@@ -190,9 +190,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
      */
     protected $nodeInterface = IHtmlInputNode::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process()
     {
         $this->plainLinks = [];

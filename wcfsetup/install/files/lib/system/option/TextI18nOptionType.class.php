@@ -21,9 +21,7 @@ class TextI18nOptionType extends TextOptionType implements II18nOptionType
      */
     protected $supportI18n = true;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         I18nHandler::getInstance()->assignVariables(!empty($_POST));
@@ -35,9 +33,7 @@ class TextI18nOptionType extends TextOptionType implements II18nOptionType
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(Option $option, mixed $newValue)
     {
         if (!I18nHandler::getInstance()->validateValue($option->optionName, (bool)$option->requireI18n, true)) {

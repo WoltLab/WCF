@@ -268,9 +268,7 @@ class PackageInstallationSQLParser extends SQLParser
         return 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function executeCreateTableStatement($tableName, $columns, $indices = [])
     {
         if ($this->test) {
@@ -300,9 +298,7 @@ class PackageInstallationSQLParser extends SQLParser
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function executeAddColumnStatement($tableName, $columnName, $columnData)
     {
         if ($this->test) {
@@ -323,9 +319,7 @@ class PackageInstallationSQLParser extends SQLParser
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function executeAlterColumnStatement($tableName, $oldColumnName, $newColumnName, $newColumnData)
     {
         if ($this->test) {
@@ -356,9 +350,7 @@ class PackageInstallationSQLParser extends SQLParser
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function executeAddIndexStatement($tableName, $indexName, $indexData)
     {
         if (!$this->test) {
@@ -375,9 +367,7 @@ class PackageInstallationSQLParser extends SQLParser
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function executeAddForeignKeyStatement($tableName, $indexName, $indexData)
     {
         if (!$this->test) {
@@ -394,9 +384,7 @@ class PackageInstallationSQLParser extends SQLParser
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function executeDropColumnStatement($tableName, $columnName)
     {
         if ($this->test) {
@@ -419,9 +407,7 @@ class PackageInstallationSQLParser extends SQLParser
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function executeDropIndexStatement($tableName, $indexName)
     {
         if ($this->test) {
@@ -444,9 +430,7 @@ class PackageInstallationSQLParser extends SQLParser
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function executeDropPrimaryKeyStatement($tableName)
     {
         if ($this->test) {
@@ -464,9 +448,7 @@ class PackageInstallationSQLParser extends SQLParser
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function executeDropForeignKeyStatement($tableName, $indexName)
     {
         if ($this->test) {
@@ -489,9 +471,7 @@ class PackageInstallationSQLParser extends SQLParser
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function executeDropTableStatement($tableName)
     {
         if ($this->test) {
@@ -513,9 +493,7 @@ class PackageInstallationSQLParser extends SQLParser
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function executeStandardStatement($query)
     {
         if (!$this->test) {

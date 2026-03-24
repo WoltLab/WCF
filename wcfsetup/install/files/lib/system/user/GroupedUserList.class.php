@@ -68,9 +68,7 @@ class GroupedUserList implements \Countable, \Iterator
         return $this->noUsersMessage ? WCF::getLanguage()->get($this->noUsersMessage) : '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getGroupName();
@@ -119,17 +117,13 @@ class GroupedUserList implements \Countable, \Iterator
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function count(): int
     {
         return \count($this->userIDs);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function current(): UserProfile
     {
         $userID = $this->userIDs[$this->index];
@@ -143,30 +137,25 @@ class GroupedUserList implements \Countable, \Iterator
      *
      * @see \Iterator::key()
      */
+    #[\Override]
     public function key(): int
     {
         return $this->userIDs[$this->index];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function next(): void
     {
         $this->index++;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rewind(): void
     {
         $this->index = 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function valid(): bool
     {
         return isset($this->userIDs[$this->index]);

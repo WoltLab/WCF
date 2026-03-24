@@ -23,6 +23,7 @@ interface IContextAwareSearchEngine extends ISearchEngine
      *
      * @return  string
      */
+    #[\Override]
     public function getConditionBuilderClassName();
 
     /**

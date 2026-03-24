@@ -38,9 +38,7 @@ class PageRebuildDataWorker extends AbstractRebuildDataWorker
      */
     protected $htmlInputProcessor;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function initObjectList()
     {
         parent::initObjectList();
@@ -49,9 +47,7 @@ class PageRebuildDataWorker extends AbstractRebuildDataWorker
         $this->objectList->getConditionBuilder()->add('page.pageType <> ?', ['system']);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         parent::execute();

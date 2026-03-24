@@ -35,17 +35,13 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
      */
     protected $stackable = true;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepare()
     {
         ViewableArticleRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->objectID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         $count = \count($this->getAuthors());
@@ -59,9 +55,7 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
         return $this->getLanguage()->getDynamicVariable('wcf.article.like.notification.title');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMessage()
     {
         $article = ViewableArticleRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID);
@@ -96,18 +90,14 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEmailMessage(string $notificationType = 'instant'): string
     {
         // not supported
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return ViewableArticleRuntimeCache::getInstance()
@@ -115,25 +105,19 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
             ->getLink();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function supportsEmailNotification()
     {
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEventHash()
     {
         return \sha1($this->eventID . '-' . $this->additionalData['objectID']);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkAccess()
     {
         if (!ViewableArticleRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID)->canRead()) {
@@ -145,9 +129,7 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isVisible()
     {
         if (!MODULE_ARTICLE || !MODULE_LIKE) {
@@ -158,7 +140,6 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
     }
 
     /**
-     * @inheritDoc
      * @return LikeableArticle
      */
     protected static function createTestLikeObject(UserProfile $recipient, UserProfile $author)
@@ -169,7 +150,6 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
     }
 
     /**
-     * @inheritDoc
      * @return string
      */
     protected static function getTestLikeableObjectTypeName()

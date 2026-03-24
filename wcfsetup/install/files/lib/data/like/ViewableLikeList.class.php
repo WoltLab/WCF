@@ -41,9 +41,7 @@ class ViewableLikeList extends LikeList
      */
     public $sqlOrderBy = 'like_table.time DESC';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readObjects()
     {
         parent::readObjects();

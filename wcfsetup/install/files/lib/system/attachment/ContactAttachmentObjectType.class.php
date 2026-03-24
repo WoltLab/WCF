@@ -20,17 +20,13 @@ use wcf\util\ArrayUtil;
  */
 class ContactAttachmentObjectType extends AbstractAttachmentObjectType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMaxSize()
     {
         return WCF::getSession()->getPermission('user.contactForm.attachment.maxSize');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getAllowedExtensions()
     {
         return ArrayUtil::trim(\explode(
@@ -39,17 +35,13 @@ class ContactAttachmentObjectType extends AbstractAttachmentObjectType
         ));
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMaxCount()
     {
         return WCF::getSession()->getPermission('user.contactForm.attachment.maxCount');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canDownload(int $objectID)
     {
         if (!CONTACT_FORM_ENABLE_ATTACHMENTS) {
@@ -64,17 +56,13 @@ class ContactAttachmentObjectType extends AbstractAttachmentObjectType
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canViewPreview(int $objectID)
     {
         return $this->canDownload($objectID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canUpload(int $objectID, int $parentObjectID = 0)
     {
         if (!CONTACT_FORM_ENABLE_ATTACHMENTS) {
@@ -84,17 +72,13 @@ class ContactAttachmentObjectType extends AbstractAttachmentObjectType
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canDelete(int $objectID)
     {
         return $this->canUpload($objectID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function cacheObjects(array $objectIDs)
     {
         $objectList = new ContactAttachmentList();

@@ -20,9 +20,7 @@ class RegisterButtonBoxController extends AbstractBoxController
      */
     protected static $supportedPositions = ['contentTop', 'contentBottom', 'sidebarLeft', 'sidebarRight'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function loadContent()
     {
         if (

@@ -60,9 +60,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements
      */
     protected $permissionModEdit = 'mod.profileComment.canEditComment';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAccessible(int $objectID, bool $validateWritePermission = false)
     {
         // check object id
@@ -115,9 +113,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements
         return (bool)$user->getPermission($this->permissionCanModerate);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(int $objectTypeID, int $objectID)
     {
         $user = UserRuntimeCache::getInstance()->getObject($objectID);
@@ -128,26 +124,20 @@ class UserProfileCommentManager extends AbstractCommentManager implements
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCommentLink(Comment $comment)
     {
         return $this->getLink($comment->objectTypeID, $comment->objectID) . '#wall/comment' . $comment->commentID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getResponseLink(CommentResponse $response)
     {
         return $this->getLink($response->getComment()->objectTypeID, $response->getComment()->objectID)
             . '#wall/comment' . $response->commentID . '/response' . $response->responseID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(int $objectTypeID, int $objectID, bool $isResponse = false)
     {
         if ($isResponse) {
@@ -157,17 +147,13 @@ class UserProfileCommentManager extends AbstractCommentManager implements
         return WCF::getLanguage()->getDynamicVariable('wcf.user.profile.content.wall.comment');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function updateCounter(int $objectID, int $value)
     {
         // does nothing
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canDeleteComment(Comment $comment)
     {
         if (
@@ -180,9 +166,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements
         return parent::canDeleteComment($comment);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canDeleteResponse(CommentResponse $response)
     {
         if (
@@ -195,9 +179,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements
         return parent::canDeleteResponse($response);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function prepare(array $likes)
     {
         if (!WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {

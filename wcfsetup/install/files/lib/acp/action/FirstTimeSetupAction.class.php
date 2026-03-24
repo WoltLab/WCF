@@ -23,6 +23,7 @@ use wcf\system\WCF;
  */
 final class FirstTimeSetupAction implements RequestHandlerInterface
 {
+    #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         WCF::getSession()->checkPermissions([

@@ -45,6 +45,7 @@ class LikeHandler extends SingletonFactory
     /**
      * Creates a new LikeHandler instance.
      */
+    #[\Override]
     protected function init()
     {
         // does nothing

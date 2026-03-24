@@ -31,9 +31,7 @@ class BoxVersionTracker extends DatabaseObjectDecorator implements IVersionTrack
      */
     protected $content = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectID()
     {
         return $this->getDecoratedObject()->boxID;
@@ -71,49 +69,37 @@ class BoxVersionTracker extends DatabaseObjectDecorator implements IVersionTrack
         return $this->content;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return $this->getDecoratedObject()->getLink();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getUsername()
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getUserID()
     {
         return 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTime()
     {
         return 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->getDecoratedObject()->getTitle();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEditLink()
     {
         return LinkHandler::getInstance()->getLink(

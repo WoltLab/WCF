@@ -34,6 +34,7 @@ class PermissionDeniedException extends UserException
     /**
      * Prints a permission denied exception.
      */
+    #[\Override]
     public function show()
     {
         if (!\class_exists(WCFACP::class, false)) {

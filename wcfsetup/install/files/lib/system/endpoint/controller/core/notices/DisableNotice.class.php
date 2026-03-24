@@ -22,6 +22,7 @@ use wcf\system\WCF;
 #[PostRequest("/core/notices/{id:\d+}/disable")]
 final class DisableNotice implements IController
 {
+    #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $notice = Helper::fetchObjectFromRequestParameter($variables['id'], Notice::class);

@@ -22,9 +22,7 @@ class AttachmentPage extends \wcf\page\AttachmentPage
      */
     public $neededPermissions = ['admin.attachment.canManageAttachment'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkPermissions()
     {
         AbstractPage::checkPermissions();

@@ -24,9 +24,7 @@ use wcf\system\WCF;
  */
 final class StyleAddDarkModeAction implements RequestHandlerInterface
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $parameters = Helper::mapQueryParameters(

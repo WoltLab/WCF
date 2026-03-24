@@ -43,9 +43,7 @@ abstract class AbstractCategoryEditForm extends AbstractCategoryAddForm
      */
     public $pageTitle = 'wcf.category.edit';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -60,9 +58,7 @@ abstract class AbstractCategoryEditForm extends AbstractCategoryAddForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function checkCategoryPermissions()
     {
         if ($this->category->objectTypeID != $this->objectType->objectTypeID) {
@@ -74,9 +70,7 @@ abstract class AbstractCategoryEditForm extends AbstractCategoryAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function readCategories()
     {
         $this->categoryNodeTree = new CategoryNodeTree(
@@ -87,9 +81,7 @@ abstract class AbstractCategoryEditForm extends AbstractCategoryAddForm
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -103,9 +95,7 @@ abstract class AbstractCategoryEditForm extends AbstractCategoryAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -134,9 +124,7 @@ abstract class AbstractCategoryEditForm extends AbstractCategoryAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();
@@ -204,9 +192,7 @@ abstract class AbstractCategoryEditForm extends AbstractCategoryAddForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function validateParentCategory()
     {
         parent::validateParentCategory();

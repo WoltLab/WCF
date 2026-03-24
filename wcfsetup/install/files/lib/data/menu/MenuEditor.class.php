@@ -27,10 +27,7 @@ class MenuEditor extends DatabaseObjectEditor implements IEditableCachedObject
      */
     protected static $baseClass = Menu::class;
 
-    /**
-     * @inheritDoc
-     * @return  Menu
-     */
+    #[\Override]
     public static function create(array $parameters = [])
     {
         $title = '';
@@ -82,9 +79,7 @@ class MenuEditor extends DatabaseObjectEditor implements IEditableCachedObject
         return $menu;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function deleteAll(array $objectIDs = [])
     {
         if (!empty($objectIDs)) {
@@ -109,9 +104,7 @@ class MenuEditor extends DatabaseObjectEditor implements IEditableCachedObject
         return parent::deleteAll($objectIDs);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         MenuCacheBuilder::getInstance()->reset();

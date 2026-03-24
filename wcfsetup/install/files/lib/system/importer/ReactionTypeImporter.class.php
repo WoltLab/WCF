@@ -20,9 +20,7 @@ class ReactionTypeImporter extends AbstractImporter
      */
     protected $className = ReactionType::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         // copy reaction type image

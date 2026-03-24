@@ -48,17 +48,13 @@ class MultipleSelectionFormField extends AbstractFormField implements
      */
     private bool $ignoreInvalidValues = false;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasSaveValue()
     {
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function populate()
     {
         parent::populate();
@@ -83,9 +79,7 @@ class MultipleSelectionFormField extends AbstractFormField implements
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
@@ -101,9 +95,7 @@ class MultipleSelectionFormField extends AbstractFormField implements
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         $value = $this->getValue();
@@ -120,9 +112,7 @@ class MultipleSelectionFormField extends AbstractFormField implements
         parent::validate();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function value(mixed $value)
     {
         // ignore `null` as value which can be passed either for nullable

@@ -13,9 +13,7 @@ use wcf\data\bbcode\media\provider\BBCodeMediaProviderList;
  */
 class BBCodeMediaProviderCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function rebuild(array $parameters)
     {
         $providerList = new BBCodeMediaProviderList();

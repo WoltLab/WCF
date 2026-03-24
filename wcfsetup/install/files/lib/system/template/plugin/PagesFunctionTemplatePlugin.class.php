@@ -27,9 +27,7 @@ use wcf\util\StringUtil;
  */
 final class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         // needed params: controller, link, page, pages

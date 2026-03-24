@@ -16,9 +16,7 @@ use wcf\util\StringUtil;
  */
 class TextareaUserGroupOptionType extends TextareaOptionType implements IUserGroupOptionType
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function merge(mixed $defaultValue, mixed $groupValue)
     {
         $defaultValue = empty($defaultValue) ? [] : \explode("\n", StringUtil::unifyNewlines($defaultValue));

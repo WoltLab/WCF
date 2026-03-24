@@ -47,9 +47,7 @@ final class ShowOrderFormField extends SingleSelectionFormField
         $this->label('wcf.form.field.showOrder');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSaveValue()
     {
         if ($this->value !== null) {
@@ -66,13 +64,13 @@ final class ShowOrderFormField extends SingleSelectionFormField
     }
 
     /**
-     * @inheritDoc
      * @return  static
      *
      * There is an additional element prepended to the options with key `0`
      * and using the language item `wcf.form.field.showOrder.firstPosition`
      * as value to mark adding it at the first position.
      */
+    #[\Override]
     public function options($options, $nestedOptions = false, $labelLanguageItems = true)
     {
         parent::options($options, $nestedOptions, $labelLanguageItems);
@@ -92,9 +90,7 @@ final class ShowOrderFormField extends SingleSelectionFormField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function value(mixed $value)
     {
         $keys = \array_keys($this->getOptions());
@@ -114,9 +110,7 @@ final class ShowOrderFormField extends SingleSelectionFormField
         return parent::value($keys[$value]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'showOrder';

@@ -19,9 +19,7 @@ class PageCommentResponseUserActivityEvent extends SingletonFactory implements I
 {
     use TCommentResponseUserActivityEvent;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function prepare(array $events)
     {
         $this->readResponseData($events);

@@ -19,9 +19,7 @@ class PaidSubscriptionReturnPage extends AbstractPage
      */
     public $templateName = 'redirect';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

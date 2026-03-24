@@ -23,18 +23,14 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractCommentRes
 {
     use TTestableCommentResponseUserNotificationEvent;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepare()
     {
         CommentRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->commentID);
         UserProfileRuntimeCache::getInstance()->cacheObjectID($this->additionalData['objectID']);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMessage()
     {
         $owner = UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID']);
@@ -64,9 +60,7 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractCommentRes
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEmailMessage(string $notificationType = 'instant')
     {
         $comment = CommentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->commentID);
@@ -88,32 +82,25 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractCommentRes
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink() . '#wall/comment' . $this->getUserNotificationObject()->commentID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getTypeName(): string
     {
         return $this->getLanguage()->get('wcf.user.profile.menu.wall');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function getObjectTitle(): string
     {
         return UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->username;
     }
 
     /**
-     * @inheritDoc
      * @return array{objectID: int, objectTypeID: ?int}
      * @since   3.1
      */

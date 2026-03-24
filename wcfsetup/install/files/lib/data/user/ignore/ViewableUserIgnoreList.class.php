@@ -34,9 +34,6 @@ class ViewableUserIgnoreList extends UserIgnoreList
      */
     public $useQualifiedShorthand = false;
 
-    /**
-     * @inheritDoc
-     */
     public function __construct()
     {
         parent::__construct();

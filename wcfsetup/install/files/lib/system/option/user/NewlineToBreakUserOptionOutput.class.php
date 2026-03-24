@@ -15,9 +15,7 @@ use wcf\util\StringUtil;
  */
 class NewlineToBreakUserOptionOutput implements IUserOptionOutput
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getOutput(User $user, UserOption $option, string $value)
     {
         if ($value === null) {

@@ -23,9 +23,7 @@ class UserGroupOptionCacheBuilder extends OptionCacheBuilder
      */
     protected $tableName = 'user_group_option';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rebuild(array $parameters)
     {
         $data = parent::rebuild($parameters);

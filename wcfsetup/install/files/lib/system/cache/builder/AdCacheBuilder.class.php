@@ -13,9 +13,7 @@ use wcf\data\ad\AdList;
  */
 class AdCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rebuild(array $parameters)
     {
         $adList = new AdList();

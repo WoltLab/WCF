@@ -49,9 +49,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
      */
     protected $article;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink('Article', [
@@ -60,9 +58,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->title;

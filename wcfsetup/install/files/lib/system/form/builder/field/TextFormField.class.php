@@ -77,9 +77,7 @@ class TextFormField extends AbstractFormField implements
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if ($this->isI18n()) {

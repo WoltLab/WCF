@@ -44,9 +44,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
      */
     protected $xpath;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function load(IHtmlProcessor $htmlProcessor, string $html)
     {
         $this->htmlProcessor = $htmlProcessor;
@@ -135,9 +133,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
         return $html;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtml()
     {
         $html = $this->document->saveHTML($this->document->getElementsByTagName('body')->item(0));
@@ -191,9 +187,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
         return \preg_replace('~>\x{00A0}<~u', '> <', $html);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getDocument()
     {
         return $this->document;
@@ -323,9 +317,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
         return [];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getHtmlProcessor()
     {
         return $this->htmlProcessor;

@@ -29,9 +29,7 @@ final class SecretFormField extends AbstractFormField
         $this->value(Totp::generateSecret());
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue(): static
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
@@ -69,9 +67,7 @@ final class SecretFormField extends AbstractFormField
         return new Totp($this->getValue());
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'secret';

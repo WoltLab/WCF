@@ -31,9 +31,7 @@ class UserProfileMenuPage extends AbstractPage
      */
     public $userProfileMenuItemList;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -43,9 +41,7 @@ class UserProfileMenuPage extends AbstractPage
         $this->userProfileMenuItemList->readObjects();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

@@ -30,9 +30,7 @@ trait TTestableCommentResponseUserNotificationEvent
 {
     use TTestableUserNotificationEvent;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function canBeTriggeredByGuests()
     {
         return true;
@@ -84,9 +82,7 @@ trait TTestableCommentResponseUserNotificationEvent
         return $commentResponse;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getTestAdditionalData(IUserNotificationObject $object)
     {
         /** @var CommentResponseUserNotificationObject $object */
@@ -100,9 +96,9 @@ trait TTestableCommentResponseUserNotificationEvent
     }
 
     /**
-     * @inheritDoc
      * @return  CommentResponseUserNotificationObject[]
      */
+    #[\Override]
     public static function getTestObjects(UserProfile $recipient, UserProfile $author)
     {
         return [new CommentResponseUserNotificationObject(self::createTestCommentResponse($recipient, $author))];

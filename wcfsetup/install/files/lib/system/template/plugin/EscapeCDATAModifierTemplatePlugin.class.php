@@ -18,9 +18,7 @@ use wcf\util\StringUtil;
  */
 class EscapeCDATAModifierTemplatePlugin implements IModifierTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         return StringUtil::escapeCDATA($tagArgs[0]);

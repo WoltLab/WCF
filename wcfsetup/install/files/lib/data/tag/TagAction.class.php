@@ -44,9 +44,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction
      */
     protected $requireACP = ['delete', 'update'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateGetSearchResultList()
     {
         $this->readString('searchString', false, 'data');
@@ -117,9 +115,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSearchResultList()
     {
         $excludedSearchValues = [];

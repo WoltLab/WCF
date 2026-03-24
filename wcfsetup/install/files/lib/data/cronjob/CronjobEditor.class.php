@@ -28,9 +28,7 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
      */
     protected static $baseClass = Cronjob::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function create(array $parameters = [])
     {
         $descriptions = [];
@@ -120,9 +118,7 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
         $this->update(['description' => 'wcf.acp.cronjob.description.cronjob' . $this->cronjobID]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function update(array $parameters = [])
     {
         $descriptions = [];
@@ -143,9 +139,7 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function deleteAll(array $objectIDs = [])
     {
         // delete language items
@@ -164,9 +158,7 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
         return parent::deleteAll($objectIDs);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function resetCache()
     {
         CronjobCacheBuilder::getInstance()->reset();

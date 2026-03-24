@@ -58,9 +58,7 @@ class KeywordHighlighter extends SingletonFactory
         'va',
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         // take keywords from request

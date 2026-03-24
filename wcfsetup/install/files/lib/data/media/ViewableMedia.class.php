@@ -89,9 +89,7 @@ class ViewableMedia extends DatabaseObjectDecorator
         $this->forceLanguageID = $languageID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __get(string $name)
     {
         if ($this->forceLanguageID !== null && isset($this->localizedContent[$this->forceLanguageID][$name])) {
@@ -116,6 +114,7 @@ class ViewableMedia extends DatabaseObjectDecorator
     /**
      * Returns a textual representation of the media file to be used in templates.
      */
+    #[\Override]
     public function __toString(): string
     {
         if ($this->isImage) {

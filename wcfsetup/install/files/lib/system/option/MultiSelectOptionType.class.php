@@ -31,9 +31,7 @@ class MultiSelectOptionType extends SelectOptionType
      */
     protected $searchableFormElementTemplate = 'multiSelectSearchableOptionType';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
         return WCF::getTPL()->render('wcf', $this->formElementTemplate, [
@@ -43,9 +41,7 @@ class MultiSelectOptionType extends SelectOptionType
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getSearchFormElement(Option $option, mixed $value)
     {
         return WCF::getTPL()->render('wcf', $this->searchableFormElementTemplate, [
@@ -56,9 +52,7 @@ class MultiSelectOptionType extends SelectOptionType
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate(Option $option, mixed $newValue)
     {
         if (!\is_array($newValue)) {
@@ -72,9 +66,7 @@ class MultiSelectOptionType extends SelectOptionType
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getData(Option $option, mixed $newValue)
     {
         if (!\is_array($newValue)) {
@@ -84,9 +76,7 @@ class MultiSelectOptionType extends SelectOptionType
         return \implode("\n", $newValue);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, mixed $value)
     {
         if (!isset($_POST['searchOptions'][$option->optionName])) {
@@ -119,9 +109,7 @@ class MultiSelectOptionType extends SelectOptionType
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function addCondition(UserList $userList, Option $option, mixed $value)
     {
         if (!\is_array($value) || empty($value)) {
@@ -148,9 +136,7 @@ class MultiSelectOptionType extends SelectOptionType
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function checkUser(User $user, Option $option, mixed $value)
     {
         if (!\is_array($value) || empty($value)) {
@@ -163,9 +149,7 @@ class MultiSelectOptionType extends SelectOptionType
         return \count(\array_intersect($value, $optionValues)) === \count($value);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getConditionData(Option $option, mixed $newValue)
     {
         return $newValue;

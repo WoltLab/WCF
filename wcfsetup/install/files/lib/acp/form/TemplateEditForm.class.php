@@ -32,9 +32,7 @@ class TemplateEditForm extends TemplateAddForm
      */
     public $formAction = 'edit';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         AbstractFormBuilderForm::readParameters();

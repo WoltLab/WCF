@@ -15,9 +15,7 @@ use wcf\data\cronjob\Cronjob;
  */
 class UpdateBlacklistCronjob extends AbstractCronjob
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(Cronjob $cronjob)
     {
         if (!BLACKLIST_SFS_ENABLE) {

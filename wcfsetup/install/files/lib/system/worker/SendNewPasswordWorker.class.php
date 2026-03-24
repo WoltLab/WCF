@@ -31,9 +31,7 @@ class SendNewPasswordWorker extends AbstractWorker
      */
     protected $limit = 20;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function countObjects()
     {
         $userList = new UserList();
@@ -42,9 +40,7 @@ class SendNewPasswordWorker extends AbstractWorker
         $this->count = $userList->countObjects();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         $userList = new UserList();
@@ -72,17 +68,13 @@ class SendNewPasswordWorker extends AbstractWorker
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getProceedURL()
     {
         return LinkHandler::getInstance()->getLink('UserList');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getProgress()
     {
         $progress = parent::getProgress();
@@ -145,9 +137,7 @@ class SendNewPasswordWorker extends AbstractWorker
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         WCF::getSession()->checkPermissions(['admin.user.canEditPassword']);

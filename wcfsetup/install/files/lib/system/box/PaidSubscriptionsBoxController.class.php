@@ -22,25 +22,19 @@ class PaidSubscriptionsBoxController extends AbstractBoxController
      */
     protected static $supportedPositions = ['contentTop', 'contentBottom', 'sidebarLeft', 'sidebarRight'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink('PaidSubscriptionList');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function hasLink()
     {
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function loadContent()
     {
         if (MODULE_PAID_SUBSCRIPTION) {

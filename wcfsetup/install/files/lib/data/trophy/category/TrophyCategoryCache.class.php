@@ -27,9 +27,7 @@ class TrophyCategoryCache extends SingletonFactory
      */
     protected $enabledCategories = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function init()
     {
         $categoryData = CategoryCacheBuilder::getInstance()->getData();

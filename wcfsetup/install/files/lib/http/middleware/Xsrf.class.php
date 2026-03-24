@@ -33,9 +33,7 @@ final class Xsrf implements MiddlewareInterface
         $this->requestHandler = RequestHandler::getInstance();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $xsrfToken = WCF::getSession()->getSecurityToken();

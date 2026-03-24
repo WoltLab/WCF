@@ -19,9 +19,7 @@ use wcf\data\acp\session\ACPSession;
  */
 class Session extends ACPSession
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function supportsPersistentLogins()
     {
         return true;

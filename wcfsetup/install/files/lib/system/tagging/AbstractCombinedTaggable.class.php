@@ -20,9 +20,7 @@ use wcf\data\tag\Tag;
  */
 abstract class AbstractCombinedTaggable extends AbstractTaggable implements ICombinedTaggable
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectList(Tag $tag)
     {
         return $this->getObjectListFor([$tag]);

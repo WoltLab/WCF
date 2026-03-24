@@ -45,6 +45,7 @@ class UserCoverPhotoImporter extends AbstractFileImporter
         return $file->fileID;
     }
 
+    #[\Override]
     protected function isValidFile(File $file): bool
     {
         return $file->isImage();

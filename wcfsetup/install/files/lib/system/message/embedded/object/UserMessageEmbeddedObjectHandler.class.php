@@ -14,9 +14,7 @@ use wcf\system\html\input\HtmlInputProcessor;
  */
 class UserMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHandler
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function parse(HtmlInputProcessor $htmlInputProcessor, array $embeddedData)
     {
         $objectIDs = [];
@@ -29,9 +27,7 @@ class UserMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHand
         return \array_unique($objectIDs);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function loadObjects(array $objectIDs)
     {
         return UserProfileRuntimeCache::getInstance()->getObjects($objectIDs);

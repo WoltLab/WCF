@@ -18,9 +18,7 @@ class UserGroupAssignmentCronjob extends AbstractCronjob
 {
     const MAXIMUM_ASSIGNMENTS = 1000;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(Cronjob $cronjob)
     {
         parent::execute($cronjob);

@@ -50,6 +50,7 @@ final class UserRankGridView extends AbstractGridView
                 ->filter(I18nTextFilter::class)
                 ->renderer([
                     new class extends DefaultColumnRenderer {
+                        #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
                             \assert($row instanceof UserRank);
@@ -65,6 +66,7 @@ final class UserRankGridView extends AbstractGridView
                 ->sortable()
                 ->renderer([
                     new class extends DefaultColumnRenderer {
+                        #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
                             \assert($row instanceof UserRank);
@@ -83,6 +85,7 @@ final class UserRankGridView extends AbstractGridView
                 ))
                 ->renderer([
                     new class extends DefaultColumnRenderer {
+                        #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
                             return StringUtil::encodeHTML(UserGroup::getGroupByID($value)->getName());
@@ -94,6 +97,7 @@ final class UserRankGridView extends AbstractGridView
                 ->sortable()
                 ->renderer([
                     new class extends DefaultColumnRenderer {
+                        #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
                             if (!$value) {

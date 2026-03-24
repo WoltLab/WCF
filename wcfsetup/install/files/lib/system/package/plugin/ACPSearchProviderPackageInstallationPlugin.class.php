@@ -38,9 +38,7 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
      */
     public $className = ACPSearchProviderEditor::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function handleDelete(array $items)
     {
         $sql = "DELETE FROM wcf1_" . $this->tableName . "
@@ -58,9 +56,7 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
         WCF::getDB()->commitTransaction();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepareImport(array $data)
     {
         // get show order
@@ -74,9 +70,7 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
@@ -94,17 +88,13 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function cleanup()
     {
         ACPSearchProviderCacheBuilder::getInstance()->reset();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getNameByData(array $data): string
     {
         return $data['providerName'];
@@ -114,26 +104,27 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
      * @see \wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
      * @since   3.0
      */
+    #[\Override]
     public static function getDefaultFilename()
     {
         return 'acpSearchProvider.xml';
     }
 
     /**
-     * @inheritDoc
      * @since   3.1
      */
+    #[\Override]
     public static function getSyncDependencies()
     {
         return [];
     }
 
     /**
-     * @inheritDoc
      * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
+    #[\Override]
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = [
@@ -153,17 +144,16 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
+    #[\Override]
     public function getElementIdentifier(\DOMElement $element)
     {
         return $element->getAttribute('name');
     }
 
     /**
-     * @inheritDoc
      * @return string
      * @since   5.2
      */
@@ -173,10 +163,10 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
         /** @var FormContainer $dataContainer */
@@ -230,10 +220,10 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
     }
 
     /**
-     * @inheritDoc
      * @return void
      * @since   5.2
      */
+    #[\Override]
     protected function setEntryListKeys(IDevtoolsPipEntryList $entryList)
     {
         $entryList->setKeys([
@@ -243,10 +233,10 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
     }
 
     /**
-     * @inheritDoc
      * @return \DOMElement
      * @since   5.2
      */
+    #[\Override]
     protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form)
     {
         $data = $form->getData()['data'];

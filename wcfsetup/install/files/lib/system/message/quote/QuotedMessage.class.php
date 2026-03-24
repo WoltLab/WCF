@@ -88,9 +88,7 @@ class QuotedMessage implements \Countable, \Iterator
         $this->indexToObject[] = $quoteID;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __toString(): string
     {
         return $this->object->getTitle();
@@ -161,17 +159,13 @@ class QuotedMessage implements \Countable, \Iterator
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function count(): int
     {
         return \count($this->quotes);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function current(): string
     {
         $objectID = $this->indexToObject[$this->index];
@@ -185,30 +179,25 @@ class QuotedMessage implements \Countable, \Iterator
      *
      * @see \Iterator::key()
      */
+    #[\Override]
     public function key(): string
     {
         return $this->indexToObject[$this->index];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function next(): void
     {
         $this->index++;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rewind(): void
     {
         $this->index = 0;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function valid(): bool
     {
         return isset($this->indexToObject[$this->index]);

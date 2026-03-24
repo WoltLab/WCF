@@ -16,9 +16,7 @@ use wcf\system\html\node\HtmlNodeUnfurlLink;
  */
 class UnfurlUrlEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHandler
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function loadObjects(array $objectIDs)
     {
         $urlList = new UnfurlUrlList();
@@ -28,9 +26,7 @@ class UnfurlUrlEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHandle
         return $urlList->getObjects();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function parse(HtmlInputProcessor $htmlInputProcessor, array $embeddedData)
     {
         $unfurlUrlIDs = [];

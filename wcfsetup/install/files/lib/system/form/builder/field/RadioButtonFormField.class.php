@@ -33,9 +33,7 @@ class RadioButtonFormField extends AbstractFormField implements
      */
     protected $templateName = 'shared_radioButtonFormField';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
@@ -49,17 +47,13 @@ class RadioButtonFormField extends AbstractFormField implements
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function supportsNestedOptions()
     {
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         if ($this->isRequired() || $this->getValue() !== '') {

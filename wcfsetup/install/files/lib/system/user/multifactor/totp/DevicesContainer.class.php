@@ -24,9 +24,7 @@ class DevicesContainer extends FormContainer
      */
     protected $templateName = '__multifactorTotpDevicesContainer';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected static function getDefaultId(): string
     {
         return 'devices';
@@ -37,6 +35,7 @@ class DevicesContainer extends FormContainer
      *
      * @return $this
      */
+    #[\Override]
     public function appendChild(IFormChildNode $child): static
     {
         if (!($child instanceof DeviceNode)) {

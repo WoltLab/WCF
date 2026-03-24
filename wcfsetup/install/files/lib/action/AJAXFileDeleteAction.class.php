@@ -36,9 +36,7 @@ class AJAXFileDeleteAction extends AbstractSecureAction
      */
     public $uploadedFiles = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function __run()
     {
         try {
@@ -52,9 +50,7 @@ class AJAXFileDeleteAction extends AbstractSecureAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         parent::readParameters();
@@ -72,9 +68,7 @@ class AJAXFileDeleteAction extends AbstractSecureAction
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute()
     {
         parent::execute();

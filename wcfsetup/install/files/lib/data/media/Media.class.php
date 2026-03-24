@@ -94,9 +94,7 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
         ],
     ];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink('Media', [
@@ -105,17 +103,13 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLocation()
     {
         return self::getStorage() . \substr($this->fileHash, 0, 2) . '/' . $this->mediaID . '-' . $this->fileHash;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getThumbnailLink(string $size)
     {
         if (!isset(self::$thumbnailSizes[$size])) {
@@ -173,9 +167,7 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
         return $this->height;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getThumbnailLocation(string $size)
     {
         if (!isset(self::$thumbnailSizes[$size])) {
@@ -189,9 +181,7 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
         ) . '/' . $this->mediaID . '-' . $size . '-' . $this->fileHash;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->filename;
@@ -309,9 +299,7 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
         return WCF_DIR . 'media_files/';
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public static function getThumbnailSizes()
     {
         return static::$thumbnailSizes;

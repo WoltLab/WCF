@@ -45,9 +45,7 @@ class StatPage extends AbstractPage
      */
     public $availableObjectTypes = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -70,9 +68,7 @@ class StatPage extends AbstractPage
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

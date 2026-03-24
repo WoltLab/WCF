@@ -28,6 +28,7 @@ class ArticleCategoryNode extends CategoryNode
      */
     protected $articles;
 
+    #[\Override]
     public function getItems(): int
     {
         if ($this->articles === null) {

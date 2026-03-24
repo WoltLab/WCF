@@ -72,9 +72,7 @@ final class RequestHandler extends SingletonFactory
 
     private ?Page $activePage;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function init()
     {
         $this->isACPRequest = \class_exists('wcf\system\WCFACP', false);

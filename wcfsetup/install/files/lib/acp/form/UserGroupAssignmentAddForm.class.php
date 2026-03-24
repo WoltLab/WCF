@@ -62,9 +62,7 @@ class UserGroupAssignmentAddForm extends AbstractForm
      */
     public $userGroups = [];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -79,9 +77,7 @@ class UserGroupAssignmentAddForm extends AbstractForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         $this->userGroups = UserGroup::getSortedGroupsByType([], [
@@ -101,9 +97,7 @@ class UserGroupAssignmentAddForm extends AbstractForm
         parent::readData();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -126,9 +120,7 @@ class UserGroupAssignmentAddForm extends AbstractForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         parent::save();
@@ -172,9 +164,7 @@ class UserGroupAssignmentAddForm extends AbstractForm
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validate()
     {
         parent::validate();

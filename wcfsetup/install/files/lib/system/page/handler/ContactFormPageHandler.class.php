@@ -13,9 +13,7 @@ namespace wcf\system\page\handler;
  */
 class ContactFormPageHandler extends AbstractMenuPageHandler
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isVisible(?int $objectID = null)
     {
         return true;

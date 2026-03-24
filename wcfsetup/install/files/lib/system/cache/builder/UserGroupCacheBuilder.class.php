@@ -13,9 +13,7 @@ use wcf\data\user\group\UserGroupList;
  */
 class UserGroupCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function rebuild(array $parameters)
     {
         $data = [

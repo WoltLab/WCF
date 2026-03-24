@@ -27,9 +27,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
      */
     protected $definitionName = '';
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignQueues(int $objectTypeID, array $queues)
     {
         ModerationQueueManager::getInstance()
@@ -37,33 +35,25 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
             ->assignQueues($queues);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isValid(string $objectType, ?int $objectID = null)
     {
         return ModerationQueueManager::getInstance()->isValid($this->definitionName, $objectType);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getObjectTypeID(string $objectType)
     {
         return ModerationQueueManager::getInstance()->getObjectTypeID($this->definitionName, $objectType);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getProcessor(?string $objectType, ?int $objectTypeID = null)
     {
         return ModerationQueueManager::getInstance()->getProcessor($this->definitionName, $objectType, $objectTypeID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function populate(int $objectTypeID, array $objects)
     {
         ModerationQueueManager::getInstance()
@@ -71,17 +61,13 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
             ->populate($objects);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canRemoveContent(ModerationQueue $queue)
     {
         return $this->getProcessor(null, $queue->objectTypeID)->canRemoveContent($queue);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function removeContent(ModerationQueue $queue, string $message = '')
     {
         $this->getProcessor(null, $queue->objectTypeID)->removeContent($queue, $message);

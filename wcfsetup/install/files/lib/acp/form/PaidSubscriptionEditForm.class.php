@@ -41,9 +41,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
      */
     public $subscription;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readParameters()
     {
         if (isset($_REQUEST['id'])) {
@@ -57,9 +55,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
         parent::readParameters();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readFormParameters()
     {
         parent::readFormParameters();
@@ -79,6 +75,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
     /**
      * @return void
      */
+    #[\Override]
     protected function getAvailableSubscriptions()
     {
         $subscriptionList = new PaidSubscriptionList();
@@ -88,9 +85,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
         $this->availableSubscriptions = $subscriptionList->getObjects();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readData()
     {
         parent::readData();
@@ -121,9 +116,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function save()
     {
         AbstractForm::save();
@@ -169,9 +162,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
         WCF::getTPL()->assign('success', true);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();

@@ -32,9 +32,6 @@ class ViewableModerationQueueList extends ModerationQueueList
      */
     public $useQualifiedShorthand = false;
 
-    /**
-     * @inheritDoc
-     */
     public function __construct(?User $target = null)
     {
         parent::__construct();
@@ -56,9 +53,7 @@ class ViewableModerationQueueList extends ModerationQueueList
         $this->getConditionBuilder()->add("moderation_queue_to_user.isAffected = ?", [1]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function readObjects()
     {
         parent::readObjects();
@@ -110,6 +105,7 @@ class ViewableModerationQueueList extends ModerationQueueList
      *
      * @return  string
      */
+    #[\Override]
     public function getDatabaseTableName()
     {
         return parent::getDatabaseTableName() . '_to_user';
@@ -120,6 +116,7 @@ class ViewableModerationQueueList extends ModerationQueueList
      *
      * @return  string
      */
+    #[\Override]
     public function getDatabaseTableAlias()
     {
         return parent::getDatabaseTableAlias() . '_to_user';

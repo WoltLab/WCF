@@ -49,9 +49,7 @@ class WorkerCLICommand implements ICLICommand
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(array $parameters)
     {
         $this->argv->setArguments($parameters);
@@ -493,9 +491,7 @@ class WorkerCLICommand implements ICLICommand
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canAccess()
     {
         return true;

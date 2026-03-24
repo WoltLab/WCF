@@ -30,33 +30,25 @@ class SmileyCategoryType extends AbstractCategoryType
      */
     protected $maximumNestingLevel = 0;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function afterDeletion(CategoryEditor $categoryEditor)
     {
         SmileyCacheBuilder::getInstance()->reset();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canAddCategory()
     {
         return $this->canEditCategory();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canDeleteCategory()
     {
         return $this->canEditCategory();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function canEditCategory()
     {
         return WCF::getSession()->getPermission('admin.content.smiley.canManageSmiley');

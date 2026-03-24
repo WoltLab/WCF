@@ -14,9 +14,7 @@ use wcf\util\StringUtil;
  */
 class SpoilerMetacodeConverter extends AbstractMetacodeConverter
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function convert(\DOMDocumentFragment $fragment, array $attributes)
     {
         $element = $fragment->ownerDocument->createElement('woltlab-spoiler');
@@ -29,9 +27,7 @@ class SpoilerMetacodeConverter extends AbstractMetacodeConverter
         return $element;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateAttributes(array $attributes)
     {
         // 0 or 1 attribute

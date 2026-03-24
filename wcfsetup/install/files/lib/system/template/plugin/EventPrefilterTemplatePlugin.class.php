@@ -17,9 +17,7 @@ use wcf\system\WCF;
  */
 class EventPrefilterTemplatePlugin implements IPrefilterTemplatePlugin
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function execute(string $templateName, string $sourceContent, TemplateScriptingCompiler $compiler)
     {
         $ldq = \preg_quote($compiler->getLeftDelimiter(), '~');

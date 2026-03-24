@@ -32,9 +32,7 @@ class UserProfileCommentUserNotificationObjectType extends AbstractUserNotificat
      */
     protected static $objectListClassName = CommentList::class;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getOwnerID(int $objectID)
     {
         $sql = "SELECT  objectID

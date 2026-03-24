@@ -24,17 +24,12 @@ class RowFormFieldContainer extends FormContainer
      */
     protected $templateName = 'shared_rowFormFieldContainer';
 
-    /**
-     * @inheritDoc
-     */
     public function __construct()
     {
         // does nothing
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function appendChild(IFormChildNode $child): static
     {
         if ((!$child instanceof IFormField)) {

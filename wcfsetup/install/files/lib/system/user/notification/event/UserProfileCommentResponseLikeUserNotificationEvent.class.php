@@ -28,18 +28,14 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
      */
     protected $stackable = true;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function prepare()
     {
         UserProfileRuntimeCache::getInstance()->cacheObjectID($this->additionalData['objectID']);
         UserProfileRuntimeCache::getInstance()->cacheObjectID($this->additionalData['commentUserID']);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getTitle(): string
     {
         $count = \count($this->getAuthors());
@@ -56,9 +52,7 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
         return $this->getLanguage()->get('wcf.user.notification.commentResponse.like.title');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getMessage()
     {
         $authors = \array_values($this->getAuthors());
@@ -110,17 +104,13 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
         );
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEmailMessage(string $notificationType = 'instant')
     {
         throw new \LogicException('Unreachable');
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         $owner = WCF::getUser();
@@ -131,17 +121,13 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
         return $owner->getLink() . '#wall/comment' . $this->additionalData['commentID'] . '/response' . $this->getResponseID();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getEventHash()
     {
         return \sha1($this->eventID . '-' . $this->getUserNotificationObject()->objectID);
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function supportsEmailNotification()
     {
         return false;
@@ -159,7 +145,6 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
     }
 
     /**
-     * @inheritDoc
      * @return array{objectID: int, objectTypeID: ?int}
      * @since   3.1
      */

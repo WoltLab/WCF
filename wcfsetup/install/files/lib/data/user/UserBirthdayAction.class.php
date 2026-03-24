@@ -25,9 +25,7 @@ class UserBirthdayAction extends UserProfileAction implements IGroupedUserListAc
      */
     protected $allowGuestAccess = ['getGroupedUserList'];
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function validateGetGroupedUserList()
     {
         $this->readString('date');
@@ -49,9 +47,7 @@ class UserBirthdayAction extends UserProfileAction implements IGroupedUserListAc
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getGroupedUserList()
     {
         $year = $month = $day = 0;

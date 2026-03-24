@@ -78,18 +78,14 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
         $this->sourceElements = BBCodeParser::getInstance()->getSourceBBCodes();
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function isAllowed(AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         // metacode-marker isn't present at time of validation
         return [];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         // collect pairs

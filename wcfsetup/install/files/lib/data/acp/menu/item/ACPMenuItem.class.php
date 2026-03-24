@@ -51,9 +51,7 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem
      */
     protected $controller;
 
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     public function getLink(): string
     {
         // external link
@@ -111,6 +109,7 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem
     /**
      * Returns the menu item name.
      */
+    #[\Override]
     public function __toString(): string
     {
         return WCF::getLanguage()->get($this->menuItem);

@@ -13,9 +13,7 @@ use wcf\system\cache\builder\ContactOptionCacheBuilder;
  */
 class ContactOptionHandler extends CustomOptionHandler
 {
-    /**
-     * @inheritDoc
-     */
+    #[\Override]
     protected function readCache()
     {
         $this->cachedOptions = ContactOptionCacheBuilder::getInstance()->getData();
