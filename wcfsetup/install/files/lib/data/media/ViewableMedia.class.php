@@ -15,7 +15,6 @@ use wcf\util\StringUtil;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since   3.0
  *
  * @mixin   Media
  * @property-read   string|null $title      title of the media file in the active user's language or `null` if object has not been fetched via `ViewableMediaList`

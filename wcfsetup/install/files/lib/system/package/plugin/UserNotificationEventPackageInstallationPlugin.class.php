@@ -171,9 +171,6 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
         return $row['objectTypeID'];
     }
 
-    /**
-     * @since   3.1
-     */
     #[\Override]
     public static function getSyncDependencies()
     {

@@ -84,9 +84,6 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
         ];
     }
 
-    /**
-     * @since   3.1
-     */
     #[\Override]
     public static function getSyncDependencies()
     {

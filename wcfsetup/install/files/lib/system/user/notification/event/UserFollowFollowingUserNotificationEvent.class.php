@@ -85,7 +85,6 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
 
     /**
      * @return  UserFollowUserNotificationObject[]
-     * @since   3.1
      */
     #[\Override]
     public static function getTestObjects(UserProfile $recipient, UserProfile $author)
@@ -104,9 +103,6 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
         return [new UserFollowUserNotificationObject($follow)];
     }
 
-    /**
-     * @since   3.1
-     */
     #[\Override]
     public static function getTestAdditionalData(IUserNotificationObject $object)
     {

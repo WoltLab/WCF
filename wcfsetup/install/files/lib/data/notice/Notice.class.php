@@ -44,7 +44,6 @@ class Notice extends DatabaseObject implements IRouteController
     /**
      * Returns the textual representation of the notice.
      *
-     * @since   3.0
      */
     #[\Override]
     public function __toString(): string

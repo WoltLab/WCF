@@ -120,7 +120,6 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractComme
 
     /**
      * @return array{objectID: int, objectTypeID: ?int}
-     * @since   3.1
      */
     protected static function getTestCommentObjectData(UserProfile $recipient, UserProfile $author)
     {

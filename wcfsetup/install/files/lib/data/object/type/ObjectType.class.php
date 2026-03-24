@@ -112,7 +112,6 @@ class ObjectType extends ProcessibleDatabaseObject
      * Returns the object type definition of the object type.
      *
      * @return  ObjectTypeDefinition
-     * @since   3.0
      */
     public function getDefinition()
     {

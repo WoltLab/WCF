@@ -160,7 +160,6 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
      * Executes the package's uninstall script (if existing).
      *
      * @return void
-     * @since   3.0
      */
     protected function executeUninstallScript()
     {

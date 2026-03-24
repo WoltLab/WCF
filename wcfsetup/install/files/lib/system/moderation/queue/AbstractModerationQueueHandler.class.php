@@ -115,9 +115,6 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
         return $userProfile->getPermission($this->requiredPermission);
     }
 
-    /**
-     * @since   3.0
-     */
     #[\Override]
     public function getCommentNotificationLanguageItemPrefix()
     {

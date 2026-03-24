@@ -18,7 +18,6 @@ use wcf\system\form\option\FormOptionHandler;
  * @author      Alexander Ebert
  * @copyright   2001-2025 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since       3.1
  *
  * @extends AbstractFormOptionAddForm<ContactOption>
  */

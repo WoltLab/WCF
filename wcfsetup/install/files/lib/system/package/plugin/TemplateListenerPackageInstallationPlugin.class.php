@@ -121,9 +121,6 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
         TemplateListenerCodeCacheBuilder::getInstance()->reset();
     }
 
-    /**
-     * @since   3.1
-     */
     #[\Override]
     public static function getSyncDependencies()
     {

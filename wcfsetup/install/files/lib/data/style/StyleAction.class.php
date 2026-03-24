@@ -303,7 +303,6 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
      * Updates style favicon files.
      *
      * @return void
-     * @since 3.1
      */
     protected function updateFavicons(Style $style)
     {
@@ -408,7 +407,6 @@ BROWSERCONFIG;
      * Updates the style cover photo.
      *
      * @return void
-     * @since 3.1
      */
     protected function updateCoverPhoto(Style $style)
     {
@@ -578,7 +576,6 @@ BROWSERCONFIG;
      * Validates the mark as tainted action.
      *
      * @return void
-     * @since 3.0
      */
     public function validateMarkAsTainted()
     {

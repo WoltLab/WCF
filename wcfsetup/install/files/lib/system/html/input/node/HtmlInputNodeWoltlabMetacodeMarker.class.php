@@ -17,7 +17,6 @@ use wcf\util\DOMUtil;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since   3.0
  * @phpstan-type MetacodePair array{
  *  attributes: string,
  *  close: ?\DOMElement,

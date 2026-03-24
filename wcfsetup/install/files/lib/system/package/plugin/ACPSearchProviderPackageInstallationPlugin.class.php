@@ -102,7 +102,6 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 
     /**
      * @see \wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
-     * @since   3.0
      */
     #[\Override]
     public static function getDefaultFilename()
@@ -110,9 +109,6 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
         return 'acpSearchProvider.xml';
     }
 
-    /**
-     * @since   3.1
-     */
     #[\Override]
     public static function getSyncDependencies()
     {

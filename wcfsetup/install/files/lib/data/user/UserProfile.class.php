@@ -1174,7 +1174,6 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      *
      * @param string $username
      * @return  UserProfile
-     * @since   3.0
      */
     public static function getGuestUserProfile($username)
     {

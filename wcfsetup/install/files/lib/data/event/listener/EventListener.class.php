@@ -34,7 +34,6 @@ class EventListener extends DatabaseObject
      * Returns the names of all events listened to.
      *
      * @return  string[]
-     * @since   3.0
      */
     public function getEventNames()
     {

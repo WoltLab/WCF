@@ -82,9 +82,6 @@ abstract class AbstractCommentStatDailyHandler extends AbstractStatDailyHandler
         ];
     }
 
-    /**
-     * @since   3.1
-     */
     #[\Override]
     protected function addConditions(PreparedStatementConditionBuilder $conditionBuilder)
     {

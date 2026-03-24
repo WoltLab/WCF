@@ -24,7 +24,6 @@ use wcf\system\WCF;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since   3.0
  *
  * @property-read   int     $articleID          unique id of the article
  * @property-read   ?int    $userID             id of the user the article belongs to or `null` if the user does not exist anymore

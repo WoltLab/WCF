@@ -60,9 +60,6 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
         }
     }
 
-    /**
-     * @since   3.0
-     */
     #[\Override]
     public static function getDefaultFilename()
     {

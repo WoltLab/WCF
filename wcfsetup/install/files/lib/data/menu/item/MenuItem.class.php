@@ -19,7 +19,6 @@ use wcf\util\Url;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since   3.0
  *
  * @property-read   int     $itemID         unique id of the menu item
  * @property-read   int     $menuID         id of the menu the menu item belongs to

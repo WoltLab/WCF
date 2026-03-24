@@ -269,7 +269,6 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
      * Returns the absolute path to the package directory with a trailing slash.
      *
      * @return  string
-     * @since   3.1
      */
     public function getAbsolutePackageDir()
     {

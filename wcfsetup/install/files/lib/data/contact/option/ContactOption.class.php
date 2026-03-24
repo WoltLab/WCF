@@ -14,7 +14,6 @@ use wcf\system\WCF;
  * @author      Alexander Ebert
  * @copyright   2001-2025 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since       3.1
  *
  * @property-read   int     $optionID           unique id of the option
  * @property-read   string  $optionTitle        title of the option or name of language item which contains the title

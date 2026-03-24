@@ -95,7 +95,6 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
 
     /**
      * @see \wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
-     * @since   3.0
      */
     #[\Override]
     public static function getDefaultFilename()

@@ -341,7 +341,6 @@ class Style extends DatabaseObject implements ITitledObject
 
     /**
      * Returns the cover photo filename.
-     * @since 3.1
      */
     public function getCoverPhoto(?bool $forceWebP = null): string
     {
@@ -461,7 +460,6 @@ class Style extends DatabaseObject implements ITitledObject
      *
      * @param string $variables
      * @return array{preset: string, custom: string}
-     * @since 3.0
      */
     public static function splitLessVariables($variables)
     {
@@ -479,7 +477,6 @@ class Style extends DatabaseObject implements ITitledObject
      * @param string $preset
      * @param string $custom
      * @return  string
-     * @since   3.0
      */
     public static function joinLessVariables($preset, $custom)
     {

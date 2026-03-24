@@ -13,7 +13,6 @@ use wcf\system\WCF;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since   3.1
  *
  * @property-read   int     $recipientID        unique id of the recipient
  * @property-read   string  $name               name of the recipient

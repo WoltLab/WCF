@@ -111,9 +111,6 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
         ];
     }
 
-    /**
-     * @since   3.1
-     */
     #[\Override]
     public static function getSyncDependencies()
     {

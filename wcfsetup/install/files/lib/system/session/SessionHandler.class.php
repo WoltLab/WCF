@@ -294,8 +294,6 @@ final class SessionHandler extends SingletonFactory
 
     /**
      * Returns true if client provided a valid session cookie.
-     *
-     * @since   3.0
      */
     public function hasValidCookie(): bool
     {
