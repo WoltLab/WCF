@@ -3,7 +3,7 @@
 namespace wcf\system\user\notification\event;
 
 use wcf\data\DatabaseObjectDecorator;
-use wcf\data\IFeedEntry;
+use wcf\data\IMessage;
 use wcf\data\language\Language;
 use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\notification\UserNotification;
@@ -25,7 +25,7 @@ use wcf\util\StringUtil;
  */
 abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator implements
     IUserNotificationEvent,
-    IFeedEntry
+    IMessage
 {
     /**
      * @inheritDoc
@@ -257,13 +257,19 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
         return $this->userNotificationObject;
     }
 
-    #[\Override]
+    /**
+     * @return int
+     * @deprecated 6.3 No longer in use.
+     */
     public function getComments()
     {
         return 0;
     }
 
-    #[\Override]
+    /**
+     * @return string[]
+     * @deprecated 6.3 No longer in use.
+     */
     public function getCategories()
     {
         return [
