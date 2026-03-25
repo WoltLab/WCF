@@ -2,7 +2,8 @@
 <input type="{$inputType}" id="{$option->optionName}" name="values[{$option->optionName}]" value="{$value}"{if $inputClass} class="{$inputClass}"{/if}{if !$searchOption} disabled{/if}>
 
 <script data-relocate="true">
-	{
+	{* The dependency on the date picker is required for the element access. *}
+	require(["WoltLabSuite/Core/Date/Picker"], () => {
 		const checkbox = document.getElementById('search_{unsafe:$option->optionName|encodeJS}');
 		const inputField = document.getElementById('{unsafe:$option->optionName|encodeJS}');
 		{if $inputType === 'date'}
@@ -30,5 +31,5 @@
 		{if !$searchOption && $inputType === 'date'}
 		datePicker.disabled = true;
 		{/if}
-	}
+	});
 </script>
