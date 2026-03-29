@@ -17,8 +17,6 @@
 	</nav>
 </header>
 
-{include file='shared_formNotice'}
-
 {unsafe:$form->getHTML()}
 
 {include file='footer'}

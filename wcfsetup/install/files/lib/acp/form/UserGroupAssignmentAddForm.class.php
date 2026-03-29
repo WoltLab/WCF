@@ -2,22 +2,17 @@
 
 namespace wcf\acp\form;
 
-use wcf\data\object\type\ObjectType;
 use wcf\data\user\group\assignment\UserGroupAssignment;
 use wcf\data\user\group\assignment\UserGroupAssignmentAction;
 use wcf\data\user\group\UserGroup;
-use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\condition\ConditionHandler;
-use wcf\system\exception\UserInputException;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\ObjectFilterFormField;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Shows the form to create a new automatic user group assignment.
@@ -33,12 +28,6 @@ class UserGroupAssignmentAddForm extends AbstractFormBuilderForm
      * @inheritDoc
      */
     public $activeMenuItem = 'wcf.acp.menu.link.group.assignment.add';
-
-    /**
-     * list of grouped user group assignment condition object types
-     * @var ObjectType[][]
-     */
-    public $conditions = [];
 
     /**
      * @inheritDoc
@@ -82,40 +71,10 @@ class UserGroupAssignmentAddForm extends AbstractFormBuilderForm
     }
 
     #[\Override]
-    public function assignVariables()
-    {
-        parent::assignVariables();
-
-        WCF::getTPL()->assign([
-            'action' => 'add',
-            'groupedObjectTypes' => $this->conditions,
-        ]);
-    }
-
-    #[\Override]
-    public function readData()
-    {
-        $this->conditions = UserGroupAssignmentHandler::getInstance()->getGroupedObjectTypes();
-
-        parent::readData();
-    }
-
-    #[\Override]
-    public function readFormParameters()
-    {
-        parent::readFormParameters();
-
-        foreach ($this->conditions as $conditions) {
-            /** @var ObjectType $condition */
-            foreach ($conditions as $condition) {
-                $condition->getProcessor()->readFormParameters();
-            }
-        }
-    }
-
-    #[\Override]
     public function save()
     {
+        \wcfDebug($this->form->getData());
+
         parent::save();
 
         $this->objectAction = new UserGroupAssignmentAction([], 'create', [
@@ -151,26 +110,5 @@ class UserGroupAssignmentAddForm extends AbstractFormBuilderForm
                 ['id' => $returnValues['returnValues']->assignmentID]
             ),
         ]);
-    }
-
-    #[\Override]
-    public function validate()
-    {
-        parent::validate();
-
-        $hasData = false;
-        foreach ($this->conditions as $conditions) {
-            foreach ($conditions as $condition) {
-                $condition->getProcessor()->validate();
-
-                if (!$hasData && $condition->getProcessor()->getData() !== null) {
-                    $hasData = true;
-                }
-            }
-        }
-
-        if (!$hasData) {
-            throw new UserInputException('conditions');
-        }
     }
 }
