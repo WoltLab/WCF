@@ -6,7 +6,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\AbstractFormField;
 
 /**
- * @template-covariant TValueType of mixed
+ * @template TValueType of mixed
  */
 interface IObjectFilter
 {
@@ -17,8 +17,6 @@ interface IObjectFilter
 
     /**
      * Returns the form field that the user interacts with when entering a value.
-     *
-     * @param array<string, mixed> $configuration
      */
     public function getFormField(): AbstractFormField;
 

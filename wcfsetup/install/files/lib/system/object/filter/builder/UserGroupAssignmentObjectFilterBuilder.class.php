@@ -9,7 +9,7 @@ use wcf\system\object\filter\user\UserLanguageObjectFilter;
 final class UserGroupAssignmentObjectFilterBuilder
 {
     /**
-     * @var list<IObjectFilter>
+     * @var list<IObjectFilter<mixed>>
      */
     private readonly array $filters;
 
@@ -22,7 +22,7 @@ final class UserGroupAssignmentObjectFilterBuilder
     }
 
     /**
-     * @return list<IObjectFilter>
+     * @return list<IObjectFilter<mixed>>
      */
     public function getFilters(): array
     {
