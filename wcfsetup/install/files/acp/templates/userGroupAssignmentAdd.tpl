@@ -26,12 +26,23 @@
 			dialogFactory()
 				.usingFormBuilder()
 				.fromEndpoint('{link controller='ObjectFilterBuilder' forceFrontend=true}{/link}')
-				.then((result) => {
-					console.log(result);
+				.then((response) => {
+					if (response.ok) {
+						addCondition(response.result);
+					}
 				});
 		});
+
+		function addCondition(result) {
+			const li = document.createElement("li");
+			li.textContent = result.summary;
+
+			document.getElementById("conditions").append(li);
+		}
 	});
 </script>
+
+<ul id="conditions"></ul>
 
 <form method="post"
 	action="{if $action == 'add'}{link controller='UserGroupAssignmentAdd'}{/link}{else}{link controller='UserGroupAssignmentEdit' object=$assignment}{/link}{/if}">

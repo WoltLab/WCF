@@ -3,62 +3,66 @@
 namespace wcf\system\object\filter\user;
 
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\form\builder\field\MultipleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\language\LanguageFactory;
 use wcf\system\object\filter\IObjectFilter;
 
+/**
+ * @implements IObjectFilter<int>
+ */
 final class UserLanguageObjectFilter implements IObjectFilter
 {
+    #[\Override]
     public function getIdentifier(): string
     {
         return 'com.woltlab.wcf.userLanguage';
     }
 
+    #[\Override]
     public function getTitle(): string
     {
         return 'TODO: user language';
     }
 
-    public function getFormField(): AbstractFormField
+    #[\Override]
+    public function getFormField(): SelectFormField
     {
-        return MultipleSelectionFormField::create('userLanguage')
+        return SelectFormField::create('userLanguage')
             ->label('TODO: user language')
             ->options(LanguageFactory::getInstance()->getLanguages())
             ->required();
     }
 
+    #[\Override]
     public function serializeValue(mixed $value): string
     {
-        return \json_encode($value, \JSON_THROW_ON_ERROR);
+        return (string)$value;
     }
 
+    #[\Override]
     public function unserializeValue(string $serializedValue): mixed
     {
-        return \json_decode($serializedValue, true, flags: \JSON_THROW_ON_ERROR);
+        return (int)$serializedValue;
     }
 
+    #[\Override]
     public function summarizeValue(mixed $value): string
     {
         return \sprintf(
             'TODO: has language %s',
-            \implode(
-                ', ',
-                \array_map(
-                    static fn(int $languageID) => LanguageFactory::getInstance()->getLanguage($languageID)->__toString(),
-                    $value,
-                )
-            )
+            LanguageFactory::getInstance()->getLanguage($value)->__toString()
         );
     }
 
+    #[\Override]
     public function applyFilter(PreparedStatementConditionBuilder $conditions, mixed $value): void
     {
-        $conditions->add('languageID IN (?)', [$value]);
+        $conditions->add('languageID = ?', [$value]);
     }
 
+    #[\Override]
     public function testValue(mixed $configuredValue, mixed $value): bool
     {
-        return \in_array($value, $configuredValue);
+        return $configuredValue === $value;
     }
 }

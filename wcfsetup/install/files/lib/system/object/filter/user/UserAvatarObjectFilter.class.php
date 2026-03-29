@@ -11,22 +11,26 @@ use wcf\system\object\filter\IObjectFilter;
  */
 final class UserAvatarObjectFilter implements IObjectFilter
 {
+    #[\Override]
     public function getIdentifier(): string
     {
         return 'com.woltlab.wcf.userAvatar';
     }
 
+    #[\Override]
     public function getTitle(): string
     {
         return 'TODO: user avatar';
     }
 
+    #[\Override]
     public function getFormField(): BooleanFormField
     {
         return BooleanFormField::create('userAvatar')
             ->label('wcf.user.avatar');
     }
 
+    #[\Override]
     public function applyFilter(PreparedStatementConditionBuilder $conditions, mixed $value): void
     {
         if ($value) {
@@ -36,6 +40,7 @@ final class UserAvatarObjectFilter implements IObjectFilter
         }
     }
 
+    #[\Override]
     public function serializeValue(mixed $value): string
     {
         if ($value) {
@@ -45,11 +50,13 @@ final class UserAvatarObjectFilter implements IObjectFilter
         return '0';
     }
 
+    #[\Override]
     public function unserializeValue(string $serializedValue): bool
     {
         return (bool)$serializedValue;
     }
 
+    #[\Override]
     public function summarizeValue(mixed $value): string
     {
         if ($value) {
@@ -59,6 +66,7 @@ final class UserAvatarObjectFilter implements IObjectFilter
         return 'TODO: does not have an avatar';
     }
 
+    #[\Override]
     public function testValue(mixed $configuredValue, mixed $value): bool
     {
         return (bool)$value;
