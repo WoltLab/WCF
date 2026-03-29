@@ -132,10 +132,9 @@ class UserGroup extends DatabaseObject implements ITitledObject
     /**
      * Returns a sorted list of groups filtered by given type.
      *
-     * @param int[] $types
-     * @param int[] $invalidGroupTypes
-     * @return  UserGroup[]
-     * @since       5.3
+     * @param list<int> $types
+     * @param list<int> $invalidGroupTypes
+     * @return array<int, UserGroup>
      */
     public static function getSortedGroupsByType(array $types = [], array $invalidGroupTypes = [])
     {
