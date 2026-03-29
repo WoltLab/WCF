@@ -83,7 +83,7 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Even
                 }
             });
         }
-        node.querySelectorAll("input, select").forEach((validatedField) => {
+        node.querySelectorAll("input, select, textarea").forEach((validatedField) => {
             // if a container is shown, ignore all fields that
             // have a hidden parent element within the container
             let parentNode = validatedField.parentNode;

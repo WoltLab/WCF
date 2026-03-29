@@ -498,6 +498,8 @@ abstract class AbstractListView
      */
     public function getAvailableFilters(): array
     {
+        $this->init();
+
         return $this->availableFilters;
     }
 

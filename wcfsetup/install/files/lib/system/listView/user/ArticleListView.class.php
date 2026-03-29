@@ -37,6 +37,7 @@ class ArticleListView extends AbstractListView
         $this->addAvailableSortFields([
             new ListViewSortField('time', 'wcf.global.date'),
             new ListViewSortField('title', 'wcf.global.title', 'title'),
+            new ListViewSortField('views', 'wcf.article.sortField.views'),
         ]);
         $this->addAvailableFilters([
             $this->getTitleFilter(),

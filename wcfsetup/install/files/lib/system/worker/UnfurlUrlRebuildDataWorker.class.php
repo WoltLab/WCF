@@ -6,6 +6,7 @@ use wcf\data\file\FileEditor;
 use wcf\data\unfurl\url\UnfurlUrl;
 use wcf\data\unfurl\url\UnfurlUrlEditor;
 use wcf\data\unfurl\url\UnfurlUrlList;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
 /**
@@ -50,7 +51,7 @@ final class UnfurlUrlRebuildDataWorker extends AbstractLinearRebuildDataWorker
         $deleteStatement = WCF::getDB()->prepare($sql);
 
         $deleteFileIDs = [];
-
+        $cleanUpImageIDs = [];
         foreach ($this->getObjectList()->getObjects() as $unfurlUrl) {
             if (!$unfurlUrl->isStored || $unfurlUrl->imageID === null) {
                 continue;
@@ -66,6 +67,7 @@ final class UnfurlUrlRebuildDataWorker extends AbstractLinearRebuildDataWorker
                 }
 
                 $deleteStatement->execute([$unfurlUrl->imageID]);
+                $cleanUpImageIDs[] = $unfurlUrl->imageID;
             } elseif ($unfurlUrl->fileID === null) {
                 $fileLocation = $this->getOldFileLocation($unfurlUrl);
 
@@ -82,6 +84,15 @@ final class UnfurlUrlRebuildDataWorker extends AbstractLinearRebuildDataWorker
                     $unfurlUrl->imageID,
                 ]);
             }
+        }
+
+        if ($cleanUpImageIDs !== []) {
+            $conditions = new PreparedStatementConditionBuilder();
+            $conditions->add("imageID IN (?)", [$cleanUpImageIDs]);
+            $sql = "DELETE FROM     wcf1_unfurl_url_image
+                    " . $conditions;
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute($conditions->getParameters());
         }
 
         if ($deleteFileIDs !== []) {

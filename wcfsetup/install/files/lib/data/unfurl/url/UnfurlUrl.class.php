@@ -130,7 +130,7 @@ class UnfurlUrl extends DatabaseObject
     {
         if (URL_UNFURLING_SAVE_IMAGES && $this->isStored && $this->fileID !== null) {
             return true;
-        } elseif (!empty($this->imageUrl)) {
+        } elseif (!empty($this->imageUrl) && (\MODULE_IMAGE_PROXY || \IMAGE_ALLOW_EXTERNAL_SOURCE)) {
             return true;
         }
 

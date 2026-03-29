@@ -50,6 +50,8 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
 
         $damagedFileIDs = [];
         foreach ($this->objectList->getObjects() as $file) {
+            $file = $this->fixFile($file);
+
             try {
                 $file = FileProcessor::getInstance()->stripExif($file);
                 $file = FileProcessor::getInstance()->generateWebpVariant($file);
@@ -139,6 +141,48 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
         if ($reloadFiles) {
             $this->objectList->readObjects();
         }
+    }
+
+    #[\NoDiscard("as the file itself could change")]
+    private function fixFile(File $file): File
+    {
+        if ($file->fileHashWebp === null) {
+            return $file;
+        }
+
+        if (\file_exists($file->getPathname())) {
+            return $file;
+        }
+
+        $pathnameWebp = $file->getPathnameWebp();
+        if ($pathnameWebp === null || \file_exists($pathnameWebp)) {
+            return $file;
+        }
+
+        // In some cases the database record is out of sync and the file has
+        // been converted to WebP but is not recognized as such.
+        $pathnameWebp = \str_replace('-variant.webp', '.webp', $pathnameWebp);
+        if (!\file_exists($pathnameWebp)) {
+            return $file;
+        }
+
+        // The file does exist but under its WebP filename.
+        (new FileEditor($file))->update([
+            'filename' => \sprintf(
+                "%s.webp",
+                \preg_replace(
+                    '~\.(?:jpe?g|png)$~i',
+                    '',
+                    $file->filename,
+                )
+            ),
+            'fileSize' => \filesize($pathnameWebp),
+            'fileHash' => $file->fileHashWebp,
+            'fileHashWebp' => null,
+            'mimeType' => 'image/webp',
+        ]);
+
+        return new File($file->fileID);
     }
 
     private function getPath(string $fileHash, string $fileExtension): string

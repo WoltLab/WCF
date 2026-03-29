@@ -249,7 +249,7 @@ class BBCodeHandler extends SingletonFactory
      *
      * @since 6.0
      */
-    public function getEditorLocalization(): string
+    public function getEditorLocalization(bool $asPlainLocale = false): string
     {
         $availableTranslations = [
             'af',
@@ -325,6 +325,10 @@ class BBCodeHandler extends SingletonFactory
 
         $locale = \strtolower(WCF::getLanguage()->getBcp47());
         if (\in_array($locale, $availableTranslations, true)) {
+            if ($asPlainLocale) {
+                return $locale;
+            }
+
             return \sprintf(
                 '"ckeditor5-translation/%s",',
                 $locale
@@ -335,6 +339,10 @@ class BBCodeHandler extends SingletonFactory
         // but also provide a "generic" variant. For example, "en-gb" and "en".
         [$languageCode] = \explode('-', $locale, 2);
         if (\in_array($languageCode, $availableTranslations, true)) {
+            if ($asPlainLocale) {
+                return $languageCode;
+            }
+
             return \sprintf(
                 '"ckeditor5-translation/%s",',
                 $languageCode
