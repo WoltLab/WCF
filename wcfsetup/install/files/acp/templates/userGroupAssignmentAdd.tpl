@@ -19,30 +19,14 @@
 
 {include file='shared_formNotice'}
 
-<button type="button" id="testButton" class="button">TODO: add object filter</button>
+<button type="button" id="testButton" class="button" data-endpoint="{link controller='ObjectFilterBuilder' forceFrontend=true}{/link}">TODO: add object filter</button>
 <script data-relocate="true">
-	require(["WoltLabSuite/Core/Component/Dialog"], ({ dialogFactory }) => {
-		document.getElementById("testButton").addEventListener("click", () => {
-			dialogFactory()
-				.usingFormBuilder()
-				.fromEndpoint('{link controller='ObjectFilterBuilder' forceFrontend=true}{/link}')
-				.then((response) => {
-					if (response.ok) {
-						addCondition(response.result);
-					}
-				});
-		});
-
-		function addCondition(result) {
-			const li = document.createElement("li");
-			li.textContent = result.summary;
-
-			document.getElementById("conditions").append(li);
-		}
+	require(["WoltLabSuite/Core/Component/Object/Filter/Builder"], ({ setup }) => {
+		setup(document.getElementById("conditions"), document.getElementById("testButton"));
 	});
 </script>
 
-<ul id="conditions"></ul>
+<div id="conditions"></div>
 
 <form method="post"
 	action="{if $action == 'add'}{link controller='UserGroupAssignmentAdd'}{/link}{else}{link controller='UserGroupAssignmentEdit' object=$assignment}{/link}{/if}">
