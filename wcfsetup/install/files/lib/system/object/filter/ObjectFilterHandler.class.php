@@ -8,13 +8,13 @@ use wcf\system\WCF;
 final class ObjectFilterHandler
 {
     /**
-     * @param list<IObjectFilter> $filters
+     * @param list<IObjectFilter<mixed>> $filters
      */
     public function __construct(
         private readonly array $filters,
     ) {}
 
-    public function getFormFields()
+    public function getFormFields(): void
     {
         $filters = [];
         foreach ($this->filters as $filter) {

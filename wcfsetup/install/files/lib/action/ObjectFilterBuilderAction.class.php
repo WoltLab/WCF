@@ -17,45 +17,6 @@ final class ObjectFilterBuilderAction implements RequestHandlerInterface
     #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        /*
-        $parameters = Helper::mapQueryParameters(
-            $request->getQueryParams(),
-            <<<'EOT'
-                array {
-                    gridView: string,
-                    filters: string[],
-                    gridViewParameters: array<string, string|string[]>
-                }
-                EOT
-        );
-
-        if (!\is_subclass_of($parameters['gridView'], AbstractGridView::class)) {
-            throw new UserInputException('gridView', 'invalid');
-        }
-
-        try {
-            /** @var AbstractGridView<DatabaseObject, DatabaseObjectList<DatabaseObject>> $view *//*
-            $view = new $parameters['gridView'](...$parameters['gridViewParameters']);
-            // @phpstan-ignore catch.neverThrown
-        } catch (\ArgumentCountError $e) {
-            if (\ENABLE_DEBUG_MODE) {
-                throw $e;
-            } else {
-                throw new IllegalLinkException();
-            }
-        }
-        */
-
-        /*
-        if (!$view->isAccessible()) {
-            throw new PermissionDeniedException();
-        }
-
-        if (!$view->isFilterable()) {
-            throw new IllegalLinkException();
-        }
-        */
-
         $form = $this->getForm();
 
         if ($request->getMethod() === 'GET') {
@@ -71,23 +32,24 @@ final class ObjectFilterBuilderAction implements RequestHandlerInterface
 
             $builder = new UserGroupAssignmentObjectFilterBuilder();
 
+            $result = [];
             foreach ($builder->getFilters() as $filter) {
-                $id = $filter->getFormField()->getId();
-                if (!isset($rawData[$id])) {
+                if ($data['filter'] !== $filter->getIdentifier()) {
                     continue;
                 }
 
-                $data[$id] = $filter->serializeValue($rawData[$id]);
-            }
+                $id = $filter->getFormField()->getId();
+                $value = $data[$id] ?? $rawData[$id];
 
-            foreach ($data as $key => $value) {
-                if ($value === '' || $value === null || $value === 0) {
-                    unset($data[$key]);
-                }
+                $result = [
+                    'identifier' => $filter->getIdentifier(),
+                    'summary' => $filter->summarizeValue($value),
+                    'value' => $filter->serializeValue($value),
+                ];
             }
 
             return new JsonResponse([
-                'result' => $data
+                'result' => $result,
             ]);
         } else {
             throw new \LogicException('Unreachable');
@@ -99,7 +61,6 @@ final class ObjectFilterBuilderAction implements RequestHandlerInterface
         $form = new Psr15DialogForm(
             static::class,
             'TODO: title',
-            //WCF::getLanguage()->get('wcf.global.filter')
         );
 
         $container = FormContainer::create('container');
@@ -120,13 +81,6 @@ final class ObjectFilterBuilderAction implements RequestHandlerInterface
                     ->field($select)
                     ->values([$filter->getIdentifier()])
             );
-
-            /*
-            if (isset($values[$filter->getID()])) {
-                $value = $filter->unserializeValue($values[$filter->getID()]);
-                $formField->value($value);
-            }
-            */
 
             $formField->addClass('objectFilterBuilder__list__item');
             $container->appendChild($formField);
