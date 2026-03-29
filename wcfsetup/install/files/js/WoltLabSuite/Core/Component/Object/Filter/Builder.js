@@ -6,10 +6,36 @@ define(["require", "exports", "WoltLabSuite/Core/Helper/PromiseMutex", "../../Di
         #conditions = new Map();
         #container;
         #endpoint;
-        constructor(container, button) {
+        constructor(container, endpoint, values) {
             this.#container = container;
-            this.#endpoint = button.dataset.endpoint;
+            this.#endpoint = endpoint;
+            const button = document.createElement("button");
+            button.type = "button";
+            button.classList.add("button");
+            button.textContent = "TODO: add object filter";
             button.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(() => this.#addFilter()));
+            this.#container.insertAdjacentElement("beforebegin", button);
+            const form = this.#container.closest("form");
+            let shadow = undefined;
+            form?.addEventListener("submit", () => {
+                if (shadow === undefined) {
+                    shadow = document.createElement("input");
+                    shadow.type = "hidden";
+                    shadow.name = this.#container.id;
+                    this.#container.insertAdjacentElement("afterend", shadow);
+                }
+                shadow.value = this.#serializeConditions();
+            });
+            this.#fromSerializedData(values);
+        }
+        #fromSerializedData(values) {
+            for (const [identifier, value] of values) {
+                this.#createCondition({
+                    identifier,
+                    summary: "TODO: missing summary!",
+                    value,
+                });
+            }
         }
         async #addFilter() {
             const response = await (0, Dialog_1.dialogFactory)().usingFormBuilder().fromEndpoint(this.#endpoint);
@@ -36,8 +62,15 @@ define(["require", "exports", "WoltLabSuite/Core/Helper/PromiseMutex", "../../Di
             element.remove();
             this.#conditions.delete(element);
         }
+        #serializeConditions() {
+            const values = [];
+            this.#conditions.forEach((condition) => {
+                values.push([condition.identifier, condition.value]);
+            });
+            return JSON.stringify(values);
+        }
     }
-    function setup(container, button) {
-        new ObjectFilterBuilder(container, button);
+    function setup(container, endpoint, values) {
+        new ObjectFilterBuilder(container, endpoint, values);
     }
 });

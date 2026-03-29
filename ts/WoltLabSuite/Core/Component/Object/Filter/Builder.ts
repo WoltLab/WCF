@@ -8,19 +8,53 @@ type Response = {
   value: string;
 };
 
+type SerializedData = [string, string][];
+
 class ObjectFilterBuilder {
   readonly #conditions: Map<HTMLElement, Response> = new Map();
   readonly #container: HTMLElement;
   readonly #endpoint: string;
 
-  constructor(container: HTMLElement, button: HTMLElement) {
+  constructor(container: HTMLElement, endpoint: string, values: SerializedData) {
     this.#container = container;
-    this.#endpoint = button.dataset.endpoint!;
+    this.#endpoint = endpoint;
 
+    const button = document.createElement("button");
+    button.type = "button";
+    button.classList.add("button");
+    button.textContent = "TODO: add object filter";
     button.addEventListener(
       "click",
       promiseMutex(() => this.#addFilter()),
     );
+
+    this.#container.insertAdjacentElement("beforebegin", button);
+
+    const form = this.#container.closest("form");
+    let shadow: HTMLInputElement | undefined = undefined;
+    form?.addEventListener("submit", () => {
+      if (shadow === undefined) {
+        shadow = document.createElement("input");
+        shadow.type = "hidden";
+        shadow.name = this.#container.id;
+
+        this.#container.insertAdjacentElement("afterend", shadow);
+      }
+
+      shadow.value = this.#serializeConditions();
+    });
+
+    this.#fromSerializedData(values);
+  }
+
+  #fromSerializedData(values: SerializedData): void {
+    for (const [identifier, value] of values) {
+      this.#createCondition({
+        identifier,
+        summary: "TODO: missing summary!",
+        value,
+      });
+    }
   }
 
   async #addFilter(): Promise<void> {
@@ -54,8 +88,17 @@ class ObjectFilterBuilder {
     element.remove();
     this.#conditions.delete(element);
   }
+
+  #serializeConditions(): string {
+    const values: [string, string][] = [];
+    this.#conditions.forEach((condition) => {
+      values.push([condition.identifier, condition.value]);
+    });
+
+    return JSON.stringify(values);
+  }
 }
 
-export function setup(container: HTMLElement, button: HTMLButtonElement): void {
-  new ObjectFilterBuilder(container, button);
+export function setup(container: HTMLElement, endpoint: string, values: SerializedData): void {
+  new ObjectFilterBuilder(container, endpoint, values);
 }
