@@ -6,9 +6,11 @@ use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\MapperBuilder;
 use Override;
+use wcf\action\ObjectFilterBuilderAction;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\TObjectTypeFormNode;
 use wcf\system\object\filter\builder\IObjectFilterBuilder;
+use wcf\system\request\LinkHandler;
 
 final class ObjectFilterFormField extends AbstractFormField
 {
@@ -62,6 +64,16 @@ final class ObjectFilterFormField extends AbstractFormField
         return \json_encode(
             $this->unserializeFilters($this->getValue()),
             \JSON_THROW_ON_ERROR,
+        );
+    }
+
+    public function getEndpoint(): string
+    {
+        return LinkHandler::getInstance()->getControllerLink(
+            ObjectFilterBuilderAction::class,
+            [
+                'objectType' => $this->getObjectType()->objectType,
+            ],
         );
     }
 
