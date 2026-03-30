@@ -6,18 +6,41 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\data\object\type\ObjectTypeCache;
+use wcf\http\Helper;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\Psr15DialogForm;
-use wcf\system\object\filter\builder\UserGroupAssignmentObjectFilterBuilder;
+use wcf\system\object\filter\builder\IObjectFilterBuilder;
 
 final class ObjectFilterBuilderAction implements RequestHandlerInterface
 {
     #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $form = $this->getForm();
+        $parameters = Helper::mapQueryParameters(
+            $request->getQueryParams(),
+            <<<'EOT'
+                array {
+                    objectType: string,
+                }
+                EOT
+        );
+        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
+            'com.woltlab.wcf.objectFilter',
+            $parameters['objectType'],
+        );
+
+        if ($objectType === null) {
+            throw new IllegalLinkException();
+        }
+
+        $builder = $objectType->getProcessor();
+        \assert($builder instanceof IObjectFilterBuilder);
+
+        $form = $this->getForm($builder);
 
         if ($request->getMethod() === 'GET') {
             return $form->toResponse();
@@ -29,8 +52,6 @@ final class ObjectFilterBuilderAction implements RequestHandlerInterface
 
             $rawData = $form->getData();
             $data = $rawData['data'];
-
-            $builder = new UserGroupAssignmentObjectFilterBuilder();
 
             $result = [];
             foreach ($builder->getFilters() as $filter) {
@@ -56,7 +77,7 @@ final class ObjectFilterBuilderAction implements RequestHandlerInterface
         }
     }
 
-    private function getForm(): Psr15DialogForm
+    private function getForm(IObjectFilterBuilder $builder): Psr15DialogForm
     {
         $form = new Psr15DialogForm(
             static::class,
@@ -72,7 +93,6 @@ final class ObjectFilterBuilderAction implements RequestHandlerInterface
             ->required();
         $container->appendChild($select);
 
-        $builder = new UserGroupAssignmentObjectFilterBuilder();
         $selectValues = [];
         foreach ($builder->getFilters() as $filter) {
             $formField = $filter->getFormField();
