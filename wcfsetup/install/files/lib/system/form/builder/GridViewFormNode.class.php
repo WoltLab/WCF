@@ -12,7 +12,7 @@ use wcf\system\gridView\AbstractGridView;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  *
- * @phpstan-type GridView AbstractGridView<\wcf\data\DatabaseObject, \wcf\data\DatabaseObjectList<\wcf\data\DatabaseObject>>
+ * @phpstan-type GridView AbstractGridView<*, *>
  */
 class GridViewFormNode implements IFormChildNode
 {

@@ -32,7 +32,7 @@ interface IEditableObject extends IStorableObject
     /**
      * Updates the counters of this object.
      *
-     * @param array<string, int> $counters
+     * @param array<string, int|float> $counters
      * @return void
      */
     public function updateCounters(array $counters = []);
