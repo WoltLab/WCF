@@ -8,7 +8,13 @@ type Response = {
   value: string;
 };
 
-type SerializedData = [string, string][];
+type Filter = {
+  identifier: string;
+  summary: string;
+  value: string;
+};
+
+type SerializedData = Filter[];
 
 class ObjectFilterBuilder {
   readonly #conditions: Map<HTMLElement, Response> = new Map();
@@ -48,12 +54,8 @@ class ObjectFilterBuilder {
   }
 
   #fromSerializedData(values: SerializedData): void {
-    for (const [identifier, value] of values) {
-      this.#createCondition({
-        identifier,
-        summary: "TODO: missing summary!",
-        value,
-      });
+    for (const filter of values) {
+      this.#createCondition(filter);
     }
   }
 

@@ -1777,6 +1777,11 @@
 			<definitionname>com.woltlab.wcf.file</definitionname>
 			<classname>wcf\system\file\processor\UnfurlUrlImageFileProcessor</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.userGroupAssignment</name>
+			<definitionname>com.woltlab.wcf.objectFilter</definitionname>
+			<classname>wcf\system\object\filter\builder\UserGroupAssignmentObjectFilterBuilder</classname>
+		</type>
 		<!-- deprecated -->
 		<type>
 			<name>com.woltlab.wcf.page.controller</name>

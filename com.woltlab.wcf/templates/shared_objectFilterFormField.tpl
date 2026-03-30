@@ -5,7 +5,7 @@
 		setup(
 			document.getElementById('{unsafe:$field->getPrefixedId()|encodeJS}'),
 			'{link controller='ObjectFilterBuilder' forceFrontend=true}{/link}',
-			{unsafe:$field->getValue()},
+			{unsafe:$field->toJson()},
 		);
 	});
 </script>

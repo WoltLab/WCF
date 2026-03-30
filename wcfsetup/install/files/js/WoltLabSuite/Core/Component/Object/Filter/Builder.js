@@ -29,12 +29,8 @@ define(["require", "exports", "WoltLabSuite/Core/Helper/PromiseMutex", "../../Di
             this.#fromSerializedData(values);
         }
         #fromSerializedData(values) {
-            for (const [identifier, value] of values) {
-                this.#createCondition({
-                    identifier,
-                    summary: "TODO: missing summary!",
-                    value,
-                });
+            for (const filter of values) {
+                this.#createCondition(filter);
             }
         }
         async #addFilter() {

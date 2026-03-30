@@ -228,5 +228,9 @@
 			<name>com.woltlab.wcf.file</name>
 			<interfacename>wcf\system\file\processor\IFileProcessor</interfacename>
 		</definition>
+		<definition>
+			<name>com.woltlab.wcf.objectFilter</name>
+			<interfacename>wcf\system\object\filter\builder\IObjectFilterBuilder</interfacename>
+		</definition>
 	</import>
 </data>
