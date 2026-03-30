@@ -51,6 +51,8 @@ class UserGroupAssignmentAddForm extends AbstractFormBuilderForm
             BooleanFormField::create('isDisabled')
                 ->label('wcf.acp.group.assignment.isDisabled'),
             ObjectFilterFormField::create('conditions')
+                ->objectType('com.woltlab.wcf.userGroupAssignment')
+                ->required()
         ]);
     }
 

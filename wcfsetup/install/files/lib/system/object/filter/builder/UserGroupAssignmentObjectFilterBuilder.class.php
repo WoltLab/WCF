@@ -2,11 +2,12 @@
 
 namespace wcf\system\object\filter\builder;
 
+use Override;
 use wcf\system\object\filter\IObjectFilter;
 use wcf\system\object\filter\user\UserAvatarObjectFilter;
 use wcf\system\object\filter\user\UserLanguageObjectFilter;
 
-final class UserGroupAssignmentObjectFilterBuilder
+final class UserGroupAssignmentObjectFilterBuilder implements IObjectFilterBuilder
 {
     /**
      * @var list<IObjectFilter<mixed>>
@@ -21,9 +22,7 @@ final class UserGroupAssignmentObjectFilterBuilder
         ];
     }
 
-    /**
-     * @return list<IObjectFilter<mixed>>
-     */
+    #[Override]
     public function getFilters(): array
     {
         return $this->filters;
