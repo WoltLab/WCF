@@ -53,6 +53,7 @@ abstract class AbstractListView
     protected bool $allowBulkInteractions = true;
     private int $fixedNumberOfItems = 0;
     private string $markAsReadEndpoint = '';
+    private ?ListViewPrimaryButton $primaryButton = null;
 
     /**
      * @var array<string, string>
@@ -790,6 +791,22 @@ abstract class AbstractListView
                 <span class="listView__item__unread__indicator" aria-hidden="true"></span>
             </button>
             HTML;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function setPrimaryButton(ListViewPrimaryButton $button): void
+    {
+        $this->primaryButton = $button;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getPrimaryButton(): ?ListViewPrimaryButton
+    {
+        return $this->primaryButton;
     }
 
     private function init(): void
