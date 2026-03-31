@@ -41,7 +41,7 @@ trait TCollectionReactions
         $this->reactionData = [];
 
         $objectType = ReactionHandler::getInstance()->getObjectType($this->getReactionObjectType());
-        ReactionHandler::getInstance()->loadLikeObjects($objectType, $this->getObjectIDs());
+        ReactionHandler::getInstance()->loadLikeObjects($objectType, $this->getObjectIDs(), false);
 
         foreach ($this->getObjectIDs() as $objectID) {
             $likeObject = ReactionHandler::getInstance()->getLikeObject($objectType, $objectID);

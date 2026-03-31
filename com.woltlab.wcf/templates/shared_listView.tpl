@@ -58,6 +58,11 @@
 						</button>
 					</div>
 				{/if}
+				{if $view->getPrimaryButton()}
+					<div class="listView__header__button">
+						{unsafe:$view->getPrimaryButton()->render()}
+					</div>
+				{/if}
 			</div>
 		</div>
 	{/if}
