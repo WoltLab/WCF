@@ -215,13 +215,15 @@ final class ReactionHandler extends SingletonFactory
      *
      * @param list<int> $objectIDs
      */
-    public function loadLikeObjects(ObjectType $objectType, array $objectIDs): int
+    public function loadLikeObjects(ObjectType $objectType, array $objectIDs, bool $loadLikeableObjects = true): int
     {
         if (empty($objectIDs)) {
             return 0;
         }
 
-        $this->cacheLikeableObjects($objectType->objectType, $objectIDs);
+        if ($loadLikeableObjects) {
+            $this->cacheLikeableObjects($objectType->objectType, $objectIDs);
+        }
 
         $i = 0;
 
