@@ -43,6 +43,7 @@ final class ReactionHandler extends SingletonFactory
 
     /**
      * @var ILikeObject[][]
+     * @deprecated 6.3
      */
     private array $likeableObjectsCache = [];
 
@@ -90,6 +91,8 @@ final class ReactionHandler extends SingletonFactory
 
     /**
      * Builds the data attributes for the object container.
+     *
+     * @deprecated 6.3
      */
     public function getDataAttributes(string $objectTypeName, int $objectID): string
     {
@@ -122,6 +125,8 @@ final class ReactionHandler extends SingletonFactory
 
     /**
      * @param list<int> $objectIDs
+     *
+     * @deprecated 6.3
      */
     public function cacheLikeableObjects(string $objectTypeName, array $objectIDs): void
     {
@@ -148,6 +153,8 @@ final class ReactionHandler extends SingletonFactory
 
     /**
      * Get an likeable object from the internal cache.
+     *
+     * @deprecated 6.3
      */
     public function getLikeableObject(string $objectTypeName, int $objectID): ILikeObject
     {
