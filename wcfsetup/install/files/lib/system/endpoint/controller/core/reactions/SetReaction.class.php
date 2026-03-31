@@ -5,6 +5,7 @@ namespace wcf\system\endpoint\controller\core\reactions;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\data\like\ILikeObjectTypeProvider;
 use wcf\data\like\IRestrictedLikeObjectTypeProvider;
 use wcf\data\like\Like;
 use wcf\data\like\object\ILikeObject;
@@ -49,6 +50,8 @@ final class SetReaction implements IController
         }
 
         $objectTypeProvider = $objectType->getProcessor();
+        \assert($objectTypeProvider instanceof ILikeObjectTypeProvider);
+
         $likeable = $objectTypeProvider->getObjectByID($parameters->objectID);
         \assert($likeable instanceof ILikeObject);
         $likeable->setObjectType($objectType);
