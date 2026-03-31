@@ -262,9 +262,7 @@ final class ReactionHandler extends SingletonFactory
         }
 
         foreach ($objectIDs as $objectID) {
-            if (!isset($this->likeObjectCache[$objectType->objectTypeID][$objectID])) {
-                $this->likeObjectCache[$objectType->objectTypeID][$objectID] = null;
-            }
+            $this->likeObjectCache[$objectType->objectTypeID][$objectID] ??= null;
         }
 
         return $i;
