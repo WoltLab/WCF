@@ -46,6 +46,7 @@ async function upload(
   file: File,
   fileHash: string,
   exifData: Exif | null,
+  ignoreExifRotation: boolean,
 ): Promise<ResponseCompleted | undefined> {
   const objectType = element.dataset.objectType!;
 
@@ -63,6 +64,7 @@ async function upload(
     objectType,
     element.dataset.context || "",
     exifData,
+    ignoreExifRotation,
   );
   if (!response.ok) {
     const validationError = response.error.getValidationError();
@@ -344,6 +346,7 @@ export function setup(): void {
       element.markAsBusy();
 
       const exifData = new Map<File, Exif | null>();
+      const ignoreExifRotation = new Set<File>();
 
       let processImage: (file: File) => Promise<File>;
       if (element.dataset.cropperConfiguration) {
@@ -353,7 +356,15 @@ export function setup(): void {
           exifData.set(file, await getExifBytes(file));
 
           try {
-            return await cropImage(element, file, cropperConfiguration);
+            const croppedFile = await cropImage(element, file, cropperConfiguration);
+            const croppedExifData = await getExifBytes(croppedFile);
+            if (exifData.has(file) && (croppedExifData === null || croppedExifData.length === 0)) {
+              // Cropping the image will implicitly normalized the rotation of
+              // the image but the EXIF data will still report a rotation.
+              ignoreExifRotation.add(file);
+            }
+
+            return croppedFile;
           } catch (e) {
             element.dispatchEvent(new CustomEvent("cancel"));
 
@@ -400,7 +411,7 @@ export function setup(): void {
 
             if (result.status === "fulfilled") {
               const exif = exifData.get(validFiles[i]) || exifData.get(files[i]) || null;
-              void upload(element, validFiles[i], result.value, exif);
+              void upload(element, validFiles[i], result.value, exif, ignoreExifRotation.has(files[i]));
             } else {
               throw new Error(result.reason);
             }
@@ -444,7 +455,7 @@ export function setup(): void {
         .then(async (resizeFile) => {
           try {
             const checksum = await getSha256Hash(resizeFile);
-            const data = await upload(element, resizeFile, checksum, exifData);
+            const data = await upload(element, resizeFile, checksum, exifData, false);
             if (data === undefined || typeof data.data.attachmentID !== "number") {
               promiseReject();
             } else {

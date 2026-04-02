@@ -5,14 +5,14 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
     exports.setup = setup;
     Resizer_1 = tslib_1.__importDefault(Resizer_1);
     const BUFFER_SIZE = 10 * 1_024 * 1_024;
-    async function upload(element, file, fileHash, exifData) {
+    async function upload(element, file, fileHash, exifData, ignoreExifRotation) {
         const objectType = element.dataset.objectType;
         const fileElement = document.createElement("woltlab-core-file");
         fileElement.dataset.filename = file.name;
         fileElement.dataset.fileSize = file.size.toString();
         const event = new CustomEvent("uploadStart", { detail: fileElement });
         element.dispatchEvent(event);
-        const response = await (0, Upload_1.upload)(file.name, file.size, fileHash, objectType, element.dataset.context || "", exifData);
+        const response = await (0, Upload_1.upload)(file.name, file.size, fileHash, objectType, element.dataset.context || "", exifData, ignoreExifRotation);
         if (!response.ok) {
             const validationError = response.error.getValidationError();
             if (validationError === undefined) {
@@ -234,13 +234,21 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                 }
                 element.markAsBusy();
                 const exifData = new Map();
+                const ignoreExifRotation = new Set();
                 let processImage;
                 if (element.dataset.cropperConfiguration) {
                     const cropperConfiguration = JSON.parse(element.dataset.cropperConfiguration);
                     processImage = async (file) => {
                         exifData.set(file, await getExifBytes(file));
                         try {
-                            return await (0, Cropper_1.cropImage)(element, file, cropperConfiguration);
+                            const croppedFile = await (0, Cropper_1.cropImage)(element, file, cropperConfiguration);
+                            const croppedExifData = await getExifBytes(croppedFile);
+                            if (exifData.has(file) && (croppedExifData === null || croppedExifData.length === 0)) {
+                                // Cropping the image will implicitly normalized the rotation of
+                                // the image but the EXIF data will still report a rotation.
+                                ignoreExifRotation.add(file);
+                            }
+                            return croppedFile;
                         }
                         catch (e) {
                             element.dispatchEvent(new CustomEvent("cancel"));
@@ -284,7 +292,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                         const result = checksums[i];
                         if (result.status === "fulfilled") {
                             const exif = exifData.get(validFiles[i]) || exifData.get(files[i]) || null;
-                            void upload(element, validFiles[i], result.value, exif);
+                            void upload(element, validFiles[i], result.value, exif, ignoreExifRotation.has(files[i]));
                         }
                         else {
                             throw new Error(result.reason);
@@ -321,7 +329,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                     .then(async (resizeFile) => {
                     try {
                         const checksum = await getSha256Hash(resizeFile);
-                        const data = await upload(element, resizeFile, checksum, exifData);
+                        const data = await upload(element, resizeFile, checksum, exifData, false);
                         if (data === undefined || typeof data.data.attachmentID !== "number") {
                             promiseReject();
                         }

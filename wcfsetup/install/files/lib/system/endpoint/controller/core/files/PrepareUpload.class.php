@@ -15,6 +15,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\FileProcessorPreflightResult;
+use wcf\util\ExifUtil;
 use wcf\util\JSON;
 use WoltLab\WebpExif\Chunk\Exif;
 
@@ -84,7 +85,7 @@ final class PrepareUpload implements IController
             }
         }
 
-        $exifData = $this->parseExifData($exifBytes);
+        $exifData = $this->parseExifData($exifBytes, $parameters->ignoreExifRotation);
         if ($exifData !== null) {
             $exifData = \serialize($exifData);
         }
@@ -109,7 +110,7 @@ final class PrepareUpload implements IController
     /**
      * @return array<string, array<string, mixed>>|null
      */
-    private function parseExifData(?string $exifData): ?array
+    private function parseExifData(?string $exifData, bool $ignoreExifRotation): ?array
     {
         if ($exifData === null) {
             return null;
@@ -127,6 +128,10 @@ final class PrepareUpload implements IController
         // We can also discard the `THUMBNAIL` section because it is a
         // pointless feature and we’re not extracting it either.
         unset($data['THUMBNAIL']);
+
+        if ($ignoreExifRotation && ExifUtil::getOrientation($data) !== ExifUtil::ORIENTATION_ORIGINAL) {
+            unset($data['IFD0']['Orientation']);
+        }
 
         if ($data === []) {
             return null;
@@ -156,5 +161,7 @@ final class PostUploadParameters
         public readonly string $context,
 
         public readonly ?string $exifData = null,
+
+        public readonly bool $ignoreExifRotation = false,
     ) {}
 }

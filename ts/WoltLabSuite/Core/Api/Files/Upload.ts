@@ -14,6 +14,7 @@ export async function upload(
   objectType: string,
   context: string,
   exifBytes: Exif | null = null,
+  ignoreExifRotation: boolean = false,
 ): Promise<ApiResult<Response>> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/files/upload`);
 
@@ -32,6 +33,7 @@ export async function upload(
     objectType,
     context,
     exifData,
+    ignoreExifRotation,
   };
 
   let response: Response;
