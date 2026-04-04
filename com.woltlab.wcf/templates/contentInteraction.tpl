@@ -52,7 +52,7 @@
 
 				{if $__contentInteractionDropdownItems}
 					<div class="contentInteractionDropdown dropdown jsOnly">
-						<button type="button" class="button small dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis'}</button>
+						<button type="button" class="button small jsTooltip dropdownToggle" title="{lang}wcf.global.button.moreOptions{/lang}">{icon name='ellipsis'}</button>
 
 						<ul class="contentInteractionDropdownItems dropdownMenu">
 							{unsafe:$__contentInteractionDropdownItems}
