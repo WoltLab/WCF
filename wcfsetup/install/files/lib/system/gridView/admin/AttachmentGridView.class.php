@@ -94,7 +94,7 @@ final class AttachmentGridView extends AbstractGridView
                 ->sortable(sortByDatabaseColumn: 'file_table.filename'),
             GridViewColumn::for('username')
                 ->label('wcf.user.username')
-                ->filter(new UserFilter('usernane', 'wcf.user.username', 'user_table.username'))
+                ->filter(new UserFilter('username', 'wcf.user.username', 'user_table.username'))
                 ->renderer(
                     new class extends AbstractColumnRenderer {
                         #[\Override]
