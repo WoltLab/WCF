@@ -264,13 +264,15 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Returns the count of unread moderation queue items.
      *
-     * @param bool $skipCache
      * @return  int
      */
-    public function getUnreadModerationCount($skipCache = false)
+    public function getUnreadModerationCount(bool $skipCache = false)
     {
         // get count
         $count = UserStorageHandler::getInstance()->getField('unreadModerationCount');
+        if (\is_numeric($count)) {
+            $count = (int)$count;
+        }
 
         // cache does not exist or is outdated
         if ($count === null || $skipCache) {
