@@ -268,10 +268,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                 void Promise.allSettled(files.map((file) => processImage(file)))
                     .then(async (results) => {
                     const validFiles = [];
+                    const validFilesToFiles = [];
                     for (let i = 0, length = results.length; i < length; i++) {
                         const result = results[i];
                         if (result.status === "fulfilled") {
                             validFiles.push(result.value);
+                            validFilesToFiles.push(i);
                         }
                         else if (result.reason !== undefined) {
                             let message;
@@ -291,8 +293,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                     for (let i = 0, length = checksums.length; i < length; i++) {
                         const result = checksums[i];
                         if (result.status === "fulfilled") {
-                            const exif = exifData.get(validFiles[i]) || exifData.get(files[i]) || null;
-                            void upload(element, validFiles[i], result.value, exif, ignoreExifRotation.has(files[i]));
+                            const fileIndex = validFilesToFiles[i];
+                            const exif = exifData.get(validFiles[i]) || exifData.get(files[fileIndex]) || null;
+                            void upload(element, validFiles[i], result.value, exif, ignoreExifRotation.has(files[fileIndex]));
                         }
                         else {
                             throw new Error(result.reason);
