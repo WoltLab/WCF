@@ -347,7 +347,8 @@ class ReactionHandler extends SingletonFactory
                 $sql = "INSERT INTO             wcf1_like
                                                 (objectID, objectTypeID, objectUserID, userID, time, likeValue, reactionTypeID)
                         VALUES                  (?, ?, ?, ?, ?, ?, ?)
-                        ON DUPLICATE KEY UPDATE time = ?,
+                        ON DUPLICATE KEY UPDATE likeID = LAST_INSERT_ID(likeID),
+                                                time = ?,
                                                 likeValue = ?,
                                                 reactionTypeID = ?";
                 $statement = WCF::getDB()->prepare($sql);
@@ -520,7 +521,8 @@ class ReactionHandler extends SingletonFactory
             $sql = "INSERT INTO             wcf1_like_object
                                             (objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes, cachedReactions)
                     VALUES                  (?, ?, ?, ?, ?, ?, ?)
-                    ON DUPLICATE KEY UPDATE likes = ?,
+                    ON DUPLICATE KEY UPDATE likeObjectID = LAST_INSERT_ID(likeObjectID),
+                                            likes = ?,
                                             dislikes = ?,
                                             cumulativeLikes = ?,
                                             cachedReactions = ?";
