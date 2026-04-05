@@ -113,7 +113,6 @@
 	<category name="wcf.acp.attachment">
 		<item name="wcf.acp.attachment.list"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.attachment.stats"><![CDATA[<ul class="inlineList dotSeparated"><li>{#$stats.count} Attachment{if $stats.count != 1}s{/if}</li><li>{@$stats.size|filesize}</li><li>{#$stats.downloads} Download{if $stats.downloads != 1}s{/if}</li></ul>]]></item>
-		<item name="wcf.acp.attachment.button.goToContent"><![CDATA[Go to Related Content]]></item>
 		<item name="wcf.acp.attachment.content"><![CDATA[Related Content]]></item>
 	</category>
 	<category name="wcf.acp.bbcode">
@@ -5734,5 +5733,6 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.user.profileHits.hitsPerDay"/>
 	<item name="wcf.user.avatar.type.none"/>
 	<item name="wcf.user.avatar.type.custom"/>
+	<item name="wcf.acp.attachment.button.goToContent"/>
 </delete>
 </language>
