@@ -6,7 +6,9 @@ use wcf\acp\form\UserEditForm;
 use wcf\data\attachment\AdministrativeAttachment;
 use wcf\data\attachment\AdministrativeAttachmentList;
 use wcf\data\DatabaseObject;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\event\gridView\admin\AttachmentGridViewInitialized;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
@@ -190,13 +192,23 @@ final class AttachmentGridView extends AbstractGridView
      */
     private function getAvailableFileTypes(): array
     {
+        $objectTypeIDs = $this->getAvailableObjectTypeIDs();
+        if ($objectTypeIDs === []) {
+            return [];
+        }
+
+        $conditionBuilder = new PreparedStatementConditionBuilder();
+        $conditionBuilder->add('attachment.fileID IS NOT NULL');
+        $conditionBuilder->add('attachment.objectTypeID IN (?)', [$objectTypeIDs]);
+        $conditionBuilder->add('attachment.tmpHash = ?', ['']);
+
         $sql = "SELECT    DISTINCT file_table.mimeType
                 FROM      wcf1_attachment attachment
                 LEFT JOIN wcf1_file file_table
                 ON        (file_table.fileID = attachment.fileID)
-                WHERE     attachment.fileID IS NOT NULL";
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepare($sql);
-        $statement->execute();
+        $statement->execute($conditionBuilder->getParameters());
         $fileTypes = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
         \sort($fileTypes);
@@ -213,12 +225,37 @@ final class AttachmentGridView extends AbstractGridView
     #[\Override]
     protected function createObjectList(): AdministrativeAttachmentList
     {
-        return new AdministrativeAttachmentList();
+        $list = new AdministrativeAttachmentList();
+
+        $objectTypeIDs = $this->getAvailableObjectTypeIDs();
+        if ($objectTypeIDs !== []) {
+            $list->getConditionBuilder()->add('attachment.objectTypeID IN (?)', [$objectTypeIDs]);
+        } else {
+            $list->getConditionBuilder()->add('1=0');
+        }
+        $list->getConditionBuilder()->add('attachment.tmpHash = ?', ['']);
+
+        return $list;
     }
 
     #[\Override]
     protected function getInitializedEvent(): AttachmentGridViewInitialized
     {
         return new AttachmentGridViewInitialized($this);
+    }
+
+    /**
+     * @return list<int>
+     */
+    private function getAvailableObjectTypeIDs(): array
+    {
+        $objectTypeIDs = [];
+        foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.attachment.objectType') as $objectType) {
+            if (!$objectType->private) {
+                $objectTypeIDs[] = $objectType->objectTypeID;
+            }
+        }
+
+        return $objectTypeIDs;
     }
 }
