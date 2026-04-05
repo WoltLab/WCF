@@ -177,7 +177,7 @@ final class AttachmentGridView extends AbstractGridView
         $statement->execute();
         $fileTypes = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
-        \ksort($fileTypes);
+        \sort($fileTypes);
 
         return \array_combine($fileTypes, $fileTypes);
     }
