@@ -60,9 +60,9 @@ class ContactOptionAction extends AbstractDatabaseObjectAction implements ISorta
             throw new UserInputException('structure');
         }
 
-        $recipientList = new ContactOptionList();
-        $recipientList->setObjectIDs($this->parameters['data']['structure'][0]);
-        if ($recipientList->countObjects() != \count($this->parameters['data']['structure'][0])) {
+        $optionList = new ContactOptionList();
+        $optionList->setObjectIDs($this->parameters['data']['structure'][0]);
+        if ($optionList->countObjects() != \count($this->parameters['data']['structure'][0])) {
             throw new UserInputException('structure');
         }
     }
