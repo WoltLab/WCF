@@ -109,13 +109,18 @@ final class AttachmentGridView extends AbstractGridView
                             if (WCF::getSession()->getPermission('admin.user.canEditUser')) {
                                 return \sprintf(
                                     '<a href="%s">%s</a>',
-                                    LinkHandler::getInstance()->getControllerLink(UserEditForm::class, [
-                                        'id' => $row->userID,
-                                    ]),
-                                    $row->username
+                                    StringUtil::encodeHTML(
+                                        LinkHandler::getInstance()->getControllerLink(
+                                            UserEditForm::class,
+                                            [
+                                                'id' => $row->userID,
+                                            ]
+                                        )
+                                    ),
+                                    StringUtil::encodeHTML($row->username)
                                 );
                             } else {
-                                return $row->username;
+                                return StringUtil::encodeHTML($row->username);
                             }
                         }
                     }
