@@ -114,6 +114,7 @@
 		<item name="wcf.acp.attachment.list"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.attachment.stats"><![CDATA[<ul class="inlineList dotSeparated"><li>{#$stats.count} {if $stats.count == 1}Dateianhang{else}Dateianhänge{/if}</li><li>{@$stats.size|filesize}</li><li>{#$stats.downloads} Download{if $stats.downloads != 1}s{/if}</li></ul>]]></item>
 		<item name="wcf.acp.attachment.button.goToContent"><![CDATA[Zum Inhalt gehen]]></item>
+		<item name="wcf.acp.attachment.content"><![CDATA[Inhalt]]></item>
 	</category>
 	<category name="wcf.acp.bbcode">
 		<item name="wcf.acp.bbcode.add"><![CDATA[BBCode hinzufügen]]></item>

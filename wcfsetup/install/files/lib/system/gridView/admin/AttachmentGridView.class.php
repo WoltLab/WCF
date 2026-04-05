@@ -11,6 +11,7 @@ use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\AbstractColumnRenderer;
+use wcf\system\gridView\renderer\DefaultColumnRenderer;
 use wcf\system\gridView\renderer\FilesizeColumnRenderer;
 use wcf\system\gridView\renderer\ILinkColumnRenderer;
 use wcf\system\gridView\renderer\NumberColumnRenderer;
@@ -92,6 +93,27 @@ final class AttachmentGridView extends AbstractGridView
                 ->unsafeDisableEncoding()
                 ->renderer(new TruncatedTextColumnRenderer())
                 ->sortable(sortByDatabaseColumn: 'file_table.filename'),
+            GridViewColumn::for('container')
+                ->label('wcf.acp.attachment.content')
+                ->renderer(
+                    new class extends DefaultColumnRenderer implements ILinkColumnRenderer {
+                        #[\Override]
+                        public function render(mixed $value, DatabaseObject $row): string
+                        {
+                            \assert($row instanceof AdministrativeAttachment);
+
+                            if ($row->getContainerObject() === null) {
+                                return '';
+                            }
+
+                            return \sprintf(
+                                '<a href="%s">%s</a>',
+                                StringUtil::encodeHTML($row->getContainerObject()->getLink()),
+                                StringUtil::encodeHTML($row->getContainerObject()->getTitle())
+                            );
+                        }
+                    }
+                ),
             GridViewColumn::for('username')
                 ->label('wcf.user.username')
                 ->filter(new UserFilter('username', 'wcf.user.username', 'user_table.userID'))
