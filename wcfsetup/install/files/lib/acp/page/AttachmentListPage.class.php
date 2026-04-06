@@ -2,7 +2,9 @@
 
 namespace wcf\acp\page;
 
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\page\AbstractGridViewPage;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\gridView\admin\AttachmentGridView;
 use wcf\system\WCF;
 
@@ -48,14 +50,34 @@ final class AttachmentListPage extends AbstractGridViewPage
      */
     private function getAttachmentStats(): array
     {
-        $sql = "SELECT  COUNT(*) AS count,
-                        COALESCE(SUM(file.fileSize), 0) AS size,
-                        COALESCE(SUM(downloads), 0) AS downloads
-                FROM    wcf1_attachment attachment
+        $objectTypeIDs = [];
+        foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.attachment.objectType') as $objectType) {
+            if (!$objectType->private) {
+                $objectTypeIDs[] = $objectType->objectTypeID;
+            }
+        }
+
+        if ($objectTypeIDs === []) {
+            return [
+                'count' => 0,
+                'size' => 0,
+                'downloads' => 0,
+            ];
+        }
+
+        $conditionBuilder = new PreparedStatementConditionBuilder();
+        $conditionBuilder->add('attachment.objectTypeID IN (?)', [$objectTypeIDs]);
+        $conditionBuilder->add('attachment.tmpHash = ?', ['']);
+
+        $sql = "SELECT      COUNT(*) AS count,
+                            COALESCE(SUM(file.fileSize), 0) AS size,
+                            COALESCE(SUM(downloads), 0) AS downloads
+                FROM        wcf1_attachment attachment
                 LEFT JOIN   wcf1_file file
-                ON          (file.fileID = attachment.fileID)";
+                ON          (file.fileID = attachment.fileID)
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepare($sql);
-        $statement->execute();
+        $statement->execute($conditionBuilder->getParameters());
 
         return $statement->fetchArray();
     }
