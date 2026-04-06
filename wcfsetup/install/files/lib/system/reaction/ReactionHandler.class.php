@@ -42,8 +42,7 @@ use wcf\util\StringUtil;
 class ReactionHandler extends SingletonFactory
 {
     /**
-     * loaded like objects
-     * @var LikeObject[][]
+     * @var array<int, array<int, ?LikeObject>>
      */
     protected $likeObjectCache = [];
 
@@ -231,7 +230,10 @@ class ReactionHandler extends SingletonFactory
      */
     public function getLikeObject(ObjectType $objectType, $objectID)
     {
-        if (!isset($this->likeObjectCache[$objectType->objectTypeID][$objectID])) {
+        if (
+            !isset($this->likeObjectCache[$objectType->objectTypeID])
+            || !\array_key_exists($objectID, $this->likeObjectCache[$objectType->objectTypeID])
+        ) {
             $this->loadLikeObjects($objectType, [$objectID]);
         }
 
@@ -247,7 +249,8 @@ class ReactionHandler extends SingletonFactory
     public function getLikeObjects(ObjectType $objectType)
     {
         if (isset($this->likeObjectCache[$objectType->objectTypeID])) {
-            return $this->likeObjectCache[$objectType->objectTypeID];
+            // Use `array_filter` to filter `null` values.
+            return \array_filter($this->likeObjectCache[$objectType->objectTypeID]);
         }
 
         return [];
@@ -299,6 +302,12 @@ class ReactionHandler extends SingletonFactory
         while ($row = $statement->fetchArray()) {
             $this->likeObjectCache[$objectType->objectTypeID][$row['objectID']] = new LikeObject(null, $row);
             $i++;
+        }
+
+        foreach ($objectIDs as $objectID) {
+            if (!isset($this->likeObjectCache[$objectType->objectTypeID][$objectID])) {
+                $this->likeObjectCache[$objectType->objectTypeID][$objectID] = null;
+            }
         }
 
         return $i;
