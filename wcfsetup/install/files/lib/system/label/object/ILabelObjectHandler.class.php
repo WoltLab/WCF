@@ -50,10 +50,11 @@ interface ILabelObjectHandler
     /**
      * Removes all assigned labels.
      *
+     * @param int|list<int> $objectID
      * @return void
-     * @see     \wcf\system\label\LabelHandler::removeLabels()
+     * @see \wcf\system\label\LabelHandler::removeLabels()
      */
-    public function removeLabels(int $objectID, bool $validatePermissions = true);
+    public function removeLabels(int|array $objectID, bool $validatePermissions = true);
 
     /**
      * Returns a list of assigned labels.

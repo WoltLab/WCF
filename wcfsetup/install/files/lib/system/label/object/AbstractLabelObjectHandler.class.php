@@ -148,9 +148,8 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
     }
 
     #[\Override]
-    public function removeLabels(int $objectID, bool $validatePermissions = true)
+    public function removeLabels(int|array $objectID, bool $validatePermissions = true)
     {
-        // @phpstan-ignore function.impossibleType
         $objectIDs = (\is_array($objectID)) ? $objectID : [$objectID];
         LabelHandler::getInstance()->removeLabels($this->objectTypeID, $objectIDs);
     }
