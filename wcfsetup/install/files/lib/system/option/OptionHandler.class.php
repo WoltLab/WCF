@@ -91,7 +91,6 @@ class OptionHandler implements IOptionHandler
             'general.page.seo',
             'general.system.cookie',
             'general.system.http',
-            'general.system.image',
             'general.system.packageServer',
             'general.system.proxy',
             'general.system.search',
@@ -99,6 +98,7 @@ class OptionHandler implements IOptionHandler
             'security.general.secrets',
         ],
         'options' => [
+            'image_adapter_type',
             'mail_from_address',
         ],
     ];
