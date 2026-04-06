@@ -2,6 +2,7 @@
 
 namespace wcf\system\attachment;
 
+use wcf\system\cache\runtime\AbstractRuntimeCache;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 
@@ -17,10 +18,10 @@ use wcf\util\ArrayUtil;
 abstract class AbstractAttachmentObjectType implements IAttachmentObjectType
 {
     /**
-     * cached objects
      * @var array<int, ?T>
+     * @deprecated 6.3
      */
-    protected $cachedObjects = [];
+    protected array $cachedObjects = [];
 
     #[\Override]
     public function getMaxSize()
@@ -49,12 +50,17 @@ abstract class AbstractAttachmentObjectType implements IAttachmentObjectType
     #[\Override]
     public function getObject(int $objectID)
     {
+        if ($this->getObjectRuntimeCache() !== null) {
+            return $this->getObjectRuntimeCache()->getObject($objectID);
+        }
+
         return $this->cachedObjects[$objectID] ?? null;
     }
 
     /**
      * @param array<int, ?T> $objects
      * @return void
+     * @deprecated 6.3
      */
     public function setCachedObjects(array $objects)
     {
@@ -63,8 +69,21 @@ abstract class AbstractAttachmentObjectType implements IAttachmentObjectType
         }
     }
 
+    /**
+     * @return ?AbstractRuntimeCache<*, *>
+     */
+    protected function getObjectRuntimeCache(): ?AbstractRuntimeCache
+    {
+        return null;
+    }
+
     #[\Override]
-    public function cacheObjects(array $objectIDs) {}
+    public function cacheObjects(array $objectIDs)
+    {
+        if ($this->getObjectRuntimeCache() !== null) {
+            $this->getObjectRuntimeCache()->cacheObjectIDs($objectIDs);
+        }
+    }
 
     #[\Override]
     public function setPermissions(array $attachments)

@@ -3,6 +3,7 @@
 namespace wcf\data\attachment;
 
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\attachment\IAttachmentObjectType;
 
 /**
  * Represents a list of attachments.
@@ -53,8 +54,9 @@ class AdministrativeAttachmentList extends AttachmentList
         }
 
         foreach ($groupedObjectIDs as $objectTypeID => $objectIDs) {
-            $objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
-            $objectType->getProcessor()->cacheObjects($objectIDs);
+            $processor = ObjectTypeCache::getInstance()->getObjectType($objectTypeID)->getProcessor();
+            \assert($processor instanceof IAttachmentObjectType);
+            $processor->cacheObjects($objectIDs);
         }
     }
 }
