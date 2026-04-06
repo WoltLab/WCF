@@ -15,6 +15,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\package\plugin\DatabasePackageInstallationPlugin;
 use wcf\system\package\plugin\OptionPackageInstallationPlugin;
 use wcf\system\package\SplitNodeException;
 use wcf\system\search\SearchIndexManager;
@@ -100,11 +101,20 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
     public function invoke()
     {
         $dispatcher = new DevtoolsPackageInstallationDispatcher($this->project);
-        /** @var IIdempotentPackageInstallationPlugin $pip */
-        $pip = new $this->packageInstallationPlugin->className(
-            $dispatcher,
-            $this->devtoolsPip->getInstructions($this->project, $this->parameters['target'])
-        );
+        $className = $this->packageInstallationPlugin->className;
+        if ($className === DatabasePackageInstallationPlugin::class) {
+            $pip = new DatabasePackageInstallationPlugin(
+                $dispatcher,
+                $this->devtoolsPip->getInstructions($this->project, $this->parameters['target']),
+                $this->project,
+            );
+        } else {
+            /** @var IIdempotentPackageInstallationPlugin $pip */
+            $pip = new $this->packageInstallationPlugin->className(
+                $dispatcher,
+                $this->devtoolsPip->getInstructions($this->project, $this->parameters['target'])
+            );
+        }
 
         $start = \microtime(true);
 

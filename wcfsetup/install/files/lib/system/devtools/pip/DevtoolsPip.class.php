@@ -211,6 +211,8 @@ class DevtoolsPip extends DatabaseObjectDecorator
                         $targets[] = \basename($file);
                     }
 
+                    $targets[] = 'install_com.woltlab.wcf.php';
+
                     // `glob()` returns files in an arbitrary order
                     \sort($targets, \SORT_NATURAL);
 
@@ -366,9 +368,13 @@ class DevtoolsPip extends DatabaseObjectDecorator
                     break;
 
                 case 'database':
-                    $instructions['value'] = DatabasePackageInstallationPlugin::SCRIPT_DIR . $target;
+                    if ($target === 'install_com.woltlab.wcf.php') {
+                        $instructions['value'] = $target;
+                    } else {
+                        $instructions['value'] = DatabasePackageInstallationPlugin::SCRIPT_DIR . $target;
 
-                    $tar->registerFile($instructions['value'], $project->path . 'wcfsetup/install/files/' . $target);
+                        $tar->registerFile($instructions['value'], $project->path . 'wcfsetup/install/files/' . $target);
+                    }
 
                     break;
 

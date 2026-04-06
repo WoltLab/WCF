@@ -3,9 +3,11 @@
 namespace wcf\system\package\plugin;
 
 use wcf\data\application\Application;
+use wcf\data\devtools\project\DevtoolsProject;
 use wcf\data\package\Package;
 use wcf\system\database\table\DatabaseTableChangeProcessor;
 use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
+use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
 
 /**
@@ -19,19 +21,34 @@ class DatabasePackageInstallationPlugin extends AbstractPackageInstallationPlugi
 {
     public const SCRIPT_DIR = 'acp/database/';
 
+    /**
+     * @param mixed[] $instruction
+     */
+    public function __construct(
+        PackageInstallationDispatcher $installation,
+        array $instruction = [],
+        private readonly ?DevtoolsProject $devtoolsProject = null,
+    ) {
+        parent::__construct($installation, $instruction);
+    }
+
     #[\Override]
     public function install()
     {
         parent::install();
 
-        $abbreviation = 'wcf';
-        if (isset($this->instruction['attributes']['application'])) {
-            $abbreviation = $this->instruction['attributes']['application'];
-        } elseif ($this->installation->getPackage()->isApplication) {
-            $abbreviation = Package::getAbbreviation($this->installation->getPackage()->package);
-        }
+        if ($this->devtoolsProject?->isCore() && $this->instruction['value'] === 'install_com.woltlab.wcf.php') {
+            $packageDir = $this->devtoolsProject->path . 'wcfsetup/setup/db/';
+        } else {
+            $abbreviation = 'wcf';
+            if (isset($this->instruction['attributes']['application'])) {
+                $abbreviation = $this->instruction['attributes']['application'];
+            } elseif ($this->installation->getPackage()->isApplication) {
+                $abbreviation = Package::getAbbreviation($this->installation->getPackage()->package);
+            }
 
-        $packageDir = Application::getDirectory($abbreviation);
+            $packageDir = Application::getDirectory($abbreviation);
+        }
 
         $this->updateDatabase($packageDir . $this->instruction['value']);
     }
