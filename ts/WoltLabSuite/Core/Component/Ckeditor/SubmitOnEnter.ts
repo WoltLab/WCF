@@ -14,7 +14,7 @@ import type { CKEditor5 } from "@woltlab/editor";
 import { dispatchToCkeditor } from "./Event";
 import type { CKEditor } from "../Ckeditor";
 
-export function setup(editor: CKEditor5.ClassicEditor.ClassicEditor, ckeditor: CKEditor): void {
+export function setup(editor: CKEditor5.ClassicEditor, ckeditor: CKEditor): void {
   editor.editing.view.document.on(
     "enter",
     (evt, data) => {

@@ -34,10 +34,10 @@ import type { WoltlabSmileyItem } from "@woltlab/editor/plugins/ckeditor5-woltla
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
 class Ckeditor {
-  readonly #editor: CKEditor5.ClassicEditor.ClassicEditor;
+  readonly #editor: CKEditor5.ClassicEditor;
   readonly #features: Features;
 
-  constructor(editor: CKEditor5.ClassicEditor.ClassicEditor, features: Features) {
+  constructor(editor: CKEditor5.ClassicEditor, features: Features) {
     this.#editor = editor;
     this.#features = features;
   }
@@ -165,16 +165,16 @@ class Ckeditor {
     return this.#editor.sourceElement!;
   }
 
-  get focusTracker(): CKEditor5.Utils.FocusTracker {
+  get focusTracker(): CKEditor5.FocusTracker {
     return this.#editor.ui.focusTracker;
   }
 }
 
 function* findModelForRemoval(
-  element: CKEditor5.Engine.ModelElement,
+  element: CKEditor5.ModelElement,
   model: string,
   attributes: Record<string, string | number | boolean>,
-): Generator<CKEditor5.Engine.ModelElement> {
+): Generator<CKEditor5.ModelElement> {
   if (element.is("element", model)) {
     const isMatch = Object.entries(attributes).every(([key, value]) => {
       if (!element.hasAttribute(key)) {
@@ -221,9 +221,9 @@ function initializeConfiguration(
   features: Features,
   bbcodes: WoltlabBbcodeItem[],
   smileys: WoltlabSmileyItem[],
-  codeBlockLanguages: CKEditor5.CodeBlock.CodeBlockConfig["languages"],
+  codeBlockLanguages: CKEditor5.CodeBlockConfig["languages"],
   modules: typeof CKEditor5,
-): CKEditor5.Core.EditorConfig {
+): CKEditor5.EditorConfig {
   const configuration = createConfigurationFor(features);
   configuration.codeBlock = {
     languages: codeBlockLanguages,
@@ -242,7 +242,7 @@ function initializeConfiguration(
     modules,
   });
 
-  const toolbar = configuration.toolbar as CKEditor5.Core.ToolbarConfigItem[];
+  const toolbar = configuration.toolbar as CKEditor5.ToolbarConfigItem[];
   for (let { name } of bbcodes) {
     name = `woltlabBbcode_${name}`;
 
@@ -256,7 +256,7 @@ function initializeConfiguration(
   return configuration;
 }
 
-function hasToolbarButton(items: CKEditor5.Core.ToolbarConfigItem[], name: string): boolean {
+function hasToolbarButton(items: CKEditor5.ToolbarConfigItem[], name: string): boolean {
   for (const item of items) {
     if (typeof item === "string") {
       if (item === name) {
@@ -270,7 +270,7 @@ function hasToolbarButton(items: CKEditor5.Core.ToolbarConfigItem[], name: strin
   return false;
 }
 
-function notifyOfDataChanges(editor: CKEditor5.ClassicEditor.ClassicEditor, element: HTMLElement): void {
+function notifyOfDataChanges(editor: CKEditor5.ClassicEditor, element: HTMLElement): void {
   editor.model.document.on("change:data", () => {
     dispatchToCkeditor(element).changeData();
   });
@@ -281,7 +281,7 @@ export async function setupCkeditor(
   features: Features,
   bbcodes: WoltlabBbcodeItem[],
   smileys: WoltlabSmileyItem[],
-  codeBlockLanguages: CKEditor5.CodeBlock.CodeBlockConfig["languages"],
+  codeBlockLanguages: CKEditor5.CodeBlockConfig["languages"],
   licenseKey: string,
 ): Promise<CKEditor> {
   if (instances.has(element)) {

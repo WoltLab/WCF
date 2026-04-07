@@ -92,7 +92,7 @@ function saveDraft(element: HTMLElement, identifier: string, html: string): void
   }
 }
 
-export function setupRestoreDraft(editor: CKEditor5.ClassicEditor.ClassicEditor, identifier: string): void {
+export function setupRestoreDraft(editor: CKEditor5.ClassicEditor, identifier: string): void {
   let value: AutosavePayload | undefined = undefined;
 
   try {
@@ -230,7 +230,7 @@ function removeExpiredDrafts(): void {
 
 export function initializeAutosave(
   element: HTMLElement,
-  configuration: CKEditor5.Core.EditorConfig,
+  configuration: CKEditor5.EditorConfig,
   identifier: string,
 ): void {
   removeExpiredDrafts();

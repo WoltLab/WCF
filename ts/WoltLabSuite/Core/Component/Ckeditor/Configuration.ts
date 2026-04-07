@@ -272,10 +272,16 @@ class ConfigurationBuilder {
     this.#setupMention();
   }
 
-  toConfig(): CKEditor5.Core.EditorConfig {
+  toConfig(): CKEditor5.EditorConfig {
     const language = Object.keys(window.CKEDITOR_TRANSLATIONS).find((language) => language !== "en");
-
     const key = language ? language : "en";
+
+    if (key === "en" && !Object.hasOwn(window.CKEDITOR_TRANSLATIONS, key)) {
+      window.CKEDITOR_TRANSLATIONS[key] = {
+        dictionary: {},
+      };
+    }
+
     const { dictionary } = window.CKEDITOR_TRANSLATIONS[key];
 
     dictionary["Author"] = getPhrase("wcf.ckeditor.quote.author");
@@ -358,7 +364,7 @@ class ConfigurationBuilder {
       ui: {
         poweredBy: {
           label: null,
-        } as CKEditor5.Core.UiConfig["poweredBy"],
+        } as CKEditor5.UiConfig["poweredBy"],
         viewportOffset: {
           top: 50,
         },
@@ -397,7 +403,7 @@ export type Features = {
   undo: boolean;
 };
 
-export function createConfigurationFor(features: Features): CKEditor5.Core.EditorConfig {
+export function createConfigurationFor(features: Features): CKEditor5.EditorConfig {
   const configuration = new ConfigurationBuilder(features);
   configuration.build();
 
