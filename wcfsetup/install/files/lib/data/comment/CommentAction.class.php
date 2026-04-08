@@ -397,7 +397,6 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         if (!empty($this->parameters['commentProcessor'])) {
             $objectType = null;
             if (!empty($this->objects)) {
-                /** @var Comment $comment */
                 $comment = \reset($this->objects);
                 $objectType = $this->validateObjectType($comment->objectTypeID);
             }
@@ -408,7 +407,6 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             $this->commentProcessor = $objectType->getProcessor();
         }
 
-        /** @var CommentEditor $comment */
         foreach ($this->objects as $comment) {
             // update counter
             $comment->update(['isDisabled' => 0]);

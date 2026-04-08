@@ -49,7 +49,6 @@ class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements 
     {
         parent::validateDelete();
 
-        /** @var PackageUpdateServer $updateServer */
         foreach ($this->getObjects() as $updateServer) {
             if (!$updateServer->canDelete()) {
                 throw new PermissionDeniedException();
@@ -65,7 +64,6 @@ class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements 
     {
         $this->validateUpdate();
 
-        /** @var PackageUpdateServer $updateServer */
         foreach ($this->getObjects() as $updateServer) {
             if (!$updateServer->canDisable()) {
                 throw new PermissionDeniedException();

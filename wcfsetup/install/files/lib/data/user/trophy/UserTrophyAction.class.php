@@ -108,7 +108,6 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
     {
         parent::validateDelete();
 
-        /** @var UserTrophy $object */
         foreach ($this->objects as $object) {
             if ($object->getTrophy()->awardAutomatically) {
                 throw new PermissionDeniedException();
