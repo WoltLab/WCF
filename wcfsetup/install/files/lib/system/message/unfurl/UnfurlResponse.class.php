@@ -68,7 +68,7 @@ final class UnfurlResponse
     private $domDocument;
 
     /**
-     * @var \DomXPath
+     * @var \DOMXPath
      */
     private $domXPath;
 

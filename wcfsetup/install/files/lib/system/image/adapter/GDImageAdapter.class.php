@@ -36,7 +36,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
 
     /**
      * loaded image
-     * @var \GDImage
+     * @var \GdImage
      */
     protected $image;
 
@@ -453,8 +453,8 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
      *
      * @see http://php.net/manual/en/function.imagecopymerge.php#88456
      *
-     * @param \GDImage $dst_im destination image resource
-     * @param \GDImage $src_im source image resource
+     * @param \GdImage $dst_im destination image resource
+     * @param \GdImage $src_im source image resource
      * @param int $dst_x x-coordinate of destination point
      * @param int $dst_y y-coordinate of destination point
      * @param int $src_x x-coordinate of source point
@@ -465,7 +465,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
      * @return  bool
      */
     // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
-    private function imagecopymerge_alpha(\GDImage $dst_im, \GDImage $src_im, int $dst_x, int $dst_y, int $src_x, int $src_y, int $src_w, int $src_h, int $pct)
+    private function imagecopymerge_alpha(\GdImage $dst_im, \GdImage $src_im, int $dst_x, int $dst_y, int $src_x, int $src_y, int $src_w, int $src_h, int $pct)
     {
         $pct /= 100;
         // Get image width and height

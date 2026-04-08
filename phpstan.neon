@@ -25,3 +25,4 @@ parameters:
     polluteScopeWithBlock: true
     checkExplicitMixedMissingReturn: false
     checkFunctionNameCase: true
+    checkInternalClassCaseSensitivity: true

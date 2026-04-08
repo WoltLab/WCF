@@ -32,7 +32,7 @@ final class HtmlOutputNodeNormalizer
     /**
      * @return list<\DOMElement>
      */
-    private function getPossibleSpacerParagraphs(\DOMXpath $xpath): array
+    private function getPossibleSpacerParagraphs(\DOMXPath $xpath): array
     {
         $paragraphs = [];
 
@@ -99,7 +99,7 @@ final class HtmlOutputNodeNormalizer
         }
     }
 
-    private function normalizeBr(\DOMXpath $xpath): void
+    private function normalizeBr(\DOMXPath $xpath): void
     {
         foreach ($xpath->query('//br') as $br) {
             \assert($br instanceof \DOMElement);
