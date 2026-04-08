@@ -83,24 +83,19 @@ class UserNotificationHandler extends SingletonFactory
     /**
      * Triggers a notification event.
      *
-     * @param string $eventName
-     * @param string $objectType
-     * @param IUserNotificationObject $notificationObject
      * @param int[] $recipientIDs
      * @param mixed[] $additionalData
-     * @param int $baseObjectID
-     * @param int $contentLanguageID
      * @return void
      * @throws  SystemException
      */
     public function fireEvent(
-        $eventName,
-        $objectType,
+        string $eventName,
+        string $objectType,
         IUserNotificationObject $notificationObject,
         array $recipientIDs,
         array $additionalData = [],
-        $baseObjectID = 0,
-        $contentLanguageID = 0
+        int $baseObjectID = 0,
+        int $contentLanguageID = 0
     ) {
         // check given object type and event name
         if (!isset($this->availableEvents[$objectType][$eventName])) {

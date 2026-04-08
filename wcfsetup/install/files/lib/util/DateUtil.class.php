@@ -220,8 +220,8 @@ final class DateUtil
      */
     public static function formatInterval(
         \DateInterval $interval,
-        $fullInterval = false,
-        $formatType = self::FORMAT_DEFAULT
+        bool $fullInterval = false,
+        int $formatType = self::FORMAT_DEFAULT
     ) {
         $years = $interval->format('%y');
         $months = $interval->format('%m');

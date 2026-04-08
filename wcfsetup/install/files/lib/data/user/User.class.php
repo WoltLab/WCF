@@ -142,12 +142,11 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns true if the given password is the correct password for this user.
      *
-     * @param string $password
      * @return bool password correct
      */
     public function checkPassword(
         #[\SensitiveParameter]
-        $password
+        string $password
     ) {
         $isValid = false;
 

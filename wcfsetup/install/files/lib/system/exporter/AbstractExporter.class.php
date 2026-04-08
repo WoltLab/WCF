@@ -89,14 +89,14 @@ abstract class AbstractExporter implements IExporter
 
     #[\Override]
     public function setData(
-        $databaseHost,
-        $databaseUser,
+        string $databaseHost,
+        string $databaseUser,
         #[\SensitiveParameter]
-        $databasePassword,
-        $databaseName,
-        $databasePrefix,
-        $fileSystemPath,
-        $additionalData
+        string $databasePassword,
+        string $databaseName,
+        string $databasePrefix,
+        string $fileSystemPath,
+        array $additionalData
     ) {
         $this->databaseHost = $databaseHost;
         $this->databaseUser = $databaseUser;

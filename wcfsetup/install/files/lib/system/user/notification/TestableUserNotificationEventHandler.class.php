@@ -184,16 +184,13 @@ class TestableUserNotificationEventHandler extends SingletonFactory
     /**
      * Returns a new user notification object based on the given data.
      *
-     * @param UserProfile $author
-     * @param int $timesTriggered
-     * @param int $guestTimesTriggered
      * @param mixed[] $additionalData
      * @return  UserNotification
      */
     protected function getUserNotification(
         UserProfile $author,
-        $timesTriggered,
-        $guestTimesTriggered,
+        int $timesTriggered,
+        int $guestTimesTriggered,
         array $additionalData
     ) {
         return new UserNotification(null, [

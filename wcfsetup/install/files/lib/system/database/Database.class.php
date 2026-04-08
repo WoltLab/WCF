@@ -118,15 +118,15 @@ abstract class Database
      * @param mixed[] $defaultDriverOptions
      */
     public function __construct(
-        $host,
-        $user,
+        string $host,
+        string $user,
         #[\SensitiveParameter]
-        $password,
-        $database,
-        $port,
-        $failsafeTest = false,
-        $tryToCreateDatabase = false,
-        $defaultDriverOptions = []
+        string $password,
+        string $database,
+        int $port,
+        bool $failsafeTest = false,
+        bool $tryToCreateDatabase = false,
+        array $defaultDriverOptions = []
     ) {
         $this->host = $host;
         $this->port = $port;

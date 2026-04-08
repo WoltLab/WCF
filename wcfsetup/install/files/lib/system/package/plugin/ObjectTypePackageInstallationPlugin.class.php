@@ -994,18 +994,14 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     /**
      * Adds all condition specific fields to the given form container.
      *
-     * @param IFormContainer $dataContainer
-     * @param string $objectTypeDefinition
-     * @param bool $addConditionObject
-     * @param bool $addConditionGroup
      * @return void
      * @since   5.2
      */
     public function addConditionFields(
         IFormContainer $dataContainer,
-        $objectTypeDefinition,
-        $addConditionObject = true,
-        $addConditionGroup = true
+        string $objectTypeDefinition,
+        bool $addConditionObject = true,
+        bool $addConditionGroup = true
     ) {
         $prefix = \preg_replace('~Fields$~', '', $dataContainer->getId());
 
@@ -1163,10 +1159,10 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
      */
     public function getIntegerConditionPropertyNameField(
         TextFormField $classNameField,
-        $conditionClass,
-        $id,
-        $databaseTableName,
-        $lowercase = true
+        string $conditionClass,
+        string $id,
+        string $databaseTableName,
+        bool $lowercase = true
     ) {
         return TextFormField::create($id)
             ->objectProperty($lowercase ? 'propertyname' : 'propertyName')

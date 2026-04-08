@@ -30,7 +30,7 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType
         string $currency,
         string $transactionID,
         string $status,
-        $transactionDetails
+        array $transactionDetails
     ) {
         $userSubscription = $user = $subscription = null;
         try {

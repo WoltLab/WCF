@@ -78,12 +78,12 @@ final class SmtpEmailTransport implements IStatusReportingEmailTransport
      * @throws  \InvalidArgumentException
      */
     public function __construct(
-        $host = MAIL_SMTP_HOST,
-        $port = MAIL_SMTP_PORT,
-        $username = MAIL_SMTP_USER,
+        string $host = MAIL_SMTP_HOST,
+        int $port = MAIL_SMTP_PORT,
+        string $username = MAIL_SMTP_USER,
         #[\SensitiveParameter]
-        $password = MAIL_SMTP_PASSWORD,
-        $starttls = MAIL_SMTP_STARTTLS
+        string $password = MAIL_SMTP_PASSWORD,
+        string $starttls = MAIL_SMTP_STARTTLS
     ) {
         $this->host = StringUtil::trim($host);
         $this->port = \intval($port);

@@ -851,15 +851,13 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
      * Updates the language items of a language category.
      *
      * @param array<string, string> $items
-     * @param LanguageCategory $category
-     * @param int $packageID
      * @param array<int, int> $useCustom
      * @return void
      */
     public function updateItems(
         array $items,
         LanguageCategory $category,
-        $packageID = PACKAGE_ID,
+        int $packageID = PACKAGE_ID,
         array $useCustom = []
     ) {
         if (empty($items)) {

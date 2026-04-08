@@ -62,23 +62,16 @@ final class MessageQuoteManager extends SingletonFactory
      * message while maintaining the original markup, pass $obj->getExcerpt() for
      * $message and $obj->getMessage() for $fullQuote.
      *
-     * @param string $objectType
-     * @param int $parentObjectID
-     * @param int $objectID
-     * @param string $message
-     * @param string $fullQuote
-     * @param bool $returnFalseIfExists
-     *
      * @return  mixed
      * @deprecated 6.2
      */
     public function addQuote(
-        $objectType,
-        $parentObjectID,
-        $objectID,
-        $message,
-        $fullQuote = '',
-        $returnFalseIfExists = true
+        string $objectType,
+        int $parentObjectID,
+        int $objectID,
+        string $message,
+        string $fullQuote = '',
+        bool $returnFalseIfExists = true
     ) {
         if (isset($this->legacyQuoteData)) {
             throw new \RuntimeException("Cannot store another quote, there is already one legacy quote present.");

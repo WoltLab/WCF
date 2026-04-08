@@ -27,10 +27,10 @@ abstract class FormFieldValidatorUtil
      * @return  FormFieldValidator
      */
     public static function getDotSeparatedStringValidator(
-        $languageItemPrefix,
-        $minimumSegmentCount = 3,
-        $maximumSegmentCount = -1,
-        $segmentRegularExpression = '^[A-z0-9\-\_]+$'
+        string $languageItemPrefix,
+        int $minimumSegmentCount = 3,
+        int $maximumSegmentCount = -1,
+        string $segmentRegularExpression = '^[A-z0-9\-\_]+$'
     ) {
         $regex = Regex::compile($segmentRegularExpression);
         if (!$regex->isValid()) {

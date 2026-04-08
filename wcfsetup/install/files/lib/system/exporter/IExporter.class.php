@@ -14,23 +14,17 @@ interface IExporter
     /**
      * Sets database access data.
      *
-     * @param string $databaseHost
-     * @param string $databaseUser
-     * @param string $databasePassword
-     * @param string $databaseName
-     * @param string $databasePrefix
-     * @param string $fileSystemPath
      * @param array<string, mixed> $additionalData
      * @return void
      */
     public function setData(
-        $databaseHost,
-        $databaseUser,
-        $databasePassword,
-        $databaseName,
-        $databasePrefix,
-        $fileSystemPath,
-        $additionalData
+        string $databaseHost,
+        string $databaseUser,
+        string $databasePassword,
+        string $databaseName,
+        string $databasePrefix,
+        string $fileSystemPath,
+        array $additionalData
     );
 
     /**

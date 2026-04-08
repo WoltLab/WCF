@@ -73,15 +73,12 @@ trait TMaximumLengthFormField
     /**
      * Validates the maximum length of the given text.
      *
-     * @param string $text validated text
-     * @param ?Language $language language of the validated text
-     * @param string $errorLanguageItem
      * @return void
      */
     public function validateMaximumLength(
-        $text,
+        string $text,
         ?Language $language = null,
-        $errorLanguageItem = 'wcf.form.field.text.error.maximumLength'
+        string $errorLanguageItem = 'wcf.form.field.text.error.maximumLength'
     ) {
         if ($this->getMaximumLength() !== null && \mb_strlen($text) > $this->getMaximumLength()) {
             $this->addValidationError(new FormFieldValidationError(

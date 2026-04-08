@@ -60,22 +60,17 @@ class UserActivityEventHandler extends SingletonFactory
     /**
      * Fires a new activity event.
      *
-     * @param string $objectType
-     * @param int $objectID
-     * @param int $languageID
-     * @param int $userID
-     * @param int $time
      * @param mixed[] $additionalData
      * @return  \wcf\data\user\activity\event\UserActivityEvent
      * @throws  SystemException
      */
     public function fireEvent(
-        $objectType,
-        $objectID,
-        $languageID = null,
-        $userID = null,
-        $time = TIME_NOW,
-        $additionalData = []
+        string $objectType,
+        int $objectID,
+        ?int $languageID = null,
+        ?int $userID = null,
+        int $time = TIME_NOW,
+        array $additionalData = []
     ) {
         $objectTypeID = $this->getObjectTypeID($objectType);
         if ($objectTypeID === null) {

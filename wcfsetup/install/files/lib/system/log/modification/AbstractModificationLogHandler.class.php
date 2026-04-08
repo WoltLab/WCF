@@ -48,25 +48,18 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
     /**
      * Creates a modification log entry.
      *
-     * @param string $action
-     * @param int $objectID
-     * @param int|null $parentObjectID
      * @param mixed[] $additionalData
-     * @param int $time
-     * @param int|null $userID
-     * @param string|null $username
-     * @param int $hidden
      * @return ModificationLog
      */
     public function createLog(
-        $action,
-        $objectID,
-        $parentObjectID = null,
+        string $action,
+        int $objectID,
+        ?int $parentObjectID = null,
         array $additionalData = [],
-        $time = TIME_NOW,
-        $userID = null,
-        $username = null,
-        $hidden = 1
+        int $time = TIME_NOW,
+        ?int $userID = null,
+        ?string $username = null,
+        int $hidden = 1
     ) {
         // set default user data
         if ($userID === null) {

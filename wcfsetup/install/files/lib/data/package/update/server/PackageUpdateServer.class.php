@@ -218,18 +218,13 @@ class PackageUpdateServer extends DatabaseObject implements ITitledObject
 
     /**
      * Stores auth data for a package update server.
-     *
-     * @param int $packageUpdateServerID
-     * @param string $username
-     * @param string $password
-     * @param bool $saveCredentials
      */
     public static function storeAuthData(
-        $packageUpdateServerID,
-        $username,
+        int $packageUpdateServerID,
+        string $username,
         #[\SensitiveParameter]
-        $password,
-        $saveCredentials = false
+        string $password,
+        bool $saveCredentials = false
     ): void {
         $packageUpdateAuthData = @\unserialize(WCF::getSession()->getVar('packageUpdateAuthData'));
         if ($packageUpdateAuthData === null || !\is_array($packageUpdateAuthData)) {

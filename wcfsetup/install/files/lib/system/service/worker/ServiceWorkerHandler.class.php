@@ -71,9 +71,6 @@ final class ServiceWorkerHandler extends SingletonFactory
     /**
      * Send the given payload to the service worker.
      *
-     * @param ServiceWorker $serviceWorker
-     * @param string $payload
-     *
      * @return MessageSentReport
      */
     public function sendOneNotification(

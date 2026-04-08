@@ -17,15 +17,12 @@ abstract class AbstractACPSearchResultProvider
     /**
      * Validates object options and permissions.
      *
-     * @param DatabaseObject $object
-     * @param string $optionsColumnName
-     * @param string $permissionsColumnName
      * @return  bool
      */
     protected function validate(
         DatabaseObject $object,
-        $optionsColumnName = 'options',
-        $permissionsColumnName = 'permissions'
+        string $optionsColumnName = 'options',
+        string $permissionsColumnName = 'permissions'
     ) {
         // check the options of this item
         $hasEnabledOption = true;

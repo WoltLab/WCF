@@ -77,21 +77,12 @@ class UploadFile
      */
     private $imageData;
 
-    /**
-     * UploadFile constructor.
-     *
-     * @param string $location
-     * @param string $filename
-     * @param bool $viewableImage
-     * @param bool $processed
-     * @param bool $detectSvgAsImage
-     */
     public function __construct(
-        $location,
-        $filename,
-        $viewableImage = true,
-        $processed = false,
-        $detectSvgAsImage = false
+        string $location,
+        string $filename,
+        bool $viewableImage = true,
+        bool $processed = false,
+        bool $detectSvgAsImage = false
     ) {
         if (!\file_exists($location)) {
             throw new \InvalidArgumentException("File '" . $location . "' could not be found.");

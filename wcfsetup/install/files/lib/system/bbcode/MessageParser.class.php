@@ -72,20 +72,15 @@ class MessageParser extends BBCodeParser
     /**
      * Parses a message.
      *
-     * @param string $text
-     * @param bool $enableSmilies
-     * @param bool $enableHtml
-     * @param bool $enableBBCodes
-     * @param bool $doKeywordHighlighting
      * @return string parsed message
      */
     #[\Override]
     public function parse(
-        $text,
-        $enableSmilies = true,
-        $enableHtml = false,
-        $enableBBCodes = true,
-        $doKeywordHighlighting = true
+        string $text,
+        bool $enableSmilies = true,
+        bool $enableHtml = false,
+        bool $enableBBCodes = true,
+        bool $doKeywordHighlighting = true
     ) {
         $this->cachedCodes = [];
         $this->message = $text;

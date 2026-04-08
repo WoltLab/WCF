@@ -706,19 +706,14 @@ class PackageInstallationDispatcher
     /**
      * Saves a localized package info.
      *
-     * @param PreparedStatement $statement
-     * @param LanguageList $languageList
-     * @param LanguageCategory $languageCategory
-     * @param Package $package
-     * @param string $infoName
      * @return void
      */
     protected function saveLocalizedPackageInfo(
         PreparedStatement $statement,
-        $languageList,
+        LanguageList $languageList,
         LanguageCategory $languageCategory,
         Package $package,
-        $infoName
+        string $infoName
     ) {
         $infoValues = $this->getArchive()->getPackageInfo($infoName);
 
