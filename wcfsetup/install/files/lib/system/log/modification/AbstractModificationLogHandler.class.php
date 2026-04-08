@@ -155,7 +155,7 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
      * @param string $objectType name of the modifiable content object type, deprecated parameter
      * @return  ObjectType
      */
-    public function getObjectType($objectType = null)
+    public function getObjectType(?string $objectType = null)
     {
         // allow parameter for better backwards compatibility with ModificationLogHandler
         if ($objectType !== null) {
@@ -170,10 +170,9 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
      * Updates the parent object id of modification log entries.
      *
      * @param int[] $objectIDs
-     * @param int $newParentObjectID
      * @return void
      */
-    public function updateParentObjectID(array $objectIDs, $newParentObjectID)
+    public function updateParentObjectID(array $objectIDs, int $newParentObjectID)
     {
         if (empty($objectIDs)) {
             return;

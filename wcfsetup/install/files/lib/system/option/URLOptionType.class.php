@@ -14,7 +14,7 @@ use wcf\data\option\Option;
 class URLOptionType extends TextOptionType
 {
     #[\Override]
-    protected function getContent(Option $option, $newValue)
+    protected function getContent(Option $option, mixed $newValue)
     {
         if ($newValue && !\preg_match('~^https?://~i', $newValue)) {
             $newValue = 'https://' . $newValue;

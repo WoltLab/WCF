@@ -22,14 +22,13 @@ class MultipartMixedMimePart extends AbstractMultipartMimePart
      *
      * The given $data is ignored.
      *
-     * @param AbstractMimePart $part
      * @param mixed $data Ignored.
      * @throws \InvalidArgumentException
      * @throws \DomainException
      */
     // @codingStandardsIgnoreStart
     #[\Override]
-    public function addMimePart(AbstractMimePart $part, $data = null)
+    public function addMimePart(AbstractMimePart $part, mixed $data = null)
     {
         parent::addMimePart($part, $data);
     }

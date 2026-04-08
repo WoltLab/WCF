@@ -215,11 +215,10 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      * Extracts the language file and parses it. If the specified language file
      * was not found, an exception message is thrown.
      *
-     * @param string $filename
      * @return  XML
      * @throws  SystemException
      */
-    protected function readLanguage($filename)
+    protected function readLanguage(string $filename)
     {
         // search language files in package archive
         // throw error message if not found
@@ -239,10 +238,9 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      * in case they are now empty.
      *
      * @param int[] $categoryIDs
-     * @param int $packageID
      * @return void
      */
-    protected function deleteEmptyCategories(array $categoryIDs, $packageID)
+    protected function deleteEmptyCategories(array $categoryIDs, int $packageID)
     {
         // Get empty categories which where changed by this package.
         $conditions = new PreparedStatementConditionBuilder();
@@ -312,7 +310,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     }
 
     #[\Override]
-    public static function isValid(PackageArchive $packageArchive, $instruction)
+    public static function isValid(PackageArchive $packageArchive, string $instruction)
     {
         return true;
     }
@@ -501,12 +499,11 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     }
 
     /**
-     * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
     #[\Override]
-    protected function fetchElementData(\DOMElement $element, $saveData)
+    protected function fetchElementData(\DOMElement $element, bool $saveData)
     {
         $data = [
             'languageID' => LanguageFactory::getInstance()->getLanguageByCode($element->ownerDocument->documentElement->getAttribute('languagecode'))->languageID,
@@ -618,11 +615,10 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     }
 
     /**
-     * @param string $languageCode
      * @return string
      * @since   5.2
      */
-    protected function getEmptyXml($languageCode)
+    protected function getEmptyXml(string $languageCode)
     {
         $xsdFilename = $this->getXsdFilename();
 
@@ -645,7 +641,7 @@ XML;
      * @return  XML[]
      */
     #[\Override]
-    protected function getProjectXmls($createXmlFiles = false)
+    protected function getProjectXmls(bool $createXmlFiles = false)
     {
         $xmls = [];
 
@@ -846,11 +842,10 @@ XML;
     }
 
     /**
-     * @param string $identifier
      * @return \DOMElement
      * @since   5.2
      */
-    protected function replaceXmlElement(XML $xml, IFormDocument $form, $identifier)
+    protected function replaceXmlElement(XML $xml, IFormDocument $form, string $identifier)
     {
         $newElement = $this->createXmlElement($xml->getDocument(), $form);
 

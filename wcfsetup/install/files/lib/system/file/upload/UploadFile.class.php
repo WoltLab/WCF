@@ -224,10 +224,9 @@ class UploadFile
      * Sets the new location of the file, after it is processed and
      * sets the `processed` attribute to true.
      *
-     * @param string $newLocation
      * @return void
      */
-    public function setProcessed($newLocation)
+    public function setProcessed(string $newLocation)
     {
         if (!\file_exists($newLocation)) {
             throw new \InvalidArgumentException("File '" . $newLocation . "' could not be found.");
@@ -240,10 +239,9 @@ class UploadFile
     /**
      * Sets the new image link of the file for processed files.
      *
-     * @param string $link
      * @return void
      */
-    public function setImageLink($link)
+    public function setImageLink(string $link)
     {
         $this->imageLink = $link;
     }

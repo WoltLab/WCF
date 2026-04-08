@@ -53,7 +53,7 @@ class PackageUpdateServer extends DatabaseObject implements ITitledObject
     private static $secureMode = false;
 
     #[\Override]
-    protected function handleData($data)
+    protected function handleData(array $data)
     {
         if (!empty($data['metaData'])) {
             $metaData = @\unserialize($data['metaData']);
@@ -172,10 +172,9 @@ class PackageUpdateServer extends DatabaseObject implements ITitledObject
     }
 
     /**
-     * @param string $serverURL
      * @deprecated 6.0 This method was only used in PackageUpdateServerAddForm.
      */
-    public static function isValidServerURL($serverURL): bool
+    public static function isValidServerURL(string $serverURL): bool
     {
         $parsedURL = Url::parse($serverURL);
 

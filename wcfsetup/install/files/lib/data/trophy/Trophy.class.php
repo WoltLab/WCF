@@ -85,11 +85,9 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
     /**
      * Renders a trophy.
      *
-     * @param int $size
-     * @param bool $showTooltip
      * @return  string
      */
-    public function renderTrophy($size = self::DEFAULT_SIZE, $showTooltip = false)
+    public function renderTrophy(int $size = self::DEFAULT_SIZE, bool $showTooltip = false)
     {
         switch ($this->type) {
             case self::TYPE_IMAGE:

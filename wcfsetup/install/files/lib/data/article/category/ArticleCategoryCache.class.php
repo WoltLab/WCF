@@ -64,10 +64,9 @@ class ArticleCategoryCache extends SingletonFactory
      *
      * @param int[][] $categoryToParent
      * @param int[] $articles
-     * @param int $categoryID
      * @return      int
      */
-    protected function countArticles(array $categoryToParent, array &$articles, $categoryID)
+    protected function countArticles(array $categoryToParent, array &$articles, int $categoryID)
     {
         $count = (isset($articles[$categoryID])) ? $articles[$categoryID] : 0;
         if (isset($categoryToParent[$categoryID])) {
@@ -86,10 +85,9 @@ class ArticleCategoryCache extends SingletonFactory
     /**
      * Returns the number of articles in the category with the given id.
      *
-     * @param int $categoryID
      * @return  int
      */
-    public function getArticles($categoryID)
+    public function getArticles(int $categoryID)
     {
         if ($this->articles === null) {
             $this->initArticles();

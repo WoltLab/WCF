@@ -82,10 +82,7 @@ class HtmlInputNodeTextParser
 		)
 	~x";
 
-    /**
-     * @param int $smileyCount
-     */
-    public function __construct(HtmlInputNodeProcessor $htmlInputNodeProcessor, $smileyCount = 0)
+    public function __construct(HtmlInputNodeProcessor $htmlInputNodeProcessor, int $smileyCount = 0)
     {
         $this->htmlInputNodeProcessor = $htmlInputNodeProcessor;
         $this->sourceBBCodes = BBCodeParser::getInstance()->getSourceBBCodes();
@@ -781,7 +778,7 @@ class HtmlInputNodeTextParser
      * @param bool $trimTrailingSpecialCharacters true to strip special characters found at the end of the match
      * @return  string          sanitized username
      */
-    public function getUsername($match, $trimTrailingSpecialCharacters = true)
+    public function getUsername(string $match, bool $trimTrailingSpecialCharacters = true)
     {
         // remove escaped single quotation mark
         $match = \str_replace("''", "'", $match);
@@ -806,7 +803,7 @@ class HtmlInputNodeTextParser
      * @param string $match matched username
      * @return      string[]        [sanitizedUsername, usernameWithTrailingSpecialChar]
      */
-    public function getUsernameVariants($match)
+    public function getUsernameVariants(string $match)
     {
         $username = $this->getUsername($match);
         $usernameTSC = $this->getUsername($match, false);

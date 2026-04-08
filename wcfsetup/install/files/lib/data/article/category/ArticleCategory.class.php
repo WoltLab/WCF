@@ -64,10 +64,9 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
     }
 
     /**
-     * @param string $permission
      * @return mixed
      */
-    public function getPermission($permission, ?User $user = null)
+    public function getPermission(string $permission, ?User $user = null)
     {
         if ($user === null) {
             $user = WCF::getUser();
@@ -142,10 +141,9 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
     /**
      * Returns the label groups for all accessible categories.
      *
-     * @param string $permission
      * @return  ViewableLabelGroup[]
      */
-    public static function getAccessibleLabelGroups($permission = 'canSetLabel')
+    public static function getAccessibleLabelGroups(string $permission = 'canSetLabel')
     {
         $labelGroupsToCategories = ArticleCategoryLabelCacheBuilder::getInstance()->getData();
         $accessibleCategoryIDs = self::getAccessibleCategoryIDs();

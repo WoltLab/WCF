@@ -31,11 +31,8 @@ class ConditionBuilder
 
     /**
      * Creates a new ConditionBuilder object.
-     *
-     * @param bool $addWhereKeyword
-     * @param string $concat
      */
-    public function __construct($addWhereKeyword = true, $concat = 'AND')
+    public function __construct(bool $addWhereKeyword = true, string $concat = 'AND')
     {
         $this->addWhereKeyword = $addWhereKeyword;
         $this->concat = ($concat == 'OR') ? ' OR ' : ' AND ';
@@ -44,10 +41,9 @@ class ConditionBuilder
     /**
      * Adds a new condition.
      *
-     * @param mixed $condition
      * @return void
      */
-    public function add($condition)
+    public function add(mixed $condition)
     {
         $conditions = $condition;
         if (!\is_array($conditions)) {
@@ -74,10 +70,9 @@ class ConditionBuilder
     /**
      * Enables / disables the where keyword.
      *
-     * @param bool $enable
      * @return void
      */
-    public function enableWhereKeyword($enable = true)
+    public function enableWhereKeyword(bool $enable = true)
     {
         $this->addWhereKeyword = $enable;
     }

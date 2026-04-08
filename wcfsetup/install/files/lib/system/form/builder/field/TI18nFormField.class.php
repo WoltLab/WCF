@@ -188,7 +188,7 @@ trait TI18nFormField
      * @param bool $i18n determines if field supports i18n input
      * @return II18nFormField this field
      */
-    public function i18n($i18n = true)
+    public function i18n(bool $i18n = true)
     {
         $this->i18n = $i18n;
 
@@ -216,7 +216,7 @@ trait TI18nFormField
      * @param bool $i18nRequired determines if field value must be i18n input
      * @return static this field
      */
-    public function i18nRequired($i18nRequired = true)
+    public function i18nRequired(bool $i18nRequired = true)
     {
         $this->i18nRequired = $i18nRequired;
         $this->i18n();
@@ -250,13 +250,12 @@ trait TI18nFormField
      * Sets the pattern for the language item used to save the i18n values
      * and returns this field.
      *
-     * @param string $pattern language item pattern
      * @return II18nFormField this field
      *
      * @throws \BadMethodCallException if i18n is disabled for this field
      * @throws \InvalidArgumentException if the given pattern is invalid
      */
-    public function languageItemPattern($pattern)
+    public function languageItemPattern(string $pattern)
     {
         if (!$this->isI18n()) {
             throw new \BadMethodCallException(
@@ -274,7 +273,7 @@ trait TI18nFormField
     }
 
     #[\Override]
-    public function updatedObject(array $data, IStorableObject $object, $loadValues = true)
+    public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true)
     {
         if ($this instanceof IImmutableFormField && $this->isImmutable()) {
             $loadValues = true;
@@ -357,10 +356,9 @@ trait TI18nFormField
      * the relevant language items are loaded and their values are used as
      * field values.
      *
-     * @param string $value set value
      * @return void
      */
-    protected function setStringValue($value)
+    protected function setStringValue(string $value)
     {
         if (Regex::compile('^' . $this->getLanguageItemPattern() . '$')->match($value)) {
             $languageItemList = new LanguageItemList();
@@ -393,7 +391,7 @@ trait TI18nFormField
      *
      * @throws  \InvalidArgumentException       if the given value is of an invalid type or otherwise is invalid
      */
-    public function value($value)
+    public function value(mixed $value)
     {
         if ($this->isI18n()) {
             if (\is_string($value) || \is_numeric($value)) {

@@ -49,7 +49,7 @@ class PreparedStatement
     /**
      * @param string $query SQL query
      */
-    public function __construct(Database $database, \PDOStatement $pdoStatement, $query = '')
+    public function __construct(Database $database, \PDOStatement $pdoStatement, string $query = '')
     {
         $this->database = $database;
         $this->pdoStatement = $pdoStatement;
@@ -59,12 +59,11 @@ class PreparedStatement
     /**
      * Delegates inaccessible methods calls to the decorated object.
      *
-     * @param string $name
      * @param mixed[] $arguments
      * @return mixed
      * @throws SystemException
      */
-    public function __call($name, $arguments)
+    public function __call(string $name, array $arguments)
     {
         if (!\method_exists($this->pdoStatement, $name)) {
             throw new SystemException("unknown method '" . $name . "'");
@@ -149,10 +148,9 @@ class PreparedStatement
     /**
      * Fetches the next row from a result set in an array.
      *
-     * @param int $type fetch type
      * @return mixed
      */
-    public function fetchArray($type = null)
+    public function fetchArray(?int $type = null)
     {
         // get fetch style
         if ($type === null) {
@@ -169,11 +167,10 @@ class PreparedStatement
      * Note: It is not possible to fetch further rows after calling
      * this method!
      *
-     * @param int $type fetch type
      * @return mixed
      * @see \wcf\system\database\statement\PreparedStatement::fetchArray()
      */
-    public function fetchSingleRow($type = null)
+    public function fetchSingleRow(?int $type = null)
     {
         $row = $this->fetchArray($type);
         $this->closeCursor();
@@ -188,11 +185,10 @@ class PreparedStatement
      * Note: It is not possible to fetch further rows after calling
      * this method!
      *
-     * @param int $columnNumber
      * @return mixed
      * @see \PDOStatement::fetchColumn()
      */
-    public function fetchSingleColumn($columnNumber = 0)
+    public function fetchSingleColumn(int $columnNumber = 0)
     {
         $column = $this->fetchColumn($columnNumber);
         $this->closeCursor();
@@ -207,7 +203,7 @@ class PreparedStatement
      * @param class-string<T> $className
      * @return ?T
      */
-    public function fetchObject($className)
+    public function fetchObject(string $className)
     {
         $row = $this->fetchArray();
         if ($row !== false) {
@@ -229,7 +225,7 @@ class PreparedStatement
      * @return ?T
      * @since 5.3
      */
-    public function fetchSingleObject($className)
+    public function fetchSingleObject(string $className)
     {
         $row = $this->fetchSingleRow();
         if ($row !== false) {
@@ -247,7 +243,7 @@ class PreparedStatement
      * @param ?string $keyProperty
      * @return T[]
      */
-    public function fetchObjects($className, $keyProperty = null)
+    public function fetchObjects(string $className, ?string $keyProperty = null)
     {
         $objects = [];
         while ($object = $this->fetchObject($className)) {
@@ -269,7 +265,7 @@ class PreparedStatement
      * @param bool $uniqueKey if `true`, a one-dimensional array is returned, otherwise, for each key an array of fetched values is returned
      * @return ($uniqueKey is true ? array<string|int, string|int|float> : array<string|int, (string|int|float)[]>)
      */
-    public function fetchMap($keyColumn, $valueColumn, $uniqueKey = true)
+    public function fetchMap(string $keyColumn, string $valueColumn, bool $uniqueKey = true)
     {
         $map = [];
 
@@ -292,11 +288,10 @@ class PreparedStatement
     }
 
     /**
-     * @param string $column
      * @return list<string|int|float>
      * @deprecated 5.4 - Use ->fetchAll(\PDO::FETCH_COLUMN)
      */
-    public function fetchList($column)
+    public function fetchList(string $column)
     {
         $list = [];
 

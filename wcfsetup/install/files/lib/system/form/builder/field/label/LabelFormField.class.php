@@ -96,7 +96,7 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
     }
 
     #[\Override]
-    public function updatedObject(array $data, IStorableObject $object, $loadValues = true)
+    public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true)
     {
         if ($loadValues) {
             $objectTypeID = $this->getObjectType()->objectTypeID;
@@ -184,7 +184,7 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
      * @param string $objectProperty object property of form fields
      * @return  static[]
      */
-    public static function createFields($objectType, array $labelGroups, $objectProperty = 'labelIDs')
+    public static function createFields(string $objectType, array $labelGroups, string $objectProperty = 'labelIDs')
     {
         $formFields = [];
         foreach ($labelGroups as $labelGroup) {

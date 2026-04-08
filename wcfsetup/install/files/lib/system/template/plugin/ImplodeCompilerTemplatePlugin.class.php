@@ -25,7 +25,7 @@ class ImplodeCompilerTemplatePlugin implements ICompilerTemplatePlugin
     protected $tagStack = [];
 
     #[\Override]
-    public function executeStart($tagArgs, TemplateScriptingCompiler $compiler)
+    public function executeStart(array $tagArgs, TemplateScriptingCompiler $compiler)
     {
         $compiler->pushTag('implode');
 

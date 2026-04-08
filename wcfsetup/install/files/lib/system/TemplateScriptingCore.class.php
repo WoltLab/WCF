@@ -37,7 +37,7 @@ class TemplateScriptingCore
      * @param mixed[] $arguments method parameters
      * @return mixed
      */
-    public function __call($name, array $arguments)
+    public function __call(string $name, array $arguments)
     {
         if (\strcasecmp($name, 'getDB') === 0 || \strcasecmp($name, 'getTPL') === 0) {
             throw new \BadMethodCallException("'WCF::{$name}()' cannot be called from templates.");
@@ -53,7 +53,7 @@ class TemplateScriptingCore
      * @param string $name accessed property
      * @return  mixed
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         if (\strcasecmp($name, 'DB') === 0 || \strcasecmp($name, 'TPL') === 0) {
             throw new \BadMethodCallException("'WCF::{$name}' cannot be accessed from templates.");

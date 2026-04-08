@@ -128,12 +128,11 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
     }
 
     /**
-     * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
     #[\Override]
-    protected function fetchElementData(\DOMElement $element, $saveData)
+    protected function fetchElementData(\DOMElement $element, bool $saveData)
     {
         return [
             'objectName' => $element->getElementsByTagName('objectname')->item(0)->nodeValue,

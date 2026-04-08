@@ -73,12 +73,9 @@ class SimpleMessageParser extends SingletonFactory
     /**
      * Parses the given message and returns the parsed message.
      *
-     * @param string $message
-     * @param bool $parseURLs
-     * @param bool $parseSmilies
      * @return string
      */
-    public function parse($message, $parseURLs = true, $parseSmilies = true)
+    public function parse(string $message, bool $parseURLs = true, bool $parseSmilies = true)
     {
         $this->message = $message;
         $this->cachedURLs = $this->cachedEmails = [];
@@ -121,10 +118,9 @@ class SimpleMessageParser extends SingletonFactory
     /**
      * Parses urls.
      *
-     * @param string $text
      * @return string text
      */
-    public function parseURLs($text)
+    public function parseURLs(string $text)
     {
         // define pattern
         $urlPattern = '~(?<!\B|"|\'|=|/|\]|,|\?)
@@ -171,7 +167,7 @@ class SimpleMessageParser extends SingletonFactory
      * @param list<string> $matches
      * @return string
      */
-    protected function cacheURLsCallback($matches)
+    protected function cacheURLsCallback(array $matches)
     {
         $hash = '@@' . StringUtil::getRandomID() . '@@';
         $this->cachedURLs[$hash] = $matches[0];
@@ -185,7 +181,7 @@ class SimpleMessageParser extends SingletonFactory
      * @param list<string> $matches
      * @return string
      */
-    protected function cacheEmailsCallback($matches)
+    protected function cacheEmailsCallback(array $matches)
     {
         $hash = '@@' . StringUtil::getRandomID() . '@@';
         $this->cachedEmails[$hash] = $matches[0];
@@ -196,10 +192,9 @@ class SimpleMessageParser extends SingletonFactory
     /**
      * Reinserts cached URLs and e-mails.
      *
-     * @param string $text
      * @return string
      */
-    protected function insertCachedURLs($text)
+    protected function insertCachedURLs(string $text)
     {
         foreach ($this->cachedURLs as $hash => $url) {
             // add protocol if necessary
@@ -222,10 +217,9 @@ class SimpleMessageParser extends SingletonFactory
     /**
      * Parses smiley codes.
      *
-     * @param string $text
      * @return string text
      */
-    public function parseSmilies($text)
+    public function parseSmilies(string $text)
     {
         $smileyCount = 0;
         foreach ($this->smilies as $code => $html) {

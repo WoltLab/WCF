@@ -69,10 +69,9 @@ trait TMultiXmlGuiPackageInstallationPlugin
      * provided by the given form and returns the new identifier of the entry
      * (or the old identifier if it has not changed).
      *
-     * @param string $identifier
      * @return string new identifier
      */
-    public function editEntry(IFormDocument $form, $identifier)
+    public function editEntry(IFormDocument $form, string $identifier)
     {
         $newElement = null;
         foreach ($this->getProjectXmls(true) as $xml) {
@@ -94,10 +93,9 @@ trait TMultiXmlGuiPackageInstallationPlugin
     /**
      * Replaces an edited element with a new element and returns the new element.
      *
-     * @param string $identifier
      * @return \DOMElement
      */
-    protected function replaceXmlElement(XML $xml, IFormDocument $form, $identifier)
+    protected function replaceXmlElement(XML $xml, IFormDocument $form, string $identifier)
     {
         $newElement = $this->createXmlElement($xml->getDocument(), $form);
 
@@ -140,7 +138,7 @@ trait TMultiXmlGuiPackageInstallationPlugin
      * @param bool $createXmlFiles if `true` and if a relevant XML file does not exist, it is created
      * @return XML[]
      */
-    abstract protected function getProjectXmls($createXmlFiles = false);
+    abstract protected function getProjectXmls(bool $createXmlFiles = false);
 
     /**
      * @return void
@@ -165,10 +163,9 @@ trait TMultiXmlGuiPackageInstallationPlugin
     }
 
     /**
-     * @param string $identifier
      * @return bool
      */
-    public function setEntryData($identifier, IFormDocument $document)
+    public function setEntryData(string $identifier, IFormDocument $document)
     {
         $xmls = $this->getProjectXmls();
         $missingElements = 0;
@@ -213,11 +210,9 @@ trait TMultiXmlGuiPackageInstallationPlugin
     }
 
     /**
-     * @param string $identifier
-     * @param bool $addDeleteInstruction
      * @return void
      */
-    public function deleteEntry($identifier, $addDeleteInstruction)
+    public function deleteEntry(string $identifier, bool $addDeleteInstruction)
     {
         foreach ($this->getProjectXmls() as $xml) {
             $element = $this->getElementByIdentifier($xml, $identifier);

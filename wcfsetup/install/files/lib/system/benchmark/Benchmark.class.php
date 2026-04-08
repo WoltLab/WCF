@@ -70,11 +70,9 @@ class Benchmark extends SingletonFactory
     /**
      * Starts a benchmark.
      *
-     * @param string $text
-     * @param int $type
      * @return int index
      */
-    public function start($text, $type = self::TYPE_OTHER)
+    public function start(string $text, int $type = self::TYPE_OTHER)
     {
         $newIndex = \count($this->items);
         $this->items[$newIndex]['text'] = $text;
@@ -136,10 +134,9 @@ class Benchmark extends SingletonFactory
      * Stops the benchmark with the given index. If no index is given, the
      * latest benchmark is stopped.
      *
-     * @param int $index
      * @return void
      */
-    public function stop($index = null)
+    public function stop(?int $index = null)
     {
         if ($index === null) {
             $index = \count($this->items) - 1;
@@ -234,11 +231,9 @@ class Benchmark extends SingletonFactory
     /**
      * Calculates the difference of two unix timestamps.
      *
-     * @param float $startTime
-     * @param float $endTime
      * @return float
      */
-    protected static function compareMicrotimes($startTime, $endTime)
+    protected static function compareMicrotimes(float $startTime, float $endTime)
     {
         return \round($endTime - $startTime, 4);
     }

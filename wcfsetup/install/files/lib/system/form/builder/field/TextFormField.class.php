@@ -107,11 +107,10 @@ class TextFormField extends AbstractFormField implements
     /**
      * Checks the length of the given text with the given language.
      *
-     * @param string $text validated text
      * @param ?Language $language language of validated text or `null` for monolingual text
      * @return void
      */
-    protected function validateText($text, ?Language $language = null)
+    protected function validateText(string $text, ?Language $language = null)
     {
         $this->validateMinimumLength($text, $language);
         $this->validateMaximumLength($text, $language);

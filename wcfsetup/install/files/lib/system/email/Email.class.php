@@ -133,10 +133,9 @@ class Email
     /**
      * Sets the email's 'Subject'.
      *
-     * @param string $subject
      * @return void
      */
-    public function setSubject($subject)
+    public function setSubject(string $subject)
     {
         $this->subject = $subject;
     }
@@ -180,11 +179,10 @@ class Email
     /**
      * Sets the part left of the at sign (@) in the email's 'Message-Id'.
      *
-     * @param string $messageID
      * @return void
      * @throws \DomainException
      */
-    public function setMessageID($messageID = null)
+    public function setMessageID(?string $messageID = null)
     {
         if ($messageID === null) {
             $this->messageID = null;
@@ -222,11 +220,10 @@ class Email
     /**
      * Adds a message id to the email's 'In-Reply-To'.
      *
-     * @param string $messageID
      * @return void
      * @throws \DomainException
      */
-    public function addInReplyTo($messageID)
+    public function addInReplyTo(string $messageID)
     {
         if (!\preg_match('(^' . EmailGrammar::getGrammar('msg-id') . '$)', $messageID)) {
             throw new \DomainException("The given reference '" . $messageID . "' is invalid.");
@@ -238,10 +235,9 @@ class Email
     /**
      * Removes a message id from the email's 'In-Reply-To'.
      *
-     * @param string $messageID
      * @return void
      */
-    public function removeInReplyTo($messageID)
+    public function removeInReplyTo(string $messageID)
     {
         unset($this->inReplyTo[$messageID]);
     }
@@ -259,11 +255,10 @@ class Email
     /**
      * Adds a message id to the email's 'References'.
      *
-     * @param string $messageID
      * @return void
      * @throws \DomainException
      */
-    public function addReferences($messageID)
+    public function addReferences(string $messageID)
     {
         if (!\preg_match('(^' . EmailGrammar::getGrammar('msg-id') . '$)', $messageID)) {
             throw new \DomainException("The given reference '" . $messageID . "' is invalid.");
@@ -275,10 +270,9 @@ class Email
     /**
      * Removes a message id from the email's 'References'.
      *
-     * @param string $messageID
      * @return void
      */
-    public function removeReferences($messageID)
+    public function removeReferences(string $messageID)
     {
         unset($this->references[$messageID]);
     }
@@ -296,13 +290,11 @@ class Email
     /**
      * Sets the list-label part of the email's 'List-Id'.
      *
-     * @param ?string $listId
-     * @param string $humanReadable
      * @return void
      * @throws \DomainException
      * @since 5.3
      */
-    public function setListID($listId, $humanReadable = null)
+    public function setListID(?string $listId, ?string $humanReadable = null)
     {
         if ($listId === null) {
             $this->listId = null;
@@ -351,12 +343,10 @@ class Email
      * If $supportsOneClick is set to true the 'List-Unsubscribe-Post' header
      * with the value 'List-Unsubscribe=One-Click' is added.
      *
-     * @param ?string $uri
-     * @param bool $supportsOneClick
      * @return void
      * @since 5.3
      */
-    public function setListUnsubscribe($uri, $supportsOneClick = false)
+    public function setListUnsubscribe(?string $uri, bool $supportsOneClick = false)
     {
         if ($uri === null) {
             $this->listUnsubscribe = null;
@@ -435,12 +425,11 @@ class Email
     /**
      * Adds a recipient to this email.
      *
-     * @param Mailbox $recipient
      * @param string $type One of 'to', 'cc', 'bcc'
      * @return void
      * @throws \DomainException
      */
-    public function addRecipient(Mailbox $recipient, $type = 'to')
+    public function addRecipient(Mailbox $recipient, string $type = 'to')
     {
         switch ($type) {
             case 'to':
@@ -487,12 +476,10 @@ class Email
     /**
      * Adds a custom X-* header to the email.
      *
-     * @param string $header
-     * @param string $value
      * @return void
      * @throws \DomainException
      */
-    public function addHeader($header, $value)
+    public function addHeader(string $header, string $value)
     {
         $header = \mb_strtolower($header);
         if (!\str_starts_with($header, 'x-')) {

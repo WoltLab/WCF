@@ -21,10 +21,9 @@ class MessageUtil
     /**
      * Strips session links, html entities and \r\n from the given text.
      *
-     * @param string $text
      * @return  string
      */
-    public static function stripCrap($text)
+    public static function stripCrap(string $text)
     {
         // strip session links, security tokens and access tokens
         $text = Regex::compile('(?<=\?|&)([st]=[a-f0-9]{40}|at=\d+-[a-f0-9]{40})')->replace($text, '');
@@ -215,7 +214,7 @@ class MessageUtil
      * @param int $maxLength string length after truncating
      * @return  string                  truncated string
      */
-    public static function truncateFormattedMessage($message, $maxLength = 1000)
+    public static function truncateFormattedMessage(string $message, int $maxLength = 1000)
     {
         $message = Regex::compile(
             '<!-- begin:parser_nonessential -->.*?<!-- end:parser_nonessential -->',

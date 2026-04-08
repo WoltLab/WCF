@@ -129,11 +129,10 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
     /**
      * Returns the width of the thumbnail file with the given size.
      *
-     * @param string $size
      * @return  int
      * @throws  \InvalidArgumentException
      */
-    public function getThumbnailWidth($size)
+    public function getThumbnailWidth(string $size)
     {
         if (!isset(self::$thumbnailSizes[$size])) {
             throw new \InvalidArgumentException("Unknown thumbnail size '" . $size . "'");
@@ -149,11 +148,10 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
     /**
      * Returns the height of the thumbnail file with the given size.
      *
-     * @param string $size
      * @return  int
      * @throws  \InvalidArgumentException
      */
-    public function getThumbnailHeight($size)
+    public function getThumbnailHeight(string $size)
     {
         if (!isset(self::$thumbnailSizes[$size])) {
             throw new \InvalidArgumentException("Unknown thumbnail size '" . $size . "'");
@@ -251,11 +249,10 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
     /**
      * Returns true if a thumbnail version with the given size is available.
      *
-     * @param string $size
      * @return  bool
      * @throws  \InvalidArgumentException
      */
-    public function hasThumbnail($size)
+    public function hasThumbnail(string $size)
     {
         if (!isset(self::$thumbnailSizes[$size])) {
             throw new \InvalidArgumentException("Unknown thumbnail size '" . $size . "'");

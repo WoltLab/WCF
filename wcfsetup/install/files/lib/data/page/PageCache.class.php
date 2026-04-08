@@ -58,10 +58,9 @@ class PageCache extends SingletonFactory
     /**
      * Returns a page by controller or null.
      *
-     * @param string $controller controller class name
      * @return  Page|null
      */
-    public function getPageByController($controller)
+    public function getPageByController(string $controller)
     {
         if (isset($this->cache['controller'][$controller])) {
             return $this->getPage($this->cache['controller'][$controller]);
@@ -73,10 +72,9 @@ class PageCache extends SingletonFactory
     /**
      * Returns a page by its internal identifier or null.
      *
-     * @param string $identifier internal identifier
      * @return  Page|null
      */
-    public function getPageByIdentifier($identifier)
+    public function getPageByIdentifier(string $identifier)
     {
         if (isset($this->cache['identifier'][$identifier])) {
             return $this->getPage($this->cache['identifier'][$identifier]);
@@ -89,11 +87,9 @@ class PageCache extends SingletonFactory
      * Returns the localized page title by page id, optionally retrieving the title
      * for given language id if it is a multilingual page.
      *
-     * @param int $pageID page id
-     * @param int $languageID specific value by language id
      * @return  string  localized page title
      */
-    public function getPageTitle($pageID, $languageID = null)
+    public function getPageTitle(int $pageID, ?int $languageID = null)
     {
         if (isset($this->cache['pageTitles'][$pageID])) {
             $page = $this->getPage($pageID);
@@ -115,11 +111,9 @@ class PageCache extends SingletonFactory
      * Returns the localized page meta description by page id, optionally retrieving the description
      * for given language id if it is a multilingual page (or a system page).
      *
-     * @param int $pageID page id
-     * @param int $languageID specific value by language id
      * @since 5.4
      */
-    public function getPageMetaDescription($pageID, $languageID = null): string
+    public function getPageMetaDescription(int $pageID, ?int $languageID = null): string
     {
         if (isset($this->cache['pageMetaDescriptions'][$pageID])) {
             $page = $this->getPage($pageID);

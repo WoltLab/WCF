@@ -93,10 +93,9 @@ class UserProfileMenu extends SingletonFactory
     /**
      * Sets active menu item.
      *
-     * @param string $menuItem
      * @return  bool
      */
-    public function setActiveMenuItem($menuItem)
+    public function setActiveMenuItem(string $menuItem)
     {
         foreach ($this->menuItems as $item) {
             if ($item->menuItem == $menuItem) {
@@ -112,10 +111,9 @@ class UserProfileMenu extends SingletonFactory
     /**
      * Returns the first visible menu item.
      *
-     * @param int $userID
      * @return  UserProfileMenuItem|null
      */
-    public function getActiveMenuItem($userID = 0)
+    public function getActiveMenuItem(int $userID = 0)
     {
         if (empty($this->menuItems)) {
             return null;
@@ -140,10 +138,9 @@ class UserProfileMenu extends SingletonFactory
     /**
      * Returns a specific menu item.
      *
-     * @param string $menuItem
      * @return  UserProfileMenuItem|null
      */
-    public function getMenuItem($menuItem)
+    public function getMenuItem(string $menuItem)
     {
         foreach ($this->menuItems as $item) {
             if ($item->menuItem == $menuItem) {

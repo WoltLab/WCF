@@ -271,11 +271,9 @@ class TemplateEngine extends SingletonFactory
     /**
      * Adds a new application.
      *
-     * @param string $abbreviation
-     * @param string $templatePath
      * @return void
      */
-    public function addApplication($abbreviation, $templatePath)
+    public function addApplication(string $abbreviation, string $templatePath)
     {
         $this->templatePaths[$abbreviation] = $templatePath;
     }
@@ -283,10 +281,9 @@ class TemplateEngine extends SingletonFactory
     /**
      * Sets active language id.
      *
-     * @param int $languageID
      * @return void
      */
-    public function setLanguageID($languageID)
+    public function setLanguageID(int $languageID)
     {
         $this->languageID = $languageID;
     }
@@ -311,11 +308,10 @@ class TemplateEngine extends SingletonFactory
     /**
      * Assigns a template variable.
      *
-     * @param mixed $variable
-     * @param mixed $value
+     * @param string|array<string, mixed> $variable
      * @return void
      */
-    public function assign($variable, $value = '')
+    public function assign(string|array $variable, mixed $value = '')
     {
         if (\is_array($variable)) {
             foreach ($variable as $key => $value) {
@@ -333,11 +329,10 @@ class TemplateEngine extends SingletonFactory
     /**
      * Appends content to an existing template variable.
      *
-     * @param mixed $variable
-     * @param mixed $value
+     * @param string|array<string, mixed> $variable
      * @return void
      */
-    public function append($variable, $value = '')
+    public function append(string|array $variable, mixed $value = '')
     {
         if (\is_array($variable)) {
             foreach ($variable as $key => $val) {
@@ -370,11 +365,10 @@ class TemplateEngine extends SingletonFactory
     /**
      * Prepends content to an existing template variable.
      *
-     * @param mixed $variable
-     * @param mixed $value
+     * @param string|array<string, mixed> $variable
      * @return void
      */
-    public function prepend($variable, $value = '')
+    public function prepend(string|array $variable, mixed $value = '')
     {
         if (\is_array($variable)) {
             foreach ($variable as $key => $val) {
@@ -407,11 +401,9 @@ class TemplateEngine extends SingletonFactory
     /**
      * Assigns a template variable by reference.
      *
-     * @param string $variable
-     * @param mixed $value
      * @return void
      */
-    public function assignByRef($variable, &$value)
+    public function assignByRef(string $variable, mixed &$value)
     {
         if (!empty($variable)) {
             $this->v[$variable] = &$value;
@@ -445,12 +437,9 @@ class TemplateEngine extends SingletonFactory
     /**
      * Outputs a template.
      *
-     * @param string $templateName
-     * @param string $application
-     * @param bool $sendHeaders
      * @return void
      */
-    public function display($templateName, $application = 'wcf', $sendHeaders = true)
+    public function display(string $templateName, string $application = 'wcf', bool $sendHeaders = true)
     {
         if ($sendHeaders) {
             HeaderUtil::sendHeaders();
@@ -489,12 +478,10 @@ class TemplateEngine extends SingletonFactory
     /**
      * Returns the absolute filename of a template source.
      *
-     * @param string $templateName
-     * @param string $application
-     * @return  string      $path
+     * @return  string
      * @throws  SystemException
      */
-    public function getSourceFilename($templateName, $application)
+    public function getSourceFilename(string $templateName, string $application)
     {
         // Map old template names to new shared template names
         if (\array_key_exists($templateName, TemplateEngine::SHARED_TEMPLATES)) {
@@ -524,11 +511,9 @@ class TemplateEngine extends SingletonFactory
     /**
      * Returns path if template was found.
      *
-     * @param string $templatePath
-     * @param string $templateName
      * @return  string
      */
-    protected function getPath($templatePath, $templateName)
+    protected function getPath(string $templatePath, string $templateName)
     {
         if (!Template::isSystemCritical($templateName)) {
             if (TemplateEngine::isSharedTemplate($templateName)) {
@@ -561,11 +546,9 @@ class TemplateEngine extends SingletonFactory
     /**
      * Returns the absolute filename of a compiled template.
      *
-     * @param string $templateName
-     * @param string $application
      * @return  string
      */
-    public function getCompiledFilename($templateName, $application)
+    public function getCompiledFilename(string $templateName, string $application)
     {
         return $this->getCompileFilePrefix($templateName) . '_' . $application . '_' . $this->languageID . '_' . $templateName . '.php';
     }
@@ -573,10 +556,9 @@ class TemplateEngine extends SingletonFactory
     /**
      * Returns the absolute filename for template's meta data.
      *
-     * @param string $templateName
      * @return  string
      */
-    public function getMetaDataFilename($templateName)
+    public function getMetaDataFilename(string $templateName)
     {
         return $this->getCompileFilePrefix($templateName) . '_' . $templateName . '.meta.php';
     }
@@ -584,14 +566,10 @@ class TemplateEngine extends SingletonFactory
     /**
      * Returns true if the template with the given data is already compiled.
      *
-     * @param string $templateName
-     * @param string $sourceFilename
-     * @param string $compiledFilename
-     * @param string $application
      * @param mixed[] $metaData
      * @return  bool
      */
-    protected function isCompiled($templateName, $sourceFilename, $compiledFilename, $application, array $metaData)
+    protected function isCompiled(string $templateName, string $sourceFilename, string $compiledFilename, string $application, array $metaData)
     {
         if ($this->forceCompile || !\file_exists($compiledFilename)) {
             return false;
@@ -624,13 +602,10 @@ class TemplateEngine extends SingletonFactory
     /**
      * Compiles a template.
      *
-     * @param string $templateName
-     * @param string $sourceFilename
-     * @param string $compiledFilename
      * @param array{application: string, data: string[], filename: string} $metaData
      * @return void
      */
-    protected function compileTemplate($templateName, $sourceFilename, $compiledFilename, array $metaData)
+    protected function compileTemplate(string $templateName, string $sourceFilename, string $compiledFilename, array $metaData)
     {
         // get source
         $sourceContent = $this->getSourceContent($sourceFilename);
@@ -656,11 +631,10 @@ class TemplateEngine extends SingletonFactory
     /**
      * Reads the content of a template file.
      *
-     * @param string $sourceFilename
      * @return  string
      * @throws  SystemException
      */
-    public function getSourceContent($sourceFilename)
+    public function getSourceContent(string $sourceFilename)
     {
         $sourceContent = '';
         if (!\file_exists($sourceFilename) || (($sourceContent = @\file_get_contents($sourceFilename)) === false)) {
@@ -673,11 +647,9 @@ class TemplateEngine extends SingletonFactory
     /**
      * Returns the class name of a plugin.
      *
-     * @param string $type
-     * @param string $tag
      * @return  string
      */
-    public function getPluginClassName($type, $tag)
+    public function getPluginClassName(string $type, string $tag)
     {
         return $this->pluginNamespace . StringUtil::firstCharToUpperCase($tag) . StringUtil::firstCharToUpperCase(\mb_strtolower($type)) . 'TemplatePlugin';
     }
@@ -715,15 +687,13 @@ class TemplateEngine extends SingletonFactory
     /**
      * Returns the output of a template.
      *
-     * @param string $templateName
-     * @param string $application
      * @param array<string, mixed> $variables
      * @param bool $sandbox enables execution in sandbox
      * @return  string
      *
      * @deprecated 6.2 use `render()` instead, will be removed in 7.0
      */
-    public function fetch($templateName, $application = 'wcf', array $variables = [], $sandbox = false)
+    public function fetch(string $templateName, string $application = 'wcf', array $variables = [], bool $sandbox = false)
     {
         if ($sandbox) {
             return $this->render($application, $templateName, $variables);
@@ -826,12 +796,11 @@ class TemplateEngine extends SingletonFactory
     /**
      * Executes a compiled template scripting source and returns the result.
      *
-     * @param string $compiledSource
      * @param array<string, mixed> $variables
      * @param bool $sandbox enables execution in sandbox
      * @return  string
      */
-    public function fetchString($compiledSource, array $variables = [], $sandbox = true)
+    public function fetchString(string $compiledSource, array $variables = [], bool $sandbox = true)
     {
         // enable sandbox
         if ($sandbox) {
@@ -860,10 +829,9 @@ class TemplateEngine extends SingletonFactory
     /**
      * Deletes all compiled templates.
      *
-     * @param string $compileDir
      * @return void
      */
-    public static function deleteCompiledTemplates($compileDir = '')
+    public static function deleteCompiledTemplates(string $compileDir = '')
     {
         if (empty($compileDir)) {
             $compileDir = WCF_DIR . 'templates/compiled/';
@@ -896,10 +864,9 @@ class TemplateEngine extends SingletonFactory
     /**
      * Sets the active template group id.
      *
-     * @param int $templateGroupID
      * @return void
      */
-    public function setTemplateGroupID($templateGroupID)
+    public function setTemplateGroupID(int $templateGroupID)
     {
         if ($templateGroupID && !isset($this->templateGroupCache[$templateGroupID])) {
             $templateGroupID = 0;
@@ -937,7 +904,7 @@ class TemplateEngine extends SingletonFactory
      * @param string $name internal prefilter identifier
      * @return void
      */
-    public function removePrefilter($name)
+    public function removePrefilter(string $name)
     {
         unset($this->prefilters[$name]);
     }
@@ -945,11 +912,10 @@ class TemplateEngine extends SingletonFactory
     /**
      * Sets the dir for the compiled templates.
      *
-     * @param string $compileDir
      * @return void
      * @throws  SystemException
      */
-    public function setCompileDir($compileDir)
+    public function setCompileDir(string $compileDir)
     {
         if (!\is_dir($compileDir)) {
             throw new SystemException("'" . $compileDir . "' is not a valid dir");
@@ -961,13 +927,11 @@ class TemplateEngine extends SingletonFactory
     /**
      * Includes a template.
      *
-     * @param string $templateName
-     * @param string $application
      * @param array<string, mixed> $variables
      * @param bool $sandbox enables execution in sandbox
      * @return void
      */
-    protected function includeTemplate($templateName, $application, array $variables = [], $sandbox = true)
+    protected function includeTemplate(string $templateName, string $application, array $variables = [], bool $sandbox = true)
     {
         // enable sandbox
         if ($sandbox) {
@@ -991,10 +955,9 @@ class TemplateEngine extends SingletonFactory
     /**
      * Returns the value of a template variable.
      *
-     * @param string $varname
      * @return  mixed
      */
-    public function get($varname)
+    public function get(string $varname)
     {
         if (isset($this->v[$varname])) {
             return $this->v[$varname];
@@ -1018,11 +981,9 @@ class TemplateEngine extends SingletonFactory
     /**
      * Returns template listener's code.
      *
-     * @param string $templateName
-     * @param string $eventName
      * @return  string
      */
-    public function getTemplateListenerCode($templateName, $eventName)
+    public function getTemplateListenerCode(string $templateName, string $eventName)
     {
         $this->loadTemplateListenerCode();
         $listeners = [];
@@ -1042,11 +1003,9 @@ class TemplateEngine extends SingletonFactory
     /**
      * Reads meta data from file.
      *
-     * @param string $templateName
-     * @param string $filename
      * @return mixed[]|null
      */
-    protected function getMetaData($templateName, $filename)
+    protected function getMetaData(string $templateName, string $filename)
     {
         if (!\file_exists($filename) || !\is_readable($filename)) {
             return null;

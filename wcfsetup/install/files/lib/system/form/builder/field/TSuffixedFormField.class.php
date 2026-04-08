@@ -40,7 +40,7 @@ trait TSuffixedFormField
      *
      * @throws  \InvalidArgumentException   if the given language item is no or otherwise invalid
      */
-    public function suffix($languageItem = null, array $variables = [])
+    public function suffix(?string $languageItem = null, array $variables = [])
     {
         if ($languageItem === null) {
             if (!empty($variables)) {

@@ -131,13 +131,12 @@ trait TAttributeFormField
     /**
      * Checks if the given name is valid attribute name.
      *
-     * @param string $name checked argument name
      * @return void
      *
      * @throws \InvalidArgumentException if the given attribute name is invalid
      * @see IFormNode::validateAttribute()
      */
-    abstract public static function validateAttribute($name);
+    abstract public static function validateAttribute(string $name);
 
     /**
      * Checks if the given name is a valid additional attribute name.

@@ -78,11 +78,8 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
         'cdata',
     ];
 
-    /**
-     * @param array<string, string|int|null> $category
-     */
     #[\Override]
-    protected function saveCategory($category)
+    protected function saveCategory(array $category)
     {
         // use for create and update
         $data = [
@@ -113,7 +110,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
     }
 
     #[\Override]
-    protected function saveOption($option, $categoryName, $existingOptionID = 0)
+    protected function saveOption(array $option, string $categoryName, int $existingOptionID = 0)
     {
         // default values
         $optionName = $optionType = $validationPattern = $outputClass = $selectOptions = $enableOptions = $permissions = $options = '';
@@ -394,12 +391,11 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
     }
 
     /**
-     * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
     #[\Override]
-    protected function fetchElementData(\DOMElement $element, $saveData)
+    protected function fetchElementData(\DOMElement $element, bool $saveData)
     {
         $data = parent::fetchElementData($element, $saveData);
 

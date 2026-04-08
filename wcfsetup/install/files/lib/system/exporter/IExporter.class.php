@@ -43,19 +43,16 @@ interface IExporter
     /**
      * Counts the number of required loops for given type.
      *
-     * @param string $objectType
      * @return int
      */
-    public function countLoops($objectType);
+    public function countLoops(string $objectType);
 
     /**
      * Runs the data export.
      *
-     * @param string $objectType
-     * @param int $loopCount
      * @return void
      */
-    public function exportData($objectType, $loopCount = 0);
+    public function exportData(string $objectType, int $loopCount = 0);
 
     /**
      * Validates database access.

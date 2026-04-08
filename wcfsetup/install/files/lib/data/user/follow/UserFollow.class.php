@@ -22,11 +22,9 @@ class UserFollow extends DatabaseObject
     /**
      * Retrieves a follower.
      *
-     * @param int $userID
-     * @param int $followUserID
      * @return  UserFollow
      */
-    public static function getFollow($userID, $followUserID)
+    public static function getFollow(int $userID, int $followUserID)
     {
         $sql = "SELECT  followID
                 FROM    wcf1_user_follow

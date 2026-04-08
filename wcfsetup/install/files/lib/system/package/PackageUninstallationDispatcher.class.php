@@ -198,13 +198,10 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
     /**
      * Deletes the given list of files from the target dir.
      *
-     * @param string $targetDir
      * @param string[] $files
-     * @param bool $deleteEmptyDirectories
-     * @param bool $deleteEmptyTargetDir
      * @return void
      */
-    public function deleteFiles($targetDir, $files, $deleteEmptyTargetDir = false, $deleteEmptyDirectories = true)
+    public function deleteFiles(string $targetDir, array $files, bool $deleteEmptyTargetDir = false, bool $deleteEmptyDirectories = true)
     {
         new Uninstaller($targetDir, $files, $deleteEmptyTargetDir, $deleteEmptyDirectories);
     }

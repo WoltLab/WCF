@@ -176,12 +176,10 @@ class UsersOnlineList extends SessionList
     /**
      * Checks the 'canViewOnlineStatus' setting.
      *
-     * @param int $userID
-     * @param int $canViewOnlineStatus
      * @return  bool
      * @deprecated  5.3             Use `isVisibleUser` instead
      */
-    public static function isVisible($userID, $canViewOnlineStatus)
+    public static function isVisible(int $userID, int $canViewOnlineStatus)
     {
         if (WCF::getSession()->getPermission('admin.user.canViewInvisible') || $userID == WCF::getUser()->userID) {
             return true;

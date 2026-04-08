@@ -544,10 +544,9 @@ class UserProfileAction extends UserAction
     /**
      * Returns the user option handler object.
      *
-     * @param bool $editMode
      * @return UserOptionHandler
      */
-    protected function getOptionHandler(User $user, $editMode = true)
+    protected function getOptionHandler(User $user, bool $editMode = true)
     {
         $optionHandler = new UserOptionHandler(false, '', 'profile');
         if (!$editMode) {

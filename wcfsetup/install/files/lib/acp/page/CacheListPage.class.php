@@ -114,13 +114,9 @@ class CacheListPage extends AbstractPage
     /**
      * Reads the information of cached files
      *
-     * @param string $cacheType
-     * @param string $cacheDir
-     * @param ?Regex $ignore
-     * @param string $extension
      * @return void
      */
-    protected function readCacheFiles($cacheType, $cacheDir, ?Regex $ignore = null, $extension = 'php')
+    protected function readCacheFiles(string $cacheType, string $cacheDir, ?Regex $ignore = null, string $extension = 'php')
     {
         if (!isset($this->cacheData[$cacheType])) {
             $this->cacheData[$cacheType] = [];

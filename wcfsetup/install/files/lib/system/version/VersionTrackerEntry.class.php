@@ -32,10 +32,9 @@ class VersionTrackerEntry
     /**
      * VersionTrackerEntry constructor.
      *
-     * @param ?int $id id
      * @param mixed[] $data version data
      */
-    public function __construct($id, array $data)
+    public function __construct(?int $id, array $data)
     {
         if ($id !== null) {
             throw new \InvalidArgumentException("Accessing tracked versions by id is not supported.");
@@ -57,10 +56,9 @@ class VersionTrackerEntry
      * Returns the value of a object data variable with the given name or `null` if no
      * such data variable exists.
      *
-     * @param string $name
      * @return  mixed
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         if (isset($this->data[$name])) {
             return $this->data[$name];
@@ -73,10 +71,9 @@ class VersionTrackerEntry
      * Determines if the object data variable with the given name is set and
      * is not NULL.
      *
-     * @param string $name
      * @return  bool
      */
-    public function __isset($name)
+    public function __isset(string $name)
     {
         return isset($this->data[$name]);
     }
@@ -84,11 +81,9 @@ class VersionTrackerEntry
     /**
      * Returns the stored value of a property or null if unknown.
      *
-     * @param string $property property name
-     * @param int $languageID language id
      * @return      string
      */
-    public function getPayload($property, $languageID)
+    public function getPayload(string $property, int $languageID)
     {
         if (isset($this->payload[$languageID])) {
             return (isset($this->payload[$languageID][$property])) ? $this->payload[$languageID][$property] : '';
@@ -102,10 +97,9 @@ class VersionTrackerEntry
      * properties will be set to an empty string.
      *
      * @param string[] $properties list of property names
-     * @param int $languageID language id
      * @return      string[]
      */
-    public function getPayloadForProperties(array $properties, $languageID)
+    public function getPayloadForProperties(array $properties, int $languageID)
     {
         $payload = [];
         foreach ($properties as $property) {

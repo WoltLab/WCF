@@ -883,12 +883,9 @@ class PackageInstallationDispatcher
     /**
      * Extracts files from .tar(.gz) archive and installs them
      *
-     * @param string $targetDir
-     * @param string $sourceArchive
-     * @param IFileHandler $fileHandler
      * @return  Installer
      */
-    public function extractFiles($targetDir, $sourceArchive, $fileHandler = null)
+    public function extractFiles(string $targetDir, string $sourceArchive, ?IFileHandler $fileHandler = null)
     {
         return new Installer($targetDir, $sourceArchive, $fileHandler);
     }
@@ -910,10 +907,9 @@ class PackageInstallationDispatcher
     /**
      * Prompts for a text input for package directory (applies for applications only)
      *
-     * @param string $applicationDirectory
      * @return  FormDocument|null
      */
-    protected function promptPackageDir($applicationDirectory)
+    protected function promptPackageDir(string $applicationDirectory)
     {
         $directory = null;
         $abbreviation = Package::getAbbreviation($this->getPackage()->package);

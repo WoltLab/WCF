@@ -105,10 +105,9 @@ class DevtoolsPip extends DatabaseObjectDecorator
     }
 
     /**
-     * @param bool $toJson
      * @return string|string[]
      */
-    public function getSyncDependencies($toJson = true)
+    public function getSyncDependencies(bool $toJson = true)
     {
         $dependencies = \call_user_func([$this->getDecoratedObject()->className, 'getSyncDependencies']);
 
@@ -284,11 +283,9 @@ class DevtoolsPip extends DatabaseObjectDecorator
     /**
      * Computes and prepares the instructions for the provided target file.
      *
-     * @param DevtoolsProject $project
-     * @param string $target
      * @return array<string, array<string, string>|string>
      */
-    public function getInstructions(DevtoolsProject $project, $target)
+    public function getInstructions(DevtoolsProject $project, string $target)
     {
         $defaultFilename = $this->getDefaultFilename();
         $pluginName = $this->getDecoratedObject()->pluginName;

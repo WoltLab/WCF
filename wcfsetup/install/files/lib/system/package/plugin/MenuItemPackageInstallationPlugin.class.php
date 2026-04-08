@@ -185,10 +185,9 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      * Returns the id of the menu with the given identifier. If no such menu
      * exists, `null` is returned.
      *
-     * @param string $identifier
      * @return  null|int
      */
-    protected function getMenuID($identifier)
+    protected function getMenuID(string $identifier)
     {
         $sql = "SELECT  menuID
                 FROM    wcf1_menu
@@ -203,10 +202,9 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      * Returns the id of the page with the given identifier. If no such page
      * exists, `null` is returned.
      *
-     * @param string $identifier
      * @return  null|int
      */
-    protected function getPageID($identifier)
+    protected function getPageID(string $identifier)
     {
         $sql = "SELECT  pageID
                 FROM    wcf1_page
@@ -255,7 +253,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      * @param int $parentItemID
      * @return  int
      */
-    protected function getItemOrder($menuID, $parentItemID = null)
+    protected function getItemOrder(int $menuID, ?int $parentItemID = null)
     {
         $sql = "SELECT  MAX(showOrder) AS showOrder
                 FROM    wcf1_menu_item
@@ -450,12 +448,11 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     }
 
     /**
-     * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
     #[\Override]
-    protected function fetchElementData(\DOMElement $element, $saveData)
+    protected function fetchElementData(\DOMElement $element, bool $saveData)
     {
         $data = [
             'identifier' => $element->getAttribute('identifier'),

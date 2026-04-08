@@ -29,10 +29,9 @@ class UserIgnore extends DatabaseObject
     /**
      * Returns a UserIgnore object for given ignored user id.
      *
-     * @param int $ignoreUserID
      * @return  UserIgnore
      */
-    public static function getIgnore($ignoreUserID)
+    public static function getIgnore(int $ignoreUserID)
     {
         $sql = "SELECT  *
                 FROM    wcf1_user_ignore

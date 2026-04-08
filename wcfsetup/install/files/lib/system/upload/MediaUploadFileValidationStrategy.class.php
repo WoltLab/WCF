@@ -17,12 +17,7 @@ class MediaUploadFileValidationStrategy implements IUploadFileValidationStrategy
      */
     protected $imagesOnly = false;
 
-    /**
-     * Creates a new instance of MediaUploadFileValidationStrategy.
-     *
-     * @param bool $imagesOnly
-     */
-    public function __construct($imagesOnly)
+    public function __construct(bool $imagesOnly)
     {
         $this->imagesOnly = $imagesOnly;
     }

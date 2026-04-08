@@ -21,7 +21,7 @@ class HtmlToc
      * @param string $idPrefix prefix for all generated ids, must not end with a delimiter
      * @return      string          the HTML of the generated table of contents or an empty string if there are too few headings
      */
-    public static function forMessage(\DOMDocument $document, $idPrefix)
+    public static function forMessage(\DOMDocument $document, string $idPrefix)
     {
         $titleRegex = new Regex('[^\p{L}\p{N}]+', Regex::UTF_8);
 

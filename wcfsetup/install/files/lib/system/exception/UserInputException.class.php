@@ -36,7 +36,7 @@ class UserInputException extends UserException
      * @param string|mixed[] $type kind of this error
      * @param array<string, mixed> $variables additional variables for AJAX error handling
      */
-    public function __construct($field = '', $type = 'empty', array $variables = [])
+    public function __construct(string $field = '', string|array $type = 'empty', array $variables = [])
     {
         $this->field = $field;
         $this->type = $type;

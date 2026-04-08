@@ -68,10 +68,9 @@ class Poll extends DatabaseObject
     /**
      * Returns a list of poll options.
      *
-     * @param bool $isResultDisplay
      * @return PollOption[]
      */
-    public function getOptions($isResultDisplay = false)
+    public function getOptions(bool $isResultDisplay = false)
     {
         $this->loadOptions();
 

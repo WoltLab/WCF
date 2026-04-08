@@ -138,10 +138,9 @@ class UploadHandler
      * Returns an upload handler instance for the given identifier or `null` if no data exists in `$_FILES`
      * for the identifier.
      *
-     * @param string $identifier
      * @return  UploadHandler|null
      */
-    public static function getUploadHandler($identifier)
+    public static function getUploadHandler(string $identifier)
     {
         if (isset($_FILES[$identifier]) && \is_array($_FILES[$identifier])) {
             return new self($_FILES[$identifier]);
@@ -153,11 +152,10 @@ class UploadHandler
     /**
      * Returns the mime type of a file.
      *
-     * @param string $file
      * @param string $mimeType mime type transferred by client
      * @return  string
      */
-    protected static function getMimeType($file, $mimeType)
+    protected static function getMimeType(string $file, string $mimeType)
     {
         if (
             $mimeType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'

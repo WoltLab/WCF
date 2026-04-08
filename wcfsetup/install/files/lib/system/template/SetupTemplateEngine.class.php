@@ -18,19 +18,19 @@ class SetupTemplateEngine extends TemplateEngine
     }
 
     #[\Override]
-    public function getSourceFilename($templateName, $application)
+    public function getSourceFilename(string $templateName, string $application)
     {
         return $this->compileDir . 'setup/template/' . $templateName . '.tpl';
     }
 
     #[\Override]
-    public function getCompiledFilename($templateName, $application)
+    public function getCompiledFilename(string $templateName, string $application)
     {
         return $this->compileDir . 'setup/template/compiled/' . $this->languageID . '_' . $templateName . '.php';
     }
 
     #[\Override]
-    public function getMetaDataFilename($templateName)
+    public function getMetaDataFilename(string $templateName)
     {
         return $this->compileDir . 'setup/template/compiled/' . $this->languageID . '_' . $templateName . '.meta.php';
     }

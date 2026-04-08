@@ -356,11 +356,10 @@ class UserAddForm extends UserOptionListForm
     /**
      * Throws a UserInputException if the username is not unique or not valid.
      *
-     * @param string $username
      * @return void
      * @throws UserInputException
      */
-    protected function validateUsername($username)
+    protected function validateUsername(string $username)
     {
         if (empty($username)) {
             throw new UserInputException('username');

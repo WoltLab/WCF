@@ -97,10 +97,9 @@ trait TCssClassFormField
     /**
      * Checks if the given parameter class is a valid CSS class.
      *
-     * @param string $class checked class
      * @return void
      *
      * @throws \InvalidArgumentException if the given class is invalid
      */
-    abstract public static function validateClass($class);
+    abstract public static function validateClass(string $class);
 }

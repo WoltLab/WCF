@@ -111,13 +111,11 @@ final class WorkerProxyAction extends AJAXInvokeAction
     /**
      * Sends a JSON-encoded response.
      *
-     * @param int $progress
      * @param ?array<string, mixed> $parameters
-     * @param string $proceedURL
      * @return void
      */
     #[\Override]
-    protected function sendResponse($progress = 0, ?array $parameters = null, $proceedURL = '')
+    protected function sendResponse(int $progress = 0, ?array $parameters = null, string $proceedURL = '')
     {
         if ($parameters === null) {
             $parameters = $this->parameters;

@@ -84,7 +84,7 @@ class DateFormField extends AbstractFormField implements
      * @param null|string|int $earliestDate
      * @return  static
      */
-    public function earliestDate($earliestDate = null)
+    public function earliestDate(null|string|int $earliestDate = null)
     {
         $this->earliestDate = $earliestDate;
 
@@ -240,10 +240,9 @@ class DateFormField extends AbstractFormField implements
      * Sets the latest valid date in `DateFormField::$saveValueFormat` format and returns this
      * field. If `null` is given, the previously set latest valid date is unset.
      *
-     * @param null|string|int $latestDate
      * @return  static
      */
-    public function latestDate($latestDate = null)
+    public function latestDate(null|string|int $latestDate = null)
     {
         $this->latestDate = $latestDate;
 
@@ -331,10 +330,9 @@ class DateFormField extends AbstractFormField implements
     /**
      * Sets the date time format of the save value.
      *
-     * @param string $saveValueFormat
      * @return  static
      */
-    public function saveValueFormat($saveValueFormat)
+    public function saveValueFormat(string $saveValueFormat)
     {
         if ($this->saveValueFormat !== null) {
             throw new \BadMethodCallException("Save value type has already been set for field '{$this->getId()}'.");
@@ -348,10 +346,9 @@ class DateFormField extends AbstractFormField implements
     /**
      * Sets if not only the date, but also the time can be set.
      *
-     * @param bool $supportsTime
      * @return  static      this field
      */
-    public function supportTime($supportsTime = true)
+    public function supportTime(bool $supportsTime = true)
     {
         if ($this->value !== null) {
             throw new \BadFunctionCallException(

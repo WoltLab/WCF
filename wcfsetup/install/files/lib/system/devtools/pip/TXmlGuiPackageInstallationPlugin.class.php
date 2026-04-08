@@ -182,11 +182,9 @@ trait TXmlGuiPackageInstallationPlugin
      * Deletes the entry of this pip with the given identifier and, based
      * on the value of `$addDeleteInstruction`, adds a delete instruction.
      *
-     * @param string $identifier
-     * @param bool $addDeleteInstruction
      * @return void
      */
-    public function deleteEntry($identifier, $addDeleteInstruction)
+    public function deleteEntry(string $identifier, bool $addDeleteInstruction)
     {
         $xml = $this->getProjectXml();
 
@@ -276,10 +274,9 @@ trait TXmlGuiPackageInstallationPlugin
      * provided by the given form and returns the new identifier of the entry
      * (or the old identifier if it has not changed).
      *
-     * @param string $identifier
      * @return string new identifier
      */
-    public function editEntry(IFormDocument $form, $identifier)
+    public function editEntry(IFormDocument $form, string $identifier)
     {
         $xml = $this->getProjectXml();
         $document = $xml->getDocument();
@@ -312,10 +309,9 @@ trait TXmlGuiPackageInstallationPlugin
      * Checks if the given string needs to be encapsuled by cdata and does so
      * if required.
      *
-     * @param string $value
      * @return string
      */
-    protected function getAutoCdataValue($value)
+    protected function getAutoCdataValue(string $value)
     {
         if (\strpos('<', $value) !== false || \strpos('>', $value) !== false || \strpos('&', $value) !== false) {
             $value = '<![CDATA[' . StringUtil::escapeCDATA($value) . ']]>';
@@ -327,10 +323,9 @@ trait TXmlGuiPackageInstallationPlugin
     /**
      * Returns the `import` element with the given identifier.
      *
-     * @param string $identifier
      * @return ?\DOMElement
      */
-    protected function getElementByIdentifier(XML $xml, $identifier)
+    protected function getElementByIdentifier(XML $xml, string $identifier)
     {
         foreach ($this->getImportElements($xml->xpath()) as $element) {
             // @phpstan-ignore function.alreadyNarrowedType, instanceof.alwaysTrue
@@ -350,7 +345,7 @@ trait TXmlGuiPackageInstallationPlugin
      * @param bool $saveData is `true` if data is intended to be saved and otherwise `false`
      * @return array<string, int|string>
      */
-    abstract protected function fetchElementData(\DOMElement $element, $saveData);
+    abstract protected function fetchElementData(\DOMElement $element, bool $saveData);
 
     /**
      * Extracts the PIP object data from the given XML element by calling
@@ -360,7 +355,7 @@ trait TXmlGuiPackageInstallationPlugin
      * @param bool $saveData is `true` if data is intended to be saved and otherwise `false`
      * @return mixed[]
      */
-    protected function getElementData(\DOMElement $element, $saveData = false)
+    protected function getElementData(\DOMElement $element, bool $saveData = false)
     {
         $elementData = $this->fetchElementData($element, $saveData);
 
@@ -629,12 +624,11 @@ XML;
      * Informs the pip of the identifier of the edited entry if the form to
      * edit that entry has been submitted.
      *
-     * @param string $identifier
      * @return void
      *
      * @throws \InvalidArgumentException if no such entry exists
      */
-    public function setEditedEntryIdentifier($identifier)
+    public function setEditedEntryIdentifier(string $identifier)
     {
         $this->editedEntry = $this->getElementByIdentifier($this->getProjectXml(), $identifier);
 
@@ -648,10 +642,9 @@ XML;
      * given form and returns `true`. If no entry with the given identifier
      * exists, `false` is returned.
      *
-     * @param string $identifier
      * @return bool
      */
-    public function setEntryData($identifier, IFormDocument $document)
+    public function setEntryData(string $identifier, IFormDocument $document)
     {
         $xml = $this->getProjectXml();
 
@@ -704,7 +697,7 @@ XML;
      *
      * @throws \InvalidArgumentException if the given entry type is invalid (see `getEntryTypes()` method)
      */
-    public function setEntryType($entryType)
+    public function setEntryType(string $entryType)
     {
         if (!\in_array($entryType, $this->getEntryTypes())) {
             throw new \InvalidArgumentException("Unknown entry type '{$entryType}'.");

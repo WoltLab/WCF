@@ -36,10 +36,9 @@ class AtomicWriter extends File
     /**
      * Opens a new file. The file is always opened in binary mode.
      *
-     * @param string $filename
      * @throws  SystemException
      */
-    public function __construct($filename)
+    public function __construct(string $filename)
     {
         $this->targetFilename = $filename;
 
@@ -115,13 +114,8 @@ class AtomicWriter extends File
         }
     }
 
-    /**
-     * @param string $function
-     * @param mixed[] $arguments
-     * @return mixed
-     */
     #[\Override]
-    public function __call($function, $arguments)
+    public function __call(string $function, array $arguments)
     {
         if ($this->isFlushed) {
             throw new SystemException('AtomicWriter for ' . $this->targetFilename . ' was already flushed.');

@@ -96,10 +96,9 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController
     /**
      * Returns BBCode object with the given tag.
      *
-     * @param string $tag
      * @return BBCode
      */
-    public static function getBBCodeByTag($tag)
+    public static function getBBCodeByTag(string $tag)
     {
         $sql = "SELECT  *
                 FROM    wcf1_bbcode
@@ -119,11 +118,10 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController
      * BBCode tags. If the relevant BBCode should be globally disabled or non-
      * existent, false is returned.
      *
-     * @param string $bbcodeTag
      * @param string[] $allowedBBCodeTags
      * @return bool
      */
-    public static function isAllowedBBCode($bbcodeTag, array $allowedBBCodeTags)
+    public static function isAllowedBBCode(string $bbcodeTag, array $allowedBBCodeTags)
     {
         // check if bbcode is unknown or disabled
         if (BBCodeCache::getInstance()->getBBCodeByTag($bbcodeTag) === null) {

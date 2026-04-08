@@ -64,11 +64,10 @@ class ACPSessionEditor extends DatabaseObjectEditor
     }
 
     /**
-     * @param int $timestamp
      * @return void
      * @deprecated 5.4 - Sessions are managed via the SessionHandler.
      */
-    public static function deleteExpiredSessions($timestamp)
+    public static function deleteExpiredSessions(int $timestamp)
     {
         SessionHandler::getInstance()->prune();
     }

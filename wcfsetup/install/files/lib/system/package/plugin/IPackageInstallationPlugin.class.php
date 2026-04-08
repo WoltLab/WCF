@@ -54,9 +54,7 @@ interface IPackageInstallationPlugin
      * Validates if the passed instruction is valid for this package installation plugin. If anything is
      * wrong with it, this method should return false.
      *
-     * @param PackageArchive $packageArchive
-     * @param string $instruction
      * @return  bool
      */
-    public static function isValid(PackageArchive $packageArchive, $instruction);
+    public static function isValid(PackageArchive $packageArchive, string $instruction);
 }

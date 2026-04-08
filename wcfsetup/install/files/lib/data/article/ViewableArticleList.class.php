@@ -121,10 +121,9 @@ class ViewableArticleList extends ArticleList
     /**
      * Enables/disables the loading of article content objects.
      *
-     * @param bool $enable
      * @return void
      */
-    public function enableContentLoading($enable = true)
+    public function enableContentLoading(bool $enable = true)
     {
         $this->contentLoading = $enable;
     }

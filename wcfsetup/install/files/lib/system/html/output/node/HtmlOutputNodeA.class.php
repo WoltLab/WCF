@@ -205,11 +205,9 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
     /**
      * Marks an element as external.
      *
-     * @param \DOMElement $element
-     * @param bool $isUgc
      * @return void
      */
-    public static function markLinkAsExternal(\DOMElement $element, $isUgc = false)
+    public static function markLinkAsExternal(\DOMElement $element, bool $isUgc = false)
     {
         $element->setAttribute('class', 'externalURL');
 

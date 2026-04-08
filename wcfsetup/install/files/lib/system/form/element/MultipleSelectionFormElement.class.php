@@ -23,7 +23,7 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement
     protected $disabledMessage = '';
 
     #[\Override]
-    public function setValue($value)
+    public function setValue(string $value)
     {
         if (!\is_array($value)) {
             parent::setValue($value);
@@ -35,10 +35,9 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement
     /**
      * Sets message displayed if input should be disabled.
      *
-     * @param string $message
      * @return void
      */
-    public function setDisabledMessage($message)
+    public function setDisabledMessage(string $message)
     {
         $this->disabledMessage = $message;
     }

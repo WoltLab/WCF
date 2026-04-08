@@ -46,15 +46,12 @@ class UserActivityPointHandler extends SingletonFactory
     /**
      * Adds a new user activity point event.
      *
-     * @param string $objectType
-     * @param int $objectID
-     * @param int $userID
      * @param mixed[] $additionalData
      * @return void
      * @throws  InvalidObjectTypeException
      * @throws  SystemException
      */
-    public function fireEvent($objectType, $objectID, $userID = null, array $additionalData = [])
+    public function fireEvent(string $objectType, int $objectID, ?int $userID = null, array $additionalData = [])
     {
         $objectTypeObj = $this->getObjectTypeByName($objectType);
         if ($objectTypeObj === null) {
@@ -106,13 +103,11 @@ class UserActivityPointHandler extends SingletonFactory
      *  userID => countOfItems
      * )
      *
-     * @param string $objectType
      * @param int[] $itemsToUser
-     * @param bool $updateUsers
      * @return void
      * @throws  InvalidObjectTypeException
      */
-    public function fireEvents($objectType, array $itemsToUser, $updateUsers = true)
+    public function fireEvents(string $objectType, array $itemsToUser, bool $updateUsers = true)
     {
         $objectTypeObj = $this->getObjectTypeByName($objectType);
         if ($objectTypeObj === null) {
@@ -163,12 +158,11 @@ class UserActivityPointHandler extends SingletonFactory
     /**
      * Removes activity point events.
      *
-     * @param string $objectType
      * @param int[] $userToItems
      * @return void
      * @throws  InvalidObjectTypeException
      */
-    public function removeEvents($objectType, array $userToItems)
+    public function removeEvents(string $objectType, array $userToItems)
     {
         if (empty($userToItems)) {
             return;
@@ -231,11 +225,10 @@ class UserActivityPointHandler extends SingletonFactory
     /**
      * Resets activity points and items for a given object type.
      *
-     * @param string $objectType
      * @return void
      * @throws  InvalidObjectTypeException
      */
-    public function reset($objectType)
+    public function reset(string $objectType)
     {
         // get and validate object type
         $objectTypeObj = $this->getObjectTypeByName($objectType);
@@ -255,10 +248,9 @@ class UserActivityPointHandler extends SingletonFactory
      * Returns the user activity point event object type with the given id or
      * null if no such object type exists.
      *
-     * @param int $objectTypeID
      * @return  ObjectType|null
      */
-    public function getObjectType($objectTypeID)
+    public function getObjectType(int $objectTypeID)
     {
         if (isset($this->objectTypeNames[$objectTypeID])) {
             return $this->getObjectTypeByName($this->objectTypeNames[$objectTypeID]);
@@ -271,10 +263,9 @@ class UserActivityPointHandler extends SingletonFactory
      * Returns the user activity point event object type with the given name
      * or null if no such object type exists.
      *
-     * @param string $objectType
      * @return  ObjectType|null
      */
-    public function getObjectTypeByName($objectType)
+    public function getObjectTypeByName(string $objectType)
     {
         return $this->objectTypes[$objectType] ?? null;
     }

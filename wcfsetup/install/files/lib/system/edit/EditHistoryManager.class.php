@@ -36,11 +36,10 @@ class EditHistoryManager extends SingletonFactory
     /**
      * Returns the id of the object type with the given name.
      *
-     * @param string $objectType
      * @return int
      * @throws SystemException
      */
-    public function getObjectTypeID($objectType)
+    public function getObjectTypeID(string $objectType)
     {
         if (!isset($this->availableObjectTypes[$objectType])) {
             throw new SystemException("unknown object type '" . $objectType . "'");
@@ -52,17 +51,10 @@ class EditHistoryManager extends SingletonFactory
     /**
      * Adds a new entry.
      *
-     * @param string $objectType
-     * @param int $objectID
-     * @param string $message
-     * @param int $time
-     * @param int $userID
-     * @param string $username
-     * @param string $editReason
      * @param int $obsoletedByUserID The userID of the user that forced this entry to become outdated
      * @return void
      */
-    public function add($objectType, $objectID, $message, $time, $userID, $username, $editReason, $obsoletedByUserID)
+    public function add(string $objectType, int $objectID, string $message, int $time, int $userID, string $username, string $editReason, int $obsoletedByUserID)
     {
         // no op, if edit history is disabled
         if (!MODULE_EDIT_HISTORY) {
@@ -90,11 +82,10 @@ class EditHistoryManager extends SingletonFactory
     /**
      * Deletes edit history entries.
      *
-     * @param string $objectType
      * @param int[] $objectIDs
      * @return void
      */
-    public function delete($objectType, array $objectIDs)
+    public function delete(string $objectType, array $objectIDs)
     {
         $objectTypeID = $this->getObjectTypeID($objectType);
 
@@ -121,10 +112,9 @@ class EditHistoryManager extends SingletonFactory
      * Performs mass reverting of edits by the given users in the given timeframe.
      *
      * @param int[] $userIDs
-     * @param int $timeframe
      * @return void
      */
-    public function bulkRevert(array $userIDs, $timeframe = 86400)
+    public function bulkRevert(array $userIDs, int $timeframe = 86400)
     {
         if (empty($userIDs)) {
             return;

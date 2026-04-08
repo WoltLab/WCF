@@ -123,11 +123,9 @@ class Style extends DatabaseObject implements ITitledObject
      * will be converted to the hexadecimal notation (e.g. for use
      * in emails)
      *
-     * @param string $variableName
-     * @param bool $toHex
      * @return  string|null
      */
-    public function getVariable($variableName, $toHex = false)
+    public function getVariable(string $variableName, bool $toHex = false)
     {
         if (isset($this->variables[$variableName])) {
             // check if variable is empty
@@ -420,11 +418,10 @@ class Style extends DatabaseObject implements ITitledObject
      * Serve the WebP variant of the cover photo if the browser supports
      * it and the original cover photo is not a GIF.
      *
-     * @param bool $forceWebP
      * @return bool
      * @since 5.4
      */
-    protected function useWebP($forceWebP = null): bool
+    protected function useWebP(?bool $forceWebP = null): bool
     {
         if ($this->coverPhotoExtension === "gif") {
             return false;
@@ -440,7 +437,7 @@ class Style extends DatabaseObject implements ITitledObject
      * @param bool $absolutePath if `true`, the absolute path is returned, otherwise the path relative to WCF is returned
      * @return  string
      */
-    protected function getFaviconPath($filename, $absolutePath = true)
+    protected function getFaviconPath(string $filename, bool $absolutePath = true)
     {
         if ($this->hasFavicon) {
             $path = FileUtil::getRelativePath(WCF_DIR, $this->getAssetPath()) . $filename;
@@ -458,10 +455,9 @@ class Style extends DatabaseObject implements ITitledObject
     /**
      * Splits the less variables string.
      *
-     * @param string $variables
      * @return array{preset: string, custom: string}
      */
-    public static function splitLessVariables($variables)
+    public static function splitLessVariables(string $variables)
     {
         $tmp = \explode("/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n", $variables, 2);
 
@@ -474,11 +470,9 @@ class Style extends DatabaseObject implements ITitledObject
     /**
      * Joins the less variables.
      *
-     * @param string $preset
-     * @param string $custom
      * @return  string
      */
-    public static function joinLessVariables($preset, $custom)
+    public static function joinLessVariables(string $preset, string $custom)
     {
         if (empty($custom)) {
             return $preset;

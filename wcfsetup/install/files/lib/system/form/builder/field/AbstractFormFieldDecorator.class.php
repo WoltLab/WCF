@@ -106,7 +106,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     }
 
     #[\Override]
-    public function updatedObject(array $data, IStorableObject $object, $loadValues = true)
+    public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true)
     {
         $this->field->updatedObject($data, $object, $loadValues);
 
@@ -114,7 +114,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     }
 
     #[\Override]
-    public function objectProperty($objectProperty)
+    public function objectProperty(string $objectProperty)
     {
         $this->field->objectProperty($objectProperty);
 
@@ -138,7 +138,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     }
 
     #[\Override]
-    public function required($required = true)
+    public function required(bool $required = true)
     {
         $this->field->required($required);
 
@@ -346,7 +346,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     }
 
     #[\Override]
-    public function description($languageItem = null, array $variables = [])
+    public function description(?string $languageItem = null, array $variables = [])
     {
         $this->field->description($languageItem, $variables);
 
@@ -366,7 +366,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     }
 
     #[\Override]
-    public function label($languageItem = null, array $variables = [])
+    public function label(?string $languageItem = null, array $variables = [])
     {
         $this->field->label($languageItem, $variables);
 

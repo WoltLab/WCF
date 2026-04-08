@@ -22,11 +22,9 @@ class UserProfileVisitor extends DatabaseObject
     /**
      * Returns a profile visitor object or `null` if it does not exist.
      *
-     * @param int $ownerID
-     * @param int $userID
      * @return  UserProfileVisitor|null
      */
-    public static function getObject($ownerID, $userID)
+    public static function getObject(int $ownerID, int $userID)
     {
         $sql = "SELECT  *
                 FROM    " . static::getDatabaseTableName() . "

@@ -115,12 +115,10 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
      * @since 5.2
      * @deprecated 5.5 - This function is a noop. The 'active' status is determined live.
      */
-    public function rebuildActiveApplication()
-    {
-    }
+    public function rebuildActiveApplication() {}
 
     #[\Override]
-    public static function __callStatic($method, array $arguments)
+    public static function __callStatic(string $method, array $arguments)
     {
         return \call_user_func_array([WCF::class, $method], $arguments);
     }

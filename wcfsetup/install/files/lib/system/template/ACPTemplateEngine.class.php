@@ -30,10 +30,9 @@ class ACPTemplateEngine extends TemplateEngine
     /**
      * Deletes all compiled acp templates.
      *
-     * @param string $compileDir
      * @return void
      */
-    public static function deleteCompiledACPTemplates($compileDir = '')
+    public static function deleteCompiledACPTemplates(string $compileDir = '')
     {
         if (empty($compileDir)) {
             $compileDir = WCF_DIR . 'acp/templates/compiled/';
@@ -43,7 +42,7 @@ class ACPTemplateEngine extends TemplateEngine
     }
 
     #[\Override]
-    public function getCompiledFilename($templateName, $application)
+    public function getCompiledFilename(string $templateName, string $application)
     {
         $abbreviation = 'wcf';
         if (PACKAGE_ID) {
@@ -56,17 +55,16 @@ class ACPTemplateEngine extends TemplateEngine
     /**
      * This method always throws, because changing the template group is not supported.
      *
-     * @param int $templateGroupID
      * @throws  \BadMethodCallException
      */
     #[\Override]
-    public function setTemplateGroupID($templateGroupID)
+    public function setTemplateGroupID(int $templateGroupID)
     {
         throw new \BadMethodCallException("You may not change the template group of the acp template engine");
     }
 
     #[\Override]
-    public function getTemplateListenerCode($templateName, $eventName)
+    public function getTemplateListenerCode(string $templateName, string $eventName)
     {
         // skip template listeners within WCFSetup
         if (!PACKAGE_ID) {

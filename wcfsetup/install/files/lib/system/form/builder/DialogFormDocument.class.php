@@ -41,7 +41,7 @@ class DialogFormDocument extends FormDocument
      * @param bool $cancelable determines if dialog from can be canceled
      * @return  static          this document
      */
-    public function cancelable($cancelable = true)
+    public function cancelable(bool $cancelable = true)
     {
         $this->isCancelable = $cancelable;
 

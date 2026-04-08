@@ -104,7 +104,7 @@ final class WysiwygFormField extends AbstractFormField implements
      * @param string $autosaveId identifier used to autosave field value
      * @return  WysiwygFormField        this field
      */
-    public function autosaveId($autosaveId)
+    public function autosaveId(string $autosaveId)
     {
         $this->autosaveId = $autosaveId;
 
@@ -158,15 +158,11 @@ final class WysiwygFormField extends AbstractFormField implements
     /**
      * Returns all quote data or specific quote data if an argument is given.
      *
-     * @param null|string $index quote data index
-     *
      * @return  string
-     *
      * @throws  \BadMethodCallException     if quotes are not supported for this field
-     *
      * @deprecated 6.2
      */
-    public function getQuoteData($index = null)
+    public function getQuoteData(?string $index = null)
     {
         if (!$this->supportQuotes) {
             throw new \BadMethodCallException("Quotes are not supported for field '{$this->getId()}'.");
@@ -187,7 +183,7 @@ final class WysiwygFormField extends AbstractFormField implements
      * @param int $lastEditTime last time field has been edited
      * @return  WysiwygFormField    this field
      */
-    public function lastEditTime($lastEditTime)
+    public function lastEditTime(int $lastEditTime)
     {
         $this->lastEditTime = $lastEditTime;
 
@@ -231,7 +227,7 @@ final class WysiwygFormField extends AbstractFormField implements
      *
      * @deprecated 6.2
      */
-    public function quoteData($objectType, $actionClass, array $selectors = [])
+    public function quoteData(string $objectType, string $actionClass, array $selectors = [])
     {
         return $this;
     }
@@ -257,10 +253,9 @@ final class WysiwygFormField extends AbstractFormField implements
     /**
      * Sets if the form field supports attachments and returns this field.
      *
-     * @param bool $supportAttachments
      * @return  WysiwygFormField        this field
      */
-    public function supportAttachments($supportAttachments = true)
+    public function supportAttachments(bool $supportAttachments = true)
     {
         $this->supportAttachments = $supportAttachments;
 
@@ -270,10 +265,9 @@ final class WysiwygFormField extends AbstractFormField implements
     /**
      * Sets if the form field supports mentions and returns this field.
      *
-     * @param bool $supportMentions
      * @return  WysiwygFormField        this field
      */
-    public function supportMentions($supportMentions = true)
+    public function supportMentions(bool $supportMentions = true)
     {
         $this->supportMentions = $supportMentions;
 
@@ -283,10 +277,9 @@ final class WysiwygFormField extends AbstractFormField implements
     /**
      * Sets if the form field supports quotes and returns this field.
      *
-     * @param bool $supportQuotes
      * @return  WysiwygFormField        this field
      */
-    public function supportQuotes($supportQuotes = true)
+    public function supportQuotes(bool $supportQuotes = true)
     {
         $this->supportQuotes = $supportQuotes;
 

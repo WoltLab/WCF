@@ -305,7 +305,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
      * @param string $position box position
      * @return  int
      */
-    protected function getItemOrder($position)
+    protected function getItemOrder(string $position)
     {
         $sql = "SELECT  MAX(showOrder) AS showOrder
                 FROM    wcf1_box
@@ -643,12 +643,11 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
     }
 
     /**
-     * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
     #[\Override]
-    protected function fetchElementData(\DOMElement $element, $saveData)
+    protected function fetchElementData(\DOMElement $element, bool $saveData)
     {
         $data = [
             'boxType' => $element->getElementsByTagName('boxType')->item(0)->nodeValue,

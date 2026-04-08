@@ -30,10 +30,9 @@ class YouTubeBBCodeMediaProvider implements IBBCodeMediaProvider
     /**
      * Converts the given time parameter into seconds.
      *
-     * @param string $time
      * @return  int
      */
-    protected function timeToSeconds($time)
+    protected function timeToSeconds(string $time)
     {
         $result = 0;
         if (\preg_match('~^(?:(?:(?P<h>\d+)h)?(?P<m>\d+)m(?P<s>\d+))|(?P<t>\d+)~', $time, $match)) {

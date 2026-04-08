@@ -28,7 +28,7 @@ class Zip extends File implements IArchive
      */
     protected $centralDirectory;
 
-    public function __construct($filename)
+    public function __construct(string $filename)
     {
         parent::__construct($filename, 'rb');
 
@@ -52,7 +52,7 @@ class Zip extends File implements IArchive
     }
 
     #[\Override]
-    public function getFileInfo($index)
+    public function getFileInfo(int|string $index)
     {
         if (!\is_int($index)) {
             $index = $this->getIndexByFilename($index);
@@ -67,10 +67,9 @@ class Zip extends File implements IArchive
      * Extracts all files to the given destination.
      * The directory-structure inside the .zip is preserved.
      *
-     * @param string $destination where to extract
      * @return void
      */
-    public function extractAll($destination)
+    public function extractAll(string $destination)
     {
         $destination = FileUtil::addTrailingSlash($destination);
         $this->seek(0);
@@ -84,7 +83,7 @@ class Zip extends File implements IArchive
     }
 
     #[\Override]
-    public function extractToString($index)
+    public function extractToString(int|string $index)
     {
         if (!\is_int($index)) {
             $index = $this->getIndexByFilename($index);
@@ -103,7 +102,7 @@ class Zip extends File implements IArchive
     }
 
     #[\Override]
-    public function extract($index, string $destination)
+    public function extract(int|string $index, string $destination)
     {
         if (!\is_int($index)) {
             $index = $this->getIndexByFilename($index);
@@ -261,11 +260,11 @@ class Zip extends File implements IArchive
      * Checks whether the next record is a file.
      * This does not change the position of the file-pointer.
      *
-     * @param int|false|null $offset where to start reading
+     * @param null|int|false $offset where to start reading
      * @return bool
      * @throws SystemException
      */
-    public function isFile($offset = null)
+    public function isFile(null|int|false $offset = null)
     {
         if ($offset === null) {
             $offset = $this->tell();
@@ -287,11 +286,11 @@ class Zip extends File implements IArchive
     /**
      * Reads a file and returns it.
      *
-     * @param int|false|null $offset where to start reading
+     * @param null|int|false $offset where to start reading
      * @return mixed[]
      * @throws SystemException
      */
-    public function readFile($offset = null)
+    public function readFile(null|int|false $offset = null)
     {
         if ($offset === null) {
             $offset = $this->tell();
@@ -387,7 +386,7 @@ class Zip extends File implements IArchive
      * @param string $type Which type are the bytes of
      * @return mixed
      */
-    protected function readAndUnpack($length, $type)
+    protected function readAndUnpack(int $length, string $type)
     {
         $data = \unpack($type, $this->read($length));
 

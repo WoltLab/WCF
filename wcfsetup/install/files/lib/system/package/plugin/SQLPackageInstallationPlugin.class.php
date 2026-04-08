@@ -123,11 +123,10 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin
      * Extracts and returns the sql file.
      * If the specified sql file was not found, an error message is thrown.
      *
-     * @param string $filename
      * @return  string
      * @throws  SystemException
      */
-    protected function getSQL($filename)
+    protected function getSQL(string $filename)
     {
         // search sql files in package archive
         if (($fileindex = $this->installation->getArchive()->getTar()->getIndexByFilename($filename)) === false) {
@@ -145,7 +144,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin
     }
 
     #[\Override]
-    public static function isValid(PackageArchive $packageArchive, $instruction)
+    public static function isValid(PackageArchive $packageArchive, string $instruction)
     {
         if (!$instruction) {
             $instruction = static::getDefaultFilename();

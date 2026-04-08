@@ -73,10 +73,9 @@ class StructuredCommentResponse extends DatabaseObjectDecorator
     /**
      * Returns a structured response.
      *
-     * @param int $responseID
      * @return ?StructuredCommentResponse
      */
-    public static function getResponse($responseID)
+    public static function getResponse(int $responseID)
     {
         $response = new CommentResponse($responseID);
         if (!$response->responseID) {
@@ -97,10 +96,9 @@ class StructuredCommentResponse extends DatabaseObjectDecorator
     /**
      * Sets deletable state.
      *
-     * @param bool $deletable
      * @return void
      */
-    public function setIsDeletable($deletable)
+    public function setIsDeletable(bool $deletable)
     {
         $this->deletable = $deletable;
     }
@@ -108,10 +106,9 @@ class StructuredCommentResponse extends DatabaseObjectDecorator
     /**
      * Sets editable state.
      *
-     * @param bool $editable
      * @return void
      */
-    public function setIsEditable($editable)
+    public function setIsEditable(bool $editable)
     {
         $this->editable = $editable;
     }

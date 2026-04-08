@@ -18,7 +18,7 @@ class MultipartAlternativeMimePart extends AbstractMultipartMimePart
     }
 
     #[\Override]
-    protected function getConcatenatedParts($parts)
+    protected function getConcatenatedParts(\Traversable $parts)
     {
         \assert($parts instanceof \SplObjectStorage);
 
@@ -43,14 +43,13 @@ class MultipartAlternativeMimePart extends AbstractMultipartMimePart
      * The given priority determines the ordering within the Email. A higher priority
      * mime part will be further down the email (see RFC 2046, 5.1.4).
      *
-     * @param AbstractMimePart $part
      * @param int $data The priority.
      * @throws  \InvalidArgumentException
      * @throws  \DomainException
      */
     // @codingStandardsIgnoreStart
     #[\Override]
-    public function addMimePart(AbstractMimePart $part, $data = 1000)
+    public function addMimePart(AbstractMimePart $part, mixed $data = 1000)
     {
         parent::addMimePart($part, $data);
     }

@@ -144,7 +144,7 @@ class WysiwygFormContainer extends FormContainer
      * @return  static
      */
     #[\Override]
-    public static function create($id)
+    public static function create(string $id)
     {
         // the actual id is used for the form field containing the text
         return parent::create($id . 'Container');
@@ -229,12 +229,11 @@ class WysiwygFormContainer extends FormContainer
      *
      * By default, the preview button is shown.
      *
-     * @param bool $enablePreviewButton
      * @return      WysiwygFormContainer            this form container
      * @throws      \BadMethodCallException         if the form field container has already been populated yet
      * @since       5.3
      */
-    public function enablePreviewButton($enablePreviewButton = true)
+    public function enablePreviewButton(bool $enablePreviewButton = true)
     {
         if ($this->isPopulated) {
             throw new \BadMethodCallException(
@@ -360,7 +359,7 @@ class WysiwygFormContainer extends FormContainer
     }
 
     #[\Override]
-    public function id($id)
+    public function id(string $id)
     {
         $this->wysiwygId(\substr($id, 0, -\strlen('Container')));
 
@@ -407,7 +406,7 @@ class WysiwygFormContainer extends FormContainer
      * @return  WysiwygFormContainer            this container
      * @throws  \InvalidArgumentException       if the given string is no message object type
      */
-    public function messageObjectType($messageObjectType)
+    public function messageObjectType(string $messageObjectType)
     {
         if (
             ObjectTypeCache::getInstance()->getObjectTypeByName(
@@ -448,7 +447,7 @@ class WysiwygFormContainer extends FormContainer
      * @return  WysiwygFormContainer            this container
      * @throws  \InvalidArgumentException       if the given string is no poll object type
      */
-    public function pollObjectType($pollObjectType)
+    public function pollObjectType(string $pollObjectType)
     {
         if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.poll', $pollObjectType) === null) {
             throw new \InvalidArgumentException(
@@ -559,7 +558,7 @@ class WysiwygFormContainer extends FormContainer
      * @param string $preselect id of preselected tab, `'true'` for first tab, or non-existing id for no preselected tab
      * @return  WysiwygFormContainer
      */
-    public function preselect($preselect = 'true')
+    public function preselect(string $preselect = 'true')
     {
         $this->preselect = $preselect;
 
@@ -580,7 +579,7 @@ class WysiwygFormContainer extends FormContainer
      *
      * @deprecated 6.2
      */
-    public function quoteData($objectType, $actionClass, array $selectors = [])
+    public function quoteData(string $objectType, string $actionClass, array $selectors = [])
     {
         return $this;
     }
@@ -591,7 +590,7 @@ class WysiwygFormContainer extends FormContainer
      * @param bool $required determines if field has to be filled out
      * @return  static              this container
      */
-    public function required($required = true)
+    public function required(bool $required = true)
     {
         $this->required = $required;
 
@@ -622,10 +621,9 @@ class WysiwygFormContainer extends FormContainer
      *
      * By default, mentions are not supported.
      *
-     * @param bool $supportMentions
      * @return  WysiwygFormContainer        this form container
      */
-    public function supportMentions($supportMentions = true)
+    public function supportMentions(bool $supportMentions = true)
     {
         if ($this->wysiwygField !== null) {
             $this->wysiwygField->supportMentions($supportMentions);
@@ -641,10 +639,9 @@ class WysiwygFormContainer extends FormContainer
      *
      * By default, quotes are not supported.
      *
-     * @param bool $supportQuotes
      * @return  WysiwygFormContainer        this form container
      */
-    public function supportQuotes($supportQuotes = true)
+    public function supportQuotes(bool $supportQuotes = true)
     {
         $this->supportQuotes = $supportQuotes;
 
@@ -662,10 +659,9 @@ class WysiwygFormContainer extends FormContainer
      *
      * By default, smilies are supported.
      *
-     * @param bool $supportSmilies
      * @return  WysiwygFormContainer        this form container
      */
-    public function supportSmilies($supportSmilies = true)
+    public function supportSmilies(bool $supportSmilies = true)
     {
         if ($this->smiliesContainer !== null) {
             $this->smiliesContainer->available($supportSmilies);

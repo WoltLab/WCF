@@ -79,10 +79,9 @@ class PageContent extends DatabaseObject implements ITitledLinkObject
     /**
      * Parses simple placeholders embedded in HTML with template scripting.
      *
-     * @param string $templateName content template name
      * @return      string          parsed template
      */
-    public function getParsedTemplate($templateName)
+    public function getParsedTemplate(string $templateName)
     {
         MessageEmbeddedObjectManager::getInstance()->loadObjects(
             'com.woltlab.wcf.page.content',
@@ -102,11 +101,9 @@ class PageContent extends DatabaseObject implements ITitledLinkObject
     /**
      * Returns a certain page content.
      *
-     * @param int $pageID
-     * @param ?int $languageID
      * @return      PageContent|null
      */
-    public static function getPageContent($pageID, $languageID)
+    public static function getPageContent(int $pageID, ?int $languageID)
     {
         if ($languageID !== null) {
             $sql = "SELECT  *

@@ -62,10 +62,8 @@ class Cronjob extends DatabaseObject
 
     /**
      * Returns timestamp of next execution.
-     *
-     * @param int $timeBase
      */
-    public function getNextExec($timeBase = null): int
+    public function getNextExec(?int $timeBase = null): int
     {
         if ($timeBase === null) {
             if ($this->lastExec) {

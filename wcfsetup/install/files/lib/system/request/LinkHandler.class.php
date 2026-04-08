@@ -261,11 +261,9 @@ final class LinkHandler extends SingletonFactory
      * Passing in an illegal page id will cause this method to fail silently, returning an
      * empty string.
      *
-     * @param int $pageID page id
-     * @param int $languageID language id, optional
      * @return  string      full URL of empty string if `$pageID` is invalid
      */
-    public function getCmsLink($pageID, $languageID = -1): string
+    public function getCmsLink(int $pageID, int $languageID = -1): string
     {
         $data = null;
 

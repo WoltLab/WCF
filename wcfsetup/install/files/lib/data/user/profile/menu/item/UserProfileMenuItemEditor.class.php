@@ -61,10 +61,9 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
     /**
      * Updates show order for current menu item.
      *
-     * @param int $showOrder
      * @return void
      */
-    protected function updateShowOrder($showOrder)
+    protected function updateShowOrder(int $showOrder)
     {
         if ($this->showOrder != $showOrder) {
             if ($showOrder < $this->showOrder) {
@@ -94,10 +93,9 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
     /**
      * Returns show order for a new menu item.
      *
-     * @param int $showOrder
      * @return  int
      */
-    protected static function getShowOrder($showOrder = 0)
+    protected static function getShowOrder(int $showOrder = 0)
     {
         if ($showOrder == 0) {
             // get next number in row

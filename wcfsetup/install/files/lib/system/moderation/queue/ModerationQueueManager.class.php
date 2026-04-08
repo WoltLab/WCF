@@ -80,11 +80,9 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Returns true if the given combination of definition and object type is valid.
      *
-     * @param string $definitionName
-     * @param string $objectType
      * @return  bool
      */
-    public function isValid($definitionName, $objectType)
+    public function isValid(string $definitionName, string $objectType)
     {
         if (!isset($this->objectTypeNames[$definitionName])) {
             return false;
@@ -98,12 +96,9 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Returns the object type processor.
      *
-     * @param ?string $definitionName
-     * @param ?string $objectType
-     * @param int $objectTypeID
      * @return  object|null
      */
-    public function getProcessor($definitionName, $objectType, $objectTypeID = null)
+    public function getProcessor(?string $definitionName, ?string $objectType, ?int $objectTypeID = null)
     {
         if ($objectType !== null) {
             if ($definitionName === null) {
@@ -123,11 +118,9 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Returns link for viewing/editing an object type.
      *
-     * @param int $objectTypeID
-     * @param int $queueID
      * @return  string
      */
-    public function getLink($objectTypeID, $queueID)
+    public function getLink(int $objectTypeID, int $queueID)
     {
         foreach ($this->objectTypeNames as $definitionName => $objectTypeIDs) {
             if (\in_array($objectTypeID, $objectTypeIDs)) {
@@ -141,11 +134,9 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Returns object type id.
      *
-     * @param string $definitionName
-     * @param string $objectType
      * @return  int|null
      */
-    public function getObjectTypeID($definitionName, $objectType)
+    public function getObjectTypeID(string $definitionName, string $objectType)
     {
         if ($this->isValid($definitionName, $objectType)) {
             return $this->objectTypeNames[$definitionName][$objectType];
@@ -197,12 +188,11 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Populates object properties for viewing.
      *
-     * @param int $objectTypeID
      * @param ViewableModerationQueue[] $objects
      * @return void
      * @throws  SystemException
      */
-    public function populate($objectTypeID, array $objects)
+    public function populate(int $objectTypeID, array $objects)
     {
         $moderationType = '';
         foreach ($this->objectTypeNames as $definitionName => $data) {
@@ -263,10 +253,9 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Returns the count of unread moderation queue items.
      *
-     * @param bool $skipCache
      * @return  int
      */
-    public function getUnreadModerationCount($skipCache = false)
+    public function getUnreadModerationCount(bool $skipCache = false)
     {
         // get count
         $count = UserStorageHandler::getInstance()->getField('unreadModerationCount');
@@ -455,10 +444,9 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Resets moderation count for all users or optionally only for one user.
      *
-     * @param int $userID
      * @return void
      */
-    public function resetModerationCount($userID = null)
+    public function resetModerationCount(?int $userID = null)
     {
         if ($userID === null) {
             UserStorageHandler::getInstance()->resetAll('outstandingModerationCount');
@@ -489,10 +477,9 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Returns a list of definition names associated with the specified object type.
      *
-     * @param string $objectType
      * @return  string[]
      */
-    public function getDefinitionNamesByObjectType($objectType)
+    public function getDefinitionNamesByObjectType(string $objectType)
     {
         $definitionNames = [];
         foreach ($this->objectTypeNames as $definitionName => $objectTypes) {
@@ -507,12 +494,11 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Removes moderation queues, should only be called if related objects are permanently deleted.
      *
-     * @param string $objectType
      * @param int[] $objectIDs
      * @return void
      * @throws  SystemException
      */
-    public function removeQueues($objectType, array $objectIDs)
+    public function removeQueues(string $objectType, array $objectIDs)
     {
         $definitionNames = $this->getDefinitionNamesByObjectType($objectType);
         if (empty($definitionNames)) {

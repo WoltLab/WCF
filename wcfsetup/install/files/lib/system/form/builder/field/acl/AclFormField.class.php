@@ -64,7 +64,7 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
      *
      * @throws  \InvalidArgumentException   if given category name is invalid
      */
-    public function categoryName($categoryName)
+    public function categoryName(string $categoryName)
     {
         if (
             !\is_string($categoryName)
@@ -127,7 +127,7 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
     }
 
     #[\Override]
-    public function updatedObject(array $data, IStorableObject $object, $loadValues = true)
+    public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true)
     {
         $this->objectID = $object->{$object::getDatabaseTableIndexName()};
 

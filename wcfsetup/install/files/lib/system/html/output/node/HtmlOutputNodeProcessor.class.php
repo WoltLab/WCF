@@ -59,10 +59,9 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
     /**
      * Sets the desired output type.
      *
-     * @param string $outputType desired output type
      * @return void
      */
-    public function setOutputType($outputType)
+    public function setOutputType(string $outputType)
     {
         $this->outputType = $outputType;
     }
@@ -202,10 +201,9 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
     /**
      * Enables the keyword highlighting.
      *
-     * @param bool $enable
      * @return void
      */
-    public function enableKeywordHighlighting($enable = true)
+    public function enableKeywordHighlighting(bool $enable = true)
     {
         $this->keywordHighlighting = $enable;
     }

@@ -48,7 +48,7 @@ class UrlFormField extends TextFormField
     }
 
     #[\Override]
-    protected function validateText($text, ?Language $language = null)
+    protected function validateText(string $text, ?Language $language = null)
     {
         if ($this->isRequired() && ($this->getValue() === null || $this->getValue() === '')) {
             $this->addValidationError(new FormFieldValidationError('empty'));

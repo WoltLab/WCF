@@ -37,10 +37,9 @@ class VersionTracker extends SingletonFactory
     /**
      * Adds a new entry to the version history.
      *
-     * @param string $objectTypeName object type name
      * @return void
      */
-    public function add($objectTypeName, IVersionTrackerObject $object)
+    public function add(string $objectTypeName, IVersionTrackerObject $object)
     {
         $objectType = $this->getObjectType($objectTypeName);
 
@@ -64,11 +63,9 @@ class VersionTracker extends SingletonFactory
     /**
      * Returns the number of stored versions for provided object type and object id.
      *
-     * @param string $objectTypeName object type name
-     * @param int $objectID target object id
      * @return      int         number of stored versions
      */
-    public function countVersions($objectTypeName, $objectID)
+    public function countVersions(string $objectTypeName, int $objectID)
     {
         $objectType = $this->getObjectType($objectTypeName);
 
@@ -84,11 +81,9 @@ class VersionTracker extends SingletonFactory
     /**
      * Returns the last stored version.
      *
-     * @param string $objectTypeName object type name
-     * @param int $objectID target object id
      * @return ?VersionTrackerEntry
      */
-    public function getLastVersion($objectTypeName, $objectID)
+    public function getLastVersion(string $objectTypeName, int $objectID)
     {
         $objectType = $this->getObjectType($objectTypeName);
 
@@ -109,11 +104,9 @@ class VersionTracker extends SingletonFactory
     /**
      * Returns the list of stored versions.
      *
-     * @param string $objectTypeName object type name
-     * @param int $objectID target object id
      * @return      VersionTrackerEntry[]
      */
-    public function getVersions($objectTypeName, $objectID)
+    public function getVersions(string $objectTypeName, int $objectID)
     {
         $objectType = $this->getObjectType($objectTypeName);
 
@@ -134,11 +127,9 @@ class VersionTracker extends SingletonFactory
     /**
      * Returns a version including the contents of the data column.
      *
-     * @param string $objectTypeName object type name
-     * @param int $versionID version id
      * @return ?VersionTrackerEntry
      */
-    public function getVersion($objectTypeName, $versionID)
+    public function getVersion(string $objectTypeName, int $versionID)
     {
         $objectType = $this->getObjectType($objectTypeName);
 
@@ -182,11 +173,10 @@ class VersionTracker extends SingletonFactory
     /**
      * Retrieves the object type object by its name.
      *
-     * @param string $name object type name
      * @return      ObjectType      target object
      * @throws      \InvalidArgumentException
      */
-    public function getObjectType($name)
+    public function getObjectType(string $name)
     {
         foreach ($this->availableObjectTypes as $objectType) {
             if ($objectType->objectType === $name) {
@@ -202,11 +192,9 @@ class VersionTracker extends SingletonFactory
     /**
      * Resets the entire history for provided object id.
      *
-     * @param string $objectTypeName object type name
-     * @param int $objectID object id
      * @return void
      */
-    public function reset($objectTypeName, $objectID)
+    public function reset(string $objectTypeName, int $objectID)
     {
         $objectType = $this->getObjectType($objectTypeName);
 

@@ -16,7 +16,7 @@ class HtmlTextMimePart extends RecipientAwareTextMimePart
      *
      * @param string $content Content of this text part.
      */
-    public function __construct($content)
+    public function __construct(string $content)
     {
         parent::__construct('text/html', 'email_html', 'wcf', $content);
     }

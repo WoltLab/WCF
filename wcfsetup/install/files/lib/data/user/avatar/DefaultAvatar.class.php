@@ -32,7 +32,7 @@ class DefaultAvatar implements IUserAvatar, ISafeFormatAvatar
      *
      * @param string $username username for use with the 'initials' avatar type
      */
-    public function __construct($username = '')
+    public function __construct(string $username = '')
     {
         if (\defined('AVATAR_DEFAULT_TYPE') && AVATAR_DEFAULT_TYPE === 'initials' && !empty($username)) {
             $words = \explode(' ', $username);
@@ -111,12 +111,9 @@ SVG;
     /**
      * Returns the perceived luminance of the given color.
      *
-     * @param int $r
-     * @param int $g
-     * @param int $b
      * @return      float           luminance expressed in a float in the range of 0 and 1
      */
-    protected function getPerceptiveLuminance($r, $g, $b)
+    protected function getPerceptiveLuminance(int $r, int $g, int $b)
     {
         return 1 - (0.299 * $r + 0.587 * $g + 0.114 * $b) / 255;
     }

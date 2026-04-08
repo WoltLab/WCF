@@ -116,7 +116,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
     const REGISTER_ACTIVATION_USER_AND_ADMIN = self::REGISTER_ACTIVATION_USER | self::REGISTER_ACTIVATION_ADMIN;
 
-    public function __construct($id, $row = null, ?DatabaseObject $object = null)
+    public function __construct(null|string|int $id, ?array $row = null, ?DatabaseObject $object = null)
     {
         if ($id !== null) {
             $sql = "SELECT      user_option_value.*, user_table.*
@@ -186,11 +186,10 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     }
 
     /**
-     * @param string $passwordHash
      * @return false
      * @deprecated 5.4 - This method always returns false, as user sessions are long-lived now.
      */
-    public function checkCookiePassword($passwordHash)
+    public function checkCookiePassword(string $passwordHash)
     {
         return false;
     }
@@ -198,10 +197,9 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns an array with all the groups in which the actual user is a member.
      *
-     * @param bool $skipCache
      * @return int[]
      */
-    public function getGroupIDs($skipCache = false)
+    public function getGroupIDs(bool $skipCache = false)
     {
         if ($this->groupIDs === null || $skipCache) {
             if (!$this->userID) {
@@ -286,7 +284,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      * @param bool $filterDisabled suppress values for disabled options
      * @return mixed user option value
      */
-    public function getUserOption($name, $filterDisabled = false)
+    public function getUserOption(string $name, bool $filterDisabled = false)
     {
         $optionID = self::getUserOptionID($name);
         if ($optionID === null) {
@@ -311,10 +309,9 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns the id of a user option.
      *
-     * @param string $name
      * @return ?int
      */
-    public static function getUserOptionID($name)
+    public static function getUserOptionID(string $name)
     {
         // get user option cache if necessary
         if (self::$userOptions === null) {
@@ -337,10 +334,9 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns the user with the given username.
      *
-     * @param string $username
      * @return User
      */
-    public static function getUserByUsername($username)
+    public static function getUserByUsername(string $username)
     {
         $sql = "SELECT      user_option_value.*, user_table.*
                 FROM        wcf1_user user_table
@@ -360,10 +356,9 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns the user with the given email.
      *
-     * @param string $email
      * @return User
      */
-    public static function getUserByEmail($email)
+    public static function getUserByEmail(string $email)
     {
         $sql = "SELECT      user_option_value.*, user_table.*
                 FROM        wcf1_user user_table
@@ -383,10 +378,9 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns the user with the given authData.
      *
-     * @param string $authData
      * @return User
      */
-    public static function getUserByAuthData($authData)
+    public static function getUserByAuthData(string $authData)
     {
         $sql = "SELECT      user_option_value.*, user_table.*
                 FROM        wcf1_user user_table

@@ -61,7 +61,7 @@ final class ClassNameFormField extends TextFormField
      * @param bool $classExists determines if entered class must exist
      * @return  static              this field
      */
-    public function classExists($classExists = true)
+    public function classExists(bool $classExists = true)
     {
         $this->classExists = $classExists;
 
@@ -115,7 +115,7 @@ final class ClassNameFormField extends TextFormField
      *
      * @throws  \InvalidArgumentException   if the entered interface does not exists
      */
-    public function implementedInterface($interface)
+    public function implementedInterface(string $interface)
     {
         if (!\interface_exists($interface)) {
             throw new \InvalidArgumentException("Interface '{$interface}' does not exist for field '{$this->getId()}'.");
@@ -139,7 +139,7 @@ final class ClassNameFormField extends TextFormField
      * @param bool $instantiable determines if entered class must be instantiable
      * @return  static              this field
      */
-    public function instantiable($instantiable = true)
+    public function instantiable(bool $instantiable = true)
     {
         $this->instantiable = $instantiable;
 
@@ -165,7 +165,7 @@ final class ClassNameFormField extends TextFormField
      *
      * @throws  \InvalidArgumentException   if the entered class does not exists
      */
-    public function parentClass($parentClass)
+    public function parentClass(string $parentClass)
     {
         if (!\class_exists($parentClass)) {
             throw new \InvalidArgumentException("Class '{$parentClass}' does not exist for field '{$this->getId()}'.");
@@ -184,7 +184,7 @@ final class ClassNameFormField extends TextFormField
     }
 
     #[\Override]
-    protected function validateText($text, ?Language $language = null)
+    protected function validateText(string $text, ?Language $language = null)
     {
         parent::validateText($text, $language);
 

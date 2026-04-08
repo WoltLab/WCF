@@ -80,7 +80,7 @@ class CommentResponse extends DatabaseObject implements IMessage
      * @param string $mimeType Either 'text/plain' or 'text/html'
      * @return  string
      */
-    public function getMailText($mimeType = 'text/plain')
+    public function getMailText(string $mimeType = 'text/plain')
     {
         if ($this->hasEmbeddedObjects) {
             MessageEmbeddedObjectManager::getInstance()->loadObjects(

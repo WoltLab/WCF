@@ -71,12 +71,11 @@ abstract class DatabaseObjectDecorator extends DatabaseObject
     /**
      * Delegates inaccessible methods calls to the decorated object.
      *
-     * @param string $name
      * @param mixed[] $arguments
      * @return mixed
      * @throws SystemException
      */
-    public function __call($name, $arguments)
+    public function __call(string $name, array $arguments)
     {
         if (!\method_exists($this->object, $name) && !($this->object instanceof self)) {
             throw new SystemException("unknown method '" . $name . "'");

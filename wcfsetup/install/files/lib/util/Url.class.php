@@ -150,11 +150,10 @@ final class Url implements \ArrayAccess
      * component indices. Will throw an exception if the property is unknown,
      * making it easier to spot typos.
      *
-     * @param mixed $property
      * @return      string
      * @throws      \RuntimeException
      */
-    private function getIndex($property)
+    private function getIndex(mixed $property)
     {
         if (\is_int($property) && isset(self::$propertyMap[$property])) {
             return self::$propertyMap[$property];

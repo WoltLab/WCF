@@ -19,11 +19,9 @@ final class GZipFile extends File
     /**
      * Opens a gzip file.
      *
-     * @param string $filename
-     * @param string $mode
      * @throws  SystemException
      */
-    public function __construct($filename, $mode = 'wb')
+    public function __construct(string $filename, string $mode = 'wb')
     {
         $this->filename = $filename;
         $this->resource = \gzopen($filename, $mode);
@@ -35,13 +33,12 @@ final class GZipFile extends File
     /**
      * Calls the specified function on the open file.
      *
-     * @param string $function
      * @param mixed[] $arguments
      * @return  mixed
      * @throws  SystemException
      */
     #[\Override]
-    public function __call($function, $arguments)
+    public function __call(string $function, array $arguments)
     {
         if (\function_exists('gz' . $function)) {
             \array_unshift($arguments, $this->resource);

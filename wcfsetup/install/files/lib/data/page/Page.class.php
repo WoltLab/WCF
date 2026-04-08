@@ -145,7 +145,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
      * @param int $languageID language id or `null` if there are no localized versions
      * @return  PageContent|null            page content data
      */
-    public function getPageContentByLanguage($languageID = null)
+    public function getPageContentByLanguage(?int $languageID = null)
     {
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("pageID = ?", [$this->pageID]);
@@ -338,10 +338,9 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
     /**
      * Returns the template name of this page.
      *
-     * @param int $languageID
      * @return  string
      */
-    public function getTplName($languageID = null)
+    public function getTplName(?int $languageID = null)
     {
         if ($this->pageType == 'tpl') {
             if ($this->isMultilingual) {
@@ -394,10 +393,9 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
     /**
      * Returns the page with the given identifier.
      *
-     * @param string $identifier unique page identifier
      * @return ?Page
      */
-    public static function getPageByIdentifier($identifier)
+    public static function getPageByIdentifier(string $identifier)
     {
         $sql = "SELECT  *
                 FROM    wcf1_page
@@ -411,10 +409,9 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
     /**
      * Returns the page with the given name.
      *
-     * @param string $name
      * @return ?Page
      */
-    public static function getPageByName($name)
+    public static function getPageByName(string $name)
     {
         $sql = "SELECT  *
                 FROM    wcf1_page

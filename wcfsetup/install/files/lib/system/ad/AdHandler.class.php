@@ -34,11 +34,10 @@ class AdHandler extends SingletonFactory
     /**
      * Returns the ad output for the given ad location.
      *
-     * @param string $adLocation
      * @return  string
      * @throws  SystemException
      */
-    public function getAds($adLocation)
+    public function getAds(string $adLocation)
     {
         if (!isset($this->objectTypes[$adLocation])) {
             throw new SystemException("Unknown ad location '" . $adLocation . "'");
@@ -83,10 +82,9 @@ class AdHandler extends SingletonFactory
     /**
      * Returns all available ad location object types.
      *
-     * @param string|null $categoryName
      * @return  ObjectType[]
      */
-    public function getLocationObjectTypes($categoryName = null)
+    public function getLocationObjectTypes(?string $categoryName = null)
     {
         if ($categoryName === null) {
             return $this->objectTypes;

@@ -101,11 +101,9 @@ class TestableUserNotificationEventHandler extends SingletonFactory
     /**
      * Returns the email body for a user notification email.
      *
-     * @param ITestableUserNotificationEvent $event
-     * @param string $notificationType
      * @return  string
      */
-    public function getEmailBody(ITestableUserNotificationEvent $event, $notificationType)
+    public function getEmailBody(ITestableUserNotificationEvent $event, string $notificationType)
     {
         $email = new Email();
         $email->setSubject($event->getEmailTitle());

@@ -311,13 +311,10 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
      * Imports language items from an XML file into this language.
      * Updates the relevant language files automatically.
      *
-     * @param int $packageID
-     * @param bool $updateFiles
-     * @param bool $updateExistingItems
      * @return void
      * @throws  \InvalidArgumentException   if given XML file is invalid
      */
-    public function updateFromXML(XML $xml, $packageID, $updateFiles = true, $updateExistingItems = true)
+    public function updateFromXML(XML $xml, int $packageID, bool $updateFiles = true, bool $updateExistingItems = true)
     {
         $this->validateXMLStructure($xml);
 
@@ -690,11 +687,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
     /**
      * Deletes the language cache.
      *
-     * @param string $languageID
-     * @param string $category
      * @return void
      */
-    public static function deleteLanguageFiles($languageID = '.*', $category = '.*')
+    public static function deleteLanguageFiles(string $languageID = '.*', string $category = '.*')
     {
         if ($category != '.*') {
             $category = \preg_quote($category, '~');
@@ -793,10 +788,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
      * Imports language items from an XML file into a new or a current language.
      * Updates the relevant language files automatically.
      *
-     * @param int $packageID
      * @return LanguageEditor
      */
-    public static function importFromXML(XML $xml, $packageID, ?Language $source = null)
+    public static function importFromXML(XML $xml, int $packageID, ?Language $source = null)
     {
         $languageCode = self::readLanguageCodeFromXML($xml);
 
@@ -987,11 +981,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
     /**
      * Copies all cms contents (article, box, media, page) from given source language to language specified as $destinationLanguageID.
      *
-     * @param int $sourceLanguageID
-     * @param int $destinationLanguageID
      * @return void
      */
-    public static function copyLanguageContent($sourceLanguageID, $destinationLanguageID)
+    public static function copyLanguageContent(int $sourceLanguageID, int $destinationLanguageID)
     {
         // article content
         $sql = "INSERT IGNORE INTO  wcf1_article_content

@@ -34,10 +34,9 @@ abstract class AbstractMultipleFieldsCondition extends AbstractCondition
     /**
      * Returns the description element for the HTML output.
      *
-     * @param string $identifier
      * @return  string
      */
-    protected function getDescriptionElement($identifier)
+    protected function getDescriptionElement(string $identifier)
     {
         if (isset($this->descriptions[$identifier])) {
             return '<small>' . WCF::getLanguage()->get($this->descriptions[$identifier]) . '</small>';
@@ -49,10 +48,9 @@ abstract class AbstractMultipleFieldsCondition extends AbstractCondition
     /**
      * Returns the error class for the definition list element.
      *
-     * @param string $identifier
      * @return  string
      */
-    public function getErrorClass($identifier)
+    public function getErrorClass(string $identifier)
     {
         if (isset($this->errorMessages[$identifier])) {
             return ' class="formError"';
@@ -64,10 +62,9 @@ abstract class AbstractMultipleFieldsCondition extends AbstractCondition
     /**
      * Returns the error message element for the HTML output.
      *
-     * @param string $identifier
      * @return  string
      */
-    protected function getErrorMessageElement($identifier)
+    protected function getErrorMessageElement(string $identifier)
     {
         if (isset($this->errorMessages[$identifier])) {
             return '<small class="innerError">' . WCF::getLanguage()->getDynamicVariable($this->errorMessages[$identifier]) . '</small>';
@@ -79,10 +76,9 @@ abstract class AbstractMultipleFieldsCondition extends AbstractCondition
     /**
      * Returns the label of the input element.
      *
-     * @param string $identifier
      * @return  string
      */
-    protected function getLabel($identifier)
+    protected function getLabel(string $identifier)
     {
         if (isset($this->labels[$identifier])) {
             return '<label for="' . $identifier . '">' . WCF::getLanguage()->get($this->labels[$identifier]) . '</label>';

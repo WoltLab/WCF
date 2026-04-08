@@ -22,12 +22,11 @@ class PreparedStatementConditionBuilder extends ConditionBuilder
     /**
      * Adds a new condition. The parameters array has to be a numbered array.
      *
-     * @param string $condition
      * @param array<int, mixed> $parameters
      * @return void
      */
     #[\Override]
-    public function add($condition, array $parameters = [])
+    public function add(mixed $condition, array $parameters = [])
     {
         if (!empty($parameters)) {
             $count = 0;

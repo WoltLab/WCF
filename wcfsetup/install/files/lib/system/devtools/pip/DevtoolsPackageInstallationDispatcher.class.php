@@ -7,6 +7,7 @@ use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\system\devtools\package\DevtoolsInstaller;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\package\PackageInstallationNodeBuilder;
+use wcf\system\setup\IFileHandler;
 
 /**
  * Specialized implementation to emulate a regular package installation.
@@ -80,7 +81,7 @@ class DevtoolsPackageInstallationDispatcher extends PackageInstallationDispatche
     }
 
     #[\Override]
-    public function extractFiles($targetDir, $sourceArchive, $fileHandler = null)
+    public function extractFiles(string $targetDir, string $sourceArchive, ?IFileHandler $fileHandler = null)
     {
         return new DevtoolsInstaller($this->project, $targetDir, $sourceArchive, $fileHandler);
     }

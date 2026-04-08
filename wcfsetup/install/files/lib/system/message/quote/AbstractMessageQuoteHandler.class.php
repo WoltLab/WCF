@@ -35,11 +35,10 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
      * Renders a template for given quotes.
      *
      * @param mixed[][] $data
-     * @param bool $supportPaste
      * @return string
      * @deprecated 6.2 Implement `getMessage()` instead.
      */
-    public function render(array $data, $supportPaste = false)
+    public function render(array $data, bool $supportPaste = false)
     {
         $messages = $this->getMessages($data);
         $this->overrideIsFullQuote($messages);
@@ -68,12 +67,10 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
      * Renders a list of quotes for insertation.
      *
      * @param mixed[][] $data
-     * @param bool $render
-     * @param bool $renderAsString
      * @return  string[]
      * @deprecated 6.2 Implement `getMessage()` instead.
      */
-    public function renderQuotes(array $data, $render = true, $renderAsString = true)
+    public function renderQuotes(array $data, bool $render = true, bool $renderAsString = true)
     {
         $messages = $this->getMessages($data);
         $this->overrideIsFullQuote($messages);

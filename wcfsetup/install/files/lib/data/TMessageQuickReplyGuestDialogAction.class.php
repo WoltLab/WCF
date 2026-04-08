@@ -39,12 +39,9 @@ trait TMessageQuickReplyGuestDialogAction
     /**
      * Reads a string value and validates it.
      *
-     * @param string $variableName
-     * @param bool $allowEmpty
-     * @param string $arrayIndex
      * @see AbstractDatabaseObjectAction::readString()
      */
-    abstract protected function readString($variableName, $allowEmpty = false, $arrayIndex = '');
+    abstract protected function readString(string $variableName, bool $allowEmpty = false, string $arrayIndex = '');
 
     /**
      * Sets the guest dialog captcha.

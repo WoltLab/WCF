@@ -122,10 +122,9 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
     /**
      * Checks permissions.
      *
-     * @param string $permission
      * @return  bool
      */
-    protected function getPermission($permission)
+    protected function getPermission(string $permission)
     {
         if (!isset($this->permissions[$permission])) {
             $this->permissions[$permission] = true;
@@ -233,12 +232,11 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      * Files are suffixed with `.bin` since 5.2, but they are recognized
      * without the extension for backward compatibility.
      *
-     * @param string $location
      * @return  string
      * @since   5.2
      * @deprecated 6.1 This will no longer be required once the attachments have been migrated.
      */
-    final protected function getLocationHelper($location)
+    final protected function getLocationHelper(string $location)
     {
         if (\is_readable($location . '.bin')) {
             return $location . '.bin';

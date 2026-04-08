@@ -40,10 +40,9 @@ class BBCodeCache extends SingletonFactory
     /**
      * Returns the BBCode with the given tag or `null` if no such BBCode exists.
      *
-     * @param string $tag
      * @return ?BBCode
      */
-    public function getBBCodeByTag($tag)
+    public function getBBCodeByTag(string $tag)
     {
         return $this->cachedBBCodes[$tag] ?? null;
     }
@@ -51,10 +50,9 @@ class BBCodeCache extends SingletonFactory
     /**
      * Returns all attributes of a bbcode.
      *
-     * @param string $tag
      * @return list<BBCodeAttribute>
      */
-    public function getBBCodeAttributes($tag)
+    public function getBBCodeAttributes(string $tag)
     {
         return $this->cachedBBCodes[$tag]->getAttributes();
     }

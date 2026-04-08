@@ -101,10 +101,9 @@ class UserOptionImporter extends AbstractImporter
     /**
      * Creates the given category if necessary.
      *
-     * @param string $name
      * @return void
      */
-    protected function createCategory($name)
+    protected function createCategory(string $name)
     {
         if ($this->categoryCache === null) {
             // get existing categories

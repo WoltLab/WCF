@@ -24,12 +24,9 @@ class UserObjectWatch extends DatabaseObject
      * Returns the UserObjectWatch with the given data or null if no such object
      * exists.
      *
-     * @param int $objectTypeID
-     * @param int $userID
-     * @param int $objectID
      * @return  UserObjectWatch|null
      */
-    public static function getUserObjectWatch($objectTypeID, $userID, $objectID)
+    public static function getUserObjectWatch(int $objectTypeID, int $userID, int $objectID)
     {
         $sql = "SELECT  *
                 FROM    wcf1_user_object_watch

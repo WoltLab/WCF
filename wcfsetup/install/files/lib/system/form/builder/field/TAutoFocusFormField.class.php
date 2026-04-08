@@ -24,7 +24,7 @@ trait TAutoFocusFormField
      * @param bool $autoFocus determines if field is auto-focused
      * @return  static              this field
      */
-    public function autoFocus($autoFocus = true)
+    public function autoFocus(bool $autoFocus = true)
     {
         $this->autoFocus = $autoFocus;
 

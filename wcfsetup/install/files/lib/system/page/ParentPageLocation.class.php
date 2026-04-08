@@ -32,7 +32,7 @@ class ParentPageLocation implements ITitledLinkObject
      * @param string $title title of the parent page location
      * @param string $link link of the parent page location
      */
-    public function __construct($title, $link)
+    public function __construct(string $title, string $link)
     {
         $this->title = $title;
         $this->link = $link;

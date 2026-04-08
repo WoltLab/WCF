@@ -71,10 +71,9 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
     }
 
     /**
-     * @param int $articleID
      * @return ViewableArticle|null
      */
-    public function getArticle($articleID)
+    public function getArticle(int $articleID)
     {
         return ViewableArticleRuntimeCache::getInstance()->getObject($articleID);
     }

@@ -27,7 +27,7 @@ class DevtoolsPipEntryList implements IDevtoolsPipEntryList
     protected $keys;
 
     #[\Override]
-    public function addEntry($id, array $entry)
+    public function addEntry(string $id, array $entry)
     {
         if ($this->keys === null) {
             throw new \BadMethodCallException("No keys have been set.");
@@ -53,7 +53,7 @@ class DevtoolsPipEntryList implements IDevtoolsPipEntryList
     }
 
     #[\Override]
-    public function filterEntries($filter)
+    public function filterEntries(string|array $filter)
     {
         $filterType = \gettype($filter);
 
@@ -121,7 +121,7 @@ class DevtoolsPipEntryList implements IDevtoolsPipEntryList
     }
 
     #[\Override]
-    public function hasEntry($id)
+    public function hasEntry(string $id)
     {
         return isset($this->entries[$id]);
     }

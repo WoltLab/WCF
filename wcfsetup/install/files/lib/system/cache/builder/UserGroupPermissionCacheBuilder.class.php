@@ -175,11 +175,10 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
     /**
      * Returns an object of the requested group option type.
      *
-     * @param string $type
      * @return  IUserGroupOptionType
      * @throws  SystemException
      */
-    protected function getTypeObject($type)
+    protected function getTypeObject(string $type)
     {
         if (!isset($this->typeObjects[$type])) {
             $className = 'wcf\system\option\user\group\\' . StringUtil::firstCharToUpperCase($type) . 'UserGroupOptionType';

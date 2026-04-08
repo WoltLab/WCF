@@ -55,11 +55,10 @@ class MenuItemNodeTree
     /**
      * Creates a new MenuItemNodeTree object.
      *
-     * @param int $menuID menu id
      * @param MenuItemList $menuItemList optional object to be provided when building the tree from cache
      * @param bool $checkVisibility if `false`, individual menu item visibility will not be checked
      */
-    public function __construct($menuID, ?MenuItemList $menuItemList = null, $checkVisibility = true)
+    public function __construct(int $menuID, ?MenuItemList $menuItemList = null, bool $checkVisibility = true)
     {
         $this->menuID = $menuID;
         $this->checkVisibility = $checkVisibility;
@@ -140,11 +139,9 @@ class MenuItemNodeTree
     /**
      * Generates the node tree recursively.
      *
-     * @param int $parentID parent menu item id
-     * @param MenuItemNode $parentNode parent menu item object
      * @return  MenuItemNode[]      nested menu item tree
      */
-    protected function generateNodeTree($parentID = null, ?MenuItemNode $parentNode = null)
+    protected function generateNodeTree(?int $parentID = null, ?MenuItemNode $parentNode = null)
     {
         $nodes = [];
 

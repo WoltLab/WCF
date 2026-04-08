@@ -303,12 +303,11 @@ trait TFormNode
      * Returns `true` if an additional attribute with the given name exists and returns
      * `false` otherwise.
      *
-     * @param string $name attribute name
      * @return bool
      *
      * @throws \InvalidArgumentException if the given attribute name is invalid
      */
-    public function hasAttribute($name)
+    public function hasAttribute(string $name)
     {
         static::validateAttribute($name);
 
@@ -323,7 +322,7 @@ trait TFormNode
      *
      * @throws \InvalidArgumentException if the given class is invalid
      */
-    public function hasClass($class)
+    public function hasClass(string $class)
     {
         static::validateClass($class);
 
@@ -339,7 +338,7 @@ trait TFormNode
      *
      * @throws \InvalidArgumentException if the given id is invalid
      */
-    public function hasDependency($dependencyId)
+    public function hasDependency(string $dependencyId)
     {
         foreach ($this->dependencies as $dependency) {
             if ($dependency->getId() === $dependencyId) {
@@ -359,7 +358,7 @@ trait TFormNode
      * @throws \BadMethodCallException if id has already been set
      * @throws \InvalidArgumentException if the given id is invalid
      */
-    public function id($id)
+    public function id(string $id)
     {
         static::validateId($id);
 
@@ -445,12 +444,11 @@ trait TFormNode
      * If this node does not have the given attribute, this method silently
      * ignores that fact.
      *
-     * @param string $name removed attribute
      * @return static this node
      *
      * @throws \InvalidArgumentException if the given attribute is invalid
      */
-    public function removeAttribute($name)
+    public function removeAttribute(string $name)
     {
         static::validateAttribute($name);
 
@@ -470,7 +468,7 @@ trait TFormNode
      *
      * @throws \InvalidArgumentException if the given class is invalid
      */
-    public function removeClass($class)
+    public function removeClass(string $class)
     {
         static::validateClass($class);
 
@@ -490,7 +488,7 @@ trait TFormNode
      *
      * @throws \InvalidArgumentException if the given id is invalid or no such dependency exists
      */
-    public function removeDependency($dependencyId)
+    public function removeDependency(string $dependencyId)
     {
         foreach ($this->dependencies as $key => $dependency) {
             if ($dependency->getId() === $dependencyId) {
@@ -508,12 +506,11 @@ trait TFormNode
     /**
      * Creates a new element with the given id.
      *
-     * @param string $id node id
      * @return static this node
      *
      * @throws \InvalidArgumentException if the given id is already used by another node, or otherwise is invalid
      */
-    public static function create($id)
+    public static function create(string $id)
     {
         return (new static())->id($id);
     }
@@ -542,7 +539,7 @@ trait TFormNode
      *
      * @throws \InvalidArgumentException if the given attribute name is invalid
      */
-    public static function validateAttribute($name)
+    public static function validateAttribute(string $name)
     {
         if (\preg_match('~^[_A-z][_A-z0-9-]*$~', $name) !== 1) {
             throw new \InvalidArgumentException("Invalid name '{$name}' given.");
@@ -561,7 +558,7 @@ trait TFormNode
      *
      * @throws \InvalidArgumentException if the given id is invalid
      */
-    public static function validateClass($class)
+    public static function validateClass(string $class)
     {
         // regular expression is a more restrictive version of
         // https://www.w3.org/TR/2011/REC-css3-selectors-20110929/#w3cselgrammar
@@ -578,7 +575,7 @@ trait TFormNode
      *
      * @throws \InvalidArgumentException if the given id is invalid
      */
-    public static function validateId($id)
+    public static function validateId(string $id)
     {
         // regular expression is a more restrictive version of
         // https://www.w3.org/TR/CSS21/syndata.html#value-def-identifier

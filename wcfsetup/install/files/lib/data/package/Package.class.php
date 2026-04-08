@@ -148,10 +148,9 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
     /**
      * Returns the abbreviation of the package name.
      *
-     * @param string $package
      * @return  string
      */
-    public static function getAbbreviation($package)
+    public static function getAbbreviation(string $package)
     {
         $array = \explode('.', $package);
 
@@ -257,10 +256,9 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
      *
      * DO NOT call this method outside the package installation!
      *
-     * @param string $packageVersion
      * @return void
      */
-    public function setPackageVersion($packageVersion)
+    public function setPackageVersion(string $packageVersion)
     {
         $this->data['packageVersion'] = $packageVersion;
     }
@@ -307,10 +305,9 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
     /**
      * Returns true if package identified by $package is already installed.
      *
-     * @param string $package
      * @return  bool
      */
-    public static function isAlreadyInstalled($package)
+    public static function isAlreadyInstalled(string $package)
     {
         $sql = "SELECT  COUNT(*)
                 FROM    wcf1_package
@@ -390,11 +387,10 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
     /**
      * Compares two version number strings.
      *
-     * @param string $operator
      * @return int|bool        result
      * @see http://www.php.net/manual/en/function.version-compare.php
      */
-    public static function compareVersion(string $version1, string $version2, $operator = null)
+    public static function compareVersion(string $version1, string $version2, ?string $operator = null)
     {
         $version1 = self::formatVersionForCompare($version1);
         $version2 = self::formatVersionForCompare($version2);

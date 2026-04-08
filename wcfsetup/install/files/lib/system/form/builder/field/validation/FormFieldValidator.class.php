@@ -38,22 +38,22 @@ final class FormFieldValidator implements IFormFieldValidator
         if (\count($parameters) !== 1) {
             throw new \InvalidArgumentException(
                 "The validation function must expect one parameter, instead " . \count($parameters)
-                . " parameters are expected for validator '{$id}'."
+                    . " parameters are expected for validator '{$id}'."
             );
         }
         $parameterType = $parameters[0]->getType();
         if (
             !(
                 $parameterType instanceof \ReflectionNamedType
-            && (
-                $parameterType->getName() === IFormField::class
-                || \is_subclass_of($parameterType->getName(), IFormField::class)
-            )
+                && (
+                    $parameterType->getName() === IFormField::class
+                    || \is_subclass_of($parameterType->getName(), IFormField::class)
+                )
             )
         ) {
             throw new \InvalidArgumentException(
                 "The validation function's parameter must be an instance of '" . IFormField::class . "', instead "
-                . @($parameterType === null ? 'any' : "'" . $parameterType . "'") . " parameter is expected for validator '{$id}'."
+                    . @($parameterType === null ? 'any' : "'" . $parameterType . "'") . " parameter is expected for validator '{$id}'."
             );
         }
 
@@ -75,12 +75,11 @@ final class FormFieldValidator implements IFormFieldValidator
     /**
      * Checks if the given parameter is a and a valid validator id.
      *
-     * @param mixed $id checked id
      * @return void
      *
      * @throws  \InvalidArgumentException   if the given id is invalid
      */
-    public static function validateId($id)
+    public static function validateId(string $id)
     {
         if (\preg_match('~^[a-z][A-z0-9-]*$~', $id) !== 1) {
             throw new \InvalidArgumentException("Invalid id '{$id}' given.");

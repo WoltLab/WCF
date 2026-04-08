@@ -328,10 +328,9 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm
     }
 
     /**
-     * @param bool $available
      * @return void
      */
-    protected function tooglePackageXmlFieldAvailabilty($available)
+    protected function tooglePackageXmlFieldAvailabilty(bool $available)
     {
         /** @var TabMenuFormContainer $tabMenu */
         $tabMenu = $this->form->getNodeById('project');

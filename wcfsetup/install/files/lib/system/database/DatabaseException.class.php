@@ -62,10 +62,10 @@ class DatabaseException extends SystemException
      *
      * @param string $message error message
      * @param Database $db affected db object
-     * @param PreparedStatement $preparedStatement affected prepared statement
-     * @param string $sqlQuery SQL query if prepare() failed
+     * @param ?PreparedStatement $preparedStatement affected prepared statement
+     * @param ?string $sqlQuery SQL query if prepare() failed
      */
-    public function __construct($message, Database $db, ?PreparedStatement $preparedStatement = null, $sqlQuery = null)
+    public function __construct(string $message, Database $db, ?PreparedStatement $preparedStatement = null, ?string $sqlQuery = null)
     {
         $this->db = $db;
         $this->DBType = $db->getDBType();

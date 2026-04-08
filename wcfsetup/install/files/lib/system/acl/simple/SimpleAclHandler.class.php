@@ -36,11 +36,10 @@ class SimpleAclHandler extends SingletonFactory
     /**
      * Returns the object type id by object type.
      *
-     * @param string $objectType object type name
      * @return      int         object type id
      * @throws      \InvalidArgumentException
      */
-    public function getObjectTypeID($objectType)
+    public function getObjectTypeID(string $objectType)
     {
         if (!isset($this->objectTypes[$objectType])) {
             throw new \InvalidArgumentException("Unknown object type '" . $objectType . "'");
@@ -52,15 +51,13 @@ class SimpleAclHandler extends SingletonFactory
     /**
      * Returns the user and group values for provided object type and object id.
      *
-     * @param string $objectType object type name
-     * @param int $objectID object id
      * @return array{
      *  allowAll: bool,
      *  user: (User|null)[],
      *  group: UserGroup[],
      * }
      */
-    public function getValues($objectType, $objectID)
+    public function getValues(string $objectType, int $objectID)
     {
         $objectTypeID = $this->getObjectTypeID($objectType);
 
@@ -110,13 +107,11 @@ class SimpleAclHandler extends SingletonFactory
     /**
      * Sets the user and group values for provided object type and object id.
      *
-     * @param string $objectType object type name
-     * @param int $objectID object id
      * @param array{allowAll?: bool, user?: (User|null)[], group?: UserGroup[]} $values list of user and group ids
      * @return void
      * @throws \InvalidArgumentException
      */
-    public function setValues($objectType, $objectID, array $values)
+    public function setValues(string $objectType, int $objectID, array $values)
     {
         $objectTypeID = $this->getObjectTypeID($objectType);
 

@@ -230,7 +230,7 @@ final class RouteHandler extends SingletonFactory
      * @param string $customUrl url to perform sanity checks on
      * @return  bool    true if `$customUrl` passes the sanity check
      */
-    public static function isValidCustomUrl($customUrl): bool
+    public static function isValidCustomUrl(string $customUrl): bool
     {
         return \preg_match('~^[a-z0-9\-_/]+$~', $customUrl) === 1;
     }

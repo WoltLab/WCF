@@ -156,12 +156,11 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
     }
 
     /**
-     * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
     #[\Override]
-    protected function fetchElementData(\DOMElement $element, $saveData)
+    protected function fetchElementData(\DOMElement $element, bool $saveData)
     {
         $data = [
             'definitionName' => $element->getElementsByTagName('name')->item(0)->nodeValue,

@@ -143,7 +143,7 @@ class LanguageFactory extends SingletonFactory
             $preferredLanguage = $negotiator->getBest(
                 $_SERVER['HTTP_ACCEPT_LANGUAGE'],
                 \array_map(
-                    static fn ($availableLanguageCode) => \strtolower(self::fixLanguageCode($availableLanguageCode)),
+                    static fn($availableLanguageCode) => \strtolower(self::fixLanguageCode($availableLanguageCode)),
                     $availableLanguageCodes
                 )
             );
@@ -194,10 +194,9 @@ class LanguageFactory extends SingletonFactory
      * Removes additional language identifier from given language code.
      * Converts e.g. 'de-informal' to 'de'.
      *
-     * @param string $languageCode
      * @return string $languageCode
      */
-    public static function fixLanguageCode($languageCode)
+    public static function fixLanguageCode(string $languageCode)
     {
         return \preg_replace('/-[a-z0-9]+/', '', $languageCode);
     }

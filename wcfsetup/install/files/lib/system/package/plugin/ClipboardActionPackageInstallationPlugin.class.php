@@ -250,12 +250,11 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
     }
 
     /**
-     * @param bool $saveData
      * @return array<string, mixed>
      * @since   5.2
      */
     #[\Override]
-    protected function fetchElementData(\DOMElement $element, $saveData)
+    protected function fetchElementData(\DOMElement $element, bool $saveData)
     {
         $data = [
             'actionClassName' => $element->getElementsByTagName('actionclassname')->item(0)->nodeValue,

@@ -21,10 +21,7 @@ class PackageUpdateList extends DatabaseObjectList
      */
     public $className = PackageUpdate::class;
 
-    /**
-     * @param bool $useSqlOr
-     */
-    public function __construct($useSqlOr = false)
+    public function __construct(bool $useSqlOr = false)
     {
         parent::__construct();
 

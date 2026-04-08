@@ -271,14 +271,11 @@ class TemplateScriptingCompiler
     /**
      * Compiles the source of a template.
      *
-     * @param string $identifier
-     * @param string $sourceContent
      * @param array<string, string|null> $metaData
-     * @param bool $isolated
      * @return array{meta: array{include: string[][]}, template: string}|bool
      * @throws SystemException
      */
-    public function compileString($identifier, $sourceContent, array $metaData = [], $isolated = false)
+    public function compileString(string $identifier, string $sourceContent, array $metaData = [], bool $isolated = false)
     {
         $previousData = [];
         if ($isolated) {
@@ -391,14 +388,12 @@ class TemplateScriptingCompiler
     /**
      * Compiles a template tag.
      *
-     * @param string $tag
-     * @param string $identifier
      * @param string[] $metaData
      * @return  string
      * @throws  SystemException
      * @phpstan-impure
      */
-    protected function compileTag($tag, $identifier, array &$metaData)
+    protected function compileTag(string $tag, string $identifier, array &$metaData)
     {
         if (\preg_match('~^' . $this->outputPattern . '~s', $tag)) {
             // variable output
@@ -601,11 +596,9 @@ class TemplateScriptingCompiler
      * Compiles a function plugin and returns the output of the plugin or false
      * if the plugin doesn't exist.
      *
-     * @param string $tagCommand
-     * @param string $tagArgs
      * @return  mixed
      */
-    protected function compileFunctionPlugin($tagCommand, $tagArgs)
+    protected function compileFunctionPlugin(string $tagCommand, string $tagArgs)
     {
         $className = $this->template->getPluginClassName('function', $tagCommand);
         if (!\class_exists($className)) {
@@ -622,12 +615,10 @@ class TemplateScriptingCompiler
      * Compiles a block plugin and returns the output of the plugin or false
      * if the plugin doesn't exist.
      *
-     * @param string $tagCommand
-     * @param string $tagArgs
      * @return  mixed
      * @throws  SystemException
      */
-    protected function compileBlockPlugin($tagCommand, $tagArgs)
+    protected function compileBlockPlugin(string $tagCommand, string $tagArgs)
     {
         // check whether this is the start ({block}) or the
         // end tag ({/block})
@@ -675,12 +666,10 @@ class TemplateScriptingCompiler
      * Compiles a compiler function/block and returns the output of the plugin
      * or false if the plugin doesn't exist.
      *
-     * @param string $tagCommand
-     * @param string $tagArgs
      * @return  mixed
      * @throws  SystemException
      */
-    protected function compileCompilerPlugin($tagCommand, $tagArgs)
+    protected function compileCompilerPlugin(string $tagCommand, string $tagArgs)
     {
         // check whether this is the start ({block}) or the
         // end tag ({/block})
@@ -724,11 +713,9 @@ class TemplateScriptingCompiler
     /**
      * Compiles a capture tag and returns the compiled PHP code.
      *
-     * @param bool $startTag
-     * @param string $captureTag
      * @return  string
      */
-    protected function compileCaptureTag($startTag, $captureTag = null)
+    protected function compileCaptureTag(bool $startTag, ?string $captureTag = null)
     {
         if ($startTag) {
             $append = false;
@@ -766,11 +753,10 @@ class TemplateScriptingCompiler
     /**
      * Compiles a section tag and returns the compiled PHP code.
      *
-     * @param string $sectionTag
      * @return  string
      * @throws  SystemException
      */
-    protected function compileSectionTag($sectionTag)
+    protected function compileSectionTag(string $sectionTag)
     {
         $args = $this->parseTagArgs($sectionTag, 'section');
 
@@ -851,11 +837,10 @@ class TemplateScriptingCompiler
     /**
      * Compiles a foreach tag and returns the compiled PHP code.
      *
-     * @param string $foreachTag
      * @return  string
      * @throws  SystemException
      */
-    protected function compileForeachTag($foreachTag)
+    protected function compileForeachTag(string $foreachTag)
     {
         $args = $this->parseTagArgs($foreachTag, 'foreach');
 
@@ -965,13 +950,11 @@ class TemplateScriptingCompiler
     /**
      * Compiles an include tag and returns the compiled PHP code.
      *
-     * @param string $includeTag
-     * @param string $identifier
      * @param string[] $metaData
      * @return  string
      * @throws  SystemException
      */
-    protected function compileIncludeTag($includeTag, $identifier, array $metaData)
+    protected function compileIncludeTag(string $includeTag, string $identifier, array $metaData)
     {
         $args = $this->parseTagArgs($includeTag, 'include');
         $append = false;
@@ -1124,12 +1107,10 @@ class TemplateScriptingCompiler
      * Parses an argument list and returns the keys and values in an associative
      * array.
      *
-     * @param string $tagArgs
-     * @param string $tag
      * @return array<string, string>
      * @throws  SystemException
      */
-    public function parseTagArgs($tagArgs, $tag)
+    public function parseTagArgs(string $tagArgs, string $tag)
     {
         // replace strings
         $tagArgs = $this->replaceQuotes($tagArgs);
@@ -1182,7 +1163,7 @@ class TemplateScriptingCompiler
      * @param array<string, string> $args
      * @return  string      $args
      */
-    public static function makeArgString($args)
+    public static function makeArgString(array $args)
     {
         $argString = '';
         foreach ($args as $key => $val) {
@@ -1198,12 +1179,9 @@ class TemplateScriptingCompiler
     /**
      * Returns a formatted syntax error message.
      *
-     * @param string $errorMsg
-     * @param ?string $file
-     * @param ?int $line
      * @return  string
      */
-    public static function formatSyntaxError($errorMsg, $file = null, $line = null)
+    public static function formatSyntaxError(string $errorMsg, ?string $file = null, ?int $line = null)
     {
         $errorMsg = 'Template compilation failed: ' . $errorMsg;
         if ($file && $line) {
@@ -1218,12 +1196,11 @@ class TemplateScriptingCompiler
     /**
      * Compiles an {if} tag and returns the compiled PHP code.
      *
-     * @param string $tagArgs
      * @param bool $elseif true, if this tag is an else tag
      * @return  string
      * @throws  SystemException
      */
-    protected function compileIfTag($tagArgs, $elseif = false)
+    protected function compileIfTag(string $tagArgs, bool $elseif = false)
     {
         $tagArgs = $this->replaceQuotes($tagArgs);
         $tagArgs = \str_replace([' ', "\n"], '', $tagArgs);
@@ -1316,10 +1293,9 @@ class TemplateScriptingCompiler
     /**
      * Adds a tag to the tag stack.
      *
-     * @param string $tag
      * @return void
      */
-    public function pushTag($tag)
+    public function pushTag(string $tag)
     {
         $this->tagStack[] = [$tag, $this->currentLineNo];
     }
@@ -1327,10 +1303,9 @@ class TemplateScriptingCompiler
     /**
      * Deletes a tag from the tag stack.
      *
-     * @param string $tag
      * @return  string      $tag
      */
-    public function popTag($tag)
+    public function popTag(string $tag)
     {
         [$openTag] = \array_pop($this->tagStack);
         if ($tag == $openTag) {
@@ -1352,11 +1327,10 @@ class TemplateScriptingCompiler
     /**
      * Compiles an output tag and returns the compiled PHP code.
      *
-     * @param string $tag
      * @return  string
      * @throws  SystemException
      */
-    protected function compileOutputTag($tag)
+    protected function compileOutputTag(string $tag)
     {
         $encodeHTML = false;
         $formatNumeric = false;
@@ -1402,12 +1376,9 @@ class TemplateScriptingCompiler
     /**
      * Compiles a variable tag and returns the compiled PHP code.
      *
-     * @param string $variable
-     * @param string $type
-     * @param bool $allowConstants
      * @return  string
      */
-    protected function compileSimpleVariable($variable, $type = '', $allowConstants = true)
+    protected function compileSimpleVariable(string $variable, string $type = '', bool $allowConstants = true)
     {
         if ($type == '') {
             $type = $this->getVariableType($variable);
@@ -1438,7 +1409,7 @@ class TemplateScriptingCompiler
      * @param array{className: string, parameter: list<string>}|array{name: string, parameter: list<string>} $data
      * @return  string
      */
-    protected function compileModifier($data)
+    protected function compileModifier(array $data)
     {
         if (isset($data['className'])) {
             return "\$this->pluginObjects['" . $data['className'] . "']->execute([" . \implode(
@@ -1453,10 +1424,9 @@ class TemplateScriptingCompiler
     /**
      * Returns type of the given variable.
      *
-     * @param string $variable
      * @return  string
      */
-    protected function getVariableType($variable)
+    protected function getVariableType(string $variable)
     {
         if (\substr($variable, 0, 1) == '$') {
             return 'variable';
@@ -1470,12 +1440,10 @@ class TemplateScriptingCompiler
     /**
      * Compiles a variable tag and returns the compiled PHP code.
      *
-     * @param string $tag
-     * @param bool $replaceQuotes
      * @return  string
      * @throws  SystemException
      */
-    public function compileVariableTag($tag, $replaceQuotes = true)
+    public function compileVariableTag(string $tag, bool $replaceQuotes = true)
     {
         // replace all quotes with unique hash values
         $compiledTag = $tag;
@@ -1962,12 +1930,10 @@ class TemplateScriptingCompiler
     /**
      * Applies the prefilters to the given string.
      *
-     * @param string $templateName
-     * @param string $string
      * @return  string
      * @throws  SystemException
      */
-    public function applyPrefilters($templateName, $string)
+    public function applyPrefilters(string $templateName, string $string)
     {
         foreach ($this->template->getPrefilters() as $prefilter) {
             if (!\is_object($prefilter)) {
@@ -2001,10 +1967,9 @@ class TemplateScriptingCompiler
     /**
      * Replaces all {literal} Tags with unique hash values.
      *
-     * @param string $string
      * @return  string
      */
-    public function replaceLiterals($string)
+    public function replaceLiterals(string $string)
     {
         return \preg_replace_callback(
             "~" . $this->ldq . "literal" . $this->rdq . "(.*?)" . $this->ldq . "/literal" . $this->rdq . "~s",
@@ -2016,10 +1981,9 @@ class TemplateScriptingCompiler
     /**
      * Reinserts the literal tags.
      *
-     * @param string $string
      * @return  string
      */
-    public function reinsertLiterals($string)
+    public function reinsertLiterals(string $string)
     {
         return StringStack::reinsertStrings($string, 'literal');
     }
@@ -2030,7 +1994,7 @@ class TemplateScriptingCompiler
      * @param string[] $matches
      * @return  string
      */
-    private function replaceLiteralsCallback($matches)
+    private function replaceLiteralsCallback(array $matches)
     {
         return StringStack::pushToStringStack($matches[1], 'literal');
     }
@@ -2038,10 +2002,9 @@ class TemplateScriptingCompiler
     /**
      * Removes template comments
      *
-     * @param string $string
      * @return  string
      */
-    public function removeComments($string)
+    public function removeComments(string $string)
     {
         return \preg_replace("~" . $this->ldq . "\\*.*?\\*" . $this->rdq . "~s", '', $string);
     }
@@ -2049,10 +2012,9 @@ class TemplateScriptingCompiler
     /**
      * Replaces all quotes with unique hash values.
      *
-     * @param string $string
      * @return  string
      */
-    public function replaceQuotes($string)
+    public function replaceQuotes(string $string)
     {
         $string = \preg_replace_callback('~\'([^\'\\\\]+|\\\\.)*\'~', [$this, 'replaceSingleQuotesCallback'], $string);
 
@@ -2065,7 +2027,7 @@ class TemplateScriptingCompiler
      * @param string[] $matches
      * @return  string
      */
-    private function replaceSingleQuotesCallback($matches)
+    private function replaceSingleQuotesCallback(array $matches)
     {
         return StringStack::pushToStringStack($matches[0], 'singleQuote');
     }
@@ -2076,7 +2038,7 @@ class TemplateScriptingCompiler
      * @param string[] $matches
      * @return  string
      */
-    private function replaceDoubleQuotesCallback($matches)
+    private function replaceDoubleQuotesCallback(array $matches)
     {
         // parse unescaped simple vars in double quotes
         // replace $foo with {$this->v['foo']}
@@ -2092,10 +2054,9 @@ class TemplateScriptingCompiler
     /**
      * Reinserts the quotes.
      *
-     * @param string $string
      * @return  string
      */
-    public function reinsertQuotes($string)
+    public function reinsertQuotes(string $string)
     {
         $string = StringStack::reinsertStrings($string, 'singleQuote');
 
@@ -2105,10 +2066,9 @@ class TemplateScriptingCompiler
     /**
      * Replaces all constants with unique hash values.
      *
-     * @param string $string
      * @return  string
      */
-    public function replaceConstants($string)
+    public function replaceConstants(string $string)
     {
         return \preg_replace_callback(
             '~(?<=^|' . $this->variableOperatorPattern . ')(?i)((?:\-?\d+(?:\.\d+)?)|true|false|null|\[\])(?=$|' . $this->variableOperatorPattern . ')~',
@@ -2123,7 +2083,7 @@ class TemplateScriptingCompiler
      * @param string[] $matches
      * @return  string
      */
-    private function replaceConstantsCallback($matches)
+    private function replaceConstantsCallback(array $matches)
     {
         return StringStack::pushToStringStack($matches[1], 'constants');
     }
@@ -2131,10 +2091,9 @@ class TemplateScriptingCompiler
     /**
      * Reinserts the constants.
      *
-     * @param string $string
      * @return  string
      */
-    public function reinsertConstants($string)
+    public function reinsertConstants(string $string)
     {
         return StringStack::reinsertStrings($string, 'constants');
     }
@@ -2142,10 +2101,9 @@ class TemplateScriptingCompiler
     /**
      * Replaces all php tags.
      *
-     * @param string $string
      * @return  string
      */
-    public function replacePHPTags($string)
+    public function replacePHPTags(string $string)
     {
         if (\str_contains($string, '<?')) {
             $string = \str_replace('<?php', '@@PHP_START_TAG@@', $string);

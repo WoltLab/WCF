@@ -61,10 +61,9 @@ class CommentHandler extends SingletonFactory
      * Returns the id of the comment object type with the given name or `null` if no
      * such object type exists.
      *
-     * @param string $objectType
      * @return ?int
      */
-    public function getObjectTypeID($objectType)
+    public function getObjectTypeID(string $objectType)
     {
         return $this->cache['objectTypeIDs'][$objectType] ?? null;
     }
@@ -73,10 +72,9 @@ class CommentHandler extends SingletonFactory
      * Returns the comment object type with the given name or `null` if no such
      * object type exists.
      *
-     * @param int $objectTypeID
      * @return ?ObjectType
      */
-    public function getObjectType($objectTypeID)
+    public function getObjectType(int $objectTypeID)
     {
         return $this->cache['objectTypes'][$objectTypeID] ?? null;
     }
@@ -84,11 +82,10 @@ class CommentHandler extends SingletonFactory
     /**
      * Returns comment manager object for given object type.
      *
-     * @param string $objectType
      * @return ICommentManager
      * @throws SystemException
      */
-    public function getCommentManager($objectType)
+    public function getCommentManager(string $objectType)
     {
         $objectTypeID = $this->getObjectTypeID($objectType);
         if ($objectTypeID === null) {
@@ -120,13 +117,9 @@ class CommentHandler extends SingletonFactory
     /**
      * Returns a comment list for a given object type and object id.
      *
-     * @param ICommentManager $commentManager
-     * @param int $objectTypeID
-     * @param int $objectID
-     * @param bool $readObjects
      * @return StructuredCommentList
      */
-    public function getCommentList(ICommentManager $commentManager, $objectTypeID, $objectID, $readObjects = true)
+    public function getCommentList(ICommentManager $commentManager, int $objectTypeID, int $objectID, bool $readObjects = true)
     {
         $commentList = new StructuredCommentList($commentManager, $objectTypeID, $objectID);
         if ($readObjects) {
@@ -139,11 +132,10 @@ class CommentHandler extends SingletonFactory
     /**
      * Removes all comments for given objects.
      *
-     * @param string $objectType
      * @param int[] $objectIDs
      * @return void
      */
-    public function deleteObjects($objectType, array $objectIDs)
+    public function deleteObjects(string $objectType, array $objectIDs)
     {
         $objectTypeID = $this->getObjectTypeID($objectType);
         $objectTypeObj = $this->getObjectType($objectTypeID);
@@ -251,7 +243,7 @@ class CommentHandler extends SingletonFactory
      * @throws \InvalidArgumentException if invalid comment object type name is given
      * @since 5.2
      */
-    public function markNotificationsAsConfirmed($objectType, array $objectIDs, $time = TIME_NOW)
+    public function markNotificationsAsConfirmed(string $objectType, array $objectIDs, int $time = TIME_NOW)
     {
         // notifications are only relevant for logged-in users
         if (!WCF::getUser()->userID) {
@@ -477,13 +469,12 @@ class CommentHandler extends SingletonFactory
      * Marks all comment-related notifications for objects of the given object type in the
      * given comment list as confirmed for the active user.
      *
-     * @param string $objectType comment object type name
      * @param StructuredComment[] $comments comments whose notifications will be marked as read
      * @return void
      * @throws \InvalidArgumentException if invalid comment object type name is given
      * @since 5.2
      */
-    public function markNotificationsAsConfirmedForComments($objectType, array $comments)
+    public function markNotificationsAsConfirmedForComments(string $objectType, array $comments)
     {
         // notifications are only relevant for logged-in users
         if (!WCF::getUser()->userID) {
@@ -659,14 +650,13 @@ class CommentHandler extends SingletonFactory
      * Marks all comment response-related notifications for objects of the given object type in
      * the given comment response list as confirmed for the active user.
      *
-     * @param string $objectType comment object type name
      * @param (CommentResponse|StructuredCommentResponse)[] $responses comment responses whose notifications will be marked as read
      * @return void
      *
      * @throws \InvalidArgumentException if invalid comment object type name is given
      * @since 5.2
      */
-    public function markNotificationsAsConfirmedForResponses($objectType, array $responses)
+    public function markNotificationsAsConfirmedForResponses(string $objectType, array $responses)
     {
         // notifications are only relevant for logged-in users
         if (!WCF::getUser()->userID) {
@@ -755,11 +745,10 @@ class CommentHandler extends SingletonFactory
     /**
      * Enforces the censorship.
      *
-     * @param string $text
      * @return void
      * @throws UserInputException
      */
-    public static function enforceCensorship($text)
+    public static function enforceCensorship(string $text)
     {
         $censoredWords = Censorship::getInstance()->test($text);
         if ($censoredWords) {

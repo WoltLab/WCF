@@ -143,10 +143,9 @@ HTML;
     /**
      * Returns the min and max attributes for the input elements.
      *
-     * @param string $type
      * @return  string
      */
-    protected function getMinMaxAttributes($type)
+    protected function getMinMaxAttributes(string $type)
     {
         $attributes = '';
         if ($this->getMinValue() !== null) {

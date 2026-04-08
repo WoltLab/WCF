@@ -178,7 +178,7 @@ final class ControllerMap extends SingletonFactory
      * @param bool $forceFrontend force transformation for frontend
      * @return  string      url representation of controller, e.g. 'members-list'
      */
-    public function lookup(string $application, string $controller, $forceFrontend = null)
+    public function lookup(string $application, string $controller, ?bool $forceFrontend = null)
     {
         if ($forceFrontend === null) {
             $forceFrontend = !\class_exists(WCFACP::class, false);
@@ -208,11 +208,9 @@ final class ControllerMap extends SingletonFactory
      * Looks up a cms page URL, returns an array containing the application identifier
      * and url controller name or null if there was no match.
      *
-     * @param int $pageID page id
-     * @param ?int $languageID content language id
      * @return  string[]|null
      */
-    public function lookupCmsPage($pageID, $languageID)
+    public function lookupCmsPage(int $pageID, ?int $languageID)
     {
         $key = '__WCF_CMS__' . $pageID . '-' . ($languageID ?: 0);
         foreach ($this->customUrls['reverse'] as $application => $reverseURLs) {

@@ -98,7 +98,7 @@ abstract class FormFieldValidatorUtil
      *
      * @throws  \InvalidArgumentException       if regular expression is invalid
      */
-    public static function getRegularExpressionValidator($regularExpression, $languageItemPrefix)
+    public static function getRegularExpressionValidator(string $regularExpression, string $languageItemPrefix)
     {
         $regex = Regex::compile($regularExpression);
         if (!$regex->isValid()) {

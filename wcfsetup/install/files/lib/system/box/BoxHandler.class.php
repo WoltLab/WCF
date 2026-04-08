@@ -65,15 +65,12 @@ class BoxHandler extends SingletonFactory
      *
      * Note: The primary use of this method is to be used during package installation.
      *
-     * @param string $boxIdentifier
-     * @param string $conditionDefinition
-     * @param string $conditionObjectType
      * @param mixed[] $conditionData
      * @return void
      * @throws  \InvalidArgumentException
      * @deprecated 6.1 use `CreateBoxCondition` instead
      */
-    public function createBoxCondition($boxIdentifier, $conditionDefinition, $conditionObjectType, array $conditionData)
+    public function createBoxCondition(string $boxIdentifier, string $conditionDefinition, string $conditionObjectType, array $conditionData)
     {
         $command = new CreateBoxCondition($boxIdentifier, $conditionDefinition, $conditionObjectType, $conditionData);
         $command();
@@ -82,10 +79,9 @@ class BoxHandler extends SingletonFactory
     /**
      * Returns the box with the given id or `null` if it does not exist.
      *
-     * @param int $boxID
      * @return  Box|null
      */
-    public function getBox($boxID)
+    public function getBox(int $boxID)
     {
         return $this->boxes[$boxID] ?? null;
     }
@@ -93,10 +89,9 @@ class BoxHandler extends SingletonFactory
     /**
      * Returns boxes for the given position.
      *
-     * @param string $position
      * @return  Box[]
      */
-    public function getBoxes($position)
+    public function getBoxes(string $position)
     {
         return $this->boxesByPosition[$position] ?? [];
     }
@@ -104,10 +99,9 @@ class BoxHandler extends SingletonFactory
     /**
      * Returns the box with given identifier or `null` if there is no such box.
      *
-     * @param string $identifier
      * @return  Box|null
      */
-    public function getBoxByIdentifier($identifier)
+    public function getBoxByIdentifier(string $identifier)
     {
         return $this->boxesByIdentifier[$identifier] ?? null;
     }
@@ -117,14 +111,12 @@ class BoxHandler extends SingletonFactory
      *
      * Note: The primary use of this method is to be used during package installation.
      *
-     * @param string $boxIdentifier
      * @param string[] $pageIdentifiers
-     * @param bool $visible
      * @return void
      * @throws \InvalidArgumentException
      * @deprecated 6.1 use `CreateBoxCondition` instead
      */
-    public function addBoxToPageAssignments($boxIdentifier, array $pageIdentifiers, $visible = true)
+    public function addBoxToPageAssignments(string $boxIdentifier, array $pageIdentifiers, bool $visible = true)
     {
         $command = new CreateBoxToPageAssignments($boxIdentifier, $pageIdentifiers, $visible);
         $command();
@@ -159,11 +151,10 @@ class BoxHandler extends SingletonFactory
     /**
      * Returns the list of boxes sorted by their global and page-local show order.
      *
-     * @param int $pageID page id
      * @param bool $forDisplay enables content loading and removes inaccessible boxes from view
      * @return      Box[][]
      */
-    public static function loadBoxes($pageID, $forDisplay)
+    public static function loadBoxes(int $pageID, bool $forDisplay)
     {
         // load box layout for active page
         $boxList = new BoxList();
@@ -256,10 +247,9 @@ class BoxHandler extends SingletonFactory
     /**
      * Returns true if provided page id uses a custom box show order.
      *
-     * @param int $pageID page id
      * @return      bool         true if there is a custom show order for boxes
      */
-    public static function hasCustomShowOrder($pageID)
+    public static function hasCustomShowOrder(int $pageID)
     {
         $sql = "SELECT  COUNT(*) AS count
                 FROM    wcf1_page_box_order

@@ -17,12 +17,9 @@ abstract class AbstractStatDailyHandler implements IStatDailyHandler
     /**
      * Counts the number of rows for a single day.
      *
-     * @param int $date
-     * @param string $tableName
-     * @param string $dateColumnName
      * @return  int
      */
-    protected function getCounter($date, $tableName, $dateColumnName)
+    protected function getCounter(int $date, string $tableName, string $dateColumnName)
     {
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add($dateColumnName . ' BETWEEN ? AND ?', [$date, $date + 86399]);
@@ -41,12 +38,9 @@ abstract class AbstractStatDailyHandler implements IStatDailyHandler
     /**
      * Counts the total number of rows.
      *
-     * @param int $date
-     * @param string $tableName
-     * @param string $dateColumnName
      * @return  int
      */
-    protected function getTotal($date, $tableName, $dateColumnName)
+    protected function getTotal(int $date, string $tableName, string $dateColumnName)
     {
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add($dateColumnName . ' < ?', [$date + 86399]);

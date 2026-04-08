@@ -48,12 +48,10 @@ class UserCollapsibleContentHandler extends SingletonFactory
     /**
      * Returns true if given object is collapsed.
      *
-     * @param string $objectType
-     * @param string $objectID
      * @return  bool
      * @throws  InvalidObjectTypeException
      */
-    public function isCollapsed($objectType, $objectID)
+    public function isCollapsed(string $objectType, string $objectID)
     {
         $objectTypeID = $this->getObjectTypeID($objectType);
         if ($objectTypeID === null) {
@@ -67,10 +65,9 @@ class UserCollapsibleContentHandler extends SingletonFactory
      * Returns the object type id based upon specified object type name. Returns
      * null, if object type is unknown.
      *
-     * @param string $objectType
      * @return  int|null
      */
-    public function getObjectTypeID($objectType)
+    public function getObjectTypeID(string $objectType)
     {
         return $this->cache['objectTypeIDs'][$objectType] ?? null;
     }
@@ -78,10 +75,9 @@ class UserCollapsibleContentHandler extends SingletonFactory
     /**
      * Returns a list of object ids being collapsed by current user.
      *
-     * @param int $objectTypeID
      * @return  int[]
      */
-    public function getCollapsedContent($objectTypeID)
+    public function getCollapsedContent(int $objectTypeID)
     {
         if (!isset($this->collapsedContent[$objectTypeID])) {
             $this->collapsedContent[$objectTypeID] = [];
@@ -220,10 +216,9 @@ class UserCollapsibleContentHandler extends SingletonFactory
     /**
      * Deletes all saved states for a specific object type.
      *
-     * @param int $objectTypeID
      * @return void
      */
-    public function reset($objectTypeID)
+    public function reset(int $objectTypeID)
     {
         if (WCF::getUser()->userID) {
             $sql = "DELETE FROM wcf1_user_collapsible_content
@@ -255,12 +250,10 @@ class UserCollapsibleContentHandler extends SingletonFactory
      * Deletes the saved states for a specific object or all objects of a
      * specific object type for all users.
      *
-     * @param string $objectType
-     * @param int $objectID
      * @return void
      * @throws  InvalidObjectTypeException
      */
-    public function resetAll($objectType, $objectID = null)
+    public function resetAll(string $objectType, ?int $objectID = null)
     {
         $objectTypeID = $this->getObjectTypeID($objectType);
         if (!$objectTypeID) {

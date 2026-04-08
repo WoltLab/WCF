@@ -46,17 +46,12 @@ class UploadField
 
     /**
      * Acceptable file types.
-     * @var string[]|null
+     * @var ?string[]
      * @since 5.3
      */
     public $acceptableFiles;
 
-    /**
-     * UploadField constructor.
-     *
-     * @param string $fieldId
-     */
-    public function __construct($fieldId)
+    public function __construct(string $fieldId)
     {
         $this->fieldId = $fieldId;
     }
@@ -114,10 +109,9 @@ class UploadField
     /**
      * Sets the internalId for this field.
      *
-     * @param string $internalId
      * @return void
      */
-    public function setInternalId($internalId)
+    public function setInternalId(string $internalId)
     {
         $this->internalId = $internalId;
     }
@@ -139,10 +133,9 @@ class UploadField
      * If set to `true` will also set the acceptable types to `image/*`. If set to
      * false it will clear the acceptable types if they are `image/*`.
      *
-     * @param bool $imageOnly
      * @return void
      */
-    public function setImageOnly($imageOnly)
+    public function setImageOnly(bool $imageOnly)
     {
         $this->imageOnly = $imageOnly;
 
@@ -166,12 +159,11 @@ class UploadField
      * <strong>Attention</strong>: SVG images can contain bad code, therefore do not
      * use this option, outside the acp or check the file whether remote code is contained.
      *
-     * @param bool $allowSvgImage
      * @return void
      *
      * @throws \BadMethodCallException         if the imageOnly flag isn't set to true
      */
-    public function setAllowSvgImage($allowSvgImage)
+    public function setAllowSvgImage(bool $allowSvgImage)
     {
         if (!$this->isImageOnly()) {
             throw new \BadMethodCallException(
@@ -197,11 +189,11 @@ class UploadField
      * - `video/*`
      *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#Unique_file_type_specifiers
-     * @param string[]|null $acceptableFiles
+     * @param ?string[] $acceptableFiles
      * @return void
      * @since 5.3
      */
-    public function setAcceptableFiles($acceptableFiles = null)
+    public function setAcceptableFiles(?array $acceptableFiles = null)
     {
         $this->acceptableFiles = $acceptableFiles;
     }
@@ -209,7 +201,7 @@ class UploadField
     /**
      * Returns the acceptable file types.
      *
-     * @return string[]|null
+     * @return ?string[]
      * @since 5.3
      */
     public function getAcceptableFiles()

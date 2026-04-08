@@ -89,10 +89,9 @@ class MessageEmbeddedObjectManager extends SingletonFactory
      * Registers the embedded objects found in given message.
      *
      * @param HtmlInputProcessor $htmlInputProcessor html input processor instance holding embedded object data
-     * @param bool $isBulk true for bulk operations
      * @return      bool                 true if at least one embedded object was found
      */
-    public function registerObjects(HtmlInputProcessor $htmlInputProcessor, $isBulk = false, bool $removeExistingObjects = true)
+    public function registerObjects(HtmlInputProcessor $htmlInputProcessor, bool $isBulk = false, bool $removeExistingObjects = true)
     {
         $context = $htmlInputProcessor->getContext();
 
@@ -192,12 +191,10 @@ class MessageEmbeddedObjectManager extends SingletonFactory
     /**
      * Registers the embedded objects found in a message using the simplified syntax.
      *
-     * @param string $messageObjectType object type identifier
-     * @param int $messageID object id
      * @param int[][] $embeddedContent list of object ids for embedded objects by object type id
      * @return      bool         true if at least one embedded object was found
      */
-    public function registerSimpleObjects($messageObjectType, $messageID, array $embeddedContent)
+    public function registerSimpleObjects(string $messageObjectType, int $messageID, array $embeddedContent)
     {
         if (!$messageID) {
             throw new \BadMethodCallException("No 'messageID' was given.");
@@ -234,11 +231,10 @@ class MessageEmbeddedObjectManager extends SingletonFactory
     /**
      * Removes embedded object assignments for given messages.
      *
-     * @param string $messageObjectType
      * @param int[] $messageIDs
      * @return void
      */
-    public function removeObjects($messageObjectType, array $messageIDs)
+    public function removeObjects(string $messageObjectType, array $messageIDs)
     {
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add(
@@ -256,13 +252,11 @@ class MessageEmbeddedObjectManager extends SingletonFactory
     /**
      * Loads the embedded objects for given messages.
      *
-     * @param string $messageObjectType
      * @param int[] $messageIDs
-     * @param int $contentLanguageID
      * @return void
      * @throws  InvalidObjectTypeException
      */
-    public function loadObjects($messageObjectType, array $messageIDs, $contentLanguageID = null)
+    public function loadObjects(string $messageObjectType, array $messageIDs, ?int $contentLanguageID = null)
     {
         $messageObjectTypeID = ObjectTypeCache::getInstance()
             ->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);
@@ -325,12 +319,9 @@ class MessageEmbeddedObjectManager extends SingletonFactory
     /**
      * Sets active message information.
      *
-     * @param string $messageObjectType
-     * @param int $messageID
-     * @param int $languageID
      * @return void
      */
-    public function setActiveMessage($messageObjectType, $messageID, $languageID = null)
+    public function setActiveMessage(string $messageObjectType, int $messageID, ?int $languageID = null)
     {
         if ($this->activeMessageObjectTypeID) {
             $this->activeMessageHistory[] = [
@@ -400,10 +391,9 @@ class MessageEmbeddedObjectManager extends SingletonFactory
     /**
      * Returns all embedded objects of a specific type in the active message.
      *
-     * @param string $embeddedObjectType
      * @return list<DatabaseObject>
      */
-    public function getObjects($embeddedObjectType)
+    public function getObjects(string $embeddedObjectType)
     {
         $embeddedObjectTypeID = ObjectTypeCache::getInstance()
             ->getObjectTypeIDByName('com.woltlab.wcf.message.embeddedObject', $embeddedObjectType);
@@ -447,11 +437,9 @@ class MessageEmbeddedObjectManager extends SingletonFactory
     /**
      * Returns a specific embedded object.
      *
-     * @param string $embeddedObjectType
-     * @param int $objectID
      * @return ?DatabaseObject
      */
-    public function getObject($embeddedObjectType, $objectID)
+    public function getObject(string $embeddedObjectType, int $objectID)
     {
         // `$objectID` might contain non integer values containing a comment, such
         // as `123#This is a comment`. PHP <8.0 would silently truncate the value
@@ -548,10 +536,9 @@ class MessageEmbeddedObjectManager extends SingletonFactory
     /**
      * Returns a specific embedded object handler.
      *
-     * @param int $objectTypeID
      * @return  IMessageEmbeddedObjectHandler
      */
-    protected function getEmbeddedObjectHandler($objectTypeID)
+    protected function getEmbeddedObjectHandler(int $objectTypeID)
     {
         $this->getEmbeddedObjectHandlers();
 

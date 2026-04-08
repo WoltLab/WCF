@@ -24,7 +24,7 @@ class HTTPException extends SystemException implements IExtraInformationExceptio
      */
     protected $http;
 
-    public function __construct(HTTPRequest $http, $message, $code = 0, $previous = null)
+    public function __construct(HTTPRequest $http, string $message, int $code = 0, ?\Throwable $previous = null)
     {
         parent::__construct($message, $code, '', $previous);
 

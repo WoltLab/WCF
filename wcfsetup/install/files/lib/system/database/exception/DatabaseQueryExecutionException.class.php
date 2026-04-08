@@ -36,10 +36,9 @@ class DatabaseQueryExecutionException extends DatabaseQueryException implements 
     protected $driverCode;
 
     /**
-     * @param string $message
      * @param ParameterValues $parameters
      */
-    public function __construct($message, $parameters, ?\PDOException $previous = null)
+    public function __construct(string $message, array $parameters, ?\PDOException $previous = null)
     {
         parent::__construct($message, $previous);
 

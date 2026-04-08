@@ -27,13 +27,7 @@ class PageLanguage
      */
     protected $pageID;
 
-    /**
-     * Creates a new PageLanguage object.
-     *
-     * @param int $pageID
-     * @param int $languageID
-     */
-    public function __construct($pageID, $languageID)
+    public function __construct(int $pageID, int $languageID)
     {
         $this->pageID = $pageID;
         $this->languageID = $languageID;

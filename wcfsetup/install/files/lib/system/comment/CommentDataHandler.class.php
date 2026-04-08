@@ -19,37 +19,33 @@ use wcf\system\SingletonFactory;
 class CommentDataHandler extends SingletonFactory
 {
     /**
-     * @param int $commentID
      * @return void
      */
-    public function cacheCommentID($commentID)
+    public function cacheCommentID(int $commentID)
     {
         CommentRuntimeCache::getInstance()->cacheObjectID($commentID);
     }
 
     /**
-     * @param int $userID
      * @return void
      */
-    public function cacheUserID($userID)
+    public function cacheUserID(int $userID)
     {
         UserProfileRuntimeCache::getInstance()->cacheObjectID($userID);
     }
 
     /**
-     * @param int $commentID
      * @return ?Comment
      */
-    public function getComment($commentID)
+    public function getComment(int $commentID)
     {
         return CommentRuntimeCache::getInstance()->getObject($commentID);
     }
 
     /**
-     * @param int $userID
      * @return ?UserProfile
      */
-    public function getUser($userID)
+    public function getUser(int $userID)
     {
         return UserProfileRuntimeCache::getInstance()->getObject($userID);
     }

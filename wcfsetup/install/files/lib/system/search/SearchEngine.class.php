@@ -61,10 +61,9 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
     /**
      * Returns the object type with the given name.
      *
-     * @param string $objectTypeName
      * @return  ISearchableObjectType|ISearchProvider|null
      */
-    public function getObjectType($objectTypeName)
+    public function getObjectType(string $objectTypeName)
     {
         return $this->availableObjectTypes[$objectTypeName] ?? null;
     }

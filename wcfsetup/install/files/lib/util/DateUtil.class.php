@@ -312,12 +312,9 @@ final class DateUtil
     /**
      * Returns a localized date output.
      *
-     * @param string $date
-     * @param string $format
-     * @param Language $language
      * @return  string
      */
-    public static function localizeDate($date, $format, Language $language)
+    public static function localizeDate(string $date, string $format, Language $language)
     {
         if ($language->languageCode != 'en') {
             // full textual representation of the day of the week (l)
@@ -415,10 +412,9 @@ final class DateUtil
     /**
      * Creates a DateTime object with the given unix timestamp.
      *
-     * @param int $timestamp
      * @return  \DateTime
      */
-    public static function getDateTimeByTimestamp($timestamp)
+    public static function getDateTimeByTimestamp(int $timestamp)
     {
         return new \DateTime('@' . $timestamp);
     }
@@ -439,7 +435,7 @@ final class DateUtil
      * @param string $date format YYYY-MM-DD
      * @return  int
      */
-    public static function getAge($date)
+    public static function getAge(string $date)
     {
         // split date
         $year = $month = $day = 0;
@@ -472,11 +468,10 @@ final class DateUtil
     /**
      * Validates if given date is valid ISO-8601.
      *
-     * @param string $date
      * @return void
      * @throws  SystemException
      */
-    public static function validateDate($date)
+    public static function validateDate(string $date)
     {
         if (\preg_match('~^(?P<year>[0-9]{4})-(?P<month>[0-9]{2})-(?P<day>[0-9]{2})~', $date, $matches)) {
             if (!\checkdate((int)$matches['month'], (int)$matches['day'], (int)$matches['year'])) {
@@ -575,10 +570,9 @@ final class DateUtil
     /**
      * Returns the number of weeks in the given year.
      *
-     * @param int $year
      * @return  int
      */
-    public static function getWeeksInYear($year)
+    public static function getWeeksInYear(int $year)
     {
         $date = new \DateTime();
         $date->setISODate($year, 53, self::getFirstDayOfTheWeek());
@@ -597,7 +591,7 @@ final class DateUtil
      * @param bool $isFutureDate true if timestamp is in the future
      * @return  string      relative time
      */
-    public static function getRelativeTime(\DateTime $dateTimeObject, $timestamp, $date, $time, $isFutureDate)
+    public static function getRelativeTime(\DateTime $dateTimeObject, int $timestamp, string $date, string $time, bool $isFutureDate)
     {
         if ($isFutureDate) {
             return \str_replace(

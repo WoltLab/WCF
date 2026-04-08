@@ -748,11 +748,10 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
     /**
      * Creates a new package installation queue.
      *
-     * @param string $queueType
      * @return QueueEntry
      * @throws SystemException
      */
-    protected function createQueue($queueType)
+    protected function createQueue(string $queueType)
     {
         if (isset($this->parameters['authData'])) {
             PackageUpdateServer::storeAuthData(

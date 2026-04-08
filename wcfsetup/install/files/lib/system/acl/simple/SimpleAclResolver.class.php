@@ -27,12 +27,10 @@ class SimpleAclResolver extends SingletonFactory
      * Returns true if there are no ACL settings, the user is allowed or
      * one of its group is allowed.
      *
-     * @param string $objectType object type name
-     * @param int $objectID object id
      * @param ?User $user user object, if `null` uses current user
      * @return bool false if user is not allowed
      */
-    public function canAccess($objectType, $objectID, ?User $user = null)
+    public function canAccess(string $objectType, int $objectID, ?User $user = null)
     {
         if ($user === null) {
             $user = WCF::getUser();
@@ -67,10 +65,9 @@ class SimpleAclResolver extends SingletonFactory
     /**
      * Resets the cache for provided object type.
      *
-     * @param string $objectType object type name
      * @return void
      */
-    public function resetCache($objectType)
+    public function resetCache(string $objectType)
     {
         SimpleAclCacheBuilder::getInstance()->reset(['objectType' => $objectType]);
     }
@@ -78,10 +75,9 @@ class SimpleAclResolver extends SingletonFactory
     /**
      * Attempts to load the cache for provided object type.
      *
-     * @param string $objectType object type name
      * @return void
      */
-    protected function loadCache($objectType)
+    protected function loadCache(string $objectType)
     {
         if (!isset($this->cache[$objectType])) {
             $this->cache[$objectType] = SimpleAclCacheBuilder::getInstance()->getData(['objectType' => $objectType]);

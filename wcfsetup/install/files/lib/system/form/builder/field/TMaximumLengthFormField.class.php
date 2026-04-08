@@ -36,12 +36,11 @@ trait TMaximumLengthFormField
      * Sets the maximum length of the values of this field. If `null` is passed, the
      * maximum length is removed.
      *
-     * @param ?int $maximumLength maximum field value length
      * @return static this field
      *
      * @throws \InvalidArgumentException if the given maximum length is no integer or otherwise invalid
      */
-    public function maximumLength($maximumLength = null)
+    public function maximumLength(?int $maximumLength = null)
     {
         if ($maximumLength !== null) {
             if (!\is_int($maximumLength)) {

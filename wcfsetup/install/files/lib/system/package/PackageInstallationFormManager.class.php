@@ -57,11 +57,9 @@ abstract class PackageInstallationFormManager
     /**
      * Searches for an existing form document associated with given queue.
      *
-     * @param PackageInstallationQueue $queue
-     * @param string $formName
      * @return  bool
      */
-    public static function findForm(PackageInstallationQueue $queue, $formName)
+    public static function findForm(PackageInstallationQueue $queue, string $formName)
     {
         $sql = "SELECT  COUNT(*)
                 FROM    wcf1_package_installation_form
@@ -132,11 +130,9 @@ abstract class PackageInstallationFormManager
     /**
      * Returns a form document from database.
      *
-     * @param PackageInstallationQueue $queue
-     * @param string $formName
      * @return ?FormDocument
      */
-    public static function getForm(PackageInstallationQueue $queue, $formName)
+    public static function getForm(PackageInstallationQueue $queue, string $formName)
     {
         $sql = "SELECT  document
                 FROM    wcf1_package_installation_form

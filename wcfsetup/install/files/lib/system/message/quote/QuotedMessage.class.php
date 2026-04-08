@@ -63,11 +63,6 @@ class QuotedMessage implements \Countable, \Iterator
      */
     protected $indexToObject;
 
-    /**
-     * Creates a new QuotedMessage object.
-     *
-     * @param IMessage $object
-     */
     public function __construct(IMessage $object)
     {
         $this->object = $object;
@@ -76,12 +71,9 @@ class QuotedMessage implements \Countable, \Iterator
     /**
      * Adds a quote for this message.
      *
-     * @param string $quoteID
-     * @param string $quote
-     * @param string $fullQuote
      * @return void
      */
-    public function addQuote($quoteID, $quote, $fullQuote)
+    public function addQuote(string $quoteID, string $quote, string $fullQuote)
     {
         $this->fullQuotes[$quoteID] = $fullQuote;
         $this->quotes[$quoteID] = $quote;
@@ -97,11 +89,10 @@ class QuotedMessage implements \Countable, \Iterator
     /**
      * Forwards calls to the decorated object.
      *
-     * @param string $name
-     * @param mixed $value
+     * @param mixed[] $arguments
      * @return  mixed
      */
-    public function __call($name, $value)
+    public function __call(string $name, array $arguments)
     {
         return $this->object->{$name}();
     }
@@ -109,11 +100,9 @@ class QuotedMessage implements \Countable, \Iterator
     /**
      * Overrides the full quote flag.
      *
-     * @param string $quoteID
-     * @param bool $overrideIsFullQuote
      * @return void
      */
-    public function setOverrideIsFullQuote($quoteID, $overrideIsFullQuote)
+    public function setOverrideIsFullQuote(string $quoteID, bool $overrideIsFullQuote)
     {
         $this->overrideIsFullQuote[$quoteID] = $overrideIsFullQuote;
     }
@@ -131,10 +120,9 @@ class QuotedMessage implements \Countable, \Iterator
     /**
      * Returns the full quote by quote id.
      *
-     * @param string $quoteID
      * @return  string|null
      */
-    public function getFullQuote($quoteID)
+    public function getFullQuote(string $quoteID)
     {
         return $this->fullQuotes[$quoteID] ?? null;
     }
@@ -142,10 +130,9 @@ class QuotedMessage implements \Countable, \Iterator
     /**
      * Returns true if given quote id represents a full quote.
      *
-     * @param string $quoteID
      * @return  bool
      */
-    public function isFullQuote($quoteID)
+    public function isFullQuote(string $quoteID)
     {
         if (isset($this->overrideIsFullQuote[$quoteID])) {
             return $this->overrideIsFullQuote[$quoteID];

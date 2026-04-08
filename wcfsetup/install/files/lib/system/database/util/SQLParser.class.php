@@ -28,12 +28,7 @@ class SQLParser
      */
     protected $queryArray = [];
 
-    /**
-     * Creates a new SQLParser object.
-     *
-     * @param string $queries
-     */
-    public function __construct($queries)
+    public function __construct(string $queries)
     {
         // delete comments
         $queries = \preg_replace("~('[^'\\\\]*(?:\\\\.[^'\\\\]*)*')|(?:(?:--|#)[^\n]*|/\\*.*?\\*/)~s", '$1', $queries);
@@ -69,12 +64,10 @@ class SQLParser
     /**
      * Executes a sql statement.
      *
-     * @param string $statement
-     * @param string $query
      * @return void
      * @throws SystemException
      */
-    protected function executeStatement($statement, $query)
+    protected function executeStatement(string $statement, string $query)
     {
         switch ($statement) {
             case 'CREATE TABLE':
@@ -292,12 +285,11 @@ class SQLParser
     /**
      * Executes a 'CREATE TABLE' statement.
      *
-     * @param string $tableName
      * @param list<array{name: string, data: ColumnDefinition}> $columns
      * @param list<array{name: string, data: IndexDefinition}> $indices
      * @return void
      */
-    protected function executeCreateTableStatement($tableName, $columns, $indices = [])
+    protected function executeCreateTableStatement(string $tableName, array $columns, array $indices = [])
     {
         WCF::getDB()->getEditor()->createTable($tableName, $columns, $indices);
     }
@@ -305,12 +297,10 @@ class SQLParser
     /**
      * Executes an 'ALTER TABLE ... ADD COLUMN' statement.
      *
-     * @param string $tableName
-     * @param string $columnName
      * @param ColumnDefinition $columnData
      * @return void
      */
-    protected function executeAddColumnStatement($tableName, $columnName, $columnData)
+    protected function executeAddColumnStatement(string $tableName, string $columnName, array $columnData)
     {
         WCF::getDB()->getEditor()->addColumn($tableName, $columnName, $columnData);
     }
@@ -318,13 +308,10 @@ class SQLParser
     /**
      * Executes an 'ALTER TABLE ... CHANGE COLUMN' statement.
      *
-     * @param string $tableName
-     * @param string $oldColumnName
-     * @param string $newColumnName
      * @param ColumnDefinition $newColumnData
      * @return void
      */
-    protected function executeAlterColumnStatement($tableName, $oldColumnName, $newColumnName, $newColumnData)
+    protected function executeAlterColumnStatement(string $tableName, string $oldColumnName, string $newColumnName, array $newColumnData)
     {
         WCF::getDB()->getEditor()->alterColumn($tableName, $oldColumnName, $newColumnName, $newColumnData);
     }
@@ -332,12 +319,10 @@ class SQLParser
     /**
      * Executes a 'CREATE INDEX' statement.
      *
-     * @param string $tableName
-     * @param string $indexName
      * @param IndexDefinition $indexData
      * @return void
      */
-    protected function executeAddIndexStatement($tableName, $indexName, $indexData)
+    protected function executeAddIndexStatement(string $tableName, string $indexName, array $indexData)
     {
         WCF::getDB()->getEditor()->addIndex($tableName, $indexName, $indexData);
     }
@@ -345,12 +330,10 @@ class SQLParser
     /**
      * Executes a 'ALTER TABLE ... ADD FOREIGN KEY' statement.
      *
-     * @param string $tableName
-     * @param string $indexName
      * @param ForeignKeyDefinition $indexData
      * @return void
      */
-    protected function executeAddForeignKeyStatement($tableName, $indexName, $indexData)
+    protected function executeAddForeignKeyStatement(string $tableName, string $indexName, array $indexData)
     {
         WCF::getDB()->getEditor()->addForeignKey($tableName, $indexName, $indexData);
     }
@@ -358,11 +341,9 @@ class SQLParser
     /**
      * Executes an 'ALTER TABLE ... DROP COLUMN' statement.
      *
-     * @param string $tableName
-     * @param string $columnName
      * @return void
      */
-    protected function executeDropColumnStatement($tableName, $columnName)
+    protected function executeDropColumnStatement(string $tableName, string $columnName)
     {
         WCF::getDB()->getEditor()->dropColumn($tableName, $columnName);
     }
@@ -370,11 +351,9 @@ class SQLParser
     /**
      * Executes a 'DROP INDEX' statement.
      *
-     * @param string $tableName
-     * @param string $indexName
      * @return void
      */
-    protected function executeDropIndexStatement($tableName, $indexName)
+    protected function executeDropIndexStatement(string $tableName, string $indexName)
     {
         WCF::getDB()->getEditor()->dropIndex($tableName, $indexName);
     }
@@ -382,10 +361,9 @@ class SQLParser
     /**
      * Executes a 'DROP PRIMARY KEY' statement.
      *
-     * @param string $tableName
      * @return void
      */
-    protected function executeDropPrimaryKeyStatement($tableName)
+    protected function executeDropPrimaryKeyStatement(string $tableName)
     {
         WCF::getDB()->getEditor()->dropPrimaryKey($tableName);
     }
@@ -393,11 +371,9 @@ class SQLParser
     /**
      * Executes a 'DROP FOREIGN KEY' statement.
      *
-     * @param string $tableName
-     * @param string $indexName
      * @return void
      */
-    protected function executeDropForeignKeyStatement($tableName, $indexName)
+    protected function executeDropForeignKeyStatement(string $tableName, string $indexName)
     {
         WCF::getDB()->getEditor()->dropForeignKey($tableName, $indexName);
     }
@@ -405,10 +381,9 @@ class SQLParser
     /**
      * Executes a 'DROP TABLE' statement.
      *
-     * @param string $tableName
      * @return void
      */
-    protected function executeDropTableStatement($tableName)
+    protected function executeDropTableStatement(string $tableName)
     {
         WCF::getDB()->getEditor()->dropTable($tableName);
     }
@@ -416,10 +391,9 @@ class SQLParser
     /**
      * Executes a standard ansi sql statement.
      *
-     * @param string $query
      * @return void
      */
-    protected function executeStandardStatement($query)
+    protected function executeStandardStatement(string $query)
     {
         $statement = WCF::getDB()->prepare($query);
         $statement->execute();
@@ -428,12 +402,9 @@ class SQLParser
     /**
      * Creates a generic index name.
      *
-     * @param string $tableName
-     * @param string $columns
-     * @param string $suffix
      * @return  string      index name
      */
-    protected static function getGenericIndexName($tableName, $columns, $suffix = '')
+    protected static function getGenericIndexName(string $tableName, string $columns, string $suffix = '')
     {
         // get first column
         $columns = ArrayUtil::trim(\explode(',', $columns));

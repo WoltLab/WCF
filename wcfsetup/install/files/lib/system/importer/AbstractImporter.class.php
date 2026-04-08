@@ -35,11 +35,9 @@ abstract class AbstractImporter implements IImporter
      * Imports a list of language items.
      *
      * @param I18nValue[] $items
-     * @param string $languageCategory
-     * @param string $package
      * @return void
      */
-    protected function importI18nValues(array $items, $languageCategory, $package)
+    protected function importI18nValues(array $items, string $languageCategory, string $package)
     {
         // get package id
         $packageID = PackageCache::getInstance()->getPackageID($package);
@@ -65,10 +63,9 @@ abstract class AbstractImporter implements IImporter
     /**
      * Returns the language category id.
      *
-     * @param string $languageCategory
      * @return int
      */
-    protected function getLanguageCategoryID($languageCategory)
+    protected function getLanguageCategoryID(string $languageCategory)
     {
         static $languageCategoryIDs = [];
 

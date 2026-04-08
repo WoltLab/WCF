@@ -102,11 +102,8 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController imp
         ];
     }
 
-    /**
-     * @param bool $setConditionData
-     */
     #[\Override]
-    public function setBox(Box $box, $setConditionData = true): void
+    public function setBox(Box $box, bool $setConditionData = true): void
     {
         parent::setBox($box);
 

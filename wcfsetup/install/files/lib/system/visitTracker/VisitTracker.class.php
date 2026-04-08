@@ -52,11 +52,10 @@ class VisitTracker extends SingletonFactory
     /**
      * Returns the object type id of the given visit tracker object type.
      *
-     * @param string $objectType
      * @return  int
      * @throws  SystemException
      */
-    public function getObjectTypeID($objectType)
+    public function getObjectTypeID(string $objectType)
     {
         if (!isset($this->availableObjectTypes[$objectType])) {
             throw new SystemException("unknown object type '" . $objectType . "'");
@@ -68,10 +67,9 @@ class VisitTracker extends SingletonFactory
     /**
      * Returns the last visit time for a whole object type.
      *
-     * @param string $objectType
      * @return  int
      */
-    public function getVisitTime($objectType)
+    public function getVisitTime(string $objectType)
     {
         if (!WCF::getUser()->userID) {
             return \TIME_NOW;
@@ -117,11 +115,9 @@ class VisitTracker extends SingletonFactory
     /**
      * Returns the last visit time for a specific object.
      *
-     * @param string $objectType
-     * @param int $objectID
      * @return  int
      */
-    public function getObjectVisitTime($objectType, $objectID)
+    public function getObjectVisitTime(string $objectType, int $objectID)
     {
         if (!WCF::getUser()->userID) {
             return \TIME_NOW;
@@ -145,10 +141,9 @@ class VisitTracker extends SingletonFactory
     /**
      * Deletes all tracked visits of a specific object type.
      *
-     * @param string $objectType
      * @return void
      */
-    public function deleteObjectVisits($objectType)
+    public function deleteObjectVisits(string $objectType)
     {
         if (WCF::getUser()->userID) {
             $sql = "DELETE FROM wcf1_tracked_visit
@@ -162,13 +157,10 @@ class VisitTracker extends SingletonFactory
     /**
      * Tracks an object visit for the users with the given ids.
      *
-     * @param string $objectType
-     * @param int $objectID
      * @param int[] $userIDs
-     * @param int $time
      * @return void
      */
-    public function trackObjectVisitByUserIDs($objectType, $objectID, array $userIDs, $time = TIME_NOW)
+    public function trackObjectVisitByUserIDs(string $objectType, int $objectID, array $userIDs, int $time = TIME_NOW)
     {
         // save visit
         $sql = "REPLACE INTO    wcf1_tracked_visit
@@ -188,12 +180,9 @@ class VisitTracker extends SingletonFactory
     /**
      * Tracks an object visit.
      *
-     * @param string $objectType
-     * @param int $objectID
-     * @param int $time
      * @return void
      */
-    public function trackObjectVisit($objectType, $objectID, $time = TIME_NOW)
+    public function trackObjectVisit(string $objectType, int $objectID, int $time = TIME_NOW)
     {
         if (!WCF::getUser()->userID) {
             return;
@@ -209,11 +198,9 @@ class VisitTracker extends SingletonFactory
     /**
      * Tracks an object type visit.
      *
-     * @param string $objectType
-     * @param int $time
      * @return void
      */
-    public function trackTypeVisit($objectType, $time = TIME_NOW)
+    public function trackTypeVisit(string $objectType, int $time = TIME_NOW)
     {
         if (!WCF::getUser()->userID) {
             return;

@@ -90,12 +90,11 @@ trait TMultipleFormField
      * Sets the maximum number of values that can be selected or set and returns
      * this field. To unset the maximum number, pass `IMultipleFormField::NO_MAXIMUM_MULTIPLES`.
      *
-     * @param int $maximum maximum number of values
      * @return  static              this field
      *
      * @throws  \InvalidArgumentException   if the given maximum number of values is invalid
      */
-    public function maximumMultiples($maximum)
+    public function maximumMultiples(int $maximum)
     {
         if ($maximum !== IMultipleFormField::NO_MAXIMUM_MULTIPLES) {
             if ($maximum <= 0) {
@@ -121,12 +120,11 @@ trait TMultipleFormField
      * Sets the minimum number of values that can be selected or set and returns
      * this field.
      *
-     * @param int $minimum maximum number of values
      * @return  static              this field
      *
      * @throws  \InvalidArgumentException   if the given minimum number of values is invalid
      */
-    public function minimumMultiples($minimum)
+    public function minimumMultiples(int $minimum)
     {
         if ($minimum < 0) {
             throw new \InvalidArgumentException(
@@ -149,10 +147,9 @@ trait TMultipleFormField
     /**
      * Sets whether multiple values can be selected or set and returns this field.
      *
-     * @param bool $multiple determines if multiple values can be selected/set
      * @return  static      this field
      */
-    public function multiple($multiple = true)
+    public function multiple(bool $multiple = true)
     {
         $this->multiple = $multiple;
 
@@ -192,12 +189,11 @@ trait TMultipleFormField
     /**
      * Sets the value of this field and returns this field.
      *
-     * @param mixed $value new field value
      * @return  static              this field
      *
      * @throws  \InvalidArgumentException   if the given value is of an invalid type or otherwise is invalid
      */
-    public function value($value)
+    public function value(mixed $value)
     {
         // ensure array value for form fields that actually support multiple values;
         // allows enabling support for multiple values for existing fields

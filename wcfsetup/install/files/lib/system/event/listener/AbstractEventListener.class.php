@@ -39,7 +39,7 @@ abstract class AbstractEventListener implements IParameterizedEventListener
     ];
 
     #[\Override]
-    final public function execute($eventObj, $className, $eventName, array &$parameters)
+    final public function execute(mixed $eventObj, string $className, string $eventName, array &$parameters)
     {
         $methodName = 'on' . \ucfirst($eventName);
 

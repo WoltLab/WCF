@@ -79,10 +79,9 @@ class DynamicRequestRoute implements IRequestRoute
     }
 
     /**
-     * @param bool $isACP
      * @return void
      */
-    public function setIsACP($isACP)
+    public function setIsACP(bool $isACP)
     {
         $this->isACP = $isACP;
     }
@@ -90,10 +89,9 @@ class DynamicRequestRoute implements IRequestRoute
     /**
      * Sets the build schema used to build outgoing links.
      *
-     * @param string $buildSchema
      * @return void
      */
-    public function setBuildSchema($buildSchema)
+    public function setBuildSchema(string $buildSchema)
     {
         $this->buildSchema = [];
 
@@ -123,10 +121,9 @@ class DynamicRequestRoute implements IRequestRoute
     /**
      * Sets the route pattern used to evaluate an incoming request.
      *
-     * @param string $pattern
      * @return void
      */
-    public function setPattern($pattern)
+    public function setPattern(string $pattern)
     {
         $this->pattern = $pattern;
     }
@@ -173,11 +170,9 @@ class DynamicRequestRoute implements IRequestRoute
      * empty routes, e.g. for the default page.
      *
      * @param string[] $components
-     * @param string $application
-     * @param bool $useBuildSchema
      * @return  string
      */
-    protected function buildRoute(array $components, $application, $useBuildSchema)
+    protected function buildRoute(array $components, string $application, bool $useBuildSchema)
     {
         $link = '';
 
@@ -292,11 +287,9 @@ class DynamicRequestRoute implements IRequestRoute
     /**
      * Returns the transformed controller name.
      *
-     * @param string $application
-     * @param string $controller
      * @return  string
      */
-    protected function getControllerName($application, $controller)
+    protected function getControllerName(string $application, string $controller)
     {
         return ControllerMap::getInstance()->lookup($application, $controller, !$this->isACP());
     }

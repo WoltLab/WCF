@@ -93,10 +93,9 @@ class ViewableUserOption extends DatabaseObjectDecorator
     /**
      * Returns the user option with the given name
      *
-     * @param string $name
      * @return  ViewableUserOption
      */
-    public static function getUserOption($name)
+    public static function getUserOption(string $name)
     {
         if (!isset(self::$userOptions[$name])) {
             $options = UserOptionCacheBuilder::getInstance()->getData([], 'options');

@@ -45,11 +45,9 @@ class HtmlSimpleParser extends SingletonFactory
     /**
      * Sets the embedded object context.
      *
-     * @param string $objectType object type identifier
-     * @param int $objectID object id
      * @return void
      */
-    public function setContext($objectType, $objectID)
+    public function setContext(string $objectType, int $objectID)
     {
         MessageEmbeddedObjectManager::getInstance()->setActiveMessage($objectType, $objectID);
 
@@ -62,12 +60,9 @@ class HtmlSimpleParser extends SingletonFactory
     /**
      * Parses a message to identify any embedded content using simple placeholders.
      *
-     * @param string $objectType object type identifier
-     * @param int $objectID object id
-     * @param string $message message content
      * @return bool true if there is at least one embedded content found
      */
-    public function parse($objectType, $objectID, $message)
+    public function parse(string $objectType, int $objectID, string $message)
     {
         \preg_match_all($this->regexHandlers, $message, $matches);
 
@@ -103,12 +98,9 @@ class HtmlSimpleParser extends SingletonFactory
     /**
      * Replaces simple placeholders with embedded content data.
      *
-     * @param string $objectType object type identifier
-     * @param int $objectID object id
-     * @param string $message message content
      * @return string parsed and replaced string
      */
-    public function replaceTags($objectType, $objectID, $message)
+    public function replaceTags(string $objectType, int $objectID, string $message)
     {
         MessageEmbeddedObjectManager::getInstance()->setActiveMessage($objectType, $objectID);
         $this->setContext($objectType, $objectID);
@@ -159,10 +151,9 @@ class HtmlSimpleParser extends SingletonFactory
      * with a custom template plugin. This step ensures proper replacement
      * without causing conflicts with existing syntax.
      *
-     * @param string $template template content
      * @return string template content with custom template plugin
      */
-    public function parseTemplate($template)
+    public function parseTemplate(string $template)
     {
         return \preg_replace_callback($this->regexHandlers, function ($matches) {
             $data = $this->parseAttributes($matches[1]);
@@ -188,7 +179,7 @@ class HtmlSimpleParser extends SingletonFactory
      *  value: string,
      * }
      */
-    protected function parseAttributes($attributesString)
+    protected function parseAttributes(string $attributesString)
     {
         \preg_match_all('~([a-z][a-zA-Z]+)="((?:\\\\"|[^"])+)"~', $attributesString, $attributes);
 

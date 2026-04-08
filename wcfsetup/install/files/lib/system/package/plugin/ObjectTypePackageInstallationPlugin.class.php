@@ -88,11 +88,10 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     /**
      * Returns the id of the object type definition with the given name.
      *
-     * @param string $definitionName
      * @return  int
      * @throws  SystemException
      */
-    protected function getDefinitionID($definitionName)
+    protected function getDefinitionID(string $definitionName)
     {
         // get object type id
         $sql = "SELECT  definitionID
@@ -201,12 +200,11 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     }
 
     /**
-     * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
     #[\Override]
-    protected function fetchElementData(\DOMElement $element, $saveData)
+    protected function fetchElementData(\DOMElement $element, bool $saveData)
     {
         $data = [
             'definitionID' => $this->getDefinitionID(
@@ -886,11 +884,10 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
      * is only shown for the relevant object type definition.
      *
      * @param IFormDocument $form
-     * @param string $definitionName
      * @return  FormContainer
      * @since   5.2
      */
-    public function getObjectTypeDefinitionDataContainer(IFormDocument $form, $definitionName)
+    public function getObjectTypeDefinitionDataContainer(IFormDocument $form, string $definitionName)
     {
         $definitionIDField = $form->getFormField('definitionID');
         $definitionPieces = \explode('.', $definitionName);
@@ -946,10 +943,9 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
      * processing action object type definition.
      *
      * @param IFormDocument $form
-     * @param string $objectTypeDefinition
      * @return void
      */
-    public function addBulkProcessingActionFields(IFormDocument $form, $objectTypeDefinition)
+    public function addBulkProcessingActionFields(IFormDocument $form, string $objectTypeDefinition)
     {
         $definitionPieces = \explode('.', $objectTypeDefinition);
         $definitionIdString = \implode('', \array_map('ucfirst', $definitionPieces));

@@ -76,11 +76,10 @@ class ViewableArticle extends DatabaseObjectDecorator
     /**
      * Returns a specific article decorated as viewable article or `null` if it does not exist.
      *
-     * @param int $articleID
      * @param bool $enableContentLoading Enables/disables the loading of article content objects
      * @return  ViewableArticle
      */
-    public static function getArticle($articleID, $enableContentLoading = true)
+    public static function getArticle(int $articleID, bool $enableContentLoading = true)
     {
         $list = new ViewableArticleList();
         $list->enableContentLoading($enableContentLoading);
@@ -285,11 +284,10 @@ class ViewableArticle extends DatabaseObjectDecorator
     /**
      * Returns the number of unread articles for a specific category.
      *
-     * @param int $articleCategoryID
      * @return  int
      * @since       5.2
      */
-    public static function getUnreadArticlesForCategory($articleCategoryID)
+    public static function getUnreadArticlesForCategory(int $articleCategoryID)
     {
         if (self::$unreadArticlesByCategory === null) {
             self::$unreadArticlesByCategory = [];
@@ -347,11 +345,10 @@ class ViewableArticle extends DatabaseObjectDecorator
     /**
      * Returns the unread article count for a specific category.
      *
-     * @param int $articleCategoryID
      * @return      int
      * @since       5.2
      */
-    private static function fetchUnreadArticlesForCategory($articleCategoryID)
+    private static function fetchUnreadArticlesForCategory(int $articleCategoryID)
     {
         $accessibleCategoryIDs = ArticleCategory::getAccessibleCategoryIDs();
 

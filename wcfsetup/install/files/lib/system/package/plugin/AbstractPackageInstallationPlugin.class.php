@@ -43,10 +43,9 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
     /**
      * Creates a new AbstractPackageInstallationPlugin object.
      *
-     * @param PackageInstallationDispatcher $installation
      * @param mixed[] $instruction
      */
-    public function __construct(PackageInstallationDispatcher $installation, $instruction = [])
+    public function __construct(PackageInstallationDispatcher $installation, array $instruction = [])
     {
         $this->installation = $installation;
         $this->instruction = $instruction;
@@ -108,7 +107,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
     }
 
     #[\Override]
-    public static function isValid(PackageArchive $packageArchive, $instruction)
+    public static function isValid(PackageArchive $packageArchive, string $instruction)
     {
         return true;
     }

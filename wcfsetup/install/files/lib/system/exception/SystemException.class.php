@@ -37,7 +37,7 @@ class SystemException extends LoggedException implements IExtraInformationExcept
      * @param string $description description of the error
      * @param \Exception $previous repacked Exception
      */
-    public function __construct($message = '', $code = 0, $description = '', ?\Exception $previous = null)
+    public function __construct(string $message = '', int $code = 0, string $description = '', ?\Exception $previous = null)
     {
         parent::__construct((string)$message, (int)$code, $previous);
         $this->description = $description;
@@ -68,7 +68,5 @@ class SystemException extends LoggedException implements IExtraInformationExcept
     /**
      * @return void
      */
-    public function show()
-    {
-    }
+    public function show() {}
 }

@@ -18,7 +18,7 @@ use wcf\system\request\LinkHandler;
 class UserLinkHtmlInputNodeProcessorListener extends AbstractHtmlInputNodeProcessorListener
 {
     #[\Override]
-    public function execute($eventObj, $className, $eventName, array &$parameters)
+    public function execute(mixed $eventObj, string $className, string $eventName, array &$parameters)
     {
         /** @var HtmlInputNodeProcessor $eventObj */
 

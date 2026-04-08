@@ -54,10 +54,9 @@ class LikeHandler extends SingletonFactory
     /**
      * Returns an object type from cache.
      *
-     * @param string $objectName
      * @return  ObjectType
      */
-    public function getObjectType($objectName)
+    public function getObjectType(string $objectName)
     {
         return ReactionHandler::getInstance()->getObjectType($objectName);
     }
@@ -65,11 +64,9 @@ class LikeHandler extends SingletonFactory
     /**
      * Returns a like object.
      *
-     * @param ObjectType $objectType
-     * @param int $objectID
      * @return  LikeObject|null
      */
-    public function getLikeObject(ObjectType $objectType, $objectID)
+    public function getLikeObject(ObjectType $objectType, int $objectID)
     {
         return ReactionHandler::getInstance()->getLikeObject($objectType, $objectID);
     }
@@ -77,7 +74,6 @@ class LikeHandler extends SingletonFactory
     /**
      * Returns the like objects of a specific object type.
      *
-     * @param ObjectType $objectType
      * @return  LikeObject[]
      */
     public function getLikeObjects(ObjectType $objectType)
@@ -89,7 +85,6 @@ class LikeHandler extends SingletonFactory
      * Loads the like data for a set of objects and returns the number of loaded
      * like objects
      *
-     * @param ObjectType $objectType
      * @param int[] $objectIDs
      * @return  int
      */
@@ -101,10 +96,6 @@ class LikeHandler extends SingletonFactory
     /**
      * Saves the like of an object.
      *
-     * @param ILikeObject $likeable
-     * @param User $user
-     * @param int $likeValue
-     * @param int $time
      * @return array{
      *  data: LikeStatus|array{},
      *  like: Like|null|0,
@@ -113,7 +104,7 @@ class LikeHandler extends SingletonFactory
      *  users: array{}
      * }
      */
-    public function like(ILikeObject $likeable, User $user, $likeValue, $time = TIME_NOW)
+    public function like(ILikeObject $likeable, User $user, int $likeValue, int $time = TIME_NOW)
     {
         $reactionTypeID = null;
         if ($likeValue == 1) {
@@ -144,10 +135,6 @@ class LikeHandler extends SingletonFactory
     /**
      * Reverts the like of an object.
      *
-     * @param Like $like
-     * @param ILikeObject $likeable
-     * @param LikeObject $likeObject
-     * @param User $user
      * @return array{
      *  data: LikeStatus,
      *  like: null,
@@ -172,12 +159,11 @@ class LikeHandler extends SingletonFactory
     /**
      * Removes all likes for given objects.
      *
-     * @param string $objectType
      * @param int[] $objectIDs
      * @param string[] $notificationObjectTypes
      * @return void
      */
-    public function removeLikes($objectType, array $objectIDs, array $notificationObjectTypes = [])
+    public function removeLikes(string $objectType, array $objectIDs, array $notificationObjectTypes = [])
     {
         ReactionHandler::getInstance()->removeReactions($objectType, $objectIDs, $notificationObjectTypes);
     }
@@ -185,8 +171,6 @@ class LikeHandler extends SingletonFactory
     /**
      * Returns current like object status.
      *
-     * @param LikeObject $likeObject
-     * @param User $user
      * @return LikeStatus
      */
     protected function loadLikeStatus(LikeObject $likeObject, User $user)

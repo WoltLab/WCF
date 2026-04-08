@@ -62,10 +62,9 @@ class TrophyConditionHandler extends SingletonFactory
     /**
      * Assign trophies based on rules.
      *
-     * @param int $maxAssigns
      * @return void
      */
-    public function assignTrophies($maxAssigns = 500)
+    public function assignTrophies(int $maxAssigns = 500)
     {
         $trophyList = new TrophyList();
         $trophyList->getConditionBuilder()->add('awardAutomatically = ?', [1]);
@@ -96,11 +95,10 @@ class TrophyConditionHandler extends SingletonFactory
     /**
      * Revoke user trophies which are not longer fulfills the conditions.
      *
-     * @param int $maxRevokes
      * @return void
      * @since       5.2
      */
-    public function revokeTrophies($maxRevokes = 500)
+    public function revokeTrophies(int $maxRevokes = 500)
     {
         $trophyList = new TrophyList();
         $trophyList->getConditionBuilder()->add('awardAutomatically = ?', [1]);
@@ -158,12 +156,11 @@ class TrophyConditionHandler extends SingletonFactory
     /**
      * Returns the userTrophyIDs of the users, which no longer fulfills the trophy conditions.
      *
-     * @param Trophy $trophy
      * @param int $maxTrophyIDs maximum number of trophies that are processed
      * @return      int[]
      * @since       5.2
      */
-    private function getRevocableUserTrophyIDs(Trophy $trophy, $maxTrophyIDs)
+    private function getRevocableUserTrophyIDs(Trophy $trophy, int $maxTrophyIDs)
     {
         // Unfortunately, the condition system does not support negated conditions.
         // Therefore, we need to build our own SQL query. To get to the conditions

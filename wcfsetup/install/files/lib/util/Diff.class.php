@@ -247,11 +247,10 @@ class Diff
     }
 
     /**
-     * @param int $context
      * @return string
      * @deprecated 6.0 Use sebastian/diff instead.
      */
-    public function getUnixDiff($context = 2)
+    public function getUnixDiff(int $context = 2)
     {
         $d = $this->getRawDiff();
 

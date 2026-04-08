@@ -23,13 +23,7 @@ class Breadcrumb
      */
     protected $url = '';
 
-    /**
-     * Creates a new Breadcrumb object.
-     *
-     * @param string $label
-     * @param string $url
-     */
-    public function __construct($label, $url)
+    public function __construct(string $label, string $url)
     {
         $this->setLabel($label);
         $this->setURL($url);
@@ -38,10 +32,9 @@ class Breadcrumb
     /**
      * Sets the displayed label.
      *
-     * @param string $label
      * @return void
      */
-    public function setLabel($label)
+    public function setLabel(string $label)
     {
         $this->label = $label;
     }
@@ -50,11 +43,10 @@ class Breadcrumb
      * Sets the target url.
      * May be left empty to disable url functionality.
      *
-     * @param string $url
      * @param bool $appendSession This parameter is unused as of version 3.0
      * @return void
      */
-    public function setURL($url, $appendSession = false)
+    public function setURL(string $url, bool $appendSession = false)
     {
         $this->url = $url;
     }

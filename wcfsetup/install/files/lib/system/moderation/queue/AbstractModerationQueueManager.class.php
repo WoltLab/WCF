@@ -76,13 +76,10 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
     /**
      * Adds an entry to moderation queue.
      *
-     * @param int $objectTypeID
-     * @param int $objectID
-     * @param int $containerID
      * @param mixed[] $additionalData
      * @return void
      */
-    protected function addEntry($objectTypeID, $objectID, $containerID = 0, array $additionalData = [])
+    protected function addEntry(int $objectTypeID, int $objectID, int $containerID = 0, array $additionalData = [])
     {
         $sql = "SELECT  queueID
                 FROM    wcf1_moderation_queue
@@ -132,13 +129,12 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
      *
      * This method is intended for bulk processing.
      *
-     * @param int $objectTypeID
      * @param int[] $objectIDs
      * @param int[] $containerIDs format: `objectID => containerID`
      * @param mixed[] $additionalData
      * @return void
      */
-    protected function addEntries($objectTypeID, array $objectIDs, array $containerIDs, array $additionalData = [])
+    protected function addEntries(int $objectTypeID, array $objectIDs, array $containerIDs, array $additionalData = [])
     {
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add('objectTypeID = ?', [$objectTypeID]);
@@ -240,18 +236,17 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
     /**
      * Marks a list of moderation queue entries as done.
      *
-     * @param int $objectTypeID
      * @param int[] $objectIDs
      * @return void
      */
-    protected function removeEntries($objectTypeID, array $objectIDs)
+    protected function removeEntries(int $objectTypeID, array $objectIDs)
     {
         $queueList = new ModerationQueueList();
         $queueList->getConditionBuilder()->add("moderation_queue.objectTypeID = ?", [$objectTypeID]);
         $queueList->getConditionBuilder()->add("moderation_queue.objectID IN (?)", [$objectIDs]);
         $queueList->readObjects();
 
-        foreach($queueList->getObjects() as $queue) {
+        foreach ($queueList->getObjects() as $queue) {
             (new MarkModerationQueueAsDone($queue))();
         }
     }

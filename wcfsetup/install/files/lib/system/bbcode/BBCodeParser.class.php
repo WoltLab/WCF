@@ -83,10 +83,9 @@ class BBCodeParser extends SingletonFactory
     /**
      * Sets the output type of the parser.
      *
-     * @param string $outputType
      * @return void
      */
-    public function setOutputType($outputType)
+    public function setOutputType(string $outputType)
     {
         $this->outputType = $outputType;
     }
@@ -104,10 +103,9 @@ class BBCodeParser extends SingletonFactory
     /**
      * Sets the text to be parsed.
      *
-     * @param string $text
      * @return void
      */
-    public function setText($text)
+    public function setText(string $text)
     {
         $this->text = $text;
     }
@@ -115,10 +113,9 @@ class BBCodeParser extends SingletonFactory
     /**
      * Parses the given text.
      *
-     * @param string $text
      * @return string parsed text
      */
-    public function parse($text)
+    public function parse(string $text)
     {
         $this->setText($text);
         $this->buildTagArray();
@@ -381,12 +378,10 @@ class BBCodeParser extends SingletonFactory
      * Returns true if the given tag is allowed in the given list of open tags.
      *
      * @param mixed[] $openTags
-     * @param string $tag
-     * @param bool $closing
      * @return bool
      * @deprecated 5.5 This method is useless since 3.0, do not use it.
      */
-    protected function isAllowed(array $openTags, $tag, $closing = false)
+    protected function isAllowed(array $openTags, string $tag, bool $closing = false)
     {
         // This is a left-over from the pre WoltLab Suite 3.0 era.
         return true;
@@ -489,10 +484,9 @@ class BBCodeParser extends SingletonFactory
     /**
      * Builds the tag array from the given text.
      *
-     * @param bool $ignoreSourceCodes
      * @return void
      */
-    public function buildTagArray($ignoreSourceCodes = true)
+    public function buildTagArray(bool $ignoreSourceCodes = true)
     {
         // build tag pattern
         $validTags = '';
@@ -510,21 +504,19 @@ class BBCodeParser extends SingletonFactory
             }
         }
         $pattern = '~\[(?:/(?:' . $validTags . ')|(?:' . $validTags . ')
-			(?:=
-				(?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*)
-				(?:,(?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*))*
-			)?)\]~ix';
+            (?:=
+                (?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*)
+                (?:,(?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*))*
+            )?)\]~ix';
 
         // get bbcode tags
         \preg_match_all($pattern, $this->text, $matches);
-        // @phpstan-ignore assign.propertyType
-        $this->tagArray = $matches[0];
-        unset($matches);
 
         // build tags
-        for ($i = 0, $j = \count($this->tagArray); $i < $j; $i++) {
-            $this->tagArray[$i] = $this->buildTag($this->tagArray[$i]);
-        }
+        $this->tagArray = \array_map(
+            fn(string $match) => $this->buildTag($match),
+            $matches[0],
+        );
 
         // get text
         $this->textArray = \preg_split($pattern, $this->text);
@@ -533,10 +525,9 @@ class BBCodeParser extends SingletonFactory
     /**
      * Builds a bbcode tag.
      *
-     * @param string $string
      * @return BBCodeTag
      */
-    protected function buildTag($string)
+    protected function buildTag(string $string)
     {
         $tag = ['name' => '', 'closing' => false, 'source' => $string];
 
@@ -565,7 +556,7 @@ class BBCodeParser extends SingletonFactory
      * @param string $string
      * @return list<string> bbcode attributes
      */
-    public function buildTagAttributes($string)
+    public function buildTagAttributes(string $string)
     {
         \preg_match_all("~(?:^|,)('[^'\\\\]*(?:\\\\.[^'\\\\]*)*'|[^,]*)~", $string, $matches);
 
@@ -585,10 +576,9 @@ class BBCodeParser extends SingletonFactory
     /**
      * Removes code bbcode occurrences in given message.
      *
-     * @param string $message
      * @return string
      */
-    public function removeCodeTags($message)
+    public function removeCodeTags(string $message)
     {
         if (!empty($this->sourceCodeRegEx)) {
             return \preg_replace("~(\\[(" . $this->sourceCodeRegEx . ")

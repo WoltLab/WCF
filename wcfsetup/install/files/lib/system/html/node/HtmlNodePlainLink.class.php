@@ -52,11 +52,7 @@ class HtmlNodePlainLink
      */
     protected $topLevelParent;
 
-    /**
-     * @param \DOMElement $link
-     * @param string $href
-     */
-    public function __construct(\DOMElement $link, $href)
+    public function __construct(\DOMElement $link, string $href)
     {
         $this->link = $link;
         $this->href = $href;
@@ -154,11 +150,9 @@ class HtmlNodePlainLink
      * Replaces the entire link, including any formatting, with the provided bbcode. This is
      * available for standalone links only.
      *
-     * @param BBCode $bbcode
-     * @param ?int $overrideObjectID
      * @return void
      */
-    public function replaceWithBBCode(BBCode $bbcode, $overrideObjectID = null)
+    public function replaceWithBBCode(BBCode $bbcode, ?int $overrideObjectID = null)
     {
         $this->markAsTainted();
 

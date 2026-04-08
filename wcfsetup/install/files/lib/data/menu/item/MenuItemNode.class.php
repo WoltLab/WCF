@@ -35,14 +35,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements IObjectTreeNode
      */
     protected static $baseClass = MenuItem::class;
 
-    /**
-     * Creates a new MenuItemNode object.
-     *
-     * @param MenuItemNode $parentNode
-     * @param MenuItem $menuItem
-     * @param int $depth
-     */
-    public function __construct($parentNode = null, ?MenuItem $menuItem = null, $depth = 0)
+    public function __construct(?MenuItemNode $parentNode = null, ?MenuItem $menuItem = null, int $depth = 0)
     {
         if ($menuItem === null) {
             $menuItem = new MenuItem(null, []);

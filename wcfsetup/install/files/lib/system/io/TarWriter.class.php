@@ -29,10 +29,9 @@ class TarWriter extends Tar
     /**
      * Creates a new TarWriter object.
      *
-     * @param string $archiveName
      * @param bool $compress enables gzip compression
      */
-    public function __construct($archiveName, $compress = false)
+    public function __construct(string $archiveName, bool $compress = false)
     {
         $this->archiveName = $archiveName;
         $this->isZipped = $compress;
@@ -66,11 +65,10 @@ class TarWriter extends Tar
     /**
      * Adds a string to the tar archive.
      *
-     * @param string $filename
      * @param string $string file content
      * @return  bool        result
      */
-    public function addString($filename, $string)
+    public function addString(string $filename, string $string)
     {
         if (empty($filename)) {
             return false;
@@ -93,13 +91,11 @@ class TarWriter extends Tar
     /**
      * Adds a list of files or directories to the tar archive.
      *
-     * @param mixed $files
-     * @param string $addDir
-     * @param string $removeDir
+     * @param string|list<string> $files
      * @return  bool        result
      * @throws  SystemException
      */
-    public function add($files, $addDir = '', $removeDir = '')
+    public function add(string|array $files, string $addDir = '', string $removeDir = '')
     {
         if (!\is_array($files)) {
             $files = [$files];
@@ -155,12 +151,9 @@ class TarWriter extends Tar
     /**
      * Adds a file to the tar archive.
      *
-     * @param string $filename
-     * @param string $addDir
-     * @param string $removeDir
      * @return  bool        result
      */
-    protected function addFile($filename, $addDir, $removeDir)
+    protected function addFile(string $filename, string $addDir, string $removeDir)
     {
         $filename = FileUtil::unifyDirSeparator($filename);
         $storedFilename = $filename;
@@ -200,11 +193,9 @@ class TarWriter extends Tar
     /**
      * Writes the file header.
      *
-     * @param string $filename
-     * @param string $storedFilename
      * @return  bool        result
      */
-    protected function writeFileHeader($filename, $storedFilename)
+    protected function writeFileHeader(string $filename, string $storedFilename)
     {
         $fileInfo = \stat($filename);
         $permissions = \fileperms($filename);
@@ -232,16 +223,9 @@ class TarWriter extends Tar
     /**
      * Writes header block.
      *
-     * @param string $filename
-     * @param int $size
-     * @param int $mtime
-     * @param int $permissions
-     * @param string $typeFlag
-     * @param int $uid
-     * @param int $gid
      * @return  bool
      */
-    public function writeHeaderBlock($filename, $size, $mtime = 0, $permissions = 0, $typeFlag = '', $uid = 0, $gid = 0)
+    public function writeHeaderBlock(string $filename, int $size, int $mtime = 0, int $permissions = 0, string $typeFlag = '', int $uid = 0, int $gid = 0)
     {
         if (\strlen($filename) > 99) {
             if (!$this->writeLongHeaderBlock($filename)) {
@@ -285,10 +269,9 @@ class TarWriter extends Tar
     /**
      * Writes a long header block.
      *
-     * @param string $filename
      * @return  bool
      */
-    protected function writeLongHeaderBlock($filename)
+    protected function writeLongHeaderBlock(string $filename)
     {
         $size = \sprintf("%11s ", \decoct(\strlen($filename)));
         $typeFlag = 'L';

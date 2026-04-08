@@ -18,7 +18,7 @@ class DebugPreparedStatement extends PreparedStatement
     protected $debugDidExecuteOnce = false;
 
     #[\Override]
-    public function __call($name, $arguments)
+    public function __call(string $name, array $arguments)
     {
         if ($name === 'fetchAll' || $name === 'fetchColumn') {
             $this->debugThrowIfNotExecutedBefore();
@@ -36,7 +36,7 @@ class DebugPreparedStatement extends PreparedStatement
     }
 
     #[\Override]
-    public function fetchArray($type = null)
+    public function fetchArray(?int $type = null)
     {
         $this->debugThrowIfNotExecutedBefore();
 
@@ -44,7 +44,7 @@ class DebugPreparedStatement extends PreparedStatement
     }
 
     #[\Override]
-    public function fetchSingleRow($type = null)
+    public function fetchSingleRow(?int $type = null)
     {
         $this->debugThrowIfNotExecutedBefore();
 
@@ -52,7 +52,7 @@ class DebugPreparedStatement extends PreparedStatement
     }
 
     #[\Override]
-    public function fetchSingleColumn($columnNumber = 0)
+    public function fetchSingleColumn(int $columnNumber = 0)
     {
         $this->debugThrowIfNotExecutedBefore();
 
@@ -60,7 +60,7 @@ class DebugPreparedStatement extends PreparedStatement
     }
 
     #[\Override]
-    public function fetchObject($className)
+    public function fetchObject(string $className)
     {
         $this->debugThrowIfNotExecutedBefore();
 
@@ -68,7 +68,7 @@ class DebugPreparedStatement extends PreparedStatement
     }
 
     #[\Override]
-    public function fetchSingleObject($className)
+    public function fetchSingleObject(string $className)
     {
         $this->debugThrowIfNotExecutedBefore();
 
@@ -76,7 +76,7 @@ class DebugPreparedStatement extends PreparedStatement
     }
 
     #[\Override]
-    public function fetchObjects($className, $keyProperty = null)
+    public function fetchObjects(string $className, ?string $keyProperty = null)
     {
         $this->debugThrowIfNotExecutedBefore();
 
@@ -84,7 +84,7 @@ class DebugPreparedStatement extends PreparedStatement
     }
 
     #[\Override]
-    public function fetchMap($keyColumn, $valueColumn, $uniqueKey = true)
+    public function fetchMap(string $keyColumn, string $valueColumn, bool $uniqueKey = true)
     {
         $this->debugThrowIfNotExecutedBefore();
 

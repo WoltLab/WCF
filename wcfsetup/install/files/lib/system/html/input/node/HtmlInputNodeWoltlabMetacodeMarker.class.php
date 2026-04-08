@@ -380,7 +380,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
      * @param string $attributes encoded attribute string
      * @return void
      */
-    protected function convertBlockElement($name, $start, $end, $attributes)
+    protected function convertBlockElement(string $name, \DOMElement $start, \DOMElement $end, string $attributes)
     {
         // we need to ensure proper nesting, block elements are not allowed to
         // be placed inside paragraphs, but being a direct child of another block
@@ -454,7 +454,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
      * @param string $attributes encoded attribute string
      * @return void
      */
-    protected function convertInlineElement($name, $start, $end, $attributes)
+    protected function convertInlineElement(string $name, \DOMElement $start, \DOMElement $end, string $attributes)
     {
         if ($start->parentNode === $end->parentNode) {
             $this->wrapContent($name, $attributes, $start, $end);
@@ -551,7 +551,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
      * @param ?\DOMNode $endNode last node to wrap
      * @return \DOMElement newly created element
      */
-    protected function wrapContent($name, $attributes, $startNode, $endNode)
+    protected function wrapContent(string $name, string $attributes, ?\DOMNode $startNode, ?\DOMNode $endNode)
     {
         if ($startNode === null && $endNode === null) {
             throw new \InvalidArgumentException(
@@ -625,7 +625,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
      * @param ParsedMetacodeGroup $pair bbcode marker pair
      * @return void
      */
-    protected function convertToBBCode($name, array $pair)
+    protected function convertToBBCode(string $name, array $pair)
     {
         /** @var \DOMElement $start */
         $start = $pair['open'];

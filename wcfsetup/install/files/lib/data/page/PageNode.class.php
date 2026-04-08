@@ -30,12 +30,7 @@ class PageNode extends DatabaseObjectDecorator implements IObjectTreeNode
      */
     protected static $baseClass = Page::class;
 
-    /**
-     * Creates a new PageNode object.
-     *
-     * @param PageNode $parentNode
-     */
-    public function __construct($parentNode = null, ?Page $page = null, int $depth = 0)
+    public function __construct(?PageNode $parentNode = null, ?Page $page = null, int $depth = 0)
     {
         if ($page === null) {
             $page = new Page(null, []);

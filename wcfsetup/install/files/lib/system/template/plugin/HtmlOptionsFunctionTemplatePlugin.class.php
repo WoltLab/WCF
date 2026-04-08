@@ -104,11 +104,10 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
     /**
      * Makes the HTML for an option group.
      *
-     * @param ?string $key
      * @param array<string, string|array<string, string>>|DatabaseObjectList<DatabaseObject> $values
      * @return  string
      */
-    protected function makeOptionGroup($key, $values)
+    protected function makeOptionGroup(?string $key, array|DatabaseObjectList $values)
     {
         $html = '';
         if ($key !== null) {
@@ -117,8 +116,8 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
 
         if ($values instanceof DatabaseObjectList) {
             foreach ($values as $childKey => $value) {
-                // @phpstan-ignore argument.type, argument.type
-                $html .= $this->makeOption($childKey, $value);
+                // @phpstan-ignore cast.string
+                $html .= $this->makeOption((string)$childKey, (string)$value);
             }
         } else {
             foreach ($values as $childKey => $value) {
@@ -140,11 +139,9 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
     /**
      * Makes the HTML code for an option.
      *
-     * @param string $key
-     * @param string $value
      * @return  string
      */
-    protected function makeOption($key, $value)
+    protected function makeOption(string $key, string $value)
     {
         $value = $this->encodeHTML($value);
 

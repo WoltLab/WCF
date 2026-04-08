@@ -69,10 +69,9 @@ class UserOnline extends UserProfile
      * Sets the location of the user. If no location is given, the method tries to
      * automatically determine the location.
      *
-     * @param string|null $location
      * @return  bool        `true` if the location has been successfully set, otherwise `false`
      */
-    public function setLocation($location = null)
+    public function setLocation(?string $location = null)
     {
         if ($location === null) {
             if ($this->pageID) {

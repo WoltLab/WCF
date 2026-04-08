@@ -50,12 +50,11 @@ class MultilineTextFormField extends TextFormField
     /**
      * Sets the number of rows of the textarea and returns this field.
      *
-     * @param int $rows number of textarea rows
      * @return  static              this field
      *
      * @throws  \InvalidArgumentException   if given number of rows is invalid
      */
-    public function rows($rows)
+    public function rows(int $rows)
     {
         if ($rows <= 0) {
             throw new \InvalidArgumentException("Given number of rows is not positive for field '{$this->getId()}'.");

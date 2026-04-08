@@ -58,11 +58,9 @@ class TemplateEditor extends DatabaseObjectEditor
     /**
      * Renames the file of this template.
      *
-     * @param string $name
-     * @param int $templateGroupID
      * @return void
      */
-    public function rename($name, $templateGroupID = 0)
+    public function rename(string $name, int $templateGroupID = 0)
     {
         // get current path
         $currentPath = $this->getPath();

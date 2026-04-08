@@ -271,10 +271,9 @@ class UserImporter extends AbstractImporter
     /**
      * Revolves duplicate user names and returns the new user name.
      *
-     * @param string $username
      * @return  string
      */
-    private static function resolveDuplicate($username)
+    private static function resolveDuplicate(string $username)
     {
         $i = 0;
         do {

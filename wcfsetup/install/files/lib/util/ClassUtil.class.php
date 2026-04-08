@@ -18,17 +18,10 @@ final class ClassUtil
      * Checks whether the given objects are equal.
      * Objects are considered equal, when they are instances of the same class and all attributes are equal.
      *
-     * @param object $a
-     * @param object $b
      * @return  bool
      */
-    public static function equals($a, $b)
+    public static function equals(object $a, object $b)
     {
-        // @phpstan-ignore function.alreadyNarrowedType
-        if (!\is_object($a)) {
-            return false;
-        }
-
         return \print_r($a, true) === \print_r($b, true);
     }
 
@@ -36,14 +29,12 @@ final class ClassUtil
      * Checks whether given class extends or implements the target class or interface.
      * You SHOULD NOT call this method if 'instanceof' satisfies your request!
      *
-     * @param string $className
-     * @param string $targetClass
      * @return  bool
      * @throws  SystemException
      *
      * @deprecated  use is_subclass_of() instead
      */
-    public static function isInstanceOf($className, $targetClass)
+    public static function isInstanceOf(string $className, string $targetClass)
     {
         // validate parameters
         // @phpstan-ignore function.alreadyNarrowedType
@@ -73,7 +64,7 @@ final class ClassUtil
      * @param string $targetClass target class or interface
      * @return  bool
      */
-    public static function isDecoratedInstanceOf($className, $targetClass)
+    public static function isDecoratedInstanceOf(object|string $className, string $targetClass)
     {
         if (\is_subclass_of($className, $targetClass)) {
             return true;

@@ -197,10 +197,9 @@ class WorkerCLICommand implements ICLICommand
     /**
      * Contains the logic of the parent controller process in multithreading mode.
      *
-     * @param int $threads
      * @return void
      */
-    protected function spawnController(IWorker $worker, $threads)
+    protected function spawnController(IWorker $worker, int $threads)
     {
         // Perform the first iteration before spawning the worker processes.
         // The first iteration is usually used to perform clean-up operations

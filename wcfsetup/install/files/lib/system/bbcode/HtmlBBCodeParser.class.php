@@ -71,7 +71,7 @@ class HtmlBBCodeParser extends BBCodeParser
     protected $validBBCodePattern = '~^[a-z](?:[a-z0-9\-_]+)?$~';
 
     #[\Override]
-    public function parse($text)
+    public function parse(string $text)
     {
         $codeBlocks = [];
         foreach (self::$codeTagNames as $tagName) {
@@ -324,12 +324,10 @@ class HtmlBBCodeParser extends BBCodeParser
     /**
      * Builds the bbcode output.
      *
-     * @param string $name bbcode identifier
      * @param list<string> $attributes list of attributes
-     * @param \DOMElement $element element
      * @return string parsed bbcode
      */
-    public function getHtmlOutput($name, array $attributes, \DOMElement $element)
+    public function getHtmlOutput(string $name, array $attributes, \DOMElement $element)
     {
         if (isset($this->bbcodes[$name])) {
             $bbcode = $this->bbcodes[$name];
@@ -358,14 +356,12 @@ class HtmlBBCodeParser extends BBCodeParser
     /**
      * Builds a plain bbcode string, used for unknown bbcodes.
      *
-     * @param string $name bbcode identifier
      * @param array<int, ?string> $attributes list of attributes
-     * @param bool $openingTagOnly only render the opening tag
      * @return string
      */
-    public function buildBBCodeTag($name, $attributes, $openingTagOnly = false)
+    public function buildBBCodeTag(string $name, array $attributes, bool $openingTagOnly = false)
     {
-        $attributes = \array_filter($attributes, fn ($value) => $value !== null);
+        $attributes = \array_filter($attributes, fn($value) => $value !== null);
 
         if (!empty($attributes)) {
             foreach ($attributes as &$attribute) {
@@ -396,16 +392,16 @@ class HtmlBBCodeParser extends BBCodeParser
      * @param BBCodeTag $closingTag closing tag data
      * @return string custom HTML element
      */
-    protected function compileTag(array $openingTag, $content, array $closingTag)
+    protected function compileTag(array $openingTag, string $content, array $closingTag)
     {
         return $this->buildOpeningTag($openingTag) . $content . $this->buildClosingTag($closingTag);
     }
 
-/**
+    /**
      * @param BBCodeTag $tag
      */
     #[\Override]
-protected function buildOpeningTag(array $tag)
+    protected function buildOpeningTag(array $tag)
     {
         $name = \strtolower($tag['name']);
         if (!$this->isValidBBCodeName($name)) {
@@ -467,10 +463,9 @@ protected function buildOpeningTag(array $tag)
     /**
      * Returns true if provided name is a valid bbcode identifier.
      *
-     * @param string $name bbcode identifier
      * @return  bool        true if provided name is a valid bbcode identifier
      */
-    protected function isValidBBCodeName($name)
+    protected function isValidBBCodeName(string $name)
     {
         return \preg_match($this->validBBCodePattern, $name) === 1;
     }

@@ -71,7 +71,7 @@ class TemplateGroup extends DatabaseObject implements ITitledObject
      * @param int $initialDepth Specifies the initial indentation depth of the list
      * @return array<int, string>
      */
-    public static function getSelectList($ignore = [], $initialDepth = 0)
+    public static function getSelectList(array $ignore = [], int $initialDepth = 0)
     {
         self::buildTemplateGroupStructure();
 
@@ -100,10 +100,9 @@ class TemplateGroup extends DatabaseObject implements ITitledObject
     /**
      * Returns a list of all parent template groups.
      *
-     * @param int $parentID
      * @return \Generator<TemplateGroup>
      */
-    public static function getParentTemplatesGroups($parentID = 0): \Generator
+    public static function getParentTemplatesGroups(int $parentID = 0): \Generator
     {
         self::buildTemplateGroupStructure();
 
@@ -121,7 +120,7 @@ class TemplateGroup extends DatabaseObject implements ITitledObject
      * @param int[] $ignore list of template group ids to ignore in result
      * @return void
      */
-    protected static function makeSelectList($parentID = 0, $depth = 0, $ignore = [])
+    protected static function makeSelectList(int $parentID = 0, int $depth = 0, array $ignore = [])
     {
         foreach (self::getParentTemplatesGroups($parentID) as $templateGroup) {
             if (!empty($ignore) && \in_array($templateGroup->templateGroupID, $ignore)) {

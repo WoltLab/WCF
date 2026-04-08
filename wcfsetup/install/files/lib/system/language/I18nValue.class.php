@@ -53,12 +53,7 @@ class I18nValue
      */
     const REQUIRE_I18N = 2;
 
-    /**
-     * I18nValue constructor.
-     *
-     * @param string $fieldName
-     */
-    public function __construct($fieldName)
+    public function __construct(string $fieldName)
     {
         $this->fieldName = $fieldName;
     }
@@ -66,12 +61,9 @@ class I18nValue
     /**
      * Sets the language item configuration.
      *
-     * @param string $item
-     * @param string $category
-     * @param string $package
      * @return void
      */
-    public function setLanguageItem($item, $category, $package)
+    public function setLanguageItem(string $item, string $category, string $package)
     {
         $this->languageItem = $item;
         $this->languageItemCategory = $category;
@@ -81,10 +73,9 @@ class I18nValue
     /**
      * Sets bit flags.
      *
-     * @param int $flags
      * @return void
      */
-    public function setFlags($flags)
+    public function setFlags(int $flags)
     {
         $this->flags = $flags;
     }
@@ -92,10 +83,9 @@ class I18nValue
     /**
      * Returns true if given flag is set.
      *
-     * @param int $flag
      * @return      bool
      */
-    public function getFlag($flag)
+    public function getFlag(int $flag)
     {
         return ($this->flags & $flag) === $flag;
     }

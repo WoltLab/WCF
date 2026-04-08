@@ -111,16 +111,11 @@ final class MessageQuoteManager extends SingletonFactory
 
     /**
      * Returns the quote id for given quote.
-     *
-     * @param string $objectType
-     * @param int $objectID
-     * @param string $message
-     * @param string $fullQuote
-     *
+     *     *
      * @return  string
      * @deprecated 6.2
      */
-    public function getQuoteID($objectType, $objectID, $message, $fullQuote = '')
+    public function getQuoteID(string $objectType, int $objectID, string $message, string $fullQuote = '')
     {
         return \substr(\sha1($objectType . '|' . $objectID . '|' . $message . '|' . $fullQuote), 0, 8);
     }
@@ -128,12 +123,10 @@ final class MessageQuoteManager extends SingletonFactory
     /**
      * Removes a quote from storage and returns true if the quote has successfully been removed.
      *
-     * @param string $quoteID
-     *
      * @return  bool
      * @deprecated 6.2
      */
-    public function removeQuote($quoteID)
+    public function removeQuote(string $quoteID)
     {
         return false;
     }
@@ -141,11 +134,10 @@ final class MessageQuoteManager extends SingletonFactory
     /**
      * Returns an array containing the quote author, link and text.
      *
-     * @param string $quoteID
      * @return array{objectID: int, author: string, avatar: string, link: string, message: string, rawMessage: string}
      * @deprecated 6.2
      */
-    public function getQuoteComponents($quoteID)
+    public function getQuoteComponents(string $quoteID)
     {
         if ($quoteID !== self::LEGACY_QUOTE_MARKER) {
             throw new \RuntimeException("Encountered an unexpected quote id, found '{$quoteID}'.");
@@ -194,13 +186,11 @@ final class MessageQuoteManager extends SingletonFactory
     /**
      * Returns a list of quotes.
      *
-     * @param bool $supportPaste
-     *
      * @return  string
      *
      * @deprecated 6.2
      */
-    public function getQuotes($supportPaste = false)
+    public function getQuotes(bool $supportPaste = false)
     {
         return '';
     }
@@ -208,15 +198,13 @@ final class MessageQuoteManager extends SingletonFactory
     /**
      * Returns a list of quotes by object type and id.
      *
-     * @param string $objectType
      * @param int[] $objectIDs
-     * @param bool $markForRemoval
      *
      * @return  string[]
      *
      * @deprecated 6.2
      */
-    public function getQuotesByObjectIDs($objectType, array $objectIDs, $markForRemoval = true)
+    public function getQuotesByObjectIDs(string $objectType, array $objectIDs, bool $markForRemoval = true)
     {
         return [];
     }
@@ -224,15 +212,11 @@ final class MessageQuoteManager extends SingletonFactory
     /**
      * Returns a list of quotes by object type and parent object id.
      *
-     * @param string $objectType
-     * @param int $parentObjectID
-     * @param bool $markForRemoval
-     *
      * @return  string[]
      *
      * @deprecated 6.2
      */
-    public function getQuotesByParentObjectID($objectType, $parentObjectID, $markForRemoval = true)
+    public function getQuotesByParentObjectID(string $objectType, int $parentObjectID, bool $markForRemoval = true)
     {
         return [];
     }
@@ -240,12 +224,10 @@ final class MessageQuoteManager extends SingletonFactory
     /**
      * Returns a quote by id.
      *
-     * @param string $quoteID
-     * @param bool $useFullQuote
      * @return string
      * @deprecated 6.2
      */
-    public function getQuote($quoteID, $useFullQuote = true)
+    public function getQuote(string $quoteID, bool $useFullQuote = true)
     {
         \assert(isset($this->legacyQuoteData));
 
@@ -259,11 +241,10 @@ final class MessageQuoteManager extends SingletonFactory
     /**
      * Returns the object id by quote id.
      *
-     * @param string $quoteID
      * @return null
      * @deprecated 6.2
      */
-    public function getObjectID($quoteID)
+    public function getObjectID(string $quoteID)
     {
         return null;
     }
@@ -290,13 +271,10 @@ final class MessageQuoteManager extends SingletonFactory
     /**
      * Renders a quote for given message.
      *
-     * @param IMessage $message
-     * @param string $text
-     * @param bool $renderAsString
      * @return array{username: string, link: string, text: string}|string
      * @deprecated 6.2
      */
-    public function renderQuote(IMessage $message, $text, $renderAsString = true)
+    public function renderQuote(IMessage $message, string $text, bool $renderAsString = true)
     {
         $parameters = [
             'message' => $message,
@@ -353,12 +331,11 @@ final class MessageQuoteManager extends SingletonFactory
     /**
      * Sets object type and object ids.
      *
-     * @param string $objectType
      * @param int[] $objectIDs
      * @return void
      * @deprecated 6.2
      */
-    public function initObjects($objectType, array $objectIDs) {}
+    public function initObjects(string $objectType, array $objectIDs) {}
 
     /**
      * Reads the quote message id.
@@ -432,12 +409,10 @@ final class MessageQuoteManager extends SingletonFactory
     /**
      * Returns true if a quote id represents a full quote.
      *
-     * @param string $quoteID
-     *
      * @return      bool
      * @deprecated 6.2
      */
-    public function isFullQuote($quoteID)
+    public function isFullQuote(string $quoteID)
     {
         \assert(isset($this->legacyQuoteData));
 

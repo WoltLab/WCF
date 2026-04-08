@@ -63,12 +63,9 @@ class Like extends DatabaseObject
     /**
      * Returns the like with given type, object id and user id.
      *
-     * @param int $objectTypeID
-     * @param int $objectID
-     * @param int $userID
      * @return  Like
      */
-    public static function getLike($objectTypeID, $objectID, $userID)
+    public static function getLike(int $objectTypeID, int $objectID, int $userID)
     {
         $sql = "SELECT  *
                 FROM    wcf1_like

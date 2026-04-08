@@ -11,7 +11,6 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\exception\ValidateActionException;
-use wcf\util\StringUtil;
 
 /**
  * Default implementation for the AJAXException throw method.
@@ -26,13 +25,12 @@ trait TAJAXException
     /**
      * Throws an previously caught exception while maintaining the propriate stacktrace.
      *
-     * @param \Exception|\Throwable $e
      * @return never
      * @throws AJAXException
      * @throws \Exception
      * @throws \Throwable
      */
-    protected function throwException($e)
+    protected function throwException(\Exception|\Throwable $e)
     {
         if ($e instanceof InvalidSecurityTokenException) {
             throw $e;

@@ -49,12 +49,7 @@ class HtmlTocItem implements \Countable, \RecursiveIterator
      */
     private $parent;
 
-    /**
-     * @param int $level
-     * @param string $id
-     * @param string $title
-     */
-    public function __construct($level, $id, $title)
+    public function __construct(int $level, string $id, string $title)
     {
         $this->level = $level;
         $this->id = $id;
@@ -91,10 +86,9 @@ class HtmlTocItem implements \Countable, \RecursiveIterator
     }
 
     /**
-     * @param HtmlTocItem $parent
      * @return void
      */
-    public function setParent($parent)
+    public function setParent(HtmlTocItem $parent)
     {
         $this->parent = $parent;
     }
@@ -117,10 +111,9 @@ class HtmlTocItem implements \Countable, \RecursiveIterator
     }
 
     /**
-     * @param int $depth
      * @return void
      */
-    public function setDepth($depth)
+    public function setDepth(int $depth)
     {
         $this->depth = $depth;
     }

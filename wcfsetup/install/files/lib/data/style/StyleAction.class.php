@@ -116,11 +116,10 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
     }
 
     /**
-     * @param string $pathComponent
      * @return void
      * @deprecated 5.4 This method is unused.
      */
-    protected function removeDirectory($pathComponent)
+    protected function removeDirectory(string $pathComponent)
     {
         $dir = WCF_DIR . $pathComponent;
         if (\is_dir($dir)) {

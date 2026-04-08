@@ -62,15 +62,9 @@ class UploadFile
     /**
      * Creates a new UploadFile object.
      *
-     * @param string $filename
-     * @param string $location
-     * @param int $filesize
-     * @param int $errorCode
-     * @param string $mimeType
-     *
      * @throws  \Exception  if an error occurred during upload and debug mode is enabled
      */
-    public function __construct($filename, $location, $filesize, $errorCode = 0, $mimeType = '')
+    public function __construct(string $filename, string $location, int $filesize, int $errorCode = 0, string $mimeType = '')
     {
         if (\preg_match('~^__wcf_([0-9]+)_(.*)~', $filename, $matches)) {
             $this->internalFileID = (int)$matches[1];
@@ -183,11 +177,10 @@ class UploadFile
     /**
      * Sets the validation error type.
      *
-     * @param string $validationErrorType
      * @param mixed[] $additionalData
      * @return void
      */
-    public function setValidationErrorType($validationErrorType, array $additionalData = [])
+    public function setValidationErrorType(string $validationErrorType, array $additionalData = [])
     {
         $this->validationErrorType = $validationErrorType;
         $this->validationErrorAdditionalData = $additionalData;
@@ -238,7 +231,7 @@ class UploadFile
      * @param string $newLocation new file location
      * @return void
      */
-    public function moveUploadedFile($newLocation)
+    public function moveUploadedFile(string $newLocation)
     {
         \move_uploaded_file($this->location, $newLocation);
 

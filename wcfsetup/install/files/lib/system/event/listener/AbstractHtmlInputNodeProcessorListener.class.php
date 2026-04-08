@@ -45,11 +45,9 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
      * Returns a `Regex` object for matching links based on the given string
      * followed by an object id.
      *
-     * @param string $link
-     * @param string $defaultAnchor
      * @return Regex
      */
-    protected function getRegexFromLink($link, $defaultAnchor = '')
+    protected function getRegexFromLink(string $link, string $defaultAnchor = '')
     {
         return new Regex('^(' . \preg_replace(
             '~^https?~',
@@ -94,12 +92,10 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
     }
 
     /**
-     * @param HtmlInputNodeProcessor $processor
      * @param ITitledObject[] $objects
-     * @param string $bbcodeName
      * @return void
      */
-    protected function replaceLinks(HtmlInputNodeProcessor $processor, array $objects, $bbcodeName = '')
+    protected function replaceLinks(HtmlInputNodeProcessor $processor, array $objects, string $bbcodeName = '')
     {
         $bbcode = null;
         if ($bbcodeName) {

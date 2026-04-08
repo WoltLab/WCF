@@ -25,7 +25,7 @@ use wcf\system\WCF;
 class ContactRecipient extends DatabaseObject implements ITitledObject
 {
     #[\Override]
-    protected function handleData($data)
+    protected function handleData(array $data)
     {
         // dynamically set email address for the administrator
         if (!empty($data['isAdministrator'])) {

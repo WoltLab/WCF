@@ -159,12 +159,10 @@ abstract class Database
     /**
      * Returns ID from last insert.
      *
-     * @param string $table
-     * @param string $field
      * @return  string
      * @throws  DatabaseException
      */
-    public function getInsertID($table, $field)
+    public function getInsertID(string $table, string $field)
     {
         try {
             $lastInsertID = $this->pdo->lastInsertId();
@@ -351,16 +349,12 @@ abstract class Database
     /**
      * Prepares a statement for execution and returns a statement object.
      *
-     * @param string $statement
-     * @param int    $limit
-     * @param int    $offset
-     *
      * @return  PreparedStatement
      * @throws  DatabaseQueryException
      *
      * @deprecated 6.2 Use `prepareUnmanaged()` or `prepare()` instead.
      */
-    public function prepareStatement($statement, $limit = 0, $offset = 0)
+    public function prepareStatement(string $statement, int $limit = 0, int $offset = 0)
     {
         return $this->prepareUnmanaged($statement, $limit, $offset);
     }
@@ -385,12 +379,9 @@ abstract class Database
      * This is a default implementation compatible to MySQL and PostgreSQL.
      * Other database implementations should override this function.
      *
-     * @param string $query
-     * @param int $limit
-     * @param int $offset
      * @return  string
      */
-    public function handleLimitParameter($query, $limit = 0, $offset = 0)
+    public function handleLimitParameter(string $query, int $limit = 0, int $offset = 0)
     {
         $limit = \intval($limit);
         $offset = \intval($offset);
@@ -458,10 +449,9 @@ abstract class Database
     /**
      * Escapes a string for use in sql query.
      *
-     * @param string $string
      * @return  string
      */
-    public function escapeString($string)
+    public function escapeString(string $string)
     {
         return \addslashes($string);
     }

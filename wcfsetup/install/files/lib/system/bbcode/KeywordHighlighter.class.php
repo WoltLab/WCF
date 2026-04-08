@@ -92,10 +92,9 @@ class KeywordHighlighter extends SingletonFactory
     /**
      * Parses search keywords.
      *
-     * @param string $keywordString
      * @return void
      */
-    protected function parseKeywords($keywordString)
+    protected function parseKeywords(string $keywordString)
     {
         // convert encoding if necessary
         if (!StringUtil::isUTF8($keywordString)) {
@@ -136,10 +135,9 @@ class KeywordHighlighter extends SingletonFactory
     /**
      * Highlights search keywords.
      *
-     * @param string $text
      * @return  string      highlighted text
      */
-    public function doHighlight($text)
+    public function doHighlight(string $text)
     {
         if (empty($this->keywords)) {
             return $text;
