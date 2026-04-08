@@ -35,3 +35,7 @@ parameters:
     rememberPossiblyImpureFunctionValues: true
     reportPossiblyNonexistentGeneralArrayOffset: true
     reportAlwaysTrueInLastCondition: true
+    reportNonIntStringArrayKey: false
+    reportWrongPhpDocTypeInVarTag: false
+    reportAnyTypeWideningInVarTag: true
+    checkStrictPrintfPlaceholderTypes: true
