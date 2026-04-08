@@ -29,10 +29,9 @@ class PackageCache extends SingletonFactory
     /**
      * Returns a specific package.
      *
-     * @param int $packageID
      * @return ?Package
      */
-    public function getPackage($packageID)
+    public function getPackage(int $packageID)
     {
         return $this->packages['packages'][$packageID] ?? null;
     }
@@ -40,10 +39,9 @@ class PackageCache extends SingletonFactory
     /**
      * Returns the id of a specific package or 'null' if not found.
      *
-     * @param string $package
      * @return ?int
      */
-    public function getPackageID($package)
+    public function getPackageID(string $package)
     {
         return $this->packages['packageIDs'][$package] ?? null;
     }
@@ -61,10 +59,9 @@ class PackageCache extends SingletonFactory
     /**
      * Returns a specific package.
      *
-     * @param string $package
      * @return ?Package
      */
-    public function getPackageByIdentifier($package)
+    public function getPackageByIdentifier(string $package)
     {
         $packageID = $this->getPackageID($package);
         if ($packageID === null) {

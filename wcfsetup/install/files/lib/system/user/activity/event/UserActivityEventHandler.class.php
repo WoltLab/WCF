@@ -40,10 +40,9 @@ class UserActivityEventHandler extends SingletonFactory
     /**
      * Returns an object type by id.
      *
-     * @param int $objectTypeID
      * @return  ObjectType|null
      */
-    public function getObjectType($objectTypeID)
+    public function getObjectType(int $objectTypeID)
     {
         return $this->objectTypes['objects'][$objectTypeID] ?? null;
     }
@@ -51,10 +50,9 @@ class UserActivityEventHandler extends SingletonFactory
     /**
      * Returns an object type id by object type name.
      *
-     * @param string $objectType
      * @return  int|null
      */
-    public function getObjectTypeID($objectType)
+    public function getObjectTypeID(string $objectType)
     {
         return $this->objectTypes['names'][$objectType] ?? null;
     }
@@ -62,22 +60,17 @@ class UserActivityEventHandler extends SingletonFactory
     /**
      * Fires a new activity event.
      *
-     * @param string $objectType
-     * @param int $objectID
-     * @param int $languageID
-     * @param int $userID
-     * @param int $time
      * @param mixed[] $additionalData
      * @return  \wcf\data\user\activity\event\UserActivityEvent
      * @throws  SystemException
      */
     public function fireEvent(
-        $objectType,
-        $objectID,
-        $languageID = null,
-        $userID = null,
-        $time = TIME_NOW,
-        $additionalData = []
+        string $objectType,
+        int $objectID,
+        ?int $languageID = null,
+        ?int $userID = null,
+        int $time = TIME_NOW,
+        array $additionalData = []
     ) {
         $objectTypeID = $this->getObjectTypeID($objectType);
         if ($objectTypeID === null) {
@@ -108,12 +101,11 @@ class UserActivityEventHandler extends SingletonFactory
      *
      * This method is intended for bulk processing.
      *
-     * @param string $objectType
      * @param mixed[] $eventData
      * @return void
      * @throws  SystemException
      */
-    public function fireEvents($objectType, array $eventData)
+    public function fireEvents(string $objectType, array $eventData)
     {
         $objectTypeID = $this->getObjectTypeID($objectType);
         if ($objectTypeID === null) {
@@ -151,13 +143,10 @@ class UserActivityEventHandler extends SingletonFactory
     /**
      * Removes an activity event.
      *
-     * @param string $objectType
-     * @param int $objectID
-     * @param int $userID
      * @return void
      * @throws  SystemException
      */
-    public function removeEvent($objectType, $objectID, $userID = null)
+    public function removeEvent(string $objectType, int $objectID, ?int $userID = null)
     {
         $objectTypeID = $this->getObjectTypeID($objectType);
         if ($objectTypeID === null) {
@@ -183,12 +172,11 @@ class UserActivityEventHandler extends SingletonFactory
     /**
      * Removes activity events.
      *
-     * @param string $objectType
      * @param int[] $objectIDs
      * @return void
      * @throws  SystemException
      */
-    public function removeEvents($objectType, array $objectIDs)
+    public function removeEvents(string $objectType, array $objectIDs)
     {
         if (empty($objectIDs)) {
             return;

@@ -101,9 +101,7 @@ abstract class AbstractPage implements IPage
      */
     private $psr7Response;
 
-    final public function __construct()
-    {
-    }
+    final public function __construct() {}
 
     #[\Override]
     public function __run()
@@ -374,18 +372,15 @@ abstract class AbstractPage implements IPage
      * @return void
      * @deprecated 6.1 handled by the `CheckForForceLogin` middleware
      */
-    protected function forceLogin()
-    {
-    }
+    protected function forceLogin() {}
 
     /**
      * Calls setResponse() if the parameter implements the ResponseInterface.
      *
-     * @param mixed $response
      * @see AbstractPage::setPsr7Response()
      * @since 5.5
      */
-    final protected function maybeSetPsr7Response($response): void
+    final protected function maybeSetPsr7Response(mixed $response): void
     {
         if ($response instanceof ResponseInterface) {
             $this->setPsr7Response($response);

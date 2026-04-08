@@ -42,11 +42,9 @@ class ZipWriter
     /**
      * Adds a folder to the Zip archive.
      *
-     * @param string $name dirname
-     * @param int $date
      * @return void
      */
-    public function addDir($name, $date = TIME_NOW)
+    public function addDir(string $name, int $date = TIME_NOW)
     {
         // replace backward slashes with forward slashes in the dirname
         $name = \str_replace("\\", "/", $name);
@@ -105,7 +103,7 @@ class ZipWriter
      * @param int $date file creation time as unix timestamp
      * @return void
      */
-    public function addFile($data, $name, $date = TIME_NOW)
+    public function addFile(string $data, string $name, int $date = TIME_NOW)
     {
         // replace backward slashes with forward slashes in the filename
         $name = \str_replace("\\", "/", $name);
@@ -172,10 +170,9 @@ class ZipWriter
     /**
      * Set Zip archive comment
      *
-     * @param string $comment zip archive comment
      * @return void
      */
-    public function setArchiveComment($comment)
+    public function setArchiveComment(string $comment)
     {
         $this->zipComment = StringUtil::trim($comment);
     }
@@ -208,14 +205,10 @@ class ZipWriter
     /**
      * Converts an unix timestamp to Zip file time.
      *
-     * @param int $date unix timestamp
      * @return string
      */
-    protected static function getDosDatetime($date)
+    protected static function getDosDatetime(int $date)
     {
-        // Ensure we have a numeric value
-        $date = \intval($date);
-
         if ($date < 315532800) {
             return "\x00\x00\x00\x00";
         }

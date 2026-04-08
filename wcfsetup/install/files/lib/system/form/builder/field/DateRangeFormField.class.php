@@ -70,10 +70,8 @@ class DateRangeFormField extends AbstractFormField implements
 
     /**
      * Sets if not only the date, but also the time can be set.
-     *
-     * @param bool $supportsTime
      */
-    public function supportTime($supportsTime = true): static
+    public function supportTime(bool $supportsTime = true): static
     {
         if ($this->value !== null) {
             throw new \BadFunctionCallException(

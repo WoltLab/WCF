@@ -102,11 +102,9 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
     /**
      * Tries to extract content from value.
      *
-     * @param Option $option
-     * @param string $newValue
      * @return  string
      */
-    protected function getContent(Option $option, $newValue)
+    protected function getContent(Option $option, string $newValue)
     {
         if ($option->contentpattern) {
             if (\preg_match('~' . $option->contentpattern . '~', $newValue, $matches)) {

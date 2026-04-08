@@ -100,10 +100,8 @@ final class UserRegistrationUtil
 
     /**
      * Generates a random field name.
-     *
-     * @param string $unused
      */
-    public static function getRandomFieldName($unused): string
+    public static function getRandomFieldName(string $unused): string
     {
         $hash = StringUtil::getRandomID();
 

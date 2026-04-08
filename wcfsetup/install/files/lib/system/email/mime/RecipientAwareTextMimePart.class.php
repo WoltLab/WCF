@@ -48,7 +48,7 @@ class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAware
      * @param string $application Application of the template to evaluate (default: wcf)
      * @param mixed $content Content of this text part. Passed as 'content' to the template. If it is an array it will additionally be merged with the template variables.
      */
-    public function __construct($mimeType, $template, $application = 'wcf', $content = null)
+    public function __construct(string $mimeType, string $template, string $application = 'wcf', mixed $content = null)
     {
         parent::__construct($content, $mimeType);
 

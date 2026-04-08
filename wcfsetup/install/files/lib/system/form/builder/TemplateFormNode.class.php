@@ -45,7 +45,7 @@ class TemplateFormNode implements IFormChildNode
      *
      * @throws \InvalidArgumentException if no application with the given abbreviation exists
      */
-    public function application($application)
+    public function application(string $application)
     {
         if (ApplicationHandler::getInstance()->getApplication($application) === null) {
             throw new \InvalidArgumentException(
@@ -118,7 +118,7 @@ class TemplateFormNode implements IFormChildNode
      * @param string $templateName name of template with form node contents
      * @return static this form node
      */
-    public function templateName($templateName)
+    public function templateName(string $templateName)
     {
         $this->templateName = $templateName;
 

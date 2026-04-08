@@ -149,7 +149,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
     }
 
     #[\Override]
-    protected function saveCategory($category)
+    protected function saveCategory(array $category)
     {
         if (isset($category['objectTypeID'])) {
             $objectTypeID = $category['objectTypeID'];
@@ -260,7 +260,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
     }
 
     #[\Override]
-    protected function saveOption($option, $categoryName, $existingOptionID = 0)
+    protected function saveOption(array $option, string $categoryName, int $existingOptionID = 0)
     {
         // check for option existence
         $sql = "SELECT  optionID
@@ -302,11 +302,10 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
      * Returns the object type id of the acl option type with the given name
      * or throws a SystemException if no such option type exists.
      *
-     * @param string $optionType
      * @return  int
      * @throws  SystemException
      */
-    protected function getObjectTypeID($optionType)
+    protected function getObjectTypeID(string $optionType)
     {
         if (!isset($this->optionTypeIDs[$optionType])) {
             $sql = "SELECT  objectTypeID
@@ -516,12 +515,11 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
     }
 
     /**
-     * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
     #[\Override]
-    protected function fetchElementData(\DOMElement $element, $saveData)
+    protected function fetchElementData(\DOMElement $element, bool $saveData)
     {
         $data = [
             'packageID' => $this->installation->getPackage()->packageID,

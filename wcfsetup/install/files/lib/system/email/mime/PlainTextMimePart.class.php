@@ -16,7 +16,7 @@ class PlainTextMimePart extends RecipientAwareTextMimePart
      *
      * @param string $content Content of this text part.
      */
-    public function __construct($content)
+    public function __construct(string $content)
     {
         parent::__construct('text/plain', 'email_plaintext', 'wcf', $content);
     }

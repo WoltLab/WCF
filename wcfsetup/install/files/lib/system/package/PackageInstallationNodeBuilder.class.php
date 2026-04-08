@@ -314,10 +314,9 @@ class PackageInstallationNodeBuilder
     /**
      * Calculates current setup process.
      *
-     * @param string $node
      * @return  int
      */
-    public function calculateProgress($node)
+    public function calculateProgress(string $node)
     {
         $progress = [
             'done' => 0,
@@ -353,11 +352,9 @@ class PackageInstallationNodeBuilder
     /**
      * Duplicates a node by re-inserting it and moving all descendants into a new tree.
      *
-     * @param string $node
-     * @param int $sequenceNo
      * @return void
      */
-    public function cloneNode($node, $sequenceNo)
+    public function cloneNode(string $node, int $sequenceNo)
     {
         $newNode = $this->getToken();
 

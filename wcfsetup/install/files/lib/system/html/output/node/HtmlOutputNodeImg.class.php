@@ -153,12 +153,9 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
     /**
      * Replaces images embedded from external sources that are not handled by the image proxy.
      *
-     * @param \DOMElement $element
-     * @param string $src
-     * @param bool $isUgc
      * @return void
      */
-    protected function replaceExternalSource(\DOMElement $element, $src, $isUgc = false)
+    protected function replaceExternalSource(\DOMElement $element, string $src, bool $isUgc = false)
     {
         $element->parentNode->insertBefore(
             $element->ownerDocument->createTextNode(
@@ -197,10 +194,9 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
      * Validates the domain name against the list of own domains
      * and whitelisted ones with wildcard support.
      *
-     * @param string $hostname
      * @return bool
      */
-    protected function bypassProxy($hostname)
+    protected function bypassProxy(string $hostname)
     {
         static $matcher = null;
 
@@ -217,10 +213,9 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
     /**
      * Returns the link to fetch the image using the image proxy.
      *
-     * @param string $link
      * @return string
      */
-    protected function getProxyLink($link)
+    protected function getProxyLink(string $link)
     {
         try {
             $key = CryptoUtil::createSignedString($link);
@@ -234,10 +229,9 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
     }
 
     /**
-     * @param string $src
      * @return bool
      */
-    protected function isAllowedOrigin($src)
+    protected function isAllowedOrigin(string $src)
     {
         static $matcher = null;
         if ($matcher === null) {

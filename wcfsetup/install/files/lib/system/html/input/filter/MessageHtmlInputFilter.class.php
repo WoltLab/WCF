@@ -21,11 +21,10 @@ class MessageHtmlInputFilter implements IHtmlInputFilter
     /**
      * Applies HTMLPurifier's filter on provided HTML.
      *
-     * @param string $html unsafe HTML
      * @return      string  sanitized HTML
      */
     #[\Override]
-    public function apply($html)
+    public function apply(string $html)
     {
         // work-around for a libxml bug that causes a single space between
         // some inline elements to be dropped

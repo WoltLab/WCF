@@ -63,13 +63,12 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
     /**
      * Creates a new instance of DefaultUploadFileSaveStrategy.
      *
-     * @param string $actionClassName
      * @param mixed[] $options
      * @param mixed[] $data
      * @throws  ImplementationException
      * @throws  ParentClassException
      */
-    public function __construct($actionClassName, array $options = [], array $data = [])
+    public function __construct(string $actionClassName, array $options = [], array $data = [])
     {
         $this->actionClassName = $actionClassName;
         $this->options = $options;

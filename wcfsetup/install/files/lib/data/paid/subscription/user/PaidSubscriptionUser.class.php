@@ -82,11 +82,9 @@ class PaidSubscriptionUser extends DatabaseObject
     /**
      * Returns a specific subscription user or `null` if such a user does not exist.
      *
-     * @param int $subscriptionID
-     * @param int $userID
      * @return  PaidSubscriptionUser|null
      */
-    public static function getSubscriptionUser($subscriptionID, $userID)
+    public static function getSubscriptionUser(int $subscriptionID, int $userID)
     {
         $sql = "SELECT  *
                 FROM    wcf1_paid_subscription_user

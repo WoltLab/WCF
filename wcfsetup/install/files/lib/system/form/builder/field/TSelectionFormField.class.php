@@ -102,7 +102,7 @@ trait TSelectionFormField
      * @throws \InvalidArgumentException if given options are no array or callable or otherwise invalid
      * @throws \UnexpectedValueException if callable does not return an array
      */
-    public function options($options, $nestedOptions = false, $labelLanguageItems = true)
+    public function options(array|callable|\Traversable|DatabaseObjectList $options, bool $nestedOptions = false, bool $labelLanguageItems = true)
     {
         if ($nestedOptions) {
             if (!\is_array($options) && !($options instanceof \Traversable) && !\is_callable($options)) {

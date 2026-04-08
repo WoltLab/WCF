@@ -138,7 +138,7 @@ class Smiley extends DatabaseObject implements ITitledObject
      * @param string $class (additional) class(es) of the smiley element
      * @return  string
      */
-    public function getHtml($class = '')
+    public function getHtml(string $class = '')
     {
         $srcset = ($this->smileyPath2x) ? ' srcset="' . StringUtil::encodeHTML($this->getURL2x()) . ' 2x"' : '';
         $height = ($this->getHeight()) ? ' height="' . $this->getHeight() . '"' : '';

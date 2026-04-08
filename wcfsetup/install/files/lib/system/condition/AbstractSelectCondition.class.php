@@ -75,11 +75,10 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition
     /**
      * Returns the html code for an opt group.
      *
-     * @param string $label
      * @param string[] $options
      * @return  string
      */
-    protected function getOptGroupCode($label, array $options)
+    protected function getOptGroupCode(string $label, array $options)
     {
         $html = '<optgroup label="' . StringUtil::encodeHTML($label) . '">';
         foreach ($options as $key => $value) {
@@ -93,11 +92,9 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition
     /**
      * Returns the html code for an option.
      *
-     * @param string $value
-     * @param string $label
      * @return  string
      */
-    protected function getOptionCode($value, $label)
+    protected function getOptionCode(string $value, string $label)
     {
         return '<option value="' . $value . '"' . ($this->fieldValue == $value ? ' selected' : '') . '>' . StringUtil::encodeHTML(WCF::getLanguage()->get($label)) . '</option>';
     }

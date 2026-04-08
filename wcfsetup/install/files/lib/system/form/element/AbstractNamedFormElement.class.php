@@ -34,11 +34,10 @@ abstract class AbstractNamedFormElement extends AbstractFormElement
     /**
      * Sets element description.
      *
-     * @param string $description
      * @return void
      */
     #[\Override]
-    public function setDescription($description)
+    public function setDescription(string $description)
     {
         $this->description = $description;
     }
@@ -57,10 +56,9 @@ abstract class AbstractNamedFormElement extends AbstractFormElement
     /**
      * Sets element name.
      *
-     * @param string $name
      * @return void
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = StringUtil::trim($name);
     }
@@ -78,10 +76,9 @@ abstract class AbstractNamedFormElement extends AbstractFormElement
     /**
      * Sets element value.
      *
-     * @param string $value
      * @return void
      */
-    public function setValue($value)
+    public function setValue(string $value)
     {
         if (!\is_string($value)) {
             exit(\print_r($value, true));

@@ -40,15 +40,7 @@ class Installer
      */
     protected $fileHandler;
 
-    /**
-     * Creates a new Installer object.
-     *
-     * @param string $targetDir
-     * @param string $source
-     * @param IFileHandler $fileHandler
-     * @param string $folder
-     */
-    public function __construct($targetDir, $source, $fileHandler = null, $folder = '')
+    public function __construct(string $targetDir, string $source, ?IFileHandler $fileHandler = null, string $folder = '')
     {
         $this->targetDir = FileUtil::addTrailingSlash($targetDir);
         $this->source = $source;
@@ -77,11 +69,10 @@ class Installer
     /**
      * Creates a directory in the target directory.
      *
-     * @param string $dir
      * @return void
      * @throws  SystemException
      */
-    protected function createDir($dir)
+    protected function createDir(string $dir)
     {
         if (!@\is_dir($this->targetDir . $dir)) {
             $oldumask = \umask(0);
@@ -98,10 +89,9 @@ class Installer
     /**
      * Touches a file in the target directory.
      *
-     * @param string $file
      * @return void
      */
-    public function touchFile($file)
+    public function touchFile(string $file)
     {
         @\touch($this->targetDir . $file);
         $this->makeWriteable($this->targetDir . $file);
@@ -110,12 +100,9 @@ class Installer
     /**
      * Creates a file in the target directory.
      *
-     * @param string $file
-     * @param int $index
-     * @param Tar $tar
      * @return void
      */
-    protected function createFile($file, $index, Tar $tar)
+    protected function createFile(string $file, int $index, Tar $tar)
     {
         $tar->extract($index, $this->targetDir . $file);
         if (FileUtil::isApacheModule() || !\is_writable($this->targetDir . $file)) {
@@ -192,10 +179,9 @@ class Installer
     /**
      * Opens a new tar archive.
      *
-     * @param string $source
      * @return      Tar
      */
-    protected function getTar($source)
+    protected function getTar(string $source)
     {
         return new Tar($source);
     }
@@ -225,10 +211,9 @@ class Installer
     /**
      * Makes a file or directory writeable.
      *
-     * @param string $target
      * @return void
      */
-    protected function makeWriteable($target)
+    protected function makeWriteable(string $target)
     {
         FileUtil::makeWritable($target);
     }

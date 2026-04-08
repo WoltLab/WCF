@@ -65,7 +65,7 @@ class LinkBlockTemplatePlugin implements IBlockTemplatePlugin
     }
 
     #[\Override]
-    public function init($tagArgs, TemplateEngine $tplObj)
+    public function init(array $tagArgs, TemplateEngine $tplObj)
     {
         $this->counter = 0;
     }

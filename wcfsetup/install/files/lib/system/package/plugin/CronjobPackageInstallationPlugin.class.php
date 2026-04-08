@@ -325,12 +325,11 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
     }
 
     /**
-     * @param bool $saveData
      * @return array<string, mixed>
      * @since   5.2
      */
     #[\Override]
-    protected function fetchElementData(\DOMElement $element, $saveData)
+    protected function fetchElementData(\DOMElement $element, bool $saveData)
     {
         $data = [
             'className' => $element->getElementsByTagName('classname')->item(0)->nodeValue,

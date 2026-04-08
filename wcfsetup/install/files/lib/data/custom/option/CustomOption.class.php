@@ -102,10 +102,9 @@ abstract class CustomOption extends Option implements ITitledObject
     /**
      * Sets the value of this option.
      *
-     * @param string $value
      * @return void
      */
-    public function setOptionValue($value)
+    public function setOptionValue(string $value)
     {
         $this->optionValue = $value;
     }
@@ -113,7 +112,6 @@ abstract class CustomOption extends Option implements ITitledObject
     /**
      * Attempts to return the localized option name.
      *
-     * @param Language $language
      * @return      string
      */
     public function getLocalizedName(Language $language)
@@ -128,10 +126,9 @@ abstract class CustomOption extends Option implements ITitledObject
     /**
      * Returns the formatted value of this option.
      *
-     * @param bool $forcePlaintext
      * @return  string
      */
-    public function getFormattedOptionValue($forcePlaintext = false)
+    public function getFormattedOptionValue(bool $forcePlaintext = false)
     {
         switch ($this->optionType) {
             case 'boolean':

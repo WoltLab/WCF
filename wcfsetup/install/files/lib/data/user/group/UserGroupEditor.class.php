@@ -131,7 +131,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
      * @return void
      * @throws  SystemException
      */
-    protected static function updateAccessibleGroups($groupID, $delete = false)
+    protected static function updateAccessibleGroups(int $groupID, bool $delete = false)
     {
         $sql = "SELECT  optionID
                 FROM    wcf1_user_group_option

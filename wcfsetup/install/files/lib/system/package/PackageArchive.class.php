@@ -102,12 +102,7 @@ class PackageArchive
      */
     const VOID_MARKER = "===void===";
 
-    /**
-     * Creates a new PackageArchive object.
-     *
-     * @param string $archive
-     */
-    public function __construct($archive)
+    public function __construct(string $archive)
     {
         $this->archive = $archive;  // be careful: this is a string within this class,
         // but an object in the packageStartInstallForm.class!
@@ -799,12 +794,10 @@ class PackageArchive
      * Extracts the requested file in the package archive to the temp folder
      * and returns the path to the extracted file.
      *
-     * @param string $filename
-     * @param string $tempPrefix
      * @return string
      * @throws PackageValidationException
      */
-    public function extractTar($filename, $tempPrefix = 'package_')
+    public function extractTar(string $filename, string $tempPrefix = 'package_')
     {
         // search the requested tar archive in our package archive.
         // throw error message if not found.

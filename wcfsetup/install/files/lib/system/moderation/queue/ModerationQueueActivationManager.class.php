@@ -53,13 +53,11 @@ class ModerationQueueActivationManager extends AbstractModerationQueueManager
     /**
      * Adds an entry for moderated content.
      *
-     * @param string $objectType
-     * @param int $objectID
      * @param mixed[] $additionalData
      * @return void
      * @throws  InvalidObjectTypeException
      */
-    public function addModeratedContent($objectType, $objectID, array $additionalData = [])
+    public function addModeratedContent(string $objectType, int $objectID, array $additionalData = [])
     {
         if (!$this->isValid($objectType)) {
             throw new InvalidObjectTypeException($objectType, 'com.woltlab.wcf.moderation.activation');
@@ -82,14 +80,13 @@ class ModerationQueueActivationManager extends AbstractModerationQueueManager
      *
      * This method is intended for bulk processing.
      *
-     * @param string $objectType
      * @param int[] $objectIDs
      * @param int[] $containerIDs       format: `objectID => containerID`
      * @param mixed[] $additionalData
      * @return void
      * @throws  InvalidObjectTypeException
      */
-    public function addModeratedContents($objectType, array $objectIDs, array $containerIDs, array $additionalData = [])
+    public function addModeratedContents(string $objectType, array $objectIDs, array $containerIDs, array $additionalData = [])
     {
         if (!$this->isValid($objectType)) {
             throw new InvalidObjectTypeException($objectType, 'com.woltlab.wcf.moderation.activation');
@@ -106,12 +103,11 @@ class ModerationQueueActivationManager extends AbstractModerationQueueManager
     /**
      * Marks entries from moderation queue as done.
      *
-     * @param string $objectType
      * @param int[] $objectIDs
      * @return void
      * @throws  InvalidObjectTypeException
      */
-    public function removeModeratedContent($objectType, array $objectIDs)
+    public function removeModeratedContent(string $objectType, array $objectIDs)
     {
         if (!$this->isValid($objectType)) {
             throw new InvalidObjectTypeException($objectType, 'com.woltlab.wcf.moderation.activation');

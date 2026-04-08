@@ -55,12 +55,10 @@ class File
     /**
      * Opens a new file.
      *
-     * @param string $filename
-     * @param string $mode
      * @param array<string, mixed> $options
      * @throws  SystemException
      */
-    public function __construct($filename, $mode = 'wb', $options = [])
+    public function __construct(string $filename, string $mode = 'wb', array $options = [])
     {
         $this->filename = $filename;
         if (!empty($options)) {
@@ -78,12 +76,11 @@ class File
      * Calls the specified function on the open file.
      * Do not call this function directly. Use $file->write('') instead.
      *
-     * @param string $function
      * @param mixed[] $arguments
      * @return  mixed
      * @throws  SystemException
      */
-    public function __call($function, $arguments)
+    public function __call(string $function, array $arguments)
     {
         if (\function_exists('f' . $function)) {
             \array_unshift($arguments, $this->resource);

@@ -59,10 +59,9 @@ class TrophyCategory extends AbstractDecoratedCategory implements ITitledLinkObj
     /**
      * Returns the trophies for the category.
      *
-     * @param bool $includeDisabled
      * @return  Trophy[]
      */
-    public function getTrophies($includeDisabled = false)
+    public function getTrophies(bool $includeDisabled = false)
     {
         if ($includeDisabled) {
             return TrophyCache::getInstance()->getTrophiesByCategoryID($this->getObjectID());

@@ -162,11 +162,9 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
      * with the return value of `getBulkUserPermissions()`.
      *
      * @param mixed[] $userPermissions
-     * @param int $userID
-     * @param string $permission
      * @return mixed
      */
-    protected function getBulkUserPermissionValue(array &$userPermissions, $userID, $permission)
+    protected function getBulkUserPermissionValue(array &$userPermissions, int $userID, string $permission)
     {
         $userID = \intval($userID);
 

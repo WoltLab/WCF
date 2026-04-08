@@ -56,7 +56,6 @@ interface IModerationQueueHandler
      * Removes affected content. It is up to the processing class to either
      * soft-delete the content or remove it permanently.
      *
-     * @param ModerationQueue $queue
      * @return void
      */
     public function removeContent(ModerationQueue $queue, string $message);
@@ -64,7 +63,6 @@ interface IModerationQueueHandler
     /**
      * Returns true if the affected content may be removed.
      *
-     * @param ModerationQueue $queue
      * @return bool
      */
     public function canRemoveContent(ModerationQueue $queue);
@@ -81,7 +79,6 @@ interface IModerationQueueHandler
     /**
      * Returns true, if given user is affected by given queue entry.
      *
-     * @param ModerationQueue $queue
      * @return bool
      */
     public function isAffectedUser(ModerationQueue $queue, int $userID);

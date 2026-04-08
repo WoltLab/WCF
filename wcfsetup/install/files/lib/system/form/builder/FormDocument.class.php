@@ -270,7 +270,7 @@ class FormDocument implements IFormDocument
     }
 
     #[\Override]
-    public function errorMessage($languageItem = null, array $variables = [])
+    public function errorMessage(?string $languageItem = null, array $variables = [])
     {
         if ($languageItem === null) {
             if (!empty($variables)) {
@@ -432,7 +432,7 @@ class FormDocument implements IFormDocument
     }
 
     #[\Override]
-    public function getRequestData($index = null)
+    public function getRequestData(?string $index = null)
     {
         if ($this->requestData === null) {
             $this->requestData = $_POST;
@@ -483,7 +483,7 @@ class FormDocument implements IFormDocument
     }
 
     #[\Override]
-    public function hasRequestData($index = null)
+    public function hasRequestData(?string $index = null)
     {
         $requestData = $this->getRequestData();
 
@@ -563,7 +563,7 @@ class FormDocument implements IFormDocument
     }
 
     #[\Override]
-    public function updatedObject(IStorableObject $object, $loadValues = true)
+    public function updatedObject(IStorableObject $object, bool $loadValues = true)
     {
         if ($this->formMode === null) {
             $this->formMode(self::FORM_MODE_UPDATE);
@@ -670,7 +670,7 @@ class FormDocument implements IFormDocument
     }
 
     #[\Override]
-    public function successMessage($languageItem = null, array $variables = [])
+    public function successMessage(?string $languageItem = null, array $variables = [])
     {
         if ($languageItem === null) {
             if (!empty($variables)) {

@@ -41,16 +41,14 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
 
     /**
      * Creates a new ImageAdapter instance.
-     *
-     * @param string $adapterClassName
      */
-    public function __construct($adapterClassName)
+    public function __construct(string $adapterClassName)
     {
         $this->adapter = new $adapterClassName();
     }
 
     #[\Override]
-    public function load($image, int $type = 0)
+    public function load(object $image, int $type = 0)
     {
         $this->adapter->load($image, $type);
     }
@@ -150,7 +148,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     }
 
     #[\Override]
-    public function drawText(string $text, int $x, int $y, $font, int $size, float $opacity = 1.0)
+    public function drawText(string $text, int $x, int $y, string $font, int $size, float $opacity = 1.0)
     {
         if (!$this->adapter->hasColor()) {
             throw new SystemException("Cannot draw text unless a color has been specified with setColor().");
@@ -165,7 +163,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     }
 
     #[\Override]
-    public function drawTextRelative(string $text, string $position, int $margin, int $offsetX, int $offsetY, $font, int $size, float $opacity = 1.0)
+    public function drawTextRelative(string $text, string $position, int $margin, int $offsetX, int $offsetY, string $font, int $size, float $opacity = 1.0)
     {
         if (!$this->adapter->hasColor()) {
             throw new SystemException("Cannot draw text unless a color has been specified with setColor().");
@@ -190,13 +188,13 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     }
 
     #[\Override]
-    public function textFitsImage(string $text, int $margin, $font, int $size)
+    public function textFitsImage(string $text, int $margin, string $font, int $size)
     {
         return $this->adapter->textFitsImage($text, $margin, $font, $size);
     }
 
     #[\Override]
-    public function adjustFontSize(string $text, int $margin, $font, int $size)
+    public function adjustFontSize(string $text, int $margin, string $font, int $size)
     {
         // adjust font size
         while ($size && !$this->textFitsImage($text, $margin, $font, $size)) {
@@ -225,7 +223,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     }
 
     #[\Override]
-    public function writeImage($image, ?string $filename = null)
+    public function writeImage(object|string $image, ?string $filename = null)
     {
         if ($filename === null) {
             $filename = $image;
@@ -260,7 +258,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     }
 
     #[\Override]
-    public function rotate($degrees)
+    public function rotate(float $degrees)
     {
         if ($degrees > 360.0 || $degrees < 0.0) {
             throw new SystemException("Degrees must be a value between 0 and 360.");

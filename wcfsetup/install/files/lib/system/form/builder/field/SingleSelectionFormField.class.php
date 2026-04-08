@@ -50,7 +50,7 @@ class SingleSelectionFormField extends AbstractFormField implements
     }
 
     #[\Override]
-    public function filterable($filterable = true)
+    public function filterable(bool $filterable = true)
     {
         if ($filterable) {
             $this->javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/RadioButton';

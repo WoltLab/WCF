@@ -52,11 +52,7 @@ class HtmlNodePlainLink
      */
     protected $topLevelParent;
 
-    /**
-     * @param \DOMElement $link
-     * @param string $href
-     */
-    public function __construct(\DOMElement $link, $href)
+    public function __construct(\DOMElement $link, string $href)
     {
         $this->link = $link;
         $this->href = $href;
@@ -80,8 +76,6 @@ class HtmlNodePlainLink
     /**
      * Marks the link as standalone, which means that it is the only content in a line.
      *
-     * @param \DOMElement $topLevelParent
-     * @param bool $aloneInParagraph
      * @return $this
      */
     public function setIsStandalone(\DOMElement $topLevelParent, bool $aloneInParagraph = true)
@@ -154,11 +148,9 @@ class HtmlNodePlainLink
      * Replaces the entire link, including any formatting, with the provided bbcode. This is
      * available for standalone links only.
      *
-     * @param BBCode $bbcode
-     * @param ?int $overrideObjectID
      * @return void
      */
-    public function replaceWithBBCode(BBCode $bbcode, $overrideObjectID = null)
+    public function replaceWithBBCode(BBCode $bbcode, ?int $overrideObjectID = null)
     {
         $this->markAsTainted();
 
@@ -210,8 +202,6 @@ class HtmlNodePlainLink
     /**
      * Split a link within a block element into its own block element.
      *
-     * @param \DOMElement $link
-     * @param \DOMElement|null $topLevelParent
      * @return \DOMElement
      */
     public static function splitAtLink(\DOMElement $link, ?\DOMElement $topLevelParent = null): \DOMElement

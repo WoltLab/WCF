@@ -37,10 +37,9 @@ class UserAuthenticationFailure extends DatabaseObject
     /**
      * Returns the number of authentication failures caused by given ip address.
      *
-     * @param string $ipAddress
      * @return  bool
      */
-    public static function countIPFailures($ipAddress)
+    public static function countIPFailures(string $ipAddress)
     {
         $sql = "SELECT  COUNT(*)
                 FROM    wcf1_user_authentication_failure
@@ -55,10 +54,9 @@ class UserAuthenticationFailure extends DatabaseObject
     /**
      * Returns the number of authentication failures for given user account.
      *
-     * @param int $userID
      * @return  bool
      */
-    public static function countUserFailures($userID)
+    public static function countUserFailures(int $userID)
     {
         $sql = "SELECT  COUNT(*)
                 FROM    wcf1_user_authentication_failure

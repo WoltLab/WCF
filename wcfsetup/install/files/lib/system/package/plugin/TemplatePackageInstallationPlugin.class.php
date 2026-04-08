@@ -103,7 +103,7 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
     }
 
     #[\Override]
-    public static function isValid(PackageArchive $packageArchive, $instruction)
+    public static function isValid(PackageArchive $packageArchive, string $instruction)
     {
         if (!$instruction) {
             $instruction = static::getDefaultFilename();

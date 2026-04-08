@@ -72,20 +72,15 @@ class MessageParser extends BBCodeParser
     /**
      * Parses a message.
      *
-     * @param string $text
-     * @param bool $enableSmilies
-     * @param bool $enableHtml
-     * @param bool $enableBBCodes
-     * @param bool $doKeywordHighlighting
      * @return string parsed message
      */
     #[\Override]
     public function parse(
-        $text,
-        $enableSmilies = true,
-        $enableHtml = false,
-        $enableBBCodes = true,
-        $doKeywordHighlighting = true
+        string $text,
+        bool $enableSmilies = true,
+        bool $enableHtml = false,
+        bool $enableBBCodes = true,
+        bool $doKeywordHighlighting = true
     ) {
         $this->cachedCodes = [];
         $this->message = $text;
@@ -146,11 +141,9 @@ class MessageParser extends BBCodeParser
     /**
      * Parses smiley codes.
      *
-     * @param string $text
-     * @param bool $enableHtml
      * @return string
      */
-    protected function parseSmilies($text, $enableHtml = false)
+    protected function parseSmilies(string $text, bool $enableHtml = false)
     {
         foreach ($this->smilies as $code => $html) {
             //$text = preg_replace('~(?<!&\w{2}|&\w{3}|&\w{4}|&\w{5}|&\w{6}|&#\d{2}|&#\d{3}|&#\d{4}|&#\d{5})'.preg_quote((!$enableHtml ? StringUtil::encodeHTML($code) : $code), '~').'(?![^<]*>)~', $html, $text);
@@ -166,10 +159,9 @@ class MessageParser extends BBCodeParser
     /**
      * Caches code bbcodes to avoid parsing of smileys and other bbcodes inside them.
      *
-     * @param string $text
      * @return string
      */
-    protected function cacheCodes($text)
+    protected function cacheCodes(string $text)
     {
         if (!empty($this->sourceCodeRegEx)) {
             $text = \preg_replace_callback("~(\\[(" . $this->sourceCodeRegEx . ")
@@ -190,7 +182,7 @@ class MessageParser extends BBCodeParser
      * @param list<string> $matches
      * @return string
      */
-    protected function cacheCodesCallback($matches)
+    protected function cacheCodesCallback(array $matches)
     {
         // create hash
         $hash = '@@' . StringUtil::getRandomID() . '@@';
@@ -208,10 +200,9 @@ class MessageParser extends BBCodeParser
     /**
      * Reinserts cached code bbcodes.
      *
-     * @param string $text
      * @return string
      */
-    protected function insertCachedCodes($text)
+    protected function insertCachedCodes(string $text)
     {
         foreach ($this->cachedCodes as $hash => $tag) {
             // build code and insert
@@ -255,10 +246,9 @@ class MessageParser extends BBCodeParser
     /**
      * Returns a text-only version of given message.
      *
-     * @param string $message
      * @return string
      */
-    public function stripHTML($message)
+    public function stripHTML(string $message)
     {
         // remove img tags (smilies)
         $message = \preg_replace('~<img src="[^"]+" alt="([^"]+)"(?: /)?>~', '\\1', $message);

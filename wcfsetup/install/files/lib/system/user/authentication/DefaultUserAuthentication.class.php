@@ -24,12 +24,10 @@ class DefaultUserAuthentication extends AbstractUserAuthentication
     }
 
     /**
-     * @param string $username
-     * @param string $password
      * @return void
      * @deprecated 5.4 - This method is a noop, as user sessions are long-lived now.
      */
-    public function storeAccessData(User $user, $username, $password)
+    public function storeAccessData(User $user, string $username, string $password)
     {
         // Does nothing
     }
@@ -58,40 +56,32 @@ class DefaultUserAuthentication extends AbstractUserAuthentication
     }
 
     /**
-     * @param bool $persistent
-     * @param string $userClassname
      * @return void
      * @deprecated 5.4 - This method always returns null, as user sessions are long-lived now.
      */
-    public function loginAutomatically($persistent = false, $userClassname = User::class) {}
+    public function loginAutomatically(bool $persistent = false, string $userClassname = User::class) {}
 
     /**
      * Returns a user object by given login name.
      *
-     * @param string $login
      * @return  User
      */
-    protected function getUserByLogin($login)
+    protected function getUserByLogin(string $login)
     {
         return User::getUserByUsername($login);
     }
 
     /**
-     * @param int $userID
-     * @param string $password
-     * @param string $userClassname
      * @return void
      * @deprecated 5.4 - This method always returns null, as user sessions are long-lived now.
      */
-    protected function getUserAutomatically($userID, $password, $userClassname = User::class) {}
+    protected function getUserAutomatically(int $userID, string $password, string $userClassname = User::class) {}
 
     /**
-     * @param string $user
-     * @param string $password
      * @return false
      * @deprecated 5.4 - This method always returns false, as user sessions are long-lived now.
      */
-    protected function checkCookiePassword($user, $password)
+    protected function checkCookiePassword(string $user, string $password)
     {
         return false;
     }

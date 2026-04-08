@@ -39,7 +39,7 @@ trait TFormElement
      *
      * @throws \InvalidArgumentException if the given description is no string or otherwise is invalid
      */
-    public function description($languageItem = null, array $variables = [])
+    public function description(?string $languageItem = null, array $variables = [])
     {
         if ($languageItem === null) {
             if (!empty($variables)) {
@@ -93,7 +93,7 @@ trait TFormElement
      *
      * @throws \InvalidArgumentException if the given label is no string or otherwise is invalid
      */
-    public function label($languageItem = null, array $variables = [])
+    public function label(?string $languageItem = null, array $variables = [])
     {
         if ($languageItem === null) {
             if (!empty($variables)) {

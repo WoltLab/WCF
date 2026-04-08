@@ -84,12 +84,11 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
     /**
      * Validates accessible groups.
      *
-     * @param bool $ignoreOwnUser
      * @return void
      * @throws  PermissionDeniedException
      * @throws  UserInputException
      */
-    protected function __validateAccessibleGroups($ignoreOwnUser = true)
+    protected function __validateAccessibleGroups(bool $ignoreOwnUser = true)
     {
         if ($ignoreOwnUser) {
             if (\in_array(WCF::getUser()->userID, $this->objectIDs)) {

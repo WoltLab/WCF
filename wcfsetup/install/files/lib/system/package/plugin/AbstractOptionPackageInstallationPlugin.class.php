@@ -279,10 +279,9 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
     /**
      * Returns the category with given name.
      *
-     * @param string $category
      * @return array{categoryID: int, packageID: int}|false
      */
-    protected function getExistingCategory($category)
+    protected function getExistingCategory(string $category)
     {
         $sql = "SELECT  categoryID, packageID
                 FROM    " . $this->application . "1_" . $this->tableName . "_category
@@ -302,7 +301,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
      * @return void
      * @throws  SystemException
      */
-    protected function saveCategory($category)
+    protected function saveCategory(array $category)
     {
         // search existing category
         $row = $this->getExistingCategory($category['categoryName']);
@@ -358,11 +357,9 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
      * Installs options.
      *
      * @param array<string, int|string> $option
-     * @param string $categoryName
-     * @param int $existingOptionID
      * @return void
      */
-    abstract protected function saveOption($option, $categoryName, $existingOptionID = 0);
+    abstract protected function saveOption(array $option, string $categoryName, int $existingOptionID = 0);
 
     /**
      * @param array{name: string} $data
@@ -734,12 +731,11 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
     }
 
     /**
-     * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
     #[\Override]
-    protected function fetchElementData(\DOMElement $element, $saveData)
+    protected function fetchElementData(\DOMElement $element, bool $saveData)
     {
         $data = [];
 

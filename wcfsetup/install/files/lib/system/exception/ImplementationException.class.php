@@ -12,13 +12,7 @@ namespace wcf\system\exception;
  */
 class ImplementationException extends \LogicException
 {
-    /**
-     * ImplementationException constructor.
-     *
-     * @param string $className
-     * @param string $interfaceName
-     */
-    public function __construct($className, $interfaceName)
+    public function __construct(string $className, string $interfaceName)
     {
         parent::__construct("Class '{$className}' does not implement interface '{$interfaceName}'.");
     }

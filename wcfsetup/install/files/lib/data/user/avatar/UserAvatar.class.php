@@ -42,11 +42,9 @@ class UserAvatar extends DatabaseObject implements IUserAvatar, ISafeFormatAvata
     /**
      * Returns the physical location of this avatar.
      *
-     * @param int $size
-     * @param bool|null $forceWebP
      * @return string
      */
-    public function getLocation($size = null, ?bool $forceWebP = null)
+    public function getLocation(?int $size = null, ?bool $forceWebP = null)
     {
         return WCF_DIR . 'images/avatars/' . $this->getFilename($size, $forceWebP);
     }
@@ -54,11 +52,9 @@ class UserAvatar extends DatabaseObject implements IUserAvatar, ISafeFormatAvata
     /**
      * Returns the file name of this avatar.
      *
-     * @param int $size
-     * @param bool|null $forceWebP
      * @return string
      */
-    public function getFilename($size = null, ?bool $forceWebP = null)
+    public function getFilename(?int $size = null, ?bool $forceWebP = null)
     {
         if (
             $forceWebP === true

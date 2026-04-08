@@ -34,11 +34,9 @@ class LabelEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Adds the label to a specific position in the label group.
      *
-     * @param int $groupID
-     * @param int $showOrder
      * @return void
      */
-    public function setShowOrder($groupID, $showOrder = 0)
+    public function setShowOrder(int $groupID, int $showOrder = 0)
     {
         // shift back labels in old label group with higher showOrder
         if ($this->showOrder) {

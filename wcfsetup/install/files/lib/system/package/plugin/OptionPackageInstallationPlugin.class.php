@@ -67,7 +67,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
     ];
 
     #[\Override]
-    protected function saveOption($option, $categoryName, $existingOptionID = 0)
+    protected function saveOption(array $option, string $categoryName, int $existingOptionID = 0)
     {
         // default values
         $optionName = $optionType = $defaultValue = $validationPattern = $selectOptions = $enableOptions = $permissions = $options = '';
@@ -315,12 +315,11 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
     }
 
     /**
-     * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
     #[\Override]
-    protected function fetchElementData(\DOMElement $element, $saveData)
+    protected function fetchElementData(\DOMElement $element, bool $saveData)
     {
         $data = parent::fetchElementData($element, $saveData);
 

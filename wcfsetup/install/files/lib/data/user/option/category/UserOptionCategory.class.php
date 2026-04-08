@@ -41,10 +41,9 @@ class UserOptionCategory extends DatabaseObject implements ITitledObject
     /**
      * Returns an instance of UserOptionCategory by name.
      *
-     * @param string $categoryName
      * @return  UserOptionCategory|null
      */
-    public static function getCategoryByName($categoryName)
+    public static function getCategoryByName(string $categoryName)
     {
         $sql = "SELECT  *
                 FROM    wcf1_user_option_category

@@ -122,7 +122,7 @@ final class GoogleMapsFormField extends AbstractFormField implements
     }
 
     #[\Override]
-    public function updatedObject(array $data, IStorableObject $object, $loadValues = true): static
+    public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true): static
     {
         if ($this->isImmutable()) {
             $loadValues = true;

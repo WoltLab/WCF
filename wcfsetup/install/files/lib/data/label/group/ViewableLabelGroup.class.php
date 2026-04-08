@@ -90,10 +90,9 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
     /**
      * Returns true, if label is known.
      *
-     * @param int $labelID
      * @return  bool
      */
-    public function isValid($labelID)
+    public function isValid(int $labelID)
     {
         return isset($this->labels[$labelID]);
     }
@@ -102,11 +101,9 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
      * Returns true, if the given user fulfils option id permissions.
      * If the user parameter is null, the method checks the current user.
      *
-     * @param int $optionID
-     * @param User $user
      * @return  bool
      */
-    public function getPermission($optionID, ?User $user = null)
+    public function getPermission(int $optionID, ?User $user = null)
     {
         if ($user === null) {
             $user = WCF::getUser();
@@ -162,10 +159,9 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
     /**
      * Returns a label by id.
      *
-     * @param int $labelID
      * @return ?Label
      */
-    public function getLabel($labelID)
+    public function getLabel(int $labelID)
     {
         return $this->labels[$labelID] ?? null;
     }
@@ -215,7 +211,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
     }
 
     #[\Override]
-    public function seek($offset): void
+    public function seek(int $offset): void
     {
         $this->index = $offset;
 

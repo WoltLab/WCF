@@ -165,10 +165,9 @@ HTML;
     /**
      * Returns the option elements for the user group selection.
      *
-     * @param string $identifier
      * @return  string
      */
-    protected function getOptionElements($identifier)
+    protected function getOptionElements(string $identifier)
     {
         $trophies = $this->getTrophies();
 

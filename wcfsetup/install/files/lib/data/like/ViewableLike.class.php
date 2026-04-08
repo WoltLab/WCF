@@ -98,11 +98,10 @@ class ViewableLike extends DatabaseObjectDecorator
     /**
      * Sets the description of the object type displayed in the list of likes.
      *
-     * @param string $name
      * @return void
      * @deprecated 6.3 No longer in use.
      */
-    public function setObjectTypeDescription($name)
+    public function setObjectTypeDescription(string $name)
     {
         $this->objectTypeDescription = $name;
     }

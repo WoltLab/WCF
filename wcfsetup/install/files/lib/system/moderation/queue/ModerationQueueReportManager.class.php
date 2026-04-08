@@ -33,11 +33,9 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
     /**
      * Returns true if given item was already reported.
      *
-     * @param string $objectType
-     * @param int $objectID
      * @return  bool
      */
-    public function isAlreadyReported($objectType, $objectID)
+    public function isAlreadyReported(string $objectType, int $objectID)
     {
         $objectTypeID = $this->getObjectTypeID($objectType);
 
@@ -58,11 +56,9 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
      * Returns true if the object with the given data has a pending report.
      * A pending report has a status other than done.
      *
-     * @param string $objectType
-     * @param int $objectID
      * @return  bool
      */
-    public function hasPendingReport($objectType, $objectID)
+    public function hasPendingReport(string $objectType, int $objectID)
     {
         $objectTypeID = $this->getObjectTypeID($objectType);
 
@@ -85,11 +81,9 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
     /**
      * Returns true if current user can report given content.
      *
-     * @param string $objectType
-     * @param int $objectID
      * @return  bool
      */
-    public function canReport($objectType, $objectID)
+    public function canReport(string $objectType, int $objectID)
     {
         return $this->getProcessor($objectType)->canReport($objectID);
     }
@@ -114,11 +108,9 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
     /**
      * Returns the reported object.
      *
-     * @param string $objectType
-     * @param int $objectID
      * @return  \wcf\data\IUserContent
      */
-    public function getReportedObject($objectType, $objectID)
+    public function getReportedObject(string $objectType, int $objectID)
     {
         return $this->getProcessor($objectType)->getReportedObject($objectID);
     }
@@ -126,14 +118,11 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
     /**
      * Adds a report for specified content.
      *
-     * @param string $objectType
-     * @param int $objectID
-     * @param string $message
      * @param mixed[] $additionalData
      * @return void
      * @throws  InvalidObjectTypeException
      */
-    public function addReport($objectType, $objectID, $message, array $additionalData = [])
+    public function addReport(string $objectType, int $objectID, string $message, array $additionalData = [])
     {
         if (!$this->isValid($objectType)) {
             throw new InvalidObjectTypeException($objectType, 'com.woltlab.wcf.moderation.report');
@@ -149,7 +138,7 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
     }
 
     #[\Override]
-    protected function addEntry($objectTypeID, $objectID, $containerID = 0, array $additionalData = [])
+    protected function addEntry(int $objectTypeID, int $objectID, int $containerID = 0, array $additionalData = [])
     {
         $sql = "SELECT  queueID
                 FROM    wcf1_moderation_queue

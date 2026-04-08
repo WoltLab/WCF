@@ -336,11 +336,9 @@ class PaidSubscriptionAddForm extends AbstractForm
     /**
      * Saves i18n values.
      *
-     * @param PaidSubscription $subscription
-     * @param string $columnName
      * @return void
      */
-    public function saveI18nValue(PaidSubscription $subscription, $columnName)
+    public function saveI18nValue(PaidSubscription $subscription, string $columnName)
     {
         if (!I18nHandler::getInstance()->isPlainValue($columnName)) {
             I18nHandler::getInstance()->save(

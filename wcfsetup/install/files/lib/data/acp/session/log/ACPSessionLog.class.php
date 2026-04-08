@@ -29,7 +29,7 @@ class ACPSessionLog extends DatabaseObject
      */
     protected static $databaseTableIndexName = 'sessionLogID';
 
-    public function __construct($id, ?array $row = null, ?DatabaseObject $object = null)
+    public function __construct(null|string|int $id, ?array $row = null, ?DatabaseObject $object = null)
     {
         if ($id !== null) {
             $sql = "SELECT      acp_session_log.*, user_table.username
@@ -44,7 +44,7 @@ class ACPSessionLog extends DatabaseObject
             $row = $object->data;
         }
 
-        $this->handleData($row);
+        $this->handleData($row ?? []);
     }
 
     /**

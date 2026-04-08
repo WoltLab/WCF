@@ -108,11 +108,10 @@ class EmailFormField extends AbstractFormField implements
     /**
      * Validates the given email address in the given language.
      *
-     * @param ?string $email validated email address
      * @param ?Language $language language of validated email address or `null` for monolingual email address
      * @return void
      */
-    protected function validateEmail($email, ?Language $language = null)
+    protected function validateEmail(?string $email, ?Language $language = null)
     {
         if ($email === null || $email === '') {
             return;

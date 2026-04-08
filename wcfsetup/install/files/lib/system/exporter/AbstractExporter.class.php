@@ -89,14 +89,14 @@ abstract class AbstractExporter implements IExporter
 
     #[\Override]
     public function setData(
-        $databaseHost,
-        $databaseUser,
+        string $databaseHost,
+        string $databaseUser,
         #[\SensitiveParameter]
-        $databasePassword,
-        $databaseName,
-        $databasePrefix,
-        $fileSystemPath,
-        $additionalData
+        string $databasePassword,
+        string $databaseName,
+        string $databasePrefix,
+        string $fileSystemPath,
+        array $additionalData
     ) {
         $this->databaseHost = $databaseHost;
         $this->databaseUser = $databaseUser;
@@ -140,7 +140,7 @@ abstract class AbstractExporter implements IExporter
     }
 
     #[\Override]
-    public function countLoops($objectType)
+    public function countLoops(string $objectType)
     {
         if (!isset($this->methods[$objectType]) || !\method_exists($this, 'count' . $this->methods[$objectType])) {
             throw new SystemException("unknown object type '" . $objectType . "' given");
@@ -153,7 +153,7 @@ abstract class AbstractExporter implements IExporter
     }
 
     #[\Override]
-    public function exportData($objectType, $loopCount = 0)
+    public function exportData(string $objectType, int $loopCount = 0)
     {
         if (!isset($this->methods[$objectType]) || !\method_exists($this, 'export' . $this->methods[$objectType])) {
             throw new SystemException("unknown object type '" . $objectType . "' given");
@@ -197,11 +197,9 @@ abstract class AbstractExporter implements IExporter
     /**
      * Returns the maximum value of a specific column.
      *
-     * @param string $tableName
-     * @param string $columnName
      * @return  int
      */
-    protected function __getMaxID($tableName, $columnName)
+    protected function __getMaxID(string $tableName, string $columnName)
     {
         $sql = "SELECT  MAX(" . $columnName . ") AS maxID
                 FROM    " . $tableName;

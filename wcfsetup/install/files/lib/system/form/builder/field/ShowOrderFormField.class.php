@@ -2,6 +2,7 @@
 
 namespace wcf\system\form\builder\field;
 
+use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\WCF;
 
@@ -71,7 +72,7 @@ final class ShowOrderFormField extends SingleSelectionFormField
      * as value to mark adding it at the first position.
      */
     #[\Override]
-    public function options($options, $nestedOptions = false, $labelLanguageItems = true)
+    public function options(array|callable|\Traversable|DatabaseObjectList $options, bool $nestedOptions = false, bool $labelLanguageItems = true)
     {
         parent::options($options, $nestedOptions, $labelLanguageItems);
 

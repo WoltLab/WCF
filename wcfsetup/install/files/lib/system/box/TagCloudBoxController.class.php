@@ -42,6 +42,7 @@ abstract class TagCloudBoxController extends AbstractBoxController
                     if (!WCF::getSession()->getPermission($this->neededPermission)) {
                         return;
                     }
+                    // @phpstan-ignore elseif.alwaysTrue
                 } elseif (\is_array($this->neededPermission)) {
                     $hasPermission = false;
                     foreach ($this->neededPermission as $permission) {

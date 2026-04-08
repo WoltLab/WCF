@@ -63,10 +63,8 @@ class FloatOptionType extends TextOptionType
 
     /**
      * Converts a localized string value into a float value.
-     *
-     * @param string $value
      */
-    protected function toFloat($value): float
+    protected function toFloat(string $value): float
     {
         $value = \str_replace(' ', '', $value);
         $value = \str_replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $value);

@@ -177,10 +177,9 @@ class MysqlSearchEngine extends AbstractSearchEngine
      * - `test <foo bar` becomes `+test* <foo* +bar*`
      * - `test "foo bar"` becomes `+test* +"foo bar"`
      *
-     * @param string $query
      * @return string
      */
-    protected function parseSearchQuery($query)
+    protected function parseSearchQuery(string $query)
     {
         $query = StringUtil::trim($query);
 
@@ -335,13 +334,12 @@ class MysqlSearchEngine extends AbstractSearchEngine
      * Word: |bar|
      * Word: |)|
      *
-     * @param string $query
      * @return iterable<array{0: string, 1: string, 2: string}>
      * @see https://dev.mysql.com/doc/refman/8.0/en/fulltext-boolean.html
      * @see https://github.com/mysql/mysql-server/blob/ee4455a33b10f1b1886044322e4893f587b319ed/storage/innobase/fts/fts0pars.y
      * @see https://github.com/mysql/mysql-server/blob/ee4455a33b10f1b1886044322e4893f587b319ed/storage/innobase/fts/fts0blex.l
      */
-    protected function splitIntoTerms($query)
+    protected function splitIntoTerms(string $query)
     {
         $state = 'beforePrefix';
 

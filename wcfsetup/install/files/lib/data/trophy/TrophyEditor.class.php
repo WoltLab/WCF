@@ -27,10 +27,9 @@ class TrophyEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Sets the show order of the trophy.
      *
-     * @param int $showOrder
      * @return void
      */
-    public function setShowOrder($showOrder = 0)
+    public function setShowOrder(int $showOrder = 0)
     {
         $sql = "SELECT  MAX(showOrder)
                 FROM    wcf1_trophy";

@@ -87,10 +87,9 @@ class DevtoolsProject extends DatabaseObject
      * Validates the repository and returns the first error message, or
      * an empty string on success.
      *
-     * @param bool $pathOnly
      * @return      string
      */
-    public function validate($pathOnly = false)
+    public function validate(bool $pathOnly = false)
     {
         $errorType = self::validatePath($this->path);
         if ($errorType !== '') {
@@ -250,10 +249,9 @@ class DevtoolsProject extends DatabaseObject
      * if the path does not exist (`notFound`) or if there is
      * no package.xml (`packageXml`).
      *
-     * @param string $path
      * @return      string
      */
-    public static function validatePath($path)
+    public static function validatePath(string $path)
     {
         if (!\is_dir($path)) {
             return 'notFound';
@@ -270,10 +268,9 @@ class DevtoolsProject extends DatabaseObject
     /**
      * Returns true if the path appears to point to `WoltLab Suite Core`.
      *
-     * @param string $path
      * @return bool
      */
-    public static function pathIsCore($path)
+    public static function pathIsCore(string $path)
     {
         return \is_dir($path . 'com.woltlab.wcf') && \file_exists($path . 'com.woltlab.wcf/package.xml');
     }

@@ -39,10 +39,9 @@ class CaptchaQuestion extends DatabaseObject implements ITitledObject
     /**
      * Returns true if the given user input is an answer to this question.
      *
-     * @param string $answer
      * @return  bool
      */
-    public function isAnswer($answer)
+    public function isAnswer(string $answer)
     {
         $answers = \explode("\n", StringUtil::unifyNewlines(WCF::getLanguage()->get($this->answers)));
         foreach ($answers as $__answer) {

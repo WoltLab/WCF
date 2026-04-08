@@ -56,7 +56,7 @@ class Application extends DatabaseObject
     protected static $directories;
 
     #[\Override]
-    protected function handleData($data)
+    protected function handleData(array $data)
     {
         if (isset($data['domainPath'])) {
             // The leading and trailing slashes are required and enforced through the admin panel,
@@ -129,11 +129,10 @@ class Application extends DatabaseObject
     /**
      * Returns the directory of the application with the given abbreviation.
      *
-     * @param string $abbreviation
      * @return  string
      * @throws  SystemException
      */
-    public static function getDirectory($abbreviation)
+    public static function getDirectory(string $abbreviation)
     {
         if (static::$directories === null) {
             static::$directories = [];

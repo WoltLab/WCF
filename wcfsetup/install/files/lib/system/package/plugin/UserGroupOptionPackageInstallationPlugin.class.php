@@ -80,7 +80,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
     ];
 
     #[\Override]
-    protected function saveOption($option, $categoryName, $existingOptionID = 0)
+    protected function saveOption(array $option, string $categoryName, int $existingOptionID = 0)
     {
         // default values
         $optionName = $optionType = $defaultValue = $adminDefaultValue = $modDefaultValue = $userDefaultValue = $validationPattern = $enableOptions = $permissions = $options = '';
@@ -315,12 +315,11 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
     }
 
     /**
-     * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
     #[\Override]
-    protected function fetchElementData(\DOMElement $element, $saveData)
+    protected function fetchElementData(\DOMElement $element, bool $saveData)
     {
         $data = parent::fetchElementData($element, $saveData);
 

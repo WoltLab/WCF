@@ -31,11 +31,10 @@ class ConditionHandler extends SingletonFactory
      * Creates condition objects for the object with the given id and based
      * on the given condition object types.
      *
-     * @param int $objectID
      * @param ObjectType[] $conditionObjectTypes
      * @return void
      */
-    public function createConditions($objectID, array $conditionObjectTypes)
+    public function createConditions(int $objectID, array $conditionObjectTypes)
     {
         foreach ($conditionObjectTypes as $objectType) {
             $conditionData = $objectType->getProcessor()->getData();
@@ -55,12 +54,11 @@ class ConditionHandler extends SingletonFactory
     /**
      * Deletes all conditions of the objects with the given ids.
      *
-     * @param string $definitionName
      * @param int[] $objectIDs
      * @return void
      * @throws SystemException
      */
-    public function deleteConditions($definitionName, array $objectIDs)
+    public function deleteConditions(string $definitionName, array $objectIDs)
     {
         if (empty($objectIDs)) {
             return;
@@ -96,12 +94,10 @@ class ConditionHandler extends SingletonFactory
      * Returns the conditions for the conditioned object with the given condition
      * object type definition and object id.
      *
-     * @param string $definitionName
-     * @param int $objectID
      * @return Condition[]
      * @throws SystemException
      */
-    public function getConditions($definitionName, $objectID)
+    public function getConditions(string $definitionName, int $objectID)
     {
         // validate definition
         $definition = ObjectTypeCache::getInstance()->getDefinitionByName($definitionName);
@@ -125,12 +121,11 @@ class ConditionHandler extends SingletonFactory
     /**
      * Updates the conditions for the object with the given object id.
      *
-     * @param int $objectID
      * @param Condition[] $oldConditions
      * @param ObjectType[] $conditionObjectTypes
      * @return void
      */
-    public function updateConditions($objectID, array $oldConditions, array $conditionObjectTypes)
+    public function updateConditions(int $objectID, array $oldConditions, array $conditionObjectTypes)
     {
         // delete old conditions first
         $conditionAction = new ConditionAction($oldConditions, 'delete');

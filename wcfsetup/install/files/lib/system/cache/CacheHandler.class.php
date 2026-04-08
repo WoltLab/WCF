@@ -142,7 +142,7 @@ class CacheHandler extends SingletonFactory
      * @param mixed[] $parameters
      * @return mixed[]
      */
-    protected function orderParameters($parameters)
+    protected function orderParameters(array $parameters)
     {
         if (!empty($parameters)) {
             \array_multisort($parameters);

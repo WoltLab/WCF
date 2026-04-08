@@ -211,8 +211,8 @@ class UserSearchForm extends UserOptionListForm
             $option = $option['object'];
 
             $value = $this->optionHandler->optionValues[$option->optionName] ?? null;
-            /** @var ISearchableUserOption $typeObject */
             $typeObject = $this->optionHandler->getTypeObject($option->optionType);
+            \assert($typeObject instanceof ISearchableUserOption);
             $typeObject->getCondition($this->conditions, $option, $value);
         }
     }

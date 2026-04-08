@@ -26,10 +26,9 @@ class ActiveStyle extends DatabaseObjectDecorator
     /**
      * Returns full path to specified image.
      *
-     * @param string $image
      * @return string
      */
-    public function getImage($image)
+    public function getImage(string $image)
     {
         if (\preg_match('~^(https?)://~', $image, $matches)) {
             // rewrite protocol

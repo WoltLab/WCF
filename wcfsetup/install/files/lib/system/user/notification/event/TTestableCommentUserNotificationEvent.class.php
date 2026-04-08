@@ -35,8 +35,6 @@ trait TTestableCommentUserNotificationEvent
     /**
      * Creates a test comment.
      *
-     * @param UserProfile $recipient
-     * @param UserProfile $author
      * @return  Comment
      */
     public static function createTestComment(UserProfile $recipient, UserProfile $author)

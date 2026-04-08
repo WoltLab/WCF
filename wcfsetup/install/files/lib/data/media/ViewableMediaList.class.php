@@ -26,10 +26,8 @@ class ViewableMediaList extends MediaList
 
     /**
      * Creates a new ViewableMediaList object.
-     *
-     * @param int|null $languageID
      */
-    public function __construct($languageID = null)
+    public function __construct(?int $languageID = null)
     {
         parent::__construct();
 

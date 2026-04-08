@@ -397,7 +397,6 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         if (!empty($this->parameters['commentProcessor'])) {
             $objectType = null;
             if (!empty($this->objects)) {
-                /** @var Comment $comment */
                 $comment = \reset($this->objects);
                 $objectType = $this->validateObjectType($comment->objectTypeID);
             }
@@ -408,7 +407,6 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             $this->commentProcessor = $objectType->getProcessor();
         }
 
-        /** @var CommentEditor $comment */
         foreach ($this->objects as $comment) {
             // update counter
             $comment->update(['isDisabled' => 0]);
@@ -1021,8 +1019,6 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     /**
      * Renders a comment.
      *
-     * @param Comment $comment
-     * @param CommentResponse $response
      * @return  string|string[]
      * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
@@ -1209,12 +1205,11 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     /**
      * Validates object type id parameter.
      *
-     * @param int $objectTypeID
      * @return  ObjectType
      * @throws  UserInputException
      * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
-    protected function validateObjectType($objectTypeID = null)
+    protected function validateObjectType(?int $objectTypeID = null)
     {
         if ($objectTypeID === null) {
             $this->readInteger('objectTypeID', false, 'data');
@@ -1345,12 +1340,10 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     /**
      * Returns the current html input processor or a new one if `$message` is not null.
      *
-     * @param string|null $message source message
-     * @param int $objectID object id
      * @return      HtmlInputProcessor
      * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
-    public function getHtmlInputProcessor($message = null, $objectID = 0)
+    public function getHtmlInputProcessor(?string $message = null, int $objectID = 0)
     {
         if ($message === null) {
             return $this->htmlInputProcessor;

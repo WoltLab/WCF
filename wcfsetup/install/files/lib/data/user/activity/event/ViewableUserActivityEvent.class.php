@@ -140,11 +140,9 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator
     /**
      * Sets event text.
      *
-     * @param string $description
-     * @param bool $isRawHtml
      * @return void
      */
-    public function setDescription($description, $isRawHtml = false)
+    public function setDescription(string $description, bool $isRawHtml = false)
     {
         $this->description = $description;
         $this->isRawHtml = $isRawHtml;
@@ -163,10 +161,9 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator
     /**
      * Sets event title.
      *
-     * @param string $title
      * @return void
      */
-    public function setTitle($title)
+    public function setTitle(string $title)
     {
         $this->title = $title;
     }

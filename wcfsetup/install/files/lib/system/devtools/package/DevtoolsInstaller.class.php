@@ -6,6 +6,7 @@ use wcf\data\devtools\project\DevtoolsProject;
 use wcf\system\package\plugin\ACPTemplatePackageInstallationPlugin;
 use wcf\system\package\plugin\FilePackageInstallationPlugin;
 use wcf\system\package\plugin\TemplatePackageInstallationPlugin;
+use wcf\system\setup\IFileHandler;
 use wcf\system\setup\Installer;
 use wcf\util\FileUtil;
 
@@ -23,7 +24,7 @@ class DevtoolsInstaller extends Installer
      */
     protected $project;
 
-    public function __construct(DevtoolsProject $project, $targetDir, $source, $fileHandler = null, $folder = '')
+    public function __construct(DevtoolsProject $project, string $targetDir, string $source, ?IFileHandler $fileHandler = null, string $folder = '')
     {
         $this->project = $project;
 
@@ -31,7 +32,7 @@ class DevtoolsInstaller extends Installer
     }
 
     #[\Override]
-    public function getTar($source)
+    public function getTar(string $source)
     {
         $directory = null;
 

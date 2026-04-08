@@ -300,12 +300,11 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
     /**
      * Validates object type id parameter.
      *
-     * @param int $objectTypeID
      * @return  ObjectType
      * @throws  UserInputException
      * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
-    protected function validateObjectType($objectTypeID = null)
+    protected function validateObjectType(?int $objectTypeID = null)
     {
         if ($objectTypeID === null) {
             $this->readInteger('objectTypeID', false, 'data');
@@ -337,12 +336,10 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
     /**
      * Returns the current html input processor or a new one if `$message` is not null.
      *
-     * @param string|null $message source message
-     * @param int $objectID object id
      * @return      HtmlInputProcessor
      * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */
-    public function getHtmlInputProcessor($message = null, $objectID = 0)
+    public function getHtmlInputProcessor(?string $message = null, int $objectID = 0)
     {
         if ($message === null) {
             return $this->htmlInputProcessor;

@@ -22,11 +22,10 @@ class UserObjectWatchHandler extends SingletonFactory
     /**
      * Returns the id of the given object type.
      *
-     * @param string $objectTypeName
      * @return  int
      * @throws  SystemException
      */
-    public function getObjectTypeID($objectTypeName)
+    public function getObjectTypeID(string $objectTypeName)
     {
         $objectType = ObjectTypeCache::getInstance()
             ->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $objectTypeName);
@@ -38,11 +37,9 @@ class UserObjectWatchHandler extends SingletonFactory
     }
 
     /**
-     * @param string $objectType
-     * @param int $objectID
      * @return void
      */
-    public function resetObject($objectType, $objectID)
+    public function resetObject(string $objectType, int $objectID)
     {
         $this->resetObjects($objectType, [$objectID]);
     }
@@ -50,11 +47,10 @@ class UserObjectWatchHandler extends SingletonFactory
     /**
      * Resets the object watch cache for all subscriber of the given object.
      *
-     * @param string $objectType
      * @param int[] $objectIDs
      * @return void
      */
-    public function resetObjects($objectType, array $objectIDs)
+    public function resetObjects(string $objectType, array $objectIDs)
     {
         // get object type id
         $objectTypeObj = ObjectTypeCache::getInstance()
@@ -80,12 +76,11 @@ class UserObjectWatchHandler extends SingletonFactory
     /**
      * Deletes the given objects.
      *
-     * @param string $objectType
      * @param int[] $objectIDs
      * @param int[] $userIDs
      * @return void
      */
-    public function deleteObjects($objectType, array $objectIDs, array $userIDs = [])
+    public function deleteObjects(string $objectType, array $objectIDs, array $userIDs = [])
     {
         // get object type id
         $objectTypeObj = ObjectTypeCache::getInstance()
@@ -108,19 +103,14 @@ class UserObjectWatchHandler extends SingletonFactory
     /**
      * Updates a watched object for all subscriber.
      *
-     * @param string $objectType
-     * @param int $objectID
-     * @param string $notificationEventName
-     * @param string $notificationObjectType
-     * @param IUserNotificationObject $notificationObject
      * @param mixed[] $additionalData
      * @return void
      */
     public function updateObject(
-        $objectType,
-        $objectID,
-        $notificationEventName,
-        $notificationObjectType,
+        string $objectType,
+        int $objectID,
+        string $notificationEventName,
+        string $notificationObjectType,
         IUserNotificationObject $notificationObject,
         array $additionalData = []
     ) {

@@ -60,10 +60,9 @@ class LabelHandler extends SingletonFactory
      * Returns the id of the label ACL option with the given name or null if
      * no such option exists.
      *
-     * @param string $optionName
      * @return ?int
      */
-    public function getOptionID($optionName)
+    public function getOptionID(string $optionName)
     {
         foreach ($this->labelGroups['options'] as $option) {
             if ($option->optionName === $optionName) {
@@ -78,10 +77,9 @@ class LabelHandler extends SingletonFactory
      * Returns the label object type with the given name or null of no such
      * object.
      *
-     * @param string $objectType
      * @return ?ObjectType
      */
-    public function getObjectType($objectType)
+    public function getObjectType(string $objectType)
     {
         if (isset($this->cache['objectTypeNames'][$objectType])) {
             $objectTypeID = $this->cache['objectTypeNames'][$objectType];
@@ -121,13 +119,11 @@ class LabelHandler extends SingletonFactory
     /**
      * Returns an array with boolean values for each given label id.
      *
-     * @param string $optionName
      * @param int[] $labelIDs
-     * @param User $user
      * @return array<int, bool>|array{}
      * @throws  SystemException
      */
-    public function getPermissions($optionName, array $labelIDs, ?User $user = null)
+    public function getPermissions(string $optionName, array $labelIDs, ?User $user = null)
     {
         if (empty($labelIDs)) {
             // nothing to validate anyway
@@ -176,12 +172,9 @@ class LabelHandler extends SingletonFactory
      * assigned labels.
      *
      * @param int[] $labelIDs
-     * @param int $objectTypeID
-     * @param int $objectID
-     * @param bool $validatePermissions
      * @return void
      */
-    public function setLabels(array $labelIDs, $objectTypeID, $objectID, $validatePermissions = true)
+    public function setLabels(array $labelIDs, int $objectTypeID, int $objectID, bool $validatePermissions = true)
     {
         // get accessible label ids to prevent inaccessible ones to be removed
         $accessibleLabelIDs = $this->getAccessibleLabelIDs();
@@ -230,7 +223,7 @@ class LabelHandler extends SingletonFactory
      * @return void
      * @since   5.2
      */
-    public function replaceLabels(array $groupIDs, array $labelIDs, $objectType, $objectID)
+    public function replaceLabels(array $groupIDs, array $labelIDs, string $objectType, int $objectID)
     {
         $objectTypeID = $this->getObjectType($objectType)->objectTypeID;
 
@@ -273,12 +266,10 @@ class LabelHandler extends SingletonFactory
     /**
      * Returns all assigned labels, optionally filtered to validate permissions.
      *
-     * @param int $objectTypeID
      * @param int[] $objectIDs
-     * @param bool $validatePermissions
      * @return  Label[][]
      */
-    public function getAssignedLabels($objectTypeID, array $objectIDs, $validatePermissions = true)
+    public function getAssignedLabels(int $objectTypeID, array $objectIDs, bool $validatePermissions = true)
     {
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("objectTypeID = ?", [$objectTypeID]);
@@ -343,12 +334,10 @@ class LabelHandler extends SingletonFactory
      * Returns given label groups by id.
      *
      * @param int[] $groupIDs
-     * @param bool $validatePermissions
-     * @param string $permission
      * @return  ViewableLabelGroup[]
      * @throws  SystemException
      */
-    public function getLabelGroups(array $groupIDs = [], $validatePermissions = true, $permission = 'canSetLabel')
+    public function getLabelGroups(array $groupIDs = [], bool $validatePermissions = true, string $permission = 'canSetLabel')
     {
         $data = [];
 
@@ -408,10 +397,9 @@ class LabelHandler extends SingletonFactory
     /**
      * Returns label group by id.
      *
-     * @param int $groupID
      * @return  ViewableLabelGroup|null
      */
-    public function getLabelGroup($groupID): ?ViewableLabelGroup
+    public function getLabelGroup(int $groupID): ?ViewableLabelGroup
     {
         if (!isset($this->labelGroups['groups'][$groupID])) {
             return null;
@@ -429,11 +417,10 @@ class LabelHandler extends SingletonFactory
     /**
      * Removes all assigned labels for given object ids.
      *
-     * @param int $objectTypeID
      * @param int[] $objectIDs
      * @return void
      */
-    public function removeLabels($objectTypeID, array $objectIDs)
+    public function removeLabels(int $objectTypeID, array $objectIDs)
     {
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("objectTypeID = ?", [$objectTypeID]);

@@ -61,13 +61,9 @@ class AttachmentHandler implements \Countable
     private AttachmentFileProcessor $fileProcessor;
 
     /**
-     * @param string $objectType
-     * @param int $objectID
-     * @param string $tmpHash
-     * @param int $parentObjectID
      * @throws SystemException
      */
-    public function __construct($objectType, $objectID, $tmpHash = '', $parentObjectID = 0)
+    public function __construct(string $objectType, int $objectID, string $tmpHash = '', int $parentObjectID = 0)
     {
         if (!$objectID && !$tmpHash) {
             throw new SystemException('objectID and tmpHash cannot be empty at the same time');
@@ -119,10 +115,9 @@ class AttachmentHandler implements \Countable
     /**
      * Sets the object id of temporary saved attachments.
      *
-     * @param int $objectID
      * @return void
      */
-    public function updateObjectID($objectID)
+    public function updateObjectID(int $objectID)
     {
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("objectTypeID = ?", [$this->objectType->objectTypeID]);
@@ -144,12 +139,10 @@ class AttachmentHandler implements \Countable
     /**
      * Transfers attachments to a different object id of the same type (e.g. merging content)
      *
-     * @param string $objectType
-     * @param int $newObjectID
      * @param int[] $oldObjectIDs
      * @return void
      */
-    public static function transferAttachments($objectType, $newObjectID, array $oldObjectIDs)
+    public static function transferAttachments(string $objectType, int $newObjectID, array $oldObjectIDs)
     {
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("objectTypeID = ?", [
@@ -172,11 +165,10 @@ class AttachmentHandler implements \Countable
     /**
      * Removes all attachments for given object ids by type.
      *
-     * @param string $objectType
      * @param int[] $objectIDs
      * @return void
      */
-    public static function removeAttachments($objectType, array $objectIDs)
+    public static function removeAttachments(string $objectType, array $objectIDs)
     {
         $attachmentList = new AttachmentList();
         $attachmentList->getConditionBuilder()->add("objectTypeID = ?", [

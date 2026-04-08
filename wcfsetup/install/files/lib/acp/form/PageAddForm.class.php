@@ -480,13 +480,11 @@ class PageAddForm extends AbstractForm
     /**
      * Validates given custom url.
      *
-     * @param int $languageID
-     * @param string $customURL
      * @return void
      *
      * @throws  UserInputException
      */
-    protected function validateCustomUrl($languageID, $customURL)
+    protected function validateCustomUrl(int $languageID, string $customURL)
     {
         if (empty($customURL)) {
             if ($this->pageType != 'system') {

@@ -116,12 +116,11 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
     }
 
     /**
-     * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
     #[\Override]
-    protected function fetchElementData(\DOMElement $element, $saveData)
+    protected function fetchElementData(\DOMElement $element, bool $saveData)
     {
         $data = [
             'className' => $element->getElementsByTagName('classname')->item(0)->nodeValue,

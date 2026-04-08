@@ -19,21 +19,13 @@ class ErrorException extends SystemException
      */
     protected $severity;
 
-    /**
-     * @param string $message
-     * @param int $code
-     * @param int $severity
-     * @param string $filename
-     * @param int $lineno
-     * @param ?\Exception $previous
-     */
     public function __construct(
-        $message = "",
-        $code = 0,
-        $severity = 1,
-        $filename = __FILE__,
-        $lineno = __LINE__,
-        $previous = null
+        string $message = "",
+        int $code = 0,
+        int $severity = 1,
+        string $filename = __FILE__,
+        int $lineno = __LINE__,
+        ?\Exception $previous = null
     ) {
         parent::__construct($message, $code, "", $previous);
 

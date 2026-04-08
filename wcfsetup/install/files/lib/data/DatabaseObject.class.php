@@ -52,11 +52,10 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
     /**
      * Creates a new instance of the DatabaseObject class.
      *
-     * @param string|int|null $id
      * @param mixed[]|null $row
      * @param ?static $object
      */
-    public function __construct($id, ?array $row = null, ?self $object = null)
+    public function __construct(null|string|int $id, ?array $row = null, ?self $object = null)
     {
         if ($id !== null) {
             $sql = "SELECT  *
@@ -74,7 +73,7 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
             $row = $object->data;
         }
 
-        $this->handleData($row);
+        $this->handleData($row ?? []);
     }
 
     /**
@@ -83,7 +82,7 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
      * @param mixed[] $data
      * @return void
      */
-    protected function handleData($data)
+    protected function handleData(array $data)
     {
         // provide a logical false value for - assumed numeric - primary index
         if (!isset($data[static::getDatabaseTableIndexName()])) {
@@ -207,12 +206,9 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
      *
      * @template T of object
      * @param T[] $objects
-     * @param mixed $sortBy
-     * @param string $sortOrder
-     * @param bool $maintainIndexAssociation
      * @return void
      */
-    public static function sort(&$objects, $sortBy, $sortOrder = 'ASC', $maintainIndexAssociation = true)
+    public static function sort(array &$objects, string $sortBy, string $sortOrder = 'ASC', bool $maintainIndexAssociation = true)
     {
         $sortArray = $objects2 = [];
         foreach ($objects as $idx => $obj) {

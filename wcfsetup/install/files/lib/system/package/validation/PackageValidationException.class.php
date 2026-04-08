@@ -239,10 +239,9 @@ class PackageValidationException extends SystemException
     /**
      * Creates a new PackageArchiveValidationException.
      *
-     * @param int $code
      * @param array<string, mixed> $details
      */
-    public function __construct($code, array $details = [])
+    public function __construct(int $code, array $details = [])
     {
         $this->details = $details;
 
@@ -262,10 +261,9 @@ class PackageValidationException extends SystemException
     /**
      * Returns the readable error message.
      *
-     * @param int $code
      * @return  string
      */
-    public function getErrorMessage($code = null)
+    public function getErrorMessage(?int $code = null)
     {
         if (!empty($this->details['legacyMessage'])) {
             return $this->details['legacyMessage'];
@@ -280,10 +278,9 @@ class PackageValidationException extends SystemException
     /**
      * Returns legacy error messages to mimic WCF 2.0.x PackageArchive's exceptions.
      *
-     * @param int $code
      * @return  string
      */
-    protected function getLegacyMessage($code)
+    protected function getLegacyMessage(int $code)
     {
         switch ($code) {
             case self::FILE_NOT_FOUND:

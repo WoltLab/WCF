@@ -90,11 +90,9 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
     /**
      * Replaces image element with attachment metacode element.
      *
-     * @param \DOMElement $element
-     * @param string $class
      * @return void
      */
-    protected function handleAttachment(\DOMElement $element, $class)
+    protected function handleAttachment(\DOMElement $element, string $class)
     {
         $attachmentID = \intval($element->getAttribute('data-attachment-id'));
         if (!$attachmentID) {
@@ -314,7 +312,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
 
         $classNames = \array_filter(
             \array_map(
-                fn (string $className) => StringUtil::trim($className),
+                fn(string $className) => StringUtil::trim($className),
                 \explode(
                     ' ',
                     $figure->getAttribute("class")

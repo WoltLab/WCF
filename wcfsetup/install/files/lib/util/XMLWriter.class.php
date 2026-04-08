@@ -34,13 +34,10 @@ class XMLWriter
     /**
      * Creates a new XML document.
      *
-     * @param string $rootElement
-     * @param string $namespace
-     * @param string $schemaLocation
      * @param string[] $attributes
      * @return void
      */
-    public function beginDocument($rootElement, $namespace, $schemaLocation, array $attributes = [])
+    public function beginDocument(string $rootElement, string $namespace, string $schemaLocation, array $attributes = [])
     {
         if ($this->activeDocument) {
             throw new SystemException("Could not begin a new document unless the previous is finished");
@@ -76,10 +73,9 @@ class XMLWriter
      * Returns the generated XML document or writes it to given filename. All open
      * elements will be automatically closed before flushing.
      *
-     * @param string $filename
      * @return string|int|void
      */
-    public function endDocument($filename = '')
+    public function endDocument(string $filename = '')
     {
         // mark document as done
         $this->activeDocument = false;
@@ -101,11 +97,10 @@ class XMLWriter
     /**
      * Begins a new element.
      *
-     * @param string $element
      * @param string[] $attributes
      * @return void
      */
-    public function startElement($element, array $attributes = [])
+    public function startElement(string $element, array $attributes = [])
     {
         $this->xml->startElement($element);
         $this->openElements++;
@@ -131,14 +126,11 @@ class XMLWriter
     /**
      * Writes an element directly.
      *
-     * @param string $element
-     * @param string $cdata
      * @param string[] $attributes
-     * @param bool $writeAsCdata
      *
      * @return void
      */
-    public function writeElement($element, $cdata, array $attributes = [], $writeAsCdata = true)
+    public function writeElement(string $element, string $cdata, array $attributes = [], bool $writeAsCdata = true)
     {
         $this->startElement($element);
 
@@ -162,11 +154,10 @@ class XMLWriter
     /**
      * Writes a comment.
      *
-     * @param string $comment
      * @return void
      * @since   5.2
      */
-    public function writeComment($comment)
+    public function writeComment(string $comment)
     {
         $this->xml->writeComment($comment);
     }
@@ -174,11 +165,9 @@ class XMLWriter
     /**
      * Writes an attribute to last opened element.
      *
-     * @param string $attribute
-     * @param string $value
      * @return void
      */
-    public function writeAttribute($attribute, $value)
+    public function writeAttribute(string $attribute, string $value)
     {
         $this->writeAttributes([$attribute => $value]);
     }

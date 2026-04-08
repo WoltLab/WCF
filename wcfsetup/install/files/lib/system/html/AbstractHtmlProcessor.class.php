@@ -28,12 +28,10 @@ abstract class AbstractHtmlProcessor implements IHtmlProcessor
     /**
      * Sets the message context data.
      *
-     * @param string $objectType object type identifier
-     * @param int $objectID object id
      * @return void
      * @throws InvalidObjectTypeException
      */
-    public function setContext($objectType, $objectID)
+    public function setContext(string $objectType, int $objectID)
     {
         $objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $objectType);
         if ($objectTypeID === null) {

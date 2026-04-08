@@ -37,7 +37,6 @@ class DevtoolsPackageXmlWriter
     /**
      * Creates a new `DevtoolsPackageXmlWriter` object.
      *
-     * @param DevtoolsProject $project
      * @param mixed[][] $packageXmlData
      */
     public function __construct(DevtoolsProject $project, array $packageXmlData)
@@ -50,10 +49,9 @@ class DevtoolsPackageXmlWriter
      * Returns `true` if the given string needs to be placed in a CDATA
      * section or `false`, otherwise.
      *
-     * @param string $string
      * @return bool
      */
-    protected function requiresCdata($string)
+    protected function requiresCdata(string $string)
     {
         return \strpos($string, '<') !== false
             || \strpos($string, '>') !== false
@@ -201,11 +199,10 @@ class DevtoolsPackageXmlWriter
     /**
      * Writes a child of the `packageinformation` element with i18n data.
      *
-     * @param string $information
-     * @param null|string $elementName is set to lowercase version of `$information` if missing
+     * @param ?string $elementName is set to lowercase version of `$information` if missing
      * @return void
      */
-    protected function writeI18nPackageInformation($information, $elementName = null)
+    protected function writeI18nPackageInformation(string $information, ?string $elementName = null)
     {
         if ($elementName === null) {
             $elementName = \strtolower($information);

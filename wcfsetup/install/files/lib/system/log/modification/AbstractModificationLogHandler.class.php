@@ -48,25 +48,18 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
     /**
      * Creates a modification log entry.
      *
-     * @param string $action
-     * @param int $objectID
-     * @param int|null $parentObjectID
      * @param mixed[] $additionalData
-     * @param int $time
-     * @param int|null $userID
-     * @param string|null $username
-     * @param int $hidden
      * @return ModificationLog
      */
     public function createLog(
-        $action,
-        $objectID,
-        $parentObjectID = null,
+        string $action,
+        int $objectID,
+        ?int $parentObjectID = null,
         array $additionalData = [],
-        $time = TIME_NOW,
-        $userID = null,
-        $username = null,
-        $hidden = 1
+        int $time = TIME_NOW,
+        ?int $userID = null,
+        ?string $username = null,
+        int $hidden = 1
     ) {
         // set default user data
         if ($userID === null) {
@@ -155,7 +148,7 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
      * @param string $objectType name of the modifiable content object type, deprecated parameter
      * @return  ObjectType
      */
-    public function getObjectType($objectType = null)
+    public function getObjectType(?string $objectType = null)
     {
         // allow parameter for better backwards compatibility with ModificationLogHandler
         if ($objectType !== null) {
@@ -170,10 +163,9 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
      * Updates the parent object id of modification log entries.
      *
      * @param int[] $objectIDs
-     * @param int $newParentObjectID
      * @return void
      */
-    public function updateParentObjectID(array $objectIDs, $newParentObjectID)
+    public function updateParentObjectID(array $objectIDs, int $newParentObjectID)
     {
         if (empty($objectIDs)) {
             return;

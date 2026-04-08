@@ -52,11 +52,9 @@ class QuickReplyManager extends SingletonFactory
     /**
      * Returns a stored message from session.
      *
-     * @param string $type
-     * @param int $objectID
      * @return string
      */
-    public function getMessage($type, $objectID)
+    public function getMessage(string $type, int $objectID)
     {
         $this->type = $type;
         $this->objectID = $objectID;
@@ -72,12 +70,9 @@ class QuickReplyManager extends SingletonFactory
     /**
      * Stores a message in session.
      *
-     * @param string $type
-     * @param int $objectID
-     * @param string $message
      * @return void
      */
-    public function setMessage($type, $objectID, $message)
+    public function setMessage(string $type, int $objectID, string $message)
     {
         WCF::getSession()->register('quickReply-' . $type . '-' . $objectID, MessageUtil::stripCrap($message));
     }
@@ -85,11 +80,9 @@ class QuickReplyManager extends SingletonFactory
     /**
      * Removes a stored message from session.
      *
-     * @param string $type
-     * @param int $objectID
      * @return void
      */
-    public function removeMessage($type, $objectID)
+    public function removeMessage(string $type, int $objectID)
     {
         WCF::getSession()->unregister('quickReply-' . $type . '-' . $objectID);
     }
@@ -327,11 +320,10 @@ class QuickReplyManager extends SingletonFactory
     }
 
     /**
-     * @param string $tmpHash
      * @return void
      * @deprecated 5.5 The concept of starting a message in a simple editor and then migrating to an extended editor no longer exists.
      */
-    public function setTmpHash($tmpHash)
+    public function setTmpHash(string $tmpHash)
     {
         WCF::getSession()->register('__wcfAttachmentTmpHash', $tmpHash);
     }

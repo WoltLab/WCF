@@ -18,12 +18,9 @@ class FTP
     /**
      * Opens a new ftp connection to given host.
      *
-     * @param string $host
-     * @param int $port
-     * @param int $timeout
      * @throws  SystemException
      */
-    public function __construct($host = 'localhost', $port = 21, $timeout = 30)
+    public function __construct(string $host = 'localhost', int $port = 21, int $timeout = 30)
     {
         $resource = \ftp_connect($host, $port, $timeout);
         if ($resource === false) {
@@ -36,12 +33,11 @@ class FTP
     /**
      * Calls the specified function on the open ftp connection.
      *
-     * @param string $function
      * @param mixed[] $arguments
      * @return  mixed
      * @throws  SystemException
      */
-    public function __call($function, $arguments)
+    public function __call(string $function, array $arguments)
     {
         \array_unshift($arguments, $this->resource);
         if (!\function_exists('ftp_' . $function)) {

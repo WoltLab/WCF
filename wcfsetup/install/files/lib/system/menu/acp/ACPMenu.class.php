@@ -99,7 +99,7 @@ class ACPMenu extends TreeMenu
     }
 
     #[\Override]
-    protected function removeEmptyItems($parentMenuItem = '')
+    protected function removeEmptyItems(string $parentMenuItem = '')
     {
         if (!isset($this->menuItems[$parentMenuItem])) {
             return;

@@ -162,7 +162,7 @@ class Box extends DatabaseObject
     }
 
     #[\Override]
-    protected function handleData($data)
+    protected function handleData(array $data)
     {
         parent::handleData($data);
 
@@ -221,7 +221,7 @@ class Box extends DatabaseObject
      * @param BoxContent[] $boxContents
      * @return void
      */
-    public function setBoxContents($boxContents)
+    public function setBoxContents(array $boxContents)
     {
         $this->boxContents = $boxContents;
     }
@@ -487,10 +487,9 @@ class Box extends DatabaseObject
     /**
      * Returns the template name of this box.
      *
-     * @param int $languageID
      * @return  string
      */
-    public function getTplName($languageID = null)
+    public function getTplName(?int $languageID = null)
     {
         if ($this->boxType == 'tpl') {
             if ($this->isMultilingual) {
@@ -603,10 +602,9 @@ class Box extends DatabaseObject
     /**
      * Sets the virtual show order of this box.
      *
-     * @param int $virtualShowOrder
      * @return void
      */
-    public function setVirtualShowOrder($virtualShowOrder)
+    public function setVirtualShowOrder(int $virtualShowOrder)
     {
         $this->virtualShowOrder = $virtualShowOrder;
     }
@@ -633,10 +631,9 @@ class Box extends DatabaseObject
     /**
      * Returns the box with the given identifier.
      *
-     * @param string $identifier
      * @return ?Box
      */
-    public static function getBoxByIdentifier($identifier)
+    public static function getBoxByIdentifier(string $identifier)
     {
         $sql = "SELECT  *
                 FROM    wcf1_box
@@ -650,10 +647,9 @@ class Box extends DatabaseObject
     /**
      * Returns the box with the given name.
      *
-     * @param string $name
      * @return ?Box
      */
-    public static function getBoxByName($name)
+    public static function getBoxByName(string $name)
     {
         $sql = "SELECT  *
                 FROM    wcf1_box
@@ -667,10 +663,9 @@ class Box extends DatabaseObject
     /**
      * Returns the box with the menu id.
      *
-     * @param int $menuID
      * @return ?Box
      */
-    public static function getBoxByMenuID($menuID)
+    public static function getBoxByMenuID(int $menuID)
     {
         $sql = "SELECT  *
                 FROM    wcf1_box

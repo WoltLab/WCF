@@ -620,11 +620,10 @@ class StyleAddForm extends AbstractForm
      * If an override is invalid, unknown or matches a variable covered by
      * the style editor itself, it will be silently discarded.
      *
-     * @param string $variableName
      * @return void
      * @throws      UserInputException
      */
-    protected function parseOverrides($variableName = 'overrideScss')
+    protected function parseOverrides(string $variableName = 'overrideScss')
     {
         static $colorNames = null;
         if ($colorNames === null) {

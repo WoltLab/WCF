@@ -215,7 +215,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
      * @param bool $preserveAttributes retain attributes for the new element
      * @return \DOMElement newly created element
      */
-    public function renameTag(\DOMElement $element, $tagName, $preserveAttributes = false)
+    public function renameTag(\DOMElement $element, string $tagName, bool $preserveAttributes = false)
     {
         $newElement = $this->document->createElement($tagName);
         if ($preserveAttributes) {
@@ -243,7 +243,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
      * @param bool $isBlockElement true if element is a block element
      * @return void
      */
-    public function replaceElementWithText(\DOMElement $element, $text, $isBlockElement)
+    public function replaceElementWithText(\DOMElement $element, string $text, bool $isBlockElement)
     {
         $textNode = $element->ownerDocument->createTextNode($text);
         $element->parentNode->insertBefore($textNode, $element);
@@ -282,7 +282,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
      * @param array<string, mixed> $data replacement data
      * @return void
      */
-    public function addNodeData(IHtmlNode $htmlNode, $nodeIdentifier, array $data)
+    public function addNodeData(IHtmlNode $htmlNode, string $nodeIdentifier, array $data)
     {
         $this->nodeData[] = [
             'data' => $data,
@@ -297,7 +297,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
      * @param string $attributes base64 and JSON encoded attributes
      * @return array<string|int, string|int|bool|null> parsed attributes
      */
-    public function parseAttributes($attributes)
+    public function parseAttributes(string $attributes)
     {
         if ($attributes !== '') {
             $parsedAttributes = \base64_decode($attributes, true);
@@ -360,7 +360,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
      * @param callable $callback optional callback
      * @return void
      */
-    protected function invokeNodeHandlers($classNamePattern, array $skipTags = [], ?callable $callback = null)
+    protected function invokeNodeHandlers(string $classNamePattern, array $skipTags = [], ?callable $callback = null)
     {
         static $handlerClassExists = [];
 

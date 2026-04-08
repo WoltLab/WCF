@@ -73,10 +73,9 @@ final class SingleMediaSelectionFormField extends AbstractFormField implements I
     /**
      * Sets if only images can be selected and returns this field.
      *
-     * @param bool $imageOnly
      * @return  static              this field
      */
-    public function imageOnly($imageOnly = true)
+    public function imageOnly(bool $imageOnly = true)
     {
         $this->imageOnly = $imageOnly;
 

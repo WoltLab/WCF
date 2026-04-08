@@ -248,7 +248,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
     }
 
     #[\Override]
-    protected function handleData($data)
+    protected function handleData(array $data)
     {
         // handle additional data
         if (isset($data['additionalData'])) {

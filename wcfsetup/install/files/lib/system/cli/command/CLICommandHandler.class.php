@@ -60,11 +60,10 @@ class CLICommandHandler
     /**
      * Returns a command by the given line.
      *
-     * @param string $line
      * @return ICLICommand
      * @throws IllegalLinkException
      */
-    public static function getCommand($line)
+    public static function getCommand(string $line)
     {
         [$command] = \explode(' ', $line . ' ', 2);
 
@@ -78,11 +77,10 @@ class CLICommandHandler
     /**
      * Returns a command by the given line.
      *
-     * @param string $line
      * @return string
      * @throws IllegalLinkException
      */
-    public static function getCommandName($line)
+    public static function getCommandName(string $line)
     {
         [$command] = \explode(' ', $line . ' ', 2);
 
@@ -96,10 +94,9 @@ class CLICommandHandler
     /**
      * Returns the parameter list of the given line.
      *
-     * @param string $line
      * @return string[]
      */
-    public static function getParameters($line)
+    public static function getParameters(string $line)
     {
         [, $parameters] = \explode(' ', $line . ' ', 2);
 

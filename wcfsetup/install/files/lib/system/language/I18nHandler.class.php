@@ -270,7 +270,7 @@ final class I18nHandler extends SingletonFactory
      * @param string|string[] $elementID either the id of the element or externally passed array `languageID => value`
      * @return void
      */
-    public function save($elementID, string $languageVariable, string $languageCategory, int $packageID = PACKAGE_ID)
+    public function save(string|array $elementID, string $languageVariable, string $languageCategory, int $packageID = PACKAGE_ID)
     {
         LanguageEditor::validateItemName($languageVariable, $languageCategory);
 
@@ -385,10 +385,8 @@ final class I18nHandler extends SingletonFactory
 
     /**
      * Sets additional options for elements, required if updating values.
-     *
-     * @param string $elementID
      */
-    public function setOptions($elementID, int $packageID, string $value, string $pattern): void
+    public function setOptions(string $elementID, int $packageID, string $value, string $pattern): void
     {
         $this->elementOptions[$elementID] = [
             'packageID' => $packageID,

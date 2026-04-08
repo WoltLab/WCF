@@ -42,10 +42,9 @@ class TrophyCache extends SingletonFactory
     /**
      * Returns the trophy with the given trophyID.
      *
-     * @param int $trophyID
      * @return  Trophy|null
      */
-    public function getTrophyByID($trophyID)
+    public function getTrophyByID(int $trophyID)
     {
         return $this->trophies[$trophyID] ?? null;
     }
@@ -70,10 +69,9 @@ class TrophyCache extends SingletonFactory
     /**
      * Returns all trophies for a specific category.
      *
-     * @param int $categoryID
      * @return  Trophy[]
      */
-    public function getTrophiesByCategoryID($categoryID)
+    public function getTrophiesByCategoryID(int $categoryID)
     {
         if (!\is_array($this->categorySortedTrophies)) {
             $this->categorySortedTrophies = [];
@@ -97,10 +95,9 @@ class TrophyCache extends SingletonFactory
     /**
      * Returns all enabled trophies for a specific category.
      *
-     * @param int $categoryID
      * @return  Trophy[]
      */
-    public function getEnabledTrophiesByCategoryID($categoryID)
+    public function getEnabledTrophiesByCategoryID(int $categoryID)
     {
         $trophies = $this->getTrophiesByCategoryID($categoryID);
 

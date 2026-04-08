@@ -380,7 +380,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
     }
 
     #[\Override]
-    public function seek($offset): void
+    public function seek(int $offset): void
     {
         $this->index = $offset;
 

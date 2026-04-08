@@ -60,10 +60,9 @@ class SearchResultTextParser extends SingletonFactory
      * Returns an abstract of the given message.
      * Uses search keywords to shift the start and end position of the abstract (like Google).
      *
-     * @param string $text
      * @return  string
      */
-    protected function getMessageAbstract($text)
+    protected function getMessageAbstract(string $text)
     {
         // replace newlines with spaces
         $text = Regex::compile("\\s+", Regex::UTF_8)->replace($text, ' ');
@@ -186,10 +185,9 @@ class SearchResultTextParser extends SingletonFactory
     /**
      * Formats a message for search result output.
      *
-     * @param string $text
      * @return  string
      */
-    public function parse($text)
+    public function parse(string $text)
     {
         // remove nonessentials
         $text = Regex::compile(

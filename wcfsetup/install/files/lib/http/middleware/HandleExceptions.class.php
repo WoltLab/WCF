@@ -39,10 +39,8 @@ final class HandleExceptions implements MiddlewareInterface
                 $handler = new NotFoundHandler();
             } elseif ($e instanceof InvalidSecurityTokenException) {
                 $handler = new XsrfValidationFailedHandler();
-            } elseif ($e instanceof NamedUserException) {
-                $handler = new OperationNotPermittedHandler();
             } else {
-                throw new \LogicException('Unreachable');
+                $handler = new OperationNotPermittedHandler();
             }
 
             if ($e instanceof NamedUserException) {

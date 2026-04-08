@@ -14,11 +14,7 @@ class FontDownloadFailed extends \Exception
 {
     private string $reason = '';
 
-    /**
-     * @param string $message
-     * @param string $reason
-     */
-    public function __construct($message, $reason = '', ?\Throwable $previous = null)
+    public function __construct(string $message, string $reason = '', ?\Throwable $previous = null)
     {
         parent::__construct($message, 0, $previous);
 

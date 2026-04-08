@@ -33,7 +33,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
      */
     public $tagName = '';
 
-    public function __construct(PackageInstallationDispatcher $installation, $instruction = [])
+    public function __construct(PackageInstallationDispatcher $installation, array $instruction = [])
     {
         parent::__construct($installation, $instruction);
 
@@ -212,9 +212,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
     /**
      * Sets element value from XPath.
      *
-     * @param \DOMXPath $xpath
      * @param array<string, mixed> $elements
-     * @param \DOMElement $element
      * @return void
      */
     protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element)
@@ -230,7 +228,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
      * @param bool $singleValueOnly true to return only the best matching value
      * @return  string[]|string matching i18n values controller by `$singleValueOnly`
      */
-    protected function getI18nValues(array $values, $singleValueOnly = false)
+    protected function getI18nValues(array $values, bool $singleValueOnly = false)
     {
         if (empty($values)) {
             return $singleValueOnly ? '' : [];
@@ -370,11 +368,10 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
     /**
      * Loads the xml file into a string and returns this string.
      *
-     * @param string $filename
      * @return  XML     $xml
      * @throws  SystemException
      */
-    protected function getXML($filename = '')
+    protected function getXML(string $filename = '')
     {
         if (empty($filename)) {
             $filename = $this->instruction['value'];
@@ -412,13 +409,9 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
     /**
      * Returns the show order value.
      *
-     * @param null|int $showOrder
-     * @param string $parentName
-     * @param string $columnName
-     * @param string $tableNameExtension
      * @return  int
      */
-    protected function getShowOrder($showOrder, $parentName = null, $columnName = null, $tableNameExtension = '')
+    protected function getShowOrder(?int $showOrder, ?string $parentName = null, ?string $columnName = null, string $tableNameExtension = '')
     {
         if ($showOrder === null) {
             // get greatest showOrder value
@@ -467,7 +460,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
     }
 
     #[\Override]
-    public static function isValid(PackageArchive $packageArchive, $instruction)
+    public static function isValid(PackageArchive $packageArchive, string $instruction)
     {
         if (!$instruction) {
             $defaultFilename = static::getDefaultFilename();

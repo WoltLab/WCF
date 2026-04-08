@@ -106,13 +106,10 @@ class PollManager extends SingletonFactory
     /**
      * Sets object data.
      *
-     * @param string $objectType
-     * @param int $objectID
-     * @param int $pollID
      * @return  bool
      * @throws  SystemException
      */
-    public function setObject($objectType, $objectID, $pollID = 0)
+    public function setObject(string $objectType, int $objectID, int $pollID = 0)
     {
         if (!isset($this->cache[$objectType])) {
             throw new SystemException("Object type '" . $objectType . "' is unknown");
@@ -271,11 +268,10 @@ class PollManager extends SingletonFactory
      * Handles poll creation, modification and deletion. Returns poll id or zero
      * if poll was deleted or nothing was created.
      *
-     * @param int $objectID
      * @return  int
      * @throws  SystemException
      */
-    public function save($objectID = null)
+    public function save(?int $objectID = null)
     {
         if ($objectID !== null) {
             $this->objectID = \intval($objectID);
@@ -399,11 +395,8 @@ class PollManager extends SingletonFactory
     public function canStartPublicPoll()
     {
         $handler = $this->getHandler(null, $this->objectType);
-        if ($handler !== null) {
-            return $handler->canStartPublicPoll();
-        }
 
-        return true;
+        return $handler->canStartPublicPoll();
     }
 
     /**
@@ -481,12 +474,10 @@ class PollManager extends SingletonFactory
      * Returns the handler object for given object type. Returns false if object type (id)
      * is not found, or null if no handler is assigned.
      *
-     * @param ?int $objectTypeID
-     * @param string $objectType
-     * @return  mixed
+     * @return  IPollHandler
      * @throws  SystemException
      */
-    protected function getHandler($objectTypeID, $objectType = '')
+    protected function getHandler(?int $objectTypeID, string $objectType = '')
     {
         if ($objectTypeID !== null) {
             foreach ($this->cache as $objectTypeObj) {

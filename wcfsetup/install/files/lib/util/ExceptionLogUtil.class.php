@@ -18,10 +18,9 @@ final class ExceptionLogUtil
     /**
      * Splits the given string of Exceptions into an array.
      *
-     * @param string $contents
      * @return  string[]
      */
-    public static function splitLog($contents)
+    public static function splitLog(string $contents)
     {
         // unify newlines
         $contents = StringUtil::unifyNewlines($contents);
@@ -46,10 +45,9 @@ final class ExceptionLogUtil
     /**
      * Parses the given log entry.
      *
-     * @param string $entry
      * @return  mixed[]
      */
-    public static function parseException($entry)
+    public static function parseException(string $entry)
     {
         static $regex = null;
         static $chainRegex = null;

@@ -68,11 +68,9 @@ class PackageValidationManager extends SingletonFactory
      * looks fine, this is useful for a rough check during upload when a more detailed check will
      * be performed afterwards.
      *
-     * @param string $archive
-     * @param bool $deepInspection
      * @return  bool
      */
-    public function validate($archive, $deepInspection)
+    public function validate(string $archive, bool $deepInspection)
     {
         $this->virtualPackageList = [];
         $this->packageValidationArchive = new PackageValidationArchive($archive);
@@ -102,11 +100,9 @@ class PackageValidationManager extends SingletonFactory
      * Adds a virtual package with the corresponding version, if the package is already known,
      * the higher version number will be stored.
      *
-     * @param string $package
-     * @param string $packageVersion
      * @return  bool
      */
-    public function addVirtualPackage($package, $packageVersion)
+    public function addVirtualPackage(string $package, string $packageVersion)
     {
         if (isset($this->virtualPackageList[$package])) {
             if (Package::compareVersion($packageVersion, $this->virtualPackageList[$package], '<')) {
@@ -122,10 +118,9 @@ class PackageValidationManager extends SingletonFactory
     /**
      * Returns the version number of a virtual package or null if it doesn't exist.
      *
-     * @param string $package
      * @return  string|null
      */
-    public function getVirtualPackage($package)
+    public function getVirtualPackage(string $package)
     {
         return $this->virtualPackageList[$package] ?? null;
     }
@@ -180,12 +175,9 @@ class PackageValidationManager extends SingletonFactory
      *
      * Please be aware that unknown PIPs will silently ignored and cause no error.
      *
-     * @param PackageArchive $archive
-     * @param string $pip
-     * @param string $instruction
      * @return  bool
      */
-    public function validatePackageInstallationPluginInstruction(PackageArchive $archive, $pip, $instruction)
+    public function validatePackageInstallationPluginInstruction(PackageArchive $archive, string $pip, string $instruction)
     {
         if (isset($this->packageInstallationPlugins[$pip])) {
             return \call_user_func([$this->packageInstallationPlugins[$pip], 'isValid'], $archive, $instruction);
@@ -198,10 +190,9 @@ class PackageValidationManager extends SingletonFactory
      * Returns the default filename for the given pip name. If no default filename
      * exists `null` is returned.
      *
-     * @param string $pip
      * @return  string|null
      */
-    public function getDefaultFilenameForPackageInstallationPlugin($pip)
+    public function getDefaultFilenameForPackageInstallationPlugin(string $pip)
     {
         if (isset($this->packageInstallationPlugins[$pip])) {
             return \call_user_func([$this->packageInstallationPlugins[$pip], 'getDefaultFilename']);

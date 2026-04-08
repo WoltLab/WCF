@@ -628,12 +628,11 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
     }
 
     /**
-     * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
     #[\Override]
-    protected function fetchElementData(\DOMElement $element, $saveData)
+    protected function fetchElementData(\DOMElement $element, bool $saveData)
     {
         $data = [
             'identifier' => $element->getAttribute('identifier'),

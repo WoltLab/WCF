@@ -21,7 +21,7 @@ abstract class AbstractDiskUsageStatDailyHandler extends AbstractStatDailyHandle
     protected $columnName = 'filesize';
 
     #[\Override]
-    protected function getCounter($date, $tableName, $dateColumnName)
+    protected function getCounter(int $date, string $tableName, string $dateColumnName)
     {
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add($dateColumnName . ' BETWEEN ? AND ?', [$date, $date + 86399]);
@@ -38,7 +38,7 @@ abstract class AbstractDiskUsageStatDailyHandler extends AbstractStatDailyHandle
     }
 
     #[\Override]
-    protected function getTotal($date, $tableName, $dateColumnName)
+    protected function getTotal(int $date, string $tableName, string $dateColumnName)
     {
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add($dateColumnName . ' < ?', [$date + 86399]);

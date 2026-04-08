@@ -394,11 +394,9 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
     /**
      * Reads the data of a variables.xml file.
      *
-     * @param string $filename
-     * @param string $content
      * @return array<string, string>
      */
-    public static function readVariablesData($filename, $content)
+    public static function readVariablesData(string $filename, string $content)
     {
         // open variables.xml
         $xml = new XML();
@@ -418,10 +416,9 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
     /**
      * Returns the data of a style exchange format file.
      *
-     * @param string $filename
      * @return mixed[]
      */
-    public static function getStyleData($filename)
+    public static function getStyleData(string $filename)
     {
         // open file
         $tar = new Tar($filename);
@@ -447,13 +444,9 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
     /**
      * Imports a style.
      *
-     * @param string $filename
-     * @param int $packageID
-     * @param StyleEditor $style
-     * @param bool $skipFontDownload
      * @return  StyleEditor
      */
-    public static function import($filename, $packageID = 1, ?self $style = null, $skipFontDownload = false)
+    public static function import(string $filename, int $packageID = 1, ?self $style = null, bool $skipFontDownload = false)
     {
         // open file
         $tar = new Tar($filename);
@@ -891,10 +884,9 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
     /**
      * Returns available location path.
      *
-     * @param string $location
      * @return  string
      */
-    protected static function getFileLocation($location)
+    protected static function getFileLocation(string $location)
     {
         $location = FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash($location));
         $location = WCF_DIR . $location;
@@ -916,12 +908,9 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
     /**
      * Exports this style.
      *
-     * @param bool $templates
-     * @param bool $images
-     * @param string $packageName
      * @return void
      */
-    public function export($templates = false, $images = false, $packageName = '')
+    public function export(bool $templates = false, bool $images = false, string $packageName = '')
     {
         // create style tar
         $styleTarName = FileUtil::getTemporaryFilename('style_', '.tgz');
@@ -1157,7 +1146,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                     continue;
                 }
 
-                $imagesTar->add($file->getPathName(), '', $this->getAssetPath());
+                $imagesTar->add($file->getPathname(), '', $this->getAssetPath());
             }
             // append images tar to style tar
             $imagesTar->create();

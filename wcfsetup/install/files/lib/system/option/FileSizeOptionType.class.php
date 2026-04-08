@@ -21,7 +21,7 @@ class FileSizeOptionType extends TextOptionType
     protected $inputClass = 'short textRight';
 
     #[\Override]
-    public function getContent(Option $option, $newValue)
+    public function getContent(Option $option, mixed $newValue)
     {
         $number = \str_replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $newValue);
         $number = \str_replace(WCF::getLanguage()->get('wcf.global.decimalPoint'), '.', $number);

@@ -242,13 +242,9 @@ final class UserExportGdprAction extends AbstractAction
      * Exports the list of stored ip addresses for this user using the IPv4 representation
      * whenever possible.
      *
-     * @param string $databaseTable
-     * @param string $ipAddressColumn
-     * @param string $timeColumn
-     * @param string $userIDColumn
      * @return mixed[]
      */
-    public function exportIpAddresses($databaseTable, $ipAddressColumn, $timeColumn, $userIDColumn)
+    public function exportIpAddresses(string $databaseTable, string $ipAddressColumn, string $timeColumn, string $userIDColumn)
     {
         $sql = "SELECT  {$ipAddressColumn}, {$timeColumn}
                 FROM    {$databaseTable}
@@ -261,11 +257,9 @@ final class UserExportGdprAction extends AbstractAction
     }
 
     /**
-     * @param string $tableName
-     * @param string $userIDColumn
      * @return mixed[]
      */
-    protected function dumpTable($tableName, $userIDColumn)
+    protected function dumpTable(string $tableName, string $userIDColumn)
     {
         $sql = "SELECT  *
                 FROM    {$tableName}
@@ -282,11 +276,9 @@ final class UserExportGdprAction extends AbstractAction
     }
 
     /**
-     * @param string $ipAddressColumn
-     * @param string $timeColumn
      * @return array{ipAddress: string, time: mixed}[]
      */
-    protected function fetchIpAddresses(PreparedStatement $statement, $ipAddressColumn, $timeColumn)
+    protected function fetchIpAddresses(PreparedStatement $statement, string $ipAddressColumn, string $timeColumn)
     {
         $ipAddresses = [];
 

@@ -312,7 +312,7 @@ class RegisterForm extends UserAddForm
     }
 
     #[\Override]
-    protected function validateUsername($username)
+    protected function validateUsername(string $username)
     {
         parent::validateUsername($username);
 

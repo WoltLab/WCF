@@ -44,11 +44,9 @@ class BoxContent extends DatabaseObject
     /**
      * Returns a certain box content or `null` if it does not exist.
      *
-     * @param int $boxID
-     * @param ?int $languageID
      * @return      BoxContent|null
      */
-    public static function getBoxContent($boxID, $languageID)
+    public static function getBoxContent(int $boxID, ?int $languageID)
     {
         if ($languageID !== null) {
             $sql = "SELECT  *
@@ -130,10 +128,9 @@ class BoxContent extends DatabaseObject
     /**
      * Parses simple placeholders embedded in HTML with template scripting.
      *
-     * @param string $templateName content template name
      * @return      string          parsed template
      */
-    public function getParsedTemplate($templateName)
+    public function getParsedTemplate(string $templateName)
     {
         HtmlSimpleParser::getInstance()->setContext('com.woltlab.wcf.box.content', $this->boxContentID);
 

@@ -63,10 +63,9 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController
     /**
      * Returns true if given URL is a media URL.
      *
-     * @param string $url
      * @return  bool
      */
-    public static function isMediaURL($url)
+    public static function isMediaURL(string $url)
     {
         foreach (static::getCache() as $provider) {
             if ($provider->matches($url)) {
@@ -80,10 +79,9 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController
     /**
      * Checks whether this provider matches the given URL.
      *
-     * @param string $url
      * @return  bool
      */
-    public function matches($url)
+    public function matches(string $url)
     {
         $lines = \explode("\n", StringUtil::unifyNewlines($this->regex));
 
@@ -99,10 +97,9 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController
     /**
      * Returns the html for this provider.
      *
-     * @param string $url
      * @return  string
      */
-    public function getOutput($url)
+    public function getOutput(string $url)
     {
         $lines = \explode("\n", StringUtil::unifyNewlines($this->regex));
 
@@ -154,11 +151,9 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController
     /**
      * Replaces embedded media with an approval dialog.
      *
-     * @param string $url
-     * @param string $html
      * @return string
      */
-    protected function getOutputForUserConsent($url, $html)
+    protected function getOutputForUserConsent(string $url, string $html)
     {
         if (!MESSAGE_ENABLE_USER_CONSENT) {
             return $html;

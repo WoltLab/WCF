@@ -45,11 +45,10 @@ class SimpleEmail
     /**
      * Sets the email's 'Subject'.
      *
-     * @param string $subject
      * @return void
      * @see Email::setSubject()
      */
-    public function setSubject($subject)
+    public function setSubject(string $subject)
     {
         $this->email->setSubject($subject);
     }
@@ -80,11 +79,10 @@ class SimpleEmail
      * Sets the text/plain version of this message.
      * An empty string clears this version (not recommended!).
      *
-     * @param string $message
      * @return void
      * @see PlainTextMimePart
      */
-    public function setMessage($message)
+    public function setMessage(string $message)
     {
         $this->textPlain = $message ? new PlainTextMimePart($message) : null;
 
@@ -95,11 +93,10 @@ class SimpleEmail
      * Sets the text/html version of this message.
      * An empty string clears this version.
      *
-     * @param string $message
      * @return void
      * @see HtmlTextMimePart
      */
-    public function setHtmlMessage($message)
+    public function setHtmlMessage(string $message)
     {
         $this->textHtml = $message ? new HtmlTextMimePart($message) : null;
 

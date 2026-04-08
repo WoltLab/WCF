@@ -43,10 +43,9 @@ class ACPSession extends DatabaseObject
      * Returns the existing session object for given user id or null if there
      * is no such session.
      *
-     * @param int $userID
      * @return  ACPSession
      */
-    public static function getSessionByUserID($userID)
+    public static function getSessionByUserID(int $userID)
     {
         $sql = "SELECT  *
                 FROM    " . static::getDatabaseTableName() . "

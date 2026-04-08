@@ -118,8 +118,8 @@ final class ListViewFilterAction implements RequestHandlerInterface
         foreach ($listView->getAvailableFilters() as $filter) {
             $formField = $filter->getFormField();
 
-            if (isset($values[$filter->getID()])) {
-                $value = $filter->unserializeValue($values[$filter->getID()]);
+            if (isset($values[$filter->getId()])) {
+                $value = $filter->unserializeValue($values[$filter->getId()]);
                 $formField->value($value);
             }
 

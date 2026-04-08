@@ -147,10 +147,9 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
     /**
      * Returns a likely highlighter for the given content.
      *
-     * @param string $content
      * @return string
      */
-    public function guessHighlighter($content)
+    public function guessHighlighter(string $content)
     {
         // PHP at the beginning is almost surely PHP.
         if (\str_starts_with($content, '<?php')) {
@@ -262,11 +261,9 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
     /**
      * Returns a unique ID for this code block.
      *
-     * @param string $prefix
-     * @param string $code
      * @return  string
      */
-    protected function getCodeID($prefix, $code)
+    protected function getCodeID(string $prefix, string $code)
     {
         $i = -1;
         // find an unused codeID

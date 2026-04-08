@@ -32,7 +32,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     }
 
     #[\Override]
-    public function getColumns($tableName)
+    public function getColumns(string $tableName)
     {
         $columns = [];
         $regex = new Regex('([a-z]+)\((.+)\)', Regex::CASE_INSENSITIVE);
@@ -100,7 +100,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     }
 
     #[\Override]
-    public function getForeignKeys($tableName)
+    public function getForeignKeys(string $tableName)
     {
         $sql = "SELECT  CONSTRAINT_NAME, DELETE_RULE, UPDATE_RULE
                 FROM    INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS
@@ -162,7 +162,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     }
 
     #[\Override]
-    public function getIndexInformation($tableName)
+    public function getIndexInformation(string $tableName)
     {
         $sql = "SHOW    INDEX
                 FROM    `" . $tableName . "`";
@@ -195,7 +195,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     }
 
     #[\Override]
-    public function getIndices($tableName)
+    public function getIndices(string $tableName)
     {
         $indices = [];
         $sql = "SHOW INDEX FROM `" . $tableName . "`";
@@ -209,7 +209,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     }
 
     #[\Override]
-    public function createTable($tableName, $columns, $indices = [])
+    public function createTable(string $tableName, array $columns, array $indices = [])
     {
         $columnDefinition = $indexDefinition = '';
 
@@ -240,7 +240,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     }
 
     #[\Override]
-    public function dropTable($tableName)
+    public function dropTable(string $tableName)
     {
         $sql = "DROP TABLE IF EXISTS `" . $tableName . "`";
         $statement = $this->dbObj->prepare($sql);
@@ -248,7 +248,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     }
 
     #[\Override]
-    public function addColumn($tableName, $columnName, $columnData)
+    public function addColumn(string $tableName, string $columnName, array $columnData)
     {
         $sql = "ALTER TABLE `" . $tableName . "` ADD COLUMN " . $this->buildColumnDefinition($columnName, $columnData);
         $statement = $this->dbObj->prepare($sql);
@@ -256,7 +256,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     }
 
     #[\Override]
-    public function alterColumn($tableName, $oldColumnName, $newColumnName, $newColumnData)
+    public function alterColumn(string $tableName, string $oldColumnName, string $newColumnName, array $newColumnData)
     {
         $sql = "ALTER TABLE `" . $tableName . "` CHANGE COLUMN `" . $oldColumnName . "` " . $this->buildColumnDefinition(
             $newColumnName,
@@ -267,13 +267,13 @@ class MySQLDatabaseEditor extends DatabaseEditor
     }
 
     #[\Override]
-    public function alterColumns($tableName, $alterData)
+    public function alterColumns(string $tableName, array $alterData)
     {
         $queries = "";
         foreach ($alterData as $columnName => $data) {
             switch ($data['action']) {
                 case 'add':
-                    $queries .= "ADD COLUMN {$this->buildColumnDefinition($columnName, $data['data'])},";
+                    $queries .= "ADD COLUMN {$this->buildColumnDefinition($columnName,$data['data'])},";
                     break;
 
                 case 'alter':
@@ -288,7 +288,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
                         $newColumnName = $data['newColumnName'];
                     }
 
-                    $queries .= "CHANGE COLUMN `{$columnName}` {$this->buildColumnDefinition($newColumnName, $data['data'])},";
+                    $queries .= "CHANGE COLUMN `{$columnName}` {$this->buildColumnDefinition($newColumnName,$data['data'])},";
                     break;
 
                 case 'drop':
@@ -301,7 +301,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     }
 
     #[\Override]
-    public function dropColumn($tableName, $columnName)
+    public function dropColumn(string $tableName, string $columnName)
     {
         try {
             $sql = "ALTER TABLE `" . $tableName . "` DROP COLUMN `" . $columnName . "`";
@@ -318,7 +318,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     }
 
     #[\Override]
-    public function addIndex($tableName, $indexName, $indexData)
+    public function addIndex(string $tableName, string $indexName, array $indexData)
     {
         $sql = "ALTER TABLE `" . $tableName . "` ADD " . $this->buildIndexDefinition($indexName, $indexData);
         $statement = $this->dbObj->prepare($sql);
@@ -326,7 +326,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     }
 
     #[\Override]
-    public function addForeignKey($tableName, $indexName, $indexData)
+    public function addForeignKey(string $tableName, string $indexName, array $indexData)
     {
         $sql = "ALTER TABLE `" . $tableName . "` ADD";
 
@@ -360,7 +360,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     }
 
     #[\Override]
-    public function dropIndex($tableName, $indexName)
+    public function dropIndex(string $tableName, string $indexName)
     {
         try {
             $sql = "ALTER TABLE `" . $tableName . "` DROP INDEX `" . $indexName . "`";
@@ -377,7 +377,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     }
 
     #[\Override]
-    public function dropPrimaryKey($tableName)
+    public function dropPrimaryKey(string $tableName)
     {
         try {
             $sql = "ALTER TABLE " . $tableName . " DROP PRIMARY KEY";
@@ -394,7 +394,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     }
 
     #[\Override]
-    public function dropForeignKey($tableName, $indexName)
+    public function dropForeignKey(string $tableName, string $indexName)
     {
         try {
             $sql = "ALTER TABLE `" . $tableName . "` DROP FOREIGN KEY `" . $indexName . "`";
@@ -413,11 +413,10 @@ class MySQLDatabaseEditor extends DatabaseEditor
     /**
      * Builds a column definition for execution in a create table or alter table statement.
      *
-     * @param string $columnName
      * @param ColumnDefinition $columnData
      * @return string
      */
-    protected function buildColumnDefinition($columnName, $columnData)
+    protected function buildColumnDefinition(string $columnName, array $columnData)
     {
         // column name
         $definition = "`" . $columnName . "`";
@@ -457,11 +456,10 @@ class MySQLDatabaseEditor extends DatabaseEditor
     /**
      * Builds a index definition for execution in a create table or alter table statement.
      *
-     * @param string $indexName
      * @param IndexDefinition $indexData
      * @return string
      */
-    protected function buildIndexDefinition($indexName, $indexData)
+    protected function buildIndexDefinition(string $indexName, array $indexData)
     {
         // index type
         if ($indexData['type'] == 'PRIMARY') {

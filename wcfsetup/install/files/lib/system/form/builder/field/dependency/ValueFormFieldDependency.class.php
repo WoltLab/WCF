@@ -88,10 +88,9 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency
     /**
      * Sets if the field value may not have any of the set values.
      *
-     * @param bool $negate
      * @return static $this this dependency
      */
-    public function negate($negate = true)
+    public function negate(bool $negate = true)
     {
         $this->negate = $negate;
 
@@ -107,7 +106,7 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency
      * @throws \InvalidArgumentException if given value are no array, callable, DatabaseObjectList, or otherwise invalid
      * @throws \UnexpectedValueException if callable does not return an array or a DatabaseObjectList
      */
-    public function values($values)
+    public function values(array|callable|DatabaseObjectList $values)
     {
         if (!\is_array($values) && !\is_callable($values) && !($values instanceof DatabaseObjectList)) {
             throw new \InvalidArgumentException("The given values are neither an array, a callable nor an instance of '" . DatabaseObjectList::class . "', " . \gettype($values) . " given.");

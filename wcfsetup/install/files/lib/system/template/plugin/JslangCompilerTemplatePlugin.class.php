@@ -19,7 +19,7 @@ use wcf\system\template\TemplateScriptingCompiler;
 class JslangCompilerTemplatePlugin implements ICompilerTemplatePlugin
 {
     #[\Override]
-    public function executeStart($tagArgs, TemplateScriptingCompiler $compiler)
+    public function executeStart(array $tagArgs, TemplateScriptingCompiler $compiler)
     {
         $compiler->pushTag('jslang');
 

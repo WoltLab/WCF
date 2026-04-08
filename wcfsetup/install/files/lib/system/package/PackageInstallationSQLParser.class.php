@@ -71,13 +71,7 @@ class PackageInstallationSQLParser extends SQLParser
      */
     protected $indexLog = [];
 
-    /**
-     * Creates a new PackageInstallationSQLParser object.
-     *
-     * @param string $queries
-     * @param string $action
-     */
-    public function __construct($queries, Package $package, $action = 'install')
+    public function __construct(string $queries, Package $package, string $action = 'install')
     {
         $this->package = $package;
         $this->action = $action;
@@ -215,11 +209,9 @@ class PackageInstallationSQLParser extends SQLParser
     /**
      * Returns the owner of a specific database table column.
      *
-     * @param string $tableName
-     * @param string $columnName
      * @return  int|null     package id
      */
-    protected function getColumnOwnerID($tableName, $columnName)
+    protected function getColumnOwnerID(string $tableName, string $columnName)
     {
         $sql = "SELECT  packageID
                 FROM    wcf1_package_installation_sql_log
@@ -243,11 +235,9 @@ class PackageInstallationSQLParser extends SQLParser
     /**
      * Returns the owner of a specific database index.
      *
-     * @param string $tableName
-     * @param string $indexName
      * @return  int     package id
      */
-    protected function getIndexOwnerID($tableName, $indexName)
+    protected function getIndexOwnerID(string $tableName, string $indexName)
     {
         $sql = "SELECT  packageID
                 FROM    wcf1_package_installation_sql_log
@@ -269,7 +259,7 @@ class PackageInstallationSQLParser extends SQLParser
     }
 
     #[\Override]
-    protected function executeCreateTableStatement($tableName, $columns, $indices = [])
+    protected function executeCreateTableStatement(string $tableName, array $columns, array $indices = [])
     {
         if ($this->test) {
             if (\in_array($tableName, $this->existingTables)) {
@@ -299,7 +289,7 @@ class PackageInstallationSQLParser extends SQLParser
     }
 
     #[\Override]
-    protected function executeAddColumnStatement($tableName, $columnName, $columnData)
+    protected function executeAddColumnStatement(string $tableName, string $columnName, array $columnData)
     {
         if ($this->test) {
             if (!isset($this->knownTables[$tableName])) {
@@ -320,7 +310,7 @@ class PackageInstallationSQLParser extends SQLParser
     }
 
     #[\Override]
-    protected function executeAlterColumnStatement($tableName, $oldColumnName, $newColumnName, $newColumnData)
+    protected function executeAlterColumnStatement(string $tableName, string $oldColumnName, string $newColumnName, array $newColumnData)
     {
         if ($this->test) {
             if ($ownerPackageID = $this->getColumnOwnerID($tableName, $oldColumnName)) {
@@ -351,7 +341,7 @@ class PackageInstallationSQLParser extends SQLParser
     }
 
     #[\Override]
-    protected function executeAddIndexStatement($tableName, $indexName, $indexData)
+    protected function executeAddIndexStatement(string $tableName, string $indexName, array $indexData)
     {
         if (!$this->test) {
             // log
@@ -368,7 +358,7 @@ class PackageInstallationSQLParser extends SQLParser
     }
 
     #[\Override]
-    protected function executeAddForeignKeyStatement($tableName, $indexName, $indexData)
+    protected function executeAddForeignKeyStatement(string $tableName, string $indexName, array $indexData)
     {
         if (!$this->test) {
             // log
@@ -385,7 +375,7 @@ class PackageInstallationSQLParser extends SQLParser
     }
 
     #[\Override]
-    protected function executeDropColumnStatement($tableName, $columnName)
+    protected function executeDropColumnStatement(string $tableName, string $columnName)
     {
         if ($this->test) {
             if ($ownerPackageID = $this->getColumnOwnerID($tableName, $columnName)) {
@@ -408,7 +398,7 @@ class PackageInstallationSQLParser extends SQLParser
     }
 
     #[\Override]
-    protected function executeDropIndexStatement($tableName, $indexName)
+    protected function executeDropIndexStatement(string $tableName, string $indexName)
     {
         if ($this->test) {
             if ($ownerPackageID = $this->getIndexOwnerID($tableName, $indexName)) {
@@ -431,7 +421,7 @@ class PackageInstallationSQLParser extends SQLParser
     }
 
     #[\Override]
-    protected function executeDropPrimaryKeyStatement($tableName)
+    protected function executeDropPrimaryKeyStatement(string $tableName)
     {
         if ($this->test) {
             if ($ownerPackageID = $this->getIndexOwnerID($tableName, '')) {
@@ -440,8 +430,8 @@ class PackageInstallationSQLParser extends SQLParser
                 }
             }
         } else {
-//          // log
-//          $this->indexLog[] = array('tableName' => $tableName, 'indexName' => '', 'packageID' => $this->package->packageID, 'action' => 'delete');
+            //          // log
+            //          $this->indexLog[] = array('tableName' => $tableName, 'indexName' => '', 'packageID' => $this->package->packageID, 'action' => 'delete');
 
             // execute
             parent::executeDropPrimaryKeyStatement($tableName);
@@ -449,7 +439,7 @@ class PackageInstallationSQLParser extends SQLParser
     }
 
     #[\Override]
-    protected function executeDropForeignKeyStatement($tableName, $indexName)
+    protected function executeDropForeignKeyStatement(string $tableName, string $indexName)
     {
         if ($this->test) {
             if ($ownerPackageID = $this->getIndexOwnerID($tableName, $indexName)) {
@@ -472,7 +462,7 @@ class PackageInstallationSQLParser extends SQLParser
     }
 
     #[\Override]
-    protected function executeDropTableStatement($tableName)
+    protected function executeDropTableStatement(string $tableName)
     {
         if ($this->test) {
             if (\in_array($tableName, $this->existingTables)) {
@@ -494,7 +484,7 @@ class PackageInstallationSQLParser extends SQLParser
     }
 
     #[\Override]
-    protected function executeStandardStatement($query)
+    protected function executeStandardStatement(string $query)
     {
         if (!$this->test) {
             parent::executeStandardStatement($query);

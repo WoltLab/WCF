@@ -37,7 +37,7 @@ class FeedEnclosure
      * @param string $type enclosure's MIME type
      * @param int $length size of the enclosure in bytes
      */
-    public function __construct($url, $type, $length)
+    public function __construct(string $url, string $type, int $length)
     {
         $this->url = $url;
         $this->type = $type;

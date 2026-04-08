@@ -50,7 +50,7 @@ interface ISelectionFormField extends IFormField
      * callable returning an array. Each array value must be an array with the
      * following entries: `depth`, `label`, and `value`.
      *
-     * @param mixed[]|callable|DatabaseObjectList<DatabaseObject> $options selectable options or callable returning the options
+     * @param array<string|int, mixed>|callable|\Traversable<mixed>|DatabaseObjectList $options selectable options or callable returning the options
      * @param bool $nestedOptions is `true` if the passed options are nested options
      * @param bool $labelLanguageItems is `true` if the labels should be treated as language items if possible
      * @return static this field
@@ -58,7 +58,7 @@ interface ISelectionFormField extends IFormField
      * @throws \InvalidArgumentException if given options are no array or callable or otherwise invalid
      * @throws \UnexpectedValueException if callable does not return an array
      */
-    public function options(array|callable|DatabaseObjectList $options, bool $nestedOptions = false, bool $labelLanguageItems = true);
+    public function options(array|callable|\Traversable|DatabaseObjectList $options, bool $nestedOptions = false, bool $labelLanguageItems = true);
 
     /**
      * Returns `true` if the field class supports nested options and `false` otherwise.

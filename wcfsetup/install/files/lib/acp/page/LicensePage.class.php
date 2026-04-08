@@ -443,15 +443,13 @@ final class LicensePage extends AbstractPage
      *
      * Stolen from PackageUpdateAction::canInstall()
      *
-     * @param int $packageUpdateID
-     * @param string|null $minVersion
      * @param string[] $installedPackages
      * @param string[] $excludedPackagesOfInstalledPackages
      * @return      string[][]
      */
     protected function canInstall(
-        $packageUpdateID,
-        $minVersion,
+        int $packageUpdateID,
+        ?string $minVersion,
         array &$installedPackages,
         array &$excludedPackagesOfInstalledPackages
     ) {

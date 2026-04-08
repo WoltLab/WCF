@@ -21,11 +21,10 @@ trait TTestableCategorizedUserNotificationEvent
     /**
      * Returns a newly created test category of the given object type.
      *
-     * @param string $objectTypeName
      * @param mixed[] $additionalData
      * @return  Category
      */
-    protected static function createTestCategory($objectTypeName, array $additionalData = [])
+    protected static function createTestCategory(string $objectTypeName, array $additionalData = [])
     {
         $objectType = CategoryHandler::getInstance()->getObjectTypeByName($objectTypeName);
         if ($objectType === null) {

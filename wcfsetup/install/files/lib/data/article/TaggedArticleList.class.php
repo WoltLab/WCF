@@ -20,7 +20,7 @@ class TaggedArticleList extends AccessibleArticleList
      *
      * @param Tag|Tag[] $tags
      */
-    public function __construct($tags)
+    public function __construct(Tag|array $tags)
     {
         parent::__construct();
 

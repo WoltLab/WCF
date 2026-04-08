@@ -22,10 +22,9 @@ class SingleSelectionFormElementContainer extends SelectionFormElementContainer
     /**
      * Sets container value.
      *
-     * @param string $value
      * @return void
      */
-    public function setValue($value)
+    public function setValue(string $value)
     {
         $this->value = StringUtil::trim($value);
     }

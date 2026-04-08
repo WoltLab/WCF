@@ -298,11 +298,11 @@ class SystemCheckPage extends AbstractPage
                 $innerConditionBuilder = new PreparedStatementConditionBuilder(false);
                 $innerConditionBuilder->add('REFERENCED_TABLE_SCHEMA = ?', [WCF::getDB()->getDatabaseName()]);
                 $innerConditionBuilder->add('REFERENCED_TABLE_NAME = ?', [
-                        ApplicationHandler::insertRealDatabaseTableNames($reference['referenceTable'])
+                    ApplicationHandler::insertRealDatabaseTableNames($reference['referenceTable'])
                 ]);
                 $innerConditionBuilder->add('REFERENCED_COLUMN_NAME = ?', [$reference['referenceColumn']]);
                 $innerConditionBuilder->add('TABLE_NAME = ?', [
-                        ApplicationHandler::insertRealDatabaseTableNames($table)
+                    ApplicationHandler::insertRealDatabaseTableNames($table)
                 ]);
                 $innerConditionBuilder->add('COLUMN_NAME = ?', [$column]);
 
@@ -481,10 +481,9 @@ class SystemCheckPage extends AbstractPage
     }
 
     /**
-     * @param string $path
      * @return bool
      */
-    protected function checkDirectory($path)
+    protected function checkDirectory(string $path)
     {
         if (!$this->createDirectoryIfNotExists($path)) {
             $this->results['directories'][] = FileUtil::unifyDirSeparator($path);
@@ -496,10 +495,9 @@ class SystemCheckPage extends AbstractPage
     }
 
     /**
-     * @param string $path
      * @return bool
      */
-    protected function createDirectoryIfNotExists($path)
+    protected function createDirectoryIfNotExists(string $path)
     {
         if (!\file_exists($path) && !FileUtil::makePath($path)) {
             // FileUtil::makePath() returns false if either the directory cannot be created
@@ -513,10 +511,9 @@ class SystemCheckPage extends AbstractPage
     }
 
     /**
-     * @param string $path
      * @return bool
      */
-    protected function makeDirectoryWritable($path)
+    protected function makeDirectoryWritable(string $path)
     {
         try {
             FileUtil::makeWritable($path);

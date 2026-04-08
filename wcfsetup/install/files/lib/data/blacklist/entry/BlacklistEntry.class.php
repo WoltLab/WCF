@@ -23,12 +23,9 @@ use wcf\util\IpAddress;
 class BlacklistEntry extends DatabaseObject
 {
     /**
-     * @param string $username
-     * @param string $email
-     * @param string $ipAddress
      * @return string[]
      */
-    public static function getMatches($username, $email, $ipAddress)
+    public static function getMatches(string $username, string $email, string $ipAddress)
     {
         if (BLACKLIST_SFS_USERNAME === 'skip' && BLACKLIST_SFS_EMAIL_ADDRESS === 'skip' && BLACKLIST_SFS_IP_ADDRESS === 'skip') {
             return [];
@@ -76,20 +73,17 @@ class BlacklistEntry extends DatabaseObject
     }
 
     /**
-     * @param string $string
      * @return string
      */
-    protected static function getHash($string)
+    protected static function getHash(string $string)
     {
         return \hash('sha256', $string, true);
     }
 
     /**
-     * @param string $type
-     * @param int $occurrences
      * @return bool
      */
-    protected static function isMatch($type, $occurrences)
+    protected static function isMatch(string $type, int $occurrences)
     {
         $setting = [
             'email' => BLACKLIST_SFS_EMAIL_ADDRESS,
@@ -117,10 +111,9 @@ class BlacklistEntry extends DatabaseObject
     }
 
     /**
-     * @param string $type
      * @return int
      */
-    protected static function get90Percentile($type)
+    protected static function get90Percentile(string $type)
     {
         static $percentile = [];
         if (!isset($percentile[$type])) {

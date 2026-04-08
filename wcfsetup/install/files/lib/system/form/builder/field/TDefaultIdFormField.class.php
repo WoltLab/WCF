@@ -20,7 +20,7 @@ trait TDefaultIdFormField
      * @return  static
      */
     #[\Override]
-    public static function create($id = null)
+    public static function create(?string $id = null)
     {
         if ($id === null) {
             $id = static::getDefaultId();

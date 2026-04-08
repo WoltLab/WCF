@@ -136,10 +136,9 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
     /**
      * Returns the data of the media file to be returned by AJAX requests.
      *
-     * @param Media|ViewableMedia $media media files whose data will be returned
      * @return mixed[]
      */
-    protected function getMediaData($media)
+    protected function getMediaData(Media|ViewableMedia $media)
     {
         return [
             'altText' => $media instanceof ViewableMedia ? $media->altText : [],

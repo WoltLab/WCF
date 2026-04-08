@@ -44,10 +44,9 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
     /**
      * Returns a level 1 or 2 category id for given category name.
      *
-     * @param string $categoryName
      * @return  int
      */
-    protected function getCategoryID($categoryName)
+    protected function getCategoryID(string $categoryName)
     {
         // @phpstan-ignore property.notFound
         return $this->getTopCategory($categoryName)->categoryID;
@@ -56,10 +55,9 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
     /**
      * Returns a level 1 or 2 category name for given category name.
      *
-     * @param string $categoryName
      * @return  string
      */
-    protected function getCategoryName($categoryName)
+    protected function getCategoryName(string $categoryName)
     {
         // @phpstan-ignore property.notFound
         return $this->getTopCategory($categoryName)->categoryName;
@@ -68,11 +66,10 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
     /**
      * Returns a level 1 or 2 category for given category name.
      *
-     * @param string $categoryName
      * @return  DatabaseObject
      * @throws  SystemException
      */
-    protected function getTopCategory($categoryName)
+    protected function getTopCategory(string $categoryName)
     {
         if (!$this->isValid($categoryName)) {
             throw new SystemException("Category name '" . $categoryName . "' is unknown");
@@ -144,10 +141,9 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
     /**
      * Returns true if given category is valid and accessible.
      *
-     * @param string $categoryName
      * @return  bool
      */
-    protected function isValid($categoryName)
+    protected function isValid(string $categoryName)
     {
         return isset($this->categories[$categoryName]);
     }

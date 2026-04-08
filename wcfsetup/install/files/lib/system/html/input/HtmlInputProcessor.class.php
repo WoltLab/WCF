@@ -43,13 +43,10 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
     /**
      * Processes the input html string.
      *
-     * @param string $html html string
-     * @param string $objectType object type identifier
-     * @param int $objectID object id
      * @param bool $convertFromBBCode interpret input as bbcode
      * @return void
      */
-    public function process($html, $objectType, $objectID = 0, $convertFromBBCode = false)
+    public function process(string $html, string $objectType, int $objectID = 0, bool $convertFromBBCode = false)
     {
         $this->reset();
 
@@ -79,10 +76,9 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
      * does not perform any filtering or validation. You SHOULD NOT use this
      * to deal with HTML that has not been filtered previously.
      *
-     * @param string $html html string
      * @return void
      */
-    public function processIntermediate($html)
+    public function processIntermediate(string $html)
     {
         $this->getHtmlInputNodeProcessor()->load($this, $html);
     }
@@ -91,12 +87,9 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
      * Reprocesses a message by transforming the message into an editor-like
      * state using plain bbcodes instead of metacode elements.
      *
-     * @param string $html html string
-     * @param string $objectType object type identifier
-     * @param int $objectID object id
      * @return void
      */
-    public function reprocess($html, $objectType, $objectID)
+    public function reprocess(string $html, string $objectType, int $objectID)
     {
         $this->processIntermediate($html);
 
@@ -148,13 +141,10 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
      * Processes only embedded content. This method should only be called when rebuilding
      * data where only embedded content is relevant, but no actual parsing is required.
      *
-     * @param string $html html string
-     * @param string $objectType object type identifier
-     * @param int $objectID object id
      * @return void
      * @throws \UnexpectedValueException
      */
-    public function processEmbeddedContent($html, $objectType, $objectID)
+    public function processEmbeddedContent(string $html, string $objectType, int $objectID)
     {
         if (!$objectID) {
             throw new \UnexpectedValueException("Object id parameter must be non-zero.");
@@ -180,10 +170,9 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
     /**
      * Enforces the maximum depth of nested quotes.
      *
-     * @param int $depth
      * @return void
      */
-    public function enforceQuoteDepth($depth, bool $isFullQuote = false)
+    public function enforceQuoteDepth(int $depth, bool $isFullQuote = false)
     {
         $this->getHtmlInputNodeProcessor()->enforceQuoteDepth($depth, $isFullQuote);
     }
@@ -244,10 +233,9 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
     /**
      * Sets the new object id.
      *
-     * @param int $objectID object id
      * @return void
      */
-    public function setObjectID($objectID)
+    public function setObjectID(int $objectID)
     {
         $this->context['objectID'] = $objectID;
     }
@@ -278,10 +266,9 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
     /**
      * Converts bbcodes using newlines into valid HTML.
      *
-     * @param string $html html string
      * @return string parsed html string
      */
-    protected function convertToHtml($html)
+    protected function convertToHtml(string $html)
     {
         // Do not use StringUtil::encodeHTML() / htmlspecialchars() or similar:
         //

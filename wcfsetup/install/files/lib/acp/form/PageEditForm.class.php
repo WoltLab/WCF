@@ -163,7 +163,7 @@ class PageEditForm extends PageAddForm
     }
 
     #[\Override]
-    protected function validateCustomUrl($languageID, $customURL)
+    protected function validateCustomUrl(int $languageID, string $customURL)
     {
         if (!$this->supportsCustomUrl) {
             return;

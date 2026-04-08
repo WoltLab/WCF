@@ -273,10 +273,9 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
     /**
      * Enforces the maximum depth of nested quotes.
      *
-     * @param int $depth
      * @return void
      */
-    public function enforceQuoteDepth($depth, bool $isFullQuote = false)
+    public function enforceQuoteDepth(int $depth, bool $isFullQuote = false)
     {
         $quotes = [];
         /** @var \DOMElement $quote */
@@ -723,11 +722,10 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
     /**
      * Add embedded content for provided type.
      *
-     * @param string $type type name
      * @param mixed[] $data embedded content
      * @return void
      */
-    public function addEmbeddedContent($type, array $data)
+    public function addEmbeddedContent(string $type, array $data)
     {
         if (isset($this->embeddedContent[$type])) {
             $this->embeddedContent[$type] = \array_merge($this->embeddedContent[$type], $data);
@@ -772,7 +770,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
      * @param mixed[] $attributes list of attributes
      * @return      \DOMElement     new metacode element
      */
-    public function createMetacodeElement(\DOMNode $node, $name, array $attributes)
+    public function createMetacodeElement(\DOMNode $node, string $name, array $attributes)
     {
         $element = $node->ownerDocument->createElement('woltlab-metacode');
         $element->setAttribute('data-name', $name);

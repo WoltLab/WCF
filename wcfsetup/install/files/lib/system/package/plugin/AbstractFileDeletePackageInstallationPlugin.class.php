@@ -254,11 +254,10 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
     }
 
     /**
-     * @param bool $saveData
      * @return array<string, int|string>
      */
     #[\Override]
-    protected function fetchElementData(\DOMElement $element, $saveData)
+    protected function fetchElementData(\DOMElement $element, bool $saveData)
     {
         return [
             'application' => $element->getAttribute('application') ?: 'wcf',

@@ -24,11 +24,9 @@ class BoxEditor extends DatabaseObjectEditor
     /**
      * Creates the template file for "tpl"-type boxes.
      *
-     * @param int $languageID
-     * @param string $content
      * @return void
      */
-    public function writeTemplate($languageID, $content)
+    public function writeTemplate(int $languageID, string $content)
     {
         if ($this->getDecoratedObject()->boxType === 'tpl') {
             \file_put_contents(

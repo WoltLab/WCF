@@ -41,13 +41,7 @@ class PageNodeTree
      */
     public $node;
 
-    /**
-     * Creates a new PageNodeTree object.
-     *
-     * @param int $parentID
-     * @param int $startDepth
-     */
-    public function __construct($parentID = null, $startDepth = 0)
+    public function __construct(?int $parentID = null, int $startDepth = 0)
     {
         $this->parentID = $parentID;
         $this->startDepth = $startDepth;

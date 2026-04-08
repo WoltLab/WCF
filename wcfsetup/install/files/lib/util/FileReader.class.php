@@ -64,11 +64,10 @@ class FileReader
     /**
      * Creates a new instance of the HTTPFileReader class.
      *
-     * @param string $location
      * @param array<string, string|int|bool> $options
      * @throws  SystemException
      */
-    public function __construct($location, array $options)
+    public function __construct(string $location, array $options)
     {
         $this->location = $location;
 
@@ -222,10 +221,9 @@ class FileReader
     /**
      * @deprecated 6.0 This method is unused internally. Use `wcf\http\ContentDisposition` instead.
      *
-     * @param string $filename
      * @return string
      */
-    protected function sanitizeFilename($filename)
+    protected function sanitizeFilename(string $filename)
     {
         return \str_replace(['<', '>', ':', '"', '/', '\\', '|', '?', '*'], '_', $filename);
     }
@@ -291,11 +289,9 @@ class FileReader
     /**
      * Adds the header with the given name and value.
      *
-     * @param string $name
-     * @param string $value
      * @return void
      */
-    public function addHeader($name, $value)
+    public function addHeader(string $name, string $value)
     {
         $this->headers[$name] = $value;
     }
@@ -303,10 +299,9 @@ class FileReader
     /**
      * Removes the header with the given name.
      *
-     * @param string $name
      * @return void
      */
-    public function removeHeader($name)
+    public function removeHeader(string $name)
     {
         unset($this->headers[$name]);
     }

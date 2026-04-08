@@ -50,10 +50,9 @@ class XML
     /**
      * Loads a xml file for processing.
      *
-     * @param string $path
      * @return void
      */
-    public function load($path)
+    public function load(string $path)
     {
         $this->path = $path;
 
@@ -79,11 +78,9 @@ class XML
     /**
      * Loads a xml string, specifying $path is mandatory to provide detailed error handling.
      *
-     * @param string $path
-     * @param string $xml
      * @return void
      */
-    public function loadXML($path, $xml)
+    public function loadXML(string $path, string $xml)
     {
         $this->path = $path;
 
@@ -152,7 +149,7 @@ class XML
     public function getSchemaLocation()
     {
         $schema = $this->document->documentElement->getAttributeNS(
-            $this->document->documentElement->lookupNamespaceUri('xsi'),
+            $this->document->documentElement->lookupNamespaceURI('xsi'),
             'schemaLocation'
         );
 
@@ -212,12 +209,11 @@ class XML
     /**
      * Throws a SystemException providing details on xml errors if applicable.
      *
-     * @param string $message
      * @param array{line: int, message: string}[] $errors
      * @return never
      * @throws  SystemException
      */
-    protected function throwException($message, array $errors = [])
+    protected function throwException(string $message, array $errors = [])
     {
         if (!empty($errors)) {
             $description = '<b>LibXML output:</b><pre>';
@@ -246,15 +242,14 @@ class XML
     /**
      * Writes the xml structure into the given file.
      *
-     * @param string $fileLocation location of file
      * @param bool $cdata indicates of values are escaped using cdata
      * @return void
      * @since   5.2
      */
-    public function write($fileLocation, $cdata = false)
+    public function write(string $fileLocation, bool $cdata = false)
     {
         $schemaParts = \explode(' ', $this->document->documentElement->getAttributeNS(
-            $this->document->documentElement->lookupNamespaceUri('xsi'),
+            $this->document->documentElement->lookupNamespaceURI('xsi'),
             'schemaLocation'
         ));
 
@@ -277,13 +272,12 @@ class XML
     /**
      * Writes the given element using the given xml writer.
      *
-     * @param XMLWriter $writer xml writer
      * @param \DOMElement $element written element
      * @param bool $cdata indicates if element value is escaped using cdata
      * @return void
      * @since   5.2
      */
-    protected function writeElement(XMLWriter $writer, \DOMElement $element, $cdata)
+    protected function writeElement(XMLWriter $writer, \DOMElement $element, bool $cdata)
     {
         if ($element->childNodes->length === 1 && $element->firstChild instanceof \DOMText) {
             $writer->writeElement(

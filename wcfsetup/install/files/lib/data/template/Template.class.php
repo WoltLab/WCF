@@ -30,7 +30,7 @@ class Template extends DatabaseObject
      */
     protected static $systemCriticalTemplates = ['headIncludeJavaScript', 'shared_wysiwyg', 'wysiwygToolbar'];
 
-    public function __construct($id, $row = null, ?DatabaseObject $object = null)
+    public function __construct(null|string|int $id, ?array $row = null, ?DatabaseObject $object = null)
     {
         if ($id !== null) {
             $sql = "SELECT      template.*, template_group.templateGroupFolderName,
@@ -52,7 +52,7 @@ class Template extends DatabaseObject
             $row = $object->data;
         }
 
-        $this->handleData($row);
+        $this->handleData($row ?? []);
     }
 
     /**
@@ -110,10 +110,9 @@ class Template extends DatabaseObject
      * Returns true if current template is considered system critical and
      * may not be customized at any point.
      *
-     * @param string $templateName
      * @return      bool
      */
-    public static function isSystemCritical($templateName)
+    public static function isSystemCritical(string $templateName)
     {
         return \in_array($templateName, self::$systemCriticalTemplates);
     }

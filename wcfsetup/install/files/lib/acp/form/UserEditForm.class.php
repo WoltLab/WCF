@@ -516,7 +516,7 @@ class UserEditForm extends UserAddForm
     }
 
     #[\Override]
-    protected function validateUsername($username)
+    protected function validateUsername(string $username)
     {
         try {
             if (\mb_strtolower($this->user->username) != \mb_strtolower($username)) {

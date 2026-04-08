@@ -36,12 +36,11 @@ trait TMaximumLengthFormField
      * Sets the maximum length of the values of this field. If `null` is passed, the
      * maximum length is removed.
      *
-     * @param ?int $maximumLength maximum field value length
      * @return static this field
      *
      * @throws \InvalidArgumentException if the given maximum length is no integer or otherwise invalid
      */
-    public function maximumLength($maximumLength = null)
+    public function maximumLength(?int $maximumLength = null)
     {
         if ($maximumLength !== null) {
             if (!\is_int($maximumLength)) {
@@ -74,15 +73,12 @@ trait TMaximumLengthFormField
     /**
      * Validates the maximum length of the given text.
      *
-     * @param string $text validated text
-     * @param ?Language $language language of the validated text
-     * @param string $errorLanguageItem
      * @return void
      */
     public function validateMaximumLength(
-        $text,
+        string $text,
         ?Language $language = null,
-        $errorLanguageItem = 'wcf.form.field.text.error.maximumLength'
+        string $errorLanguageItem = 'wcf.form.field.text.error.maximumLength'
     ) {
         if ($this->getMaximumLength() !== null && \mb_strlen($text) > $this->getMaximumLength()) {
             $this->addValidationError(new FormFieldValidationError(

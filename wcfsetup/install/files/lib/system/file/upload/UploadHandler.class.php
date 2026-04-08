@@ -95,12 +95,11 @@ class UploadHandler extends SingletonFactory
     /**
      * Unregisters an upload field by the given field id.
      *
-     * @param string $fieldId
      * @return void
      *
      * @throws \InvalidArgumentException if the given fieldId is unknown
      */
-    public function unregisterUploadField($fieldId)
+    public function unregisterUploadField(string $fieldId)
     {
         if (!isset($this->fields[$fieldId])) {
             throw new \InvalidArgumentException('UploadField with the id "' . $fieldId . '" is unknown.');
@@ -117,12 +116,11 @@ class UploadHandler extends SingletonFactory
     /**
      * Returns the uploaded files for a specific fieldId.
      *
-     * @param string $fieldId
      * @return UploadFile[]
      *
      * @throws \InvalidArgumentException if the given fieldId is unknown
      */
-    public function getFilesByFieldId($fieldId)
+    public function getFilesByFieldId(string $fieldId)
     {
         if (!isset($this->fields[$fieldId])) {
             throw new \InvalidArgumentException('UploadField with the id "' . $fieldId . '" is unknown.');
@@ -134,13 +132,11 @@ class UploadHandler extends SingletonFactory
     /**
      * Returns the removed but previosly proccessed files for a specific fieldId.
      *
-     * @param string $fieldId
-     * @param bool $processFiles
      * @return UploadFile[]
      *
      * @throws \InvalidArgumentException if the given fieldId is unknown
      */
-    public function getRemovedFilesByFieldId($fieldId, $processFiles = true)
+    public function getRemovedFilesByFieldId(string $fieldId, bool $processFiles = true)
     {
         if (!isset($this->fields[$fieldId])) {
             throw new \InvalidArgumentException('UploadField with the id "' . $fieldId . '" is unknown.');
@@ -150,12 +146,10 @@ class UploadHandler extends SingletonFactory
     }
 
     /**
-     * @param string $fieldId
-     * @param bool $processFiles
      * @return UploadFile[]
      * @deprecated 6.0 This method exists only because of a spelling error in the method name. Use `getRemovedFiledByFieldId` instead.
      */
-    public function getRemovedFiledByFieldId($fieldId, $processFiles = true)
+    public function getRemovedFiledByFieldId(string $fieldId, bool $processFiles = true)
     {
         return $this->getRemovedFilesByFieldId($fieldId, $processFiles);
     }
@@ -163,11 +157,9 @@ class UploadHandler extends SingletonFactory
     /**
      * Returns the removed but previosly proccessed files for a specific internalId.
      *
-     * @param string $internalId
-     * @param bool $processFiles
      * @return UploadFile[]
      */
-    public function getRemovedFilesByInternalId($internalId, $processFiles = true)
+    public function getRemovedFilesByInternalId(string $internalId, bool $processFiles = true)
     {
         if (isset($this->getStorage()[$internalId])) {
             $files = $this->getStorage()[$internalId]['removedFiles'];
@@ -191,12 +183,10 @@ class UploadHandler extends SingletonFactory
     }
 
     /**
-     * @param string $internalId
-     * @param bool $processFiles
      * @return UploadFile[]
      * @deprecated 6.0 This method exists only because of a spelling error in the method name. Use `getRemovedFilesByInternalId` instead.
      */
-    public function getRemovedFiledByInternalId($internalId, $processFiles = true)
+    public function getRemovedFiledByInternalId(string $internalId, bool $processFiles = true)
     {
         return $this->getRemovedFilesByInternalId($internalId, $processFiles);
     }
@@ -204,13 +194,11 @@ class UploadHandler extends SingletonFactory
     /**
      * Removes a file from the upload.
      *
-     * @param string $internalId
-     * @param string $uniqueFileId
      * @return void
      *
      * @throws \InvalidArgumentException if the given internalId is unknown
      */
-    public function removeFile($internalId, $uniqueFileId)
+    public function removeFile(string $internalId, string $uniqueFileId)
     {
         if (!$this->isValidInternalId($internalId)) {
             throw new \InvalidArgumentException('InternalId "' . $internalId . '" is unknown.');
@@ -228,11 +216,10 @@ class UploadHandler extends SingletonFactory
     /**
      * Removes an file by file object.
      *
-     * @param string $internalId
      * @param UploadFile $file
      * @return void
      */
-    private function removeFileByObject($internalId, UploadFile $file)
+    private function removeFileByObject(string $internalId, UploadFile $file)
     {
         $storage = $this->getStorage();
 
@@ -256,12 +243,11 @@ class UploadHandler extends SingletonFactory
     /**
      * Renders the field with the given fieldId for the template.
      *
-     * @param string $fieldId
      * @return string
      *
      * @throws \InvalidArgumentException if the given fieldId is unknown
      */
-    public function renderField($fieldId)
+    public function renderField(string $fieldId)
     {
         if (!isset($this->fields[$fieldId])) {
             throw new \InvalidArgumentException('UploadField with the id "' . $fieldId . '" is unknown.');
@@ -277,10 +263,9 @@ class UploadHandler extends SingletonFactory
     /**
      * Returns true, if the given internalId is valid.
      *
-     * @param string $internalId
      * @return bool
      */
-    public function isValidInternalId($internalId)
+    public function isValidInternalId(string $internalId)
     {
         return isset($this->getStorage()[$internalId]);
     }
@@ -288,11 +273,9 @@ class UploadHandler extends SingletonFactory
     /**
      * Checks whether the passed internal file id is valid for an internal id.
      *
-     * @param string $internalId
-     * @param string $uniqueFileId
      * @return bool
      */
-    public function isValidUniqueFileId($internalId, $uniqueFileId)
+    public function isValidUniqueFileId(string $internalId, string $uniqueFileId)
     {
         return $this->getFileByUniqueFileId($internalId, $uniqueFileId) !== null;
     }
@@ -300,13 +283,11 @@ class UploadHandler extends SingletonFactory
     /**
      * Return all files by file id.
      *
-     * @param string $internalId
-     * @param string $uniqueFileId
      * @return ?UploadFile
      *
      * @throws \InvalidArgumentException if the given internalId is unknown
      */
-    public function getFileByUniqueFileId($internalId, $uniqueFileId)
+    public function getFileByUniqueFileId(string $internalId, string $uniqueFileId)
     {
         if (!$this->isValidInternalId($internalId)) {
             throw new \InvalidArgumentException('InternalId "' . $internalId . '" is unknown.');
@@ -324,10 +305,9 @@ class UploadHandler extends SingletonFactory
     /**
      * Add a file for an internalId.
      *
-     * @param string $internalId
      * @return void
      */
-    public function addFileByInternalId($internalId, UploadFile $file)
+    public function addFileByInternalId(string $internalId, UploadFile $file)
     {
         $this->registerFilesByInternalId($internalId, \array_merge($this->getFilesByInternalId($internalId), [$file]));
     }
@@ -338,13 +318,12 @@ class UploadHandler extends SingletonFactory
      * <strong>Attention</strong>: Deletes all uploaded files and overwrites them with
      * the given files. If you want to add a file, use the addFileForInternalId method.
      *
-     * @param string $internalId
      * @param UploadFile[] $files
      * @return void
      *
      * @throws \InvalidArgumentException       if the given internalId is unknown
      */
-    public function registerFilesByInternalId($internalId, array $files)
+    public function registerFilesByInternalId(string $internalId, array $files)
     {
         if (!$this->isValidInternalId($internalId)) {
             throw new \InvalidArgumentException('InternalId "' . $internalId . '" is unknown.');
@@ -366,11 +345,10 @@ class UploadHandler extends SingletonFactory
     /**
      * Add a file for an upload field with the given fieldId.
      *
-     * @param string $fieldId
      * @param UploadFile $file
      * @return void
      */
-    public function addFileByField($fieldId, UploadFile $file)
+    public function addFileByField(string $fieldId, UploadFile $file)
     {
         $this->registerFilesByField($fieldId, \array_merge($this->getFilesByFieldId($fieldId), [$file]));
     }
@@ -381,13 +359,12 @@ class UploadHandler extends SingletonFactory
      * <strong>Attention</strong>: Deletes all uploaded files and overwrites them with
      * the given files. If you want to add a file, use the addFileForField method.
      *
-     * @param string $fieldId
      * @param UploadFile[] $files
      * @return void
      *
      * @throws \InvalidArgumentException if the given fieldId is unknown
      */
-    public function registerFilesByField($fieldId, array $files)
+    public function registerFilesByField(string $fieldId, array $files)
     {
         if (!isset($this->fields[$fieldId])) {
             throw new \InvalidArgumentException('UploadField with the id "' . $fieldId . '" is unknown.');
@@ -399,12 +376,11 @@ class UploadHandler extends SingletonFactory
     /**
      * Returns the field for the internalId.
      *
-     * @param string $internalId
      * @return UploadField
      *
      * @throws \InvalidArgumentException       if the given internalId is unknown
      */
-    public function getFieldByInternalId($internalId)
+    public function getFieldByInternalId(string $internalId)
     {
         if (!$this->isValidInternalId($internalId)) {
             throw new \InvalidArgumentException('InternalId "' . $internalId . '" is unknown.');
@@ -416,10 +392,9 @@ class UploadHandler extends SingletonFactory
     /**
      * Returns the count of uploaded files for an internal id.
      *
-     * @param string $internalId
      * @return int
      */
-    public function getFilesCountByInternalId($internalId)
+    public function getFilesCountByInternalId(string $internalId)
     {
         return \count($this->getFilesByInternalId($internalId));
     }
@@ -427,10 +402,9 @@ class UploadHandler extends SingletonFactory
     /**
      * Returns true, iff a field with the given fieldId is already registered.
      *
-     * @param string $fieldId
      * @return bool
      */
-    public function isRegisteredFieldId($fieldId)
+    public function isRegisteredFieldId(string $fieldId)
     {
         return isset($this->fields[$fieldId]);
     }
@@ -527,13 +501,10 @@ class UploadHandler extends SingletonFactory
     /**
      * Returns true, iff the given location contains an image.
      *
-     * @param string $location
-     * @param string $imageName
-     * @param bool $svgImageAllowed
      * @return      bool
      * @deprecated  5.3 Use \wcf\util\ImageUtil::isImage() instead (direct replacement).
      */
-    public static function isValidImage($location, $imageName, $svgImageAllowed)
+    public static function isValidImage(string $location, string $imageName, bool $svgImageAllowed)
     {
         return ImageUtil::isImage($location, $imageName, $svgImageAllowed);
     }

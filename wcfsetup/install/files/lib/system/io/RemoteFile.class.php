@@ -46,13 +46,10 @@ class RemoteFile extends File
     /**
      * Opens a new connection to a remote host.
      *
-     * @param string $host
-     * @param int $port
-     * @param int $timeout
      * @param array<string, mixed> $options
      * @throws  SystemException
      */
-    public function __construct($host, $port, $timeout = 30, $options = [])
+    public function __construct(string $host, int $port, int $timeout = 30, array $options = [])
     {
         $this->host = $host;
         $this->port = $port;
@@ -108,7 +105,7 @@ class RemoteFile extends File
      * @param bool $enable Whether TLS support should be enabled
      * @return  bool            True on success, false otherwise
      */
-    public function setTLS($enable)
+    public function setTLS(bool $enable)
     {
         if (!$this->hasTLSSupport()) {
             return false;

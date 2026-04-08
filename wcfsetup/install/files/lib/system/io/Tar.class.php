@@ -80,10 +80,9 @@ class Tar implements IArchive
      * Creates a new Tar object.
      * archiveName must be tarball or gzipped tarball
      *
-     * @param string $archiveName
      * @throws  SystemException
      */
-    public function __construct($archiveName)
+    public function __construct(string $archiveName)
     {
         if (!\is_file($archiveName)) {
             throw new SystemException("unable to find tar archive '" . $archiveName . "'");
@@ -159,7 +158,7 @@ class Tar implements IArchive
     }
 
     #[\Override]
-    public function getFileInfo($index)
+    public function getFileInfo(int|string $index)
     {
         if (!\is_int($index)) {
             $index = $this->getIndexByFilename($index);
@@ -185,7 +184,7 @@ class Tar implements IArchive
     }
 
     #[\Override]
-    public function extractToString($index)
+    public function extractToString(int|string $index)
     {
         if (!$this->read) {
             $this->open();
@@ -250,7 +249,7 @@ class Tar implements IArchive
     }
 
     #[\Override]
-    public function extract($index, string $destination)
+    public function extract(int|string $index, string $destination)
     {
         if (!$this->read) {
             $this->open();
@@ -342,10 +341,9 @@ class Tar implements IArchive
     /**
      * Unpacks file header for one file entry.
      *
-     * @param string $binaryData
      * @return mixed[]|bool
      */
-    protected function readHeader($binaryData)
+    protected function readHeader(string $binaryData)
     {
         if (\strlen($binaryData) != 512) {
             return false;

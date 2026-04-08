@@ -38,13 +38,10 @@ class ACPSearchHandler extends SingletonFactory
     /**
      * Returns a list of search result collections for given query.
      *
-     * @param string $query
-     * @param int $limit
-     * @param string $providerName
      * @return  ACPSearchResultList[]
      * @throws  ImplementationException
      */
-    public function search($query, $limit = 10, $providerName = '')
+    public function search(string $query, int $limit = 10, string $providerName = '')
     {
         $data = [];
         if ($providerName) {
@@ -122,10 +119,9 @@ class ACPSearchHandler extends SingletonFactory
     /**
      * Returns a list of application abbreviations.
      *
-     * @param string $suffix
      * @return  string[]
      */
-    public function getAbbreviations($suffix = '')
+    public function getAbbreviations(string $suffix = '')
     {
         if (empty($this->abbreviations)) {
             // append the 'WCF' pseudo application

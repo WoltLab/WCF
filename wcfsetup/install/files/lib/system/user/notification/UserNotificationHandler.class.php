@@ -83,24 +83,19 @@ class UserNotificationHandler extends SingletonFactory
     /**
      * Triggers a notification event.
      *
-     * @param string $eventName
-     * @param string $objectType
-     * @param IUserNotificationObject $notificationObject
      * @param int[] $recipientIDs
      * @param mixed[] $additionalData
-     * @param int $baseObjectID
-     * @param int $contentLanguageID
      * @return void
      * @throws  SystemException
      */
     public function fireEvent(
-        $eventName,
-        $objectType,
+        string $eventName,
+        string $objectType,
         IUserNotificationObject $notificationObject,
         array $recipientIDs,
         array $additionalData = [],
-        $baseObjectID = 0,
-        $contentLanguageID = 0
+        int $baseObjectID = 0,
+        int $contentLanguageID = 0
     ) {
         // check given object type and event name
         if (!isset($this->availableEvents[$objectType][$eventName])) {
@@ -340,10 +335,9 @@ class UserNotificationHandler extends SingletonFactory
     /**
      * Returns the number of outstanding notifications for the active user.
      *
-     * @param bool $skipCache
      * @return  int
      */
-    public function getNotificationCount($skipCache = false)
+    public function getNotificationCount(bool $skipCache = false)
     {
         if ($this->notificationCount === null || $skipCache) {
             $this->notificationCount = 0;
@@ -399,12 +393,10 @@ class UserNotificationHandler extends SingletonFactory
     /**
      * Returns a list of notifications.
      *
-     * @param int $limit
-     * @param int $offset
      * @param bool $showConfirmedNotifications DEPRECATED
      * @return  mixed[]
      */
-    public function getNotifications($limit = 5, $offset = 0, $showConfirmedNotifications = false)
+    public function getNotifications(int $limit = 5, int $offset = 0, bool $showConfirmedNotifications = false)
     {
         $notifications = $this->fetchNotifications($limit, $offset);
 
@@ -442,12 +434,9 @@ class UserNotificationHandler extends SingletonFactory
     /**
      * Fetches a list of notifications based upon given conditions.
      *
-     * @param int $limit
-     * @param int $offset
-     * @param mixed $filterByConfirmed
      * @return  UserNotification[]
      */
-    protected function fetchNotifications($limit, $offset, $filterByConfirmed = null)
+    protected function fetchNotifications(int $limit, int $offset, ?int $filterByConfirmed = null)
     {
         // build enormous query
         $conditions = new PreparedStatementConditionBuilder();
@@ -627,11 +616,9 @@ class UserNotificationHandler extends SingletonFactory
     /**
      * Returns event object for given object type and event, returns NULL on failure.
      *
-     * @param string $objectType
-     * @param string $eventName
      * @return  IUserNotificationEvent|null
      */
-    public function getEvent($objectType, $eventName)
+    public function getEvent(string $objectType, string $eventName)
     {
         if (!isset($this->availableEvents[$objectType][$eventName])) {
             return null;
@@ -643,10 +630,9 @@ class UserNotificationHandler extends SingletonFactory
     /**
      * Returns all events for given object type.
      *
-     * @param string $objectType
      * @return  IUserNotificationEvent[]
      */
-    public function getEvents($objectType)
+    public function getEvents(string $objectType)
     {
         if (!isset($this->availableEvents[$objectType])) {
             return [];
@@ -658,14 +644,10 @@ class UserNotificationHandler extends SingletonFactory
     /**
      * Retrieves a notification id.
      *
-     * @param int $eventID
-     * @param int $objectID
-     * @param int $authorID
-     * @param int $time
      * @return  int
      * @throws  SystemException
      */
-    public function getNotificationID($eventID, $objectID, $authorID = null, $time = null)
+    public function getNotificationID(int $eventID, int $objectID, ?int $authorID = null, ?int $time = null)
     {
         if ($authorID === null && $time === null) {
             throw new SystemException("authorID and time cannot be omitted at once.");
@@ -715,10 +697,9 @@ class UserNotificationHandler extends SingletonFactory
     /**
      * Returns object type id by name.
      *
-     * @param string $objectType
      * @return  int
      */
-    public function getObjectTypeID($objectType)
+    public function getObjectTypeID(string $objectType)
     {
         if (isset($this->objectTypes[$objectType])) {
             return $this->objectTypes[$objectType]->objectTypeID;
@@ -731,10 +712,9 @@ class UserNotificationHandler extends SingletonFactory
      * Returns the processor of the object type with the given name or `null`
      * if no such processor exists
      *
-     * @param string $objectType
      * @return  IUserNotificationObjectType|null
      */
-    public function getObjectTypeProcessor($objectType)
+    public function getObjectTypeProcessor(string $objectType)
     {
         return $this->availableObjectTypes[$objectType] ?? null;
     }
@@ -851,14 +831,12 @@ class UserNotificationHandler extends SingletonFactory
      *
      * Please consider replacing your calls with markAsConfirmed().
      *
-     * @param string $eventName
-     * @param string $objectType
      * @param int[] $recipientIDs
      * @param int[] $objectIDs
      * @return void
      * @deprecated
      */
-    public function deleteNotifications($eventName, $objectType, array $recipientIDs, array $objectIDs = [])
+    public function deleteNotifications(string $eventName, string $objectType, array $recipientIDs, array $objectIDs = [])
     {
         $this->markAsConfirmed($eventName, $objectType, $recipientIDs, $objectIDs);
     }
@@ -866,12 +844,11 @@ class UserNotificationHandler extends SingletonFactory
     /**
      * Removes notifications, this method should only be invoked for delete objects.
      *
-     * @param string $objectType
      * @param int[] $objectIDs
      * @return void
      * @throws  SystemException
      */
-    public function removeNotifications($objectType, array $objectIDs)
+    public function removeNotifications(string $objectType, array $objectIDs)
     {
         // check given object type
         $objectTypeObj = ObjectTypeCache::getInstance()
@@ -926,14 +903,12 @@ class UserNotificationHandler extends SingletonFactory
     /**
      * Marks notifications as confirmed
      *
-     * @param string $eventName
-     * @param string $objectType
      * @param int[] $recipientIDs
      * @param int[] $objectIDs
      * @return void
      * @throws  SystemException
      */
-    public function markAsConfirmed($eventName, $objectType, array $recipientIDs, array $objectIDs = [])
+    public function markAsConfirmed(string $eventName, string $objectType, array $recipientIDs, array $objectIDs = [])
     {
         // check given object type and event name
         if (!isset($this->availableEvents[$objectType][$eventName])) {
@@ -985,11 +960,10 @@ class UserNotificationHandler extends SingletonFactory
     /**
      * Marks a single notification id as confirmed.
      *
-     * @param int $notificationID
      * @return void
      * @deprecated 5.2 Please use `UserNotificationHandler::markAsConfirmedByIDs()` instead.
      */
-    public function markAsConfirmedByID($notificationID)
+    public function markAsConfirmedByID(int $notificationID)
     {
         $this->markAsConfirmedByIDs([$notificationID]);
     }
@@ -1032,11 +1006,9 @@ class UserNotificationHandler extends SingletonFactory
     /**
      * Returns the user's notification setting for the given event.
      *
-     * @param string $objectType
-     * @param string $eventName
      * @return int|false
      */
-    public function getEventSetting($objectType, $eventName)
+    public function getEventSetting(string $objectType, string $eventName)
     {
         // get event
         $event = $this->getEvent($objectType, $eventName);
@@ -1061,10 +1033,9 @@ class UserNotificationHandler extends SingletonFactory
      * that is both unread and newer than `$lastRequestTimestamp`. May return an
      * empty array if there is no new notification.
      *
-     * @param int $lastRequestTimestamp
      * @return      string[]
      */
-    public function getLatestNotification($lastRequestTimestamp)
+    public function getLatestNotification(int $lastRequestTimestamp)
     {
         $notifications = $this->fetchNotifications(1, 0, 0);
         if (!empty($notifications) && \reset($notifications)->time > $lastRequestTimestamp) {

@@ -18,7 +18,7 @@ class InvalidObjectTypeException extends \UnexpectedValueException
      * @param string $objectType invalid object type name
      * @param string $definitionName name of the required object type definition
      */
-    public function __construct($objectType, $definitionName)
+    public function __construct(string $objectType, string $definitionName)
     {
         parent::__construct("Invalid object type '{$objectType}' for definition '{$definitionName}'.");
     }

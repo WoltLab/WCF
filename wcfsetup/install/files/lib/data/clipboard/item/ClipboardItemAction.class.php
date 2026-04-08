@@ -35,7 +35,7 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction
      * @param object[] $objects
      * @param mixed[] $parameters
      */
-    public function __construct(array $objects, $action, array $parameters = [])
+    public function __construct(array $objects, string $action, array $parameters = [])
     {
         $this->action = $action;
         $this->parameters = $parameters;

@@ -29,14 +29,7 @@ class ACPSearchResult
      */
     protected $title = '';
 
-    /**
-     * Creates a new ACP search result.
-     *
-     * @param string $title
-     * @param string $link
-     * @param string $subtitle
-     */
-    public function __construct($title, $link, $subtitle = '')
+    public function __construct(string $title, string $link, string $subtitle = '')
     {
         $this->title = $title;
         $this->link = $link;

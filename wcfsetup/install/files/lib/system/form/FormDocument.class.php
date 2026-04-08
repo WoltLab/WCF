@@ -25,10 +25,7 @@ class FormDocument
      */
     protected $name = '';
 
-    /**
-     * @param string $name
-     */
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->name = StringUtil::trim($name);
     }
@@ -78,10 +75,9 @@ class FormDocument
     /**
      * Returns the value of container's child element with given name.
      *
-     * @param string $key
      * @return mixed
      */
-    public function getValue($key)
+    public function getValue(string $key)
     {
         foreach ($this->containers as $container) {
             $value = $container->getValue($key);
@@ -133,11 +129,9 @@ class FormDocument
     /**
      * Sets localized error message for given element.
      *
-     * @param string $name
-     * @param string $error
      * @return void
      */
-    public function setError($name, $error)
+    public function setError(string $name, string $error)
     {
         foreach ($this->containers as $container) {
             $container->setError($name, $error);

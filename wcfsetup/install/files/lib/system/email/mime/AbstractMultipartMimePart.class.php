@@ -58,7 +58,7 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
      * @param \Traversable<int, AbstractMimePart> $parts
      * @return string
      */
-    protected function getConcatenatedParts($parts)
+    protected function getConcatenatedParts(\Traversable $parts)
     {
         $content = "";
 
@@ -116,13 +116,12 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
      * Adds a mime part to this email. Should be either \wcf\system\email\mime\TextMimePart
      * or \wcf\system\email\mime\AttachmentMimePart.
      *
-     * @param AbstractMimePart $part
      * @param mixed $data Additional data, to be defined by child classes
      * @return void
      * @throws \InvalidArgumentException
      * @throws \DomainException
      */
-    public function addMimePart(AbstractMimePart $part, $data = null)
+    public function addMimePart(AbstractMimePart $part, mixed $data = null)
     {
         foreach ($part->getAdditionalHeaders() as $header) {
             $header[0] = \mb_strtolower($header[0]);

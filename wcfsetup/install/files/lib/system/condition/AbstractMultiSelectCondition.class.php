@@ -55,7 +55,7 @@ abstract class AbstractMultiSelectCondition extends AbstractSelectCondition
     }
 
     #[\Override]
-    protected function getOptionCode($value, $label)
+    protected function getOptionCode(string $value, string $label)
     {
         return '<option value="' . $value . '"' . (\in_array(
             $value,

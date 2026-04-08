@@ -69,7 +69,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     }
 
     #[\Override]
-    public function load($image, int $type = 0)
+    public function load(object $image, int $type = 0)
     {
         // @phpstan-ignore instanceof.alwaysTrue
         if (!($image instanceof \Imagick)) {
@@ -212,7 +212,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     }
 
     #[\Override]
-    public function drawText(string $text, int $x, int $y, $font, int $size, float $opacity = 1.0)
+    public function drawText(string $text, int $x, int $y, string $font, int $size, float $opacity = 1.0)
     {
         $draw = new \ImagickDraw();
         $draw->setFillColor($this->color);
@@ -236,7 +236,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     }
 
     #[\Override]
-    public function drawTextRelative(string $text, string $position, int $margin, int $offsetX, int $offsetY, $font, int $size, float $opacity = 1.0)
+    public function drawTextRelative(string $text, string $position, int $margin, int $offsetX, int $offsetY, string $font, int $size, float $opacity = 1.0)
     {
         // split text into multiple lines
         $lines = \explode("\n", StringUtil::unifyNewlines($text));
@@ -299,7 +299,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     }
 
     #[\Override]
-    public function textFitsImage(string $text, int $margin, $font, int $size)
+    public function textFitsImage(string $text, int $margin, string $font, int $size)
     {
         $draw = new \ImagickDraw();
         $draw->setFont($font);
@@ -310,7 +310,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     }
 
     #[\Override]
-    public function adjustFontSize(string $text, int $margin, $font, int $size)
+    public function adjustFontSize(string $text, int $margin, string $font, int $size)
     {
         return 0;
     }
@@ -346,7 +346,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     }
 
     #[\Override]
-    public function writeImage($image, ?string $filename)
+    public function writeImage(object|string $image, ?string $filename)
     {
         if (!($image instanceof \Imagick)) {
             throw new SystemException("Given image is not a valid Imagick-object.");
@@ -384,7 +384,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     }
 
     #[\Override]
-    public function rotate($degrees)
+    public function rotate(float $degrees)
     {
         $image = clone $this->imagick;
         $image->rotateImage(($this->color ?: new \ImagickPixel()), $degrees);
@@ -515,10 +515,9 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     }
 
     /**
-     * @param string $version
      * @return bool
      */
-    public static function supportsAnimatedGIFs($version)
+    public static function supportsAnimatedGIFs(string $version)
     {
         return \version_compare($version, '6.3.6') >= 0;
     }

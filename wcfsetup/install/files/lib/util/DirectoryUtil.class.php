@@ -71,7 +71,7 @@ final class DirectoryUtil
      * @param bool $recursive created a recursive directory iterator
      * @see     \wcf\util\DirectoryUtil::getInstance()
      */
-    public function __construct($directory, $recursive = true)
+    public function __construct(string $directory, bool $recursive = true)
     {
         $this->directory = $directory;
         $this->recursive = $recursive;
@@ -87,12 +87,11 @@ final class DirectoryUtil
     /**
      * Returns an instance of DirectoryUtil (or child).
      *
-     * @param string $tmpDirectory path
      * @param bool $recursive walk through sub-directories too
      * @return  DirectoryUtil
      * @throws  SystemException
      */
-    public static function getInstance($tmpDirectory, $recursive = true)
+    public static function getInstance(string $tmpDirectory, bool $recursive = true)
     {
         $directory = \realpath(FileUtil::unifyDirSeparator($tmpDirectory));
         // realpath returns false if the directory does not exist
@@ -121,13 +120,11 @@ final class DirectoryUtil
     /**
      * Returns a sorted list of files.
      *
-     * @param int $order sort-order
-     * @param Regex $pattern pattern to match
      * @param bool $negativeMatch true if the pattern should be inversed
      * @return  string[]
      * @throws  SystemException
      */
-    public function getFiles($order = \SORT_ASC, ?Regex $pattern = null, $negativeMatch = false)
+    public function getFiles(int $order = \SORT_ASC, ?Regex $pattern = null, bool $negativeMatch = false)
     {
         // scan the folder
         $this->scanFiles();
@@ -158,13 +155,11 @@ final class DirectoryUtil
     /**
      * Returns a sorted list of files, with DirectoryIterator object as value
      *
-     * @param int $order sort order
-     * @param Regex $pattern pattern to match
      * @param bool $negativeMatch should the pattern be inversed
      * @return  \DirectoryIterator[]
      * @throws  SystemException
      */
-    public function getFileObjects($order = \SORT_ASC, ?Regex $pattern = null, $negativeMatch = false)
+    public function getFileObjects(int $order = \SORT_ASC, ?Regex $pattern = null, bool $negativeMatch = false)
     {
         // scan the folder
         $this->scanFileObjects();
@@ -269,7 +264,6 @@ final class DirectoryUtil
     /**
      * Executes a callback on each file and returns false if callback is invalid.
      *
-     * @param callable $callback
      * @param Regex $pattern callback is only applied to files matching the given pattern
      */
     public function executeCallback(callable $callback, ?Regex $pattern = null): bool
@@ -301,11 +295,10 @@ final class DirectoryUtil
     /**
      * Removes all files that match the given pattern.
      *
-     * @param Regex $pattern pattern to match
      * @param bool $negativeMatch should the pattern be inversed
      * @throws  SystemException
      */
-    public function removePattern(Regex $pattern, $negativeMatch = false): void
+    public function removePattern(Regex $pattern, bool $negativeMatch = false): void
     {
         if (!$this->recursive) {
             throw new SystemException('Removing of files only works in recursive mode');

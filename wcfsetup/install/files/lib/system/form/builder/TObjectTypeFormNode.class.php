@@ -41,14 +41,13 @@ trait TObjectTypeFormNode
     /**
      * Sets the name of the object type and returns this field.
      *
-     * @param string $objectType object type name
      * @return  static              this field
      *
      * @throws  \BadMethodCallException     if object type has already been set
      * @throws  \UnexpectedValueException   if object type definition returned by `getObjectTypeDefinition()` is unknown
      * @throws  InvalidObjectTypeException  if given object type name is invalid
      */
-    public function objectType($objectType)
+    public function objectType(string $objectType)
     {
         if ($this->objectType !== null) {
             throw new \BadMethodCallException("Object type has already been set for field '{$this->getId()}'.");

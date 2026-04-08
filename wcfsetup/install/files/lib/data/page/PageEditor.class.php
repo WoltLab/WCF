@@ -33,11 +33,9 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Creates or updates the page's template file.
      *
-     * @param int $languageID language id or `null`
-     * @param string $content template content
      * @return void
      */
-    public function updateTemplate($languageID, $content)
+    public function updateTemplate(?int $languageID, string $content)
     {
         if ($this->pageType !== 'tpl') {
             throw new \RuntimeException("Only tpl-type pages support template files.");
@@ -59,12 +57,9 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Returns true if given custom url is unique.
      *
-     * @param string $customURL
-     * @param int $packageID
-     *
      * @return      bool
      */
-    public static function isUniqueCustomUrl($customURL, $packageID = 1)
+    public static function isUniqueCustomUrl(string $customURL, int $packageID = 1)
     {
         // check controller
         $package = PackageCache::getInstance()->getPackage($packageID);

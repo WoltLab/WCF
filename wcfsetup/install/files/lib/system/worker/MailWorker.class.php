@@ -163,8 +163,6 @@ class MailWorker extends AbstractWorker
     /**
      * Sends the given blueprint (Email without recipients) to the given user.
      *
-     * @param Email $blueprint
-     * @param User $user
      * @return void
      */
     protected function sendMail(Email $blueprint, User $user)

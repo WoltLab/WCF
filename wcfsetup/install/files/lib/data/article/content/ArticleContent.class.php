@@ -162,7 +162,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
      * @return  string
      * @since       5.2
      */
-    public function getMailText($mimeType = 'text/plain')
+    public function getMailText(string $mimeType = 'text/plain')
     {
         if ($this->hasEmbeddedObjects) {
             MessageEmbeddedObjectManager::getInstance()->loadObjects(
@@ -195,11 +195,9 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
     /**
      * Returns a certain article content or `null` if it does not exist.
      *
-     * @param int $articleID
-     * @param ?int $languageID
      * @return      ArticleContent|null
      */
-    public static function getArticleContent($articleID, $languageID)
+    public static function getArticleContent(int $articleID, ?int $languageID)
     {
         if ($languageID !== null) {
             $sql = "SELECT  *

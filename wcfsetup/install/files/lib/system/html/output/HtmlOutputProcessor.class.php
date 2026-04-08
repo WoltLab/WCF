@@ -31,7 +31,7 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor
 
     /**
      * content language id
-     * @var int
+     * @var ?int
      */
     protected $languageID;
 
@@ -50,14 +50,9 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor
     /**
      * Processes the input html string.
      *
-     * @param string $html html string
-     * @param string $objectType object type identifier
-     * @param int $objectID object id
-     * @param bool $doKeywordHighlighting enable keyword highlighting
-     * @param int $languageID content language id
      * @return void
      */
-    public function process($html, $objectType, $objectID, $doKeywordHighlighting = true, $languageID = null)
+    public function process(string $html, string $objectType, int $objectID, bool $doKeywordHighlighting = true, ?int $languageID = null)
     {
         $this->languageID = $languageID;
         $this->setContext($objectType, $objectID);
@@ -77,11 +72,10 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor
     /**
      * Sets the desired output type.
      *
-     * @param string $outputType desired output type
      * @return void
      * @throws \InvalidArgumentException
      */
-    public function setOutputType($outputType)
+    public function setOutputType(string $outputType)
     {
         if (!\in_array($outputType, ['text/html', 'text/simplified-html', 'text/plain'])) {
             throw new \InvalidArgumentException(
@@ -108,11 +102,10 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor
     }
 
     /**
-     * @inheritdoc
      * @throws \InvalidArgumentException
      */
     #[\Override]
-    public function setContext($objectType, $objectID)
+    public function setContext(string $objectType, int $objectID)
     {
         parent::setContext($objectType, $objectID);
 

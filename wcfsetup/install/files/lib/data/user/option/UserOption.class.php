@@ -173,7 +173,7 @@ class UserOption extends Option implements ITitledObject
      * @param bool $inRegistration True iff the user currently is in registration.
      * @return  bool
      */
-    public function isEditable($inRegistration = false)
+    public function isEditable(bool $inRegistration = false)
     {
         if ($this->isDisabled) {
             return false;
@@ -217,10 +217,9 @@ class UserOption extends Option implements ITitledObject
     /**
      * Allows modifications of editable option.
      *
-     * @param int $editableOption
      * @return void
      */
-    public function modifyEditableOption($editableOption)
+    public function modifyEditableOption(int $editableOption)
     {
         $this->data['editable'] = $editableOption;
     }
@@ -228,10 +227,9 @@ class UserOption extends Option implements ITitledObject
     /**
      * Allows modifications of visible option.
      *
-     * @param int $visibleOption
      * @return void
      */
-    public function modifyVisibleOption($visibleOption)
+    public function modifyVisibleOption(int $visibleOption)
     {
         $this->data['visible'] = $visibleOption;
     }

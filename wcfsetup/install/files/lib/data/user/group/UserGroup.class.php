@@ -149,11 +149,10 @@ class UserGroup extends DatabaseObject implements ITitledObject
     /**
      * Returns unique group by given type. Only works for the default user groups.
      *
-     * @param int $type
      * @return ?UserGroup
      * @throws  SystemException
      */
-    public static function getGroupByType($type)
+    public static function getGroupByType(int $type)
     {
         if ($type != self::EVERYONE && $type != self::GUESTS && $type != self::USERS && $type != self::OWNER) {
             throw new SystemException('invalid value for type argument');
@@ -168,10 +167,9 @@ class UserGroup extends DatabaseObject implements ITitledObject
      * Returns the user group with the given id or null if no such user group
      * exists.
      *
-     * @param int $groupID
      * @return  UserGroup|null
      */
-    public static function getGroupByID($groupID)
+    public static function getGroupByID(int $groupID)
     {
         self::getCache();
 
@@ -410,10 +408,9 @@ class UserGroup extends DatabaseObject implements ITitledObject
      * This method is only needed to set the current name if it has been changed
      * in the same request.
      *
-     * @param string $name
      * @return void
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->data['groupName'] = $name;
     }
@@ -471,10 +468,9 @@ class UserGroup extends DatabaseObject implements ITitledObject
     /**
      * Returns the value of the group option with the given name.
      *
-     * @param string $name
      * @return mixed|null
      */
-    public function getGroupOption($name)
+    public function getGroupOption(string $name)
     {
         if ($this->groupOptions === null) {
             // get all options and filter options with low priority

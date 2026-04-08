@@ -36,7 +36,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
 
     /**
      * loaded image
-     * @var \GDImage
+     * @var \GdImage
      */
     protected $image;
 
@@ -64,16 +64,15 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
     /**
      * Returns whether the given image is a valid GD resource / GD object
      *
-     * @param mixed $image
      * @return  bool
      */
-    public function isImage($image)
+    public function isImage(mixed $image)
     {
         return (\is_resource($image) && \get_resource_type($image) === 'gd') || (\is_object($image) && $image instanceof \GdImage);
     }
 
     #[\Override]
-    public function load($image, int $type = 0)
+    public function load(object $image, int $type = 0)
     {
         if (!$this->isImage($image)) {
             throw new SystemException("Image resource is invalid.");
@@ -239,7 +238,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
     }
 
     #[\Override]
-    public function drawText(string $text, int $x, int $y, $font, int $size, float $opacity = 1.0)
+    public function drawText(string $text, int $x, int $y, string $font, int $size, float $opacity = 1.0)
     {
         // set opacity
         $color = \imagecolorallocatealpha(
@@ -255,7 +254,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
     }
 
     #[\Override]
-    public function drawTextRelative(string $text, string $position, int $margin, int $offsetX, int $offsetY, $font, int $size, float $opacity = 1.0)
+    public function drawTextRelative(string $text, string $position, int $margin, int $offsetX, int $offsetY, string $font, int $size, float $opacity = 1.0)
     {
         // split text into multiple lines
         $lines = \explode("\n", StringUtil::unifyNewlines($text));
@@ -315,7 +314,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
     }
 
     #[\Override]
-    public function textFitsImage(string $text, int $margin, $font, int $size)
+    public function textFitsImage(string $text, int $margin, string $font, int $size)
     {
         $box = \imagettfbbox($size, 0, $font, $text);
 
@@ -326,7 +325,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
     }
 
     #[\Override]
-    public function adjustFontSize(string $text, int $margin, $font, int $size)
+    public function adjustFontSize(string $text, int $margin, string $font, int $size)
     {
         return 0;
     }
@@ -360,7 +359,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
     }
 
     #[\Override]
-    public function writeImage($image, ?string $filename)
+    public function writeImage(object|string $image, ?string $filename)
     {
         if (!$this->isImage($image)) {
             throw new SystemException("Given image is not a valid image resource.");
@@ -415,7 +414,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
     }
 
     #[\Override]
-    public function rotate($degrees)
+    public function rotate(float $degrees)
     {
         // imagerotate interpretes degrees as counter-clockwise
         return \imagerotate($this->image, 360.0 - $degrees, ($this->color ?: 0));
@@ -454,8 +453,8 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
      *
      * @see http://php.net/manual/en/function.imagecopymerge.php#88456
      *
-     * @param \GDImage $dst_im destination image resource
-     * @param \GDImage $src_im source image resource
+     * @param \GdImage $dst_im destination image resource
+     * @param \GdImage $src_im source image resource
      * @param int $dst_x x-coordinate of destination point
      * @param int $dst_y y-coordinate of destination point
      * @param int $src_x x-coordinate of source point
@@ -466,7 +465,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
      * @return  bool
      */
     // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
-    private function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct)
+    private function imagecopymerge_alpha(\GdImage $dst_im, \GdImage $src_im, int $dst_x, int $dst_y, int $src_x, int $src_y, int $src_w, int $src_h, int $pct)
     {
         $pct /= 100;
         // Get image width and height

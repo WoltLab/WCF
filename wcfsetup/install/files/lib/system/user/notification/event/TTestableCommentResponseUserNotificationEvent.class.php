@@ -38,8 +38,6 @@ trait TTestableCommentResponseUserNotificationEvent
     /**
      * Creates a test comment response.
      *
-     * @param UserProfile $recipient
-     * @param UserProfile $author
      * @return  CommentResponse
      */
     public static function createTestCommentResponse(UserProfile $recipient, UserProfile $author)

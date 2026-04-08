@@ -22,10 +22,9 @@ class ACLOption extends DatabaseObject
     /**
      * Returns a list of options by object type id.
      *
-     * @param int $objectTypeID
      * @return  ACLOptionList
      */
-    public static function getOptions($objectTypeID)
+    public static function getOptions(int $objectTypeID)
     {
         $optionList = new ACLOptionList();
         $optionList->getConditionBuilder()->add("acl_option.objectTypeID = ?", [$objectTypeID]);

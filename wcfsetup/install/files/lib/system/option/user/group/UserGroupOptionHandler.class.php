@@ -59,7 +59,7 @@ class UserGroupOptionHandler extends OptionHandler
     }
 
     #[\Override]
-    public function getTypeObject($type)
+    public function getTypeObject(string $type)
     {
         $objectType = parent::getTypeObject($type);
 
@@ -86,7 +86,7 @@ class UserGroupOptionHandler extends OptionHandler
     }
 
     #[\Override]
-    protected function getClassName($optionType)
+    protected function getClassName(string $optionType)
     {
         $className = 'wcf\system\option\user\group\\' . \ucfirst($optionType) . 'UserGroupOptionType';
 

@@ -24,10 +24,9 @@ class MediaList extends DatabaseObjectList
     /**
      * Adds conditions to search the media files by a certain search string.
      *
-     * @param string $searchString
      * @return void
      */
-    public function addSearchConditions($searchString)
+    public function addSearchConditions(string $searchString)
     {
         if ($searchString === '') {
             return;

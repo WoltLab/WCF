@@ -308,7 +308,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
      * @param bool $closeFile Close a previously opened handle.
      * @return void
      */
-    protected function writeIndexFile($closeFile = true)
+    protected function writeIndexFile(bool $closeFile = true)
     {
         $file = new AtomicWriter(self::getSitemapPath() . 'sitemap.xml');
         $file->write(WCF::getTPL()->render('wcf', 'shared_sitemapIndex', [
@@ -336,7 +336,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
      * @param bool $closeFile Close a previously opened handle.
      * @return void
      */
-    protected function generateTmpFile($closeFile = true)
+    protected function generateTmpFile(bool $closeFile = true)
     {
         if ($closeFile) {
             $this->closeFile();
@@ -379,12 +379,9 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
      * Writes the current temporary file in a finished sitemap file. The param
      * $filename defines the sitemap filename.
      *
-     * @param string $filename
-     * @param int $packageID
-     *
      * @return void
      */
-    protected function finishSitemap($filename, $packageID)
+    protected function finishSitemap(string $filename, int $packageID)
     {
         $this->file->write(WCF::getTPL()->render('wcf', 'shared_sitemapEnd', []));
         $this->file->close();

@@ -25,14 +25,10 @@ class TagEngine extends SingletonFactory
     /**
      * Adds tags to a tagged object.
      *
-     * @param string $objectType
-     * @param int $objectID
      * @param string[] $tags
-     * @param int $languageID
-     * @param bool $replace
      * @return void
      */
-    public function addObjectTags($objectType, $objectID, array $tags, $languageID, $replace = true)
+    public function addObjectTags(string $objectType, int $objectID, array $tags, int $languageID, bool $replace = true)
     {
         $objectTypeID = $this->getObjectTypeID($objectType);
         $tags = \array_unique(
@@ -114,12 +110,9 @@ class TagEngine extends SingletonFactory
     /**
      * Deletes all tags assigned to given tagged object.
      *
-     * @param string $objectType
-     * @param int $objectID
-     * @param int $languageID
      * @return void
      */
-    public function deleteObjectTags($objectType, $objectID, $languageID = null)
+    public function deleteObjectTags(string $objectType, int $objectID, ?int $languageID = null)
     {
         $objectTypeID = $this->getObjectTypeID($objectType);
 
@@ -144,11 +137,10 @@ class TagEngine extends SingletonFactory
     /**
      * Deletes all tags assigned to given tagged objects.
      *
-     * @param string $objectType
      * @param int[] $objectIDs
      * @return void
      */
-    public function deleteObjects($objectType, array $objectIDs)
+    public function deleteObjects(string $objectType, array $objectIDs)
     {
         $objectTypeID = $this->getObjectTypeID($objectType);
 
@@ -165,12 +157,10 @@ class TagEngine extends SingletonFactory
     /**
      * Returns all tags set for given object.
      *
-     * @param string $objectType
-     * @param int $objectID
      * @param int[] $languageIDs
      * @return  Tag[]
      */
-    public function getObjectTags($objectType, $objectID, array $languageIDs = [])
+    public function getObjectTags(string $objectType, int $objectID, array $languageIDs = [])
     {
         $tags = $this->getObjectsTags($objectType, [$objectID], $languageIDs);
 
@@ -180,12 +170,11 @@ class TagEngine extends SingletonFactory
     /**
      * Returns all tags set for given objects.
      *
-     * @param string $objectType
      * @param int[] $objectIDs
      * @param int[] $languageIDs
      * @return array<int, array<int, Tag>>
      */
-    public function getObjectsTags($objectType, array $objectIDs, array $languageIDs = [])
+    public function getObjectsTags(string $objectType, array $objectIDs, array $languageIDs = [])
     {
         $objectTypeID = $this->getObjectTypeID($objectType);
 
@@ -236,11 +225,10 @@ class TagEngine extends SingletonFactory
     /**
      * Returns id of the object type with the given name.
      *
-     * @param string $objectType
      * @return  int
      * @throws  InvalidObjectTypeException
      */
-    public function getObjectTypeID($objectType)
+    public function getObjectTypeID(string $objectType)
     {
         // get object type
         $objectTypeObj = ObjectTypeCache::getInstance()
@@ -259,11 +247,9 @@ class TagEngine extends SingletonFactory
      * associated tags for that object is returned, but can still be arbitrary if
      * there are two or more top language ids with the same amount of tags.
      *
-     * @param string $objectType
-     * @param int $objectID
      * @return      int|null
      */
-    public function getImplicitLanguageID($objectType, $objectID)
+    public function getImplicitLanguageID(string $objectType, int $objectID)
     {
         $existingTags = $this->getObjectTags($objectType, $objectID);
         if (empty($existingTags)) {
@@ -287,7 +273,7 @@ class TagEngine extends SingletonFactory
      * @param Tag[] $tags
      * @return int[]
      */
-    public function getTagIDs($tags)
+    public function getTagIDs(array $tags)
     {
         return \array_map(static function ($tag) {
             return $tag->tagID;
@@ -298,12 +284,11 @@ class TagEngine extends SingletonFactory
      * Generates the inner SQL statement to fetch object ids that have all listed
      * tags assigned to them.
      *
-     * @param string $objectType
      * @param Tag[] $tags
      * @return array{sql: string, parameters: mixed[]}
      * @since   5.2
      */
-    public function getSubselectForObjectsByTags($objectType, array $tags)
+    public function getSubselectForObjectsByTags(string $objectType, array $tags)
     {
         $parameters = [$this->getObjectTypeID($objectType)];
         $tagIDs = \implode(',', \array_map(static function (Tag $tag) use (&$parameters) {
@@ -357,11 +342,10 @@ class TagEngine extends SingletonFactory
      * Returns the matching tags by name.
      *
      * @param string[] $names
-     * @param int $languageID
      * @return Tag[]
      * @since   5.2
      */
-    public function getTagsByName(array $names, $languageID)
+    public function getTagsByName(array $names, int $languageID)
     {
         $tagList = new TagList();
         $tagList->getConditionBuilder()->add('name IN (?)', [$names]);

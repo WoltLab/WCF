@@ -54,10 +54,9 @@ abstract class AbstractAcpForm extends AbstractForm
     /**
      * Retrieves an i18n value object.
      *
-     * @param string $fieldName
      * @return      I18nValue|null
      */
-    public function getI18nValue($fieldName)
+    public function getI18nValue(string $fieldName)
     {
         return $this->i18nValues[$fieldName] ?? null;
     }
@@ -157,10 +156,9 @@ abstract class AbstractAcpForm extends AbstractForm
      *
      * @template TDatabaseObject of DatabaseObject
      * @param TDatabaseObject $databaseObject
-     * @param string $editorClass
      * @return void
      */
-    public function saveI18n(DatabaseObject $databaseObject, $editorClass)
+    public function saveI18n(DatabaseObject $databaseObject, string $editorClass)
     {
         $data = [];
 

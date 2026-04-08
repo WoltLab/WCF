@@ -18,7 +18,7 @@ use wcf\system\template\TemplateScriptingCompiler;
 class AssignCompilerTemplatePlugin implements ICompilerTemplatePlugin
 {
     #[\Override]
-    public function executeStart($tagArgs, TemplateScriptingCompiler $compiler)
+    public function executeStart(array $tagArgs, TemplateScriptingCompiler $compiler)
     {
         if (!isset($tagArgs['var'])) {
             throw new SystemException(

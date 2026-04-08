@@ -40,9 +40,6 @@ class NotificationEmailDeliveryBackgroundJob extends AbstractBackgroundJob
      * the value is used as a safety check within the constructor to make sure all the checks run against the expected
      * user.
      *
-     * @param EmailDeliveryBackgroundJob $job
-     * @param User $recipient
-     * @param UserNotification $notification
      */
     public function __construct(EmailDeliveryBackgroundJob $job, UserNotification $notification, User $recipient)
     {

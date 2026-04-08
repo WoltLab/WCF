@@ -706,19 +706,14 @@ class PackageInstallationDispatcher
     /**
      * Saves a localized package info.
      *
-     * @param PreparedStatement $statement
-     * @param LanguageList $languageList
-     * @param LanguageCategory $languageCategory
-     * @param Package $package
-     * @param string $infoName
      * @return void
      */
     protected function saveLocalizedPackageInfo(
         PreparedStatement $statement,
-        $languageList,
+        LanguageList $languageList,
         LanguageCategory $languageCategory,
         Package $package,
-        $infoName
+        string $infoName
     ) {
         $infoValues = $this->getArchive()->getPackageInfo($infoName);
 
@@ -820,7 +815,6 @@ class PackageInstallationDispatcher
     /**
      * Displays a list to select optional packages or installs selection.
      *
-     * @param string $currentNode
      * @param mixed[] $nodeData
      * @return PackageInstallationStep
      */
@@ -883,12 +877,9 @@ class PackageInstallationDispatcher
     /**
      * Extracts files from .tar(.gz) archive and installs them
      *
-     * @param string $targetDir
-     * @param string $sourceArchive
-     * @param IFileHandler $fileHandler
      * @return  Installer
      */
-    public function extractFiles($targetDir, $sourceArchive, $fileHandler = null)
+    public function extractFiles(string $targetDir, string $sourceArchive, ?IFileHandler $fileHandler = null)
     {
         return new Installer($targetDir, $sourceArchive, $fileHandler);
     }
@@ -910,10 +901,9 @@ class PackageInstallationDispatcher
     /**
      * Prompts for a text input for package directory (applies for applications only)
      *
-     * @param string $applicationDirectory
      * @return  FormDocument|null
      */
-    protected function promptPackageDir($applicationDirectory)
+    protected function promptPackageDir(string $applicationDirectory)
     {
         $directory = null;
         $abbreviation = Package::getAbbreviation($this->getPackage()->package);

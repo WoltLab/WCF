@@ -62,10 +62,9 @@ class Censorship extends SingletonFactory
     /**
      * Returns censored words from a text.
      *
-     * @param string $text
      * @return  mixed       $matches / false
      */
-    public function test($text)
+    public function test(string $text)
     {
         if (empty($this->censoredWords)) {
             return false;
@@ -160,11 +159,9 @@ class Censorship extends SingletonFactory
     /**
      * Looks behind in the word list.
      *
-     * @param int $index
-     * @param string $search
      * @return  bool
      */
-    protected function lookBehind($index, $search)
+    protected function lookBehind(int $index, string $search)
     {
         if (isset($this->words[$index])) {
             if (
@@ -193,11 +190,9 @@ class Censorship extends SingletonFactory
     /**
      * Looks ahead in the word list.
      *
-     * @param int $index
-     * @param string $search
      * @return  mixed
      */
-    protected function lookAhead($index, $search)
+    protected function lookAhead(int $index, string $search)
     {
         if (isset($this->words[$index])) {
             if (\str_starts_with($this->words[$index], $search)) {

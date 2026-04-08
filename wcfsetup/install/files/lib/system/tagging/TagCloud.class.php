@@ -75,10 +75,9 @@ class TagCloud
     /**
      * Returns a list of weighted tags.
      *
-     * @param int $slice
      * @return  TagCloudTag[]   the tags to get
      */
-    public function getTags($slice = 50)
+    public function getTags(int $slice = 50)
     {
         // slice list
         /** @var TagCloudTag[] $tags */
@@ -109,10 +108,9 @@ class TagCloud
     /**
      * Calculates the weight of the tag based on the given tag count.
      *
-     * @param int $counter
      * @return  float|int
      */
-    private function calculateWeight($counter)
+    private function calculateWeight(int $counter)
     {
         if ($this->maxCounter == $this->minCounter) {
             return 2;

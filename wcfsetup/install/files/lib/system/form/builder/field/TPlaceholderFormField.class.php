@@ -42,7 +42,7 @@ trait TPlaceholderFormField
      *
      * @throws \InvalidArgumentException if the given value is no or otherwise invalid
      */
-    public function placeholder($languageItem = null, array $variables = [])
+    public function placeholder(?string $languageItem = null, array $variables = [])
     {
         if ($languageItem === null) {
             if ($variables !== []) {

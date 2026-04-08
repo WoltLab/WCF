@@ -123,7 +123,7 @@ class DevtoolsPackageArchive extends PackageArchive
     }
 
     #[\Override]
-    public function extractTar($filename, $tempPrefix = 'package_')
+    public function extractTar(string $filename, string $tempPrefix = 'package_')
     {
         return $filename;
     }

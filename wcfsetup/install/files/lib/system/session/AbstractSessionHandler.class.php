@@ -31,10 +31,9 @@ abstract class AbstractSessionHandler extends SingletonFactory
     /**
      * Forwards calls on unknown properties to stored SessionHandler
      *
-     * @param string $key
      * @return  mixed
      */
-    public function __get($key)
+    public function __get(string $key)
     {
         return $this->sessionHandler->{$key};
     }

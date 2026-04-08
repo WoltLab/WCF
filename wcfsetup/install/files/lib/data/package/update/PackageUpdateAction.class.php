@@ -277,15 +277,13 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
      * Validates dependencies and exclusions of a package,
      * optionally limited by a minimum version number.
      *
-     * @param int $packageUpdateID
-     * @param string|null $minVersion
      * @param string[] $installedPackages
      * @param string[] $excludedPackagesOfInstalledPackages
      * @return string[][]
      */
     protected function canInstall(
-        $packageUpdateID,
-        $minVersion,
+        int $packageUpdateID,
+        ?string $minVersion,
         array &$installedPackages,
         array &$excludedPackagesOfInstalledPackages
     ) {
@@ -748,11 +746,10 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
     /**
      * Creates a new package installation queue.
      *
-     * @param string $queueType
      * @return QueueEntry
      * @throws SystemException
      */
-    protected function createQueue($queueType)
+    protected function createQueue(string $queueType)
     {
         if (isset($this->parameters['authData'])) {
             PackageUpdateServer::storeAuthData(

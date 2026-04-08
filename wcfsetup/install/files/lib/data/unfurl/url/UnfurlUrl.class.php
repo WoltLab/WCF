@@ -56,7 +56,7 @@ class UnfurlUrl extends DatabaseObject
     public const THUMBNAIL_WIDTH = 800;
     public const THUMBNAIL_HEIGHT = 400;
 
-    public function __construct($id, $row = null, ?DatabaseObject $object = null)
+    public function __construct(null|string|int $id, ?array $row = null, ?DatabaseObject $object = null)
     {
         if ($id !== null) {
             $sql = "SELECT      unfurl_url.*, unfurl_url_image.*
@@ -76,7 +76,7 @@ class UnfurlUrl extends DatabaseObject
             $row = $object->data;
         }
 
-        $this->handleData($row);
+        $this->handleData($row ?? []);
     }
 
     /**

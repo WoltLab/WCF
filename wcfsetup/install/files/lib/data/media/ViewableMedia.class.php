@@ -50,11 +50,10 @@ class ViewableMedia extends DatabaseObjectDecorator
     /**
      * Registers localized content by language id.
      *
-     * @param int $languageID
      * @param string[] $content
      * @return void
      */
-    public function setLocalizedContent($languageID, array $content)
+    public function setLocalizedContent(int $languageID, array $content)
     {
         $this->localizedContent[$languageID] = $content;
     }
@@ -62,10 +61,9 @@ class ViewableMedia extends DatabaseObjectDecorator
     /**
      * Returns an instance of this class with localized versions.
      *
-     * @param int $languageID
      * @return ViewableMedia
      */
-    public function getLocalizedVersion($languageID)
+    public function getLocalizedVersion(int $languageID)
     {
         if (isset($this->localizedContent[$languageID])) {
             $localized = clone $this;
@@ -80,10 +78,9 @@ class ViewableMedia extends DatabaseObjectDecorator
     /**
      * Forces the localized values by language id.
      *
-     * @param int $languageID
      * @return void
      */
-    protected function forceLanguageID($languageID)
+    protected function forceLanguageID(int $languageID)
     {
         $this->forceLanguageID = $languageID;
     }
@@ -126,10 +123,9 @@ class ViewableMedia extends DatabaseObjectDecorator
     /**
      * Returns a tag to display the media element.
      *
-     * @param int $size
      * @return  string
      */
-    public function getElementTag($size)
+    public function getElementTag(int $size)
     {
         if ($this->isImage) {
             $width = $size;
@@ -199,11 +195,10 @@ class ViewableMedia extends DatabaseObjectDecorator
     /**
      * Returns a tag to display a certain thumbnail.
      *
-     * @param string $size thumbnail size
      * @return  string
      * @throws  \InvalidArgumentException
      */
-    public function getThumbnailTag($size = 'tiny')
+    public function getThumbnailTag(string $size = 'tiny')
     {
         if (!isset(Media::getThumbnailSizes()[$size])) {
             throw new \InvalidArgumentException("Unknown thumbnail size '" . $size . "'");
@@ -240,10 +235,9 @@ class ViewableMedia extends DatabaseObjectDecorator
     /**
      * Returns the viewable media file with the given id.
      *
-     * @param int $mediaID
      * @return  ViewableMedia|null
      */
-    public static function getMedia($mediaID)
+    public static function getMedia(int $mediaID)
     {
         $mediaList = new ViewableMediaList();
         $mediaList->setObjectIDs([$mediaID]);

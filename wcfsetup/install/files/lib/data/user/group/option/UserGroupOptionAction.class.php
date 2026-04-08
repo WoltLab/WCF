@@ -30,7 +30,6 @@ class UserGroupOptionAction extends AbstractDatabaseObjectAction
      */
     public function updateValues()
     {
-        /** @var UserGroupOption $option */
         $option = \current($this->objects);
 
         $conditions = new PreparedStatementConditionBuilder();

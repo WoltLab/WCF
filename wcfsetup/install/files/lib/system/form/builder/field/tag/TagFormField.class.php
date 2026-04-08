@@ -66,7 +66,7 @@ final class TagFormField extends AbstractFormField implements IAttributeFormFiel
     }
 
     #[\Override]
-    public function updatedObject(array $data, IStorableObject $object, $loadValues = true)
+    public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true)
     {
         if ($loadValues) {
             if (isset($data[$this->getObjectProperty()])) {

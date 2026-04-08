@@ -97,11 +97,9 @@ class UserGroupAssignmentHandler extends SingletonFactory
      * Returns the users who fulfill all conditions of the given user group
      * assignment.
      *
-     * @param UserGroupAssignment $assignment
-     * @param int $maxUsers
      * @return  User[]
      */
-    public function getUsers(UserGroupAssignment $assignment, $maxUsers = null)
+    public function getUsers(UserGroupAssignment $assignment, ?int $maxUsers = null)
     {
         $userList = new UserList();
         $userList->getConditionBuilder()->add(

@@ -28,10 +28,9 @@ class PaidSubscriptionEditor extends DatabaseObjectEditor implements IEditableCa
     /**
      * Sets the show order of the subscription.
      *
-     * @param int $showOrder
      * @return void
      */
-    public function setShowOrder($showOrder = 0)
+    public function setShowOrder(int $showOrder = 0)
     {
         $sql = "SELECT  MAX(showOrder)
                 FROM    wcf1_paid_subscription";

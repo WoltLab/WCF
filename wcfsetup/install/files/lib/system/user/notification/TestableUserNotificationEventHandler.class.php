@@ -101,11 +101,9 @@ class TestableUserNotificationEventHandler extends SingletonFactory
     /**
      * Returns the email body for a user notification email.
      *
-     * @param ITestableUserNotificationEvent $event
-     * @param string $notificationType
      * @return  string
      */
-    public function getEmailBody(ITestableUserNotificationEvent $event, $notificationType)
+    public function getEmailBody(ITestableUserNotificationEvent $event, string $notificationType)
     {
         $email = new Email();
         $email->setSubject($event->getEmailTitle());
@@ -186,16 +184,13 @@ class TestableUserNotificationEventHandler extends SingletonFactory
     /**
      * Returns a new user notification object based on the given data.
      *
-     * @param UserProfile $author
-     * @param int $timesTriggered
-     * @param int $guestTimesTriggered
      * @param mixed[] $additionalData
      * @return  UserNotification
      */
     protected function getUserNotification(
         UserProfile $author,
-        $timesTriggered,
-        $guestTimesTriggered,
+        int $timesTriggered,
+        int $guestTimesTriggered,
         array $additionalData
     ) {
         return new UserNotification(null, [

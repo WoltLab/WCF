@@ -118,10 +118,8 @@ trait TMultiCategoryObject
 
     /**
      * Sets a category id.
-     *
-     * @param int $categoryID
      */
-    public function setCategoryID($categoryID)
+    public function setCategoryID(int $categoryID)
     {
         $this->categoryIDs[] = $categoryID;
     }

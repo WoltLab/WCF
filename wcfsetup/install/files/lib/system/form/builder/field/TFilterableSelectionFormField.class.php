@@ -28,7 +28,7 @@ trait TFilterableSelectionFormField
      * @param bool $filterable determines if field's options are filterable by user
      * @return  static          this node
      */
-    public function filterable($filterable = true)
+    public function filterable(bool $filterable = true)
     {
         $this->filterable = $filterable;
 

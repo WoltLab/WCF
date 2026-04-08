@@ -21,10 +21,9 @@ trait TImmutableFormField
     /**
      * Sets whether the value of this field is immutable and returns this field.
      *
-     * @param bool $immutable determines if field value is immutable
      * @return  static              this field
      */
-    public function immutable($immutable = true)
+    public function immutable(bool $immutable = true)
     {
         $this->immutable = $immutable;
 

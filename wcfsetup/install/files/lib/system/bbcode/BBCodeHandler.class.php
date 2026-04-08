@@ -92,7 +92,7 @@ class BBCodeHandler extends SingletonFactory
      * @param bool $excludeCoreBBCodes do not return bbcodes that are available by default
      * @return  BBCode[]
      */
-    public function getButtonBBCodes($excludeCoreBBCodes = false)
+    public function getButtonBBCodes(bool $excludeCoreBBCodes = false)
     {
         $buttons = [];
         $coreBBCodes = [

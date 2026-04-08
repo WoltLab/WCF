@@ -23,10 +23,9 @@ final class Callback
     /**
      * Creates new instance of Callback.
      *
-     * @param callable $callback
      * @throws  SystemException
      */
-    public function __construct($callback)
+    public function __construct(callable $callback)
     {
         if (!\is_callable($callback)) {
             throw new SystemException('Given callback is not callable.');

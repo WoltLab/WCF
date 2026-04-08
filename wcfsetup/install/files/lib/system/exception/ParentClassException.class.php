@@ -12,13 +12,7 @@ namespace wcf\system\exception;
  */
 class ParentClassException extends \LogicException
 {
-    /**
-     * ImplementationException constructor.
-     *
-     * @param string $className
-     * @param string $parentClassName
-     */
-    public function __construct($className, $parentClassName)
+    public function __construct(string $className, string $parentClassName)
     {
         parent::__construct("Class '{$className}' does not extend class '{$parentClassName}'.");
     }

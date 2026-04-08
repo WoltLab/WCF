@@ -43,11 +43,9 @@ class DevtoolsTar extends Tar
     /**
      * Registers a new file in the virtual file list.
      *
-     * @param string $filename
-     * @param string $fullPath
      * @return void
      */
-    public function registerFile($filename, $fullPath)
+    public function registerFile(string $filename, string $fullPath)
     {
         $this->files[$filename] = $fullPath;
     }
@@ -59,7 +57,7 @@ class DevtoolsTar extends Tar
     }
 
     #[\Override]
-    public function extractToString($index)
+    public function extractToString(int|string $index)
     {
         if (!isset($this->files[$index])) {
             throw new \RuntimeException(
@@ -71,7 +69,7 @@ class DevtoolsTar extends Tar
     }
 
     #[\Override]
-    public function extract($index, string $destination)
+    public function extract(int|string $index, string $destination)
     {
         // The source file is empty, if the file is a symlink, which yield to an error.
         if (empty($this->files[$index])) {
@@ -87,23 +85,24 @@ class DevtoolsTar extends Tar
     public function getContentList()
     {
         if (!$this->read) {
+            $contentList = [];
             foreach ($this->files as $filename => $fullPath) {
                 if (\strpos($filename, '/') !== false) {
                     $directory = \dirname($filename) . '/';
-                    if (!isset($this->contentList[$directory])) {
-                        $this->contentList[$directory] = [
-                            'filename' => $directory,
-                            'type' => 'folder',
-                        ];
-                    }
+                    $contentList[$directory] ??= [
+                        'filename' => $directory,
+                        'type' => 'folder',
+                    ];
                 }
 
-                $this->contentList[$filename] = [
+                $contentList[$filename] = [
                     'filename' => $filename,
                     'type' => 'file',
                 ];
             }
 
+            // @phpstan-ignore assign.propertyType
+            $this->contentList = \array_values($contentList);
             $this->read = true;
         }
 

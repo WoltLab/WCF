@@ -55,11 +55,10 @@ class Label extends DatabaseObject implements IRouteController
     /**
      * Returns the HTML representation of the label.
      *
-     * @param string $additionalClasses
      * @return      string
      * @since       5.3
      */
-    public function render($additionalClasses = '')
+    public function render(string $additionalClasses = '')
     {
         return '<span class="badge label' . ($this->getClassNames() ? ' ' . $this->getClassNames() : '')
             . ($additionalClasses ? ' ' . $additionalClasses : '') . '">'

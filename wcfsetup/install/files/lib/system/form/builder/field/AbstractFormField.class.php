@@ -186,7 +186,7 @@ abstract class AbstractFormField implements IFormField
     }
 
     #[\Override]
-    public function updatedObject(array $data, IStorableObject $object, $loadValues = true)
+    public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true)
     {
         if ($this instanceof IImmutableFormField && $this->isImmutable()) {
             $loadValues = true;
@@ -203,7 +203,7 @@ abstract class AbstractFormField implements IFormField
      * @return  static
      */
     #[\Override]
-    public function objectProperty($objectProperty)
+    public function objectProperty(string $objectProperty)
     {
         if ($objectProperty === '') {
             $this->objectProperty = null;
@@ -232,7 +232,7 @@ abstract class AbstractFormField implements IFormField
      * @return  static
      */
     #[\Override]
-    public function required($required = true)
+    public function required(bool $required = true)
     {
         $this->required = $required;
 

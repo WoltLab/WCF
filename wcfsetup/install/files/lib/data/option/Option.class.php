@@ -54,7 +54,7 @@ class Option extends DatabaseObject
     }
 
     #[\Override]
-    protected function handleData($data)
+    protected function handleData(array $data)
     {
         parent::handleData($data);
 
@@ -100,10 +100,9 @@ class Option extends DatabaseObject
     /**
      * Parses enableOptions.
      *
-     * @param string $optionData
      * @return array{disableOptions: string, enableOptions: string}
      */
-    public static function parseEnableOptions($optionData)
+    public static function parseEnableOptions(string $optionData)
     {
         $disableOptions = $enableOptions = '';
 
@@ -211,10 +210,9 @@ class Option extends DatabaseObject
     /**
      * Allows modifications of select options.
      *
-     * @param string $selectOptions
      * @return void
      */
-    public function modifySelectOptions($selectOptions)
+    public function modifySelectOptions(string $selectOptions)
     {
         $this->data['selectOptions'] = $selectOptions;
     }
@@ -222,10 +220,9 @@ class Option extends DatabaseObject
     /**
      * Allows modifications of enable options.
      *
-     * @param string $enableOptions
      * @return void
      */
-    public function modifyEnableOptions($enableOptions)
+    public function modifyEnableOptions(string $enableOptions)
     {
         $this->data['enableOptions'] = $enableOptions;
     }
@@ -233,10 +230,9 @@ class Option extends DatabaseObject
     /**
      * Allows modifications of hidden option.
      *
-     * @param string $hiddenOption
      * @return void
      */
-    public function modifyHiddenOption($hiddenOption)
+    public function modifyHiddenOption(string $hiddenOption)
     {
         $this->data['hidden'] = $hiddenOption;
     }

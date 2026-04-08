@@ -88,11 +88,10 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     /**
      * Returns the id of the object type definition with the given name.
      *
-     * @param string $definitionName
      * @return  int
      * @throws  SystemException
      */
-    protected function getDefinitionID($definitionName)
+    protected function getDefinitionID(string $definitionName)
     {
         // get object type id
         $sql = "SELECT  definitionID
@@ -201,12 +200,11 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     }
 
     /**
-     * @param bool $saveData
      * @return array<string, int|string>
      * @since   5.2
      */
     #[\Override]
-    protected function fetchElementData(\DOMElement $element, $saveData)
+    protected function fetchElementData(\DOMElement $element, bool $saveData)
     {
         $data = [
             'definitionID' => $this->getDefinitionID(
@@ -885,12 +883,10 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
      * has a dependency on the `definitionName` field so that the form container
      * is only shown for the relevant object type definition.
      *
-     * @param IFormDocument $form
-     * @param string $definitionName
      * @return  FormContainer
      * @since   5.2
      */
-    public function getObjectTypeDefinitionDataContainer(IFormDocument $form, $definitionName)
+    public function getObjectTypeDefinitionDataContainer(IFormDocument $form, string $definitionName)
     {
         $definitionIDField = $form->getFormField('definitionID');
         $definitionPieces = \explode('.', $definitionName);
@@ -945,11 +941,9 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
      * Adds bulk processing action-related fields to the given form for the given bulk
      * processing action object type definition.
      *
-     * @param IFormDocument $form
-     * @param string $objectTypeDefinition
      * @return void
      */
-    public function addBulkProcessingActionFields(IFormDocument $form, $objectTypeDefinition)
+    public function addBulkProcessingActionFields(IFormDocument $form, string $objectTypeDefinition)
     {
         $definitionPieces = \explode('.', $objectTypeDefinition);
         $definitionIdString = \implode('', \array_map('ucfirst', $definitionPieces));
@@ -1000,18 +994,14 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     /**
      * Adds all condition specific fields to the given form container.
      *
-     * @param IFormContainer $dataContainer
-     * @param string $objectTypeDefinition
-     * @param bool $addConditionObject
-     * @param bool $addConditionGroup
      * @return void
      * @since   5.2
      */
     public function addConditionFields(
         IFormContainer $dataContainer,
-        $objectTypeDefinition,
-        $addConditionObject = true,
-        $addConditionGroup = true
+        string $objectTypeDefinition,
+        bool $addConditionObject = true,
+        bool $addConditionGroup = true
     ) {
         $prefix = \preg_replace('~Fields$~', '', $dataContainer->getId());
 
@@ -1169,10 +1159,10 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
      */
     public function getIntegerConditionPropertyNameField(
         TextFormField $classNameField,
-        $conditionClass,
-        $id,
-        $databaseTableName,
-        $lowercase = true
+        string $conditionClass,
+        string $id,
+        string $databaseTableName,
+        bool $lowercase = true
     ) {
         return TextFormField::create($id)
             ->objectProperty($lowercase ? 'propertyname' : 'propertyName')

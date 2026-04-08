@@ -64,10 +64,9 @@ class ObjectTypeCache extends SingletonFactory
      * Returns the object type definition with the given id or null if no such
      * object type definition exists.
      *
-     * @param int $definitionID
      * @return ?ObjectTypeDefinition
      */
-    public function getDefinition($definitionID)
+    public function getDefinition(int $definitionID)
     {
         return $this->definitions[$definitionID] ?? null;
     }
@@ -76,10 +75,9 @@ class ObjectTypeCache extends SingletonFactory
      * Returns the object type definition with the given name or null if no
      * such object type definition exists.
      *
-     * @param string $definitionName
      * @return ?ObjectTypeDefinition
      */
-    public function getDefinitionByName($definitionName)
+    public function getDefinitionByName(string $definitionName)
     {
         return $this->definitionsByName[$definitionName] ?? null;
     }
@@ -88,10 +86,9 @@ class ObjectTypeCache extends SingletonFactory
      * Returns a list of definitions by category name or 'null' if the given
      * category name is invalid.
      *
-     * @param string $categoryName
      * @return array<int, ObjectTypeDefinition>|null
      */
-    public function getDefinitionsByCategory($categoryName)
+    public function getDefinitionsByCategory(string $categoryName)
     {
         if (isset($this->definitionsByCategory[$categoryName])) {
             $definitions = [];
@@ -109,10 +106,9 @@ class ObjectTypeCache extends SingletonFactory
      * Returns the object type with the given id or null if no such object type
      * exists.
      *
-     * @param int $objectTypeID
      * @return ?ObjectType
      */
-    public function getObjectType($objectTypeID)
+    public function getObjectType(int $objectTypeID)
     {
         return $this->objectTypes[$objectTypeID] ?? null;
     }
@@ -120,10 +116,9 @@ class ObjectTypeCache extends SingletonFactory
     /**
      * Returns the list of object type with the given definition name.
      *
-     * @param string $definitionName
      * @return array<string, ObjectType>
      */
-    public function getObjectTypes($definitionName)
+    public function getObjectTypes(string $definitionName)
     {
         if (isset($this->groupedObjectTypes[$definitionName])) {
             return $this->groupedObjectTypes[$definitionName];
@@ -136,11 +131,9 @@ class ObjectTypeCache extends SingletonFactory
      * Returns the object type with the given definition name and given name
      * or null of no such object type exists.
      *
-     * @param string $definitionName
-     * @param string $objectTypeName
      * @return ?ObjectType
      */
-    public function getObjectTypeByName($definitionName, $objectTypeName)
+    public function getObjectTypeByName(string $definitionName, string $objectTypeName)
     {
         if (
             isset($this->groupedObjectTypes[$definitionName])
@@ -155,11 +148,9 @@ class ObjectTypeCache extends SingletonFactory
     /**
      * Returns the object type id with the given definition name and given name.
      *
-     * @param string $definitionName
-     * @param string $objectTypeName
      * @return ?int
      */
-    public function getObjectTypeIDByName($definitionName, $objectTypeName)
+    public function getObjectTypeIDByName(string $definitionName, string $objectTypeName)
     {
         $objectType = $this->getObjectTypeByName($definitionName, $objectTypeName);
         if ($objectType !== null) {

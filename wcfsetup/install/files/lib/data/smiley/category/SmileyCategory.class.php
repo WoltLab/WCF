@@ -101,7 +101,7 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
     }
 
     #[\Override]
-    public function seek($offset): void
+    public function seek(int $offset): void
     {
         $this->index = $offset;
 

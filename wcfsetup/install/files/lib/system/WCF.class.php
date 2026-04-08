@@ -361,13 +361,9 @@ class WCF
     /**
      * Turns PHP errors into an ErrorException.
      *
-     * @param int $severity
-     * @param string $message
-     * @param string $file
-     * @param int $line
      * @throws  ErrorException
      */
-    final public static function handleError($severity, $message, $file, $line): bool
+    final public static function handleError(int $severity, string $message, string $file, int $line): bool
     {
         // this is necessary for the shut-up operator
         if (!(\error_reporting() & $severity)) {
@@ -1030,10 +1026,9 @@ class WCF
     }
 
     /**
-     * @param string $fragment
      * @deprecated 5.5 - Put a '#' followed by the fragment as the anchor's href. Make sure to |rawurlencode any variables that may contain special characters.
      */
-    public function getAnchor($fragment): string
+    public function getAnchor(string $fragment): string
     {
         return StringUtil::encodeHTML(self::getRequestURI() . '#' . $fragment);
     }

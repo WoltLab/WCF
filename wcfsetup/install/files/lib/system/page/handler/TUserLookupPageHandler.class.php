@@ -17,11 +17,10 @@ trait TUserLookupPageHandler
     /**
      * Returns true if provided object id exists and is valid.
      *
-     * @param int $objectID page object id
      * @return  bool        true if object id is valid
      * @see ILookupPageHandler::isValid()
      */
-    public function isValid($objectID)
+    public function isValid(int $objectID)
     {
         return UserRuntimeCache::getInstance()->getObject($objectID) !== null;
     }
@@ -30,11 +29,10 @@ trait TUserLookupPageHandler
      * Performs a search for pages using a query string, returning an array containing
      * an `objectID => title` relation.
      *
-     * @param string $searchString search string
      * @return list<array<string, int|string>>
      * @see ILookupPageHandler::lookup()
      */
-    public function lookup($searchString)
+    public function lookup(string $searchString)
     {
         $userList = new UserProfileList();
         $userList->getConditionBuilder()->add('user_table.username LIKE ?', ['%' . $searchString . '%']);

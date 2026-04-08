@@ -55,10 +55,9 @@ class BoxList extends DatabaseObjectList
     /**
      * Enables/disables the loading of box content objects.
      *
-     * @param bool $enable
      * @return void
      */
-    public function enableContentLoading($enable = true)
+    public function enableContentLoading(bool $enable = true)
     {
         $this->contentLoading = $enable;
     }

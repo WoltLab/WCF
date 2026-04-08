@@ -32,10 +32,9 @@ class BlacklistStatus extends DatabaseObject
     /**
      * Returns true if the delta for the time period of the UTC hour has already been fetched.
      *
-     * @param int $utcHour
      * @return bool
      */
-    public function hasDelta($utcHour)
+    public function hasDelta(int $utcHour)
     {
         if ($utcHour < 6) {
             return !!$this->delta1;

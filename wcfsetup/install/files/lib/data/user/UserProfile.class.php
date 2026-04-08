@@ -300,10 +300,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns true if current user is following given user id.
      *
-     * @param int $userID
      * @return  bool
      */
-    public function isFollowing($userID)
+    public function isFollowing(int $userID)
     {
         if ($userID === WCF::getUser()->userID) {
             // This code block is intended to avoid unnecessary queries,
@@ -317,10 +316,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns true if given user ids follows current user.
      *
-     * @param int $userID
      * @return  bool
      */
-    public function isFollower($userID)
+    public function isFollower(int $userID)
     {
         return \in_array($userID, $this->getFollowers());
     }
@@ -328,11 +326,10 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns true if given user is ignored.
      *
-     * @param int $userID
      * @param  ?int  $type One of the UserIgnore::TYPE_* constants.
      * @return  bool
      */
-    public function isIgnoredUser($userID, ?int $type = null)
+    public function isIgnoredUser(int $userID, ?int $type = null)
     {
         return \in_array($userID, $this->getIgnoredUsers($type));
     }
@@ -340,10 +337,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns true if the given user ignores the current user.
      *
-     * @param int $userID
      * @return  bool
      */
-    public function isIgnoredByUser($userID)
+    public function isIgnoredByUser(int $userID)
     {
         return \in_array($userID, $this->getIgnoredByUsers());
     }
@@ -416,7 +412,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      * @param bool $isACP override ban on cover photo
      * @return      IUserCoverPhoto
      */
-    public function getCoverPhoto($isACP = false)
+    public function getCoverPhoto(bool $isACP = false)
     {
         if ($this->coverPhoto === null) {
             if ($this->coverPhotoFileID) {
@@ -630,11 +626,10 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns a new user profile object.
      *
-     * @param int $userID
      * @return ?UserProfile
      * @deprecated  3.0, use UserProfileRuntimeCache::getObject()
      */
-    public static function getUserProfile($userID)
+    public static function getUserProfile(int $userID)
     {
         return UserProfileRuntimeCache::getInstance()->getObject($userID);
     }
@@ -663,10 +658,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns the user profile of the user with the given name.
      *
-     * @param string $username
      * @return ?UserProfile
      */
-    public static function getUserProfileByUsername($username)
+    public static function getUserProfileByUsername(string $username)
     {
         $users = self::getUserProfilesByUsername([$username]);
 
@@ -790,10 +784,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns the age of this user.
      *
-     * @param int $year
      * @return int
      */
-    public function getAge($year = null)
+    public function getAge(?int $year = null)
     {
         $showYear = $this->birthdayShowYear || WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions');
 
@@ -824,10 +817,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns the formatted birthday of this user.
      *
-     * @param int $year
      * @return string
      */
-    public function getBirthday($year = null)
+    public function getBirthday(?int $year = null)
     {
         // split date
         $birthdayYear = $month = $day = 0;
@@ -877,10 +869,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns the value of the permission with the given name.
      *
-     * @param string $permission
      * @return mixed permission value
      */
-    public function getPermission($permission)
+    public function getPermission(string $permission)
     {
         if ($this->groupData === null) {
             $this->loadGroupData();
@@ -897,10 +888,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      * Returns true if a permission was set to 'Never'. This is required to preserve
      * compatibility, while preventing ACLs from overruling a 'Never' setting.
      *
-     * @param string $permission
      * @return bool
      */
-    public function getNeverPermission($permission)
+    public function getNeverPermission(string $permission)
     {
         $this->loadGroupData();
 
@@ -1081,10 +1071,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns the formatted value of the user option with the given name.
      *
-     * @param string $name
      * @return mixed
      */
-    public function getFormattedUserOption($name)
+    public function getFormattedUserOption(string $name)
     {
         // get value
         $value = $this->getUserOption($name);
@@ -1104,10 +1093,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns true, if the active user has access to the user option with the given name.
      *
-     * @param string $name
      * @return bool
      */
-    public function isVisibleOption($name)
+    public function isVisibleOption(string $name)
     {
         $option = ViewableUserOption::getUserOption($name);
 
@@ -1158,10 +1146,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Sets the session-based last activity time.
      *
-     * @param int $timestamp
      * @return void
      */
-    public function setSessionLastActivityTime($timestamp)
+    public function setSessionLastActivityTime(int $timestamp)
     {
         $this->object->data['sessionLastActivityTime'] = $timestamp;
     }
@@ -1172,10 +1159,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      * Such objects can also be used in situations where the relevant user has been deleted
      * but their original username is still known.
      *
-     * @param string $username
      * @return  UserProfile
      */
-    public static function getGuestUserProfile($username)
+    public static function getGuestUserProfile(string $username)
     {
         return new self(new User(null, ['username' => $username]));
     }

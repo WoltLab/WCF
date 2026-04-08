@@ -101,10 +101,9 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
     /**
      * Enables this option.
      *
-     * @param bool $enable
      * @return void
      */
-    public function enable($enable = true)
+    public function enable(bool $enable = true)
     {
         $value = \intval(!$enable);
 
@@ -118,7 +117,6 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
     /**
      * Determines the needed sql statement to modify column definitions.
      *
-     * @param string $optionType
      * @return array{
      *  autoIncrement: bool,
      *  key: false,
@@ -128,7 +126,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
      *  length?: int,
      * } column definition
      */
-    public static function getColumnDefinition($optionType)
+    public static function getColumnDefinition(string $optionType)
     {
         $column = [
             'autoIncrement' => false,

@@ -233,7 +233,7 @@ final class DatabaseTableForeignKey
      * @return $this this foreign key
      * @throws \InvalidArgumentException if given action is invalid
      */
-    public function onUpdate($onUpdate)
+    public function onUpdate(?string $onUpdate)
     {
         if ($onUpdate !== null && !\in_array($onUpdate, static::VALID_ACTIONS)) {
             throw new \InvalidArgumentException("Unknown on update action '{$onUpdate}'.");
@@ -260,10 +260,9 @@ final class DatabaseTableForeignKey
     /**
      * Sets the name of the referenced table and returns the foreign key.
      *
-     * @param string $referencedTable name of referenced table
      * @return $this this foreign key
      */
-    public function referencedTable($referencedTable)
+    public function referencedTable(string $referencedTable)
     {
         $this->referencedTable = ApplicationHandler::insertRealDatabaseTableNames($referencedTable, true);
 
@@ -275,12 +274,11 @@ final class DatabaseTableForeignKey
      * MySQL 8 reports `NO ACTION` where MySQL 5.7 would identify the action as `null`. This method normalized
      * the action, by always setting it to null if the value is `RESTRICT` or `NO ACTION`.
      *
-     * @param string $action
      * @return ?string
      */
-    protected function normalizeAction($action)
+    protected function normalizeAction(?string $action)
     {
-        if ($action === 'RESTRICT' || $action === 'NO ACTION') {
+        if ($action === null || $action === 'RESTRICT' || $action === 'NO ACTION') {
             return null;
         }
 
@@ -290,10 +288,9 @@ final class DatabaseTableForeignKey
     /**
      * Returns a `DatabaseTableForeignKey` object with the given name.
      *
-     * @param string $name
      * @return static
      */
-    public static function create($name = '')
+    public static function create(string $name = '')
     {
         return new static($name);
     }
@@ -301,7 +298,6 @@ final class DatabaseTableForeignKey
     /**
      * Returns a `DatabaseTableForeignKey` object with the given name and data.
      *
-     * @param string $name
      * @param array{
      *  columns: string[],
      *  referencedTable: string,
@@ -311,7 +307,7 @@ final class DatabaseTableForeignKey
      * } $data data returned by `DatabaseEditor::getForeignKeys()`
      * @return static
      */
-    public static function createFromData($name, $data)
+    public static function createFromData(string $name, array $data)
     {
         return static::create($name)
             ->columns($data['columns'])

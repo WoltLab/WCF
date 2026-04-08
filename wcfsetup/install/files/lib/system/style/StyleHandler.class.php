@@ -86,12 +86,10 @@ class StyleHandler extends SingletonFactory
     /**
      * Changes the active style.
      *
-     * @param int $styleID
-     * @param bool $ignorePermissions
      * @return void
      * @throws  SystemException
      */
-    public function changeStyle($styleID = 0, $ignorePermissions = false)
+    public function changeStyle(int $styleID = 0, bool $ignorePermissions = false)
     {
         // check permission
         if (!$ignorePermissions) {
@@ -131,7 +129,7 @@ class StyleHandler extends SingletonFactory
      * @param bool $isACP indicates if the request is an acp request
      * @return  string
      */
-    public function getStylesheet($isACP = false)
+    public function getStylesheet(bool $isACP = false)
     {
         $preload = '';
 
@@ -205,10 +203,9 @@ class StyleHandler extends SingletonFactory
     /**
      * Resets all stylesheets.
      *
-     * @param bool $resetACP
      * @return void
      */
-    public static function resetStylesheets($resetACP = true)
+    public static function resetStylesheets(bool $resetACP = true)
     {
         // frontend stylesheets
         $files = \glob(WCF_DIR . 'style/style-*.css');
@@ -240,11 +237,9 @@ class StyleHandler extends SingletonFactory
     /**
      * Returns a style by package name, optionally filtering tainted styles.
      *
-     * @param string $packageName style package name
-     * @param bool $skipTainted ignore tainted styles
      * @return  StyleEditor|null
      */
-    public function getStyleByName($packageName, $skipTainted = false)
+    public function getStyleByName(string $packageName, bool $skipTainted = false)
     {
         foreach ($this->cache['styles'] as $style) {
             if ($style->packageName === $packageName) {
@@ -276,11 +271,10 @@ class StyleHandler extends SingletonFactory
     }
 
     /**
-     * @param boolean $toJSON
      * @return array{}|string
      * @deprecated 6.0 Unsupported, this exists temporarily for development purposes.
      */
-    public function getIcons($toJSON = false)
+    public function getIcons(bool $toJSON = false)
     {
         if ($toJSON) {
             return \json_encode([], \JSON_THROW_ON_ERROR);

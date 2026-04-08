@@ -20,3 +20,22 @@ parameters:
         - identifier: new.static
         - identifier: trait.unused
     checkMissingOverrideMethodAttribute: true
+    polluteScopeWithLoopInitialAssignments: true
+    polluteScopeWithAlwaysIterableForeach: true
+    polluteScopeWithBlock: true
+    checkExplicitMixedMissingReturn: false
+    checkFunctionNameCase: true
+    checkInternalClassCaseSensitivity: true
+    reportMaybesInMethodSignatures: false
+    reportMaybesInPropertyPhpDocTypes: true
+    reportStaticMethodSignatures: true
+    checkTooWideReturnTypesInProtectedAndPublicMethods: false
+    checkTooWideParameterOutInProtectedAndPublicMethods: true
+    checkTooWideThrowTypesInProtectedAndPublicMethods: true
+    rememberPossiblyImpureFunctionValues: true
+    reportPossiblyNonexistentGeneralArrayOffset: true
+    reportAlwaysTrueInLastCondition: true
+    reportNonIntStringArrayKey: false
+    reportWrongPhpDocTypeInVarTag: false
+    reportAnyTypeWideningInVarTag: true
+    checkStrictPrintfPlaceholderTypes: true

@@ -57,7 +57,7 @@ class ModerationQueue extends DatabaseObject
     }
 
     #[\Override]
-    protected function handleData($data)
+    protected function handleData(array $data)
     {
         parent::handleData($data);
 
@@ -105,10 +105,9 @@ class ModerationQueue extends DatabaseObject
     /**
      * Returns status text.
      *
-     * @param int $status
      * @return  string
      */
-    public function getStatus($status = null)
+    public function getStatus(?int $status = null)
     {
         $status = ($status === null) ? $this->status : $status;
         switch ($status) {

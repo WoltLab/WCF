@@ -43,7 +43,7 @@ class Condition extends DatabaseObject
     }
 
     #[\Override]
-    protected function handleData($data)
+    protected function handleData(array $data)
     {
         parent::handleData($data);
 

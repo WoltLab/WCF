@@ -53,7 +53,7 @@ class PackageUpdateServer extends DatabaseObject implements ITitledObject
     private static $secureMode = false;
 
     #[\Override]
-    protected function handleData($data)
+    protected function handleData(array $data)
     {
         if (!empty($data['metaData'])) {
             $metaData = @\unserialize($data['metaData']);
@@ -172,10 +172,9 @@ class PackageUpdateServer extends DatabaseObject implements ITitledObject
     }
 
     /**
-     * @param string $serverURL
      * @deprecated 6.0 This method was only used in PackageUpdateServerAddForm.
      */
-    public static function isValidServerURL($serverURL): bool
+    public static function isValidServerURL(string $serverURL): bool
     {
         $parsedURL = Url::parse($serverURL);
 
@@ -219,18 +218,13 @@ class PackageUpdateServer extends DatabaseObject implements ITitledObject
 
     /**
      * Stores auth data for a package update server.
-     *
-     * @param int $packageUpdateServerID
-     * @param string $username
-     * @param string $password
-     * @param bool $saveCredentials
      */
     public static function storeAuthData(
-        $packageUpdateServerID,
-        $username,
+        int $packageUpdateServerID,
+        string $username,
         #[\SensitiveParameter]
-        $password,
-        $saveCredentials = false
+        string $password,
+        bool $saveCredentials = false
     ): void {
         $packageUpdateAuthData = @\unserialize(WCF::getSession()->getVar('packageUpdateAuthData'));
         if ($packageUpdateAuthData === null || !\is_array($packageUpdateAuthData)) {

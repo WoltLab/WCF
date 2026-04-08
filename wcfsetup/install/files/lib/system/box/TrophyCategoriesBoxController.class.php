@@ -3,7 +3,7 @@
 namespace wcf\system\box;
 
 use wcf\data\trophy\category\TrophyCategoryCache;
-use wcf\page\TrophyListPage;
+use wcf\page\CategoryTrophyListPage;
 use wcf\page\TrophyPage;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
@@ -39,10 +39,8 @@ class TrophyCategoriesBoxController extends AbstractBoxController
             // get active category
             $activeCategory = null;
             $requestObject = RequestHandler::getInstance()->getActiveRequest()?->getRequestObject();
-            if ($requestObject instanceof TrophyListPage || $requestObject instanceof TrophyPage) {
-                if ($requestObject->category !== null) {
-                    $activeCategory = $requestObject->category;
-                }
+            if ($requestObject instanceof CategoryTrophyListPage || $requestObject instanceof TrophyPage) {
+                $activeCategory = $requestObject->category;
             }
 
             $this->content = WCF::getTPL()->render(

@@ -43,7 +43,7 @@ class UserNotification extends DatabaseObject
     }
 
     #[\Override]
-    protected function handleData($data)
+    protected function handleData(array $data)
     {
         parent::handleData($data);
 
@@ -56,12 +56,9 @@ class UserNotification extends DatabaseObject
     /**
      * Returns an existing notification.
      *
-     * @param int $packageID
-     * @param int $eventID
-     * @param int $objectID
      * @return  UserNotification|null
      */
-    public static function getNotification($packageID, $eventID, $objectID)
+    public static function getNotification(int $packageID, int $eventID, int $objectID)
     {
         $sql = "SELECT  *
                 FROM    wcf1_user_notification

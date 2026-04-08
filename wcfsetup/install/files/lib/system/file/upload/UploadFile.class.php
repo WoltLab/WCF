@@ -77,21 +77,12 @@ class UploadFile
      */
     private $imageData;
 
-    /**
-     * UploadFile constructor.
-     *
-     * @param string $location
-     * @param string $filename
-     * @param bool $viewableImage
-     * @param bool $processed
-     * @param bool $detectSvgAsImage
-     */
     public function __construct(
-        $location,
-        $filename,
-        $viewableImage = true,
-        $processed = false,
-        $detectSvgAsImage = false
+        string $location,
+        string $filename,
+        bool $viewableImage = true,
+        bool $processed = false,
+        bool $detectSvgAsImage = false
     ) {
         if (!\file_exists($location)) {
             throw new \InvalidArgumentException("File '" . $location . "' could not be found.");
@@ -224,10 +215,9 @@ class UploadFile
      * Sets the new location of the file, after it is processed and
      * sets the `processed` attribute to true.
      *
-     * @param string $newLocation
      * @return void
      */
-    public function setProcessed($newLocation)
+    public function setProcessed(string $newLocation)
     {
         if (!\file_exists($newLocation)) {
             throw new \InvalidArgumentException("File '" . $newLocation . "' could not be found.");
@@ -240,10 +230,9 @@ class UploadFile
     /**
      * Sets the new image link of the file for processed files.
      *
-     * @param string $link
      * @return void
      */
-    public function setImageLink($link)
+    public function setImageLink(string $link)
     {
         $this->imageLink = $link;
     }

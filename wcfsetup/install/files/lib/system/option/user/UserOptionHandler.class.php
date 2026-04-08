@@ -87,10 +87,9 @@ class UserOptionHandler extends OptionHandler
     /**
      * Shows empty options.
      *
-     * @param bool $show
      * @return void
      */
-    public function showEmptyOptions($show = true)
+    public function showEmptyOptions(bool $show = true)
     {
         $this->removeEmptyOptions = !$show;
     }
@@ -98,10 +97,9 @@ class UserOptionHandler extends OptionHandler
     /**
      * Sets registration mode.
      *
-     * @param bool $inRegistration
      * @return void
      */
-    public function setInRegistration($inRegistration = true)
+    public function setInRegistration(bool $inRegistration = true)
     {
         $this->inRegistration = $inRegistration;
         if ($inRegistration) {
@@ -112,10 +110,9 @@ class UserOptionHandler extends OptionHandler
     /**
      * Enables edit mode.
      *
-     * @param bool $enable
      * @return void
      */
-    public function enableEditMode($enable = true)
+    public function enableEditMode(bool $enable = true)
     {
         $this->editMode = $enable;
     }
@@ -123,10 +120,9 @@ class UserOptionHandler extends OptionHandler
     /**
      * Enables search mode.
      *
-     * @param bool $enable
      * @return void
      */
-    public function enableSearchMode($enable = true)
+    public function enableSearchMode(bool $enable = true)
     {
         $this->searchMode = $enable;
         if ($enable) {
@@ -137,7 +133,6 @@ class UserOptionHandler extends OptionHandler
     /**
      * Sets option values for a certain user.
      *
-     * @param User $user
      * @return void
      */
     public function setUser(User $user)
@@ -173,10 +168,9 @@ class UserOptionHandler extends OptionHandler
      * are considered. Furthermore, the visibility setting of the option is disregarded to ensure that
      * during automatic cronjob execution (always done as a guest), the conditions are properly set.
      *
-     * @param bool $enable
      * @return void
      */
-    public function enableConditionMode($enable = true)
+    public function enableConditionMode(bool $enable = true)
     {
         if (!$this->searchMode) {
             $this->enableSearchMode();
@@ -207,7 +201,7 @@ class UserOptionHandler extends OptionHandler
     }
 
     #[\Override]
-    public function getOption($optionName)
+    public function getOption(string $optionName)
     {
         $optionData = parent::getOption($optionName);
 
@@ -228,7 +222,7 @@ class UserOptionHandler extends OptionHandler
     }
 
     #[\Override]
-    protected function getFormElement($type, Option $option)
+    protected function getFormElement(string $type, Option $option)
     {
         if ($this->searchMode) {
             $optionType = $this->getTypeObject($type);

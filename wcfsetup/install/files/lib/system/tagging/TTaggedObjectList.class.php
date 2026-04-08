@@ -16,11 +16,9 @@ trait TTaggedObjectList
     /**
      * Processes the `$orderBy` parameters to inject the parameter into the `GROUP BY` parameter.
      *
-     * @param string $groupBy
-     * @param string $orderBy
      * @return string
      */
-    protected function getGroupByFromOrderBy($groupBy, $orderBy)
+    protected function getGroupByFromOrderBy(string $groupBy, string $orderBy)
     {
         if (!empty($orderBy)) {
             $orderBy = \explode(',', $orderBy);

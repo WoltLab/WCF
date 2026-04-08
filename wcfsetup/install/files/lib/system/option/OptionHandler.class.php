@@ -264,10 +264,9 @@ class OptionHandler implements IOptionHandler
     /**
      * Counts the number of options in a specific option category.
      *
-     * @param string $categoryName
      * @return  int
      */
-    public function countCategoryOptions($categoryName = '')
+    public function countCategoryOptions(string $categoryName = '')
     {
         $count = 0;
 
@@ -343,10 +342,9 @@ class OptionHandler implements IOptionHandler
     /**
      * Returns a parsed option.
      *
-     * @param string $optionName
      * @return ParsedOption
      */
-    protected function getOption($optionName)
+    protected function getOption(string $optionName)
     {
         // get option object
         $option = $this->options[$optionName];
@@ -366,11 +364,10 @@ class OptionHandler implements IOptionHandler
     /**
      * Wrapper function to preserve backwards compatibility with the visibility of `getOption()`.
      *
-     * @param string $optionName
      * @return ParsedOption
      * @since 5.2
      */
-    public function getSingleOption($optionName)
+    public function getSingleOption(string $optionName)
     {
         return $this->getOption($optionName);
     }
@@ -410,10 +407,9 @@ class OptionHandler implements IOptionHandler
     }
 
     /**
-     * @param string $type
      * @return string
      */
-    protected function getFormElement($type, Option $option)
+    protected function getFormElement(string $type, Option $option)
     {
         return $this->getTypeObject($type)->getFormElement($option, ($this->optionValues[$option->optionName] ?? null));
     }
@@ -421,11 +417,10 @@ class OptionHandler implements IOptionHandler
     /**
      * Returns an object of the requested option type.
      *
-     * @param string $type
      * @return  IOptionType
      * @throws  SystemException
      */
-    public function getTypeObject($type)
+    public function getTypeObject(string $type)
     {
         if (!isset($this->typeObjects[$type])) {
             $className = $this->getClassName($type);
@@ -443,11 +438,10 @@ class OptionHandler implements IOptionHandler
     /**
      * Returns class name for option type.
      *
-     * @param string $optionType
      * @return  ?string
      * @throws  ImplementationException
      */
-    protected function getClassName($optionType)
+    protected function getClassName(string $optionType)
     {
         $optionType = StringUtil::firstCharToUpperCase($optionType);
 
@@ -535,10 +529,9 @@ class OptionHandler implements IOptionHandler
     /**
      * Creates a list of all active options.
      *
-     * @param string $parentCategoryName
      * @return void
      */
-    protected function loadActiveOptions($parentCategoryName)
+    protected function loadActiveOptions(string $parentCategoryName)
     {
         if (!isset($this->cachedCategories[$parentCategoryName]) || $this->checkCategory($this->cachedCategories[$parentCategoryName])) {
             if (isset($this->cachedOptionToCategories[$parentCategoryName])) {

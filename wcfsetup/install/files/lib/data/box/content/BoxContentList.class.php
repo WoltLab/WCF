@@ -78,10 +78,9 @@ class BoxContentList extends DatabaseObjectList
     /**
      * Enables/disables the loading of box content images.
      *
-     * @param bool $enable
      * @return void
      */
-    public function enableImageLoading($enable = true)
+    public function enableImageLoading(bool $enable = true)
     {
         $this->imageLoading = $enable;
     }
@@ -89,10 +88,9 @@ class BoxContentList extends DatabaseObjectList
     /**
      * Enables/disables the loading of embedded objects.
      *
-     * @param bool $enable
      * @return void
      */
-    public function enableEmbeddedObjectLoading($enable = true)
+    public function enableEmbeddedObjectLoading(bool $enable = true)
     {
         $this->embeddedObjectLoading = $enable;
     }

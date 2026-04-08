@@ -30,10 +30,9 @@ class URLUserOptionOutput implements IUserOptionOutput
     /**
      * Formats the URL.
      *
-     * @param string $url
      * @return  string
      */
-    private static function getURL($url)
+    private static function getURL(string $url)
     {
         if (!\preg_match('~^https?://~i', $url)) {
             $url = 'https://' . $url;

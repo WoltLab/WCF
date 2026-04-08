@@ -161,12 +161,11 @@ class ItemListFormField extends AbstractFormField implements
     /**
      * Sets the type of the returned save value (see `SAVE_VALUE_TYPE_*` constants).
      *
-     * @param string $saveValueType type of the returned save value
      * @return  static          this field
      * @throws  \BadMethodCallException         if save value type has already been set
      * @throws  \InvalidArgumentException       if given save value type is invalid
      */
-    public function saveValueType($saveValueType)
+    public function saveValueType(string $saveValueType)
     {
         if ($this->saveValueType !== null) {
             throw new \BadMethodCallException("Save value type has already been set for field '{$this->getId()}'.");

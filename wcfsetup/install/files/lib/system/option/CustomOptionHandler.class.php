@@ -107,7 +107,7 @@ abstract class CustomOptionHandler extends OptionHandler
     }
 
     #[\Override]
-    public function getOption($optionName)
+    public function getOption(string $optionName)
     {
         $optionData = parent::getOption($optionName);
 
