@@ -149,7 +149,7 @@ class XML
     public function getSchemaLocation()
     {
         $schema = $this->document->documentElement->getAttributeNS(
-            $this->document->documentElement->lookupNamespaceUri('xsi'),
+            $this->document->documentElement->lookupNamespaceURI('xsi'),
             'schemaLocation'
         );
 
@@ -249,7 +249,7 @@ class XML
     public function write(string $fileLocation, bool $cdata = false)
     {
         $schemaParts = \explode(' ', $this->document->documentElement->getAttributeNS(
-            $this->document->documentElement->lookupNamespaceUri('xsi'),
+            $this->document->documentElement->lookupNamespaceURI('xsi'),
             'schemaLocation'
         ));
 

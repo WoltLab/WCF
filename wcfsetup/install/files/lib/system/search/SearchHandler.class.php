@@ -158,7 +158,7 @@ final class SearchHandler
                 $startDateTime = \DateTime::createFromFormat(
                     "Y-m-d",
                     $this->parameters['startDate'],
-                    WCF::getUser()->getTimezone()
+                    WCF::getUser()->getTimeZone()
                 );
             } catch (\ValueError) {
             }
@@ -176,7 +176,7 @@ final class SearchHandler
                 $endDateTime = \DateTime::createFromFormat(
                     "Y-m-d",
                     $this->parameters['endDate'],
-                    WCF::getUser()->getTimezone()
+                    WCF::getUser()->getTimeZone()
                 );
             } catch (\ValueError) {
             }

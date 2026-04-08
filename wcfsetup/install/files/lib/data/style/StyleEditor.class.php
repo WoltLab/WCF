@@ -1146,7 +1146,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                     continue;
                 }
 
-                $imagesTar->add($file->getPathName(), '', $this->getAssetPath());
+                $imagesTar->add($file->getPathname(), '', $this->getAssetPath());
             }
             // append images tar to style tar
             $imagesTar->create();

@@ -798,7 +798,7 @@ class Email
             );
             $result .= $dumpPartHeaders($body);
             if ($body instanceof mime\AbstractMultipartMimePart) {
-                foreach ($body->getMimeparts() as $part) {
+                foreach ($body->getMimeParts() as $part) {
                     $result .= $dumpBody($part);
                 }
             } elseif ($body instanceof mime\TextMimePart) {

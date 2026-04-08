@@ -20,3 +20,8 @@ parameters:
         - identifier: new.static
         - identifier: trait.unused
     checkMissingOverrideMethodAttribute: true
+    polluteScopeWithLoopInitialAssignments: true
+    polluteScopeWithAlwaysIterableForeach: true
+    polluteScopeWithBlock: true
+    checkExplicitMixedMissingReturn: false
+    checkFunctionNameCase: true
