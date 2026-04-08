@@ -6,7 +6,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
         const url = new URL(`${window.WSC_RPC_API_URL}core/files/${fileID}/generate-thumbnails`);
         let response;
         try {
-            response = (await (0, Backend_1.prepareRequest)(url).post().fetchAsJson());
+            response = (await (0, Backend_1.prepareRequest)(url).post().disableLoadingIndicator().fetchAsJson());
         }
         catch (e) {
             return (0, Result_1.apiResultFromError)(e);

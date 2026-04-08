@@ -25,6 +25,9 @@ define(["require", "exports", "../Ajax/Error", "../Component/Dialog", "../Core",
         };
     }
     async function apiResultFromError(error) {
+        if (!(error instanceof Error)) {
+            throw new TypeError("Refusing to handle errors that are not an error.");
+        }
         if (error instanceof Error_1.StatusNotOk) {
             return apiResultFromStatusNotOk(error);
         }

@@ -17,7 +17,7 @@ export async function generateThumbnails(fileID: number): Promise<ApiResult<Resp
 
   let response: Response;
   try {
-    response = (await prepareRequest(url).post().fetchAsJson()) as Response;
+    response = (await prepareRequest(url).post().disableLoadingIndicator().fetchAsJson()) as Response;
   } catch (e) {
     return apiResultFromError(e);
   }
