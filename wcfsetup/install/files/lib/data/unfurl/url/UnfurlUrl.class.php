@@ -76,7 +76,7 @@ class UnfurlUrl extends DatabaseObject
             $row = $object->data;
         }
 
-        $this->handleData($row);
+        $this->handleData($row ?? []);
     }
 
     /**

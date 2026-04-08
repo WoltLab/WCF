@@ -136,7 +136,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
             $row = $object->data;
         }
 
-        $this->handleData($row);
+        $this->handleData($row ?? []);
     }
 
     /**

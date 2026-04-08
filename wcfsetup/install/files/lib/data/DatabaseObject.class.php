@@ -73,7 +73,7 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
             $row = $object->data;
         }
 
-        $this->handleData($row);
+        $this->handleData($row ?? []);
     }
 
     /**
