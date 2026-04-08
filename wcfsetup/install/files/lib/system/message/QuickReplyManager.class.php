@@ -52,8 +52,6 @@ class QuickReplyManager extends SingletonFactory
     /**
      * Returns a stored message from session.
      *
-     * @param string $type
-     * @param int $objectID
      * @return string
      */
     public function getMessage(string $type, int $objectID)

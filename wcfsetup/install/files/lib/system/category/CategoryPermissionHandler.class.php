@@ -30,8 +30,6 @@ class CategoryPermissionHandler extends SingletonFactory
      * Returns the acl options for the given category and for the given user.
      * If no user is given, the active user is used.
      *
-     * @param Category $category
-     * @param User $user
      * @return array<string, int>
      */
     public function getPermissions(Category $category, ?User $user = null)

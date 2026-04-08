@@ -336,7 +336,6 @@ class PaidSubscriptionAddForm extends AbstractForm
     /**
      * Saves i18n values.
      *
-     * @param PaidSubscription $subscription
      * @return void
      */
     public function saveI18nValue(PaidSubscription $subscription, string $columnName)

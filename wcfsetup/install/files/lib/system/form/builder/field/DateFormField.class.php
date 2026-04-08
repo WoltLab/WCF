@@ -81,7 +81,6 @@ class DateFormField extends AbstractFormField implements
      * Sets the earliest valid date in `DateFormField::$saveValueFormat` format and returns this
      * field. If `null` is given, the previously set earliest valid date is unset.
      *
-     * @param null|string|int $earliestDate
      * @return  static
      */
     public function earliestDate(null|string|int $earliestDate = null)

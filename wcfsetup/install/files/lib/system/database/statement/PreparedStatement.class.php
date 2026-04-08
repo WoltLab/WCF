@@ -240,7 +240,6 @@ class PreparedStatement
      *
      * @template T of DatabaseObject
      * @param class-string<T> $className
-     * @param ?string $keyProperty
      * @return T[]
      */
     public function fetchObjects(string $className, ?string $keyProperty = null)

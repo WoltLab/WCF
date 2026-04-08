@@ -212,9 +212,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
     /**
      * Sets element value from XPath.
      *
-     * @param \DOMXPath $xpath
      * @param array<string, mixed> $elements
-     * @param \DOMElement $element
      * @return void
      */
     protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element)

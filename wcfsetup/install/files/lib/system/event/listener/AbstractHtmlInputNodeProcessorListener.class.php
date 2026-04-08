@@ -23,8 +23,6 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
      * Returns the ids of the objects linked in the text processed by the given
      * processor matching the given regular expression.
      *
-     * @param HtmlInputNodeProcessor $processor
-     * @param Regex $regex
      * @return int[]
      */
     protected function getObjectIDs(HtmlInputNodeProcessor $processor, Regex $regex)
@@ -59,10 +57,7 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
     /**
      * Replaces relevant object links with bbcodes.
      *
-     * @param HtmlInputNodeProcessor $processor
-     * @param Regex $regex
      * @param ITitledObject[] $objects
-     * @param string $bbcodeName
      * @return void
      * @deprecated 5.2 Use `replaceLinks()` instead.
      */
@@ -70,7 +65,7 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
         HtmlInputNodeProcessor $processor,
         Regex $regex,
         array $objects,
-        $bbcodeName
+        string $bbcodeName
     ) {
         $this->replaceLinks($processor, $objects, $bbcodeName);
     }
@@ -79,8 +74,6 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
      * Replaces the text content of relevant object links with the titles of
      * the objects.
      *
-     * @param HtmlInputNodeProcessor $processor
-     * @param Regex $regex
      * @param ITitledObject[] $objects
      * @return void
      * @throws ImplementationException

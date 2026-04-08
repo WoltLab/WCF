@@ -131,7 +131,6 @@ class ViewableArticleList extends ArticleList
     /**
      * Enables/disables the loading of embedded objects in the article contents.
      *
-     * @param bool $enable
      * @since   5.4
      */
     public function enableEmbeddedObjectLoading(bool $enable = true): void

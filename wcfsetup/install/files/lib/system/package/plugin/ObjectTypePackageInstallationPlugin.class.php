@@ -883,7 +883,6 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
      * has a dependency on the `definitionName` field so that the form container
      * is only shown for the relevant object type definition.
      *
-     * @param IFormDocument $form
      * @return  FormContainer
      * @since   5.2
      */
@@ -942,7 +941,6 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
      * Adds bulk processing action-related fields to the given form for the given bulk
      * processing action object type definition.
      *
-     * @param IFormDocument $form
      * @return void
      */
     public function addBulkProcessingActionFields(IFormDocument $form, string $objectTypeDefinition)

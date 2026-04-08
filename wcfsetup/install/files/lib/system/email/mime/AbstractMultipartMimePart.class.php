@@ -116,7 +116,6 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
      * Adds a mime part to this email. Should be either \wcf\system\email\mime\TextMimePart
      * or \wcf\system\email\mime\AttachmentMimePart.
      *
-     * @param AbstractMimePart $part
      * @param mixed $data Additional data, to be defined by child classes
      * @return void
      * @throws \InvalidArgumentException

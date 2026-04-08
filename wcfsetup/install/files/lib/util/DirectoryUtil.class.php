@@ -264,7 +264,6 @@ final class DirectoryUtil
     /**
      * Executes a callback on each file and returns false if callback is invalid.
      *
-     * @param callable $callback
      * @param Regex $pattern callback is only applied to files matching the given pattern
      */
     public function executeCallback(callable $callback, ?Regex $pattern = null): bool

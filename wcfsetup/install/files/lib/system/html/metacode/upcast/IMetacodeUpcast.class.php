@@ -15,7 +15,6 @@ interface IMetacodeUpcast
     /**
      * Converts a known metacode into the HTML representation for use by CKEditor5.
      *
-     * @param \DOMElement $element
      * @param list<string> $attributes list of attributes
      */
     public function upcast(\DOMElement $element, array $attributes): void;

@@ -41,8 +41,6 @@ abstract class PackageInstallationFormManager
     /**
      * Registers a form document.
      *
-     * @param PackageInstallationQueue $queue
-     * @param FormDocument $document
      * @return void
      */
     public static function registerForm(PackageInstallationQueue $queue, FormDocument $document)
@@ -76,9 +74,6 @@ abstract class PackageInstallationFormManager
 
     /**
      * Inserts a form document into database.
-     *
-     * @param PackageInstallationQueue $queue
-     * @param FormDocument $document
      */
     private static function insertForm(PackageInstallationQueue $queue, FormDocument $document): void
     {
@@ -95,9 +90,6 @@ abstract class PackageInstallationFormManager
 
     /**
      * Updates a form document database entry.
-     *
-     * @param PackageInstallationQueue $queue
-     * @param FormDocument $document
      */
     private static function updateForm(PackageInstallationQueue $queue, FormDocument $document): void
     {

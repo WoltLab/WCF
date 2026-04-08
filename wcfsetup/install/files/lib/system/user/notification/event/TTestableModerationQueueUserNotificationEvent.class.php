@@ -22,8 +22,6 @@ trait TTestableModerationQueueUserNotificationEvent
     /**
      * Creates a moderation queue entry for a reported user.
      *
-     * @param UserProfile $reportedUser
-     * @param UserProfile $reportingUser
      * @return  ModerationQueue
      */
     public static function getTestUserModerationQueueEntry(UserProfile $reportedUser, UserProfile $reportingUser)

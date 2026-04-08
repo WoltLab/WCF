@@ -820,7 +820,6 @@ class PackageInstallationDispatcher
     /**
      * Displays a list to select optional packages or installs selection.
      *
-     * @param string $currentNode
      * @param mixed[] $nodeData
      * @return PackageInstallationStep
      */

@@ -1019,8 +1019,6 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     /**
      * Renders a comment.
      *
-     * @param Comment $comment
-     * @param CommentResponse $response
      * @return  string|string[]
      * @deprecated 6.1 see https://docs.woltlab.com/6.1/migration/wsc60/php/#comment-backend
      */

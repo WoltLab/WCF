@@ -90,7 +90,6 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
     /**
      * Replaces image element with attachment metacode element.
      *
-     * @param \DOMElement $element
      * @return void
      */
     protected function handleAttachment(\DOMElement $element, string $class)

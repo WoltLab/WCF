@@ -76,8 +76,6 @@ class HtmlNodePlainLink
     /**
      * Marks the link as standalone, which means that it is the only content in a line.
      *
-     * @param \DOMElement $topLevelParent
-     * @param bool $aloneInParagraph
      * @return $this
      */
     public function setIsStandalone(\DOMElement $topLevelParent, bool $aloneInParagraph = true)
@@ -204,8 +202,6 @@ class HtmlNodePlainLink
     /**
      * Split a link within a block element into its own block element.
      *
-     * @param \DOMElement $link
-     * @param \DOMElement|null $topLevelParent
      * @return \DOMElement
      */
     public static function splitAtLink(\DOMElement $link, ?\DOMElement $topLevelParent = null): \DOMElement
