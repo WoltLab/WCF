@@ -2,7 +2,6 @@
 
 namespace wcf\page;
 
-use wcf\data\trophy\category\TrophyCategory;
 use wcf\data\trophy\category\TrophyCategoryCache;
 use wcf\data\trophy\TrophyList;
 use wcf\system\exception\IllegalLinkException;
@@ -52,20 +51,6 @@ class TrophyListPage extends MultipleLinkPage
      */
     public $sortOrder = 'ASC';
 
-    /**
-     * the category id filter
-     * @var int
-     * @deprecated since 5.2, use CategoryTrophyListPage instead
-     */
-    public $categoryID = 0;
-
-    /**
-     * The category object filter
-     * @var ?TrophyCategory
-     * @deprecated since 5.2, use CategoryTrophyListPage instead
-     */
-    public $category;
-
     #[\Override]
     public function readParameters()
     {
@@ -106,8 +91,6 @@ class TrophyListPage extends MultipleLinkPage
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'category' => $this->category,
-            'categoryID' => $this->categoryID,
             'categories' => TrophyCategoryCache::getInstance()->getEnabledCategories(),
         ]);
 
