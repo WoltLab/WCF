@@ -28,3 +28,10 @@ parameters:
     checkInternalClassCaseSensitivity: true
     reportMaybesInMethodSignatures: false
     reportMaybesInPropertyPhpDocTypes: true
+    reportStaticMethodSignatures: true
+    checkTooWideReturnTypesInProtectedAndPublicMethods: false
+    checkTooWideParameterOutInProtectedAndPublicMethods: true
+    checkTooWideThrowTypesInProtectedAndPublicMethods: true
+    rememberPossiblyImpureFunctionValues: true
+    reportPossiblyNonexistentGeneralArrayOffset: true
+    reportAlwaysTrueInLastCondition: true

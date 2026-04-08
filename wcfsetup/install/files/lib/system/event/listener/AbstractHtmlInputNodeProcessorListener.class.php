@@ -115,7 +115,7 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
                     }
 
                     $link->setTitle($object);
-                } elseif ($bbcode !== null) {
+                } else {
                     $link->replaceWithBBCode($bbcode);
                 }
             }

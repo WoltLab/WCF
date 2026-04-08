@@ -358,7 +358,7 @@ class AccountManagementForm extends AbstractForm
                 // update email
                 $updateParameters['email'] = $this->email;
                 $success[] = 'wcf.user.changeEmail.success';
-            } elseif ((int)REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) {
+            } else {
                 // get reactivation code
                 $activationCode = UserRegistrationUtil::getActivationCode();
 

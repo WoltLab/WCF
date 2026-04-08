@@ -275,13 +275,10 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                         throw new \InvalidArgumentException('The given ' . $type . ' is not an image');
                     }
                     $extension = ImageUtil::getExtensionByMimeType($imageData['mime']);
-                    if ($type === 'image') {
-                        $newName = 'stylePreview.' . $extension;
-                    } elseif ($type === 'image2x') {
-                        $newName = 'stylePreview@2x.' . $extension;
-                    } else {
-                        throw new \LogicException('Unreachable');
-                    }
+                    $newName = match ($type) {
+                        'image' => $newName = 'stylePreview.' . $extension,
+                        'image2x' => $newName = 'stylePreview@2x.' . $extension,
+                    };
                     $newLocation = $style->getAssetPath() . $newName;
                     \rename($fileLocation, $newLocation);
                     (new StyleEditor($style))->update([

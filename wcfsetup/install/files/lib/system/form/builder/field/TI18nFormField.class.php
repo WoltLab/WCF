@@ -396,6 +396,7 @@ trait TI18nFormField
         if ($this->isI18n()) {
             if (\is_string($value) || \is_numeric($value)) {
                 $this->setStringValue($value);
+                // @phpstan-ignore function.alreadyNarrowedType
             } elseif (\is_array($value)) {
                 if (!empty($value)) {
                     I18nHandler::getInstance()->setValues($this->getPrefixedId(), $value);
