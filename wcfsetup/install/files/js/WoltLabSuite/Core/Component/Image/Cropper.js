@@ -133,10 +133,25 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Image/Resizer", "WoltL
             // Calculate the size of the image in relation to the window size
             const selectionRatio = Math.min(this.cropperCanvasRect.width / this.width, this.cropperCanvasRect.height / this.height);
             const width = this.cropperSelection.width / selectionRatio;
-            const height = width / this.configuration.aspectRatio;
+            const height = this.cropperSelection.height / selectionRatio;
+            const desiredWidth = Math.max(Math.min(Math.round(width), this.maxSize.width), this.minSize.width);
+            const desiredHeight = Math.max(Math.min(Math.round(height), this.maxSize.height), this.minSize.height);
             return this.cropperSelection.$toCanvas({
-                width: Math.max(Math.min(Math.round(width), this.maxSize.width), this.minSize.width),
-                height: Math.max(Math.min(Math.round(height), this.maxSize.height), this.minSize.height),
+                width: desiredWidth,
+                height: desiredHeight,
+            }).then((canvas) => {
+                if (canvas.width === desiredWidth && canvas.height === desiredHeight) {
+                    return canvas;
+                }
+                // $toCanvas uses the selection element's offsetWidth/offsetHeight (integers)
+                // to compute the aspect ratio, which can differ slightly from the configured
+                // aspect ratio. This causes the "contain" fitting inside $toCanvas to adjust
+                // one dimension by a pixel. Redraw onto a correctly sized canvas.
+                const resizedCanvas = document.createElement("canvas");
+                resizedCanvas.width = desiredWidth;
+                resizedCanvas.height = desiredHeight;
+                resizedCanvas.getContext("2d").drawImage(canvas, 0, 0, desiredWidth, desiredHeight);
+                return resizedCanvas;
             });
         }
         createCropper() {
@@ -189,11 +204,11 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Image/Resizer", "WoltL
             this.cropperImage.$center("cover");
             this.cropperCanvasRect = this.cropperImage.getBoundingClientRect();
             const selectionRatio = Math.min(this.cropperCanvasRect.width / this.maxSize.width, this.cropperCanvasRect.height / this.maxSize.height);
-            let selectionHeight = Math.min(this.cropperCanvasRect.height, Math.floor(this.maxSize.height * selectionRatio));
-            let selectionWidth = Math.floor(selectionHeight * this.configuration.aspectRatio);
+            let selectionHeight = Math.min(this.cropperCanvasRect.height, this.maxSize.height * selectionRatio);
+            let selectionWidth = selectionHeight * this.configuration.aspectRatio;
             if (selectionWidth > this.cropperCanvasRect.width) {
-                selectionWidth = Math.floor(this.cropperCanvasRect.width);
-                selectionHeight = Math.floor(selectionWidth / this.configuration.aspectRatio);
+                selectionWidth = this.cropperCanvasRect.width;
+                selectionHeight = selectionWidth / this.configuration.aspectRatio;
             }
             this.cropperSelection.$change(0, 0, selectionWidth, selectionHeight, this.configuration.aspectRatio, true);
             this.cropperSelection.$center();
@@ -241,7 +256,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Image/Resizer", "WoltL
             // Calculate the size of the image in relation to the window size
             const selectionRatio = Math.min(this.cropperCanvasRect.width / this.width, this.cropperCanvasRect.height / this.height);
             const width = this.cropperSelection.width / selectionRatio;
-            const height = width / this.configuration.aspectRatio;
+            const height = this.cropperSelection.height / selectionRatio;
             const sizes = this.configuration.sizes
                 .filter((size) => {
                 return width >= size.width && height >= size.height;
@@ -251,6 +266,15 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Image/Resizer", "WoltL
             return this.cropperSelection.$toCanvas({
                 width: size.width,
                 height: size.height,
+            }).then((canvas) => {
+                if (canvas.width === size.width && canvas.height === size.height) {
+                    return canvas;
+                }
+                const resizedCanvas = document.createElement("canvas");
+                resizedCanvas.width = size.width;
+                resizedCanvas.height = size.height;
+                resizedCanvas.getContext("2d").drawImage(canvas, 0, 0, size.width, size.height);
+                return resizedCanvas;
             });
         }
         async loadImage() {
