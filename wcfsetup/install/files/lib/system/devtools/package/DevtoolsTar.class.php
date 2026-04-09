@@ -71,6 +71,11 @@ class DevtoolsTar extends Tar
     #[\Override]
     public function extract(int|string $index, string $destination)
     {
+        if (\is_int($index)) {
+            $header = $this->getFileInfo($index);
+            $index = $header['filename'];
+        }
+
         // The source file is empty, if the file is a symlink, which yield to an error.
         if (empty($this->files[$index])) {
             return false;
