@@ -152,7 +152,7 @@ function getDeleteAttachButton(
       return;
     }
 
-    await deleteFile(fileId);
+    (await deleteFile(fileId)).unwrap();
 
     dispatchToCkeditor(editor).removeAttachment({
       attachmentId,

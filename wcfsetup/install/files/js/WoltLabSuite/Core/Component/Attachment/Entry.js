@@ -107,7 +107,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "
             if (!confirmationResult) {
                 return;
             }
-            await (0, DeleteFile_1.deleteFile)(fileId);
+            (await (0, DeleteFile_1.deleteFile)(fileId)).unwrap();
             (0, Event_1.dispatchToCkeditor)(editor).removeAttachment({
                 attachmentId,
             });
