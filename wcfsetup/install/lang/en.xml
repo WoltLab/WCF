@@ -3294,7 +3294,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.attachment.insert"><![CDATA[Insert into Message]]></item>
 		<item name="wcf.attachment.inserted"><![CDATA[Inserted]]></item>
 		<item name="wcf.attachment.insertAll"><![CDATA[Insert All]]></item>
-		<item name="wcf.attachment.insertFull"><![CDATA[Full Image]]></item>
+		<item name="wcf.attachment.insertFull"><![CDATA[Insert Full Image]]></item>
 		<item name="wcf.attachment.insertThumbnail"><![CDATA[Thumbnail]]></item>
 		<item name="wcf.attachment.filename"><![CDATA[Filename]]></item>
 		<item name="wcf.attachment.uploadTime"><![CDATA[Upload Date]]></item>
