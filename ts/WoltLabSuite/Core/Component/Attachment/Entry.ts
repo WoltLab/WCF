@@ -11,6 +11,7 @@ import {
   trackUploadProgress,
   updateFileInformation,
 } from "WoltLabSuite/Core/Component/File/Helper";
+import { confirmationFactory } from "../Confirmation";
 
 export type FileProcessorData = {
   attachmentID: number;
@@ -108,7 +109,9 @@ function fileInitializationCompleted(element: HTMLElement, file: WoltlabCoreFile
   }
 
   const listItem = document.createElement("li");
-  listItem.append(getDeleteAttachButton(fileId, (data as FileProcessorData).attachmentID, editor, element));
+  listItem.append(
+    getDeleteAttachButton(fileId, (data as FileProcessorData).attachmentID, editor, element, file.filename),
+  );
   dropdownMenu.append(listItem);
 
   const moreOptions = document.createElement("button");
@@ -137,21 +140,25 @@ function getDeleteAttachButton(
   attachmentId: number,
   editor: HTMLElement,
   element: HTMLElement,
+  filename: string | undefined,
 ): HTMLButtonElement {
   const button = document.createElement("button");
   button.type = "button";
   button.textContent = getPhrase("wcf.global.button.delete");
 
-  button.addEventListener("click", () => {
-    void deleteFile(fileId).then((result) => {
-      result.unwrap();
+  button.addEventListener("click", async () => {
+    const confirmationResult = await confirmationFactory().delete(filename);
+    if (!confirmationResult) {
+      return;
+    }
 
-      dispatchToCkeditor(editor).removeAttachment({
-        attachmentId,
-      });
+    (await deleteFile(fileId)).unwrap();
 
-      element.remove();
+    dispatchToCkeditor(editor).removeAttachment({
+      attachmentId,
     });
+
+    element.remove();
   });
 
   return button;
