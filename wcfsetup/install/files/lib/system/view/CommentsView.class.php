@@ -29,7 +29,8 @@ final class CommentsView
         public readonly string $commentContainerID,
         public readonly bool $canAddComments = true,
         public readonly int $totalComments = 0,
-        public readonly bool $showSection = true
+        public readonly bool $showSection = true,
+        public readonly string $sectionDescription = ''
     ) {
         $this->init();
     }

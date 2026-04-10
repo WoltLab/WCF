@@ -1,7 +1,10 @@
 {if $commentsView->isVisible()}
 	{if $commentsView->showSection}
 		<section id="comments" class="section sectionContainerList">
-			<h2 class="sectionTitle">{lang}wcf.global.comments{/lang}{if $commentsView->totalComments} <span class="badge">{#$commentsView->totalComments}</span>{/if}</h2>
+			<header class="sectionHeader">
+				<h2 class="sectionTitle">{lang}wcf.global.comments{/lang}{if $commentsView->totalComments} <span class="badge">{#$commentsView->totalComments}</span>{/if}</h2>
+				{if $commentsView->sectionDescription}<p class="sectionDescription">{$commentsView->sectionDescription}</p>{/if}
+			</header>
 	{/if}
 
 	{assign var='commentContainerID' value=$commentsView->commentContainerID}

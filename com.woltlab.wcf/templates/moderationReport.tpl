@@ -59,13 +59,6 @@
 	{unsafe:$reportedContent}
 </section>
 
-<section id="comments" class="section sectionContainerList moderationComments">
-	<header class="sectionHeader">
-		<h2 class="sectionTitle">{lang}wcf.global.comments{/lang}{if $queue->comments} <span class="badge">{#$queue->comments}</span>{/if}</h2>
-		<p class="sectionDescription">{lang}wcf.moderation.comments.description{/lang}</p>
-	</header>
-	
-	{include file='comments' commentContainerID='moderationQueueCommentList' commentObjectID=$queueID}
-</section>
+{unsafe:$commentsView->render()}
 
 {include file='footer'}

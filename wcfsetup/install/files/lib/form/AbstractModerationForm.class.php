@@ -3,11 +3,8 @@
 namespace wcf\form;
 
 use wcf\command\moderation\queue\MarkModerationQueueAsRead;
-use wcf\data\comment\StructuredCommentList;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\page\ModerationListPage;
-use wcf\system\comment\CommentHandler;
-use wcf\system\comment\manager\ICommentManager;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -16,6 +13,7 @@ use wcf\system\interaction\user\ModerationQueueInteractions;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\page\PageLocationManager;
 use wcf\system\request\LinkHandler;
+use wcf\system\view\CommentsView;
 use wcf\system\WCF;
 
 /**
@@ -61,23 +59,7 @@ abstract class AbstractModerationForm extends AbstractForm
      */
     public $queueID = 0;
 
-    /**
-     * comment object type id
-     * @var int
-     */
-    public $commentObjectTypeID = 0;
-
-    /**
-     * comment manager object
-     * @var ICommentManager
-     */
-    public $commentManager;
-
-    /**
-     * list of comments
-     * @var ?StructuredCommentList
-     */
-    public $commentList;
+    public CommentsView $commentsView;
 
     #[\Override]
     public function readParameters()
@@ -123,18 +105,27 @@ abstract class AbstractModerationForm extends AbstractForm
 
         PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.ModerationList');
 
-        $this->commentObjectTypeID = CommentHandler::getInstance()
-            ->getObjectTypeID('com.woltlab.wcf.moderation.queue');
-        $this->commentManager = CommentHandler::getInstance()
-            ->getObjectType($this->commentObjectTypeID)
-            ->getProcessor();
-        $this->commentList = CommentHandler::getInstance()
-            ->getCommentList($this->commentManager, $this->commentObjectTypeID, $this->queueID);
+        $this->loadComments();
 
         // update queue visit
         if ($this->queue->isNew()) {
             (new MarkModerationQueueAsRead($this->queue->getDecoratedObject()))();
         }
+    }
+
+    /**
+     * @since 6.3
+     */
+    protected function loadComments(): void
+    {
+        $this->commentsView = new CommentsView(
+            'com.woltlab.wcf.moderation.queue',
+            $this->queueID,
+            'moderationQueueCommentList',
+            true,
+            $this->queue->comments,
+            sectionDescription: WCF::getLanguage()->getDynamicVariable('wcf.moderation.comments.description')
+        );
     }
 
     #[\Override]
@@ -146,10 +137,7 @@ abstract class AbstractModerationForm extends AbstractForm
             'assignedUserID' => $this->assignedUserID,
             'queue' => $this->queue,
             'queueID' => $this->queueID,
-            'commentCanAdd' => true,
-            'commentList' => $this->commentList,
-            'commentObjectTypeID' => $this->commentObjectTypeID,
-            'lastCommentTime' => $this->commentList ? $this->commentList->getMinCommentTime() : 0,
+            'commentsView' => $this->commentsView,
             'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentInteractionButton(
                 new ModerationQueueInteractions(),
                 $this->queue,
