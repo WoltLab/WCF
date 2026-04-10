@@ -6,7 +6,7 @@ use wcf\data\article\Article;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\article\content\ArticleContentEditor;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\system\comment\CommentHandler;
+use wcf\system\view\CommentsView;
 use wcf\system\WCF;
 
 /**
@@ -42,22 +42,15 @@ class CommentArticleDiscussionProvider extends AbstractArticleDiscussionProvider
     #[\Override]
     public function renderDiscussions()
     {
-        $commentCanAdd = WCF::getSession()->getPermission('user.article.canAddComment');
-        $commentObjectTypeID = CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.articleComment');
-        $commentManager = CommentHandler::getInstance()->getObjectType($commentObjectTypeID)->getProcessor();
-        $commentList = CommentHandler::getInstance()->getCommentList(
-            $commentManager,
-            $commentObjectTypeID,
-            $this->articleContent->articleContentID
+        $commentsView = new CommentsView(
+            'com.woltlab.wcf.articleComment',
+            $this->articleContent->articleContentID,
+            'articleCommentList',
+            WCF::getSession()->hasPermission('user.article.canAddComment'),
+            $this->articleContent->comments
         );
 
-        return WCF::getTPL()->render('wcf', 'articleComments', [
-            'commentCanAdd' => $commentCanAdd,
-            'commentList' => $commentList,
-            'commentObjectTypeID' => $commentObjectTypeID,
-            'lastCommentTime' => $commentList->getMinCommentTime(),
-            'likeData' => (MODULE_LIKE) ? $commentList->getLikeData() : [],
-        ]);
+        return $commentsView->render();
     }
 
     #[\Override]
