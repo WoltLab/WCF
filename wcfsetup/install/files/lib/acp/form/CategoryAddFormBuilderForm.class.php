@@ -258,6 +258,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
                 ->label('wcf.form.field.showOrder')
                 ->description($processor->getLanguageVariable('showOrder.description', true))
                 ->minimum(0)
+                ->value(0)
                 ->required();
         }
 
