@@ -4,9 +4,6 @@ namespace wcf\page;
 
 use wcf\data\article\CategoryArticleList;
 use wcf\data\article\ViewableArticle;
-use wcf\data\comment\StructuredCommentList;
-use wcf\system\comment\CommentHandler;
-use wcf\system\comment\manager\ICommentManager;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\interaction\user\ArticleInteractions;
 use wcf\system\MetaTagHandler;
@@ -35,24 +32,6 @@ class ArticlePage extends AbstractArticlePage
      */
     public $previousArticle;
 
-    /**
-     * comment object type id
-     * @var int
-     */
-    public $commentObjectTypeID = 0;
-
-    /**
-     * comment manager object
-     * @var ICommentManager
-     */
-    public $commentManager;
-
-    /**
-     * list of comments
-     * @var StructuredCommentList
-     */
-    public $commentList;
-
     #[\Override]
     public function readParameters()
     {
@@ -65,17 +44,6 @@ class ArticlePage extends AbstractArticlePage
     public function readData()
     {
         parent::readData();
-
-        // get comments
-        if ($this->article->enableComments) {
-            $this->commentObjectTypeID = CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.articleComment');
-            $this->commentManager = CommentHandler::getInstance()->getObjectType($this->commentObjectTypeID)->getProcessor();
-            $this->commentList = CommentHandler::getInstance()->getCommentList(
-                $this->commentManager,
-                $this->commentObjectTypeID,
-                $this->articleContent->articleContentID
-            );
-        }
 
         // get next article
         $articleList = new CategoryArticleList($this->article->categoryID);
@@ -190,14 +158,6 @@ class ArticlePage extends AbstractArticlePage
                 WCF::getLanguage()->getDynamicVariable('wcf.acp.article.edit'),
                 "core/articles/contents/{$this->articleContentID}/content-header-title"
             ),
-
-            // nullified values for backwards-compatibility
-            'commentCanAdd' => 0,
-            'commentList' => null,
-            'commentObjectTypeID' => 0,
-            'lastCommentTime' => 0,
-            'likeData' => [],
-            'articleLikeData' => [],
         ]);
     }
 }
