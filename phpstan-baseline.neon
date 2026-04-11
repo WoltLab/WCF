@@ -109,98 +109,8 @@ parameters:
 			path: wcfsetup/install/files/lib/system/CLIWCF.class.php
 
 		-
-			message: '#^Call to method getTerminal\(\) on an unknown class phpline\\console\\ConsoleReader\.$#'
-			identifier: class.notFound
-			count: 1
-			path: wcfsetup/install/files/lib/system/CLIWCF.class.php
-
-		-
-			message: '#^Call to method getWidth\(\) on an unknown class phpline\\Terminal\.$#'
-			identifier: class.notFound
-			count: 1
-			path: wcfsetup/install/files/lib/system/CLIWCF.class.php
-
-		-
-			message: '#^Call to method println\(\) on an unknown class phpline\\console\\ConsoleReader\.$#'
-			identifier: class.notFound
-			count: 5
-			path: wcfsetup/install/files/lib/system/CLIWCF.class.php
-
-		-
-			message: '#^Call to method readLine\(\) on an unknown class phpline\\console\\ConsoleReader\.$#'
-			identifier: class.notFound
-			count: 3
-			path: wcfsetup/install/files/lib/system/CLIWCF.class.php
-
-		-
-			message: '#^Call to method setExpandEvents\(\) on an unknown class phpline\\console\\ConsoleReader\.$#'
-			identifier: class.notFound
-			count: 1
-			path: wcfsetup/install/files/lib/system/CLIWCF.class.php
-
-		-
-			message: '#^Call to method setHistory\(\) on an unknown class phpline\\console\\ConsoleReader\.$#'
-			identifier: class.notFound
-			count: 1
-			path: wcfsetup/install/files/lib/system/CLIWCF.class.php
-
-		-
-			message: '#^Call to method setHistoryEnabled\(\) on an unknown class phpline\\console\\ConsoleReader\.$#'
-			identifier: class.notFound
-			count: 3
-			path: wcfsetup/install/files/lib/system/CLIWCF.class.php
-
-		-
-			message: '#^Call to static method error\(\) on an unknown class phpline\\internal\\Log\.$#'
-			identifier: class.notFound
-			count: 3
-			path: wcfsetup/install/files/lib/system/CLIWCF.class.php
-
-		-
-			message: '#^Call to static method get\(\) on an unknown class phpline\\TerminalFactory\.$#'
-			identifier: class.notFound
-			count: 1
-			path: wcfsetup/install/files/lib/system/CLIWCF.class.php
-
-		-
-			message: '#^Call to static method warn\(\) on an unknown class phpline\\internal\\Log\.$#'
-			identifier: class.notFound
-			count: 1
-			path: wcfsetup/install/files/lib/system/CLIWCF.class.php
-
-		-
 			message: '#^Constant VERBOSITY not found\.$#'
 			identifier: constant.notFound
-			count: 1
-			path: wcfsetup/install/files/lib/system/CLIWCF.class.php
-
-		-
-			message: '#^Instantiated class phpline\\console\\ConsoleReader not found\.$#'
-			identifier: class.notFound
-			count: 1
-			path: wcfsetup/install/files/lib/system/CLIWCF.class.php
-
-		-
-			message: '#^Instantiated class phpline\\console\\history\\MemoryHistory not found\.$#'
-			identifier: class.notFound
-			count: 1
-			path: wcfsetup/install/files/lib/system/CLIWCF.class.php
-
-		-
-			message: '#^Method wcf\\system\\CLIWCF\:\:getReader\(\) has invalid return type phpline\\console\\ConsoleReader\.$#'
-			identifier: class.notFound
-			count: 1
-			path: wcfsetup/install/files/lib/system/CLIWCF.class.php
-
-		-
-			message: '#^Method wcf\\system\\CLIWCF\:\:getTerminal\(\) has invalid return type phpline\\Terminal\.$#'
-			identifier: class.notFound
-			count: 1
-			path: wcfsetup/install/files/lib/system/CLIWCF.class.php
-
-		-
-			message: '#^Property wcf\\system\\CLIWCF\:\:\$consoleReader has unknown class phpline\\console\\ConsoleReader as its type\.$#'
-			identifier: class.notFound
 			count: 1
 			path: wcfsetup/install/files/lib/system/CLIWCF.class.php
 
@@ -247,30 +157,6 @@ parameters:
 			path: wcfsetup/install/files/lib/system/background/BackgroundQueueHandler.class.php
 
 		-
-			message: '#^Call to static method info\(\) on an unknown class phpline\\internal\\Log\.$#'
-			identifier: class.notFound
-			count: 2
-			path: wcfsetup/install/files/lib/system/cli/command/CLICommandHandler.class.php
-
-		-
-			message: '#^Call to method println\(\) on an unknown class phpline\\console\\ConsoleReader\.$#'
-			identifier: class.notFound
-			count: 31
-			path: wcfsetup/install/files/lib/system/cli/command/ImportCLICommand.class.php
-
-		-
-			message: '#^Call to method readLine\(\) on an unknown class phpline\\console\\ConsoleReader\.$#'
-			identifier: class.notFound
-			count: 11
-			path: wcfsetup/install/files/lib/system/cli/command/ImportCLICommand.class.php
-
-		-
-			message: '#^Call to method setHistoryEnabled\(\) on an unknown class phpline\\console\\ConsoleReader\.$#'
-			identifier: class.notFound
-			count: 3
-			path: wcfsetup/install/files/lib/system/cli/command/ImportCLICommand.class.php
-
-		-
 			message: '#^Access to an undefined property Zend\\Console\\Getopt\:\:\$list\.$#'
 			identifier: property.notFound
 			count: 1
@@ -286,30 +172,6 @@ parameters:
 			message: '#^Access to an undefined property Zend\\Console\\Getopt\:\:\$threads\.$#'
 			identifier: property.notFound
 			count: 1
-			path: wcfsetup/install/files/lib/system/cli/command/WorkerCLICommand.class.php
-
-		-
-			message: '#^Call to method getWidth\(\) on an unknown class phpline\\Terminal\.$#'
-			identifier: class.notFound
-			count: 2
-			path: wcfsetup/install/files/lib/system/cli/command/WorkerCLICommand.class.php
-
-		-
-			message: '#^Call to method println\(\) on an unknown class phpline\\console\\ConsoleReader\.$#'
-			identifier: class.notFound
-			count: 4
-			path: wcfsetup/install/files/lib/system/cli/command/WorkerCLICommand.class.php
-
-		-
-			message: '#^Call to static method debug\(\) on an unknown class phpline\\internal\\Log\.$#'
-			identifier: class.notFound
-			count: 1
-			path: wcfsetup/install/files/lib/system/cli/command/WorkerCLICommand.class.php
-
-		-
-			message: '#^Call to static method info\(\) on an unknown class phpline\\internal\\Log\.$#'
-			identifier: class.notFound
-			count: 2
 			path: wcfsetup/install/files/lib/system/cli/command/WorkerCLICommand.class.php
 
 		-
@@ -989,12 +851,6 @@ parameters:
 			identifier: identical.alwaysFalse
 			count: 1
 			path: wcfsetup/install/files/lib/system/user/multifactor/totp/DeviceNode.class.php
-
-		-
-			message: '#^Call to static method stripAnsi\(\) on an unknown class phpline\\internal\\AnsiUtil\.$#'
-			identifier: class.notFound
-			count: 3
-			path: wcfsetup/install/files/lib/util/CLIUtil.class.php
 
 		-
 			message: '#^Parameter \#1 \$iterator of class RecursiveIteratorIterator constructor expects T of IteratorAggregate\|RecursiveIterator, DirectoryIterator given\.$#'

@@ -12,6 +12,8 @@ parameters:
     excludePaths:
         analyse:
             - wcfsetup/install/files/lib/system/api/
+    bootstrapFiles:
+            - wcfsetup/install/files/lib/system/api/phpline/phpline.phar
     scanFiles:
         - constants.php
     ignoreErrors:

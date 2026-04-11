@@ -73,7 +73,6 @@ final class CLIUtil
     {
         $result = '';
         foreach ($list as $row) {
-            /** @phpstan-ignore class.notFound */
             $parts = \mb_str_split($row, CLIWCF::getTerminal()->getWidth() - 2);
             $result .= '* ' . \implode(\PHP_EOL . '  ', $parts) . \PHP_EOL;
         }

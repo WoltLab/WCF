@@ -132,6 +132,7 @@ class ImportCLICommand implements ICLICommand
             CLIWCF::getReader()->println(StringUtil::stripHTML(WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.existingMapping.notice')));
             CLIWCF::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.existingMapping.confirmMessage') . ' [YN]');
 
+            /** @var ?string */
             $answer = CLIWCF::getReader()->readLine('> ');
             if ($answer === null) {
                 exit;
@@ -205,31 +206,42 @@ class ImportCLICommand implements ICLICommand
      */
     protected function readDatabaseConnection()
     {
-        while (true) {
+        for (;;) {
             CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database'));
-            $this->dbHost = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.host') . '> ');
-            if ($this->dbHost === null) {
+            /** @var ?string */
+            $dbHost = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.host') . '> ');
+            if ($dbHost === null) {
                 exit;
             }
-            $this->dbUser = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.user') . '> ');
-            if ($this->dbUser === null) {
+            /** @var ?string */
+            $dbUser = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.user') . '> ');
+            if ($dbUser === null) {
                 exit;
             }
-            $this->dbPassword = CLIWCF::getReader()->readLine(
+            /** @var ?string */
+            $dbPassword = CLIWCF::getReader()->readLine(
                 WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.password') . '> ',
                 '*'
             );
-            if ($this->dbPassword === null) {
+            if ($dbPassword === null) {
                 exit;
             }
-            $this->dbName = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.name') . '> ');
-            if ($this->dbName === null) {
+            /** @var ?string */
+            $dbName = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.name') . '> ');
+            if ($dbName === null) {
                 exit;
             }
-            $this->dbPrefix = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.prefix') . '> ');
-            if ($this->dbPrefix === null) {
+            /** @var ?string */
+            $dbPrefix = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.prefix') . '> ');
+            if ($dbPrefix === null) {
                 exit;
             }
+
+            $this->dbHost = $dbHost;
+            $this->dbUser = $dbUser;
+            $this->dbPassword = $dbPassword;
+            $this->dbName = $dbName;
+            $this->dbPrefix = $dbPrefix;
 
             $this->exporter->setData(
                 $this->dbHost,
@@ -290,7 +302,7 @@ class ImportCLICommand implements ICLICommand
             'maxSelection' => $exporterIndex - 1,
         ]));
 
-        while (true) {
+        for (;;) {
             /** @var string|null $exporterIndex */
             $exporterIndex = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.exporter') . '> ');
             if ($exporterIndex === null) {
@@ -331,11 +343,14 @@ class ImportCLICommand implements ICLICommand
     protected function readFileSystemPath()
     {
         CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.configure.fileSystem.path'));
-        while (true) {
-            $this->fileSystemPath = CLIWCF::getReader()->readLine('> ');
-            if ($this->fileSystemPath === null) {
+        for (;;) {
+            /** @var ?string */
+            $fileSystemPath = CLIWCF::getReader()->readLine('> ');
+            if ($fileSystemPath === null) {
                 exit;
             }
+
+            $this->fileSystemPath = $fileSystemPath;
             $this->exporter->setData(
                 $this->dbHost,
                 $this->dbUser,
@@ -373,7 +388,7 @@ class ImportCLICommand implements ICLICommand
         foreach ($this->supportedData as $objectType => $subData) {
             $availablePrimaryDataTypes[$i++] = $objectType;
         }
-        while (true) {
+        for (;;) {
             if ($printPrimaryTypes) {
                 // print primary import data types
                 CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.configure.data.description'));
@@ -452,8 +467,9 @@ class ImportCLICommand implements ICLICommand
                     ]
                 ));
 
-                while (true) {
+                for (;;) {
                     // read index of selected secondary import data type
+                    /** @var ?string */
                     $selectedSecondaryObjectTypeIndex = CLIWCF::getReader()->readLine('  ' . WCF::getLanguage()->get('wcf.acp.dataImport.configure.data') . '> ');
                     if ($selectedSecondaryObjectTypeIndex === null) {
                         exit;
@@ -528,22 +544,18 @@ class ImportCLICommand implements ICLICommand
             'maxSelection' => 2,
         ]));
 
-        while (true) {
-            $this->userMergeMode = CLIWCF::getReader()->readLine('> ');
-            if ($this->userMergeMode === null) {
+        for (;;) {
+            /** @var ?string */
+            $userMergeMode = CLIWCF::getReader()->readLine('> ');
+            if ($userMergeMode === null) {
                 exit;
             }
-            switch (\intval($this->userMergeMode)) {
-                case 1:
-                    $this->userMergeMode = UserImporter::MERGE_MODE_EMAIL;
-                    break;
-                case 2:
-                    $this->userMergeMode = UserImporter::MERGE_MODE_USERNAME_OR_EMAIL;
-                    break;
-                default:
-                    $this->userMergeMode = UserImporter::MERGE_MODE_EMAIL;
-                    break;
-            }
+
+            $this->userMergeMode = match ((int)$userMergeMode) {
+                1 => UserImporter::MERGE_MODE_EMAIL,
+                2 => UserImporter::MERGE_MODE_USERNAME_OR_EMAIL,
+                default => UserImporter::MERGE_MODE_EMAIL,
+            };
 
             break;
         }
