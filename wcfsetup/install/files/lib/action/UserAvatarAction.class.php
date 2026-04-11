@@ -6,8 +6,10 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\data\user\UserProfile;
+use wcf\event\user\UserAvatarFormFieldCollecting;
 use wcf\http\Helper;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\field\FileProcessorFormField;
@@ -82,6 +84,10 @@ final class UserAvatarAction implements RequestHandlerInterface
                 ->simpleReplace()
                 ->thumbnailSize('128'),
         ]);
+
+        $event = new UserAvatarFormFieldCollecting($user);
+        EventHandler::getInstance()->fire($event);
+        $form->appendChildren($event->getFormFields());
 
         $form->markRequiredFields(false);
         $form->updatedObject($user);
