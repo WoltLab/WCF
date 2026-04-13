@@ -121,6 +121,17 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
         return $this->data;
     }
 
+    /**
+     * Returns true if this object does not contain any data. This state is
+     * represented by the index column being set to an empty value.
+     *
+     * @since 6.3
+     */
+    public function isNil(): bool
+    {
+        return $this->data[static::getDatabaseTableIndexName()] === 0;
+    }
+
     #[\Override]
     public static function getDatabaseTableName()
     {
