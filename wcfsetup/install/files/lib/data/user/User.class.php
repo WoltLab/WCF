@@ -748,4 +748,12 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     {
         return \sprintf('%d-%s', $this->userID, $this->accessToken);
     }
+
+    /**
+     * @since 6.3
+     */
+    public function isGuest(): bool
+    {
+        return $this->userID === 0;
+    }
 }
