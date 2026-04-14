@@ -59,23 +59,25 @@ class SimplePageSitemapObject extends AbstractSitemapObjectObjectType
         }
 
         if (!empty($object->controller)) {
-            /** @var AbstractPage $page */
-            $page = new $object->controller();
+            if (\class_exists($object->controller)) {
+                /** @var AbstractPage $page */
+                $page = new $object->controller();
 
-            if ($page->loginRequired) {
-                return false;
-            }
+                if ($page->loginRequired) {
+                    return false;
+                }
 
-            try {
-                // check modules
-                $page->checkModules();
+                try {
+                    // check modules
+                    $page->checkModules();
 
-                // check permission
-                $page->checkPermissions();
-            } catch (PermissionDeniedException $e) {
-                return false;
-            } catch (IllegalLinkException $e) {
-                return false;
+                    // check permission
+                    $page->checkPermissions();
+                } catch (PermissionDeniedException $e) {
+                    return false;
+                } catch (IllegalLinkException $e) {
+                    return false;
+                }
             }
         }
 
