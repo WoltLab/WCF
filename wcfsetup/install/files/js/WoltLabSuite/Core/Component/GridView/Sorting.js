@@ -68,6 +68,7 @@ define(["require", "exports"], function (require, exports) {
                     this.#sortOrder = value;
                 }
             });
+            this.#renderActiveSorting();
         }
         #sort(sortField) {
             if (this.#sortField == sortField && this.#sortOrder == "ASC") {

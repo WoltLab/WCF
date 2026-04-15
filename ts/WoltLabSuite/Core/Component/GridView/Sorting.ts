@@ -80,6 +80,8 @@ export class Sorting extends EventTarget {
         this.#sortOrder = value;
       }
     });
+
+    this.#renderActiveSorting();
   }
 
   #sort(sortField: string): void {
