@@ -159,6 +159,9 @@ export function setup(options: BoostrapOptions): void {
   whenFirstSeen(".messageTabMenu", () => {
     void import("./Component/Message/MessageTabMenu").then(({ setup }) => setup());
   });
+  whenFirstSeen(".htmlContent .sortableTable", () => {
+    void import("./Component/Message/MessageTableSort").then(({ setup }) => setup());
+  });
   whenFirstSeen("[data-edit-avatar]", () => {
     void import("./Component/User/Avatar").then(({ setup }) => setup());
   });
