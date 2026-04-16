@@ -40,7 +40,7 @@
 							data-sortable="{$column->isSortable()}"
 							{if $column->isSortable()}
 								{if $view->isSortedBy($column)}
-									aria-sort="{if $view->getSortOrder() == 'ASC'}ascending{else}descending{/if}"
+									aria-sort="{if $view->getSortOrder() === 'ASC'}ascending{else}descending{/if}"
 								{else}
 									aria-sort="none"
 								{/if}
