@@ -98,9 +98,11 @@ export class Sorting extends EventTarget {
   #renderActiveSorting(): void {
     this.#table.querySelectorAll<HTMLTableCellElement>('th[data-sortable="1"]').forEach((element) => {
       element.classList.remove("active", "ASC", "DESC");
+      element.setAttribute("aria-sort", "none");
 
       if (element.dataset.id == this.#sortField) {
         element.classList.add("active", this.#sortOrder);
+        element.setAttribute("aria-sort", this.#sortOrder === "ASC" ? "ascending" : "descending");
       }
     });
   }
