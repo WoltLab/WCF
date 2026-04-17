@@ -254,7 +254,7 @@ final class UserUtil
         return CryptoUtil::createSignedString(\json_encode(
             [
                 'username' => $username,
-                'time' => TIME_NOW,
+                'time' => \TIME_NOW,
             ],
             \JSON_THROW_ON_ERROR
         ));

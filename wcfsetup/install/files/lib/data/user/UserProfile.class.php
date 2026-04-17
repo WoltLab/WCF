@@ -452,7 +452,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      */
     public function isOnline()
     {
-        if ($this->getLastActivityTime() > (TIME_NOW - USER_ONLINE_TIMEOUT) && $this->canViewOnlineStatus()) {
+        if ($this->getLastActivityTime() > (\TIME_NOW - USER_ONLINE_TIMEOUT) && $this->canViewOnlineStatus()) {
             return true;
         }
 
@@ -863,7 +863,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      */
     public function getProfileAge()
     {
-        return (TIME_NOW - $this->registrationDate) / 86400;
+        return (\TIME_NOW - $this->registrationDate) / 86400;
     }
 
     /**
@@ -945,7 +945,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     public function getOldUsername()
     {
         if ($this->oldUsername) {
-            if ($this->lastUsernameChange + PROFILE_SHOW_OLD_USERNAME * 86400 > TIME_NOW) {
+            if ($this->lastUsernameChange + PROFILE_SHOW_OLD_USERNAME * 86400 > \TIME_NOW) {
                 return $this->oldUsername;
             }
         }

@@ -268,7 +268,7 @@ final class RescueModeForm extends AbstractForm
                         'environment' => 'admin',
                         'userID' => $this->user !== null ? $this->user->userID : null,
                         'username' => \mb_substr($this->username, 0, 100),
-                        'time' => TIME_NOW,
+                        'time' => \TIME_NOW,
                         'ipAddress' => UserUtil::getIpAddress(),
                         'userAgent' => UserUtil::getUserAgent(),
                         'validationError' => 'invalid' . \ucfirst($this->errorField),

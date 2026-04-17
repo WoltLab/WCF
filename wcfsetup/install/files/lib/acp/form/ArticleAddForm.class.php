@@ -355,7 +355,7 @@ class ArticleAddForm extends AbstractForm
             // supplied timestamp matches the time at which the form was initially requested,
             // use the current time instead as publication timestamp, otherwise the article
             // would be published in the past rather than "now"
-            $this->timeObj->setTimestamp(TIME_NOW);
+            $this->timeObj->setTimestamp(\TIME_NOW);
             $this->time = $this->timeObj->format('Y-m-d\TH:i:sP');
         }
     }
@@ -418,7 +418,7 @@ class ArticleAddForm extends AbstractForm
         if (empty($this->time) || !$this->timeObj) {
             throw new UserInputException('time');
         }
-        if ($this->timeObj->getTimestamp() > TIME_NOW && $this->publicationStatus == Article::PUBLISHED) {
+        if ($this->timeObj->getTimestamp() > \TIME_NOW && $this->publicationStatus == Article::PUBLISHED) {
             throw new UserInputException('time', 'invalid');
         }
 
@@ -431,7 +431,7 @@ class ArticleAddForm extends AbstractForm
                 throw new UserInputException('publicationDate');
             }
 
-            if (!$this->publicationDateObj || $this->publicationDateObj->getTimestamp() < TIME_NOW) {
+            if (!$this->publicationDateObj || $this->publicationDateObj->getTimestamp() < \TIME_NOW) {
                 throw new UserInputException('publicationDate', 'invalid');
             }
         }
@@ -652,7 +652,7 @@ class ArticleAddForm extends AbstractForm
     protected function setDefaultValues()
     {
         $this->username = WCF::getUser()->username;
-        $dateTime = DateUtil::getDateTimeByTimestamp(TIME_NOW);
+        $dateTime = DateUtil::getDateTimeByTimestamp(\TIME_NOW);
         $dateTime->setTimezone(WCF::getUser()->getTimeZone());
         $this->time = $dateTime->format('c');
 

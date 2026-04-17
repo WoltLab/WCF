@@ -69,7 +69,7 @@ class UserActivityEventHandler extends SingletonFactory
         int $objectID,
         ?int $languageID = null,
         ?int $userID = null,
-        int $time = TIME_NOW,
+        int $time = \TIME_NOW,
         array $additionalData = []
     ) {
         $objectTypeID = $this->getObjectTypeID($objectType);
@@ -126,7 +126,7 @@ class UserActivityEventHandler extends SingletonFactory
                     $data['objectID'],
                     $data['languageID'] ?? null,
                     $data['userID'] ?? WCF::getUser()->userID,
-                    $data['time'] ?? TIME_NOW,
+                    $data['time'] ?? \TIME_NOW,
                     \serialize($data['additionalData'] ?? []),
                 ]);
             }

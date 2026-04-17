@@ -334,7 +334,7 @@ final class SearchHandler
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('searchHash = ?', [$this->searchHash]);
             $conditionBuilder->add('searchType = ?', ['messages']);
-            $conditionBuilder->add('searchTime > ?', [TIME_NOW - 1800]);
+            $conditionBuilder->add('searchTime > ?', [\TIME_NOW - 1800]);
             if (WCF::getUser()->userID) {
                 $conditionBuilder->add('userID = ?', [WCF::getUser()->userID]);
             } else {
@@ -389,7 +389,7 @@ final class SearchHandler
             'data' => [
                 'userID' => WCF::getUser()->userID ?: null,
                 'searchData' => \serialize($searchData),
-                'searchTime' => TIME_NOW,
+                'searchTime' => \TIME_NOW,
                 'searchType' => 'messages',
                 'searchHash' => $this->searchHash,
             ],

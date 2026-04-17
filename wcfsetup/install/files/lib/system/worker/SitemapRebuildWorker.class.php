@@ -114,7 +114,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
 
                         if (SITEMAP_INDEX_TIME_FRAME > 0 && $processor->getLastModifiedColumn() !== null) {
                             $list->getConditionBuilder()->add($processor->getLastModifiedColumn() . " > ?", [
-                                TIME_NOW - SITEMAP_INDEX_TIME_FRAME * 86400, // one day (60 * 60 * 24)
+                                \TIME_NOW - SITEMAP_INDEX_TIME_FRAME * 86400, // one day (60 * 60 * 24)
                             ]);
                         }
 
@@ -187,7 +187,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
 
             if (SITEMAP_INDEX_TIME_FRAME > 0 && $sitemapObject->getLastModifiedColumn() !== null) {
                 $objectList->getConditionBuilder()->add($sitemapObject->getLastModifiedColumn() . " > ?", [
-                    TIME_NOW - SITEMAP_INDEX_TIME_FRAME * 86400, // one day (60 * 60 * 24)
+                    \TIME_NOW - SITEMAP_INDEX_TIME_FRAME * 86400, // one day (60 * 60 * 24)
                 ]);
             }
 
@@ -274,7 +274,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
         while (
             $object
             && \file_exists(self::getSitemapPath() . $object->objectType . '.xml')
-            && \filectime(self::getSitemapPath() . $object->objectType . '.xml') > TIME_NOW - ($this->sitemapData[$object->objectType]['rebuildTime'] ?: 60 * 60 * 24 * 7)
+            && \filectime(self::getSitemapPath() . $object->objectType . '.xml') > \TIME_NOW - ($this->sitemapData[$object->objectType]['rebuildTime'] ?: 60 * 60 * 24 * 7)
         ) {
             $filenames = \array_merge(
                 \glob(self::getSitemapPath() . $object->objectType . '_*'),

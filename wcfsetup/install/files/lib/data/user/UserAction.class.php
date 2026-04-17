@@ -786,7 +786,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
                 $email->setMessageID(\sprintf(
                     'com.woltlab.wcf.adminActivation/%d/%d/%s',
                     $user->userID,
-                    TIME_NOW,
+                    \TIME_NOW,
                     \bin2hex(\random_bytes(8))
                 ));
                 $email->addRecipient(new UserMailbox($user->getDecoratedObject()));

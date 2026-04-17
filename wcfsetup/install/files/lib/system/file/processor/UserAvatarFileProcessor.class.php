@@ -74,7 +74,7 @@ final class UserAvatarFileProcessor extends AbstractFileProcessor
 
         // Save the `fileID` in the session variable so that the current user can delete the old avatar
         if ($user->avatarFileID !== null) {
-            WCF::getSession()->register(\sprintf(self::SESSION_VARIABLE, $user->avatarFileID), TIME_NOW);
+            WCF::getSession()->register(\sprintf(self::SESSION_VARIABLE, $user->avatarFileID), \TIME_NOW);
             WCF::getSession()->update();
         }
 

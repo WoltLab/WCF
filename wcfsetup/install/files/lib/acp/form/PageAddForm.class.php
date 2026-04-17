@@ -639,7 +639,7 @@ class PageAddForm extends AbstractForm
                 'allowSpidersToIndex' => $this->allowSpidersToIndex,
                 'enableShareButtons' => $this->enableShareButtons,
                 'applicationPackageID' => $this->applicationPackageID,
-                'lastUpdateTime' => TIME_NOW,
+                'lastUpdateTime' => \TIME_NOW,
                 'isMultilingual' => $this->isMultilingual,
                 'identifier' => '',
                 'packageID' => 1,

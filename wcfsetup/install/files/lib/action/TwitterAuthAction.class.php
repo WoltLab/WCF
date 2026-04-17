@@ -104,7 +104,7 @@ final class TwitterAuthAction extends AbstractOauth2AuthAction
             'oauth_consumer_key' => StringUtil::trim(TWITTER_PUBLIC_KEY),
             'oauth_nonce' => Hex::encode(\random_bytes(20)),
             'oauth_signature_method' => 'HMAC-SHA1',
-            'oauth_timestamp' => TIME_NOW,
+            'oauth_timestamp' => \TIME_NOW,
             'oauth_version' => '1.0',
             'oauth_token' => $accessToken['oauth_token'],
         ];
@@ -160,7 +160,7 @@ final class TwitterAuthAction extends AbstractOauth2AuthAction
             'oauth_consumer_key' => $this->getClientId(),
             'oauth_nonce' => Hex::encode(\random_bytes(20)),
             'oauth_signature_method' => 'HMAC-SHA1',
-            'oauth_timestamp' => TIME_NOW,
+            'oauth_timestamp' => \TIME_NOW,
             'oauth_version' => '1.0',
             'oauth_token' => $auth2Success->code,
         ];
@@ -211,7 +211,7 @@ final class TwitterAuthAction extends AbstractOauth2AuthAction
             'oauth_consumer_key' => $this->getClientId(),
             'oauth_nonce' => Hex::encode(\random_bytes(20)),
             'oauth_signature_method' => 'HMAC-SHA1',
-            'oauth_timestamp' => TIME_NOW,
+            'oauth_timestamp' => \TIME_NOW,
             'oauth_version' => '1.0',
         ];
         $signature = $this->createSignature($uri, $oauthHeader);

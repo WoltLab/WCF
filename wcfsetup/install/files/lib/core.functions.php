@@ -1,4 +1,5 @@
 <?php // @codingStandardsIgnoreFile
+
 /**
  * @author	Marcel Werk
  * @copyright	2001-2019 WoltLab GmbH
@@ -176,7 +177,7 @@ namespace wcf\functions\exception {
 	 */
 	function logThrowable(\Throwable $e, &$logFile = null): string
 	{
-		if ($logFile === null) $logFile = WCF_DIR . 'log/' . gmdate('Y-m-d', TIME_NOW) . '.txt';
+		if ($logFile === null) $logFile = WCF_DIR . 'log/' . gmdate('Y-m-d', \TIME_NOW) . '.txt';
 		touch($logFile);
 
 		$stripNewlines = function ($item) {
@@ -202,7 +203,7 @@ namespace wcf\functions\exception {
 		};
 
 		// don't forget to update ExceptionLogUtil / ExceptionLogViewPage, when changing the log file format
-		$message = gmdate('r', TIME_NOW) . "\n" .
+		$message = gmdate('r', \TIME_NOW) . "\n" .
 			'Message: ' . $stripNewlines($e->getMessage()) . "\n" .
 			'PHP version: ' . phpversion() . "\n" .
 			'WoltLab Suite version: ' . WCF_VERSION . "\n" .

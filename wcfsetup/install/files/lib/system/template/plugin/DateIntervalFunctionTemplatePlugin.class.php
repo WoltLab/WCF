@@ -33,7 +33,7 @@ class DateIntervalFunctionTemplatePlugin implements IFunctionTemplatePlugin
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         // read start and end time, each defaulting to current time
-        $start = $end = TIME_NOW;
+        $start = $end = \TIME_NOW;
 
         if (!isset($tagArgs['start']) && !isset($tagArgs['end'])) {
             throw new \InvalidArgumentException("Neither a 'start' nor an 'end' argument has been provided.");

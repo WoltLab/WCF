@@ -288,7 +288,7 @@ class SearchForm extends AbstractCaptchaForm
 
         // check search hash
         if (!empty($this->query)) {
-            $parameters = [$this->searchHash, 'messages', TIME_NOW - 1800];
+            $parameters = [$this->searchHash, 'messages', \TIME_NOW - 1800];
             if (WCF::getUser()->userID) {
                 $parameters[] = WCF::getUser()->userID;
             }
@@ -396,7 +396,7 @@ class SearchForm extends AbstractCaptchaForm
             $this->objectAction = new SearchAction([$this->modifySearchID], 'update', [
                 'data' => [
                     'searchData' => \serialize($this->searchData),
-                    'searchTime' => TIME_NOW,
+                    'searchTime' => \TIME_NOW,
                     'searchType' => 'messages',
                     'searchHash' => $this->searchHash,
                 ],
@@ -407,7 +407,7 @@ class SearchForm extends AbstractCaptchaForm
                 'data' => [
                     'userID' => WCF::getUser()->userID ?: null,
                     'searchData' => \serialize($this->searchData),
-                    'searchTime' => TIME_NOW,
+                    'searchTime' => \TIME_NOW,
                     'searchType' => 'messages',
                     'searchHash' => $this->searchHash,
                 ],

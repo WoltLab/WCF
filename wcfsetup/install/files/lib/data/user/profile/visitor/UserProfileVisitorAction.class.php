@@ -106,7 +106,7 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
         (new TrackUserProfileVisitor(
             $user->getDecoratedObject(),
             $target->getDecoratedObject(),
-            $this->parameters['data']['time'] ?? TIME_NOW
+            $this->parameters['data']['time'] ?? \TIME_NOW
         ))();
     }
 }

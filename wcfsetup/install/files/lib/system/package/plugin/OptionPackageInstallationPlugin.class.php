@@ -153,7 +153,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
             if ($hidden && $optionType == 'integer' && $this->installation->getPackage()->isApplication) {
                 $abbreviation = Package::getAbbreviation($this->installation->getPackage()->package);
                 if ($optionName == $abbreviation . '_install_date') {
-                    $defaultValue = TIME_NOW;
+                    $defaultValue = \TIME_NOW;
                 }
             }
 

@@ -19,7 +19,7 @@ final class MarkModerationQueueAsRead
 {
     public function __construct(
         private readonly ModerationQueue $moderationQueue,
-        private readonly int $visitTime = TIME_NOW
+        private readonly int $visitTime = \TIME_NOW
     ) {}
 
     public function __invoke(): void

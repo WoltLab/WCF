@@ -128,7 +128,7 @@ final class DiskCacheSource implements ICacheSource
         }
 
         // maxlifetime expired
-        if ($maxLifetime > 0 && (TIME_NOW - $mtime) > $maxLifetime) {
+        if ($maxLifetime > 0 && (\TIME_NOW - $mtime) > $maxLifetime) {
             return true;
         }
 

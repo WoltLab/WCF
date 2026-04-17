@@ -251,7 +251,7 @@ class LoginForm extends AbstractFormBuilderForm
                 'environment' => RequestHandler::getInstance()->isACPRequest() ? 'admin' : 'user',
                 'userID' => $user->userID ?: null,
                 'username' => \mb_substr($username, 0, 100),
-                'time' => TIME_NOW,
+                'time' => \TIME_NOW,
                 'ipAddress' => UserUtil::getIpAddress(),
                 'userAgent' => UserUtil::getUserAgent(),
                 'validationError' => 'invalid' . \ucfirst($errorField),

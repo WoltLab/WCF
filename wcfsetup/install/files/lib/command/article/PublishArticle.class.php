@@ -25,7 +25,7 @@ final class PublishArticle
     public function __invoke(): void
     {
         (new ArticleEditor($this->article))->update([
-            'time' => TIME_NOW,
+            'time' => \TIME_NOW,
             'publicationStatus' => Article::PUBLISHED,
             'publicationDate' => 0,
         ]);
@@ -61,7 +61,7 @@ final class PublishArticle
             $articleID,
             null,
             $userID,
-            TIME_NOW
+            \TIME_NOW
         );
     }
 }

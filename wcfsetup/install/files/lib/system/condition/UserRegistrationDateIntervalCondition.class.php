@@ -42,13 +42,13 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
         if (isset($conditionData['greaterThan'])) {
             $objectList->getConditionBuilder()->add(
                 'user_table.registrationDate < ?',
-                [TIME_NOW - $conditionData['greaterThan'] * 86400]
+                [\TIME_NOW - $conditionData['greaterThan'] * 86400]
             );
         }
         if (isset($conditionData['lessThan'])) {
             $objectList->getConditionBuilder()->add(
                 'user_table.registrationDate > ?',
-                [TIME_NOW - $conditionData['lessThan'] * 86400]
+                [\TIME_NOW - $conditionData['lessThan'] * 86400]
             );
         }
     }
@@ -57,12 +57,12 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
     public function checkUser(Condition $condition, User $user): bool
     {
         $greaterThan = $condition->greaterThan;
-        if ($greaterThan !== null && $user->registrationDate >= TIME_NOW - $greaterThan * 86400) {
+        if ($greaterThan !== null && $user->registrationDate >= \TIME_NOW - $greaterThan * 86400) {
             return false;
         }
 
         $lessThan = $condition->lessThan;
-        if ($lessThan !== null && $user->registrationDate <= TIME_NOW - $lessThan * 86400) {
+        if ($lessThan !== null && $user->registrationDate <= \TIME_NOW - $lessThan * 86400) {
             return false;
         }
 

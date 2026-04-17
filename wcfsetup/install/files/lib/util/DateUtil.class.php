@@ -602,23 +602,23 @@ final class DateUtil
         }
 
         // timestamp is less than 60 seconds ago
-        if ($timestamp >= TIME_NOW || TIME_NOW < ($timestamp + 60)) {
+        if ($timestamp >= \TIME_NOW || \TIME_NOW < ($timestamp + 60)) {
             return WCF::getLanguage()->get('wcf.date.relative.now');
         } // timestamp is less than 60 minutes ago (display 1 hour ago rather than 60 minutes ago)
-        elseif (TIME_NOW < ($timestamp + 3540)) {
-            $minutes = \max(\round((TIME_NOW - $timestamp) / 60), 1);
+        elseif (\TIME_NOW < ($timestamp + 3540)) {
+            $minutes = \max(\round((\TIME_NOW - $timestamp) / 60), 1);
 
             return WCF::getLanguage()->getDynamicVariable('wcf.date.relative.minutes', ['minutes' => $minutes]);
         } // timestamp is less than 24 hours ago
-        elseif (TIME_NOW < ($timestamp + 86400)) {
-            $hours = \round((TIME_NOW - $timestamp) / 3600);
+        elseif (\TIME_NOW < ($timestamp + 86400)) {
+            $hours = \round((\TIME_NOW - $timestamp) / 3600);
 
             return WCF::getLanguage()->getDynamicVariable('wcf.date.relative.hours', ['hours' => $hours]);
         } // timestamp is less than 6 days ago
-        elseif (TIME_NOW < ($timestamp + 518400)) {
+        elseif (\TIME_NOW < ($timestamp + 518400)) {
             $dtoNoTime = clone $dateTimeObject;
             $dtoNoTime->setTime(0, 0, 0);
-            $currentDateTimeObject = self::getDateTimeByTimestamp(TIME_NOW);
+            $currentDateTimeObject = self::getDateTimeByTimestamp(\TIME_NOW);
             $currentDateTimeObject->setTimezone(WCF::getUser()->getTimeZone());
             $currentDateTimeObject->setTime(0, 0, 0);
 

@@ -55,13 +55,13 @@ class UserLastActivityTimeIntervalDaysCondition extends AbstractSingleFieldCondi
         if (isset($conditionData['startDays'])) {
             $objectList->getConditionBuilder()->add(
                 'user_table.lastActivityTime <= ?',
-                [TIME_NOW - $conditionData['startDays'] * 24 * 3600]
+                [\TIME_NOW - $conditionData['startDays'] * 24 * 3600]
             );
         }
         if (isset($conditionData['endDays'])) {
             $objectList->getConditionBuilder()->add(
                 'user_table.lastActivityTime >= ?',
-                [TIME_NOW - $conditionData['endDays'] * 24 * 3600]
+                [\TIME_NOW - $conditionData['endDays'] * 24 * 3600]
             );
         }
     }
@@ -75,12 +75,12 @@ class UserLastActivityTimeIntervalDaysCondition extends AbstractSingleFieldCondi
 
         if (isset($conditionData['startDays'])) {
             // @phpstan-ignore property.notFound
-            if ($object->lastActivityTime > TIME_NOW - $conditionData['startDays'] * 24 * 3600) {
+            if ($object->lastActivityTime > \TIME_NOW - $conditionData['startDays'] * 24 * 3600) {
                 return false;
             }
 
             if (isset($conditionData['endDays'])) {
-                if ($object->lastActivityTime < TIME_NOW - $conditionData['endDays'] * 24 * 3600) {
+                if ($object->lastActivityTime < \TIME_NOW - $conditionData['endDays'] * 24 * 3600) {
                     return false;
                 }
             }
@@ -89,7 +89,7 @@ class UserLastActivityTimeIntervalDaysCondition extends AbstractSingleFieldCondi
         } elseif (
             isset($conditionData['endDays'])
             // @phpstan-ignore property.notFound
-            && $object->lastActivityTime < TIME_NOW - $conditionData['endDays'] * 24 * 3600
+            && $object->lastActivityTime < \TIME_NOW - $conditionData['endDays'] * 24 * 3600
         ) {
             return false;
         }

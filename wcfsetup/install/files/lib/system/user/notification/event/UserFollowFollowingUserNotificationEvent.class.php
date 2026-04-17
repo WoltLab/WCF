@@ -95,7 +95,7 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
                 'data' => [
                     'userID' => $recipient->userID,
                     'followUserID' => $author->userID,
-                    'time' => TIME_NOW - 60 * 60,
+                    'time' => \TIME_NOW - 60 * 60,
                 ],
             ]))->executeAction()['returnValues'];
         }

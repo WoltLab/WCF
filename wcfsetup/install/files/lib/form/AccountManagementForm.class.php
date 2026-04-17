@@ -215,7 +215,7 @@ class AccountManagementForm extends AbstractForm
             && UserAuthenticationConfigurationFactory::getInstance()->getConfigration()->canChangeUsername
         ) {
             if (\mb_strtolower($this->username) != \mb_strtolower(WCF::getUser()->username)) {
-                if (WCF::getUser()->lastUsernameChange + WCF::getSession()->getPermission('user.profile.renamePeriod') * 86400 > TIME_NOW) {
+                if (WCF::getUser()->lastUsernameChange + WCF::getSession()->getPermission('user.profile.renamePeriod') * 86400 > \TIME_NOW) {
                     throw new UserInputException('username', 'alreadyRenamed');
                 }
 
@@ -328,8 +328,8 @@ class AccountManagementForm extends AbstractForm
         // quit
         if (WCF::getUser()->quitStarted || WCF::getSession()->getPermission('user.profile.canQuit')) {
             if (!WCF::getUser()->quitStarted && $this->quit == 1) {
-                $updateParameters['quitStarted'] = TIME_NOW;
-                $this->quitStarted = TIME_NOW;
+                $updateParameters['quitStarted'] = \TIME_NOW;
+                $this->quitStarted = \TIME_NOW;
                 $success[] = 'wcf.user.quit.success';
             } elseif (WCF::getUser()->quitStarted && $this->cancelQuit == 1) {
                 $updateParameters['quitStarted'] = 0;
@@ -341,7 +341,7 @@ class AccountManagementForm extends AbstractForm
         // user name
         if (WCF::getSession()->getPermission('user.profile.canRename') && $this->username != WCF::getUser()->username) {
             if (\mb_strtolower($this->username) != \mb_strtolower(WCF::getUser()->username)) {
-                $updateParameters['lastUsernameChange'] = TIME_NOW;
+                $updateParameters['lastUsernameChange'] = \TIME_NOW;
                 $updateParameters['oldUsername'] = WCF::getUser()->username;
             }
             $updateParameters['username'] = $this->username;

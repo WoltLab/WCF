@@ -32,7 +32,7 @@ class ModerationQueueCronjob extends AbstractCronjob
             ModerationQueue::STATUS_DONE,
             ModerationQueue::STATUS_REJECTED,
             ModerationQueue::STATUS_CONFIRMED,
-            TIME_NOW - (86400 * 30),
+            \TIME_NOW - (86400 * 30),
         ]);
         $queueIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 

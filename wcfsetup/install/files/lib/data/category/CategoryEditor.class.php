@@ -109,7 +109,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
     public static function create(array $parameters = [])
     {
         // default values
-        $parameters['time'] = $parameters['time'] ?? TIME_NOW;
+        $parameters['time'] = $parameters['time'] ?? \TIME_NOW;
         $parameters['parentCategoryID'] = $parameters['parentCategoryID'] ?? 0;
         $parameters['showOrder'] = $parameters['showOrder'] ?? null;
 

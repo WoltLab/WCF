@@ -44,7 +44,7 @@ class ZipWriter
      *
      * @return void
      */
-    public function addDir(string $name, int $date = TIME_NOW)
+    public function addDir(string $name, int $date = \TIME_NOW)
     {
         // replace backward slashes with forward slashes in the dirname
         $name = \str_replace("\\", "/", $name);
@@ -103,7 +103,7 @@ class ZipWriter
      * @param int $date file creation time as unix timestamp
      * @return void
      */
-    public function addFile(string $data, string $name, int $date = TIME_NOW)
+    public function addFile(string $data, string $name, int $date = \TIME_NOW)
     {
         // replace backward slashes with forward slashes in the filename
         $name = \str_replace("\\", "/", $name);

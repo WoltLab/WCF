@@ -184,7 +184,7 @@ class UserTrophyAddForm extends AbstractAcpForm
                     'trophyID' => $this->trophy->trophyID,
                     'userID' => $user,
                     'description' => $this->useCustomDescription ? $this->description : '',
-                    'time' => TIME_NOW,
+                    'time' => \TIME_NOW,
                     'useCustomDescription' => $this->useCustomDescription,
                     'trophyUseHtml' => $this->trophyUseHtml,
                 ]),

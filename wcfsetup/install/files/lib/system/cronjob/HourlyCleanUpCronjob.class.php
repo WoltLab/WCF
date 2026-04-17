@@ -24,7 +24,7 @@ class HourlyCleanUpCronjob extends AbstractCronjob
         if (MODULE_PAID_SUBSCRIPTION) {
             $subscriptionUserList = new PaidSubscriptionUserList();
             $subscriptionUserList->getConditionBuilder()->add('isActive = ?', [1]);
-            $subscriptionUserList->getConditionBuilder()->add('endDate > 0 AND endDate < ?', [TIME_NOW]);
+            $subscriptionUserList->getConditionBuilder()->add('endDate > 0 AND endDate < ?', [\TIME_NOW]);
             $subscriptionUserList->readObjects();
 
             foreach ($subscriptionUserList->getObjects() as $subscriptionUser) {

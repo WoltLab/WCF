@@ -133,7 +133,7 @@ class Poll extends DatabaseObject
      */
     public function isFinished()
     {
-        return $this->endTime && $this->endTime <= TIME_NOW;
+        return $this->endTime && $this->endTime <= \TIME_NOW;
     }
 
     /**

@@ -958,7 +958,7 @@ class StyleAddForm extends AbstractForm
     protected function setDefaultValues()
     {
         $this->authorName = WCF::getUser()->username;
-        $this->styleDate = \gmdate('Y-m-d', TIME_NOW);
+        $this->styleDate = \gmdate('Y-m-d', \TIME_NOW);
         $this->styleVersion = '1.0.0';
     }
 }

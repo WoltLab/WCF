@@ -25,7 +25,7 @@ class DateDiffModifierTemplatePlugin implements IModifierTemplatePlugin
     public function execute(array $tagArgs, TemplateEngine $tplObj)
     {
         if (!isset($tagArgs[1])) {
-            $tagArgs[1] = TIME_NOW;
+            $tagArgs[1] = \TIME_NOW;
         }
 
         $fullInterval = false;

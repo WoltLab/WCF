@@ -71,7 +71,7 @@ class EditHistoryManager extends SingletonFactory
             $objectID,
             $message,
             $time,
-            TIME_NOW,
+            \TIME_NOW,
             $userID,
             $username,
             $editReason,
@@ -151,10 +151,10 @@ class EditHistoryManager extends SingletonFactory
                 GROUP BY    revertTo.objectTypeID, revertTo.objectID";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute(\array_merge(
-            [TIME_NOW - $timeframe],
+            [\TIME_NOW - $timeframe],
             $userIDs,
-            [TIME_NOW - $timeframe],
-            [TIME_NOW - $timeframe],
+            [\TIME_NOW - $timeframe],
+            [\TIME_NOW - $timeframe],
             $userIDs
         ));
 

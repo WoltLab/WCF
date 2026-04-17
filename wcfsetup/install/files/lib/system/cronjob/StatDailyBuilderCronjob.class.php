@@ -22,7 +22,7 @@ class StatDailyBuilderCronjob extends AbstractCronjob
         parent::execute($cronjob);
 
         // get date
-        $d = DateUtil::getDateTimeByTimestamp(TIME_NOW);
+        $d = DateUtil::getDateTimeByTimestamp(\TIME_NOW);
         $d->setTimezone(new \DateTimeZone(TIMEZONE));
         $d->sub(new \DateInterval('P1D'));
         $d->setTime(0, 0);

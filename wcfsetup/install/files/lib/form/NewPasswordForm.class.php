@@ -60,7 +60,7 @@ final class NewPasswordForm extends AbstractFormBuilderForm
                 $this->throwInvalidLinkException();
             }
             // expire lost password requests after a day
-            if ($this->user->lastLostPasswordRequestTime < TIME_NOW - 86400) {
+            if ($this->user->lastLostPasswordRequestTime < \TIME_NOW - 86400) {
                 $this->throwInvalidLinkException();
             }
 

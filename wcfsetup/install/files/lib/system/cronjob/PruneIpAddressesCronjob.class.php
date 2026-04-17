@@ -46,7 +46,7 @@ class PruneIpAddressesCronjob extends AbstractCronjob
                 $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([
                     '',
-                    TIME_NOW - 86400 * PRUNE_IP_ADDRESS, // 86400 = 1 day
+                    \TIME_NOW - 86400 * PRUNE_IP_ADDRESS, // 86400 = 1 day
                     '',
                 ]);
             }

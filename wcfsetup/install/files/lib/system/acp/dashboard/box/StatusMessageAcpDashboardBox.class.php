@@ -69,7 +69,7 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
 
         \usort(
             $this->messages,
-            static fn (StatusMessage $a, StatusMessage $b) => StatusMessageType::compare($a->type, $b->type)
+            static fn(StatusMessage $a, StatusMessage $b) => StatusMessageType::compare($a->type, $b->type)
         );
 
         return $this->messages;
@@ -180,7 +180,7 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
             $app = WCF::getApplicationObject($application);
             $endDate = $app->getEvaluationEndDate();
             if ($endDate) {
-                if ($endDate < TIME_NOW) {
+                if ($endDate < \TIME_NOW) {
                     $pluginStoreFileID = $app->getEvaluationPluginStoreID();
                     $isWoltLab = false;
                     if (

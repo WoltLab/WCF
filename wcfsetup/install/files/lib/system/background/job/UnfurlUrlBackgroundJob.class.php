@@ -297,7 +297,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
                 'title' => $title,
                 'description' => $description,
                 'imageID' => $imageID,
-                'lastFetch' => TIME_NOW,
+                'lastFetch' => \TIME_NOW,
             ],
             'imageData' => $imageData,
         ]);

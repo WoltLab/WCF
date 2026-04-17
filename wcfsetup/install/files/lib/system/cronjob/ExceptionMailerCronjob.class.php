@@ -31,13 +31,13 @@ class ExceptionMailerCronjob extends AbstractCronjob
         }
 
         $timestamp = RegistryHandler::getInstance()->get('com.woltlab.wcf', 'exceptionMailerTimestamp');
-        $timestamp = \max($timestamp, TIME_NOW - 86400 * 3);
+        $timestamp = \max($timestamp, \TIME_NOW - 86400 * 3);
 
         $files = [];
-        for ($it = $timestamp; $it < TIME_NOW; $it += 86400) {
+        for ($it = $timestamp; $it < \TIME_NOW; $it += 86400) {
             $files[\gmdate('Y-m-d', $it)] = [];
         }
-        $files[\gmdate('Y-m-d', TIME_NOW)] = [];
+        $files[\gmdate('Y-m-d', \TIME_NOW)] = [];
 
         foreach ($files as $file => $value) {
             $seen = [];

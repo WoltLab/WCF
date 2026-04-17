@@ -148,10 +148,10 @@ final class LostPasswordForm extends AbstractFormBuilderForm
         }
 
         // check whether a lost password request was sent in the last 24 hours
-        if ($this->user->lastLostPasswordRequestTime && TIME_NOW - 86400 < $this->user->lastLostPasswordRequestTime) {
+        if ($this->user->lastLostPasswordRequestTime && \TIME_NOW - 86400 < $this->user->lastLostPasswordRequestTime) {
             throw new NamedUserException(HtmlString::fromSafeHtml(WCF::getLanguage()->getDynamicVariable(
                 'wcf.user.lostPassword.error.tooManyRequests',
-                ['hours' => \ceil(($this->user->lastLostPasswordRequestTime - (TIME_NOW - 86400)) / 3600)]
+                ['hours' => \ceil(($this->user->lastLostPasswordRequestTime - (\TIME_NOW - 86400)) / 3600)]
             )));
         }
 
@@ -162,7 +162,7 @@ final class LostPasswordForm extends AbstractFormBuilderForm
         $this->objectAction = new UserAction([$this->user], 'update', [
             'data' => \array_merge($this->additionalFields, [
                 'lostPasswordKey' => $lostPasswordKey,
-                'lastLostPasswordRequestTime' => TIME_NOW,
+                'lastLostPasswordRequestTime' => \TIME_NOW,
             ]),
         ]);
         $this->objectAction->executeAction();

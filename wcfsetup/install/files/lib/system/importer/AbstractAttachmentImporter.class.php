@@ -66,7 +66,7 @@ class AbstractAttachmentImporter extends AbstractImporter
 
         // set default last download time
         if (empty($data['lastDownloadTime']) && !empty($data['downloads'])) {
-            $data['lastDownloadTime'] = TIME_NOW;
+            $data['lastDownloadTime'] = \TIME_NOW;
         }
 
         // save attachment

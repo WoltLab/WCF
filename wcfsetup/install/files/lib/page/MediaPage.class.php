@@ -99,7 +99,7 @@ class MediaPage extends AbstractPage
             'showInline' => \in_array($mimeType, self::$inlineMimeTypes),
             'enableRangeSupport' => $this->thumbnail ? true : false,
             'lastModificationTime' => $this->media->fileUpdateTime ?? $this->media->uploadTime,
-            'expirationDate' => TIME_NOW + $maxAge,
+            'expirationDate' => \TIME_NOW + $maxAge,
             'maxAge' => $maxAge,
         ]);
 
@@ -154,7 +154,7 @@ class MediaPage extends AbstractPage
             // update download count
             (new MediaEditor($this->media))->update([
                 'downloads' => $this->media->downloads + 1,
-                'lastDownloadTime' => TIME_NOW,
+                'lastDownloadTime' => \TIME_NOW,
             ]);
         }
 

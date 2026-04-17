@@ -44,7 +44,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
     public function create()
     {
         if (!isset($this->parameters['data']['time'])) {
-            $this->parameters['data']['time'] = TIME_NOW;
+            $this->parameters['data']['time'] = \TIME_NOW;
         }
 
         /** @var Poll $poll */

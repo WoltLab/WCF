@@ -201,7 +201,7 @@ class TemplateAddForm extends AbstractFormBuilderForm
                 new CustomFormDataProcessor(
                     'lastModificationTime',
                     static function (IFormDocument $document, array $parameters) {
-                        $parameters['data']['lastModificationTime'] = TIME_NOW;
+                        $parameters['data']['lastModificationTime'] = \TIME_NOW;
 
                         return $parameters;
                     }

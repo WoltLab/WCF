@@ -32,7 +32,7 @@ class UserBanCronjob extends AbstractCronjob
             0,
             1,
             0,
-            TIME_NOW,
+            \TIME_NOW,
         ]);
 
         // enable avatars
@@ -48,7 +48,7 @@ class UserBanCronjob extends AbstractCronjob
             0,
             1,
             0,
-            TIME_NOW,
+            \TIME_NOW,
         ]);
 
         // enable signatures
@@ -64,7 +64,7 @@ class UserBanCronjob extends AbstractCronjob
             0,
             1,
             0,
-            TIME_NOW,
+            \TIME_NOW,
         ]);
 
         // enable cover photos
@@ -80,7 +80,7 @@ class UserBanCronjob extends AbstractCronjob
             0,
             1,
             0,
-            TIME_NOW,
+            \TIME_NOW,
         ]);
     }
 }

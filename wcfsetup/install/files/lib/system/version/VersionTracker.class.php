@@ -55,7 +55,7 @@ class VersionTracker extends SingletonFactory
             $object->getObjectID(),
             WCF::getUser()->userID,
             WCF::getUser()->username,
-            TIME_NOW,
+            \TIME_NOW,
             \serialize($data),
         ]);
     }

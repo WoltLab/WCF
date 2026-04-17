@@ -52,7 +52,7 @@ final class CronjobUtil
         string $dom,
         string $month,
         string $dow,
-        int $timeBase = TIME_NOW
+        int $timeBase = \TIME_NOW
     ): int {
         // using the native `date()` and `mktime()` functions is dangerous
         // unless we explicitly set the correct timezone

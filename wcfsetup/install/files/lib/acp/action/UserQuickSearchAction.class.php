@@ -191,7 +191,7 @@ final class UserQuickSearchAction extends AbstractAction
         $search = SearchEditor::create([
             'userID' => WCF::getUser()->userID,
             'searchData' => $data,
-            'searchTime' => TIME_NOW,
+            'searchTime' => \TIME_NOW,
             'searchType' => 'users',
         ]);
         $this->executed();

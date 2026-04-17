@@ -45,7 +45,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
         $this->parameters['data']['subscriptionID'] = $this->parameters['subscription']->subscriptionID;
         $this->parameters['data']['userID'] = $this->parameters['user']->userID;
         if (!isset($this->parameters['data']['startDate'])) {
-            $this->parameters['data']['startDate'] = TIME_NOW;
+            $this->parameters['data']['startDate'] = \TIME_NOW;
         }
         if (!isset($this->parameters['data']['endDate'])) {
             if (!$this->parameters['subscription']->subscriptionLength) {

@@ -56,7 +56,7 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
         int $objectID,
         ?int $parentObjectID = null,
         array $additionalData = [],
-        int $time = TIME_NOW,
+        int $time = \TIME_NOW,
         ?int $userID = null,
         ?string $username = null,
         int $hidden = 1

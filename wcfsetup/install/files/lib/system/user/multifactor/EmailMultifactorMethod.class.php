@@ -118,7 +118,7 @@ final class EmailMultifactorMethod implements IMultifactorMethod
         $email->setMessageID(\sprintf(
             'com.woltlab.wcf.multifactor.email/%d/%d/%s',
             $setup->getUser()->userID,
-            TIME_NOW,
+            \TIME_NOW,
             \bin2hex(\random_bytes(8))
         ));
 

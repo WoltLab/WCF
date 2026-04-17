@@ -110,7 +110,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
         ], $this->data);
 
         if ($this->options['action'] === 'create') {
-            $data['uploadTime'] = TIME_NOW;
+            $data['uploadTime'] = \TIME_NOW;
         }
 
         // get image data

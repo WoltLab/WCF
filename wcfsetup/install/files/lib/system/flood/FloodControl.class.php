@@ -18,7 +18,7 @@ use wcf\util\UserUtil;
  */
 final class FloodControl extends SingletonFactory
 {
-    private const PRUNE_TIME = TIME_NOW - 31 * 86400;
+    private const PRUNE_TIME = \TIME_NOW - 31 * 86400;
 
     private const IDENTIFIER_PREFIX = WCF_UUID . ':' . self::class . ':';
 
@@ -58,7 +58,7 @@ final class FloodControl extends SingletonFactory
      *
      * @return array{count: int, earliestTime: int}
      */
-    public function countContent(string $objectType, \DateInterval $interval, int $time = TIME_NOW): array
+    public function countContent(string $objectType, \DateInterval $interval, int $time = \TIME_NOW): array
     {
         if (WCF::getUser()->userID) {
             return $this->countUserContent($objectType, WCF::getUser()->userID, $interval, $time);
@@ -78,7 +78,7 @@ final class FloodControl extends SingletonFactory
         string $objectType,
         string $ipAddress,
         \DateInterval $interval,
-        int $time = TIME_NOW
+        int $time = \TIME_NOW
     ): array {
         return $this->countContentByIdentifier(
             $objectType,
@@ -99,7 +99,7 @@ final class FloodControl extends SingletonFactory
         string $objectType,
         int $userID,
         \DateInterval $interval,
-        int $time = TIME_NOW
+        int $time = \TIME_NOW
     ): array {
         return $this->countContentByIdentifier(
             $objectType,
@@ -241,7 +241,7 @@ final class FloodControl extends SingletonFactory
     /**
      * Registers content created by the active user.
      */
-    public function registerContent(string $objectType, int $time = TIME_NOW): void
+    public function registerContent(string $objectType, int $time = \TIME_NOW): void
     {
         if (WCF::getUser()->userID) {
             $this->registerUserContent($objectType, WCF::getUser()->userID, $time);
@@ -253,7 +253,7 @@ final class FloodControl extends SingletonFactory
     /**
      * Registers content created by a guest.
      */
-    public function registerGuestContent(string $objectType, string $ipAddress, int $time = TIME_NOW): void
+    public function registerGuestContent(string $objectType, string $ipAddress, int $time = \TIME_NOW): void
     {
         $this->registerContentByIdentifier(
             $objectType,
@@ -265,7 +265,7 @@ final class FloodControl extends SingletonFactory
     /**
      * Registers content created by a registered user.
      */
-    public function registerUserContent(string $objectType, int $userID, int $time = TIME_NOW): void
+    public function registerUserContent(string $objectType, int $userID, int $time = \TIME_NOW): void
     {
         $this->registerContentByIdentifier(
             $objectType,

@@ -28,7 +28,7 @@ class UserProfileHandler extends SingletonFactory
     protected function init()
     {
         $this->userProfile = new UserProfile(WCF::getUser());
-        $this->userProfile->setSessionLastActivityTime(TIME_NOW);
+        $this->userProfile->setSessionLastActivityTime(\TIME_NOW);
     }
 
     /**
@@ -60,7 +60,7 @@ class UserProfileHandler extends SingletonFactory
     public function reloadUserProfile()
     {
         $this->userProfile = new UserProfile(new User($this->userID));
-        $this->userProfile->setSessionLastActivityTime(TIME_NOW);
+        $this->userProfile->setSessionLastActivityTime(\TIME_NOW);
     }
 
     /**

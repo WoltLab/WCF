@@ -72,7 +72,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
         // handle registration date
         if (!isset($parameters['registrationDate'])) {
-            $parameters['registrationDate'] = TIME_NOW;
+            $parameters['registrationDate'] = \TIME_NOW;
         }
 
         /** @var User $user */

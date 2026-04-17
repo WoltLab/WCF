@@ -77,7 +77,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
         $updateServers = [];
         $requirePurchasedVersions = false;
         foreach ($tmp as $updateServer) {
-            if ($ignoreCache || $updateServer->lastUpdateTime < TIME_NOW - 600) {
+            if ($ignoreCache || $updateServer->lastUpdateTime < \TIME_NOW - 600) {
                 if (\preg_match('~^https?://(?:update|store)\.woltlab\.com\/~', $updateServer->serverURL)) {
                     $requirePurchasedVersions = true;
                 }
@@ -234,7 +234,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
         }
 
         $data = [
-            'lastUpdateTime' => TIME_NOW,
+            'lastUpdateTime' => \TIME_NOW,
             'status' => 'online',
             'errorMessage' => '',
         ];

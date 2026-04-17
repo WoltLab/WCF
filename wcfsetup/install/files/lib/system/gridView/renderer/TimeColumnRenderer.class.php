@@ -27,7 +27,7 @@ class TimeColumnRenderer extends AbstractColumnRenderer
         $dateTime = $dateTime->setTimezone(WCF::getUser()->getTimeZone());
         $locale = WCF::getLanguage()->getLocale();
 
-        $isFutureDate = $dateTime->getTimestamp() > TIME_NOW;
+        $isFutureDate = $dateTime->getTimestamp() > \TIME_NOW;
 
         $dateAndTime = \IntlDateFormatter::formatObject(
             $dateTime,

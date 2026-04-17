@@ -126,7 +126,7 @@ class UserSearchForm extends UserOptionListForm
         $search = SearchEditor::create([
             'userID' => WCF::getUser()->userID ?: null,
             'searchData' => \serialize(['matches' => $this->matches]),
-            'searchTime' => TIME_NOW,
+            'searchTime' => \TIME_NOW,
             'searchType' => 'users',
         ]);
 

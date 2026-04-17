@@ -596,7 +596,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
         }
 
         if (empty($this->parameters['visitTime'])) {
-            $this->parameters['visitTime'] = TIME_NOW;
+            $this->parameters['visitTime'] = \TIME_NOW;
         }
 
         if (empty($this->objects)) {

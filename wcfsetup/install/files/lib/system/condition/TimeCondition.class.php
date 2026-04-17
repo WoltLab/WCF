@@ -208,7 +208,7 @@ HTML;
         $startTime = $condition->startTime;
         if ($startTime) {
             $dateTime = \DateTimeImmutable::createFromFormat('H:i', $startTime, $timezone);
-            if ($dateTime->getTimestamp() > TIME_NOW) {
+            if ($dateTime->getTimestamp() > \TIME_NOW) {
                 return false;
             }
         }
@@ -216,7 +216,7 @@ HTML;
         $endTime = $condition->endTime;
         if ($endTime) {
             $dateTime = \DateTimeImmutable::createFromFormat('H:i', $endTime, $timezone);
-            if ($dateTime->getTimestamp() < TIME_NOW) {
+            if ($dateTime->getTimestamp() < \TIME_NOW) {
                 return false;
             }
         }

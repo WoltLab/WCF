@@ -100,7 +100,7 @@ class UserTrophyReceivedNotificationEvent extends AbstractUserNotificationEvent 
                 'trophyID' => $trophy->trophyID,
                 'userID' => $recipient->userID,
                 'description' => 'User Trophy Description',
-                'time' => TIME_NOW,
+                'time' => \TIME_NOW,
                 'useCustomDescription' => 1,
             ],
         ]))->executeAction()['returnValues'];

@@ -337,7 +337,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         $this->createdComment = CommentEditor::create([
             'objectTypeID' => $this->parameters['data']['objectTypeID'],
             'objectID' => $this->parameters['data']['objectID'],
-            'time' => TIME_NOW,
+            'time' => \TIME_NOW,
             'userID' => WCF::getUser()->userID ?: null,
             'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->parameters['data']['username'],
             'message' => $htmlInputProcessor->getHtml(),
@@ -514,7 +514,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         // create response
         $this->createdResponse = CommentResponseEditor::create([
             'commentID' => $comment->commentID,
-            'time' => TIME_NOW,
+            'time' => \TIME_NOW,
             'userID' => WCF::getUser()->userID ?: null,
             'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->parameters['data']['username'],
             'message' => $htmlInputProcessor->getHtml(),

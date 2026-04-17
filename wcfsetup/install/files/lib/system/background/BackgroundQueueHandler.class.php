@@ -50,7 +50,7 @@ final class BackgroundQueueHandler extends SingletonFactory
      */
     public function enqueueIn(AbstractBackgroundJob|array $jobs, int $time = 0): void
     {
-        $this->enqueueAt($jobs, TIME_NOW + $time);
+        $this->enqueueAt($jobs, \TIME_NOW + $time);
     }
 
     /**
@@ -64,8 +64,8 @@ final class BackgroundQueueHandler extends SingletonFactory
      */
     public function enqueueAt(AbstractBackgroundJob|array $jobs, int $time): void
     {
-        if ($time < TIME_NOW) {
-            throw new \InvalidArgumentException("You may not schedule a job in the past (" . $time . " is smaller than the current timestamp " . TIME_NOW . ").");
+        if ($time < \TIME_NOW) {
+            throw new \InvalidArgumentException("You may not schedule a job in the past (" . $time . " is smaller than the current timestamp " . \TIME_NOW . ").");
         }
         if (!\is_array($jobs)) {
             $jobs = [$jobs];
@@ -166,7 +166,7 @@ final class BackgroundQueueHandler extends SingletonFactory
             $statement = WCF::getDB()->prepare($sql, 1);
             $statement->execute([
                 'ready',
-                TIME_NOW,
+                \TIME_NOW,
             ]);
             $row = $statement->fetchSingleRow();
             if (!$row) {
@@ -183,7 +183,7 @@ final class BackgroundQueueHandler extends SingletonFactory
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 'processing',
-                TIME_NOW,
+                \TIME_NOW,
                 $row['jobID'],
                 'ready',
             ]);
@@ -239,7 +239,7 @@ final class BackgroundQueueHandler extends SingletonFactory
                 WHERE   status = ?
                     AND time <= ?";
         $statement = WCF::getDB()->prepare($sql);
-        $statement->execute(['ready', TIME_NOW]);
+        $statement->execute(['ready', \TIME_NOW]);
 
         return $statement->fetchSingleColumn();
     }

@@ -91,8 +91,8 @@ class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNoti
         /** @var PaidSubscriptionUser $paidSubscriptionUser */
         $paidSubscriptionUser = (new PaidSubscriptionUserAction([], 'create', [
             'data' => [
-                'startDate' => TIME_NOW - 24 * 24 * 60 * 60,
-                'endDate' => TIME_NOW + 24 * 60 * 60,
+                'startDate' => \TIME_NOW - 24 * 24 * 60 * 60,
+                'endDate' => \TIME_NOW + 24 * 60 * 60,
                 'isActive' => 1,
                 'sentExpirationNotification' => 0,
             ],

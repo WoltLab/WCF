@@ -124,7 +124,7 @@ abstract class AbstractTolerantCache
         // Probabilistic early expiration
         // https://en.wikipedia.org/wiki/Cache_stampede#Probabilistic_early_expiration
 
-        return TIME_NOW - 10 * \log(\random_int(1, \PHP_INT_MAX) / \PHP_INT_MAX)
+        return \TIME_NOW - 10 * \log(\random_int(1, \PHP_INT_MAX) / \PHP_INT_MAX)
             >= $this->nextRebuildTime();
     }
 }

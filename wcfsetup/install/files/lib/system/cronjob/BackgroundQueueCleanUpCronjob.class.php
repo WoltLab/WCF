@@ -36,7 +36,7 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 'processing',
-                TIME_NOW - 600, // running longer than 10 minutes
+                \TIME_NOW - 600, // running longer than 10 minutes
             ]);
 
             $jobIDs = [];

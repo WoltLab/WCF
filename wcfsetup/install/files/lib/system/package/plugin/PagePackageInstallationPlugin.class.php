@@ -251,7 +251,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
             'controllerCustomURL' => $controllerCustomURL,
             'identifier' => $identifier,
             'isMultilingual' => $isMultilingual,
-            'lastUpdateTime' => TIME_NOW,
+            'lastUpdateTime' => \TIME_NOW,
             'name' => $name,
             'originIsSystem' => 1,
             'parentPageID' => $parentPageID,

@@ -104,7 +104,7 @@ class VisitTracker extends SingletonFactory
             }
         }
 
-        $minimum = TIME_NOW - self::LIFETIME;
+        $minimum = \TIME_NOW - self::LIFETIME;
 
         // Mark everything before the registration date as read.
         $minimum = \max($minimum, WCF::getUser()->registrationDate);
@@ -160,7 +160,7 @@ class VisitTracker extends SingletonFactory
      * @param int[] $userIDs
      * @return void
      */
-    public function trackObjectVisitByUserIDs(string $objectType, int $objectID, array $userIDs, int $time = TIME_NOW)
+    public function trackObjectVisitByUserIDs(string $objectType, int $objectID, array $userIDs, int $time = \TIME_NOW)
     {
         // save visit
         $sql = "REPLACE INTO    wcf1_tracked_visit
@@ -182,7 +182,7 @@ class VisitTracker extends SingletonFactory
      *
      * @return void
      */
-    public function trackObjectVisit(string $objectType, int $objectID, int $time = TIME_NOW)
+    public function trackObjectVisit(string $objectType, int $objectID, int $time = \TIME_NOW)
     {
         if (!WCF::getUser()->userID) {
             return;
@@ -200,7 +200,7 @@ class VisitTracker extends SingletonFactory
      *
      * @return void
      */
-    public function trackTypeVisit(string $objectType, int $time = TIME_NOW)
+    public function trackTypeVisit(string $objectType, int $time = \TIME_NOW)
     {
         if (!WCF::getUser()->userID) {
             return;
@@ -240,14 +240,14 @@ class VisitTracker extends SingletonFactory
                 WHERE       visitTime < ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
-            TIME_NOW - $visitLifetime,
+            \TIME_NOW - $visitLifetime,
         ]);
 
         $sql = "DELETE FROM wcf1_tracked_visit_type
                 WHERE       visitTime < ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
-            TIME_NOW - $visitLifetime,
+            \TIME_NOW - $visitLifetime,
         ]);
     }
 }

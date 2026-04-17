@@ -43,7 +43,7 @@ final class DebugEmailTransport implements IEmailTransport
         $this->mbox->write(\sprintf(
             "From %s %s\r\n",
             $envelopeFrom->getAddress(),
-            DateUtil::getDateTimeByTimestamp(TIME_NOW)->format('D M d H:i:s Y')
+            DateUtil::getDateTimeByTimestamp(\TIME_NOW)->format('D M d H:i:s Y')
         ));
         $this->mbox->write("Delivered-To: " . $envelopeTo->getAddress() . "\r\n");
         $this->mbox->write($email->getEmail());

@@ -147,7 +147,7 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             WCF::getSession()->sessionID,
-            (TIME_NOW - 15 * 60),
+            (\TIME_NOW - 15 * 60),
         ]);
         $row = $statement->fetchArray();
         if (!empty($row['sessionLogID'])) {
@@ -155,7 +155,7 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
 
             $sessionLogEditor = new ACPSessionLogEditor(new ACPSessionLog(null, ['sessionLogID' => $sessionLogID]));
             $sessionLogEditor->update([
-                'lastActivityTime' => TIME_NOW,
+                'lastActivityTime' => \TIME_NOW,
             ]);
         } else {
             // create new session log
@@ -165,8 +165,8 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
                 'ipAddress' => UserUtil::getIpAddress(),
                 'hostname' => @\gethostbyaddr(UserUtil::getIpAddress()),
                 'userAgent' => \mb_substr(Helper::getUserAgent($request) ?? '', 0, 191),
-                'time' => TIME_NOW,
-                'lastActivityTime' => TIME_NOW,
+                'time' => \TIME_NOW,
+                'lastActivityTime' => \TIME_NOW,
             ]);
             $sessionLogID = $sessionLog->sessionLogID;
         }
@@ -196,7 +196,7 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
         ACPSessionAccessLogEditor::create([
             'sessionLogID' => $sessionLogID,
             'ipAddress' => UserUtil::getIpAddress(),
-            'time' => TIME_NOW,
+            'time' => \TIME_NOW,
             'requestURI' => \substr($requestURI, 0, 255),
             'requestMethod' => \substr($request->getMethod(), 0, 255),
             'className' => \substr($className, 0, 255),

@@ -56,7 +56,7 @@ final class IgnoreUser
             $user->userID,
             $target->userID,
             $type,
-            TIME_NOW,
+            \TIME_NOW,
         ]);
     }
 }

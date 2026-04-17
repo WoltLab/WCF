@@ -60,7 +60,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
             $statement->execute([
                 $notificationData['object']->notificationID,
                 $this->parameters['authorID'] ?: null,
-                TIME_NOW,
+                \TIME_NOW,
             ]);
         }
 
@@ -133,7 +133,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
             $authorStatement->execute([
                 $notificationData['object']->notificationID,
                 $this->parameters['authorID'] ?: null,
-                TIME_NOW,
+                \TIME_NOW,
             ]);
             $triggerStatement->execute([
                 1,
@@ -157,9 +157,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
     /**
      * @since 5.5
      */
-    public function validateGetNotificationData(): void
-    {
-    }
+    public function validateGetNotificationData(): void {}
 
     /**
      * @return array{
@@ -283,7 +281,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
         $statement->execute([
             WCF::getUser()->userID,
             0,
-            TIME_NOW,
+            \TIME_NOW,
         ]);
         $notificationIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
@@ -296,7 +294,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
                     SET     confirmTime = ?
                     {$condition}";
             $statement = WCF::getDB()->prepare($sql);
-            $statement->execute(\array_merge([TIME_NOW], $condition->getParameters()));
+            $statement->execute(\array_merge([\TIME_NOW], $condition->getParameters()));
         }
 
         // Step 4) Clear cached values.

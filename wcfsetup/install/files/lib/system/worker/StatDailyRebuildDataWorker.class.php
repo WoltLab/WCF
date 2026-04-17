@@ -40,7 +40,7 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker
     {
         $this->getStartDate();
 
-        $this->count = (int)\ceil((TIME_NOW - $this->startDate) / 86400);
+        $this->count = (int)\ceil((\TIME_NOW - $this->startDate) / 86400);
     }
 
     #[\Override]
@@ -69,7 +69,7 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker
             $d->add(new \DateInterval('P' . ($this->loopCount * $this->limit) . 'D'));
         }
         for ($i = 0; $i < $this->limit; $i++) {
-            if ($d->getTimestamp() > TIME_NOW) {
+            if ($d->getTimestamp() > \TIME_NOW) {
                 break;
             }
 

@@ -80,10 +80,10 @@ class DevtoolsMissingLanguageItemAction extends AbstractDatabaseObjectAction imp
         $statement->execute([
             $this->parameters['language']->languageID,
             $this->parameters['languageItem'],
-            TIME_NOW,
+            \TIME_NOW,
             $stackTrace,
 
-            TIME_NOW,
+            \TIME_NOW,
             $stackTrace,
         ]);
     }

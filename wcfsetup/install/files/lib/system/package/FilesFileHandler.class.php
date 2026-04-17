@@ -73,7 +73,7 @@ class FilesFileHandler extends PackageInstallationFileHandler
                 $file,
                 $this->application,
                 \hash_file('sha256', $baseDirectory . $file, true),
-                TIME_NOW,
+                \TIME_NOW,
             ]);
         }
         WCF::getDB()->commitTransaction();

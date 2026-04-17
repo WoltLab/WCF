@@ -50,7 +50,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
     public function create()
     {
         if (!isset($this->parameters['data']['lastChangeTime'])) {
-            $this->parameters['data']['lastChangeTime'] = TIME_NOW;
+            $this->parameters['data']['lastChangeTime'] = \TIME_NOW;
         }
 
         return parent::create();
@@ -60,7 +60,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
     public function update()
     {
         if (!isset($this->parameters['data']['lastChangeTime'])) {
-            $this->parameters['data']['lastChangeTime'] = TIME_NOW;
+            $this->parameters['data']['lastChangeTime'] = \TIME_NOW;
         }
 
         parent::update();
@@ -227,7 +227,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
     public function markAsRead()
     {
         if (empty($this->parameters['visitTime'])) {
-            $this->parameters['visitTime'] = TIME_NOW;
+            $this->parameters['visitTime'] = \TIME_NOW;
         }
 
         if (empty($this->objects)) {

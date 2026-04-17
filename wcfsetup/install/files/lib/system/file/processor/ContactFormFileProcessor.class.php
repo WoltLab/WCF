@@ -35,7 +35,7 @@ final class ContactFormFileProcessor extends AbstractFileProcessor
     public function adopt(File $file, array $context): void
     {
         // Save the `fileID` in the session variable so that the current user can download or delete it.
-        WCF::getSession()->register(\sprintf(self::SESSION_VARIABLE, $file->fileID), TIME_NOW);
+        WCF::getSession()->register(\sprintf(self::SESSION_VARIABLE, $file->fileID), \TIME_NOW);
         WCF::getSession()->update();
     }
 

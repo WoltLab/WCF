@@ -27,10 +27,10 @@ trait TTestableArticleUserNotificationEvent
     {
         return (new ArticleAction([], 'create', [
             'data' => [
-                'time' => TIME_NOW,
+                'time' => \TIME_NOW,
                 'categoryID' => $category->categoryID,
                 'publicationStatus' => Article::PUBLISHED,
-                'publicationDate' => TIME_NOW,
+                'publicationDate' => \TIME_NOW,
                 'enableComments' => 1,
                 'userID' => $author->userID,
                 'username' => $author->username,

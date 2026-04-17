@@ -59,7 +59,7 @@ class MailWorker extends AbstractWorker
         if (!isset($this->mailData['message-id'])) {
             $this->mailData['message-id'] = \sprintf(
                 'com.woltlab.wcf.mailWorker/%d/%s',
-                TIME_NOW,
+                \TIME_NOW,
                 \bin2hex(\random_bytes(8))
             );
             $userMailData[$this->parameters['mailID']] = $this->mailData;

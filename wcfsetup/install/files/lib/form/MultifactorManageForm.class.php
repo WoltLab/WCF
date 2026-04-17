@@ -255,7 +255,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm
         $email->setMessageID(\sprintf(
             'com.woltlab.wcf.multifactorSetup/%d/%d/%s',
             WCF::getUser()->userID,
-            TIME_NOW,
+            \TIME_NOW,
             \bin2hex(\random_bytes(8))
         ));
 

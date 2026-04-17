@@ -45,7 +45,7 @@ trait TTestableCommentUserNotificationEvent
                 'enableHtml' => 1,
                 'isDisabled' => 0,
                 'message' => '<p>Test Comment</p>',
-                'time' => TIME_NOW - 10,
+                'time' => \TIME_NOW - 10,
                 'userID' => $recipient->userID,
                 'username' => $recipient->username,
             ], self::getTestCommentObjectData($recipient, $author)),

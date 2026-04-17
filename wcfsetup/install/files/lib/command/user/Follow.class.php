@@ -32,7 +32,7 @@ final class Follow
         $follow = UserFollowEditor::createOrIgnore([
             'userID' => $this->user->userID,
             'followUserID' => $this->target->userID,
-            'time' => TIME_NOW,
+            'time' => \TIME_NOW,
         ]);
 
         if ($follow === null) {

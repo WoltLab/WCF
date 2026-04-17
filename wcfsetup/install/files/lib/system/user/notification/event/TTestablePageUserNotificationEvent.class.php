@@ -37,7 +37,7 @@ trait TTestablePageUserNotificationEvent
                 'name' => 'Page Title',
                 'cssClassName' => '',
                 'applicationPackageID' => 1,
-                'lastUpdateTime' => TIME_NOW,
+                'lastUpdateTime' => \TIME_NOW,
                 'isMultilingual' => 0,
                 'identifier' => '',
                 'packageID' => 1,

@@ -224,7 +224,7 @@ class CommentHandler extends SingletonFactory
         }
 
         $lastTime = FloodControl::getInstance()->getLastTime('com.woltlab.wcf.comment');
-        if ($lastTime !== null && $lastTime > TIME_NOW - $floodControlTime) {
+        if ($lastTime !== null && $lastTime > \TIME_NOW - $floodControlTime) {
             throw new NamedUserException(HtmlString::fromSafeHtml(WCF::getLanguage()->getDynamicVariable(
                 'wcf.comment.error.floodControl',
                 ['lastCommentTime' => $lastTime]
@@ -243,7 +243,7 @@ class CommentHandler extends SingletonFactory
      * @throws \InvalidArgumentException if invalid comment object type name is given
      * @since 5.2
      */
-    public function markNotificationsAsConfirmed(string $objectType, array $objectIDs, int $time = TIME_NOW)
+    public function markNotificationsAsConfirmed(string $objectType, array $objectIDs, int $time = \TIME_NOW)
     {
         // notifications are only relevant for logged-in users
         if (!WCF::getUser()->userID) {

@@ -60,7 +60,7 @@ class TemplatesFileHandler extends ACPTemplatesFileHandler
             $statement->execute([
                 $packageID,
                 $file,
-                TIME_NOW,
+                \TIME_NOW,
                 $this->application,
             ]);
         }
@@ -74,7 +74,7 @@ class TemplatesFileHandler extends ACPTemplatesFileHandler
                     SET     lastModificationTime = ?
                     " . $conditionBuilder;
             $statement = WCF::getDB()->prepare($sql);
-            $statement->execute(\array_merge([TIME_NOW], $conditionBuilder->getParameters()));
+            $statement->execute(\array_merge([\TIME_NOW], $conditionBuilder->getParameters()));
         }
     }
 }

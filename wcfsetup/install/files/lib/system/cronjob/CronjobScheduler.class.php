@@ -41,7 +41,7 @@ final class CronjobScheduler extends SingletonFactory
     public function executeCronjobs(): void
     {
         // break if there are no outstanding cronjobs
-        if ($this->cache['nextExec'] > TIME_NOW && $this->cache['afterNextExec'] > TIME_NOW) {
+        if ($this->cache['nextExec'] > \TIME_NOW && $this->cache['afterNextExec'] > \TIME_NOW) {
             return;
         }
 
@@ -71,7 +71,7 @@ final class CronjobScheduler extends SingletonFactory
                 // create log entry
                 $log = CronjobLogEditor::create([
                     'cronjobID' => $cronjobEditor->cronjobID,
-                    'execTime' => TIME_NOW,
+                    'execTime' => \TIME_NOW,
                 ]);
                 $logEditor = new CronjobLogEditor($log);
 
@@ -127,7 +127,7 @@ final class CronjobScheduler extends SingletonFactory
             $statement->execute([
                 Cronjob::READY,
                 0,
-                TIME_NOW,
+                \TIME_NOW,
             ]);
             while ($cronjob = $statement->fetchObject(Cronjob::class)) {
                 // In any case: Reset the state to READY.
@@ -162,7 +162,7 @@ final class CronjobScheduler extends SingletonFactory
 
                         $log = CronjobLogEditor::create([
                             'cronjobID' => $cronjob->cronjobID,
-                            'execTime' => TIME_NOW,
+                            'execTime' => \TIME_NOW,
                         ]);
                         $logEditor = new CronjobLogEditor($log);
 
@@ -172,7 +172,7 @@ final class CronjobScheduler extends SingletonFactory
                             $cronjob->cronjobID,
                             $cronjob->nextExec,
                             $cronjob->afterNextExec,
-                            TIME_NOW
+                            \TIME_NOW
                         );
                         $this->logResult($logEditor, new \Exception($errorMessage));
                         break;
@@ -183,7 +183,7 @@ final class CronjobScheduler extends SingletonFactory
                 // Schedule the cronjob for execution at the next regular execution date. The previous
                 // implementation was executing the cronjob immediately, which may be undesirable if
                 // the cronjob is expected to be executed in a specific time window only.
-                $data['nextExec'] = $cronjob->getNextExec(TIME_NOW);
+                $data['nextExec'] = $cronjob->getNextExec(\TIME_NOW);
                 $data['afterNextExec'] = $cronjob->getNextExec($data['nextExec'] + 120);
 
                 (new CronjobEditor($cronjob))->update($data);
@@ -219,7 +219,7 @@ final class CronjobScheduler extends SingletonFactory
             $statement->execute([
                 0,
                 Cronjob::READY,
-                TIME_NOW,
+                \TIME_NOW,
             ]);
 
             $cronjobEditors = [];
@@ -236,7 +236,7 @@ final class CronjobScheduler extends SingletonFactory
                 // a few milliseconds before.
                 $data['nextExec'] = $cronjob->getNextExec();
                 $data['afterNextExec'] = $cronjob->getNextExec($data['nextExec'] + 120);
-                $data['lastExec'] = TIME_NOW;
+                $data['lastExec'] = \TIME_NOW;
 
                 $cronjobEditor->update($data);
 

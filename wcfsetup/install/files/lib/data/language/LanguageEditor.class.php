@@ -479,7 +479,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                     WCF::getDB()->beginTransaction();
                     foreach ($updateValues as $languageItemID) {
                         $statement->execute([
-                            TIME_NOW,
+                            \TIME_NOW,
                             0,
                             $languageItemID,
                         ]);

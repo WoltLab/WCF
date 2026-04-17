@@ -157,7 +157,7 @@ final class SessionHandler extends SingletonFactory
             case 'requestMethod':
                 return !empty($_SERVER['REQUEST_METHOD']) ? \substr($_SERVER['REQUEST_METHOD'], 0, 7) : '';
             case 'lastActivityTime':
-                return TIME_NOW;
+                return \TIME_NOW;
 
             default:
                 return null;
@@ -272,7 +272,7 @@ final class SessionHandler extends SingletonFactory
         // @phpstan-ignore function.alreadyNarrowedType, smaller.alwaysTrue
         \assert((self::USER_SESSION_LIFETIME / $window) < 0xFF);
 
-        return \intdiv(TIME_NOW, $window) & 0xFF;
+        return \intdiv(\TIME_NOW, $window) & 0xFF;
     }
 
     /**
@@ -356,7 +356,7 @@ final class SessionHandler extends SingletonFactory
         HeaderUtil::setCookie(
             'user_session',
             $this->getCookieValue(),
-            TIME_NOW + (self::USER_SESSION_LIFETIME + (7 * 86400))
+            \TIME_NOW + (self::USER_SESSION_LIFETIME + (7 * 86400))
         );
     }
 
@@ -537,7 +537,7 @@ final class SessionHandler extends SingletonFactory
 
         // Check whether the session technically already expired.
         $lifetime = ($row['userID'] ? self::USER_SESSION_LIFETIME : self::GUEST_SESSION_LIFETIME);
-        if ($row['lastActivityTime'] < (TIME_NOW - $lifetime)) {
+        if ($row['lastActivityTime'] < (\TIME_NOW - $lifetime)) {
             return false;
         }
 
@@ -561,7 +561,7 @@ final class SessionHandler extends SingletonFactory
         //
         // The former two fields are not going to rapidly change and the latter is just
         // used for session expiry, where accuracy to the second is not required.
-        if ($row['lastActivityTime'] < (TIME_NOW - 60)) {
+        if ($row['lastActivityTime'] < (\TIME_NOW - 60)) {
             $sql = "UPDATE  wcf1_user_session
                     SET     ipAddress = ?,
                             userAgent = ?,
@@ -571,7 +571,7 @@ final class SessionHandler extends SingletonFactory
             $statement->execute([
                 UserUtil::getIpAddress(),
                 UserUtil::getUserAgent(),
-                TIME_NOW,
+                \TIME_NOW,
                 $this->sessionID,
             ]);
         }
@@ -661,8 +661,8 @@ final class SessionHandler extends SingletonFactory
             $this->sessionID,
             UserUtil::getIpAddress(),
             UserUtil::getUserAgent(),
-            TIME_NOW,
-            TIME_NOW,
+            \TIME_NOW,
+            \TIME_NOW,
             \serialize($variables),
         ]);
 
@@ -712,7 +712,7 @@ final class SessionHandler extends SingletonFactory
             'userID' => $this->user->userID,
             'ipAddress' => UserUtil::getIpAddress(),
             'userAgent' => UserUtil::getUserAgent(),
-            'lastActivityTime' => TIME_NOW,
+            'lastActivityTime' => \TIME_NOW,
             'requestURI' => UserUtil::getRequestURI(),
             'requestMethod' => !empty($_SERVER['REQUEST_METHOD']) ? \substr($_SERVER['REQUEST_METHOD'], 0, 7) : '',
             'spiderIdentifier' => $spiderIdentifier,
@@ -842,7 +842,7 @@ final class SessionHandler extends SingletonFactory
         if ($user->multifactorActive) {
             $this->register(self::CHANGE_USER_AFTER_MULTIFACTOR_KEY, [
                 'userId' => $user->userID,
-                'expires' => TIME_NOW + self::PENDING_USER_LIFETIME,
+                'expires' => \TIME_NOW + self::PENDING_USER_LIFETIME,
             ]);
             $this->setLanguageID($user->languageID);
 
@@ -898,7 +898,7 @@ final class SessionHandler extends SingletonFactory
         $userId = $data['userId'];
         $expires = $data['expires'];
 
-        if ($expires < TIME_NOW) {
+        if ($expires < \TIME_NOW) {
             return null;
         }
 
@@ -1033,7 +1033,7 @@ final class SessionHandler extends SingletonFactory
             HeaderUtil::setCookie(
                 'user_session',
                 $this->getCookieValue(),
-                TIME_NOW + (self::USER_SESSION_LIFETIME + (7 * 86400))
+                \TIME_NOW + (self::USER_SESSION_LIFETIME + (7 * 86400))
             );
 
             foreach ($saveVars as $key => $value) {
@@ -1075,7 +1075,7 @@ final class SessionHandler extends SingletonFactory
 
         // Request a new authentication if the hard limit since the last authentication
         // is exceeded.
-        if ($lastAuthentication < (TIME_NOW - self::REAUTHENTICATION_HARD_LIMIT)) {
+        if ($lastAuthentication < (\TIME_NOW - self::REAUTHENTICATION_HARD_LIMIT)) {
             return true;
         }
 
@@ -1096,9 +1096,9 @@ final class SessionHandler extends SingletonFactory
 
         // Request a new authentication if the soft limit since the last authentication
         // is exceeded ...
-        if ($lastAuthentication < (TIME_NOW - $softLimit)) {
+        if ($lastAuthentication < (\TIME_NOW - $softLimit)) {
             // ... and the grace period since the last check is also exceeded.
-            if ($_POST === [] || $lastCheck < (TIME_NOW - self::REAUTHENTICATION_GRACE_PERIOD)) {
+            if ($_POST === [] || $lastCheck < (\TIME_NOW - self::REAUTHENTICATION_GRACE_PERIOD)) {
                 return true;
             }
 
@@ -1119,9 +1119,9 @@ final class SessionHandler extends SingletonFactory
 
         // If we reach this point we determined that a new authentication is not necessary.
         \assert(
-            ($lastAuthentication >= TIME_NOW - $softLimit)
-                || ($lastAuthentication >= TIME_NOW - self::REAUTHENTICATION_HARD_LIMIT
-                    && $lastCheck >= TIME_NOW - self::REAUTHENTICATION_GRACE_PERIOD)
+            ($lastAuthentication >= \TIME_NOW - $softLimit)
+                || ($lastAuthentication >= \TIME_NOW - self::REAUTHENTICATION_HARD_LIMIT
+                    && $lastCheck >= \TIME_NOW - self::REAUTHENTICATION_GRACE_PERIOD)
         );
 
         // Update the lastCheck timestamp to make sure that the grace period works properly.
@@ -1129,7 +1129,7 @@ final class SessionHandler extends SingletonFactory
         // The grace period allows the user to complete their action if the soft limit
         // expires between loading a form and actually submitting that form, provided that
         // the user does not take longer than the grace period to fill in the form.
-        $data['lastCheck'] = TIME_NOW;
+        $data['lastCheck'] = \TIME_NOW;
         $this->register(self::REAUTHENTICATION_KEY, $data);
 
         return false;
@@ -1152,8 +1152,8 @@ final class SessionHandler extends SingletonFactory
         }
 
         $this->register(self::REAUTHENTICATION_KEY, [
-            'lastAuthentication' => TIME_NOW,
-            'lastCheck' => TIME_NOW,
+            'lastAuthentication' => \TIME_NOW,
+            'lastCheck' => \TIME_NOW,
         ]);
     }
 
@@ -1205,7 +1205,7 @@ final class SessionHandler extends SingletonFactory
             'userAgent' => UserUtil::getUserAgent(),
             'requestURI' => UserUtil::getRequestURI(),
             'requestMethod' => !empty($_SERVER['REQUEST_METHOD']) ? \substr($_SERVER['REQUEST_METHOD'], 0, 7) : '',
-            'lastActivityTime' => TIME_NOW,
+            'lastActivityTime' => \TIME_NOW,
             'sessionID' => $this->sessionID,
         ];
         if (!\class_exists('wcf\system\CLIWCF', false) && !$this->disableTracking) {
@@ -1248,7 +1248,7 @@ final class SessionHandler extends SingletonFactory
 
             // update last activity time
             $editor = new UserEditor($this->user);
-            $editor->update(['lastActivityTime' => TIME_NOW]);
+            $editor->update(['lastActivityTime' => \TIME_NOW]);
         }
 
         $this->deleteUserSession($this->sessionID);
@@ -1264,8 +1264,8 @@ final class SessionHandler extends SingletonFactory
                          OR (lastActivityTime < ? AND userID IS NOT NULL)";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
-            TIME_NOW - self::GUEST_SESSION_LIFETIME,
-            TIME_NOW - self::USER_SESSION_LIFETIME,
+            \TIME_NOW - self::GUEST_SESSION_LIFETIME,
+            \TIME_NOW - self::USER_SESSION_LIFETIME,
         ]);
 
         // Legacy sessions live 120 minutes, they will be re-created on demand.
@@ -1273,7 +1273,7 @@ final class SessionHandler extends SingletonFactory
                 WHERE       lastActivityTime < ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
-            TIME_NOW - (3600 * 2),
+            \TIME_NOW - (3600 * 2),
         ]);
     }
 

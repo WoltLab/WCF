@@ -204,7 +204,7 @@ class RegisterForm extends UserAddForm
             !$this->isExternalAuthentication
             && (
                 !WCF::getSession()->getVar('registrationStartTime')
-                || (TIME_NOW - WCF::getSession()->getVar('registrationStartTime')) < self::$minRegistrationTime
+                || (\TIME_NOW - WCF::getSession()->getVar('registrationStartTime')) < self::$minRegistrationTime
             )
         ) {
             throw new UserInputException('registrationStartTime', []);
@@ -253,7 +253,7 @@ class RegisterForm extends UserAddForm
                 $this->email = WCF::getSession()->getVar('__email');
             }
 
-            WCF::getSession()->register('registrationStartTime', TIME_NOW);
+            WCF::getSession()->register('registrationStartTime', \TIME_NOW);
 
             // generate random field names
             $this->randomFieldNames = [

@@ -224,7 +224,7 @@ final class UserExportGdprAction extends AbstractAction
             }
         }
 
-        $this->data['@@generatedAt'] = TIME_NOW;
+        $this->data['@@generatedAt'] = \TIME_NOW;
 
         $this->executed();
 

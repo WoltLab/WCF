@@ -137,7 +137,7 @@ final class FontManager extends SingletonFactory
                         'url(getFont("%s", "%s", "%d"))',
                         \rawurlencode($filename),
                         \rawurlencode($family),
-                        TIME_NOW
+                        \TIME_NOW
                     ),
                     $css
                 );
@@ -155,7 +155,7 @@ final class FontManager extends SingletonFactory
                             'getFont("%s", "%s", "%d")',
                             \rawurlencode($filename),
                             \rawurlencode($family),
-                            TIME_NOW
+                            \TIME_NOW
                         )
                     );
                 }

@@ -53,7 +53,7 @@ final class TimeFunctionTemplatePlugin implements IFunctionTemplatePlugin
 
         switch ($type) {
             case 'interactive':
-                $isFutureDate = $dateTime->getTimestamp() > TIME_NOW;
+                $isFutureDate = $dateTime->getTimestamp() > \TIME_NOW;
 
                 $dateAndTime = \IntlDateFormatter::formatObject(
                     $dateTime,

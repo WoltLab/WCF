@@ -232,7 +232,7 @@ class QuickReplyManager extends SingletonFactory
 
         $tableIndexName = \call_user_func([$this->container, 'getDatabaseTableIndexName']);
         $parameters['data'][$tableIndexName] = $parameters['objectID'];
-        $parameters['data']['time'] = TIME_NOW;
+        $parameters['data']['time'] = \TIME_NOW;
 
         if (!\array_key_exists('userID', $parameters['data'])) {
             $parameters['data']['userID'] = WCF::getUser()->userID ?: null;

@@ -189,7 +189,7 @@ class PageEditForm extends PageAddForm
             'name' => $this->name,
             'cssClassName' => $this->cssClassName,
             'isDisabled' => $this->isDisabled ? 1 : 0,
-            'lastUpdateTime' => TIME_NOW,
+            'lastUpdateTime' => \TIME_NOW,
             'parentPageID' => $this->parentPageID ?: null,
             'applicationPackageID' => $this->applicationPackageID,
             'overrideApplicationPackageID' => $this->overrideApplicationPackageID,

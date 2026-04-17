@@ -398,7 +398,7 @@ class PackageInstallationDispatcher
         $logEntry .= \str_repeat('-', 30) . "\n\n";
 
         \file_put_contents(
-            WCF_DIR . 'log/' . \date('Y-m-d', TIME_NOW) . '-update-' . $this->queue->queueID . '.txt',
+            WCF_DIR . 'log/' . \date('Y-m-d', \TIME_NOW) . '-update-' . $this->queue->queueID . '.txt',
             $logEntry,
             \FILE_APPEND
         );

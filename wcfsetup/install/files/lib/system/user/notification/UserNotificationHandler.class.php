@@ -263,7 +263,7 @@ class UserNotificationHandler extends SingletonFactory
                     'eventHash' => $event->getEventHash(),
                     'packageID' => $objectTypeObject->packageID,
                     'mailNotified' => $event->supportsEmailNotification() ? 0 : 1,
-                    'time' => TIME_NOW,
+                    'time' => \TIME_NOW,
                     'additionalData' => \serialize($additionalData),
                 ],
                 'recipients' => $recipients,
@@ -448,7 +448,7 @@ class UserNotificationHandler extends SingletonFactory
                 $conditions->add("notification.confirmTime = ?", [0]);
             } else {
                 // consider only notifications marked as confirmed in the past 48 hours (86400 = 1 day)
-                $conditions->add("notification.confirmTime >= ?", [TIME_NOW - (2 * 86400)]);
+                $conditions->add("notification.confirmTime >= ?", [\TIME_NOW - (2 * 86400)]);
             }
         }
 
@@ -792,7 +792,7 @@ class UserNotificationHandler extends SingletonFactory
                 $email->setMessageID(\sprintf(
                     'com.woltlab.wcf.genericNotification/%d/%d',
                     $notification->notificationID,
-                    TIME_NOW
+                    \TIME_NOW
                 ));
             }
             if (isset($message['in-reply-to'])) {
@@ -934,7 +934,7 @@ class UserNotificationHandler extends SingletonFactory
                 " . $conditions;
         $statement = WCF::getDB()->prepare($sql);
         $parameters = $conditions->getParameters();
-        \array_unshift($parameters, TIME_NOW);
+        \array_unshift($parameters, \TIME_NOW);
         $statement->execute($parameters);
         $confirmedCount = $statement->getAffectedRows();
 
@@ -990,7 +990,7 @@ class UserNotificationHandler extends SingletonFactory
                 " . $conditions;
         $statement = WCF::getDB()->prepare($sql);
         $parameters = $conditions->getParameters();
-        \array_unshift($parameters, TIME_NOW);
+        \array_unshift($parameters, \TIME_NOW);
         $statement->execute($parameters);
         $confirmedCount = $statement->getAffectedRows();
 

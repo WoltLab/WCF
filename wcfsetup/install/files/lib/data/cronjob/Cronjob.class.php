@@ -68,12 +68,12 @@ class Cronjob extends DatabaseObject
         if ($timeBase === null) {
             if ($this->lastExec) {
                 $timeBase = $this->lastExec + 120;
-                if ($timeBase < TIME_NOW) {
-                    $timeBase = TIME_NOW + 120;
+                if ($timeBase < \TIME_NOW) {
+                    $timeBase = \TIME_NOW + 120;
                 }
             } else {
                 // first time setup
-                $timeBase = TIME_NOW;
+                $timeBase = \TIME_NOW;
             }
         }
 

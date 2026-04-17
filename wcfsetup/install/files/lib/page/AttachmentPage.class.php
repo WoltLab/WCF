@@ -179,7 +179,7 @@ class AttachmentPage extends AbstractPage
                 'showInline' => \in_array($mimeType, self::$inlineMimeTypes),
                 'enableRangeSupport' => !$this->tiny && !$this->thumbnail,
                 'lastModificationTime' => $this->attachment->uploadTime,
-                'expirationDate' => TIME_NOW + $cacheDuration,
+                'expirationDate' => \TIME_NOW + $cacheDuration,
                 'maxAge' => $cacheDuration,
             ]);
         } catch (SystemException $e) {
@@ -224,7 +224,7 @@ class AttachmentPage extends AbstractPage
             $editor = new AttachmentEditor($this->attachment);
             $editor->update([
                 'downloads' => $this->attachment->downloads + 1,
-                'lastDownloadTime' => TIME_NOW,
+                'lastDownloadTime' => \TIME_NOW,
             ]);
         }
 

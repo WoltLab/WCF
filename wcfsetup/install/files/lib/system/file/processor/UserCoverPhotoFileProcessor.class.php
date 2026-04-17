@@ -86,7 +86,7 @@ final class UserCoverPhotoFileProcessor extends AbstractFileProcessor
 
         // Save the `fileID` in the session variable so that the current user can delete the old cover photo
         if ($user->coverPhotoFileID !== null) {
-            WCF::getSession()->register(\sprintf(self::SESSION_VARIABLE, $user->coverPhotoFileID), TIME_NOW);
+            WCF::getSession()->register(\sprintf(self::SESSION_VARIABLE, $user->coverPhotoFileID), \TIME_NOW);
             WCF::getSession()->update();
         }
 

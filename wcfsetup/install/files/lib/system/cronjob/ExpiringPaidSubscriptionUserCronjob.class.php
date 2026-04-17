@@ -30,17 +30,17 @@ class ExpiringPaidSubscriptionUserCronjob extends AbstractCronjob
         // one week before if the subscription lasts months or years (and not just days)
         $conditionBuilder->add(
             '(paid_subscription.subscriptionLengthUnit <> ? AND paid_subscription_user.endDate < ?)',
-            ['d', TIME_NOW + 7 * 24 * 3600]
+            ['d', \TIME_NOW + 7 * 24 * 3600]
         );
         // one week before if the subscription lasts for more than two weeks (2 * 7 days)
         $conditionBuilder->add(
             '(paid_subscription.subscriptionLengthUnit = ? AND paid_subscription.subscriptionLength > ? AND paid_subscription_user.endDate < ?)',
-            ['d', 2 * 7, TIME_NOW + 7 * 24 * 3600]
+            ['d', 2 * 7, \TIME_NOW + 7 * 24 * 3600]
         );
         // two days before if the subscription lasts for less than two weeks (2 * 7 days)
         $conditionBuilder->add(
             '(paid_subscription.subscriptionLengthUnit = ? AND paid_subscription.subscriptionLength <= ? AND paid_subscription_user.endDate < ?)',
-            ['d', 2 * 7, TIME_NOW + 2 * 24 * 3600]
+            ['d', 2 * 7, \TIME_NOW + 2 * 24 * 3600]
         );
 
         $paidSubscriptionUserList = new PaidSubscriptionUserList();

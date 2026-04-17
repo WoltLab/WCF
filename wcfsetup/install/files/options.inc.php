@@ -10,7 +10,7 @@
 
 // phpcs:disable PSR1.Files.SideEffects
 
-\define('LAST_UPDATE_TIME', TIME_NOW);
+\define('LAST_UPDATE_TIME', \TIME_NOW);
 
 $prefix = 'wsc_';
 if (\file_exists(WCF_DIR . 'cookiePrefix.txt')) {

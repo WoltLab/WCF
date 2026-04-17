@@ -46,7 +46,7 @@ class UserAuthenticationFailure extends DatabaseObject
                 WHERE   ipAddress = ?
                     AND time > ?";
         $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([$ipAddress, TIME_NOW - USER_AUTHENTICATION_FAILURE_TIMEOUT]);
+        $statement->execute([$ipAddress, \TIME_NOW - USER_AUTHENTICATION_FAILURE_TIMEOUT]);
 
         return $statement->fetchSingleColumn();
     }
@@ -63,7 +63,7 @@ class UserAuthenticationFailure extends DatabaseObject
                 WHERE   userID = ?
                     AND time > ?";
         $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([$userID, TIME_NOW - USER_AUTHENTICATION_FAILURE_TIMEOUT]);
+        $statement->execute([$userID, \TIME_NOW - USER_AUTHENTICATION_FAILURE_TIMEOUT]);
 
         return $statement->fetchSingleColumn();
     }

@@ -763,7 +763,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             'object' => $this->getSingleObject()->getDecoratedObject(),
             'rotateImages' => true,
         ], [
-            'fileUpdateTime' => TIME_NOW,
+            'fileUpdateTime' => \TIME_NOW,
             'userID' => $this->getSingleObject()->userID,
             'username' => $this->getSingleObject()->username,
             // Reset thumbnail data in case the new file has no thumbnails.

@@ -25,7 +25,7 @@ return new class {
         if ($cronjobNextExec !== null) {
             WCF::getTPL()->assign(
                 'executeCronjobs',
-                $cronjobNextExec < TIME_NOW && \defined('OFFLINE') && !OFFLINE
+                $cronjobNextExec < \TIME_NOW && \defined('OFFLINE') && !OFFLINE
             );
         }
 

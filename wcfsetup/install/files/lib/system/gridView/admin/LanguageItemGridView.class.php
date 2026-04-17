@@ -119,7 +119,7 @@ final class LanguageItemGridView extends AbstractGridView
                     $list->getConditionBuilder()->add("languageCustomItemValue IS NOT NULL");
                     $list->getConditionBuilder()->add(
                         "languageCustomItemDisableTime >= ?",
-                        [TIME_NOW - 86400 * 7]
+                        [\TIME_NOW - 86400 * 7]
                     );
                 }
             },

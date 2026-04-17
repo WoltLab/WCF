@@ -48,7 +48,7 @@ trait TTestableCommentResponseUserNotificationEvent
                 'enableHtml' => 1,
                 'isDisabled' => 0,
                 'message' => '<p>Test Comment</p>',
-                'time' => TIME_NOW - 10,
+                'time' => \TIME_NOW - 10,
                 'userID' => $recipient->userID,
                 'username' => $recipient->username,
             ], self::getTestCommentObjectData($recipient, $author)),
@@ -62,7 +62,7 @@ trait TTestableCommentResponseUserNotificationEvent
         $commentResponse = (new CommentResponseAction([], 'create', [
             'data' => [
                 'commentID' => $comment->commentID,
-                'time' => TIME_NOW - 10,
+                'time' => \TIME_NOW - 10,
                 'userID' => $author->userID,
                 'username' => $author->username,
                 'message' => 'Test Response',

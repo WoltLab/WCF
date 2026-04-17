@@ -104,7 +104,7 @@ class LikeHandler extends SingletonFactory
      *  users: array{}
      * }
      */
-    public function like(ILikeObject $likeable, User $user, int $likeValue, int $time = TIME_NOW)
+    public function like(ILikeObject $likeable, User $user, int $likeValue, int $time = \TIME_NOW)
     {
         $reactionTypeID = null;
         if ($likeValue == 1) {

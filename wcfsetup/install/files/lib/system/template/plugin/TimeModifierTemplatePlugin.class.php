@@ -33,7 +33,7 @@ class TimeModifierTemplatePlugin implements IModifierTemplatePlugin
             $dateTime = new \DateTimeImmutable('@' . $timestamp);
         }
 
-        $isFutureDate = $dateTime->getTimestamp() > TIME_NOW;
+        $isFutureDate = $dateTime->getTimestamp() > \TIME_NOW;
 
         $locale = WCF::getLanguage()->getLocale();
         $timeZone = WCF::getUser()->getTimeZone();

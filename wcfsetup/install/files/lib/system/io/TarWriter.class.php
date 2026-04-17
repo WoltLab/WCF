@@ -74,7 +74,7 @@ class TarWriter extends Tar
 
         $filename = FileUtil::unifyDirSeparator($filename);
 
-        if (!$this->writeHeaderBlock($filename, \strlen($string), TIME_NOW, 33279)) {
+        if (!$this->writeHeaderBlock($filename, \strlen($string), \TIME_NOW, 33279)) {
             return false;
         }
 

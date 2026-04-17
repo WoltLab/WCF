@@ -428,7 +428,7 @@ class UserEditForm extends UserAddForm
         ];
         // handle changed username
         if (\mb_strtolower($this->username) != \mb_strtolower($this->user->username)) {
-            $data['data']['lastUsernameChange'] = TIME_NOW;
+            $data['data']['lastUsernameChange'] = \TIME_NOW;
             $data['data']['oldUsername'] = $this->user->username;
         }
 

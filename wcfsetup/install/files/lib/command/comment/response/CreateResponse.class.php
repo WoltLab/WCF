@@ -37,7 +37,7 @@ final class CreateResponse
         $action = new CommentResponseAction([], 'create', [
             'data' => [
                 'commentID' => $this->comment->commentID,
-                'time' => TIME_NOW,
+                'time' => \TIME_NOW,
                 'userID' => $this->user ? $this->user->userID : null,
                 'username' => $this->user ? $this->user->username : $this->username,
                 'message' => $this->htmlInputProcessor->getHtml(),

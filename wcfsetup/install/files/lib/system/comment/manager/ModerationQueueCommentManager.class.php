@@ -61,7 +61,7 @@ class ModerationQueueCommentManager extends AbstractCommentManager implements IC
             'comments' => $value,
         ]);
         $editor->update([
-            'lastChangeTime' => TIME_NOW,
+            'lastChangeTime' => \TIME_NOW,
         ]);
     }
 

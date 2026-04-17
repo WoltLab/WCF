@@ -205,7 +205,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 
         // Set the execution date to 10 minutes in the future to avoid collisions
         // with the cronjob scheduler.
-        $data['nextExec'] = TIME_NOW + 600;
+        $data['nextExec'] = \TIME_NOW + 600;
     }
 
     #[\Override]
@@ -220,7 +220,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
         $cronjobList->readObjects();
 
         foreach ($cronjobList as $cronjob) {
-            $nextExec = $cronjob->getNextExec(TIME_NOW);
+            $nextExec = $cronjob->getNextExec(\TIME_NOW);
             (new CronjobEditor($cronjob))->update([
                 'nextExec' => $nextExec,
                 // Offset taken from `CronjobScheduler`

@@ -77,7 +77,7 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
         $statement->execute([
             \mb_substr($this->parameters['data']['keyword'], 0, 191),
             ($this->parameters['data']['searches'] ?? 1),
-            ($this->parameters['data']['lastSearchTime'] ?? TIME_NOW),
+            ($this->parameters['data']['lastSearchTime'] ?? \TIME_NOW),
         ]);
     }
 }

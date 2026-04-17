@@ -99,7 +99,7 @@ class SendNewPasswordWorker extends AbstractWorker
     protected function resetPassword(UserEditor $userEditor)
     {
         $lostPasswordKey = Hex::encode(\random_bytes(20));
-        $lastLostPasswordRequestTime = TIME_NOW;
+        $lastLostPasswordRequestTime = \TIME_NOW;
         $userAction = new UserAction([$userEditor], 'update', [
             'data' => [
                 'password' => null,
@@ -122,7 +122,7 @@ class SendNewPasswordWorker extends AbstractWorker
         $email->setMessageID(\sprintf(
             'com.woltlab.wcf.sendNewPassword/%d/%d/%s',
             $user->userID,
-            TIME_NOW,
+            \TIME_NOW,
             \bin2hex(\random_bytes(8))
         ));
         $email->addRecipient(new UserMailbox($user));

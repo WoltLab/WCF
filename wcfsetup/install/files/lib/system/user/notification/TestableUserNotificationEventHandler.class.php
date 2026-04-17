@@ -82,7 +82,7 @@ class TestableUserNotificationEventHandler extends SingletonFactory
                         'email' => $username . '@example.com',
                         'languageID' => $languages[\array_rand($languages)]->languageID,
                         'password' => Hex::encode(\random_bytes(16)),
-                        'registrationDate' => TIME_NOW - 24 * 3600 * \random_int(10, 1000),
+                        'registrationDate' => \TIME_NOW - 24 * 3600 * \random_int(10, 1000),
                         'username' => $username,
                     ],
                 ]))->executeAction()['returnValues'];
@@ -200,7 +200,7 @@ class TestableUserNotificationEventHandler extends SingletonFactory
             'eventHash' => '',
             'guestTimesTriggered' => $guestTimesTriggered,
             'mailNotified' => 0,
-            'time' => TIME_NOW - 60 * 60,
+            'time' => \TIME_NOW - 60 * 60,
             'timesTriggered' => $timesTriggered,
             'userID' => $this->getRecipient()->userID,
         ]);

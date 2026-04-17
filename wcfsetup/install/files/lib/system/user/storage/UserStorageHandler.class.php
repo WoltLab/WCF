@@ -336,7 +336,7 @@ final class UserStorageHandler extends SingletonFactory
     public function clear(): void
     {
         if ($this->redis) {
-            $this->redis->setnx('ush:_flush', TIME_NOW);
+            $this->redis->setnx('ush:_flush', \TIME_NOW);
             $this->redis->incr('ush:_flush');
 
             return;
@@ -360,7 +360,7 @@ final class UserStorageHandler extends SingletonFactory
 
         // create flush counter if it does not exist
         if ($flush === false) {
-            $this->redis->setnx('ush:_flush', TIME_NOW);
+            $this->redis->setnx('ush:_flush', \TIME_NOW);
             $this->redis->incr('ush:_flush');
 
             $flush = $this->redis->get('ush:_flush');

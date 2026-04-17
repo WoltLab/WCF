@@ -38,8 +38,8 @@ class AttachmentCleanUpCronjob extends AbstractCronjob
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             0,
-            TIME_NOW - 86400,
-            TIME_NOW - (86400 * 3),
+            \TIME_NOW - 86400,
+            \TIME_NOW - (86400 * 3),
         ]);
         $attachmentIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
@@ -65,7 +65,7 @@ class AttachmentCleanUpCronjob extends AbstractCronjob
         $statement->execute([
             ObjectTypeCache::getInstance()
                 ->getObjectTypeIDByName('com.woltlab.wcf.attachment.objectType', 'com.woltlab.wcf.contact'),
-            TIME_NOW - (CONTACT_FORM_PRUNE_ATTACHMENTS * 86400),
+            \TIME_NOW - (CONTACT_FORM_PRUNE_ATTACHMENTS * 86400),
         ]);
 
         return $statement->fetchAll(\PDO::FETCH_COLUMN);

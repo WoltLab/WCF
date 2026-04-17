@@ -303,7 +303,7 @@ class LanguageFactory extends SingletonFactory
                 FROM    wcf1_language_item
                 WHERE   languageCustomItemDisableTime >= ?";
         $statement = WCF::getDB()->prepare($sql, 1);
-        $statement->execute([TIME_NOW - 86400 * 7]);
+        $statement->execute([\TIME_NOW - 86400 * 7]);
 
         return $statement->fetchSingleColumn();
     }

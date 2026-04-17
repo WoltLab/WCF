@@ -34,7 +34,7 @@ class BirthdayOptionType extends DateOptionType
         }
 
         $timestamp = @\strtotime($newValue);
-        if ($timestamp > TIME_NOW || $timestamp < -2147483647) {
+        if ($timestamp > \TIME_NOW || $timestamp < -2147483647) {
             throw new UserInputException($option->optionName, 'validationFailed');
         }
     }
@@ -79,8 +79,8 @@ class BirthdayOptionType extends DateOptionType
             return false;
         }
 
-        $dateFrom = DateUtil::getDateTimeByTimestamp(TIME_NOW)->sub(new \DateInterval('P' . ($ageTo + 1) . 'Y'))->add(new \DateInterval('P1D'));
-        $dateTo = DateUtil::getDateTimeByTimestamp(TIME_NOW)->sub(new \DateInterval('P' . $ageFrom . 'Y'));
+        $dateFrom = DateUtil::getDateTimeByTimestamp(\TIME_NOW)->sub(new \DateInterval('P' . ($ageTo + 1) . 'Y'))->add(new \DateInterval('P1D'));
+        $dateTo = DateUtil::getDateTimeByTimestamp(\TIME_NOW)->sub(new \DateInterval('P' . $ageFrom . 'Y'));
 
         $conditions->add('option_value.userOption' . User::getUserOptionID('birthdayShowYear') . ' = ?', [1]);
 
@@ -97,7 +97,7 @@ class BirthdayOptionType extends DateOptionType
         } else {
             $conditions->add('option_value.userOption' . $option->optionID . ' BETWEEN DATE(?) AND DATE(?)', [
                 $dateFrom->format('Y-m-d'),
-                DateUtil::getDateTimeByTimestamp(TIME_NOW)->add(new \DateInterval('P1D'))->format('Y-m-d'),
+                DateUtil::getDateTimeByTimestamp(\TIME_NOW)->add(new \DateInterval('P1D'))->format('Y-m-d'),
             ]);
         }
 
@@ -114,8 +114,8 @@ class BirthdayOptionType extends DateOptionType
             return;
         }
 
-        $dateFrom = DateUtil::getDateTimeByTimestamp(TIME_NOW)->sub(new \DateInterval('P' . ($ageTo + 1) . 'Y'))->add(new \DateInterval('P1D'));
-        $dateTo = DateUtil::getDateTimeByTimestamp(TIME_NOW)->sub(new \DateInterval('P' . $ageFrom . 'Y'));
+        $dateFrom = DateUtil::getDateTimeByTimestamp(\TIME_NOW)->sub(new \DateInterval('P' . ($ageTo + 1) . 'Y'))->add(new \DateInterval('P1D'));
+        $dateTo = DateUtil::getDateTimeByTimestamp(\TIME_NOW)->sub(new \DateInterval('P' . $ageFrom . 'Y'));
 
         $userList->getConditionBuilder()->add(
             'user_option_value.userOption' . User::getUserOptionID('birthdayShowYear') . ' = ?',
@@ -137,7 +137,7 @@ class BirthdayOptionType extends DateOptionType
                 'user_option_value.userOption' . $option->optionID . ' BETWEEN DATE(?) AND DATE(?)',
                 [
                     $dateFrom->format('Y-m-d'),
-                    DateUtil::getDateTimeByTimestamp(TIME_NOW)->add(new \DateInterval('P1D'))->format('Y-m-d'),
+                    DateUtil::getDateTimeByTimestamp(\TIME_NOW)->add(new \DateInterval('P1D'))->format('Y-m-d'),
                 ]
             );
         }

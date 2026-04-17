@@ -106,7 +106,7 @@ class BoxEditForm extends BoxAddForm
             'position' => $this->position,
             'showOrder' => $this->showOrder,
             'visibleEverywhere' => $this->visibleEverywhere,
-            'lastUpdateTime' => TIME_NOW,
+            'lastUpdateTime' => \TIME_NOW,
             'cssClassName' => $this->cssClassName,
             'showHeader' => $this->showHeader,
             'isDisabled' => $this->isDisabled ? 1 : 0,

@@ -190,7 +190,7 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
     public function getPeriod()
     {
         if (empty(self::$periods)) {
-            $date = DateUtil::getDateTimeByTimestamp(TIME_NOW);
+            $date = DateUtil::getDateTimeByTimestamp(\TIME_NOW);
             $date->setTimezone(WCF::getUser()->getTimeZone());
             $date->setTime(0, 0, 0);
 

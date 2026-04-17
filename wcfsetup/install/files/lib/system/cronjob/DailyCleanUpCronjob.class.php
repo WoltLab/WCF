@@ -36,7 +36,7 @@ class DailyCleanUpCronjob extends AbstractCronjob
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 \floor($row['searches'] / 4),
-                TIME_NOW - 86400 * 30,
+                \TIME_NOW - 86400 * 30,
             ]);
         }
 
@@ -45,7 +45,7 @@ class DailyCleanUpCronjob extends AbstractCronjob
                 WHERE       time < ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
-            TIME_NOW - 86400 * USER_CLEANUP_NOTIFICATION_LIFETIME,
+            \TIME_NOW - 86400 * USER_CLEANUP_NOTIFICATION_LIFETIME,
         ]);
 
         // clean up user activity events
@@ -53,7 +53,7 @@ class DailyCleanUpCronjob extends AbstractCronjob
                 WHERE       time < ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
-            TIME_NOW - 86400 * USER_CLEANUP_ACTIVITY_EVENT_LIFETIME,
+            \TIME_NOW - 86400 * USER_CLEANUP_ACTIVITY_EVENT_LIFETIME,
         ]);
 
         // clean up profile visitors
@@ -61,7 +61,7 @@ class DailyCleanUpCronjob extends AbstractCronjob
                 WHERE       time < ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
-            TIME_NOW - 86400 * USER_CLEANUP_PROFILE_VISITOR_LIFETIME,
+            \TIME_NOW - 86400 * USER_CLEANUP_PROFILE_VISITOR_LIFETIME,
         ]);
 
         VisitTracker::getInstance()->prune();
@@ -71,7 +71,7 @@ class DailyCleanUpCronjob extends AbstractCronjob
                 WHERE       execTime < ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
-            TIME_NOW - (86400 * 7),
+            \TIME_NOW - (86400 * 7),
         ]);
 
         // clean up session access log
@@ -83,7 +83,7 @@ class DailyCleanUpCronjob extends AbstractCronjob
                             )";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
-            TIME_NOW - (86400 * 30),
+            \TIME_NOW - (86400 * 30),
         ]);
 
         // clean up session log
@@ -91,7 +91,7 @@ class DailyCleanUpCronjob extends AbstractCronjob
                 WHERE       lastActivityTime < ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
-            TIME_NOW - (86400 * 30),
+            \TIME_NOW - (86400 * 30),
         ]);
 
         // clean up search data
@@ -99,7 +99,7 @@ class DailyCleanUpCronjob extends AbstractCronjob
                 WHERE       searchTime < ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
-            TIME_NOW - 86400,
+            \TIME_NOW - 86400,
         ]);
 
         // clean up expired edit history entries
@@ -109,7 +109,7 @@ class DailyCleanUpCronjob extends AbstractCronjob
                         WHERE       obsoletedAt < ?";
                 $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([
-                    TIME_NOW - 86400 * EDIT_HISTORY_EXPIRATION,
+                    \TIME_NOW - 86400 * EDIT_HISTORY_EXPIRATION,
                 ]);
             }
         } else {
@@ -125,7 +125,7 @@ class DailyCleanUpCronjob extends AbstractCronjob
                     WHERE       time < ?";
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
-                TIME_NOW - 86400 * USER_AUTHENTICATION_FAILURE_EXPIRATION,
+                \TIME_NOW - 86400 * USER_AUTHENTICATION_FAILURE_EXPIRATION,
             ]);
         }
 
@@ -134,7 +134,7 @@ class DailyCleanUpCronjob extends AbstractCronjob
                     WHERE       time < ?";
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
-                TIME_NOW - 86400 * MODIFICATION_LOG_EXPIRATION,
+                \TIME_NOW - 86400 * MODIFICATION_LOG_EXPIRATION,
             ]);
         }
 
@@ -142,7 +142,7 @@ class DailyCleanUpCronjob extends AbstractCronjob
         $files = @\glob(WCF_DIR . 'log/*.txt');
         if (\is_array($files)) {
             foreach ($files as $filename) {
-                if (\filemtime($filename) < TIME_NOW - 86400 * 14) {
+                if (\filemtime($filename) < \TIME_NOW - 86400 * 14) {
                     @\unlink($filename);
                 }
             }
@@ -164,7 +164,7 @@ class DailyCleanUpCronjob extends AbstractCronjob
             }
 
             $mtime = @$file->getMTime();
-            if ($mtime !== false && $mtime < TIME_NOW - 86400) {
+            if ($mtime !== false && $mtime < \TIME_NOW - 86400) {
                 if ($file->isDir()) {
                     @\rmdir($file->getPathname());
                 } elseif ($file->isFile()) {
@@ -184,14 +184,14 @@ class DailyCleanUpCronjob extends AbstractCronjob
                     continue;
                 }
 
-                if ($file->isFile() && $file->getMTime() < (TIME_NOW - 86400 * IMAGE_PROXY_EXPIRATION)) {
+                if ($file->isFile() && $file->getMTime() < (\TIME_NOW - 86400 * IMAGE_PROXY_EXPIRATION)) {
                     @\unlink($file->getPathname());
                 }
             }
         }
 
         if (BLACKLIST_SFS_ENABLE) {
-            $timeLimit = TIME_NOW - 31 * 86400;
+            $timeLimit = \TIME_NOW - 31 * 86400;
 
             $sql = "DELETE FROM wcf1_blacklist_entry
                     WHERE       lastSeen < ?";

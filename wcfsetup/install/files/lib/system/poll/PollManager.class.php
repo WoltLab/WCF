@@ -241,8 +241,8 @@ class PollManager extends SingletonFactory
             throw new UserInputException('pollQuestion');
         }
 
-        if ($this->pollData['endTime'] && $this->pollData['endTime'] <= TIME_NOW) {
-            if ($this->poll === null || $this->poll->endTime >= TIME_NOW) {
+        if ($this->pollData['endTime'] && $this->pollData['endTime'] <= \TIME_NOW) {
+            if ($this->poll === null || $this->poll->endTime >= \TIME_NOW) {
                 // end time is in the past
                 throw new UserInputException('pollEndTime', 'invalid');
             }
@@ -292,7 +292,7 @@ class PollManager extends SingletonFactory
             $data = $this->pollData;
             $data['objectID'] = $this->objectID;
             $data['objectTypeID'] = $this->cache[$this->objectType]->objectTypeID;
-            $data['time'] = TIME_NOW;
+            $data['time'] = \TIME_NOW;
 
             $action = new PollAction([], 'create', [
                 'data' => $data,

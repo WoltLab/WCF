@@ -45,7 +45,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             0,
-            TIME_NOW - 3600 * 23,
+            \TIME_NOW - 3600 * 23,
             0,
         ]);
         $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);

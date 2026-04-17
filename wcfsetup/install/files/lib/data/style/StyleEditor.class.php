@@ -603,7 +603,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
 
                             if (isset($knownTemplates[Package::getAbbreviation($package) . '-' . $templateName])) {
                                 $knownTemplates[Package::getAbbreviation($package) . '-' . $templateName]->update([
-                                    'lastModificationTime' => TIME_NOW,
+                                    'lastModificationTime' => \TIME_NOW,
                                 ]);
                             } else {
                                 TemplateEditor::create([
@@ -1307,7 +1307,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             $parameters['packageID'] = 1;
         }
         if (!isset($parameters['styleDate'])) {
-            $parameters['styleDate'] = \gmdate('Y-m-d', TIME_NOW);
+            $parameters['styleDate'] = \gmdate('Y-m-d', \TIME_NOW);
         }
 
         // check if no default style is defined

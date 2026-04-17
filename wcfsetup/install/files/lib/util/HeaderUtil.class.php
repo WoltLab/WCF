@@ -42,7 +42,7 @@ final class HeaderUtil
             'Set-Cookie: ' . \rawurlencode(COOKIE_PREFIX . $name) . '=' . \rawurlencode((string)$value) . ($expire ? '; expires=' . \gmdate(
                 'D, d-M-Y H:i:s',
                 $expire
-            ) . ' GMT; max-age=' . ($expire - TIME_NOW) : '') . '; path=/' . ($cookieDomain !== null ? '; domain=' . $cookieDomain : '') . (RouteHandler::secureConnection() ? '; secure' : '') . '; HttpOnly',
+            ) . ' GMT; max-age=' . ($expire - \TIME_NOW) : '') . '; path=/' . ($cookieDomain !== null ? '; domain=' . $cookieDomain : '') . (RouteHandler::secureConnection() ? '; secure' : '') . '; HttpOnly',
             false
         );
     }

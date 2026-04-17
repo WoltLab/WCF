@@ -99,7 +99,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
                     'objectID' => $objectID,
                     'containerID' => $containerID,
                     'userID' => WCF::getUser()->userID ?: null,
-                    'time' => TIME_NOW,
+                    'time' => \TIME_NOW,
                     'additionalData' => \serialize($additionalData),
                 ],
             ]);
@@ -110,7 +110,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
                     'status' => ModerationQueue::STATUS_OUTSTANDING,
                     'containerID' => $containerID,
                     'userID' => WCF::getUser()->userID ?: null,
-                    'time' => TIME_NOW,
+                    'time' => \TIME_NOW,
                     'additionalData' => \serialize($additionalData),
                 ],
             ]);
@@ -166,8 +166,8 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
                     $objectID,
                     $containerIDs[$objectID] ?? 0,
                     $userID,
-                    TIME_NOW,
-                    TIME_NOW,
+                    \TIME_NOW,
+                    \TIME_NOW,
                     $serializedData,
                 ]);
             }
@@ -220,8 +220,8 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
                         ModerationQueue::STATUS_OUTSTANDING,
                         $containerID,
                         $userID,
-                        TIME_NOW,
-                        TIME_NOW,
+                        \TIME_NOW,
+                        \TIME_NOW,
                         $serializedData,
                     ],
                     $conditionBuilder->getParameters()
