@@ -37,9 +37,6 @@ class UserOptionImporter extends AbstractImporter
      */
     protected $categoryCache;
 
-    /**
-     * Creates a new UserOptionImporter object.
-     */
     public function __construct()
     {
         // get language category id

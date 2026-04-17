@@ -47,9 +47,6 @@ final class RatingFormField extends AbstractFormField implements
      */
     protected $templateName = 'shared_ratingFormField';
 
-    /**
-     * Creates a new instance of `RatingFormField`.
-     */
     public function __construct()
     {
         $this->label('wcf.form.field.rating');

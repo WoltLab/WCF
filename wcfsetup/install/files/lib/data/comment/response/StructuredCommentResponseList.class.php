@@ -52,9 +52,6 @@ class StructuredCommentResponseList extends CommentResponseList
      */
     public $sqlLimit = 50;
 
-    /**
-     * Creates a new structured comment response list.
-     */
     public function __construct(ICommentManager $commentManager, Comment $comment)
     {
         parent::__construct();

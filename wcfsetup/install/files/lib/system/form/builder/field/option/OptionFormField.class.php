@@ -26,9 +26,6 @@ final class OptionFormField extends ItemListFormField implements IPackagesFormFi
     use TDefaultIdFormField;
     use TPackagesFormField;
 
-    /**
-     * Creates a new instance of `OptionsFormField`.
-     */
     public function __construct()
     {
         parent::__construct();

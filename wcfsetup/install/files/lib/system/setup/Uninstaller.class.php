@@ -36,8 +36,6 @@ class Uninstaller
     protected $deleteEmptyDirectories;
 
     /**
-     * Creates a new Uninstaller object.
-     *
      * @param string[] $files
      */
     public function __construct(string $targetDir, array $files, bool $deleteEmptyTargetDir, bool $deleteEmptyDirectories)

@@ -51,8 +51,6 @@ abstract class DatabaseEditor
     protected $dbObj;
 
     /**
-     * Creates a new DatabaseEditor object.
-     *
      * @param Database $dbObj
      */
     public function __construct(Database $dbObj)

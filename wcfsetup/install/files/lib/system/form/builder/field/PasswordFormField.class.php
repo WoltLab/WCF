@@ -69,9 +69,6 @@ class PasswordFormField extends AbstractFormField implements
      */
     protected array $staticDictionary = [];
 
-    /**
-     * Creates a new instance of `PasswordFormField`.
-     */
     public function __construct()
     {
         $this->label('wcf.user.password');

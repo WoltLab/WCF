@@ -27,8 +27,6 @@ class TarWriter extends Tar
     protected $mode = 'wb+';
 
     /**
-     * Creates a new TarWriter object.
-     *
      * @param bool $compress enables gzip compression
      */
     public function __construct(string $archiveName, bool $compress = false)

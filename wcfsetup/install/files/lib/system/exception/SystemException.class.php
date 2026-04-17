@@ -30,8 +30,6 @@ class SystemException extends LoggedException implements IExtraInformationExcept
     protected $functions = '';
 
     /**
-     * Creates a new SystemException.
-     *
      * @param string $message error message
      * @param int $code error code
      * @param string $description description of the error

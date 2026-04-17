@@ -30,8 +30,6 @@ class VersionTrackerEntry
     protected $payload = [];
 
     /**
-     * VersionTrackerEntry constructor.
-     *
      * @param mixed[] $data version data
      */
     public function __construct(?int $id, array $data)

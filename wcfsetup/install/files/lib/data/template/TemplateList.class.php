@@ -20,9 +20,6 @@ class TemplateList extends DatabaseObjectList
      */
     public $className = Template::class;
 
-    /**
-     * Creates a new TemplateList object.
-     */
     public function __construct()
     {
         parent::__construct();

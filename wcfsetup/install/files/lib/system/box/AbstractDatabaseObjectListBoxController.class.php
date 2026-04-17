@@ -112,8 +112,6 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
     public $validSortFields;
 
     /**
-     * Creates a new instance of AbstractDynamicBoxController.
-     *
      * @throws  \LogicException
      */
     public function __construct()

@@ -45,9 +45,6 @@ final class DatabaseTableIndex
 
     const FULLTEXT_TYPE = 'FULLTEXT';
 
-    /**
-     * Creates a new `DatabaseTableIndex` object.
-     */
     private function __construct(string $name)
     {
         $this->name = $name;

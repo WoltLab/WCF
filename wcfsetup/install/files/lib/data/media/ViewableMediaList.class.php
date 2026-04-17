@@ -24,9 +24,6 @@ class ViewableMediaList extends MediaList
      */
     public $decoratorClassName = ViewableMedia::class;
 
-    /**
-     * Creates a new ViewableMediaList object.
-     */
     public function __construct(?int $languageID = null)
     {
         parent::__construct();

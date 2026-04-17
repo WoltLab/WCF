@@ -35,8 +35,6 @@ class DevtoolsPackageXmlWriter
     protected $xmlWriter;
 
     /**
-     * Creates a new `DevtoolsPackageXmlWriter` object.
-     *
      * @param mixed[][] $packageXmlData
      */
     public function __construct(DevtoolsProject $project, array $packageXmlData)

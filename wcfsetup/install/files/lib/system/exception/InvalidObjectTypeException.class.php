@@ -13,8 +13,6 @@ namespace wcf\system\exception;
 class InvalidObjectTypeException extends \UnexpectedValueException
 {
     /**
-     * InvalidObjectTypeException constructor.
-     *
      * @param string $objectType invalid object type name
      * @param string $definitionName name of the required object type definition
      */

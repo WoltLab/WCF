@@ -74,9 +74,6 @@ class StructuredCommentList extends CommentList
      */
     public $responseLoading = true;
 
-    /**
-     * Creates a new structured comment list.
-     */
     public function __construct(ICommentManager $commentManager, int $objectTypeID, int $objectID)
     {
         parent::__construct();

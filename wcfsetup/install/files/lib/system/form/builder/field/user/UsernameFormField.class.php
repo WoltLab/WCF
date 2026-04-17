@@ -66,9 +66,6 @@ final class UsernameFormField extends AbstractFormField implements
      */
     protected $templateName = 'shared_usernameFormField';
 
-    /**
-     * Creates a new instance of `UsernameFormField`.
-     */
     public function __construct()
     {
         $this->label('wcf.user.username');

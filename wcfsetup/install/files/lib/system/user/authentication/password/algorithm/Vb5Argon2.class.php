@@ -19,9 +19,6 @@ final class Vb5Argon2 implements IPasswordAlgorithm
      */
     private $argon2;
 
-    /**
-     * Wcf2 constructor.
-     */
     public function __construct()
     {
         $this->argon2 = new Argon2();

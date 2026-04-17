@@ -13,9 +13,6 @@ namespace wcf\system\exception;
  */
 class InvalidObjectArgument extends \InvalidArgumentException
 {
-    /**
-     * InvalidObjectArgument constructor.
-     */
     public function __construct(object $object, string $expectedClass, string $objectName = 'Object')
     {
         parent::__construct(

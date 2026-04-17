@@ -34,9 +34,6 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
      */
     private $urlID;
 
-    /**
-     * UnfurlURLJob constructor.
-     */
     public function __construct(UnfurlUrl $url)
     {
         $this->urlID = $url->urlID;

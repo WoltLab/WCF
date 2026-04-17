@@ -61,8 +61,6 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
     public $options = [];
 
     /**
-     * Creates a new instance of DefaultUploadFileSaveStrategy.
-     *
      * @param mixed[] $options
      * @param mixed[] $data
      * @throws  ImplementationException

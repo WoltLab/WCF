@@ -33,9 +33,6 @@ abstract class AbstractBoxController implements IBoxController
      */
     protected static $supportedPositions = [];
 
-    /**
-     * Creates a new instance of AbstractBoxController.
-     */
     public function __construct()
     {
         EventHandler::getInstance()->fireAction($this, '__construct');

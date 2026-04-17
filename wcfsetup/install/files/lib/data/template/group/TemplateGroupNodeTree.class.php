@@ -35,8 +35,6 @@ final class TemplateGroupNodeTree implements \IteratorAggregate
     private TemplateGroupNode $parentNode;
 
     /**
-     * Creates a new instance of TemplateGroupNodeTree.
-     *
      * @param int[] $excludedTemplateGroupIDs
      */
     public function __construct(

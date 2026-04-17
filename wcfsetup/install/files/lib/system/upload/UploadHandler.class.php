@@ -26,8 +26,6 @@ class UploadHandler
     protected $erroneousFiles = [];
 
     /**
-     * Creates a new UploadHandler object.
-     *
      * @param mixed[] $rawFileData
      */
     protected function __construct(array $rawFileData)

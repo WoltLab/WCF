@@ -69,9 +69,6 @@ class DateFormField extends AbstractFormField implements
 
     const TIME_FORMAT = 'Y-m-d\TH:i:sP';
 
-    /**
-     * Creates a new instance of `DateFormField`.
-     */
     public function __construct()
     {
         $this->addFieldClass('medium');

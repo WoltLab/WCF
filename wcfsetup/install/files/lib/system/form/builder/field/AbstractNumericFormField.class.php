@@ -62,9 +62,6 @@ abstract class AbstractNumericFormField extends AbstractFormField implements
      */
     protected $templateName = 'shared_numericFormField';
 
-    /**
-     * Creates a new instance of `AbstractNumericFormField`.
-     */
     public function __construct()
     {
         $this->addFieldClass('short');

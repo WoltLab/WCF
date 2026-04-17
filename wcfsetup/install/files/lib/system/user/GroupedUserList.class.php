@@ -43,9 +43,6 @@ class GroupedUserList implements \Countable, \Iterator
      */
     protected array $userIDs = [];
 
-    /**
-     * Creates a new grouped list of users.
-     */
     public function __construct(string $groupName = '', string $noUsersMessage = '')
     {
         $this->groupName = $groupName;

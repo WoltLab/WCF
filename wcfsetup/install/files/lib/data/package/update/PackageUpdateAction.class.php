@@ -744,8 +744,6 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
     }
 
     /**
-     * Creates a new package installation queue.
-     *
      * @return QueueEntry
      * @throws SystemException
      */

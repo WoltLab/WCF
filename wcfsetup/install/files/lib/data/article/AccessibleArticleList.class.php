@@ -14,9 +14,6 @@ use wcf\system\WCF;
  */
 class AccessibleArticleList extends ViewableArticleList
 {
-    /**
-     * Creates a new AccessibleArticleList object.
-     */
     public function __construct()
     {
         parent::__construct();

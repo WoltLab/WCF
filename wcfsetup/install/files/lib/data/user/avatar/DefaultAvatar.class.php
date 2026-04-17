@@ -28,8 +28,6 @@ class DefaultAvatar implements IUserAvatar, ISafeFormatAvatar
     protected $src = '';
 
     /**
-     * DefaultAvatar constructor.
-     *
      * @param string $username username for use with the 'initials' avatar type
      */
     public function __construct(string $username = '')

@@ -21,9 +21,6 @@ class RedisCacheSource implements ICacheSource
      */
     protected $redis;
 
-    /**
-     * Creates a new instance of Redis.
-     */
     public function __construct()
     {
         try {

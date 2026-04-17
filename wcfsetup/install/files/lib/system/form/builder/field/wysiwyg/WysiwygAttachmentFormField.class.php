@@ -39,9 +39,6 @@ final class WysiwygAttachmentFormField extends AbstractFormField
      */
     protected $templateName = 'shared_wysiwygAttachmentFormField';
 
-    /**
-     * Creates a new instance of `WysiwygAttachmentFormField`.
-     */
     public function __construct()
     {
         $this->addClass('wide');

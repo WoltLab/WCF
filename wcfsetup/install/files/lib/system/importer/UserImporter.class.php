@@ -52,9 +52,6 @@ class UserImporter extends AbstractImporter
 
     const MERGE_MODE_USERNAME_OR_EMAIL = 5;
 
-    /**
-     * Creates a new UserImporter object.
-     */
     public function __construct()
     {
         // get default notification events

@@ -49,9 +49,6 @@ final class UserPasswordField extends AbstractFormField implements
      */
     protected $templateName = 'shared_userPasswordFormField';
 
-    /**
-     * Creates a new instance of `UserPasswordField`.
-     */
     public function __construct()
     {
         $this->label('wcf.user.password');

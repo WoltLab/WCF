@@ -60,8 +60,6 @@ class UploadFile
     protected $validationErrorAdditionalData = [];
 
     /**
-     * Creates a new UploadFile object.
-     *
      * @throws  \Exception  if an error occurred during upload and debug mode is enabled
      */
     public function __construct(string $filename, string $location, int $filesize, int $errorCode = 0, string $mimeType = '')

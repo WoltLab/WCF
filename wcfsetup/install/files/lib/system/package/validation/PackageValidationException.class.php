@@ -237,8 +237,6 @@ class PackageValidationException extends SystemException
     const FROMVERSION_CONTAINS_ONLY_WILDCARD = 32;
 
     /**
-     * Creates a new PackageArchiveValidationException.
-     *
      * @param array<string, mixed> $details
      */
     public function __construct(int $code, array $details = [])

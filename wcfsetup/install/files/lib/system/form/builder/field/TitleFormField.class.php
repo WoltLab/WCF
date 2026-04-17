@@ -14,9 +14,6 @@ class TitleFormField extends TextFormField
 {
     use TDefaultIdFormField;
 
-    /**
-     * Creates a new instance of `TitleFormField`.
-     */
     public function __construct()
     {
         parent::__construct();

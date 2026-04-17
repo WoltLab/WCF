@@ -50,8 +50,6 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
     protected $data;
 
     /**
-     * Creates a new instance of the DatabaseObject class.
-     *
      * @param mixed[]|null $row
      * @param ?static $object
      */

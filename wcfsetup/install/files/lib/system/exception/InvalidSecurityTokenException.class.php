@@ -13,9 +13,6 @@ use wcf\system\WCF;
  */
 class InvalidSecurityTokenException extends NamedUserException
 {
-    /**
-     * Creates a new InvalidSecurityTokenException object.
-     */
     public function __construct()
     {
         parent::__construct(WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.sessionExpired'));

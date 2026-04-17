@@ -18,9 +18,6 @@ class SmileyCategoryImporter extends AbstractCategoryImporter
      */
     protected $objectTypeName = 'com.woltlab.wcf.smiley.category';
 
-    /**
-     * Creates a new SmileyCategoryImporter object.
-     */
     public function __construct()
     {
         $objectType = ObjectTypeCache::getInstance()

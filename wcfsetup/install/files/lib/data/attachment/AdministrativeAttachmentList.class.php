@@ -21,9 +21,6 @@ class AdministrativeAttachmentList extends AttachmentList
      */
     public $decoratorClassName = AdministrativeAttachment::class;
 
-    /**
-     * Creates a new AdministrativeAttachmentList object.
-     */
     public function __construct()
     {
         parent::__construct();

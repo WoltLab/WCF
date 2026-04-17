@@ -19,8 +19,6 @@ use wcf\system\WCFACP;
 class PermissionDeniedException extends UserException
 {
     /**
-     * Creates a new PermissionDeniedException object.
-     *
      * @param ?string $message custom error message
      */
     public function __construct(?string $message = null)

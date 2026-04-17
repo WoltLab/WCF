@@ -58,8 +58,6 @@ class DatabaseException extends SystemException
     protected $sqlQuery;
 
     /**
-     * Creates a new DatabaseException.
-     *
      * @param string $message error message
      * @param Database $db affected db object
      * @param ?PreparedStatement $preparedStatement affected prepared statement

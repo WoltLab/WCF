@@ -19,9 +19,6 @@ final class Wcf2 implements IPasswordAlgorithm
      */
     private $doubleBcrypt;
 
-    /**
-     * Wcf2 constructor.
-     */
     public function __construct()
     {
         $this->doubleBcrypt = new DoubleBcrypt();

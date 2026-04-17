@@ -19,9 +19,6 @@ class ArticleCommentImporter extends AbstractCommentImporter
      */
     protected $objectTypeName = 'com.woltlab.wcf.article.comment';
 
-    /**
-     * Creates a new ArticleCommentImporter object.
-     */
     public function __construct()
     {
         $objectType = ObjectTypeCache::getInstance()

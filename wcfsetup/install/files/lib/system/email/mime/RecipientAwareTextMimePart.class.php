@@ -41,8 +41,6 @@ class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAware
     protected $mailbox;
 
     /**
-     * Creates a new AbstractRecipientAwareTextMimePart.
-     *
      * @param string $mimeType Mime type to provide in the email. You *must* not provide a charset. UTF-8 will be used automatically.
      * @param string $template Template to evaluate
      * @param string $application Application of the template to evaluate (default: wcf)

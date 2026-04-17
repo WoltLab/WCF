@@ -65,8 +65,6 @@ final class DirectoryUtil
     ];
 
     /**
-     * Creates a new instance of DirectoryUtil.
-     *
      * @param string $directory directory path
      * @param bool $recursive created a recursive directory iterator
      * @see     \wcf\util\DirectoryUtil::getInstance()

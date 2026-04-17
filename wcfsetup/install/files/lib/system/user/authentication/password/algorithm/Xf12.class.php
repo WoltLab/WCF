@@ -19,9 +19,6 @@ final class Xf12 implements IPasswordAlgorithm
      */
     private $bcrypt;
 
-    /**
-     * Wcf2 constructor.
-     */
     public function __construct()
     {
         $this->bcrypt = new Bcrypt();

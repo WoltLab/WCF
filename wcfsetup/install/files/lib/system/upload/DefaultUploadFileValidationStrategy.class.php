@@ -30,8 +30,6 @@ class DefaultUploadFileValidationStrategy implements IUploadFileValidationStrate
     protected $fileExtensionRegex = '';
 
     /**
-     * Creates a new DefaultUploadFileValidationStrategy object.
-     *
      * @param string[] $fileExtensions
      */
     public function __construct(int $maxFilesize, array $fileExtensions)

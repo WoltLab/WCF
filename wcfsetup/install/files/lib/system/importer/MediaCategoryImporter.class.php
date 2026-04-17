@@ -18,9 +18,6 @@ class MediaCategoryImporter extends AbstractCategoryImporter
      */
     protected $objectTypeName = 'com.woltlab.wcf.media.category';
 
-    /**
-     * Creates a new `MediaCategoryImporter` object.
-     */
     public function __construct()
     {
         $this->objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeByName(

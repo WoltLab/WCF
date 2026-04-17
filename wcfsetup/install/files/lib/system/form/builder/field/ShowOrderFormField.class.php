@@ -40,9 +40,6 @@ final class ShowOrderFormField extends SingleSelectionFormField
      */
     protected $addedFirstPositionOption = false;
 
-    /**
-     * Creates a new instance of `ShowOrderFormField`.
-     */
     public function __construct()
     {
         $this->label('wcf.form.field.showOrder');

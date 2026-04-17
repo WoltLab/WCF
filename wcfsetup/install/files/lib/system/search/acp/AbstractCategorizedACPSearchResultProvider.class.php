@@ -33,9 +33,6 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
      */
     protected $topCategories = [];
 
-    /**
-     * Creates a new categorized ACP search result provider.
-     */
     public function __construct()
     {
         $this->loadCategories();

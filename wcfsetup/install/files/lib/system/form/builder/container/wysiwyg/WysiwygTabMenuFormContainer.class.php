@@ -20,9 +20,6 @@ class WysiwygTabMenuFormContainer extends TabMenuFormContainer
      */
     protected $templateName = 'shared_wysiwygTabMenuFormContainer';
 
-    /**
-     * Creates a new instance of `WysiwygTabMenuFormContainer`.
-     */
     public function __construct()
     {
         $this->removeClass('section')

@@ -32,11 +32,6 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
      */
     protected $didExecuteUninstallScript = false;
 
-    /**
-     * Creates a new instance of PackageUninstallationDispatcher.
-     *
-     * @param PackageInstallationQueue $queue
-     */
     public function __construct(PackageInstallationQueue $queue)
     {
         $this->queue = $queue;

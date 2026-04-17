@@ -44,9 +44,6 @@ final class TagFormField extends AbstractFormField implements IAttributeFormFiel
      */
     protected $templateName = 'shared_tagFormField';
 
-    /**
-     * Creates a new instance of `TagFormField`.
-     */
     public function __construct()
     {
         $this->description('wcf.tagging.tags.description');

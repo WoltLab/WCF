@@ -13,9 +13,6 @@ use wcf\system\WCF;
  */
 class IllegalLinkException extends NamedUserException
 {
-    /**
-     * Creates a new IllegalLinkException object.
-     */
     public function __construct()
     {
         parent::__construct(WCF::getLanguage()->getDynamicVariable('wcf.page.error.illegalLink'));

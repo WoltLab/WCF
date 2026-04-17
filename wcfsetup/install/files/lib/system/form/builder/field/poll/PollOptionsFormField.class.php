@@ -37,9 +37,6 @@ final class PollOptionsFormField extends AbstractFormField
      */
     protected $value = [];
 
-    /**
-     * Creates a new instance of `PollOptionsFormField`.
-     */
     public function __construct()
     {
         $this->label('wcf.poll.options')

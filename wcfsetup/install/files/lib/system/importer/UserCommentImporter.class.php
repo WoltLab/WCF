@@ -18,9 +18,6 @@ class UserCommentImporter extends AbstractCommentImporter
      */
     protected $objectTypeName = 'com.woltlab.wcf.user.comment';
 
-    /**
-     * Creates a new UserCommentImporter object.
-     */
     public function __construct()
     {
         $objectType = ObjectTypeCache::getInstance()

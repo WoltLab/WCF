@@ -68,9 +68,6 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
      */
     protected $tagName = 'woltlab-metacode-marker';
 
-    /**
-     * HtmlInputNodeWoltlabMetacodeMarker constructor.
-     */
     public function __construct()
     {
         $this->blockElements = BBCodeParser::getInstance()->getBlockBBCodes();

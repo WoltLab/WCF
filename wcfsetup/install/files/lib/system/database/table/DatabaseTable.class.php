@@ -45,8 +45,6 @@ class DatabaseTable
     protected string $name;
 
     /**
-     * Creates a new instance of `DatabaseTable`.
-     *
      * @param string $name name of the database table
      */
     protected function __construct(string $name)

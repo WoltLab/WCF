@@ -59,8 +59,6 @@ class CategoryNodeTree implements \IteratorAggregate
     protected $objectType = '';
 
     /**
-     * Creates a new instance of CategoryNodeTree.
-     *
      * @param int[] $excludedCategoryIDs
      * @throws  SystemException
      */

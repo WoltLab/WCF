@@ -56,9 +56,6 @@ final class PackageValidationArchive implements \RecursiveIterator
      */
     private int $position = 0;
 
-    /**
-     * Creates a new package validation archive instance.
-     */
     public function __construct(string $archive, int $depth = 0)
     {
         $this->archive = new PackageArchive($archive);

@@ -53,9 +53,7 @@ class MenuItemNodeTree
     protected $visibleItemCount = 0;
 
     /**
-     * Creates a new MenuItemNodeTree object.
-     *
-     * @param MenuItemList $menuItemList optional object to be provided when building the tree from cache
+     * @param ?MenuItemList $menuItemList optional object to be provided when building the tree from cache
      * @param bool $checkVisibility if `false`, individual menu item visibility will not be checked
      */
     public function __construct(int $menuID, ?MenuItemList $menuItemList = null, bool $checkVisibility = true)

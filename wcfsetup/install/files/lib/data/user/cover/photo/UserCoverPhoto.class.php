@@ -23,14 +23,10 @@ final class UserCoverPhoto implements IUserCoverPhoto
 
     public const MIN_WIDTH = 500;
 
-    /**
-     * UserCoverPhoto constructor.
-     */
     public function __construct(
         protected readonly int $userID,
         protected readonly File $file
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function delete()

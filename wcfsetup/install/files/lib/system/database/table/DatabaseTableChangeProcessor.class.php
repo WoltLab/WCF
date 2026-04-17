@@ -151,8 +151,6 @@ final class DatabaseTableChangeProcessor
     private array $tablesToCleanup = [];
 
     /**
-     * Creates a new instance of `DatabaseTableChangeProcessor`.
-     *
      * @param DatabaseTable[]|null $tables
      */
     public function __construct(Package $package, ?array $tables, DatabaseEditor $dbEditor)

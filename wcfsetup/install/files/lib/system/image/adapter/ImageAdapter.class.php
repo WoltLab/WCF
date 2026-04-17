@@ -39,9 +39,6 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
         'bottomRight',
     ];
 
-    /**
-     * Creates a new ImageAdapter instance.
-     */
     public function __construct(string $adapterClassName)
     {
         $this->adapter = new $adapterClassName();

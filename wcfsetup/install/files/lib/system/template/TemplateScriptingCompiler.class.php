@@ -251,11 +251,6 @@ class TemplateScriptingCompiler
      */
     protected $foreachLoops = [];
 
-    /**
-     * Creates a new TemplateScriptingCompiler object.
-     *
-     * @param TemplateEngine $template
-     */
     public function __construct(TemplateEngine $template)
     {
         $this->template = $template;

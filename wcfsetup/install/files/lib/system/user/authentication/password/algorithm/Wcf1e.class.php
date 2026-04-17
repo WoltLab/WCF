@@ -35,9 +35,6 @@ final class Wcf1e implements IPasswordAlgorithm
      */
     private $encryptBeforeSalting;
 
-    /**
-     * Wcf1e constructor.
-     */
     public function __construct(string $type)
     {
         if (\preg_match('~^wcf1e([cms])([01])([ab])([01])$~', $type, $matches) === false) {

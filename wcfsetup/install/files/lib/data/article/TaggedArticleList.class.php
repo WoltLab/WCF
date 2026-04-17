@@ -16,8 +16,6 @@ use wcf\system\tagging\TagEngine;
 class TaggedArticleList extends AccessibleArticleList
 {
     /**
-     * Creates a new CategoryArticleList object.
-     *
      * @param Tag|Tag[] $tags
      */
     public function __construct(Tag|array $tags)

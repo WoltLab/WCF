@@ -18,9 +18,6 @@ namespace wcf\system\exception;
  */
 class NotImplementedException extends \LogicException
 {
-    /**
-     * NotImplementedException constructor.
-     */
     public function __construct()
     {
         parent::__construct("The invoked method has not been implemented yet.");

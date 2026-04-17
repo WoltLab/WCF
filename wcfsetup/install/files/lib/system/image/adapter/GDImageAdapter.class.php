@@ -52,9 +52,6 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
      */
     protected $width = 0;
 
-    /**
-     * GDImageAdapter constructor.
-     */
     public function __construct()
     {
         // suppress warnings like "recoverable error: Invalid SOS parameters for sequential JPEG"

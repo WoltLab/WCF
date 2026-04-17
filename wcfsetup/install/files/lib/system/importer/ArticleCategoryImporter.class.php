@@ -18,9 +18,6 @@ class ArticleCategoryImporter extends AbstractCategoryImporter
      */
     protected $objectTypeName = 'com.woltlab.wcf.article.category';
 
-    /**
-     * Creates a new ArticleCategoryImporter object.
-     */
     public function __construct()
     {
         $objectType = ObjectTypeCache::getInstance()

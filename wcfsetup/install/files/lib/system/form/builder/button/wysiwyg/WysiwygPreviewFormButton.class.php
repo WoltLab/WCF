@@ -31,9 +31,6 @@ class WysiwygPreviewFormButton extends FormButton implements IObjectTypeFormNode
      */
     protected $templateName = 'shared_wysiwygPreviewFormButton';
 
-    /**
-     * Creates a new instance of `WysiwygPreviewFormButton`.
-     */
     public function __construct()
     {
         $this->label('wcf.global.button.preview');

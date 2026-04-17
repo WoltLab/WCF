@@ -30,8 +30,6 @@ class UserInputException extends UserException
     protected $variables = [];
 
     /**
-     * Creates a new UserInputException.
-     *
      * @param string $field affected formular field
      * @param string|mixed[] $type kind of this error
      * @param array<string, mixed> $variables additional variables for AJAX error handling

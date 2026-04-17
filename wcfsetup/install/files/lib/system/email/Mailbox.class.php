@@ -33,8 +33,6 @@ class Mailbox
     protected int $languageID;
 
     /**
-     * Creates a new Mailbox.
-     *
      * @param $address email address of this mailbox
      * @param $name human readable name of this mailbox (or null)
      * @param $language Language to use for localization (or null for the default language)

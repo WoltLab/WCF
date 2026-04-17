@@ -15,8 +15,6 @@ use wcf\system\WCF;
 class CategoryArticleList extends AccessibleArticleList
 {
     /**
-     * Creates a new CategoryArticleList object.
-     *
      * @param int|int[] $categoryID
      * @throws      \InvalidArgumentException
      */

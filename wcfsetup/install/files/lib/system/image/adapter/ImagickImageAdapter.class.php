@@ -56,9 +56,6 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
      */
     protected static array $animatedFormats = ['GIF', 'WEBP'];
 
-    /**
-     * Creates a new ImagickImageAdapter.
-     */
     public function __construct()
     {
         $this->imagick = new \Imagick();

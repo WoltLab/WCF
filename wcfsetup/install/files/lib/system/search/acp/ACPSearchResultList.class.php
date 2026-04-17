@@ -32,9 +32,6 @@ class ACPSearchResultList implements \Countable, \Iterator
      */
     protected array $results = [];
 
-    /**
-     * Creates a new ACPSearchResultList.
-     */
     public function __construct(string $title)
     {
         $this->title = WCF::getLanguage()->get('wcf.acp.search.provider.' . $title);
@@ -89,7 +86,7 @@ class ACPSearchResultList implements \Countable, \Iterator
         $collator = new \Collator(WCF::getLanguage()->getLocale());
         \usort(
             $this->results,
-            static fn (ACPSearchResult $a, ACPSearchResult $b) => $collator->compare($a->getTitle(), $b->getTitle())
+            static fn(ACPSearchResult $a, ACPSearchResult $b) => $collator->compare($a->getTitle(), $b->getTitle())
         );
     }
 

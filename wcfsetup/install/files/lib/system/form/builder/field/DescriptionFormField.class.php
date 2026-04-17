@@ -14,9 +14,6 @@ class DescriptionFormField extends MultilineTextFormField
 {
     use TDefaultIdFormField;
 
-    /**
-     * Creates a new instance of `DescriptionFormField`.
-     */
     public function __construct()
     {
         $this->label('wcf.global.description');

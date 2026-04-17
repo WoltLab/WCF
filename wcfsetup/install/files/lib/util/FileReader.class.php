@@ -62,8 +62,6 @@ class FileReader
     protected $invalidRange = false;
 
     /**
-     * Creates a new instance of the HTTPFileReader class.
-     *
      * @param array<string, string|int|bool> $options
      * @throws  SystemException
      */

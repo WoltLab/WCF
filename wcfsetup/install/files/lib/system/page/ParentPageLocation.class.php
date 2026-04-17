@@ -27,8 +27,6 @@ class ParentPageLocation implements ITitledLinkObject
     protected $title;
 
     /**
-     * ParentPageLocation constructor.
-     *
      * @param string $title title of the parent page location
      * @param string $link link of the parent page location
      */

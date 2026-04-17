@@ -25,8 +25,6 @@ class TextMimePart extends AbstractMimePart
     protected $mimeType;
 
     /**
-     * Creates a new Text.
-     *
      * @param string $content Content of this text part.
      * @param string $mimeType Mime type to provide in the email. You *must* not provide a charset. UTF-8 will be used automatically.
      */

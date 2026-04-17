@@ -20,8 +20,6 @@ class MimePartFacade extends AbstractMimePart implements IRecipientAwareMimePart
     protected $mimePart;
 
     /**
-     * Creates a new MimePartFacade.
-     *
      * @param AbstractMimePart[] $texts Versions of the text part in descending priority (i.e. inside multipart/alternative)
      * @param AbstractMimePart[] $attachments Attachments (i.e. inside multipart/mixed)
      * @see     MultipartAlternativeMimePart

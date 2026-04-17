@@ -45,9 +45,6 @@ final class ClassNameFormField extends TextFormField
      */
     protected $parentClass = '';
 
-    /**
-     * Creates a new instance of `ClassNameFormField`.
-     */
     public function __construct()
     {
         parent::__construct();

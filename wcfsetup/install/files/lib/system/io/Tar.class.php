@@ -77,9 +77,7 @@ class Tar implements IArchive
     private static array $asciiMap;
 
     /**
-     * Creates a new Tar object.
-     * archiveName must be tarball or gzipped tarball
-     *
+     * @param string $archiveName tarball or gzipped tarball
      * @throws  SystemException
      */
     public function __construct(string $archiveName)

@@ -53,9 +53,6 @@ class TextFormField extends AbstractFormField implements
      */
     protected $templateName = 'shared_textFormField';
 
-    /**
-     * Creates a new instance of `TextFormField`.
-     */
     public function __construct()
     {
         $this->addFieldClass('long');

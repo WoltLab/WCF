@@ -29,9 +29,6 @@ class ConditionBuilder
      */
     protected $conditions = '';
 
-    /**
-     * Creates a new ConditionBuilder object.
-     */
     public function __construct(bool $addWhereKeyword = true, string $concat = 'AND')
     {
         $this->addWhereKeyword = $addWhereKeyword;

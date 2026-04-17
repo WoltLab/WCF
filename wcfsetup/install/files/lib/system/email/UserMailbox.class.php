@@ -22,8 +22,6 @@ class UserMailbox extends Mailbox implements IUserMailbox
     protected $userID;
 
     /**
-     * Creates a new Mailbox.
-     *
      * @param User $user User object belonging to this Mailbox
      */
     public function __construct(User $user)
