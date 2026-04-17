@@ -77,7 +77,7 @@ class UserContentRemoveWorker extends AbstractWorker
 
             foreach ($userList as $user) {
                 if (
-                    !WCF::getSession()->getPermission('admin.user.canDeleteUser')
+                    !WCF::getSession()->hasPermission('admin.user.canDeleteUser')
                     || !UserGroup::isAccessibleGroup($user->getGroupIDs())
                 ) {
                     throw new PermissionDeniedException();

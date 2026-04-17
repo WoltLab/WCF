@@ -67,7 +67,7 @@ class UserContentClipboardAction extends AbstractClipboardAction
         }
 
         // check permissions
-        if (!WCF::getSession()->getPermission('admin.content.canBulkRevertContentChanges')) {
+        if (!WCF::getSession()->hasPermission('admin.content.canBulkRevertContentChanges')) {
             return [];
         }
 

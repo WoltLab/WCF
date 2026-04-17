@@ -82,7 +82,7 @@ abstract class AbstractCommentManager implements ICommentManager
             return false;
         }
 
-        return WCF::getSession()->getPermission($this->permissionAdd) ? true : false;
+        return WCF::getSession()->hasPermission($this->permissionAdd);
     }
 
     #[\Override]
@@ -101,7 +101,7 @@ abstract class AbstractCommentManager implements ICommentManager
             return true;
         }
 
-        return WCF::getSession()->getPermission($this->permissionAddWithoutModeration) ? true : false;
+        return WCF::getSession()->hasPermission($this->permissionAddWithoutModeration);
     }
 
     #[\Override]
@@ -140,7 +140,7 @@ abstract class AbstractCommentManager implements ICommentManager
     #[\Override]
     public function canModerate(int $objectTypeID, int $objectID)
     {
-        return WCF::getSession()->getPermission($this->permissionCanModerate) ? true : false;
+        return WCF::getSession()->hasPermission($this->permissionCanModerate);
     }
 
     /**
@@ -156,12 +156,12 @@ abstract class AbstractCommentManager implements ICommentManager
         }
 
         // check moderator permission
-        if (WCF::getSession()->getPermission($this->permissionModEdit)) {
+        if (WCF::getSession()->hasPermission($this->permissionModEdit)) {
             return true;
         }
 
         // check user permission and ownership
-        if ($isOwner && WCF::getSession()->getPermission($this->permissionEdit)) {
+        if ($isOwner && WCF::getSession()->hasPermission($this->permissionEdit)) {
             return true;
         }
 
@@ -181,12 +181,12 @@ abstract class AbstractCommentManager implements ICommentManager
         }
 
         // check moderator permission
-        if (WCF::getSession()->getPermission($this->permissionModDelete)) {
+        if (WCF::getSession()->hasPermission($this->permissionModDelete)) {
             return true;
         }
 
         // check user permission and ownership
-        if ($isOwner && WCF::getSession()->getPermission($this->permissionDelete)) {
+        if ($isOwner && WCF::getSession()->hasPermission($this->permissionDelete)) {
             return true;
         }
 

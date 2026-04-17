@@ -41,7 +41,7 @@ final class StyleAddDarkModeAction implements RequestHandlerInterface
             throw new IllegalLinkException();
         }
 
-        if (!WCF::getSession()->getPermission('admin.style.canManageStyle')) {
+        if (!WCF::getSession()->hasPermission('admin.style.canManageStyle')) {
             throw new PermissionDeniedException();
         }
 

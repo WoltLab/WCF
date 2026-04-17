@@ -106,7 +106,7 @@ final class AttachmentGridView extends AbstractGridView
                                 return WCF::getLanguage()->get('wcf.user.guest');
                             }
 
-                            if (WCF::getSession()->getPermission('admin.user.canEditUser')) {
+                            if (WCF::getSession()->hasPermission('admin.user.canEditUser')) {
                                 return \sprintf(
                                     '<a href="%s">%s</a>',
                                     LinkHandler::getInstance()->getControllerLink(UserEditForm::class, [
@@ -180,7 +180,7 @@ final class AttachmentGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return WCF::getSession()->getPermission('admin.attachment.canManageAttachment');
+        return WCF::getSession()->hasPermission('admin.attachment.canManageAttachment');
     }
 
     #[\Override]

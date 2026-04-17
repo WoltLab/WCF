@@ -531,7 +531,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public function canEdit()
     {
-        return WCF::getSession()->getPermission('admin.user.canEditUser') && UserGroup::isAccessibleGroup($this->getGroupIDs());
+        return WCF::getSession()->hasPermission('admin.user.canEditUser') && UserGroup::isAccessibleGroup($this->getGroupIDs());
     }
 
     /**

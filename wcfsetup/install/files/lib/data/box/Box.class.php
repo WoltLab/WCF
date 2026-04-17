@@ -185,7 +185,7 @@ class Box extends DatabaseObject
      */
     public function canDelete()
     {
-        if (WCF::getSession()->getPermission('admin.content.cms.canManageBox') && !$this->originIsSystem) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canManageBox') && !$this->originIsSystem) {
             return true;
         }
 
@@ -618,7 +618,7 @@ class Box extends DatabaseObject
     public function showEditButton()
     {
         if (
-            WCF::getSession()->getPermission('admin.content.cms.canManageBox')
+            WCF::getSession()->hasPermission('admin.content.cms.canManageBox')
             && $this->boxType !== 'menu'
             && \in_array($this->position, $this->editButtonPositions)
         ) {

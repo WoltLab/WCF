@@ -209,7 +209,7 @@ abstract class AbstractPage implements IPage
         if (!empty($this->neededPermissions)) {
             $hasPermissions = false;
             foreach ($this->neededPermissions as $permission) {
-                if (WCF::getSession()->getPermission($permission)) {
+                if (WCF::getSession()->hasPermission($permission)) {
                     $hasPermissions = true;
                     break;
                 }

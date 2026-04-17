@@ -69,7 +69,7 @@ final class PaidSubscriptionTransactionLogGridView extends AbstractGridView
                         {
                             \assert($row instanceof PaidSubscriptionTransactionLog);
 
-                            if (!WCF::getSession()->getPermission('admin.user.canEditUser')) {
+                            if (!WCF::getSession()->hasPermission('admin.user.canEditUser')) {
                                 return parent::render($value, $row);
                             } else {
                                 $user = UserRuntimeCache::getInstance()->getObject($value);
@@ -182,7 +182,7 @@ final class PaidSubscriptionTransactionLogGridView extends AbstractGridView
     public function isAccessible(): bool
     {
         return \MODULE_PAID_SUBSCRIPTION
-            && WCF::getSession()->getPermission('admin.paidSubscription.canManageSubscription');
+            && WCF::getSession()->hasPermission('admin.paidSubscription.canManageSubscription');
     }
 
     #[\Override]

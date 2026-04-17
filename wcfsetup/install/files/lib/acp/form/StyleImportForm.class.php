@@ -72,7 +72,7 @@ class StyleImportForm extends AbstractForm
             $archive = new PackageArchive($this->source['tmp_name']);
             $archive->openArchive();
 
-            if (!WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage')) {
+            if (!WCF::getSession()->hasPermission('admin.configuration.package.canInstallPackage')) {
                 throw new UserInputException('source', 'isPackageNoPermission');
             }
 

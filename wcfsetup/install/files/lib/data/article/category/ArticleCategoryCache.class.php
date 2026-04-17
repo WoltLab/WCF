@@ -35,7 +35,7 @@ class ArticleCategoryCache extends SingletonFactory
 
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add('publicationStatus = ?', [Article::PUBLISHED]);
-        if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
+        if (!WCF::getSession()->hasPermission('admin.content.article.canManageArticle')) {
             $conditionBuilder->add('isDeleted = ?', [0]);
         }
 

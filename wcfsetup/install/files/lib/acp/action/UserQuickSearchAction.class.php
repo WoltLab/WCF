@@ -87,7 +87,7 @@ final class UserQuickSearchAction extends AbstractAction
         parent::execute();
 
         // add email column for authorized users
-        if (WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
+        if (WCF::getSession()->hasPermission('admin.user.canEditMailAddress')) {
             \array_unshift($this->columns, 'email');
         }
 

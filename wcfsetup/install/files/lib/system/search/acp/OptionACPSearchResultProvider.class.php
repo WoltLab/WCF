@@ -27,7 +27,7 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
     #[\Override]
     public function search(string $query)
     {
-        if (!WCF::getSession()->getPermission('admin.configuration.canEditOption')) {
+        if (!WCF::getSession()->hasPermission('admin.configuration.canEditOption')) {
             return [];
         }
 

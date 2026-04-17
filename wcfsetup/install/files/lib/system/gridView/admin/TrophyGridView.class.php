@@ -98,7 +98,7 @@ final class TrophyGridView extends AbstractGridView
     public function isAccessible(): bool
     {
         return \MODULE_TROPHY
-            && WCF::getSession()->getPermission("admin.trophy.canManageTrophy");
+            && WCF::getSession()->hasPermission("admin.trophy.canManageTrophy");
     }
 
     #[\Override]

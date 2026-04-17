@@ -99,12 +99,12 @@ final class UserProfileHeaderView implements \Stringable
 
     public function canEditCoverPhoto(): bool
     {
-        return $this->user->canEdit() || (WCF::getUser()->userID == $this->user->userID && (WCF::getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto') || $this->user->coverPhotoHash));
+        return $this->user->canEdit() || (WCF::getUser()->userID == $this->user->userID && (WCF::getSession()->hasPermission('user.profile.coverPhoto.canUploadCoverPhoto') || $this->user->coverPhotoHash));
     }
 
     public function canAddCoverPhoto(): bool
     {
-        return $this->user->canEdit() || (WCF::getUser()->userID == $this->user->userID && WCF::getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto'));
+        return $this->user->canEdit() || (WCF::getUser()->userID == $this->user->userID && WCF::getSession()->hasPermission('user.profile.coverPhoto.canUploadCoverPhoto'));
     }
 
     public function isInAccessibleGroup(): bool

@@ -181,7 +181,7 @@ class UsersOnlineList extends SessionList
      */
     public static function isVisible(int $userID, int $canViewOnlineStatus)
     {
-        if (WCF::getSession()->getPermission('admin.user.canViewInvisible') || $userID == WCF::getUser()->userID) {
+        if (WCF::getSession()->hasPermission('admin.user.canViewInvisible') || $userID == WCF::getUser()->userID) {
             return true;
         }
 
@@ -223,7 +223,7 @@ class UsersOnlineList extends SessionList
      */
     public static function isVisibleUser(UserOnline $userOnline)
     {
-        if (WCF::getSession()->getPermission('admin.user.canViewInvisible') || $userOnline->userID == WCF::getUser()->userID) {
+        if (WCF::getSession()->hasPermission('admin.user.canViewInvisible') || $userOnline->userID == WCF::getUser()->userID) {
             return true;
         }
 

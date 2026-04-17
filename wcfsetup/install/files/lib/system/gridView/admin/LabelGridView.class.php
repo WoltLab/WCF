@@ -113,7 +113,7 @@ final class LabelGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return WCF::getSession()->getPermission("admin.content.label.canManageLabel");
+        return WCF::getSession()->hasPermission("admin.content.label.canManageLabel");
     }
 
     #[\Override]

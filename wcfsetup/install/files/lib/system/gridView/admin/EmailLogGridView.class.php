@@ -67,7 +67,7 @@ final class EmailLogGridView extends AbstractGridView
                 ),
             GridViewColumn::for('recipient')
                 ->label('wcf.user.email')
-                ->filter(WCF::getSession()->getPermission("admin.user.canEditMailAddress") ? TextFilter::class : null)
+                ->filter(WCF::getSession()->hasPermission("admin.user.canEditMailAddress") ? TextFilter::class : null)
                 ->renderer(
                     new class extends AbstractColumnRenderer {
                         #[\Override]
@@ -75,7 +75,7 @@ final class EmailLogGridView extends AbstractGridView
                         {
                             \assert($row instanceof EmailLogEntry);
 
-                            if (WCF::getSession()->getPermission("admin.user.canEditMailAddress")) {
+                            if (WCF::getSession()->hasPermission("admin.user.canEditMailAddress")) {
                                 $recipient = StringUtil::encodeHTML($row->recipient);
                             } else {
                                 $recipient = StringUtil::encodeHTML($row->getRedactedRecipientAddress());
@@ -103,7 +103,7 @@ final class EmailLogGridView extends AbstractGridView
 
                             $username = StringUtil::encodeHTML($row->getRecipient()->getTitle());
 
-                            if (WCF::getSession()->getPermission('admin.user.canEditUser')) {
+                            if (WCF::getSession()->hasPermission('admin.user.canEditUser')) {
                                 return \sprintf(
                                     '<a href="%s">%s</a>',
                                     LinkHandler::getInstance()->getControllerLink(UserEditForm::class, [
@@ -168,7 +168,7 @@ final class EmailLogGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return WCF::getSession()->getPermission('admin.management.canViewLog');
+        return WCF::getSession()->hasPermission('admin.management.canViewLog');
     }
 
     #[\Override]

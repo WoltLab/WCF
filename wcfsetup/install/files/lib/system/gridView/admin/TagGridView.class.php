@@ -149,7 +149,7 @@ final class TagGridView extends AbstractGridView
     public function isAccessible(): bool
     {
         return \MODULE_TAGGING
-            && WCF::getSession()->getPermission('admin.content.tag.canManageTag');
+            && WCF::getSession()->hasPermission('admin.content.tag.canManageTag');
     }
 
     #[\Override]

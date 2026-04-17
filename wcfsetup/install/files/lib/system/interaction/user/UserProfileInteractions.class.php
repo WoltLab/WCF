@@ -99,7 +99,7 @@ final class UserProfileInteractions extends AbstractInteractionProvider
                     return $user->userID !== WCF::getUser()->userID
                         && (
                             $user->isAccessible('canViewEmailAddress')
-                            || WCF::getSession()->getPermission('admin.user.canEditMailAddress')
+                            || WCF::getSession()->hasPermission('admin.user.canEditMailAddress')
                         );
                 }
             ) extends AbstractInteraction {

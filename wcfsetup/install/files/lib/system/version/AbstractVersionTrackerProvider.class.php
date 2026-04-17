@@ -60,7 +60,7 @@ abstract class AbstractVersionTrackerProvider extends AbstractObjectTypeProvider
     #[\Override]
     public function canAccess()
     {
-        return WCF::getSession()->getPermission($this->permissionCanAccess);
+        return WCF::getSession()->hasPermission($this->permissionCanAccess);
     }
 
     #[\Override]

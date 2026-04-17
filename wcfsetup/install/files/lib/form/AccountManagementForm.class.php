@@ -210,7 +210,7 @@ class AccountManagementForm extends AbstractForm
 
         // user name
         if (
-            WCF::getSession()->getPermission('user.profile.canRename')
+            WCF::getSession()->hasPermission('user.profile.canRename')
             && $this->username != WCF::getUser()->username
             && UserAuthenticationConfigurationFactory::getInstance()->getConfigration()->canChangeUsername
         ) {
@@ -246,7 +246,7 @@ class AccountManagementForm extends AbstractForm
 
         // email
         if (
-            WCF::getSession()->getPermission('user.profile.canChangeEmail')
+            WCF::getSession()->hasPermission('user.profile.canChangeEmail')
             && $this->email != WCF::getUser()->email
             && $this->email != WCF::getUser()->newEmail
             && UserAuthenticationConfigurationFactory::getInstance()->getConfigration()->canChangeEmail
@@ -326,7 +326,7 @@ class AccountManagementForm extends AbstractForm
         $updateParameters = [];
 
         // quit
-        if (WCF::getUser()->quitStarted || WCF::getSession()->getPermission('user.profile.canQuit')) {
+        if (WCF::getUser()->quitStarted || WCF::getSession()->hasPermission('user.profile.canQuit')) {
             if (!WCF::getUser()->quitStarted && $this->quit == 1) {
                 $updateParameters['quitStarted'] = \TIME_NOW;
                 $this->quitStarted = \TIME_NOW;
@@ -339,7 +339,7 @@ class AccountManagementForm extends AbstractForm
         }
 
         // user name
-        if (WCF::getSession()->getPermission('user.profile.canRename') && $this->username != WCF::getUser()->username) {
+        if (WCF::getSession()->hasPermission('user.profile.canRename') && $this->username != WCF::getUser()->username) {
             if (\mb_strtolower($this->username) != \mb_strtolower(WCF::getUser()->username)) {
                 $updateParameters['lastUsernameChange'] = \TIME_NOW;
                 $updateParameters['oldUsername'] = WCF::getUser()->username;
@@ -350,7 +350,7 @@ class AccountManagementForm extends AbstractForm
 
         // email
         if (
-            WCF::getSession()->getPermission('user.profile.canChangeEmail')
+            WCF::getSession()->hasPermission('user.profile.canChangeEmail')
             && $this->email != WCF::getUser()->email
             && $this->email != WCF::getUser()->newEmail
         ) {

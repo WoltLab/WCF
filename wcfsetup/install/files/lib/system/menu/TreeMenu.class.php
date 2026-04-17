@@ -95,7 +95,7 @@ abstract class TreeMenu extends SingletonFactory
             $hasPermission = false;
             $permissions = \explode(',', $item->permissions);
             foreach ($permissions as $permission) {
-                if (WCF::getSession()->getPermission($permission)) {
+                if (WCF::getSession()->hasPermission($permission)) {
                     $hasPermission = true;
                     break;
                 }

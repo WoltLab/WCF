@@ -113,7 +113,7 @@ class UserSearchForm extends UserOptionListForm
                 $this->columns = $defaultColumns;
 
                 // add email column for authorized users
-                if (WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
+                if (WCF::getSession()->hasPermission('admin.user.canEditMailAddress')) {
                     \array_unshift($this->columns, 'email');
                 }
 
@@ -177,7 +177,7 @@ class UserSearchForm extends UserOptionListForm
         parent::readData();
 
         // add email column for authorized users
-        if (WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
+        if (WCF::getSession()->hasPermission('admin.user.canEditMailAddress')) {
             \array_unshift($this->columns, 'email');
         }
     }
@@ -235,7 +235,7 @@ class UserSearchForm extends UserOptionListForm
 
         // remove email column for non-authorized users
         if (
-            !WCF::getSession()->getPermission('admin.user.canEditMailAddress') && ($key = \array_search(
+            !WCF::getSession()->hasPermission('admin.user.canEditMailAddress') && ($key = \array_search(
                 'email',
                 $this->columns
             )) !== false

@@ -73,7 +73,7 @@ final class NoticeGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return WCF::getSession()->getPermission("admin.notice.canManageNotice");
+        return WCF::getSession()->hasPermission("admin.notice.canManageNotice");
     }
 
     #[\Override]

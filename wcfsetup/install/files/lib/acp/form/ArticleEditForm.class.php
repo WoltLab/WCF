@@ -158,7 +158,7 @@ class ArticleEditForm extends ArticleAddForm
     #[\Override]
     public function readData()
     {
-        if (!empty($_POST) && !WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
+        if (!empty($_POST) && !WCF::getSession()->hasPermission('admin.content.cms.canUseMedia')) {
             foreach ($this->article->getArticleContents() as $languageID => $content) {
                 $this->imageID[$languageID] = $content->imageID;
                 $this->teaserImageID[$languageID] = $content->teaserImageID;

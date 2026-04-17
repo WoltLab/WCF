@@ -195,10 +195,10 @@ class UserEditForm extends UserAddForm
     {
         parent::readFormParameters();
 
-        if (!WCF::getSession()->getPermission('admin.user.canEditPassword') || !empty($this->user->authData)) {
+        if (!WCF::getSession()->hasPermission('admin.user.canEditPassword') || !empty($this->user->authData)) {
             $this->password = '';
         }
-        if (!WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
+        if (!WCF::getSession()->hasPermission('admin.user.canEditMailAddress')) {
             $this->email = $this->user->email;
         }
 
@@ -226,7 +226,7 @@ class UserEditForm extends UserAddForm
             $this->colorScheme = $_POST['colorScheme'];
         }
 
-        if (WCF::getSession()->getPermission('admin.user.canDisableAvatar')) {
+        if (WCF::getSession()->hasPermission('admin.user.canDisableAvatar')) {
             if (!empty($_POST['disableAvatar'])) {
                 $this->disableAvatar = 1;
             }
@@ -240,7 +240,7 @@ class UserEditForm extends UserAddForm
             }
         }
 
-        if (WCF::getSession()->getPermission('admin.user.canDisableCoverPhoto')) {
+        if (WCF::getSession()->hasPermission('admin.user.canDisableCoverPhoto')) {
             if (isset($_POST['deleteCoverPhoto'])) {
                 $this->deleteCoverPhoto = 1;
             }
@@ -257,10 +257,10 @@ class UserEditForm extends UserAddForm
             }
         }
 
-        if (WCF::getSession()->getPermission('admin.user.canEditPassword') && isset($_POST['disconnect3rdParty'])) {
+        if (WCF::getSession()->hasPermission('admin.user.canEditPassword') && isset($_POST['disconnect3rdParty'])) {
             $this->disconnect3rdParty = 1;
         }
-        if (WCF::getSession()->getPermission('admin.user.canEditPassword') && isset($_POST['multifactorDisable'])) {
+        if (WCF::getSession()->hasPermission('admin.user.canEditPassword') && isset($_POST['multifactorDisable'])) {
             $this->multifactorDisable = 1;
         }
     }
@@ -433,28 +433,28 @@ class UserEditForm extends UserAddForm
         }
 
         // handle ban
-        if (WCF::getSession()->getPermission('admin.user.canBanUser')) {
+        if (WCF::getSession()->hasPermission('admin.user.canBanUser')) {
             $data['data']['banned'] = $this->banned;
             $data['data']['banReason'] = $this->banReason;
             $data['data']['banExpires'] = $this->banExpires;
         }
 
         // handle disabled signature
-        if (WCF::getSession()->getPermission('admin.user.canDisableSignature')) {
+        if (WCF::getSession()->hasPermission('admin.user.canDisableSignature')) {
             $data['data']['disableSignature'] = $this->disableSignature;
             $data['data']['disableSignatureReason'] = $this->disableSignatureReason;
             $data['data']['disableSignatureExpires'] = $this->disableSignatureExpires;
         }
 
         // handle disabled avatar
-        if (WCF::getSession()->getPermission('admin.user.canDisableAvatar')) {
+        if (WCF::getSession()->hasPermission('admin.user.canDisableAvatar')) {
             $data['data']['disableAvatar'] = $this->disableAvatar;
             $data['data']['disableAvatarReason'] = $this->disableAvatarReason;
             $data['data']['disableAvatarExpires'] = $this->disableAvatarExpires;
         }
 
         // handle disabled cover photo
-        if (WCF::getSession()->getPermission('admin.user.canDisableCoverPhoto')) {
+        if (WCF::getSession()->hasPermission('admin.user.canDisableCoverPhoto')) {
             $data['data']['disableCoverPhoto'] = $this->disableCoverPhoto;
             $data['data']['disableCoverPhotoReason'] = $this->disableCoverPhotoReason;
             $data['data']['disableCoverPhotoExpires'] = $this->disableCoverPhotoExpires;
@@ -464,7 +464,7 @@ class UserEditForm extends UserAddForm
         $this->objectAction->executeAction();
 
         // disable multifactor authentication
-        if (WCF::getSession()->getPermission('admin.user.canEditPassword') && $this->multifactorDisable) {
+        if (WCF::getSession()->hasPermission('admin.user.canEditPassword') && $this->multifactorDisable) {
             WCF::getDB()->beginTransaction();
             $setups = Setup::getAllForUser($this->user->getDecoratedObject());
             foreach ($setups as $setup) {

@@ -387,7 +387,7 @@ class BoxAddForm extends AbstractForm
             $this->invertPermissions = 0;
         }
 
-        if (WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canUseMedia')) {
             if (isset($_POST['imageID']) && \is_array($_POST['imageID'])) {
                 $this->imageID = ArrayUtil::toIntegerArray($_POST['imageID']);
             }
@@ -497,7 +497,7 @@ class BoxAddForm extends AbstractForm
         }
 
         // validate images
-        if (WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canUseMedia')) {
             foreach ($this->imageID as $languageID => $imageID) {
                 if ($imageID !== 0 && !isset($this->images[$languageID])) {
                     throw new UserInputException('imageID' . $languageID);

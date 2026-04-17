@@ -49,7 +49,7 @@ class StyleHandler extends SingletonFactory
         $styles = [];
 
         foreach ($this->cache['styles'] as $styleID => $style) {
-            if (!$style->isDisabled || WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')) {
+            if (!$style->isDisabled || WCF::getSession()->hasPermission('admin.style.canUseDisabledStyle')) {
                 $styles[$styleID] = $style;
             }
         }
@@ -96,7 +96,7 @@ class StyleHandler extends SingletonFactory
             if (isset($this->cache['styles'][$styleID])) {
                 if (
                     $this->cache['styles'][$styleID]->isDisabled
-                    && !WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')
+                    && !WCF::getSession()->hasPermission('admin.style.canUseDisabledStyle')
                 ) {
                     $styleID = 0;
                 }

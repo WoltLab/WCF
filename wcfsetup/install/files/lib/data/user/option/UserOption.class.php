@@ -152,7 +152,7 @@ class UserOption extends Option implements ITitledObject
 
         // check admin permissions
         if ($this->visible & self::VISIBILITY_ADMINISTRATOR) {
-            if (WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions')) {
+            if (WCF::getSession()->hasPermission('admin.general.canViewPrivateUserOptions')) {
                 return true;
             }
         }
@@ -181,7 +181,7 @@ class UserOption extends Option implements ITitledObject
 
         // check admin permissions
         if ($this->editable & self::EDITABILITY_ADMINISTRATOR) {
-            if (WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions')) {
+            if (WCF::getSession()->hasPermission('admin.general.canViewPrivateUserOptions')) {
                 return true;
             }
         }

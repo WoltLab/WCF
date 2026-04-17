@@ -21,7 +21,7 @@ class ProfileCommentResponseUserActivityEvent extends SingletonFactory implement
     #[\Override]
     public function prepare(array $events)
     {
-        if (!WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
+        if (!WCF::getSession()->hasPermission('user.profile.canViewUserProfile')) {
             return;
         }
 

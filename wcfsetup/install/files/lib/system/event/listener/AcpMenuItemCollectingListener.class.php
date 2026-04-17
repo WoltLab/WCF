@@ -87,7 +87,7 @@ final class AcpMenuItemCollectingListener
 
     private function addOptionItems(ItemCollecting $event): void
     {
-        if (!WCF::getSession()->getPermission('admin.configuration.canEditOption')) {
+        if (!WCF::getSession()->hasPermission('admin.configuration.canEditOption')) {
             return;
         }
 
@@ -121,7 +121,7 @@ final class AcpMenuItemCollectingListener
             parentMenuItem: 'wcf.acp.menu.link.configuration'
         ));
 
-        if (WCF::getSession()->getPermission('admin.user.canEditActivityPoints')) {
+        if (WCF::getSession()->hasPermission('admin.user.canEditActivityPoints')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.activityPoint',
                 parentMenuItem: 'wcf.acp.menu.link.other',
@@ -129,7 +129,7 @@ final class AcpMenuItemCollectingListener
             ));
         }
 
-        if (WCF::getSession()->getPermission('admin.user.canManageNotificationSettings')) {
+        if (WCF::getSession()->hasPermission('admin.user.canManageNotificationSettings')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.notificationPresetSettings',
                 parentMenuItem: 'wcf.acp.menu.link.other',
@@ -137,7 +137,7 @@ final class AcpMenuItemCollectingListener
             ));
         }
 
-        if (WCF::getSession()->getPermission('admin.captcha.canManageCaptchaQuestion')) {
+        if (WCF::getSession()->hasPermission('admin.captcha.canManageCaptchaQuestion')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.captcha.question.list',
                 parentMenuItem: 'wcf.acp.menu.link.other',
@@ -159,7 +159,7 @@ final class AcpMenuItemCollectingListener
             parentMenuItem: 'wcf.acp.menu.link.configuration'
         ));
 
-        if (WCF::getSession()->getPermission('admin.configuration.canManageApplication')) {
+        if (WCF::getSession()->hasPermission('admin.configuration.canManageApplication')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.application.management',
                 parentMenuItem: 'wcf.acp.menu.link.package',
@@ -168,8 +168,8 @@ final class AcpMenuItemCollectingListener
         }
 
         if (
-            WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage')
-            || WCF::getSession()->getPermission('admin.configuration.package.canUpdatePackage')
+            WCF::getSession()->hasPermission('admin.configuration.package.canInstallPackage')
+            || WCF::getSession()->hasPermission('admin.configuration.package.canUpdatePackage')
         ) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.package.list',
@@ -178,7 +178,7 @@ final class AcpMenuItemCollectingListener
             ));
         }
 
-        if (WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage')) {
+        if (WCF::getSession()->hasPermission('admin.configuration.package.canInstallPackage')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.package.license',
                 parentMenuItem: 'wcf.acp.menu.link.package.list',
@@ -193,7 +193,7 @@ final class AcpMenuItemCollectingListener
             ));
         }
 
-        if (WCF::getSession()->getPermission('admin.configuration.package.canEditServer')) {
+        if (WCF::getSession()->hasPermission('admin.configuration.package.canEditServer')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.package.server.list',
                 parentMenuItem: 'wcf.acp.menu.link.package',
@@ -219,7 +219,7 @@ final class AcpMenuItemCollectingListener
             parentMenuItem: 'wcf.acp.menu.link.configuration'
         ));
 
-        if (!WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage')) {
+        if (!WCF::getSession()->hasPermission('admin.configuration.package.canInstallPackage')) {
             return;
         }
 
@@ -252,7 +252,7 @@ final class AcpMenuItemCollectingListener
             return;
         }
 
-        if (!WCF::getSession()->getPermission('admin.contact.canManageContactForm')) {
+        if (!WCF::getSession()->hasPermission('admin.contact.canManageContactForm')) {
             return;
         }
 
@@ -293,7 +293,7 @@ final class AcpMenuItemCollectingListener
             parentMenuItem: 'wcf.acp.menu.link.user'
         ));
 
-        if (WCF::getSession()->getPermission('admin.user.canSearchUser')) {
+        if (WCF::getSession()->hasPermission('admin.user.canSearchUser')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.user.list',
                 parentMenuItem: 'wcf.acp.menu.link.user.management',
@@ -305,7 +305,7 @@ final class AcpMenuItemCollectingListener
                 link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\UserSearchForm::class),
                 icon: FontAwesomeIcon::fromValues('magnifying-glass')
             ));
-            if (WCF::getSession()->getPermission('admin.user.canAddUser')) {
+            if (WCF::getSession()->hasPermission('admin.user.canAddUser')) {
                 $event->register(new AcpMenuItem(
                     'wcf.acp.menu.link.user.add',
                     parentMenuItem: 'wcf.acp.menu.link.user.list',
@@ -316,9 +316,9 @@ final class AcpMenuItemCollectingListener
         }
 
         if (
-            WCF::getSession()->getPermission('admin.user.canEditUser')
-            || WCF::getSession()->getPermission('admin.user.canDeleteUser')
-            || WCF::getSession()->getPermission('admin.user.canMailUser')
+            WCF::getSession()->hasPermission('admin.user.canEditUser')
+            || WCF::getSession()->hasPermission('admin.user.canDeleteUser')
+            || WCF::getSession()->hasPermission('admin.user.canMailUser')
         ) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.user.bulkProcessing',
@@ -326,7 +326,7 @@ final class AcpMenuItemCollectingListener
                 link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\UserBulkProcessingForm::class)
             ));
         }
-        if (WCF::getSession()->getPermission('admin.user.canMailUser')) {
+        if (WCF::getSession()->hasPermission('admin.user.canMailUser')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.user.mail',
                 parentMenuItem: 'wcf.acp.menu.link.user.management',
@@ -336,7 +336,7 @@ final class AcpMenuItemCollectingListener
                 )
             ));
         }
-        if (WCF::getSession()->getPermission('admin.user.canManageUserOption')) {
+        if (WCF::getSession()->hasPermission('admin.user.canManageUserOption')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.user.profileMenu',
                 parentMenuItem: 'wcf.acp.menu.link.user.management',
@@ -353,8 +353,8 @@ final class AcpMenuItemCollectingListener
         ));
 
         if (
-            WCF::getSession()->getPermission('admin.user.canEditGroup')
-            || WCF::getSession()->getPermission('admin.user.canDeleteGroup')
+            WCF::getSession()->hasPermission('admin.user.canEditGroup')
+            || WCF::getSession()->hasPermission('admin.user.canDeleteGroup')
         ) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.group.list',
@@ -362,7 +362,7 @@ final class AcpMenuItemCollectingListener
                 link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\UserGroupListPage::class)
             ));
 
-            if (WCF::getSession()->getPermission('admin.user.canAddGroup')) {
+            if (WCF::getSession()->hasPermission('admin.user.canAddGroup')) {
                 $event->register(new AcpMenuItem(
                     'wcf.acp.menu.link.group.add',
                     parentMenuItem: 'wcf.acp.menu.link.group.list',
@@ -372,7 +372,7 @@ final class AcpMenuItemCollectingListener
             }
         }
 
-        if (WCF::getSession()->getPermission('admin.user.canMailUser')) {
+        if (WCF::getSession()->hasPermission('admin.user.canMailUser')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.group.mail',
                 parentMenuItem: 'wcf.acp.menu.link.group',
@@ -383,7 +383,7 @@ final class AcpMenuItemCollectingListener
             ));
         }
 
-        if (WCF::getSession()->getPermission('admin.user.canManageGroupAssignment')) {
+        if (WCF::getSession()->hasPermission('admin.user.canManageGroupAssignment')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.group.assignment',
                 parentMenuItem: 'wcf.acp.menu.link.group',
@@ -404,7 +404,7 @@ final class AcpMenuItemCollectingListener
             return;
         }
 
-        if (!WCF::getSession()->getPermission('admin.user.rank.canManageRank')) {
+        if (!WCF::getSession()->hasPermission('admin.user.rank.canManageRank')) {
             return;
         }
 
@@ -427,7 +427,7 @@ final class AcpMenuItemCollectingListener
 
     private function addUserOptionItems(ItemCollecting $event): void
     {
-        if (!WCF::getSession()->getPermission('admin.user.canManageUserOption')) {
+        if (!WCF::getSession()->hasPermission('admin.user.canManageUserOption')) {
             return;
         }
 
@@ -468,7 +468,7 @@ final class AcpMenuItemCollectingListener
 
     private function addUserNoticeItems(ItemCollecting $event): void
     {
-        if (!WCF::getSession()->getPermission('admin.notice.canManageNotice')) {
+        if (!WCF::getSession()->hasPermission('admin.notice.canManageNotice')) {
             return;
         }
 
@@ -495,7 +495,7 @@ final class AcpMenuItemCollectingListener
             return;
         }
 
-        if (!WCF::getSession()->getPermission('admin.paidSubscription.canManageSubscription')) {
+        if (!WCF::getSession()->hasPermission('admin.paidSubscription.canManageSubscription')) {
             return;
         }
 
@@ -532,7 +532,7 @@ final class AcpMenuItemCollectingListener
             return;
         }
 
-        if (!WCF::getSession()->getPermission('admin.trophy.canManageTrophy')) {
+        if (!WCF::getSession()->hasPermission('admin.trophy.canManageTrophy')) {
             return;
         }
 
@@ -584,7 +584,7 @@ final class AcpMenuItemCollectingListener
             parentMenuItem: 'wcf.acp.menu.link.content'
         ));
 
-        if (WCF::getSession()->getPermission('admin.content.cms.canManagePage')) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canManagePage')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.cms.page.list',
                 parentMenuItem: 'wcf.acp.menu.link.cms',
@@ -598,7 +598,7 @@ final class AcpMenuItemCollectingListener
             ));
         }
 
-        if (WCF::getSession()->getPermission('admin.content.cms.canManageMenu')) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canManageMenu')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.cms.menu.list',
                 parentMenuItem: 'wcf.acp.menu.link.cms',
@@ -612,7 +612,7 @@ final class AcpMenuItemCollectingListener
             ));
         }
 
-        if (WCF::getSession()->getPermission('admin.content.cms.canManageBox')) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canManageBox')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.cms.box.list',
                 parentMenuItem: 'wcf.acp.menu.link.cms',
@@ -629,7 +629,7 @@ final class AcpMenuItemCollectingListener
 
     private function addMediaItems(ItemCollecting $event): void
     {
-        if (!WCF::getSession()->getPermission('admin.content.cms.canManageMedia')) {
+        if (!WCF::getSession()->hasPermission('admin.content.cms.canManageMedia')) {
             return;
         }
 
@@ -670,9 +670,9 @@ final class AcpMenuItemCollectingListener
         ));
 
         if (
-            WCF::getSession()->getPermission('admin.content.article.canManageArticle')
-            || WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles')
-            || WCF::getSession()->getPermission('admin.content.article.canContributeArticle')
+            WCF::getSession()->hasPermission('admin.content.article.canManageArticle')
+            || WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles')
+            || WCF::getSession()->hasPermission('admin.content.article.canContributeArticle')
         ) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.article.list',
@@ -687,7 +687,7 @@ final class AcpMenuItemCollectingListener
             ));
         }
 
-        if (WCF::getSession()->getPermission('admin.content.article.canManageCategory')) {
+        if (WCF::getSession()->hasPermission('admin.content.article.canManageCategory')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.article.category.list',
                 title: WCF::getLanguage()->get('wcf.category.list'),
@@ -706,7 +706,7 @@ final class AcpMenuItemCollectingListener
 
     private function addLabelItems(ItemCollecting $event): void
     {
-        if (!WCF::getSession()->getPermission('admin.content.label.canManageLabel')) {
+        if (!WCF::getSession()->hasPermission('admin.content.label.canManageLabel')) {
             return;
         }
 
@@ -741,7 +741,7 @@ final class AcpMenuItemCollectingListener
 
     private function addBbcodeItems(ItemCollecting $event): void
     {
-        if (!WCF::getSession()->getPermission('admin.content.bbcode.canManageBBCode')) {
+        if (!WCF::getSession()->hasPermission('admin.content.bbcode.canManageBBCode')) {
             return;
         }
 
@@ -780,7 +780,7 @@ final class AcpMenuItemCollectingListener
             return;
         }
 
-        if (!WCF::getSession()->getPermission('admin.content.tag.canManageTag')) {
+        if (!WCF::getSession()->hasPermission('admin.content.tag.canManageTag')) {
             return;
         }
 
@@ -803,7 +803,7 @@ final class AcpMenuItemCollectingListener
 
     private function addAttachmentItems(ItemCollecting $event): void
     {
-        if (!WCF::getSession()->getPermission('admin.attachment.canManageAttachment')) {
+        if (!WCF::getSession()->hasPermission('admin.attachment.canManageAttachment')) {
             return;
         }
 
@@ -820,7 +820,7 @@ final class AcpMenuItemCollectingListener
 
     private function addStyleItems(ItemCollecting $event): void
     {
-        if (!WCF::getSession()->getPermission('admin.style.canManageStyle')) {
+        if (!WCF::getSession()->hasPermission('admin.style.canManageStyle')) {
             return;
         }
 
@@ -854,7 +854,7 @@ final class AcpMenuItemCollectingListener
 
     private function addTemplateItems(ItemCollecting $event): void
     {
-        if (!WCF::getSession()->getPermission('admin.template.canManageTemplate')) {
+        if (!WCF::getSession()->hasPermission('admin.template.canManageTemplate')) {
             return;
         }
 
@@ -888,7 +888,7 @@ final class AcpMenuItemCollectingListener
 
     private function addLanguageItems(ItemCollecting $event): void
     {
-        if (!WCF::getSession()->getPermission('admin.language.canManageLanguage')) {
+        if (!WCF::getSession()->hasPermission('admin.language.canManageLanguage')) {
             return;
         }
 
@@ -931,7 +931,7 @@ final class AcpMenuItemCollectingListener
             return;
         }
 
-        if (!WCF::getSession()->getPermission('admin.content.smiley.canManageSmiley')) {
+        if (!WCF::getSession()->hasPermission('admin.content.smiley.canManageSmiley')) {
             return;
         }
 
@@ -971,7 +971,7 @@ final class AcpMenuItemCollectingListener
             return;
         }
 
-        if (!WCF::getSession()->getPermission('admin.ad.canManageAd')) {
+        if (!WCF::getSession()->hasPermission('admin.ad.canManageAd')) {
             return;
         }
 
@@ -998,7 +998,7 @@ final class AcpMenuItemCollectingListener
             return;
         }
 
-        if (!WCF::getSession()->getPermission('admin.content.reaction.canManageReactionType')) {
+        if (!WCF::getSession()->hasPermission('admin.content.reaction.canManageReactionType')) {
             return;
         }
 
@@ -1026,7 +1026,7 @@ final class AcpMenuItemCollectingListener
             parentMenuItem: 'wcf.acp.menu.link.management'
         ));
 
-        if (WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage')) {
+        if (WCF::getSession()->hasPermission('admin.configuration.package.canInstallPackage')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.systemCheck',
                 parentMenuItem: 'wcf.acp.menu.link.maintenance',
@@ -1034,7 +1034,7 @@ final class AcpMenuItemCollectingListener
             ));
         }
 
-        if (WCF::getSession()->getPermission('admin.management.canManageCronjob')) {
+        if (WCF::getSession()->hasPermission('admin.management.canManageCronjob')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.cronjob.list',
                 parentMenuItem: 'wcf.acp.menu.link.maintenance',
@@ -1048,7 +1048,7 @@ final class AcpMenuItemCollectingListener
             ));
         }
 
-        if (WCF::getSession()->getPermission('admin.management.canRebuildData')) {
+        if (WCF::getSession()->hasPermission('admin.management.canRebuildData')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.maintenance.cache',
                 parentMenuItem: 'wcf.acp.menu.link.maintenance',
@@ -1066,7 +1066,7 @@ final class AcpMenuItemCollectingListener
             ));
         }
 
-        if (WCF::getSession()->getPermission('admin.management.canImportData')) {
+        if (WCF::getSession()->hasPermission('admin.management.canImportData')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.maintenance.import',
                 parentMenuItem: 'wcf.acp.menu.link.maintenance',
@@ -1077,7 +1077,7 @@ final class AcpMenuItemCollectingListener
 
     private function addStatItems(ItemCollecting $event): void
     {
-        if (!WCF::getSession()->getPermission('admin.management.canViewLog')) {
+        if (!WCF::getSession()->hasPermission('admin.management.canViewLog')) {
             return;
         }
 
@@ -1099,7 +1099,7 @@ final class AcpMenuItemCollectingListener
             parentMenuItem: 'wcf.acp.menu.link.management'
         ));
 
-        if (WCF::getSession()->getPermission('admin.management.canViewLog')) {
+        if (WCF::getSession()->hasPermission('admin.management.canViewLog')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.log.session',
                 parentMenuItem: 'wcf.acp.menu.link.log',
@@ -1107,7 +1107,7 @@ final class AcpMenuItemCollectingListener
             ));
         }
 
-        if (WCF::getSession()->getPermission('admin.management.canManageCronjob')) {
+        if (WCF::getSession()->hasPermission('admin.management.canManageCronjob')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.log.cronjob',
                 parentMenuItem: 'wcf.acp.menu.link.log',
@@ -1115,7 +1115,7 @@ final class AcpMenuItemCollectingListener
             ));
         }
 
-        if (WCF::getSession()->getPermission('admin.management.canViewLog')) {
+        if (WCF::getSession()->hasPermission('admin.management.canViewLog')) {
             $event->register(new AcpMenuItem(
                 'wcf.acp.menu.link.log.email',
                 parentMenuItem: 'wcf.acp.menu.link.log',

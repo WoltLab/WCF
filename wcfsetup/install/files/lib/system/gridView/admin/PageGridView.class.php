@@ -174,7 +174,7 @@ final class PageGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return WCF::getSession()->getPermission('admin.content.cms.canManagePage');
+        return WCF::getSession()->hasPermission('admin.content.cms.canManagePage');
     }
 
     #[\Override]

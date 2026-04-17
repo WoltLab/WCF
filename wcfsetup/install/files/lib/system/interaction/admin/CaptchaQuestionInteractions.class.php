@@ -21,7 +21,7 @@ final class CaptchaQuestionInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
-        if (WCF::getSession()->getPermission("admin.captcha.canManageCaptchaQuestion")) {
+        if (WCF::getSession()->hasPermission("admin.captcha.canManageCaptchaQuestion")) {
             $this->addInteractions([
                 new DeleteInteraction('core/captchas/questions/%s')
             ]);

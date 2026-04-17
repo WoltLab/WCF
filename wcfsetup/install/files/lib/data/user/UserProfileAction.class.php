@@ -228,7 +228,7 @@ class UserProfileAction extends UserAction
 
         if (
             isset($this->parameters['values']['__userTitle'])
-            && !WCF::getSession()->getPermission('user.profile.canEditUserTitle')
+            && !WCF::getSession()->hasPermission('user.profile.canEditUserTitle')
         ) {
             throw new PermissionDeniedException();
         }

@@ -18,7 +18,7 @@ class PageACPSearchResultProvider implements IACPSearchResultProvider
     #[\Override]
     public function search(string $query)
     {
-        if (!WCF::getSession()->getPermission('admin.content.cms.canManagePage')) {
+        if (!WCF::getSession()->hasPermission('admin.content.cms.canManagePage')) {
             return [];
         }
 

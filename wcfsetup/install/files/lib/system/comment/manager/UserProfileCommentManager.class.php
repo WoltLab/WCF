@@ -158,7 +158,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements
     {
         if (
             $comment->objectID == WCF::getUser()->userID
-            && WCF::getSession()->getPermission('user.profileComment.canDeleteCommentInOwnProfile')
+            && WCF::getSession()->hasPermission('user.profileComment.canDeleteCommentInOwnProfile')
         ) {
             return true;
         }
@@ -171,7 +171,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements
     {
         if (
             $response->getComment()->objectID == WCF::getUser()->userID
-            && WCF::getSession()->getPermission('user.profileComment.canDeleteCommentInOwnProfile')
+            && WCF::getSession()->hasPermission('user.profileComment.canDeleteCommentInOwnProfile')
         ) {
             return true;
         }
@@ -182,7 +182,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements
     #[\Override]
     public function prepare(array $likes)
     {
-        if (!WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
+        if (!WCF::getSession()->hasPermission('user.profile.canViewUserProfile')) {
             return;
         }
 

@@ -60,7 +60,7 @@ class RelatedArticleListView extends ArticleListView
         return parent::isAccessible()
             && \MODULE_TAGGING
             && \ARTICLE_RELATED_ARTICLES
-            && WCF::getSession()->getPermission('user.tag.canViewTag');
+            && WCF::getSession()->hasPermission('user.tag.canViewTag');
     }
 
     /**

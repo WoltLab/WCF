@@ -30,7 +30,7 @@ class TrophyPageHandler extends AbstractLookupPageHandler
     #[\Override]
     public function isVisible(?int $objectID = null)
     {
-        return WCF::getSession()->getPermission('user.profile.trophy.canSeeTrophies');
+        return WCF::getSession()->hasPermission('user.profile.trophy.canSeeTrophies');
     }
 
     #[\Override]

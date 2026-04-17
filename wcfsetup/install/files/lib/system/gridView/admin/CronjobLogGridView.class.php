@@ -108,7 +108,7 @@ final class CronjobLogGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return WCF::getSession()->getPermission('admin.management.canManageCronjob');
+        return WCF::getSession()->hasPermission('admin.management.canManageCronjob');
     }
 
     #[\Override]

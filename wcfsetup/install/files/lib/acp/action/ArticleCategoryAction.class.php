@@ -30,7 +30,7 @@ final class ArticleCategoryAction implements RequestHandlerInterface
     #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        if (!WCF::getSession()->getPermission("admin.content.article.canManageArticle")) {
+        if (!WCF::getSession()->hasPermission("admin.content.article.canManageArticle")) {
             throw new PermissionDeniedException();
         }
 

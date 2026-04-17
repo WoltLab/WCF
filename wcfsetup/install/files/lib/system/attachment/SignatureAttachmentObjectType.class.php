@@ -149,13 +149,13 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType
 
     private function canAddUser(): bool
     {
-        return WCF::getSession()->getPermission('admin.user.canAddUser');
+        return WCF::getSession()->hasPermission('admin.user.canAddUser');
     }
 
     private function canEditUser(UserProfile $userProfile): bool
     {
-        return WCF::getSession()->getPermission('admin.user.canEditUser')
+        return WCF::getSession()->hasPermission('admin.user.canEditUser')
             && UserGroup::isAccessibleGroup($userProfile->getGroupIDs())
-            && WCF::getSession()->getPermission('user.signature.attachment.canUpload');
+            && WCF::getSession()->hasPermission('user.signature.attachment.canUpload');
     }
 }

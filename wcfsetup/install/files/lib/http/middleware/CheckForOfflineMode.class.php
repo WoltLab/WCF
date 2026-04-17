@@ -45,6 +45,6 @@ final class CheckForOfflineMode implements MiddlewareInterface
 
     private function userCanBypassOfflineMode(): bool
     {
-        return WCF::getSession()->getPermission('admin.general.canViewPageDuringOfflineMode');
+        return WCF::getSession()->hasPermission('admin.general.canViewPageDuringOfflineMode');
     }
 }

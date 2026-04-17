@@ -309,7 +309,7 @@ class ArticleAddForm extends AbstractForm
             $this->enableComments = 1;
         }
 
-        if (WCF::getSession()->getPermission('admin.content.article.canManageArticle') || WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles')) {
+        if (WCF::getSession()->hasPermission('admin.content.article.canManageArticle') || WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles')) {
             if (isset($_POST['publicationStatus'])) {
                 $this->publicationStatus = \intval($_POST['publicationStatus']);
             }
@@ -340,7 +340,7 @@ class ArticleAddForm extends AbstractForm
             $this->content = ArrayUtil::trim($_POST['content']);
         }
 
-        if (WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canUseMedia')) {
             if (isset($_POST['imageID']) && \is_array($_POST['imageID'])) {
                 $this->imageID = ArrayUtil::toIntegerArray($_POST['imageID']);
             }
@@ -657,8 +657,8 @@ class ArticleAddForm extends AbstractForm
         $this->time = $dateTime->format('c');
 
         if (
-            !WCF::getSession()->getPermission('admin.content.article.canManageArticle')
-            && !WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles')
+            !WCF::getSession()->hasPermission('admin.content.article.canManageArticle')
+            && !WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles')
         ) {
             $this->publicationStatus = Article::UNPUBLISHED;
         }

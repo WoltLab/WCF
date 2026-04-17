@@ -402,7 +402,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     {
         return
             WCF::getUser()->userID == $this->userID
-            || WCF::getSession()->getPermission('user.profile.avatar.canSeeAvatars')
+            || WCF::getSession()->hasPermission('user.profile.avatar.canSeeAvatars')
             || (($pending = WCF::getSession()->getPendingUserChange()) && $pending->userID == $this->userID);
     }
 
@@ -442,7 +442,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      */
     public function canSeeCoverPhoto()
     {
-        return WCF::getUser()->userID == $this->userID || WCF::getSession()->getPermission('user.profile.coverPhoto.canSeeCoverPhotos');
+        return WCF::getUser()->userID == $this->userID || WCF::getSession()->hasPermission('user.profile.coverPhoto.canSeeCoverPhotos');
     }
 
     /**
@@ -467,7 +467,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     public function canViewOnlineStatus()
     {
         return WCF::getUser()->userID == $this->userID
-            || WCF::getSession()->getPermission('admin.user.canViewInvisible')
+            || WCF::getSession()->hasPermission('admin.user.canViewInvisible')
             || $this->isAccessible('canViewOnlineStatus');
     }
 
@@ -778,7 +778,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      */
     public function isProtected()
     {
-        return !WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions') && !$this->isAccessible('canViewProfile') && $this->userID != WCF::getUser()->userID;
+        return !WCF::getSession()->hasPermission('admin.general.canViewPrivateUserOptions') && !$this->isAccessible('canViewProfile') && $this->userID != WCF::getUser()->userID;
     }
 
     /**
@@ -788,7 +788,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      */
     public function getAge(?int $year = null)
     {
-        $showYear = $this->birthdayShowYear || WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions');
+        $showYear = $this->birthdayShowYear || WCF::getSession()->hasPermission('admin.general.canViewPrivateUserOptions');
 
         if ($year !== null) {
             if ($showYear) {
@@ -836,7 +836,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
             return '';
         }
 
-        $showYear = $this->birthdayShowYear || WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions');
+        $showYear = $this->birthdayShowYear || WCF::getSession()->hasPermission('admin.general.canViewPrivateUserOptions');
 
         $d = new \DateTimeImmutable($this->birthday, WCF::getUser()->getTimeZone());
         $dateFormat = (($showYear && $birthdayYear) ? WCF::getLanguage()->get(DateUtil::DATE_FORMAT) : \str_replace(
@@ -1172,7 +1172,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     public function showTrophyPoints(): bool
     {
         return \MODULE_TROPHY
-            && WCF::getSession()->getPermission('user.profile.trophy.canSeeTrophies')
+            && WCF::getSession()->hasPermission('user.profile.trophy.canSeeTrophies')
             && $this->trophyPoints
             && ($this->isAccessible('canViewTrophies') || $this->userID == WCF::getSession()->userID);
     }
@@ -1183,7 +1183,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     public function canEditAvatar(): bool
     {
         if (
-            WCF::getSession()->getPermission('admin.user.canEditUser')
+            WCF::getSession()->hasPermission('admin.user.canEditUser')
             && UserGroup::isAccessibleGroup($this->getGroupIDs())
         ) {
             return true;
@@ -1197,7 +1197,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
             return false;
         }
 
-        return WCF::getSession()->getPermission('user.profile.avatar.canUploadAvatar');
+        return WCF::getSession()->hasPermission('user.profile.avatar.canUploadAvatar');
     }
 
     /**
@@ -1205,7 +1205,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      */
     public function canEditCoverPhoto(): bool
     {
-        if ($this->canEdit() && WCF::getSession()->getPermission('admin.user.canDisableCoverPhoto')) {
+        if ($this->canEdit() && WCF::getSession()->hasPermission('admin.user.canDisableCoverPhoto')) {
             return true;
         }
 
@@ -1217,6 +1217,6 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
             return false;
         }
 
-        return WCF::getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto');
+        return WCF::getSession()->hasPermission('user.profile.coverPhoto.canUploadCoverPhoto');
     }
 }

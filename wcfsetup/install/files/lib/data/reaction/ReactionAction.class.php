@@ -82,7 +82,7 @@ class ReactionAction extends AbstractDatabaseObjectAction
     {
         $this->validateObjectParameters();
 
-        if (!WCF::getSession()->getPermission('user.like.canViewLike')) {
+        if (!WCF::getSession()->hasPermission('user.like.canViewLike')) {
             throw new PermissionDeniedException();
         }
     }
@@ -204,7 +204,7 @@ class ReactionAction extends AbstractDatabaseObjectAction
         }
 
         // check permissions
-        if (!WCF::getUser()->userID || !WCF::getSession()->getPermission('user.like.canLike')) {
+        if (!WCF::getUser()->userID || !WCF::getSession()->hasPermission('user.like.canLike')) {
             throw new PermissionDeniedException();
         }
 

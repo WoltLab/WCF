@@ -482,7 +482,7 @@ BROWSERCONFIG;
      */
     public function validateCopy()
     {
-        if (!WCF::getSession()->getPermission('admin.style.canManageStyle')) {
+        if (!WCF::getSession()->hasPermission('admin.style.canManageStyle')) {
             throw new PermissionDeniedException();
         }
 
@@ -515,7 +515,7 @@ BROWSERCONFIG;
     public function validateChangeStyle()
     {
         $this->style = $this->getSingleObject()->getDecoratedObject();
-        if ($this->style->isDisabled && !WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')) {
+        if ($this->style->isDisabled && !WCF::getSession()->hasPermission('admin.style.canUseDisabledStyle')) {
             throw new PermissionDeniedException();
         }
     }
@@ -554,7 +554,7 @@ BROWSERCONFIG;
     public function getStyleChooser()
     {
         $styleList = new StyleList();
-        if (!WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')) {
+        if (!WCF::getSession()->hasPermission('admin.style.canUseDisabledStyle')) {
             $styleList->getConditionBuilder()->add("style.isDisabled = ?", [0]);
         }
         $styleList->sqlOrderBy = "style.styleName ASC";
@@ -575,7 +575,7 @@ BROWSERCONFIG;
      */
     public function validateMarkAsTainted()
     {
-        if (!WCF::getSession()->getPermission('admin.style.canManageStyle')) {
+        if (!WCF::getSession()->hasPermission('admin.style.canManageStyle')) {
             throw new PermissionDeniedException();
         }
 

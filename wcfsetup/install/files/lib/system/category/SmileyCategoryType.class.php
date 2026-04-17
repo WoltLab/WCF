@@ -51,6 +51,6 @@ class SmileyCategoryType extends AbstractCategoryType
     #[\Override]
     public function canEditCategory()
     {
-        return WCF::getSession()->getPermission('admin.content.smiley.canManageSmiley');
+        return WCF::getSession()->hasPermission('admin.content.smiley.canManageSmiley');
     }
 }

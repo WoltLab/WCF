@@ -170,7 +170,7 @@ class TrophyPage extends MultipleLinkPage
                 SELECT  userID
                 FROM    wcf1_user_option_value
                 WHERE   COALESCE(userOption' . $canViewTrophiesOptionID . ', ' . $canViewTrophyDefaultValue . ') = 0)');
-        } elseif (!WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions')) {
+        } elseif (!WCF::getSession()->hasPermission('admin.general.canViewPrivateUserOptions')) {
             $conditionBuilder = new PreparedStatementConditionBuilder(false, 'OR');
             $conditionBuilder->add('user_trophy.userID IN (
                 SELECT  userID

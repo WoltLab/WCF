@@ -18,7 +18,7 @@ class FollowUserActivityEvent extends SingletonFactory implements IUserActivityE
     #[\Override]
     public function prepare(array $events)
     {
-        if (!WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
+        if (!WCF::getSession()->hasPermission('user.profile.canViewUserProfile')) {
             return;
         }
 

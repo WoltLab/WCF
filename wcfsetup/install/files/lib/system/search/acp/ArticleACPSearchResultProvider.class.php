@@ -18,7 +18,7 @@ class ArticleACPSearchResultProvider implements IACPSearchResultProvider
     #[\Override]
     public function search(string $query)
     {
-        if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
+        if (!WCF::getSession()->hasPermission('admin.content.article.canManageArticle')) {
             return [];
         }
 

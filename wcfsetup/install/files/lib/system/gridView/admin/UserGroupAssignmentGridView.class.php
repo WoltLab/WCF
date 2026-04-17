@@ -93,7 +93,7 @@ final class UserGroupAssignmentGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return WCF::getSession()->getPermission('admin.user.canManageGroupAssignment');
+        return WCF::getSession()->hasPermission('admin.user.canManageGroupAssignment');
     }
 
     #[\Override]

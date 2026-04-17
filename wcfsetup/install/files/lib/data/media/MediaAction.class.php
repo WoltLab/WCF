@@ -204,7 +204,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
      */
     public function validateGetManagementDialog()
     {
-        if (!WCF::getSession()->getPermission('admin.content.cms.canManageMedia') && !WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
+        if (!WCF::getSession()->hasPermission('admin.content.cms.canManageMedia') && !WCF::getSession()->hasPermission('admin.content.cms.canUseMedia')) {
             throw new PermissionDeniedException();
         }
 
@@ -224,7 +224,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
     public function getManagementDialog()
     {
         $mediaList = new ViewableMediaList();
-        if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
             $mediaList->getConditionBuilder()->add('media.userID = ?', [WCF::getUser()->userID]);
         }
         if ($this->parameters['imagesOnly']) {
@@ -363,7 +363,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             }
         }
 
-        if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
             foreach ($this->getObjects() as $media) {
                 if ($media->userID != WCF::getUser()->userID) {
                     throw new PermissionDeniedException();
@@ -498,7 +498,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
     #[\Override]
     public function validateGetSearchResultList()
     {
-        if (!WCF::getSession()->getPermission('admin.content.cms.canManageMedia') && !WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
+        if (!WCF::getSession()->hasPermission('admin.content.cms.canManageMedia') && !WCF::getSession()->hasPermission('admin.content.cms.canUseMedia')) {
             throw new PermissionDeniedException();
         }
 
@@ -526,7 +526,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
     {
         $mediaList = new MediaList();
         $mediaList->addSearchConditions($this->parameters['searchString']);
-        if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
             $mediaList->getConditionBuilder()->add('media.userID = ?', [WCF::getUser()->userID]);
         }
         if ($this->parameters['imagesOnly']) {
@@ -588,7 +588,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             }
         }
 
-        if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
             foreach ($this->getObjects() as $media) {
                 if ($media->userID != WCF::getUser()->userID) {
                     throw new PermissionDeniedException();
@@ -647,7 +647,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
      */
     public function validateGetSetCategoryDialog()
     {
-        if (!WCF::getSession()->getPermission('admin.content.cms.canManageMedia')) {
+        if (!WCF::getSession()->hasPermission('admin.content.cms.canManageMedia')) {
             throw new PermissionDeniedException();
         }
 
@@ -692,7 +692,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             }
         }
 
-        if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
             foreach ($this->getObjects() as $media) {
                 if ($media->userID != WCF::getUser()->userID) {
                     throw new PermissionDeniedException();

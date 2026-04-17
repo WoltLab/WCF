@@ -105,7 +105,7 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
         $data = PackageUpdateCacheBuilder::getInstance()->getData();
         if (
             $data['updates']
-            && WCF::getSession()->getPermission('admin.configuration.package.canUpdatePackage')
+            && WCF::getSession()->hasPermission('admin.configuration.package.canUpdatePackage')
         ) {
             $messages[] = new StatusMessage(
                 StatusMessageType::Info,
@@ -120,7 +120,7 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
             Environment::SYSTEM_ID_REGISTRY_KEY
         );
         if ($storedSystemId !== Environment::getSystemId()) {
-            if (WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage') && (!\ENABLE_ENTERPRISE_MODE || WCF::getUser()->hasOwnerAccess())) {
+            if (WCF::getSession()->hasPermission('admin.configuration.package.canInstallPackage') && (!\ENABLE_ENTERPRISE_MODE || WCF::getUser()->hasOwnerAccess())) {
                 $messages[] = new StatusMessage(
                     StatusMessageType::Info,
                     WCF::getLanguage()->getDynamicVariable('wcf.acp.index.systemIdMismatch')

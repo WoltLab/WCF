@@ -572,7 +572,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
                     continue;
                 }
 
-                if ($this->parameters['data']['scope'] === 'mention' && (!WCF::getSession()->getPermission('user.message.canMentionGroups') || !$group->canBeMentioned())) {
+                if ($this->parameters['data']['scope'] === 'mention' && (!WCF::getSession()->hasPermission('user.message.canMentionGroups') || !$group->canBeMentioned())) {
                     continue;
                 }
 
@@ -1205,7 +1205,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
     {
         $this->readObjects();
 
-        if (!WCF::getSession()->getPermission('admin.user.canEnableUser')) {
+        if (!WCF::getSession()->hasPermission('admin.user.canEnableUser')) {
             throw new PermissionDeniedException();
         }
 

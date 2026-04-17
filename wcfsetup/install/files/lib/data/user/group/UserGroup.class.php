@@ -254,7 +254,7 @@ class UserGroup extends DatabaseObject implements ITitledObject
      */
     public function canCopy()
     {
-        return WCF::getSession()->getPermission('admin.user.canAddGroup') && $this->isAccessible();
+        return WCF::getSession()->hasPermission('admin.user.canAddGroup') && $this->isAccessible();
     }
 
     /**
@@ -423,7 +423,7 @@ class UserGroup extends DatabaseObject implements ITitledObject
     public function isDeletable()
     {
         // insufficient permissions
-        if (!WCF::getSession()->getPermission('admin.user.canDeleteGroup')) {
+        if (!WCF::getSession()->hasPermission('admin.user.canDeleteGroup')) {
             return false;
         }
 
@@ -453,7 +453,7 @@ class UserGroup extends DatabaseObject implements ITitledObject
     public function isEditable()
     {
         // insufficient permissions
-        if (!WCF::getSession()->getPermission('admin.user.canEditGroup')) {
+        if (!WCF::getSession()->hasPermission('admin.user.canEditGroup')) {
             return false;
         }
 
@@ -551,7 +551,7 @@ class UserGroup extends DatabaseObject implements ITitledObject
      */
     public static function getMentionableGroups()
     {
-        if (!WCF::getSession()->getPermission('user.message.canMentionGroups')) {
+        if (!WCF::getSession()->hasPermission('user.message.canMentionGroups')) {
             return [];
         }
 

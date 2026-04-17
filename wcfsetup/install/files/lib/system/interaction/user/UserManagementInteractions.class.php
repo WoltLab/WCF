@@ -27,7 +27,7 @@ final class UserManagementInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
-        if (WCF::getSession()->getPermission('admin.user.canBanUser')) {
+        if (WCF::getSession()->hasPermission('admin.user.canBanUser')) {
             $this->addInteraction(
                 new class(
                     'ban',
@@ -49,7 +49,7 @@ final class UserManagementInteractions extends AbstractInteractionProvider
                 }
             );
         }
-        if (WCF::getSession()->getPermission('admin.user.canDisableAvatar')) {
+        if (WCF::getSession()->hasPermission('admin.user.canDisableAvatar')) {
             $this->addInteraction(
                 new class(
                     'disable-avatar',
@@ -71,7 +71,7 @@ final class UserManagementInteractions extends AbstractInteractionProvider
                 }
             );
         }
-        if (WCF::getSession()->getPermission('admin.user.canDisableSignature')) {
+        if (WCF::getSession()->hasPermission('admin.user.canDisableSignature')) {
             $this->addInteraction(
                 new class(
                     'disable-signature',
@@ -93,7 +93,7 @@ final class UserManagementInteractions extends AbstractInteractionProvider
                 }
             );
         }
-        if (WCF::getSession()->getPermission('admin.user.canDisableCoverPhoto')) {
+        if (WCF::getSession()->hasPermission('admin.user.canDisableCoverPhoto')) {
             $this->addInteraction(
                 new class(
                     'disable-cover-photo',
@@ -115,7 +115,7 @@ final class UserManagementInteractions extends AbstractInteractionProvider
                 }
             );
         }
-        if (WCF::getSession()->getPermission('admin.user.canEnableUser')) {
+        if (WCF::getSession()->hasPermission('admin.user.canEnableUser')) {
             $this->addInteraction(
                 new class(
                     'enable',
@@ -137,7 +137,7 @@ final class UserManagementInteractions extends AbstractInteractionProvider
                 }
             );
         }
-        if (WCF::getSession()->getPermission('admin.general.canUseAcp') && WCF::getSession()->getPermission('admin.user.canEditUser')) {
+        if (WCF::getSession()->hasPermission('admin.general.canUseAcp') && WCF::getSession()->hasPermission('admin.user.canEditUser')) {
             $this->addInteraction(
                 new class(
                     'edit',

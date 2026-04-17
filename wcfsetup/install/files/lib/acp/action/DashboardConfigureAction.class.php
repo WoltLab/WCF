@@ -44,7 +44,7 @@ final class DashboardConfigureAction implements RequestHandlerInterface
     #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        if (!WCF::getSession()->getPermission('admin.general.canUseAcp')) {
+        if (!WCF::getSession()->hasPermission('admin.general.canUseAcp')) {
             throw new PermissionDeniedException();
         }
 

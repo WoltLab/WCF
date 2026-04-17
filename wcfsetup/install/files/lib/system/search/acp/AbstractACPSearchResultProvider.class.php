@@ -46,7 +46,7 @@ abstract class AbstractACPSearchResultProvider
             $hasPermission = false;
             $permissions = \explode(',', $object->{$permissionsColumnName});
             foreach ($permissions as $permission) {
-                if (WCF::getSession()->getPermission($permission)) {
+                if (WCF::getSession()->hasPermission($permission)) {
                     $hasPermission = true;
                     break;
                 }

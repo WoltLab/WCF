@@ -128,7 +128,7 @@ final class UserAuthenticationFailureGridView extends AbstractGridView
     public function isAccessible(): bool
     {
         return \ENABLE_USER_AUTHENTICATION_FAILURE
-            && WCF::getSession()->getPermission('admin.management.canViewLog');
+            && WCF::getSession()->hasPermission('admin.management.canViewLog');
     }
 
     #[\Override]

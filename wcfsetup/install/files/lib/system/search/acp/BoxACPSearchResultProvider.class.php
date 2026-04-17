@@ -18,7 +18,7 @@ class BoxACPSearchResultProvider implements IACPSearchResultProvider
     #[\Override]
     public function search(string $query)
     {
-        if (!WCF::getSession()->getPermission('admin.content.cms.canManageBox')) {
+        if (!WCF::getSession()->hasPermission('admin.content.cms.canManageBox')) {
             return [];
         }
 

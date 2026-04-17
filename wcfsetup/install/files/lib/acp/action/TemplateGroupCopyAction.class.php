@@ -34,7 +34,7 @@ final class TemplateGroupCopyAction implements RequestHandlerInterface
     #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        if (!WCF::getSession()->getPermission('admin.template.canManageTemplate')) {
+        if (!WCF::getSession()->hasPermission('admin.template.canManageTemplate')) {
             throw new PermissionDeniedException();
         }
 

@@ -42,7 +42,7 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
         $assignments = [];
         foreach ($queues as $queue) {
             $assignUser = false;
-            if (WCF::getSession()->getPermission('mod.general.canUseModeration')) {
+            if (WCF::getSession()->hasPermission('mod.general.canUseModeration')) {
                 $assignUser = true;
             }
 

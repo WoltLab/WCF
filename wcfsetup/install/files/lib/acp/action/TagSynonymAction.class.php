@@ -34,7 +34,7 @@ final class TagSynonymAction implements RequestHandlerInterface
         if (!\MODULE_TAGGING) {
             throw new IllegalLinkException();
         }
-        if (!WCF::getSession()->getPermission('admin.content.tag.canManageTag')) {
+        if (!WCF::getSession()->hasPermission('admin.content.tag.canManageTag')) {
             throw new PermissionDeniedException();
         }
 

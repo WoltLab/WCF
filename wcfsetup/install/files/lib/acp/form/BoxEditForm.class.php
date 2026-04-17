@@ -192,7 +192,7 @@ class BoxEditForm extends BoxAddForm
     #[\Override]
     public function readData()
     {
-        if (!empty($_POST) && !WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
+        if (!empty($_POST) && !WCF::getSession()->hasPermission('admin.content.cms.canUseMedia')) {
             foreach ($this->box->getBoxContents() as $languageID => $content) {
                 $this->imageID[$languageID] = $content->imageID;
             }

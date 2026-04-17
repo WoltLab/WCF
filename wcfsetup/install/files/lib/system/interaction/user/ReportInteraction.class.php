@@ -29,7 +29,7 @@ class ReportInteraction extends AbstractInteraction
     public function isAvailable(DatabaseObject $object): bool
     {
         if ($this->isAvailableCallback === null) {
-            return !!WCF::getSession()->getPermission('user.profile.canReportContent');
+            return !!WCF::getSession()->hasPermission('user.profile.canReportContent');
         }
 
         return parent::isAvailable($object);

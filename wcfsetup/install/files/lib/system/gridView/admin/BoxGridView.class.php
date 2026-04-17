@@ -152,7 +152,7 @@ final class BoxGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return WCF::getSession()->getPermission('admin.content.cms.canManageBox');
+        return WCF::getSession()->hasPermission('admin.content.cms.canManageBox');
     }
 
     #[\Override]

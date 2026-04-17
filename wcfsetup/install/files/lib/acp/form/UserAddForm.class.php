@@ -187,7 +187,7 @@ class UserAddForm extends UserOptionListForm
             $this->signature = StringUtil::trim($_POST['signature']);
         }
 
-        if (WCF::getSession()->getPermission('admin.user.canDisableSignature')) {
+        if (WCF::getSession()->hasPermission('admin.user.canDisableSignature')) {
             if (isset($_POST['disableSignatureReason'])) {
                 $this->disableSignatureReason = StringUtil::trim($_POST['disableSignatureReason']);
             }
@@ -314,7 +314,7 @@ class UserAddForm extends UserOptionListForm
             'signatureAttachmentHandler' => $this->attachmentHandler,
         ];
 
-        if (WCF::getSession()->getPermission('admin.user.canDisableSignature')) {
+        if (WCF::getSession()->hasPermission('admin.user.canDisableSignature')) {
             $data['data']['disableSignature'] = $this->disableSignature;
             $data['data']['disableSignatureReason'] = $this->disableSignatureReason;
             $data['data']['disableSignatureExpires'] = $this->disableSignatureExpires;

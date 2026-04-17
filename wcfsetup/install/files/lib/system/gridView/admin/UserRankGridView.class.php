@@ -133,7 +133,7 @@ final class UserRankGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return \MODULE_USER_RANK && WCF::getSession()->getPermission('admin.user.rank.canManageRank');
+        return \MODULE_USER_RANK && WCF::getSession()->hasPermission('admin.user.rank.canManageRank');
     }
 
     #[\Override]

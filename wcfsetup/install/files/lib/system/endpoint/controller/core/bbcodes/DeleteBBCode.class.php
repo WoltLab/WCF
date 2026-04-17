@@ -38,7 +38,7 @@ final class DeleteBBCode implements IController
 
     private function assertBBCodeCanBeDeleted(BBCode $bbcode): void
     {
-        if (!WCF::getSession()->getPermission("admin.content.bbcode.canManageBBCode")) {
+        if (!WCF::getSession()->hasPermission("admin.content.bbcode.canManageBBCode")) {
             throw new PermissionDeniedException();
         }
 

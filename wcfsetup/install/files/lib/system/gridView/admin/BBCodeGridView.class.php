@@ -71,7 +71,7 @@ final class BBCodeGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return WCF::getSession()->getPermission('admin.content.bbcode.canManageBBCode');
+        return WCF::getSession()->hasPermission('admin.content.bbcode.canManageBBCode');
     }
 
     #[\Override]

@@ -261,7 +261,7 @@ final class ModerationQueueGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return WCF::getSession()->getPermission('mod.general.canUseModeration');
+        return WCF::getSession()->hasPermission('mod.general.canUseModeration');
     }
 
     #[\Override]

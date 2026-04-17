@@ -35,8 +35,8 @@ class ArticleAttachmentObjectType extends AbstractAttachmentObjectType
             return (new Article($objectID))->canEdit();
         }
 
-        return WCF::getSession()->getPermission('admin.content.article.canManageArticle')
-            || WCF::getSession()->getPermission('admin.content.article.canContributeArticle');
+        return WCF::getSession()->hasPermission('admin.content.article.canManageArticle')
+            || WCF::getSession()->hasPermission('admin.content.article.canContributeArticle');
     }
 
     #[\Override]

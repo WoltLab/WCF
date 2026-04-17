@@ -101,7 +101,7 @@ final class UserOptionGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return WCF::getSession()->getPermission('admin.user.canManageUserOption');
+        return WCF::getSession()->hasPermission('admin.user.canManageUserOption');
     }
 
     #[\Override]

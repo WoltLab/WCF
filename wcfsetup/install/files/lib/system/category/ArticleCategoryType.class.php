@@ -74,7 +74,7 @@ class ArticleCategoryType extends AbstractCategoryType
     #[\Override]
     public function canEditCategory()
     {
-        return WCF::getSession()->getPermission('admin.content.article.canManageCategory');
+        return WCF::getSession()->hasPermission('admin.content.article.canManageCategory');
     }
 
     /**

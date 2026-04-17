@@ -90,11 +90,11 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
      */
     public function canDelete()
     {
-        if (WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
+        if (WCF::getSession()->hasPermission('admin.content.article.canManageArticle')) {
             return true;
         }
 
-        if (WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles') && $this->userID == WCF::getUser()->userID) {
+        if (WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles') && $this->userID == WCF::getUser()->userID) {
             return true;
         }
 
@@ -154,16 +154,16 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
             return false;
         }
 
-        if (WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
+        if (WCF::getSession()->hasPermission('admin.content.article.canManageArticle')) {
             return true;
         }
 
-        if (WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles') && $this->userID == WCF::getUser()->userID) {
+        if (WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles') && $this->userID == WCF::getUser()->userID) {
             return true;
         }
 
         if ($this->publicationStatus != self::PUBLISHED) {
-            if (WCF::getSession()->getPermission('admin.content.article.canContributeArticle') && $this->userID == WCF::getUser()->userID) {
+            if (WCF::getSession()->hasPermission('admin.content.article.canContributeArticle') && $this->userID == WCF::getUser()->userID) {
                 return true;
             }
         }
@@ -179,11 +179,11 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
      */
     public function canPublish()
     {
-        if (WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
+        if (WCF::getSession()->hasPermission('admin.content.article.canManageArticle')) {
             return true;
         }
 
-        if (WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles') && $this->userID == WCF::getUser()->userID) {
+        if (WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles') && $this->userID == WCF::getUser()->userID) {
             return true;
         }
 
@@ -459,7 +459,7 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
             && \ARTICLE_ENABLE_LIKE
             && WCF::getUser()->userID
             && $this->userID != WCF::getUser()->userID
-            && WCF::getSession()->getPermission('user.like.canLike');
+            && WCF::getSession()->hasPermission('user.like.canLike');
     }
 
     /**

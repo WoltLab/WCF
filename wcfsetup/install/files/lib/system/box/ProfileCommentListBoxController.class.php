@@ -28,7 +28,7 @@ class ProfileCommentListBoxController extends AbstractCommentListBoxController
     {
         $commentList->decoratorClassName = ViewableUserProfileComment::class;
 
-        if (WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
+        if (WCF::getSession()->hasPermission('user.profile.canViewUserProfile')) {
             $optionID = User::getUserOptionID('canViewProfile');
             $commentList->sqlJoins .= '
                 INNER JOIN  wcf1_user_option_value user_option_value

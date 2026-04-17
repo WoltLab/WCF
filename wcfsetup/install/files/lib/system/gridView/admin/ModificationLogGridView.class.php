@@ -161,7 +161,7 @@ final class ModificationLogGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return WCF::getSession()->getPermission('admin.management.canViewLog');
+        return WCF::getSession()->hasPermission('admin.management.canViewLog');
     }
 
     #[\Override]

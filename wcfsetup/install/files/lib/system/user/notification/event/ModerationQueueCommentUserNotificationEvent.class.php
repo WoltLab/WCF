@@ -49,7 +49,7 @@ class ModerationQueueCommentUserNotificationEvent extends AbstractCommentUserNot
     #[\Override]
     public function checkAccess()
     {
-        if (!WCF::getSession()->getPermission('mod.general.canUseModeration')) {
+        if (!WCF::getSession()->hasPermission('mod.general.canUseModeration')) {
             return false;
         }
         if (!$this->moderationQueue->queueID) {

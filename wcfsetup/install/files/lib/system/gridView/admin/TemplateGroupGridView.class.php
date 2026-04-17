@@ -104,7 +104,7 @@ final class TemplateGroupGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return WCF::getSession()->getPermission("admin.template.canManageTemplate");
+        return WCF::getSession()->hasPermission("admin.template.canManageTemplate");
     }
 
     #[\Override]

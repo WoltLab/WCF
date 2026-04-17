@@ -29,7 +29,7 @@ final class ExpiringLicensesAcpDashboardBox extends AbstractAcpDashboardBox
     #[\Override]
     public function isAccessible(): bool
     {
-        return WCF::getSession()->getPermission('admin.configuration.package.canEditServer');
+        return WCF::getSession()->hasPermission('admin.configuration.package.canEditServer');
     }
 
     #[\Override]

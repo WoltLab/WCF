@@ -65,7 +65,7 @@ class CmsPage extends AbstractPage
             throw new IllegalLinkException();
         }
 
-        if ($this->page->isDisabled && !WCF::getSession()->getPermission('admin.content.cms.canManagePage')) {
+        if ($this->page->isDisabled && !WCF::getSession()->hasPermission('admin.content.cms.canManagePage')) {
             throw new IllegalLinkException();
         }
 

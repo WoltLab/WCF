@@ -45,7 +45,7 @@ final class RenderException implements IController
 
     private function assertExceptionLogIsAccessible(): void
     {
-        if (!WCF::getSession()->getPermission('admin.management.canViewLog')) {
+        if (!WCF::getSession()->hasPermission('admin.management.canViewLog')) {
             throw new PermissionDeniedException();
         }
     }

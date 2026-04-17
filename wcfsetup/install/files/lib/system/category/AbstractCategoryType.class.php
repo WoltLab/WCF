@@ -91,19 +91,19 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
     #[\Override]
     public function canAddCategory()
     {
-        return WCF::getSession()->getPermission($this->permissionPrefix . '.canAddCategory');
+        return WCF::getSession()->hasPermission($this->permissionPrefix . '.canAddCategory');
     }
 
     #[\Override]
     public function canDeleteCategory()
     {
-        return WCF::getSession()->getPermission($this->permissionPrefix . '.canDeleteCategory');
+        return WCF::getSession()->hasPermission($this->permissionPrefix . '.canDeleteCategory');
     }
 
     #[\Override]
     public function canEditCategory()
     {
-        return WCF::getSession()->getPermission($this->permissionPrefix . '.canEditCategory');
+        return WCF::getSession()->hasPermission($this->permissionPrefix . '.canEditCategory');
     }
 
     #[\Override]

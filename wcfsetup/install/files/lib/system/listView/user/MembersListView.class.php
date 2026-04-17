@@ -61,7 +61,7 @@ class MembersListView extends AbstractListView
     #[\Override]
     public function isAccessible(): bool
     {
-        if (!\MODULE_MEMBERS_LIST || !WCF::getSession()->getPermission('user.profile.canViewMembersList')) {
+        if (!\MODULE_MEMBERS_LIST || !WCF::getSession()->hasPermission('user.profile.canViewMembersList')) {
             return false;
         }
 

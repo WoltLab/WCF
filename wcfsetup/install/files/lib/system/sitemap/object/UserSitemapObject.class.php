@@ -33,7 +33,7 @@ class UserSitemapObject extends AbstractSitemapObjectObjectType
     #[\Override]
     public function isAvailableType()
     {
-        if (!WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
+        if (!WCF::getSession()->hasPermission('user.profile.canViewUserProfile')) {
             return false;
         }
 

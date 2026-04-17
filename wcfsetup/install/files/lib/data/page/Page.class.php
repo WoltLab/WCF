@@ -94,7 +94,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
      */
     public function canDelete()
     {
-        if (WCF::getSession()->getPermission('admin.content.cms.canManagePage') && !$this->originIsSystem) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canManagePage') && !$this->originIsSystem) {
             return true;
         }
 
@@ -108,7 +108,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
      */
     public function canDisable()
     {
-        if (WCF::getSession()->getPermission('admin.content.cms.canManagePage') && (!$this->originIsSystem || $this->pageType != 'system')) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canManagePage') && (!$this->originIsSystem || $this->pageType != 'system')) {
             return true;
         }
 

@@ -68,7 +68,7 @@ final class ContactFormFileProcessor extends AbstractFileProcessor
     #[\Override]
     public function canDownload(File $file): bool
     {
-        if (WCF::getSession()->getPermission('admin.contact.canManageContactForm')) {
+        if (WCF::getSession()->hasPermission('admin.contact.canManageContactForm')) {
             return true;
         }
 

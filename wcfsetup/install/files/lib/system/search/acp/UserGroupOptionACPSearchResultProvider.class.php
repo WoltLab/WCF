@@ -39,7 +39,7 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
     #[\Override]
     public function search(string $query)
     {
-        if (!WCF::getSession()->getPermission('admin.user.canEditGroup')) {
+        if (!WCF::getSession()->hasPermission('admin.user.canEditGroup')) {
             return [];
         }
 
@@ -152,7 +152,7 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
         }
 
         // Allow the option to appear if the user has this permission.
-        if (WCF::getSession()->getPermission($userGroupOption->optionName)) {
+        if (WCF::getSession()->hasPermission($userGroupOption->optionName)) {
             return false;
         }
 

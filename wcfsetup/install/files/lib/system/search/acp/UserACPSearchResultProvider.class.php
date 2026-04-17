@@ -20,14 +20,14 @@ class UserACPSearchResultProvider implements IACPSearchResultProvider
     #[\Override]
     public function search(string $query)
     {
-        if (!WCF::getSession()->getPermission('admin.user.canEditUser')) {
+        if (!WCF::getSession()->hasPermission('admin.user.canEditUser')) {
             return [];
         }
 
         $conditionBuilder = new PreparedStatementConditionBuilder(true, 'OR');
         $conditionBuilder->add("username LIKE ?", [[$query . '%']]);
 
-        if (WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
+        if (WCF::getSession()->hasPermission('admin.user.canEditMailAddress')) {
             $conditionBuilder->add("email LIKE ?", [[$query . '%']]);
         }
 

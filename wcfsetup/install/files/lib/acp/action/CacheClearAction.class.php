@@ -23,7 +23,7 @@ final class CacheClearAction implements RequestHandlerInterface
     #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        if (!WCF::getSession()->getPermission('admin.management.canRebuildData')) {
+        if (!WCF::getSession()->hasPermission('admin.management.canRebuildData')) {
             throw new PermissionDeniedException();
         }
 

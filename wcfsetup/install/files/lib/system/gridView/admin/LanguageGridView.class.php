@@ -174,7 +174,7 @@ final class LanguageGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return WCF::getSession()->getPermission('admin.language.canManageLanguage');
+        return WCF::getSession()->hasPermission('admin.language.canManageLanguage');
     }
 
     #[\Override]

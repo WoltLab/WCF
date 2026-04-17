@@ -80,7 +80,7 @@ final class CaptchaQuestionGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return WCF::getSession()->getPermission('admin.captcha.canManageCaptchaQuestion');
+        return WCF::getSession()->hasPermission('admin.captcha.canManageCaptchaQuestion');
     }
 
     #[\Override]

@@ -36,7 +36,7 @@ final class GetStyleChooser implements IController
     private function getStyles(): StyleList
     {
         $styleList = new StyleList();
-        if (!WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')) {
+        if (!WCF::getSession()->hasPermission('admin.style.canUseDisabledStyle')) {
             $styleList->getConditionBuilder()->add("style.isDisabled = ?", [0]);
         }
         $styleList->sqlOrderBy = "style.styleName ASC";

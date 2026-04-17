@@ -22,7 +22,7 @@ final class UsersAwaitingApprovalAcpDashboardBox extends AbstractAcpDashboardBox
     #[\Override]
     public function isAccessible(): bool
     {
-        return WCF::getSession()->getPermission('admin.user.canSearchUser')
+        return WCF::getSession()->hasPermission('admin.user.canSearchUser')
             && ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN);
     }
 

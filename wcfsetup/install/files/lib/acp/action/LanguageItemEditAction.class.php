@@ -97,7 +97,7 @@ final class LanguageItemEditAction implements RequestHandlerInterface
         if (!WCF::getSession()->getUser()->userID) {
             throw new PermissionDeniedException();
         }
-        if (!WCF::getSession()->getPermission('admin.language.canManageLanguage')) {
+        if (!WCF::getSession()->hasPermission('admin.language.canManageLanguage')) {
             throw new PermissionDeniedException();
         }
     }

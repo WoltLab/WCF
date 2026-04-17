@@ -119,7 +119,7 @@ class UserClipboardAction extends AbstractClipboardAction
     protected function validateDelete()
     {
         // check permissions
-        if (!WCF::getSession()->getPermission('admin.user.canDeleteUser')) {
+        if (!WCF::getSession()->hasPermission('admin.user.canDeleteUser')) {
             return [];
         }
 
@@ -134,7 +134,7 @@ class UserClipboardAction extends AbstractClipboardAction
     protected function validateBan()
     {
         // check permissions
-        if (!WCF::getSession()->getPermission('admin.user.canBanUser')) {
+        if (!WCF::getSession()->hasPermission('admin.user.canBanUser')) {
             return [];
         }
 
@@ -200,7 +200,7 @@ class UserClipboardAction extends AbstractClipboardAction
     protected function validateConfirmEmail()
     {
         // check permissions
-        if (!WCF::getSession()->getPermission('admin.user.canEnableUser')) {
+        if (!WCF::getSession()->hasPermission('admin.user.canEnableUser')) {
             return [];
         }
 
@@ -224,7 +224,7 @@ class UserClipboardAction extends AbstractClipboardAction
     protected function validateUnconfirmEmail()
     {
         // check permissions
-        if (!WCF::getSession()->getPermission('admin.user.canEnableUser')) {
+        if (!WCF::getSession()->hasPermission('admin.user.canEnableUser')) {
             return [];
         }
 
@@ -247,7 +247,7 @@ class UserClipboardAction extends AbstractClipboardAction
     public function validateSendNewPassword()
     {
         // check permissions
-        if (!WCF::getSession()->getPermission('admin.user.canEditPassword')) {
+        if (!WCF::getSession()->hasPermission('admin.user.canEditPassword')) {
             return [];
         }
 
@@ -270,7 +270,7 @@ class UserClipboardAction extends AbstractClipboardAction
     protected function validateEnable()
     {
         // check permissions
-        if (!WCF::getSession()->getPermission('admin.user.canEnableUser')) {
+        if (!WCF::getSession()->hasPermission('admin.user.canEnableUser')) {
             return [];
         }
 
@@ -293,7 +293,7 @@ class UserClipboardAction extends AbstractClipboardAction
     protected function validateMerge()
     {
         // check permissions
-        if (!WCF::getSession()->getPermission('admin.user.canEditUser')) {
+        if (!WCF::getSession()->hasPermission('admin.user.canEditUser')) {
             return [];
         }
 
@@ -315,7 +315,7 @@ class UserClipboardAction extends AbstractClipboardAction
     {
         // check permissions
         if (
-            !WCF::getSession()->getPermission('admin.user.canEnableUser')
+            !WCF::getSession()->hasPermission('admin.user.canEnableUser')
             || !((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)
         ) {
             return [];
@@ -340,7 +340,7 @@ class UserClipboardAction extends AbstractClipboardAction
      */
     protected function validateDeleteUserContent()
     {
-        if (!WCF::getSession()->getPermission('admin.user.canDeleteUser')) {
+        if (!WCF::getSession()->hasPermission('admin.user.canDeleteUser')) {
             return [];
         }
 
@@ -353,7 +353,7 @@ class UserClipboardAction extends AbstractClipboardAction
      */
     protected function validateSendMail(): array
     {
-        if (!WCF::getSession()->getPermission('admin.user.canMailUser')) {
+        if (!WCF::getSession()->hasPermission('admin.user.canMailUser')) {
             return [];
         }
 
@@ -366,7 +366,7 @@ class UserClipboardAction extends AbstractClipboardAction
      */
     protected function validateExportMailAddress(): array
     {
-        if (!WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
+        if (!WCF::getSession()->hasPermission('admin.user.canEditMailAddress')) {
             return [];
         }
 

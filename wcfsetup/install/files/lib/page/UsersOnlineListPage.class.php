@@ -62,7 +62,7 @@ class UsersOnlineListPage extends SortablePage
     {
         parent::readParameters();
 
-        if (WCF::getSession()->getPermission('admin.user.canViewIpAddress')) {
+        if (WCF::getSession()->hasPermission('admin.user.canViewIpAddress')) {
             $this->validSortFields[] = 'ipAddress';
             $this->validSortFields[] = 'userAgent';
         }

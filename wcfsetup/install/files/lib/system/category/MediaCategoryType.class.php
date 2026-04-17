@@ -31,18 +31,18 @@ class MediaCategoryType extends AbstractCategoryType
     #[\Override]
     public function canAddCategory()
     {
-        return WCF::getSession()->getPermission('admin.content.cms.canManageMedia');
+        return WCF::getSession()->hasPermission('admin.content.cms.canManageMedia');
     }
 
     #[\Override]
     public function canDeleteCategory()
     {
-        return WCF::getSession()->getPermission('admin.content.cms.canManageMedia');
+        return WCF::getSession()->hasPermission('admin.content.cms.canManageMedia');
     }
 
     #[\Override]
     public function canEditCategory()
     {
-        return WCF::getSession()->getPermission('admin.content.cms.canManageMedia');
+        return WCF::getSession()->hasPermission('admin.content.cms.canManageMedia');
     }
 }

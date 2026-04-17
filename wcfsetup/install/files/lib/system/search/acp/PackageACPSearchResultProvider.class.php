@@ -19,8 +19,8 @@ class PackageACPSearchResultProvider implements IACPSearchResultProvider
     public function search(string $query)
     {
         if (
-            !WCF::getSession()->getPermission('admin.configuration.package.canUpdatePackage')
-            && !WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage')
+            !WCF::getSession()->hasPermission('admin.configuration.package.canUpdatePackage')
+            && !WCF::getSession()->hasPermission('admin.configuration.package.canInstallPackage')
         ) {
             return [];
         }

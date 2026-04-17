@@ -22,7 +22,7 @@ class StatisticsBoxController extends AbstractBoxController
     #[\Override]
     protected function loadContent()
     {
-        if (WCF::getSession()->getPermission('user.profile.canViewStatistics')) {
+        if (WCF::getSession()->hasPermission('user.profile.canViewStatistics')) {
             $this->content = WCF::getTPL()->render(
                 'wcf',
                 'boxStatistics',

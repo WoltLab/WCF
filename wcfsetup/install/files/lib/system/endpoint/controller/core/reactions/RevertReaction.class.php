@@ -91,7 +91,7 @@ final class RevertReaction implements IController
 
     private function assertUserCanReact(): void
     {
-        if (!WCF::getUser()->userID || !WCF::getSession()->getPermission('user.like.canLike')) {
+        if (!WCF::getUser()->userID || !WCF::getSession()->hasPermission('user.like.canLike')) {
             throw new PermissionDeniedException();
         }
     }

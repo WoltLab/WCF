@@ -197,7 +197,7 @@ final class RescueModeForm extends AbstractForm
         WCF::getSession()->disableUpdate();
         WCF::getSession()->changeUser($this->user, true);
 
-        if (!WCF::getSession()->getPermission('admin.configuration.canManageApplication')) {
+        if (!WCF::getSession()->hasPermission('admin.configuration.canManageApplication')) {
             throw new UserInputException('username', 'notAuthorized');
         }
 

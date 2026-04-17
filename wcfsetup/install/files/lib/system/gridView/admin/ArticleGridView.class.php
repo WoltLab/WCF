@@ -224,9 +224,9 @@ final class ArticleGridView extends AbstractGridView
     {
         return \MODULE_ARTICLE
             && (
-                WCF::getSession()->getPermission('admin.content.article.canManageArticle')
-                || WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles')
-                || WCF::getSession()->getPermission('admin.content.article.canContributeArticle')
+                WCF::getSession()->hasPermission('admin.content.article.canManageArticle')
+                || WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles')
+                || WCF::getSession()->hasPermission('admin.content.article.canContributeArticle')
             );
     }
 

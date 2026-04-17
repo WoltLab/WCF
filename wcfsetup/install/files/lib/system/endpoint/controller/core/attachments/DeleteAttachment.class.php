@@ -39,7 +39,7 @@ final class DeleteAttachment implements IController
 
     private function assertAttachmentBeDeleted(Attachment $attachment): void
     {
-        if (!WCF::getSession()->getPermission("admin.attachment.canManageAttachment") || !$attachment->canDelete()) {
+        if (!WCF::getSession()->hasPermission("admin.attachment.canManageAttachment") || !$attachment->canDelete()) {
             throw new PermissionDeniedException();
         }
 

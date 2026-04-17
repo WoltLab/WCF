@@ -28,7 +28,7 @@ final class UserPopoverAction implements RequestHandlerInterface
     #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        if (!WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
+        if (!WCF::getSession()->hasPermission('user.profile.canViewUserProfile')) {
             throw new PermissionDeniedException();
         }
 

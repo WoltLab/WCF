@@ -166,7 +166,7 @@ class UserListPage extends SortablePage
         $this->validSortFields = \array_merge($this->validSortFields, \array_keys($this->options));
 
         // avoid leaking mail adresses by sorting
-        if (WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
+        if (WCF::getSession()->hasPermission('admin.user.canEditMailAddress')) {
             $this->validSortFields[] = 'email';
         }
 
@@ -179,7 +179,7 @@ class UserListPage extends SortablePage
         parent::readData();
 
         // add email column for authorized users
-        if (!$this->searchID && WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
+        if (!$this->searchID && WCF::getSession()->hasPermission('admin.user.canEditMailAddress')) {
             \array_unshift($this->columns, 'email');
         }
 
@@ -295,10 +295,10 @@ class UserListPage extends SortablePage
                 $row['groupIDs'] = \implode(',', $groupIDs);
                 $accessible = (!empty($groupIDs) ? UserGroup::isAccessibleGroup($groupIDs) : true);
                 $row['accessible'] = $accessible;
-                $row['deletable'] = ($accessible && WCF::getSession()->getPermission('admin.user.canDeleteUser') && $row['userID'] != WCF::getUser()->userID) ? 1 : 0;
-                $row['editable'] = ($accessible && WCF::getSession()->getPermission('admin.user.canEditUser')) ? 1 : 0;
-                $row['bannable'] = ($accessible && WCF::getSession()->getPermission('admin.user.canBanUser') && $row['userID'] != WCF::getUser()->userID) ? 1 : 0;
-                $row['canBeEnabled'] = ($accessible && WCF::getSession()->getPermission('admin.user.canEnableUser') && $row['userID'] != WCF::getUser()->userID) ? 1 : 0;
+                $row['deletable'] = ($accessible && WCF::getSession()->hasPermission('admin.user.canDeleteUser') && $row['userID'] != WCF::getUser()->userID) ? 1 : 0;
+                $row['editable'] = ($accessible && WCF::getSession()->hasPermission('admin.user.canEditUser')) ? 1 : 0;
+                $row['bannable'] = ($accessible && WCF::getSession()->hasPermission('admin.user.canBanUser') && $row['userID'] != WCF::getUser()->userID) ? 1 : 0;
+                $row['canBeEnabled'] = ($accessible && WCF::getSession()->hasPermission('admin.user.canEnableUser') && $row['userID'] != WCF::getUser()->userID) ? 1 : 0;
                 $row['isMarked'] = \intval(\in_array($row['userID'], $this->markedUsers));
 
                 $this->users[] = new UserProfile(new User(null, $row));

@@ -49,9 +49,9 @@ class ArticleListPage extends AbstractListViewPage
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'canManageArticles' => WCF::getSession()->getPermission('admin.content.article.canManageArticle')
-                || WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles')
-                || WCF::getSession()->getPermission('admin.content.article.canContributeArticle'),
+            'canManageArticles' => WCF::getSession()->hasPermission('admin.content.article.canManageArticle')
+                || WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles')
+                || WCF::getSession()->hasPermission('admin.content.article.canContributeArticle'),
             'categoryID' => 0,
             'showArticleAddDialog' => $this->showArticleAddDialog,
             'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),

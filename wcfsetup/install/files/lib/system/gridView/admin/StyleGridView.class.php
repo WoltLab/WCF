@@ -130,7 +130,7 @@ final class StyleGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return WCF::getSession()->getPermission('admin.style.canManageStyle');
+        return WCF::getSession()->hasPermission('admin.style.canManageStyle');
     }
 
     #[\Override]

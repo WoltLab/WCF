@@ -46,7 +46,7 @@ class TrophyCategoryType extends AbstractCategoryType
     #[\Override]
     public function canEditCategory()
     {
-        return WCF::getSession()->getPermission('admin.trophy.canManageTrophy');
+        return WCF::getSession()->hasPermission('admin.trophy.canManageTrophy');
     }
 
     #[\Override]

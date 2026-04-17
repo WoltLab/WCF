@@ -65,7 +65,7 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
             return $this->handleGuest($request);
         }
 
-        if (!WCF::getSession()->getPermission('admin.general.canUseAcp')) {
+        if (!WCF::getSession()->hasPermission('admin.general.canUseAcp')) {
             return $this->handleNoAcpPermission($request);
         }
 

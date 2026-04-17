@@ -92,7 +92,7 @@ class UserPage extends AbstractPage
             throw new IllegalLinkException();
         }
 
-        if ($this->user->userID != WCF::getUser()->userID && !WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
+        if ($this->user->userID != WCF::getUser()->userID && !WCF::getSession()->hasPermission('user.profile.canViewUserProfile')) {
             throw new PermissionDeniedException();
         }
 

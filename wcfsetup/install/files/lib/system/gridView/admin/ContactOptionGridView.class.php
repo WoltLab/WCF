@@ -87,7 +87,7 @@ final class ContactOptionGridView extends AbstractGridView
     public function isAccessible(): bool
     {
         return \MODULE_CONTACT_FORM
-            && WCF::getSession()->getPermission("admin.contact.canManageContactForm");
+            && WCF::getSession()->hasPermission("admin.contact.canManageContactForm");
     }
 
     #[\Override]

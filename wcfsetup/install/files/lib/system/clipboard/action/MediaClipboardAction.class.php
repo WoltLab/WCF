@@ -79,13 +79,13 @@ class MediaClipboardAction extends AbstractClipboardAction
      */
     public function validateDelete()
     {
-        if (!WCF::getSession()->getPermission('admin.content.cms.canManageMedia')) {
+        if (!WCF::getSession()->hasPermission('admin.content.cms.canManageMedia')) {
             return [];
         }
 
         $mediaIDs = \array_keys($this->objects);
 
-        if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
             $mediaIDs = [];
 
             /** @var Media $media */
@@ -116,7 +116,7 @@ class MediaClipboardAction extends AbstractClipboardAction
      */
     public function validateSetCategory()
     {
-        if (!WCF::getSession()->getPermission('admin.content.cms.canManageMedia')) {
+        if (!WCF::getSession()->hasPermission('admin.content.cms.canManageMedia')) {
             return [];
         }
 
@@ -127,7 +127,7 @@ class MediaClipboardAction extends AbstractClipboardAction
 
         $mediaIDs = \array_keys($this->objects);
 
-        if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
             $mediaIDs = [];
 
             /** @var Media $media */

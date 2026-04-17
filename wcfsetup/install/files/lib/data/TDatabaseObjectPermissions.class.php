@@ -25,7 +25,7 @@ trait TDatabaseObjectPermissions
         if ($this->permissions) {
             $permissions = \explode(',', $this->permissions);
             foreach ($permissions as $permission) {
-                if (WCF::getSession()->getPermission($permission)) {
+                if (WCF::getSession()->hasPermission($permission)) {
                     return true;
                 }
             }

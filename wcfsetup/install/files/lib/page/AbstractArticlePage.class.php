@@ -127,7 +127,7 @@ abstract class AbstractArticlePage extends AbstractPage
         }
 
         // get tags
-        if (\MODULE_TAGGING && WCF::getSession()->getPermission('user.tag.canViewTag')) {
+        if (\MODULE_TAGGING && WCF::getSession()->hasPermission('user.tag.canViewTag')) {
             $this->tags = TagEngine::getInstance()->getObjectTags(
                 'com.woltlab.wcf.article',
                 $this->articleContent->articleContentID,

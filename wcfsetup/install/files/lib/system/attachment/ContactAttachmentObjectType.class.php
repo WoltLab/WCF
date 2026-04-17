@@ -49,7 +49,7 @@ class ContactAttachmentObjectType extends AbstractAttachmentObjectType
         }
 
         // The administrator does not require the access key in order to view the attachment.
-        if (!WCF::getSession()->getPermission('admin.contact.canManageContactForm')) {
+        if (!WCF::getSession()->hasPermission('admin.contact.canManageContactForm')) {
             return false;
         }
 

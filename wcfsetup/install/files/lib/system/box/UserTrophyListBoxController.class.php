@@ -97,7 +97,7 @@ class UserTrophyListBoxController extends AbstractDatabaseObjectListBoxControlle
                 FROM    wcf1_user_option_value
                 WHERE   userOption' . $canViewTrophiesOptionID . ' = 0
             )');
-        } elseif (!WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions')) {
+        } elseif (!WCF::getSession()->hasPermission('admin.general.canViewPrivateUserOptions')) {
             $conditionBuilder = new PreparedStatementConditionBuilder(false, 'OR');
             $conditionBuilder->add('user_trophy.userID IN (
                 SELECT  userID

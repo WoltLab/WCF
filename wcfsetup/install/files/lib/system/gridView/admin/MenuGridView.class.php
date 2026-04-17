@@ -124,7 +124,7 @@ final class MenuGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return WCF::getSession()->getPermission("admin.content.cms.canManageMenu");
+        return WCF::getSession()->hasPermission("admin.content.cms.canManageMenu");
     }
 
     #[\Override]

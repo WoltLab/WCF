@@ -108,7 +108,7 @@ class MediaListPage extends SortablePage
     {
         parent::initObjectList();
 
-        if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
             $this->objectList->getConditionBuilder()->add('media.userID = ?', [WCF::getUser()->userID]);
         }
 
