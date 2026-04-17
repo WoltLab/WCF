@@ -32,7 +32,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
     {
         $data = $excludedInTinyBuild = [];
 
-        if (VISITOR_USE_TINY_BUILD) {
+        if (\VISITOR_USE_TINY_BUILD) {
             foreach ($parameters as $groupID) {
                 if (UserGroup::getGroupByID($groupID)->groupType == UserGroup::GUESTS) {
                     $sql = "SELECT  optionName, additionalData

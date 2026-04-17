@@ -29,13 +29,13 @@ final class GithubAuthAction extends AbstractOauth2AuthAction
     #[\Override]
     protected function getClientId(): string
     {
-        return StringUtil::trim(GITHUB_PUBLIC_KEY);
+        return StringUtil::trim(\GITHUB_PUBLIC_KEY);
     }
 
     #[\Override]
     protected function getClientSecret(): string
     {
-        return StringUtil::trim(GITHUB_PRIVATE_KEY);
+        return StringUtil::trim(\GITHUB_PRIVATE_KEY);
     }
 
     #[\Override]

@@ -167,7 +167,7 @@ final class SessionHandler extends SingletonFactory
     #[\Override]
     protected function init()
     {
-        $this->isACP = (\class_exists(WCFACP::class, false) || !PACKAGE_ID);
+        $this->isACP = (\class_exists(WCFACP::class, false) || !\PACKAGE_ID);
         $this->usersOnlyPermissions = UserGroupOptionCacheBuilder::getInstance()->getData([], 'usersOnlyOptions');
     }
 
@@ -221,10 +221,10 @@ final class SessionHandler extends SingletonFactory
      */
     private function getParsedCookieData(): ?array
     {
-        $cookieName = COOKIE_PREFIX . "user_session";
+        $cookieName = \COOKIE_PREFIX . "user_session";
 
         if (!empty($_COOKIE[$cookieName])) {
-            if (!PACKAGE_ID) {
+            if (!\PACKAGE_ID) {
                 return [
                     'sessionId' => $_COOKIE[$cookieName],
                 ];
@@ -280,7 +280,7 @@ final class SessionHandler extends SingletonFactory
      */
     private function getCookieValue(): string
     {
-        if (!PACKAGE_ID) {
+        if (!\PACKAGE_ID) {
             return $this->sessionID;
         }
 
@@ -414,7 +414,7 @@ final class SessionHandler extends SingletonFactory
             // is not able to create a valid `XSRF-TOKEN`, e.g. by setting the `XSRF-TOKEN` cookie to the static
             // value `1234`, possibly allowing later exploitation.
             if (
-                !PACKAGE_ID
+                !\PACKAGE_ID
                 || CryptoUtil::getValueFromSignedString($_COOKIE['XSRF-TOKEN']) !== null
             ) {
                 $xsrfToken = $_COOKIE['XSRF-TOKEN'];
@@ -422,7 +422,7 @@ final class SessionHandler extends SingletonFactory
         }
 
         if (!$xsrfToken) {
-            if (PACKAGE_ID) {
+            if (\PACKAGE_ID) {
                 $xsrfToken = CryptoUtil::createSignedString(\random_bytes(16));
             } else {
                 $xsrfToken = Hex::encode(\random_bytes(16));
@@ -797,7 +797,7 @@ final class SessionHandler extends SingletonFactory
         }
 
         // work-around for setup process (package wcf does not exist yet)
-        if (!PACKAGE_ID) {
+        if (!\PACKAGE_ID) {
             $sql = "SELECT  groupID
                     FROM    wcf1_user_to_group
                     WHERE   userID = ?";
@@ -1089,7 +1089,7 @@ final class SessionHandler extends SingletonFactory
             // This allows for a continous access to the ACP and specifically the
             // developer tools within a single workday without needing to re-login
             // just because one spent 15 minutes within the IDE.
-            if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+            if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
                 $softLimit = self::REAUTHENTICATION_HARD_LIMIT;
             }
         }

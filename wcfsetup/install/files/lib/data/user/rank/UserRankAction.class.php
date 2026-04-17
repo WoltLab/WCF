@@ -54,9 +54,9 @@ class UserRankAction extends AbstractDatabaseObjectAction
 
                 \rename(
                     $rankImageFile->getLocation(),
-                    WCF_DIR . UserRank::RANK_IMAGE_DIR . $fileName
+                    \WCF_DIR . UserRank::RANK_IMAGE_DIR . $fileName
                 );
-                $rankImageFile->setProcessed(WCF_DIR . UserRank::RANK_IMAGE_DIR . $fileName);
+                $rankImageFile->setProcessed(\WCF_DIR . UserRank::RANK_IMAGE_DIR . $fileName);
 
                 $updateData['rankImage'] = $fileName;
 
@@ -110,9 +110,9 @@ class UserRankAction extends AbstractDatabaseObjectAction
 
                     \rename(
                         $rankImageFile->getLocation(),
-                        WCF_DIR . UserRank::RANK_IMAGE_DIR . $fileName
+                        \WCF_DIR . UserRank::RANK_IMAGE_DIR . $fileName
                     );
-                    $rankImageFile->setProcessed(WCF_DIR . UserRank::RANK_IMAGE_DIR . $fileName);
+                    $rankImageFile->setProcessed(\WCF_DIR . UserRank::RANK_IMAGE_DIR . $fileName);
 
                     $this->parameters['data']['rankImage'] = $fileName;
                 }
@@ -154,6 +154,6 @@ class UserRankAction extends AbstractDatabaseObjectAction
     #[\Override]
     public function getPackageID(): int
     {
-        return PACKAGE_ID;
+        return \PACKAGE_ID;
     }
 }

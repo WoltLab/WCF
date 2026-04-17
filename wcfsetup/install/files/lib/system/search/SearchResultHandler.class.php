@@ -41,7 +41,7 @@ final class SearchResultHandler
 
     private int $endIndex = 0;
 
-    public function __construct(Search $search, int $startIndex = 0, int $limit = SEARCH_RESULTS_PER_PAGE)
+    public function __construct(Search $search, int $startIndex = 0, int $limit = \SEARCH_RESULTS_PER_PAGE)
     {
         $this->search = $search;
         $this->startIndex = $startIndex;

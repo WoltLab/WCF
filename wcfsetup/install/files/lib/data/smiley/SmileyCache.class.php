@@ -128,7 +128,7 @@ final class SmileyCache extends SingletonFactory
      */
     public function assignVariables(): void
     {
-        if (!MODULE_SMILEY) {
+        if (!\MODULE_SMILEY) {
             return;
         }
 
@@ -153,7 +153,7 @@ final class SmileyCache extends SingletonFactory
      */
     public function getEmojis(): array
     {
-        if (!MODULE_SMILEY) {
+        if (!\MODULE_SMILEY) {
             return [];
         }
 

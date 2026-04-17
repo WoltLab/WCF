@@ -562,7 +562,7 @@ class OptionHandler implements IOptionHandler
             return false;
         }
 
-        if (ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess() && \get_class($category) === OptionCategory::class) {
+        if (\ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess() && \get_class($category) === OptionCategory::class) {
             return !\in_array($category->categoryName, $this->enterpriseBlacklist['categories']);
         }
 
@@ -592,7 +592,7 @@ class OptionHandler implements IOptionHandler
             return false;
         }
 
-        if (ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess() && \get_class($option) === Option::class) {
+        if (\ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess() && \get_class($option) === Option::class) {
             return !\in_array($option->optionName, $this->enterpriseBlacklist['options']);
         }
 

@@ -270,7 +270,7 @@ final class I18nHandler extends SingletonFactory
      * @param string|string[] $elementID either the id of the element or externally passed array `languageID => value`
      * @return void
      */
-    public function save(string|array $elementID, string $languageVariable, string $languageCategory, int $packageID = PACKAGE_ID)
+    public function save(string|array $elementID, string $languageVariable, string $languageCategory, int $packageID = \PACKAGE_ID)
     {
         LanguageEditor::validateItemName($languageVariable, $languageCategory);
 

@@ -66,11 +66,11 @@ class SearchAction extends AbstractDatabaseObjectAction
         }
 
         if (!\in_array($this->parameters['sortField'], ['subject', 'time', 'username', 'relevance'])) {
-            $this->parameters['sortField'] = SEARCH_DEFAULT_SORT_FIELD;
+            $this->parameters['sortField'] = \SEARCH_DEFAULT_SORT_FIELD;
         }
 
         if (!\in_array($this->parameters['sortOrder'], ['ASC', 'DESC'])) {
-            $this->parameters['sortOrder'] = SEARCH_DEFAULT_SORT_ORDER;
+            $this->parameters['sortOrder'] = \SEARCH_DEFAULT_SORT_ORDER;
         }
 
         $requestsPer24h = FloodControl::getInstance()->countContent(
@@ -119,7 +119,7 @@ class SearchAction extends AbstractDatabaseObjectAction
 
         $startIndex = 0;
         if ($this->parameters['pageNo'] > 1) {
-            $startIndex = SEARCH_RESULTS_PER_PAGE * ($this->parameters['pageNo'] - 1);
+            $startIndex = \SEARCH_RESULTS_PER_PAGE * ($this->parameters['pageNo'] - 1);
         }
         $resultHandler = new SearchResultHandler($search, $startIndex);
         $resultHandler->loadSearchResults();
@@ -132,7 +132,7 @@ class SearchAction extends AbstractDatabaseObjectAction
                 'count' => $resultHandler->countSearchResults(),
                 'query' => $resultHandler->getQuery(),
             ]),
-            'pages' => (int)\ceil($resultHandler->countSearchResults() / SEARCH_RESULTS_PER_PAGE),
+            'pages' => (int)\ceil($resultHandler->countSearchResults() / \SEARCH_RESULTS_PER_PAGE),
             'pageNo' => $this->parameters['pageNo'] ?: 1,
             'searchID' => $search->searchID,
             'template' => WCF::getTPL()->render($templateName['application'], $templateName['templateName'], [
@@ -167,7 +167,7 @@ class SearchAction extends AbstractDatabaseObjectAction
     public function getSearchResults(): array
     {
         $search = new Search($this->parameters['searchID']);
-        $resultHandler = new SearchResultHandler($search, SEARCH_RESULTS_PER_PAGE * ($this->parameters['pageNo'] - 1));
+        $resultHandler = new SearchResultHandler($search, \SEARCH_RESULTS_PER_PAGE * ($this->parameters['pageNo'] - 1));
         $resultHandler->loadSearchResults();
         $templateName = $resultHandler->getTemplateName();
         SearchResultTextParser::getInstance()->setSearchQuery($resultHandler->getQuery());

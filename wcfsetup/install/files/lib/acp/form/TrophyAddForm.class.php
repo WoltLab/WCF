@@ -216,7 +216,7 @@ class TrophyAddForm extends AbstractAcpForm
         // read file upload
         $fileExtension = WCF::getSession()->getVar('trophyImage-' . $this->tmpHash);
 
-        if ($fileExtension !== null && \file_exists(WCF_DIR . 'images/trophy/tmp_' . $this->tmpHash . '.' . $fileExtension)) {
+        if ($fileExtension !== null && \file_exists(\WCF_DIR . 'images/trophy/tmp_' . $this->tmpHash . '.' . $fileExtension)) {
             $this->uploadedImageURL = WCF::getPath() . 'images/trophy/tmp_' . $this->tmpHash . '.' . $fileExtension;
         }
 
@@ -282,7 +282,7 @@ class TrophyAddForm extends AbstractAcpForm
                     throw new UserInputException('imageUpload');
                 }
 
-                if (!\file_exists(WCF_DIR . 'images/trophy/tmp_' . $this->tmpHash . '.' . $fileExtension)) {
+                if (!\file_exists(\WCF_DIR . 'images/trophy/tmp_' . $this->tmpHash . '.' . $fileExtension)) {
                     throw new UserInputException('imageUpload');
                 }
                 break;

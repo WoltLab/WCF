@@ -95,7 +95,7 @@ class CmsPage extends AbstractPage
         MetaTagHandler::getInstance()->addTag(
             'og:title',
             'og:title',
-            $this->content->title . ' - ' . WCF::getLanguage()->get(PAGE_TITLE),
+            $this->content->title . ' - ' . WCF::getLanguage()->get(\PAGE_TITLE),
             true
         );
         MetaTagHandler::getInstance()->addTag('og:url', 'og:url', $this->canonicalURL, true);

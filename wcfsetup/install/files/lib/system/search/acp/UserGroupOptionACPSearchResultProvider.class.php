@@ -68,7 +68,7 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
             $languageItems[$itemName] = $languageItem;
         }
 
-        if (empty($languageItems) && !(ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS)) {
+        if (empty($languageItems) && !(\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS)) {
             return [];
         }
 
@@ -76,7 +76,7 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
         if (!empty($languageItems)) {
             $conditions->add("optionName IN (?)", [\array_keys($languageItems)]);
         }
-        if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+        if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
             $conditions->add('optionName LIKE ?', ['%' . $query . '%']);
         }
 

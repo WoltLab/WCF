@@ -180,7 +180,7 @@ class PackageInstallationDispatcher
                 // save localized package infos
                 $this->saveLocalizedPackageInfos();
 
-                if (!PACKAGE_ID) {
+                if (!\PACKAGE_ID) {
                     $this->finalizeWcfSetup();
                 }
 
@@ -398,7 +398,7 @@ class PackageInstallationDispatcher
         $logEntry .= \str_repeat('-', 30) . "\n\n";
 
         \file_put_contents(
-            WCF_DIR . 'log/' . \date('Y-m-d', \TIME_NOW) . '-update-' . $this->queue->queueID . '.txt',
+            \WCF_DIR . 'log/' . \date('Y-m-d', \TIME_NOW) . '-update-' . $this->queue->queueID . '.txt',
             $logEntry,
             \FILE_APPEND
         );
@@ -648,7 +648,7 @@ class PackageInstallationDispatcher
      */
     protected function createPackage(array $packageData)
     {
-        if (!PACKAGE_ID && $packageData['package'] === 'com.woltlab.wcf') {
+        if (!\PACKAGE_ID && $packageData['package'] === 'com.woltlab.wcf') {
             $packageEditor = new PackageEditor(new Package(1));
             $packageEditor->update($packageData);
 
@@ -678,7 +678,7 @@ class PackageInstallationDispatcher
         $languageList->readObjects();
 
         // workaround for WCFSetup
-        if (!PACKAGE_ID) {
+        if (!\PACKAGE_ID) {
             $sql = "SELECT  *
                     FROM    wcf1_language_category
                     WHERE   languageCategory = ?";
@@ -919,13 +919,13 @@ class PackageInstallationDispatcher
                 || DevtoolsSetup::getInstance()->useDefaultInstallPath()
             )
         ) {
-            $directory = WCF_DIR . $applicationDirectory . '/';
+            $directory = \WCF_DIR . $applicationDirectory . '/';
         } elseif (
-            ENABLE_ENTERPRISE_MODE
+            \ENABLE_ENTERPRISE_MODE
             && \defined('ENTERPRISE_MODE_APP_DIRECTORIES')
-            && \is_array(ENTERPRISE_MODE_APP_DIRECTORIES)
+            && \is_array(\ENTERPRISE_MODE_APP_DIRECTORIES)
         ) {
-            $directory = ENTERPRISE_MODE_APP_DIRECTORIES[$abbreviation] ?? null;
+            $directory = \ENTERPRISE_MODE_APP_DIRECTORIES[$abbreviation] ?? null;
         }
 
         if ($directory === null && !PackageInstallationFormManager::findForm($this->queue, 'packageDir')) {
@@ -955,9 +955,9 @@ class PackageInstallationDispatcher
                 }
             }
 
-            $defaultPath = WCF_DIR;
+            $defaultPath = \WCF_DIR;
             if ($isParent === false) {
-                $defaultPath = \dirname(WCF_DIR);
+                $defaultPath = \dirname(\WCF_DIR);
             }
             $defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($defaultPath)) . $applicationDirectory . '/';
 
@@ -998,12 +998,12 @@ class PackageInstallationDispatcher
             // set package dir
             $packageEditor = new PackageEditor($this->getPackage());
             $packageEditor->update([
-                'packageDir' => FileUtil::getRelativePath(WCF_DIR, $packageDir),
+                'packageDir' => FileUtil::getRelativePath(\WCF_DIR, $packageDir),
             ]);
 
             // determine domain path, in some environments (e.g. ISPConfig) the $_SERVER paths are
             // faked and differ from the real filesystem path
-            if (PACKAGE_ID) {
+            if (\PACKAGE_ID) {
                 $wcfDomainPath = ApplicationHandler::getInstance()->getWCF()->domainPath;
             } else {
                 $sql = "SELECT  domainPath
@@ -1017,7 +1017,7 @@ class PackageInstallationDispatcher
             }
 
             $documentRoot = \substr(
-                FileUtil::unifyDirSeparator(WCF_DIR),
+                FileUtil::unifyDirSeparator(\WCF_DIR),
                 0,
                 -\strlen(FileUtil::unifyDirSeparator($wcfDomainPath))
             );

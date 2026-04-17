@@ -435,7 +435,7 @@ class WorkerCLICommand implements ICLICommand
      */
     public function generateList()
     {
-        $directory = DirectoryUtil::getInstance(WCF_DIR . 'lib/system/worker/');
+        $directory = DirectoryUtil::getInstance(\WCF_DIR . 'lib/system/worker/');
         $workerList = $directory->getFiles(\SORT_ASC, new Regex('Worker\.class\.php$'));
 
         $table = [

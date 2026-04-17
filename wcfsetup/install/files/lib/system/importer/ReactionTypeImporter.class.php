@@ -25,7 +25,7 @@ class ReactionTypeImporter extends AbstractImporter
     {
         // copy reaction type image
         $data['iconFile'] = \basename($additionalData['fileLocation']);
-        if (!@\copy($additionalData['fileLocation'], WCF_DIR . 'images/reaction/' . $data['iconFile'])) {
+        if (!@\copy($additionalData['fileLocation'], \WCF_DIR . 'images/reaction/' . $data['iconFile'])) {
             return 0;
         }
 

@@ -32,7 +32,7 @@ final class UserRegistrationUtil
         }
 
         $length = \mb_strlen($name);
-        if ($length < REGISTER_USERNAME_MIN_LENGTH || $length > REGISTER_USERNAME_MAX_LENGTH) {
+        if ($length < \REGISTER_USERNAME_MIN_LENGTH || $length > \REGISTER_USERNAME_MAX_LENGTH) {
             return false;
         }
 
@@ -62,7 +62,7 @@ final class UserRegistrationUtil
      */
     public static function checkForbiddenUsernames(string $name): bool
     {
-        return StringUtil::executeWordFilter($name, REGISTER_FORBIDDEN_USERNAMES);
+        return StringUtil::executeWordFilter($name, \REGISTER_FORBIDDEN_USERNAMES);
     }
 
     /**
@@ -72,10 +72,10 @@ final class UserRegistrationUtil
     {
         return StringUtil::executeWordFilter(
             $email,
-            REGISTER_FORBIDDEN_EMAILS
-        ) && (!StringUtil::trim(REGISTER_ALLOWED_EMAILS) || !StringUtil::executeWordFilter(
+            \REGISTER_FORBIDDEN_EMAILS
+        ) && (!StringUtil::trim(\REGISTER_ALLOWED_EMAILS) || !StringUtil::executeWordFilter(
             $email,
-            REGISTER_ALLOWED_EMAILS
+            \REGISTER_ALLOWED_EMAILS
         ));
     }
 

@@ -21,7 +21,7 @@ final class DiskCacheSource implements ICacheSource
             $quoted = \preg_quote($cacheName, '/');
             $regex = "/^cache\\.{$quoted}(-[a-f0-9]+)?\\.v2\\.php$/";
 
-            $iterator = new \DirectoryIterator(WCF_DIR . 'cache/');
+            $iterator = new \DirectoryIterator(\WCF_DIR . 'cache/');
             foreach ($iterator as $file) {
                 if (!$file->isFile()) {
                     continue;
@@ -55,7 +55,7 @@ final class DiskCacheSource implements ICacheSource
     #[\Override]
     public function flushAll()
     {
-        $iterator = new \DirectoryIterator(WCF_DIR . 'cache/');
+        $iterator = new \DirectoryIterator(\WCF_DIR . 'cache/');
         foreach ($iterator as $file) {
             if (!$file->isFile()) {
                 continue;
@@ -104,7 +104,7 @@ final class DiskCacheSource implements ICacheSource
      */
     private function getFilename(string $cacheName): string
     {
-        return WCF_DIR . 'cache/cache.' . $cacheName . '.v2.php';
+        return \WCF_DIR . 'cache/cache.' . $cacheName . '.v2.php';
     }
 
     /**

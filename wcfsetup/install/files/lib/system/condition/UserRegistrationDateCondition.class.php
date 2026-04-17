@@ -49,7 +49,7 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
             $registrationDateEnd = \DateTime::createFromFormat(
                 'Y-m-d',
                 $conditionData['registrationDateEnd'],
-                new \DateTimeZone(TIMEZONE)
+                new \DateTimeZone(\TIMEZONE)
             );
             $registrationDateEnd->setTime(23, 59, 59);
             $objectList->getConditionBuilder()->add(
@@ -61,7 +61,7 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
             $registrationDateStart = \DateTime::createFromFormat(
                 'Y-m-d',
                 $conditionData['registrationDateStart'],
-                new \DateTimeZone(TIMEZONE)
+                new \DateTimeZone(\TIMEZONE)
             );
             $registrationDateStart->setTime(0, 0, 0);
             $objectList->getConditionBuilder()->add(
@@ -79,7 +79,7 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
             $registrationDateStart = \DateTime::createFromFormat(
                 'Y-m-d',
                 $dateStart,
-                new \DateTimeZone(TIMEZONE)
+                new \DateTimeZone(\TIMEZONE)
             );
             if ($registrationDateStart !== false) {
                 $registrationDateStart->setTime(0, 0, 0);
@@ -94,7 +94,7 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
             $registrationDateEnd = \DateTime::createFromFormat(
                 'Y-m-d',
                 $dateEnd,
-                new \DateTimeZone(TIMEZONE)
+                new \DateTimeZone(\TIMEZONE)
             );
             if ($registrationDateEnd !== false) {
                 $registrationDateEnd->setTime(23, 59, 59);
@@ -178,7 +178,7 @@ HTML;
             $registrationDateStart = \DateTime::createFromFormat(
                 'Y-m-d',
                 $this->registrationDateStart,
-                new \DateTimeZone(TIMEZONE)
+                new \DateTimeZone(\TIMEZONE)
             );
             if ($registrationDateStart === false) {
                 $this->errorMessage = 'wcf.condition.timestamp.error.invalidStart';
@@ -190,7 +190,7 @@ HTML;
             $registrationDateEnd = \DateTime::createFromFormat(
                 'Y-m-d',
                 $this->registrationDateEnd,
-                new \DateTimeZone(TIMEZONE)
+                new \DateTimeZone(\TIMEZONE)
             );
             if ($registrationDateEnd === false) {
                 $this->errorMessage = 'wcf.condition.timestamp.error.invalidEnd';

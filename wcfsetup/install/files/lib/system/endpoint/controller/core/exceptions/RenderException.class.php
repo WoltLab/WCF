@@ -72,9 +72,9 @@ final class RenderException implements IController
     private function getLogFile(string $exceptionID): ?string
     {
         $fileNameRegex = new Regex('(?:^|/)\d{4}-\d{2}-\d{2}\.txt$');
-        $logFiles = DirectoryUtil::getInstance(WCF_DIR . 'log/', false)->getFiles(\SORT_DESC, $fileNameRegex);
+        $logFiles = DirectoryUtil::getInstance(\WCF_DIR . 'log/', false)->getFiles(\SORT_DESC, $fileNameRegex);
         foreach ($logFiles as $logFile) {
-            $pathname = WCF_DIR . 'log/' . $logFile;
+            $pathname = \WCF_DIR . 'log/' . $logFile;
             $contents = \file_get_contents($pathname);
 
             if (\str_contains($contents, '<<<<<<<<' . $exceptionID . '<<<<')) {

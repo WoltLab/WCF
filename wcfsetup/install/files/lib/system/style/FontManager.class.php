@@ -49,7 +49,7 @@ final class FontManager extends SingletonFactory
      */
     public function getCssFilename(string $family): string
     {
-        return WCF_DIR . 'font/families/' . $family . '/font.css';
+        return \WCF_DIR . 'font/families/' . $family . '/font.css';
     }
 
     /**

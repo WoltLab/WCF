@@ -150,7 +150,7 @@ class StyleHandler extends SingletonFactory
                 $filemtime = \filemtime(\WCF_DIR . $filename);
             }
 
-            $preloadFilename = WCF_DIR . 'style/style-' . $this->getStyle()->styleID . '-preload.json';
+            $preloadFilename = \WCF_DIR . 'style/style-' . $this->getStyle()->styleID . '-preload.json';
             if (\is_readable($preloadFilename)) {
                 try {
                     $decoded = \json_decode(
@@ -175,19 +175,18 @@ class StyleHandler extends SingletonFactory
     /**
      * Resets stylesheet for given style.
      *
-     * @param Style $style
      * @return void
      */
     public function resetStylesheet(Style $style)
     {
-        $stylesheets = \glob(WCF_DIR . 'style/style-' . $style->styleID . '*.css');
+        $stylesheets = \glob(\WCF_DIR . 'style/style-' . $style->styleID . '*.css');
         if ($stylesheets !== false) {
             foreach ($stylesheets as $stylesheet) {
                 @\unlink($stylesheet);
             }
         }
 
-        @\unlink(WCF_DIR . 'style/style-' . $style->styleID . '-preload.json');
+        @\unlink(\WCF_DIR . 'style/style-' . $style->styleID . '-preload.json');
     }
 
     /**
@@ -208,7 +207,7 @@ class StyleHandler extends SingletonFactory
     public static function resetStylesheets(bool $resetACP = true)
     {
         // frontend stylesheets
-        $files = \glob(WCF_DIR . 'style/style-*.css');
+        $files = \glob(\WCF_DIR . 'style/style-*.css');
         if ($files !== false) {
             foreach ($files as $file) {
                 @\unlink($file);
@@ -216,7 +215,7 @@ class StyleHandler extends SingletonFactory
         }
 
         // preload data
-        $files = \glob(WCF_DIR . 'style/style-*-preload.json');
+        $files = \glob(\WCF_DIR . 'style/style-*-preload.json');
         if ($files !== false) {
             foreach ($files as $file) {
                 @\unlink($file);
@@ -225,7 +224,7 @@ class StyleHandler extends SingletonFactory
 
         // ACP stylesheets
         if ($resetACP) {
-            $files = \glob(WCF_DIR . 'acp/style/style*.css');
+            $files = \glob(\WCF_DIR . 'acp/style/style*.css');
             if ($files !== false) {
                 foreach ($files as $file) {
                     @\unlink($file);

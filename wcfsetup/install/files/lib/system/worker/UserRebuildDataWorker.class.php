@@ -94,7 +94,7 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
             $statement->execute($conditionBuilder->getParameters());
 
             // update like counter
-            if (MODULE_LIKE) {
+            if (\MODULE_LIKE) {
                 $sql = "UPDATE  wcf1_user user_table
                         SET";
 
@@ -117,7 +117,7 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
             }
 
             // update trophy points
-            if (MODULE_TROPHY) {
+            if (\MODULE_TROPHY) {
                 $sql = "UPDATE  wcf1_user user_table
                         SET     trophyPoints = (
                                     SELECT      COUNT(*)

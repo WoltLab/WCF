@@ -39,7 +39,7 @@ class ActiveStyle extends DatabaseObjectDecorator
             return $image;
         }
 
-        if ($this->imagePath && \file_exists(WCF_DIR . $this->imagePath . $image)) {
+        if ($this->imagePath && \file_exists(\WCF_DIR . $this->imagePath . $image)) {
             return WCF::getPath() . $this->imagePath . $image;
         }
 

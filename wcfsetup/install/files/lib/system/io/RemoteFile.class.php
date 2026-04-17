@@ -121,7 +121,7 @@ class RemoteFile extends File
         // see: https://wiki.php.net/rfc/improved-tls-constants
         // see: https://github.com/php/php-src/blob/197cac65fdf712effb19ad3e40688ceb7ebc7f7d/main/streams/php_stream_transport.h#L173-L175
         if (\defined('STREAM_CRYPTO_METHOD_TLS_ANY_CLIENT')) {
-            $cryptoType |= STREAM_CRYPTO_METHOD_TLS_ANY_CLIENT;
+            $cryptoType |= \STREAM_CRYPTO_METHOD_TLS_ANY_CLIENT;
         }
 
         // Add bits for all known TLS versions for the reasons above.

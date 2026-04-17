@@ -131,7 +131,7 @@ class XML
         $this->schema = "{$tmp[0]} {$tmp[1]}";
 
         // build file path upon namespace and filename
-        $this->schema = WCF_DIR . 'xsd/' . \mb_substr(\sha1($tmp[0]), 0, 8) . '_' . \basename($tmp[1]);
+        $this->schema = \WCF_DIR . 'xsd/' . \mb_substr(\sha1($tmp[0]), 0, 8) . '_' . \basename($tmp[1]);
 
         if (!\file_exists($this->schema) || !\is_readable($this->schema)) {
             throw new SystemException("Could not read XML schema definition located at '" . $this->schema . "'.");

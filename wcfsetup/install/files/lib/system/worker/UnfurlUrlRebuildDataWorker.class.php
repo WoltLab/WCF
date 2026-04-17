@@ -57,7 +57,7 @@ final class UnfurlUrlRebuildDataWorker extends AbstractLinearRebuildDataWorker
                 continue;
             }
 
-            if (!URL_UNFURLING_SAVE_IMAGES) {
+            if (!\URL_UNFURLING_SAVE_IMAGES) {
                 // delete stored images
                 if ($unfurlUrl->fileID !== null) {
                     $deleteFileIDs[] = $unfurlUrl->fileID;
@@ -73,7 +73,7 @@ final class UnfurlUrlRebuildDataWorker extends AbstractLinearRebuildDataWorker
 
                 $file = UnfurlUrlEditor::saveUnfurlImage(
                     $fileLocation,
-                    \pathinfo($unfurlUrl->imageUrl, PATHINFO_FILENAME)
+                    \pathinfo($unfurlUrl->imageUrl, \PATHINFO_FILENAME)
                 );
 
                 @\unlink($fileLocation);
@@ -104,7 +104,7 @@ final class UnfurlUrlRebuildDataWorker extends AbstractLinearRebuildDataWorker
     {
         return \sprintf(
             '%s%s%s/%s.%s',
-            WCF_DIR,
+            \WCF_DIR,
             UnfurlUrl::IMAGE_DIR,
             \substr($unfurlUrl->imageUrlHash, 0, 2),
             $unfurlUrl->imageUrlHash,

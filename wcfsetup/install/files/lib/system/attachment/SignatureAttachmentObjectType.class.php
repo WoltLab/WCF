@@ -23,7 +23,7 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType
     #[\Override]
     public function canDownload(int $objectID)
     {
-        if (!MODULE_USER_SIGNATURE) {
+        if (!\MODULE_USER_SIGNATURE) {
             return false;
         }
         if ($objectID) {
@@ -54,7 +54,7 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType
     #[\Override]
     public function canUpload(int $objectID, int $parentObjectID = 0)
     {
-        if (!MODULE_USER_SIGNATURE) {
+        if (!\MODULE_USER_SIGNATURE) {
             return false;
         }
 

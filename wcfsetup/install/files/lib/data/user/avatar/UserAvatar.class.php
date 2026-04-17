@@ -46,7 +46,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar, ISafeFormatAvata
      */
     public function getLocation(?int $size = null, ?bool $forceWebP = null)
     {
-        return WCF_DIR . 'images/avatars/' . $this->getFilename($size, $forceWebP);
+        return \WCF_DIR . 'images/avatars/' . $this->getFilename($size, $forceWebP);
     }
 
     /**

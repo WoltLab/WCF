@@ -72,11 +72,11 @@ class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin
         }
 
         $src = WCF::getPath($tagArgs['application']) . (isset($tagArgs['acp']) && $tagArgs['acp'] === 'true' ? 'acp/' : '') . 'js/';
-        if (!empty($tagArgs['bundle']) && !ENABLE_DEBUG_MODE) {
+        if (!empty($tagArgs['bundle']) && !\ENABLE_DEBUG_MODE) {
             $src .= $tagArgs['bundle'];
         } elseif (!empty($tagArgs['lib'])) {
             if ($isJquery) {
-                $src .= ENABLE_DEBUG_MODE ? '3rdParty/' . $tagArgs['lib'] : 'WCF.Combined';
+                $src .= \ENABLE_DEBUG_MODE ? '3rdParty/' . $tagArgs['lib'] : 'WCF.Combined';
             } else {
                 $src .= '3rdParty/' . $tagArgs['lib'];
                 if (!empty($tagArgs['file'])) {
@@ -92,10 +92,10 @@ class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin
         }
 
         $this->includedFiles[$src] = true;
-        if (!ENABLE_DEBUG_MODE) {
+        if (!\ENABLE_DEBUG_MODE) {
             if (
                 \defined('VISITOR_USE_TINY_BUILD')
-                && VISITOR_USE_TINY_BUILD
+                && \VISITOR_USE_TINY_BUILD
                 && !WCF::getUser()->userID
                 && !empty($tagArgs['hasTiny'])
             ) {
@@ -104,7 +104,7 @@ class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin
 
             $src .= '.min';
         }
-        $src .= '.js?v=' . LAST_UPDATE_TIME;
+        $src .= '.js?v=' . \LAST_UPDATE_TIME;
 
         $relocate = !RequestHandler::getInstance()->isACPRequest() && (!isset($tagArgs['core']) || $tagArgs['core'] !== 'true');
         $html = '<script' . ($relocate ? ' data-relocate="true"' : '') . ' data-cfasync="false" src="' . $src . '"></script>' . "\n";

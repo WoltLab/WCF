@@ -66,7 +66,7 @@ class PackageUpdateServer extends DatabaseObject implements ITitledObject
 
         parent::handleData($data);
 
-        $prefix = ENABLE_ENTERPRISE_MODE ? 'cloud/' : '';
+        $prefix = \ENABLE_ENTERPRISE_MODE ? 'cloud/' : '';
         $officialPath = \wcf\getMinorVersion();
         if (self::isUpgradeOverrideEnabled()) {
             $officialPath = WCF::AVAILABLE_UPGRADE_VERSION;
@@ -135,7 +135,7 @@ class PackageUpdateServer extends DatabaseObject implements ITitledObject
             $results[$packageServer->packageUpdateServerID] = $packageServer;
         }
 
-        if (ENABLE_ENTERPRISE_MODE) {
+        if (\ENABLE_ENTERPRISE_MODE) {
             return \array_filter($results, static function (self $server) {
                 return $server->isWoltLabStoreServer() || $server->isTrustedServer();
             });
@@ -188,10 +188,10 @@ class PackageUpdateServer extends DatabaseObject implements ITitledObject
      */
     public function getAuthData()
     {
-        if (ENABLE_ENTERPRISE_MODE && \defined('ENTERPRISE_MODE_AUTH_DATA')) {
+        if (\ENABLE_ENTERPRISE_MODE && \defined('ENTERPRISE_MODE_AUTH_DATA')) {
             $host = Url::parse($this->serverURL)['host'];
-            if (!empty(ENTERPRISE_MODE_AUTH_DATA[$host])) {
-                return ENTERPRISE_MODE_AUTH_DATA[$host];
+            if (!empty(\ENTERPRISE_MODE_AUTH_DATA[$host])) {
+                return \ENTERPRISE_MODE_AUTH_DATA[$host];
             }
         }
 

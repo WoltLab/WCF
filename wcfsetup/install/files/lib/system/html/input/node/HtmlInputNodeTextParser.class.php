@@ -87,7 +87,7 @@ class HtmlInputNodeTextParser
         $this->htmlInputNodeProcessor = $htmlInputNodeProcessor;
         $this->sourceBBCodes = BBCodeParser::getInstance()->getSourceBBCodes();
 
-        if (MODULE_SMILEY) {
+        if (\MODULE_SMILEY) {
             $this->smileyCount = $smileyCount;
 
             if (self::$smilies === null) {
@@ -203,7 +203,7 @@ class HtmlInputNodeTextParser
                 $value = $this->parseEmail($node, $value);
             }
 
-            if (MODULE_SMILEY && $this->smileyCount !== 50) {
+            if (\MODULE_SMILEY && $this->smileyCount !== 50) {
                 $value = $this->parseSmiley($node, $value);
             }
 

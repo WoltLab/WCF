@@ -23,13 +23,13 @@ final class ApplicationCache extends AbstractEagerCache
     protected function getCacheData(): ApplicationCacheData
     {
         $sql = "SELECT *
-                FROM   wcf" . WCF_N . "_application";
+                FROM   wcf" . \WCF_N . "_application";
         $statement = WCF::getDB()->prepareUnmanaged($sql);
         $statement->execute();
         $applications = $statement->fetchObjects(Application::class, 'packageID');
 
         $sql = "SELECT packageID, package
-                FROM   wcf" . WCF_N . "_package
+                FROM   wcf" . \WCF_N . "_package
                 WHERE  isApplication = ?";
         $statement = WCF::getDB()->prepareUnmanaged($sql);
         $statement->execute([1]);

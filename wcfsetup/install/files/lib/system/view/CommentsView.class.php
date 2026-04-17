@@ -77,7 +77,7 @@ final class CommentsView
      */
     public function getLikeData(): array
     {
-        if (!MODULE_LIKE) {
+        if (!\MODULE_LIKE) {
             return [];
         }
 

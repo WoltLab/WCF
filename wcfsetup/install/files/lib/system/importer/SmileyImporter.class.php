@@ -55,7 +55,7 @@ class SmileyImporter extends AbstractImporter
     {
         // copy smiley
         $data['smileyPath'] = 'images/smilies/' . \basename($additionalData['fileLocation']);
-        if (!@\copy($additionalData['fileLocation'], WCF_DIR . $data['smileyPath'])) {
+        if (!@\copy($additionalData['fileLocation'], \WCF_DIR . $data['smileyPath'])) {
             return 0;
         }
 

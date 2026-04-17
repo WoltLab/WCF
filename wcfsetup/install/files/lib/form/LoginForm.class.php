@@ -52,7 +52,7 @@ class LoginForm extends \wcf\acp\form\LoginForm
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'forceLoginRedirect' => FORCE_LOGIN,
+            'forceLoginRedirect' => \FORCE_LOGIN,
         ]);
     }
 }

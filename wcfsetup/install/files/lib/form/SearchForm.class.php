@@ -283,7 +283,7 @@ class SearchForm extends AbstractCaptchaForm
             $this->searchIndexCondition,
             $this->additionalConditions,
             $this->sortField . ' ' . $this->sortOrder,
-            PACKAGE_ID,
+            \PACKAGE_ID,
         ]));
 
         // check search hash
@@ -377,7 +377,7 @@ class SearchForm extends AbstractCaptchaForm
 
         // save result in database
         $this->searchData = [
-            'packageID' => PACKAGE_ID,
+            'packageID' => \PACKAGE_ID,
             'query' => $this->query,
             'results' => $this->results,
             'additionalData' => $additionalData,

@@ -96,7 +96,7 @@ final class ACPSessionLogGridView extends AbstractGridView
                 FROM    wcf1_acp_session_access_log
                 WHERE   sessionLogID = " . $list->getDatabaseTableAlias() . ".sessionLogID
             ) AS accesses";
-        $list->sqlJoins = $list->sqlConditionJoins .= " LEFT JOIN wcf" . WCF_N . "_user user_table ON (user_table.userID = " . $list->getDatabaseTableAlias() . ".userID)";
+        $list->sqlJoins = $list->sqlConditionJoins .= " LEFT JOIN wcf" . \WCF_N . "_user user_table ON (user_table.userID = " . $list->getDatabaseTableAlias() . ".userID)";
 
         return $list;
     }

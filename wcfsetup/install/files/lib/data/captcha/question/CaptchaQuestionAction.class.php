@@ -52,7 +52,7 @@ class CaptchaQuestionAction extends AbstractDatabaseObjectAction implements ITog
     #[\Override]
     public function getPackageID(): int
     {
-        return PACKAGE_ID;
+        return \PACKAGE_ID;
     }
 
     #[\Override]

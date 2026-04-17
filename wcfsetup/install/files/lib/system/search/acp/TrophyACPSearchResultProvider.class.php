@@ -19,7 +19,7 @@ class TrophyACPSearchResultProvider implements IACPSearchResultProvider
     #[\Override]
     public function search(string $query)
     {
-        if (!MODULE_TROPHY || !WCF::getSession()->getPermission('admin.trophy.canManageTrophy')) {
+        if (!\MODULE_TROPHY || !WCF::getSession()->getPermission('admin.trophy.canManageTrophy')) {
             return [];
         }
 

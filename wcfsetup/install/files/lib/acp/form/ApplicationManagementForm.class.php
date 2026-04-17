@@ -79,7 +79,7 @@ final class ApplicationManagementForm extends AbstractForm
     {
         parent::readFormParameters();
 
-        if (!ENABLE_ENTERPRISE_MODE || WCF::getUser()->hasOwnerAccess()) {
+        if (!\ENABLE_ENTERPRISE_MODE || WCF::getUser()->hasOwnerAccess()) {
             if (isset($_POST['cookieDomain'])) {
                 $this->cookieDomain = StringUtil::trim($_POST['cookieDomain']);
             }
@@ -98,7 +98,7 @@ final class ApplicationManagementForm extends AbstractForm
     {
         parent::validate();
 
-        if (!ENABLE_ENTERPRISE_MODE || WCF::getUser()->hasOwnerAccess()) {
+        if (!\ENABLE_ENTERPRISE_MODE || WCF::getUser()->hasOwnerAccess()) {
             if (empty($this->domainName)) {
                 throw new UserInputException('domainName');
             }
@@ -157,7 +157,7 @@ final class ApplicationManagementForm extends AbstractForm
     {
         parent::save();
 
-        if (!ENABLE_ENTERPRISE_MODE || WCF::getUser()->hasOwnerAccess()) {
+        if (!\ENABLE_ENTERPRISE_MODE || WCF::getUser()->hasOwnerAccess()) {
             $sql = "UPDATE  wcf1_application
                     SET     domainName = ?,
                             cookieDomain = ?";

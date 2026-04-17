@@ -79,7 +79,7 @@ class Cronjob extends DatabaseObject
 
         $dateTime = (new \DateTimeImmutable("@{$timeBase}"))
             // The TZ parameter in the constructor is ignored for timestamps.
-            ->setTimezone(new \DateTimeZone(TIMEZONE));
+            ->setTimezone(new \DateTimeZone(\TIMEZONE));
 
         return $this->getExpression()->getNextRunDate($dateTime)->getTimestamp();
     }

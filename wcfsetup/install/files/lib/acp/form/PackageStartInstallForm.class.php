@@ -91,7 +91,7 @@ class PackageStartInstallForm extends AbstractForm
         parent::validate();
 
         if ($this->stylePackageImportLocation) {
-            if (ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess()) {
+            if (\ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess()) {
                 throw new IllegalLinkException();
             }
 
@@ -103,7 +103,7 @@ class PackageStartInstallForm extends AbstractForm
                 throw $e;
             }
         } elseif (!empty($this->uploadPackage['name'])) {
-            if (ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess()) {
+            if (\ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess()) {
                 throw new IllegalLinkException();
             }
 

@@ -124,7 +124,7 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
             if (!empty($this->parameters['content'])) {
                 foreach ($this->parameters['content'] as $languageID => $content) {
                     \file_put_contents(
-                        WCF_DIR . 'templates/' . $box->getTplName(($languageID ?: null)) . '.tpl',
+                        \WCF_DIR . 'templates/' . $box->getTplName(($languageID ?: null)) . '.tpl',
                         $content['content']
                     );
                 }
@@ -259,7 +259,7 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
         foreach ($this->getObjects() as $box) {
             foreach ($box->getBoxContents() as $languageID => $content) {
                 if ($box->boxType == 'tpl') {
-                    $file = WCF_DIR . 'templates/' . $box->getTplName(($languageID ?: null)) . '.tpl';
+                    $file = \WCF_DIR . 'templates/' . $box->getTplName(($languageID ?: null)) . '.tpl';
                     if (\file_exists($file)) {
                         @\unlink($file);
                     }

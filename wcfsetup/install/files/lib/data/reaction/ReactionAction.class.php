@@ -133,7 +133,7 @@ class ReactionAction extends AbstractDatabaseObjectAction
      */
     protected function validateObjectParameters()
     {
-        if (!MODULE_LIKE) {
+        if (!\MODULE_LIKE) {
             throw new IllegalLinkException();
         }
 
@@ -245,7 +245,7 @@ class ReactionAction extends AbstractDatabaseObjectAction
      */
     public function validateLoad()
     {
-        if (!MODULE_LIKE) {
+        if (!\MODULE_LIKE) {
             throw new IllegalLinkException();
         }
 

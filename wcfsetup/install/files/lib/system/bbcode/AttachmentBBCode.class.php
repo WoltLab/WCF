@@ -91,7 +91,7 @@ final class AttachmentBBCode extends AbstractBBCode
             $attachment->height,
         );
 
-        if (!$hasParentLink && ($attachment->width > ATTACHMENT_THUMBNAIL_WIDTH || $attachment->height > ATTACHMENT_THUMBNAIL_HEIGHT)) {
+        if (!$hasParentLink && ($attachment->width > \ATTACHMENT_THUMBNAIL_WIDTH || $attachment->height > \ATTACHMENT_THUMBNAIL_HEIGHT)) {
             $result = \sprintf(
                 <<<'HTML'
                     <a href="%s" data-caption="%s" data-type="image" data-fancybox="message-%s-%d" class="embeddedAttachmentLink %s" style="width: %s">

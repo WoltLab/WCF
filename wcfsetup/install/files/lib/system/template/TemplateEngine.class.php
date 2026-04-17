@@ -260,9 +260,9 @@ class TemplateEngine extends SingletonFactory
     #[\Override]
     protected function init()
     {
-        $this->templatePaths = ['wcf' => WCF_DIR . 'templates/'];
+        $this->templatePaths = ['wcf' => \WCF_DIR . 'templates/'];
         $this->pluginNamespace = 'wcf\system\template\plugin\\';
-        $this->compileDir = WCF_DIR . 'templates/compiled/';
+        $this->compileDir = \WCF_DIR . 'templates/compiled/';
 
         $this->loadTemplateGroupCache();
         $this->assignSystemVariables();
@@ -834,7 +834,7 @@ class TemplateEngine extends SingletonFactory
     public static function deleteCompiledTemplates(string $compileDir = '')
     {
         if (empty($compileDir)) {
-            $compileDir = WCF_DIR . 'templates/compiled/';
+            $compileDir = \WCF_DIR . 'templates/compiled/';
         }
 
         // delete compiled templates

@@ -450,7 +450,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
             if ($this->timezone) {
                 $this->timezoneObj = new \DateTimeZone($this->timezone);
             } else {
-                $this->timezoneObj = new \DateTimeZone(TIMEZONE);
+                $this->timezoneObj = new \DateTimeZone(\TIMEZONE);
             }
         }
 
@@ -680,7 +680,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public function requiresEmailActivation()
     {
-        return (int)REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER && $this->pendingActivation() && !$this->isEmailConfirmed();
+        return (int)\REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER && $this->pendingActivation() && !$this->isEmailConfirmed();
     }
 
     /**
@@ -691,7 +691,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public function requiresAdminActivation()
     {
-        return (int)REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_ADMIN && $this->pendingActivation();
+        return (int)\REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_ADMIN && $this->pendingActivation();
     }
 
     /**
@@ -702,7 +702,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public function canEmailConfirm()
     {
-        return (int)REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER && !$this->isEmailConfirmed();
+        return (int)\REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER && !$this->isEmailConfirmed();
     }
 
     /**
@@ -713,7 +713,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public function mustSelfEmailConfirm()
     {
-        return !!((int)REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER);
+        return !!((int)\REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER);
     }
 
     /**

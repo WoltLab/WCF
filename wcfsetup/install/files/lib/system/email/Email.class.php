@@ -390,7 +390,7 @@ class Email
     public function getSender()
     {
         if ($this->sender === null) {
-            $this->sender = new Mailbox(MAIL_FROM_ADDRESS, MAIL_FROM_NAME);
+            $this->sender = new Mailbox(\MAIL_FROM_ADDRESS, \MAIL_FROM_NAME);
         }
 
         return $this->sender;
@@ -416,7 +416,7 @@ class Email
     public function getReplyTo()
     {
         if ($this->replyTo === null) {
-            $this->replyTo = new Mailbox(MAIL_ADMIN_ADDRESS);
+            $this->replyTo = new Mailbox(\MAIL_ADMIN_ADDRESS);
         }
 
         return $this->replyTo;
@@ -715,7 +715,7 @@ class Email
         $jobs = $this->getJobs();
 
         // force synchronous execution, see https://github.com/WoltLab/WCF/issues/2501
-        if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+        if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
             foreach ($jobs as $job) {
                 BackgroundQueueHandler::getInstance()->performJob($job, true);
             }

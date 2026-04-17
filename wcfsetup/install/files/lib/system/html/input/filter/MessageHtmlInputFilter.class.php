@@ -43,8 +43,8 @@ class MessageHtmlInputFilter implements IHtmlInputFilter
     protected function getPurifier()
     {
         if (self::$purifier === null) {
-            require_once(WCF_DIR . 'lib/system/html/input/filter/HTMLPurifier_URIScheme_steam.php');
-            require_once(WCF_DIR . 'lib/system/html/input/filter/HTMLPurifier_URIScheme_ts3server.php');
+            require_once(\WCF_DIR . 'lib/system/html/input/filter/HTMLPurifier_URIScheme_steam.php');
+            require_once(\WCF_DIR . 'lib/system/html/input/filter/HTMLPurifier_URIScheme_ts3server.php');
 
             $config = \HTMLPurifier_Config::createDefault();
 

@@ -184,7 +184,7 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
      */
     public function validateGetGroupedUserTrophyList()
     {
-        if (!MODULE_TROPHY) {
+        if (!\MODULE_TROPHY) {
             throw new IllegalLinkException();
         }
 

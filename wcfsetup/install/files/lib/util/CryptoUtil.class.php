@@ -23,11 +23,11 @@ final class CryptoUtil
      */
     public static function getSignature(string $value): string
     {
-        if (\mb_strlen(SIGNATURE_SECRET, '8bit') < 15) {
+        if (\mb_strlen(\SIGNATURE_SECRET, '8bit') < 15) {
             throw new CryptoException('SIGNATURE_SECRET is too short, aborting.');
         }
 
-        return \hash_hmac('sha256', $value, SIGNATURE_SECRET);
+        return \hash_hmac('sha256', $value, \SIGNATURE_SECRET);
     }
 
     /**

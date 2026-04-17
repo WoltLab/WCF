@@ -174,6 +174,6 @@ class LabelAction extends AbstractDatabaseObjectAction implements ISortableActio
     #[\Override]
     public function getPackageID(): int
     {
-        return PACKAGE_ID;
+        return \PACKAGE_ID;
     }
 }

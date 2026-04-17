@@ -54,7 +54,7 @@ class ArticleRssFeedPage extends AbstractRssFeedPage
         } else {
             $this->articles = new AccessibleArticleList();
         }
-        $this->articles->sqlOrderBy = 'article.time ' . ARTICLE_SORT_ORDER;
+        $this->articles->sqlOrderBy = 'article.time ' . \ARTICLE_SORT_ORDER;
         $this->articles->sqlLimit = 20;
         $this->articles->readObjects();
     }

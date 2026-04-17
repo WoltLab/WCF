@@ -208,8 +208,8 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
         // handle static converters
         $this->invokeHtmlNode(new HtmlInputNodeWoltlabMetacode());
 
-        if (MESSAGE_MAX_QUOTE_DEPTH) {
-            $this->enforceQuoteDepth(MESSAGE_MAX_QUOTE_DEPTH);
+        if (\MESSAGE_MAX_QUOTE_DEPTH) {
+            $this->enforceQuoteDepth(\MESSAGE_MAX_QUOTE_DEPTH);
         }
 
         $imgNodeHandler = new HtmlInputNodeImg();
@@ -864,7 +864,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
         EventHandler::getInstance()->fireAction($this, 'convertPlainLinks');
 
         $isWorkerAction = \class_exists(AbstractWorker::class, false);
-        if (MODULE_URL_UNFURLING && !$isWorkerAction) {
+        if (\MODULE_URL_UNFURLING && !$isWorkerAction) {
             foreach ($this->plainLinks as $plainLink) {
                 if ($plainLink->isPristine()) {
                     HtmlNodeUnfurlLink::setUnfurl($plainLink);

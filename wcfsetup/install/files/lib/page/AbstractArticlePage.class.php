@@ -127,7 +127,7 @@ abstract class AbstractArticlePage extends AbstractPage
         }
 
         // get tags
-        if (MODULE_TAGGING && WCF::getSession()->getPermission('user.tag.canViewTag')) {
+        if (\MODULE_TAGGING && WCF::getSession()->getPermission('user.tag.canViewTag')) {
             $this->tags = TagEngine::getInstance()->getObjectTags(
                 'com.woltlab.wcf.article',
                 $this->articleContent->articleContentID,
@@ -136,7 +136,7 @@ abstract class AbstractArticlePage extends AbstractPage
         }
 
         // get related articles
-        if (MODULE_TAGGING && ARTICLE_RELATED_ARTICLES && $this->tags !== []) {
+        if (\MODULE_TAGGING && \ARTICLE_RELATED_ARTICLES && $this->tags !== []) {
             $this->relatedArticleListView = new RelatedArticleListView($this->articleContent->articleContentID);
         }
 

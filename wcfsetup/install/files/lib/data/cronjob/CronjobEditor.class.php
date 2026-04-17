@@ -75,7 +75,7 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
         }
 
         // fetch data directly from database during framework installation
-        if (!PACKAGE_ID) {
+        if (!\PACKAGE_ID) {
             $sql = "SELECT  *
                     FROM    wcf1_language_category
                     WHERE   languageCategory = ?";

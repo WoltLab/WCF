@@ -136,7 +136,7 @@ final class RssFeedItem
 
         $element = new XmlElement(
             '<?xml version="1.0" encoding="UTF-8"?><item></item>',
-            LIBXML_NOERROR | LIBXML_ERR_NONE | LIBXML_ERR_FATAL
+            \LIBXML_NOERROR | \LIBXML_ERR_NONE | \LIBXML_ERR_FATAL
         );
 
         if (isset($this->title)) {

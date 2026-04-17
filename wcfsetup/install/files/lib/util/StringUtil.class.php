@@ -701,7 +701,7 @@ final class StringUtil
         if ($external) {
             $attributes .= ' class="externalURL"';
             $rel = 'nofollow';
-            if (EXTERNAL_LINK_TARGET_BLANK) {
+            if (\EXTERNAL_LINK_TARGET_BLANK) {
                 $rel .= ' noopener';
                 $attributes .= ' target="_blank"';
             }

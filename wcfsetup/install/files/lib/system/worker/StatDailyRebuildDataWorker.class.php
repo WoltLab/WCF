@@ -63,7 +63,7 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker
 
         $this->getStartDate();
         $d = DateUtil::getDateTimeByTimestamp($this->startDate);
-        $d->setTimezone(new \DateTimeZone(TIMEZONE));
+        $d->setTimezone(new \DateTimeZone(\TIMEZONE));
         $d->setTime(0, 0);
         if ($this->loopCount) {
             $d->add(new \DateInterval('P' . ($this->loopCount * $this->limit) . 'D'));

@@ -142,7 +142,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
      */
     public static function rebuild()
     {
-        $writer = new AtomicWriter(WCF_DIR . 'options.inc.php');
+        $writer = new AtomicWriter(\WCF_DIR . 'options.inc.php');
 
         // file header
         $writer->write("<?php\n/**\n* generated at " . \gmdate('r') . "\n*/\n");
@@ -185,7 +185,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
         $writer->flush();
         $writer->close();
 
-        FileUtil::makeWritable(WCF_DIR . 'options.inc.php');
-        WCF::resetZendOpcache(WCF_DIR . 'options.inc.php');
+        FileUtil::makeWritable(\WCF_DIR . 'options.inc.php');
+        WCF::resetZendOpcache(\WCF_DIR . 'options.inc.php');
     }
 }

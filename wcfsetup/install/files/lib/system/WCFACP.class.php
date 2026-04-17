@@ -52,7 +52,7 @@ class WCFACP extends WCF
         $this->initCoreObjects();
 
         // prevent application loading during setup
-        if (PACKAGE_ID) {
+        if (\PACKAGE_ID) {
             $this->initApplications();
         }
 

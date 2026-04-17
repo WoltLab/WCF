@@ -33,13 +33,13 @@ final class TwitterAuthAction extends AbstractOauth2AuthAction
     #[\Override]
     protected function getClientId(): string
     {
-        return StringUtil::trim(TWITTER_PUBLIC_KEY);
+        return StringUtil::trim(\TWITTER_PUBLIC_KEY);
     }
 
     #[\Override]
     protected function getClientSecret(): string
     {
-        return StringUtil::trim(TWITTER_PRIVATE_KEY);
+        return StringUtil::trim(\TWITTER_PRIVATE_KEY);
     }
 
     #[\Override]
@@ -101,7 +101,7 @@ final class TwitterAuthAction extends AbstractOauth2AuthAction
     {
         $uri = 'https://api.twitter.com/1.1/account/verify_credentials.json';
         $oauthHeader = [
-            'oauth_consumer_key' => StringUtil::trim(TWITTER_PUBLIC_KEY),
+            'oauth_consumer_key' => StringUtil::trim(\TWITTER_PUBLIC_KEY),
             'oauth_nonce' => Hex::encode(\random_bytes(20)),
             'oauth_signature_method' => 'HMAC-SHA1',
             'oauth_timestamp' => \TIME_NOW,

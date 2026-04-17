@@ -23,8 +23,8 @@ class ACPTemplateEngine extends TemplateEngine
     {
         parent::init();
 
-        $this->templatePaths = ['wcf' => WCF_DIR . 'acp/templates/'];
-        $this->compileDir = WCF_DIR . 'acp/templates/compiled/';
+        $this->templatePaths = ['wcf' => \WCF_DIR . 'acp/templates/'];
+        $this->compileDir = \WCF_DIR . 'acp/templates/compiled/';
     }
 
     /**
@@ -35,7 +35,7 @@ class ACPTemplateEngine extends TemplateEngine
     public static function deleteCompiledACPTemplates(string $compileDir = '')
     {
         if (empty($compileDir)) {
-            $compileDir = WCF_DIR . 'acp/templates/compiled/';
+            $compileDir = \WCF_DIR . 'acp/templates/compiled/';
         }
 
         self::deleteCompiledTemplates($compileDir);
@@ -45,7 +45,7 @@ class ACPTemplateEngine extends TemplateEngine
     public function getCompiledFilename(string $templateName, string $application)
     {
         $abbreviation = 'wcf';
-        if (PACKAGE_ID) {
+        if (\PACKAGE_ID) {
             $abbreviation = ApplicationHandler::getInstance()->getActiveApplication()->getAbbreviation();
         }
 
@@ -67,7 +67,7 @@ class ACPTemplateEngine extends TemplateEngine
     public function getTemplateListenerCode(string $templateName, string $eventName)
     {
         // skip template listeners within WCFSetup
-        if (!PACKAGE_ID) {
+        if (!\PACKAGE_ID) {
             return '';
         }
 

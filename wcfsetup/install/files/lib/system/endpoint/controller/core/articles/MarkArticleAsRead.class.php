@@ -27,7 +27,7 @@ final class MarkArticleAsRead implements IController
     #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
-        if (!MODULE_ARTICLE) {
+        if (!\MODULE_ARTICLE) {
             throw new IllegalLinkException();
         }
 

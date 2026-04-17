@@ -39,7 +39,7 @@ class Censorship extends SingletonFactory
         // get words which should be censored
         $censoredWords = ArrayUtil::trim(\explode(
             "\n",
-            StringUtil::unifyNewlines(\mb_strtolower(CENSORED_WORDS))
+            StringUtil::unifyNewlines(\mb_strtolower(\CENSORED_WORDS))
         ));
 
         // format censored words

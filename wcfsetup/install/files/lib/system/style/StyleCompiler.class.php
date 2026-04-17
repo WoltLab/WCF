@@ -69,7 +69,7 @@ final class StyleCompiler extends SingletonFactory
     private function makeCompiler(): Compiler
     {
         $compiler = new Compiler();
-        $compiler->setImportPaths([WCF_DIR]);
+        $compiler->setImportPaths([\WCF_DIR]);
 
         if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
             $compiler->setOutputStyle(OutputStyle::EXPANDED);
@@ -138,7 +138,7 @@ final class StyleCompiler extends SingletonFactory
 
         // add style image path
         if ($imagePath) {
-            $imagePath = FileUtil::getRelativePath(WCF_DIR . 'style/', WCF_DIR . $imagePath);
+            $imagePath = FileUtil::getRelativePath(\WCF_DIR . 'style/', \WCF_DIR . $imagePath);
             $imagePath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($imagePath));
         } else {
             $imagePath = '../images/';
@@ -167,7 +167,7 @@ final class StyleCompiler extends SingletonFactory
         $files = $this->getFiles();
 
         if ($customCustomSCSSFile !== null) {
-            if (($customSCSSFileKey = \array_search(WCF_DIR . self::FILE_GLOBAL_VALUES, $files)) !== false) {
+            if (($customSCSSFileKey = \array_search(\WCF_DIR . self::FILE_GLOBAL_VALUES, $files)) !== false) {
                 unset($files[$customSCSSFileKey]);
             }
 
@@ -238,8 +238,8 @@ final class StyleCompiler extends SingletonFactory
             }
 
             // global SCSS
-            if (\file_exists(WCF_DIR . self::FILE_GLOBAL_VALUES)) {
-                $files[] = WCF_DIR . self::FILE_GLOBAL_VALUES;
+            if (\file_exists(\WCF_DIR . self::FILE_GLOBAL_VALUES)) {
+                $files[] = \WCF_DIR . self::FILE_GLOBAL_VALUES;
             }
 
             $this->files = $files;
@@ -278,7 +278,7 @@ final class StyleCompiler extends SingletonFactory
         // add style image path
         $imagePath = '../images/';
         if ($style->imagePath) {
-            $imagePath = FileUtil::getRelativePath(WCF_DIR . 'style/', WCF_DIR . $style->imagePath);
+            $imagePath = FileUtil::getRelativePath(\WCF_DIR . 'style/', \WCF_DIR . $style->imagePath);
             $imagePath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($imagePath));
         }
         $variables['style_image_path'] = "'{$imagePath}'";
@@ -417,10 +417,10 @@ final class StyleCompiler extends SingletonFactory
         $files = $this->getCoreFiles();
 
         // ACP uses a slightly different layout
-        $files[] = WCF_DIR . 'acp/style/layout.scss';
+        $files[] = \WCF_DIR . 'acp/style/layout.scss';
 
         // include stylesheets from other apps in arbitrary order
-        if (PACKAGE_ID) {
+        if (\PACKAGE_ID) {
             foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
                 $files = \array_merge($files, $this->getAcpStylesheets($application));
             }
@@ -461,7 +461,7 @@ final class StyleCompiler extends SingletonFactory
         $css = \str_replace('../icon/', '../../icon/', $css);
         $css = \preg_replace('~\.\./images/~', '../../images/', $css);
 
-        $this->writeCss(WCF_DIR . 'acp/style/style', $css);
+        $this->writeCss(\WCF_DIR . 'acp/style/style', $css);
     }
 
     /**
@@ -472,13 +472,13 @@ final class StyleCompiler extends SingletonFactory
     private function getCoreFiles(): array
     {
         $files = [];
-        if ($handle = \opendir(WCF_DIR . 'style/')) {
+        if ($handle = \opendir(\WCF_DIR . 'style/')) {
             while (($file = \readdir($handle)) !== false) {
-                if ($file === '.' || $file === '..' || $file === 'bootstrap' || \is_file(WCF_DIR . 'style/' . $file)) {
+                if ($file === '.' || $file === '..' || $file === 'bootstrap' || \is_file(\WCF_DIR . 'style/' . $file)) {
                     continue;
                 }
 
-                $file = WCF_DIR . "style/{$file}/";
+                $file = \WCF_DIR . "style/{$file}/";
                 if ($innerHandle = \opendir($file)) {
                     while (($innerFile = \readdir($innerHandle)) !== false) {
                         if (
@@ -529,7 +529,7 @@ final class StyleCompiler extends SingletonFactory
 
         $files = [];
 
-        $basePath = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR . $application->getPackage()->packageDir)) . 'acp/style/';
+        $basePath = FileUtil::addTrailingSlash(FileUtil::getRealPath(\WCF_DIR . $application->getPackage()->packageDir)) . 'acp/style/';
         $result = \glob($basePath . '*.scss');
         if (\is_array($result)) {
             foreach ($result as $file) {
@@ -580,13 +580,13 @@ final class StyleCompiler extends SingletonFactory
         }
 
         // add reset like a boss
-        $content .= $this->prepareFile(WCF_DIR . 'style/bootstrap/reset.scss');
+        $content .= $this->prepareFile(\WCF_DIR . 'style/bootstrap/reset.scss');
 
         // add mixins
-        $content .= $this->prepareFile(WCF_DIR . 'style/bootstrap/mixin.scss');
+        $content .= $this->prepareFile(\WCF_DIR . 'style/bootstrap/mixin.scss');
 
         // add newer mixins added with version 3.0
-        foreach (\glob(WCF_DIR . 'style/bootstrap/mixin/*.scss') as $mixin) {
+        foreach (\glob(\WCF_DIR . 'style/bootstrap/mixin/*.scss') as $mixin) {
             $content .= $this->prepareFile($mixin);
         }
 
@@ -655,7 +655,7 @@ final class StyleCompiler extends SingletonFactory
         }
 
         // add options as SCSS variables
-        if (PACKAGE_ID) {
+        if (\PACKAGE_ID) {
             foreach (Option::getOptions() as $constantName => $option) {
                 if (\in_array($option->optionType, static::$supportedOptionType)) {
                     $variables['wcf_option_' . \mb_strtolower($constantName)] = \is_numeric($option->optionValue) ? $option->optionValue : '"' . $option->optionValue . '"';
@@ -692,7 +692,7 @@ final class StyleCompiler extends SingletonFactory
         }
 
         // use a relative path
-        $filename = FileUtil::getRelativePath(WCF_DIR, \dirname($filename)) . \basename($filename);
+        $filename = FileUtil::getRelativePath(\WCF_DIR, \dirname($filename)) . \basename($filename);
 
         return '@import "' . $filename . '";' . "\n";
     }
@@ -773,7 +773,7 @@ final class StyleCompiler extends SingletonFactory
      */
     private function getGoogleFontScss(string $font): string
     {
-        if (!PACKAGE_ID) {
+        if (!\PACKAGE_ID) {
             return '';
         }
 
@@ -840,6 +840,6 @@ final class StyleCompiler extends SingletonFactory
      */
     public static function getFilenameForStyle(Style $style): string
     {
-        return WCF_DIR . 'style/style-' . $style->styleID;
+        return \WCF_DIR . 'style/style-' . $style->styleID;
     }
 }

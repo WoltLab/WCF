@@ -48,7 +48,7 @@ final class PhpEmailTransport implements IEmailTransport
 
         $encodedSubject = EmailGrammar::encodeQuotedPrintableHeader($email->getSubject());
 
-        if (MAIL_USE_F_PARAM) {
+        if (\MAIL_USE_F_PARAM) {
             $return = \mail(
                 $envelopeTo->getAddress(),
                 $encodedSubject,

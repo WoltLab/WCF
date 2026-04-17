@@ -27,13 +27,13 @@ final class FacebookAuthAction extends AbstractOauth2AuthAction
     #[\Override]
     protected function getClientId(): string
     {
-        return StringUtil::trim(FACEBOOK_PUBLIC_KEY);
+        return StringUtil::trim(\FACEBOOK_PUBLIC_KEY);
     }
 
     #[\Override]
     protected function getClientSecret(): string
     {
-        return StringUtil::trim(FACEBOOK_PRIVATE_KEY);
+        return StringUtil::trim(\FACEBOOK_PRIVATE_KEY);
     }
 
     #[\Override]

@@ -379,7 +379,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
         foreach ($this->getObjects() as $page) {
             if ($page->pageType == 'tpl') {
                 foreach ($page->getPageContents() as $languageID => $content) {
-                    $file = WCF_DIR . 'templates/' . $page->getTplName(($languageID ?: null)) . '.tpl';
+                    $file = \WCF_DIR . 'templates/' . $page->getTplName(($languageID ?: null)) . '.tpl';
                     if (\file_exists($file)) {
                         @\unlink($file);
                     }

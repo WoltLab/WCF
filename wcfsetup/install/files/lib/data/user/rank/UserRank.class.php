@@ -76,6 +76,6 @@ class UserRank extends DatabaseObject implements ITitledObject
             return [];
         }
 
-        return [WCF_DIR . self::RANK_IMAGE_DIR . $this->rankImage];
+        return [\WCF_DIR . self::RANK_IMAGE_DIR . $this->rankImage];
     }
 }

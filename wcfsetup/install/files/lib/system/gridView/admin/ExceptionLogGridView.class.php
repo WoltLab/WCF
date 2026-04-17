@@ -79,7 +79,7 @@ final class ExceptionLogGridView extends AbstractGridView
         if ($exceptionID !== '') {
             $contents = $logFile = '';
             foreach ($this->getAvailableLogFiles() as $logFile) {
-                $contents = \file_get_contents(WCF_DIR . $logFile);
+                $contents = \file_get_contents(\WCF_DIR . $logFile);
 
                 if (\str_contains($contents, '<<<<<<<<' . $exceptionID . '<<<<')) {
                     break;
@@ -115,7 +115,7 @@ final class ExceptionLogGridView extends AbstractGridView
 
         $logFile = $this->getActiveFilters()['logFile'] ?? '';
         if ($logFile !== '') {
-            $contents = \file_get_contents(WCF_DIR . $logFile);
+            $contents = \file_get_contents(\WCF_DIR . $logFile);
             $exceptions = ExceptionLogUtil::splitLog($contents);
             $parsedExceptions = [];
 
@@ -200,7 +200,7 @@ final class ExceptionLogGridView extends AbstractGridView
         if (!isset($this->availableLogFiles)) {
             $this->availableLogFiles = [];
             $fileNameRegex = new Regex('(?:^|/)\d{4}-\d{2}-\d{2}\.txt$');
-            $logFiles = DirectoryUtil::getInstance(WCF_DIR . 'log/', false)->getFiles(\SORT_DESC, $fileNameRegex);
+            $logFiles = DirectoryUtil::getInstance(\WCF_DIR . 'log/', false)->getFiles(\SORT_DESC, $fileNameRegex);
             foreach ($logFiles as $logFile) {
                 $this->availableLogFiles['log/' . $logFile] = 'log/' . $logFile;
             }

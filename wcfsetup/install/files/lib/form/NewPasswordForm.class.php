@@ -120,7 +120,7 @@ final class NewPasswordForm extends AbstractFormBuilderForm
             }
         }
 
-        if (($newPasswordStrengthVerdict['score'] ?? 4) < PASSWORD_MIN_SCORE) {
+        if (($newPasswordStrengthVerdict['score'] ?? 4) < \PASSWORD_MIN_SCORE) {
             $formField->addValidationError(
                 new FormFieldValidationError(
                     'notSecure',

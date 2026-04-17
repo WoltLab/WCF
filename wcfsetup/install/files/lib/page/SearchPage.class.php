@@ -46,8 +46,8 @@ final class SearchPage extends AbstractPage
 
         WCF::getTPL()->assign([
             'objectTypes' => SearchEngine::getInstance()->getAvailableObjectTypes(),
-            'sortField' => SEARCH_DEFAULT_SORT_FIELD,
-            'sortOrder' => SEARCH_DEFAULT_SORT_ORDER,
+            'sortField' => \SEARCH_DEFAULT_SORT_FIELD,
+            'sortOrder' => \SEARCH_DEFAULT_SORT_ORDER,
             'extended' => $this->extended,
         ]);
     }

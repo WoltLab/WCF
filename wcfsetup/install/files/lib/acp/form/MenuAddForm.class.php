@@ -117,9 +117,9 @@ class MenuAddForm extends AbstractFormBuilderForm
                         $parameters['boxData'] = [];
 
                         if ($this->formAction === 'create') {
-                            $parameters['data']['packageID'] = PACKAGE_ID;
+                            $parameters['data']['packageID'] = \PACKAGE_ID;
                             $parameters['data']['identifier'] = '';
-                            $parameters['boxData']['packageID'] = PACKAGE_ID;
+                            $parameters['boxData']['packageID'] = \PACKAGE_ID;
                             $parameters['boxData']['boxType'] = 'menu';
                         }
 

@@ -45,7 +45,7 @@ class DailyCleanUpCronjob extends AbstractCronjob
                 WHERE       time < ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
-            \TIME_NOW - 86400 * USER_CLEANUP_NOTIFICATION_LIFETIME,
+            \TIME_NOW - 86400 * \USER_CLEANUP_NOTIFICATION_LIFETIME,
         ]);
 
         // clean up user activity events
@@ -53,7 +53,7 @@ class DailyCleanUpCronjob extends AbstractCronjob
                 WHERE       time < ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
-            \TIME_NOW - 86400 * USER_CLEANUP_ACTIVITY_EVENT_LIFETIME,
+            \TIME_NOW - 86400 * \USER_CLEANUP_ACTIVITY_EVENT_LIFETIME,
         ]);
 
         // clean up profile visitors
@@ -61,7 +61,7 @@ class DailyCleanUpCronjob extends AbstractCronjob
                 WHERE       time < ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
-            \TIME_NOW - 86400 * USER_CLEANUP_PROFILE_VISITOR_LIFETIME,
+            \TIME_NOW - 86400 * \USER_CLEANUP_PROFILE_VISITOR_LIFETIME,
         ]);
 
         VisitTracker::getInstance()->prune();
@@ -103,13 +103,13 @@ class DailyCleanUpCronjob extends AbstractCronjob
         ]);
 
         // clean up expired edit history entries
-        if (MODULE_EDIT_HISTORY) {
-            if (EDIT_HISTORY_EXPIRATION) {
+        if (\MODULE_EDIT_HISTORY) {
+            if (\EDIT_HISTORY_EXPIRATION) {
                 $sql = "DELETE FROM wcf1_edit_history_entry
                         WHERE       obsoletedAt < ?";
                 $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([
-                    \TIME_NOW - 86400 * EDIT_HISTORY_EXPIRATION,
+                    \TIME_NOW - 86400 * \EDIT_HISTORY_EXPIRATION,
                 ]);
             }
         } else {
@@ -120,26 +120,26 @@ class DailyCleanUpCronjob extends AbstractCronjob
         }
 
         // clean up user authentication failure log
-        if (ENABLE_USER_AUTHENTICATION_FAILURE) {
+        if (\ENABLE_USER_AUTHENTICATION_FAILURE) {
             $sql = "DELETE FROM wcf1_user_authentication_failure
                     WHERE       time < ?";
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
-                \TIME_NOW - 86400 * USER_AUTHENTICATION_FAILURE_EXPIRATION,
+                \TIME_NOW - 86400 * \USER_AUTHENTICATION_FAILURE_EXPIRATION,
             ]);
         }
 
-        if (MODIFICATION_LOG_EXPIRATION > 0) {
+        if (\MODIFICATION_LOG_EXPIRATION > 0) {
             $sql = "DELETE FROM wcf1_modification_log
                     WHERE       time < ?";
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
-                \TIME_NOW - 86400 * MODIFICATION_LOG_EXPIRATION,
+                \TIME_NOW - 86400 * \MODIFICATION_LOG_EXPIRATION,
             ]);
         }
 
         // clean up error logs
-        $files = @\glob(WCF_DIR . 'log/*.txt');
+        $files = @\glob(\WCF_DIR . 'log/*.txt');
         if (\is_array($files)) {
             foreach ($files as $filename) {
                 if (\filemtime($filename) < \TIME_NOW - 86400 * 14) {
@@ -174,23 +174,23 @@ class DailyCleanUpCronjob extends AbstractCronjob
         }
 
         // clean up proxy images
-        if (MODULE_IMAGE_PROXY && IMAGE_PROXY_ENABLE_PRUNE) {
+        if (\MODULE_IMAGE_PROXY && \IMAGE_PROXY_ENABLE_PRUNE) {
             $it = new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator(WCF_DIR . 'images/proxy/', \FilesystemIterator::SKIP_DOTS),
+                new \RecursiveDirectoryIterator(\WCF_DIR . 'images/proxy/', \FilesystemIterator::SKIP_DOTS),
                 \RecursiveIteratorIterator::CHILD_FIRST
             );
             foreach ($it as $file) {
-                if ($file->getPathname() === WCF_DIR . 'images/proxy/.htaccess') {
+                if ($file->getPathname() === \WCF_DIR . 'images/proxy/.htaccess') {
                     continue;
                 }
 
-                if ($file->isFile() && $file->getMTime() < (\TIME_NOW - 86400 * IMAGE_PROXY_EXPIRATION)) {
+                if ($file->isFile() && $file->getMTime() < (\TIME_NOW - 86400 * \IMAGE_PROXY_EXPIRATION)) {
                     @\unlink($file->getPathname());
                 }
             }
         }
 
-        if (BLACKLIST_SFS_ENABLE) {
+        if (\BLACKLIST_SFS_ENABLE) {
             $timeLimit = \TIME_NOW - 31 * 86400;
 
             $sql = "DELETE FROM wcf1_blacklist_entry

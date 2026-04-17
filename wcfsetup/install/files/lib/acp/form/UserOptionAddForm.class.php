@@ -361,7 +361,7 @@ class UserOptionAddForm extends AbstractFormBuilderForm
     {
         if ($this->formAction === 'create') {
             $this->additionalFields['optionName'] = StringUtil::getRandomID();
-            $this->additionalFields['packageID'] = PACKAGE_ID;
+            $this->additionalFields['packageID'] = \PACKAGE_ID;
         }
 
         parent::save();

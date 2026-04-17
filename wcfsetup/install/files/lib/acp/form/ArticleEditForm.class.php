@@ -193,7 +193,7 @@ class ArticleEditForm extends ArticleAddForm
                 $this->metaDescription[$languageID] = $content->metaDescription;
 
                 // get tags
-                if (MODULE_TAGGING) {
+                if (\MODULE_TAGGING) {
                     $this->tags[$languageID] = TagEngine::getInstance()->getObjectTags(
                         'com.woltlab.wcf.article',
                         $content->articleContentID,

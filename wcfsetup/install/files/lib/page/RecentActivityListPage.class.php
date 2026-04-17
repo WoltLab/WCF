@@ -53,7 +53,7 @@ class RecentActivityListPage extends AbstractPage
         $this->eventList->readObjects();
 
         // add breadcrumbs
-        if (MODULE_MEMBERS_LIST) {
+        if (\MODULE_MEMBERS_LIST) {
             PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.MembersList');
         }
     }

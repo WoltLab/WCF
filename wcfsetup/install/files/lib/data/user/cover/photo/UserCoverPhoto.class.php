@@ -99,7 +99,7 @@ final class UserCoverPhoto implements IUserCoverPhoto
 
         return \sprintf(
             '%simages/coverPhotos/%s/%d-%s.%s',
-            WCF_DIR,
+            \WCF_DIR,
             \substr(
                 $user->coverPhotoHash,
                 0,

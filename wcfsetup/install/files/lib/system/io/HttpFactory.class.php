@@ -86,7 +86,7 @@ final class HttpFactory
     public static function makeClient(array $options = []): ClientInterface
     {
         $defaults = [
-            RequestOptions::PROXY => PROXY_SERVER_HTTP,
+            RequestOptions::PROXY => \PROXY_SERVER_HTTP,
             RequestOptions::HEADERS => [],
             RequestOptions::TIMEOUT => 60,
         ];

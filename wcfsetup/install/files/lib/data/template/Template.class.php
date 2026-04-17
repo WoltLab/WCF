@@ -76,7 +76,7 @@ class Template extends DatabaseObject
             $application = ApplicationHandler::getInstance()->getWCF();
         }
 
-        return \realpath(WCF_DIR . PackageCache::getInstance()->getPackage($application->packageID)->packageDir);
+        return \realpath(\WCF_DIR . PackageCache::getInstance()->getPackage($application->packageID)->packageDir);
     }
 
     /**

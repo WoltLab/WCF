@@ -108,7 +108,7 @@ final class RegisterActivationForm extends AbstractFormBuilderForm
     #[\Override]
     public function show()
     {
-        if (!((int)REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
+        if (!((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
             throw new IllegalLinkException();
         }
 

@@ -127,7 +127,7 @@ final class RequestHandler extends SingletonFactory
             if ($routeMatches) {
                 $builtRequest = $this->buildRequest($psrRequest, $application);
             } else {
-                if (ENABLE_DEBUG_MODE) {
+                if (\ENABLE_DEBUG_MODE) {
                     throw new SystemException("Cannot handle request, no valid route provided.");
                 }
 
@@ -317,9 +317,9 @@ final class RequestHandler extends SingletonFactory
         } catch (SystemException $e) {
             if (
                 \defined('ENABLE_DEBUG_MODE')
-                && ENABLE_DEBUG_MODE
+                && \ENABLE_DEBUG_MODE
                 && \defined('ENABLE_DEVELOPER_TOOLS')
-                && ENABLE_DEVELOPER_TOOLS
+                && \ENABLE_DEVELOPER_TOOLS
             ) {
                 throw $e;
             }

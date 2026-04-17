@@ -40,7 +40,7 @@ final class CheckForOfflineMode implements MiddlewareInterface
 
     private function offlineModeEnabled(): bool
     {
-        return \defined('OFFLINE') && OFFLINE;
+        return \defined('OFFLINE') && \OFFLINE;
     }
 
     private function userCanBypassOfflineMode(): bool

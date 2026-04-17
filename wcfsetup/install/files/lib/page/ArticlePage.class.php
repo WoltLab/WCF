@@ -48,10 +48,10 @@ class ArticlePage extends AbstractArticlePage
         // get next article
         $articleList = new CategoryArticleList($this->article->categoryID);
         $articleList->getConditionBuilder()->add(
-            'article.time ' . (ARTICLE_SORT_ORDER == 'DESC' ? '>' : '<') . ' ?',
+            'article.time ' . (\ARTICLE_SORT_ORDER == 'DESC' ? '>' : '<') . ' ?',
             [$this->article->time]
         );
-        $articleList->sqlOrderBy = 'article.time ' . (ARTICLE_SORT_ORDER == 'DESC' ? 'ASC' : 'DESC');
+        $articleList->sqlOrderBy = 'article.time ' . (\ARTICLE_SORT_ORDER == 'DESC' ? 'ASC' : 'DESC');
         $articleList->sqlLimit = 1;
         $articleList->readObjects();
         foreach ($articleList as $article) {
@@ -61,10 +61,10 @@ class ArticlePage extends AbstractArticlePage
         // get previous article
         $articleList = new CategoryArticleList($this->article->categoryID);
         $articleList->getConditionBuilder()->add(
-            'article.time ' . (ARTICLE_SORT_ORDER == 'DESC' ? '<' : '>') . ' ?',
+            'article.time ' . (\ARTICLE_SORT_ORDER == 'DESC' ? '<' : '>') . ' ?',
             [$this->article->time]
         );
-        $articleList->sqlOrderBy = 'article.time ' . ARTICLE_SORT_ORDER;
+        $articleList->sqlOrderBy = 'article.time ' . \ARTICLE_SORT_ORDER;
         $articleList->sqlLimit = 1;
         $articleList->readObjects();
         foreach ($articleList as $article) {
@@ -75,7 +75,7 @@ class ArticlePage extends AbstractArticlePage
         MetaTagHandler::getInstance()->addTag(
             'og:title',
             'og:title',
-            $this->articleContent->getTitle() . ' - ' . WCF::getLanguage()->get(PAGE_TITLE),
+            $this->articleContent->getTitle() . ' - ' . WCF::getLanguage()->get(\PAGE_TITLE),
             true
         );
         MetaTagHandler::getInstance()->addTag('og:url', 'og:url', $this->articleContent->getLink(), true);

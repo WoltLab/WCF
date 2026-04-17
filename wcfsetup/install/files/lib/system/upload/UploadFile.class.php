@@ -75,7 +75,7 @@ class UploadFile
         $this->errorCode = $errorCode;
         $this->mimeType = $mimeType;
 
-        if (ENABLE_DEBUG_MODE) {
+        if (\ENABLE_DEBUG_MODE) {
             switch ($errorCode) {
                 case \UPLOAD_ERR_INI_SIZE:
                     throw new \Exception("The uploaded file is larger than PHP's `upload_max_filesize`.");

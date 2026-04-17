@@ -117,7 +117,7 @@ class TrophyEditForm extends TrophyAddForm
     {
         switch ($this->type) {
             case Trophy::TYPE_IMAGE:
-                if (empty($this->trophy->iconFile) || !\file_exists(WCF_DIR . 'images/trophy/' . $this->trophy->iconFile)) {
+                if (empty($this->trophy->iconFile) || !\file_exists(\WCF_DIR . 'images/trophy/' . $this->trophy->iconFile)) {
                     throw new UserInputException('imageUpload');
                 }
                 break;
@@ -152,8 +152,8 @@ class TrophyEditForm extends TrophyAddForm
             $data['badgeColor'] = '';
         } elseif ($this->type == Trophy::TYPE_BADGE) {
             // delete old image icon
-            if (\is_file(WCF_DIR . 'images/trophy/' . $this->trophy->iconFile)) {
-                @\unlink(WCF_DIR . 'images/trophy/' . $this->trophy->iconFile);
+            if (\is_file(\WCF_DIR . 'images/trophy/' . $this->trophy->iconFile)) {
+                @\unlink(\WCF_DIR . 'images/trophy/' . $this->trophy->iconFile);
             }
 
             $data['iconName'] = $this->iconName;

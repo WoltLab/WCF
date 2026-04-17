@@ -80,7 +80,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
             $imageData = [];
             $imageID = null;
             $imageUrl = $unfurlResponse->getImageUrl();
-            if (URL_UNFURLING_SAVE_IMAGES && $imageUrl) {
+            if (\URL_UNFURLING_SAVE_IMAGES && $imageUrl) {
                 if (
                     \strpos($imageUrl, '\\') === false
                     && \strpos($imageUrl, "'") === false
@@ -153,7 +153,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
             }
             $file = $this->createFile(
                 $imageData,
-                \pathinfo($unfurlResponse->getImageUrl(), PATHINFO_FILENAME),
+                \pathinfo($unfurlResponse->getImageUrl(), \PATHINFO_FILENAME),
                 $image
             );
 

@@ -118,7 +118,7 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         $dataContainer = $form->getNodeById('data');
 
         $fileValidator = new FormFieldValidator('fileExists', static function (TextFormField $formField) {
-            if (!\file_exists(WCF_DIR . $formField->getValue())) {
+            if (!\file_exists(\WCF_DIR . $formField->getValue())) {
                 $formField->addValidationError(
                     new FormFieldValidationError(
                         'fileDoesNotExist',
@@ -221,7 +221,7 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
                 ->label('wcf.acp.pip.smiley.smileyPath')
                 ->description(
                     'wcf.acp.pip.smiley.smileyPath.description',
-                    ['path' => WCF_DIR]
+                    ['path' => \WCF_DIR]
                 )
                 ->required()
                 ->maximumLength(255)
@@ -232,7 +232,7 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
                 ->label('wcf.acp.pip.smiley.smileyPath2x')
                 ->description(
                     'wcf.acp.pip.smiley.smileyPath2x.description',
-                    ['path' => WCF_DIR]
+                    ['path' => \WCF_DIR]
                 )
                 ->maximumLength(255)
                 ->addValidator($fileValidator),

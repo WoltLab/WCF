@@ -162,7 +162,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
             'lastResponseID' => $lastResponseID,
             'template' => WCF::getTPL()->render('wcf', 'commentResponseList', [
                 'commentCanModerate' => $commentCanModerate,
-                'likeData' => MODULE_LIKE ? $responseList->getLikeData() : [],
+                'likeData' => \MODULE_LIKE ? $responseList->getLikeData() : [],
                 'responseList' => $responseList,
                 'commentManager' => $this->commentManager,
             ]),

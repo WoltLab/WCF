@@ -125,7 +125,7 @@ class WCF
      * @var array<string, string>
      */
     protected static $autoloadDirectories = [
-        'wcf' => WCF_DIR . 'lib/',
+        'wcf' => \WCF_DIR . 'lib/',
     ];
 
     /**
@@ -382,7 +382,7 @@ class WCF
         $dbHost = $dbUser = $dbPassword = $dbName = '';
         $dbPort = 0;
         $defaultDriverOptions = [];
-        require(WCF_DIR . 'config.inc.php');
+        require(\WCF_DIR . 'config.inc.php');
 
         // create database connection
         self::$dbObj = new MySQLDatabase(
@@ -404,7 +404,7 @@ class WCF
     {
         $this->defineLegacyOptions();
 
-        $filename = WCF_DIR . 'options.inc.php';
+        $filename = \WCF_DIR . 'options.inc.php';
 
         // create options file if doesn't exist
         if (!\file_exists($filename) || \filemtime($filename) <= 1) {
@@ -430,7 +430,7 @@ class WCF
                 require($filename);
             }
 
-            if (ENABLE_DEBUG_MODE) {
+            if (\ENABLE_DEBUG_MODE) {
                 self::$dbObj->enableDebugMode();
 
                 // zend.assertions can't be enabled at runtime if the value is set to -1, because
@@ -663,7 +663,7 @@ class WCF
         }
 
         $abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
-        $packageDir = FileUtil::getRealPath(WCF_DIR . $package->packageDir);
+        $packageDir = FileUtil::getRealPath(\WCF_DIR . $package->packageDir);
         self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
 
         $className = $abbreviation . '\system\\' . \strtoupper($abbreviation) . 'Core';
@@ -675,7 +675,7 @@ class WCF
             // resolve the relative path and use it to construct the autoload directory
             $relativePath = FileUtil::getRelativePath($coreApp->domainPath, $application->domainPath);
             if ($relativePath !== './') {
-                $packageDir = FileUtil::getRealPath(WCF_DIR . $relativePath);
+                $packageDir = FileUtil::getRealPath(\WCF_DIR . $relativePath);
                 self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
 
                 // @phpstan-ignore if.alwaysFalse
@@ -763,7 +763,7 @@ class WCF
         $application = new Application($packageID);
 
         $abbreviation = Package::getAbbreviation($package->package);
-        $packageDir = FileUtil::getRealPath(WCF_DIR . $package->packageDir);
+        $packageDir = FileUtil::getRealPath(\WCF_DIR . $package->packageDir);
         self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
         self::$applications[$abbreviation] = $application;
         self::getTPL()->addApplication($abbreviation, $packageDir . 'acp/templates/');
@@ -775,7 +775,7 @@ class WCF
     protected function initCoreObjects(): void
     {
         // ignore core objects if installing WCF
-        if (PACKAGE_ID == 0) {
+        if (\PACKAGE_ID == 0) {
             return;
         }
 
@@ -789,7 +789,7 @@ class WCF
     {
         $wcf = $this;
 
-        if (ENABLE_ENTERPRISE_MODE) {
+        if (\ENABLE_ENTERPRISE_MODE) {
             $wcf = new TemplateScriptingCore($wcf);
         }
 
@@ -972,7 +972,7 @@ class WCF
         // ACP override
         if (!$ignoreACP && self::$overrideDebugMode) {
             return true;
-        } elseif (\defined('ENABLE_DEBUG_MODE') && ENABLE_DEBUG_MODE) {
+        } elseif (\defined('ENABLE_DEBUG_MODE') && \ENABLE_DEBUG_MODE) {
             return true;
         }
 
@@ -985,7 +985,7 @@ class WCF
     public static function benchmarkIsEnabled(): bool
     {
         // benchmarking is enabled by default
-        if (!\defined('ENABLE_BENCHMARK') || ENABLE_BENCHMARK) {
+        if (!\defined('ENABLE_BENCHMARK') || \ENABLE_BENCHMARK) {
             return true;
         }
 
@@ -998,7 +998,7 @@ class WCF
     public static function getPath(string $abbreviation = 'wcf'): string
     {
         // workaround during WCFSetup
-        if (!PACKAGE_ID) {
+        if (!\PACKAGE_ID) {
             return '../';
         }
 
@@ -1014,7 +1014,7 @@ class WCF
      */
     public static function getActivePath(): string
     {
-        if (!PACKAGE_ID) {
+        if (!\PACKAGE_ID) {
             return self::getPath();
         }
 
@@ -1022,7 +1022,7 @@ class WCF
         // it uses the requested controller to determine the namespace. However, starting
         // with WoltLab Suite 5.2, system pages can be virtually assigned to a different
         // app, resolving against the target app without changing the namespace.
-        return self::getPath(ApplicationHandler::getInstance()->getAbbreviation(PACKAGE_ID));
+        return self::getPath(ApplicationHandler::getInstance()->getAbbreviation(\PACKAGE_ID));
     }
 
     /**
@@ -1149,7 +1149,7 @@ class WCF
             $key = \random_bytes(16);
         }
 
-        if (PACKAGE_ID) {
+        if (\PACKAGE_ID) {
             $prefix = \WCF_UUID . ':' . self::class . ':';
         } else {
             $prefix = '';
@@ -1185,7 +1185,7 @@ class WCF
             'tmp/',
         ];
         foreach ($nonRecursiveDirectories as $directory) {
-            $path = WCF_DIR . $directory;
+            $path = \WCF_DIR . $directory;
             if ($path === 'tmp/' && !\is_dir($path)) {
                 continue;
             }
@@ -1225,7 +1225,7 @@ class WCF
             'templates/',
         ];
         foreach ($recursiveDirectories as $directory) {
-            $path = WCF_DIR . $directory;
+            $path = \WCF_DIR . $directory;
 
             if (!\is_writable($path)) {
                 $nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $path);

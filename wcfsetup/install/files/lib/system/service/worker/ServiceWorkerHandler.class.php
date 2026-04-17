@@ -42,7 +42,7 @@ final class ServiceWorkerHandler extends SingletonFactory
     public function updateKeys(): void
     {
         $hash = RegistryHandler::getInstance()->get('com.woltlab.wcf', self::REGISTRY_KEY);
-        if ($hash !== null && \hash_equals($hash, \hash('sha256', SERVICE_WORKER_PRIVATE_KEY))) {
+        if ($hash !== null && \hash_equals($hash, \hash('sha256', \SERVICE_WORKER_PRIVATE_KEY))) {
             return;
         }
         $this->createNewKeys();
@@ -86,16 +86,16 @@ final class ServiceWorkerHandler extends SingletonFactory
             $this->pushClient = new WebPush(
                 [
                     'VAPID' => [
-                        'subject' => 'mailto:' . MAIL_ADMIN_ADDRESS,
-                        'publicKey' => SERVICE_WORKER_PUBLIC_KEY,
-                        'privateKey' => SERVICE_WORKER_PRIVATE_KEY,
+                        'subject' => 'mailto:' . \MAIL_ADMIN_ADDRESS,
+                        'publicKey' => \SERVICE_WORKER_PUBLIC_KEY,
+                        'privateKey' => \SERVICE_WORKER_PRIVATE_KEY,
                     ],
                 ],
                 ['TTL' => self::TTL],
                 null,
                 [
                     /** @see HttpFactory::makeClient() */
-                    RequestOptions::PROXY => PROXY_SERVER_HTTP,
+                    RequestOptions::PROXY => \PROXY_SERVER_HTTP,
                     RequestOptions::HEADERS => [
                         'user-agent' => HttpFactory::getDefaultUserAgent(),
                     ],

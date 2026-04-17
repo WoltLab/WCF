@@ -69,8 +69,8 @@ final class LostPasswordForm extends AbstractFormBuilderForm
                             $this->validateUsername(...)
                         )),
                     CaptchaFormField::create()
-                        ->available(!!LOST_PASSWORD_USE_CAPTCHA)
-                        ->objectType(CAPTCHA_TYPE)
+                        ->available(!!\LOST_PASSWORD_USE_CAPTCHA)
+                        ->objectType(\CAPTCHA_TYPE)
                 ])
         );
     }

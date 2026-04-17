@@ -96,7 +96,7 @@ class ArticleImporter extends AbstractImporter
 
         // comments
         if (!isset($data['enableComments'])) {
-            $data['enableComments'] = ARTICLE_ENABLE_COMMENTS_DEFAULT_VALUE ? 1 : 0;
+            $data['enableComments'] = \ARTICLE_ENABLE_COMMENTS_DEFAULT_VALUE ? 1 : 0;
         }
 
         // save article

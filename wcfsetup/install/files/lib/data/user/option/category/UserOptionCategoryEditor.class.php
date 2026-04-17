@@ -29,7 +29,7 @@ class UserOptionCategoryEditor extends DatabaseObjectEditor implements IEditable
     {
         // obtain default values
         if (!isset($parameters['packageID'])) {
-            $parameters['packageID'] = PACKAGE_ID;
+            $parameters['packageID'] = \PACKAGE_ID;
         }
 
         return parent::create($parameters);

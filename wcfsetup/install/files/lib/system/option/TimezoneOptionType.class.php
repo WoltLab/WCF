@@ -31,7 +31,7 @@ class TimezoneOptionType extends AbstractOptionType
             'enableOptions' => '',
             'option' => $option,
             'selectOptions' => $timezoneOptions,
-            'value' => $value ?: TIMEZONE,
+            'value' => $value ?: \TIMEZONE,
             'allowEmptyValue' => false,
         ]);
     }

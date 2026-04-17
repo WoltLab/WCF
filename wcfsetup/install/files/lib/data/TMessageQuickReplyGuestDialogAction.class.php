@@ -50,10 +50,10 @@ trait TMessageQuickReplyGuestDialogAction
      */
     protected function setGuestDialogCaptcha()
     {
-        if (CAPTCHA_TYPE) {
-            $this->guestDialogCaptchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName(CAPTCHA_TYPE);
+        if (\CAPTCHA_TYPE) {
+            $this->guestDialogCaptchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName(\CAPTCHA_TYPE);
             if ($this->guestDialogCaptchaObjectType === null) {
-                throw new \LogicException("Unknown captcha object type with name '" . CAPTCHA_TYPE . "'");
+                throw new \LogicException("Unknown captcha object type with name '" . \CAPTCHA_TYPE . "'");
             }
 
             /** @var ICaptchaHandler $processor */
@@ -78,7 +78,7 @@ trait TMessageQuickReplyGuestDialogAction
             throw new \BadMethodCallException("Guest dialogs are only relevant for guests");
         }
 
-        if (CAPTCHA_TYPE && $this->guestDialogCaptchaObjectType) {
+        if (\CAPTCHA_TYPE && $this->guestDialogCaptchaObjectType) {
             /** @var ICaptchaHandler $processor */
             $processor = $this->guestDialogCaptchaObjectType->getProcessor();
 

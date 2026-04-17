@@ -263,10 +263,10 @@ class UserAddForm extends UserOptionListForm
 
         // validate user title
         try {
-            if (\mb_strlen($this->userTitle) > USER_TITLE_MAX_LENGTH) {
+            if (\mb_strlen($this->userTitle) > \USER_TITLE_MAX_LENGTH) {
                 throw new UserInputException('userTitle', 'tooLong');
             }
-            if (!StringUtil::executeWordFilter($this->userTitle, USER_FORBIDDEN_TITLES)) {
+            if (!StringUtil::executeWordFilter($this->userTitle, \USER_FORBIDDEN_TITLES)) {
                 throw new UserInputException('userTitle', 'forbidden');
             }
         } catch (UserInputException $e) {
@@ -422,7 +422,7 @@ class UserAddForm extends UserOptionListForm
 
         parent::readData();
         // get default smilies
-        if (MODULE_SMILEY) {
+        if (\MODULE_SMILEY) {
             $this->smileyCategories = SmileyCache::getInstance()->getVisibleCategories();
 
             $firstCategory = \reset($this->smileyCategories);

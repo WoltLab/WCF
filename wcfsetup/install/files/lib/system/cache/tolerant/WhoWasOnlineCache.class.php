@@ -34,7 +34,7 @@ final class WhoWasOnlineCache extends AbstractTolerantCache
                         AND lastActivityTime > ?
                 )";
         $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([\TIME_NOW - 86400, \TIME_NOW - USER_ONLINE_TIMEOUT]);
+        $statement->execute([\TIME_NOW - 86400, \TIME_NOW - \USER_ONLINE_TIMEOUT]);
 
         return $statement->fetchAll(\PDO::FETCH_COLUMN);
     }

@@ -254,8 +254,8 @@ class PollManager extends SingletonFactory
         }
 
         // too many options provided, discard superfluous options
-        if ($count > POLL_MAX_OPTIONS) {
-            $this->pollOptions = \array_slice($this->pollOptions, 0, POLL_MAX_OPTIONS);
+        if ($count > \POLL_MAX_OPTIONS) {
+            $this->pollOptions = \array_slice($this->pollOptions, 0, \POLL_MAX_OPTIONS);
         }
 
         // less options available than allowed

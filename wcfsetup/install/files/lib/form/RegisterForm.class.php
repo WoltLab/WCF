@@ -70,13 +70,13 @@ class RegisterForm extends UserAddForm
      * name of the captcha object type; if empty, captcha is disabled
      * @var string
      */
-    public $captchaObjectTypeName = CAPTCHA_TYPE;
+    public $captchaObjectTypeName = \CAPTCHA_TYPE;
 
     /**
      * true if captcha is used
      * @var bool
      */
-    public $useCaptcha = !!REGISTER_USE_CAPTCHA;
+    public $useCaptcha = !!\REGISTER_USE_CAPTCHA;
 
     /**
      * field names
@@ -218,7 +218,7 @@ class RegisterForm extends UserAddForm
             ));
         }
 
-        if (REGISTER_ENABLE_DISCLAIMER && !$this->termsConfirmed) {
+        if (\REGISTER_ENABLE_DISCLAIMER && !$this->termsConfirmed) {
             $this->errorType['termsConfirmed'] = 'empty';
         }
     }
@@ -331,7 +331,7 @@ class RegisterForm extends UserAddForm
             parent::validatePassword($password);
 
             // check security of the given password
-            if (($this->passwordStrengthVerdict['score'] ?? 4) < PASSWORD_MIN_SCORE) {
+            if (($this->passwordStrengthVerdict['score'] ?? 4) < \PASSWORD_MIN_SCORE) {
                 throw new UserInputException('password', 'notSecure');
             }
         }
@@ -386,7 +386,7 @@ class RegisterForm extends UserAddForm
         $registerVia3rdParty = $eventParameters['registerVia3rdParty'];
 
         $this->additionalFields['languageID'] = $this->languageID;
-        if (LOG_IP_ADDRESS) {
+        if (\LOG_IP_ADDRESS) {
             $this->additionalFields['registrationIpAddress'] = UserUtil::getIpAddress();
         }
 
@@ -394,8 +394,8 @@ class RegisterForm extends UserAddForm
         $addDefaultGroups = true;
         if (
             $this->spamCheckEvent->hasMatches()
-            || ((int)REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER && !$registerVia3rdParty)
-            || ((int)REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN)
+            || ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER && !$registerVia3rdParty)
+            || ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN)
         ) {
             $activationCode = UserRegistrationUtil::getActivationCode();
             $this->additionalFields['activationCode'] = $activationCode;
@@ -430,14 +430,14 @@ class RegisterForm extends UserAddForm
         WCF::getSession()->changeUser($user);
 
         // activation management
-        if (REGISTER_ACTIVATION_METHOD == User::REGISTER_ACTIVATION_NONE && !$this->spamCheckEvent->hasMatches()) {
+        if (\REGISTER_ACTIVATION_METHOD == User::REGISTER_ACTIVATION_NONE && !$this->spamCheckEvent->hasMatches()) {
             $this->message = 'wcf.user.register.success';
 
             UserGroupAssignmentHandler::getInstance()->checkUsers([$user->userID]);
-        } elseif ((int)REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER && !$this->spamCheckEvent->hasMatches()) {
+        } elseif ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER && !$this->spamCheckEvent->hasMatches()) {
             // registering via 3rdParty leads to instant activation
             if ($registerVia3rdParty) {
-                if ((int)REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) {
+                if ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) {
                     $this->message = 'wcf.user.register.success.awaitActivation';
                 } else {
                     $this->message = 'wcf.user.register.success';
@@ -455,7 +455,7 @@ class RegisterForm extends UserAddForm
                 $email->send();
                 $this->message = 'wcf.user.register.success.needActivation';
             }
-        } elseif ((int)REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN || $this->spamCheckEvent->hasMatches()) {
+        } elseif ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN || $this->spamCheckEvent->hasMatches()) {
             $this->message = 'wcf.user.register.success.awaitActivation';
         }
 

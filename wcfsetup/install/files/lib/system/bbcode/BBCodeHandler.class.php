@@ -161,7 +161,7 @@ class BBCodeHandler extends SingletonFactory
             $this->highlighterMeta = \json_decode(\preg_replace(
                 '/.*\/\*!START\*\/\s*const\s*metadata\s*=\s*(.*)\s*;\s*\/\*!END\*\/.*/s',
                 '\\1',
-                \file_get_contents(WCF_DIR . 'js/WoltLabSuite/Core/prism-meta.js')
+                \file_get_contents(\WCF_DIR . 'js/WoltLabSuite/Core/prism-meta.js')
             ), true, flags: \JSON_THROW_ON_ERROR);
         }
 
@@ -226,7 +226,7 @@ class BBCodeHandler extends SingletonFactory
     {
         $hosts = [];
         // Hide these hosts unless external sources are actually denied.
-        if (!IMAGE_ALLOW_EXTERNAL_SOURCE) {
+        if (!\IMAGE_ALLOW_EXTERNAL_SOURCE) {
             $hosts = ArrayUtil::trim(\explode(
                 "\n",
                 \sprintf(

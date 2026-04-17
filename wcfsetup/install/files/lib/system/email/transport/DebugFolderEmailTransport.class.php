@@ -28,7 +28,7 @@ final class DebugFolderEmailTransport implements IStatusReportingEmailTransport
     public function __construct(?string $folder = null)
     {
         if ($folder === null) {
-            $folder = WCF_DIR . 'log/Maildir';
+            $folder = \WCF_DIR . 'log/Maildir';
         }
 
         $this->folder = FileUtil::addTrailingSlash($folder);

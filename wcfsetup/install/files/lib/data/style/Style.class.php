@@ -262,7 +262,7 @@ class Style extends DatabaseObject implements ITitledObject
      */
     public function getPreviewImage()
     {
-        if ($this->image && \file_exists(WCF_DIR . 'images/' . $this->image)) {
+        if ($this->image && \file_exists(\WCF_DIR . 'images/' . $this->image)) {
             return WCF::getPath() . 'images/' . $this->image;
         }
 
@@ -276,7 +276,7 @@ class Style extends DatabaseObject implements ITitledObject
      */
     public function getPreviewImage2x()
     {
-        if ($this->image2x && \file_exists(WCF_DIR . 'images/' . $this->image2x)) {
+        if ($this->image2x && \file_exists(\WCF_DIR . 'images/' . $this->image2x)) {
             return WCF::getPath() . 'images/' . $this->image2x;
         }
 
@@ -303,7 +303,7 @@ class Style extends DatabaseObject implements ITitledObject
         return \sprintf(
             '%s%smanifest-%d.json',
             WCF::getPath(),
-            FileUtil::getRelativePath(WCF_DIR, $this->getAssetPath()),
+            FileUtil::getRelativePath(\WCF_DIR, $this->getAssetPath()),
             WCF::getLanguage()->languageID
         );
     }
@@ -362,7 +362,7 @@ class Style extends DatabaseObject implements ITitledObject
             return $this->getAssetPath() . 'coverPhoto.' . ($useWebP ? 'webp' : $this->coverPhotoExtension);
         }
 
-        return WCF_DIR . 'images/coverPhotos/default.' . ($useWebP ? 'webp' : 'jpg');
+        return \WCF_DIR . 'images/coverPhotos/default.' . ($useWebP ? 'webp' : 'jpg');
     }
 
     /**
@@ -374,7 +374,7 @@ class Style extends DatabaseObject implements ITitledObject
 
         if ($this->coverPhotoExtension) {
             return WCF::getPath() . FileUtil::getRelativePath(
-                WCF_DIR,
+                \WCF_DIR,
                 $this->getAssetPath()
             ) . 'coverPhoto.' . ($useWebP ? 'webp' : $this->coverPhotoExtension);
         }
@@ -440,7 +440,7 @@ class Style extends DatabaseObject implements ITitledObject
     protected function getFaviconPath(string $filename, bool $absolutePath = true)
     {
         if ($this->hasFavicon) {
-            $path = FileUtil::getRelativePath(WCF_DIR, $this->getAssetPath()) . $filename;
+            $path = FileUtil::getRelativePath(\WCF_DIR, $this->getAssetPath()) . $filename;
         } else {
             $path = 'images/favicon/default.' . $filename;
         }

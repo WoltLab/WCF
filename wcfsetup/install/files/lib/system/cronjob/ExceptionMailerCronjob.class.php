@@ -41,7 +41,7 @@ class ExceptionMailerCronjob extends AbstractCronjob
 
         foreach ($files as $file => $value) {
             $seen = [];
-            $path = WCF_DIR . 'log/' . $file . '.txt';
+            $path = \WCF_DIR . 'log/' . $file . '.txt';
             if (!\file_exists($path)) {
                 unset($files[$file]);
                 continue;
@@ -98,14 +98,14 @@ class ExceptionMailerCronjob extends AbstractCronjob
             $timestamp,
             \bin2hex(\random_bytes(8))
         ));
-        $email->addRecipient(new Mailbox(MAIL_ADMIN_ADDRESS, null, $language));
+        $email->addRecipient(new Mailbox(\MAIL_ADMIN_ADDRESS, null, $language));
         $email->setSubject($language->getDynamicVariable('wcf.acp.exceptionLog.email.subject', [
             'date' => $timestamp,
         ]));
         $email->setBody(new PlainTextMimePart($language->getDynamicVariable('wcf.acp.exceptionLog.email.body', [
             'date' => $timestamp,
             'files' => $files,
-            'logPath' => WCF_DIR . 'log/',
+            'logPath' => \WCF_DIR . 'log/',
         ])));
         $email->send();
         RegistryHandler::getInstance()->set('com.woltlab.wcf', 'exceptionMailerTimestamp', (string)\TIME_NOW);

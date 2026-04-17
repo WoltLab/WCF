@@ -36,22 +36,22 @@ final class MetaTagHandler extends SingletonFactory implements \Countable, \Iter
     protected function init(): void
     {
         // set default tags
-        if ($value = WCF::getLanguage()->get(META_DESCRIPTION)) {
+        if ($value = WCF::getLanguage()->get(\META_DESCRIPTION)) {
             $this->addTag('description', 'description', $value);
         }
-        if ($value = WCF::getLanguage()->get(PAGE_TITLE)) {
+        if ($value = WCF::getLanguage()->get(\PAGE_TITLE)) {
             $this->addTag('og:site_name', 'og:site_name', $value, true);
         }
-        if (OG_IMAGE) {
+        if (\OG_IMAGE) {
             $this->addTag(
                 'og:image',
                 'og:image',
-                (\preg_match('~^https?://~', OG_IMAGE) ? OG_IMAGE : WCF::getPath() . OG_IMAGE),
+                (\preg_match('~^https?://~', \OG_IMAGE) ? \OG_IMAGE : WCF::getPath() . \OG_IMAGE),
                 true
             );
         }
-        if (FB_SHARE_APP_ID) {
-            $this->addTag('fb:app_id', 'fb:app_id', FB_SHARE_APP_ID, true);
+        if (\FB_SHARE_APP_ID) {
+            $this->addTag('fb:app_id', 'fb:app_id', \FB_SHARE_APP_ID, true);
         }
     }
 

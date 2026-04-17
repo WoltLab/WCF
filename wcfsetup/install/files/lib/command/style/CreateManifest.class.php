@@ -50,7 +50,7 @@ final class CreateManifest
                 // To get the correct landing page url, we need to change the language.
                 WCF::setLanguage($language->languageID);
 
-                $title = \json_encode($language->get(PAGE_TITLE), \JSON_THROW_ON_ERROR);
+                $title = \json_encode($language->get(\PAGE_TITLE), \JSON_THROW_ON_ERROR);
                 $startUrl = \json_encode($landingPage->getLink(), \JSON_THROW_ON_ERROR);
 
                 // update manifest.json

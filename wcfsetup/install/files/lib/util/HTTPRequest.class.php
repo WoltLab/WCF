@@ -91,7 +91,7 @@ final class HTTPRequest
         $language = WCF::getLanguage();
         $this->addHeader(
             'user-agent',
-            "HTTP.PHP (HTTPRequest.class.php; WoltLab Suite/" . WCF_VERSION . "; " . $language->languageCode . ")"
+            "HTTP.PHP (HTTPRequest.class.php; WoltLab Suite/" . \WCF_VERSION . "; " . $language->languageCode . ")"
         );
         $this->addHeader('accept', '*/*');
         $this->addHeader('accept-encoding', 'identity');

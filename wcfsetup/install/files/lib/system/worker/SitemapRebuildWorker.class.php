@@ -112,9 +112,9 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
                             throw new ParentClassException(\get_class($list), DatabaseObjectList::class);
                         }
 
-                        if (SITEMAP_INDEX_TIME_FRAME > 0 && $processor->getLastModifiedColumn() !== null) {
+                        if (\SITEMAP_INDEX_TIME_FRAME > 0 && $processor->getLastModifiedColumn() !== null) {
                             $list->getConditionBuilder()->add($processor->getLastModifiedColumn() . " > ?", [
-                                \TIME_NOW - SITEMAP_INDEX_TIME_FRAME * 86400, // one day (60 * 60 * 24)
+                                \TIME_NOW - \SITEMAP_INDEX_TIME_FRAME * 86400, // one day (60 * 60 * 24)
                             ]);
                         }
 
@@ -185,9 +185,9 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
             /** @var DatabaseObjectList<DatabaseObject> $objectList */
             $objectList = $sitemapObject->getObjectList();
 
-            if (SITEMAP_INDEX_TIME_FRAME > 0 && $sitemapObject->getLastModifiedColumn() !== null) {
+            if (\SITEMAP_INDEX_TIME_FRAME > 0 && $sitemapObject->getLastModifiedColumn() !== null) {
                 $objectList->getConditionBuilder()->add($sitemapObject->getLastModifiedColumn() . " > ?", [
-                    \TIME_NOW - SITEMAP_INDEX_TIME_FRAME * 86400, // one day (60 * 60 * 24)
+                    \TIME_NOW - \SITEMAP_INDEX_TIME_FRAME * 86400, // one day (60 * 60 * 24)
                 ]);
             }
 
@@ -473,7 +473,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
      */
     public static function getSitemapPath()
     {
-        return WCF_DIR . 'sitemaps/';
+        return \WCF_DIR . 'sitemaps/';
     }
 
     /**

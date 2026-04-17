@@ -57,8 +57,8 @@ final class CronjobUtil
         // using the native `date()` and `mktime()` functions is dangerous
         // unless we explicitly set the correct timezone
         $originalTimezone = \date_default_timezone_get();
-        if ($originalTimezone !== TIMEZONE) {
-            \date_default_timezone_set(TIMEZONE);
+        if ($originalTimezone !== \TIMEZONE) {
+            \date_default_timezone_set(\TIMEZONE);
         }
 
         // initialize fields
@@ -131,7 +131,7 @@ final class CronjobUtil
         );
 
         // restore the original timezone
-        if ($originalTimezone !== TIMEZONE) {
+        if ($originalTimezone !== \TIMEZONE) {
             \date_default_timezone_set($originalTimezone);
         }
 

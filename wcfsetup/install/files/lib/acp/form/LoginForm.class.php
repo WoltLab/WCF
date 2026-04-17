@@ -77,7 +77,7 @@ class LoginForm extends AbstractFormBuilderForm
                 )),
             CaptchaFormField::create()
                 ->available($this->useCaptcha)
-                ->objectType(CAPTCHA_TYPE)
+                ->objectType(\CAPTCHA_TYPE)
         ]);
     }
 
@@ -114,16 +114,16 @@ class LoginForm extends AbstractFormBuilderForm
         }
 
         // check authentication failures
-        if (ENABLE_USER_AUTHENTICATION_FAILURE) {
+        if (\ENABLE_USER_AUTHENTICATION_FAILURE) {
             $failures = UserAuthenticationFailure::countIPFailures(UserUtil::getIpAddress());
-            if (USER_AUTHENTICATION_FAILURE_IP_BLOCK && $failures >= USER_AUTHENTICATION_FAILURE_IP_BLOCK) {
+            if (\USER_AUTHENTICATION_FAILURE_IP_BLOCK && $failures >= \USER_AUTHENTICATION_FAILURE_IP_BLOCK) {
                 throw new NamedUserException(HtmlString::fromSafeHtml(
                     WCF::getLanguage()->getDynamicVariable('wcf.user.login.blocked')
                 ));
             }
-            if (USER_AUTHENTICATION_FAILURE_IP_CAPTCHA && $failures >= USER_AUTHENTICATION_FAILURE_IP_CAPTCHA) {
+            if (\USER_AUTHENTICATION_FAILURE_IP_CAPTCHA && $failures >= \USER_AUTHENTICATION_FAILURE_IP_CAPTCHA) {
                 $this->useCaptcha = true;
-            } elseif (USER_AUTHENTICATION_FAILURE_USER_CAPTCHA) {
+            } elseif (\USER_AUTHENTICATION_FAILURE_USER_CAPTCHA) {
                 if (isset($_POST['username'])) {
                     $user = User::getUserByUsername(StringUtil::trim($_POST['username']));
                     if (!$user->userID) {
@@ -134,8 +134,8 @@ class LoginForm extends AbstractFormBuilderForm
                         $failures = UserAuthenticationFailure::countUserFailures($user->userID);
                         if (
                             // @phpstan-ignore booleanAnd.leftAlwaysTrue
-                            USER_AUTHENTICATION_FAILURE_USER_CAPTCHA
-                            && $failures >= USER_AUTHENTICATION_FAILURE_USER_CAPTCHA
+                            \USER_AUTHENTICATION_FAILURE_USER_CAPTCHA
+                            && $failures >= \USER_AUTHENTICATION_FAILURE_USER_CAPTCHA
                         ) {
                             $this->useCaptcha = true;
                         }
@@ -237,7 +237,7 @@ class LoginForm extends AbstractFormBuilderForm
 
     protected function saveAuthenticationFailure(string $errorField, string $username): void
     {
-        if (!ENABLE_USER_AUTHENTICATION_FAILURE) {
+        if (!\ENABLE_USER_AUTHENTICATION_FAILURE) {
             return;
         }
 

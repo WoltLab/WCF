@@ -27,7 +27,7 @@ final class RenderUserReactions implements IController
     #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
-        if (!MODULE_LIKE) {
+        if (!\MODULE_LIKE) {
             throw new IllegalLinkException();
         }
 

@@ -62,7 +62,7 @@ class UsersOnlineList extends SessionList
             LEFT JOIN   wcf1_user_group user_group
             ON          user_group.groupID = user_table.userOnlineGroupID";
 
-        $this->getConditionBuilder()->add('session.lastActivityTime > ?', [\TIME_NOW - USER_ONLINE_TIMEOUT]);
+        $this->getConditionBuilder()->add('session.lastActivityTime > ?', [\TIME_NOW - \USER_ONLINE_TIMEOUT]);
     }
 
     #[\Override]
@@ -161,7 +161,7 @@ class UsersOnlineList extends SessionList
     public function checkRecord()
     {
         $usersOnlineTotal = $this->stats['members'];
-        if ($usersOnlineTotal > USERS_ONLINE_RECORD) {
+        if ($usersOnlineTotal > \USERS_ONLINE_RECORD) {
             // save new record
             $optionAction = new OptionAction([], 'import', [
                 'data' => [

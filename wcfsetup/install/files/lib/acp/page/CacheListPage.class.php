@@ -78,9 +78,9 @@ class CacheListPage extends AbstractPage
         switch ($this->cacheData['source']) {
             case DiskCacheSource::class:
                 // set version
-                $this->cacheData['version'] = WCF_VERSION;
+                $this->cacheData['version'] = \WCF_VERSION;
 
-                $this->readCacheFiles('data', FileUtil::unifyDirSeparator(WCF_DIR . 'cache'));
+                $this->readCacheFiles('data', FileUtil::unifyDirSeparator(\WCF_DIR . 'cache'));
                 break;
 
             case RedisCacheSource::class:
@@ -91,21 +91,21 @@ class CacheListPage extends AbstractPage
                 break;
         }
 
-        $this->readCacheFiles('language', FileUtil::unifyDirSeparator(WCF_DIR . 'language'));
+        $this->readCacheFiles('language', FileUtil::unifyDirSeparator(\WCF_DIR . 'language'));
         $this->readCacheFiles(
             'template',
-            FileUtil::unifyDirSeparator(WCF_DIR . 'templates/compiled'),
+            FileUtil::unifyDirSeparator(\WCF_DIR . 'templates/compiled'),
             new Regex('\.meta\.php$')
         );
         $this->readCacheFiles(
             'template',
-            FileUtil::unifyDirSeparator(WCF_DIR . 'acp/templates/compiled'),
+            FileUtil::unifyDirSeparator(\WCF_DIR . 'acp/templates/compiled'),
             new Regex('\.meta\.php$')
         );
-        $this->readCacheFiles('style', FileUtil::unifyDirSeparator(WCF_DIR . 'style'), null, '(css|json)');
+        $this->readCacheFiles('style', FileUtil::unifyDirSeparator(\WCF_DIR . 'style'), null, '(css|json)');
         $this->readCacheFiles(
             'style',
-            FileUtil::unifyDirSeparator(WCF_DIR . 'acp/style'),
+            FileUtil::unifyDirSeparator(\WCF_DIR . 'acp/style'),
             new Regex('WCFSetup.css$'),
             'css'
         );

@@ -310,7 +310,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
                 $shouldHaveThumbnail = true;
                 if ($this->width > \ATTACHMENT_THUMBNAIL_WIDTH && $this->height < \ATTACHMENT_THUMBNAIL_HEIGHT) {
                     $shouldHaveThumbnail = false;
-                } else if ($this->height > ATTACHMENT_THUMBNAIL_HEIGHT && $this->width < \ATTACHMENT_THUMBNAIL_WIDTH) {
+                } else if ($this->height > \ATTACHMENT_THUMBNAIL_HEIGHT && $this->width < \ATTACHMENT_THUMBNAIL_WIDTH) {
                     $shouldHaveThumbnail = false;
                 }
 
@@ -465,7 +465,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      */
     public static function getStorage(): string
     {
-        return WCF_DIR . 'attachments/';
+        return \WCF_DIR . 'attachments/';
     }
 
     #[\Override]
@@ -479,9 +479,9 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
             ],
             // standard thumbnail size
             '' => [
-                'height' => ATTACHMENT_THUMBNAIL_HEIGHT,
-                'retainDimensions' => ATTACHMENT_RETAIN_DIMENSIONS,
-                'width' => ATTACHMENT_THUMBNAIL_WIDTH,
+                'height' => \ATTACHMENT_THUMBNAIL_HEIGHT,
+                'retainDimensions' => \ATTACHMENT_RETAIN_DIMENSIONS,
+                'width' => \ATTACHMENT_THUMBNAIL_WIDTH,
             ],
         ];
     }

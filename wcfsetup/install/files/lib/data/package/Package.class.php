@@ -270,7 +270,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
      */
     public function getAbsolutePackageDir()
     {
-        return FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR . $this->packageDir));
+        return FileUtil::addTrailingSlash(FileUtil::getRealPath(\WCF_DIR . $this->packageDir));
     }
 
     /**
@@ -426,7 +426,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
     public static function writeConfigFile(int $packageID): void
     {
         $package = new self($packageID);
-        $packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR . $package->packageDir));
+        $packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(\WCF_DIR . $package->packageDir));
 
         $prefix = \strtoupper(self::getAbbreviation($package->package));
 

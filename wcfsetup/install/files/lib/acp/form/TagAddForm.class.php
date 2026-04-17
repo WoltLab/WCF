@@ -69,7 +69,7 @@ class TagAddForm extends AbstractFormBuilderForm
                     TextFormField::create('name')
                         ->label('wcf.global.name')
                         ->required()
-                        ->maximumLength(TAGGING_MAX_TAG_LENGTH)
+                        ->maximumLength(\TAGGING_MAX_TAG_LENGTH)
                         ->addValidator(
                             new FormFieldValidator('duplicateTagValidator', function (TextFormField $field) {
                                 $languageIDFormField = $field->getDocument()->getFormField('languageID');

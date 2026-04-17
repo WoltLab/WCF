@@ -62,7 +62,7 @@ class UserContentClipboardAction extends AbstractClipboardAction
      */
     protected function validateRevertContentChanges()
     {
-        if (!MODULE_EDIT_HISTORY) {
+        if (!\MODULE_EDIT_HISTORY) {
             return [];
         }
 

@@ -20,7 +20,7 @@ final class FloodControl extends SingletonFactory
 {
     private const PRUNE_TIME = \TIME_NOW - 31 * 86400;
 
-    private const IDENTIFIER_PREFIX = WCF_UUID . ':' . self::class . ':';
+    private const IDENTIFIER_PREFIX = \WCF_UUID . ':' . self::class . ':';
 
     /**
      * Returns the number of contents by a certain identifier type within a certain period of

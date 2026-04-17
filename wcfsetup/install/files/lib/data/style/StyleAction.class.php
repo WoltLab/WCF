@@ -121,7 +121,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
      */
     protected function removeDirectory(string $pathComponent)
     {
-        $dir = WCF_DIR . $pathComponent;
+        $dir = \WCF_DIR . $pathComponent;
         if (\is_dir($dir)) {
             $iterator = new \RecursiveIteratorIterator(
                 new \RecursiveDirectoryIterator($dir),
@@ -282,7 +282,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                     $newLocation = $style->getAssetPath() . $newName;
                     \rename($fileLocation, $newLocation);
                     (new StyleEditor($style))->update([
-                        $type => FileUtil::getRelativePath(WCF_DIR . 'images/', $style->getAssetPath()) . $newName,
+                        $type => FileUtil::getRelativePath(\WCF_DIR . 'images/', $style->getAssetPath()) . $newName,
                     ]);
 
                     $file->setProcessed($newLocation);

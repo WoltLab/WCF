@@ -88,7 +88,7 @@ final class ImageProxyAction extends AbstractAction
             }
 
             $fileName = \sha1($this->key);
-            $dir = WCF_DIR . 'images/proxy/' . \substr($fileName, 0, 2);
+            $dir = \WCF_DIR . 'images/proxy/' . \substr($fileName, 0, 2);
 
             // ensure that the directory exists
             if (!\file_exists($dir)) {
@@ -193,7 +193,7 @@ final class ImageProxyAction extends AbstractAction
                 @\touch($fileLocation);
             }
 
-            $path = FileUtil::getRelativePath(WCF_DIR, \dirname($fileLocation)) . \basename($fileLocation);
+            $path = FileUtil::getRelativePath(\WCF_DIR, \dirname($fileLocation)) . \basename($fileLocation);
 
             $this->executed();
 

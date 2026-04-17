@@ -35,8 +35,8 @@ class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCache
 
         if (isset($parameters['templateGroupFolderName']) && ($parameters['templateGroupFolderName'] != $this->templateGroupFolderName)) {
             @\rename(
-                WCF_DIR . 'templates/' . $this->templateGroupFolderName,
-                WCF_DIR . 'templates/' . $parameters['templateGroupFolderName']
+                \WCF_DIR . 'templates/' . $this->templateGroupFolderName,
+                \WCF_DIR . 'templates/' . $parameters['templateGroupFolderName']
             );
 
             // check template group folders in other applications
@@ -51,8 +51,8 @@ class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCache
                 $package = PackageCache::getInstance()->getPackage($application->packageID);
 
                 @\rename(
-                    WCF_DIR . $package->packageDir . 'templates/' . $this->templateGroupFolderName,
-                    WCF_DIR . $package->packageDir . 'templates/' . $parameters['templateGroupFolderName']
+                    \WCF_DIR . $package->packageDir . 'templates/' . $this->templateGroupFolderName,
+                    \WCF_DIR . $package->packageDir . 'templates/' . $parameters['templateGroupFolderName']
                 );
             }
         }
@@ -79,8 +79,8 @@ class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCache
      */
     public function deleteFolder()
     {
-        if (\file_exists(WCF_DIR . 'templates/' . $this->templateGroupFolderName)) {
-            DirectoryUtil::getInstance(WCF_DIR . 'templates/' . $this->templateGroupFolderName)->removeAll();
+        if (\file_exists(\WCF_DIR . 'templates/' . $this->templateGroupFolderName)) {
+            DirectoryUtil::getInstance(\WCF_DIR . 'templates/' . $this->templateGroupFolderName)->removeAll();
         }
 
         // check template group folders in other applications
@@ -94,8 +94,8 @@ class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCache
             $application = ApplicationHandler::getInstance()->getApplication($row['application']);
             $package = PackageCache::getInstance()->getPackage($application->packageID);
 
-            if (\file_exists(WCF_DIR . $package->packageDir . 'templates/' . $this->templateGroupFolderName)) {
-                DirectoryUtil::getInstance(WCF_DIR . $package->packageDir . 'templates/' . $this->templateGroupFolderName)->removeAll();
+            if (\file_exists(\WCF_DIR . $package->packageDir . 'templates/' . $this->templateGroupFolderName)) {
+                DirectoryUtil::getInstance(\WCF_DIR . $package->packageDir . 'templates/' . $this->templateGroupFolderName)->removeAll();
             }
         }
     }

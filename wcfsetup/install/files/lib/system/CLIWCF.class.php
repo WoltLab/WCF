@@ -55,8 +55,8 @@ class CLIWCF extends WCF
         }
 
         // register additional autoloaders
-        require_once(WCF_DIR . 'lib/system/api/phpline/phpline.phar');
-        require_once(WCF_DIR . 'lib/system/api/zend/Loader/StandardAutoloader.php');
+        require_once(\WCF_DIR . 'lib/system/api/phpline/phpline.phar');
+        require_once(\WCF_DIR . 'lib/system/api/zend/Loader/StandardAutoloader.php');
         $zendLoader = new ZendLoader([ZendLoader::AUTOREGISTER_ZF => true]);
         $zendLoader->register();
 
@@ -133,7 +133,7 @@ class CLIWCF extends WCF
         }
         if (self::getArgvParser()->version) {
             // show version
-            echo WCF_VERSION . \PHP_EOL;
+            echo \WCF_VERSION . \PHP_EOL;
 
             exit;
         }
@@ -167,7 +167,7 @@ class CLIWCF extends WCF
 
         if (VERBOSITY >= 0) {
             $headline = \str_pad(
-                "WoltLab Suite (tm) " . WCF_VERSION,
+                "WoltLab Suite (tm) " . \WCF_VERSION,
                 self::getTerminal()->getWidth(),
                 " ",
                 \STR_PAD_BOTH

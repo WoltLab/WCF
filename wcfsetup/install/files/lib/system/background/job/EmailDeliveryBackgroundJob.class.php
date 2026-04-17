@@ -169,7 +169,7 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
     public function perform()
     {
         if (self::$transport === null) {
-            $name = '\wcf\system\email\transport\\' . \ucfirst(MAIL_SEND_METHOD) . 'EmailTransport';
+            $name = '\wcf\system\email\transport\\' . \ucfirst(\MAIL_SEND_METHOD) . 'EmailTransport';
             self::$transport = new $name();
         }
 

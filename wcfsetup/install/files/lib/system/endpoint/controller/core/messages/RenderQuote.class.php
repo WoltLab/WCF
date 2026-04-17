@@ -72,8 +72,8 @@ final class RenderQuote implements IController
         $htmlInputProcessor = new HtmlInputProcessor();
         $htmlInputProcessor->processIntermediate($object->getMessage());
 
-        if (MESSAGE_MAX_QUOTE_DEPTH) {
-            $htmlInputProcessor->enforceQuoteDepth(MESSAGE_MAX_QUOTE_DEPTH - 1, true);
+        if (\MESSAGE_MAX_QUOTE_DEPTH) {
+            $htmlInputProcessor->enforceQuoteDepth(\MESSAGE_MAX_QUOTE_DEPTH - 1, true);
         }
 
         return $htmlInputProcessor->getHtml();

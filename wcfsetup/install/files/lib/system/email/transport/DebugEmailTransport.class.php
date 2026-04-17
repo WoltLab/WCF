@@ -28,7 +28,7 @@ final class DebugEmailTransport implements IEmailTransport
     public function __construct(?string $mbox = null)
     {
         if ($mbox === null) {
-            $mbox = WCF_DIR . 'log/debug.mbox';
+            $mbox = \WCF_DIR . 'log/debug.mbox';
         }
 
         $this->mbox = new Stream($mbox, 'ab');

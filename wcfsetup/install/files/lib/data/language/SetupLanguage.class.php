@@ -30,7 +30,7 @@ final class SetupLanguage extends Language
 
     private function getXmlFilename(): string
     {
-        return TMP_DIR . 'setup/lang/setup_' . $this->languageCode . '.xml';
+        return \TMP_DIR . 'setup/lang/setup_' . $this->languageCode . '.xml';
     }
 
     #[\Override]

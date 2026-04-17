@@ -88,7 +88,7 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 
         foreach ($this->getObjects() as $trophy) {
             if ($trophy->iconFile) {
-                @\unlink(WCF_DIR . 'images/trophy/' . $trophy->iconFile);
+                @\unlink(\WCF_DIR . 'images/trophy/' . $trophy->iconFile);
             }
         }
 
@@ -177,7 +177,7 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
     #[\Override]
     public function upload()
     {
-        $fileName = WCF_DIR . 'images/trophy/tmp_' . $this->parameters['tmpHash'] . '.' . $this->parameters['file']->getFileExtension();
+        $fileName = \WCF_DIR . 'images/trophy/tmp_' . $this->parameters['tmpHash'] . '.' . $this->parameters['file']->getFileExtension();
         if ($this->parameters['file']->getImageData()['height'] > 128) {
             $adapter = ImageHandler::getInstance()->getAdapter();
             $adapter->loadFile($this->parameters['file']->getLocation());
@@ -229,13 +229,13 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 
         $fileExtension = WCF::getSession()->getVar('trophyImage-' . $this->parameters['tmpHash']);
         if ($fileExtension !== null) {
-            $oldFilename = WCF_DIR . 'images/trophy/tmp_' . $this->parameters['tmpHash'] . '.' . $fileExtension;
+            $oldFilename = \WCF_DIR . 'images/trophy/tmp_' . $this->parameters['tmpHash'] . '.' . $fileExtension;
             if (\file_exists($oldFilename)) {
                 $filename = 'trophyImage-' . $trophy->trophyID . '.' . $fileExtension;
-                if (@\rename($oldFilename, WCF_DIR . 'images/trophy/' . $filename)) {
+                if (@\rename($oldFilename, \WCF_DIR . 'images/trophy/' . $filename)) {
                     // delete old file if it has a different file extension
                     if ($trophy->iconFile != $filename) {
-                        @\unlink(WCF_DIR . 'images/trophy/' . $trophy->iconFile);
+                        @\unlink(\WCF_DIR . 'images/trophy/' . $trophy->iconFile);
 
                         $trophyEditor = new TrophyEditor($trophy);
                         $trophyEditor->update([

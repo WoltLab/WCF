@@ -67,7 +67,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
                 $class .= 'jsResizeImage';
                 $element->setAttribute('class', $class);
 
-                if (MODULE_IMAGE_PROXY) {
+                if (\MODULE_IMAGE_PROXY) {
                     if (!Url::is($src)) {
                         // not a valid URL, discard it
                         DOMUtil::removeNode($element);
@@ -80,9 +80,9 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
                         continue;
                     }
 
-                    if (IMAGE_PROXY_INSECURE_ONLY && $urlComponents['scheme'] === 'https') {
+                    if (\IMAGE_PROXY_INSECURE_ONLY && $urlComponents['scheme'] === 'https') {
                         // proxy is enabled for insecure connections only
-                        if (!IMAGE_ALLOW_EXTERNAL_SOURCE && !$this->isAllowedOrigin($src)) {
+                        if (!\IMAGE_ALLOW_EXTERNAL_SOURCE && !$this->isAllowedOrigin($src)) {
                             /** @var HtmlOutputNodeProcessor $htmlNodeProcessor */
                             $this->replaceExternalSource(
                                 $element,
@@ -99,7 +99,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
                         // but the link is insecure
                         if (
                             $urlComponents['scheme'] === 'http'
-                            && (MESSAGE_FORCE_SECURE_IMAGES || RouteHandler::secureConnection())
+                            && (\MESSAGE_FORCE_SECURE_IMAGES || RouteHandler::secureConnection())
                         ) {
                             // rewrite protocol to `https`
                             $element->setAttribute('src', \preg_replace('~^http~', 'https', $src));
@@ -139,10 +139,10 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
 
                         $element->setAttribute('srcset', $srcset);
                     }
-                } elseif (!IMAGE_ALLOW_EXTERNAL_SOURCE && !$this->isAllowedOrigin($src)) {
+                } elseif (!\IMAGE_ALLOW_EXTERNAL_SOURCE && !$this->isAllowedOrigin($src)) {
                     /** @var HtmlOutputNodeProcessor $htmlNodeProcessor */
                     $this->replaceExternalSource($element, $src, $htmlNodeProcessor->getHtmlProcessor()->enableUgc);
-                } elseif (MESSAGE_FORCE_SECURE_IMAGES && Url::parse($src)['scheme'] === 'http') {
+                } elseif (\MESSAGE_FORCE_SECURE_IMAGES && Url::parse($src)['scheme'] === 'http') {
                     // rewrite protocol to `https`
                     $element->setAttribute('src', \preg_replace('~^http~', 'https', $src));
                 }
@@ -201,7 +201,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
         static $matcher = null;
 
         if ($matcher === null) {
-            $whitelist = \explode("\n", StringUtil::unifyNewlines(IMAGE_PROXY_HOST_WHITELIST));
+            $whitelist = \explode("\n", StringUtil::unifyNewlines(\IMAGE_PROXY_HOST_WHITELIST));
             $whitelist[] = \mb_strtolower(ApplicationHandler::getInstance()->getDomainName());
 
             $matcher = Url::getHostnameMatcher($whitelist);

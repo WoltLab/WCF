@@ -31,7 +31,7 @@ class PaymentMethodHandler extends SingletonFactory
     #[\Override]
     protected function init()
     {
-        $availablePaymentMethods = \explode(',', AVAILABLE_PAYMENT_METHODS);
+        $availablePaymentMethods = \explode(',', \AVAILABLE_PAYMENT_METHODS);
         $this->objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.payment.method');
         foreach ($this->objectTypes as $objectType) {
             if (\in_array($objectType->objectType, $availablePaymentMethods)) {

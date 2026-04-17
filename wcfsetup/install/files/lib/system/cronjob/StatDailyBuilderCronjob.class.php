@@ -23,7 +23,7 @@ class StatDailyBuilderCronjob extends AbstractCronjob
 
         // get date
         $d = DateUtil::getDateTimeByTimestamp(\TIME_NOW);
-        $d->setTimezone(new \DateTimeZone(TIMEZONE));
+        $d->setTimezone(new \DateTimeZone(\TIMEZONE));
         $d->sub(new \DateInterval('P1D'));
         $d->setTime(0, 0);
         $date = $d->getTimestamp();

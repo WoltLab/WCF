@@ -29,7 +29,7 @@ class ContactRecipient extends DatabaseObject implements ITitledObject
     {
         // dynamically set email address for the administrator
         if (!empty($data['isAdministrator'])) {
-            $data['email'] = MAIL_ADMIN_ADDRESS;
+            $data['email'] = \MAIL_ADMIN_ADDRESS;
         }
 
         parent::handleData($data);
@@ -45,7 +45,7 @@ class ContactRecipient extends DatabaseObject implements ITitledObject
     {
         // update the administrator's email address on de-serialization, avoids outdated caches
         if (!empty($this->data['isAdministrator'])) {
-            $this->data['isAdministrator'] = MAIL_ADMIN_ADDRESS;
+            $this->data['isAdministrator'] = \MAIL_ADMIN_ADDRESS;
         }
     }
 

@@ -27,7 +27,7 @@ abstract class AbstractCaptchaForm extends AbstractForm
      * name of the captcha object type; if empty, captcha is disabled
      * @var string
      */
-    public $captchaObjectTypeName = CAPTCHA_TYPE;
+    public $captchaObjectTypeName = \CAPTCHA_TYPE;
 
     /**
      * true if captcha is used

@@ -34,7 +34,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin
         $styleEditor = StyleHandler::getInstance()->getStyleByName($this->installation->getPackageName(), false);
 
         // import style
-        $style = StyleEditor::import($filename, $this->installation->getPackageID(), $styleEditor, !PACKAGE_ID);
+        $style = StyleEditor::import($filename, $this->installation->getPackageID(), $styleEditor, !\PACKAGE_ID);
 
         // set style as default
         if (isset($this->instruction['attributes']['default'])) {

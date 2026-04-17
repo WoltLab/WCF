@@ -239,7 +239,7 @@ class StyleEditForm extends StyleAddForm
 
         I18nHandler::getInstance()->setOptions(
             'styleDescription',
-            PACKAGE_ID,
+            \PACKAGE_ID,
             $this->style->styleDescription,
             'wcf.style.styleDescription\d+'
         );
@@ -256,9 +256,9 @@ class StyleEditForm extends StyleAddForm
             $this->styleName = $this->style->styleName;
             $this->styleVersion = $this->style->styleVersion;
             $this->templateGroupID = $this->style->templateGroupID;
-            if ($this->style->image && \file_exists(WCF_DIR . 'images/' . $this->style->image)) {
+            if ($this->style->image && \file_exists(\WCF_DIR . 'images/' . $this->style->image)) {
                 $file = new UploadFile(
-                    WCF_DIR . 'images/' . $this->style->image,
+                    \WCF_DIR . 'images/' . $this->style->image,
                     $this->style->image,
                     true,
                     true,
@@ -268,9 +268,9 @@ class StyleEditForm extends StyleAddForm
                     $file,
                 ]);
             }
-            if ($this->style->image2x && \file_exists(WCF_DIR . 'images/' . $this->style->image2x)) {
+            if ($this->style->image2x && \file_exists(\WCF_DIR . 'images/' . $this->style->image2x)) {
                 $file = new UploadFile(
-                    WCF_DIR . 'images/' . $this->style->image2x,
+                    \WCF_DIR . 'images/' . $this->style->image2x,
                     $this->style->image2x,
                     true,
                     true,

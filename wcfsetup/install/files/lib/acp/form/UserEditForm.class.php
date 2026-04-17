@@ -486,11 +486,11 @@ class UserEditForm extends UserAddForm
         $this->user = new UserEditor(new User($this->userID));
 
         // update user rank
-        if (MODULE_USER_RANK) {
+        if (\MODULE_USER_RANK) {
             $action = new UserProfileAction([$this->user], 'updateUserRank');
             $action->executeAction();
         }
-        if (MODULE_USERS_ONLINE) {
+        if (\MODULE_USERS_ONLINE) {
             $action = new UserProfileAction([$this->user], 'updateUserOnlineMarking');
             $action->executeAction();
         }

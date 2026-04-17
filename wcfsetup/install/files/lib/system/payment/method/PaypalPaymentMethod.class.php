@@ -66,12 +66,12 @@ class PaypalPaymentMethod extends AbstractPaymentMethod
     ) {
         if ($isRecurring) {
             // subscribe button
-            return '<form method="post" action="https://www.' . (ENABLE_DEBUG_MODE ? 'sandbox.' : '') . 'paypal.com/cgi-bin/webscr">
+            return '<form method="post" action="https://www.' . (\ENABLE_DEBUG_MODE ? 'sandbox.' : '') . 'paypal.com/cgi-bin/webscr">
 					<input type="hidden" name="a3" value="' . $cost . '">
 					<input type="hidden" name="p3" value="' . $subscriptionLength . '">
 					<input type="hidden" name="t3" value="' . $subscriptionLengthUnit . '">
 					<input type="hidden" name="src" value="1">
-					<input type="hidden" name="business" value="' . StringUtil::encodeHTML(PAYPAL_EMAIL_ADDRESS) . '">
+					<input type="hidden" name="business" value="' . StringUtil::encodeHTML(\PAYPAL_EMAIL_ADDRESS) . '">
 					<input type="hidden" name="cancel_return" value="' . StringUtil::encodeHTML($cancelReturnURL) . '">
 					<input type="hidden" name="charset" value="utf-8">
 					<input type="hidden" name="cmd" value="_xclick-subscriptions">
@@ -89,9 +89,9 @@ class PaypalPaymentMethod extends AbstractPaymentMethod
 					<button class="button small" type="submit">' . WCF::getLanguage()->get('wcf.payment.paypal.button.subscribe') . '</button>
 				</form>';
         } else {
-            return '<form method="post" action="https://www.' . (ENABLE_DEBUG_MODE ? 'sandbox.' : '') . 'paypal.com/cgi-bin/webscr">
+            return '<form method="post" action="https://www.' . (\ENABLE_DEBUG_MODE ? 'sandbox.' : '') . 'paypal.com/cgi-bin/webscr">
 					<input type="hidden" name="amount" value="' . $cost . '">
-					<input type="hidden" name="business" value="' . StringUtil::encodeHTML(PAYPAL_EMAIL_ADDRESS) . '">
+					<input type="hidden" name="business" value="' . StringUtil::encodeHTML(\PAYPAL_EMAIL_ADDRESS) . '">
 					<input type="hidden" name="cancel_return" value="' . StringUtil::encodeHTML($cancelReturnURL) . '">
 					<input type="hidden" name="charset" value="utf-8">
 					<input type="hidden" name="cmd" value="_xclick">

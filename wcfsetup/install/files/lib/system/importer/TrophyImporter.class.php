@@ -46,11 +46,11 @@ class TrophyImporter extends AbstractImporter
             }
 
             $filename = \basename($additionalData['fileLocation']);
-            while (\file_exists(WCF_DIR . 'images/trophy/' . $filename)) {
+            while (\file_exists(\WCF_DIR . 'images/trophy/' . $filename)) {
                 $filename = \substr(StringUtil::getRandomID(), 0, 5) . '_' . \basename($additionalData['fileLocation']);
             }
 
-            if (!@\copy($additionalData['fileLocation'], WCF_DIR . 'images/trophy/' . $filename)) {
+            if (!@\copy($additionalData['fileLocation'], \WCF_DIR . 'images/trophy/' . $filename)) {
                 return 0;
             }
 

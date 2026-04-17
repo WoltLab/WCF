@@ -238,7 +238,7 @@ class AccountManagementForm extends AbstractForm
             && UserAuthenticationConfigurationFactory::getInstance()->getConfigration()->canChangePassword
         ) {
             if (!empty($this->newPassword)) {
-                if (($this->newPasswordStrengthVerdict['score'] ?? 4) < PASSWORD_MIN_SCORE) {
+                if (($this->newPasswordStrengthVerdict['score'] ?? 4) < \PASSWORD_MIN_SCORE) {
                     throw new UserInputException('newPassword', 'notSecure');
                 }
             }
@@ -354,7 +354,7 @@ class AccountManagementForm extends AbstractForm
             && $this->email != WCF::getUser()->email
             && $this->email != WCF::getUser()->newEmail
         ) {
-            if (!((int)REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
+            if (!((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
                 // update email
                 $updateParameters['email'] = $this->email;
                 $success[] = 'wcf.user.changeEmail.success';
@@ -379,7 +379,7 @@ class AccountManagementForm extends AbstractForm
         }
 
         // 3rdParty
-        if (GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== '') {
+        if (\GITHUB_PUBLIC_KEY !== '' && \GITHUB_PRIVATE_KEY !== '') {
             if (
                 $this->githubConnect
                 && WCF::getSession()->getVar('__3rdPartyProvider') == 'github'
@@ -397,7 +397,7 @@ class AccountManagementForm extends AbstractForm
             $updateParameters['authData'] = '';
             $success[] = 'wcf.user.3rdparty.github.disconnect.success';
         }
-        if (TWITTER_PUBLIC_KEY !== '' && TWITTER_PRIVATE_KEY !== '') {
+        if (\TWITTER_PUBLIC_KEY !== '' && \TWITTER_PRIVATE_KEY !== '') {
             if (
                 $this->twitterConnect
                 && WCF::getSession()->getVar('__3rdPartyProvider') == 'twitter'
@@ -415,7 +415,7 @@ class AccountManagementForm extends AbstractForm
             $updateParameters['authData'] = '';
             $success[] = 'wcf.user.3rdparty.twitter.disconnect.success';
         }
-        if (FACEBOOK_PUBLIC_KEY !== '' && FACEBOOK_PRIVATE_KEY !== '') {
+        if (\FACEBOOK_PUBLIC_KEY !== '' && \FACEBOOK_PRIVATE_KEY !== '') {
             if (
                 $this->facebookConnect
                 && WCF::getSession()->getVar('__3rdPartyProvider') == 'facebook'
@@ -433,7 +433,7 @@ class AccountManagementForm extends AbstractForm
             $updateParameters['authData'] = '';
             $success[] = 'wcf.user.3rdparty.facebook.disconnect.success';
         }
-        if (GOOGLE_PUBLIC_KEY !== '' && GOOGLE_PRIVATE_KEY !== '') {
+        if (\GOOGLE_PUBLIC_KEY !== '' && \GOOGLE_PRIVATE_KEY !== '') {
             if (
                 $this->googleConnect
                 && WCF::getSession()->getVar('__3rdPartyProvider') == 'google'

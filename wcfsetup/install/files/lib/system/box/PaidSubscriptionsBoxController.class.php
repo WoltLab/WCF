@@ -36,7 +36,7 @@ class PaidSubscriptionsBoxController extends AbstractBoxController
     #[\Override]
     protected function loadContent()
     {
-        if (MODULE_PAID_SUBSCRIPTION) {
+        if (\MODULE_PAID_SUBSCRIPTION) {
             // get available subscriptions
             $subscriptions = PaidSubscriptionCacheBuilder::getInstance()->getData();
 

@@ -121,7 +121,7 @@ class MenuAction extends AbstractDatabaseObjectAction
     #[\Override]
     public function getPackageID(): int
     {
-        return PACKAGE_ID;
+        return \PACKAGE_ID;
     }
 
     protected function getLanguageItem(DatabaseObject $object, string $regex): string

@@ -27,18 +27,18 @@ class BlacklistEntry extends DatabaseObject
      */
     public static function getMatches(string $username, string $email, string $ipAddress)
     {
-        if (BLACKLIST_SFS_USERNAME === 'skip' && BLACKLIST_SFS_EMAIL_ADDRESS === 'skip' && BLACKLIST_SFS_IP_ADDRESS === 'skip') {
+        if (\BLACKLIST_SFS_USERNAME === 'skip' && \BLACKLIST_SFS_EMAIL_ADDRESS === 'skip' && \BLACKLIST_SFS_IP_ADDRESS === 'skip') {
             return [];
         }
 
         $conditions = new PreparedStatementConditionBuilder(true, 'OR');
-        if (BLACKLIST_SFS_USERNAME && $username !== '') {
+        if (\BLACKLIST_SFS_USERNAME && $username !== '') {
             $conditions->add('(type = ? AND hash = ?)', ['username', self::getHash($username)]);
         }
-        if (BLACKLIST_SFS_EMAIL_ADDRESS) {
+        if (\BLACKLIST_SFS_EMAIL_ADDRESS) {
             $conditions->add('(type = ? AND hash = ?)', ['email', self::getHash($email)]);
         }
-        if (BLACKLIST_SFS_IP_ADDRESS) {
+        if (\BLACKLIST_SFS_IP_ADDRESS) {
             if ($ipAddress) {
                 $ipAddress = new IpAddress($ipAddress);
                 if (($ipv4 = $ipAddress->asV4()) !== null) {
@@ -86,10 +86,10 @@ class BlacklistEntry extends DatabaseObject
     protected static function isMatch(string $type, int $occurrences)
     {
         $setting = [
-            'email' => BLACKLIST_SFS_EMAIL_ADDRESS,
-            'ipv4' => BLACKLIST_SFS_IP_ADDRESS,
-            'ipv6' => BLACKLIST_SFS_IP_ADDRESS,
-            'username' => BLACKLIST_SFS_USERNAME,
+            'email' => \BLACKLIST_SFS_EMAIL_ADDRESS,
+            'ipv4' => \BLACKLIST_SFS_IP_ADDRESS,
+            'ipv6' => \BLACKLIST_SFS_IP_ADDRESS,
+            'username' => \BLACKLIST_SFS_USERNAME,
         ][$type];
 
         switch ($setting) {

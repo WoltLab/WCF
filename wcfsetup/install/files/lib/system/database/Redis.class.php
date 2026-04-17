@@ -84,7 +84,7 @@ class Redis
         }
 
         // automatically prefix key names with the WCF UUID
-        $this->redis->setOption(\Redis::OPT_PREFIX, WCF_UUID . ':');
+        $this->redis->setOption(\Redis::OPT_PREFIX, \WCF_UUID . ':');
     }
 
     /**

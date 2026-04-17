@@ -86,7 +86,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
             }
         }
 
-        if ($requirePurchasedVersions && PACKAGE_SERVER_AUTH_CODE) {
+        if ($requirePurchasedVersions && \PACKAGE_SERVER_AUTH_CODE) {
             $this->fetchPurchasedVersions();
         }
 
@@ -143,7 +143,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
                 'content-type' => 'application/x-www-form-urlencoded',
             ],
             \http_build_query([
-                'authCode' => PACKAGE_SERVER_AUTH_CODE,
+                'authCode' => \PACKAGE_SERVER_AUTH_CODE,
             ], '', '&', \PHP_QUERY_RFC1738)
         );
 
@@ -194,7 +194,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
             // skip etag check for WoltLab servers when an auth code is provided
             if (
                 !\preg_match('~^https?://(?:update|store)\.woltlab\.com\/~', $updateServer->serverURL)
-                || !PACKAGE_SERVER_AUTH_CODE
+                || !\PACKAGE_SERVER_AUTH_CODE
             ) {
                 $metaData = $updateServer->getMetaData();
                 if (isset($metaData['list']['etag'])) {
@@ -321,7 +321,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
 
             $name = $package->getAttribute('name');
             if (\strpos($name, 'com.woltlab.') === 0 && !$isTrustedServer) {
-                if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+                if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
                     throw new SystemException("The server '" . $updateServer->serverURL . "' attempted to provide an official WoltLab package, but is not authorized.");
                 }
 
@@ -511,7 +511,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
                             if ($compatibleVersion->nodeName === 'api' && $compatibleVersion->hasAttribute('version')) {
                                 $versionNumber = $compatibleVersion->getAttribute('version');
                                 if (!\preg_match('~^(?:201[7-9]|20[2-9][0-9])$~', $versionNumber)) {
-                                    if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+                                    if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
                                         throw new PackageValidationException(
                                             PackageValidationException::INVALID_API_VERSION,
                                             ['version' => $versionNumber]
@@ -763,7 +763,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
         $statement->execute($conditions->getParameters());
         while ($row = $statement->fetchArray()) {
             if (!isset($existingPackages[$row['package']])) {
-                if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+                if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
                     throw new SystemException("Invalid package update data, identifier '" . $row['package'] . "' does not match any installed package (case-mismatch).");
                 }
 

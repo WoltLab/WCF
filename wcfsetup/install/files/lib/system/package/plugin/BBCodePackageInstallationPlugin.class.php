@@ -468,12 +468,12 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
                 ->label('wcf.acp.pip.bbcode.iconPath')
                 ->description(
                     'wcf.acp.pip.bbcode.iconPath.description',
-                    ['path' => WCF_DIR . 'icon/']
+                    ['path' => \WCF_DIR . 'icon/']
                 )
                 ->required()
                 ->maximumLength(255)
                 ->addValidator(new FormFieldValidator('fileExists', static function (TextFormField $formField) {
-                    if (!\file_exists(WCF_DIR . 'icon/' . $formField->getValue())) {
+                    if (!\file_exists(\WCF_DIR . 'icon/' . $formField->getValue())) {
                         $formField->addValidationError(
                             new FormFieldValidationError(
                                 'fileDoesNotExist',

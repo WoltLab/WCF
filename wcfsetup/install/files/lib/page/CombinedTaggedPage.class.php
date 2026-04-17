@@ -88,7 +88,7 @@ class CombinedTaggedPage extends MultipleLinkPage
         }
         if (empty($this->tagIDs)) {
             throw new IllegalLinkException();
-        } elseif (\count($this->tagIDs) > SEARCH_MAX_COMBINED_TAGS) {
+        } elseif (\count($this->tagIDs) > \SEARCH_MAX_COMBINED_TAGS) {
             throw new PermissionDeniedException();
         }
 

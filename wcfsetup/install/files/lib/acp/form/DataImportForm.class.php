@@ -306,7 +306,7 @@ class DataImportForm extends AbstractForm
         parent::readData();
 
         if (!isset($_POST['fileSystemPath'])) {
-            $this->fileSystemPath = (!empty($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : WCF_DIR);
+            $this->fileSystemPath = (!empty($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : \WCF_DIR);
         }
 
         if (empty($_POST)) {

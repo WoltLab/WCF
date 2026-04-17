@@ -57,7 +57,7 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
             }
         }
 
-        if (empty($optionNames) && empty($categoryNames) && !(ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS)) {
+        if (empty($optionNames) && empty($categoryNames) && !(\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS)) {
             return [];
         }
 
@@ -68,7 +68,7 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
         if (!empty($optionNames)) {
             $conditions->add('optionName IN (?)', [$optionNames]);
         }
-        if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+        if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
             $conditions->add('optionName LIKE ?', ['%' . $query . '%']);
         }
 

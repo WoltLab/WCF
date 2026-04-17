@@ -28,7 +28,7 @@ final class FileUtil
      */
     public static function getTempFolder(): string
     {
-        $path = self::unifyDirSeparator(WCF_DIR . 'tmp/');
+        $path = self::unifyDirSeparator(\WCF_DIR . 'tmp/');
 
         if (\is_file($path)) {
             // wat
@@ -71,7 +71,7 @@ final class FileUtil
     public static function getTemporaryFilename(
         string $prefix = 'tmpFile_',
         string $extension = '',
-        string $dir = TMP_DIR
+        string $dir = \TMP_DIR
     ): string {
         $dir = self::addTrailingSlash($dir);
         do {
@@ -431,7 +431,7 @@ final class FileUtil
         static $mode = null;
         if ($mode === null) {
             // WCFSetup
-            if (\defined('INSTALL_SCRIPT') && \file_exists(INSTALL_SCRIPT)) {
+            if (\defined('INSTALL_SCRIPT') && \file_exists(\INSTALL_SCRIPT)) {
                 // do not use PHP_OS here, as this represents the system it was built on != running on
                 // php_uname() is forbidden on some strange hosts; PHP_EOL is reliable
                 if (\PHP_EOL == "\r\n") {
@@ -450,7 +450,7 @@ final class FileUtil
                     // as this file (uploaded through FTP), we can safely grant write
                     // permissions exclusively to the owner rather than everyone
                     if (\file_exists($tmpFilename)) {
-                        $scriptOwner = \fileowner(INSTALL_SCRIPT);
+                        $scriptOwner = \fileowner(\INSTALL_SCRIPT);
                         $fileOwner = \fileowner($tmpFilename);
 
                         if ($scriptOwner === $fileOwner) {
@@ -462,11 +462,11 @@ final class FileUtil
                 }
             } else {
                 // mirror permissions of WCF.class.php
-                if (!\file_exists(WCF_DIR . 'lib/system/WCF.class.php')) {
+                if (!\file_exists(\WCF_DIR . 'lib/system/WCF.class.php')) {
                     throw new SystemException("Unable to find 'wcf/lib/system/WCF.class.php'.");
                 }
 
-                $mode = '0' . \substr(\sprintf('%o', \fileperms(WCF_DIR . 'lib/system/WCF.class.php')), -3);
+                $mode = '0' . \substr(\sprintf('%o', \fileperms(\WCF_DIR . 'lib/system/WCF.class.php')), -3);
             }
         }
 

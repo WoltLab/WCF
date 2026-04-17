@@ -54,7 +54,7 @@ final class PollOptionsFormField extends AbstractFormField
             $value = \array_slice(
                 ArrayUtil::trim($this->getDocument()->getRequestData($this->getPrefixedId())),
                 0,
-                POLL_MAX_OPTIONS
+                \POLL_MAX_OPTIONS
             );
 
             $this->value = [];

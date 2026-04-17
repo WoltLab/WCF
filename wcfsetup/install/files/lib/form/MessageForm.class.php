@@ -304,7 +304,7 @@ abstract class MessageForm extends AbstractCaptchaForm
         parent::readData();
 
         // get default smilies
-        if (MODULE_SMILEY) {
+        if (\MODULE_SMILEY) {
             $this->smileyCategories = SmileyCache::getInstance()->getVisibleCategories();
 
             $firstCategory = \reset($this->smileyCategories);

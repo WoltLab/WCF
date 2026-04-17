@@ -100,9 +100,9 @@ final class RescueModeForm extends AbstractForm
         parent::readParameters();
 
         // check authentication failures
-        if (ENABLE_USER_AUTHENTICATION_FAILURE) {
+        if (\ENABLE_USER_AUTHENTICATION_FAILURE) {
             $failures = UserAuthenticationFailure::countIPFailures(UserUtil::getIpAddress());
-            if (USER_AUTHENTICATION_FAILURE_IP_BLOCK && $failures >= USER_AUTHENTICATION_FAILURE_IP_BLOCK) {
+            if (\USER_AUTHENTICATION_FAILURE_IP_BLOCK && $failures >= \USER_AUTHENTICATION_FAILURE_IP_BLOCK) {
                 throw new NamedUserException(HtmlString::fromSafeHtml(
                     WCF::getLanguage()->getDynamicVariable('wcf.user.login.blocked')
                 ));
@@ -201,7 +201,7 @@ final class RescueModeForm extends AbstractForm
             throw new UserInputException('username', 'notAuthorized');
         }
 
-        if (ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess()) {
+        if (\ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess()) {
             throw new UserInputException('username', 'notAuthorized');
         }
     }
@@ -262,7 +262,7 @@ final class RescueModeForm extends AbstractForm
                 'global'
             );
 
-            if (ENABLE_USER_AUTHENTICATION_FAILURE) {
+            if (\ENABLE_USER_AUTHENTICATION_FAILURE) {
                 $action = new UserAuthenticationFailureAction([], 'create', [
                     'data' => [
                         'environment' => 'admin',
@@ -363,11 +363,11 @@ final class RescueModeForm extends AbstractForm
             'assets' => [
                 'woltlabSuite.png' => \sprintf(
                     'data:image/png;base64,%s',
-                    \base64_encode(\file_get_contents(WCF_DIR . 'acp/images/woltlabSuite.png'))
+                    \base64_encode(\file_get_contents(\WCF_DIR . 'acp/images/woltlabSuite.png'))
                 ),
                 'WCFSetup.css' => \sprintf(
                     'data:text/css;base64,%s',
-                    \base64_encode(\file_get_contents(WCF_DIR . 'acp/style/setup/WCFSetup.css'))
+                    \base64_encode(\file_get_contents(\WCF_DIR . 'acp/style/setup/WCFSetup.css'))
                 ),
             ],
         ]);

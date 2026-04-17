@@ -48,7 +48,7 @@ class Language extends DatabaseObject
      * id of the active package
      * @var int
      */
-    public $packageID = PACKAGE_ID;
+    public $packageID = \PACKAGE_ID;
 
     /**
      * contains categories currently being loaded as array keys
@@ -112,9 +112,9 @@ class Language extends DatabaseObject
 
         if (
             \defined('ENABLE_DEVELOPER_TOOLS')
-            && ENABLE_DEVELOPER_TOOLS
+            && \ENABLE_DEVELOPER_TOOLS
             && \defined('LOG_MISSING_LANGUAGE_ITEMS')
-            && LOG_MISSING_LANGUAGE_ITEMS
+            && \LOG_MISSING_LANGUAGE_ITEMS
             && \preg_match('~^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$~', $item)
         ) {
             (new DevtoolsMissingLanguageItemAction([], 'logLanguageItem', [
@@ -148,9 +148,9 @@ class Language extends DatabaseObject
 
         if (
             \defined('ENABLE_DEVELOPER_TOOLS')
-            && ENABLE_DEVELOPER_TOOLS
+            && \ENABLE_DEVELOPER_TOOLS
             && \defined('LOG_MISSING_LANGUAGE_ITEMS')
-            && LOG_MISSING_LANGUAGE_ITEMS
+            && \LOG_MISSING_LANGUAGE_ITEMS
             && $staticItem === $item
             && \preg_match('~^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$~', $item)
         ) {
@@ -196,7 +196,7 @@ class Language extends DatabaseObject
         }
 
         // search language file
-        $filename = WCF_DIR . 'language/' . $this->languageID . '_' . $category . '.php';
+        $filename = \WCF_DIR . 'language/' . $this->languageID . '_' . $category . '.php';
         if (!@\file_exists($filename)) {
             if (isset($this->categoriesBeingLoaded[$category])) {
                 throw new \LogicException("Circular dependency detected! Cannot load category '{$category}' while it is already being loaded.");
@@ -260,7 +260,7 @@ class Language extends DatabaseObject
      */
     public function __wakeup()
     {
-        $this->packageID = PACKAGE_ID;
+        $this->packageID = \PACKAGE_ID;
     }
 
     /**

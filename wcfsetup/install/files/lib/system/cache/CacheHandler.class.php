@@ -27,7 +27,7 @@ class CacheHandler extends SingletonFactory
     {
         // init cache source object
         try {
-            $className = 'wcf\system\cache\source\\' . \ucfirst(CACHE_SOURCE_TYPE) . 'CacheSource';
+            $className = 'wcf\system\cache\source\\' . \ucfirst(\CACHE_SOURCE_TYPE) . 'CacheSource';
             if (\class_exists($className)) {
                 $this->cacheSource = new $className();
             } else {
@@ -35,7 +35,7 @@ class CacheHandler extends SingletonFactory
                 $this->cacheSource = new DiskCacheSource();
             }
         } catch (SystemException $e) {
-            if (CACHE_SOURCE_TYPE != 'disk') {
+            if (\CACHE_SOURCE_TYPE != 'disk') {
                 // fallback to disk cache
                 $this->cacheSource = new DiskCacheSource();
             } else {
@@ -159,7 +159,7 @@ class CacheHandler extends SingletonFactory
     public function sanityCheck(): bool
     {
         if (
-            CACHE_SOURCE_TYPE !== 'disk'
+            \CACHE_SOURCE_TYPE !== 'disk'
             && \get_class(CacheHandler::getInstance()->getCacheSource()) === DiskCacheSource::class
         ) {
             return false;

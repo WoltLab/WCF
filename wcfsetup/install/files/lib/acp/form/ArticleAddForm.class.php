@@ -117,7 +117,7 @@ class ArticleAddForm extends AbstractForm
      * enables the comment function
      * @var int
      */
-    public $enableComments = ARTICLE_ENABLE_COMMENTS_DEFAULT_VALUE;
+    public $enableComments = \ARTICLE_ENABLE_COMMENTS_DEFAULT_VALUE;
 
     /**
      * article titles
@@ -330,7 +330,7 @@ class ArticleAddForm extends AbstractForm
         if (isset($_POST['metaDescription']) && \is_array($_POST['metaDescription'])) {
             $this->metaDescription = ArrayUtil::trim($_POST['metaDescription']);
         }
-        if (MODULE_TAGGING && isset($_POST['tags']) && \is_array($_POST['tags'])) {
+        if (\MODULE_TAGGING && isset($_POST['tags']) && \is_array($_POST['tags'])) {
             $this->tags = ArrayUtil::trim($_POST['tags']);
         }
         if (isset($_POST['teaser']) && \is_array($_POST['teaser'])) {
@@ -596,7 +596,7 @@ class ArticleAddForm extends AbstractForm
         $this->publicationDate = '';
         $this->categoryID = 0;
         $this->publicationStatus = Article::PUBLISHED;
-        $this->enableComments = ARTICLE_ENABLE_COMMENTS_DEFAULT_VALUE;
+        $this->enableComments = \ARTICLE_ENABLE_COMMENTS_DEFAULT_VALUE;
         $this->title = $this->teaser = $this->content = $this->images = $this->imageID = $this->teaserImages = $this->teaserImageID = $this->tags = [];
         $this->metaTitle = $this->metaDescription = [];
 

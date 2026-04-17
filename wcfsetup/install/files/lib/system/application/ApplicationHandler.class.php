@@ -77,7 +77,7 @@ final class ApplicationHandler extends SingletonFactory
     public function getActiveApplication(): Application
     {
         // work-around during WCFSetup
-        if (!PACKAGE_ID) {
+        if (!\PACKAGE_ID) {
             $host = \str_replace(RouteHandler::getProtocol(), '', RouteHandler::getHost());
             $documentRoot = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(\realpath($_SERVER['DOCUMENT_ROOT'])));
 
@@ -106,7 +106,7 @@ final class ApplicationHandler extends SingletonFactory
             return $this->getApplication($abbreviation);
         }
 
-        return $this->cache->getApplication(PACKAGE_ID) ?? $this->getWCF();
+        return $this->cache->getApplication(\PACKAGE_ID) ?? $this->getWCF();
     }
 
     /**
@@ -274,7 +274,7 @@ final class ApplicationHandler extends SingletonFactory
 
         if ($skipCache) {
             $sql = "SELECT package
-                    FROM   wcf" . WCF_N . "_package
+                    FROM   wcf" . \WCF_N . "_package
                     WHERE  isApplication = ?";
             $statement = WCF::getDB()->prepareUnmanaged($sql);
             $statement->execute([1]);
@@ -290,7 +290,7 @@ final class ApplicationHandler extends SingletonFactory
 
             $string = \preg_replace(
                 $regex,
-                '${1}' . WCF_N . '_',
+                '${1}' . \WCF_N . '_',
                 $string
             );
         } else {
@@ -309,7 +309,7 @@ final class ApplicationHandler extends SingletonFactory
 
             $string = \preg_replace(
                 $regex,
-                '${1}' . WCF_N . '_',
+                '${1}' . \WCF_N . '_',
                 $string
             );
         }

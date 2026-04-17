@@ -47,10 +47,10 @@ final class LinkHandler extends SingletonFactory
             '^(?P<application>[a-z][a-z0-9]*)\\\\(?P<isAcp>acp\\\\)?.+\\\\(?P<controller>[^\\\\]+)(?:Action|Form|Page)$'
         );
 
-        if (\defined('URL_TITLE_COMPONENT_REPLACEMENT') && URL_TITLE_COMPONENT_REPLACEMENT) {
+        if (\defined('URL_TITLE_COMPONENT_REPLACEMENT') && \URL_TITLE_COMPONENT_REPLACEMENT) {
             $replacements = \explode(
                 "\n",
-                StringUtil::unifyNewlines(StringUtil::trim(URL_TITLE_COMPONENT_REPLACEMENT))
+                StringUtil::unifyNewlines(StringUtil::trim(\URL_TITLE_COMPONENT_REPLACEMENT))
             );
             foreach ($replacements as $replacement) {
                 if (\strpos($replacement, '=') === false) {
@@ -234,7 +234,7 @@ final class LinkHandler extends SingletonFactory
         $url = $routeURL . $url;
 
         // handle applications
-        if (!PACKAGE_ID) {
+        if (!\PACKAGE_ID) {
             $url = RouteHandler::getHost() . RouteHandler::getPath(['acp']) . ($isACP ? 'acp/' : '') . $url;
         } else {
             $application = ApplicationHandler::getInstance()->getApplication($abbreviation);

@@ -309,7 +309,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         }
         $userEditor->addToLanguages($this->parameters['languageIDs'], false);
 
-        if (PACKAGE_ID) {
+        if (\PACKAGE_ID) {
             // set default notifications
             $sql = "INSERT INTO wcf1_user_notification_event_to_user
                                 (userID, eventID, mailNotificationType)
@@ -320,7 +320,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
             $statement->execute([$user->userID, 1]);
 
             // update user rank
-            if (MODULE_USER_RANK) {
+            if (\MODULE_USER_RANK) {
                 $action = new UserProfileAction([$userEditor], 'updateUserRank');
                 $action->executeAction();
             }
@@ -471,11 +471,11 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         UserEditor::resetCache();
         $this->readObjects();
 
-        if (MODULE_USER_RANK) {
+        if (\MODULE_USER_RANK) {
             $action = new UserProfileAction($this->objects, 'updateUserRank');
             $action->executeAction();
         }
-        if (MODULE_USERS_ONLINE) {
+        if (\MODULE_USERS_ONLINE) {
             $action = new UserProfileAction($this->objects, 'updateUserOnlineMarking');
             $action->executeAction();
         }
@@ -516,11 +516,11 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         UserEditor::resetCache();
         $this->readObjects();
 
-        if (MODULE_USER_RANK) {
+        if (\MODULE_USER_RANK) {
             $action = new UserProfileAction($this->objects, 'updateUserRank');
             $action->executeAction();
         }
-        if (MODULE_USERS_ONLINE) {
+        if (\MODULE_USERS_ONLINE) {
             $action = new UserProfileAction($this->objects, 'updateUserOnlineMarking');
             $action->executeAction();
         }
@@ -717,7 +717,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
             ],
         ]))->executeAction();
 
-        if (!((int)REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN)) {
+        if (!((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN)) {
             $this->enable();
         }
 
@@ -763,7 +763,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
             'blacklistMatches' => '',
         ];
 
-        if (!((int)REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
+        if (!((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
             $data['emailConfirmed'] = null;
         }
 
@@ -826,7 +826,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         $data = [
             'activationCode' => UserRegistrationUtil::getActivationCode(),
         ];
-        if (!((int)REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN)) {
+        if (!((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN)) {
             $data['emailConfirmed'] = Hex::encode(\random_bytes(20));
         }
         $action = new self($this->objects, 'update', [
@@ -1209,7 +1209,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
             throw new PermissionDeniedException();
         }
 
-        if (!((int)REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
+        if (!((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
             throw new IllegalLinkException();
         }
 
@@ -1262,7 +1262,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      */
     public function validateDevtoolsSetLanguage()
     {
-        if (!ENABLE_DEBUG_MODE || !ENABLE_DEVELOPER_TOOLS) {
+        if (!\ENABLE_DEBUG_MODE || !\ENABLE_DEVELOPER_TOOLS) {
             throw new PermissionDeniedException();
         }
 

@@ -71,7 +71,7 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction
     #[\Override]
     public function validateDelete()
     {
-        if (!ENABLE_DEVELOPER_TOOLS) {
+        if (!\ENABLE_DEVELOPER_TOOLS) {
             throw new IllegalLinkException();
         }
 
@@ -86,7 +86,7 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction
      */
     public function validateQuickSetup()
     {
-        if (!ENABLE_DEVELOPER_TOOLS) {
+        if (!\ENABLE_DEVELOPER_TOOLS) {
             throw new IllegalLinkException();
         }
 
@@ -188,7 +188,7 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction
      */
     public function validateInstallPackage()
     {
-        if (!ENABLE_DEVELOPER_TOOLS) {
+        if (!\ENABLE_DEVELOPER_TOOLS) {
             throw new IllegalLinkException();
         }
 
@@ -234,7 +234,7 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction
      */
     public function validateDeletePipEntry()
     {
-        if (!ENABLE_DEVELOPER_TOOLS) {
+        if (!\ENABLE_DEVELOPER_TOOLS) {
             throw new IllegalLinkException();
         }
 

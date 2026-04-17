@@ -62,7 +62,7 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction
      */
     public function validateTestEvent()
     {
-        if (!ENABLE_DEVELOPER_TOOLS) {
+        if (!\ENABLE_DEVELOPER_TOOLS) {
             throw new PermissionDeniedException();
         }
 

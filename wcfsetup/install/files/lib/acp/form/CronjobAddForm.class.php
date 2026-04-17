@@ -140,7 +140,7 @@ class CronjobAddForm extends AbstractFormBuilderForm
     public function save()
     {
         if ($this->formAction === 'create') {
-            $this->additionalFields['packageID'] = PACKAGE_ID;
+            $this->additionalFields['packageID'] = \PACKAGE_ID;
             $this->additionalFields['cronjobName'] = 'com.woltlab.wcf.cronjob';
         }
 

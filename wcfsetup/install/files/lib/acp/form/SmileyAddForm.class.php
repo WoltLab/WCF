@@ -223,8 +223,8 @@ class SmileyAddForm extends AbstractForm
                 'categoryID' => $this->categoryID ?: null,
                 'packageID' => 1,
             ]),
-            'fileLocation' => $this->uploadedFilename ? WCF_DIR . 'images/smilies/' . $this->uploadedFilename : '',
-            'fileLocation2x' => $this->uploadedFilename2x ? WCF_DIR . 'images/smilies/' . $this->uploadedFilename2x : '',
+            'fileLocation' => $this->uploadedFilename ? \WCF_DIR . 'images/smilies/' . $this->uploadedFilename : '',
+            'fileLocation2x' => $this->uploadedFilename2x ? \WCF_DIR . 'images/smilies/' . $this->uploadedFilename2x : '',
         ]);
         $this->objectAction->executeAction();
         $returnValues = $this->objectAction->getReturnValues();
@@ -268,7 +268,7 @@ class SmileyAddForm extends AbstractForm
         parent::validate();
 
         if ($this->uploadedFilename) {
-            if (!\file_exists(WCF_DIR . 'images/smilies/' . $this->uploadedFilename)) {
+            if (!\file_exists(\WCF_DIR . 'images/smilies/' . $this->uploadedFilename)) {
                 $this->uploadedFilename = '';
                 throw new UserInputException('fileUpload', 'uploadFailed');
             }
@@ -283,12 +283,12 @@ class SmileyAddForm extends AbstractForm
                     $this->fileUpload['name'],
                     \mb_strrpos($this->fileUpload['name'], '.') + 1
                 ));
-            } while (\file_exists(WCF_DIR . 'images/smilies/' . $this->uploadedFilename));
+            } while (\file_exists(\WCF_DIR . 'images/smilies/' . $this->uploadedFilename));
 
             if (
                 !@\move_uploaded_file(
                     $this->fileUpload['tmp_name'],
-                    WCF_DIR . 'images/smilies/' . $this->uploadedFilename
+                    \WCF_DIR . 'images/smilies/' . $this->uploadedFilename
                 )
             ) {
                 $this->uploadedFilename = '';
@@ -299,13 +299,13 @@ class SmileyAddForm extends AbstractForm
                 throw new UserInputException('smileyPath');
             }
 
-            if (!\is_file(WCF_DIR . $this->smileyPath)) {
+            if (!\is_file(\WCF_DIR . $this->smileyPath)) {
                 throw new UserInputException('smileyPath', 'notFound');
             }
         }
 
         if ($this->uploadedFilename2x) {
-            if (!\file_exists(WCF_DIR . 'images/smilies/' . $this->uploadedFilename2x)) {
+            if (!\file_exists(\WCF_DIR . 'images/smilies/' . $this->uploadedFilename2x)) {
                 $this->uploadedFilename2x = '';
                 throw new UserInputException('fileUpload2x', 'uploadFailed');
             }
@@ -320,18 +320,18 @@ class SmileyAddForm extends AbstractForm
                     $this->fileUpload2x['name'],
                     \mb_strrpos($this->fileUpload2x['name'], '.') + 1
                 ));
-            } while (\file_exists(WCF_DIR . 'images/smilies/' . $this->uploadedFilename2x));
+            } while (\file_exists(\WCF_DIR . 'images/smilies/' . $this->uploadedFilename2x));
 
             if (
                 !@\move_uploaded_file(
                     $this->fileUpload2x['tmp_name'],
-                    WCF_DIR . 'images/smilies/' . $this->uploadedFilename2x
+                    \WCF_DIR . 'images/smilies/' . $this->uploadedFilename2x
                 )
             ) {
                 $this->uploadedFilename2x = '';
                 throw new UserInputException('fileUpload2x', 'uploadFailed');
             }
-        } elseif ($this->smileyPath2x && !\is_file(WCF_DIR . $this->smileyPath2x)) {
+        } elseif ($this->smileyPath2x && !\is_file(\WCF_DIR . $this->smileyPath2x)) {
             throw new UserInputException('smileyPath2x', 'notFound');
         }
 

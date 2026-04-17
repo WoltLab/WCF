@@ -316,7 +316,7 @@ class UserClipboardAction extends AbstractClipboardAction
         // check permissions
         if (
             !WCF::getSession()->getPermission('admin.user.canEnableUser')
-            || !((int)REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)
+            || !((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)
         ) {
             return [];
         }

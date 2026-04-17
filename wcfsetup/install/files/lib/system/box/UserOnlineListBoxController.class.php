@@ -31,12 +31,12 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
     /**
      * @inheritDoc
      */
-    public $defaultSortField = USERS_ONLINE_DEFAULT_SORT_FIELD;
+    public $defaultSortField = \USERS_ONLINE_DEFAULT_SORT_FIELD;
 
     /**
      * @inheritDoc
      */
-    public $defaultSortOrder = USERS_ONLINE_DEFAULT_SORT_ORDER;
+    public $defaultSortOrder = \USERS_ONLINE_DEFAULT_SORT_ORDER;
 
     /**
      * enables the display of the user online record
@@ -110,7 +110,7 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
     #[\Override]
     public function hasContent()
     {
-        if (!MODULE_USERS_ONLINE || !WCF::getSession()->getPermission('user.profile.canViewUsersOnlineList')) {
+        if (!\MODULE_USERS_ONLINE || !WCF::getSession()->getPermission('user.profile.canViewUsersOnlineList')) {
             return false;
         }
 

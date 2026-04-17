@@ -141,22 +141,22 @@ final class WCFSetup extends WCF
     {
         self::$tplObj = SetupTemplateEngine::getInstance();
         self::getTPL()->setLanguageID((self::$selectedLanguageCode == 'en' ? 0 : 1));
-        self::getTPL()->setCompileDir(TMP_DIR);
-        self::getTPL()->addApplication('wcf', TMP_DIR);
+        self::getTPL()->setCompileDir(\TMP_DIR);
+        self::getTPL()->addApplication('wcf', \TMP_DIR);
         self::getTPL()->assign([
             '__wcf' => $this,
-            'tmpFilePrefix' => TMP_FILE_PREFIX,
+            'tmpFilePrefix' => \TMP_FILE_PREFIX,
             'languageCode' => self::$selectedLanguageCode,
             'developerMode' => self::$developerMode,
 
             'setupAssets' => [
                 'WCFSetup.css' => \sprintf(
                     'data:text/css;base64,%s',
-                    \base64_encode(\file_get_contents(TMP_DIR . 'install/files/acp/style/setup/WCFSetup.css'))
+                    \base64_encode(\file_get_contents(\TMP_DIR . 'install/files/acp/style/setup/WCFSetup.css'))
                 ),
                 'woltlabSuite.png' => \sprintf(
                     'data:image/png;base64,%s',
-                    \base64_encode(\file_get_contents(TMP_DIR . 'install/files/acp/images/woltlabSuite.png'))
+                    \base64_encode(\file_get_contents(\TMP_DIR . 'install/files/acp/images/woltlabSuite.png'))
                 ),
             ],
         ]);
@@ -170,7 +170,7 @@ final class WCFSetup extends WCF
     protected static function getAvailableLanguages(): array
     {
         $languages = [];
-        foreach (\glob(TMP_DIR . 'setup/lang/*.xml') as $file) {
+        foreach (\glob(\TMP_DIR . 'setup/lang/*.xml') as $file) {
             $xml = new XML();
             $xml->load($file);
             $languageCode = LanguageEditor::readLanguageCodeFromXML($xml);
@@ -211,8 +211,8 @@ final class WCFSetup extends WCF
     protected function assertNotUnzipped(): void
     {
         if (
-            \is_file(INSTALL_SCRIPT_DIR . 'lib/system/WCF.class.php')
-            || \is_file(INSTALL_SCRIPT_DIR . 'global.php')
+            \is_file(\INSTALL_SCRIPT_DIR . 'lib/system/WCF.class.php')
+            || \is_file(\INSTALL_SCRIPT_DIR . 'global.php')
         ) {
             throw new \Exception(
                 'Target directory seems to be an existing installation of WoltLab Suite Core, refusing to continue.'
@@ -232,7 +232,7 @@ final class WCFSetup extends WCF
             $step = 'selectSetupLanguage';
         }
 
-        \header('set-cookie: wcfsetup_cookietest=' . TMP_FILE_PREFIX . '; domain=' . \str_replace(
+        \header('set-cookie: wcfsetup_cookietest=' . \TMP_FILE_PREFIX . '; domain=' . \str_replace(
             RouteHandler::getProtocol(),
             '',
             RouteHandler::getHost()
@@ -341,10 +341,10 @@ final class WCFSetup extends WCF
             }
         }
 
-        if (\file_exists(TMP_DIR . 'setup/license/license_' . self::$selectedLanguageCode . '.txt')) {
-            $license = \file_get_contents(TMP_DIR . 'setup/license/license_' . self::$selectedLanguageCode . '.txt');
+        if (\file_exists(\TMP_DIR . 'setup/license/license_' . self::$selectedLanguageCode . '.txt')) {
+            $license = \file_get_contents(\TMP_DIR . 'setup/license/license_' . self::$selectedLanguageCode . '.txt');
         } else {
-            $license = \file_get_contents(TMP_DIR . 'setup/license/license_en.txt');
+            $license = \file_get_contents(\TMP_DIR . 'setup/license/license_en.txt');
         }
 
         return new HtmlResponse(
@@ -421,7 +421,7 @@ final class WCFSetup extends WCF
             $system['hostname']['result'] = $_SERVER['HTTP_HOST'] == $refererHostname;
         }
 
-        $system['cookie']['result'] = !empty($_COOKIE['wcfsetup_cookietest']) && $_COOKIE['wcfsetup_cookietest'] == TMP_FILE_PREFIX;
+        $system['cookie']['result'] = !empty($_COOKIE['wcfsetup_cookietest']) && $_COOKIE['wcfsetup_cookietest'] == \TMP_FILE_PREFIX;
 
         $system['tls']['result'] = RouteHandler::secureContext();
 
@@ -583,7 +583,7 @@ final class WCFSetup extends WCF
                     // connection successfully established
                     // write configuration to config.inc.php
                     \file_put_contents(
-                        WCF_DIR . 'config.inc.php',
+                        \WCF_DIR . 'config.inc.php',
                         \sprintf(
                             <<<'CONFIG'
                             <?php
@@ -636,7 +636,7 @@ final class WCFSetup extends WCF
     protected function getConflictedTables(Database $db): array
     {
         // get content of the sql structure file
-        $sql = \file_get_contents(TMP_DIR . 'setup/db/install.sql');
+        $sql = \file_get_contents(\TMP_DIR . 'setup/db/install.sql');
 
         // get all tablenames which should be created
         \preg_match_all("%CREATE\\s+TABLE\\s+(\\w+)%", $sql, $matches);
@@ -722,7 +722,7 @@ final class WCFSetup extends WCF
 
         $sql = \explode(
             "\n",
-            \file_get_contents(TMP_DIR . 'setup/db/install.sql')
+            \file_get_contents(\TMP_DIR . 'setup/db/install.sql')
         );
         foreach ($sql as $line) {
             $line = StringUtil::trim($line);
@@ -781,11 +781,11 @@ final class WCFSetup extends WCF
         $this->initDB();
 
         $fileHandler = new SetupFileHandler();
-        new Installer(WCF_DIR, SETUP_FILE, $fileHandler, 'install/files/');
+        new Installer(\WCF_DIR, \SETUP_FILE, $fileHandler, 'install/files/');
 
         // Create initial bootstrap.php including WCF's bootstrap script.
         \file_put_contents(
-            WCF_DIR . 'lib/bootstrap.php',
+            \WCF_DIR . 'lib/bootstrap.php',
             <<<'EOT'
             <?php
 
@@ -810,7 +810,7 @@ final class WCFSetup extends WCF
         $languageCodes = \array_keys(self::$availableLanguages);
         foreach ($languageCodes as $language) {
             // get language.xml file name
-            $filename = TMP_DIR . 'install/lang/' . $language . '.xml';
+            $filename = \TMP_DIR . 'install/lang/' . $language . '.xml';
 
             // check the file
             if (!\file_exists($filename)) {
@@ -996,7 +996,7 @@ final class WCFSetup extends WCF
         // get delivered packages
         $wcfPackageFile = '';
         $otherPackages = [];
-        $tar = new Tar(SETUP_FILE);
+        $tar = new Tar(\SETUP_FILE);
         foreach ($tar->getContentList() as $file) {
             if ($file['type'] != 'folder' && \str_starts_with($file['filename'], 'install/packages/')) {
                 $packageFile = \basename($file['filename']);
@@ -1029,8 +1029,8 @@ final class WCFSetup extends WCF
             throw new SystemException('the essential package com.woltlab.wcf is missing.');
         }
 
-        $from = TMP_DIR . 'install/packages/' . $wcfPackageFile;
-        $to = WCF_DIR . 'tmp/' . TMP_FILE_PREFIX . '-' . $wcfPackageFile;
+        $from = \TMP_DIR . 'install/packages/' . $wcfPackageFile;
+        $to = \WCF_DIR . 'tmp/' . \TMP_FILE_PREFIX . '-' . $wcfPackageFile;
 
         \rename($from, $to);
 
@@ -1051,8 +1051,8 @@ final class WCFSetup extends WCF
         // register all other delivered packages
         \asort($otherPackages);
         foreach ($otherPackages as $packageName => $packageFile) {
-            $from = TMP_DIR . 'install/packages/' . $packageFile;
-            $to = WCF_DIR . 'tmp/' . TMP_FILE_PREFIX . '-' . $packageFile;
+            $from = \TMP_DIR . 'install/packages/' . $packageFile;
+            $to = \WCF_DIR . 'tmp/' . \TMP_FILE_PREFIX . '-' . $packageFile;
 
             // extract packageName from archive's package.xml
             $archive = new PackageArchive($from);
@@ -1096,7 +1096,7 @@ final class WCFSetup extends WCF
             }
 
             // the options have not been imported yet
-            \file_put_contents(WCF_DIR . 'cookiePrefix.txt', $prefix);
+            \file_put_contents(\WCF_DIR . 'cookiePrefix.txt', $prefix);
         }
 
         \define('COOKIE_PREFIX', $prefix);

@@ -32,7 +32,7 @@ class DefaultAvatar implements IUserAvatar, ISafeFormatAvatar
      */
     public function __construct(string $username = '')
     {
-        if (\defined('AVATAR_DEFAULT_TYPE') && AVATAR_DEFAULT_TYPE === 'initials' && !empty($username)) {
+        if (\defined('AVATAR_DEFAULT_TYPE') && \AVATAR_DEFAULT_TYPE === 'initials' && !empty($username)) {
             $words = \explode(' ', $username);
             $count = \count($words);
             if ($count > 1) {

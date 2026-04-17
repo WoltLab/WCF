@@ -135,7 +135,7 @@ final class CheckForForceLogin implements MiddlewareInterface
 
     private function forceLoginEnabled(): bool
     {
-        return \defined('FORCE_LOGIN') && FORCE_LOGIN;
+        return \defined('FORCE_LOGIN') && \FORCE_LOGIN;
     }
 
     private function userCanBypassForceLogin(): bool

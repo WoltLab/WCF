@@ -166,7 +166,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             'lastCommentTime' => $commentList->getMinCommentTime(),
             'template' => WCF::getTPL()->render('wcf', 'commentList', [
                 'commentList' => $commentList,
-                'likeData' => MODULE_LIKE ? $commentList->getLikeData() : [],
+                'likeData' => \MODULE_LIKE ? $commentList->getLikeData() : [],
             ]),
         ];
     }
@@ -997,10 +997,10 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
         $captchaObjectType = null;
 
-        if (CAPTCHA_TYPE) {
-            $captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName(CAPTCHA_TYPE);
+        if (\CAPTCHA_TYPE) {
+            $captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName(\CAPTCHA_TYPE);
             if ($captchaObjectType === null) {
-                throw new SystemException("Unknown captcha object type with name '" . CAPTCHA_TYPE . "'");
+                throw new SystemException("Unknown captcha object type with name '" . \CAPTCHA_TYPE . "'");
             }
 
             if (!$captchaObjectType->getProcessor()->isAvailable()) {
@@ -1072,7 +1072,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         ]);
 
         // load like data
-        if (MODULE_LIKE) {
+        if (\MODULE_LIKE) {
             $likeData = [];
             $commentObjectType = ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.comment');
             ReactionHandler::getInstance()->loadLikeObjects($commentObjectType, [$comment->commentID]);
@@ -1300,10 +1300,10 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             return;
         }
 
-        if (CAPTCHA_TYPE) {
-            $this->captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName(CAPTCHA_TYPE);
+        if (\CAPTCHA_TYPE) {
+            $this->captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName(\CAPTCHA_TYPE);
             if ($this->captchaObjectType === null) {
-                throw new SystemException("Unknown captcha object type with name '" . CAPTCHA_TYPE . "'");
+                throw new SystemException("Unknown captcha object type with name '" . \CAPTCHA_TYPE . "'");
             }
 
             if (!$this->captchaObjectType->getProcessor()->isAvailable()) {

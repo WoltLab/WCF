@@ -35,9 +35,9 @@ class RelatedArticleListView extends ArticleListView
         $list = parent::createObjectList();
 
         if ($articleIDs !== []) {
-            if (\count($articleIDs) > ARTICLE_RELATED_ARTICLES) {
+            if (\count($articleIDs) > \ARTICLE_RELATED_ARTICLES) {
                 \shuffle($articleIDs);
-                $articleIDs = \array_slice($articleIDs, 0, ARTICLE_RELATED_ARTICLES);
+                $articleIDs = \array_slice($articleIDs, 0, \ARTICLE_RELATED_ARTICLES);
             }
 
             $list->getConditionBuilder()->add('article.articleID IN (?)', [$articleIDs]);
@@ -91,9 +91,9 @@ class RelatedArticleListView extends ArticleListView
                 ON          article_content.articleID = article.articleID
                 " . $conditionBuilder . "
                 GROUP BY    tag_to_object.objectID
-                HAVING      COUNT(*) >= " . \round(\count($tags) * ARTICLE_RELATED_ARTICLES_MATCH_THRESHOLD / 100) . "
+                HAVING      COUNT(*) >= " . \round(\count($tags) * \ARTICLE_RELATED_ARTICLES_MATCH_THRESHOLD / 100) . "
                 ORDER BY    count DESC, MAX(article.time) DESC";
-        $statement = WCF::getDB()->prepare($sql, ARTICLE_RELATED_ARTICLES * 4);
+        $statement = WCF::getDB()->prepare($sql, \ARTICLE_RELATED_ARTICLES * 4);
         $statement->execute($conditionBuilder->getParameters());
 
         return $statement->fetchAll(\PDO::FETCH_COLUMN);

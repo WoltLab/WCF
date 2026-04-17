@@ -49,13 +49,13 @@ final class GoogleAuthAction extends AbstractOauth2AuthAction
     #[\Override]
     protected function getClientId(): string
     {
-        return StringUtil::trim(GOOGLE_PUBLIC_KEY);
+        return StringUtil::trim(\GOOGLE_PUBLIC_KEY);
     }
 
     #[\Override]
     protected function getClientSecret(): string
     {
-        return StringUtil::trim(GOOGLE_PRIVATE_KEY);
+        return StringUtil::trim(\GOOGLE_PRIVATE_KEY);
     }
 
     #[\Override]

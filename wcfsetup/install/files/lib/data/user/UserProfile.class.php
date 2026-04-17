@@ -452,7 +452,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      */
     public function isOnline()
     {
-        if ($this->getLastActivityTime() > (\TIME_NOW - USER_ONLINE_TIMEOUT) && $this->canViewOnlineStatus()) {
+        if ($this->getLastActivityTime() > (\TIME_NOW - \USER_ONLINE_TIMEOUT) && $this->canViewOnlineStatus()) {
             return true;
         }
 
@@ -945,7 +945,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     public function getOldUsername()
     {
         if ($this->oldUsername) {
-            if ($this->lastUsernameChange + PROFILE_SHOW_OLD_USERNAME * 86400 > \TIME_NOW) {
+            if ($this->lastUsernameChange + \PROFILE_SHOW_OLD_USERNAME * 86400 > \TIME_NOW) {
                 return $this->oldUsername;
             }
         }
@@ -1039,7 +1039,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      */
     public function showSignature()
     {
-        if (!MODULE_USER_SIGNATURE) {
+        if (!\MODULE_USER_SIGNATURE) {
             return false;
         }
         if (!$this->signature) {
@@ -1171,7 +1171,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      */
     public function showTrophyPoints(): bool
     {
-        return MODULE_TROPHY
+        return \MODULE_TROPHY
             && WCF::getSession()->getPermission('user.profile.trophy.canSeeTrophies')
             && $this->trophyPoints
             && ($this->isAccessible('canViewTrophies') || $this->userID == WCF::getSession()->userID);

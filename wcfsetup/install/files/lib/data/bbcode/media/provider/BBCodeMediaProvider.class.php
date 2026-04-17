@@ -155,7 +155,7 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController
      */
     protected function getOutputForUserConsent(string $url, string $html)
     {
-        if (!MESSAGE_ENABLE_USER_CONSENT) {
+        if (!\MESSAGE_ENABLE_USER_CONSENT) {
             return $html;
         }
 

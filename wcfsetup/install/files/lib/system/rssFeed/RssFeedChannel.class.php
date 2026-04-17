@@ -127,7 +127,7 @@ final class RssFeedChannel
 
         $element = new XmlElement(
             '<?xml version="1.0" encoding="UTF-8"?><channel></channel>',
-            LIBXML_NOERROR | LIBXML_ERR_NONE | LIBXML_ERR_FATAL
+            \LIBXML_NOERROR | \LIBXML_ERR_NONE | \LIBXML_ERR_FATAL
         );
 
         if (isset($this->title)) {
@@ -160,7 +160,7 @@ final class RssFeedChannel
         }
 
         $element->addChild('ttl', (string)$this->ttl);
-        $element->addChild('generator', 'WoltLab Suite' . (SHOW_VERSION_NUMBER ? ' ' . \WCF_VERSION : ''));
+        $element->addChild('generator', 'WoltLab Suite' . (\SHOW_VERSION_NUMBER ? ' ' . \WCF_VERSION : ''));
 
         foreach ($this->categories as $category) {
             $categoryElement = $element->addChild('category', $category->name);

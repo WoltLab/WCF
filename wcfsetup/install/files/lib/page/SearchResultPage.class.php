@@ -30,7 +30,7 @@ class SearchResultPage extends MultipleLinkPage
     /**
      * @inheritDoc
      */
-    public $itemsPerPage = SEARCH_RESULTS_PER_PAGE;
+    public $itemsPerPage = \SEARCH_RESULTS_PER_PAGE;
 
     /**
      * highlight string

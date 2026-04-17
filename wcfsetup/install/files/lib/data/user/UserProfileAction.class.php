@@ -255,10 +255,10 @@ class UserProfileAction extends UserAction
         // validate user title
         if ($userTitle !== null) {
             try {
-                if (\mb_strlen($userTitle) > USER_TITLE_MAX_LENGTH) {
+                if (\mb_strlen($userTitle) > \USER_TITLE_MAX_LENGTH) {
                     throw new UserInputException('__userTitle', 'tooLong');
                 }
-                if (!StringUtil::executeWordFilter($userTitle, USER_FORBIDDEN_TITLES)) {
+                if (!StringUtil::executeWordFilter($userTitle, \USER_FORBIDDEN_TITLES)) {
                     throw new UserInputException('__userTitle', 'forbidden');
                 }
             } catch (UserInputException $e) {
@@ -291,7 +291,7 @@ class UserProfileAction extends UserAction
             $user = new User($this->userProfile->userID);
 
             // update user rank
-            if (MODULE_USER_RANK) {
+            if (\MODULE_USER_RANK) {
                 $action = new self([new UserEditor($user)], 'updateUserRank');
                 $action->executeAction();
             }

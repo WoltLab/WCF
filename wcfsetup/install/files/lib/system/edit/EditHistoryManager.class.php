@@ -57,7 +57,7 @@ class EditHistoryManager extends SingletonFactory
     public function add(string $objectType, int $objectID, string $message, int $time, int $userID, string $username, string $editReason, int $obsoletedByUserID)
     {
         // no op, if edit history is disabled
-        if (!MODULE_EDIT_HISTORY) {
+        if (!\MODULE_EDIT_HISTORY) {
             return;
         }
 

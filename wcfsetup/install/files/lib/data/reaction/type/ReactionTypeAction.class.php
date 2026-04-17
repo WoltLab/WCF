@@ -84,8 +84,8 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggle
             if (!$iconFile->isProcessed()) {
                 $fileName = $reactionType->reactionTypeID . '-' . $iconFile->getFilename();
 
-                \rename($iconFile->getLocation(), WCF_DIR . 'images/reaction/' . $fileName);
-                $iconFile->setProcessed(WCF_DIR . 'images/reaction/' . $fileName);
+                \rename($iconFile->getLocation(), \WCF_DIR . 'images/reaction/' . $fileName);
+                $iconFile->setProcessed(\WCF_DIR . 'images/reaction/' . $fileName);
 
                 $updateData['iconFile'] = $fileName;
             }
@@ -137,8 +137,8 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggle
                 if (!$iconFile->isProcessed()) {
                     $fileName = $object->reactionTypeID . '-' . $iconFile->getFilename();
 
-                    \rename($iconFile->getLocation(), WCF_DIR . 'images/reaction/' . $fileName);
-                    $iconFile->setProcessed(WCF_DIR . 'images/reaction/' . $fileName);
+                    \rename($iconFile->getLocation(), \WCF_DIR . 'images/reaction/' . $fileName);
+                    $iconFile->setProcessed(\WCF_DIR . 'images/reaction/' . $fileName);
 
                     $updateData['iconFile'] = $fileName;
                 }
@@ -186,8 +186,8 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggle
             ]);
 
             // Delete outdated reaction type icon.
-            if (isset($object->iconFile) && \file_exists(WCF_DIR . 'images/reaction/' . $object->iconFile)) {
-                @\unlink(WCF_DIR . 'images/reaction/' . $object->iconFile);
+            if (isset($object->iconFile) && \file_exists(\WCF_DIR . 'images/reaction/' . $object->iconFile)) {
+                @\unlink(\WCF_DIR . 'images/reaction/' . $object->iconFile);
             }
         }
 

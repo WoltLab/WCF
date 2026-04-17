@@ -77,19 +77,19 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
             'width' => 144,
         ],
         'small' => [
-            'height' => MEDIA_SMALL_THUMBNAIL_HEIGHT,
-            'retainDimensions' => MEDIA_SMALL_THUMBNAIL_RETAIN_DIMENSIONS,
-            'width' => MEDIA_SMALL_THUMBNAIL_WIDTH,
+            'height' => \MEDIA_SMALL_THUMBNAIL_HEIGHT,
+            'retainDimensions' => \MEDIA_SMALL_THUMBNAIL_RETAIN_DIMENSIONS,
+            'width' => \MEDIA_SMALL_THUMBNAIL_WIDTH,
         ],
         'medium' => [
-            'height' => MEDIA_MEDIUM_THUMBNAIL_HEIGHT,
-            'retainDimensions' => MEDIA_MEDIUM_THUMBNAIL_RETAIN_DIMENSIONS,
-            'width' => MEDIA_MEDIUM_THUMBNAIL_WIDTH,
+            'height' => \MEDIA_MEDIUM_THUMBNAIL_HEIGHT,
+            'retainDimensions' => \MEDIA_MEDIUM_THUMBNAIL_RETAIN_DIMENSIONS,
+            'width' => \MEDIA_MEDIUM_THUMBNAIL_WIDTH,
         ],
         'large' => [
-            'height' => MEDIA_LARGE_THUMBNAIL_HEIGHT,
-            'retainDimensions' => MEDIA_LARGE_THUMBNAIL_RETAIN_DIMENSIONS,
-            'width' => MEDIA_LARGE_THUMBNAIL_WIDTH,
+            'height' => \MEDIA_LARGE_THUMBNAIL_HEIGHT,
+            'retainDimensions' => \MEDIA_LARGE_THUMBNAIL_RETAIN_DIMENSIONS,
+            'width' => \MEDIA_LARGE_THUMBNAIL_WIDTH,
         ],
     ];
 
@@ -292,7 +292,7 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
      */
     public static function getStorage()
     {
-        return WCF_DIR . 'media_files/';
+        return \WCF_DIR . 'media_files/';
     }
 
     #[\Override]

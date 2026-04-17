@@ -87,7 +87,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
 
         $this->invokeHtmlNode(new HtmlOutputNodeWoltlabMetacode());
 
-        if (MODULE_URL_UNFURLING) {
+        if (\MODULE_URL_UNFURLING) {
             $this->invokeHtmlNode(new HtmlOutputUnfurlUrlNode());
         }
 
@@ -181,7 +181,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
     public function getHtml()
     {
         $toc = '';
-        if (MESSAGE_ENABLE_TOC && $this->getHtmlProcessor()->enableToc && $this->outputType === 'text/html') {
+        if (\MESSAGE_ENABLE_TOC && $this->getHtmlProcessor()->enableToc && $this->outputType === 'text/html') {
             $context = $this->getHtmlProcessor()->getContext();
             $idPrefix = \substr(\sha1($context['objectType'] . '-' . $context['objectID']), 0, 8);
 

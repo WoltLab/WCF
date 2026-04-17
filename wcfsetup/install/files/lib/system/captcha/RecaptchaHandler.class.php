@@ -52,11 +52,11 @@ class RecaptchaHandler implements ICaptchaHandler
     #[\Override]
     public function isAvailable()
     {
-        if (RECAPTCHA_PUBLICKEY_V3 && RECAPTCHA_PRIVATEKEY_V3) {
+        if (\RECAPTCHA_PUBLICKEY_V3 && \RECAPTCHA_PRIVATEKEY_V3) {
             return true;
         }
 
-        if (!RECAPTCHA_PUBLICKEY || !RECAPTCHA_PRIVATEKEY) {
+        if (!\RECAPTCHA_PUBLICKEY || !\RECAPTCHA_PRIVATEKEY) {
             // OEM keys are no longer supported, disable reCAPTCHA
             if (self::$forceIsAvailable) {
                 // work-around for the ACP option selection
@@ -105,9 +105,9 @@ class RecaptchaHandler implements ICaptchaHandler
         $type = $this->challenge ?: 'v3';
 
         $key = match ($type) {
-            'v3' => RECAPTCHA_PRIVATEKEY_V3,
-            'v2' => RECAPTCHA_PRIVATEKEY,
-            'invisible' => RECAPTCHA_PRIVATEKEY_INVISIBLE,
+            'v3' => \RECAPTCHA_PRIVATEKEY_V3,
+            'v2' => \RECAPTCHA_PRIVATEKEY,
+            'invisible' => \RECAPTCHA_PRIVATEKEY_INVISIBLE,
             default => throw new UserInputException('recaptchaString', 'false'),
         };
 

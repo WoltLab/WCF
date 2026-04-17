@@ -75,7 +75,7 @@ class UserOptionHandler extends OptionHandler
     {
         parent::init();
 
-        if ($this->inRegistration && REGISTER_MIN_USER_AGE) {
+        if ($this->inRegistration && \REGISTER_MIN_USER_AGE) {
             foreach ($this->options as $option) {
                 if ($option->optionName === 'birthday') {
                     $option->setRequired(true);
@@ -267,13 +267,13 @@ class UserOptionHandler extends OptionHandler
             }
         }
 
-        if (REGISTER_MIN_USER_AGE) {
+        if (\REGISTER_MIN_USER_AGE) {
             if ($this->inRegistration && $option->optionName == 'birthday') {
                 if (empty($this->optionValues[$option->optionName])) {
                     throw new UserInputException($option->optionName);
                 }
 
-                if (DateUtil::getAge($this->optionValues[$option->optionName]) < REGISTER_MIN_USER_AGE) {
+                if (DateUtil::getAge($this->optionValues[$option->optionName]) < \REGISTER_MIN_USER_AGE) {
                     throw new UserInputException($option->optionName, 'birthdayTooYoung');
                 }
             }
@@ -305,7 +305,7 @@ class UserOptionHandler extends OptionHandler
             && !$option->askDuringRegistration
             && !$option->required
             && !($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION)
-            && ($option->optionName != 'birthday' || !REGISTER_MIN_USER_AGE)
+            && ($option->optionName != 'birthday' || !\REGISTER_MIN_USER_AGE)
         ) {
             return false;
         }
@@ -348,7 +348,7 @@ class UserOptionHandler extends OptionHandler
                     && !$option->askDuringRegistration
                     && !($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION)
                     && !$option->required
-                    && ($option->optionName != 'birthday' || !REGISTER_MIN_USER_AGE)
+                    && ($option->optionName != 'birthday' || !\REGISTER_MIN_USER_AGE)
                 ) {
                     unset($options[$option->optionID]);
                 }

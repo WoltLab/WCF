@@ -111,7 +111,7 @@ class BBCodeMediaProviderAddForm extends AbstractFormBuilderForm
     public function save()
     {
         if ($this->formAction === "create") {
-            $this->additionalFields['packageID'] = PACKAGE_ID;
+            $this->additionalFields['packageID'] = \PACKAGE_ID;
             $this->additionalFields['name'] = 'placeholder_' . StringUtil::getRandomID();
         }
 

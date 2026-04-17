@@ -33,7 +33,7 @@ class ArticleSitemapObject extends AbstractSitemapObjectObjectType
     #[\Override]
     public function isAvailableType()
     {
-        if (!MODULE_ARTICLE) {
+        if (!\MODULE_ARTICLE) {
             return false;
         }
 

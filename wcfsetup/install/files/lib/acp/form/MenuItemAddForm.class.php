@@ -271,7 +271,7 @@ class MenuItemAddForm extends AbstractFormBuilderForm
         if ($this->formAction === 'create') {
             $this->additionalFields['menuID'] = $this->menuID;
             $this->additionalFields['identifier'] = '';
-            $this->additionalFields['packageID'] = PACKAGE_ID;
+            $this->additionalFields['packageID'] = \PACKAGE_ID;
         }
 
         parent::save();

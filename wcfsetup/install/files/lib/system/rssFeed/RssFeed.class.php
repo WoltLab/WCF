@@ -38,7 +38,7 @@ final class RssFeed
 
         $element = new XmlElement(
             $header,
-            LIBXML_NOERROR | LIBXML_ERR_NONE | LIBXML_ERR_FATAL
+            \LIBXML_NOERROR | \LIBXML_ERR_NONE | \LIBXML_ERR_FATAL
         );
 
         foreach ($this->channels as $channel) {

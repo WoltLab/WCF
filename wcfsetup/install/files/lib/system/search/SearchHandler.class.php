@@ -105,10 +105,10 @@ final class SearchHandler
     private function initParameters(): void
     {
         if (empty($this->parameters['sortField'])) {
-            $this->parameters['sortField'] = SEARCH_DEFAULT_SORT_FIELD;
+            $this->parameters['sortField'] = \SEARCH_DEFAULT_SORT_FIELD;
         }
         if (empty($this->parameters['sortOrder'])) {
-            $this->parameters['sortOrder'] = SEARCH_DEFAULT_SORT_ORDER;
+            $this->parameters['sortOrder'] = \SEARCH_DEFAULT_SORT_ORDER;
         }
     }
 

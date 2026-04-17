@@ -22,7 +22,7 @@ class TaggedArticleList extends AccessibleArticleList
     {
         parent::__construct();
 
-        $this->sqlOrderBy = 'article.time ' . ARTICLE_SORT_ORDER;
+        $this->sqlOrderBy = 'article.time ' . \ARTICLE_SORT_ORDER;
 
         $subselect = TagEngine::getInstance()->getSubselectForObjectsByTags(
             'com.woltlab.wcf.article',

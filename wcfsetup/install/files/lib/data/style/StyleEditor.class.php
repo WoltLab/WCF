@@ -109,7 +109,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
 
         // delete preview image
         if ($this->image) {
-            @\unlink(WCF_DIR . 'images/' . $this->image);
+            @\unlink(\WCF_DIR . 'images/' . $this->image);
         }
 
         // delete language items
@@ -143,7 +143,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
      */
     private function removeDirectory(string $pathComponent): void
     {
-        $dir = WCF_DIR . $pathComponent;
+        $dir = \WCF_DIR . $pathComponent;
         if (\is_dir($dir)) {
             $iterator = new \RecursiveIteratorIterator(
                 new \RecursiveDirectoryIterator($dir),
@@ -192,7 +192,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
     public function deleteCoverPhoto()
     {
         if ($this->coverPhotoExtension) {
-            @\unlink(WCF_DIR . 'images/coverPhotos/' . $this->styleID . '.' . $this->coverPhotoExtension);
+            @\unlink(\WCF_DIR . 'images/coverPhotos/' . $this->styleID . '.' . $this->coverPhotoExtension);
 
             $this->update([
                 'coverPhotoExtension' => '',
@@ -430,7 +430,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         if (!empty($data['image'])) {
             $i = $tar->getIndexByFilename($data['image']);
             if ($i !== false) {
-                $path = FileUtil::getTemporaryFilename('stylePreview_', $data['image'], WCF_DIR . 'tmp/');
+                $path = FileUtil::getTemporaryFilename('stylePreview_', $data['image'], \WCF_DIR . 'tmp/');
                 $data['image'] = \basename($path);
                 $tar->extract($i, $path);
             }
@@ -583,7 +583,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                     ]);
                     while ($row = $statement->fetchArray()) {
                         // get template path
-                        $templatesDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR . $row['packageDir']) . 'templates/' . $templateGroupFolderName);
+                        $templatesDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(\WCF_DIR . $row['packageDir']) . 'templates/' . $templateGroupFolderName);
 
                         // create template path
                         if (!\file_exists($templatesDir)) {
@@ -853,7 +853,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         $languageList->readObjects();
 
         // workaround for WCFSetup
-        if (!PACKAGE_ID) {
+        if (!\PACKAGE_ID) {
             $sql = "SELECT  *
                     FROM    wcf1_language_category
                     WHERE   languageCategory = ?";
@@ -889,7 +889,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
     protected static function getFileLocation(string $location)
     {
         $location = FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash($location));
-        $location = WCF_DIR . $location;
+        $location = \WCF_DIR . $location;
 
         $index = null;
         for (;;) {
@@ -917,18 +917,18 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         $styleTar = new TarWriter($styleTarName, true);
 
         // append style preview image
-        if ($this->image && @\file_exists(WCF_DIR . 'images/' . $this->image)) {
+        if ($this->image && @\file_exists(\WCF_DIR . 'images/' . $this->image)) {
             $styleTar->add(
-                WCF_DIR . 'images/' . $this->image,
+                \WCF_DIR . 'images/' . $this->image,
                 '',
-                FileUtil::addTrailingSlash(\dirname(WCF_DIR . 'images/' . $this->image))
+                FileUtil::addTrailingSlash(\dirname(\WCF_DIR . 'images/' . $this->image))
             );
         }
-        if ($this->image2x && @\file_exists(WCF_DIR . 'images/' . $this->image2x)) {
+        if ($this->image2x && @\file_exists(\WCF_DIR . 'images/' . $this->image2x)) {
             $styleTar->add(
-                WCF_DIR . 'images/' . $this->image2x,
+                \WCF_DIR . 'images/' . $this->image2x,
                 '',
-                FileUtil::addTrailingSlash(\dirname(WCF_DIR . 'images/' . $this->image2x))
+                FileUtil::addTrailingSlash(\dirname(\WCF_DIR . 'images/' . $this->image2x))
             );
         }
 
@@ -1093,7 +1093,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                     $package = PackageCache::getInstance()->getPackage($application->packageID);
                 }
 
-                $filename = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR . $package->packageDir . 'templates/' . $templateGroup->templateGroupFolderName)) . $row['templateName'] . '.tpl';
+                $filename = FileUtil::addTrailingSlash(FileUtil::getRealPath(\WCF_DIR . $package->packageDir . 'templates/' . $templateGroup->templateGroupFolderName)) . $row['templateName'] . '.tpl';
                 $templatesTar->add($filename, $packageDir, \dirname($filename));
             }
 
@@ -1129,13 +1129,13 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                 // Skip preview images and cover photos.
                 if (
                     $this->image
-                    && FileUtil::unifyDirSeparator($file->getPathname()) === FileUtil::unifyDirSeparator(WCF_DIR . 'images/' . $this->image)
+                    && FileUtil::unifyDirSeparator($file->getPathname()) === FileUtil::unifyDirSeparator(\WCF_DIR . 'images/' . $this->image)
                 ) {
                     continue;
                 }
                 if (
                     $this->image2x
-                    && FileUtil::unifyDirSeparator($file->getPathname()) === FileUtil::unifyDirSeparator(WCF_DIR . 'images/' . $this->image2x)
+                    && FileUtil::unifyDirSeparator($file->getPathname()) === FileUtil::unifyDirSeparator(\WCF_DIR . 'images/' . $this->image2x)
                 ) {
                     continue;
                 }
@@ -1335,7 +1335,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         FileUtil::makePath($style->getAssetPath());
 
         $styleEditor->update([
-            'imagePath' => FileUtil::getRelativePath(WCF_DIR, $style->getAssetPath()),
+            'imagePath' => FileUtil::getRelativePath(\WCF_DIR, $style->getAssetPath()),
         ]);
         $styleEditor = new self(new Style($style->styleID));
 

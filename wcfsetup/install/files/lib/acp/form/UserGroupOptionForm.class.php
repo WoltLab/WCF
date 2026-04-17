@@ -172,7 +172,7 @@ class UserGroupOptionForm extends AbstractForm
             }
 
             if (
-                WCF::getUser()->hasAdministrativeAccess() && (!ENABLE_ENTERPRISE_MODE || !\in_array(
+                WCF::getUser()->hasAdministrativeAccess() && (!\ENABLE_ENTERPRISE_MODE || !\in_array(
                     $this->userGroupOption->optionName,
                     UserGroupOption::ENTERPRISE_BLACKLIST
                 ))

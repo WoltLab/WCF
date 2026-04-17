@@ -161,7 +161,7 @@ final class RenderComment implements IController
         ]);
 
         // load like data
-        if (MODULE_LIKE) {
+        if (\MODULE_LIKE) {
             $likeData = [];
             $commentObjectType = ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.comment');
             ReactionHandler::getInstance()->loadLikeObjects($commentObjectType, [$comment->commentID]);

@@ -278,7 +278,7 @@ class UserMergeForm extends AbstractForm
         // moderation queue
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("userID IN (?)", [$this->mergedUserIDs]);
-        $sql = "UPDATE  wcf" . WCF_N . "_moderation_queue
+        $sql = "UPDATE  wcf" . \WCF_N . "_moderation_queue
             SET     userID = ?
             " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
@@ -287,7 +287,7 @@ class UserMergeForm extends AbstractForm
         // edit history
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("userID IN (?)", [$this->mergedUserIDs]);
-        $sql = "UPDATE  wcf" . WCF_N . "_edit_history_entry
+        $sql = "UPDATE  wcf" . \WCF_N . "_edit_history_entry
             SET     userID = ?
             " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);

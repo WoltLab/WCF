@@ -30,7 +30,7 @@ class TemplateEditor extends DatabaseObjectEditor
     {
         // obtain default values
         if (!isset($parameters['packageID'])) {
-            $parameters['packageID'] = PACKAGE_ID;
+            $parameters['packageID'] = \PACKAGE_ID;
         }
 
         return parent::create($parameters);
@@ -139,7 +139,7 @@ class TemplateEditor extends DatabaseObjectEditor
      */
     public function deleteCompiledFiles()
     {
-        DirectoryUtil::getInstance(WCF_DIR . 'templates/compiled/')
+        DirectoryUtil::getInstance(\WCF_DIR . 'templates/compiled/')
             ->removePattern(
                 new Regex(
                     $this->templateGroupID . '_' . $this->application . '_.*_' . \preg_quote($this->templateName) . '.php$'

@@ -36,11 +36,11 @@ class ImageHandler extends SingletonFactory
     #[\Override]
     protected function init()
     {
-        if (!isset($this->imageAdapters[IMAGE_ADAPTER_TYPE])) {
-            throw new SystemException("Image adapter referred as '" . IMAGE_ADAPTER_TYPE . "' is unknown.");
+        if (!isset($this->imageAdapters[\IMAGE_ADAPTER_TYPE])) {
+            throw new SystemException("Image adapter referred as '" . \IMAGE_ADAPTER_TYPE . "' is unknown.");
         }
 
-        $imageAdapter = $this->imageAdapters[IMAGE_ADAPTER_TYPE];
+        $imageAdapter = $this->imageAdapters[\IMAGE_ADAPTER_TYPE];
         $isSupported = \call_user_func([$imageAdapter, 'isSupported']);
         if ($isSupported) {
             if (\is_subclass_of($imageAdapter, IWebpImageAdapter::class)) {

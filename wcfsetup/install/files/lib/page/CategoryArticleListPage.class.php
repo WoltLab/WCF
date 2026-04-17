@@ -87,7 +87,7 @@ class CategoryArticleListPage extends ArticleListPage
         MetaTagHandler::getInstance()->addTag(
             'og:title',
             'og:title',
-            $this->category->getTitle() . ' - ' . WCF::getLanguage()->get(PAGE_TITLE),
+            $this->category->getTitle() . ' - ' . WCF::getLanguage()->get(\PAGE_TITLE),
             true
         );
         MetaTagHandler::getInstance()->addTag(

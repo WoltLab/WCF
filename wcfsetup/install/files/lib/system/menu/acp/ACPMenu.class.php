@@ -36,7 +36,7 @@ class ACPMenu extends TreeMenu
     protected function checkMenuItem(ITreeMenuItem $item)
     {
         if (
-            ENABLE_ENTERPRISE_MODE
+            \ENABLE_ENTERPRISE_MODE
             && !WCF::getUser()->hasOwnerAccess()
             && \in_array($item->menuItem, $this->enterpriseBlacklist)
         ) {
@@ -51,7 +51,7 @@ class ACPMenu extends TreeMenu
     {
         parent::loadCache();
 
-        if (PACKAGE_ID == 0) {
+        if (\PACKAGE_ID == 0) {
             return;
         }
 

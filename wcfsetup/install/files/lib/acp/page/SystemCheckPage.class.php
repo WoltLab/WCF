@@ -205,11 +205,11 @@ class SystemCheckPage extends AbstractPage
     {
         parent::readData();
 
-        if (IMAGE_ADAPTER_TYPE === 'imagick' && !\in_array('imagick', $this->phpExtensions)) {
+        if (\IMAGE_ADAPTER_TYPE === 'imagick' && !\in_array('imagick', $this->phpExtensions)) {
             $this->phpExtensions[] = 'imagick';
         }
 
-        if (CACHE_SOURCE_TYPE === 'redis' && !\in_array('redis', $this->phpExtensions)) {
+        if (\CACHE_SOURCE_TYPE === 'redis' && !\in_array('redis', $this->phpExtensions)) {
             $this->phpExtensions[] = 'redis';
         }
 

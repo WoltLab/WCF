@@ -127,7 +127,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
     {
         $data = [];
 
-        if (!PACKAGE_ID) {
+        if (!\PACKAGE_ID) {
             return $data;
         }
 
@@ -187,7 +187,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
             'reverse' => [],
         ];
 
-        if (!PACKAGE_ID) {
+        if (!\PACKAGE_ID) {
             return $data;
         }
 
@@ -248,7 +248,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
     {
         $data = [];
 
-        if (!PACKAGE_ID) {
+        if (!\PACKAGE_ID) {
             return $data;
         }
 

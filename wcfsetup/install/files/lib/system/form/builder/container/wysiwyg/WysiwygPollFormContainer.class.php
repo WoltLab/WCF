@@ -342,7 +342,7 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
         $this->maxVotesField = IntegerFormField::create($id . 'MaxVotes')
             ->label('wcf.poll.maxVotes')
             ->minimum(1)
-            ->maximum(POLL_MAX_OPTIONS)
+            ->maximum(\POLL_MAX_OPTIONS)
             ->value(1);
 
         $this->isChangeableField = BooleanFormField::create($id . 'IsChangeable')

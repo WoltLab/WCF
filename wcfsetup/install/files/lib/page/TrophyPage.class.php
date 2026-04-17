@@ -93,7 +93,7 @@ class TrophyPage extends MultipleLinkPage
         MetaTagHandler::getInstance()->addTag(
             'og:title',
             'og:title',
-            $this->trophy->getTitle() . ' - ' . WCF::getLanguage()->get(PAGE_TITLE),
+            $this->trophy->getTitle() . ' - ' . WCF::getLanguage()->get(\PAGE_TITLE),
             true
         );
         MetaTagHandler::getInstance()->addTag('og:url', 'og:url', $this->trophy->getLink(), true);

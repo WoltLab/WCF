@@ -76,8 +76,8 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
     protected function getSearchEngine()
     {
         if ($this->searchEngine === null) {
-            if (SEARCH_ENGINE != 'mysql') {
-                $className = 'wcf\system\search\\' . SEARCH_ENGINE . '\\' . \ucfirst(SEARCH_ENGINE) . 'SearchEngine';
+            if (\SEARCH_ENGINE != 'mysql') {
+                $className = 'wcf\system\search\\' . \SEARCH_ENGINE . '\\' . \ucfirst(\SEARCH_ENGINE) . 'SearchEngine';
                 if (!\class_exists($className)) {
                     $className = MysqlSearchEngine::class;
                 }
@@ -152,7 +152,7 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
     ) {
         $conditionBuilderClassName = $this->getConditionBuilderClassName();
         if ($searchIndexCondition !== null && !($searchIndexCondition instanceof $conditionBuilderClassName)) {
-            throw new SystemException("Search engine '" . SEARCH_ENGINE . "' requires a different condition builder, please use 'SearchEngine::getInstance()->getConditionBuilderClassName()'!");
+            throw new SystemException("Search engine '" . \SEARCH_ENGINE . "' requires a different condition builder, please use 'SearchEngine::getInstance()->getConditionBuilderClassName()'!");
         }
 
         return $this->getSearchEngine()
@@ -171,7 +171,7 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
     ): array {
         $conditionBuilderClassName = $this->getConditionBuilderClassName();
         if ($searchIndexCondition !== null && !($searchIndexCondition instanceof $conditionBuilderClassName)) {
-            throw new SystemException("Search engine '" . SEARCH_ENGINE . "' requires a different condition builder, please use 'SearchEngine::getInstance()->getConditionBuilderClassName()'!");
+            throw new SystemException("Search engine '" . \SEARCH_ENGINE . "' requires a different condition builder, please use 'SearchEngine::getInstance()->getConditionBuilderClassName()'!");
         }
 
         $searchEngine = $this->getSearchEngine();
