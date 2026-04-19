@@ -2,6 +2,7 @@
 
 namespace wcf\data\page;
 
+use wcf\acp\form\PageEditForm;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\IVersionTrackerObject;
 use wcf\data\page\content\PageContent;
@@ -101,9 +102,9 @@ class PageVersionTracker extends DatabaseObjectDecorator implements IVersionTrac
     #[\Override]
     public function getEditLink()
     {
-        return LinkHandler::getInstance()->getLink(
-            'PageEdit',
-            ['isACP' => true, 'id' => $this->getDecoratedObject()->pageID]
+        return LinkHandler::getInstance()->getControllerLink(
+            PageEditForm::class,
+            ['id' => $this->getDecoratedObject()->pageID]
         );
     }
 }

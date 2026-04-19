@@ -2,6 +2,7 @@
 
 namespace wcf\data\article;
 
+use wcf\acp\page\ArticleListPage;
 use wcf\command\article\DisableI18n;
 use wcf\command\article\EnableI18n;
 use wcf\command\article\MarkAllArticlesAsRead;
@@ -458,7 +459,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
 
         return [
             'objectIDs' => $this->objectIDs,
-            'redirectURL' => LinkHandler::getInstance()->getLink('ArticleList', ['isACP' => true]),
+            'redirectURL' => LinkHandler::getInstance()->getControllerLink(ArticleListPage::class),
         ];
     }
 

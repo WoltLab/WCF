@@ -2,6 +2,7 @@
 
 namespace wcf\data\box;
 
+use wcf\acp\form\BoxEditForm;
 use wcf\data\box\content\BoxContent;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\IVersionTrackerObject;
@@ -101,9 +102,9 @@ class BoxVersionTracker extends DatabaseObjectDecorator implements IVersionTrack
     #[\Override]
     public function getEditLink()
     {
-        return LinkHandler::getInstance()->getLink(
-            'BoxEdit',
-            ['isACP' => true, 'id' => $this->getDecoratedObject()->boxID]
+        return LinkHandler::getInstance()->getControllerLink(
+            BoxEditForm::class,
+            ['id' => $this->getDecoratedObject()->boxID]
         );
     }
 }

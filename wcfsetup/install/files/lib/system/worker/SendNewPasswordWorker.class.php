@@ -3,6 +3,7 @@
 namespace wcf\system\worker;
 
 use ParagonIE\ConstantTime\Hex;
+use wcf\acp\page\UserListPage;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
@@ -71,7 +72,7 @@ class SendNewPasswordWorker extends AbstractWorker
     #[\Override]
     public function getProceedURL()
     {
-        return LinkHandler::getInstance()->getLink('UserList');
+        return LinkHandler::getInstance()->getControllerLink(UserListPage::class);
     }
 
     #[\Override]

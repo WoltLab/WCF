@@ -3,6 +3,7 @@
 namespace wcf\data\article\content;
 
 use wcf\data\search\ISearchResultObject;
+use wcf\page\ArticlePage;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchResultTextParser;
@@ -39,14 +40,13 @@ class SearchResultArticleContent extends ViewableArticleContent implements ISear
     {
         $parameters = [
             'object' => $this->getDecoratedObject(),
-            'forceFrontend' => true,
         ];
 
         if ($query) {
             $parameters['highlight'] = \urlencode($query);
         }
 
-        return LinkHandler::getInstance()->getLink('Article', $parameters);
+        return LinkHandler::getInstance()->getControllerLink(ArticlePage::class, $parameters);
     }
 
     #[\Override]

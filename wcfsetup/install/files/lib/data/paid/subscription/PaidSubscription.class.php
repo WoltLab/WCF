@@ -6,6 +6,7 @@ use wcf\data\DatabaseObject;
 use wcf\data\ITitledObject;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
+use wcf\page\PaidSubscriptionReturnPage;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\payment\method\PaymentMethodHandler;
 use wcf\system\request\LinkHandler;
@@ -61,7 +62,7 @@ class PaidSubscription extends DatabaseObject implements ITitledObject
                 $this->currency,
                 WCF::getLanguage()->get($this->title),
                 $objectTypeID . ':' . WCF::getUser()->userID . ':' . $this->subscriptionID,
-                LinkHandler::getInstance()->getLink('PaidSubscriptionReturn'),
+                LinkHandler::getInstance()->getControllerLink(PaidSubscriptionReturnPage::class),
                 LinkHandler::getInstance()->getLink(),
                 (bool)$this->isRecurring,
                 $this->subscriptionLength,

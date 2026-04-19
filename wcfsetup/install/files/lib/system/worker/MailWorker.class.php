@@ -2,6 +2,7 @@
 
 namespace wcf\system\worker;
 
+use wcf\acp\page\UserListPage;
 use wcf\data\user\User;
 use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\clipboard\ClipboardHandler;
@@ -178,6 +179,6 @@ class MailWorker extends AbstractWorker
     #[\Override]
     public function getProceedURL()
     {
-        return LinkHandler::getInstance()->getLink('UserList');
+        return LinkHandler::getInstance()->getControllerLink(UserListPage::class);
     }
 }

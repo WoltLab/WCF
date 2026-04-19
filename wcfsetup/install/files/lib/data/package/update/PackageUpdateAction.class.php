@@ -2,6 +2,7 @@
 
 namespace wcf\data\package\update;
 
+use wcf\acp\page\PackageUpdatePage;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
@@ -615,7 +616,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         $updates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
         $url = '';
         if (!empty($updates)) {
-            $url = LinkHandler::getInstance()->getLink('PackageUpdate');
+            $url = LinkHandler::getInstance()->getControllerLink(PackageUpdatePage::class);
         }
 
         return [

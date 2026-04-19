@@ -6,6 +6,7 @@ use wcf\data\article\Article;
 use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\language\Language;
+use wcf\page\ArticlePage;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\language\LanguageFactory;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
@@ -51,9 +52,8 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
     #[\Override]
     public function getLink(): string
     {
-        return LinkHandler::getInstance()->getLink('Article', [
+        return LinkHandler::getInstance()->getControllerLink(ArticlePage::class, [
             'object' => $this,
-            'forceFrontend' => true,
         ]);
     }
 

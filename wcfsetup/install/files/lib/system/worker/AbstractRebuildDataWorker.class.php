@@ -2,6 +2,7 @@
 
 namespace wcf\system\worker;
 
+use wcf\acp\page\RebuildDataPage;
 use wcf\data\DatabaseObjectList;
 use wcf\data\user\group\UserGroup;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
@@ -83,7 +84,7 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
     #[\Override]
     public function getProceedURL()
     {
-        return LinkHandler::getInstance()->getLink('RebuildData');
+        return LinkHandler::getInstance()->getControllerLink(RebuildDataPage::class);
     }
 
     /**

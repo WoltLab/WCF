@@ -8,6 +8,7 @@ use wcf\data\ITitledLinkObject;
 use wcf\data\label\group\ViewableLabelGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
+use wcf\page\CategoryArticleListPage;
 use wcf\system\cache\builder\ArticleCategoryLabelCacheBuilder;
 use wcf\system\category\CategoryHandler;
 use wcf\system\category\CategoryPermissionHandler;
@@ -99,8 +100,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
     #[\Override]
     public function getLink(): string
     {
-        return LinkHandler::getInstance()->getLink('CategoryArticleList', [
-            'forceFrontend' => true,
+        return LinkHandler::getInstance()->getControllerLink(CategoryArticleListPage::class, [
             'object' => $this->getDecoratedObject(),
         ]);
     }

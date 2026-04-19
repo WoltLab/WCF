@@ -2,6 +2,7 @@
 
 namespace wcf\data\user\group;
 
+use wcf\acp\form\UserGroupEditForm;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\LinkHandler;
@@ -118,7 +119,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction
 
         return [
             'groupID' => $group->groupID,
-            'redirectURL' => LinkHandler::getInstance()->getLink('UserGroupEdit', [
+            'redirectURL' => LinkHandler::getInstance()->getControllerLink(UserGroupEditForm::class, [
                 'id' => $group->groupID,
             ]),
         ];

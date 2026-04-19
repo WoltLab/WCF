@@ -2,6 +2,7 @@
 
 namespace wcf\system\search\acp;
 
+use wcf\acp\form\OptionForm;
 use wcf\data\option\category\OptionCategoryList;
 use wcf\data\option\Option;
 use wcf\system\cache\builder\OptionCacheBuilder;
@@ -91,7 +92,7 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
                 continue;
             }
 
-            $link = LinkHandler::getInstance()->getLink('Option', [
+            $link = LinkHandler::getInstance()->getControllerLink(OptionForm::class, [
                 // @phpstan-ignore property.notFound
                 'id' => $this->getCategoryID($this->getTopCategory($option->categoryName)->parentCategoryName),
             ], 'optionName=' . $option->optionName . '#category_' . $this->getCategoryName($option->categoryName));

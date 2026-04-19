@@ -2,6 +2,7 @@
 
 namespace wcf\system\search\acp;
 
+use wcf\acp\form\PageEditForm;
 use wcf\data\page\PageList;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -30,7 +31,7 @@ class PageACPSearchResultProvider implements IACPSearchResultProvider
         $pageList->sqlOrderBy = 'page.name';
         $pageList->readObjects();
         foreach ($pageList as $page) {
-            $results[] = new ACPSearchResult($page->name, LinkHandler::getInstance()->getLink('PageEdit', [
+            $results[] = new ACPSearchResult($page->name, LinkHandler::getInstance()->getControllerLink(PageEditForm::class, [
                 'id' => $page->pageID,
             ]));
         }

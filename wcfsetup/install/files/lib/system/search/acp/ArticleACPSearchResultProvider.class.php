@@ -2,6 +2,7 @@
 
 namespace wcf\system\search\acp;
 
+use wcf\acp\form\ArticleEditForm;
 use wcf\data\article\content\ArticleContentList;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -30,7 +31,7 @@ class ArticleACPSearchResultProvider implements IACPSearchResultProvider
         $contentList->sqlOrderBy = 'article_content.title';
         $contentList->readObjects();
         foreach ($contentList as $content) {
-            $results[] = new ACPSearchResult($content->title, LinkHandler::getInstance()->getLink('ArticleEdit', [
+            $results[] = new ACPSearchResult($content->title, LinkHandler::getInstance()->getControllerLink(ArticleEditForm::class, [
                 'id' => $content->articleID,
             ]));
         }

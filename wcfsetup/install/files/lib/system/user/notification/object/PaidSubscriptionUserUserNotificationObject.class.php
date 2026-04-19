@@ -4,6 +4,7 @@ namespace wcf\system\user\notification\object;
 
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\paid\subscription\user\PaidSubscriptionUser;
+use wcf\page\PaidSubscriptionListPage;
 use wcf\system\request\LinkHandler;
 
 /**
@@ -38,6 +39,6 @@ class PaidSubscriptionUserUserNotificationObject extends DatabaseObjectDecorator
     #[\Override]
     public function getURL()
     {
-        return LinkHandler::getInstance()->getLink('PaidSubscriptionList', ['forceFrontend' => true]);
+        return LinkHandler::getInstance()->getControllerLink(PaidSubscriptionListPage::class);
     }
 }

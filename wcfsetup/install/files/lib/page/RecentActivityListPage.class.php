@@ -30,7 +30,7 @@ class RecentActivityListPage extends AbstractPage
     {
         parent::readParameters();
 
-        $this->canonicalURL = LinkHandler::getInstance()->getLink('RecentActivityList');
+        $this->canonicalURL = LinkHandler::getInstance()->getControllerLink(RecentActivityListPage::class);
     }
 
     #[\Override]

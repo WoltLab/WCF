@@ -2,6 +2,7 @@
 
 namespace wcf\acp\action;
 
+use wcf\acp\page\DevtoolsProjectListPage;
 use wcf\action\AbstractSecureAction;
 use wcf\data\devtools\project\DevtoolsProject;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
@@ -28,7 +29,7 @@ final class DevtoolsInstallPackageAction extends InstallPackageAction
     #[\Override]
     protected function getRedirectLink(): string
     {
-        return LinkHandler::getInstance()->getLink('DevtoolsProjectList');
+        return LinkHandler::getInstance()->getControllerLink(DevtoolsProjectListPage::class);
     }
 
     /**

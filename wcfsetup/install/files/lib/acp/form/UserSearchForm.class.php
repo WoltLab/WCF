@@ -2,6 +2,7 @@
 
 namespace wcf\acp\form;
 
+use wcf\acp\page\UserListPage;
 use wcf\data\condition\Condition;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
@@ -221,7 +222,7 @@ class UserSearchForm extends UserOptionListForm
         $this->saved();
 
         // forward to result page
-        HeaderUtil::redirect(LinkHandler::getInstance()->getLink('UserList', [
+        HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(UserListPage::class, [
             'id' => $this->searchID,
         ], 'sortField=' . \rawurlencode($this->sortField) . '&sortOrder=' . \rawurlencode($this->sortOrder)));
 

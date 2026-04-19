@@ -171,7 +171,7 @@ class MediaListPage extends SortablePage
             $parameters['categoryID'] = $this->categoryID;
         }
 
-        $this->canonicalURL = LinkHandler::getInstance()->getLink('MediaList', $parameters);
+        $this->canonicalURL = LinkHandler::getInstance()->getControllerLink(MediaListPage::class, $parameters);
     }
 
     #[\Override]

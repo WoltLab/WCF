@@ -3,6 +3,7 @@
 namespace wcf\acp\action;
 
 use Laminas\Diactoros\Response\RedirectResponse;
+use wcf\acp\page\UserListPage;
 use wcf\action\AbstractAction;
 use wcf\data\search\SearchEditor;
 use wcf\data\user\User;
@@ -197,8 +198,8 @@ final class UserQuickSearchAction extends AbstractAction
         $this->executed();
 
         // forward to result page
-        $url = LinkHandler::getInstance()->getLink(
-            'UserList',
+        $url = LinkHandler::getInstance()->getControllerLink(
+            UserListPage::class,
             ['id' => $search->searchID],
             'sortField=' . \rawurlencode($this->sortField) . '&sortOrder=' . \rawurlencode($this->sortOrder)
         );

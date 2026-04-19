@@ -5,6 +5,7 @@ namespace wcf\system\box;
 use wcf\data\condition\Condition;
 use wcf\data\DatabaseObject;
 use wcf\data\user\UserProfileList;
+use wcf\page\MembersListPage;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\cache\tolerant\AbstractTolerantCache;
 use wcf\system\cache\tolerant\SortedUserCache;
@@ -115,7 +116,7 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
                 $parameters = 'sortField=' . $this->sortField . '&sortOrder=' . $this->sortOrder;
             }
 
-            return LinkHandler::getInstance()->getLink('MembersList', [], $parameters);
+            return LinkHandler::getInstance()->getControllerLink(MembersListPage::class, [], $parameters);
         }
 
         return '';

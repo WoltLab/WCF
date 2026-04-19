@@ -3,6 +3,7 @@
 namespace wcf\data\style;
 
 use ParagonIE\ConstantTime\Hex;
+use wcf\acp\form\StyleEditForm;
 use wcf\command\style\ChangeStyle;
 use wcf\command\style\DisableStyle;
 use wcf\command\style\EnableStyle;
@@ -501,7 +502,10 @@ BROWSERCONFIG;
         $newStyle = $command();
 
         return [
-            'redirectURL' => LinkHandler::getInstance()->getLink('StyleEdit', ['id' => $newStyle->styleID]),
+            'redirectURL' => LinkHandler::getInstance()->getControllerLink(
+                StyleEditForm::class,
+                ['id' => $newStyle->styleID]
+            ),
         ];
     }
 

@@ -2,6 +2,7 @@
 
 namespace wcf\system\payment\method;
 
+use wcf\action\PaypalCallbackAction;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -82,10 +83,10 @@ class PaypalPaymentMethod extends AbstractPaymentMethod
 					<input type="hidden" name="lc" value="' . \strtoupper(WCF::getLanguage()->languageCode) . '">
 					<input type="hidden" name="no_note" value="1">
 					<input type="hidden" name="no_shipping" value="1">
-					<input type="hidden" name="notify_url" value="' . StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('PaypalCallback')) . '">
+					<input type="hidden" name="notify_url" value="' . StringUtil::encodeHTML(LinkHandler::getInstance()->getControllerLink(PaypalCallbackAction::class)) . '">
 					<input type="hidden" name="quantity" value="1">
 					<input type="hidden" name="return" value="' . StringUtil::encodeHTML($returnURL) . '">
-			
+
 					<button class="button small" type="submit">' . WCF::getLanguage()->get('wcf.payment.paypal.button.subscribe') . '</button>
 				</form>';
         } else {
@@ -102,10 +103,10 @@ class PaypalPaymentMethod extends AbstractPaymentMethod
 					<input type="hidden" name="lc" value="' . \strtoupper(WCF::getLanguage()->languageCode) . '">
 					<input type="hidden" name="no_note" value="1">
 					<input type="hidden" name="no_shipping" value="1">
-					<input type="hidden" name="notify_url" value="' . StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('PaypalCallback')) . '">
+					<input type="hidden" name="notify_url" value="' . StringUtil::encodeHTML(LinkHandler::getInstance()->getControllerLink(PaypalCallbackAction::class)) . '">
 					<input type="hidden" name="quantity" value="1">
 					<input type="hidden" name="return" value="' . StringUtil::encodeHTML($returnURL) . '">
-					
+
 					<button class="button small" type="submit">' . WCF::getLanguage()->get('wcf.payment.paypal.button.purchase') . '</button>
 				</form>';
         }

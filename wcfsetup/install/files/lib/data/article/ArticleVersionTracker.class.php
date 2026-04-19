@@ -2,6 +2,7 @@
 
 namespace wcf\data\article;
 
+use wcf\acp\form\ArticleEditForm;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\IVersionTrackerObject;
@@ -101,9 +102,9 @@ class ArticleVersionTracker extends DatabaseObjectDecorator implements IVersionT
     #[\Override]
     public function getEditLink()
     {
-        return LinkHandler::getInstance()->getLink(
-            'ArticleEdit',
-            ['isACP' => true, 'id' => $this->getDecoratedObject()->articleID]
+        return LinkHandler::getInstance()->getControllerLink(
+            ArticleEditForm::class,
+            ['id' => $this->getDecoratedObject()->articleID]
         );
     }
 }

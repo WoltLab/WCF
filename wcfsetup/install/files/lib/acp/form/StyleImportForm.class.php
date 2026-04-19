@@ -110,7 +110,7 @@ class StyleImportForm extends AbstractForm
 
             WCF::getSession()->register('stylePackageImportLocation', $filename);
 
-            HeaderUtil::redirect(LinkHandler::getInstance()->getLink('PackageStartInstall', [
+            HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(PackageStartInstallForm::class, [
                 'action' => 'install',
             ]));
 

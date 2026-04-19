@@ -2,6 +2,7 @@
 
 namespace wcf\system\worker;
 
+use wcf\acp\page\UserListPage;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
 use wcf\data\object\type\ObjectType;
@@ -254,7 +255,7 @@ class UserContentRemoveWorker extends AbstractWorker
     #[\Override]
     public function getProceedURL()
     {
-        return LinkHandler::getInstance()->getLink('UserList');
+        return LinkHandler::getInstance()->getControllerLink(UserListPage::class);
     }
 
     /**

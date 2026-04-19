@@ -3,6 +3,7 @@
 namespace wcf\system\box;
 
 use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
+use wcf\page\PaidSubscriptionListPage;
 use wcf\system\cache\builder\PaidSubscriptionCacheBuilder;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -24,7 +25,7 @@ class PaidSubscriptionsBoxController extends AbstractBoxController
     #[\Override]
     public function getLink(): string
     {
-        return LinkHandler::getInstance()->getLink('PaidSubscriptionList');
+        return LinkHandler::getInstance()->getControllerLink(PaidSubscriptionListPage::class);
     }
 
     #[\Override]

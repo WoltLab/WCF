@@ -2,6 +2,7 @@
 
 namespace wcf\system\worker;
 
+use wcf\acp\form\UserActivityPointOptionForm;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\request\LinkHandler;
@@ -70,6 +71,6 @@ class UserActivityPointUpdateEventsWorker extends AbstractWorker
     #[\Override]
     public function getProceedURL()
     {
-        return LinkHandler::getInstance()->getLink('UserActivityPointOption');
+        return LinkHandler::getInstance()->getControllerLink(UserActivityPointOptionForm::class);
     }
 }

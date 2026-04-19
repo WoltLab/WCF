@@ -68,8 +68,8 @@ class UsersOnlineListPage extends SortablePage
         }
 
         if (!empty($_POST)) {
-            HeaderUtil::redirect(LinkHandler::getInstance()->getLink(
-                'UsersOnlineList',
+            HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(
+                UsersOnlineListPage::class,
                 [],
                 'sortField=' . $this->sortField . '&sortOrder=' . $this->sortOrder
             ));

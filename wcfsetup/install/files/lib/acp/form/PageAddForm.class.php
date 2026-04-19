@@ -2,6 +2,7 @@
 
 namespace wcf\acp\form;
 
+use wcf\acp\page\PageListPage;
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationList;
 use wcf\data\box\Box;
@@ -263,7 +264,7 @@ class PageAddForm extends AbstractForm
 
         // work-around to force adding pages via dialog overlay
         if (empty($_POST) && $this->pageType == '') {
-            HeaderUtil::redirect(LinkHandler::getInstance()->getLink('PageList', ['showPageAddDialog' => 1]));
+            HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(PageListPage::class, ['showPageAddDialog' => 1]));
 
             exit;
         }

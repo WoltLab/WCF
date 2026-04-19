@@ -2,6 +2,7 @@
 
 namespace wcf\system\search\acp;
 
+use wcf\acp\form\BoxEditForm;
 use wcf\data\box\BoxList;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -31,7 +32,7 @@ class BoxACPSearchResultProvider implements IACPSearchResultProvider
         $boxList->sqlOrderBy = 'box.name';
         $boxList->readObjects();
         foreach ($boxList as $box) {
-            $results[] = new ACPSearchResult($box->name, LinkHandler::getInstance()->getLink('BoxEdit', [
+            $results[] = new ACPSearchResult($box->name, LinkHandler::getInstance()->getControllerLink(BoxEditForm::class, [
                 'id' => $box->boxID,
             ]));
         }

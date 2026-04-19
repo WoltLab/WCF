@@ -8,6 +8,7 @@ use wcf\data\paid\subscription\user\PaidSubscriptionUser;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserAction;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
 use wcf\data\user\UserProfile;
+use wcf\page\PaidSubscriptionListPage;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\object\PaidSubscriptionUserUserNotificationObject;
 use wcf\system\WCF;
@@ -29,7 +30,7 @@ class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNoti
     #[\Override]
     public function getLink(): string
     {
-        return LinkHandler::getInstance()->getLink('PaidSubscriptionList', ['forceFrontend' => true]);
+        return LinkHandler::getInstance()->getControllerLink(PaidSubscriptionListPage::class);
     }
 
     #[\Override]

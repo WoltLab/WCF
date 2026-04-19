@@ -6,6 +6,7 @@ use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
+use wcf\form\ModerationReportForm;
 use wcf\system\email\Email;
 use wcf\system\moderation\queue\IModerationQueueHandler;
 use wcf\system\request\LinkHandler;
@@ -84,7 +85,7 @@ final class ReportModerationQueueUserNotificationEvent extends AbstractUserNotif
     #[\Override]
     public function getLink(): string
     {
-        return LinkHandler::getInstance()->getLink('ModerationReport', [
+        return LinkHandler::getInstance()->getControllerLink(ModerationReportForm::class, [
             'id' => $this->getUserNotificationObject()->queueID,
         ]);
     }

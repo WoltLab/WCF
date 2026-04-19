@@ -7,6 +7,7 @@ use wcf\data\ITitledLinkObject;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyCache;
 use wcf\data\user\User;
+use wcf\page\CategoryTrophyListPage;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -44,8 +45,7 @@ class TrophyCategory extends AbstractDecoratedCategory implements ITitledLinkObj
     #[\Override]
     public function getLink(): string
     {
-        return LinkHandler::getInstance()->getLink('CategoryTrophyList', [
-            'forceFrontend' => true,
+        return LinkHandler::getInstance()->getControllerLink(CategoryTrophyListPage::class, [
             'object' => $this->getDecoratedObject(),
         ]);
     }

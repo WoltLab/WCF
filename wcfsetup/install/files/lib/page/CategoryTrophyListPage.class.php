@@ -50,7 +50,7 @@ class CategoryTrophyListPage extends TrophyListPage
             throw new PermissionDeniedException();
         }
 
-        $this->canonicalURL = LinkHandler::getInstance()->getLink('CategoryTrophyList', [
+        $this->canonicalURL = LinkHandler::getInstance()->getControllerLink(CategoryTrophyListPage::class, [
             'object' => $this->category,
         ], ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : ''));
     }

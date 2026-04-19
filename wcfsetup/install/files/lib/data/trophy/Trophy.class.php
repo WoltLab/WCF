@@ -7,6 +7,7 @@ use wcf\data\DatabaseObject;
 use wcf\data\ITitledLinkObject;
 use wcf\data\trophy\category\TrophyCategory;
 use wcf\data\trophy\category\TrophyCategoryCache;
+use wcf\page\TrophyPage;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\request\IRouteController;
@@ -76,9 +77,8 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
     #[\Override]
     public function getLink(): string
     {
-        return LinkHandler::getInstance()->getLink('Trophy', [
+        return LinkHandler::getInstance()->getControllerLink(TrophyPage::class, [
             'object' => $this,
-            'forceFrontend' => true,
         ]);
     }
 

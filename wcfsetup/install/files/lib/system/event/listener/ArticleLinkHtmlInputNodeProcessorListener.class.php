@@ -5,6 +5,7 @@ namespace wcf\system\event\listener;
 use wcf\data\article\AccessibleArticleList;
 use wcf\data\article\content\ArticleContentList;
 use wcf\data\bbcode\BBCodeCache;
+use wcf\page\ArticlePage;
 use wcf\system\html\input\node\HtmlInputNodeProcessor;
 use wcf\system\request\LinkHandler;
 
@@ -22,9 +23,7 @@ class ArticleLinkHtmlInputNodeProcessorListener extends AbstractHtmlInputNodePro
     {
         /** @var HtmlInputNodeProcessor $eventObj */
 
-        $regex = $this->getRegexFromLink(LinkHandler::getInstance()->getLink('Article', [
-            'forceFrontend' => true,
-        ]));
+        $regex = $this->getRegexFromLink(LinkHandler::getInstance()->getControllerLink(ArticlePage::class));
         $articleContentIDs = $this->getObjectIDs($eventObj, $regex);
 
         if (!empty($articleContentIDs)) {

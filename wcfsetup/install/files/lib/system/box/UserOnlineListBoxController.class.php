@@ -3,6 +3,7 @@
 namespace wcf\system\box;
 
 use wcf\data\user\online\UsersOnlineList;
+use wcf\page\UsersOnlineListPage;
 use wcf\system\event\EventHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -63,7 +64,7 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
     #[\Override]
     public function getLink(): string
     {
-        return LinkHandler::getInstance()->getLink('UsersOnlineList');
+        return LinkHandler::getInstance()->getControllerLink(UsersOnlineListPage::class);
     }
 
     #[\Override]

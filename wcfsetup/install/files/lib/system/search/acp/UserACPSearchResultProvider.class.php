@@ -2,6 +2,7 @@
 
 namespace wcf\system\search\acp;
 
+use wcf\acp\form\UserEditForm;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -41,7 +42,7 @@ class UserACPSearchResultProvider implements IACPSearchResultProvider
 
         while ($user = $statement->fetchObject(User::class)) {
             if (UserGroup::isAccessibleGroup($user->getGroupIDs())) {
-                $results[] = new ACPSearchResult($user->username, LinkHandler::getInstance()->getLink('UserEdit', [
+                $results[] = new ACPSearchResult($user->username, LinkHandler::getInstance()->getControllerLink(UserEditForm::class, [
                     'object' => $user,
                 ]));
             }

@@ -2,6 +2,7 @@
 
 namespace wcf\system\worker;
 
+use wcf\acp\page\SitemapListPage;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
 use wcf\data\ILinkableObject;
@@ -461,9 +462,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
     #[\Override]
     public function getProceedURL()
     {
-        return LinkHandler::getInstance()->getLink('SitemapList', [
-            'isACP' => true,
-        ]);
+        return LinkHandler::getInstance()->getControllerLink(SitemapListPage::class);
     }
 
     /**

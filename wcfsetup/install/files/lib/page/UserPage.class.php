@@ -150,7 +150,10 @@ class UserPage extends AbstractPage
         MetaTagHandler::getInstance()->addTag(
             'og:url',
             'og:url',
-            LinkHandler::getInstance()->getLink('User', ['object' => $this->user->getDecoratedObject()]),
+            LinkHandler::getInstance()->getControllerLink(
+                UserPage::class,
+                ['object' => $this->user->getDecoratedObject()]
+            ),
             true
         );
         MetaTagHandler::getInstance()->addTag('og:type', 'og:type', 'profile', true);

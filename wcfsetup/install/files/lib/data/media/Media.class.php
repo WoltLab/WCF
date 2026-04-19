@@ -5,6 +5,7 @@ namespace wcf\data\media;
 use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\IThumbnailFile;
+use wcf\page\MediaPage;
 use wcf\system\acl\simple\SimpleAclResolver;
 use wcf\system\file\processor\IImageDataProvider;
 use wcf\system\file\processor\ImageData;
@@ -96,9 +97,8 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
     #[\Override]
     public function getLink(): string
     {
-        return LinkHandler::getInstance()->getLink('Media', [
+        return LinkHandler::getInstance()->getControllerLink(MediaPage::class, [
             'object' => $this,
-            'forceFrontend' => true,
         ]);
     }
 
@@ -119,9 +119,8 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
             return $this->getLink();
         }
 
-        return LinkHandler::getInstance()->getLink('Media', [
+        return LinkHandler::getInstance()->getControllerLink(MediaPage::class, [
             'object' => $this,
-            'forceFrontend' => true,
             'thumbnail' => $size,
         ]);
     }

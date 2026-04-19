@@ -2,6 +2,7 @@
 
 namespace wcf\system\search\acp;
 
+use wcf\acp\form\TrophyEditForm;
 use wcf\data\trophy\Trophy;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\request\LinkHandler;
@@ -57,7 +58,7 @@ class TrophyACPSearchResultProvider implements IACPSearchResultProvider
         ], $conditions->getParameters()));
 
         while ($trophy = $statement->fetchObject(Trophy::class)) {
-            $results[] = new ACPSearchResult($trophy->getTitle(), LinkHandler::getInstance()->getLink('TrophyEdit', [
+            $results[] = new ACPSearchResult($trophy->getTitle(), LinkHandler::getInstance()->getControllerLink(TrophyEditForm::class, [
                 'id' => $trophy->trophyID,
             ]));
         }

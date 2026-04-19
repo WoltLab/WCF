@@ -2,6 +2,7 @@
 
 namespace wcf\system\search\acp;
 
+use wcf\acp\form\UserGroupOptionForm;
 use wcf\data\user\group\option\category\UserGroupOptionCategoryList;
 use wcf\data\user\group\option\UserGroupOption;
 use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
@@ -103,7 +104,7 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
                 continue;
             }
 
-            $link = LinkHandler::getInstance()->getLink('UserGroupOption', ['id' => $userGroupOption->optionID]);
+            $link = LinkHandler::getInstance()->getControllerLink(UserGroupOptionForm::class, ['id' => $userGroupOption->optionID]);
             $categoryName = $userGroupOption->categoryName;
             $parentCategories = [];
             while (isset($optionCategories[$categoryName])) {

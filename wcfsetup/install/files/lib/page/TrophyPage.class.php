@@ -137,7 +137,7 @@ class TrophyPage extends MultipleLinkPage
 
         $this->category = $this->trophy->getCategory();
 
-        $this->canonicalURL = LinkHandler::getInstance()->getLink('Trophy', [
+        $this->canonicalURL = LinkHandler::getInstance()->getControllerLink(TrophyPage::class, [
             'object' => $this->trophy,
         ], ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : ''));
     }

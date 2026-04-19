@@ -8,6 +8,7 @@ use wcf\data\IUserContent;
 use wcf\data\language\Language;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\option\UserOption;
+use wcf\page\UserPage;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\IRouteController;
@@ -595,10 +596,8 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     #[\Override]
     public function getLink(): string
     {
-        return LinkHandler::getInstance()->getLink('User', [
-            'application' => 'wcf',
+        return LinkHandler::getInstance()->getControllerLink(UserPage::class, [
             'object' => $this,
-            'forceFrontend' => true,
         ]);
     }
 

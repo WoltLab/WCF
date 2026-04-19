@@ -293,11 +293,10 @@ class MenuItemAddForm extends AbstractFormBuilderForm
     protected function setFormAction()
     {
         $this->form->action(
-            LinkHandler::getInstance()->getLink(
-                'MenuItemAdd',
+            LinkHandler::getInstance()->getControllerLink(
+                MenuItemAddForm::class,
                 [
                     'menuID' => $this->menuID,
-                    'isACP' => true
                 ]
             )
         );

@@ -56,8 +56,8 @@ class TrophyListPage extends MultipleLinkPage
     {
         parent::readParameters();
 
-        $this->canonicalURL = LinkHandler::getInstance()->getLink(
-            'TrophyList',
+        $this->canonicalURL = LinkHandler::getInstance()->getControllerLink(
+            TrophyListPage::class,
             [],
             ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : '')
         );

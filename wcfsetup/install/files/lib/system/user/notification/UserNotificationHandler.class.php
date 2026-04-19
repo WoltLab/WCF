@@ -3,6 +3,7 @@
 namespace wcf\system\user\notification;
 
 use ParagonIE\ConstantTime\Hex;
+use wcf\action\NotificationConfirmAction;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\notification\event\recipient\UserNotificationEventRecipientList;
@@ -1048,8 +1049,8 @@ class UserNotificationHandler extends SingletonFactory
                 return [
                     'title' => \strip_tags($event->getTitle()),
                     'message' => $event->getMessage(),
-                    'link' => LinkHandler::getInstance()->getLink(
-                        'NotificationConfirm',
+                    'link' => LinkHandler::getInstance()->getControllerLink(
+                        NotificationConfirmAction::class,
                         ['id' => $event->getNotification()->notificationID]
                     ),
                 ];

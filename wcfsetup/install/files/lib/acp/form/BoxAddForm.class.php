@@ -2,6 +2,7 @@
 
 namespace wcf\acp\form;
 
+use wcf\acp\page\BoxListPage;
 use wcf\data\box\Box;
 use wcf\data\box\BoxAction;
 use wcf\data\box\BoxEditor;
@@ -309,7 +310,7 @@ class BoxAddForm extends AbstractForm
 
         // work-around to force adding boxes via dialog overlay
         if (empty($_POST) && $this->boxType == '') {
-            HeaderUtil::redirect(LinkHandler::getInstance()->getLink('BoxList', ['showBoxAddDialog' => 1]));
+            HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(BoxListPage::class, ['showBoxAddDialog' => 1]));
 
             exit;
         }

@@ -164,7 +164,7 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm
     #[\Override]
     public function setFormAction()
     {
-        $this->form->action(LinkHandler::getInstance()->getLink('DevtoolsProjectPipEntryAdd', [
+        $this->form->action(LinkHandler::getInstance()->getControllerLink(DevtoolsProjectPipEntryAddForm::class, [
             'entryType' => $this->entryType,
             'id' => $this->project->projectID,
             'pip' => $this->pip,

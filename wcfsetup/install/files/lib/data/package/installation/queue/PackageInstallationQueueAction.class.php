@@ -2,6 +2,7 @@
 
 namespace wcf\data\package\installation\queue;
 
+use wcf\acp\page\PackageListPage;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\package\Package;
 use wcf\system\exception\PermissionDeniedException;
@@ -75,7 +76,7 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction
         $this->queue->delete();
 
         return [
-            'url' => LinkHandler::getInstance()->getLink('PackageList'),
+            'url' => LinkHandler::getInstance()->getControllerLink(PackageListPage::class),
         ];
     }
 }

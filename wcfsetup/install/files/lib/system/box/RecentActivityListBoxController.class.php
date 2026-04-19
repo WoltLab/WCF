@@ -6,6 +6,7 @@ use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
 use wcf\data\user\activity\event\ViewableUserActivityEventList;
 use wcf\data\user\ignore\UserIgnore;
+use wcf\page\RecentActivityListPage;
 use wcf\system\condition\IObjectListCondition;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
@@ -78,7 +79,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
     #[\Override]
     public function getLink(): string
     {
-        return LinkHandler::getInstance()->getLink('RecentActivityList');
+        return LinkHandler::getInstance()->getControllerLink(RecentActivityListPage::class);
     }
 
     /**

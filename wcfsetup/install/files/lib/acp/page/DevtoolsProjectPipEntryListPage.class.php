@@ -195,7 +195,7 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage
 
         $this->linkParameters = \http_build_query($linkParameters, '', '&');
 
-        $this->canonicalURL = LinkHandler::getInstance()->getLink('DevtoolsProjectPipEntryList', [
+        $this->canonicalURL = LinkHandler::getInstance()->getControllerLink(DevtoolsProjectPipEntryListPage::class, [
             'id' => $this->project->projectID,
         ], $this->linkParameters);
     }

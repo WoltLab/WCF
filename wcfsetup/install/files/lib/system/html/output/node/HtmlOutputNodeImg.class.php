@@ -2,6 +2,7 @@
 
 namespace wcf\system\html\output\node;
 
+use wcf\action\ImageProxyAction;
 use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\application\ApplicationHandler;
@@ -220,7 +221,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
         try {
             $key = CryptoUtil::createSignedString($link);
 
-            return LinkHandler::getInstance()->getLink('ImageProxy', [
+            return LinkHandler::getInstance()->getControllerLink(ImageProxyAction::class, [
                 'key' => $key,
             ]);
         } catch (CryptoException $e) {
