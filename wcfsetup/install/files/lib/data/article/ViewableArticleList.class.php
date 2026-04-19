@@ -88,7 +88,6 @@ class ViewableArticleList extends ArticleList
         // get article content
         if ($this->contentLoading && !empty($this->objectIDs)) {
             $contentList = new ViewableArticleContentList();
-            $contentList->enableEmbeddedObjectLoading($this->embeddedObjectLoading);
             $contentList->enableArticleLoading(false);
             $contentList->getConditionBuilder()->add('article_content.articleID IN (?)', [$this->objectIDs]);
             $contentList->getConditionBuilder()->add(

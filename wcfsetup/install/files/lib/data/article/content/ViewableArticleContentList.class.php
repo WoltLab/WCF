@@ -5,7 +5,6 @@ namespace wcf\data\article\content;
 use wcf\data\article\ViewableArticle;
 use wcf\data\article\ViewableArticleList;
 use wcf\data\media\ViewableMediaList;
-use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 
 /**
  * Represents a list of viewable article contents.
@@ -40,16 +39,13 @@ class ViewableArticleContentList extends ArticleContentList
     {
         parent::readObjects();
 
-        $imageIDs = $embeddedObjectContentIDs = $articleIDs = [];
+        $imageIDs = $articleIDs = [];
         foreach ($this->getObjects() as $articleContent) {
             if ($articleContent->imageID) {
                 $imageIDs[] = $articleContent->imageID;
             }
             if ($articleContent->teaserImageID) {
                 $imageIDs[] = $articleContent->teaserImageID;
-            }
-            if ($articleContent->hasEmbeddedObjects) {
-                $embeddedObjectContentIDs[] = $articleContent->articleContentID;
             }
 
             $articleIDs[] = $articleContent->articleID;
@@ -66,15 +62,6 @@ class ViewableArticleContentList extends ArticleContentList
             $mediaList->setObjectIDs($imageIDs);
             $mediaList->readObjects();
             $images = $mediaList->getObjects();
-        }
-
-        // load embedded objects
-        if ($this->embeddedObjectLoading && !empty($embeddedObjectContentIDs)) {
-            MessageEmbeddedObjectManager::getInstance()->loadObjects(
-                'com.woltlab.wcf.article.content',
-                $embeddedObjectContentIDs,
-                $contentLanguageID
-            );
         }
 
         /** @var array<int, ViewableArticle> */
@@ -115,6 +102,7 @@ class ViewableArticleContentList extends ArticleContentList
      * Enables/disables the loading of embedded objects in the article contents.
      *
      * @since   5.4
+     * @deprecated 6.3
      */
     public function enableEmbeddedObjectLoading(bool $enable = true): void
     {

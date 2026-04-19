@@ -3,13 +3,12 @@
 namespace wcf\data\article\content;
 
 use wcf\data\article\Article;
-use wcf\data\DatabaseObject;
+use wcf\data\CollectionDatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\language\Language;
 use wcf\page\ArticlePage;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\language\LanguageFactory;
-use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -35,8 +34,10 @@ use wcf\util\StringUtil;
  * @property-read   string  $metaTitle          title of the article used in the title tag
  * @property-read   string  $metaDescription    meta description of the article
  * @property-read   int     $comments           number of comments
+ *
+ * @extends CollectionDatabaseObject<ArticleContentCollection>
  */
-class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteController
+class ArticleContent extends CollectionDatabaseObject implements ILinkableObject, IRouteController
 {
     /**
      * @inheritDoc
@@ -94,6 +95,8 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
      */
     public function getFormattedContent()
     {
+        $this->loadEmbeddedObjects();
+
         $processor = new HtmlOutputProcessor();
         $processor->enableUgc = false;
         $processor->process(
@@ -113,6 +116,8 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
      */
     public function getSimplifiedFormattedContent(): string
     {
+        $this->loadEmbeddedObjects();
+
         $htmlOutputProcessor = new HtmlOutputProcessor();
         $htmlOutputProcessor->setOutputType('text/simplified-html');
         $htmlOutputProcessor->enableUgc = false;
@@ -164,12 +169,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
      */
     public function getMailText(string $mimeType = 'text/plain')
     {
-        if ($this->hasEmbeddedObjects) {
-            MessageEmbeddedObjectManager::getInstance()->loadObjects(
-                'com.woltlab.wcf.article.content',
-                [$this->articleContentID]
-            );
-        }
+        $this->loadEmbeddedObjects();
 
         switch ($mimeType) {
             case 'text/plain':
@@ -220,5 +220,13 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
         }
 
         return null;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function loadEmbeddedObjects(): void
+    {
+        $this->getCollection()->loadEmbeddedObjects('com.woltlab.wcf.article.content');
     }
 }
