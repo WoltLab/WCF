@@ -29,8 +29,8 @@
 					</div>
 				{elseif $boxSortField === 'cumulativeLikes'}
 					<div class="sidebarListItem__meta__item sidebarListItem__meta__reactions">
-						{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike') && $boxArticle->cachedReactions}
-							{include file='shared_topReaction' cachedReactions=$boxArticle->cachedReactions render='full'}
+						{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike') && $boxArticle->cumulativeLikes}
+							{include file='shared_topReaction' cachedReactions=$boxArticle->getCachedReactions() render='full'}
 						{/if}
 					</div>
 				{/if}

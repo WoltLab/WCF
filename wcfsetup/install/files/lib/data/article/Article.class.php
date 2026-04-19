@@ -465,6 +465,14 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
     /**
      * @since 6.3
      */
+    public function getCachedReactions(): ?string
+    {
+        return $this->getCollection()->getCachedReactions($this);
+    }
+
+    /**
+     * @since 6.3
+     */
     public function getReactionData(): ReactionData
     {
         return $this->getCollection()->getReactionData($this);

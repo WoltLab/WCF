@@ -5,7 +5,6 @@ namespace wcf\data\article;
 use wcf\data\article\content\ViewableArticleContentList;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\label\object\ArticleLabelObjectHandler;
-use wcf\system\reaction\ReactionHandler;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 
@@ -54,15 +53,6 @@ class ViewableArticleList extends ArticleList
                         AND tracked_visit.objectID = article.articleID
                         AND tracked_visit.userID = " . WCF::getUser()->userID;
         }
-
-        if (!empty($this->sqlSelects)) {
-            $this->sqlSelects .= ',';
-        }
-        $this->sqlSelects .= "like_object.cachedReactions";
-        $this->sqlJoins .= "
-            LEFT JOIN   wcf1_like_object like_object
-            ON          like_object.objectTypeID = " . ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.likeableArticle')->objectTypeID . "
-                    AND like_object.objectID = article.articleID";
     }
 
     #[\Override]
