@@ -151,20 +151,31 @@ html:not(.touch) .tabularListRow:not(.tabularListRowHead):hover {
 			color: var(--wcfTabularBoxHeadlineActive);
 		}
 
+		> .messageTableSort__trigger {
+			display: block;
+
+			&:hover {
+				color: var(--wcfTabularBoxHeadlineActive);
+			}
+		}
+
 		&.ASC,
 		&.DESC {
-			> a::after {
+			> a::after,
+			> .messageTableSort__trigger::after {
 				display: inline-block;
 				margin-left: 5px;
 			}
 		}
 
-		&.ASC > a::after {
+		&.ASC > a::after,
+		&.ASC > .messageTableSort__trigger::after {
 			// 2191 = UPWARDS ARROW
 			content: "\2191";
 		}
 
-		&.DESC > a::after {
+		&.DESC > a::after,
+		&.DESC > .messageTableSort__trigger::after {
 			// 2193 = DOWNWARDS ARROW
 			content: "\2193";
 		}

@@ -51,6 +51,8 @@ class HtmlOutputNodeTable extends AbstractHtmlOutputNode
                     }
                 }
 
+                $this->flagTableAsSortable($element, $htmlNodeProcessor);
+
                 // check if table is not contained within another table
                 $parent = $element;
                 while ($parent = $parent->parentNode) {
@@ -66,5 +68,21 @@ class HtmlOutputNodeTable extends AbstractHtmlOutputNode
                 $div->appendChild($element);
             }
         }
+    }
+
+    private function flagTableAsSortable(\DOMElement $tableElement, AbstractHtmlNodeProcessor $htmlNodeProcessor): void
+    {
+        $tableHeaders = $htmlNodeProcessor->getXPath()->query('.//thead', $tableElement);
+        if ($tableHeaders->count() === 0) {
+            return;
+        }
+
+        $class = $tableElement->getAttribute('class');
+        if ($class) {
+            $class .= " ";
+        }
+        $class .= "sortableTable";
+
+        $tableElement->setAttribute('class', $class);
     }
 }
