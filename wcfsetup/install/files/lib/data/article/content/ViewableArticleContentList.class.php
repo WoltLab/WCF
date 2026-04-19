@@ -4,7 +4,6 @@ namespace wcf\data\article\content;
 
 use wcf\data\article\ViewableArticle;
 use wcf\data\article\ViewableArticleList;
-use wcf\data\media\ViewableMediaList;
 
 /**
  * Represents a list of viewable article contents.
@@ -39,29 +38,9 @@ class ViewableArticleContentList extends ArticleContentList
     {
         parent::readObjects();
 
-        $imageIDs = $articleIDs = [];
+        $articleIDs = [];
         foreach ($this->getObjects() as $articleContent) {
-            if ($articleContent->imageID) {
-                $imageIDs[] = $articleContent->imageID;
-            }
-            if ($articleContent->teaserImageID) {
-                $imageIDs[] = $articleContent->teaserImageID;
-            }
-
             $articleIDs[] = $articleContent->articleID;
-        }
-
-        $contentLanguageID = null;
-        if (\count($this->objects) === 1) {
-            $contentLanguageID = \reset($this->objects)->languageID;
-        }
-
-        // cache images
-        if ($imageIDs !== []) {
-            $mediaList = new ViewableMediaList($contentLanguageID);
-            $mediaList->setObjectIDs($imageIDs);
-            $mediaList->readObjects();
-            $images = $mediaList->getObjects();
         }
 
         /** @var array<int, ViewableArticle> */
@@ -77,16 +56,6 @@ class ViewableArticleContentList extends ArticleContentList
         }
 
         foreach ($this->getObjects() as $articleContent) {
-            if (isset($images)) {
-                if ($articleContent->imageID && isset($images[$articleContent->imageID])) {
-                    $articleContent->setImage($images[$articleContent->imageID]);
-                }
-
-                if ($articleContent->teaserImageID && isset($images[$articleContent->teaserImageID])) {
-                    $articleContent->setTeaserImage($images[$articleContent->teaserImageID]);
-                }
-            }
-
             if ($this->articleLoading) {
                 $article = $articles[$articleContent->articleID] ?? null;
                 if ($article === null) {

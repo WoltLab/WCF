@@ -3,6 +3,8 @@
 namespace wcf\data\article\content;
 
 use wcf\data\DatabaseObjectCollection;
+use wcf\data\media\ViewableMedia;
+use wcf\data\media\ViewableMediaList;
 use wcf\data\TCollectionEmbeddedObjects;
 
 /**
@@ -18,4 +20,63 @@ use wcf\data\TCollectionEmbeddedObjects;
 class ArticleContentCollection extends DatabaseObjectCollection
 {
     use TCollectionEmbeddedObjects;
+
+    /**
+     * @var array<int, ViewableMedia>
+     */
+    private array $images;
+
+    public function getImage(int $imageID): ?ViewableMedia
+    {
+        $this->loadImages();
+
+        return $this->images[$imageID] ?? null;
+    }
+
+    private function loadImages(): void
+    {
+        if (isset($this->images)) {
+            return;
+        }
+
+        $this->images = [];
+        $imageIDs = $this->getImageIDs();
+        if ($imageIDs === []) {
+            return;
+        }
+
+        $mediaList = new ViewableMediaList($this->getContentLanguageID());
+        $mediaList->setObjectIDs($imageIDs);
+        $mediaList->readObjects();
+        $this->images = $mediaList->getObjects();
+    }
+
+    private function getContentLanguageID(): ?int
+    {
+        $objects = $this->getObjects();
+        if (\count($objects) === 1) {
+            return \reset($objects)->languageID;
+        }
+
+        return null;
+    }
+
+    /**
+     * @return list<int>
+     */
+    private function getImageIDs(): array
+    {
+        $imageIDs = [];
+
+        foreach ($this->getObjects() as $object) {
+            if ($object->imageID) {
+                $imageIDs[] = $object->imageID;
+            }
+            if ($object->teaserImageID) {
+                $imageIDs[] = $object->teaserImageID;
+            }
+        }
+
+        return \array_unique($imageIDs);
+    }
 }

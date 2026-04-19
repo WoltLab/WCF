@@ -6,6 +6,7 @@ use wcf\data\article\Article;
 use wcf\data\CollectionDatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\language\Language;
+use wcf\data\media\ViewableMedia;
 use wcf\page\ArticlePage;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\language\LanguageFactory;
@@ -228,5 +229,43 @@ class ArticleContent extends CollectionDatabaseObject implements ILinkableObject
     public function loadEmbeddedObjects(): void
     {
         $this->getCollection()->loadEmbeddedObjects('com.woltlab.wcf.article.content');
+    }
+
+    /**
+     * Returns the article's image if the active user can access it or `null`.
+     *
+     * @since 6.3
+     */
+    public function getImage(): ?ViewableMedia
+    {
+        if ($this->imageID === null) {
+            return null;
+        }
+
+        $image = $this->getCollection()->getImage($this->imageID);
+        if ($image === null || !$image->isAccessible()) {
+            return null;
+        }
+
+        return $image;
+    }
+
+    /**
+     * Returns the article's teaser image if the active user can access it or `null`.
+     *
+     * @since 6.3
+     */
+    public function getTeaserImage(): ?ViewableMedia
+    {
+        if ($this->teaserImageID === null) {
+            return $this->getImage();
+        }
+
+        $image = $this->getCollection()->getImage($this->teaserImageID);
+        if ($image === null || !$image->isAccessible()) {
+            return null;
+        }
+
+        return $image;
     }
 }
