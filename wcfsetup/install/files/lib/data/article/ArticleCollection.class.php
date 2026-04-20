@@ -9,6 +9,7 @@ use wcf\data\TCollectionLabels;
 use wcf\data\TCollectionReactions;
 use wcf\data\TCollectionUserProfiles;
 use wcf\data\TCollectionVisitTimes;
+use wcf\system\article\discussion\IArticleDiscussionProvider;
 use wcf\system\label\object\ArticleLabelObjectHandler;
 use wcf\system\WCF;
 
@@ -33,6 +34,11 @@ class ArticleCollection extends DatabaseObjectCollection
      * @var array<int, array<int, ArticleContent>>
      */
     private array $articleContents;
+
+    /**
+     * @var array<int, IArticleDiscussionProvider>
+     */
+    private array $discussionProviders;
 
     public function getArticleContent(Article $article): ?ArticleContent
     {
@@ -80,6 +86,31 @@ class ArticleCollection extends DatabaseObjectCollection
         $contentList->readObjects();
         foreach ($contentList->getObjects() as $articleContent) {
             $this->articleContents[$articleContent->articleID][$articleContent->languageID ?: 0] = $articleContent;
+        }
+    }
+
+    public function getDiscussionProvider(Article $article): ?IArticleDiscussionProvider
+    {
+        $this->loadDiscussionProviders();
+
+        return $this->discussionProviders[$article->getObjectID()] ?? null;
+    }
+
+    private function loadDiscussionProviders(): void
+    {
+        if (isset($this->discussionProviders)) {
+            return;
+        }
+
+        $this->discussionProviders = [];
+
+        foreach ($this->getObjects() as $object) {
+            foreach (Article::getAllDiscussionProviders() as $discussionProvider) {
+                if (\call_user_func([$discussionProvider, 'isResponsible'], $object)) {
+                    $this->discussionProviders[$object->getObjectID()] = new $discussionProvider($object);
+                    break;
+                }
+            }
         }
     }
 

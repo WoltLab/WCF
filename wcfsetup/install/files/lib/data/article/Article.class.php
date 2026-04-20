@@ -61,18 +61,6 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
      */
     const DELAYED_PUBLICATION = 2;
 
-    /**
-     * article's category
-     * @var ?ArticleCategory
-     */
-    protected $category;
-
-    /**
-     * @var IArticleDiscussionProvider
-     * @since   5.2
-     */
-    protected $discussionProvider;
-
     protected int $effectiveVisitTime;
 
     /**
@@ -278,48 +266,24 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
      *
      * @return ?ArticleCategory
      */
-    public function getCategory()
+    public function getCategory(): ?ArticleCategory
     {
-        if ($this->category === null && $this->categoryID) {
-            $this->category = ArticleCategory::getCategory($this->categoryID);
-        }
-
-        return $this->category;
-    }
-
-    /**
-     * Sets the discussion provider for this article.
-     *
-     * @return void
-     * @since       5.2
-     */
-    public function setDiscussionProvider(IArticleDiscussionProvider $discussionProvider)
-    {
-        $this->discussionProvider = $discussionProvider;
+        return ArticleCategory::getCategory($this->categoryID);
     }
 
     /**
      * Returns the responsible discussion provider for this article.
      *
-     * @return      IArticleDiscussionProvider
-     * @since       5.2
+     * @since 5.2
      */
-    public function getDiscussionProvider()
+    public function getDiscussionProvider(): IArticleDiscussionProvider
     {
-        if ($this->discussionProvider === null) {
-            foreach (self::getAllDiscussionProviders() as $discussionProvider) {
-                if (\call_user_func([$discussionProvider, 'isResponsible'], $this)) {
-                    $this->setDiscussionProvider(new $discussionProvider($this));
-                    break;
-                }
-            }
-
-            if ($this->discussionProvider === null) {
-                throw new \RuntimeException('No discussion provider has claimed to be responsible for the article #' . $this->articleID);
-            }
+        $discussionProvider = $this->getCollection()->getDiscussionProvider($this);
+        if ($discussionProvider === null) {
+            throw new \RuntimeException('No discussion provider has claimed to be responsible for the article #' . $this->articleID);
         }
 
-        return $this->discussionProvider;
+        return $discussionProvider;
     }
 
     /**
