@@ -4,8 +4,7 @@ namespace wcf\system\message\embedded\object;
 
 use wcf\data\article\AccessibleArticleList;
 use wcf\data\article\Article;
-use wcf\data\article\content\ViewableArticleContentList;
-use wcf\data\article\ViewableArticleList;
+use wcf\system\cache\runtime\ArticleRuntimeCache;
 use wcf\system\html\input\HtmlInputProcessor;
 
 /**
@@ -33,38 +32,7 @@ class ArticleMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedO
     #[\Override]
     public function loadObjects(array $objectIDs)
     {
-        // Do not use `ViewableArticleRuntimeCache` to avoid recursively loading embedded objects.
-        $articleList = new ViewableArticleList();
-        $articleList->enableEmbeddedObjectLoading(false);
-        $articleList->getConditionBuilder()->add('article.articleID IN (?)', [$objectIDs]);
-        $articleList->readObjects();
-        $articles = $articleList->getObjects();
-
-        $contentLanguageID = MessageEmbeddedObjectManager::getInstance()->getContentLanguageID();
-        if ($contentLanguageID !== null) {
-            $articleIDs = [];
-            foreach ($articles as $article) {
-                if (
-                    $article->getArticleContent()->languageID
-                    && $article->getArticleContent()->languageID != $contentLanguageID
-                ) {
-                    $articleIDs[] = $article->articleID;
-                }
-            }
-
-            if (!empty($articleIDs)) {
-                $list = new ViewableArticleContentList();
-                $list->getConditionBuilder()->add("articleID IN (?)", [$articleIDs]);
-                $list->getConditionBuilder()->add("languageID = ?", [$contentLanguageID]);
-                $list->readObjects();
-
-                foreach ($list->getObjects() as $articleContent) {
-                    $articles[$articleContent->articleID]->setArticleContent($articleContent);
-                }
-            }
-        }
-
-        return $articles;
+        return ArticleRuntimeCache::getInstance()->getObjects($objectIDs);
     }
 
     #[\Override]

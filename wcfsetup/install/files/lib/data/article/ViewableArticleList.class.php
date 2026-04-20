@@ -2,9 +2,6 @@
 
 namespace wcf\data\article;
 
-use wcf\data\article\content\ViewableArticleContentList;
-use wcf\system\WCF;
-
 /**
  * Represents a list of articles.
  *
@@ -33,32 +30,6 @@ class ViewableArticleList extends ArticleList
      * @since   5.4
      */
     protected $embeddedObjectLoading = true;
-
-    #[\Override]
-    public function readObjects()
-    {
-        parent::readObjects();
-
-        // get article content
-        if ($this->contentLoading && !empty($this->objectIDs)) {
-            $contentList = new ViewableArticleContentList();
-            $contentList->enableArticleLoading(false);
-            $contentList->getConditionBuilder()->add('article_content.articleID IN (?)', [$this->objectIDs]);
-            $contentList->getConditionBuilder()->add(
-                '(article_content.languageID IS NULL OR article_content.languageID = ?)',
-                [WCF::getLanguage()->languageID]
-            );
-            $contentList->readObjects();
-            foreach ($contentList as $articleContent) {
-                $article = $this->objects[$articleContent->articleID];
-                $article->setArticleContent($articleContent);
-
-                // Some providers do pre-populate internal caches in order to retrieve the data
-                // for many objects in a single step.
-                $article->getDiscussionProvider();
-            }
-        }
-    }
 
     /**
      * Enables/disables the loading of article content objects.

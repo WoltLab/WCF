@@ -6,7 +6,6 @@ use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\attachment\GroupedAttachmentList;
 use wcf\data\CollectionDatabaseObject;
-use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\IPopoverObject;
 use wcf\data\IUserContent;
@@ -61,18 +60,6 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
      * indicates that the publication of an article is delayed
      */
     const DELAYED_PUBLICATION = 2;
-
-    /**
-     * article content grouped by language id
-     * @var ArticleContent[]
-     */
-    public $articleContents;
-
-    /**
-     * language links
-     * @var ArticleContent[]
-     */
-    public $languageLinks;
 
     /**
      * article's category
@@ -259,24 +246,10 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
 
     /**
      * Returns the active content version.
-     *
-     * @return  ArticleContent|null
      */
-    public function getArticleContent()
+    public function getArticleContent(): ?ArticleContent
     {
-        $this->getArticleContents();
-
-        if ($this->isMultilingual) {
-            if (isset($this->articleContents[WCF::getLanguage()->languageID])) {
-                return $this->articleContents[WCF::getLanguage()->languageID];
-            }
-        } else {
-            if (!empty($this->articleContents[0])) {
-                return $this->articleContents[0];
-            }
-        }
-
-        return null;
+        return $this->getCollection()->getArticleContent($this);
     }
 
     /**
@@ -284,44 +257,20 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
      *
      * @return  ArticleContent[]
      */
-    public function getArticleContents()
+    public function getArticleContents(): array
     {
-        if ($this->articleContents === null) {
-            $this->articleContents = [];
-
-            $sql = "SELECT  *
-                    FROM    wcf1_article_content
-                    WHERE   articleID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$this->articleID]);
-            while ($row = $statement->fetchArray()) {
-                $this->articleContents[$row['languageID'] ?: 0] = new ArticleContent(null, $row);
-            }
-        }
-
-        return $this->articleContents;
+        return $this->getCollection()->getArticleContents($this);
     }
 
     /**
      * Returns the article's language links.
      *
-     * @return  ArticleContent[]
+     * @return ArticleContent[]
+     * @deprecated 6.3 Use `getArticleContents()` instead.
      */
-    public function getLanguageLinks()
+    public function getLanguageLinks(): array
     {
-        if ($this->languageLinks === null) {
-            $this->languageLinks = [];
-            $sql = "SELECT  articleContentID, title, languageID
-                    FROM    wcf1_article_content
-                    WHERE   articleID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$this->articleID]);
-            while ($row = $statement->fetchArray()) {
-                $this->languageLinks[$row['languageID'] ?: 0] = new ArticleContent(null, $row);
-            }
-        }
-
-        return $this->languageLinks;
+        return $this->getArticleContents();
     }
 
     /**

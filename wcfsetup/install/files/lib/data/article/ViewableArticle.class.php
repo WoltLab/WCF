@@ -67,20 +67,6 @@ class ViewableArticle extends DatabaseObjectDecorator
     }
 
     /**
-     * Sets the article's content.
-     *
-     * @return void
-     */
-    public function setArticleContent(ViewableArticleContent $articleContent)
-    {
-        if ($this->getDecoratedObject()->articleContents === null) {
-            $this->getDecoratedObject()->articleContents = [];
-        }
-
-        $this->getDecoratedObject()->articleContents[$articleContent->languageID ?: 0] = $articleContent;
-    }
-
-    /**
      * Returns the number of unread articles.
      *
      * @return  int
