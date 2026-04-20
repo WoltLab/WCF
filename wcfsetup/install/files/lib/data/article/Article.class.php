@@ -23,9 +23,9 @@ use wcf\system\WCF;
 /**
  * Represents a cms article.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @property-read   int     $articleID          unique id of the article
  * @property-read   ?int    $userID             id of the user the article belongs to or `null` if the user does not exist anymore
@@ -65,10 +65,8 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
 
     /**
      * Returns true if the active user can delete this article.
-     *
-     * @return  bool
      */
-    public function canDelete()
+    public function canDelete(): bool
     {
         if (WCF::getSession()->hasPermission('admin.content.article.canManageArticle')) {
             return true;
@@ -86,11 +84,8 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
      * the function uses the current user.
      *
      * <strong>Attention:</strong> The `$user` parameter was introduced with version 5.5.
-     *
-     * @param UserProfile|null $user
-     * @return  bool
      */
-    public function canRead(?UserProfile $user = null)
+    public function canRead(?UserProfile $user = null): bool
     {
         if ($user === null) {
             $user = new UserProfile(WCF::getUser());
@@ -125,10 +120,9 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
     /**
      * Returns true if the current user can edit these article.
      *
-     * @return      bool
      * @since       5.2
      */
-    public function canEdit()
+    public function canEdit(): bool
     {
         if (!$this->canRead()) {
             return false;
@@ -154,10 +148,9 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
     /**
      * Returns true if the current user can publish these article.
      *
-     * @return      bool
      * @since       5.2
      */
-    public function canPublish()
+    public function canPublish(): bool
     {
         if (WCF::getSession()->hasPermission('admin.content.article.canManageArticle')) {
             return true;
@@ -192,10 +185,8 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
 
     /**
      * Returns the article's unformatted teaser.
-     *
-     * @return      string
      */
-    public function getTeaser()
+    public function getTeaser(): string
     {
         if ($this->getArticleContent() !== null) {
             return $this->getArticleContent()->getTeaser();
@@ -206,10 +197,8 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
 
     /**
      * Returns the article's formatted teaser.
-     *
-     * @return      string
      */
-    public function getFormattedTeaser()
+    public function getFormattedTeaser(): string
     {
         if ($this->getArticleContent() !== null) {
             return $this->getArticleContent()->getFormattedTeaser();
@@ -220,10 +209,8 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
 
     /**
      * Returns the article's formatted content.
-     *
-     * @return      string
      */
-    public function getFormattedContent()
+    public function getFormattedContent(): string
     {
         if ($this->getArticleContent() !== null) {
             return $this->getArticleContent()->getFormattedContent();
@@ -289,10 +276,10 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
     /**
      * Returns the list of the available discussion providers.
      *
-     * @return      string[]
-     * @since       5.2
+     * @return string[]
+     * @since 5.2
      */
-    public static function getAllDiscussionProviders()
+    public static function getAllDiscussionProviders(): array
     {
         /** @var ?string[] $discussionProviders */
         static $discussionProviders;
@@ -320,28 +307,28 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
     }
 
     /**
-     * @since       5.2
+     * @since 5.2
      */
     #[\Override]
-    public function getTime()
+    public function getTime(): int
     {
         return $this->time;
     }
 
     /**
-     * @since       5.2
+     * @since 5.2
      */
     #[\Override]
-    public function getUserID()
+    public function getUserID(): ?int
     {
         return $this->userID;
     }
 
     /**
-     * @since       5.2
+     * @since 5.2
      */
     #[\Override]
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -363,7 +350,7 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
     }
 
     #[\Override]
-    public function getPopoverLinkClass()
+    public function getPopoverLinkClass(): string
     {
         return 'articleLink';
     }

@@ -19,9 +19,9 @@ use wcf\util\StringUtil;
 /**
  * Represents an article content.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @property-read   int     $articleContentID   unique id of the article content
  * @property-read   int     $articleID          id of the article the article content belongs to
@@ -61,20 +61,16 @@ class ArticleContent extends CollectionDatabaseObject implements ILinkableObject
 
     /**
      * Returns the article's unformatted teaser.
-     *
-     * @return      string
      */
-    public function getTeaser()
+    public function getTeaser(): string
     {
-        return $this->teaser;
+        return $this->teaser ?? '';
     }
 
     /**
      * Returns the article's formatted teaser.
-     *
-     * @return      string
      */
-    public function getFormattedTeaser()
+    public function getFormattedTeaser(): string
     {
         if ($this->teaser) {
             return \nl2br(StringUtil::encodeHTML($this->teaser), false);
@@ -85,10 +81,8 @@ class ArticleContent extends CollectionDatabaseObject implements ILinkableObject
 
     /**
      * Returns the article's formatted content.
-     *
-     * @return      string
      */
-    public function getFormattedContent()
+    public function getFormattedContent(): string
     {
         $this->loadEmbeddedObjects();
 
@@ -107,6 +101,7 @@ class ArticleContent extends CollectionDatabaseObject implements ILinkableObject
 
     /**
      * Returns a simplified version of the formatted content.
+     *
      * @since 6.1
      */
     public function getSimplifiedFormattedContent(): string
@@ -134,10 +129,8 @@ class ArticleContent extends CollectionDatabaseObject implements ILinkableObject
 
     /**
      * Returns the language of this article content or `null` if no language has been specified.
-     *
-     * @return  Language|null
      */
-    public function getLanguage()
+    public function getLanguage(): ?Language
     {
         if ($this->languageID) {
             return LanguageFactory::getInstance()->getLanguage($this->languageID);
@@ -150,10 +143,9 @@ class ArticleContent extends CollectionDatabaseObject implements ILinkableObject
      * Returns a version of this message optimized for use in emails.
      *
      * @param string $mimeType Either 'text/plain' or 'text/html'
-     * @return  string
-     * @since       5.2
+     * @since 5.2
      */
-    public function getMailText(string $mimeType = 'text/plain')
+    public function getMailText(string $mimeType = 'text/plain'): string
     {
         $this->loadEmbeddedObjects();
 
@@ -166,7 +158,6 @@ class ArticleContent extends CollectionDatabaseObject implements ILinkableObject
 
                 return $processor->getHtml();
             case 'text/html':
-                // parse and return message
                 $processor = new HtmlOutputProcessor();
                 $processor->setOutputType('text/simplified-html');
                 $processor->enableUgc = false;
@@ -180,10 +171,8 @@ class ArticleContent extends CollectionDatabaseObject implements ILinkableObject
 
     /**
      * Returns a certain article content or `null` if it does not exist.
-     *
-     * @return      ArticleContent|null
      */
-    public static function getArticleContent(int $articleID, ?int $languageID)
+    public static function getArticleContent(int $articleID, ?int $languageID): ?ArticleContent
     {
         if ($languageID !== null) {
             $sql = "SELECT  *
