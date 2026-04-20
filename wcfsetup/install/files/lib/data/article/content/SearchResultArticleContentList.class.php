@@ -9,13 +9,9 @@ namespace wcf\data\article\content;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @method  SearchResultArticleContent      current()
- * @method  SearchResultArticleContent[]        getObjects()
- * @method  SearchResultArticleContent|null     getSingleObject()
- * @method  SearchResultArticleContent|null     search($objectID)
- * @property    SearchResultArticleContent[] $objects
+ * @extends ArticleContentList<SearchResultArticleContent>
  */
-class SearchResultArticleContentList extends ViewableArticleContentList
+class SearchResultArticleContentList extends ArticleContentList
 {
     /**
      * @inheritDoc

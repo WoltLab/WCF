@@ -5,7 +5,7 @@ namespace wcf\system\page\handler;
 use wcf\data\article\ViewableArticleList;
 use wcf\data\page\Page;
 use wcf\data\user\online\UserOnline;
-use wcf\system\cache\runtime\ViewableArticleContentRuntimeCache;
+use wcf\system\cache\runtime\ArticleContentRuntimeCache;
 use wcf\system\cache\runtime\ViewableArticleRuntimeCache;
 use wcf\system\WCF;
 
@@ -87,7 +87,7 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
             return '';
         }
 
-        $content = ViewableArticleContentRuntimeCache::getInstance()->getObject($user->pageObjectID);
+        $content = ArticleContentRuntimeCache::getInstance()->getObject($user->pageObjectID);
         if ($content === null || !$content->getArticle()->canRead()) {
             return '';
         }
@@ -102,7 +102,7 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
     public function prepareOnlineLocation(Page $page, UserOnline $user)
     {
         if ($user->pageObjectID !== null) {
-            ViewableArticleContentRuntimeCache::getInstance()->cacheObjectID($user->pageObjectID);
+            ArticleContentRuntimeCache::getInstance()->cacheObjectID($user->pageObjectID);
         }
     }
 

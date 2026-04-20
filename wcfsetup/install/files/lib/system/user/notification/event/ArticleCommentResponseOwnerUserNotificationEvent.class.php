@@ -3,9 +3,9 @@
 namespace wcf\system\user\notification\event;
 
 use wcf\data\user\UserProfile;
+use wcf\system\cache\runtime\ArticleContentRuntimeCache;
 use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
-use wcf\system\cache\runtime\ViewableArticleContentRuntimeCache;
 use wcf\system\email\Email;
 
 /**
@@ -27,7 +27,7 @@ class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractCommentRe
     {
         parent::prepare();
 
-        ViewableArticleContentRuntimeCache::getInstance()->cacheObjectID($this->additionalData['objectID']);
+        ArticleContentRuntimeCache::getInstance()->cacheObjectID($this->additionalData['objectID']);
     }
 
     #[\Override]
@@ -46,7 +46,7 @@ class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractCommentRe
                     'author' => $this->author,
                     'authors' => \array_values($authors),
                     'commentID' => $this->getUserNotificationObject()->commentID,
-                    'article' => ViewableArticleContentRuntimeCache::getInstance()
+                    'article' => ArticleContentRuntimeCache::getInstance()
                         ->getObject($this->additionalData['objectID']),
                     'count' => $count,
                     'others' => $count - 1,
@@ -60,7 +60,7 @@ class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractCommentRe
         return $this->getLanguage()->getDynamicVariable('wcf.user.notification.articleComment.responseOwner.message', [
             'author' => $this->author,
             'commentID' => $this->getUserNotificationObject()->commentID,
-            'article' => ViewableArticleContentRuntimeCache::getInstance()
+            'article' => ArticleContentRuntimeCache::getInstance()
                 ->getObject($this->additionalData['objectID']),
             'responseID' => $this->getUserNotificationObject()->responseID,
             'commentAuthor' => $this->getCommentAuthorProfile(),
@@ -79,7 +79,7 @@ class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractCommentRe
             'application' => 'wcf',
             'variables' => [
                 'commentID' => $this->getUserNotificationObject()->commentID,
-                'article' => ViewableArticleContentRuntimeCache::getInstance()
+                'article' => ArticleContentRuntimeCache::getInstance()
                     ->getObject($this->additionalData['objectID']),
                 'languageVariablePrefix' => 'wcf.user.notification.articleComment.responseOwner',
                 'responseID' => $this->getUserNotificationObject()->responseID,
@@ -107,7 +107,7 @@ class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractCommentRe
     #[\Override]
     public function getLink(): string
     {
-        return ViewableArticleContentRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink() . '#comment' . $this->getUserNotificationObject()->commentID . '/response' . $this->getUserNotificationObject()->responseID;
+        return ArticleContentRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink() . '#comment' . $this->getUserNotificationObject()->commentID . '/response' . $this->getUserNotificationObject()->responseID;
     }
 
     #[\Override]
@@ -119,7 +119,7 @@ class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractCommentRe
     #[\Override]
     protected function getObjectTitle(): string
     {
-        return ViewableArticleContentRuntimeCache::getInstance()
+        return ArticleContentRuntimeCache::getInstance()
             ->getObject($this->additionalData['objectID'])->getTitle();
     }
 }
