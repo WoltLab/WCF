@@ -4,7 +4,6 @@ namespace wcf\system\interaction\bulk\user;
 
 use wcf\data\article\AccessibleArticleList;
 use wcf\data\article\Article;
-use wcf\data\article\ViewableArticle;
 use wcf\event\interaction\bulk\user\ArticleBulkInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\bulk\AbstractBulkInteractionProvider;
@@ -33,21 +32,21 @@ final class ArticleBulkInteractions extends AbstractBulkInteractionProvider
         ) {
             $this->addInteractions(
                 [
-                    new BulkSoftDeleteInteraction('core/articles/%s/soft-delete', function (ViewableArticle $article): bool {
+                    new BulkSoftDeleteInteraction('core/articles/%s/soft-delete', function (Article $article): bool {
                         if (!$article->canDelete()) {
                             return false;
                         }
 
                         return $article->isDeleted !== 1;
                     }),
-                    new BulkRestoreInteraction('core/articles/%s/restore', function (ViewableArticle $article): bool {
+                    new BulkRestoreInteraction('core/articles/%s/restore', function (Article $article): bool {
                         if (!$article->canDelete()) {
                             return false;
                         }
 
                         return $article->isDeleted === 1;
                     }),
-                    new BulkDeleteInteraction('core/articles/%s', function (ViewableArticle $article): bool {
+                    new BulkDeleteInteraction('core/articles/%s', function (Article $article): bool {
                         if (!$article->canDelete()) {
                             return false;
                         }
@@ -60,7 +59,7 @@ final class ArticleBulkInteractions extends AbstractBulkInteractionProvider
                         'wcf.article.button.publish',
                         InteractionConfirmationType::None,
                         '',
-                        function (ViewableArticle $article): bool {
+                        function (Article $article): bool {
                             if (!$article->canPublish()) {
                                 return false;
                             }
@@ -74,7 +73,7 @@ final class ArticleBulkInteractions extends AbstractBulkInteractionProvider
                         'wcf.article.button.unpublish',
                         InteractionConfirmationType::None,
                         '',
-                        function (ViewableArticle $article): bool {
+                        function (Article $article): bool {
                             if (!$article->canPublish()) {
                                 return false;
                             }

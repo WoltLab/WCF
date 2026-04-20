@@ -6,7 +6,6 @@ use wcf\acp\form\ArticleEditForm;
 use wcf\acp\form\UserEditForm;
 use wcf\data\article\AccessibleArticleList;
 use wcf\data\article\Article;
-use wcf\data\article\ViewableArticle;
 use wcf\data\category\CategoryNodeTree;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
@@ -27,7 +26,6 @@ use wcf\system\interaction\EditInteraction;
 use wcf\system\view\filter\BooleanFilter;
 use wcf\system\view\filter\CategoryFilter;
 use wcf\system\view\filter\MultipleSelectFilter;
-use wcf\system\view\filter\SelectFilter;
 use wcf\system\view\filter\TextFilter;
 use wcf\system\view\filter\TimeFilter;
 use wcf\system\view\filter\UserFilter;
@@ -60,7 +58,7 @@ final class ArticleGridView extends AbstractGridView
                         #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
-                            \assert($row instanceof ViewableArticle);
+                            \assert($row instanceof Article);
 
                             if ($row->getTeaserImage() !== null) {
                                 return $row->getTeaserImage()->getElementTag(48);
@@ -101,7 +99,7 @@ final class ArticleGridView extends AbstractGridView
                         #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
-                            \assert($row instanceof ViewableArticle);
+                            \assert($row instanceof Article);
 
                             $labels = '';
                             if ($row->hasLabels === 1) {
