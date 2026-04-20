@@ -6,8 +6,6 @@ use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\article\content\ViewableArticleContent;
 use wcf\data\DatabaseObjectDecorator;
-use wcf\data\label\Label;
-use wcf\data\media\ViewableMedia;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\visitTracker\VisitTracker;
@@ -59,12 +57,6 @@ class ViewableArticle extends DatabaseObjectDecorator
     protected static $unreadArticlesByCategory;
 
     /**
-     * list of assigned labels
-     * @var Label[]
-     */
-    protected $labels = [];
-
-    /**
      * Returns a specific article decorated as viewable article or `null` if it does not exist.
      *
      * @param bool $enableContentLoading Enables/disables the loading of article content objects
@@ -92,34 +84,6 @@ class ViewableArticle extends DatabaseObjectDecorator
         }
 
         $this->getDecoratedObject()->articleContents[$articleContent->languageID ?: 0] = $articleContent;
-    }
-
-    /**
-     * Returns the article's image.
-     *
-     * @return  ViewableMedia|null
-     */
-    public function getImage()
-    {
-        if ($this->getArticleContent() !== null) {
-            return $this->getArticleContent()->getImage();
-        }
-
-        return null;
-    }
-
-    /**
-     * Returns the article's teaser image.
-     *
-     * @return  ViewableMedia|null
-     */
-    public function getTeaserImage()
-    {
-        if ($this->getArticleContent() !== null) {
-            return $this->getArticleContent()->getTeaserImage();
-        }
-
-        return null;
     }
 
     /**
@@ -157,36 +121,6 @@ class ViewableArticle extends DatabaseObjectDecorator
     public function isNew()
     {
         return $this->time > $this->getVisitTime();
-    }
-
-    /**
-     * Adds a label.
-     *
-     * @return void
-     */
-    public function addLabel(Label $label)
-    {
-        $this->labels[$label->labelID] = $label;
-    }
-
-    /**
-     * Returns a list of labels.
-     *
-     * @return  Label[]
-     */
-    public function getLabels()
-    {
-        return $this->labels;
-    }
-
-    /**
-     * Returns true if one or more labels are assigned to this article.
-     *
-     * @return  bool
-     */
-    public function hasLabels()
-    {
-        return !empty($this->labels);
     }
 
     /**

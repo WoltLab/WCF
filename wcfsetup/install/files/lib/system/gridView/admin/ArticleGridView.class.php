@@ -104,7 +104,7 @@ final class ArticleGridView extends AbstractGridView
                             \assert($row instanceof ViewableArticle);
 
                             $labels = '';
-                            if ($row->hasLabels()) {
+                            if ($row->hasLabels === 1) {
                                 $labels = '<br><ul class="labelList">';
                                 foreach ($row->getLabels() as $label) {
                                     $labels .= '<li>' . $label->render() . '</li>';

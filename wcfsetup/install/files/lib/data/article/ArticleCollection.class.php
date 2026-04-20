@@ -3,8 +3,10 @@
 namespace wcf\data\article;
 
 use wcf\data\DatabaseObjectCollection;
+use wcf\data\TCollectionLabels;
 use wcf\data\TCollectionReactions;
 use wcf\data\TCollectionUserProfiles;
+use wcf\system\label\object\ArticleLabelObjectHandler;
 
 /**
  * Represents a collection of articles.
@@ -20,10 +22,17 @@ class ArticleCollection extends DatabaseObjectCollection
 {
     use TCollectionReactions;
     use TCollectionUserProfiles;
+    use TCollectionLabels;
 
     #[\Override]
     protected function getReactionObjectType(): string
     {
         return 'com.woltlab.wcf.likeableArticle';
+    }
+
+    #[\Override]
+    protected function getLabelObjectHandler(): ArticleLabelObjectHandler
+    {
+        return ArticleLabelObjectHandler::getInstance();
     }
 }

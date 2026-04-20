@@ -3,8 +3,6 @@
 namespace wcf\data\article;
 
 use wcf\data\article\content\ViewableArticleContentList;
-use wcf\system\cache\runtime\UserProfileRuntimeCache;
-use wcf\system\label\object\ArticleLabelObjectHandler;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 
@@ -60,21 +58,6 @@ class ViewableArticleList extends ArticleList
     {
         parent::readObjects();
 
-        $userIDs = $articleIDs = [];
-        foreach ($this->getObjects() as $article) {
-            if ($article->userID) {
-                $userIDs[] = $article->userID;
-            }
-            if ($article->hasLabels) {
-                $articleIDs[] = $article->articleID;
-            }
-        }
-
-        // cache user profiles
-        if (!empty($userIDs)) {
-            UserProfileRuntimeCache::getInstance()->cacheObjectIDs($userIDs);
-        }
-
         // get article content
         if ($this->contentLoading && !empty($this->objectIDs)) {
             $contentList = new ViewableArticleContentList();
@@ -92,16 +75,6 @@ class ViewableArticleList extends ArticleList
                 // Some providers do pre-populate internal caches in order to retrieve the data
                 // for many objects in a single step.
                 $article->getDiscussionProvider();
-            }
-        }
-
-        // get labels
-        if (!empty($articleIDs)) {
-            $assignedLabels = ArticleLabelObjectHandler::getInstance()->getAssignedLabels($articleIDs);
-            foreach ($assignedLabels as $articleID => $labels) {
-                foreach ($labels as $label) {
-                    $this->objects[$articleID]->addLabel($label);
-                }
             }
         }
     }

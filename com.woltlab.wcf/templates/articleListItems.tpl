@@ -41,7 +41,7 @@
 		</div>
 
 		<div class="entryCardList__item__content">
-			{if $article->hasLabels()}
+			{if $article->hasLabels}
 				<ul class="entryCardList__item__labels labelList">
 					{foreach from=$article->getLabels() item=label}
 						<li>{unsafe:$label->render()}</li>

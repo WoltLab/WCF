@@ -10,6 +10,8 @@ use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\IPopoverObject;
 use wcf\data\IUserContent;
+use wcf\data\label\Label;
+use wcf\data\media\ViewableMedia;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
 use wcf\system\article\discussion\CommentArticleDiscussionProvider;
@@ -486,5 +488,53 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
     public function getUserProfile(): UserProfile
     {
         return $this->getCollection()->getUserProfile($this);
+    }
+
+    /**
+     * Returns the article's image.
+     *
+     * @since 6.3
+     */
+    public function getImage(): ?ViewableMedia
+    {
+        if ($this->getArticleContent() !== null) {
+            return $this->getArticleContent()->getImage();
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the article's teaser image.
+     *
+     * @since 6.3
+     */
+    public function getTeaserImage(): ?ViewableMedia
+    {
+        if ($this->getArticleContent() !== null) {
+            return $this->getArticleContent()->getTeaserImage();
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns true if one or more labels are assigned to this article.
+     *
+     * @since 6.3
+     * @deprecated 6.3 Use `hasLabels` property instead
+     */
+    public function hasLabels(): bool
+    {
+        return $this->hasLabels === 1;
+    }
+
+    /**
+     * @return Label[]
+     * @since 6.3
+     */
+    public function getLabels(): array
+    {
+        return $this->getCollection()->getLabels($this);
     }
 }
