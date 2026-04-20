@@ -6,6 +6,7 @@ use wcf\data\DatabaseObjectCollection;
 use wcf\data\TCollectionLabels;
 use wcf\data\TCollectionReactions;
 use wcf\data\TCollectionUserProfiles;
+use wcf\data\TCollectionVisitTimes;
 use wcf\system\label\object\ArticleLabelObjectHandler;
 
 /**
@@ -23,6 +24,7 @@ class ArticleCollection extends DatabaseObjectCollection
     use TCollectionReactions;
     use TCollectionUserProfiles;
     use TCollectionLabels;
+    use TCollectionVisitTimes;
 
     #[\Override]
     protected function getReactionObjectType(): string
@@ -34,5 +36,11 @@ class ArticleCollection extends DatabaseObjectCollection
     protected function getLabelObjectHandler(): ArticleLabelObjectHandler
     {
         return ArticleLabelObjectHandler::getInstance();
+    }
+
+    #[\Override]
+    protected function getVisitTrackerObjectType(): string
+    {
+        return 'com.woltlab.wcf.article';
     }
 }

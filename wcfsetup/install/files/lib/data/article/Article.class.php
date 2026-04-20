@@ -18,6 +18,7 @@ use wcf\system\article\discussion\CommentArticleDiscussionProvider;
 use wcf\system\article\discussion\IArticleDiscussionProvider;
 use wcf\system\article\discussion\VoidArticleDiscussionProvider;
 use wcf\system\reaction\ReactionData;
+use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 
 /**
@@ -84,6 +85,8 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
      * @since   5.2
      */
     protected $discussionProvider;
+
+    protected int $effectiveVisitTime;
 
     /**
      * Returns true if the active user can delete this article.
@@ -536,5 +539,49 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
     public function getLabels(): array
     {
         return $this->getCollection()->getLabels($this);
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function isPublished(): bool
+    {
+        return $this->publicationStatus === Article::PUBLISHED;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getVisitTime(): int
+    {
+        return $this->getCollection()->getVisitTime($this);
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function isNew(): bool
+    {
+        return $this->time > $this->getEffectiveVisitTime();
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getEffectiveVisitTime(): int
+    {
+        if (!isset($this->effectiveVisitTime)) {
+            if (WCF::getUser()->userID !== 0) {
+                $this->effectiveVisitTime = \max(
+                    0,
+                    $this->getVisitTime(),
+                    VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article')
+                );
+            } else {
+                $this->effectiveVisitTime = \TIME_NOW;
+            }
+        }
+
+        return $this->effectiveVisitTime;
     }
 }

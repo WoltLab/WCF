@@ -3,7 +3,6 @@
 namespace wcf\data\article;
 
 use wcf\data\article\content\ViewableArticleContentList;
-use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 
 /**
@@ -34,24 +33,6 @@ class ViewableArticleList extends ArticleList
      * @since   5.4
      */
     protected $embeddedObjectLoading = true;
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        if (WCF::getUser()->userID != 0) {
-            // last visit time
-            if (!empty($this->sqlSelects)) {
-                $this->sqlSelects .= ',';
-            }
-            $this->sqlSelects .= 'tracked_visit.visitTime';
-            $this->sqlJoins .= "
-                LEFT JOIN   wcf1_tracked_visit tracked_visit
-                ON          tracked_visit.objectTypeID = " . VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.article') . "
-                        AND tracked_visit.objectID = article.articleID
-                        AND tracked_visit.userID = " . WCF::getUser()->userID;
-        }
-    }
 
     #[\Override]
     public function readObjects()

@@ -31,12 +31,6 @@ class ViewableArticle extends DatabaseObjectDecorator
     protected static $baseClass = Article::class;
 
     /**
-     * effective visit time
-     * @var int
-     */
-    protected $effectiveVisitTime;
-
-    /**
      * number of unread articles
      * @var int
      */
@@ -84,52 +78,6 @@ class ViewableArticle extends DatabaseObjectDecorator
         }
 
         $this->getDecoratedObject()->articleContents[$articleContent->languageID ?: 0] = $articleContent;
-    }
-
-    /**
-     * Returns the effective visit time.
-     *
-     * @return  int
-     */
-    public function getVisitTime()
-    {
-        if ($this->effectiveVisitTime === null) {
-            if (WCF::getUser()->userID) {
-                $this->effectiveVisitTime = \max(
-                    $this->visitTime,
-                    VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article')
-                );
-            } else {
-                $this->effectiveVisitTime = \max(VisitTracker::getInstance()->getObjectVisitTime(
-                    'com.woltlab.wcf.article',
-                    $this->articleID
-                ), VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article'));
-            }
-            if ($this->effectiveVisitTime === null) {
-                $this->effectiveVisitTime = 0;
-            }
-        }
-
-        return $this->effectiveVisitTime;
-    }
-
-    /**
-     * Returns true if this article is new for the active user.
-     *
-     * @return  bool
-     */
-    public function isNew()
-    {
-        return $this->time > $this->getVisitTime();
-    }
-
-    /**
-     * @return bool
-     * @since 5.2
-     */
-    public function isPublished()
-    {
-        return $this->publicationStatus == Article::PUBLISHED;
     }
 
     /**
