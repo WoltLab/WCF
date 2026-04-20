@@ -45,12 +45,6 @@ class ArticleContent extends CollectionDatabaseObject implements ILinkableObject
      */
     protected static $databaseTableIndexName = 'articleContentID';
 
-    /**
-     * article object
-     * @var Article
-     */
-    protected $article;
-
     #[\Override]
     public function getLink(): string
     {
@@ -133,18 +127,9 @@ class ArticleContent extends CollectionDatabaseObject implements ILinkableObject
         return $htmlOutputProcessor->getHtml();
     }
 
-    /**
-     * Returns article object.
-     *
-     * @return Article
-     */
-    public function getArticle()
+    public function getArticle(): Article
     {
-        if ($this->article === null) {
-            $this->article = new Article($this->articleID);
-        }
-
-        return $this->article;
+        return $this->getCollection()->getArticle($this);
     }
 
     /**

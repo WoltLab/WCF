@@ -8,9 +8,6 @@ use wcf\data\article\content\ViewableArticleContent;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\label\Label;
 use wcf\data\media\ViewableMedia;
-use wcf\data\user\User;
-use wcf\data\user\UserProfile;
-use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\visitTracker\VisitTracker;
@@ -34,12 +31,6 @@ class ViewableArticle extends DatabaseObjectDecorator
      * @inheritDoc
      */
     protected static $baseClass = Article::class;
-
-    /**
-     * user profile object
-     * @var UserProfile
-     */
-    protected $userProfile;
 
     /**
      * effective visit time
@@ -87,26 +78,6 @@ class ViewableArticle extends DatabaseObjectDecorator
         $list->readObjects();
 
         return $list->getSingleObject();
-    }
-
-    /**
-     * Returns the user profile object.
-     *
-     * @return  UserProfile
-     */
-    public function getUserProfile()
-    {
-        if ($this->userProfile === null) {
-            if ($this->userID) {
-                $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
-            } else {
-                $this->userProfile = new UserProfile(new User(null, [
-                    'username' => $this->username,
-                ]));
-            }
-        }
-
-        return $this->userProfile;
     }
 
     /**

@@ -6,11 +6,12 @@ use wcf\command\article\MarkArticleAsRead;
 use wcf\data\article\ArticleEditor;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\CategoryArticleList;
-use wcf\data\article\content\ViewableArticleContent;
+use wcf\data\article\content\ArticleContent;
 use wcf\data\article\ViewableArticle;
 use wcf\data\attachment\GroupedAttachmentList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\tag\Tag;
+use wcf\http\Helper;
 use wcf\system\cache\runtime\ViewableArticleRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -40,17 +41,7 @@ class ArticlePage extends AbstractPage
      */
     public $neededModules = ['MODULE_ARTICLE'];
 
-    /**
-     * article content id
-     * @var int
-     */
-    public $articleContentID = 0;
-
-    /**
-     * article content object
-     * @var ViewableArticleContent
-     */
-    public $articleContent;
+    public ArticleContent $articleContent;
 
     /**
      * article object
@@ -94,13 +85,7 @@ class ArticlePage extends AbstractPage
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->articleContentID = \intval($_REQUEST['id']);
-        }
-        $this->articleContent = ViewableArticleContent::getArticleContent($this->articleContentID);
-        if ($this->articleContent === null) {
-            throw new IllegalLinkException();
-        }
+        $this->articleContent = Helper::fetchObjectFromQueryParameter(ArticleContent::class);
 
         // check if the language has been disabled
         if ($this->articleContent->languageID && LanguageFactory::getInstance()->getLanguage($this->articleContent->languageID) === null) {
@@ -108,7 +93,7 @@ class ArticlePage extends AbstractPage
         }
 
         $this->article = ViewableArticleRuntimeCache::getInstance()->getObject($this->articleContent->articleID);
-        $this->article->getDiscussionProvider()->setArticleContent($this->articleContent->getDecoratedObject());
+        $this->article->getDiscussionProvider()->setArticleContent($this->articleContent);
         $this->category = $this->article->getCategory();
 
         if (!$this->article->canRead()) {
@@ -178,7 +163,7 @@ class ArticlePage extends AbstractPage
         $this->attachmentList = $this->article->getAttachments();
         $this->filterEmbeddedAttachments();
         MessageEmbeddedObjectManager::getInstance()
-            ->setActiveMessage('com.woltlab.wcf.article.content', $this->articleContentID);
+            ->setActiveMessage('com.woltlab.wcf.article.content', $this->articleContent->getObjectID());
 
         // get next article
         $articleList = new CategoryArticleList($this->article->categoryID);
@@ -284,7 +269,7 @@ class ArticlePage extends AbstractPage
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'articleContentID' => $this->articleContentID,
+            'articleContentID' => $this->articleContent->getObjectID(),
             'articleContent' => $this->articleContent,
             'article' => $this->article,
             'category' => $this->category,
@@ -298,7 +283,7 @@ class ArticlePage extends AbstractPage
                 $this->article,
                 LinkHandler::getInstance()->getControllerLink(ArticleListPage::class),
                 WCF::getLanguage()->getDynamicVariable('wcf.acp.article.edit'),
-                "core/articles/contents/{$this->articleContentID}/content-header-title"
+                "core/articles/contents/{$this->articleContent->getObjectID()}/content-header-title"
             ),
         ]);
     }

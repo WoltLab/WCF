@@ -88,7 +88,6 @@ class ViewableArticleList extends ArticleList
             foreach ($contentList as $articleContent) {
                 $article = $this->objects[$articleContent->articleID];
                 $article->setArticleContent($articleContent);
-                $articleContent->setArticle($article);
 
                 // Some providers do pre-populate internal caches in order to retrieve the data
                 // for many objects in a single step.

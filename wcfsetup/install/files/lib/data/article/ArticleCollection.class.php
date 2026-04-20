@@ -4,6 +4,7 @@ namespace wcf\data\article;
 
 use wcf\data\DatabaseObjectCollection;
 use wcf\data\TCollectionReactions;
+use wcf\data\TCollectionUserProfiles;
 
 /**
  * Represents a collection of articles.
@@ -18,6 +19,7 @@ use wcf\data\TCollectionReactions;
 class ArticleCollection extends DatabaseObjectCollection
 {
     use TCollectionReactions;
+    use TCollectionUserProfiles;
 
     #[\Override]
     protected function getReactionObjectType(): string

@@ -477,4 +477,14 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
     {
         return $this->getCollection()->getReactionData($this);
     }
+
+    /**
+     * Returns article owner's user profile.
+     *
+     * @since 6.3
+     */
+    public function getUserProfile(): UserProfile
+    {
+        return $this->getCollection()->getUserProfile($this);
+    }
 }

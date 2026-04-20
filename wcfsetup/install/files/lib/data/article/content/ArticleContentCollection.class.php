@@ -2,10 +2,12 @@
 
 namespace wcf\data\article\content;
 
+use wcf\data\article\Article;
 use wcf\data\DatabaseObjectCollection;
 use wcf\data\media\ViewableMedia;
 use wcf\data\media\ViewableMediaList;
 use wcf\data\TCollectionEmbeddedObjects;
+use wcf\system\cache\runtime\ArticleRuntimeCache;
 
 /**
  * Represents a collection of article contents.
@@ -25,6 +27,8 @@ class ArticleContentCollection extends DatabaseObjectCollection
      * @var array<int, ViewableMedia>
      */
     private array $images;
+
+    private bool $articlesCached = false;
 
     public function getImage(int $imageID): ?ViewableMedia
     {
@@ -78,5 +82,28 @@ class ArticleContentCollection extends DatabaseObjectCollection
         }
 
         return \array_unique($imageIDs);
+    }
+
+    public function getArticle(ArticleContent $content): ?Article
+    {
+        $this->cacheArticles();
+
+        return ArticleRuntimeCache::getInstance()->getObject($content->articleID);
+    }
+
+    private function cacheArticles(): void
+    {
+        if ($this->articlesCached) {
+            return;
+        }
+
+        $this->articlesCached = true;
+
+        $articleIDs = \array_unique(\array_map(
+            fn($object) => $object->articleID,
+            $this->getObjects()
+        ));
+
+        ArticleRuntimeCache::getInstance()->cacheObjectIDs($articleIDs);
     }
 }
