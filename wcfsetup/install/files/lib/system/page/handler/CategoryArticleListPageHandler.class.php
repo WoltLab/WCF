@@ -3,7 +3,7 @@
 namespace wcf\system\page\handler;
 
 use wcf\data\article\category\ArticleCategory;
-use wcf\data\article\ViewableArticle;
+use wcf\data\article\category\ArticleCategoryCache;
 
 /**
  * Menu page handler for the category article list page.
@@ -32,6 +32,6 @@ class CategoryArticleListPageHandler extends AbstractLookupPageHandler implement
     #[\Override]
     public function getOutstandingItemCount(?int $objectID = null)
     {
-        return ViewableArticle::getUnreadArticlesForCategory($objectID);
+        return ArticleCategoryCache::getInstance()->getUnreadArticles($objectID);
     }
 }

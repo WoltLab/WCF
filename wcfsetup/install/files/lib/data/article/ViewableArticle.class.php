@@ -75,6 +75,7 @@ class ViewableArticle extends DatabaseObjectDecorator
      *
      * @return  int
      * @since       5.2
+     * @deprecated 6.3
      */
     public static function getUnreadArticlesForCategory(int $articleCategoryID)
     {
@@ -185,6 +186,7 @@ class ViewableArticle extends DatabaseObjectDecorator
      *
      * @return  int
      * @since       5.2
+     * @deprecated 6.3
      */
     public static function getWatchedUnreadArticles()
     {
