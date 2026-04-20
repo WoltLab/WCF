@@ -667,7 +667,7 @@ parameters:
 			path: wcfsetup/install/files/lib/system/form/builder/field/acl/AclFormField.class.php
 
 		-
-			message: '#^Instanceof between wcf\\data\\DatabaseObjectList<wcf\\data\\DatabaseObject> and wcf\\data\\DatabaseObjectList will always evaluate to true\.$#'
+			message: '#^Instanceof between wcf\\data\\DatabaseObjectList\<wcf\\data\\DatabaseObject\> and wcf\\data\\DatabaseObjectList will always evaluate to true\.$#'
 			identifier: instanceof.alwaysTrue
 			count: 1
 			path: wcfsetup/install/files/lib/system/form/builder/field/dependency/ValueFormFieldDependency.class.php
@@ -739,6 +739,24 @@ parameters:
 			path: wcfsetup/install/files/lib/system/form/element/MultipleSelectionFormElement.class.php
 
 		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/html/input/node/HtmlInputNodeWoltlabMetacodeMarker.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/html/input/node/HtmlInputNodeWoltlabMetacodeMarker.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between "PK\\005\\006" and "PK\\001\\002" will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/io/Zip.class.php
+
+		-
 			message: '#^Strict comparison using \=\=\= between "PK\\001\\002" and "PK\\001\\002" will always evaluate to true\.$#'
 			identifier: identical.alwaysTrue
 			count: 1
@@ -753,7 +771,7 @@ parameters:
 		-
 			message: '#^Unreachable statement \- code above always terminates\.$#'
 			identifier: deadCode.unreachable
-			count: 1
+			count: 2
 			path: wcfsetup/install/files/lib/system/io/Zip.class.php
 
 		-
@@ -763,7 +781,7 @@ parameters:
 			path: wcfsetup/install/files/lib/system/label/object/AbstractLabelObjectHandler.class.php
 
 		-
-			message: '#^Call to an undefined method wcf\\data\\DatabaseObjectList<wcf\\data\\DatabaseObject>\:\:getAttachmentList\(\)\.$#'
+			message: '#^Call to an undefined method wcf\\data\\DatabaseObjectList\<wcf\\data\\DatabaseObject\>\:\:getAttachmentList\(\)\.$#'
 			identifier: method.notFound
 			count: 1
 			path: wcfsetup/install/files/lib/system/message/QuickReplyManager.class.php
@@ -811,10 +829,238 @@ parameters:
 			path: wcfsetup/install/files/lib/system/package/plugin/ACPMenuPackageInstallationPlugin.class.php
 
 		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/ACPSearchProviderPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/ACPSearchProviderPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/AbstractMenuPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/AbstractMenuPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/AbstractOptionPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/AbstractOptionPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/BBCodePackageInstallationPlugin.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/BBCodePackageInstallationPlugin.class.php
+
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/BoxPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/BoxPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/ClipboardActionPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/ClipboardActionPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/CoreObjectPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/CoreObjectPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/CronjobPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/CronjobPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/EventListenerPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/EventListenerPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/LanguagePackageInstallationPlugin.class.php
+
+		-
 			message: '#^Method wcf\\system\\package\\plugin\\LanguagePackageInstallationPlugin\:\:getEmptyXml\(\) invoked with 0 parameters, 1 required\.$#'
 			identifier: arguments.count
 			count: 1
 			path: wcfsetup/install/files/lib/system/package/plugin/LanguagePackageInstallationPlugin.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/LanguagePackageInstallationPlugin.class.php
+
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/MediaProviderPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/MediaProviderPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/MenuItemPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/MenuItemPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/MenuPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/MenuPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/ObjectTypeDefinitionPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/ObjectTypeDefinitionPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/ObjectTypePackageInstallationPlugin.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/ObjectTypePackageInstallationPlugin.class.php
+
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/PIPPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/PIPPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/PagePackageInstallationPlugin.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/PagePackageInstallationPlugin.class.php
+
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/SmileyPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/SmileyPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/TemplateListenerPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/TemplateListenerPackageInstallationPlugin.class.php
 
 		-
 			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
@@ -827,6 +1073,30 @@ parameters:
 			identifier: instanceof.alwaysTrue
 			count: 2
 			path: wcfsetup/install/files/lib/system/package/plugin/UserMenuPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/UserNotificationEventPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/UserNotificationEventPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/UserProfileMenuPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/UserProfileMenuPackageInstallationPlugin.class.php
 
 		-
 			message: '#^Call to function is_bool\(\) with string will always evaluate to false\.$#'

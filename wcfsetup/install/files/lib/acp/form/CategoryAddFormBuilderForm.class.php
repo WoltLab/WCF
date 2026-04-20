@@ -84,6 +84,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
 
     /**
      * language item with the page title
+     * @deprecated 6.3 No longer in use.
      */
     public string $pageTitle = 'wcf.category.add';
 
@@ -383,18 +384,6 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
     {
         parent::assignVariables();
 
-        if (!isset($this->pageTitle)) {
-            switch ($this->formAction) {
-                case 'create':
-                    $this->pageTitle = 'wcf.category.add';
-                    break;
-
-                case 'edit':
-                    $this->pageTitle = 'wcf.category.edit';
-                    break;
-            }
-        }
-
         $categoryNodeTree = new UncachedCategoryNodeTree($this->objectType->objectType, 0, true);
 
         WCF::getTPL()->assign([
@@ -403,7 +392,6 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
             'listController' => $this->listController,
             'objectType' => $this->objectType,
             'categoryNodeList' => $categoryNodeTree->getIterator(),
-            'pageTitle' => $this->pageTitle,
         ]);
     }
 

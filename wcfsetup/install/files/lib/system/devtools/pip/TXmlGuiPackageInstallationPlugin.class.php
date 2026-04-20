@@ -343,7 +343,7 @@ trait TXmlGuiPackageInstallationPlugin
      *
      * @param \DOMElement $element element whose data is returned
      * @param bool $saveData is `true` if data is intended to be saved and otherwise `false`
-     * @return array<string, int|string>
+     * @return array<string, mixed>
      */
     abstract protected function fetchElementData(\DOMElement $element, bool $saveData);
 

@@ -85,8 +85,6 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
         return $this->checkUser($condition, WCF::getUser());
     }
 
-    /**
-     */
     #[\Override]
     protected function validateConflictingValues(): void
     {

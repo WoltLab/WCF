@@ -427,7 +427,6 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
     }
 
     /**
-     * @return array<string, int|string>
      * @since   5.2
      */
     #[\Override]

@@ -224,8 +224,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         }
     }
 
-    /**
-     */
+
     #[\Override]
     public static function getDefaultFilename()
     {
@@ -239,7 +238,6 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
     }
 
     /**
-     * @return array<string, int|string>
      * @since   5.2
      */
     #[\Override]

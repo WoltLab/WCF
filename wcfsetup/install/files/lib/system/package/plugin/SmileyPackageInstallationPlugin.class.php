@@ -279,8 +279,8 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         }
 
         $showOrder = $element->getElementsByTagName('showorder')->item(0);
-        if ($showOrder !== null) {
-            $data['showOrder'] = $showOrder->nodeValue;
+        if ($showOrder !== null && $showOrder->nodeValue !== null) {
+            $data['showOrder'] = \intval($showOrder->nodeValue);
         }
         if ($saveData && $this->editedEntry === null) {
             // only set explicit showOrder when adding new menu item
