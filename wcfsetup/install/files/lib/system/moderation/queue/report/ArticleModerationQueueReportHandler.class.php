@@ -4,11 +4,10 @@ namespace wcf\system\moderation\queue\report;
 
 use wcf\data\article\Article;
 use wcf\data\article\ArticleAction;
-use wcf\data\article\ViewableArticle;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueue;
+use wcf\system\cache\runtime\ArticleRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
-use wcf\system\cache\runtime\ViewableArticleRuntimeCache;
 use wcf\system\moderation\queue\AbstractModerationQueueHandler;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\WCF;
@@ -57,11 +56,8 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
         ]);
     }
 
-    /**
-     * @return      ViewableArticle|null
-     */
     #[\Override]
-    public function getReportedObject(int $objectID)
+    public function getReportedObject(int $objectID): ?Article
     {
         if ($this->isValid($objectID)) {
             return $this->getArticle($objectID);
@@ -70,12 +66,9 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
         return null;
     }
 
-    /**
-     * @return ViewableArticle|null
-     */
-    public function getArticle(int $articleID)
+    public function getArticle(int $articleID): ?Article
     {
-        return ViewableArticleRuntimeCache::getInstance()->getObject($articleID);
+        return ArticleRuntimeCache::getInstance()->getObject($articleID);
     }
 
     #[\Override]
@@ -85,12 +78,12 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
 
         // first cache all articles
         foreach ($queues as $queue) {
-            ViewableArticleRuntimeCache::getInstance()->cacheObjectID($queue->objectID);
+            ArticleRuntimeCache::getInstance()->cacheObjectID($queue->objectID);
         }
 
         // now process articles
         foreach ($queues as $queue) {
-            $article = ViewableArticleRuntimeCache::getInstance()->getObject($queue->objectID);
+            $article = ArticleRuntimeCache::getInstance()->getObject($queue->objectID);
 
             if ($article === null) {
                 $orphanedQueueIDs[] = $queue->queueID;
@@ -132,13 +125,13 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
     {
         // first cache all articles
         foreach ($queues as $queue) {
-            ViewableArticleRuntimeCache::getInstance()->cacheObjectID($queue->objectID);
+            ArticleRuntimeCache::getInstance()->cacheObjectID($queue->objectID);
         }
 
         foreach ($queues as $object) {
-            $article = ViewableArticleRuntimeCache::getInstance()->getObject($object->objectID);
+            $article = ArticleRuntimeCache::getInstance()->getObject($object->objectID);
             if ($article !== null) {
-                $object->setAffectedObject($article->getDecoratedObject());
+                $object->setAffectedObject($article);
             } else {
                 $object->setIsOrphaned();
             }
@@ -159,7 +152,7 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
     public function removeContent(ModerationQueue $queue, string $message)
     {
         if ($this->isValid($queue->objectID)) {
-            (new ArticleAction([$this->getArticle($queue->objectID)->getDecoratedObject()], 'trash'))->executeAction();
+            (new ArticleAction([$this->getArticle($queue->objectID)], 'trash'))->executeAction();
         }
     }
 

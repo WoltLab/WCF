@@ -3,16 +3,15 @@
 namespace wcf\page;
 
 use wcf\command\article\MarkArticleAsRead;
+use wcf\data\article\Article;
 use wcf\data\article\ArticleEditor;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\CategoryArticleList;
 use wcf\data\article\content\ArticleContent;
-use wcf\data\article\ViewableArticle;
 use wcf\data\attachment\GroupedAttachmentList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\tag\Tag;
 use wcf\http\Helper;
-use wcf\system\cache\runtime\ViewableArticleRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
@@ -45,7 +44,7 @@ class ArticlePage extends AbstractPage
 
     /**
      * article object
-     * @var ViewableArticle
+     * @var Article
      */
     public $article;
 
@@ -70,13 +69,13 @@ class ArticlePage extends AbstractPage
 
     /**
      * next article in this category
-     * @var ViewableArticle
+     * @var Article
      */
     public $nextArticle;
 
     /**
      * previous article in this category
-     * @var ViewableArticle
+     * @var Article
      */
     public $previousArticle;
 
@@ -92,7 +91,7 @@ class ArticlePage extends AbstractPage
             throw new IllegalLinkException();
         }
 
-        $this->article = ViewableArticleRuntimeCache::getInstance()->getObject($this->articleContent->articleID);
+        $this->article = $this->articleContent->getArticle();
         $this->article->getDiscussionProvider()->setArticleContent($this->articleContent);
         $this->category = $this->article->getCategory();
 
@@ -120,7 +119,7 @@ class ArticlePage extends AbstractPage
 
         // update view count
         if ($this->article->isPublished()) {
-            $articleEditor = new ArticleEditor($this->article->getDecoratedObject());
+            $articleEditor = new ArticleEditor($this->article);
             $articleEditor->updateCounters([
                 'views' => 1,
             ]);
@@ -128,7 +127,7 @@ class ArticlePage extends AbstractPage
 
         // update article visit
         if ($this->article->isNew()) {
-            (new MarkArticleAsRead($this->article->getDecoratedObject()))();
+            (new MarkArticleAsRead($this->article))();
         }
 
         // get tags

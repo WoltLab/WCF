@@ -2,7 +2,7 @@
 
 namespace wcf\system\user\activity\event;
 
-use wcf\data\article\ViewableArticleList;
+use wcf\data\article\ArticleList;
 use wcf\system\reaction\ReactionHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -29,7 +29,7 @@ class LikeableArticleUserActivityEvent extends SingletonFactory implements IUser
         }
 
         // fetch articles
-        $articleList = new ViewableArticleList();
+        $articleList = new ArticleList();
         $articleList->setObjectIDs($articleIDs);
         $articleList->readObjects();
         $articles = $articleList->getObjects();
