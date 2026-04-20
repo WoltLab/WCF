@@ -16,7 +16,9 @@ use wcf\data\user\UserProfile;
 use wcf\system\article\discussion\CommentArticleDiscussionProvider;
 use wcf\system\article\discussion\IArticleDiscussionProvider;
 use wcf\system\article\discussion\VoidArticleDiscussionProvider;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\reaction\ReactionData;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 
@@ -483,5 +485,60 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
         }
 
         return $this->effectiveVisitTime;
+    }
+
+    /**
+     * Returns the number of unread articles.
+     *
+     * @since 6.3
+     */
+    public static function getUnreadArticles(): int
+    {
+        if (WCF::getUser()->isGuest()) {
+            return 0;
+        }
+
+        static $unreadArticles = null;
+
+        if ($unreadArticles === null) {
+            $unreadArticles = UserStorageHandler::getInstance()->getField('unreadArticles');
+
+            // cache does not exist or is outdated
+            if ($unreadArticles === null) {
+                $unreadArticles = 0;
+                $categoryIDs = ArticleCategory::getAccessibleCategoryIDs();
+                if ($categoryIDs !== []) {
+                    $conditionBuilder = new PreparedStatementConditionBuilder();
+                    $conditionBuilder->add('article.categoryID IN (?)', [$categoryIDs]);
+                    $conditionBuilder->add(
+                        'article.time > ?',
+                        [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article')]
+                    );
+                    $conditionBuilder->add('article.isDeleted = ?', [0]);
+                    $conditionBuilder->add('article.publicationStatus = ?', [Article::PUBLISHED]);
+                    $conditionBuilder->add('(article.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)');
+
+                    $sql = "SELECT      COUNT(*)
+                            FROM        wcf1_article article
+                            LEFT JOIN   wcf1_tracked_visit tracked_visit
+                            ON          tracked_visit.objectTypeID = " . VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.article') . "
+                                    AND tracked_visit.objectID = article.articleID
+                                    AND tracked_visit.userID = " . WCF::getUser()->userID . "
+                            " . $conditionBuilder;
+                    $statement = WCF::getDB()->prepare($sql);
+                    $statement->execute($conditionBuilder->getParameters());
+                    $unreadArticles = $statement->fetchSingleColumn();
+                }
+
+                // update storage unreadEntries
+                UserStorageHandler::getInstance()->update(
+                    WCF::getUser()->userID,
+                    'unreadArticles',
+                    $unreadArticles
+                );
+            }
+        }
+
+        return $unreadArticles;
     }
 }

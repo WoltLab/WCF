@@ -31,12 +31,6 @@ class ViewableArticle extends DatabaseObjectDecorator
     protected static $baseClass = Article::class;
 
     /**
-     * number of unread articles
-     * @var int
-     */
-    protected static $unreadArticles;
-
-    /**
      * number of unread articles in watched categories
      * @var int
      * @since   5.2
@@ -73,51 +67,7 @@ class ViewableArticle extends DatabaseObjectDecorator
      */
     public static function getUnreadArticles()
     {
-        if (self::$unreadArticles === null) {
-            self::$unreadArticles = 0;
-
-            if (WCF::getUser()->userID) {
-                $unreadArticles = UserStorageHandler::getInstance()->getField('unreadArticles');
-
-                // cache does not exist or is outdated
-                if ($unreadArticles === null) {
-                    $categoryIDs = ArticleCategory::getAccessibleCategoryIDs();
-                    if (!empty($categoryIDs)) {
-                        $conditionBuilder = new PreparedStatementConditionBuilder();
-                        $conditionBuilder->add('article.categoryID IN (?)', [$categoryIDs]);
-                        $conditionBuilder->add(
-                            'article.time > ?',
-                            [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article')]
-                        );
-                        $conditionBuilder->add('article.isDeleted = ?', [0]);
-                        $conditionBuilder->add('article.publicationStatus = ?', [Article::PUBLISHED]);
-                        $conditionBuilder->add('(article.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)');
-
-                        $sql = "SELECT      COUNT(*)
-                                FROM        wcf1_article article
-                                LEFT JOIN   wcf1_tracked_visit tracked_visit
-                                ON          tracked_visit.objectTypeID = " . VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.article') . "
-                                        AND tracked_visit.objectID = article.articleID
-                                        AND tracked_visit.userID = " . WCF::getUser()->userID . "
-                                " . $conditionBuilder;
-                        $statement = WCF::getDB()->prepare($sql);
-                        $statement->execute($conditionBuilder->getParameters());
-                        self::$unreadArticles = $statement->fetchSingleColumn();
-                    }
-
-                    // update storage unreadEntries
-                    UserStorageHandler::getInstance()->update(
-                        WCF::getUser()->userID,
-                        'unreadArticles',
-                        self::$unreadArticles
-                    );
-                } else {
-                    self::$unreadArticles = $unreadArticles;
-                }
-            }
-        }
-
-        return self::$unreadArticles;
+        return Article::getUnreadArticles();
     }
 
     /**
