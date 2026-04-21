@@ -160,8 +160,12 @@ class ArticleEditForm extends ArticleAddForm
     {
         if (!empty($_POST) && !WCF::getSession()->hasPermission('admin.content.cms.canUseMedia')) {
             foreach ($this->article->getArticleContents() as $languageID => $content) {
-                $this->imageID[$languageID] = $content->imageID;
-                $this->teaserImageID[$languageID] = $content->teaserImageID;
+                if ($content->imageID !== null) {
+                    $this->imageID[$languageID] = $content->imageID;
+                }
+                if ($content->teaserImageID !== null) {
+                    $this->teaserImageID[$languageID] = $content->teaserImageID;
+                }
             }
 
             $this->readImages();
@@ -187,8 +191,12 @@ class ArticleEditForm extends ArticleAddForm
                 $this->title[$languageID] = $content->title;
                 $this->teaser[$languageID] = $content->teaser;
                 $this->content[$languageID] = $content->content;
-                $this->imageID[$languageID] = $content->imageID;
-                $this->teaserImageID[$languageID] = $content->teaserImageID;
+                if ($content->imageID !== null) {
+                    $this->imageID[$languageID] = $content->imageID;
+                }
+                if ($content->teaserImageID !== null) {
+                    $this->teaserImageID[$languageID] = $content->teaserImageID;
+                }
                 $this->metaTitle[$languageID] = $content->metaTitle;
                 $this->metaDescription[$languageID] = $content->metaDescription;
 
