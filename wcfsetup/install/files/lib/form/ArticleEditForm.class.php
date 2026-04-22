@@ -2,8 +2,6 @@
 
 namespace wcf\form;
 
-use wcf\system\WCF;
-
 /**
  * Shows the article edit form.
  *
@@ -12,4 +10,6 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       5.2
  */
-class ArticleEditForm extends \wcf\acp\form\ArticleEditForm {}
+class ArticleEditForm extends \wcf\acp\form\ArticleEditForm
+{
+}
