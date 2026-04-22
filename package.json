@@ -27,7 +27,7 @@
     "@types/sortablejs": "^1.15.9",
     "@types/supercluster": "^7.1.3",
     "@types/twitter-for-web": "0.0.6",
-    "@woltlab/editor": "git+https://github.com/WoltLab/editor.git#dd9571e5bd5f44d7230f476f73ec6bf3377e2b14",
+    "@woltlab/editor": "git+https://github.com/WoltLab/editor.git#504c659b5867178a63717113ea6fd1721ae2837a",
     "@woltlab/visual-dom-diff": "git+https://github.com/WoltLab/visual-dom-diff.git#e5b51fce3157d1eda310566fc1f86101341d1fea",
     "@woltlab/zxcvbn": "git+https://github.com/WoltLab/zxcvbn.git#5b582b24e437f1883ccad3c37dae7c3c5f1e7da3",
     "cropperjs": "2.1.0",
