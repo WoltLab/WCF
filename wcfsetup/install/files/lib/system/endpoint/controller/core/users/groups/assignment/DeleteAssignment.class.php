@@ -36,6 +36,6 @@ final class DeleteAssignment implements IController
 
     private function assertAssignmentCanBeDeleted(): void
     {
-        WCF::getSession()->checkPermissions(['admin.management.canManageCronjob']);
+        WCF::getSession()->checkPermissions(['admin.user.canManageGroupAssignment']);
     }
 }

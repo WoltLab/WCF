@@ -37,7 +37,7 @@ final class DisableAssignment implements IController
 
     private function assertAssignmentCanBeDisabled(UserGroupAssignment $assignment): void
     {
-        WCF::getSession()->checkPermissions(['admin.management.canManageCronjob']);
+        WCF::getSession()->checkPermissions(['admin.user.canManageGroupAssignment']);
 
         if ($assignment->isDisabled) {
             throw new PermissionDeniedException();
