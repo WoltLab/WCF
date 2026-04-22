@@ -5,6 +5,7 @@ namespace wcf\data\article;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\article\content\ArticleContentList;
 use wcf\data\DatabaseObjectCollection;
+use wcf\data\TCollectionAttachments;
 use wcf\data\TCollectionLabels;
 use wcf\data\TCollectionReactions;
 use wcf\data\TCollectionUserProfiles;
@@ -29,6 +30,7 @@ class ArticleCollection extends DatabaseObjectCollection
     use TCollectionUserProfiles;
     use TCollectionLabels;
     use TCollectionVisitTimes;
+    use TCollectionAttachments;
 
     /**
      * @var array<int, array<int, ArticleContent>>
@@ -128,6 +130,12 @@ class ArticleCollection extends DatabaseObjectCollection
 
     #[\Override]
     protected function getVisitTrackerObjectType(): string
+    {
+        return 'com.woltlab.wcf.article';
+    }
+
+    #[\Override]
+    protected function getAttachmentObjectType(): string
     {
         return 'com.woltlab.wcf.article';
     }

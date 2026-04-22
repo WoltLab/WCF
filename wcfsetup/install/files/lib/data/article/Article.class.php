@@ -4,7 +4,7 @@ namespace wcf\data\article;
 
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;
-use wcf\data\attachment\GroupedAttachmentList;
+use wcf\data\attachment\Attachment;
 use wcf\data\CollectionDatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\IPopoverObject;
@@ -336,19 +336,12 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
     }
 
     /**
+     * @return Attachment[]
      * @since 6.0
      */
-    public function getAttachments(): ?GroupedAttachmentList
+    public function getAttachments(): array
     {
-        if ($this->attachments) {
-            $attachmentList = new GroupedAttachmentList('com.woltlab.wcf.article');
-            $attachmentList->getConditionBuilder()->add('attachment.objectID IN (?)', [$this->articleID]);
-            $attachmentList->readObjects();
-
-            return $attachmentList;
-        }
-
-        return null;
+        return $this->getCollection()->getAttachments($this);
     }
 
     #[\Override]
