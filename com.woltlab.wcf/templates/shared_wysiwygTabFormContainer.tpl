@@ -10,6 +10,6 @@
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/WysiwygTab'], ({ WysiwygTab }) => {
-		new WysiwygTab('{unsafe:$container->getPrefixedId()|encodeJS}Container', '{unsafe:$container->getName()|encodeJS}', '{unsafe:$container->getWysiwygId()|encodeJS}');
+		new WysiwygTab('{unsafe:$container->getPrefixedId()|encodeJS}Container', '{unsafe:$container->getName()|encodeJS}', '{unsafe:$container->getPrefixedWysiwygId()|encodeJS}');
 	});
 </script>

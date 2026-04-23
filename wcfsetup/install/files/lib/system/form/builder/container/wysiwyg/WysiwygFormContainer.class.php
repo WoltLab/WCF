@@ -505,7 +505,7 @@ class WysiwygFormContainer extends FormContainer
             $this->wysiwygField,
             WysiwygTabMenuFormContainer::create($this->wysiwygId . 'Tabs')
                 ->attribute('data-preselect', $this->getPreselect())
-                ->attribute('data-wysiwyg-container-id', $this->wysiwygId)
+                ->attribute('data-wysiwyg-container-id', $this->getPrefixedWysiwygId())
                 ->useAnchors(false)
                 ->appendChildren([
                     $this->smiliesContainer,
