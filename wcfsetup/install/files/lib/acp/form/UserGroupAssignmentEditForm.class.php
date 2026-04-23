@@ -4,10 +4,7 @@ namespace wcf\acp\form;
 
 use wcf\acp\page\UserGroupAssignmentListPage;
 use wcf\data\user\group\assignment\UserGroupAssignment;
-use wcf\data\user\group\assignment\UserGroupAssignmentAction;
-use wcf\form\AbstractForm;
 use wcf\http\Helper;
-use wcf\system\condition\ConditionHandler;
 use wcf\system\interaction\admin\UserGroupAssignmentInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\request\LinkHandler;
@@ -28,10 +25,17 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm
     public $activeMenuItem = 'wcf.acp.menu.link.group.assignment';
 
     /**
-     * edited automatic user group assignment
-     * @var ?UserGroupAssignment
+     * @inheritDoc
      */
-    public $assignment;
+    public $formAction = 'edit';
+
+    #[\Override]
+    public function readParameters()
+    {
+        parent::readParameters();
+
+        $this->formObject = Helper::fetchObjectFromQueryParameter(UserGroupAssignment::class);
+    }
 
     #[\Override]
     public function assignVariables()
@@ -39,68 +43,11 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'action' => 'edit',
-            'assignment' => $this->assignment,
             'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
                 new UserGroupAssignmentInteractions(),
-                $this->assignment,
+                $this->formObject,
                 LinkHandler::getInstance()->getControllerLink(UserGroupAssignmentListPage::class)
             ),
         ]);
-    }
-
-    #[\Override]
-    public function readData()
-    {
-        parent::readData();
-
-        if ($_POST === []) {
-            $this->groupID = $this->assignment->groupID;
-            $this->title = $this->assignment->title;
-
-            $conditions = $this->assignment->getConditions();
-            foreach ($conditions as $condition) {
-                $this->conditions[$condition->getObjectType()->conditiongroup][$condition->objectTypeID]->getProcessor()->setData($condition);
-            }
-        }
-    }
-
-    #[\Override]
-    public function readParameters()
-    {
-        parent::readParameters();
-
-        $this->assignment = Helper::fetchObjectFromQueryParameter(UserGroupAssignment::class);
-    }
-
-    #[\Override]
-    public function save()
-    {
-        AbstractForm::save();
-
-        $this->objectAction = new UserGroupAssignmentAction([$this->assignment], 'update', [
-            'data' => \array_merge($this->additionalFields, [
-                'groupID' => $this->groupID,
-                'isDisabled' => $this->isDisabled,
-                'title' => $this->title,
-            ]),
-        ]);
-        $this->objectAction->executeAction();
-
-        // transform conditions array into one-dimensional array
-        $conditions = [];
-        foreach ($this->conditions as $groupedObjectTypes) {
-            $conditions = \array_merge($conditions, $groupedObjectTypes);
-        }
-
-        ConditionHandler::getInstance()->updateConditions(
-            $this->assignment->assignmentID,
-            $this->assignment->getConditions(),
-            $conditions
-        );
-
-        $this->saved();
-
-        WCF::getTPL()->assign('success', true);
     }
 }

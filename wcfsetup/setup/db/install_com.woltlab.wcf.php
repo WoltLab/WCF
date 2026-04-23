@@ -4139,6 +4139,7 @@ return [
             NotNullInt10DatabaseTableColumn::create('groupID'),
             NotNullVarchar255DatabaseTableColumn::create('title'),
             DefaultFalseBooleanDatabaseTableColumn::create('isDisabled'),
+            JsonDatabaseTableColumn::create('conditions'),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()

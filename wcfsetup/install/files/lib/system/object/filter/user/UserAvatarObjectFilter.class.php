@@ -34,9 +34,9 @@ final class UserAvatarObjectFilter implements IObjectFilter
     public function applyFilter(PreparedStatementConditionBuilder $conditions, mixed $value): void
     {
         if ($value) {
-            $conditions->add("avatarID IS NOT NULL");
+            $conditions->add("avatarFileID IS NOT NULL");
         } else {
-            $conditions->add("avatarID IS NULL");
+            $conditions->add("avatarFileID IS NULL");
         }
     }
 
