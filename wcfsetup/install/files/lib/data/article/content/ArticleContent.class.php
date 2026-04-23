@@ -3,6 +3,7 @@
 namespace wcf\data\article\content;
 
 use wcf\data\article\Article;
+use wcf\data\attachment\Attachment;
 use wcf\data\CollectionDatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\language\Language;
@@ -35,6 +36,7 @@ use wcf\util\StringUtil;
  * @property-read   string  $metaTitle          title of the article used in the title tag
  * @property-read   string  $metaDescription    meta description of the article
  * @property-read   int     $comments           number of comments
+ * @property-read   int     $attachments        number of attachments
  *
  * @extends CollectionDatabaseObject<ArticleContentCollection>
  */
@@ -241,5 +243,14 @@ class ArticleContent extends CollectionDatabaseObject implements ILinkableObject
         }
 
         return $image;
+    }
+
+    /**
+     * @return Attachment[]
+     * @since 6.3
+     */
+    public function getAttachments(): array
+    {
+        return $this->getCollection()->getAttachments($this);
     }
 }

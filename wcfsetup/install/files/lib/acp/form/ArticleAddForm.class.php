@@ -299,7 +299,7 @@ class ArticleAddForm extends AbstractFormBuilderForm
             WysiwygFormContainer::create('content')
                 ->label('wcf.acp.article.content')
                 ->messageObjectType('com.woltlab.wcf.article.content')
-                ->attachmentData('com.woltlab.wcf.article', objectID: $this->getAttachmentObjectID())
+                ->attachmentData('com.woltlab.wcf.article.content', objectID: $this->getAttachmentObjectID())
                 ->required(),
         ]);
     }
@@ -348,7 +348,7 @@ class ArticleAddForm extends AbstractFormBuilderForm
                             ->label('wcf.acp.article.content')
                             ->messageObjectType('com.woltlab.wcf.article.content')
                             ->attachmentData(
-                                'com.woltlab.wcf.article',
+                                'com.woltlab.wcf.article.content',
                                 objectID: $this->getAttachmentObjectID($language->languageID)
                             )
                             ->required()
@@ -412,6 +412,9 @@ class ArticleAddForm extends AbstractFormBuilderForm
                                     'metaTitle' => $parameters['data']["metaTitle_{$lc}"] ?? '',
                                     'metaDescription' => $parameters['data']["metaDescription_{$lc}"] ?? '',
                                 ];
+                                if (isset($parameters["content_{$lc}_attachmentHandler"])) {
+                                    $parameters['content'][$lid]['attachmentHandler'] = $parameters["content_{$lc}_attachmentHandler"];
+                                }
 
                                 unset(
                                     $parameters['data']["title_{$lc}"],
@@ -440,7 +443,7 @@ class ArticleAddForm extends AbstractFormBuilderForm
                             ];
 
                             if (isset($parameters['content_attachmentHandler'])) {
-                                $parameters['attachmentHandler'] = $parameters['content_attachmentHandler'];
+                                $parameters['content'][0]['attachmentHandler'] = $parameters['content_attachmentHandler'];
                             }
 
                             unset(

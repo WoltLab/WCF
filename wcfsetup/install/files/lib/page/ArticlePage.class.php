@@ -8,7 +8,6 @@ use wcf\data\article\ArticleEditor;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\CategoryArticleList;
 use wcf\data\article\content\ArticleContent;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\tag\Tag;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
@@ -99,7 +98,6 @@ class ArticlePage extends AbstractPage
         $this->loadTags();
         $this->loadRelatedArticles();
         $this->setLocation();
-        $this->filterEmbeddedAttachments();
         $this->loadNextArticle();
         $this->loadPreviousArticle();
         $this->setMetaTags();
@@ -294,42 +292,5 @@ class ArticlePage extends AbstractPage
                 "core/articles/contents/{$this->articleContent->getObjectID()}/content-header-title"
             ),
         ]);
-    }
-
-    /**
-     * Filters attachments embedded in the article's description from the normal listing.
-     *
-     * @since 6.3
-     */
-    protected function filterEmbeddedAttachments(): void
-    {
-        $attachments = $this->article->getAttachments();
-        if ($attachments === []) {
-            return;
-        }
-
-        $sql = "SELECT  embeddedObjectID
-                FROM    wcf1_message_embedded_object
-                WHERE   messageObjectTypeID = ?
-                    AND messageID IN (
-                        SELECT  articleContentID
-                        FROM    wcf1_article_content
-                        WHERE   articleID = ?
-                    )
-                    AND embeddedObjectTypeID = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            ObjectTypeCache::getInstance()
-                ->getObjectTypeIDByName('com.woltlab.wcf.message', 'com.woltlab.wcf.article.content'),
-            $this->article->articleID,
-            ObjectTypeCache::getInstance()
-                ->getObjectTypeIDByName('com.woltlab.wcf.message.embeddedObject', 'com.woltlab.wcf.attachment'),
-        ]);
-        $attachmentIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-        foreach ($attachmentIDs as $attachmentID) {
-            if (isset($attachments[$attachmentID])) {
-                $attachments[$attachmentID]->markAsEmbedded();
-            }
-        }
     }
 }

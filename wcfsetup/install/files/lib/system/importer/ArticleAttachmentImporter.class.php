@@ -19,7 +19,7 @@ final class ArticleAttachmentImporter extends AbstractAttachmentImporter
     public function __construct()
     {
         $objectType = ObjectTypeCache::getInstance()
-            ->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', 'com.woltlab.wcf.article');
+            ->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', 'com.woltlab.wcf.article.content');
         \assert($objectType !== null);
         $this->objectTypeID = $objectType->objectTypeID;
     }
@@ -27,16 +27,23 @@ final class ArticleAttachmentImporter extends AbstractAttachmentImporter
     #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
-        $data['objectID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.article', $data['objectID']);
-        if (!$data['objectID']) {
+        $articleID = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.article', $data['objectID']);
+        if (!$articleID) {
             return 0;
         }
 
+        $article = new Article($articleID);
+        $articleContents = $article->getArticleContents();
+        $firstContent = \reset($articleContents);
+        if ($firstContent === false) {
+            return 0;
+        }
+
+        $data['objectID'] = $firstContent->getObjectID();
+
         $attachmentID = parent::import($oldID, $data, $additionalData);
         if ($attachmentID && $attachmentID != $oldID) {
-            $article = new Article($data['objectID']);
-
-            foreach ($article->getArticleContents() as $content) {
+            foreach ($articleContents as $content) {
                 $newMessage = $this->fixEmbeddedAttachments(
                     $content->content,
                     $oldID,

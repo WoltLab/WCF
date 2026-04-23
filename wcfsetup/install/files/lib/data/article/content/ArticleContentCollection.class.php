@@ -6,6 +6,7 @@ use wcf\data\article\Article;
 use wcf\data\DatabaseObjectCollection;
 use wcf\data\media\ViewableMedia;
 use wcf\data\media\ViewableMediaList;
+use wcf\data\TCollectionAttachments;
 use wcf\data\TCollectionEmbeddedObjects;
 use wcf\system\cache\runtime\ArticleRuntimeCache;
 
@@ -22,6 +23,7 @@ use wcf\system\cache\runtime\ArticleRuntimeCache;
 class ArticleContentCollection extends DatabaseObjectCollection
 {
     use TCollectionEmbeddedObjects;
+    use TCollectionAttachments;
 
     /**
      * @var array<int, ViewableMedia>
@@ -105,5 +107,11 @@ class ArticleContentCollection extends DatabaseObjectCollection
         ));
 
         ArticleRuntimeCache::getInstance()->cacheObjectIDs($articleIDs);
+    }
+
+    #[\Override]
+    protected function getAttachmentObjectType(): string
+    {
+        return 'com.woltlab.wcf.article.content';
     }
 }

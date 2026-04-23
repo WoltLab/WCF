@@ -116,7 +116,7 @@
 
 	{include file='entryTags' objectType='com.woltlab.wcf.article'}
 
-	{include file='entryAttachments' attachments=$article->getAttachments()}
+	{include file='entryAttachments' attachments=$articleContent->getAttachments()}
 
 	<footer class="entry__footer">
 		{if MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canViewLike')}

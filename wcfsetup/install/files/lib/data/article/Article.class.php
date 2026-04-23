@@ -40,7 +40,6 @@ use wcf\system\WCF;
  * @property-read   0|1     $enableComments     is `1` if comments are enabled for the article, otherwise `0`
  * @property-read   int     $views              number of times the article has been viewed
  * @property-read   int     $cumulativeLikes    cumulative result of likes for the article
- * @property-read   int     $attachments        number of attachments in the article descriptions
  * @property-read   0|1     $isDeleted          is 1 if the article is in trash bin, otherwise 0
  * @property-read   0|1     $hasLabels          is `1` if labels are assigned to the article
  *
@@ -338,10 +337,11 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
     /**
      * @return Attachment[]
      * @since 6.0
+     * @deprecated 6.3 Use `ArticleContent::getAttachments()` instead.
      */
     public function getAttachments(): array
     {
-        return $this->getCollection()->getAttachments($this);
+        return $this->getArticleContent()->getAttachments();
     }
 
     #[\Override]

@@ -435,9 +435,6 @@ return [
             MediumintDatabaseTableColumn::create('cumulativeLikes')
                 ->notNull()
                 ->defaultValue(0),
-            SmallintDatabaseTableColumn::create('attachments')
-                ->notNull()
-                ->defaultValue(0),
             DefaultFalseBooleanDatabaseTableColumn::create('isDeleted'),
             DefaultFalseBooleanDatabaseTableColumn::create('hasLabels'),
         ])
@@ -477,6 +474,9 @@ return [
             NotNullVarchar255DatabaseTableColumn::create('metaDescription')
                 ->defaultValue(''),
             SmallintDatabaseTableColumn::create('comments')
+                ->notNull()
+                ->defaultValue(0),
+            SmallintDatabaseTableColumn::create('attachments')
                 ->notNull()
                 ->defaultValue(0),
         ])

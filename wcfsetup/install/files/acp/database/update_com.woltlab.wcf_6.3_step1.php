@@ -17,6 +17,19 @@ use wcf\system\database\table\column\TextDatabaseTableColumn;
 use wcf\system\database\table\PartialDatabaseTable;
 
 return [
+    PartialDatabaseTable::create('wcf1_article')
+        ->columns([
+            SmallintDatabaseTableColumn::create('attachments')
+                ->notNull()
+                ->defaultValue(0)
+                ->drop()
+        ]),
+    PartialDatabaseTable::create('wcf1_article_content')
+        ->columns([
+            SmallintDatabaseTableColumn::create('attachments')
+                ->notNull()
+                ->defaultValue(0),
+        ]),
     PartialDatabaseTable::create('wcf1_label_group')
         ->columns([
             DefaultFalseBooleanDatabaseTableColumn::create('sortAlphabetically')
