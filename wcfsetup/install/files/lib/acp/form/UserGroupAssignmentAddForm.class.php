@@ -6,13 +6,10 @@ use wcf\data\user\group\assignment\UserGroupAssignment;
 use wcf\data\user\group\assignment\UserGroupAssignmentAction;
 use wcf\data\user\group\UserGroup;
 use wcf\form\AbstractFormBuilderForm;
-use wcf\system\condition\ConditionHandler;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\ObjectFilterFormField;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\TitleFormField;
-use wcf\system\request\LinkHandler;
-use wcf\system\WCF;
 
 /**
  * Shows the form to create a new automatic user group assignment.
@@ -33,6 +30,10 @@ class UserGroupAssignmentAddForm extends AbstractFormBuilderForm
      * @inheritDoc
      */
     public $neededPermissions = ['admin.user.canManageGroupAssignment'];
+
+    public $objectActionClass = UserGroupAssignmentAction::class;
+
+    public $objectEditLinkController = UserGroupAssignmentEditForm::class;
 
     #[\Override]
     protected function createForm()
@@ -70,47 +71,5 @@ class UserGroupAssignmentAddForm extends AbstractFormBuilderForm
             ]),
             static fn(UserGroup $userGroup) => $userGroup->isAccessible(),
         );
-    }
-
-    #[\Override]
-    public function save()
-    {
-        \wcfDebug($this->form->getData());
-
-        parent::save();
-
-        $this->objectAction = new UserGroupAssignmentAction([], 'create', [
-            'data' => \array_merge($this->additionalFields, [
-                /*
-                'groupID' => $this->groupID,
-                'isDisabled' => $this->isDisabled,
-                'title' => $this->title,
-                */]),
-        ]);
-        $returnValues = $this->objectAction->executeAction();
-
-        // transform conditions array into one-dimensional array
-        $conditions = [];
-        foreach ($this->conditions as $groupedObjectTypes) {
-            $conditions = \array_merge($conditions, $groupedObjectTypes);
-        }
-
-        ConditionHandler::getInstance()->createConditions($returnValues['returnValues']->assignmentID, $conditions);
-
-        $this->saved();
-
-        foreach ($this->conditions as $conditions) {
-            foreach ($conditions as $condition) {
-                $condition->getProcessor()->reset();
-            }
-        }
-
-        WCF::getTPL()->assign([
-            'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
-                UserGroupAssignmentEditForm::class,
-                ['id' => $returnValues['returnValues']->assignmentID]
-            ),
-        ]);
     }
 }

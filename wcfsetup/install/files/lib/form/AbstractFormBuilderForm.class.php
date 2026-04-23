@@ -179,7 +179,6 @@ abstract class AbstractFormBuilderForm extends AbstractForm
             $formData['data'] = [];
         }
         $formData['data'] = \array_merge($this->additionalFields, $formData['data']);
-
         $this->objectAction = new $this->objectActionClass(
             \array_filter([$this->formObject]),
             $action,
