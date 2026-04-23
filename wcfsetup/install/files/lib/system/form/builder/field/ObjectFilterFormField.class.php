@@ -46,11 +46,6 @@ final class ObjectFilterFormField extends AbstractFormField
                 new FormFieldValidationError('empty')
             );
         }
-
-        // TODO: debug only
-        $this->addValidationError(
-            new FormFieldValidationError('empty')
-        );
     }
 
     #[Override]

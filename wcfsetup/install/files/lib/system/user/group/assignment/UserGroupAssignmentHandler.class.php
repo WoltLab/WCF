@@ -9,6 +9,8 @@ use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserList;
 use wcf\system\cache\builder\UserGroupAssignmentCacheBuilder;
+use wcf\system\object\filter\builder\UserGroupAssignmentObjectFilterBuilder;
+use wcf\system\object\filter\ObjectFilterHandler;
 use wcf\system\SingletonFactory;
 
 /**
@@ -114,10 +116,15 @@ class UserGroupAssignmentHandler extends SingletonFactory
             $userList->sqlLimit = $maxUsers;
         }
 
-        $conditions = $assignment->getConditions();
-        foreach ($conditions as $condition) {
-            $condition->getObjectType()->getProcessor()->addUserCondition($condition, $userList);
-        }
+        // TODO: this is a bit too verbose
+        $builder = new UserGroupAssignmentObjectFilterBuilder();
+        $handler = new ObjectFilterHandler($builder->getFilters());
+        $handler->applyFilters(
+            $userList->getConditionBuilder(),
+            'com.woltlab.wcf.userGroupAssignment',
+            $assignment->conditions,
+        );
+
         $userList->readObjects();
 
         return $userList->getObjects();
