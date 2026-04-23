@@ -426,18 +426,18 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
     #[\Override]
     protected function addFormFields(IFormDocument $form)
     {
-        $tabContainter = TabMenuFormContainer::create('tabMenu');
-        $form->appendChild($tabContainter);
+        $tabContainer = TabMenuFormContainer::create('tabMenu');
+        $form->appendChild($tabContainer);
 
         $dataTab = TabFormContainer::create('dataTab')
             ->label('wcf.global.form.data');
-        $tabContainter->appendChild($dataTab);
+        $tabContainer->appendChild($dataTab);
         $dataContainer = FormContainer::create('dataTabData');
         $dataTab->appendChild($dataContainer);
 
         $contentTab = TabFormContainer::create('contentTab')
             ->label('wcf.acp.pip.page.content');
-        $tabContainter->appendChild($contentTab);
+        $tabContainer->appendChild($contentTab);
         $contentContainer = FormContainer::create('contentTabContent');
         $contentTab->appendChild($contentContainer);
 

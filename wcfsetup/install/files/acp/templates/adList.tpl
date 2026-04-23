@@ -23,15 +23,17 @@
 	{unsafe:$gridView->render()}
 </div>
 
-<script data-relocate="true">
-	require(["WoltLabSuite/Core/Component/ChangeShowOrder"], ({ setup }) => {
-		{jsphrase name='wcf.global.changeShowOrder'}
+{if $gridView->countRows() > 1}
+	<script data-relocate="true">
+		require(["WoltLabSuite/Core/Component/ChangeShowOrder"], ({ setup }) => {
+			{jsphrase name='wcf.global.changeShowOrder'}
 
-		setup(
-			document.querySelector('.jsChangeShowOrder'),
-			'core/ads/show-order',
-		);
-	});
-</script>
+			setup(
+				document.querySelector('.jsChangeShowOrder'),
+				'core/ads/show-order',
+			);
+		});
+	</script>
+{/if}
 
 {include file='footer'}

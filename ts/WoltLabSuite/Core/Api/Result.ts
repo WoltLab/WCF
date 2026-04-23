@@ -38,7 +38,11 @@ export function apiResultFromValue<T>(value: T): ApiResult<T> {
   };
 }
 
-export async function apiResultFromError(error: Error): Promise<ApiResult<never>> {
+export async function apiResultFromError(error: unknown): Promise<ApiResult<never>> {
+  if (!(error instanceof Error)) {
+    throw new TypeError("Refusing to handle errors that are not an error.");
+  }
+
   if (error instanceof StatusNotOk) {
     return apiResultFromStatusNotOk(error);
   }

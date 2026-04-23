@@ -100,11 +100,13 @@ final class UserRankGridView extends AbstractGridView
                         #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
-                            if (!$value) {
+                            \assert($row instanceof UserRank);
+
+                            if ($row->requiredGender === 0) {
                                 return '';
                             }
 
-                            return WCF::getLanguage()->get(match ($value) {
+                            return WCF::getLanguage()->get(match ($row->requiredGender) {
                                 1 => 'wcf.user.gender.male',
                                 2 => 'wcf.user.gender.female',
                                 default => 'wcf.user.gender.other'

@@ -19,6 +19,10 @@ type Mention = {
   icon: string;
 };
 
+type MentionFeed = CKEditor5.MentionFeed & {
+  itemRenderer?: (item: Mention) => HTMLElement | string;
+};
+
 async function getPossibleMentions(query: string): Promise<Mention[]> {
   // Prevent excessive attempts to resolve mentions.
   if (query.length > 24) {
@@ -46,11 +50,11 @@ async function getPossibleMentions(query: string): Promise<Mention[]> {
   });
 }
 
-function getMentionConfiguration(): CKEditor5.Mention.MentionConfig {
+function getMentionConfiguration(): CKEditor5.MentionConfig {
   return {
     feeds: [
       {
-        feed: (query) => getPossibleMentions(query),
+        feed: (query: string) => getPossibleMentions(query),
         itemRenderer: (item: Awaited<ReturnType<typeof getPossibleMentions>>[0]) => {
           return createFragmentFromHtml(`
             <span class="ckeditor5__mention">${item.icon} ${item.text}</span>
@@ -58,7 +62,7 @@ function getMentionConfiguration(): CKEditor5.Mention.MentionConfig {
         },
         marker: "@",
         minimumCharacters: 3,
-      },
+      } as unknown as MentionFeed,
     ],
   };
 }

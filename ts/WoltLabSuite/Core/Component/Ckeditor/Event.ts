@@ -50,7 +50,7 @@ type SetupFeaturesEventPayload = {
   features: Features;
 };
 type SetupConfigurationEventPayload = {
-  configuration: CKEditor5.Core.EditorConfig;
+  configuration: CKEditor5.EditorConfig;
   features: Features;
   modules: typeof CKEditor5;
 };

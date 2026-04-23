@@ -259,6 +259,9 @@ class ModerationQueueManager extends SingletonFactory
     {
         // get count
         $count = UserStorageHandler::getInstance()->getField('unreadModerationCount');
+        if (\is_numeric($count)) {
+            $count = (int)$count;
+        }
 
         // cache does not exist or is outdated
         if ($count === null || $skipCache) {

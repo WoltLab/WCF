@@ -2,7 +2,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.upload = upload;
-    async function upload(filename, fileSize, fileHash, objectType, context, exifBytes = null) {
+    async function upload(filename, fileSize, fileHash, objectType, context, exifBytes = null, ignoreExifRotation = false) {
         const url = new URL(`${window.WSC_RPC_API_URL}core/files/upload`);
         let exifData = null;
         if (exifBytes !== null) {
@@ -18,6 +18,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
             objectType,
             context,
             exifData,
+            ignoreExifRotation,
         };
         let response;
         try {

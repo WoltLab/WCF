@@ -46,10 +46,6 @@ final class UnfurlUrlRebuildDataWorker extends AbstractLinearRebuildDataWorker
                 WHERE  imageID = ?";
         $updateStatement = WCF::getDB()->prepare($sql);
 
-        $sql = "DELETE FROM wcf1_unfurl_url_image
-                WHERE       imageID = ?";
-        $deleteStatement = WCF::getDB()->prepare($sql);
-
         $deleteFileIDs = [];
         $cleanUpImageIDs = [];
         foreach ($this->getObjectList()->getObjects() as $unfurlUrl) {
@@ -66,7 +62,6 @@ final class UnfurlUrlRebuildDataWorker extends AbstractLinearRebuildDataWorker
                     @\unlink($fileLocation);
                 }
 
-                $deleteStatement->execute([$unfurlUrl->imageID]);
                 $cleanUpImageIDs[] = $unfurlUrl->imageID;
             } elseif ($unfurlUrl->fileID === null) {
                 $fileLocation = $this->getOldFileLocation($unfurlUrl);

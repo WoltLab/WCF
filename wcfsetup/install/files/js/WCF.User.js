@@ -340,11 +340,16 @@ if (COMPILER_TARGET_DEFAULT) {
 
 			$("#profileContent").wcfTabs("select", "about");
 			
-			if (this._active) return;
+			if (this._active) {
+				require(["WoltLabSuite/Core/Ui/Scroll"], (Scroll) => {
+					Scroll.element(document.getElementById("profileContent"));
+				});
+				return
+			};
 			this._active = true;
 			
 			this._actionName = 'beginEdit';
-			this._buttons.beginEdit.parent().addClass('active');
+			this._buttons.beginEdit.addClass('active');
 			
 			// load form
 			this._proxy.setOption('data', {
@@ -446,7 +451,7 @@ if (COMPILER_TARGET_DEFAULT) {
 		_restore: function () {
 			this._actionName = 'restore';
 			this._active = false;
-			this._buttons.beginEdit.parent().removeClass('active');
+			this._buttons.beginEdit.removeClass('active');
 			
 			this._destroyEditor();
 			
@@ -486,7 +491,7 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * @param        boolean                disableCache
 		 */
 		_prepareEdit: function (data, disableCache) {
-			require(["WoltLabSuite/Core/Dom/Util"], ({ setInnerHtml }) => {
+			require(["WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Ui/Scroll"], ({ setInnerHtml }, { element }) => {
 				this._destroyEditor();
 				
 				if (disableCache !== true) {
@@ -509,6 +514,8 @@ if (COMPILER_TARGET_DEFAULT) {
 						return false;
 					}
 				});
+
+				element(document.getElementById("profileContent"));
 			});
 		},
 		

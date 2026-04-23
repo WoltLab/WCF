@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "WoltLabSuite/Core/Dom/Change/Listener", "../Ckeditor/Event", "WoltLabSuite/Core/Api/Files/DeleteFile", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Component/File/Helper"], function (require, exports, tslib_1, Simple_1, Listener_1, Event_1, DeleteFile_1, Language_1, Helper_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "WoltLabSuite/Core/Dom/Change/Listener", "../Ckeditor/Event", "WoltLabSuite/Core/Api/Files/DeleteFile", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Component/File/Helper", "../Confirmation"], function (require, exports, tslib_1, Simple_1, Listener_1, Event_1, DeleteFile_1, Language_1, Helper_1, Confirmation_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.createAttachmentFromFile = createAttachmentFromFile;
@@ -80,7 +80,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "
             dropdownMenu.append(listItem);
         }
         const listItem = document.createElement("li");
-        listItem.append(getDeleteAttachButton(fileId, data.attachmentID, editor, element));
+        listItem.append(getDeleteAttachButton(fileId, data.attachmentID, editor, element, file.filename));
         dropdownMenu.append(listItem);
         const moreOptions = document.createElement("button");
         moreOptions.classList.add("button", "small");
@@ -98,18 +98,20 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "
             (0, Simple_1.toggleDropdown)(moreOptions.id);
         });
     }
-    function getDeleteAttachButton(fileId, attachmentId, editor, element) {
+    function getDeleteAttachButton(fileId, attachmentId, editor, element, filename) {
         const button = document.createElement("button");
         button.type = "button";
         button.textContent = (0, Language_1.getPhrase)("wcf.global.button.delete");
-        button.addEventListener("click", () => {
-            void (0, DeleteFile_1.deleteFile)(fileId).then((result) => {
-                result.unwrap();
-                (0, Event_1.dispatchToCkeditor)(editor).removeAttachment({
-                    attachmentId,
-                });
-                element.remove();
+        button.addEventListener("click", async () => {
+            const confirmationResult = await (0, Confirmation_1.confirmationFactory)().delete(filename);
+            if (!confirmationResult) {
+                return;
+            }
+            (await (0, DeleteFile_1.deleteFile)(fileId)).unwrap();
+            (0, Event_1.dispatchToCkeditor)(editor).removeAttachment({
+                attachmentId,
             });
+            element.remove();
         });
         return button;
     }

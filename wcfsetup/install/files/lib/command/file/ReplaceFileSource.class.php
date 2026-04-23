@@ -138,13 +138,22 @@ final class ReplaceFileSource
                     ]);
                     $updatedFile = new File($updatedFile->fileID);
                 } else {
-                    $newWebpVariant = $updatedFile->getPathnameWebp();
-                    \assert($newWebpVariant !== null);
+                    if (\file_exists($webpVariant)) {
+                        $newWebpVariant = $updatedFile->getPathnameWebp();
+                        \assert($newWebpVariant !== null);
 
-                    \rename(
-                        $webpVariant,
-                        $newWebpVariant,
-                    );
+                        \rename(
+                            $webpVariant,
+                            $newWebpVariant,
+                        );
+                    } else {
+                        // The variant file is missing on disk, clear the
+                        // stale reference.
+                        (new FileEditor($updatedFile))->update([
+                            'fileHashWebp' => null,
+                        ]);
+                        $updatedFile = new File($updatedFile->fileID);
+                    }
                 }
             }
 

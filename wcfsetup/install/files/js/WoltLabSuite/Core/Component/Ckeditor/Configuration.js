@@ -239,6 +239,11 @@ define(["require", "exports", "../../Language", "WoltLabSuite/Core/Component/Emo
         toConfig() {
             const language = Object.keys(window.CKEDITOR_TRANSLATIONS).find((language) => language !== "en");
             const key = language ? language : "en";
+            if (key === "en" && !Object.hasOwn(window.CKEDITOR_TRANSLATIONS, key)) {
+                window.CKEDITOR_TRANSLATIONS[key] = {
+                    dictionary: {},
+                };
+            }
             const { dictionary } = window.CKEDITOR_TRANSLATIONS[key];
             dictionary["Author"] = (0, Language_1.getPhrase)("wcf.ckeditor.quote.author");
             dictionary["Filename"] = (0, Language_1.getPhrase)("wcf.ckeditor.code.fileName");

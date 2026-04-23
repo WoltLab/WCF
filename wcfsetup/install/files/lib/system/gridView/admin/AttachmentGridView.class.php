@@ -6,11 +6,14 @@ use wcf\acp\form\UserEditForm;
 use wcf\data\attachment\AdministrativeAttachment;
 use wcf\data\attachment\AdministrativeAttachmentList;
 use wcf\data\DatabaseObject;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\event\gridView\admin\AttachmentGridViewInitialized;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\AbstractColumnRenderer;
+use wcf\system\gridView\renderer\DefaultColumnRenderer;
 use wcf\system\gridView\renderer\FilesizeColumnRenderer;
 use wcf\system\gridView\renderer\ILinkColumnRenderer;
 use wcf\system\gridView\renderer\NumberColumnRenderer;
@@ -92,9 +95,30 @@ final class AttachmentGridView extends AbstractGridView
                 ->unsafeDisableEncoding()
                 ->renderer(new TruncatedTextColumnRenderer())
                 ->sortable(sortByDatabaseColumn: 'file_table.filename'),
+            GridViewColumn::for('container')
+                ->label('wcf.acp.attachment.content')
+                ->renderer(
+                    new class extends DefaultColumnRenderer implements ILinkColumnRenderer {
+                        #[\Override]
+                        public function render(mixed $value, DatabaseObject $row): string
+                        {
+                            \assert($row instanceof AdministrativeAttachment);
+
+                            if ($row->getContainerObject() === null) {
+                                return '';
+                            }
+
+                            return \sprintf(
+                                '<a href="%s">%s</a>',
+                                StringUtil::encodeHTML($row->getContainerObject()->getLink()),
+                                StringUtil::encodeHTML($row->getContainerObject()->getTitle())
+                            );
+                        }
+                    }
+                ),
             GridViewColumn::for('username')
                 ->label('wcf.user.username')
-                ->filter(new UserFilter('usernane', 'wcf.user.username', 'user_table.username'))
+                ->filter(new UserFilter('username', 'wcf.user.username', 'user_table.userID'))
                 ->renderer(
                     new class extends AbstractColumnRenderer {
                         #[\Override]
@@ -109,13 +133,18 @@ final class AttachmentGridView extends AbstractGridView
                             if (WCF::getSession()->hasPermission('admin.user.canEditUser')) {
                                 return \sprintf(
                                     '<a href="%s">%s</a>',
-                                    LinkHandler::getInstance()->getControllerLink(UserEditForm::class, [
-                                        'id' => $row->userID,
-                                    ]),
-                                    $row->username
+                                    StringUtil::encodeHTML(
+                                        LinkHandler::getInstance()->getControllerLink(
+                                            UserEditForm::class,
+                                            [
+                                                'id' => $row->userID,
+                                            ]
+                                        )
+                                    ),
+                                    StringUtil::encodeHTML($row->username)
                                 );
                             } else {
-                                return $row->username;
+                                return StringUtil::encodeHTML($row->username);
                             }
                         }
                     }
@@ -163,16 +192,26 @@ final class AttachmentGridView extends AbstractGridView
      */
     private function getAvailableFileTypes(): array
     {
+        $objectTypeIDs = $this->getAvailableObjectTypeIDs();
+        if ($objectTypeIDs === []) {
+            return [];
+        }
+
+        $conditionBuilder = new PreparedStatementConditionBuilder();
+        $conditionBuilder->add('attachment.fileID IS NOT NULL');
+        $conditionBuilder->add('attachment.objectTypeID IN (?)', [$objectTypeIDs]);
+        $conditionBuilder->add('attachment.tmpHash = ?', ['']);
+
         $sql = "SELECT    DISTINCT file_table.mimeType
                 FROM      wcf1_attachment attachment
                 LEFT JOIN wcf1_file file_table
                 ON        (file_table.fileID = attachment.fileID)
-                WHERE     attachment.fileID IS NOT NULL";
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepare($sql);
-        $statement->execute();
+        $statement->execute($conditionBuilder->getParameters());
         $fileTypes = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
-        \ksort($fileTypes);
+        \sort($fileTypes);
 
         return \array_combine($fileTypes, $fileTypes);
     }
@@ -186,12 +225,37 @@ final class AttachmentGridView extends AbstractGridView
     #[\Override]
     protected function createObjectList(): AdministrativeAttachmentList
     {
-        return new AdministrativeAttachmentList();
+        $list = new AdministrativeAttachmentList();
+
+        $objectTypeIDs = $this->getAvailableObjectTypeIDs();
+        if ($objectTypeIDs !== []) {
+            $list->getConditionBuilder()->add('attachment.objectTypeID IN (?)', [$objectTypeIDs]);
+        } else {
+            $list->getConditionBuilder()->add('1=0');
+        }
+        $list->getConditionBuilder()->add('attachment.tmpHash = ?', ['']);
+
+        return $list;
     }
 
     #[\Override]
     protected function getInitializedEvent(): AttachmentGridViewInitialized
     {
         return new AttachmentGridViewInitialized($this);
+    }
+
+    /**
+     * @return list<int>
+     */
+    private function getAvailableObjectTypeIDs(): array
+    {
+        $objectTypeIDs = [];
+        foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.attachment.objectType') as $objectType) {
+            if (!$objectType->private) {
+                $objectTypeIDs[] = $objectType->objectTypeID;
+            }
+        }
+
+        return $objectTypeIDs;
     }
 }

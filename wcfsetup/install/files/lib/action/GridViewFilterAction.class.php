@@ -64,7 +64,7 @@ final class GridViewFilterAction implements RequestHandlerInterface
             throw new IllegalLinkException();
         }
 
-        $form = $this->getForm($view, $parameters['filters']);
+        $form = $this->getForm($view, $request->getMethod() === 'GET' ? $parameters['filters'] : []);
 
         if ($request->getMethod() === 'GET') {
             return $form->toResponse();

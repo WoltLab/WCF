@@ -154,7 +154,7 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Even
         // check if containers are currently being checked
         if (_checkingContainers === true) {
             // and if that is the case, calling this method indicates, that after the current round,
-            // containters should be checked to properly propagate changes in children to their parents
+            // containers should be checked to properly propagate changes in children to their parents
             _checkContainersAgain = true;
             return;
         }
@@ -162,7 +162,7 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Even
         _checkingContainers = true;
         _checkContainersAgain = false;
         EventHandler.fire("com.woltlab.wcf.form.builder.dependency", "checkContainers");
-        // finish checking containers and check if containters should be checked again
+        // finish checking containers and check if containers should be checked again
         _checkingContainers = false;
         if (_checkContainersAgain) {
             checkContainers();
