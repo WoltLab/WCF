@@ -40,7 +40,7 @@ class UserGroupAssignmentHandler extends SingletonFactory
      */
     public function checkUsers(array $userIDs)
     {
-        if (empty($userIDs)) {
+        if ($userIDs === []) {
             return;
         }
 
@@ -50,30 +50,33 @@ class UserGroupAssignmentHandler extends SingletonFactory
 
         /** @var UserGroupAssignment[] $assignments */
         $assignments = UserGroupAssignmentCacheBuilder::getInstance()->getData();
+
+        // TODO: this is a bit too verbose
+        $builder = new UserGroupAssignmentObjectFilterBuilder();
+        $handler = new ObjectFilterHandler($builder->getFilters());
+
         foreach ($userList as $user) {
             $groupIDs = $user->getGroupIDs();
             $newGroupIDs = [];
 
             foreach ($assignments as $assignment) {
-                if (\in_array($assignment->groupID, $groupIDs) || \in_array($assignment->groupID, $newGroupIDs)) {
+                if (
+                    \in_array($assignment->groupID, $groupIDs, true)
+                    || \in_array($assignment->groupID, $newGroupIDs, true)
+                ) {
                     continue;
                 }
 
-                $checkFailed = false;
-                $conditions = $assignment->getConditions();
-                foreach ($conditions as $condition) {
-                    if (!$condition->getObjectType()->getProcessor()->checkUser($condition, $user)) {
-                        $checkFailed = true;
-                        break;
-                    }
-                }
-
-                if (!$checkFailed) {
+                if ($handler->testUser(
+                    $user,
+                    'com.woltlab.wcf.userGroupAssignment',
+                    $assignment->conditions
+                )) {
                     $newGroupIDs[] = $assignment->groupID;
                 }
             }
 
-            if (!empty($newGroupIDs)) {
+            if ($newGroupIDs !== []) {
                 $userAction = new UserAction([$user], 'addToGroups', [
                     'addDefaultGroups' => false,
                     'deleteOldGroups' => false,
