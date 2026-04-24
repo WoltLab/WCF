@@ -44,12 +44,12 @@ class ArticleCollection extends DatabaseObjectCollection
     {
         $this->loadArticleContents();
 
-        /*if (
-            $file->getActiveLanguageID() !== null
-            && isset($this->fileContents[$file->getObjectID()][$file->getActiveLanguageID()])
+        if (
+            $article->getActiveLanguageID() !== null
+            && isset($this->articleContents[$article->getObjectID()][$article->getActiveLanguageID()])
         ) {
-            return $this->fileContents[$file->getObjectID()][$file->getActiveLanguageID()];
-        }*/
+            return $this->articleContents[$article->getObjectID()][$article->getActiveLanguageID()];
+        }
         if (isset($this->articleContents[$article->getObjectID()][WCF::getLanguage()->languageID])) {
             return $this->articleContents[$article->getObjectID()][WCF::getLanguage()->languageID];
         }

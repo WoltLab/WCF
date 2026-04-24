@@ -4,7 +4,6 @@ namespace wcf\system\message\embedded\object;
 
 use wcf\data\article\AccessibleArticleList;
 use wcf\data\article\Article;
-use wcf\system\cache\runtime\ArticleRuntimeCache;
 use wcf\system\html\input\HtmlInputProcessor;
 
 /**
@@ -32,7 +31,19 @@ class ArticleMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedO
     #[\Override]
     public function loadObjects(array $objectIDs)
     {
-        return ArticleRuntimeCache::getInstance()->getObjects($objectIDs);
+        $objectList = new AccessibleArticleList();
+        $objectList->setObjectIDs($objectIDs);
+        $objectList->readObjects();
+        $articles = $objectList->getObjects();
+
+        $contentLanguageID = MessageEmbeddedObjectManager::getInstance()->getContentLanguageID();
+        if ($contentLanguageID !== null) {
+            foreach ($articles as $article) {
+                $article->setActiveLanguageID($contentLanguageID);
+            }
+        }
+
+        return $articles;
     }
 
     #[\Override]

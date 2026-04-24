@@ -33,6 +33,10 @@ final class GetArticleContentHeaderTitle implements IController
 
         $articleContent->getArticle()->getDiscussionProvider()->setArticleContent($articleContent);
 
+        if ($articleContent->languageID !== null) {
+            $articleContent->getArticle()->setActiveLanguageID($articleContent->languageID);
+        }
+
         return new JsonResponse([
             'template' => WCF::getTPL()->render('wcf', 'articleContentHeaderTitle', [
                 'articleContent' => $articleContent,

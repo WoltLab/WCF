@@ -70,7 +70,11 @@ class ArticlePage extends AbstractPage
             throw new PermissionDeniedException();
         }
 
-        // update interface language
+        if ($this->articleContent->languageID !== null) {
+            $this->article->setActiveLanguageID($this->articleContent->languageID);
+        }
+
+        // update interface language to match the article's language
         if (
             WCF::getUser()->isGuest()
             && $this->article->isMultilingual

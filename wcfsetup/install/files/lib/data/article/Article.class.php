@@ -63,6 +63,7 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
     const DELAYED_PUBLICATION = 2;
 
     protected int $effectiveVisitTime;
+    protected int $activeLanguageID;
 
     /**
      * Returns true if the active user can delete this article.
@@ -478,6 +479,26 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
         }
 
         return $this->effectiveVisitTime;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function setActiveLanguageID(int $languageID): void
+    {
+        $this->activeLanguageID = $languageID;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getActiveLanguageID(): ?int
+    {
+        if (isset($this->activeLanguageID)) {
+            return $this->activeLanguageID;
+        }
+
+        return null;
     }
 
     /**

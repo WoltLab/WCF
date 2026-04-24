@@ -57,7 +57,7 @@ class ArticleContentCollection extends DatabaseObjectCollection
         $this->images = $mediaList->getObjects();
     }
 
-    private function getContentLanguageID(): ?int
+    protected function getContentLanguageID(): ?int
     {
         $objects = $this->getObjects();
         if (\count($objects) === 1) {
