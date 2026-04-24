@@ -17,7 +17,8 @@ use wcf\system\form\builder\field\TitleFormField;
  * @author      Alexander Ebert, Matthias Schmidt
  * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @implements  AbstractFormBuilderForm<UserGroupAssignment>
+ *
+ * @extends AbstractFormBuilderForm<UserGroupAssignment>
  */
 class UserGroupAssignmentAddForm extends AbstractFormBuilderForm
 {
