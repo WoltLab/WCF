@@ -247,7 +247,7 @@ class ArticleAddForm extends AbstractFormBuilderForm
 
             $labelFormFields[] = LabelFormField::create('labelIDs' . $groupID)
                 ->objectProperty('labelIDs')
-                ->objectType('com.woltlab.wcf.article.category')
+                ->objectType('com.woltlab.wcf.article')
                 ->available(
                     !$labelGroup->hasPermissions()
                         || $labelGroup->getPermission($optionID)
