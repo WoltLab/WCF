@@ -6,16 +6,18 @@ use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\MapperBuilder;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\User;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\object\filter\builder\IObjectFilterBuilder;
+use wcf\system\object\filter\user\IUserObjectFilter;
 use wcf\system\WCF;
 
 final class ObjectFilterHandler
 {
     /**
-     * @param list<IObjectFilter<mixed>> $filters
+     * @param list<IUserObjectFilter<mixed>> $filters
      */
     public function __construct(
         private readonly array $filters,
@@ -96,5 +98,58 @@ final class ObjectFilterHandler
         if (!$hasActiveFilters) {
             $conditions->add('1=0');
         }
+    }
+
+    public function testUser(User $user, string $objectTypeName, ?string $json): bool
+    {
+        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
+            'com.woltlab.wcf.objectFilter',
+            $objectTypeName,
+        );
+        if ($objectType === null) {
+            throw new InvalidObjectTypeException($objectTypeName, 'com.woltlab.wcf.objectFilter');
+        }
+
+        if ($json === null) {
+            return false;
+        }
+
+        /** @var list<array{0: string, 1: string}> $values */
+        $values = (new MapperBuilder())->mapper()->map(
+            <<<'EOT'
+                list<array{0: string, 1: string}>
+                EOT,
+            Source::json($json)
+        );
+
+        if ($values === []) {
+            return false;
+        }
+
+        /** @var IObjectFilterBuilder $builder */
+        $builder = $objectType->getProcessor();
+        $filters = [];
+        foreach ($builder->getFilters() as $filter) {
+            $filters[$filter->getIdentifier()] = $filter;
+        }
+
+        $hasActiveFilters = false;
+        foreach ($values as [$identifier, $serializedValue]) {
+            $filter = $filters[$identifier] ?? null;
+            if ($filter === null) {
+                continue;
+            }
+
+            \assert($filter instanceof IUserObjectFilter);
+
+            $hasActiveFilters = true;
+            if (!$filter->testUser($user, $filter->unserializeValue($serializedValue))) {
+                return false;
+            }
+        }
+
+        // Returns true if there are active filters because any negative test
+        // would have returned early.
+        return $hasActiveFilters;
     }
 }
