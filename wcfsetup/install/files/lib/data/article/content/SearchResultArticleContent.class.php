@@ -2,6 +2,7 @@
 
 namespace wcf\data\article\content;
 
+use wcf\data\DatabaseObjectDecorator;
 use wcf\data\search\ISearchResultObject;
 use wcf\page\ArticlePage;
 use wcf\system\html\output\HtmlOutputProcessor;
@@ -11,12 +12,21 @@ use wcf\system\search\SearchResultTextParser;
 /**
  * Represents an article content as a search result.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @mixin   ArticleContent
+ * @extends DatabaseObjectDecorator<ArticleContent>
  */
-class SearchResultArticleContent extends ViewableArticleContent implements ISearchResultObject
+class SearchResultArticleContent extends DatabaseObjectDecorator implements ISearchResultObject
 {
+    /**
+     * @inheritDoc
+     */
+    protected static $baseClass = ArticleContent::class;
+
+
     #[\Override]
     public function getUserProfile()
     {
@@ -38,15 +48,17 @@ class SearchResultArticleContent extends ViewableArticleContent implements ISear
     #[\Override]
     public function getLink(string $query = ''): string
     {
-        $parameters = [
-            'object' => $this->getDecoratedObject(),
-        ];
-
-        if ($query) {
-            $parameters['highlight'] = \urlencode($query);
+        if ($query !== '') {
+            return LinkHandler::getInstance()->getControllerLink(
+                ArticlePage::class,
+                [
+                    'object' => $this->getDecoratedObject(),
+                    'highlight' => \urlencode($query),
+                ]
+            );
         }
 
-        return LinkHandler::getInstance()->getControllerLink(ArticlePage::class, $parameters);
+        return $this->getDecoratedObject()->getLink();
     }
 
     #[\Override]
@@ -69,8 +81,8 @@ class SearchResultArticleContent extends ViewableArticleContent implements ISear
         );
         $message = SearchResultTextParser::getInstance()->parse($processor->getHtml());
 
-        if ($this->getTeaserImage()) {
-            return '<div class="box96">' . $this->getTeaserImage()->getElementTag(96) . '<div>' . $message . '</div></div>';
+        if ($this->getDecoratedObject()->getTeaserImage() !== null) {
+            return '<div class="box96">' . $this->getDecoratedObject()->getTeaserImage()->getElementTag(96) . '<div>' . $message . '</div></div>';
         }
 
         return $message;

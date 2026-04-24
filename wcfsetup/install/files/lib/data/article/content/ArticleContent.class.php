@@ -3,13 +3,14 @@
 namespace wcf\data\article\content;
 
 use wcf\data\article\Article;
-use wcf\data\DatabaseObject;
+use wcf\data\attachment\Attachment;
+use wcf\data\CollectionDatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\language\Language;
+use wcf\data\media\ViewableMedia;
 use wcf\page\ArticlePage;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\language\LanguageFactory;
-use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -19,9 +20,9 @@ use wcf\util\StringUtil;
 /**
  * Represents an article content.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @property-read   int     $articleContentID   unique id of the article content
  * @property-read   int     $articleID          id of the article the article content belongs to
@@ -35,19 +36,16 @@ use wcf\util\StringUtil;
  * @property-read   string  $metaTitle          title of the article used in the title tag
  * @property-read   string  $metaDescription    meta description of the article
  * @property-read   int     $comments           number of comments
+ * @property-read   int     $attachments        number of attachments
+ *
+ * @extends CollectionDatabaseObject<ArticleContentCollection>
  */
-class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteController
+class ArticleContent extends CollectionDatabaseObject implements ILinkableObject, IRouteController
 {
     /**
      * @inheritDoc
      */
     protected static $databaseTableIndexName = 'articleContentID';
-
-    /**
-     * article object
-     * @var Article
-     */
-    protected $article;
 
     #[\Override]
     public function getLink(): string
@@ -65,20 +63,16 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 
     /**
      * Returns the article's unformatted teaser.
-     *
-     * @return      string
      */
-    public function getTeaser()
+    public function getTeaser(): string
     {
-        return $this->teaser;
+        return $this->teaser ?? '';
     }
 
     /**
      * Returns the article's formatted teaser.
-     *
-     * @return      string
      */
-    public function getFormattedTeaser()
+    public function getFormattedTeaser(): string
     {
         if ($this->teaser) {
             return \nl2br(StringUtil::encodeHTML($this->teaser), false);
@@ -89,11 +83,11 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 
     /**
      * Returns the article's formatted content.
-     *
-     * @return      string
      */
-    public function getFormattedContent()
+    public function getFormattedContent(): string
     {
+        $this->loadEmbeddedObjects();
+
         $processor = new HtmlOutputProcessor();
         $processor->enableUgc = false;
         $processor->process(
@@ -109,10 +103,13 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 
     /**
      * Returns a simplified version of the formatted content.
+     *
      * @since 6.1
      */
     public function getSimplifiedFormattedContent(): string
     {
+        $this->loadEmbeddedObjects();
+
         $htmlOutputProcessor = new HtmlOutputProcessor();
         $htmlOutputProcessor->setOutputType('text/simplified-html');
         $htmlOutputProcessor->enableUgc = false;
@@ -127,26 +124,15 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
         return $htmlOutputProcessor->getHtml();
     }
 
-    /**
-     * Returns article object.
-     *
-     * @return Article
-     */
-    public function getArticle()
+    public function getArticle(): Article
     {
-        if ($this->article === null) {
-            $this->article = new Article($this->articleID);
-        }
-
-        return $this->article;
+        return $this->getCollection()->getArticle($this);
     }
 
     /**
      * Returns the language of this article content or `null` if no language has been specified.
-     *
-     * @return  Language|null
      */
-    public function getLanguage()
+    public function getLanguage(): ?Language
     {
         if ($this->languageID) {
             return LanguageFactory::getInstance()->getLanguage($this->languageID);
@@ -159,17 +145,11 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
      * Returns a version of this message optimized for use in emails.
      *
      * @param string $mimeType Either 'text/plain' or 'text/html'
-     * @return  string
-     * @since       5.2
+     * @since 5.2
      */
-    public function getMailText(string $mimeType = 'text/plain')
+    public function getMailText(string $mimeType = 'text/plain'): string
     {
-        if ($this->hasEmbeddedObjects) {
-            MessageEmbeddedObjectManager::getInstance()->loadObjects(
-                'com.woltlab.wcf.article.content',
-                [$this->articleContentID]
-            );
-        }
+        $this->loadEmbeddedObjects();
 
         switch ($mimeType) {
             case 'text/plain':
@@ -180,7 +160,6 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 
                 return $processor->getHtml();
             case 'text/html':
-                // parse and return message
                 $processor = new HtmlOutputProcessor();
                 $processor->setOutputType('text/simplified-html');
                 $processor->enableUgc = false;
@@ -194,10 +173,8 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 
     /**
      * Returns a certain article content or `null` if it does not exist.
-     *
-     * @return      ArticleContent|null
      */
-    public static function getArticleContent(int $articleID, ?int $languageID)
+    public static function getArticleContent(int $articleID, ?int $languageID): ?ArticleContent
     {
         if ($languageID !== null) {
             $sql = "SELECT  *
@@ -220,5 +197,60 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
         }
 
         return null;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function loadEmbeddedObjects(): void
+    {
+        $this->getCollection()->loadEmbeddedObjects('com.woltlab.wcf.article.content');
+    }
+
+    /**
+     * Returns the article's image if the active user can access it or `null`.
+     *
+     * @since 6.3
+     */
+    public function getImage(): ?ViewableMedia
+    {
+        if ($this->imageID === null) {
+            return null;
+        }
+
+        $image = $this->getCollection()->getImage($this->imageID);
+        if ($image === null || !$image->isAccessible()) {
+            return null;
+        }
+
+        return $image;
+    }
+
+    /**
+     * Returns the article's teaser image if the active user can access it or `null`.
+     *
+     * @since 6.3
+     */
+    public function getTeaserImage(): ?ViewableMedia
+    {
+        if ($this->teaserImageID === null) {
+            return $this->getImage();
+        }
+
+        $image = $this->getCollection()->getImage($this->teaserImageID);
+        if ($image === null || !$image->isAccessible()) {
+            return null;
+        }
+
+        return $image;
+    }
+
+    /**
+     * @return Attachment[]
+     * @since 6.3
+     */
+    public function getAttachments(): array
+    {
+        return $this->getCollection()->getAttachments($this);
     }
 }

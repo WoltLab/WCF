@@ -3241,7 +3241,7 @@ Your account on {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link}] has been a
 		<item name="wcf.article.sortField.random"><![CDATA[Random]]></item>
 		<item name="wcf.article.sortField.time"><![CDATA[Date]]></item>
 		<item name="wcf.article.sortField.views"><![CDATA[Views]]></item>
-		<item name="wcf.article.recentActivity"><![CDATA[<strong>{$author}</strong> wrote the article {if $article->hasLabels()}<ul class="labelList">{foreach from=$article->getLabels() item=label}<li>{unsafe:$label->render()}</li>{/foreach}</ul> {/if}<strong>{$article->getTitle()}</strong>.]]></item>
+		<item name="wcf.article.recentActivity"><![CDATA[<strong>{$author}</strong> wrote the article {if $article->hasLabels}<ul class="labelList">{foreach from=$article->getLabels() item=label}<li>{unsafe:$label->render()}</li>{/foreach}</ul> {/if}<strong>{$article->getTitle()}</strong>.]]></item>
 		<item name="wcf.article.button.sort"><![CDATA[Sort]]></item>
 		<item name="wcf.article.search"><![CDATA[Search Articles]]></item>
 		<item name="wcf.article.search.error.noResults"><![CDATA[The search returned no results.]]></item>

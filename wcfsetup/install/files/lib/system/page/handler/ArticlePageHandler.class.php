@@ -2,11 +2,11 @@
 
 namespace wcf\system\page\handler;
 
-use wcf\data\article\ViewableArticleList;
+use wcf\data\article\ArticleList;
 use wcf\data\page\Page;
 use wcf\data\user\online\UserOnline;
-use wcf\system\cache\runtime\ViewableArticleContentRuntimeCache;
-use wcf\system\cache\runtime\ViewableArticleRuntimeCache;
+use wcf\system\cache\runtime\ArticleContentRuntimeCache;
+use wcf\system\cache\runtime\ArticleRuntimeCache;
 use wcf\system\WCF;
 
 /**
@@ -23,19 +23,19 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
     #[\Override]
     public function getLink(int $objectID)
     {
-        return ViewableArticleRuntimeCache::getInstance()->getObject($objectID)->getLink();
+        return ArticleRuntimeCache::getInstance()->getObject($objectID)->getLink();
     }
 
     #[\Override]
     public function isValid(?int $objectID)
     {
-        return ViewableArticleRuntimeCache::getInstance()->getObject($objectID) !== null;
+        return ArticleRuntimeCache::getInstance()->getObject($objectID) !== null;
     }
 
     #[\Override]
     public function isVisible(?int $objectID = null)
     {
-        $article = ViewableArticleRuntimeCache::getInstance()->getObject($objectID);
+        $article = ArticleRuntimeCache::getInstance()->getObject($objectID);
 
         return $article !== null && $article->canRead();
     }
@@ -43,7 +43,7 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
     #[\Override]
     public function lookup(string $searchString)
     {
-        $articleList = new ViewableArticleList();
+        $articleList = new ArticleList();
         $articleList->sqlSelects = "(
             SELECT  title
             FROM    wcf1_article_content
@@ -87,7 +87,7 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
             return '';
         }
 
-        $content = ViewableArticleContentRuntimeCache::getInstance()->getObject($user->pageObjectID);
+        $content = ArticleContentRuntimeCache::getInstance()->getObject($user->pageObjectID);
         if ($content === null || !$content->getArticle()->canRead()) {
             return '';
         }
@@ -102,13 +102,13 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
     public function prepareOnlineLocation(Page $page, UserOnline $user)
     {
         if ($user->pageObjectID !== null) {
-            ViewableArticleContentRuntimeCache::getInstance()->cacheObjectID($user->pageObjectID);
+            ArticleContentRuntimeCache::getInstance()->cacheObjectID($user->pageObjectID);
         }
     }
 
     #[\Override]
     public function cacheObject(int $objectID): void
     {
-        ViewableArticleRuntimeCache::getInstance()->cacheObjectID($objectID);
+        ArticleRuntimeCache::getInstance()->cacheObjectID($objectID);
     }
 }

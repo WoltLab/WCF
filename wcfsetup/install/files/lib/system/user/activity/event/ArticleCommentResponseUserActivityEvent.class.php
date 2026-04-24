@@ -2,7 +2,7 @@
 
 namespace wcf\system\user\activity\event;
 
-use wcf\data\article\ViewableArticleList;
+use wcf\data\article\ArticleList;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -30,7 +30,7 @@ class ArticleCommentResponseUserActivityEvent extends SingletonFactory implement
         // fetch articles
         $articles = $articleContentToArticle = [];
         if (!empty($this->commentObjectIDs)) {
-            $articleList = new ViewableArticleList();
+            $articleList = new ArticleList();
             $articleList->getConditionBuilder()->add(
                 "article.articleID IN (
                     SELECT  articleID

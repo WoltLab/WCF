@@ -64,6 +64,7 @@ trait TCollectionAttachments
 
     protected function hasAttachments(DatabaseObject $object): bool
     {
+        // @phpstan-ignore property.notFound
         return $object->attachments > 0;
     }
 

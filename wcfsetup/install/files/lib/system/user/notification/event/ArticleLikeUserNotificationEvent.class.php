@@ -6,7 +6,7 @@ use wcf\command\article\ResetUserStorageForUnreadArticles;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\LikeableArticle;
 use wcf\data\user\UserProfile;
-use wcf\system\cache\runtime\ViewableArticleRuntimeCache;
+use wcf\system\cache\runtime\ArticleRuntimeCache;
 use wcf\system\user\notification\object\LikeUserNotificationObject;
 
 /**
@@ -38,7 +38,7 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
     #[\Override]
     protected function prepare()
     {
-        ViewableArticleRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->objectID);
+        ArticleRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->objectID);
     }
 
     #[\Override]
@@ -58,7 +58,7 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
     #[\Override]
     public function getMessage()
     {
-        $article = ViewableArticleRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID);
+        $article = ArticleRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID);
         $authors = \array_values($this->getAuthors());
         $count = \count($authors);
 
@@ -100,7 +100,7 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
     #[\Override]
     public function getLink(): string
     {
-        return ViewableArticleRuntimeCache::getInstance()
+        return ArticleRuntimeCache::getInstance()
             ->getObject($this->getUserNotificationObject()->objectID)
             ->getLink();
     }
@@ -120,7 +120,7 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
     #[\Override]
     public function checkAccess()
     {
-        if (!ViewableArticleRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID)->canRead()) {
+        if (!ArticleRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID)->canRead()) {
             (new ResetUserStorageForUnreadArticles())();
 
             return false;

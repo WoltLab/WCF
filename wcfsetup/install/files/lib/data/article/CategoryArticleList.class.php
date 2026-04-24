@@ -20,7 +20,7 @@ class CategoryArticleList extends AccessibleArticleList
      */
     public function __construct(int|array $categoryID, bool $includeChildCategories = false)
     {
-        ViewableArticleList::__construct();
+        ArticleList::__construct();
 
         if (!\is_array($categoryID)) {
             $categoryIDs = $fetchChildCategories = [$categoryID];

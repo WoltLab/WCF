@@ -18,7 +18,7 @@
 			<meta itemprop="datePublished" content="{$article->time|date:'c'}">
 		</li>
 
-		{if $article->hasLabels()}
+		{if $article->hasLabels}
 			<li>
 				{icon name='tags'}
 				<ul class="labelList">

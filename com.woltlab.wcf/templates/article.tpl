@@ -20,7 +20,7 @@
 
 {capture assign='headContent'}
 	{if $article->isMultilingual}
-		{foreach from=$article->getLanguageLinks() item='langArticleContent'}
+		{foreach from=$article->getArticleContents() item='langArticleContent'}
 			{if $langArticleContent->getLanguage()}
 				<link rel="alternate" hreflang="{$langArticleContent->getLanguage()->languageCode}" href="{$langArticleContent->getLink()}">
 			{/if}
@@ -38,7 +38,7 @@
 				<span>{$articleContent->getLanguage()->languageName}</span>
 			</button>
 			<ul class="dropdownMenu">
-				{foreach from=$article->getLanguageLinks() item='langArticleContent'}
+				{foreach from=$article->getArticleContents() item='langArticleContent'}
 					{if $langArticleContent->getLanguage()}
 						<li class="boxFlag">
 							<a class="box24" href="{$langArticleContent->getLink()}">
@@ -116,7 +116,7 @@
 
 	{include file='entryTags' objectType='com.woltlab.wcf.article'}
 
-	{include file='entryAttachments' objectID=$article->articleID}
+	{include file='entryAttachments' attachments=$articleContent->getAttachments()}
 
 	<footer class="entry__footer">
 		{if MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canViewLike')}

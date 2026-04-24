@@ -72,6 +72,14 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker
                     AND objectID = ?";
         $commentStatement = WCF::getDB()->prepare($sql);
 
+        $attachmentObjectType = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', 'com.woltlab.wcf.article.content');
+        $sql = "SELECT  COUNT(*) AS attachments
+                FROM    wcf1_attachment
+                WHERE   objectTypeID = ?
+                    AND objectID = ?";
+        $attachmentStatement = WCF::getDB()->prepare($sql);
+
         // update article content
         $articleContentList = new ArticleContentList();
         $articleContentList->getConditionBuilder()->add(
@@ -116,6 +124,10 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker
                 $data['hasEmbeddedObjects'] = $hasEmbeddedObjects;
             }
 
+            // count attachments
+            $attachmentStatement->execute([$attachmentObjectType->objectTypeID, $articleContent->articleContentID]);
+            $data['attachments'] = $attachmentStatement->fetchSingleColumn();
+
             $articleContentEditor = new ArticleContentEditor($articleContent);
             $articleContentEditor->update($data);
         }
@@ -135,28 +147,8 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker
         $statement->execute($conditions->getParameters());
         $cumulativeLikes = $statement->fetchMap('objectID', 'cumulativeLikes');
 
-        $objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName(
-            'com.woltlab.wcf.attachment.objectType',
-            'com.woltlab.wcf.article',
-        );
-        \assert($objectTypeID !== null);
-
-        $conditions = new PreparedStatementConditionBuilder();
-        $conditions->add("objectTypeID = ?", [$objectTypeID]);
-        $conditions->add("objectID IN (?)", [
-            \array_column($this->getObjectList()->getObjects(), 'articleID')
-        ]);
-        $sql = "SELECT  objectID, COUNT(*) AS count
-                FROM    wcf1_attachment
-                {$conditions}
-                GROUP BY objectID";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute($conditions->getParameters());
-        $attachments = $statement->fetchMap('objectID', 'count', true);
-
         foreach ($this->objectList as $article) {
             $data = [
-                'attachments' => $attachments[$article->articleID] ?? 0,
                 'cumulativeLikes' => $cumulativeLikes[$article->articleID] ?? 0,
             ];
 

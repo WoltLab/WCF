@@ -3,7 +3,9 @@
 namespace wcf\system\attachment;
 
 use wcf\data\article\Article;
-use wcf\data\article\ArticleList;
+use wcf\data\article\content\ArticleContent;
+use wcf\system\cache\runtime\ArticleContentRuntimeCache;
+use wcf\system\cache\runtime\ArticleRuntimeCache;
 use wcf\system\WCF;
 
 /**
@@ -14,25 +16,31 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.0
  *
- * @extends AbstractAttachmentObjectType<Article>
+ * @extends AbstractAttachmentObjectType<ArticleContent>
  */
 class ArticleAttachmentObjectType extends AbstractAttachmentObjectType
 {
     #[\Override]
-    public function canDownload(int $objectID)
+    public function canDownload(int $objectID): bool
     {
-        if ($objectID) {
-            return (new Article($objectID))->canRead();
+        if ($objectID !== 0) {
+            $article = $this->getArticleByContentID($objectID);
+            if ($article !== null && $article->canRead()) {
+                return true;
+            }
         }
 
         return false;
     }
 
     #[\Override]
-    public function canUpload(int $objectID, int $parentObjectID = 0)
+    public function canUpload(int $objectID, int $parentObjectID = 0): bool
     {
-        if ($objectID) {
-            return (new Article($objectID))->canEdit();
+        if ($objectID !== 0) {
+            $article = $this->getArticleByContentID($objectID);
+            if ($article !== null && $article->canEdit()) {
+                return true;
+            }
         }
 
         return WCF::getSession()->hasPermission('admin.content.article.canManageArticle')
@@ -40,20 +48,24 @@ class ArticleAttachmentObjectType extends AbstractAttachmentObjectType
     }
 
     #[\Override]
-    public function canDelete(int $objectID)
+    public function canDelete(int $objectID): bool
     {
         return $this->canUpload($objectID);
     }
 
     #[\Override]
-    public function cacheObjects(array $objectIDs)
+    protected function getObjectRuntimeCache(): ArticleContentRuntimeCache
     {
-        $articleList = new ArticleList();
-        $articleList->setObjectIDs(\array_unique($objectIDs));
-        $articleList->readObjects();
+        return ArticleContentRuntimeCache::getInstance();
+    }
 
-        foreach ($articleList->getObjects() as $objectID => $object) {
-            $this->cachedObjects[$objectID] = $object;
+    private function getArticleByContentID(int $articleContentID): ?Article
+    {
+        $content = ArticleContentRuntimeCache::getInstance()->getObject($articleContentID);
+        if ($content === null) {
+            return null;
         }
+
+        return ArticleRuntimeCache::getInstance()->getObject($content->articleID);
     }
 }

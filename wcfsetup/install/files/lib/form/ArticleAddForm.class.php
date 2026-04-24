@@ -2,10 +2,9 @@
 
 namespace wcf\form;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\data\article\Article;
-use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
 
 /**
  * Shows the article add form.
@@ -17,25 +16,20 @@ use wcf\util\HeaderUtil;
  */
 class ArticleAddForm extends \wcf\acp\form\ArticleAddForm
 {
+    /**
+     * @inheritDoc
+     */
+    public $objectEditLinkController = ArticleEditForm::class;
+
     #[\Override]
-    public function save()
+    public function save(): void
     {
         parent::save();
 
         /** @var Article $article */
         $article = $this->objectAction->getReturnValues()['returnValues'];
-        if ($article->publicationStatus == Article::PUBLISHED) {
-            HeaderUtil::redirect($article->getLink());
-
-            exit;
-        } else {
-            WCF::getTPL()->assign([
-                // We need to reassign the link here because otherwise it will lead to the admin panel.
-                'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
-                    ArticleEditForm::class,
-                    ['id' => $article->getObjectID()]
-                ),
-            ]);
+        if ($article->publicationStatus === Article::PUBLISHED) {
+            $this->setPsr7Response(new RedirectResponse($article->getLink(), 303));
         }
     }
 }

@@ -3,8 +3,8 @@
 namespace wcf\system\listView\user;
 
 use wcf\data\article\AccessibleArticleList;
+use wcf\data\article\Article;
 use wcf\data\article\category\ArticleCategory;
-use wcf\data\article\ViewableArticle;
 use wcf\data\DatabaseObjectList;
 use wcf\data\label\group\ViewableLabelGroup;
 use wcf\data\object\type\ObjectTypeCache;
@@ -28,7 +28,7 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  *
- * @extends AbstractListView<ViewableArticle, AccessibleArticleList>
+ * @extends AbstractListView<Article, AccessibleArticleList>
  */
 class ArticleListView extends AbstractListView
 {
@@ -193,6 +193,6 @@ class ArticleListView extends AbstractListView
             return false;
         }
 
-        return ViewableArticle::getUnreadArticles() > 0;
+        return Article::getUnreadArticles() > 0;
     }
 }

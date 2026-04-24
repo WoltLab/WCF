@@ -3,15 +3,13 @@
 namespace wcf\page;
 
 use wcf\command\article\MarkArticleAsRead;
+use wcf\data\article\Article;
 use wcf\data\article\ArticleEditor;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\CategoryArticleList;
-use wcf\data\article\content\ViewableArticleContent;
-use wcf\data\article\ViewableArticle;
-use wcf\data\attachment\GroupedAttachmentList;
-use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\article\content\ArticleContent;
 use wcf\data\tag\Tag;
-use wcf\system\cache\runtime\ViewableArticleRuntimeCache;
+use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
@@ -29,9 +27,9 @@ use wcf\util\StringUtil;
 /**
  * Shows a cms article.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class ArticlePage extends AbstractPage
 {
@@ -40,84 +38,45 @@ class ArticlePage extends AbstractPage
      */
     public $neededModules = ['MODULE_ARTICLE'];
 
-    /**
-     * article content id
-     * @var int
-     */
-    public $articleContentID = 0;
+    public ArticleContent $articleContent;
+    public ?Article $article = null;
+    public ?ArticleCategory $category = null;
+    public RelatedArticleListView $relatedArticleListView;
+    public ?Article $nextArticle = null;
+    public ?Article $previousArticle = null;
 
     /**
-     * article content object
-     * @var ViewableArticleContent
-     */
-    public $articleContent;
-
-    /**
-     * article object
-     * @var ViewableArticle
-     */
-    public $article;
-
-    /**
-     * list of tags
      * @var Tag[]
      */
-    public $tags = [];
-
-    /**
-     * category object
-     * @var ArticleCategory
-     */
-    public $category;
-
-    /**
-     * @var GroupedAttachmentList
-     */
-    public $attachmentList;
-
-    public RelatedArticleListView $relatedArticleListView;
-
-    /**
-     * next article in this category
-     * @var ViewableArticle
-     */
-    public $nextArticle;
-
-    /**
-     * previous article in this category
-     * @var ViewableArticle
-     */
-    public $previousArticle;
+    public array $tags = [];
 
     #[\Override]
-    public function readParameters()
+    public function readParameters(): void
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->articleContentID = \intval($_REQUEST['id']);
-        }
-        $this->articleContent = ViewableArticleContent::getArticleContent($this->articleContentID);
-        if ($this->articleContent === null) {
-            throw new IllegalLinkException();
-        }
+        $this->articleContent = Helper::fetchObjectFromQueryParameter(ArticleContent::class);
 
         // check if the language has been disabled
         if ($this->articleContent->languageID && LanguageFactory::getInstance()->getLanguage($this->articleContent->languageID) === null) {
             throw new IllegalLinkException();
         }
 
-        $this->article = ViewableArticleRuntimeCache::getInstance()->getObject($this->articleContent->articleID);
-        $this->article->getDiscussionProvider()->setArticleContent($this->articleContent->getDecoratedObject());
+        $this->article = $this->articleContent->getArticle();
+        $this->article->getDiscussionProvider()->setArticleContent($this->articleContent);
         $this->category = $this->article->getCategory();
 
         if (!$this->article->canRead()) {
             throw new PermissionDeniedException();
         }
 
-        // update interface language
+        if ($this->articleContent->languageID !== null) {
+            $this->article->setActiveLanguageID($this->articleContent->languageID);
+        }
+
+        // update interface language to match the article's language
         if (
-            !WCF::getUser()->userID
+            WCF::getUser()->isGuest()
             && $this->article->isMultilingual
             && $this->articleContent->languageID !== null
             && $this->articleContent->languageID != WCF::getLanguage()->languageID
@@ -129,43 +88,77 @@ class ArticlePage extends AbstractPage
     }
 
     #[\Override]
-    public function readData()
+    public function readData(): void
     {
         parent::readData();
 
-        // update view count
-        if ($this->article->isPublished()) {
-            $articleEditor = new ArticleEditor($this->article->getDecoratedObject());
-            $articleEditor->updateCounters([
-                'views' => 1,
-            ]);
+        MessageEmbeddedObjectManager::getInstance()->setActiveMessage(
+            'com.woltlab.wcf.article.content',
+            $this->articleContent->getObjectID()
+        );
+
+        $this->updateViewCounter();
+        $this->markAsRead();
+        $this->loadTags();
+        $this->loadRelatedArticles();
+        $this->setLocation();
+        $this->loadNextArticle();
+        $this->loadPreviousArticle();
+        $this->setMetaTags();
+        $this->setOpenGraphImageTags();
+    }
+
+    protected function updateViewCounter(): void
+    {
+        if (!$this->article->isPublished()) {
+            return;
         }
 
-        // update article visit
-        if ($this->article->isNew()) {
-            (new MarkArticleAsRead($this->article->getDecoratedObject()))();
+        $articleEditor = new ArticleEditor($this->article);
+        $articleEditor->updateCounters([
+            'views' => 1,
+        ]);
+    }
+
+    protected function markAsRead(): void
+    {
+        if (!$this->article->isNew()) {
+            return;
         }
 
-        // get tags
-        if (\MODULE_TAGGING && WCF::getSession()->hasPermission('user.tag.canViewTag')) {
-            $this->tags = TagEngine::getInstance()->getObjectTags(
-                'com.woltlab.wcf.article',
-                $this->articleContent->articleContentID,
-                [$this->articleContent->languageID ?: LanguageFactory::getInstance()->getDefaultLanguageID()]
-            );
+        (new MarkArticleAsRead($this->article))();
+    }
+
+    protected function loadTags(): void
+    {
+        if (\MODULE_TAGGING === 0 || !WCF::getSession()->hasPermission('user.tag.canViewTag')) {
+            return;
         }
 
-        // get related articles
-        if (\MODULE_TAGGING && \ARTICLE_RELATED_ARTICLES && $this->tags !== []) {
-            $this->relatedArticleListView = new RelatedArticleListView($this->articleContent->articleContentID);
+        $this->tags = TagEngine::getInstance()->getObjectTags(
+            'com.woltlab.wcf.article',
+            $this->articleContent->articleContentID,
+            [$this->articleContent->languageID ?: LanguageFactory::getInstance()->getDefaultLanguageID()]
+        );
+    }
+
+    protected function loadRelatedArticles(): void
+    {
+        if (\MODULE_TAGGING === 0 || \ARTICLE_RELATED_ARTICLES === 0 || $this->tags === []) {
+            return;
         }
 
-        // set location
+        $this->relatedArticleListView = new RelatedArticleListView($this->articleContent->articleContentID);
+    }
+
+    protected function setLocation(): void
+    {
         PageLocationManager::getInstance()->addParentLocation(
             'com.woltlab.wcf.CategoryArticleList',
             $this->article->categoryID,
             $this->article->getCategory()
         );
+
         foreach (\array_reverse($this->article->getCategory()->getParentCategories()) as $parentCategory) {
             PageLocationManager::getInstance()->addParentLocation(
                 'com.woltlab.wcf.CategoryArticleList',
@@ -173,14 +166,10 @@ class ArticlePage extends AbstractPage
                 $parentCategory
             );
         }
+    }
 
-        // get attachments
-        $this->attachmentList = $this->article->getAttachments();
-        $this->filterEmbeddedAttachments();
-        MessageEmbeddedObjectManager::getInstance()
-            ->setActiveMessage('com.woltlab.wcf.article.content', $this->articleContentID);
-
-        // get next article
+    protected function loadNextArticle(): void
+    {
         $articleList = new CategoryArticleList($this->article->categoryID);
         $articleList->getConditionBuilder()->add(
             'article.time ' . (\ARTICLE_SORT_ORDER == 'DESC' ? '>' : '<') . ' ?',
@@ -192,8 +181,10 @@ class ArticlePage extends AbstractPage
         foreach ($articleList as $article) {
             $this->nextArticle = $article;
         }
+    }
 
-        // get previous article
+    protected function loadPreviousArticle(): void
+    {
         $articleList = new CategoryArticleList($this->article->categoryID);
         $articleList->getConditionBuilder()->add(
             'article.time ' . (\ARTICLE_SORT_ORDER == 'DESC' ? '<' : '>') . ' ?',
@@ -205,8 +196,10 @@ class ArticlePage extends AbstractPage
         foreach ($articleList as $article) {
             $this->previousArticle = $article;
         }
+    }
 
-        // add meta/og tags
+    protected function setMetaTags(): void
+    {
         MetaTagHandler::getInstance()->addTag(
             'og:title',
             'og:title',
@@ -221,10 +214,54 @@ class ArticlePage extends AbstractPage
             ($this->articleContent->teaser ?: StringUtil::decodeHTML(StringUtil::stripHTML($this->articleContent->getFormattedTeaser()))),
             true
         );
+
         if ($this->articleContent->metaDescription) {
             MetaTagHandler::getInstance()->addTag('description', 'description', $this->articleContent->metaDescription);
         }
 
+        MetaTagHandler::getInstance()->addTag(
+            'article:published_time',
+            'article:published_time',
+            \gmdate('c', $this->article->time),
+            true
+        );
+        MetaTagHandler::getInstance()->addTag(
+            'article:modified_time',
+            'article:modified_time',
+            \gmdate('c', $this->article->time),
+            true
+        );
+        MetaTagHandler::getInstance()->addTag(
+            'article:author',
+            'article:author',
+            $this->article->getUserProfile()->getLink(),
+            true
+        );
+        MetaTagHandler::getInstance()->addTag(
+            'article:section',
+            'article:section',
+            $this->article->getCategory()->getTitle(),
+            true
+        );
+
+        if ($this->tags !== []) {
+            $keywords = '';
+            $i = 0;
+            foreach ($this->tags as $tag) {
+                if ($keywords !== '') {
+                    $keywords .= ', ';
+                }
+                $keywords .= $tag->name;
+
+                MetaTagHandler::getInstance()->addTag('article:tag' . $i, 'article:tag', $tag->name, true);
+                $i++;
+            }
+            MetaTagHandler::getInstance()->addTag('keywords', 'keywords', $keywords);
+        }
+    }
+
+    protected function setOpenGraphImageTags(): void
+    {
         if ($this->articleContent->getTeaserImage() && $this->articleContent->getTeaserImage()->width >= 200 && $this->articleContent->getTeaserImage()->height >= 200) {
             MetaTagHandler::getInstance()->addTag(
                 'og:image',
@@ -264,18 +301,6 @@ class ArticlePage extends AbstractPage
                 true
             );
         }
-
-        // add tags as keywords
-        if (!empty($this->tags)) {
-            $keywords = '';
-            foreach ($this->tags as $tag) {
-                if (!empty($keywords)) {
-                    $keywords .= ', ';
-                }
-                $keywords .= $tag->name;
-            }
-            MetaTagHandler::getInstance()->addTag('keywords', 'keywords', $keywords);
-        }
     }
 
     #[\Override]
@@ -284,13 +309,12 @@ class ArticlePage extends AbstractPage
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'articleContentID' => $this->articleContentID,
+            'articleContentID' => $this->articleContent->getObjectID(),
             'articleContent' => $this->articleContent,
             'article' => $this->article,
             'category' => $this->category,
             'relatedArticleListView' => $this->relatedArticleListView ?? null,
             'tags' => $this->tags,
-            'attachmentList' => $this->attachmentList,
             'previousArticle' => $this->previousArticle,
             'nextArticle' => $this->nextArticle,
             'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentInteractionButton(
@@ -298,41 +322,8 @@ class ArticlePage extends AbstractPage
                 $this->article,
                 LinkHandler::getInstance()->getControllerLink(ArticleListPage::class),
                 WCF::getLanguage()->getDynamicVariable('wcf.acp.article.edit'),
-                "core/articles/contents/{$this->articleContentID}/content-header-title"
+                "core/articles/contents/{$this->articleContent->getObjectID()}/content-header-title"
             ),
         ]);
-    }
-
-    /**
-     * Filters attachments embedded in the article's description from the normal listing.
-     * @since   6.3
-     */
-    protected function filterEmbeddedAttachments(): void
-    {
-        if ($this->attachmentList !== null && !empty($this->attachmentList->getObjects())) {
-            $sql = "SELECT  embeddedObjectID
-                    FROM    wcf1_message_embedded_object
-                    WHERE   messageObjectTypeID = ?
-                        AND messageID IN (
-                            SELECT  articleContentID
-                            FROM    wcf1_article_content
-                            WHERE   articleID = ?
-                        )
-                        AND embeddedObjectTypeID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([
-                ObjectTypeCache::getInstance()
-                    ->getObjectTypeIDByName('com.woltlab.wcf.message', 'com.woltlab.wcf.article.content'),
-                $this->article->articleID,
-                ObjectTypeCache::getInstance()
-                    ->getObjectTypeIDByName('com.woltlab.wcf.message.embeddedObject', 'com.woltlab.wcf.attachment'),
-            ]);
-            $attachmentIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-            foreach ($attachmentIDs as $attachmentID) {
-                if (isset($this->attachmentList->getObjects()[$attachmentID])) {
-                    $this->attachmentList->getObjects()[$attachmentID]->markAsEmbedded();
-                }
-            }
-        }
     }
 }

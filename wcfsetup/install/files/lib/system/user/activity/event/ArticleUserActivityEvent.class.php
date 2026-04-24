@@ -2,7 +2,7 @@
 
 namespace wcf\system\user\activity\event;
 
-use wcf\system\cache\runtime\ViewableArticleRuntimeCache;
+use wcf\system\cache\runtime\ArticleRuntimeCache;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -27,11 +27,11 @@ class ArticleUserActivityEvent extends SingletonFactory implements IUserActivity
             $objectIDs[] = $event->objectID;
         }
 
-        ViewableArticleRuntimeCache::getInstance()->cacheObjectIDs($objectIDs);
+        ArticleRuntimeCache::getInstance()->cacheObjectIDs($objectIDs);
 
         // set message
         foreach ($events as $event) {
-            $article = ViewableArticleRuntimeCache::getInstance()->getObject($event->objectID);
+            $article = ArticleRuntimeCache::getInstance()->getObject($event->objectID);
             if ($article !== null) {
                 if ($article->canRead()) {
                     $event->setIsAccessible();

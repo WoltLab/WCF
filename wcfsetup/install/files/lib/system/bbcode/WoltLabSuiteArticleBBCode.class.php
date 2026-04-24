@@ -2,7 +2,7 @@
 
 namespace wcf\system\bbcode;
 
-use wcf\data\article\ViewableArticle;
+use wcf\data\article\Article;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\view\ContentNotVisibleView;
 use wcf\system\WCF;
@@ -47,13 +47,13 @@ final class WoltLabSuiteArticleBBCode extends AbstractBBCode
         return StringUtil::getAnchorTag($article->getLink(), $article->getTitle());
     }
 
-    private function getArticle(int $articleID): ?ViewableArticle
+    private function getArticle(int $articleID): ?Article
     {
         $article = MessageEmbeddedObjectManager::getInstance()->getObject(
             'com.woltlab.wcf.article',
             $articleID
         );
-        \assert($article === null || $article instanceof ViewableArticle);
+        \assert($article === null || $article instanceof Article);
 
         return $article;
     }

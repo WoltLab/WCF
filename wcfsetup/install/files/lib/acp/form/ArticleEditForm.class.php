@@ -4,10 +4,12 @@ namespace wcf\acp\form;
 
 use wcf\acp\page\ArticleListPage;
 use wcf\data\article\Article;
-use wcf\data\article\ArticleAction;
-use wcf\form\AbstractForm;
-use wcf\system\exception\IllegalLinkException;
+use wcf\data\IStorableObject;
+use wcf\form\AbstractFormBuilderForm;
+use wcf\http\Helper;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
+use wcf\system\form\builder\IFormDocument;
 use wcf\system\interaction\admin\ArticleInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\label\object\ArticleLabelObjectHandler;
@@ -16,14 +18,13 @@ use wcf\system\request\LinkHandler;
 use wcf\system\tagging\TagEngine;
 use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
-use wcf\util\DateUtil;
 
 /**
  * Shows the article edit form.
  *
- * @author  Marcel Werk
+ * @author      Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class ArticleEditForm extends ArticleAddForm
 {
@@ -35,205 +36,159 @@ class ArticleEditForm extends ArticleAddForm
     /**
      * @inheritDoc
      */
-    public $neededPermissions = [];
-
-    /**
-     * article id
-     * @var int
-     */
-    public $articleID = 0;
-
-    /**
-     * article object
-     * @var Article
-     */
-    public $article;
+    public $formAction = 'edit';
 
     #[\Override]
-    public function readParameters()
+    public function readParameters(): void
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->articleID = \intval($_REQUEST['id']);
-        }
-        $this->article = new Article($this->articleID);
-        if (!$this->article->articleID) {
-            throw new IllegalLinkException();
-        }
-        if ($this->article->isMultilingual) {
+        $this->formObject = Helper::fetchObjectFromQueryParameter(Article::class);
+
+        if ($this->formObject->isMultilingual) {
             $this->isMultilingual = 1;
         }
 
-        if (!$this->article->canEdit()) {
+        if (!$this->formObject->canEdit()) {
             throw new PermissionDeniedException();
         }
-
-        $this->attachmentObjectID = $this->article->articleID;
     }
 
     #[\Override]
-    protected function readMultilingualSetting()
+    protected function readMultilingualSetting(): void
     {
         // not required for editing
     }
 
     #[\Override]
-    public function save()
+    public function save(): void
     {
-        AbstractForm::save();
+        if (
+            !WCF::getSession()->hasPermission('admin.content.article.canManageArticle')
+            && !WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles')
+        ) {
+            $this->additionalFields['publicationStatus'] = $this->formObject->publicationStatus;
+            $this->additionalFields['publicationDate'] = $this->formObject->publicationDate;
+        }
+
+        AbstractFormBuilderForm::save();
 
         // save labels
-        ArticleLabelObjectHandler::getInstance()->setLabels($this->labelIDs, $this->article->articleID);
-        $labelIDs = ArticleLabelObjectHandler::getInstance()->getAssignedLabels([$this->article->articleID], false);
-
-        $content = [];
-        if ($this->isMultilingual) {
-            foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
-                $content[$language->languageID] = [
-                    'title' => !empty($this->title[$language->languageID]) ? $this->title[$language->languageID] : '',
-                    'tags' => !empty($this->tags[$language->languageID]) ? $this->tags[$language->languageID] : [],
-                    'teaser' => !empty($this->teaser[$language->languageID]) ? $this->teaser[$language->languageID] : '',
-                    'content' => !empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : '',
-                    'htmlInputProcessor' => $this->htmlInputProcessors[$language->languageID] ?? null,
-                    'imageID' => !empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null,
-                    'teaserImageID' => !empty($this->teaserImageID[$language->languageID]) ? $this->teaserImageID[$language->languageID] : null,
-                    'metaTitle' => !empty($this->metaTitle[$language->languageID]) ? $this->metaTitle[$language->languageID] : '',
-                    'metaDescription' => !empty($this->metaDescription[$language->languageID]) ? $this->metaDescription[$language->languageID] : '',
-                ];
-            }
-        } else {
-            $content[0] = [
-                'title' => !empty($this->title[0]) ? $this->title[0] : '',
-                'tags' => !empty($this->tags[0]) ? $this->tags[0] : [],
-                'teaser' => !empty($this->teaser[0]) ? $this->teaser[0] : '',
-                'content' => !empty($this->content[0]) ? $this->content[0] : '',
-                'htmlInputProcessor' => $this->htmlInputProcessors[0] ?? null,
-                'imageID' => !empty($this->imageID[0]) ? $this->imageID[0] : null,
-                'teaserImageID' => !empty($this->teaserImageID[0]) ? $this->teaserImageID[0] : null,
-                'metaTitle' => !empty($this->metaTitle[0]) ? $this->metaTitle[0] : '',
-                'metaDescription' => !empty($this->metaDescription[0]) ? $this->metaDescription[0] : '',
-            ];
-        }
-
-        $data = [
-            'categoryID' => $this->categoryID,
-            'publicationStatus' => $this->publicationStatus,
-            'publicationDate' => $this->publicationStatus == Article::DELAYED_PUBLICATION ? $this->publicationDateObj->getTimestamp() : 0,
-            'enableComments' => $this->enableComments,
-            'userID' => $this->author->userID,
-            'username' => $this->author->username,
-            'time' => $this->timeObj->getTimestamp(),
-            'hasLabels' => (isset($labelIDs[$this->article->articleID]) && !empty($labelIDs[$this->article->articleID])) ? 1 : 0,
-        ];
-
-        $this->objectAction = new ArticleAction(
-            [$this->article],
-            'update',
-            [
-                'data' => \array_merge($this->additionalFields, $data),
-                'content' => $content,
-                'attachmentHandler' => $this->attachmentHandler,
-            ]
-        );
-        $this->objectAction->executeAction();
-
-        // call saved event
-        $this->saved();
-
-        // Ensure that the CKEditor has the correct content after save.
-        if ($this->isMultilingual) {
-            foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
-                $this->content[$language->languageID] = isset($this->htmlInputProcessors[$language->languageID]) ?
-                    $this->htmlInputProcessors[$language->languageID]->getHtml() : '';
-            }
-        } else {
-            $this->content[0] = isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0]->getHtml() : '';
-        }
-
-        // show success message
-        WCF::getTPL()->assign('success', true);
+        $labelIDs = $this->objectAction->getParameters()['labelIDs'] ?? [];
+        ArticleLabelObjectHandler::getInstance()->setLabels($labelIDs, $this->formObject->articleID);
     }
 
     #[\Override]
-    public function readData()
+    public function finalizeForm(): void
     {
-        if (!empty($_POST) && !WCF::getSession()->hasPermission('admin.content.cms.canUseMedia')) {
-            foreach ($this->article->getArticleContents() as $languageID => $content) {
-                $this->imageID[$languageID] = $content->imageID;
-                $this->teaserImageID[$languageID] = $content->teaserImageID;
-            }
+        parent::finalizeForm();
 
-            $this->readImages();
-        }
+        $this->form->getDataHandler()
+            ->addProcessor(
+                new CustomFormDataProcessor(
+                    'editArticleProcessor',
+                    // Save callback: preserve images when user can't use media
+                    function (IFormDocument $document, array $parameters) {
+                        if (!WCF::getSession()->hasPermission('admin.content.cms.canUseMedia')) {
+                            foreach ($this->formObject->getArticleContents() as $languageID => $content) {
+                                $key = $this->isMultilingual ? $languageID : 0;
+                                if (isset($parameters['content'][$key])) {
+                                    $parameters['content'][$key]['imageID'] = $content->imageID;
+                                    $parameters['content'][$key]['teaserImageID'] = $content->teaserImageID;
+                                }
+                            }
+                        }
 
-        parent::readData();
+                        return $parameters;
+                    },
+                    // Object callback: load article data for editing
+                    function (IFormDocument $document, array $data, IStorableObject $object) {
+                        \assert($object instanceof Article);
 
-        if (empty($_POST)) {
-            $this->categoryID = $this->article->categoryID;
-            $this->publicationStatus = $this->article->publicationStatus;
-            $this->enableComments = $this->article->enableComments;
-            $this->username = $this->article->username;
-            $dateTime = DateUtil::getDateTimeByTimestamp($this->article->time);
-            $dateTime->setTimezone(WCF::getUser()->getTimeZone());
-            $this->time = $dateTime->format('c');
-            if ($this->article->publicationDate) {
-                $dateTime = DateUtil::getDateTimeByTimestamp($this->article->publicationDate);
-                $dateTime->setTimezone(WCF::getUser()->getTimeZone());
-                $this->publicationDate = $dateTime->format('c');
-            }
+                        if ($object->publicationDate === 0) {
+                            unset($data['publicationDate']);
+                        }
 
-            foreach ($this->article->getArticleContents() as $languageID => $content) {
-                $this->title[$languageID] = $content->title;
-                $this->teaser[$languageID] = $content->teaser;
-                $this->content[$languageID] = $content->content;
-                $this->imageID[$languageID] = $content->imageID;
-                $this->teaserImageID[$languageID] = $content->teaserImageID;
-                $this->metaTitle[$languageID] = $content->metaTitle;
-                $this->metaDescription[$languageID] = $content->metaDescription;
+                        foreach ($object->getArticleContents() as $languageID => $content) {
+                            if ($this->isMultilingual) {
+                                $language = LanguageFactory::getInstance()->getLanguage($languageID);
+                                if ($language === null) {
+                                    continue;
+                                }
+                                $lc = $language->languageCode;
 
-                // get tags
-                if (\MODULE_TAGGING) {
-                    $this->tags[$languageID] = TagEngine::getInstance()->getObjectTags(
-                        'com.woltlab.wcf.article',
-                        $content->articleContentID,
-                        [$languageID ?: LanguageFactory::getInstance()->getDefaultLanguageID()]
-                    );
-                }
-            }
+                                $data["title_{$lc}"] = $content->title;
+                                $data["teaser_{$lc}"] = $content->teaser;
+                                $data["content_{$lc}"] = $content->content;
+                                $data["imageID_{$lc}"] = $content->imageID;
+                                $data["teaserImageID_{$lc}"] = $content->teaserImageID;
+                                $data["metaTitle_{$lc}"] = $content->metaTitle;
+                                $data["metaDescription_{$lc}"] = $content->metaDescription;
 
-            $this->readImages();
+                                if (\MODULE_TAGGING) {
+                                    $data["tags_{$lc}"] = TagEngine::getInstance()->getObjectTags(
+                                        'com.woltlab.wcf.article',
+                                        $content->articleContentID,
+                                        [$languageID ?: LanguageFactory::getInstance()->getDefaultLanguageID()]
+                                    );
+                                }
+                            } else {
+                                $data['title'] = $content->title;
+                                $data['teaser'] = $content->teaser;
+                                $data['content'] = $content->content;
+                                $data['imageID'] = $content->imageID;
+                                $data['teaserImageID'] = $content->teaserImageID;
+                                $data['metaTitle'] = $content->metaTitle;
+                                $data['metaDescription'] = $content->metaDescription;
 
-            // labels
-            $assignedLabels = ArticleLabelObjectHandler::getInstance()->getAssignedLabels(
-                [$this->article->articleID],
-                true
+                                if (\MODULE_TAGGING) {
+                                    $data['tags'] = TagEngine::getInstance()->getObjectTags(
+                                        'com.woltlab.wcf.article',
+                                        $content->articleContentID,
+                                    );
+                                }
+                            }
+                        }
+
+                        return $data;
+                    }
+                )
             );
-            if (isset($assignedLabels[$this->article->articleID])) {
-                foreach ($assignedLabels[$this->article->articleID] as $label) {
-                    $this->labelIDs[$label->groupID] = $label->labelID;
-                }
-            }
-        }
     }
 
     #[\Override]
-    public function assignVariables()
+    public function assignVariables(): void
     {
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'action' => 'edit',
-            'articleID' => $this->articleID,
-            'article' => $this->article,
-            'defaultLanguageID' => LanguageFactory::getInstance()->getDefaultLanguageID(),
-            'languages' => LanguageFactory::getInstance()->getLanguages(),
-            'lastVersion' => VersionTracker::getInstance()->getLastVersion('com.woltlab.wcf.article', $this->articleID),
+            'articleID' => $this->formObject->articleID,
+            'article' => $this->formObject,
+            'lastVersion' => VersionTracker::getInstance()->getLastVersion(
+                'com.woltlab.wcf.article',
+                $this->formObject->articleID
+            ),
             'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
                 new ArticleInteractions(),
-                $this->article,
+                $this->formObject,
                 LinkHandler::getInstance()->getControllerLink(ArticleListPage::class)
             ),
         ]);
+    }
+
+    #[\Override]
+    protected function getAttachmentObjectID(?int $languageID = null): ?int
+    {
+        foreach ($this->formObject->getArticleContents() as $contentLanguageID => $content) {
+            if ($this->isMultilingual) {
+                if ($contentLanguageID == $languageID) {
+                    return $content->articleContentID;
+                }
+            } else {
+                return $content->articleContentID;
+            }
+        }
+
+        return null;
     }
 }

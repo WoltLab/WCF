@@ -5,10 +5,9 @@ namespace wcf\data\article;
 use wcf\data\like\ILikeObjectTypeProvider;
 use wcf\data\like\object\ILikeObject;
 use wcf\data\object\type\AbstractObjectTypeProvider;
-use wcf\system\cache\runtime\ViewableArticleRuntimeCache;
+use wcf\system\cache\runtime\ArticleRuntimeCache;
 use wcf\system\like\IViewableLikeProvider;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Like object type provider for cms articles.
@@ -55,10 +54,10 @@ class LikeableArticleProvider extends AbstractObjectTypeProvider implements
             $objectIDs[] = $like->objectID;
         }
 
-        ViewableArticleRuntimeCache::getInstance()->cacheObjectIDs($objectIDs);
+        ArticleRuntimeCache::getInstance()->cacheObjectIDs($objectIDs);
 
         foreach ($likes as $like) {
-            $article = ViewableArticleRuntimeCache::getInstance()->getObject($like->objectID);
+            $article = ArticleRuntimeCache::getInstance()->getObject($like->objectID);
             if ($article === null || !$article->canRead()) {
                 continue;
             }

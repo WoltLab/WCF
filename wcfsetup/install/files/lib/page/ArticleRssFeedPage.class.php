@@ -104,7 +104,7 @@ class ArticleRssFeedPage extends AbstractRssFeedPage
                 );
             }
 
-            $category = $article->getDecoratedObject()->getCategory();
+            $category = $article->getCategory();
             if ($category !== null) {
                 $item->category($category->getTitle());
                 foreach ($category->getParentCategories() as $category) {

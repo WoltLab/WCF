@@ -92,10 +92,6 @@ class ArticleAction extends AbstractDatabaseObjectAction
     #[\Override]
     public function create()
     {
-        if (!empty($this->parameters['attachmentHandler'])) {
-            $this->parameters['data']['attachments'] = \count($this->parameters['attachmentHandler']);
-        }
-
         $article = parent::create();
 
         // save article content
@@ -116,8 +112,16 @@ class ArticleAction extends AbstractDatabaseObjectAction
                     'teaserImageID' => $content['teaserImageID'],
                     'metaTitle' => $content['metaTitle'] ?? '',
                     'metaDescription' => $content['metaDescription'] ?? '',
+                    'attachments' => isset($content['attachmentHandler'])
+                        ? \count($content['attachmentHandler'])
+                        : 0,
                 ]);
                 $articleContentEditor = new ArticleContentEditor($articleContent);
+
+                // update attachments
+                $attachmentHandler = $content['attachmentHandler'] ?? null;
+                /** @var ?AttachmentHandler $attachmentHandler */
+                $attachmentHandler?->updateObjectID($articleContent->getObjectID());
 
                 // save tags
                 if (!empty($content['tags'])) {
@@ -174,20 +178,12 @@ class ArticleAction extends AbstractDatabaseObjectAction
             );
         }
 
-        if (!empty($this->parameters['attachmentHandler'])) {
-            $this->parameters['attachmentHandler']->updateObjectID($article->articleID);
-        }
-
         return $article;
     }
 
     #[\Override]
     public function update()
     {
-        if (!empty($this->parameters['attachmentHandler'])) {
-            $this->parameters['data']['attachments'] = \count($this->parameters['attachmentHandler']);
-        }
-
         parent::update();
 
         $isRevert = (!empty($this->parameters['isRevert']));
@@ -206,9 +202,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
                     $articleContent = ArticleContent::getArticleContent($article->articleID, ($languageID ?: null));
                     $articleContentEditor = null;
                     if ($articleContent !== null) {
-                        // update
-                        $articleContentEditor = new ArticleContentEditor($articleContent);
-                        $articleContentEditor->update([
+                        $updateData = [
                             'title' => $content['title'],
                             'teaser' => $content['teaser'],
                             'content' => $content['content'],
@@ -216,7 +210,13 @@ class ArticleAction extends AbstractDatabaseObjectAction
                             'teaserImageID' => ($isRevert) ? $articleContent->teaserImageID : $content['teaserImageID'],
                             'metaTitle' => $content['metaTitle'] ?? '',
                             'metaDescription' => $content['metaDescription'] ?? '',
-                        ]);
+                        ];
+                        if (isset($content['attachmentHandler'])) {
+                            $updateData['attachments'] = \count($content['attachmentHandler']);
+                        }
+
+                        $articleContentEditor = new ArticleContentEditor($articleContent);
+                        $articleContentEditor->update($updateData);
 
                         $versionData[] = $articleContent;
                         if ($articleContent->content != $content['content'] || $articleContent->teaser != $content['teaser'] || $articleContent->title != $content['title']) {
@@ -243,8 +243,17 @@ class ArticleAction extends AbstractDatabaseObjectAction
                             'teaserImageID' => ($isRevert) ? null : $content['teaserImageID'],
                             'metaTitle' => $content['metaTitle'] ?? '',
                             'metaDescription' => $content['metaDescription'] ?? '',
+                            'attachments' => isset($content['attachmentHandler'])
+                                ? \count($content['attachmentHandler'])
+                                : 0,
                         ]);
                         $articleContentEditor = new ArticleContentEditor($articleContent);
+
+                        // update attachments
+                        if (isset($content['attachmentHandler'])) {
+                            /** @var AttachmentHandler $content['attachmentHandler'] */
+                            $content['attachmentHandler']->updateObjectID($articleContent->getObjectID());
+                        }
 
                         $versionData[] = $articleContent;
                         $hasChanges = true;
@@ -403,11 +412,15 @@ class ArticleAction extends AbstractDatabaseObjectAction
             $this->readObjects();
         }
 
-        $usersToArticles = $articleIDs = $articleContentIDs = $attachmentArticleIDs = [];
+        $usersToArticles = $articleIDs = $articleContentIDs = $attachmentArticleContentIDs = [];
         foreach ($this->getObjects() as $article) {
             $articleIDs[] = $article->articleID;
             foreach ($article->getArticleContents() as $articleContent) {
                 $articleContentIDs[] = $articleContent->articleContentID;
+
+                if ($articleContent->attachments) {
+                    $attachmentArticleContentIDs[] = $articleContent->articleContentID;
+                }
             }
 
             if ($article->publicationStatus == Article::PUBLISHED) {
@@ -415,10 +428,6 @@ class ArticleAction extends AbstractDatabaseObjectAction
                     $usersToArticles[$article->userID] = 0;
                 }
                 $usersToArticles[$article->userID]--;
-            }
-
-            if ($article->attachments) {
-                $attachmentArticleIDs[] = $article->articleID;
             }
         }
 
@@ -452,8 +461,11 @@ class ArticleAction extends AbstractDatabaseObjectAction
             // update wcf1_user.articles
             ArticleEditor::updateArticleCounter($usersToArticles);
             // delete attachments
-            if (!empty($attachmentArticleIDs)) {
-                AttachmentHandler::removeAttachments('com.woltlab.wcf.article', $attachmentArticleIDs);
+            if ($attachmentArticleContentIDs !== []) {
+                AttachmentHandler::removeAttachments(
+                    'com.woltlab.wcf.article.content',
+                    $attachmentArticleContentIDs
+                );
             }
         }
 

@@ -41,7 +41,7 @@
 		</div>
 
 		<div class="entryCardList__item__content">
-			{if $article->hasLabels()}
+			{if $article->hasLabels}
 				<ul class="entryCardList__item__labels labelList">
 					{foreach from=$article->getLabels() item=label}
 						<li>{unsafe:$label->render()}</li>
@@ -80,7 +80,7 @@
 			<div class="entryCardList__item__meta__icons">
 				{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike') && $article->cumulativeLikes}
 					<div class="entryCardList__item__meta__icon">
-						{include file='shared_topReaction' cachedReactions=$article->cachedReactions render='short'}
+						{include file='shared_topReaction' cachedReactions=$article->getCachedReactions() render='short'}
 					</div>
 				{/if}
 				{if $article->getDiscussionProvider()->getDiscussionCountPhrase()}{* empty phrase indicates that comments are disabled *}

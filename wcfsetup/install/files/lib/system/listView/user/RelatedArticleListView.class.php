@@ -3,7 +3,7 @@
 namespace wcf\system\listView\user;
 
 use wcf\data\article\AccessibleArticleList;
-use wcf\system\cache\runtime\ViewableArticleContentRuntimeCache;
+use wcf\system\cache\runtime\ArticleContentRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\language\LanguageFactory;
 use wcf\system\tagging\TagEngine;
@@ -68,7 +68,7 @@ class RelatedArticleListView extends ArticleListView
      */
     private function getRelatedArticleIDs(int $articleContentID): array
     {
-        $articleContent = ViewableArticleContentRuntimeCache::getInstance()->getObject($articleContentID);
+        $articleContent = ArticleContentRuntimeCache::getInstance()->getObject($articleContentID);
 
         $tags = TagEngine::getInstance()->getObjectTags(
             'com.woltlab.wcf.article',

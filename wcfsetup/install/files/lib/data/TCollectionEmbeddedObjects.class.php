@@ -31,8 +31,20 @@ trait TCollectionEmbeddedObjects
 
         MessageEmbeddedObjectManager::getInstance()->loadObjects(
             $messageObjectType,
-            $objectIDs
+            $objectIDs,
+            $this->getContentLanguageID(),
         );
+    }
+
+    protected function getContentLanguageID(): ?int
+    {
+        return null;
+    }
+
+    protected function hasEmbeddedObjects(DatabaseObject $object): bool
+    {
+        // @phpstan-ignore property.notFound
+        return $object->hasEmbeddedObjects === 1;
     }
 
     /**
@@ -44,7 +56,7 @@ trait TCollectionEmbeddedObjects
 
         return \array_map(
             static fn(DatabaseObject $object) => $object->getObjectID(),
-            \array_filter($this->getObjects(), fn(DatabaseObject $object) => $object->hasEmbeddedObjects === 1)
+            \array_filter($this->getObjects(), fn(DatabaseObject $object) => $this->hasEmbeddedObjects($object))
         );
     }
 }

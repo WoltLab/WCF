@@ -2,7 +2,7 @@
 
 namespace wcf\system\page\handler;
 
-use wcf\data\article\ViewableArticle;
+use wcf\data\article\Article;
 
 /**
  * Page handler implementation for the page showing the list of unread articles.
@@ -17,12 +17,12 @@ class UnreadArticleListPageHandler extends AbstractMenuPageHandler
     #[\Override]
     public function getOutstandingItemCount(?int $objectID = null)
     {
-        return ViewableArticle::getUnreadArticles();
+        return Article::getUnreadArticles();
     }
 
     #[\Override]
     public function isVisible(?int $objectID = null)
     {
-        return !empty(ViewableArticle::getUnreadArticles());
+        return Article::getUnreadArticles() !== 0;
     }
 }

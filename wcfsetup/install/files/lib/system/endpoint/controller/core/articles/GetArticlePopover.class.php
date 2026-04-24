@@ -6,7 +6,6 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\article\Article;
-use wcf\data\article\ViewableArticle;
 use wcf\http\Helper;
 use wcf\system\endpoint\GetRequest;
 use wcf\system\endpoint\IController;
@@ -46,7 +45,7 @@ final class GetArticlePopover implements IController
     private function renderPopover(Article $article): string
     {
         return WCF::getTPL()->render('wcf', 'articlePopover', [
-            'article' => ViewableArticle::getArticle($article->articleID),
+            'article' => $article,
         ]);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace wcf\system\user\notification\event;
 
+use wcf\system\cache\runtime\ArticleContentRuntimeCache;
 use wcf\system\cache\runtime\UserRuntimeCache;
-use wcf\system\cache\runtime\ViewableArticleContentRuntimeCache;
 use wcf\system\user\notification\object\LikeUserNotificationObject;
 use wcf\system\WCF;
 
@@ -32,7 +32,7 @@ class ArticleCommentResponseLikeUserNotificationEvent extends AbstractSharedUser
     #[\Override]
     protected function prepare()
     {
-        ViewableArticleContentRuntimeCache::getInstance()->cacheObjectID($this->additionalData['objectID']);
+        ArticleContentRuntimeCache::getInstance()->cacheObjectID($this->additionalData['objectID']);
         UserRuntimeCache::getInstance()->cacheObjectID($this->additionalData['commentUserID']);
     }
 
@@ -56,7 +56,7 @@ class ArticleCommentResponseLikeUserNotificationEvent extends AbstractSharedUser
     #[\Override]
     public function getMessage()
     {
-        $article = ViewableArticleContentRuntimeCache::getInstance()->getObject($this->additionalData['objectID']);
+        $article = ArticleContentRuntimeCache::getInstance()->getObject($this->additionalData['objectID']);
         $authors = \array_values($this->getAuthors());
         $count = \count($authors);
         $commentUser = null;
@@ -109,7 +109,7 @@ class ArticleCommentResponseLikeUserNotificationEvent extends AbstractSharedUser
     #[\Override]
     public function getLink(): string
     {
-        return ViewableArticleContentRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink()
+        return ArticleContentRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink()
             . '#comment' . $this->additionalData['commentID'] . '/response' . $this->getUserNotificationObject()->objectID;
     }
 

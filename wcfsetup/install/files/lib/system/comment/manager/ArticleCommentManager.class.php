@@ -9,8 +9,8 @@ use wcf\data\comment\Comment;
 use wcf\data\comment\response\CommentResponse;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
+use wcf\system\cache\runtime\ArticleContentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
-use wcf\system\cache\runtime\ViewableArticleContentRuntimeCache;
 use wcf\system\cache\runtime\ViewableCommentResponseRuntimeCache;
 use wcf\system\cache\runtime\ViewableCommentRuntimeCache;
 use wcf\system\like\IViewableLikeProvider;
@@ -75,7 +75,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
     #[\Override]
     public function canModerateObject(int $objectTypeID, int $objectID, UserProfile $user): bool
     {
-        $articleContent = ViewableArticleContentRuntimeCache::getInstance()->getObject($objectID);
+        $articleContent = ArticleContentRuntimeCache::getInstance()->getObject($objectID);
         if (!$articleContent->articleContentID) {
             return false;
         }
@@ -89,7 +89,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
     #[\Override]
     public function getLink(int $objectTypeID, int $objectID)
     {
-        $articleContent = ViewableArticleContentRuntimeCache::getInstance()->getObject($objectID);
+        $articleContent = ArticleContentRuntimeCache::getInstance()->getObject($objectID);
         if ($articleContent) {
             return $articleContent->getLink();
         }
@@ -229,7 +229,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
     #[\Override]
     public function isContentAuthor(Comment|CommentResponse $commentOrResponse)
     {
-        $articleContent = ViewableArticleContentRuntimeCache::getInstance()
+        $articleContent = ArticleContentRuntimeCache::getInstance()
             ->getObject($this->getObjectID($commentOrResponse));
 
         return $commentOrResponse->userID && $articleContent->getArticle()->userID == $commentOrResponse->userID;

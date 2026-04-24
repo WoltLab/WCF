@@ -3318,7 +3318,7 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.article.sortField.random"><![CDATA[Zufällig]]></item>
 		<item name="wcf.article.sortField.time"><![CDATA[Datum]]></item>
 		<item name="wcf.article.sortField.views"><![CDATA[Zugriffe]]></item>
-		<item name="wcf.article.recentActivity"><![CDATA[<strong>{$author}</strong> hat den Artikel {if $article->hasLabels()}<ul class="labelList">{foreach from=$article->getLabels() item=label}<li>{unsafe:$label->render()}</li>{/foreach}</ul> {/if}<strong>{$article->getTitle()}</strong> verfasst.]]></item>
+		<item name="wcf.article.recentActivity"><![CDATA[<strong>{$author}</strong> hat den Artikel {if $article->hasLabels}<ul class="labelList">{foreach from=$article->getLabels() item=label}<li>{unsafe:$label->render()}</li>{/foreach}</ul> {/if}<strong>{$article->getTitle()}</strong> verfasst.]]></item>
 		<item name="wcf.article.button.sort"><![CDATA[Sortieren]]></item>
 		<item name="wcf.article.search"><![CDATA[Artikel durchsuchen]]></item>
 		<item name="wcf.article.search.error.noResults"><![CDATA[Es wurden keine Ergebnisse gefunden.]]></item>

@@ -4,26 +4,30 @@ namespace wcf\data\article;
 
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;
-use wcf\data\attachment\GroupedAttachmentList;
+use wcf\data\attachment\Attachment;
 use wcf\data\CollectionDatabaseObject;
-use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\IPopoverObject;
 use wcf\data\IUserContent;
+use wcf\data\label\Label;
+use wcf\data\media\ViewableMedia;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
 use wcf\system\article\discussion\CommentArticleDiscussionProvider;
 use wcf\system\article\discussion\IArticleDiscussionProvider;
 use wcf\system\article\discussion\VoidArticleDiscussionProvider;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\reaction\ReactionData;
+use wcf\system\user\storage\UserStorageHandler;
+use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 
 /**
  * Represents a cms article.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @property-read   int     $articleID          unique id of the article
  * @property-read   ?int    $userID             id of the user the article belongs to or `null` if the user does not exist anymore
@@ -36,7 +40,6 @@ use wcf\system\WCF;
  * @property-read   0|1     $enableComments     is `1` if comments are enabled for the article, otherwise `0`
  * @property-read   int     $views              number of times the article has been viewed
  * @property-read   int     $cumulativeLikes    cumulative result of likes for the article
- * @property-read   int     $attachments        number of attachments in the article descriptions
  * @property-read   0|1     $isDeleted          is 1 if the article is in trash bin, otherwise 0
  * @property-read   0|1     $hasLabels          is `1` if labels are assigned to the article
  *
@@ -59,36 +62,13 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
      */
     const DELAYED_PUBLICATION = 2;
 
-    /**
-     * article content grouped by language id
-     * @var ArticleContent[]
-     */
-    public $articleContents;
-
-    /**
-     * language links
-     * @var ArticleContent[]
-     */
-    public $languageLinks;
-
-    /**
-     * article's category
-     * @var ?ArticleCategory
-     */
-    protected $category;
-
-    /**
-     * @var IArticleDiscussionProvider
-     * @since   5.2
-     */
-    protected $discussionProvider;
+    protected int $effectiveVisitTime;
+    protected int $activeLanguageID;
 
     /**
      * Returns true if the active user can delete this article.
-     *
-     * @return  bool
      */
-    public function canDelete()
+    public function canDelete(): bool
     {
         if (WCF::getSession()->hasPermission('admin.content.article.canManageArticle')) {
             return true;
@@ -106,11 +86,8 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
      * the function uses the current user.
      *
      * <strong>Attention:</strong> The `$user` parameter was introduced with version 5.5.
-     *
-     * @param UserProfile|null $user
-     * @return  bool
      */
-    public function canRead(?UserProfile $user = null)
+    public function canRead(?UserProfile $user = null): bool
     {
         if ($user === null) {
             $user = new UserProfile(WCF::getUser());
@@ -145,10 +122,9 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
     /**
      * Returns true if the current user can edit these article.
      *
-     * @return      bool
      * @since       5.2
      */
-    public function canEdit()
+    public function canEdit(): bool
     {
         if (!$this->canRead()) {
             return false;
@@ -174,10 +150,9 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
     /**
      * Returns true if the current user can publish these article.
      *
-     * @return      bool
      * @since       5.2
      */
-    public function canPublish()
+    public function canPublish(): bool
     {
         if (WCF::getSession()->hasPermission('admin.content.article.canManageArticle')) {
             return true;
@@ -212,10 +187,8 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
 
     /**
      * Returns the article's unformatted teaser.
-     *
-     * @return      string
      */
-    public function getTeaser()
+    public function getTeaser(): string
     {
         if ($this->getArticleContent() !== null) {
             return $this->getArticleContent()->getTeaser();
@@ -226,10 +199,8 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
 
     /**
      * Returns the article's formatted teaser.
-     *
-     * @return      string
      */
-    public function getFormattedTeaser()
+    public function getFormattedTeaser(): string
     {
         if ($this->getArticleContent() !== null) {
             return $this->getArticleContent()->getFormattedTeaser();
@@ -240,10 +211,8 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
 
     /**
      * Returns the article's formatted content.
-     *
-     * @return      string
      */
-    public function getFormattedContent()
+    public function getFormattedContent(): string
     {
         if ($this->getArticleContent() !== null) {
             return $this->getArticleContent()->getFormattedContent();
@@ -254,24 +223,10 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
 
     /**
      * Returns the active content version.
-     *
-     * @return  ArticleContent|null
      */
-    public function getArticleContent()
+    public function getArticleContent(): ?ArticleContent
     {
-        $this->getArticleContents();
-
-        if ($this->isMultilingual) {
-            if (isset($this->articleContents[WCF::getLanguage()->languageID])) {
-                return $this->articleContents[WCF::getLanguage()->languageID];
-            }
-        } else {
-            if (!empty($this->articleContents[0])) {
-                return $this->articleContents[0];
-            }
-        }
-
-        return null;
+        return $this->getCollection()->getArticleContent($this);
     }
 
     /**
@@ -279,44 +234,20 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
      *
      * @return  ArticleContent[]
      */
-    public function getArticleContents()
+    public function getArticleContents(): array
     {
-        if ($this->articleContents === null) {
-            $this->articleContents = [];
-
-            $sql = "SELECT  *
-                    FROM    wcf1_article_content
-                    WHERE   articleID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$this->articleID]);
-            while ($row = $statement->fetchArray()) {
-                $this->articleContents[$row['languageID'] ?: 0] = new ArticleContent(null, $row);
-            }
-        }
-
-        return $this->articleContents;
+        return $this->getCollection()->getArticleContents($this);
     }
 
     /**
      * Returns the article's language links.
      *
-     * @return  ArticleContent[]
+     * @return ArticleContent[]
+     * @deprecated 6.3 Use `getArticleContents()` instead.
      */
-    public function getLanguageLinks()
+    public function getLanguageLinks(): array
     {
-        if ($this->languageLinks === null) {
-            $this->languageLinks = [];
-            $sql = "SELECT  articleContentID, title, languageID
-                    FROM    wcf1_article_content
-                    WHERE   articleID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$this->articleID]);
-            while ($row = $statement->fetchArray()) {
-                $this->languageLinks[$row['languageID'] ?: 0] = new ArticleContent(null, $row);
-            }
-        }
-
-        return $this->languageLinks;
+        return $this->getArticleContents();
     }
 
     /**
@@ -324,57 +255,33 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
      *
      * @return ?ArticleCategory
      */
-    public function getCategory()
+    public function getCategory(): ?ArticleCategory
     {
-        if ($this->category === null && $this->categoryID) {
-            $this->category = ArticleCategory::getCategory($this->categoryID);
-        }
-
-        return $this->category;
-    }
-
-    /**
-     * Sets the discussion provider for this article.
-     *
-     * @return void
-     * @since       5.2
-     */
-    public function setDiscussionProvider(IArticleDiscussionProvider $discussionProvider)
-    {
-        $this->discussionProvider = $discussionProvider;
+        return ArticleCategory::getCategory($this->categoryID);
     }
 
     /**
      * Returns the responsible discussion provider for this article.
      *
-     * @return      IArticleDiscussionProvider
-     * @since       5.2
+     * @since 5.2
      */
-    public function getDiscussionProvider()
+    public function getDiscussionProvider(): IArticleDiscussionProvider
     {
-        if ($this->discussionProvider === null) {
-            foreach (self::getAllDiscussionProviders() as $discussionProvider) {
-                if (\call_user_func([$discussionProvider, 'isResponsible'], $this)) {
-                    $this->setDiscussionProvider(new $discussionProvider($this));
-                    break;
-                }
-            }
-
-            if ($this->discussionProvider === null) {
-                throw new \RuntimeException('No discussion provider has claimed to be responsible for the article #' . $this->articleID);
-            }
+        $discussionProvider = $this->getCollection()->getDiscussionProvider($this);
+        if ($discussionProvider === null) {
+            throw new \RuntimeException('No discussion provider has claimed to be responsible for the article #' . $this->articleID);
         }
 
-        return $this->discussionProvider;
+        return $discussionProvider;
     }
 
     /**
      * Returns the list of the available discussion providers.
      *
-     * @return      string[]
-     * @since       5.2
+     * @return string[]
+     * @since 5.2
      */
-    public static function getAllDiscussionProviders()
+    public static function getAllDiscussionProviders(): array
     {
         /** @var ?string[] $discussionProviders */
         static $discussionProviders;
@@ -402,50 +309,44 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
     }
 
     /**
-     * @since       5.2
+     * @since 5.2
      */
     #[\Override]
-    public function getTime()
+    public function getTime(): int
     {
         return $this->time;
     }
 
     /**
-     * @since       5.2
+     * @since 5.2
      */
     #[\Override]
-    public function getUserID()
+    public function getUserID(): ?int
     {
         return $this->userID;
     }
 
     /**
-     * @since       5.2
+     * @since 5.2
      */
     #[\Override]
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
 
     /**
+     * @return Attachment[]
      * @since 6.0
+     * @deprecated 6.3 Use `ArticleContent::getAttachments()` instead.
      */
-    public function getAttachments(): ?GroupedAttachmentList
+    public function getAttachments(): array
     {
-        if ($this->attachments) {
-            $attachmentList = new GroupedAttachmentList('com.woltlab.wcf.article');
-            $attachmentList->getConditionBuilder()->add('attachment.objectID IN (?)', [$this->articleID]);
-            $attachmentList->readObjects();
-
-            return $attachmentList;
-        }
-
-        return null;
+        return $this->getArticleContent()->getAttachments();
     }
 
     #[\Override]
-    public function getPopoverLinkClass()
+    public function getPopoverLinkClass(): string
     {
         return 'articleLink';
     }
@@ -465,8 +366,193 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
     /**
      * @since 6.3
      */
+    public function getCachedReactions(): ?string
+    {
+        return $this->getCollection()->getCachedReactions($this);
+    }
+
+    /**
+     * @since 6.3
+     */
     public function getReactionData(): ReactionData
     {
         return $this->getCollection()->getReactionData($this);
+    }
+
+    /**
+     * Returns article owner's user profile.
+     *
+     * @since 6.3
+     */
+    public function getUserProfile(): UserProfile
+    {
+        return $this->getCollection()->getUserProfile($this);
+    }
+
+    /**
+     * Returns the article's image.
+     *
+     * @since 6.3
+     */
+    public function getImage(): ?ViewableMedia
+    {
+        if ($this->getArticleContent() !== null) {
+            return $this->getArticleContent()->getImage();
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the article's teaser image.
+     *
+     * @since 6.3
+     */
+    public function getTeaserImage(): ?ViewableMedia
+    {
+        if ($this->getArticleContent() !== null) {
+            return $this->getArticleContent()->getTeaserImage();
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns true if one or more labels are assigned to this article.
+     *
+     * @since 6.3
+     * @deprecated 6.3 Use `hasLabels` property instead
+     */
+    public function hasLabels(): bool
+    {
+        return $this->hasLabels === 1;
+    }
+
+    /**
+     * @return Label[]
+     * @since 6.3
+     */
+    public function getLabels(): array
+    {
+        return $this->getCollection()->getLabels($this);
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function isPublished(): bool
+    {
+        return $this->publicationStatus === Article::PUBLISHED;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getVisitTime(): int
+    {
+        return $this->getCollection()->getVisitTime($this);
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function isNew(): bool
+    {
+        return $this->time > $this->getEffectiveVisitTime();
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getEffectiveVisitTime(): int
+    {
+        if (!isset($this->effectiveVisitTime)) {
+            if (WCF::getUser()->userID !== 0) {
+                $this->effectiveVisitTime = \max(
+                    0,
+                    $this->getVisitTime(),
+                    VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article')
+                );
+            } else {
+                $this->effectiveVisitTime = \TIME_NOW;
+            }
+        }
+
+        return $this->effectiveVisitTime;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function setActiveLanguageID(int $languageID): void
+    {
+        $this->activeLanguageID = $languageID;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getActiveLanguageID(): ?int
+    {
+        if (isset($this->activeLanguageID)) {
+            return $this->activeLanguageID;
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the number of unread articles.
+     *
+     * @since 6.3
+     */
+    public static function getUnreadArticles(): int
+    {
+        if (WCF::getUser()->isGuest()) {
+            return 0;
+        }
+
+        static $unreadArticles = null;
+
+        if ($unreadArticles === null) {
+            $unreadArticles = UserStorageHandler::getInstance()->getField('unreadArticles');
+
+            // cache does not exist or is outdated
+            if ($unreadArticles === null) {
+                $unreadArticles = 0;
+                $categoryIDs = ArticleCategory::getAccessibleCategoryIDs();
+                if ($categoryIDs !== []) {
+                    $conditionBuilder = new PreparedStatementConditionBuilder();
+                    $conditionBuilder->add('article.categoryID IN (?)', [$categoryIDs]);
+                    $conditionBuilder->add(
+                        'article.time > ?',
+                        [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article')]
+                    );
+                    $conditionBuilder->add('article.isDeleted = ?', [0]);
+                    $conditionBuilder->add('article.publicationStatus = ?', [Article::PUBLISHED]);
+                    $conditionBuilder->add('(article.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)');
+
+                    $sql = "SELECT      COUNT(*)
+                            FROM        wcf1_article article
+                            LEFT JOIN   wcf1_tracked_visit tracked_visit
+                            ON          tracked_visit.objectTypeID = " . VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.article') . "
+                                    AND tracked_visit.objectID = article.articleID
+                                    AND tracked_visit.userID = " . WCF::getUser()->userID . "
+                            " . $conditionBuilder;
+                    $statement = WCF::getDB()->prepare($sql);
+                    $statement->execute($conditionBuilder->getParameters());
+                    $unreadArticles = $statement->fetchSingleColumn();
+                }
+
+                // update storage unreadEntries
+                UserStorageHandler::getInstance()->update(
+                    WCF::getUser()->userID,
+                    'unreadArticles',
+                    $unreadArticles
+                );
+            }
+        }
+
+        return $unreadArticles;
     }
 }
