@@ -219,13 +219,42 @@ class ArticlePage extends AbstractPage
             MetaTagHandler::getInstance()->addTag('description', 'description', $this->articleContent->metaDescription);
         }
 
+        MetaTagHandler::getInstance()->addTag(
+            'article:published_time',
+            'article:published_time',
+            \gmdate('c', $this->article->time),
+            true
+        );
+        MetaTagHandler::getInstance()->addTag(
+            'article:modified_time',
+            'article:modified_time',
+            \gmdate('c', $this->article->time),
+            true
+        );
+        MetaTagHandler::getInstance()->addTag(
+            'article:author',
+            'article:author',
+            $this->article->getUserProfile()->getLink(),
+            true
+        );
+        MetaTagHandler::getInstance()->addTag(
+            'article:section',
+            'article:section',
+            $this->article->getCategory()->getTitle(),
+            true
+        );
+
         if ($this->tags !== []) {
             $keywords = '';
+            $i = 0;
             foreach ($this->tags as $tag) {
                 if ($keywords !== '') {
                     $keywords .= ', ';
                 }
                 $keywords .= $tag->name;
+
+                MetaTagHandler::getInstance()->addTag('article:tag' . $i, 'article:tag', $tag->name, true);
+                $i++;
             }
             MetaTagHandler::getInstance()->addTag('keywords', 'keywords', $keywords);
         }
