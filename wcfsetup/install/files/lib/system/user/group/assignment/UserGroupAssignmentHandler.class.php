@@ -50,10 +50,7 @@ class UserGroupAssignmentHandler extends SingletonFactory
 
         /** @var UserGroupAssignment[] $assignments */
         $assignments = UserGroupAssignmentCacheBuilder::getInstance()->getData();
-
-        // TODO: this is a bit too verbose
         $builder = new UserGroupAssignmentObjectFilterBuilder();
-        $handler = new ObjectFilterHandler($builder->getFilters());
 
         foreach ($userList as $user) {
             $groupIDs = $user->getGroupIDs();
@@ -67,11 +64,7 @@ class UserGroupAssignmentHandler extends SingletonFactory
                     continue;
                 }
 
-                if ($handler->testUser(
-                    $user,
-                    'com.woltlab.wcf.userGroupAssignment',
-                    $assignment->conditions
-                )) {
+                if ($builder->testUser($assignment, $user)) {
                     $newGroupIDs[] = $assignment->groupID;
                 }
             }
@@ -119,14 +112,7 @@ class UserGroupAssignmentHandler extends SingletonFactory
             $userList->sqlLimit = $maxUsers;
         }
 
-        // TODO: this is a bit too verbose
-        $builder = new UserGroupAssignmentObjectFilterBuilder();
-        $handler = new ObjectFilterHandler($builder->getFilters());
-        $handler->applyFilters(
-            $userList->getConditionBuilder(),
-            'com.woltlab.wcf.userGroupAssignment',
-            $assignment->conditions,
-        );
+        (new UserGroupAssignmentObjectFilterBuilder())->applyFilters($assignment, $userList->getConditionBuilder());
 
         $userList->readObjects();
 

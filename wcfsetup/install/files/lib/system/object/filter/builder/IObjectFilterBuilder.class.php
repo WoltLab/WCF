@@ -10,4 +10,6 @@ interface IObjectFilterBuilder
      * @return list<IObjectFilter<mixed>>
      */
     public function getFilters(): array;
+
+    public function getObjectTypeName(): string;
 }
