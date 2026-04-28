@@ -30,7 +30,7 @@ interface IContextAwareSearchEngine extends ISearchEngine
      * Returns the inner join query and the condition parameters. This method is allowed to return NULL for both the
      * 'fulltextCondition' and 'searchIndexCondition' index instead of a PreparedStatementConditionBuilder instance.
      *
-     * @param array{parentID?: int, containerID?: int} $contextFilter
+     * @param array{parentID?: int, containerID?: list<int>} $contextFilter
      * @return  array{
      *              fulltextCondition: ?PreparedStatementConditionBuilder,
      *              searchIndexCondition: ?PreparedStatementConditionBuilder,
@@ -51,7 +51,7 @@ interface IContextAwareSearchEngine extends ISearchEngine
      * Searches for the given string and returns the data of the found messages.
      *
      * @param list<string> $objectTypes
-     * @param array<string, array{parentID?: int, containerID?: int}> $contextFilter
+     * @param array<string, array{parentID?: int, containerID?: list<int>}> $contextFilter
      * @param array<string, PreparedStatementConditionBuilder> $additionalConditions
      * @return list<array{objectID: int, objectType: string}>
      */

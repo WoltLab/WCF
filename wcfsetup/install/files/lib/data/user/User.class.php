@@ -485,9 +485,8 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     }
 
     /**
-     * Returns username.
+     * Returns the username.
      */
-    #[\Override]
     public function __toString(): string
     {
         return $this->getTitle();
@@ -664,11 +663,10 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      * Returns true if this user is not activated.
      *
      * @return  bool
-     * @since       5.3
      */
     public function pendingActivation()
     {
-        return $this->activationCode != 0;
+        return $this->activationCode !== 0;
     }
 
     /**
