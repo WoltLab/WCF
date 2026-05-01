@@ -157,12 +157,14 @@ class ArticleListView extends AbstractListView
                     [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article')]
                 );
 
-                $list->sqlConditionJoins = "
+                $joins = "
                     LEFT JOIN   wcf1_tracked_visit tracked_visit
                     ON          tracked_visit.objectTypeID = " . VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.article') . "
                             AND tracked_visit.objectID = article.articleID
                             AND tracked_visit.userID = " . WCF::getUser()->userID;
                 $list->getConditionBuilder()->add("(article.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)");
+                $list->sqlConditionJoins .= $joins;
+                $list->sqlJoins .= $joins;
             }
         };
     }
