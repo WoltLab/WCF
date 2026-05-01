@@ -34,6 +34,8 @@ trait TCollectionVisitTimes
             return;
         }
 
+        \assert($this instanceof DatabaseObjectCollection);
+
         $this->visitTimes = [];
 
         if (WCF::getUser()->isGuest()) {
