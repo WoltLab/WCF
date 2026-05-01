@@ -14,14 +14,28 @@ define(["require", "exports", "tslib", "../../../Ui/Style/FontAwesome", "../../.
     Util_1 = tslib_1.__importDefault(Util_1);
     const badgeContainer = document.getElementById("badgeContainer");
     const previewWrapper = badgeContainer.querySelector(".trophyIcon");
-    const previewIcon = previewWrapper.querySelector("fa-icon");
+    function renderNativePreview(icon, forceSolid) {
+        let previewIcon = previewWrapper.querySelector("fa-icon");
+        if (!(previewIcon instanceof HTMLElement) || previewIcon.parentElement !== previewWrapper) {
+            previewWrapper.replaceChildren();
+            previewIcon = document.createElement("fa-icon");
+            previewIcon.size = 64;
+            previewWrapper.append(previewIcon);
+        }
+        previewIcon.setIcon(icon, forceSolid);
+    }
     function setupChangeIcon() {
         const button = badgeContainer.querySelector('.trophyIconEditButton[data-value="icon"]');
         const input = badgeContainer.querySelector('input[name="iconName"]');
         button.addEventListener("click", () => {
-            (0, FontAwesome_1.open)((icon, forceSolid) => {
-                previewIcon.setIcon(icon, forceSolid);
-                input.value = `${icon};${String(forceSolid)}`;
+            (0, FontAwesome_1.open)((icon, forceSolid, value, previewHtml) => {
+                input.value = value ?? `${icon};${String(forceSolid)}`;
+                if (typeof previewHtml === "string") {
+                    previewWrapper.innerHTML = previewHtml;
+                }
+                else {
+                    renderNativePreview(icon, forceSolid);
+                }
             });
         });
     }

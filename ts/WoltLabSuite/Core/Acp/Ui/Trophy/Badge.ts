@@ -13,16 +13,33 @@ import DomUtil from "../../../Dom/Util";
 
 const badgeContainer = document.getElementById("badgeContainer")!;
 const previewWrapper = badgeContainer.querySelector(".trophyIcon") as HTMLElement;
-const previewIcon = previewWrapper.querySelector("fa-icon")!;
+
+function renderNativePreview(icon: string, forceSolid: boolean): void {
+  let previewIcon = previewWrapper.querySelector("fa-icon");
+  if (!(previewIcon instanceof HTMLElement) || previewIcon.parentElement !== previewWrapper) {
+    previewWrapper.replaceChildren();
+
+    previewIcon = document.createElement("fa-icon");
+    previewIcon.size = 64;
+    previewWrapper.append(previewIcon);
+  }
+
+  previewIcon.setIcon(icon, forceSolid);
+}
 
 function setupChangeIcon(): void {
   const button = badgeContainer.querySelector('.trophyIconEditButton[data-value="icon"]') as HTMLButtonElement;
   const input = badgeContainer.querySelector('input[name="iconName"]') as HTMLInputElement;
 
   button.addEventListener("click", () => {
-    openFontAwesomePicker((icon, forceSolid) => {
-      previewIcon.setIcon(icon, forceSolid);
-      input.value = `${icon};${String(forceSolid)}`;
+    openFontAwesomePicker((icon, forceSolid, value, previewHtml) => {
+      input.value = value ?? `${icon};${String(forceSolid)}`;
+
+      if (typeof previewHtml === "string") {
+        previewWrapper.innerHTML = previewHtml;
+      } else {
+        renderNativePreview(icon, forceSolid);
+      }
     });
   });
 }
