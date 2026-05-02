@@ -23,28 +23,6 @@
 			{unsafe:$reaction->render()}
 			
 			<div class="simpleUserList__item__interactions">
-				{if $__wcf->user->userID && $user->userID != $__wcf->user->userID}
-					{if !$__wcf->getUserProfileHandler()->isIgnoredByUser($user->userID)}
-						{if $__wcf->getUserProfileHandler()->isFollowing($user->userID)}
-							<button
-								type="button"
-								data-following="1"
-								data-follow-user="{link controller='UserFollow' id=$user->userID}{/link}"
-								class="button small jsTooltip"
-								title="{lang}wcf.user.button.unfollow{/lang}"
-							>{icon name='user-minus' type='solid'}</button>
-						{else}
-							<button
-								type="button"
-								data-following="0"
-								data-follow-user="{link controller='UserFollow' id=$user->userID}{/link}"
-								class="button small jsTooltip"
-								title="{lang}wcf.user.button.follow{/lang}"
-							>{icon name='user-plus' type='solid'}</button>
-						{/if}
-					{/if}
-				{/if}
-				
 				{unsafe:$view->renderInteractionContextMenuButton($reaction)}
 			</div>
 		</div>

@@ -9,7 +9,7 @@ use wcf\data\like\object\ILikeObject;
 use wcf\data\like\ViewableLike;
 use wcf\data\like\ViewableLikeList;
 use wcf\event\listView\user\ReactionSummaryDetailsListViewInitialized;
-use wcf\system\interaction\user\UserProfileInteractions;
+use wcf\system\interaction\user\UserProfileInteractionsWithFollow;
 use wcf\system\listView\AbstractListView;
 use wcf\system\listView\ListViewSortField;
 use wcf\system\reaction\ReactionHandler;
@@ -41,7 +41,7 @@ class ReactionSummaryDetailsListView extends AbstractListView
         ]);
 
         $this->setAllowSorting(false);
-        $this->setInteractionProvider(new UserProfileInteractions());
+        $this->setInteractionProvider(new UserProfileInteractionsWithFollow());
         $this->setDefaultSortField('username');
         $this->setItemsPerPage(100);
         $this->setCssClassName('simpleUserList');
