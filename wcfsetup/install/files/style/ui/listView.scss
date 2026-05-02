@@ -19,6 +19,12 @@
 	}
 }
 
+.listView__header__additionalContent {
+	display: flex;
+	gap: 5px;
+	flex-wrap: wrap;
+}
+
 .listView__filters {
 	display: flex;
 	gap: 5px;

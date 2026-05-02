@@ -4170,6 +4170,7 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.like.reaction.topReaction"><![CDATA[{$reaction->getTitle()} × {#$count}{if $other} and {if $other == 1}one other reaction{else}{#$other} other reactions{/if}{/if}]]></item>
 		<item name="wcf.like.reactionsReceived"><![CDATA[Reactions Received]]></item>
 		<item name="wcf.like.reactionsGiven"><![CDATA[Reactions Given]]></item>
+		<item name="wcf.like.reaction.all"><![CDATA[All]]></item>
 	</category>
 	<category name="wcf.map">
 		<item name="wcf.map.noLocationSuggestions"><![CDATA[There are no location suggestions in the current map section.]]></item>

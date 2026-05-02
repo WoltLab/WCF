@@ -84,6 +84,20 @@ define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listen
             this.#viewElement.addEventListener("interaction:reset-selection", () => {
                 this.#state.resetSelection();
             });
+            this.#viewElement.addEventListener("interaction:set-parameters", (event) => {
+                for (const key of Object.keys(event.detail)) {
+                    if (this.#listViewParameters === undefined) {
+                        this.#listViewParameters = new Map();
+                    }
+                    if (event.detail[key] === undefined) {
+                        this.#listViewParameters.delete(key);
+                    }
+                    else {
+                        this.#listViewParameters.set(key, event.detail[key]);
+                    }
+                }
+                void this.#loadItems(0 /* StateChangeCause.Change */);
+            });
         }
         #setupState(viewId, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder) {
             const state = new State_1.default(viewId, this.#viewElement, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder);

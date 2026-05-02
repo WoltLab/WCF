@@ -128,6 +128,22 @@ export class ListView {
     this.#viewElement.addEventListener("interaction:reset-selection", () => {
       this.#state.resetSelection();
     });
+
+    this.#viewElement.addEventListener("interaction:set-parameters", (event: CustomEvent) => {
+      for (const key of Object.keys(event.detail)) {
+        if (this.#listViewParameters === undefined) {
+          this.#listViewParameters = new Map();
+        }
+
+        if (event.detail[key] === undefined) {
+          this.#listViewParameters.delete(key);
+        } else {
+          this.#listViewParameters.set(key, event.detail[key]);
+        }
+      }
+
+      void this.#loadItems(StateChangeCause.Change);
+    });
   }
 
   #setupState(

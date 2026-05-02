@@ -54,6 +54,7 @@ abstract class AbstractListView
     private int $fixedNumberOfItems = 0;
     private string $markAsReadEndpoint = '';
     private ?ListViewPrimaryButton $primaryButton = null;
+    private string $additionalHeaderContent = '';
 
     /**
      * @var array<string, string>
@@ -814,6 +815,22 @@ abstract class AbstractListView
         if (!isset($this->objectList)) {
             $this->initObjectList();
         }
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function setAdditionalHeaderContent(string $content): void
+    {
+        $this->additionalHeaderContent = $content;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getAdditionalHeaderContent(): string
+    {
+        return $this->additionalHeaderContent;
     }
 
     /**

@@ -29,7 +29,8 @@ class ReactionSummaryDetailsListView extends AbstractListView
 {
     public function __construct(
         public readonly string $objectType,
-        public readonly int $objectID
+        public readonly int $objectID,
+        public readonly ?int $reactionTypeID = null,
     ) {
         $this->addAvailableSortFields([
             new ListViewSortField(
@@ -45,6 +46,7 @@ class ReactionSummaryDetailsListView extends AbstractListView
         $this->setItemsPerPage(100);
         $this->setCssClassName('simpleUserList');
         $this->setContainerCssClassName('simpleUserList__container');
+        $this->setAdditionalHeaderContent($this->getSimpleFilterButtons());
     }
 
     #[\Override]
@@ -55,6 +57,9 @@ class ReactionSummaryDetailsListView extends AbstractListView
             ReactionHandler::getInstance()->getObjectType($this->objectType)->objectTypeID
         ]);
         $likeList->getConditionBuilder()->add('objectID = ?', [$this->objectID]);
+        if ($this->reactionTypeID !== null) {
+            $likeList->getConditionBuilder()->add('reactionTypeID = ?', [$this->reactionTypeID]);
+        }
 
         return $likeList;
     }
@@ -102,8 +107,6 @@ class ReactionSummaryDetailsListView extends AbstractListView
             return '';
         }
 
-        \assert($item instanceof ViewableLike);
-
         return $this->getInteractionContextMenuComponent()->renderButton($item->getUserProfile());
     }
 
@@ -111,5 +114,57 @@ class ReactionSummaryDetailsListView extends AbstractListView
     protected function getInitializedEvent(): ReactionSummaryDetailsListViewInitialized
     {
         return new ReactionSummaryDetailsListViewInitialized($this);
+    }
+
+    #[\Override]
+    public function getParameters(): array
+    {
+        $parameters = [
+            'objectType' => $this->objectType,
+            'objectID' => $this->objectID,
+        ];
+
+        if ($this->reactionTypeID !== null) {
+            $parameters['reactionTypeID'] = $this->reactionTypeID;
+        }
+
+        return $parameters;
+    }
+
+    private function getSimpleFilterButtons(): string
+    {
+        $objectType = ReactionHandler::getInstance()->getObjectType($this->objectType);
+        if ($objectType === null) {
+            return '';
+        }
+
+        $sql = "SELECT COUNT(*) AS count, reactionTypeID FROM wcf1_like WHERE objectTypeID = ? AND objectID = ? GROUP BY reactionTypeID";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([$objectType->objectTypeID, $this->objectID]);
+        $reactionCounts = $statement->fetchMap('reactionTypeID', 'count');
+        if (\count($reactionCounts) <= 1) {
+            // Skip filtering if only one type is present.
+            return '';
+        }
+
+        $totalCount = 0;
+        foreach ($reactionCounts as $count) {
+            $totalCount += $count;
+        }
+
+        return WCF::getTPL()->render(
+            'wcf',
+            'reactionSummaryDetailsFilterButtons',
+            [
+                'view' => $this,
+                'totalCount' => $totalCount,
+                'reactionCounts' => $reactionCounts,
+                'reactionTypes' => \array_filter(
+                    ReactionHandler::getInstance()->getReactionTypes(),
+                    static fn($reactionType) => isset($reactionCounts[$reactionType->reactionTypeID])
+                ),
+                'reactionTypeID' => $this->reactionTypeID,
+            ]
+        );
     }
 }
