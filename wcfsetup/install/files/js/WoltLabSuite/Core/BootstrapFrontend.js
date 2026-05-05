@@ -103,7 +103,7 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Ui
             }
         }
         (0, LazyLoader_1.whenFirstSeen)("woltlab-core-reaction-summary", () => {
-            void new Promise((resolve_6, reject_6) => { require(["./Ui/Reaction/SummaryDetails"], resolve_6, reject_6); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_6, reject_6) => { require(["./Component/Reaction/SummaryDetails"], resolve_6, reject_6); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)("woltlab-core-comment", () => {
             void new Promise((resolve_7, reject_7) => { require(["./Component/Comment/woltlab-core-comment"], resolve_7, reject_7); }).then(tslib_1.__importStar);

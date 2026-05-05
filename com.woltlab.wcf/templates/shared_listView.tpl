@@ -1,6 +1,12 @@
 <div class="listView">
-	{if $view->isSortable() || $view->isFilterable() || $view->hasBulkInteractions()}
+	{if $view->isSortable() || $view->isFilterable() || $view->hasBulkInteractions() || $view->getAdditionalHeaderContent()}
 		<div class="listView__header">
+			{if $view->getAdditionalHeaderContent()}
+				<div class="listView__header__additionalContent">
+					{unsafe:$view->getAdditionalHeaderContent()}
+				</div>
+			{/if}
+			
 			{if $view->isFilterable()}
 				<div class="listView__filters" id="{$view->getID()}_filters">
 					{foreach from=$view->getActiveFilters() item='value' key='key'}
@@ -17,53 +23,57 @@
 					{/foreach}
 				</div>
 			{/if}
-			<div class="listView__header__buttons">
-				{if $view->hasAvailableInteractions()}
-					<div class="listView__header__button">
-						<button type="button" class="button small listView__editMode__toggle">
-							{icon name='pencil'}
-							<span>{lang}wcf.global.button.edit{/lang}</span>
-						</button>
+			{hascontent}
+				<div class="listView__header__buttons">
+					{content}
+						{if $view->hasAvailableInteractions()}
+							<div class="listView__header__button">
+								<button type="button" class="button small listView__editMode__toggle">
+									{icon name='pencil'}
+									<span>{lang}wcf.global.button.edit{/lang}</span>
+								</button>
 
-						{if $view->hasBulkInteractions()}
-							<label class="listView__selectAllItems__label jsTooltip" title="{lang}wcf.clipboard.item.markAll{/lang}">
-								<input type="checkbox" id="{$view->getID()}_selectAllItems" class="listView__selectAllItems"
-									aria-label="{lang}wcf.clipboard.item.markAll{/lang}">
-							</label>
+								{if $view->hasBulkInteractions()}
+									<label class="listView__selectAllItems__label jsTooltip" title="{lang}wcf.clipboard.item.markAll{/lang}">
+										<input type="checkbox" id="{$view->getID()}_selectAllItems" class="listView__selectAllItems"
+											aria-label="{lang}wcf.clipboard.item.markAll{/lang}">
+									</label>
+								{/if}
+							</div>
 						{/if}
-					</div>
-				{/if}
-				{if $view->isSortable()}
-					<div class="listView__header__button dropdown">
-						<button type="button" class="button small dropdownToggle">
-							{icon name='arrow-down-short-wide'}
-							<span>{lang}wcf.global.sorting{/lang}</span>
-						</button>
-						<ul class="dropdownMenu" id="{$view->getID()}_sorting">
-							{foreach from=$view->getAvailableSortFields() item='sortField'}
-								<li>
-									<button type="button" class="listView__sorting__button" data-sort-id="{$sortField->id}">
-										{unsafe:$sortField}
-									</button>
-								</li>
-							{/foreach}
-						</ul>
-					</div>
-				{/if}
-				{if $view->isFilterable()}
-					<div class="listView__header__button">
-						<button type="button" class="button small" id="{$view->getID()}_filterButton" data-endpoint="{$view->getFilterActionEndpoint()}">
-							{icon name='sliders'}
-							{lang}wcf.global.filter{/lang}
-						</button>
-					</div>
-				{/if}
-				{if $view->getPrimaryButton()}
-					<div class="listView__header__button">
-						{unsafe:$view->getPrimaryButton()->render()}
-					</div>
-				{/if}
-			</div>
+						{if $view->isSortable()}
+							<div class="listView__header__button dropdown">
+								<button type="button" class="button small dropdownToggle">
+									{icon name='arrow-down-short-wide'}
+									<span>{lang}wcf.global.sorting{/lang}</span>
+								</button>
+								<ul class="dropdownMenu" id="{$view->getID()}_sorting">
+									{foreach from=$view->getAvailableSortFields() item='sortField'}
+										<li>
+											<button type="button" class="listView__sorting__button" data-sort-id="{$sortField->id}">
+												{unsafe:$sortField}
+											</button>
+										</li>
+									{/foreach}
+								</ul>
+							</div>
+						{/if}
+						{if $view->isFilterable()}
+							<div class="listView__header__button">
+								<button type="button" class="button small" id="{$view->getID()}_filterButton" data-endpoint="{$view->getFilterActionEndpoint()}">
+									{icon name='sliders'}
+									{lang}wcf.global.filter{/lang}
+								</button>
+							</div>
+						{/if}
+						{if $view->getPrimaryButton()}
+							<div class="listView__header__button">
+								{unsafe:$view->getPrimaryButton()->render()}
+							</div>
+						{/if}
+					{/content}
+				</div>
+			{/hascontent}
 		</div>
 	{/if}
 	

@@ -22,7 +22,7 @@ use wcf\util\StringUtil;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  */
-final class UserProfileInteractions extends AbstractInteractionProvider
+class UserProfileInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {

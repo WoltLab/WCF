@@ -1,0 +1,69 @@
+.simpleUserList {
+	display: flex;
+	flex-direction: column;
+}
+
+.simpleUserList__item {
+	align-items: center;
+	display: flex;
+	column-gap: 10px;
+	padding: 10px;
+	border-radius: var(--wcfBorderRadius);
+}
+
+@media (hover: hover) {
+	.simpleUserList__item:hover {
+		background-color: var(--wcfTabularBoxBackgroundActive);
+	}
+}
+
+.simpleUserList__item__avatar img {
+	width: 48px;
+	height: 48px;
+}
+
+.simpleUserList__item__content {
+	flex: 1 1 auto;
+}
+
+.simpleUserList__item__title {
+	display: flex;
+	gap: 5px;
+	align-items: center;
+}
+
+.simpleUserList__item__username {
+	@include wcfFontBold;
+}
+
+.simpleUserList__item__link {
+	color: inherit;
+
+	&:hover {
+		color: inherit;
+	}
+}
+
+@media (hover: hover) {
+	.simpleUserList__item__link:hover {
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+}
+
+.simpleUserList__item__description {
+	@include wcfFontSmall;
+	color: var(--wcfContentDimmedText);
+}
+
+.simpleUserList__item__extra {
+	align-items: center;
+	column-gap: 10px;
+	display: flex;
+}
+
+.simpleUserList__item__interactions {
+	align-items: center;
+	column-gap: 5px;
+	display: flex;
+}
