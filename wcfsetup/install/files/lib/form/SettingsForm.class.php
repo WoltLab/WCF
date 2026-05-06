@@ -249,7 +249,7 @@ class SettingsForm extends AbstractForm
                     return $trophy->trophyID;
                 }, (new UserProfile(WCF::getUser()))->getSpecialTrophies()));
 
-                $this->colorScheme = WCF::getUser()->getUserOption('colorScheme');
+                $this->colorScheme = WCF::getUser()->getUserOption('colorScheme') ?? 'system';
             }
         }
     }
