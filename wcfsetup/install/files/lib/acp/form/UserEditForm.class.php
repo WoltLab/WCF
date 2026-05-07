@@ -358,7 +358,7 @@ class UserEditForm extends UserAddForm
             $this->avatarType = 'custom';
         }
 
-        $this->colorScheme = $this->user->getUserOption('colorScheme');
+        $this->colorScheme = $this->user->getUserOption('colorScheme') ?? 'system';
     }
 
     /**
