@@ -413,6 +413,7 @@ final class SpiderCollecting implements IPsr14Event
         $this->register(new Spider('PackRat', 'Pack Rat'));
         $this->register(new Spider('PageBoy', 'PageBoy'));
         $this->register(new Spider('PagePeeker', 'PagePeeker', 'https://pagepeeker.com/robots/'));
+        $this->register(new Spider('Paqlebot', 'Pagle', 'http://www.paqle.dk/about/paqlebot'));
         $this->register(new Spider('Pandalytics', 'Pandalytics', 'https://domainsbot.com/pandalytics/'));
         $this->register(new Spider('ParaSite', 'ParaSite'));
         $this->register(new Spider('Patric', 'Patric'));
@@ -502,12 +503,14 @@ final class SpiderCollecting implements IPsr14Event
         $this->register(new Spider('+SitiDi.net/SitiDiBot/', 'SitiDi.net/SitiDiBot'));
         $this->register(new Spider('aWapClient', 'Skymob.com'));
         $this->register(new Spider('Slack', 'Slackbot', 'https://api.slack.com/robots'));
+        $this->register(new Spider('SleepBot', 'SleepBot', 'http://sleepbot.com/'));
         $this->register(new Spider('SLCrawler', 'SLCrawler'));
         $this->register(new Spider('Sleek Spider', 'Sleek'));
         $this->register(new Spider('ESISmartSpider', 'Smart Spider'));
         $this->register(new Spider('Snapbot', 'Snapbot', 'http://www.snap.com/'));
         $this->register(new Spider('Snooper', 'Snooper'));
         $this->register(new Spider('sohu-search', 'sohu-search'));
+        $this->register(new Spider('Sogou web spider', 'Sogou Web Spider', 'http://www.sogou.com/docs/help/webmasters.htm#07'));
         $this->register(new Spider('Solbot', 'Solbot'));
         $this->register(
             new Spider('Speedy Spider', 'Speedy Spider', 'http://www.entireweb.com/about/search_tech/speedyspider/')
@@ -526,6 +529,7 @@ final class SpiderCollecting implements IPsr14Event
         $this->register(new Spider('Szukacz', 'Szukacz', 'http://www.szukacz.pl/html/RobotEnglishVersion.html'));
         $this->register(new Spider('T-H-U-N-D-E-R-S-T-O-N-E', 'T-H-U-N-D-E-R-S-T-O-N-E'));
         $this->register(new Spider('TinEye Crawler', 'TinEye', 'http://tineye.com/crawler.html'));
+        $this->register(new Spider('TikTokSpider', 'TikTokSpider', 'https://www.tiktok.com/about'));
         $this->register(new Spider('Black Widow', 'TACH Black Widow'));
         $this->register(new Spider('Tapatalk CloudSearch', 'Tapatalk CloudSearch'));
         $this->register(new Spider('Tarantula', 'Tarantula'));
@@ -546,6 +550,7 @@ final class SpiderCollecting implements IPsr14Event
         );
         $this->register(new Spider('Testomatobot', 'TestomatoBot', 'https://www.testomato.com/bot'));
         $this->register(new Spider('thumbshots-de-Bot', 'thumbshots-de-Bot'));
+        $this->register(new Spider('Thinkbot', 'Thinkbot'));
         $this->register(new Spider('TITAN', 'TITAN'));
         $this->register(new Spider('TitIn', 'TitIn'));
         $this->register(new Spider('TLSpider', 'TLSpider'));
