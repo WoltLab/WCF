@@ -22,10 +22,6 @@ export function setup(): void {
           .fromPreset(
             getPhrase("wcf.reactions.summary.title"),
             "wcf\\system\\listView\\user\\ReactionSummaryDetailsListView",
-            1,
-            "",
-            "ASC",
-            undefined,
             new Map([
               ["objectID", element.objectId.toString()],
               ["objectType", element.objectType],

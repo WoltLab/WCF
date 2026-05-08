@@ -42,7 +42,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (requi
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ListViewSetup = void 0;
     class ListViewSetup {
-        async fromPreset(title, listViewClass, pageNo = 1, sortField = "", sortOrder = "ASC", filters, listViewParameters) {
+        async fromPreset(title, listViewClass, listViewParameters, filters, sortField = "", sortOrder = "ASC", pageNo = 1) {
             const url = new URL(`${window.WSC_RPC_API_URL}core/list-views/render`);
             url.searchParams.set("listView", listViewClass);
             url.searchParams.set("pageNo", pageNo.toString());

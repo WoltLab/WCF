@@ -15,7 +15,7 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "../../Component/Dia
             element.addEventListener("showDetails", (0, PromiseMutex_1.promiseMutex)(() => {
                 return (0, Dialog_1.dialogFactory)()
                     .usingListView()
-                    .fromPreset((0, Language_1.getPhrase)("wcf.reactions.summary.title"), "wcf\\system\\listView\\user\\ReactionSummaryDetailsListView", 1, "", "ASC", undefined, new Map([
+                    .fromPreset((0, Language_1.getPhrase)("wcf.reactions.summary.title"), "wcf\\system\\listView\\user\\ReactionSummaryDetailsListView", new Map([
                     ["objectID", element.objectId.toString()],
                     ["objectType", element.objectType],
                 ]));

@@ -16,11 +16,11 @@ export class ListViewSetup {
   async fromPreset(
     title: string,
     listViewClass: string,
-    pageNo: number = 1,
+    listViewParameters?: Map<string, string>,
+    filters?: Map<string, string>,
     sortField: string = "",
     sortOrder: string = "ASC",
-    filters?: Map<string, string>,
-    listViewParameters?: Map<string, string>,
+    pageNo: number = 1,
   ): Promise<WoltlabCoreDialog> {
     const url = new URL(`${window.WSC_RPC_API_URL}core/list-views/render`);
     url.searchParams.set("listView", listViewClass);
