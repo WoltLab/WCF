@@ -42,7 +42,7 @@ interface IObjectTreeNode extends \Countable, IIDObject, \RecursiveIterator
     /**
      * Retruns the parent node of this node.
      *
-     * @return static parent node
+     * @return ?static parent node
      */
     public function getParentNode();
 
