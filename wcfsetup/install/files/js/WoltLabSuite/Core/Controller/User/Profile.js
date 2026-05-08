@@ -5,36 +5,30 @@
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "../../Component/User/List", "WoltLabSuite/Core/Event/Handler", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Ui/TabMenu"], function (require, exports, tslib_1, Ajax_1, List_1, EventHandler, Util_1, Listener_1, TabMenu_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Event/Handler", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Ui/TabMenu", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Component/Dialog"], function (require, exports, tslib_1, Ajax_1, EventHandler, Util_1, Listener_1, TabMenu_1, PromiseMutex_1, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     EventHandler = tslib_1.__importStar(EventHandler);
     function setupUserList(userId, buttonId, className) {
         const button = document.getElementById(buttonId);
-        if (button) {
-            let userList;
-            button.addEventListener("click", () => {
-                if (userList === undefined) {
-                    userList = new List_1.UserList({
-                        className: className,
-                        parameters: {
-                            userID: userId,
-                        },
-                    }, button.dataset.dialogTitle);
-                }
-                userList.open();
-            });
+        if (!button) {
+            return;
         }
+        button.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(() => {
+            return (0, Dialog_1.dialogFactory)()
+                .usingListView()
+                .fromPreset(button.dataset.dialogTitle, className, new Map([["userID", userId.toString()]]));
+        }));
     }
     function setupFollowingList(userId) {
-        setupUserList(userId, "followingAll", "wcf\\data\\user\\follow\\UserFollowingAction");
+        setupUserList(userId, "followingAll", "wcf\\system\\listView\\user\\FollowingListView");
     }
     function setupFollowerList(userId) {
-        setupUserList(userId, "followerAll", "wcf\\data\\user\\follow\\UserFollowAction");
+        setupUserList(userId, "followerAll", "wcf\\system\\listView\\user\\FollowerListView");
     }
     function setupVisitorList(userId) {
-        setupUserList(userId, "visitorAll", "wcf\\data\\user\\profile\\visitor\\UserProfileVisitorAction");
+        setupUserList(userId, "visitorAll", "wcf\\system\\listView\\user\\UserProfileVisitorListView");
     }
     const tabContentLoaded = new Map();
     function setupTabMenu(userId) {

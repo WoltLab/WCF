@@ -35,6 +35,9 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
     public $userProfile;
 
     #[\Override]
+    /**
+     * @deprecated 6.3 No longer in use.
+     */
     public function validateGetGroupedUserList()
     {
         $this->readInteger('pageNo');
@@ -54,6 +57,9 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
     }
 
     #[\Override]
+    /**
+     * @deprecated 6.3 No longer in use.
+     */
     public function getGroupedUserList()
     {
         // resolve page count

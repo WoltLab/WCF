@@ -152,6 +152,9 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
     }
 
     #[\Override]
+    /**
+     * @deprecated 6.3 No longer in use.
+     */
     public function validateGetGroupedUserList()
     {
         $this->readInteger('pageNo');
@@ -171,6 +174,9 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
     }
 
     #[\Override]
+    /**
+     * @deprecated 6.3 No longer in use.
+     */
     public function getGroupedUserList()
     {
         // resolve page count
