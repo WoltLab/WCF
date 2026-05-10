@@ -43,4 +43,9 @@ abstract class AbstractSimpleUserListView extends AbstractListView
     {
         return WCF::getTPL()->render('wcf', 'shared_simpleUserListItems', ['view' => $this]);
     }
+
+    public function getItemDescription(UserProfile $user): string
+    {
+        return '';
+    }
 }

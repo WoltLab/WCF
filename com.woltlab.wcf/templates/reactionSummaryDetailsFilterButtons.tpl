@@ -4,7 +4,7 @@
 	data-filter-reaction-type-id="0"
 	data-list-view-id="{$view->getID()}"
 >
-	<span>{lang}wcf.like.reaction.all{/lang}</span>
+	<span>{lang}wcf.global.button.all{/lang}</span>
 	<span class="badge">{#$totalCount}</span>
 </button>
 

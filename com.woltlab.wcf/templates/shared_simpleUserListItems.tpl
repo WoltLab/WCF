@@ -13,6 +13,11 @@
 					<span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>
 				{/if}
 			</div>
+			{if $view->getItemDescription($user)}
+				<div class="simpleUserList__item__description">
+					{unsafe:$view->getItemDescription($user)}
+				</div>
+			{/if}
 		</div>
 
 		<div class="simpleUserList__item__extra">
