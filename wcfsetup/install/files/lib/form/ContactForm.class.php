@@ -106,10 +106,20 @@ class ContactForm extends AbstractFormBuilderForm
         }
 
         $optionValues = [];
-        foreach ($data as $key => $value) {
-            if (\str_starts_with($key, 'option')) {
-                $optionID = (int)\substr($key, 6);
-                $optionValues[$optionID] = $value;
+        foreach ($this->getAvailableOptions() as $option) {
+            $key = 'option' . $option->optionID;
+
+            if (\array_key_exists($key, $formData['data'])) {
+                $optionValues[$option->optionID] =
+                    $formData['data'][$key] !== null
+                    ? $option->getFormOption()->serializeValue($formData['data'][$key])
+                    : null;
+            } else if (\array_key_exists($key, $formData)) {
+                // multi-select fields place value at top-level via custom processor, see MultipleSelectionFormField::populate
+                $optionValues[$option->optionID] =
+                    $formData[$key] !== null
+                    ? $option->getFormOption()->serializeValue($formData[$key])
+                    : null;
             }
         }
 
