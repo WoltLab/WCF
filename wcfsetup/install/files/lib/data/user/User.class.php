@@ -77,7 +77,7 @@ use wcf\util\UserUtil;
  * @property-read   int     $trophyPoints           total number of user's trophies in active categories
  * @property-read   string  $timezone
  */
-final class User extends DatabaseObject implements IPopoverObject, IRouteController, IUserContent
+final class User extends DatabaseObject implements IPopoverObject, IRouteController, IUserContent, \Stringable
 {
     /**
      * list of group ids
@@ -487,6 +487,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns the username.
      */
+    #[\Override]
     public function __toString(): string
     {
         return $this->getTitle();
