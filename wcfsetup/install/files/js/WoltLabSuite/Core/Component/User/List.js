@@ -5,6 +5,7 @@
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
+ * @deprecated 6.3 Use list views instead.
  */
 define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Pagination", "../Dialog", "WoltLabSuite/Core/Dom/Util"], function (require, exports, tslib_1, Ajax_1, Pagination_1, Dialog_1, Util_1) {
     "use strict";
