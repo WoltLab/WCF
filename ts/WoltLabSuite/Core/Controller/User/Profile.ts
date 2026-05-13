@@ -7,44 +7,39 @@
  */
 
 import { dboAction } from "WoltLabSuite/Core/Ajax";
-import { UserList } from "../../Component/User/List";
 import * as EventHandler from "WoltLabSuite/Core/Event/Handler";
 import { insertHtml } from "WoltLabSuite/Core/Dom/Util";
 import { trigger as triggerDomChange } from "WoltLabSuite/Core/Dom/Change/Listener";
 import { getTabMenu } from "WoltLabSuite/Core/Ui/TabMenu";
+import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
+import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
 
 function setupUserList(userId: number, buttonId: string, className: string): void {
   const button = document.getElementById(buttonId) as HTMLElement;
-  if (button) {
-    let userList: UserList;
-
-    button.addEventListener("click", () => {
-      if (userList === undefined) {
-        userList = new UserList(
-          {
-            className: className,
-            parameters: {
-              userID: userId,
-            },
-          },
-          button.dataset.dialogTitle!,
-        );
-      }
-      userList.open();
-    });
+  if (!button) {
+    return;
   }
+
+  button.addEventListener(
+    "click",
+    promiseMutex(() => {
+      return dialogFactory()
+        .usingListView()
+        .fromPreset(button.dataset.dialogTitle!, className, new Map([["userID", userId.toString()]]));
+    }),
+  );
 }
 
 function setupFollowingList(userId: number): void {
-  setupUserList(userId, "followingAll", "wcf\\data\\user\\follow\\UserFollowingAction");
+  setupUserList(userId, "followingAll", "wcf\\system\\listView\\user\\FollowingListView");
 }
 
 function setupFollowerList(userId: number): void {
-  setupUserList(userId, "followerAll", "wcf\\data\\user\\follow\\UserFollowAction");
+  setupUserList(userId, "followerAll", "wcf\\system\\listView\\user\\FollowerListView");
 }
 
 function setupVisitorList(userId: number): void {
-  setupUserList(userId, "visitorAll", "wcf\\data\\user\\profile\\visitor\\UserProfileVisitorAction");
+  setupUserList(userId, "visitorAll", "wcf\\system\\listView\\user\\UserProfileVisitorListView");
 }
 
 const tabContentLoaded = new Map<string, boolean>();

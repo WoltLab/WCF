@@ -23,6 +23,9 @@ class UserFollowingAction extends UserFollowAction
     protected $className = UserFollowEditor::class;
 
     #[\Override]
+    /**
+     * @deprecated 6.3 No longer in use.
+     */
     public function validateGetGroupedUserList()
     {
         $this->readInteger('pageNo');
@@ -42,6 +45,9 @@ class UserFollowingAction extends UserFollowAction
     }
 
     #[\Override]
+    /**
+     * @deprecated 6.3 No longer in use.
+     */
     public function getGroupedUserList()
     {
         // resolve page count

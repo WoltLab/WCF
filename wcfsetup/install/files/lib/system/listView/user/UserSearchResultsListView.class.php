@@ -3,9 +3,7 @@
 namespace wcf\system\listView\user;
 
 use wcf\data\search\Search;
-use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileList;
-use wcf\system\listView\AbstractListView;
 use wcf\system\WCF;
 
 /**

@@ -8,12 +8,12 @@
  */
 
 import { Poll } from "../Poll";
-import { UserList } from "../../../Component/User/List";
+import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
+import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
 
 export class Participants {
   protected readonly pollManager: Poll;
   private button: HTMLButtonElement;
-  private userList?: UserList = undefined;
 
   public constructor(manager: Poll) {
     this.pollManager = manager;
@@ -25,29 +25,18 @@ export class Participants {
       );
     }
     this.button = button;
-    this.button.addEventListener("click", (event) => {
-      if (event) {
-        event.preventDefault();
-      }
-
-      this.open();
-    });
-  }
-
-  private open(): void {
-    if (!this.userList) {
-      this.userList = new UserList(
-        {
-          className: "wcf\\data\\poll\\PollAction",
-          parameters: {
-            pollID: this.pollManager.pollId,
-          },
-        },
-        this.pollManager.question,
-      );
-    }
-
-    this.userList.open();
+    this.button.addEventListener(
+      "click",
+      promiseMutex(() => {
+        return dialogFactory()
+          .usingListView()
+          .fromPreset(
+            this.pollManager.question,
+            "wcf\\system\\listView\\user\\PollParticipantListView",
+            new Map([["pollID", this.pollManager.pollId.toString()]]),
+          );
+      }),
+    );
   }
 
   public showButton(): void {

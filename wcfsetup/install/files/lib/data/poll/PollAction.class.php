@@ -299,6 +299,9 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         ];
     }
 
+    /**
+     * @deprecated 6.3 No longer in use.
+     */
     #[\Override]
     public function validateGetGroupedUserList()
     {
@@ -386,6 +389,9 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         $this->poll->setRelatedObject($relatedObject);
     }
 
+    /**
+     * @deprecated 6.3 No longer in use.
+     */
     #[\Override]
     public function getGroupedUserList()
     {
