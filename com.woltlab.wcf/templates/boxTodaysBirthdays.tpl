@@ -24,21 +24,13 @@
 	<button type="button" class="jsTodaysBirthdays button small more jsOnly">{lang}wcf.global.button.showAll{/lang}</button>
 	
 	<script data-relocate="true">
-		require(['WoltLabSuite/Core/Component/User/List'], ({ UserList }) => {
-			let userList;
+		require(['WoltLabSuite/Core/Component/Dialog'], ({ dialogFactory }) => {
 			document.querySelector('.jsTodaysBirthdays').addEventListener('click', () => {
-				if (userList === undefined) {
-					userList = new UserList({
-						className: 'wcf\\data\\user\\UserBirthdayAction',
-						parameters: {
-							date: '{time type='custom' time=TIME_NOW format='Y-m-d'}',
-							sortField: '{$sortField}',
-							sortOrder: '{$sortOrder}'
-						}
-					}, '{unsafe:$box->getTitle()|encodeJS} ({time type='plainDate' time=TIME_NOW})');
-				}
-
-				userList.open();
+				dialogFactory().usingListView().fromPreset(
+					'{unsafe:$box->getTitle()|encodeJS} ({time type='plainDate' time=TIME_NOW})',
+					'wcf\\system\\listView\\user\\UserBirthdayListView',
+					new Map([['date', '{time type='custom' time=TIME_NOW format='Y-m-d'}']])
+				);
 			});
 		});
 	</script>
