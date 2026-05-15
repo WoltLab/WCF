@@ -50,5 +50,9 @@ return [
                 ->defaultValue(0)
                 ->drop(),
             JsonDatabaseTableColumn::create('cachedReactions'),
-        ])
+        ]),
+    PartialDatabaseTable::create('wcf1_user_option')
+        ->columns([
+            DefaultFalseBooleanDatabaseTableColumn::create('showOnUserCard'),
+        ]),
 ];

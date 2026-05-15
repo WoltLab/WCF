@@ -3075,6 +3075,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.user.option.askDuringRegistration"><![CDATA[Field will be visible during registration]]></item>
 		<item name="wcf.acp.user.option.required"><![CDATA[Owner must provide a valid value]]></item>
 		<item name="wcf.acp.user.option.searchable"><![CDATA[Field values are searchable in the member search]]></item>
+		<item name="wcf.acp.user.option.showOnUserCard"><![CDATA[Display field in the members list]]></item>
 		<item name="wcf.acp.user.option.selectOptions"><![CDATA[Select Options]]></item>
 		<item name="wcf.acp.user.option.selectOptions.description"><![CDATA[Enter one select option per line, e.g. for use with a select-box. Note: The left-hand side of a colon is used as an internal identifier. It allows you to change the text of the option without invalidating former selections.]]></item>
 		<item name="wcf.acp.user.option.setDefaults"><![CDATA[Manage User Field Settings]]></item>

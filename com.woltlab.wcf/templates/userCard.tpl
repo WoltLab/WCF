@@ -100,6 +100,11 @@
 							{/if}
 						{/if}
 
+						{foreach from=$user->getUserCardOptions() item=userCardOption}
+							<dt>{$userCardOption->getTitle()}</dt>
+							<dd>{unsafe:$userCardOption->optionValue}</dd>
+						{/foreach}
+
 						{event name='afterDetails'}
 					{/content}
 				</dl>

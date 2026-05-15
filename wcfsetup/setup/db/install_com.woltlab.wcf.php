@@ -4616,6 +4616,7 @@ return [
             TextDatabaseTableColumn::create('options'),
             MediumtextDatabaseTableColumn::create('additionalData'),
             DefaultFalseBooleanDatabaseTableColumn::create('originIsSystem'),
+            DefaultFalseBooleanDatabaseTableColumn::create('showOnUserCard'),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
