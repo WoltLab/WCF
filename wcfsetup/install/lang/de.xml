@@ -21,6 +21,7 @@
 	<category name="wcf.acl.option">
 		<item name="wcf.acl.option.com.woltlab.wcf.label.canViewLabel"><![CDATA[Kann Labels sehen]]></item>
 		<item name="wcf.acl.option.com.woltlab.wcf.label.canSetLabel"><![CDATA[Kann Labels setzen]]></item>
+		<item name="wcf.acl.option.com.woltlab.wcf.article.category.canViewCategory"><![CDATA[Kann Kategorie betreten]]></item>
 		<item name="wcf.acl.option.com.woltlab.wcf.article.category.canReadArticle"><![CDATA[Kann Artikel lesen]]></item>
 	</category>
 	<category name="wcf.acp.ad">
@@ -917,6 +918,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.group.option.user.article.canAddCommentWithoutModeration"><![CDATA[Kann Kommentare ohne Moderation erstellen]]></item>
 		<item name="wcf.acp.group.option.user.article.canDeleteComment"><![CDATA[Kann eigene Kommentare löschen]]></item>
 		<item name="wcf.acp.group.option.user.article.canEditComment"><![CDATA[Kann eigene Kommentare bearbeiten]]></item>
+		<item name="wcf.acp.group.option.user.article.canViewCategory"><![CDATA[Kann Kategorien betreten]]></item>
 		<item name="wcf.acp.group.option.user.article.canReadArticle"><![CDATA[Kann Artikel lesen]]></item>
 		<item name="wcf.acp.group.option.user.page.canAddComment"><![CDATA[Kann Kommentare erstellen]]></item>
 		<item name="wcf.acp.group.option.user.page.canAddCommentWithoutModeration"><![CDATA[Kann Kommentare ohne Moderation erstellen]]></item>
