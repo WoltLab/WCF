@@ -109,6 +109,10 @@
 		<item name="wcf.acp.article.isDeleted"><![CDATA[Gelöscht]]></item>
 		<item name="wcf.acp.article.metaTitle"><![CDATA[Meta Titel]]></item>
 		<item name="wcf.acp.article.metaDescription"><![CDATA[Meta Description]]></item>
+		<item name="wcf.acp.article.slug"><![CDATA[Eigener URL-Slug]]></item>
+		<item name="wcf.acp.article.slug.description"><![CDATA[Leer lassen, um den URL-Slug aus dem Titel abzuleiten. Erlaubte Zeichen: <code>a-z</code>, <code>0-9</code>, <code>-</code>, <code>_</code>.]]></item>
+		<item name="wcf.acp.article.slug.error.invalid"><![CDATA[Der Slug darf nur aus Kleinbuchstaben, Ziffern, Binde- und Unterstrichen bestehen.]]></item>
+		<item name="wcf.acp.article.slug.error.notUnique"><![CDATA[Der Slug wird bereits durch einen anderen Artikel verwendet.]]></item>
 	</category>
 	<category name="wcf.acp.attachment">
 		<item name="wcf.acp.attachment.list"><![CDATA[Dateianhänge]]></item>

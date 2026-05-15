@@ -29,6 +29,8 @@ return [
             SmallintDatabaseTableColumn::create('attachments')
                 ->notNull()
                 ->defaultValue(0),
+            NotNullVarchar255DatabaseTableColumn::create('slug')
+                ->defaultValue(''),
         ]),
     PartialDatabaseTable::create('wcf1_label_group')
         ->columns([

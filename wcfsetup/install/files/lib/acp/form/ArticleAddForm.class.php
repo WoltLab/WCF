@@ -6,6 +6,7 @@ use wcf\command\article\MarkArticleAsRead;
 use wcf\data\article\Article;
 use wcf\data\article\ArticleAction;
 use wcf\data\article\category\ArticleCategory;
+use wcf\data\article\content\ArticleContentEditor;
 use wcf\data\category\CategoryNodeTree;
 use wcf\data\user\User;
 use wcf\form\AbstractFormBuilderForm;
@@ -40,6 +41,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\HtmlString;
+use wcf\util\StringUtil;
 
 /**
  * Shows the article add form.
@@ -280,6 +282,11 @@ class ArticleAddForm extends AbstractFormBuilderForm
             TitleFormField::create('title')
                 ->required()
                 ->maximumLength(255),
+            TextFormField::create('slug')
+                ->label('wcf.acp.article.slug')
+                ->description('wcf.acp.article.slug.description')
+                ->maximumLength(255)
+                ->addValidator($this->getSlugValidator(null)),
             MultilineTextFormField::create('teaser')
                 ->label('wcf.acp.article.teaser'),
             TagFormField::create('tags')
@@ -326,6 +333,11 @@ class ArticleAddForm extends AbstractFormBuilderForm
                 TitleFormField::create("title_{$lc}")
                     ->required()
                     ->maximumLength(255),
+                TextFormField::create("slug_{$lc}")
+                    ->label('wcf.acp.article.slug')
+                    ->description('wcf.acp.article.slug.description')
+                    ->maximumLength(255)
+                    ->addValidator($this->getSlugValidator($language->languageID)),
                 MultilineTextFormField::create("teaser_{$lc}")
                     ->label('wcf.acp.article.teaser'),
                 TagFormField::create("tags_{$lc}")
@@ -356,6 +368,36 @@ class ArticleAddForm extends AbstractFormBuilderForm
                     ])
             );
         }
+    }
+
+    /**
+     * Returns a validator ensuring that the article slug is properly formatted
+     * and unique within the given language.
+     */
+    protected function getSlugValidator(?int $languageID): FormFieldValidator
+    {
+        return new FormFieldValidator('slug', function (IFormField $field) use ($languageID) {
+            $slug = \mb_strtolower(StringUtil::trim((string)$field->getSaveValue()));
+            if ($slug === '') {
+                return;
+            }
+
+            if (\preg_match('~^[a-z0-9\-_]+$~', $slug) === 0) {
+                $field->addValidationError(new FormFieldValidationError(
+                    'invalid',
+                    'wcf.acp.article.slug.error.invalid'
+                ));
+                return;
+            }
+
+            $excludedArticleID = $this->formObject !== null ? $this->formObject->articleID : null;
+            if (!ArticleContentEditor::isUniqueSlug($slug, $languageID, $excludedArticleID)) {
+                $field->addValidationError(new FormFieldValidationError(
+                    'notUnique',
+                    'wcf.acp.article.slug.error.notUnique'
+                ));
+            }
+        });
     }
 
     #[\Override]
@@ -403,6 +445,7 @@ class ArticleAddForm extends AbstractFormBuilderForm
 
                                 $parameters['content'][$lid] = [
                                     'title' => $parameters['data']["title_{$lc}"] ?? '',
+                                    'slug' => \mb_strtolower(StringUtil::trim($parameters['data']["slug_{$lc}"] ?? '')),
                                     'tags' => $parameters["tags_{$lc}"] ?? [],
                                     'teaser' => $parameters['data']["teaser_{$lc}"] ?? '',
                                     'content' => $parameters['data']["content_{$lc}"] ?? '',
@@ -418,6 +461,7 @@ class ArticleAddForm extends AbstractFormBuilderForm
 
                                 unset(
                                     $parameters['data']["title_{$lc}"],
+                                    $parameters['data']["slug_{$lc}"],
                                     $parameters['data']["teaser_{$lc}"],
                                     $parameters['data']["content_{$lc}"],
                                     $parameters['data']["imageID_{$lc}"],
@@ -432,6 +476,7 @@ class ArticleAddForm extends AbstractFormBuilderForm
                         } else {
                             $parameters['content'][0] = [
                                 'title' => $parameters['data']['title'] ?? '',
+                                'slug' => \mb_strtolower(StringUtil::trim($parameters['data']['slug'] ?? '')),
                                 'tags' => $parameters['tags'] ?? [],
                                 'teaser' => $parameters['data']['teaser'] ?? '',
                                 'content' => $parameters['data']['content'] ?? '',
@@ -448,6 +493,7 @@ class ArticleAddForm extends AbstractFormBuilderForm
 
                             unset(
                                 $parameters['data']['title'],
+                                $parameters['data']['slug'],
                                 $parameters['data']['teaser'],
                                 $parameters['data']['content'],
                                 $parameters['data']['imageID'],

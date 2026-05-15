@@ -34,6 +34,7 @@ final class EnableI18n
         foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
             $data[$language->languageID] = [
                 'title' => $articleContent->title,
+                'slug' => $articleContent->slug,
                 'teaser' => $articleContent->teaser,
                 'content' => $articleContent->content,
                 'imageID' => $articleContent->imageID ?: null,
