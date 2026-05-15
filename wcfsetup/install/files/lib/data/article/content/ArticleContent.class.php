@@ -28,6 +28,7 @@ use wcf\util\StringUtil;
  * @property-read   int     $articleID          id of the article the article content belongs to
  * @property-read   ?int    $languageID         id of the article content's language
  * @property-read   string  $title              title of the article in the associated language
+ * @property-read   string  $slug               custom URL slug of the article in the associated language or empty to derive it from the title
  * @property-read   ?string $content            actual content of the article in the associated language
  * @property-read   ?string $teaser             teaser of the article in the associated language or empty if no teaser exists
  * @property-read   ?int    $imageID            id of the (image) media object used as article image for the associated language or `null` if no image is used
@@ -50,6 +51,13 @@ class ArticleContent extends CollectionDatabaseObject implements ILinkableObject
     #[\Override]
     public function getLink(): string
     {
+        if ($this->slug !== '') {
+            return LinkHandler::getInstance()->getControllerLink(ArticlePage::class, [
+                'id' => $this->articleContentID,
+                'title' => $this->slug,
+            ]);
+        }
+
         return LinkHandler::getInstance()->getControllerLink(ArticlePage::class, [
             'object' => $this,
         ]);

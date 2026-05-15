@@ -109,6 +109,10 @@
 		<item name="wcf.acp.article.isDeleted"><![CDATA[Deleted]]></item>
 		<item name="wcf.acp.article.metaTitle"><![CDATA[Meta Title]]></item>
 		<item name="wcf.acp.article.metaDescription"><![CDATA[Meta Description]]></item>
+		<item name="wcf.acp.article.slug"><![CDATA[Custom URL Slug]]></item>
+		<item name="wcf.acp.article.slug.description"><![CDATA[Leave empty to derive the URL slug from the title. Allowed characters: <code>a-z</code>, <code>0-9</code>, <code>-</code>, <code>_</code>.]]></item>
+		<item name="wcf.acp.article.slug.error.invalid"><![CDATA[The slug must only contain lowercase letters, digits, hyphens, and underscores.]]></item>
+		<item name="wcf.acp.article.slug.error.notUnique"><![CDATA[The slug is already in use by another article.]]></item>
 	</category>
 	<category name="wcf.acp.attachment">
 		<item name="wcf.acp.attachment.list"><![CDATA[Attachments]]></item>

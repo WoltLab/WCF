@@ -118,6 +118,7 @@ class ArticleEditForm extends ArticleAddForm
                                 $lc = $language->languageCode;
 
                                 $data["title_{$lc}"] = $content->title;
+                                $data["slug_{$lc}"] = $content->slug;
                                 $data["teaser_{$lc}"] = $content->teaser;
                                 $data["content_{$lc}"] = $content->content;
                                 $data["imageID_{$lc}"] = $content->imageID;
@@ -134,6 +135,7 @@ class ArticleEditForm extends ArticleAddForm
                                 }
                             } else {
                                 $data['title'] = $content->title;
+                                $data['slug'] = $content->slug;
                                 $data['teaser'] = $content->teaser;
                                 $data['content'] = $content->content;
                                 $data['imageID'] = $content->imageID;

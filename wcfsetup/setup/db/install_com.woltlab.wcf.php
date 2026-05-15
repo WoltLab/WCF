@@ -464,6 +464,8 @@ return [
             NotNullInt10DatabaseTableColumn::create('articleID'),
             IntDatabaseTableColumn::create('languageID'),
             NotNullVarchar255DatabaseTableColumn::create('title'),
+            NotNullVarchar255DatabaseTableColumn::create('slug')
+                ->defaultValue(''),
             TextDatabaseTableColumn::create('teaser'),
             MediumtextDatabaseTableColumn::create('content'),
             IntDatabaseTableColumn::create('imageID'),

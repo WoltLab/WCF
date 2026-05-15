@@ -106,6 +106,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
                     'articleID' => $article->articleID,
                     'languageID' => $languageID ?: null,
                     'title' => $content['title'],
+                    'slug' => $content['slug'] ?? '',
                     'teaser' => $content['teaser'],
                     'content' => $content['content'],
                     'imageID' => $content['imageID'],
@@ -204,6 +205,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
                     if ($articleContent !== null) {
                         $updateData = [
                             'title' => $content['title'],
+                            'slug' => $isRevert ? $articleContent->slug : ($content['slug'] ?? ''),
                             'teaser' => $content['teaser'],
                             'content' => $content['content'],
                             'imageID' => ($isRevert) ? $articleContent->imageID : $content['imageID'],
@@ -237,6 +239,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
                             'articleID' => $article->articleID,
                             'languageID' => $languageID ?: null,
                             'title' => $content['title'],
+                            'slug' => $isRevert ? '' : ($content['slug'] ?? ''),
                             'teaser' => $content['teaser'],
                             'content' => $content['content'],
                             'imageID' => ($isRevert) ? null : $content['imageID'],
