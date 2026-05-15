@@ -7,6 +7,7 @@ use wcf\data\box\Box;
 use wcf\data\box\BoxList;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
+use wcf\data\package\PackageCache;
 use wcf\event\gridView\admin\BoxGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\GridViewColumn;
@@ -131,6 +132,11 @@ final class BoxGridView extends AbstractGridView
                 }
             },
             new BooleanFilter('originIsNotSystem', 'wcf.acp.box.originIsNotSystem', 'originIsSystem', true),
+            new SelectFilter(
+                PackageCache::getInstance()->getPackages(),
+                'packageID',
+                'wcf.acp.package.name'
+            ),
         ]);
         $provider = new BoxInteractions();
         $provider->addInteractions([
