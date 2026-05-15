@@ -4285,6 +4285,8 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.setCategory"><![CDATA[Kategorie bearbeiten]]></item>
 		<item name="wcf.media.downloads"><![CDATA[Downloads]]></item>
 		<item name="wcf.media.lastDownloadTime"><![CDATA[Letzter Download]]></item>
+		<item name="wcf.media.file.info"><![CDATA[{$media->filesize|filesize} – {plural value=$media->downloads 1="1 Download" other="# Downloads"}]]></item>
+		<item name="wcf.media.file.title"><![CDATA[Datei „{$media->filename}“ herunterladen]]></item>
 	</category>
 	<category name="wcf.message">
 		<item name="wcf.message.autosave.prompt"><![CDATA[Gespeicherten Entwurf wiederherstellen?]]></item>

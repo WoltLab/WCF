@@ -12,6 +12,7 @@ use wcf\system\file\processor\ImageData;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 
 /**
  * Represents a media file.
@@ -181,6 +182,20 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
     public function getTitle(): string
     {
         return $this->filename;
+    }
+
+    /**
+     * Returns the icon name for this media file based on its filename.
+     *
+     * @since 6.3
+     */
+    public function getIconName(): string
+    {
+        if ($iconName = FileUtil::getIconNameByFilename($this->filename)) {
+            return 'file-' . $iconName;
+        }
+
+        return 'file';
     }
 
     /**

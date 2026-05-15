@@ -6,7 +6,6 @@ use wcf\data\DatabaseObjectDecorator;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\style\FontAwesomeIcon;
-use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -182,14 +181,7 @@ class ViewableMedia extends DatabaseObjectDecorator
                     </span>';
         }
 
-        $icon = FileUtil::getIconNameByFilename($this->filename);
-        if ($icon) {
-            $icon = "file-{$icon}";
-        } else {
-            $icon = 'file';
-        }
-
-        return FontAwesomeIcon::fromValues($icon, false)->toHtml($size);
+        return FontAwesomeIcon::fromValues($this->getIconName(), false)->toHtml($size);
     }
 
     /**

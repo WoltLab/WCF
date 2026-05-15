@@ -278,6 +278,7 @@ html[data-color-scheme="dark"] {
 		"icon filename"
 		"icon meta";
 	grid-template-columns: 32px auto;
+	max-width: 300px;
 	padding: 8px;
 	row-gap: 1px;
 	user-select: none;
