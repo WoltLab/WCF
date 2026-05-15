@@ -67,7 +67,7 @@ class PollManager extends SingletonFactory
 
     /**
      * poll id
-     * @var int
+     * @var ?int
      */
     protected $pollID = 0;
 
@@ -109,7 +109,7 @@ class PollManager extends SingletonFactory
      * @return  bool
      * @throws  SystemException
      */
-    public function setObject(string $objectType, int $objectID, int $pollID = 0)
+    public function setObject(string $objectType, int $objectID, ?int $pollID = 0)
     {
         if (!isset($this->cache[$objectType])) {
             throw new SystemException("Object type '" . $objectType . "' is unknown");
