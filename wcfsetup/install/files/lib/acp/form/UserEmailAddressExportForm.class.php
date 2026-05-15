@@ -115,40 +115,30 @@ class UserEmailAddressExportForm extends AbstractForm
         \header('Content-Disposition: attachment; filename="export.' . $this->fileType . '"');
 
         if ($this->fileType == 'xml') {
-            echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<addresses>\n";
+            echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<users>\n";
         }
 
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("userID IN (?)", [$this->userIDs]);
 
-        // count users
-        $sql = "SELECT  COUNT(*)
-                FROM    wcf1_user
-                " . $conditions;
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute($conditions->getParameters());
-        $count = $statement->fetchSingleColumn();
-
         // get users
-        $sql = "SELECT      email
+        $sql = "SELECT      username, email
                 FROM        wcf1_user
                 " . $conditions . "
                 ORDER BY    email";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
 
-        $i = 0;
         while ($row = $statement->fetchArray()) {
             if ($this->fileType == 'xml') {
-                echo "<address><![CDATA[" . StringUtil::escapeCDATA($row['email']) . "]]></address>\n";
+                echo "<user><username><![CDATA[" . StringUtil::escapeCDATA($row['username']) . "]]></username><email><![CDATA[" . StringUtil::escapeCDATA($row['email']) . "]]></email></user>\n";
             } else {
-                echo $this->textSeparator . $row['email'] . $this->textSeparator . ($i < $count ? $this->separator : '');
+                echo $this->textSeparator . \str_replace($this->textSeparator, $this->textSeparator . $this->textSeparator, $row['username']) . $this->textSeparator . $this->separator . $this->textSeparator . \str_replace($this->textSeparator, $this->textSeparator . $this->textSeparator, $row['email']) . $this->textSeparator . "\n";
             }
-            $i++;
         }
 
         if ($this->fileType == 'xml') {
-            echo "</addresses>";
+            echo "</users>";
         }
 
         $this->saved();

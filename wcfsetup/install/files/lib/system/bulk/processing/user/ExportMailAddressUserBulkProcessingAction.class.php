@@ -49,23 +49,19 @@ class ExportMailAddressUserBulkProcessingAction extends AbstractUserBulkProcessi
         \header('Content-Disposition: attachment; filename="export.' . $this->fileType . '"');
 
         if ($this->fileType == 'xml') {
-            echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<addresses>\n";
+            echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<users>\n";
         }
 
-        $userCount = \count($objectList);
-        $i = 0;
         foreach ($objectList as $user) {
             if ($this->fileType == 'xml') {
-                echo "<address><![CDATA[" . StringUtil::escapeCDATA($user->email) . "]]></address>\n";
+                echo "<user><username><![CDATA[" . StringUtil::escapeCDATA($user->username) . "]]></username><email><![CDATA[" . StringUtil::escapeCDATA($user->email) . "]]></email></user>\n";
             } else {
-                echo $this->textSeparator . $user->email . $this->textSeparator . ($i < $userCount ? $this->separator : '');
+                echo $this->textSeparator . \str_replace($this->textSeparator, $this->textSeparator . $this->textSeparator, $user->username) . $this->textSeparator . $this->separator . $this->textSeparator . \str_replace($this->textSeparator, $this->textSeparator . $this->textSeparator, $user->email) . $this->textSeparator . "\n";
             }
-
-            $i++;
         }
 
         if ($this->fileType == 'xml') {
-            echo "</addresses>";
+            echo "</users>";
         }
     }
 
