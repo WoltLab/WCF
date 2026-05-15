@@ -4231,6 +4231,8 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.setCategory"><![CDATA[Edit Category]]></item>
 		<item name="wcf.media.downloads"><![CDATA[Downloads]]></item>
 		<item name="wcf.media.lastDownloadTime"><![CDATA[Last Download]]></item>
+		<item name="wcf.media.file.info"><![CDATA[{$media->filesize|filesize} – {plural value=$media->downloads 1="1 Download" other="# Downloads"}]]></item>
+		<item name="wcf.media.file.title"><![CDATA[Download File “{$media->filename}”]]></item>
 	</category>
 	<category name="wcf.message">
 		<item name="wcf.message.autosave.prompt"><![CDATA[Restore saved draft?]]></item>

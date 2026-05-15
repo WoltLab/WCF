@@ -571,7 +571,7 @@ final class FileUtil
 
         $lastDotPosition = \strrpos($filename, '.');
         if ($lastDotPosition !== false) {
-            $extension = \substr($filename, $lastDotPosition + 1);
+            $extension = \strtolower(\substr($filename, $lastDotPosition + 1));
             if (isset($mapping[$extension])) {
                 return $mapping[$extension];
             }

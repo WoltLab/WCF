@@ -60,6 +60,9 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
 
             if ($parser->getOutputType() == 'text/html') {
                 $float = (!empty($openingTag['attributes'][2])) ? $openingTag['attributes'][2] : 'none';
+                $localizedMedia = MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID()
+                    ? $media->getLocalizedVersion(MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID())
+                    : $media;
 
                 if ($media->isImage) {
                     $thumbnailSize = (!empty($openingTag['attributes'][1])) ? $openingTag['attributes'][1] : 'original';
@@ -72,7 +75,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
                             $thumbnailSize
                         ) : '',
                         'float' => $float,
-                        'media' => $media->getLocalizedVersion(MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID()),
+                        'media' => $localizedMedia,
                         'thumbnailSize' => $thumbnailSize,
                         'width' => $width,
                         'activeMessageID' => MessageEmbeddedObjectManager::getInstance()->getActiveMessageID(),
@@ -83,12 +86,14 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
                         'mediaLink' => $media->getLink(),
                         'removeLinks' => $removeLinks,
                         'float' => $float,
-                        'media' => $media->getLocalizedVersion(MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID()),
+                        'media' => $localizedMedia,
                         'width' => 'auto',
                     ]);
+                } else {
+                    return WCF::getTPL()->render('wcf', 'shared_bbcode_wsm_file', [
+                        'media' => $localizedMedia,
+                    ]);
                 }
-
-                return StringUtil::getAnchorTag($media->getLink(), $media->getTitle());
             } elseif ($parser->getOutputType() == 'text/simplified-html') {
                 return StringUtil::getAnchorTag($media->getLink(), $media->getTitle());
             }
