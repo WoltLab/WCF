@@ -874,6 +874,12 @@ bmp</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
+			<option name="user.article.canViewCategory">
+				<categoryname>user.article</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_article</options>
+			</option>
 			<option name="user.article.canReadArticle">
 				<categoryname>user.article</categoryname>
 				<optiontype>boolean</optiontype>

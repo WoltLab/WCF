@@ -21,6 +21,7 @@
 	<category name="wcf.acl.option">
 		<item name="wcf.acl.option.com.woltlab.wcf.label.canViewLabel"><![CDATA[Can view labels]]></item>
 		<item name="wcf.acl.option.com.woltlab.wcf.label.canSetLabel"><![CDATA[Can set labels]]></item>
+		<item name="wcf.acl.option.com.woltlab.wcf.article.category.canViewCategory"><![CDATA[Can access the category]]></item>
 		<item name="wcf.acl.option.com.woltlab.wcf.article.category.canReadArticle"><![CDATA[Can read articles]]></item>
 	</category>
 	<category name="wcf.acp.ad">
@@ -893,6 +894,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.user.article.canAddCommentWithoutModeration"><![CDATA[Can create comments without approval]]></item>
 		<item name="wcf.acp.group.option.user.article.canDeleteComment"><![CDATA[Can delete their comments]]></item>
 		<item name="wcf.acp.group.option.user.article.canEditComment"><![CDATA[Can edit their comments]]></item>
+		<item name="wcf.acp.group.option.user.article.canViewCategory"><![CDATA[Can access categories]]></item>
 		<item name="wcf.acp.group.option.user.article.canReadArticle"><![CDATA[Can read articles]]></item>
 		<item name="wcf.acp.group.option.user.page.canAddComment"><![CDATA[Can create comments]]></item>
 		<item name="wcf.acp.group.option.user.page.canAddCommentWithoutModeration"><![CDATA[Can create comments without approval]]></item>

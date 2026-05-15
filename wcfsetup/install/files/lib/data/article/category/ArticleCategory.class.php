@@ -61,7 +61,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
         }
 
         // check permissions
-        return $this->getPermission('canReadArticle', $user);
+        return $this->getPermission('canViewCategory', $user);
     }
 
     /**
@@ -117,7 +117,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
      * @param string[] $permissions
      * @return  int[]
      */
-    public static function getAccessibleCategoryIDs(array $permissions = ['canReadArticle'])
+    public static function getAccessibleCategoryIDs(array $permissions = ['canViewCategory'])
     {
         $categoryIDs = [];
         foreach (CategoryHandler::getInstance()->getCategories(self::OBJECT_TYPE_NAME) as $category) {
