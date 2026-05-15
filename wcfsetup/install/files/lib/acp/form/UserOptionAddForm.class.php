@@ -258,6 +258,9 @@ class UserOptionAddForm extends AbstractFormBuilderForm
                     BooleanFormField::create('searchable')
                         ->label('wcf.acp.user.option.searchable')
                         ->value(false),
+                    BooleanFormField::create('showOnUserCard')
+                        ->label('wcf.acp.user.option.showOnUserCard')
+                        ->value(false),
                 ])
         ]);
     }

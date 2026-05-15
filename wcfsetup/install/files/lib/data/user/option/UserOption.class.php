@@ -24,6 +24,7 @@ use wcf\system\WCF;
  * @property-read   0|1     $isDisabled         is `1` if the user option is disabled and thus neither shown nor editable, otherwise `0`
  * @property-read   0|1     $originIsSystem     is `1` if the user option was created by the system and not manually by an administrator, otherwise `0`
  * @property-read   string  $labeledUrl         the url, if the option type is `labeledUrl`
+ * @property-read   0|1     $showOnUserCard     is `1` if the user option should be displayed on the user card, otherwise `0`
  */
 class UserOption extends Option implements ITitledObject
 {

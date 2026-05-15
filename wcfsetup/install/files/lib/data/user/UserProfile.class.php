@@ -18,6 +18,7 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\ignore\UserIgnore;
 use wcf\data\user\online\UserOnline;
 use wcf\data\user\option\ViewableUserOption;
+use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\data\user\rank\UserRank;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\cache\builder\UserRankCacheBuilder;
@@ -47,7 +48,7 @@ use wcf\util\StringUtil;
  * @property-read   string $birthday
  * @extends DatabaseObjectDecorator<User>
  */
-class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
+class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, \Stringable
 {
     /**
      * @inheritDoc
@@ -1100,6 +1101,44 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
         $option = ViewableUserOption::getUserOption($name);
 
         return $option->isVisible();
+    }
+
+    /**
+     * Returns the list of user options that should be displayed on the user card.
+     *
+     * @return ViewableUserOption[]
+     * @since 6.3
+     */
+    public function getUserCardOptions(): array
+    {
+        $options = UserOptionCacheBuilder::getInstance()->getData([], 'options');
+
+        $result = [];
+        foreach ($options as $option) {
+            if (!$option->showOnUserCard) {
+                continue;
+            }
+
+            $rawValue = $this->getUserOption($option->optionName);
+            if ($rawValue === null || $rawValue === '') {
+                continue;
+            }
+
+            $viewableOption = ViewableUserOption::getUserOption($option->optionName);
+            $viewableOption->setUser($this->getDecoratedObject());
+            if (!$viewableOption->isVisible()) {
+                continue;
+            }
+
+            $viewableOption->setOptionValue($this->getDecoratedObject());
+            if ($viewableOption->optionValue === '' || $viewableOption->optionValue === null) {
+                continue;
+            }
+
+            $result[] = $viewableOption;
+        }
+
+        return $result;
     }
 
     /**
