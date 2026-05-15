@@ -136,7 +136,7 @@ class Article extends DatabaseObject implements ILinkableObject, IPopoverObject,
             return $this->getCategory()->isAccessible($user->getDecoratedObject());
         }
 
-        return $user->getPermission('user.article.canRead');
+        return $user->getPermission('user.article.canAddComment');
     }
 
     /**
