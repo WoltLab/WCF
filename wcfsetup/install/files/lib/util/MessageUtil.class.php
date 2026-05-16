@@ -73,7 +73,7 @@ class MessageUtil
             );
 
             if ($type === 'user') {
-                if (!empty($attributes[0])) {
+                if (!empty($attributes[0]) && WCF::getSession()->hasPermission('user.message.canMention')) {
                     $userIDs[] = $attributes[0];
                 }
             } elseif (WCF::getSession()->hasPermission('user.message.canMentionGroups')) {
@@ -136,7 +136,9 @@ class MessageUtil
             }
 
             if ($type === 'user') {
-                $usernames[] = $element->textContent;
+                if (WCF::getSession()->hasPermission('user.message.canMention')) {
+                    $usernames[] = $element->textContent;
+                }
             } elseif (WCF::getSession()->hasPermission('user.message.canMentionGroups')) {
                 $attributes = $htmlInputProcessor->getHtmlInputNodeProcessor()->parseAttributes(
                     $element->getAttribute('data-attributes')
