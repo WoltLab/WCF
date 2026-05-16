@@ -16,7 +16,7 @@ use wcf\data\TObjectTreeNode;
  * @mixin   Page
  * @extends DatabaseObjectDecorator<Page>
  */
-class PageNode extends DatabaseObjectDecorator implements IObjectTreeNode
+class PageNode extends DatabaseObjectDecorator implements IObjectTreeNode, \Stringable
 {
     use TObjectTreeNode;
 

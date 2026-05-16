@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
  * @property-read   string|null $altText    alternative text of the media file in the active user's language or `null` if object has not been fetched via `ViewableMediaList`
  * @extends DatabaseObjectDecorator<Media>
  */
-class ViewableMedia extends DatabaseObjectDecorator
+class ViewableMedia extends DatabaseObjectDecorator implements \Stringable
 {
     /**
      * force localized content by language id

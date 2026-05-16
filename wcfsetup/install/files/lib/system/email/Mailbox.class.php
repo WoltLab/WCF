@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class Mailbox
+class Mailbox implements \Stringable
 {
     /**
      * The email address of this mailbox.

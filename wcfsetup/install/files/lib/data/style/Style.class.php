@@ -38,7 +38,7 @@ use wcf\util\ImageUtil;
  * @property-read   string  $coverPhotoExtension    extension of the style's cover photo file
  * @property-read   0|1     $hasDarkMode
  */
-class Style extends DatabaseObject implements ITitledObject
+class Style extends DatabaseObject implements ITitledObject, \Stringable
 {
     /**
      * @var int

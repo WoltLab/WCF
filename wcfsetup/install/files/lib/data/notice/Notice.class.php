@@ -26,7 +26,7 @@ use wcf\util\StringUtil;
  * @property-read   0|1     $isDisabled     is `1` if the notice is disabled and thus not shown, otherwise `0`
  * @property-read   0|1     $isDismissible  is `1` if the notice can be dismissed by users, otherwise `0`
  */
-class Notice extends DatabaseObject implements IRouteController
+class Notice extends DatabaseObject implements IRouteController, \Stringable
 {
     /**
      * Available notice types.

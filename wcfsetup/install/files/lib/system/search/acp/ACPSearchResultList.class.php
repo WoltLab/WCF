@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @implements \Iterator<ACPSearchResult>
  */
-class ACPSearchResultList implements \Countable, \Iterator
+class ACPSearchResultList implements \Countable, \Iterator, \Stringable
 {
     /**
      * current iterator index

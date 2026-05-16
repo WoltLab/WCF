@@ -28,7 +28,7 @@ use wcf\system\WCF;
  * @property-read   ?string $options        comma separated list of options of which at least one needs to be enabled for the user profile menu item to be shown
  * @property-read   string  $className      name of the PHP class implementing `wcf\system\menu\user\profile\content\IUserProfileMenuContent` handling outputting the content of the user profile tab
  */
-class UserProfileMenuItem extends DatabaseObject
+class UserProfileMenuItem extends DatabaseObject implements \Stringable
 {
     use TDatabaseObjectOptions;
     use TDatabaseObjectPermissions;

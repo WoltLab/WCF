@@ -22,7 +22,7 @@ use wcf\system\WCF;
  * @property-read   0|1     $isDisabled         is `1` if the recipient is disabled and thus is not available for selection, otherwise `0`
  * @property-read   0|1     $originIsSystem     is `1` if the recipient has been delivered by a package, otherwise `0` (i.e. the recipient has been created in the ACP)
  */
-class ContactRecipient extends DatabaseObject implements ITitledObject
+class ContactRecipient extends DatabaseObject implements ITitledObject, \Stringable
 {
     #[\Override]
     protected function handleData(array $data)

@@ -31,7 +31,7 @@ use wcf\system\WCF;
  * @property-read   0|1     $isDisabled         is `1` if the category is disabled and thus neither accessible nor selectable, otherwise `0`
  * @property-read   mixed[] $additionalData     array with additional data of the category
  */
-class Category extends ProcessibleDatabaseObject implements IPermissionObject, IRouteController
+class Category extends ProcessibleDatabaseObject implements IPermissionObject, IRouteController, \Stringable
 {
     /**
      * list of child categories of this category

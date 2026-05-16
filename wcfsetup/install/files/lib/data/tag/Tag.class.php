@@ -19,7 +19,7 @@ use wcf\util\ArrayUtil;
  * @property-read   string  $name           name/text of the tag
  * @property-read   ?int    $synonymFor     id of the tag for which the tag is a synonym or `null` if the tag is no synonym
  */
-class Tag extends DatabaseObject implements IRouteController
+class Tag extends DatabaseObject implements IRouteController, \Stringable
 {
     /**
      * Return the tag with the given name or null of no such tag exists.

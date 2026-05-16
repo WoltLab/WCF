@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  * @property-read int $attachmentID
  * @property-read string $accessKey
  */
-class ContactAttachment extends DatabaseObject implements ITitledLinkObject
+class ContactAttachment extends DatabaseObject implements ITitledLinkObject, \Stringable
 {
     /**
      * @inheritDoc

@@ -18,7 +18,7 @@ use wcf\system\WCF;
  *
  * @implements ITraversableObject<Smiley>
  */
-class SmileyCategory extends AbstractDecoratedCategory implements \Countable, ITraversableObject
+class SmileyCategory extends AbstractDecoratedCategory implements \Countable, ITraversableObject, \Stringable
 {
     /**
      * current iterator index

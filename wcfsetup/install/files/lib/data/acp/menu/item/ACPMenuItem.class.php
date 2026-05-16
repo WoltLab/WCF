@@ -27,7 +27,7 @@ use wcf\system\WCF;
  * @property-read   ?string $options            comma separated list of options of which at least one needs to be enabled for the ACP menu item to be shown
  * @property-read   string  $icon               FontAwesome CSS class name for ACP menu items on the first or third level
  */
-class ACPMenuItem extends DatabaseObject implements ITreeMenuItem
+class ACPMenuItem extends DatabaseObject implements ITreeMenuItem, \Stringable
 {
     /**
      * @inheritDoc

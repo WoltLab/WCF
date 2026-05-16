@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @deprecated 6.1 No longer in use, migrate to more specific exceptions
  */
-class ValidateActionException extends \Exception
+class ValidateActionException extends \Exception implements \Stringable
 {
     /**
      * error message

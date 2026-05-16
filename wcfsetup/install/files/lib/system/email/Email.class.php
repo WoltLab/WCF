@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @phpstan-type Recipient array{type: string, mailbox: Mailbox}
  */
-class Email
+class Email implements \Stringable
 {
     /**
      * From header

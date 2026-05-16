@@ -10,7 +10,7 @@ namespace wcf\util;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       5.4
  */
-final class IpAddress
+final class IpAddress implements \Stringable
 {
     /**
      * @var string

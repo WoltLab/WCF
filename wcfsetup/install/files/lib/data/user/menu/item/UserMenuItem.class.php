@@ -33,7 +33,7 @@ use wcf\system\WCF;
  * @property-read   string  $className          name of the class implementing the user menu item provider interface or empty if there is no specific user menu item provider
  * @property-read   string  $iconClassName      FontAwesome CSS class name for user menu items on the first level
  */
-class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, ITreeMenuItem
+class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, ITreeMenuItem, \Stringable
 {
     /**
      * @inheritDoc

@@ -9,7 +9,7 @@ namespace wcf\data;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-interface IMessage extends IUserContent
+interface IMessage extends IUserContent, \Stringable
 {
     /**
      * Returns a simplified message (only inline codes), truncated to 255 characters by default.

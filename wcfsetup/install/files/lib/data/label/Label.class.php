@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  * @property-read   string  $cssClassName   css class name used when displaying the label
  * @property-read   int     $showOrder      position of the label in relation to the other labels in the label group
  */
-class Label extends DatabaseObject implements IRouteController
+class Label extends DatabaseObject implements IRouteController, \Stringable
 {
     /**
      * Returns the label's textual representation if a label is treated as a

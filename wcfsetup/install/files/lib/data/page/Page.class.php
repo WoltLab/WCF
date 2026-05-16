@@ -53,7 +53,7 @@ use wcf\system\WCF;
  * @property-read   ?string $options                    comma separated list of options of which at least one needs to be enabled for the page to be accessible
  * @property-read   0|1     $invertPermissions          is `1` if the permissions are inverted, otherwise `0`
  */
-class Page extends DatabaseObject implements ILinkableObject, ITitledObject
+class Page extends DatabaseObject implements ILinkableObject, ITitledObject, \Stringable
 {
     use TDatabaseObjectOptions;
     use TDatabaseObjectPermissions;

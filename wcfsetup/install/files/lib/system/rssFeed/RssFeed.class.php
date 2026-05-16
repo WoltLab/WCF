@@ -10,7 +10,7 @@ namespace wcf\system\rssFeed;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.1
  */
-final class RssFeed
+final class RssFeed implements \Stringable
 {
     /**
      * @var RssFeedChannel[]

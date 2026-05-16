@@ -14,7 +14,7 @@ use SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class Diff
+class Diff implements \Stringable
 {
     /**
      * identifier for added lines

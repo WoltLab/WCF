@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @implements \Iterator<UserProfile>
  */
-class GroupedUserList implements \Countable, \Iterator
+class GroupedUserList implements \Countable, \Iterator, \Stringable
 {
     /**
      * list of user profiles shared across all instances of GroupedUserList

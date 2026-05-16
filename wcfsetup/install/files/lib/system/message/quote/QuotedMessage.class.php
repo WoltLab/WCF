@@ -25,7 +25,7 @@ use wcf\data\IMessage;
  *
  * @deprecated 6.2
  */
-class QuotedMessage implements \Countable, \Iterator
+class QuotedMessage implements \Countable, \Iterator, \Stringable
 {
     /**
      * list of full quotes for insertation

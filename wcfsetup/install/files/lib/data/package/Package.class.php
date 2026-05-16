@@ -33,7 +33,7 @@ use wcf\util\FileUtil;
  * @property-read   string  $author             author of the package
  * @property-read   string  $authorURL          external url to the website of the package author
  */
-class Package extends DatabaseObject implements ILinkableObject, IRouteController
+class Package extends DatabaseObject implements ILinkableObject, IRouteController, \Stringable
 {
     /**
      * recursive list of packages that were given as required packages during installation

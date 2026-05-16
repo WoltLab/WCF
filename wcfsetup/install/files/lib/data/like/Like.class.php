@@ -24,7 +24,7 @@ use wcf\util\StringUtil;
  * @property-read   int     $likeValue          value of the like (`+1` = like, `-1` = dislike, see `Like::LIKE` and `Like::Dislike`)
  * @property-read   int     $reactionTypeID     reactionTypeID of the reaction
  */
-class Like extends DatabaseObject
+class Like extends DatabaseObject implements \Stringable
 {
     /**
      * like value

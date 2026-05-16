@@ -38,7 +38,7 @@ use wcf\util\StringUtil;
  * @property-read   0|1     $trophyUseHtml          `1` if the trophy use a html description, otherwise `0`
  * @property-read   int     $showOrder              position of the trophy in relation to the other trophies at the same location
  */
-class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteController
+class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteController, \Stringable
 {
     /**
      * The type value, if this trophy is an image trophy.

@@ -28,7 +28,7 @@ use wcf\util\ArrayUtil;
  * @property-read   0|1     $allowMention       is `1` if the user group can be mentioned in messages, otherwise `0`
  * @property-read   0|1     $requireMultifactor is `1` if group members need to set up multi-factor authentcation, otherwise `0`
  */
-class UserGroup extends DatabaseObject implements ITitledObject
+class UserGroup extends DatabaseObject implements ITitledObject, \Stringable
 {
     /**
      * group type everyone user group

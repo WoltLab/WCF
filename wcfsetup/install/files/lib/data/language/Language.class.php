@@ -24,7 +24,7 @@ use wcf\util\StringUtil;
  * @property-read   0|1     $isDisabled     is `1` if the language is disabled and thus not selectable, otherwise `0`
  * @property-read   string  $locale         IETF language tag (BCP 47)
  */
-class Language extends DatabaseObject
+class Language extends DatabaseObject implements \Stringable
 {
     /**
      * list of language items

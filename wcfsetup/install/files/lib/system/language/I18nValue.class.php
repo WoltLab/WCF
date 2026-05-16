@@ -11,7 +11,7 @@ use wcf\data\package\PackageCache;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class I18nValue
+class I18nValue implements \Stringable
 {
     /**
      * field name

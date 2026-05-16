@@ -29,7 +29,7 @@ use wcf\util\StringUtil;
  * @mixin   ModerationQueue
  * @extends DatabaseObjectDecorator<ModerationQueue>
  */
-class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkableObject, ITitledObject
+class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkableObject, ITitledObject, \Stringable
 {
     /**
      * @inheritDoc

@@ -20,7 +20,7 @@ use wcf\system\WCF;
  * @property-read   0|1     $sortAlphabetically is `1` if labels in the label group are sorted alphabetically by their translated name, otherwise `0`
  * @property-read   int     $showOrder          position of the label group in relation to the other label groups
  */
-class LabelGroup extends DatabaseObject implements IRouteController
+class LabelGroup extends DatabaseObject implements IRouteController, \Stringable
 {
     #[\Override]
     public function getTitle(): string
