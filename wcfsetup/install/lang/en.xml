@@ -783,6 +783,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.user.comment.disallowedBBCodes.description"><![CDATA[Selected BBCodes <em>cannot</em> be used by the users of this user group.]]></item>
 		<item name="wcf.acp.group.option.user.message.disallowedBBCodes"><![CDATA[Disallowed BBCodes]]></item>
 		<item name="wcf.acp.group.option.user.message.disallowedBBCodes.description"><![CDATA[Selected BBCodes <em>cannot</em> be used by the users of this user group.]]></item>
+		<item name="wcf.acp.group.option.user.message.canMention"><![CDATA[Can mention other users]]></item>
 		<item name="wcf.acp.group.option.user.message.canMentionGroups"><![CDATA[Can mention user groups]]></item>
 		<item name="wcf.acp.group.option.admin.user.rank.canManageRank"><![CDATA[Can manage user ranks]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEditActivityPoints"><![CDATA[Can manage activity points]]></item>

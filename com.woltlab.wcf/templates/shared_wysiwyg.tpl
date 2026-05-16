@@ -81,7 +81,7 @@
 			list: true,
 			mark: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('mark')}true{else}false{/if},
 			media: {if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}true{else}false{/if},
-			mention: element.dataset.supportMention === "true",
+			mention: {if $__wcf->session->hasPermission('user.message.canMention')}element.dataset.supportMention === "true"{else}false{/if},
 			quoteBlock: true,
 			strikethrough: true,
 			submitOnEnter: false,

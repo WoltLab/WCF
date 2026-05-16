@@ -597,6 +597,13 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
             );
         }
 
+        if (
+            $this->parameters['data']['scope'] === 'mention'
+            && !WCF::getSession()->hasPermission('user.message.canMention')
+        ) {
+            return $list;
+        }
+
         // find users
         $searchString = \addcslashes($searchString, '_%');
         $parameters = [
