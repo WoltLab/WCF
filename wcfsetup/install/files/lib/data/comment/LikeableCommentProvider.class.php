@@ -87,7 +87,12 @@ class LikeableCommentProvider extends AbstractObjectTypeProvider implements
     #[\Override]
     public function getObjectByID(int $objectID)
     {
-        return new LikeableComment(CommentRuntimeCache::getInstance()->getObject($objectID));
+        $comment = CommentRuntimeCache::getInstance()->getObject($objectID);
+        if ($comment === null) {
+            $comment = new Comment(null, ['commentID' => $objectID]);
+        }
+
+        return new LikeableComment($comment);
     }
 
     #[\Override]
@@ -95,7 +100,9 @@ class LikeableCommentProvider extends AbstractObjectTypeProvider implements
     {
         return \array_map(
             static fn(Comment $comment) => new LikeableComment($comment),
-            CommentRuntimeCache::getInstance()->getObjects($objectIDs)
+            \array_filter(
+                CommentRuntimeCache::getInstance()->getObjects($objectIDs),
+            )
         );
     }
 }

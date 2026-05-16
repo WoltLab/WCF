@@ -3,11 +3,11 @@
 namespace wcf\system\html\output\node;
 
 use wcf\action\ImageProxyAction;
-use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
@@ -61,12 +61,12 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
                     continue;
                 }
 
-                $class = $element->getAttribute('class');
-                if ($class) {
-                    $class .= ' ';
-                }
-                $class .= 'jsResizeImage';
-                $element->setAttribute('class', $class);
+                $element->setAttribute('data-type', 'image');
+                $element->setAttribute('data-fancybox', \sprintf(
+                    'message-%s-%d',
+                    MessageEmbeddedObjectManager::getInstance()->getActiveMessageObjectType(),
+                    MessageEmbeddedObjectManager::getInstance()->getActiveMessageID(),
+                ));
 
                 if (\MODULE_IMAGE_PROXY) {
                     if (!Url::is($src)) {

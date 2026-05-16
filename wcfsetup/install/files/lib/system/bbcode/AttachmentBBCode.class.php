@@ -143,7 +143,7 @@ final class AttachmentBBCode extends AbstractBBCode
 
         $imageClasses = '';
         if (!$attachment->hasThumbnail()) {
-            $imageClasses = 'embeddedAttachmentLink jsResizeImage';
+            $imageClasses = 'embeddedAttachmentLink';
         }
 
         if ($class && (!$attachment->hasThumbnail() || !$attachment->canDownload())) {

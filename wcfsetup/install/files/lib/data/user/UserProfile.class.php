@@ -419,10 +419,13 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
             if ($this->coverPhotoFileID) {
                 if ($isACP || !$this->disableCoverPhoto) {
                     if ($this->canSeeCoverPhoto()) {
-                        $this->coverPhoto = new UserCoverPhoto(
-                            $this->userID,
-                            FileRuntimeCache::getInstance()->getObject($this->coverPhotoFileID)
-                        );
+                        $file = FileRuntimeCache::getInstance()->getObject($this->coverPhotoFileID);
+                        if ($file?->isImage()) {
+                            $this->coverPhoto = new UserCoverPhoto(
+                                $this->userID,
+                                $file,
+                            );
+                        }
                     }
                 }
             }

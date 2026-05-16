@@ -61,11 +61,7 @@ class SimplePageSitemapObject extends AbstractSitemapObjectObjectType
                 }
 
                 try {
-                    // check modules
                     $page->checkModules();
-
-                    // check permission
-                    $page->checkPermissions();
                 } catch (PermissionDeniedException $e) {
                     return false;
                 } catch (IllegalLinkException $e) {

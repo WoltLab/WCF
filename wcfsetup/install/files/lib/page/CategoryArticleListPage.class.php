@@ -75,7 +75,7 @@ class CategoryArticleListPage extends ArticleListPage
         parent::readData();
 
         // set location
-        foreach ($this->category->getParentCategories() as $parentCategory) {
+        foreach (\array_reverse($this->category->getParentCategories()) as $parentCategory) {
             PageLocationManager::getInstance()->addParentLocation(
                 'com.woltlab.wcf.CategoryArticleList',
                 $parentCategory->categoryID,

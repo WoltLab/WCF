@@ -120,7 +120,7 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
             return (bool)$this->getCategory()->getPermission('canReadArticle', $user->getDecoratedObject());
         }
 
-        return $user->getPermission('user.article.canRead');
+        return $user->getPermission('user.article.canAddComment');
     }
 
     /**

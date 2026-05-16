@@ -75,6 +75,9 @@ abstract class AbstractGridViewPage extends AbstractPage
 
         WCF::getTPL()->assign([
             'gridView' => $this->gridView,
+        ]);
+
+        WCF::getTPL()->append([
             'headContent' => $this->getHeadContent(),
         ]);
     }

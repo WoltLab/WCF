@@ -102,7 +102,12 @@ class LikeableCommentResponseProvider extends AbstractObjectTypeProvider impleme
     #[\Override]
     public function getObjectByID(int $objectID)
     {
-        return new LikeableCommentResponse(CommentResponseRuntimeCache::getInstance()->getObject($objectID));
+        $response = CommentResponseRuntimeCache::getInstance()->getObject($objectID);
+        if ($response === null) {
+            $response = new CommentResponse(null, ['responseID' => $objectID]);
+        }
+
+        return new LikeableCommentResponse($response);
     }
 
     #[\Override]

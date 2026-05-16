@@ -76,6 +76,9 @@ abstract class AbstractListViewPage extends AbstractPage
 
         WCF::getTPL()->assign([
             'listView' => $this->listView,
+        ]);
+
+        WCF::getTPL()->append([
             'headContent' => $this->getHeadContent(),
         ]);
     }
