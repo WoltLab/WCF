@@ -2,6 +2,7 @@
 
 namespace wcf\system\box;
 
+use wcf\data\article\Article;
 use wcf\system\listView\user\ArticleListView;
 use wcf\system\WCF;
 
@@ -64,6 +65,8 @@ class ArticleListBoxController extends AbstractListViewBoxController
     protected function getObjectList()
     {
         $objectList = $this->getListView()->getObjectList();
+        $objectList->getConditionBuilder()->add('article.isDeleted = ?', [0]);
+        $objectList->getConditionBuilder()->add('article.publicationStatus = ?', [Article::PUBLISHED]);
 
         switch ($this->sortField) {
             case 'views':
