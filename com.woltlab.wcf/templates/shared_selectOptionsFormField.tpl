@@ -4,7 +4,7 @@
 	*}value="{$field->getValue()}"{*
 *}>
 <template id="{$field->getPrefixedId()}_template">
-	<span class="selectOptionsListItem__handle">{icon name='up-down'}</span>
+	<span class="selectOptionsListItem__handle">{icon name='grip-vertical'}</span>
 	<div class="selectOptionsListItem__inputContainer">
 		<input type="text" class="selectOptionsListItem__key" placeholder="{lang}wcf.form.selectOptions.key{/lang}" required>
 		<span class="selectOptionsListItem__equals">{icon name='equals'}</span>
