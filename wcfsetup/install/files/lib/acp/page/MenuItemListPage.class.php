@@ -40,14 +40,6 @@ class MenuItemListPage extends AbstractNodeTreeViewPage
     }
 
     #[\Override]
-    public function readData()
-    {
-        parent::readData();
-
-        //$this->menuItems = new MenuItemNodeTree($this->menuID, null, false);
-    }
-
-    #[\Override]
     public function assignVariables()
     {
         parent::assignVariables();
@@ -55,7 +47,6 @@ class MenuItemListPage extends AbstractNodeTreeViewPage
         WCF::getTPL()->assign([
             'menu' => $this->menu,
             'menuID' => $this->menu->getObjectID(),
-            //'menuItemNodeList' => $this->menuItems->getNodeList(),
         ]);
     }
 
