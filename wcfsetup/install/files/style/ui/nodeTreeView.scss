@@ -15,6 +15,7 @@
 	align-items: center;
 	column-gap: 8px;
 	border-bottom: 1px solid var(--wcfContentBorderInner);
+	position: relative;
 }
 
 .nodeTreeView__item__content::before {
@@ -47,4 +48,14 @@
 	display: flex;
 	gap: 10px;
 	justify-content: end;
+}
+
+.nodeTreeView__item__handle {
+	position: absolute;
+	left: 10px;
+	color: var(--wcfContentDimmedText);
+}
+
+.nodeTreeView__item__content:hover .nodeTreeView__item__handle {
+	color: var(--wcfContentText);
 }
