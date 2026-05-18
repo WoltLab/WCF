@@ -76,6 +76,8 @@ class MenuItemAddForm extends AbstractFormBuilderForm
      */
     public $objectActionClass = MenuItemAction::class;
 
+    public ?int $parentItemID = null;
+
     #[\Override]
     public function readParameters()
     {
@@ -87,6 +89,10 @@ class MenuItemAddForm extends AbstractFormBuilderForm
         $this->menu = new Menu($this->menuID);
         if (!$this->menu->menuID) {
             throw new IllegalLinkException();
+        }
+
+        if (isset($_GET['parentItemID'])) {
+            $this->parentItemID = \intval($_GET['parentItemID']);
         }
     }
 
@@ -124,7 +130,8 @@ class MenuItemAddForm extends AbstractFormBuilderForm
                                 ];
                             }
                             return $result;
-                        }, true),
+                        }, true)
+                        ->value($this->parentItemID),
                     TitleFormField::create()
                         ->i18n()
                         ->required()
