@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * Abstract implementation of a node tree view.
  *
  * @author      Marcel Werk
- * @copyright   2001-2025 WoltLab GmbH
+ * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
  */
