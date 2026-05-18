@@ -1,0 +1,50 @@
+.nodeTreeView__list {
+	counter-reset: count;
+	display: flex;
+	flex-direction: column;
+}
+
+.nodeTreeView__item {
+	counter-increment: count;
+}
+
+.nodeTreeView__item__content {
+	border: 1px solid transparent;
+	padding: 8px 10px;
+	display: flex;
+	align-items: center;
+	column-gap: 8px;
+	border-bottom: 1px solid var(--wcfContentBorderInner);
+}
+
+.nodeTreeView__item__content::before {
+	content: counter(count, decimal);
+	background-color: var(--wcfContentText);
+	border-radius: 2px;
+	color: var(--wcfContentBackground);
+	padding: 2px 6px;
+	font-variant: tabular-nums;
+
+	@include wcfFontSmall;
+}
+
+.nodeTreeView__item__content:hover {
+	background-color: var(--wcfTabularBoxBackgroundActive);
+}
+
+.nodeTreeView__item__link {
+	color: inherit;
+	font-weight: 600;
+	flex: 1 0 auto;
+
+	&:hover {
+		color: inherit;
+	}
+}
+
+.nodeTreeView__item__buttons {
+	align-items: center;
+	display: flex;
+	gap: 10px;
+	justify-content: end;
+}
