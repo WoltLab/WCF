@@ -175,4 +175,42 @@ abstract class AbstractNodeTreeView
 
         return $this->interactionContextMenuComponent;
     }
+
+    /**
+     * Renders the initialization code for the interactions of the node tree view.
+     */
+    public function renderInteractionInitialization(): string
+    {
+        $code = '';
+        if ($this->interactionProvider !== null) {
+            $code = $this->getInteractionContextMenuComponent()->renderInitialization($this->getID());
+        }
+
+        if ($this->quickInteractions !== []) {
+            $code .= "\n";
+            $code .= \implode("\n", \array_map(
+                fn($interaction) => $interaction->renderInitialization($this->getID()),
+                $this->getQuickInteractions()
+            ));
+        }
+
+        return $code;
+    }
+
+    /**
+     * Returns the id of this node tree view.
+     */
+    public function getID(): string
+    {
+        $id = \str_replace('\\', '_', static::class);
+
+        if ($this->getParameters() !== []) {
+            $parameters = $this->getParameters();
+            \array_multisort($parameters);
+
+            $id .= '_' . \sha1(\serialize($parameters));
+        }
+
+        return $id;
+    }
 }
