@@ -59,3 +59,29 @@
 .nodeTreeView__item__content:hover .nodeTreeView__item__handle {
 	color: var(--wcfContentText);
 }
+
+.nodeTreeView__list {
+	--baseIndentation: 36px;
+	--indentation: 26px;
+	--depth: 0;
+}
+
+.nodeTreeView__list .nodeTreeView__list {
+	--depth: 1;
+}
+
+.nodeTreeView__list .nodeTreeView__list .nodeTreeView__list {
+	--depth: 2;
+}
+
+.nodeTreeView__list .nodeTreeView__list .nodeTreeView__list .nodeTreeView__list {
+	--depth: 3;
+}
+
+.nodeTreeView__list .nodeTreeView__list .nodeTreeView__list .nodeTreeView__list .nodeTreeView__list {
+	--depth: 4;
+}
+
+.nodeTreeView__item__content {
+	padding-left: calc(var(--baseIndentation) + calc(var(--depth) * var(--indentation)));
+}

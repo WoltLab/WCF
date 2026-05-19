@@ -9,6 +9,7 @@
 
 import { wheneverFirstSeen } from "../Helper/Selector";
 import UiDropdownSimple from "../Ui/Dropdown/Simple";
+import Sortable from "sortablejs";
 
 export class NodeTreeView {
   readonly #id: string;
@@ -17,6 +18,7 @@ export class NodeTreeView {
     this.#id = id;
 
     this.#initInteractions();
+    this.#initializeSorting();
   }
 
   #initInteractions(): void {
@@ -43,6 +45,18 @@ export class NodeTreeView {
           });
         });
       }
+    });
+  }
+
+  #initializeSorting(): void {
+    wheneverFirstSeen(`#${this.#id} .nodeTreeView__list`, (list) => {
+      new Sortable(list, {
+        group: "nested",
+        animation: 150,
+        fallbackOnBody: true,
+        draggable: "li",
+        handle: ".nodeTreeView__item__handle",
+      });
     });
   }
 }

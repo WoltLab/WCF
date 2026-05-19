@@ -85,11 +85,6 @@ abstract class AbstractNodeTreeView
         return [];
     }
 
-    public function getNodePadding(IObjectTreeNode $node): int
-    {
-        return ($node->getDepth() - 1) * 26 + 36;
-    }
-
     /**
      * Returns true, if this node tree view has interactions.
      */
