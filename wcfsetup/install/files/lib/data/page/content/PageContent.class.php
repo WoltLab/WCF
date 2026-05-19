@@ -20,10 +20,10 @@ use wcf\system\WCF;
  *
  * @property-read   int $pageContentID      unique id of the page content
  * @property-read   int $pageID         id of the page the page content belongs to
- * @property-read   int $languageID     id of the page content's language
+ * @property-read   ?int $languageID     id of the page content's language
  * @property-read   string $title          title of the page in the associated language
- * @property-read   string $content        actual content of the page in the associated language
- * @property-read   string $metaDescription    meta description of the page in the associated language
+ * @property-read   ?string $content        actual content of the page in the associated language
+ * @property-read   ?string $metaDescription    meta description of the page in the associated language
  * @property-read   string $customURL      custom url of the page in the associated language
  * @property-read   int $hasEmbeddedObjects is `1` if the page content contains embedded objects, otherwise `0`
  */
