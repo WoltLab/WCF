@@ -60,6 +60,51 @@
 	color: var(--wcfContentText);
 }
 
+.nodeTreeView__footer {
+	bottom: -10px;
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	min-height: 54px;
+	padding: 20px 0;
+	position: sticky;
+	z-index: 2;
+}
+
+@include screen-sm-down {
+	.nodeTreeView__footer {
+		margin-bottom: -10px;
+	}
+}
+
+@include screen-md-up {
+	.nodeTreeView__footer {
+		margin-bottom: -20px;
+	}
+}
+
+.nodeTreeView__footer__container {
+	backdrop-filter: blur(24px);
+	background-color: rgb(var(--wcfContentContainerBackground-rgb) / 78%);
+	border: 1px solid transparent;
+	border-radius: var(--wcfBorderRadiusContainer);
+	box-shadow: var(--wcfBoxShadow);
+	display: flex;
+	gap: 21px;
+	padding: 10px;
+}
+
+@include screen-xs {
+	.nodeTreeView__footer__container {
+		align-items: center;
+		flex-direction: column;
+	}
+}
+
+html[data-color-scheme="dark"] .nodeTreeView__footer__container {
+	border-color: var(--wcfContentContainerBorder);
+}
+
 .nodeTreeView__list {
 	--baseIndentation: 36px;
 	--indentation: 26px;

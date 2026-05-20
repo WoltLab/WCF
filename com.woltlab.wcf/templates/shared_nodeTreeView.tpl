@@ -4,13 +4,15 @@
 	</ol>
 
 	<div class="nodeTreeView__footer" id="{$view->getID()}_footer" hidden>
-		<button
-			type="button"
-			class="button buttonPrimary small nodeTreeView__submitButton"
-			id="{$view->getID()}_submitButton"
-		>
-			{lang}wcf.global.button.saveSorting{/lang}
-		</button>
+		<div class="nodeTreeView__footer__container">
+			<button
+				type="button"
+				class="button buttonPrimary small nodeTreeView__submitButton"
+				id="{$view->getID()}_submitButton"
+			>
+				{lang}wcf.global.button.saveSorting{/lang}
+			</button>
+		</div>
 	</div>
 </div>
 
