@@ -20,6 +20,7 @@ define(["require", "exports", "tslib", "../Api/PostObject", "../Helper/PromiseMu
             this.#id = id;
             this.#setPositionsEndpoint = setPositionsEndpoint;
             this.#initInteractions();
+            this.#initEventListeners();
             if (this.#setPositionsEndpoint) {
                 this.#initializeSorting();
             }
@@ -79,6 +80,26 @@ define(["require", "exports", "tslib", "../Api/PostObject", "../Helper/PromiseMu
                         this.#showFooter();
                     },
                 }));
+            });
+        }
+        #initEventListeners() {
+            const nodeTreeView = document.getElementById(this.#id);
+            nodeTreeView.addEventListener("interaction:invalidate-all", () => {
+                window.location.reload();
+            });
+            nodeTreeView.addEventListener("interaction:invalidate", () => {
+                window.location.reload();
+            });
+            nodeTreeView.addEventListener("interaction:remove", (event) => {
+                const item = event.target;
+                const childList = item.querySelector(":scope > .nodeTreeView__list");
+                if (childList) {
+                    const objectId = parseInt(item.dataset.objectId);
+                    this.#sortables.get(objectId)?.destroy();
+                    this.#sortables.delete(objectId);
+                    item.before(...childList.children);
+                }
+                item.remove();
             });
         }
     }

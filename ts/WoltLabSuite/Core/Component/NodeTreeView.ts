@@ -23,6 +23,7 @@ export class NodeTreeView {
     this.#setPositionsEndpoint = setPositionsEndpoint;
 
     this.#initInteractions();
+    this.#initEventListeners();
 
     if (this.#setPositionsEndpoint) {
       this.#initializeSorting();
@@ -102,6 +103,30 @@ export class NodeTreeView {
           },
         }),
       );
+    });
+  }
+
+  #initEventListeners(): void {
+    const nodeTreeView = document.getElementById(this.#id)!;
+
+    nodeTreeView.addEventListener("interaction:invalidate-all", () => {
+      window.location.reload();
+    });
+
+    nodeTreeView.addEventListener("interaction:invalidate", () => {
+      window.location.reload();
+    });
+
+    nodeTreeView.addEventListener("interaction:remove", (event) => {
+      const item = event.target as HTMLElement;
+      const childList = item.querySelector<HTMLElement>(":scope > .nodeTreeView__list");
+      if (childList) {
+        const objectId = parseInt(item.dataset.objectId!);
+        this.#sortables.get(objectId)?.destroy();
+        this.#sortables.delete(objectId);
+        item.before(...childList.children);
+      }
+      item.remove();
     });
   }
 }
