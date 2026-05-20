@@ -70,6 +70,28 @@ final class SetMenuItemPositions implements IController
             }
         }
 
+        $parentOf = [];
+        foreach ($positions as $parentItemID => $children) {
+            foreach ($children as $childID) {
+                if (isset($parentOf[$childID])) {
+                    throw new IllegalLinkException();
+                }
+                $parentOf[$childID] = $parentItemID;
+            }
+        }
+
+        foreach (\array_keys($parentOf) as $startID) {
+            $current = $startID;
+            $seen = [$startID => true];
+            while (!empty($parentOf[$current])) {
+                $current = $parentOf[$current];
+                if (isset($seen[$current])) {
+                    throw new IllegalLinkException();
+                }
+                $seen[$current] = true;
+            }
+        }
+
         return $positions;
     }
 }
