@@ -5,6 +5,7 @@
  * @copyright  2001-2024 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
+ * @deprecated 6.3 Use `AbstractNodeTreeView` instead.
  */
 define(["require", "exports", "tslib", "../../Core", "sortablejs", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Core, sortablejs_1, Ajax_1, Language_1, Snackbar_1) {
     "use strict";
