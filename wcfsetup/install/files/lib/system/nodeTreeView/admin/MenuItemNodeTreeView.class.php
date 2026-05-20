@@ -6,12 +6,14 @@ use wcf\acp\form\MenuItemEditForm;
 use wcf\data\IObjectTreeNode;
 use wcf\data\menu\item\MenuItemNode;
 use wcf\data\menu\item\MenuItemNodeTree;
+use wcf\data\menu\Menu;
 use wcf\system\interaction\admin\MenuItemInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
 use wcf\system\nodeTreeView\AbstractNodeTreeView;
 use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Node tree view that shows the items of a menu.
@@ -64,5 +66,20 @@ class MenuItemNodeTreeView extends AbstractNodeTreeView
             MenuItemEditForm::class,
             ['id' => $node->getObjectID()]
         );
+    }
+
+    #[\Override]
+    public function isAccessible(): bool
+    {
+        if (!WCF::getSession()->hasPermission('admin.content.cms.canManageMenu')) {
+            return false;
+        }
+
+        $menu = new Menu($this->menuID);
+        if ($menu->isNil()) {
+            return false;
+        }
+
+        return true;
     }
 }
