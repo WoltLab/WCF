@@ -27,6 +27,7 @@ abstract class AbstractNodeTreeView
 
     private ?IInteractionProvider $interactionProvider = null;
     private InteractionContextMenuComponent $interactionContextMenuComponent;
+    private string $setPositionsEndpoint = '';
 
     /**
      * Sets the interaction provider that is used to render the interaction context menu.
@@ -207,5 +208,15 @@ abstract class AbstractNodeTreeView
         }
 
         return $id;
+    }
+
+    public function setSetPositionsEndpoint(string $endpoint): void
+    {
+        $this->setPositionsEndpoint = $endpoint;
+    }
+
+    public function getSetPositionsEndpoint(): string
+    {
+        return $this->setPositionsEndpoint;
     }
 }

@@ -38,6 +38,7 @@ class MenuItemNodeTreeView extends AbstractNodeTreeView
                 'core/menus/items/%s/disable'
             )
         );
+        $this->setSetPositionsEndpoint("core/menus/{$this->menuID}/items/positions");
     }
 
     #[\Override]
