@@ -75,7 +75,7 @@ abstract class AbstractNodeTreeView
      */
     public function renderItem(IObjectTreeNode $node): string
     {
-        return WCF::getTPL()->render('wcf', 'shared_nodeTreeViewItems', [
+        return WCF::getTPL()->render('wcf', 'shared_nodeTreeViewItem', [
             'view' => $this,
             'node' => $node,
         ]);
