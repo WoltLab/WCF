@@ -2,20 +2,22 @@
 
 namespace wcf\acp\page;
 
-use wcf\data\menu\item\MenuItemNodeTree;
 use wcf\data\menu\Menu;
-use wcf\page\AbstractPage;
-use wcf\system\exception\IllegalLinkException;
+use wcf\http\Helper;
+use wcf\page\AbstractNodeTreeViewPage;
+use wcf\system\nodeTreeView\admin\MenuItemNodeTreeView;
 use wcf\system\WCF;
 
 /**
  * Shows a list of menu items.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @extends AbstractNodeTreeViewPage<MenuItemNodeTreeView>
  */
-class MenuItemListPage extends AbstractPage
+class MenuItemListPage extends AbstractNodeTreeViewPage
 {
     /**
      * @inheritDoc
@@ -27,44 +29,14 @@ class MenuItemListPage extends AbstractPage
      */
     public $neededPermissions = ['admin.content.cms.canManageMenu'];
 
-    /**
-     * menu item node tree
-     * @var MenuItemNodeTree
-     */
-    public $menuItems;
-
-    /**
-     * menu id
-     * @var int
-     */
-    public $menuID = 0;
-
-    /**
-     * menu object
-     * @var Menu
-     */
-    public $menu;
+    public Menu $menu;
 
     #[\Override]
     public function readParameters()
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->menuID = \intval($_REQUEST['id']);
-        }
-        $this->menu = new Menu($this->menuID);
-        if (!$this->menu->menuID) {
-            throw new IllegalLinkException();
-        }
-    }
-
-    #[\Override]
-    public function readData()
-    {
-        parent::readData();
-
-        $this->menuItems = new MenuItemNodeTree($this->menuID, null, false);
+        $this->menu = Helper::fetchObjectFromQueryParameter(Menu::class);
     }
 
     #[\Override]
@@ -73,9 +45,20 @@ class MenuItemListPage extends AbstractPage
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'menuID' => $this->menuID,
             'menu' => $this->menu,
-            'menuItemNodeList' => $this->menuItems->getNodeList(),
+            'menuID' => $this->menu->getObjectID(),
         ]);
+    }
+
+    #[\Override]
+    protected function createNodeTreeView(): MenuItemNodeTreeView
+    {
+        return new MenuItemNodeTreeView($this->menu->getObjectID());
+    }
+
+    #[\Override]
+    protected function getBaseUrlParameters(): array
+    {
+        return ['id' => $this->menu->getObjectID()];
     }
 }

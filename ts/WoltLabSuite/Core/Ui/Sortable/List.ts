@@ -5,6 +5,7 @@
  * @copyright  2001-2024 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
+ * @deprecated 6.3 Use `AbstractNodeTreeView` instead.
  */
 
 import * as Core from "../../Core";

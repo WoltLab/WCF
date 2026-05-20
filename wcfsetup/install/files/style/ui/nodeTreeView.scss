@@ -1,0 +1,132 @@
+.nodeTreeView__list {
+	counter-reset: count;
+	display: flex;
+	flex-direction: column;
+}
+
+.nodeTreeView__item {
+	counter-increment: count;
+}
+
+.nodeTreeView__item__content {
+	border: 1px solid transparent;
+	padding: 8px 10px;
+	display: flex;
+	align-items: center;
+	column-gap: 8px;
+	border-bottom: 1px solid var(--wcfContentBorderInner);
+	position: relative;
+}
+
+.nodeTreeView__item__content::before {
+	content: counter(count, decimal);
+	background-color: var(--wcfContentText);
+	border-radius: 2px;
+	color: var(--wcfContentBackground);
+	padding: 2px 6px;
+	font-variant: tabular-nums;
+
+	@include wcfFontSmall;
+}
+
+.nodeTreeView__item__content:hover {
+	background-color: var(--wcfTabularBoxBackgroundActive);
+}
+
+.nodeTreeView__item__link {
+	color: inherit;
+	font-weight: 600;
+	flex: 1 0 auto;
+
+	&:hover {
+		color: inherit;
+	}
+}
+
+.nodeTreeView__item__buttons {
+	align-items: center;
+	display: flex;
+	gap: 10px;
+	justify-content: end;
+}
+
+.nodeTreeView__item__handle {
+	position: absolute;
+	left: 10px;
+	color: var(--wcfContentDimmedText);
+}
+
+.nodeTreeView__item__content:hover .nodeTreeView__item__handle {
+	color: var(--wcfContentText);
+}
+
+.nodeTreeView__footer {
+	bottom: -10px;
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	min-height: 54px;
+	padding: 20px 0;
+	position: sticky;
+	z-index: 2;
+}
+
+@include screen-sm-down {
+	.nodeTreeView__footer {
+		margin-bottom: -10px;
+	}
+}
+
+@include screen-md-up {
+	.nodeTreeView__footer {
+		margin-bottom: -20px;
+	}
+}
+
+.nodeTreeView__footer__container {
+	backdrop-filter: blur(24px);
+	background-color: rgb(var(--wcfContentContainerBackground-rgb) / 78%);
+	border: 1px solid transparent;
+	border-radius: var(--wcfBorderRadiusContainer);
+	box-shadow: var(--wcfBoxShadow);
+	display: flex;
+	gap: 21px;
+	padding: 10px;
+}
+
+@include screen-xs {
+	.nodeTreeView__footer__container {
+		align-items: center;
+		flex-direction: column;
+	}
+}
+
+html[data-color-scheme="dark"] .nodeTreeView__footer__container {
+	border-color: var(--wcfContentContainerBorder);
+}
+
+.nodeTreeView__list {
+	--baseIndentation: 36px;
+	--indentation: 26px;
+	--depth: 0;
+}
+
+.nodeTreeView__list .nodeTreeView__list {
+	--depth: 1;
+}
+
+.nodeTreeView__list .nodeTreeView__list .nodeTreeView__list {
+	--depth: 2;
+}
+
+.nodeTreeView__list .nodeTreeView__list .nodeTreeView__list .nodeTreeView__list {
+	--depth: 3;
+}
+
+.nodeTreeView__list .nodeTreeView__list .nodeTreeView__list .nodeTreeView__list .nodeTreeView__list {
+	--depth: 4;
+}
+
+.nodeTreeView__item__content {
+	padding-left: calc(var(--baseIndentation) + calc(var(--depth) * var(--indentation)));
+}
