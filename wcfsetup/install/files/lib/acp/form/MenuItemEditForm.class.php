@@ -3,11 +3,16 @@
 namespace wcf\acp\form;
 
 use CuyZ\Valinor\Mapper\MappingError;
+use wcf\acp\page\MenuItemListPage;
 use wcf\data\menu\item\MenuItem;
 use wcf\data\menu\Menu;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\interaction\admin\MenuItemInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
+use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Shows the menu item edit form.
@@ -54,5 +59,22 @@ class MenuItemEditForm extends MenuItemAddForm
     protected function setFormAction()
     {
         AbstractFormBuilderForm::setFormAction();
+    }
+
+    #[\Override]
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign([
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new MenuItemInteractions(),
+                $this->formObject,
+                LinkHandler::getInstance()->getControllerLink(
+                    MenuItemListPage::class,
+                    ['id' => $this->menuID]
+                )
+            ),
+        ]);
     }
 }

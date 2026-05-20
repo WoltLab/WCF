@@ -24,8 +24,10 @@
 						</ul>
 					</div>
 				</li>
+				<li>
+					{unsafe:$interactionContextMenu->render()}
+				</li>
 			{/if}
-			<li><a href="{link controller='MenuItemList' id=$menuID}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.item.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
