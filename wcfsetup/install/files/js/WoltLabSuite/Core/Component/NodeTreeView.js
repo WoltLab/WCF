@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  */
-define(["require", "exports", "tslib", "../Api/PostObject", "../Helper/PromiseMutex", "../Helper/Selector", "../Ui/Dropdown/Simple", "sortablejs"], function (require, exports, tslib_1, PostObject_1, PromiseMutex_1, Selector_1, Simple_1, sortablejs_1) {
+define(["require", "exports", "tslib", "../Api/PostObject", "../Api/NodeTreeViews/GetNode", "../Api/NodeTreeViews/GetNodes", "../Helper/PromiseMutex", "../Helper/Selector", "../Dom/Util", "../Ui/Dropdown/Simple", "sortablejs"], function (require, exports, tslib_1, PostObject_1, GetNode_1, GetNodes_1, PromiseMutex_1, Selector_1, Util_1, Simple_1, sortablejs_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.NodeTreeView = void 0;
@@ -14,10 +14,14 @@ define(["require", "exports", "tslib", "../Api/PostObject", "../Helper/PromiseMu
     sortablejs_1 = tslib_1.__importDefault(sortablejs_1);
     class NodeTreeView {
         #id;
+        #viewClassName;
+        #viewParameters;
         #setPositionsEndpoint;
         #sortables = new Map();
-        constructor(id, setPositionsEndpoint = "") {
+        constructor(id, viewClassName, viewParameters, setPositionsEndpoint = "") {
             this.#id = id;
+            this.#viewClassName = viewClassName;
+            this.#viewParameters = viewParameters;
             this.#setPositionsEndpoint = setPositionsEndpoint;
             this.#initInteractions();
             this.#initEventListeners();
@@ -82,13 +86,35 @@ define(["require", "exports", "tslib", "../Api/PostObject", "../Helper/PromiseMu
                 }));
             });
         }
+        async #reloadTree() {
+            const { template } = await (0, GetNodes_1.getNodes)(this.#viewClassName, this.#viewParameters);
+            const rootList = document.querySelector(`#${this.#id} > .nodeTreeView__list`);
+            for (const [parentObjectId, sortable] of this.#sortables) {
+                if (parentObjectId === 0) {
+                    continue;
+                }
+                sortable.destroy();
+                this.#sortables.delete(parentObjectId);
+            }
+            (0, Util_1.setInnerHtml)(rootList, template);
+        }
+        async #reloadNode(item) {
+            const objectId = parseInt(item.dataset.objectId);
+            const { template } = await (0, GetNode_1.getNode)(this.#viewClassName, objectId, this.#viewParameters);
+            for (const list of item.querySelectorAll(".nodeTreeView__list")) {
+                const parentObjectId = parseInt(list.dataset.parentObjectId);
+                this.#sortables.get(parentObjectId)?.destroy();
+                this.#sortables.delete(parentObjectId);
+            }
+            item.replaceWith((0, Util_1.createFragmentFromHtml)(template));
+        }
         #initEventListeners() {
             const nodeTreeView = document.getElementById(this.#id);
             nodeTreeView.addEventListener("interaction:invalidate-all", () => {
-                window.location.reload();
+                void this.#reloadTree();
             });
-            nodeTreeView.addEventListener("interaction:invalidate", () => {
-                window.location.reload();
+            nodeTreeView.addEventListener("interaction:invalidate", (event) => {
+                void this.#reloadNode(event.target);
             });
             nodeTreeView.addEventListener("interaction:remove", (event) => {
                 const item = event.target;

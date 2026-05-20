@@ -65,7 +65,34 @@ abstract class AbstractNodeTreeView
      */
     public function renderItems(): string
     {
-        return WCF::getTPL()->render('wcf', 'shared_nodeTreeViewItems', ['view' => $this]);
+        return WCF::getTPL()->render('wcf', 'shared_nodeTreeViewItems', [
+            'view' => $this,
+        ]);
+    }
+
+    /**
+     * Renders a single node and its descendants and returns the HTML code.
+     */
+    public function renderItem(IObjectTreeNode $node): string
+    {
+        return WCF::getTPL()->render('wcf', 'shared_nodeTreeViewItems', [
+            'view' => $this,
+            'node' => $node,
+        ]);
+    }
+
+    /**
+     * Returns the node with the given object id or `null` if no such node exists.
+     */
+    public function getNode(int $objectID): ?IObjectTreeNode
+    {
+        foreach ($this->getNodes() as $node) {
+            if ($node->getObjectID() == $objectID) {
+                return $node;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -191,6 +218,14 @@ abstract class AbstractNodeTreeView
         }
 
         return $code;
+    }
+
+    /**
+     * Returns the name of the node tree view class.
+     */
+    public function getClassName(): string
+    {
+        return static::class;
     }
 
     /**

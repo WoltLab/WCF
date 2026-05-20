@@ -20,6 +20,12 @@
 	require(['WoltLabSuite/Core/Component/NodeTreeView'], ({ NodeTreeView }) => {
 		new NodeTreeView(
 			'{unsafe:$view->getID()|encodeJS}',
+			'{unsafe:$view->getClassName()|encodeJS}',
+			new Map([
+				{foreach from=$view->getParameters() key='name' item='value'}
+					['{unsafe:$name|encodeJS}', {unsafe:$value|json}],
+				{/foreach}
+			]),
 			'{unsafe:$view->getSetPositionsEndpoint()|encodeJS}',
 		);
 	});

@@ -8,18 +8,30 @@
  */
 
 import { postObject } from "../Api/PostObject";
+import { getNode } from "../Api/NodeTreeViews/GetNode";
+import { getNodes } from "../Api/NodeTreeViews/GetNodes";
 import { promiseMutex } from "../Helper/PromiseMutex";
 import { wheneverFirstSeen } from "../Helper/Selector";
+import { createFragmentFromHtml, setInnerHtml } from "../Dom/Util";
 import UiDropdownSimple from "../Ui/Dropdown/Simple";
 import Sortable from "sortablejs";
 
 export class NodeTreeView {
   readonly #id: string;
+  readonly #viewClassName: string;
+  readonly #viewParameters: Map<string, string>;
   readonly #setPositionsEndpoint: string;
   readonly #sortables = new Map<number, Sortable>();
 
-  constructor(id: string, setPositionsEndpoint: string = "") {
+  constructor(
+    id: string,
+    viewClassName: string,
+    viewParameters: Map<string, string>,
+    setPositionsEndpoint: string = "",
+  ) {
     this.#id = id;
+    this.#viewClassName = viewClassName;
+    this.#viewParameters = viewParameters;
     this.#setPositionsEndpoint = setPositionsEndpoint;
 
     this.#initInteractions();
@@ -106,15 +118,39 @@ export class NodeTreeView {
     });
   }
 
+  async #reloadTree(): Promise<void> {
+    const { template } = await getNodes(this.#viewClassName, this.#viewParameters);
+    const rootList = document.querySelector<HTMLElement>(`#${this.#id} > .nodeTreeView__list`)!;
+    for (const [parentObjectId, sortable] of this.#sortables) {
+      if (parentObjectId === 0) {
+        continue;
+      }
+      sortable.destroy();
+      this.#sortables.delete(parentObjectId);
+    }
+    setInnerHtml(rootList, template);
+  }
+
+  async #reloadNode(item: HTMLElement): Promise<void> {
+    const objectId = parseInt(item.dataset.objectId!);
+    const { template } = await getNode(this.#viewClassName, objectId, this.#viewParameters);
+    for (const list of item.querySelectorAll<HTMLElement>(".nodeTreeView__list")) {
+      const parentObjectId = parseInt(list.dataset.parentObjectId!);
+      this.#sortables.get(parentObjectId)?.destroy();
+      this.#sortables.delete(parentObjectId);
+    }
+    item.replaceWith(createFragmentFromHtml(template));
+  }
+
   #initEventListeners(): void {
     const nodeTreeView = document.getElementById(this.#id)!;
 
     nodeTreeView.addEventListener("interaction:invalidate-all", () => {
-      window.location.reload();
+      void this.#reloadTree();
     });
 
-    nodeTreeView.addEventListener("interaction:invalidate", () => {
-      window.location.reload();
+    nodeTreeView.addEventListener("interaction:invalidate", (event) => {
+      void this.#reloadNode(event.target as HTMLElement);
     });
 
     nodeTreeView.addEventListener("interaction:remove", (event) => {
