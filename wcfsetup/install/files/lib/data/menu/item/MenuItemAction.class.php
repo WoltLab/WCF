@@ -4,10 +4,7 @@ namespace wcf\data\menu\item;
 
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\DatabaseObject;
-use wcf\data\IToggleAction;
-use wcf\data\TDatabaseObjectToggle;
 use wcf\data\TI18nDatabaseObjectAction;
-use wcf\system\exception\PermissionDeniedException;
 
 /**
  * Executes menu item related actions.
@@ -18,9 +15,8 @@ use wcf\system\exception\PermissionDeniedException;
  *
  * @extends AbstractDatabaseObjectAction<MenuItem, MenuItemEditor>
  */
-class MenuItemAction extends AbstractDatabaseObjectAction implements IToggleAction
+class MenuItemAction extends AbstractDatabaseObjectAction
 {
-    use TDatabaseObjectToggle;
     use TI18nDatabaseObjectAction;
 
     /**
@@ -46,7 +42,7 @@ class MenuItemAction extends AbstractDatabaseObjectAction implements IToggleActi
     /**
      * @inheritDoc
      */
-    protected $requireACP = ['create', 'delete', 'toggle', 'update'];
+    protected $requireACP = ['create', 'delete', 'update'];
 
     #[\Override]
     public function create()
@@ -77,18 +73,6 @@ class MenuItemAction extends AbstractDatabaseObjectAction implements IToggleActi
 
         foreach ($this->getObjects() as $editor) {
             $this->saveI18nValue($editor->getDecoratedObject());
-        }
-    }
-
-    #[\Override]
-    public function validateToggle()
-    {
-        parent::validateUpdate();
-
-        foreach ($this->getObjects() as $object) {
-            if (!$object->canDisable()) {
-                throw new PermissionDeniedException();
-            }
         }
     }
 
