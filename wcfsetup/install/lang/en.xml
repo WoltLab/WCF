@@ -3354,6 +3354,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 	</category>
 	<category name="wcf.category">
 		<item name="wcf.category.add"><![CDATA[Add Category]]></item>
+		<item name="wcf.category.addChildNode"><![CDATA[Add Child Category]]></item>
 		<item name="wcf.category.button.list"><![CDATA[Categories]]></item>
 		<item name="wcf.category.delete.sure"><![CDATA[Do you really want to delete this category?]]></item>
 		<item name="wcf.category.edit"><![CDATA[Edit Category]]></item>

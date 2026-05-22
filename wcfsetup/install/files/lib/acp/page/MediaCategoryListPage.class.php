@@ -9,7 +9,7 @@ namespace wcf\acp\page;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class MediaCategoryListPage extends AbstractCategoryListPage
+class MediaCategoryListPage extends AbstractCategoryNodeTreeViewPage
 {
     /**
      * @inheritDoc
@@ -19,5 +19,5 @@ class MediaCategoryListPage extends AbstractCategoryListPage
     /**
      * @inheritDoc
      */
-    public $objectTypeName = 'com.woltlab.wcf.media.category';
+    public string $objectTypeName = 'com.woltlab.wcf.media.category';
 }

@@ -2,6 +2,8 @@
 
 namespace wcf\system\category;
 
+use wcf\acp\form\TrophyCategoryAddForm;
+use wcf\acp\form\TrophyCategoryEditForm;
 use wcf\data\category\CategoryEditor;
 use wcf\data\user\trophy\UserTrophyAction;
 use wcf\data\user\trophy\UserTrophyList;
@@ -79,5 +81,17 @@ class TrophyCategoryType extends AbstractCategoryType
     public function supportsHtmlDescription()
     {
         return true;
+    }
+
+    #[\Override]
+    public function getEditControllerClass(): string
+    {
+        return TrophyCategoryEditForm::class;
+    }
+
+    #[\Override]
+    public function getAddControllerClass(): string
+    {
+        return TrophyCategoryAddForm::class;
     }
 }

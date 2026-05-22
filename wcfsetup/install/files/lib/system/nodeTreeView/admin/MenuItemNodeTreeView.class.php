@@ -48,6 +48,7 @@ class MenuItemNodeTreeView extends AbstractNodeTreeView
     {
         $nodeTree = new MenuItemNodeTree($this->menuID, null, false);
 
+        // @phpstan-ignore return.type
         return $nodeTree->getNodeList();
     }
 

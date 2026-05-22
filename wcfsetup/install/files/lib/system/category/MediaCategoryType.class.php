@@ -2,6 +2,8 @@
 
 namespace wcf\system\category;
 
+use wcf\acp\form\MediaCategoryAddForm;
+use wcf\acp\form\MediaCategoryEditForm;
 use wcf\system\WCF;
 
 /**
@@ -44,5 +46,17 @@ class MediaCategoryType extends AbstractCategoryType
     public function canEditCategory()
     {
         return WCF::getSession()->hasPermission('admin.content.cms.canManageMedia');
+    }
+
+    #[\Override]
+    public function getEditControllerClass(): string
+    {
+        return MediaCategoryEditForm::class;
+    }
+
+    #[\Override]
+    public function getAddControllerClass(): string
+    {
+        return MediaCategoryAddForm::class;
     }
 }
