@@ -62,7 +62,7 @@ function getHtml(items: Item[]): string {
     listItem.textContent = item.label;
 
     const icon = document.createElement("fa-icon");
-    icon.setIcon("up-down");
+    icon.setIcon("grip-vertical");
     const handle = document.createElement("span");
     handle.append(icon);
     handle.classList.add("sortableList__handle");
