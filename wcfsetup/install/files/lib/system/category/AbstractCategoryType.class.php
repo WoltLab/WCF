@@ -6,7 +6,6 @@ use wcf\data\category\Category;
 use wcf\data\category\CategoryEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\request\LinkHandler;
-use wcf\system\SingletonFactory;
 use wcf\system\user\object\watch\UserObjectWatchHandler;
 use wcf\system\WCF;
 
@@ -17,7 +16,7 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-abstract class AbstractCategoryType extends SingletonFactory implements ICategoryType
+abstract class AbstractCategoryType implements ICategoryType
 {
     /**
      * indicates if categories of this type may have no empty description
