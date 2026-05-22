@@ -60,7 +60,7 @@ abstract class AbstractCategoryNodeTreeViewPage extends AbstractNodeTreeViewPage
 
         WCF::getTPL()->assign([
             'objectType' => $this->objectType,
-            'addFormLink' => LinkHandler::getInstance()->getControllerLink($this->objectType->getProcessor()->getAddControllerClass()),
+            'addFormLink' => $this->objectType->getProcessor()->getAddFormLink(),
         ]);
 
         if ($this->pageTitle) {

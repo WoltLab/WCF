@@ -2,10 +2,10 @@
 
 namespace wcf\system\nodeTreeView\admin;
 
-use RecursiveIteratorIterator;
 use wcf\data\category\Category;
 use wcf\data\category\CategoryNode;
 use wcf\data\category\CategoryNodeTree;
+use wcf\data\DatabaseObject;
 use wcf\data\IObjectTreeNode;
 use wcf\data\object\type\ObjectType;
 use wcf\system\category\CategoryHandler;
@@ -16,7 +16,6 @@ use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
 use wcf\system\nodeTreeView\AbstractNodeTreeView;
-use wcf\system\request\LinkHandler;
 
 /**
  * Abstract implementation of a node tree view that shows the categories of a
@@ -36,10 +35,18 @@ class CategoryNodeTreeView extends AbstractNodeTreeView
         $provider = new CategoryInteractions();
         $provider->addInteractions([
             new Divider(),
-            new EditInteraction(
-                $this->getProcessor()->getEditControllerClass(),
+            new class(
+                '',
                 static fn(Category $category) => $category->getObjectType()->getProcessor()->canEditCategory()
-            ),
+            ) extends EditInteraction {
+                #[\Override]
+                protected function getLink(DatabaseObject $object): string
+                {
+                    \assert($object instanceof Category);
+
+                    return $object->getObjectType()->getProcessor()->getEditFormLink($object);
+                }
+            },
         ]);
         $this->setInteractionProvider($provider);
 
@@ -91,13 +98,7 @@ class CategoryNodeTreeView extends AbstractNodeTreeView
     {
         \assert($node instanceof CategoryNode);
 
-        return LinkHandler::getInstance()->getControllerLink(
-            $this->getProcessor()->getEditControllerClass(),
-            [
-                'id' => $node->getObjectID(),
-                'title' => $node->getTitle(),
-            ]
-        );
+        return $this->getProcessor()->getEditFormLink($node->getDecoratedObject());
     }
 
     #[\Override]

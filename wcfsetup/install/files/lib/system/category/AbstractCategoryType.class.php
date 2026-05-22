@@ -2,8 +2,10 @@
 
 namespace wcf\system\category;
 
+use wcf\data\category\Category;
 use wcf\data\category\CategoryEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\request\LinkHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\user\object\watch\UserObjectWatchHandler;
 use wcf\system\WCF;
@@ -185,16 +187,55 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
     }
 
     #[\Override]
-    public function getEditControllerClass(): string
+    public function getEditFormLink(Category $category): string
     {
-        // @phpstan-ignore return.type
-        return '';
+        $controllerClass = $this->getEditControllerClass();
+        if ($controllerClass === '') {
+            return '';
+        }
+
+        return LinkHandler::getInstance()->getControllerLink(
+            $controllerClass,
+            ['object' => $category]
+        );
     }
 
     #[\Override]
+    public function getAddFormLink(?Category $parentCategory = null): string
+    {
+        $controllerClass = $this->getAddControllerClass();
+        if ($controllerClass === '') {
+            return '';
+        }
+
+        $parameters = [];
+        if ($parentCategory !== null) {
+            $parameters['parentCategoryID'] = $parentCategory->categoryID;
+        }
+
+        return LinkHandler::getInstance()->getControllerLink(
+            $controllerClass,
+            $parameters
+        );
+    }
+
+    /**
+     * Returns the name of the controller class used to edit categories of this type.
+     *
+     * @since 6.3
+     */
+    public function getEditControllerClass(): string
+    {
+        return '';
+    }
+
+    /**
+     * Returns the name of the controller class used to add categories of this type.
+     *
+     * @since 6.3
+     */
     public function getAddControllerClass(): string
     {
-        // @phpstan-ignore return.type
         return '';
     }
 }

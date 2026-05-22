@@ -10,7 +10,6 @@ use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
 use wcf\system\interaction\LinkInteraction;
-use wcf\system\request\LinkHandler;
 
 /**
  * Interaction provider for categories.
@@ -36,8 +35,7 @@ final class CategoryInteractions extends AbstractInteractionProvider
                         return false;
                     }
 
-                    // @phpstan-ignore identical.alwaysFalse
-                    if ($processor->getAddControllerClass() === '') {
+                    if ($processor->getAddFormLink($category) === '') {
                         return false;
                     }
 
@@ -58,10 +56,7 @@ final class CategoryInteractions extends AbstractInteractionProvider
                 {
                     \assert($object instanceof Category);
 
-                    return LinkHandler::getInstance()->getControllerLink(
-                        $object->getObjectType()->getProcessor()->getAddControllerClass(),
-                        ['parentCategoryID' => $object->getObjectID()]
-                    );
+                    return $object->getObjectType()->getProcessor()->getAddFormLink($object);
                 }
             },
             new DeleteInteraction(
