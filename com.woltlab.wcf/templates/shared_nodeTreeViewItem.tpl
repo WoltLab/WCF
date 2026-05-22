@@ -1,6 +1,8 @@
 <li class="nodeTreeView__item" data-object-id="{$node->getObjectID()}">
 	<div class="nodeTreeView__item__content">
-		<span class="nodeTreeView__item__handle">{icon name='grip-vertical'}</span>
+		{if $view->getSetPositionsEndpoint()}
+			<span class="nodeTreeView__item__handle">{icon name='grip-vertical'}</span>
+		{/if}
 		<a class="nodeTreeView__item__link" href="{$view->getNodeLink($node)}">{$node->getTitle()}</a>
 		{if $view->hasInteractions()}
 			<div class="nodeTreeView__item__buttons">
