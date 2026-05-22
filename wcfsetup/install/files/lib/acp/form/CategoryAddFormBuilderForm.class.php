@@ -83,6 +83,12 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
     public int $packageID = 0;
 
     /**
+     * id of the pre-selected parent category, read from the request
+     * @since 6.3
+     */
+    public ?int $parentCategoryID = null;
+
+    /**
      * language item with the page title
      * @deprecated 6.3 No longer in use.
      */
@@ -156,6 +162,14 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
 
         if ($this->formAction !== 'create') {
             $this->readFormObject();
+        }
+
+        if (isset($_GET['parentCategoryID'])) {
+            $parentCategoryID = \intval($_GET['parentCategoryID']);
+            $category = CategoryHandler::getInstance()->getCategory($parentCategoryID);
+            if ($category !== null && $category->objectTypeID === $this->objectType->getObjectID()) {
+                $this->parentCategoryID = $parentCategoryID;
+            }
         }
     }
 
@@ -265,6 +279,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
                 )
                 ->options($categoryNodeTree, true)
                 ->available((bool)$this->getObjectTypeProcessor()->getMaximumNestingLevel())
+                ->value($this->parentCategoryID)
                 ->addValidator(
                     new FormFieldValidator(
                         'recursion',

@@ -2,6 +2,8 @@
 
 namespace wcf\system\category;
 
+use wcf\acp\form\ArticleCategoryAddForm;
+use wcf\acp\form\ArticleCategoryEditForm;
 use wcf\data\article\ArticleAction;
 use wcf\data\category\CategoryEditor;
 use wcf\system\WCF;
@@ -84,5 +86,17 @@ class ArticleCategoryType extends AbstractCategoryType
     public function supportsHtmlDescription()
     {
         return true;
+    }
+
+    #[\Override]
+    public function getEditControllerClass(): string
+    {
+        return ArticleCategoryEditForm::class;
+    }
+
+    #[\Override]
+    public function getAddControllerClass(): string
+    {
+        return ArticleCategoryAddForm::class;
     }
 }

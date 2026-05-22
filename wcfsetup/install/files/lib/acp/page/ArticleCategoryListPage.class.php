@@ -9,7 +9,7 @@ namespace wcf\acp\page;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class ArticleCategoryListPage extends AbstractCategoryListPage
+class ArticleCategoryListPage extends AbstractCategoryNodeTreeViewPage
 {
     /**
      * @inheritDoc
@@ -19,7 +19,7 @@ class ArticleCategoryListPage extends AbstractCategoryListPage
     /**
      * @inheritDoc
      */
-    public $objectTypeName = 'com.woltlab.wcf.article.category';
+    public string $objectTypeName = 'com.woltlab.wcf.article.category';
 
     /**
      * @inheritDoc

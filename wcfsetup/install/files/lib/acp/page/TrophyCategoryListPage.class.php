@@ -9,7 +9,7 @@ namespace wcf\acp\page;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class TrophyCategoryListPage extends AbstractCategoryListPage
+class TrophyCategoryListPage extends AbstractCategoryNodeTreeViewPage
 {
     /**
      * @inheritDoc
@@ -19,7 +19,7 @@ class TrophyCategoryListPage extends AbstractCategoryListPage
     /**
      * @inheritDoc
      */
-    public $objectTypeName = 'com.woltlab.wcf.trophy.category';
+    public string $objectTypeName = 'com.woltlab.wcf.trophy.category';
 
     /**
      * @inheritDoc

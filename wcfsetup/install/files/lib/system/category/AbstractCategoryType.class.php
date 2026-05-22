@@ -183,4 +183,18 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
     {
         return false;
     }
+
+    #[\Override]
+    public function getEditControllerClass(): string
+    {
+        // @phpstan-ignore return.type
+        return '';
+    }
+
+    #[\Override]
+    public function getAddControllerClass(): string
+    {
+        // @phpstan-ignore return.type
+        return '';
+    }
 }

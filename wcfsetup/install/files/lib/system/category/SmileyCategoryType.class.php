@@ -2,6 +2,8 @@
 
 namespace wcf\system\category;
 
+use wcf\acp\form\SmileyCategoryAddForm;
+use wcf\acp\form\SmileyCategoryEditForm;
 use wcf\data\category\CategoryEditor;
 use wcf\system\cache\builder\SmileyCacheBuilder;
 use wcf\system\WCF;
@@ -52,5 +54,17 @@ class SmileyCategoryType extends AbstractCategoryType
     public function canEditCategory()
     {
         return WCF::getSession()->hasPermission('admin.content.smiley.canManageSmiley');
+    }
+
+    #[\Override]
+    public function getEditControllerClass(): string
+    {
+        return SmileyCategoryEditForm::class;
+    }
+
+    #[\Override]
+    public function getAddControllerClass(): string
+    {
+        return SmileyCategoryAddForm::class;
     }
 }

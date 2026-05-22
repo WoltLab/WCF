@@ -3431,6 +3431,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 	</category>
 	<category name="wcf.category">
 		<item name="wcf.category.add"><![CDATA[Kategorie hinzufügen]]></item>
+		<item name="wcf.category.addChildNode"><![CDATA[Unterkategorie hinzufügen]]></item>
 		<item name="wcf.category.button.list"><![CDATA[Kategorien auflisten]]></item>
 		<item name="wcf.category.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diese Kategorie wirklich löschen? Alle sich in dieser Kategorie befindlichen Unterkategorien werden in die Elternkategorie dieser Kategorie verschoben.]]></item>
 		<item name="wcf.category.edit"><![CDATA[Kategorie bearbeiten]]></item>

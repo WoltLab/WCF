@@ -2,6 +2,7 @@
 
 namespace wcf\system\category;
 
+use wcf\acp\form\CategoryAddFormBuilderForm;
 use wcf\data\category\CategoryEditor;
 
 /**
@@ -139,4 +140,20 @@ interface ICategoryType
      * @since 5.2
      */
     public function supportsHtmlDescription();
+
+    /**
+     * Returns the name of the controller class used to edit categories of this type.
+     *
+     * @return class-string<CategoryAddFormBuilderForm>
+     * @since 6.3
+     */
+    public function getEditControllerClass(): string;
+
+    /**
+     * Returns the name of the controller class used to add categories of this type.
+     *
+     * @return class-string<CategoryAddFormBuilderForm>
+     * @since 6.3
+     */
+    public function getAddControllerClass(): string;
 }
