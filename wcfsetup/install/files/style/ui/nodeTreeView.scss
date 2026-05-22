@@ -34,9 +34,12 @@
 }
 
 .nodeTreeView__item__link {
+	align-items: center;
 	color: inherit;
+	display: flex;
 	font-weight: 600;
 	flex: 1 0 auto;
+	gap: 5px;
 
 	&:hover {
 		color: inherit;

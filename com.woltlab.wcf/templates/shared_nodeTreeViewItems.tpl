@@ -4,7 +4,10 @@
 			{if $view->getSetPositionsEndpoint()}
 				<span class="nodeTreeView__item__handle">{icon name='grip-vertical'}</span>
 			{/if}
-			<a class="nodeTreeView__item__link" href="{$view->getNodeLink($node)}">{$node->getTitle()}</a>
+			<a class="nodeTreeView__item__link" href="{$view->getNodeLink($node)}">
+				{unsafe:$view->getNodeIcon($node)}
+				<span>{$node->getTitle()}</span>
+			</a>
 			{if $view->hasInteractions()}
 				<div class="nodeTreeView__item__buttons">
 					{unsafe:$view->renderQuickInteractions($node)}

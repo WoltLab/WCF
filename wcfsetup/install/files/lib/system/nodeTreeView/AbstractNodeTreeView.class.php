@@ -52,6 +52,11 @@ abstract class AbstractNodeTreeView
 
     public abstract function getNodeLink(IObjectTreeNode $node): string;
 
+    public function getNodeIcon(IObjectTreeNode $node): string
+    {
+        return '';
+    }
+
     /**
      * Renders the node tree view and returns the HTML code.
      */
