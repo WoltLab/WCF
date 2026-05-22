@@ -51,6 +51,7 @@
 }
 
 .nodeTreeView__item__handle {
+	cursor: grab;
 	position: absolute;
 	left: 10px;
 	color: var(--wcfContentDimmedText);
