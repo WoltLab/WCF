@@ -51,6 +51,8 @@ abstract class AbstractNodeTreeView
     }
 
     /**
+     * Returns the iterator that traverses the nodes of the tree view.
+     *
      * @return \RecursiveIteratorIterator<IObjectTreeNode>
      */
     public function getNodes(): \RecursiveIteratorIterator
@@ -62,18 +64,29 @@ abstract class AbstractNodeTreeView
         return $this->nodeIterator;
     }
 
+    /**
+     * Returns true, if this node tree view has any nodes.
+     */
     public function hasNodes(): bool
     {
         return $this->getNodes()->callHasChildren();
     }
 
     /**
+     * Creates the iterator that traverses the nodes of the tree view.
+     *
      * @return \RecursiveIteratorIterator<IObjectTreeNode>
      */
     protected abstract function createNodeIterator(): \RecursiveIteratorIterator;
 
+    /**
+     * Returns the link to the edit form of the given node.
+     */
     public abstract function getNodeLink(IObjectTreeNode $node): string;
 
+    /**
+     * Returns the icon of the given node or an empty string if the node has no icon.
+     */
     public function getNodeIcon(IObjectTreeNode $node): string
     {
         return '';
@@ -272,11 +285,17 @@ abstract class AbstractNodeTreeView
         return $id;
     }
 
+    /**
+     * Sets the endpoint that is used to save the positions of the nodes after drag and drop.
+     */
     public function setSetPositionsEndpoint(string $endpoint): void
     {
         $this->setPositionsEndpoint = $endpoint;
     }
 
+    /**
+     * Returns the endpoint that is used to save the positions of the nodes after drag and drop.
+     */
     public function getSetPositionsEndpoint(): string
     {
         return $this->setPositionsEndpoint;
