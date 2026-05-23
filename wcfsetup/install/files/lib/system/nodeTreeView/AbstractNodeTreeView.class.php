@@ -25,6 +25,11 @@ abstract class AbstractNodeTreeView
      */
     private array $quickInteractions = [];
 
+    /**
+     * @var \RecursiveIteratorIterator<IObjectTreeNode>
+     */
+    protected \RecursiveIteratorIterator $nodeIterator;
+
     private ?IInteractionProvider $interactionProvider = null;
     private InteractionContextMenuComponent $interactionContextMenuComponent;
     private string $setPositionsEndpoint = '';
@@ -48,7 +53,24 @@ abstract class AbstractNodeTreeView
     /**
      * @return \RecursiveIteratorIterator<IObjectTreeNode>
      */
-    public abstract function getNodes(): \RecursiveIteratorIterator;
+    public function getNodes(): \RecursiveIteratorIterator
+    {
+        if (!isset($this->nodeIterator)) {
+            $this->nodeIterator = $this->createNodeIterator();
+        }
+
+        return $this->nodeIterator;
+    }
+
+    public function hasNodes(): bool
+    {
+        return $this->getNodes()->callHasChildren();
+    }
+
+    /**
+     * @return \RecursiveIteratorIterator<IObjectTreeNode>
+     */
+    protected abstract function createNodeIterator(): \RecursiveIteratorIterator;
 
     public abstract function getNodeLink(IObjectTreeNode $node): string;
 

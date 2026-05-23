@@ -85,7 +85,7 @@ class CategoryNodeTreeView extends AbstractNodeTreeView
     }
 
     #[\Override]
-    public function getNodes(): \RecursiveIteratorIterator
+    protected function createNodeIterator(): \RecursiveIteratorIterator
     {
         $nodeTree = new CategoryNodeTree($this->objectTypeName, 0, true);
 

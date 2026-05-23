@@ -44,7 +44,7 @@ class MenuItemNodeTreeView extends AbstractNodeTreeView
     }
 
     #[\Override]
-    public function getNodes(): \RecursiveIteratorIterator
+    protected function createNodeIterator(): \RecursiveIteratorIterator
     {
         $nodeTree = new MenuItemNodeTree($this->menuID, null, false);
 
