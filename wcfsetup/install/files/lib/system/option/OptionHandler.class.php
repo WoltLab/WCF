@@ -86,7 +86,6 @@ class OptionHandler implements IOptionHandler
      */
     protected $enterpriseBlacklist = [
         'categories' => [
-            'general.cache',
             'general.mail.send',
             'general.page.seo',
             'general.system.cookie',

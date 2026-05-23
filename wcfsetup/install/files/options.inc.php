@@ -19,7 +19,6 @@ if (\file_exists(WCF_DIR . 'cookiePrefix.txt')) {
 }
 \define('COOKIE_PREFIX', $prefix);
 
-\define('CACHE_SOURCE_TYPE', 'disk');
 \define('IMAGE_ADAPTER_TYPE', 'gd');
 \define('TIMEZONE', 'UTC');
 

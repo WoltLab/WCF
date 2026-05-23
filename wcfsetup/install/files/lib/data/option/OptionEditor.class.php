@@ -6,9 +6,7 @@ use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
 use wcf\data\user\group\UserGroupEditor;
 use wcf\system\cache\builder\OptionCacheBuilder;
-use wcf\system\cache\CacheHandler;
 use wcf\system\io\AtomicWriter;
-use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -71,9 +69,9 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
     {
         $sql = "SELECT  optionID, optionName, optionValue
                 FROM    wcf1_option
-                WHERE   optionName IN (?, ?)";
+                WHERE   optionName = ?";
         $statement = WCF::getDB()->prepare($sql);
-        $statement->execute(['cache_source_type', 'visitor_use_tiny_build']);
+        $statement->execute(['visitor_use_tiny_build']);
         $oldValues = [];
         while ($row = $statement->fetchArray()) {
             $oldValues[$row['optionID']] = $row;
@@ -84,18 +82,11 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
                 WHERE   optionID = ?";
         $statement = WCF::getDB()->prepare($sql);
 
-        $flushCache = false;
         $flushPermissions = false;
         WCF::getDB()->beginTransaction();
         foreach ($options as $id => $value) {
-            if (isset($oldValues[$id])) {
-                if ($value != $oldValues[$id]['optionValue']) {
-                    if ($oldValues[$id]['optionName'] === 'cache_source_type') {
-                        $flushCache = true;
-                    } else {
-                        $flushPermissions = true;
-                    }
-                }
+            if (isset($oldValues[$id]) && $value != $oldValues[$id]['optionValue']) {
+                $flushPermissions = true;
             }
 
             $statement->execute([
@@ -108,18 +99,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
         // force a cache reset if options were changed
         self::resetCache();
 
-        // flush entire cache, as the CacheSource was changed
-        if ($flushCache) {
-            // flush caches (in case register_shutdown_function gets not properly called)
-            CacheHandler::getInstance()->flushAll();
-            UserStorageHandler::getInstance()->clear();
-
-            // flush cache before finishing request to flush caches created after this was executed
-            \register_shutdown_function(static function () {
-                CacheHandler::getInstance()->flushAll();
-                UserStorageHandler::getInstance()->clear();
-            });
-        } elseif ($flushPermissions) {
+        if ($flushPermissions) {
             // flush permissions if accelerated visitor mode was toggled
             UserGroupEditor::resetCache();
         }

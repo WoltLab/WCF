@@ -209,10 +209,6 @@ class SystemCheckPage extends AbstractPage
             $this->phpExtensions[] = 'imagick';
         }
 
-        if (\CACHE_SOURCE_TYPE === 'redis' && !\in_array('redis', $this->phpExtensions)) {
-            $this->phpExtensions[] = 'redis';
-        }
-
         $this->validateMysql();
         $this->validatePhpExtensions();
         $this->validatePhpMemoryLimit();

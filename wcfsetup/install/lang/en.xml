@@ -256,15 +256,11 @@
 		<item name="wcf.acp.cache.data"><![CDATA[Settings]]></item>
 		<item name="wcf.acp.cache.data.files"><![CDATA[Files]]></item>
 		<item name="wcf.acp.cache.data.size"><![CDATA[Size]]></item>
-		<item name="wcf.acp.cache.data.source"><![CDATA[Source]]></item>
-		<item name="wcf.acp.cache.data.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.cache.list"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.cache.list.mtime"><![CDATA[Last Updated]]></item>
 		<item name="wcf.acp.cache.list.name"><![CDATA[Name]]></item>
 		<item name="wcf.acp.cache.list.perm"><![CDATA[Permissions]]></item>
 		<item name="wcf.acp.cache.list.size"><![CDATA[Size]]></item>
-		<item name="wcf.acp.cache.source.type.DiskCacheSource"><![CDATA[Filesystem]]></item>
-		<item name="wcf.acp.cache.source.type.RedisCacheSource"><![CDATA[Redis]]></item>
 		<item name="wcf.acp.cache.type.data"><![CDATA[Data]]></item>
 		<item name="wcf.acp.cache.type.language"><![CDATA[Languages]]></item>
 		<item name="wcf.acp.cache.type.style"><![CDATA[Styles]]></item>
@@ -975,7 +971,6 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.index.woltlab.pluginStore"><![CDATA[Plugin Store]]></item>
 		<item name="wcf.acp.index.missingLanguageItems"><![CDATA[Missing language items have been detected (last time: {@$missingLanguageItemsMTime|time}). Check the <a href="{link controller='DevtoolsMissingLanguageItemList'}{/link}">list of missing phrases</a> for more information.]]></item>
 		<item name="wcf.acp.index.systemIdMismatch"><![CDATA[The system environment has changed. It is recommended to perform a <a href="{link controller='SystemCheck'}{/link}">System Check</a>.]]></item>
-		<item name="wcf.acp.index.cacheSanityCheckFailed"><![CDATA[The configured caching method (“{CACHE_SOURCE_TYPE}”) is not working correctly.]]></item>
 		<item name="wcf.acp.index.insecureContext"><![CDATA[The page is not accessed via HTTPS. Important features that are required for the proper operation of the software are therefore not available.]]></item>
 	</category>
 	<category name="wcf.acp.label">
@@ -1274,19 +1269,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.notice.showOrder.description"><![CDATA[Choose display order of notices.]]></item>
 	</category>
 	<category name="wcf.acp.option">
-		<item name="wcf.acp.option.cache_source_redis_host"><![CDATA[Redis-Server]]></item>
-		<item name="wcf.acp.option.cache_source_redis_host.description"><![CDATA[The server’s address, for example “localhost” or “10.0.13.37:1337”.]]></item>
-		<item name="wcf.acp.option.cache_source_type"><![CDATA[Caching Method]]></item>
-		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Caching methods different from filesystem require special extensions or services running on your machine.]]></item>
-		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[Use Filesystem]]></item>
-		<item name="wcf.acp.option.cache_source_type.redis"><![CDATA[Use Redis (deprecated, not recommended)]]></item>
 		<item name="wcf.acp.option.category.general"><![CDATA[General]]></item>
-		<item name="wcf.acp.option.category.general.cache"><![CDATA[Cache]]></item>
-		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[General]]></item>
-		<item name="wcf.acp.option.category.general.cache.redis"><![CDATA[Redis]]></item>
-		<item name="wcf.acp.option.category.general.cache.redis.description"><![CDATA[Redis uses the machine’s memory to store frequently accessed data, reducing database and filesystem load. Read more about Redis on <a href="https://redis.io/" class="externalURL">redis.io</a>.<br>
-<br>
-<strong>Warning:</strong> The support for Redis will be removed in a future version and it is recommended to switch to the filesystem based cache. The filesystem cache provides the same high level of performance without the need of an additional service process running.]]></item>
 		<item name="wcf.acp.option.category.general.system.date"><![CDATA[Date and Time]]></item>
 		<item name="wcf.acp.option.category.general.system.image"><![CDATA[Graphics]]></item>
 		<item name="wcf.acp.option.category.general.system"><![CDATA[System]]></item>

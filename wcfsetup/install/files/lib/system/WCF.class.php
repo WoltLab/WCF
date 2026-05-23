@@ -519,6 +519,11 @@ class WCF
         // The option to show/hide the like summary had no effect since version 5.2.
         // https://github.com/WoltLab/WCF/commit/f9996bef03c56e27b16bc536312186e1e34c0240
         \define('LIKE_SHOW_SUMMARY', 0);
+
+        // The configurable cache source type was removed with version 6.3.
+        // https://github.com/WoltLab/WCF/issues/6376
+        \define('CACHE_SOURCE_TYPE', 'disk');
+        \define('CACHE_SOURCE_REDIS_HOST', '');
     }
 
     /**

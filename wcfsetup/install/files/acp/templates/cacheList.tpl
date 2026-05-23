@@ -27,20 +27,6 @@
 <section class="section">
 	<h2 class="sectionTitle">{lang}wcf.acp.cache.data{/lang}</h2>
 	
-	<dl>
-		<dt>{lang}wcf.acp.cache.data.source{/lang}</dt>
-		<dd>
-			{assign var='__source' value="\\"|explode:$cacheData.source}
-			{lang}wcf.acp.cache.source.type.{$__source|end}{/lang}
-			<small>{$cacheData.source}</small>
-		</dd>
-	</dl>
-	{if $cacheData.version}
-		<dl>
-			<dt>{lang}wcf.acp.cache.data.version{/lang}</dt>
-			<dd>{$cacheData.version}</dd>
-		</dl>
-	{/if}
 	{if $cacheData.size}<dl>
 		<dt>{lang}wcf.acp.cache.data.size{/lang}</dt>
 		<dd>{$cacheData.size|filesize}</dd>

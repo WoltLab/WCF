@@ -2,9 +2,6 @@
 
 namespace wcf\system\user\storage;
 
-use wcf\system\cache\CacheHandler;
-use wcf\system\cache\source\RedisCacheSource;
-use wcf\system\database\Redis;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -29,20 +26,6 @@ final class UserStorageHandler extends SingletonFactory
      */
     private $log = [];
 
-    private ?Redis $redis = null;
-
-    /**
-     * Checks whether Redis is available.
-     */
-    #[\Override]
-    protected function init()
-    {
-        $cacheSource = CacheHandler::getInstance()->getCacheSource();
-        if ($cacheSource instanceof RedisCacheSource) {
-            $this->redis = $cacheSource->getRedis();
-        }
-    }
-
     /**
      * Loads storage for a given set of users.
      *
@@ -51,10 +34,6 @@ final class UserStorageHandler extends SingletonFactory
     public function loadStorage(array $userIDs): void
     {
         $this->validateUserIDs($userIDs);
-
-        if ($this->redis) {
-            return;
-        }
 
         $newUserIDs = [];
         foreach ($userIDs as $userID) {
@@ -107,18 +86,6 @@ final class UserStorageHandler extends SingletonFactory
         $this->validateUserIDs($userIDs);
 
         $data = [];
-
-        if ($this->redis) {
-            foreach ($userIDs as $userID) {
-                $data[$userID] = $this->redis->hGet($this->getRedisFieldName($field), $userID);
-                if ($data[$userID] === false) {
-                    $data[$userID] = null;
-                }
-            }
-
-            return $data;
-        }
-
         foreach ($userIDs as $userID) {
             if (isset($this->cache[$userID][$field])) {
                 $data[$userID] = $this->cache[$userID][$field];
@@ -150,15 +117,6 @@ final class UserStorageHandler extends SingletonFactory
             return;
         }
 
-        if ($this->redis) {
-            $result = $this->redis->hGet($this->getRedisFieldName($field), $userID);
-            if ($result === false) {
-                return;
-            }
-
-            return $result;
-        }
-
         // make sure stored data is loaded
         if (!isset($this->cache[$userID])) {
             $this->loadStorage([$userID]);
@@ -175,13 +133,6 @@ final class UserStorageHandler extends SingletonFactory
     public function update(int $userID, string $field, string $fieldValue): void
     {
         $this->validateUserIDs([$userID]);
-
-        if ($this->redis) {
-            $this->redis->hSet($this->getRedisFieldName($field), $userID, $fieldValue);
-            $this->redis->expire($this->getRedisFieldName($field), 86400);
-
-            return;
-        }
 
         if (!isset($this->log[$userID])) {
             $this->log[$userID] = [];
@@ -203,14 +154,6 @@ final class UserStorageHandler extends SingletonFactory
     {
         $this->validateUserIDs($userIDs);
 
-        if ($this->redis) {
-            foreach ($userIDs as $userID) {
-                $this->redis->hDel($this->getRedisFieldName($field), $userID);
-            }
-
-            return;
-        }
-
         foreach ($userIDs as $userID) {
             if (!isset($this->log[$userID])) {
                 $this->log[$userID] = [];
@@ -226,12 +169,6 @@ final class UserStorageHandler extends SingletonFactory
      */
     public function resetAll(string $field): void
     {
-        if ($this->redis) {
-            $this->redis->del($this->getRedisFieldName($field));
-
-            return;
-        }
-
         $sql = "DELETE FROM wcf1_user_storage
                 WHERE       field = ?";
         $statement = WCF::getDB()->prepare($sql);
@@ -253,10 +190,6 @@ final class UserStorageHandler extends SingletonFactory
      */
     public function shutdown()
     {
-        if ($this->redis) {
-            return;
-        }
-
         $i = 0;
         while (true) {
             try {
@@ -335,13 +268,6 @@ final class UserStorageHandler extends SingletonFactory
      */
     public function clear(): void
     {
-        if ($this->redis) {
-            $this->redis->setnx('ush:_flush', \TIME_NOW);
-            $this->redis->incr('ush:_flush');
-
-            return;
-        }
-
         $this->cache = [];
 
         $sql = "DELETE FROM wcf1_user_storage";
@@ -349,24 +275,6 @@ final class UserStorageHandler extends SingletonFactory
         $statement->execute();
 
         $this->log = [];
-    }
-
-    /**
-     * Returns the field name for use in Redis.
-     */
-    private function getRedisFieldName(string $fieldName): string
-    {
-        $flush = $this->redis->get('ush:_flush');
-
-        // create flush counter if it does not exist
-        if ($flush === false) {
-            $this->redis->setnx('ush:_flush', \TIME_NOW);
-            $this->redis->incr('ush:_flush');
-
-            $flush = $this->redis->get('ush:_flush');
-        }
-
-        return 'ush:' . $flush . ':' . $fieldName;
     }
 
     /**

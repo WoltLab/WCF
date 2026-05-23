@@ -38,7 +38,6 @@ use wcf\util\XML;
 
 // define
 \define('PACKAGE_ID', 0);
-\define('CACHE_SOURCE_TYPE', 'disk');
 \define('ENABLE_DEBUG_MODE', 1);
 \define('ENABLE_BENCHMARK', 0);
 \define('ENABLE_ENTERPRISE_MODE', 0);

@@ -257,15 +257,11 @@
 		<item name="wcf.acp.cache.data"><![CDATA[Eigenschaften]]></item>
 		<item name="wcf.acp.cache.data.files"><![CDATA[Dateien]]></item>
 		<item name="wcf.acp.cache.data.size"><![CDATA[Größe]]></item>
-		<item name="wcf.acp.cache.data.source"><![CDATA[Quelle]]></item>
-		<item name="wcf.acp.cache.data.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.cache.list"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.cache.list.mtime"><![CDATA[Letzte Aktualisierung]]></item>
 		<item name="wcf.acp.cache.list.name"><![CDATA[Name]]></item>
 		<item name="wcf.acp.cache.list.perm"><![CDATA[Zugriffsrechte]]></item>
 		<item name="wcf.acp.cache.list.size"><![CDATA[Größe]]></item>
-		<item name="wcf.acp.cache.source.type.DiskCacheSource"><![CDATA[Dateisystem]]></item>
-		<item name="wcf.acp.cache.source.type.RedisCacheSource"><![CDATA[Redis]]></item>
 		<item name="wcf.acp.cache.type.data"><![CDATA[Daten]]></item>
 		<item name="wcf.acp.cache.type.language"><![CDATA[Sprachen]]></item>
 		<item name="wcf.acp.cache.type.style"><![CDATA[Stile]]></item>
@@ -999,7 +995,6 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.index.woltlab.pluginStore"><![CDATA[Plugin-Store]]></item>
 		<item name="wcf.acp.index.missingLanguageItems"><![CDATA[Es wurden fehlende Sprachvariablen protokolliert (zuletzt: {@$missingLanguageItemsMTime|time}). {if LANGUAGE_USE_INFORMAL_VARIANT}Überprüfe{else}Überprüfen Sie{/if} die <a href="{link controller='DevtoolsMissingLanguageItemList'}{/link}">Liste der fehlenden Texte</a> für weitere Informationen.]]></item>
 		<item name="wcf.acp.index.systemIdMismatch"><![CDATA[Die Systemumgebung hat sich verändert. Es wird empfohlen, eine <a href="{link controller='SystemCheck'}{/link}">Systemüberprüfung</a> durchzuführen.]]></item>
-		<item name="wcf.acp.index.cacheSanityCheckFailed"><![CDATA[Die eingestellte Cache-Methode („{CACHE_SOURCE_TYPE}“) funktioniert nicht richtig.]]></item>
 		<item name="wcf.acp.index.insecureContext"><![CDATA[Die Seite wird nicht über HTTPS aufgerufen. Wichtige Funktionen stehen dadurch nicht zur Verfügung, die für die korrekte Funktionsweise der Software erforderlich sind.]]></item>
 	</category>
 	<category name="wcf.acp.label">
@@ -1298,19 +1293,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.notice.showOrder.description"><![CDATA[Legt die Reihenfolge fest, in der die Hinweise angezeigt werden.]]></item>
 	</category>
 	<category name="wcf.acp.option">
-		<item name="wcf.acp.option.cache_source_redis_host"><![CDATA[Redis-Server]]></item>
-		<item name="wcf.acp.option.cache_source_redis_host.description"><![CDATA[Die Adresse des Servers, zum Beispiel „localhost“ oder „10.0.13.37:1337“.]]></item>
-		<item name="wcf.acp.option.cache_source_type"><![CDATA[Cache-Methode]]></item>
-		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Beachte{else}Beachten Sie{/if}, dass einige Methoden spezielle Anforderungen an das Server-System stellen und nicht auf jedem Server zur Verfügung stehen.]]></item>
-		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[Dateisystem]]></item>
-		<item name="wcf.acp.option.cache_source_type.redis"><![CDATA[Redis (veraltet, nicht empfohlen)]]></item>
 		<item name="wcf.acp.option.category.general"><![CDATA[Allgemein]]></item>
-		<item name="wcf.acp.option.category.general.cache"><![CDATA[Cache]]></item>
-		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[Allgemein]]></item>
-		<item name="wcf.acp.option.category.general.cache.redis"><![CDATA[Redis]]></item>
-		<item name="wcf.acp.option.category.general.cache.redis.description"><![CDATA[Redis speichert häufig benötigte Daten im Arbeitsspeicher zwischen. Dies kann die Last auf die Datenbank und das Dateisystem drastisch reduzieren. {if LANGUAGE_USE_INFORMAL_VARIANT}Lies{else}Lesen Sie{/if} mehr über dieses Thema auf der folgenden Seite: <a href="https://redis.io/" class="externalURL">redis.io</a>.<br>
-<br>
-<strong>Warnung:</strong> Die Unterstützung für Redis wird mit einer zukünftigen Version entfernt und es wird empfohlen auf den Dateisystem-Cache zu migrieren. Der Dateisystem-Cache bietet inzwischen dieselbe hohe Performance ohne die Anforderungen an einen separaten Server-Dienst.]]></item>
 		<item name="wcf.acp.option.category.general.system.date"><![CDATA[Datum &amp; Zeit]]></item>
 		<item name="wcf.acp.option.category.general.system.image"><![CDATA[Grafik]]></item>
 		<item name="wcf.acp.option.category.general.system"><![CDATA[System]]></item>

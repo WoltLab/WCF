@@ -4,8 +4,6 @@ namespace wcf\system\cache;
 
 use wcf\system\cache\builder\ICacheBuilder;
 use wcf\system\cache\source\DiskCacheSource;
-use wcf\system\cache\source\ICacheSource;
-use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 
 /**
@@ -15,52 +13,30 @@ use wcf\system\SingletonFactory;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class CacheHandler extends SingletonFactory
+final class CacheHandler extends SingletonFactory
 {
-    /**
-     * @var ICacheSource
-     */
-    protected $cacheSource;
+    protected DiskCacheSource $cacheSource;
 
     #[\Override]
-    protected function init()
+    protected function init(): void
     {
-        // init cache source object
-        try {
-            $className = 'wcf\system\cache\source\\' . \ucfirst(\CACHE_SOURCE_TYPE) . 'CacheSource';
-            if (\class_exists($className)) {
-                $this->cacheSource = new $className();
-            } else {
-                // fallback to disk cache
-                $this->cacheSource = new DiskCacheSource();
-            }
-        } catch (SystemException $e) {
-            if (\CACHE_SOURCE_TYPE != 'disk') {
-                // fallback to disk cache
-                $this->cacheSource = new DiskCacheSource();
-            } else {
-                throw $e;
-            }
-        }
+        $this->cacheSource = new DiskCacheSource();
     }
 
     /**
      * Flush cache for given resource.
      *
      * @param mixed[] $parameters
-     * @return void
      */
-    public function flush(ICacheBuilder $cacheBuilder, array $parameters)
+    public function flush(ICacheBuilder $cacheBuilder, array $parameters): void
     {
         $this->getCacheSource()->flush($this->getCacheName($cacheBuilder, $parameters), empty($parameters));
     }
 
     /**
      * Flushes the entire cache.
-     *
-     * @return void
      */
-    public function flushAll()
+    public function flushAll(): void
     {
         $this->getCacheSource()->flushAll();
     }
@@ -69,9 +45,8 @@ class CacheHandler extends SingletonFactory
      * Returns cached value for given resource, false if no cache exists.
      *
      * @param mixed[] $parameters
-     * @return mixed
      */
-    public function get(ICacheBuilder $cacheBuilder, array $parameters)
+    public function get(ICacheBuilder $cacheBuilder, array $parameters): mixed
     {
         return $this->getCacheSource()->get(
             $this->getCacheName($cacheBuilder, $parameters),
@@ -80,13 +55,12 @@ class CacheHandler extends SingletonFactory
     }
 
     /**
-     * Caches a value for given resource,
+     * Caches a value for given resource.
      *
      * @param mixed[] $parameters
      * @param mixed[] $data
-     * @return void
      */
-    public function set(ICacheBuilder $cacheBuilder, array $parameters, array $data)
+    public function set(ICacheBuilder $cacheBuilder, array $parameters, array $data): void
     {
         $this->getCacheSource()->set(
             $this->getCacheName($cacheBuilder, $parameters),
@@ -99,9 +73,8 @@ class CacheHandler extends SingletonFactory
      * Returns cache index hash.
      *
      * @param mixed[] $parameters
-     * @return string
      */
-    public function getCacheIndex(array $parameters)
+    public function getCacheIndex(array $parameters): string
     {
         return \sha1(\serialize($this->orderParameters($parameters)));
     }
@@ -110,9 +83,8 @@ class CacheHandler extends SingletonFactory
      * Builds cache name.
      *
      * @param mixed[] $parameters
-     * @return string
      */
-    protected function getCacheName(ICacheBuilder $cacheBuilder, array $parameters = [])
+    protected function getCacheName(ICacheBuilder $cacheBuilder, array $parameters = []): string
     {
         $cacheName = \str_replace(
             ['\\', 'system_cache_builder_'],
@@ -128,10 +100,8 @@ class CacheHandler extends SingletonFactory
 
     /**
      * Returns the cache source object.
-     *
-     * @return ICacheSource
      */
-    public function getCacheSource()
+    public function getCacheSource(): DiskCacheSource
     {
         return $this->cacheSource;
     }
@@ -142,29 +112,12 @@ class CacheHandler extends SingletonFactory
      * @param mixed[] $parameters
      * @return mixed[]
      */
-    protected function orderParameters(array $parameters)
+    protected function orderParameters(array $parameters): array
     {
         if (!empty($parameters)) {
             \array_multisort($parameters);
         }
 
         return $parameters;
-    }
-
-    /**
-     * Returns false, if the configured cache source type could not be initialized.
-     *
-     * @since 6.1
-     */
-    public function sanityCheck(): bool
-    {
-        if (
-            \CACHE_SOURCE_TYPE !== 'disk'
-            && \get_class(CacheHandler::getInstance()->getCacheSource()) === DiskCacheSource::class
-        ) {
-            return false;
-        }
-
-        return true;
     }
 }

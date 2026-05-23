@@ -87,16 +87,6 @@
 			<category name="general.mail.send">
 				<parent>general.mail</parent>
 			</category>
-			<category name="general.cache">
-				<parent>general</parent>
-				<showorder>5</showorder>
-			</category>
-			<category name="general.cache.general">
-				<parent>general.cache</parent>
-			</category>
-			<category name="general.cache.redis">
-				<parent>general.cache</parent>
-			</category>
 			<category name="general.payment">
 				<parent>general</parent>
 				<showorder>6</showorder>
@@ -852,21 +842,6 @@ encrypt:wcf.acp.option.mail_smtp_starttls.encrypt</selectoptions>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /general.mail.send -->
-			<!-- general.cache -->
-			<option name="cache_source_type">
-				<categoryname>general.cache.general</categoryname>
-				<optiontype>radioButton</optiontype>
-				<defaultvalue>disk</defaultvalue>
-				<enableoptions>disk:!cache_source_redis_host
-redis:cache_source_redis_host</enableoptions>
-				<selectoptions>disk:wcf.acp.option.cache_source_type.disk
-redis:wcf.acp.option.cache_source_type.redis</selectoptions>
-			</option>
-			<option name="cache_source_redis_host">
-				<categoryname>general.cache.redis</categoryname>
-				<optiontype>text</optiontype>
-			</option>
-			<!-- /general.cache -->
 			<!-- general.payment -->
 			<option name="available_payment_methods">
 				<categoryname>general.payment</categoryname>
@@ -1607,6 +1582,8 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		<option name="desktop_notification_package_id"/>
 		<option name="http_send_x_frame_options"/>
 		<option name="cache_source_memcached_host"/>
+		<option name="cache_source_type"/>
+		<option name="cache_source_redis_host"/>
 		<option name="module_gravatar"/>
 		<option name="gravatar_default_type"/>
 		<option name="module_cookie_policy_page"/>
@@ -1624,6 +1601,9 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		<option name="message_sidebar_enable_articles"/>
 		<category name="security.blacklist"/>
 		<category name="security.blacklist.custom"/>
+		<category name="general.cache"/>
+		<category name="general.cache.general"/>
+		<category name="general.cache.redis"/>
 
 		<option name="attachment_image_autoscale_quality"/>
 		<option name="register_username_force_ascii"/>
