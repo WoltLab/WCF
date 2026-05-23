@@ -4,7 +4,6 @@ namespace wcf\data\menu\item;
 
 use wcf\system\page\PageLocationManager;
 use wcf\system\request\RequestHandler;
-use wcf\system\request\RouteHandler;
 use wcf\util\Url;
 
 /**
