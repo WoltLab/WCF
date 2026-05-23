@@ -12,7 +12,7 @@
 					<button type="button" class="button jsChangeShowOrder">{icon name='up-down'} <span>{lang}wcf.global.changeShowOrder{/lang}</span></button>
 				</li>
 			{/if}
-			<li><a href="{link controller='AdAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.menu.link.ad.add{/lang}</span></a></li>
+			<li><a href="{link controller='AdAdd'}{/link}" class="button buttonPrimary">{icon name='plus'} <span>{lang}wcf.acp.menu.link.ad.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

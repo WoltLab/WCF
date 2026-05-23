@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='StyleAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
+			<li><a href="{link controller='StyleAdd'}{/link}" class="button buttonPrimary">{icon name='plus'} <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
 			<li><a href="{link controller='StyleImport'}{/link}" class="button">{icon name='upload'} <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}

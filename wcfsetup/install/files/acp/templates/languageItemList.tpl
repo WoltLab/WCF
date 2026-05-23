@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='LanguageItemAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.menu.link.language.item.add{/lang}</span></a></li>
+			<li><a href="{link controller='LanguageItemAdd'}{/link}" class="button buttonPrimary">{icon name='plus'} <span>{lang}wcf.acp.menu.link.language.item.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

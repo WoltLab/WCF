@@ -20,7 +20,7 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			<li><a href="#" class="button jsDevtoolsProjectQuickSetupButton">{icon name='magnifying-glass'} <span>{lang}wcf.acp.devtools.project.quickSetup{/lang}</span></a></li>
-			<li><a href="{link controller='DevtoolsProjectAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.devtools.project.add{/lang}</span></a></li>
+			<li><a href="{link controller='DevtoolsProjectAdd'}{/link}" class="button buttonPrimary">{icon name='plus'} <span>{lang}wcf.acp.devtools.project.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -84,7 +84,7 @@
 <footer class="contentFooter">
 	<nav class="contentFooterNavigation">
 		<ul>
-			<li><a href="{link controller='DevtoolsProjectAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.devtools.project.add{/lang}</span></a></li>
+			<li><a href="{link controller='DevtoolsProjectAdd'}{/link}" class="button buttonPrimary">{icon name='plus'} <span>{lang}wcf.acp.devtools.project.add{/lang}</span></a></li>
 			
 			{event name='contentFooterNavigation'}
 		</ul>

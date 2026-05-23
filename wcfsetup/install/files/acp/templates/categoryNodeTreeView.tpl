@@ -10,7 +10,7 @@
 			<ul>
 				{content}
 					{if $objectType->getProcessor()->canAddCategory()}
-						<li><a href="{$addFormLink}" class="button">{icon name='plus'} <span>{unsafe:$objectType->getProcessor()->getLanguageVariable('add')}</span></a></li>
+						<li><a href="{$addFormLink}" class="button buttonPrimary">{icon name='plus'} <span>{unsafe:$objectType->getProcessor()->getLanguageVariable('add')}</span></a></li>
 					{/if}
 
 					{event name='contentHeaderNavigation'}

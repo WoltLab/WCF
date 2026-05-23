@@ -41,7 +41,7 @@
 					{/if}
 
 					{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
-						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
+						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button buttonPrimary">{icon name='plus'} <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentHeaderNavigation'}

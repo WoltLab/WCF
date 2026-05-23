@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='TemplateGroupAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.template.group.add{/lang}</span></a></li>
+			<li><a href="{link controller='TemplateGroupAdd'}{/link}" class="button buttonPrimary">{icon name='plus'} <span>{lang}wcf.acp.template.group.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

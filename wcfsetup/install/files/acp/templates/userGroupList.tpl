@@ -10,7 +10,7 @@
 			<ul>
 				{content}
 					{if $__wcf->getSession()->getPermission('admin.user.canAddGroup')}
-						<li><a href="{link controller='UserGroupAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
+						<li><a href="{link controller='UserGroupAdd'}{/link}" class="button buttonPrimary">{icon name='plus'} <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
 					{/if}
 						
 					{event name='contentHeaderNavigation'}

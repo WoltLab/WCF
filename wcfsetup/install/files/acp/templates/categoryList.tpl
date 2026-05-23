@@ -22,7 +22,7 @@
 			<ul>
 				{content}
 					{if $objectType->getProcessor()->canAddCategory()}
-						<li><a href="{link controller=$addController application=$objectType->getProcessor()->getApplication()}{/link}" class="button">{icon name='plus'} <span>{unsafe:$objectType->getProcessor()->getLanguageVariable('add')}</span></a></li>
+						<li><a href="{link controller=$addController application=$objectType->getProcessor()->getApplication()}{/link}" class="button buttonPrimary">{icon name='plus'} <span>{unsafe:$objectType->getProcessor()->getLanguageVariable('add')}</span></a></li>
 					{/if}
 						
 					{event name='contentHeaderNavigation'}

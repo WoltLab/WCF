@@ -7,7 +7,7 @@
 
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='UserTrophyAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.menu.link.userTrophy.add{/lang}</span></a></li>
+			<li><a href="{link controller='UserTrophyAdd'}{/link}" class="button buttonPrimary">{icon name='plus'} <span>{lang}wcf.acp.menu.link.userTrophy.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='CaptchaQuestionAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.captcha.question.add{/lang}</span></a></li>
+			<li><a href="{link controller='CaptchaQuestionAdd'}{/link}" class="button buttonPrimary">{icon name='plus'} <span>{lang}wcf.acp.captcha.question.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

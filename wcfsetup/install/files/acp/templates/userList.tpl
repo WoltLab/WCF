@@ -52,7 +52,7 @@
 					{/if}
 
 					{if $__wcf->session->getPermission('admin.user.canAddUser')}
-						<li><a href="{link controller='UserAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
+						<li><a href="{link controller='UserAdd'}{/link}" class="button buttonPrimary">{icon name='plus'} <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 					{/if}
 
 					{event name='contentHeaderNavigation'}
@@ -231,7 +231,7 @@
 				<ul>
 					{content}
 						{if $__wcf->session->getPermission('admin.user.canAddUser')}
-							<li><a href="{link controller='UserAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
+							<li><a href="{link controller='UserAdd'}{/link}" class="button buttonPrimary">{icon name='plus'} <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 						{/if}
 
 						{event name='contentFooterNavigation'}

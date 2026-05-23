@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='TemplateAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
+			<li><a href="{link controller='TemplateAdd'}{/link}" class="button buttonPrimary">{icon name='plus'} <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

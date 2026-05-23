@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='UserOptionCategoryAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.category.add{/lang}</span></a></li>
+			<li><a href="{link controller='UserOptionCategoryAdd'}{/link}" class="button buttonPrimary">{icon name='plus'} <span>{lang}wcf.category.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -71,7 +71,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='UserOptionCategoryAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.category.add{/lang}</span></a></li>
+				<li><a href="{link controller='UserOptionCategoryAdd'}{/link}" class="button buttonPrimary">{icon name='plus'} <span>{lang}wcf.category.add{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>
