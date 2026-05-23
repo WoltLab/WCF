@@ -40,7 +40,7 @@ class UserBirthdayListView extends AbstractSimpleUserListView
             \assert($birthdayUserOption instanceof UserOption);
 
             $userProfiles = UserProfileRuntimeCache::getInstance()->getObjects(
-                UserBirthdayCache::getInstance()->getBirthdays($month, $day)
+                $this->getBirthdays($month, $day)
             );
 
             foreach ($userProfiles as $user) {
@@ -117,5 +117,10 @@ class UserBirthdayListView extends AbstractSimpleUserListView
             'month' => \intval($value[1]),
             'year' => \intval($value[0]),
         ];
+    }
+
+    protected function getBirthdays(int $month, int $day): array
+    {
+        return UserBirthdayCache::getInstance()->getBirthdays($month, $day);
     }
 }
