@@ -180,8 +180,21 @@ interface IFileProcessor
      * variant.
      *
      * @since 6.2
+     * @deprecated 6.2 Implement `sourceFilenameChanged()` instead.
      */
     public function replacedWithWebpVariant(File $file): void;
+
+    /**
+     * Notifies the processor that the source filename or path of one of its
+     * files has changed. This happens when the file is replaced with its WebP
+     * variant, when the source file is rewritten by the rebuild data worker,
+     * or when the file extension changes due to a corrected mime type.
+     *
+     * Processors that store a denormalized pathname should recompute it here.
+     *
+     * @since 6.2
+     */
+    public function sourceFilenameChanged(File $file): void;
 
     /**
      * Returns true if there can only be ever one file for this type of upload

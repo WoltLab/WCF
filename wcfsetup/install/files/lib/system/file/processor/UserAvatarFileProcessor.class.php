@@ -205,7 +205,7 @@ final class UserAvatarFileProcessor extends AbstractFileProcessor
     }
 
     #[\Override]
-    public function replacedWithWebpVariant(File $file): void
+    public function sourceFilenameChanged(File $file): void
     {
         $user = $this->getUserByFile($file);
         if ($user === null) {

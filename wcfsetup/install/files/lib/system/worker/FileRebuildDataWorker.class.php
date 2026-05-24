@@ -71,6 +71,7 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
 
     private function fixMimeType(): void
     {
+        $renamedFileIDs = [];
         $reloadFiles = false;
         foreach ($this->objectList as $file) {
             // Workaround for images that have been detected but failed to
@@ -113,7 +114,8 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
                 }
             }
 
-            if ($previousFileExtension !== $detectedFileExtension) {
+            $pathnameChanged = $previousFileExtension !== $detectedFileExtension;
+            if ($pathnameChanged) {
                 $path = $this->getPath($file->fileHash, $detectedFileExtension);
                 FileUtil::makePath($path);
 
@@ -126,6 +128,8 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
                         $detectedFileExtension,
                     ),
                 );
+
+                $renamedFileIDs[] = $file->fileID;
             }
 
             (new FileEditor($file))->update([
@@ -140,6 +144,13 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
 
         if ($reloadFiles) {
             $this->objectList->readObjects();
+
+            foreach ($renamedFileIDs as $fileID) {
+                $file = $this->objectList->search($fileID);
+                \assert($file !== null);
+
+                $file->getProcessor()?->sourceFilenameChanged($file);
+            }
         }
     }
 
@@ -182,7 +193,10 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
             'mimeType' => 'image/webp',
         ]);
 
-        return new File($file->fileID);
+        $updatedFile = new File($file->fileID);
+        $updatedFile->getProcessor()?->sourceFilenameChanged($updatedFile);
+
+        return $updatedFile;
     }
 
     private function getPath(string $fileHash, string $fileExtension): string
