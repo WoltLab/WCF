@@ -45,16 +45,48 @@
   // for easier comparisons. Dates usually appear a lot of times on most
   // pages, computing the values ahead of time and only updating them
   // once every minute makes this process less expensive.
+  //
+  // The day boundaries are computed relative to the configured time zone
+  // rather than the browser’s local time zone. Otherwise dates near
+  // midnight would be classified incorrectly whenever the two zones
+  // differ. The locale can be anything as long as it uses latin digits.
+  const dayStartPartsFormatter = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  });
+  const getDayStartInTimeZone = (date: Date, dayOffset: number): number => {
+    const map: Record<string, string> = {};
+    for (const part of dayStartPartsFormatter.formatToParts(date)) {
+      map[part.type] = part.value;
+    }
+
+    const year = parseInt(map.year);
+    const month = parseInt(map.month) - 1;
+    const day = parseInt(map.day);
+    const hour = map.hour === "24" ? 0 : parseInt(map.hour);
+
+    const wallUTC = Date.UTC(year, month, day, hour, parseInt(map.minute), parseInt(map.second));
+
+    const offset = wallUTC - date.getTime();
+    const dayStartWall = Date.UTC(year, month, day + dayOffset);
+
+    return dayStartWall - offset;
+  };
+
   let todayDayStart: number;
   let yesterdayDayStart: number;
   const updateTodayAndYesterday = () => {
     const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    if (todayDayStart !== today.getTime()) {
-      todayDayStart = today.getTime();
-
-      const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
-      yesterdayDayStart = yesterday.getTime();
+    const newTodayDayStart = getDayStartInTimeZone(now, 0);
+    if (todayDayStart !== newTodayDayStart) {
+      todayDayStart = newTodayDayStart;
+      yesterdayDayStart = getDayStartInTimeZone(now, -1);
     }
   };
   updateTodayAndYesterday();
