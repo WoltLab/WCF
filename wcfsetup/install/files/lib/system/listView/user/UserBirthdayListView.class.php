@@ -119,6 +119,9 @@ class UserBirthdayListView extends AbstractSimpleUserListView
         ];
     }
 
+    /**
+     * @return list<int>
+     */
     protected function getBirthdays(int $month, int $day): array
     {
         return UserBirthdayCache::getInstance()->getBirthdays($month, $day);
