@@ -4087,27 +4087,18 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 	<category name="wcf.like">
 		<item name="wcf.like.cumulativeLikes"><![CDATA[Reaktionen]]></item>
 		<item name="wcf.like.tooltip"><![CDATA[{if $likes}{#$likes} Like{if $likes != 1}s{/if}{if $dislikes}, {/if}{/if}{if $dislikes}{#$dislikes} Dislike{if $dislikes != 1}s{/if}{/if}]]></item>
-		<item name="wcf.like.jsTooltip"><![CDATA[{literal}{if $likes}{#$likes} Like{if $likes != 1}s{/if}{if $dislikes}, {/if}{/if}{if $dislikes}{#$dislikes} Dislike{if $dislikes != 1}s{/if}{/if}{/literal}]]></item>
 		<item name="wcf.like.button.like"><![CDATA[Gefällt mir]]></item>
 		<item name="wcf.like.button.dislike"><![CDATA[Gefällt mir nicht]]></item>
 		<item name="wcf.like.likesReceived"><![CDATA[Reaktionen]]></item>
 		<item name="wcf.like.showLikesReceived"><![CDATA[Erhaltene Reaktionen von {$user->username}]]></item>
-		<item name="wcf.like.likesGiven"><![CDATA[Vergebene Likes]]></item>
-		<item name="wcf.like.dislikesReceived"><![CDATA[Erhaltene Dislikes]]></item>
-		<item name="wcf.like.dislikesGiven"><![CDATA[Vergebene Dislikes]]></item>
 		<item name="wcf.like.summary"><![CDATA[{literal}{if $others == 0}{@$users.slice(0, -1).join(", ")}{if $users.length > 1} und {/if}{@$users.slice(-1)[0]}{else}{@$users.join(", ")} und {if $others == 1}einem{else}{#$others}{/if} weiteren{/if} gefällt das.{/literal}]]></item>
 		<item name="wcf.like.details"><![CDATA[Details]]></item>
-		<item name="wcf.like.likes.more"><![CDATA[Weitere Reaktionen]]></item>
-		<item name="wcf.like.likes.noMoreEntries"><![CDATA[Keine weiteren Reaktionen]]></item>
-		<item name="wcf.like.dislikes.more"><![CDATA[Weitere Dislikes]]></item>
-		<item name="wcf.like.dislikes.noMoreEntries"><![CDATA[Keine weiteren Dislikes]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment"><![CDATA[<strong>{$author}</strong> hat mit {unsafe:$reaction->render()} auf den Kommentar {if $commentAuthor}von <strong>{$commentAuthor->username}</strong>{else}eines Gasts{/if} an der Pinnwand von <strong>{$user->username}</strong> reagiert.]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[<strong>{$author}</strong> hat mit {unsafe:$reaction->render()} auf die Antwort {if $responseAuthor}von <strong>{$responseAuthor->username}</strong>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <strong{$commentAuthor->username}</strong>{else}eines Gasts{/if} an der Pinnwand von <strong>{$user->username}</strong> reagiert.]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.articleComment"><![CDATA[<strong>{$author}</strong> hat mit {unsafe:$reaction->render()} auf den Kommentar {if $commentAuthor}von <strong>{$commentAuthor->username}</strong>{else}eines Gasts{/if} zum Artikel <strong>{$articleContent->getTitle()}</strong> reagiert.]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.articleComment.response"><![CDATA[<strong>{$author}</strong> hat mit {unsafe:$reaction->render()} auf die Antwort {if $responseAuthor}von <strong>{$responseAuthor->username}</strong>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <strong>{$commentAuthor->username}</strong>{else}eines Gasts{/if} zum Artikel <strong>{$articleContent->getTitle()}</strong> reagiert.]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.pageComment"><![CDATA[<strong>{$author}</strong> hat mit {unsafe:$reaction->render()} auf den Kommentar {if $commentAuthor}von <strong>{$commentAuthor->username}</strong>{else}eines Gasts{/if} zu der Seite <strong>{$page->getTitle()}</strong> reagiert.]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.pageComment.response"><![CDATA[<strong>{$author}</strong> hat mit {unsafe:$reaction->render()} auf die Antwort {if $responseAuthor}von <strong>{$responseAuthor->username}</strong>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <strong>{$commentAuthor->username}</strong>{else}eines Gasts{/if} zu der Seite <strong>{$page->getTitle()}</strong> reagiert.]]></item>
-		<item name="wcf.like.reaction.label"><![CDATA[{#$reactions} Reaktion{if $reactions != 1}en{/if}]]></item>
 		<item name="wcf.like.reaction.more"><![CDATA[Weitere Reaktionen]]></item>
 		<item name="wcf.like.reaction.noMoreEntries"><![CDATA[Keine weiteren Reaktionen]]></item>
 		<item name="wcf.like.reaction.topReaction"><![CDATA[{$reaction->getTitle()} × {#$count}{if $other} und {if $other == 1}eine weitere Reaktion{else}{#$other} weitere Reaktionen{/if}{/if}]]></item>
@@ -5720,5 +5711,14 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.message.autosave.restored.revert.confirmMessage"/>
 	<item name="wcf.message.autosave.restored.version"/>
 	<item name="wcf.message.autosave.saved"/>
+	<item name="wcf.like.jsTooltip"/>
+	<item name="wcf.like.likesGiven"/>
+	<item name="wcf.like.dislikesReceived"/>
+	<item name="wcf.like.dislikesGiven"/>
+	<item name="wcf.like.likes.more"/>
+	<item name="wcf.like.likes.noMoreEntries"/>
+	<item name="wcf.like.dislikes.more"/>
+	<item name="wcf.like.dislikes.noMoreEntries"/>
+	<item name="wcf.like.reaction.label"/>
 </delete>
 </language>
