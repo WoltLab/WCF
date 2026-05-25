@@ -3338,35 +3338,22 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 	<category name="wcf.attachment">
 		<item name="wcf.attachment.file.info"><![CDATA[{@$attachment->filesize|filesize} – {plural value=$attachment->downloads 1="1 Download" other="# Downloads"}]]></item>
 		<item name="wcf.attachment.file.title"><![CDATA[Datei „{$attachment->filename}“ herunterladen]]></item>
-		<item name="wcf.attachment.image.info"><![CDATA[{@$attachment->filesize|filesize}, {#$attachment->width} × {#$attachment->height}, {#$attachment->downloads} Mal angesehen]]></item>
 		<item name="wcf.attachment.image.title"><![CDATA[Bild „{$attachment->filename}“ anzeigen]]></item>
 		<item name="wcf.attachment.files"><![CDATA[Dateien]]></item>
 		<item name="wcf.attachment.images"><![CDATA[Bilder]]></item>
 		<item name="wcf.attachment.attachments"><![CDATA[Dateianhänge]]></item>
-		<item name="wcf.attachment.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Dateianhang wirklich löschen?]]></item>
-		<item name="wcf.attachment.upload.error.invalidExtension"><![CDATA[Die Datei hat eine ungültige Dateiendung.]]></item>
-		<item name="wcf.attachment.upload.error.tooLarge"><![CDATA[Die Dateigröße überschreitet die maximale Dateigröße.]]></item>
-		<item name="wcf.attachment.upload.error.reachedLimit"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} die maximale Anzahl an Dateianhängen erreicht.]]></item>
-		<item name="wcf.attachment.upload.error.reachedRemainingLimit"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} zu viele Dateianhänge ausgewählt, maximal verbleibend: #remaining#.]]></item>
-		<item name="wcf.attachment.upload.error.uploadFailed"><![CDATA[Beim Hochladen der Datei ist ein unbekannter Fehler aufgetreten.]]></item>
-		<item name="wcf.attachment.upload.error.http413"><![CDATA[Die Dateigröße überschreitet das Limit der Anfragegröße des Webservers (HTTP-Statuscode 413).]]></item>
-		<item name="wcf.attachment.upload.error.uploadPhpLimit"><![CDATA[Die Dateigröße überschreitet das PHP-Limit „upload_max_filesize“ und/oder „post_max_size“.]]></item>
 		<item name="wcf.attachment.upload.limits"><![CDATA[Maximale Anzahl an Dateianhängen: {#$attachmentHandler->getMaxCount()}<br>
 Maximale Dateigröße: {@$attachmentHandler->getMaxSize()|filesize}<br>
 Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExtensions()}]]></item>
 		<item name="wcf.attachment.insert"><![CDATA[In Text einfügen]]></item>
 		<item name="wcf.attachment.inserted"><![CDATA[Eingefügt]]></item>
-		<item name="wcf.attachment.insertAll"><![CDATA[Alle einfügen]]></item>
 		<item name="wcf.attachment.insertFull"><![CDATA[Original einfügen]]></item>
-		<item name="wcf.attachment.insertThumbnail"><![CDATA[Vorschau einfügen]]></item>
 		<item name="wcf.attachment.filename"><![CDATA[Dateiname]]></item>
 		<item name="wcf.attachment.uploadTime"><![CDATA[Hochgeladen]]></item>
 		<item name="wcf.attachment.filesize"><![CDATA[Größe]]></item>
 		<item name="wcf.attachment.downloads"><![CDATA[Downloads]]></item>
 		<item name="wcf.attachment.lastDownloadTime"><![CDATA[Letzter Download]]></item>
 		<item name="wcf.attachment.fileType"><![CDATA[Dateityp]]></item>
-		<item name="wcf.attachment.dragAndDrop.dropHere"><![CDATA[Hierhin ziehen und loslassen, um Dateien hochzuladen]]></item>
-		<item name="wcf.attachment.dragAndDrop.dropNow"><![CDATA[Jetzt loslassen, um Dateien hochzuladen]]></item>
 		<item name="wcf.attachment.moreOptions"><![CDATA[Weitere Aktionen]]></item>
 		<item name="wcf.attachment.preview"><![CDATA[Vorschau]]></item>
 	</category>
@@ -5721,5 +5708,18 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.like.objectType.com.woltlab.wcf.comment"/>
 	<item name="wcf.like.objectType.com.woltlab.wcf.comment.response"/>
 	<item name="wcf.like.objectType.com.woltlab.wcf.likeableArticle"/>
+	<item name="wcf.attachment.insertAll"/>
+	<item name="wcf.attachment.insertThumbnail"/>
+	<item name="wcf.attachment.dragAndDrop.dropHere"/>
+	<item name="wcf.attachment.dragAndDrop.dropNow"/>
+	<item name="wcf.attachment.delete.sure"/>
+	<item name="wcf.attachment.image.info"/>
+	<item name="wcf.attachment.upload.error.invalidExtension"/>
+	<item name="wcf.attachment.upload.error.tooLarge"/>
+	<item name="wcf.attachment.upload.error.reachedLimit"/>
+	<item name="wcf.attachment.upload.error.reachedRemainingLimit"/>
+	<item name="wcf.attachment.upload.error.uploadFailed"/>
+	<item name="wcf.attachment.upload.error.http413"/>
+	<item name="wcf.attachment.upload.error.uploadPhpLimit"/>
 </delete>
 </language>
