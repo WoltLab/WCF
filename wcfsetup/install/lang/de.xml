@@ -4176,15 +4176,6 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.file.title"><![CDATA[Datei „{$media->filename}“ herunterladen]]></item>
 	</category>
 	<category name="wcf.message">
-		<item name="wcf.message.autosave.prompt"><![CDATA[Gespeicherten Entwurf wiederherstellen?]]></item>
-		<item name="wcf.message.autosave.prompt.confirm"><![CDATA[Entwurf wiederherstellen]]></item>
-		<item name="wcf.message.autosave.prompt.discard"><![CDATA[Entwurf verwerfen]]></item>
-		<item name="wcf.message.autosave.restored"><![CDATA[Entwurf wiederhergestellt]]></item>
-		<item name="wcf.message.autosave.restored.confirm"><![CDATA[Beibehalten]]></item>
-		<item name="wcf.message.autosave.restored.revert"><![CDATA[Verwerfen und Editor leeren]]></item>
-		<item name="wcf.message.autosave.restored.revert.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den gespeicherten Entwurf wirklich löschen und den Editor leeren?]]></item>
-		<item name="wcf.message.autosave.restored.version"><![CDATA[Entwurf vom {@$date}]]></item>
-		<item name="wcf.message.autosave.saved"><![CDATA[Entwurf gespeichert]]></item>
 		<item name="wcf.message.bbcode.code.copy"><![CDATA[Inhalt kopieren]]></item>
 		<item name="wcf.message.bbcode.code.copy.success"><![CDATA[Der Inhalt wurde erfolgreich kopiert.]]></item>
 		<item name="wcf.message.quote.insertQuote"><![CDATA[Zitat einfügen]]></item>
@@ -5720,5 +5711,14 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.bbcode.quote.insert"/>
 	<item name="wcf.bbcode.image.source"/>
 	<item name="wcf.bbcode.spoiler.hide"/>
+	<item name="wcf.message.autosave.prompt"/>
+	<item name="wcf.message.autosave.prompt.confirm"/>
+	<item name="wcf.message.autosave.prompt.discard"/>
+	<item name="wcf.message.autosave.restored"/>
+	<item name="wcf.message.autosave.restored.confirm"/>
+	<item name="wcf.message.autosave.restored.revert"/>
+	<item name="wcf.message.autosave.restored.revert.confirmMessage"/>
+	<item name="wcf.message.autosave.restored.version"/>
+	<item name="wcf.message.autosave.saved"/>
 </delete>
 </language>
