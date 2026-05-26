@@ -4436,11 +4436,6 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 	</category>
 	<category name="wcf.recaptcha">
 		<item name="wcf.recaptcha.title"><![CDATA[Verification (“reCAPTCHA”)]]></item>
-		<item name="wcf.recaptcha.description"><![CDATA[Please enter the letters that are displayed in the picture below (letters are not case-sensitive). If you cannot identify the captcha even after reloading it, please contact the administrator.]]></item>
-		<item name="wcf.recaptcha.reload"><![CDATA[Reload]]></item>
-		<item name="wcf.recaptcha.audio"><![CDATA[Audio Version]]></item>
-		<item name="wcf.recaptcha.image"><![CDATA[Image Version]]></item>
-		<item name="wcf.recaptcha.help"><![CDATA[Help]]></item>
 		<item name="wcf.recaptcha.error.recaptchaString.false"><![CDATA[The entered security code is incorrect. Please try again.]]></item>
 	</category>
 	<category name="wcf.search">
@@ -5722,5 +5717,10 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.like.dislikes.more"/>
 	<item name="wcf.like.dislikes.noMoreEntries"/>
 	<item name="wcf.like.reaction.label"/>
+	<item name="wcf.recaptcha.description"/>
+	<item name="wcf.recaptcha.reload"/>
+	<item name="wcf.recaptcha.audio"/>
+	<item name="wcf.recaptcha.image"/>
+	<item name="wcf.recaptcha.help"/>
 </delete>
 </language>

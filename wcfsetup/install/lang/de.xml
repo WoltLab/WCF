@@ -4437,11 +4437,6 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 	</category>
 	<category name="wcf.recaptcha">
 		<item name="wcf.recaptcha.title"><![CDATA[Sicherheitsabfrage („reCAPTCHA“)]]></item>
-		<item name="wcf.recaptcha.description"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}gib{else}geben Sie{/if} die untenstehenden Zeichen in das leere Feld ein. Groß- und Kleinschreibung müssen nicht beachtet werden. {if LANGUAGE_USE_INFORMAL_VARIANT}Solltest du{else}Sollten Sie{/if} das Bild trotz Neuladen nicht identifizieren können, {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich{else}wenden Sie sich{/if} an den Administrator.]]></item>
-		<item name="wcf.recaptcha.reload"><![CDATA[Neu laden]]></item>
-		<item name="wcf.recaptcha.audio"><![CDATA[Audio-Version]]></item>
-		<item name="wcf.recaptcha.image"><![CDATA[Bild-Version]]></item>
-		<item name="wcf.recaptcha.help"><![CDATA[Hilfe]]></item>
 		<item name="wcf.recaptcha.error.recaptchaString.false"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} leider nicht die korrekten Zeichen eingegeben. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche{else}versuchen Sie{/if} es erneut!]]></item>
 	</category>
 	<category name="wcf.search">
@@ -5720,5 +5715,10 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.like.dislikes.more"/>
 	<item name="wcf.like.dislikes.noMoreEntries"/>
 	<item name="wcf.like.reaction.label"/>
+	<item name="wcf.recaptcha.description"/>
+	<item name="wcf.recaptcha.reload"/>
+	<item name="wcf.recaptcha.audio"/>
+	<item name="wcf.recaptcha.image"/>
+	<item name="wcf.recaptcha.help"/>
 </delete>
 </language>
