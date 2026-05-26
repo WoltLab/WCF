@@ -102,7 +102,6 @@
 		<item name="wcf.acp.article.publicationStatus.unpublished"><![CDATA[Unpublished]]></item>
 		<item name="wcf.acp.article.publicationStatus.published"><![CDATA[Published]]></item>
 		<item name="wcf.acp.article.publicationStatus.delayed"><![CDATA[Scheduled publication]]></item>
-		<item name="wcf.acp.article.setCategory"><![CDATA[Set Category]]></item>
 		<item name="wcf.acp.article.teaser"><![CDATA[Teaser]]></item>
 		<item name="wcf.acp.article.trash.notice"><![CDATA[This article has been moved to the trash bin and is currently hidden from view.]]></item>
 		<item name="wcf.acp.article.views"><![CDATA[Views]]></item>
@@ -599,7 +598,6 @@
 		<item name="wcf.acp.devtools.missingLanguageItem.clearLog.confirmMessage"><![CDATA[Do you really want to delete all entries?]]></item>
 		<item name="wcf.acp.devtools.missingLanguageItem.clearExistingLog"><![CDATA[Delete existing entries]]></item>
 		<item name="wcf.acp.devtools.missingLanguageItem.clearExistingLog.confirmMessage"><![CDATA[Do you really want to delete all entries for which the phrases exist now?]]></item>
-		<item name="wcf.acp.devtools.missingLanguageItem.stackTrace.toggleOutputFormat"><![CDATA[Toggle line breaks]]></item>
 	</category>
 	<category name="wcf.acp.email">
 		<item name="wcf.acp.email.smtp.test"><![CDATA[SMTP Connection Test]]></item>
@@ -636,7 +634,6 @@
 		<item name="wcf.acp.exceptionLog.exception.referrer"><![CDATA[Referrer]]></item>
 		<item name="wcf.acp.exceptionLog.exception.stacktrace"><![CDATA[Stacktrace]]></item>
 		<item name="wcf.acp.exceptionLog.exception.copy"><![CDATA[Copy error message]]></item>
-		<item name="wcf.acp.exceptionLog.exceptionNotFound"><![CDATA[No error with the ID “{$exceptionID}” was found.]]></item>
 		<item name="wcf.acp.exceptionLog.search"><![CDATA[Search]]></item>
 		<item name="wcf.acp.exceptionLog.search.exceptionID"><![CDATA[Error-ID]]></item>
 		<item name="wcf.acp.exceptionLog.search.logFile"><![CDATA[Logfile]]></item>
@@ -961,7 +958,6 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.dashboard.box.expiringLicenses.cta"><![CDATA[Renew Licenses Now ↗]]></item>
 	</category>
 	<category name="wcf.acp.index">
-		<item name="wcf.acp.index.inRescueMode"><![CDATA[You are accessing this installation from an unknown domain, possibly caused by moving to a new host. Please update the settings on <a href="{link controller='ApplicationManagement'}{/link}">Manage Apps</a>.]]></item>
 		<item name="wcf.acp.index.setup.notice"><![CDATA[The installation will be continued within a few moments, please do not reload this page.]]></item>
 		<item name="wcf.acp.index.setup.title"><![CDATA[Please Wait]]></item>
 		<item name="wcf.acp.index.woltlab.website"><![CDATA[Website]]></item>
@@ -1074,7 +1070,6 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.license.package.install"><![CDATA[Install]]></item>
 		<item name="wcf.acp.license.package.installed"><![CDATA[Already installed]]></item>
 		<item name="wcf.acp.license.package.outdated"><![CDATA[Up to version {$accessibleVersion}]]></item>
-		<item name="wcf.acp.license.package.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.license.error.parsingFailed"><![CDATA[The license data could not be retrieved. Please <a href="{link controller="LicenseEdit"}{/link}">verify and update the license credentials</a>.{if $licenseData !== null}<br><br>The license data was last updated on {time type='plainTime' time=$licenseData->creationDate}.{/if}]]></item>
 	</category>
 	<category name="wcf.acp.menu">
@@ -1205,8 +1200,8 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.menu.item.pageObjectID.error.invalid"><![CDATA[ID is invalid.]]></item>
 		<item name="wcf.acp.menu.item.urlParameters"><![CDATA[Additional URL Parameters]]></item>
 		<item name="wcf.acp.menu.link.contact"><![CDATA[Contact Form]]></item>
-		<item name="wcf.acp.menu.link.contact.options"><![CDATA[Option Fields]]></item>
-		<item name="wcf.acp.menu.link.contact.recipients"><![CDATA[Recipient]]></item>
+		<item name="wcf.acp.menu.link.contact.options"><![CDATA[Input Fields]]></item>
+		<item name="wcf.acp.menu.link.contact.recipients"><![CDATA[Recipients]]></item>
 		<item name="wcf.acp.menu.link.trophy"><![CDATA[Trophies]]></item>
 		<item name="wcf.acp.menu.link.trophy.list"><![CDATA[Trophies]]></item>
 		<item name="wcf.acp.menu.link.trophy.add"><![CDATA[Add Trophy]]></item>
@@ -2773,7 +2768,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.sessionLog.className"><![CDATA[Class]]></item>
 		<item name="wcf.acp.sessionLog.lastActivityTime"><![CDATA[Last Action]]></item>
 		<item name="wcf.acp.sessionLog.list"><![CDATA[Logged sessions]]></item>
-		<item name="wcf.acp.sessionLog.packageName"><![CDATA[Package]]></item>
 		<item name="wcf.acp.sessionLog.requestMethod"><![CDATA[Method]]></item>
 		<item name="wcf.acp.sessionLog.requestURI"><![CDATA[URI]]></item>
 		<item name="wcf.acp.sessionLog.time"><![CDATA[Time]]></item>
@@ -3463,14 +3457,12 @@ Attachments:
 		<item name="wcf.acp.contact.options"><![CDATA[Input Fields]]></item>
 		<item name="wcf.acp.contact.option.add"><![CDATA[Add Input Field]]></item>
 		<item name="wcf.acp.contact.option.edit"><![CDATA[Edit Input Field]]></item>
-		<item name="wcf.acp.contact.option.list"><![CDATA[Input Fields]]></item>
 		<item name="wcf.acp.contact.recipients"><![CDATA[Recipients]]></item>
 		<item name="wcf.acp.contact.recipient.add"><![CDATA[Add Recipient]]></item>
 		<item name="wcf.acp.contact.recipient.edit"><![CDATA[Edit Recipient]]></item>
 		<item name="wcf.acp.contact.recipient.list"><![CDATA[Recipients]]></item>
 		<item name="wcf.acp.contact.recipient.isDisabled"><![CDATA[Disable recipient]]></item>
 		<item name="wcf.acp.contact.recipient.name"><![CDATA[Display Name]]></item>
-		<item name="wcf.acp.contact.settings"><![CDATA[Edit Contact Form]]></item>
 	</category>
 	<category name="wcf.acp.content">
 		<item name="wcf.acp.content.removeContent"><![CDATA[Delete User’s Content]]></item>
@@ -5015,7 +5007,6 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.acp.trophy.userTrophy.user.error.notFound"><![CDATA[The username “{$errorData[username]}” does not exist.]]></item>
 		<item name="wcf.acp.trophy.userTrophy.description"><![CDATA[Select the trophy that should be awarded to the users. You cannot select automatically awarded trophies.]]></item>
 		<item name="wcf.acp.trophy.userTrophy.useCustomDescription"><![CDATA[Use custom trophy description]]></item>
-		<item name="wcf.acp.trophy.userTrophy.delete.confirmMessage"><![CDATA[Do you really want to delete the trophy <span class="confirmationObject">{$userTrophy->getTrophy()->getTitle()}</span> from <span class="confirmationObject">{$userTrophy->getUserProfile()->username}</span>?]]></item>
 		<item name="wcf.acp.trophy.userTrophy.trophy.error.awardAutomatically"><![CDATA[Trophies that are awarded automatically cannot be awarded manually.]]></item>
 		<item name="wcf.acp.trophy.error.noCategories"><![CDATA[Please <a href="{link controller='TrophyCategoryAdd'}{/link}">add a category</a> before creating trophies.]]></item>
 		<item name="wcf.acp.trophy.error.noSuitableTrophies"><![CDATA[Please <a href="{link controller='TrophyAdd'}{/link}">add a trophy</a> that is not automatically awarded before you award trophies.]]></item>
@@ -5722,5 +5713,14 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.recaptcha.audio"/>
 	<item name="wcf.recaptcha.image"/>
 	<item name="wcf.recaptcha.help"/>
+	<item name="wcf.acp.contact.option.list"/>
+	<item name="wcf.acp.contact.settings"/>
+	<item name="wcf.acp.sessionLog.packageName"/>
+	<item name="wcf.acp.exceptionLog.exceptionNotFound"/>
+	<item name="wcf.acp.index.inRescueMode"/>
+	<item name="wcf.acp.license.package.version"/>
+	<item name="wcf.acp.devtools.missingLanguageItem.stackTrace.toggleOutputFormat"/>
+	<item name="wcf.acp.article.setCategory"/>
+	<item name="wcf.acp.trophy.userTrophy.delete.confirmMessage"/>
 </delete>
 </language>

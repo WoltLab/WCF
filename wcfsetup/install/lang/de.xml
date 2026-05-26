@@ -102,7 +102,6 @@
 		<item name="wcf.acp.article.publicationStatus.unpublished"><![CDATA[Unveröffentlicht]]></item>
 		<item name="wcf.acp.article.publicationStatus.published"><![CDATA[Veröffentlicht]]></item>
 		<item name="wcf.acp.article.publicationStatus.delayed"><![CDATA[Zeitgesteuerte Veröffentlichung]]></item>
-		<item name="wcf.acp.article.setCategory"><![CDATA[Kategorie ändern]]></item>
 		<item name="wcf.acp.article.teaser"><![CDATA[Einleitungstext]]></item>
 		<item name="wcf.acp.article.trash.notice"><![CDATA[Dieser Artikel befindet sich im Papierkorb und wird gegenwärtig nicht angezeigt.]]></item>
 		<item name="wcf.acp.article.views"><![CDATA[Zugriffe]]></item>
@@ -284,14 +283,12 @@
 		<item name="wcf.acp.contact.options"><![CDATA[Eingabefelder]]></item>
 		<item name="wcf.acp.contact.option.add"><![CDATA[Eingabefeld hinzufügen]]></item>
 		<item name="wcf.acp.contact.option.edit"><![CDATA[Eingabefeld bearbeiten]]></item>
-		<item name="wcf.acp.contact.option.list"><![CDATA[Eingabefelder auflisten]]></item>
 		<item name="wcf.acp.contact.recipients"><![CDATA[Empfänger]]></item>
 		<item name="wcf.acp.contact.recipient.add"><![CDATA[Empfänger hinzufügen]]></item>
 		<item name="wcf.acp.contact.recipient.edit"><![CDATA[Empfänger bearbeiten]]></item>
 		<item name="wcf.acp.contact.recipient.list"><![CDATA[Empfänger auflisten]]></item>
 		<item name="wcf.acp.contact.recipient.isDisabled"><![CDATA[Empfänger deaktivieren]]></item>
 		<item name="wcf.acp.contact.recipient.name"><![CDATA[Angezeigter Name]]></item>
-		<item name="wcf.acp.contact.settings"><![CDATA[Kontaktformular bearbeiten]]></item>
 	</category>
 	<category name="wcf.acp.content">
 		<item name="wcf.acp.content.removeContent"><![CDATA[Inhalte des Benutzers löschen]]></item>
@@ -623,7 +620,6 @@
 		<item name="wcf.acp.devtools.missingLanguageItem.clearLog.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich alle Einträge löschen?]]></item>
 		<item name="wcf.acp.devtools.missingLanguageItem.clearExistingLog"><![CDATA[Vorhandene Einträge löschen]]></item>
 		<item name="wcf.acp.devtools.missingLanguageItem.clearExistingLog.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich alle Einträge löschen, für die es mittlerweile Texte gibt?]]></item>
-		<item name="wcf.acp.devtools.missingLanguageItem.stackTrace.toggleOutputFormat"><![CDATA[Zeilenumbrüche einschalten/ausschalten]]></item>
 	</category>
 	<category name="wcf.acp.email">
 		<item name="wcf.acp.email.smtp.test"><![CDATA[SMTP-Verbindungstest]]></item>
@@ -660,7 +656,6 @@
 		<item name="wcf.acp.exceptionLog.exception.referrer"><![CDATA[Referrer]]></item>
 		<item name="wcf.acp.exceptionLog.exception.stacktrace"><![CDATA[Stacktrace]]></item>
 		<item name="wcf.acp.exceptionLog.exception.copy"><![CDATA[Fehlermeldung kopieren]]></item>
-		<item name="wcf.acp.exceptionLog.exceptionNotFound"><![CDATA[Es wurde kein Fehler mit der ID „{$exceptionID}“ gefunden.]]></item>
 		<item name="wcf.acp.exceptionLog.search"><![CDATA[Suche]]></item>
 		<item name="wcf.acp.exceptionLog.search.exceptionID"><![CDATA[Fehler-ID]]></item>
 		<item name="wcf.acp.exceptionLog.search.logFile"><![CDATA[Protokolldatei]]></item>
@@ -985,7 +980,6 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.dashboard.box.expiringLicenses.cta"><![CDATA[Jetzt Lizenzen verlängern ↗]]></item>
 	</category>
 	<category name="wcf.acp.index">
-		<item name="wcf.acp.index.inRescueMode"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du rufst{else}Sie rufen{/if} diese Installation über eine abweichende Domain auf, etwa aufgrund eines Umzuges. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}korrigiere{else}korrigieren Sie{/if} die Einstellungen unter <a href="{link controller='ApplicationManagement'}{/link}">Apps verwalten</a>.]]></item>
 		<item name="wcf.acp.index.setup.notice"><![CDATA[Die Installation wird in wenigen Augenblicken automatisch gestartet, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}lade{else}laden Sie{/if} diese Seite nicht neu.]]></item>
 		<item name="wcf.acp.index.setup.title"><![CDATA[Bitte warten]]></item>
 		<item name="wcf.acp.index.woltlab.website"><![CDATA[Website]]></item>
@@ -1098,7 +1092,6 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.license.package.install"><![CDATA[Installieren]]></item>
 		<item name="wcf.acp.license.package.installed"><![CDATA[Bereits installiert]]></item>
 		<item name="wcf.acp.license.package.outdated"><![CDATA[Bis Version {$accessibleVersion}]]></item>
-		<item name="wcf.acp.license.package.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.license.error.parsingFailed"><![CDATA[Die Lizenzdaten konnten nicht abgerufen werden. Bitte <a href="{link controller="LicenseEdit"}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}kontrolliere und aktualisiere{else}kontrollieren und aktualisieren Sie{/if} die Lizenzdaten</a>.{if $licenseData !== null}<br><br>Der letzte erfolgreiche Abruf der Lizenzinformationen erfolgte am {time type='plainTime' time=$licenseData->creationDate}.{/if}]]></item>
 	</category>
 	<category name="wcf.acp.menu">
@@ -2846,7 +2839,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.sessionLog.className"><![CDATA[Klasse]]></item>
 		<item name="wcf.acp.sessionLog.lastActivityTime"><![CDATA[Letzte Aktion]]></item>
 		<item name="wcf.acp.sessionLog.list"><![CDATA[Protokollierte Sitzungen]]></item>
-		<item name="wcf.acp.sessionLog.packageName"><![CDATA[Paket]]></item>
 		<item name="wcf.acp.sessionLog.requestMethod"><![CDATA[Methode]]></item>
 		<item name="wcf.acp.sessionLog.requestURI"><![CDATA[URI]]></item>
 		<item name="wcf.acp.sessionLog.time"><![CDATA[Datum]]></item>
@@ -5022,7 +5014,6 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.acp.trophy.userTrophy.user.error.notFound"><![CDATA[Der Benutzername „{$errorData[username]}“ konnte nicht gefunden werden.]]></item>
 		<item name="wcf.acp.trophy.userTrophy.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gebe{else}Geben Sie{/if} hier die Trophäe an, welche an die Benutzer vergeben werden soll. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} keine automatisch vergebene Trophäe manuell vergeben.]]></item>
 		<item name="wcf.acp.trophy.userTrophy.useCustomDescription"><![CDATA[Benutzerdefinierte Trophäen-Beschreibung aktivieren]]></item>
-		<item name="wcf.acp.trophy.userTrophy.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Trophäe <span class="confirmationObject">{$userTrophy->getTrophy()->getTitle()}</span> von <span class="confirmationObject">{$userTrophy->getUserProfile()->username}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.trophy.userTrophy.trophy.error.awardAutomatically"><![CDATA[Trophäen die automatisch vergeben werden können nicht manuell vergeben werden.]]></item>
 		<item name="wcf.acp.trophy.error.noCategories"><![CDATA[Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} eine Trophäe hinzufügen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst, musst du{else}können, müssen Sie{/if} eine <a href="{link controller='TrophyCategoryAdd'}{/link}">Kategorie hinzufügen</a>.]]></item>
 		<item name="wcf.acp.trophy.error.noSuitableTrophies"><![CDATA[Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} eine Trophäe vergeben {if LANGUAGE_USE_INFORMAL_VARIANT}kannst, musst du{else}können, müssen Sie{/if} eine <a href="{link controller='TrophyAdd'}{/link}">Trophäe hinzufügen</a>, welche nicht automatisch durch das System vergeben wird.]]></item>
@@ -5720,5 +5711,14 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.recaptcha.audio"/>
 	<item name="wcf.recaptcha.image"/>
 	<item name="wcf.recaptcha.help"/>
+	<item name="wcf.acp.contact.option.list"/>
+	<item name="wcf.acp.contact.settings"/>
+	<item name="wcf.acp.sessionLog.packageName"/>
+	<item name="wcf.acp.exceptionLog.exceptionNotFound"/>
+	<item name="wcf.acp.index.inRescueMode"/>
+	<item name="wcf.acp.license.package.version"/>
+	<item name="wcf.acp.devtools.missingLanguageItem.stackTrace.toggleOutputFormat"/>
+	<item name="wcf.acp.article.setCategory"/>
+	<item name="wcf.acp.trophy.userTrophy.delete.confirmMessage"/>
 </delete>
 </language>
