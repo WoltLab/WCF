@@ -90,7 +90,7 @@ final class UserTrophyGridView extends AbstractGridView
                 ->sortable(),
             GridViewColumn::for('time')
                 ->label('wcf.global.date')
-                ->sortable()
+                ->sortable(defaultSortOrder: 'DESC')
                 ->renderer(new TimeColumnRenderer())
                 ->filter(TimeFilter::class),
         ]);

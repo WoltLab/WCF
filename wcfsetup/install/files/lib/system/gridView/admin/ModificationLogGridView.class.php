@@ -149,7 +149,7 @@ final class ModificationLogGridView extends AbstractGridView
                 ]),
             GridViewColumn::for('time')
                 ->label('wcf.global.date')
-                ->sortable()
+                ->sortable(defaultSortOrder: 'DESC')
                 ->renderer(new TimeColumnRenderer())
                 ->filter(TimeFilter::class),
         ]);

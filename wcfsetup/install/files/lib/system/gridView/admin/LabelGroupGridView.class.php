@@ -78,7 +78,7 @@ final class LabelGroupGridView extends AbstractGridView
                         );
                     }
                 })
-                ->sortable(sortByDatabaseColumn: $this->subSelectLabels()),
+                ->sortable(sortByDatabaseColumn: $this->subSelectLabels(), defaultSortOrder: 'DESC'),
             GridViewColumn::for('showOrder')
                 ->label('wcf.global.showOrder')
                 ->renderer(new NumberColumnRenderer())

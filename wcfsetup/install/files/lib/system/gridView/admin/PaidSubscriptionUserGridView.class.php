@@ -62,7 +62,7 @@ final class PaidSubscriptionUserGridView extends AbstractGridView
                 ->label('wcf.acp.paidSubscription.user.endDate')
                 ->renderer(new TimeColumnRenderer())
                 ->filter(TimeFilter::class)
-                ->sortable(),
+                ->sortable(defaultSortOrder: 'DESC'),
         ]);
 
         $provider = new PaidSubscriptionUserInteractions();

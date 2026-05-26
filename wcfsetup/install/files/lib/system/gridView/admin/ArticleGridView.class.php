@@ -170,10 +170,10 @@ final class ArticleGridView extends AbstractGridView
             GridViewColumn::for('views')
                 ->label('wcf.acp.article.views')
                 ->renderer(new NumberColumnRenderer())
-                ->sortable(),
+                ->sortable(defaultSortOrder: 'DESC'),
             GridViewColumn::for('time')
                 ->label('wcf.acp.sessionLog.time')
-                ->sortable()
+                ->sortable(defaultSortOrder: 'DESC')
                 ->renderer(new TimeColumnRenderer())
                 ->filter(TimeFilter::class),
         ]);

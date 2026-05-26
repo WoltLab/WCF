@@ -154,21 +154,21 @@ final class AttachmentGridView extends AbstractGridView
                 ->label('wcf.attachment.uploadTime')
                 ->renderer(new TimeColumnRenderer())
                 ->filter(TimeFilter::class)
-                ->sortable(),
+                ->sortable(defaultSortOrder: 'DESC'),
             GridViewColumn::for('downloads')
                 ->label('wcf.attachment.downloads')
                 ->filter(IntegerFilter::class)
                 ->renderer(new NumberColumnRenderer())
-                ->sortable(),
+                ->sortable(defaultSortOrder: 'DESC'),
             GridViewColumn::for('filesize')
                 ->label('wcf.attachment.filesize')
                 ->renderer(new FilesizeColumnRenderer())
-                ->sortable(sortByDatabaseColumn: 'file_table.filesize'),
+                ->sortable(sortByDatabaseColumn: 'file_table.filesize', defaultSortOrder: 'DESC'),
             GridViewColumn::for('lastDownloadTime')
                 ->label('wcf.attachment.lastDownloadTime')
                 ->renderer(new TimeColumnRenderer())
                 ->filter(TimeFilter::class)
-                ->sortable(),
+                ->sortable(defaultSortOrder: 'DESC'),
         ]);
 
         $this->addAvailableFilters([

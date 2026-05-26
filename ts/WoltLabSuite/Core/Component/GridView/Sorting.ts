@@ -35,7 +35,7 @@ export class Sorting extends EventTarget {
       .forEach((element) => {
         const button = element.querySelector<HTMLButtonElement>(".gridView__headerColumn__button");
         button?.addEventListener("click", () => {
-          this.#sort(element.dataset.id!);
+          this.#sort(element.dataset.id!, element.dataset.defaultSortOrder ?? "ASC");
         });
       });
 
@@ -84,12 +84,12 @@ export class Sorting extends EventTarget {
     this.#renderActiveSorting();
   }
 
-  #sort(sortField: string): void {
-    if (this.#sortField == sortField && this.#sortOrder == "ASC") {
-      this.#sortOrder = "DESC";
+  #sort(sortField: string, defaultSortOrder: string): void {
+    if (this.#sortField === sortField) {
+      this.#sortOrder = this.#sortOrder === "ASC" ? "DESC" : "ASC";
     } else {
       this.#sortField = sortField;
-      this.#sortOrder = "ASC";
+      this.#sortOrder = defaultSortOrder;
     }
 
     this.#renderActiveSorting();

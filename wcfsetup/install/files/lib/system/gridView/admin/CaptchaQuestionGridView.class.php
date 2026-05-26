@@ -45,15 +45,15 @@ final class CaptchaQuestionGridView extends AbstractGridView
                 ->sortable(sortByDatabaseColumn: 'questionI18n'),
             GridViewColumn::for('views')
                 ->label('wcf.acp.captcha.question.views')
-                ->sortable()
+                ->sortable(defaultSortOrder: 'DESC')
                 ->filter(IntegerFilter::class),
             GridViewColumn::for('correctSubmissions')
                 ->label('wcf.acp.captcha.question.correctSubmissions')
-                ->sortable()
+                ->sortable(defaultSortOrder: 'DESC')
                 ->filter(IntegerFilter::class),
             GridViewColumn::for('incorrectSubmissions')
                 ->label('wcf.acp.captcha.question.incorrectSubmissions')
-                ->sortable()
+                ->sortable(defaultSortOrder: 'DESC')
                 ->filter(IntegerFilter::class),
         ]);
 

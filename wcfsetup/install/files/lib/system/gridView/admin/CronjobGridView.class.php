@@ -87,7 +87,7 @@ final class CronjobGridView extends AbstractGridView
                 ->label('wcf.acp.cronjob.lastExec')
                 ->renderer(new TimeColumnRenderer())
                 ->filter(TimeFilter::class)
-                ->sortable(),
+                ->sortable(defaultSortOrder: 'DESC'),
             GridViewColumn::for('nextExec')
                 ->label('wcf.acp.cronjob.nextExec')
                 ->renderer(
@@ -106,7 +106,7 @@ final class CronjobGridView extends AbstractGridView
                     }
                 )
                 ->filter(TimeFilter::class)
-                ->sortable(),
+                ->sortable(defaultSortOrder: 'DESC'),
         ]);
 
         $interaction = new CronjobInteractions();

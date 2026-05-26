@@ -75,7 +75,7 @@ final class LanguageGridView extends AbstractGridView
                 ->label('wcf.acp.language.users')
                 ->filter(new IntegerFilter('users', 'wcf.acp.language.users', $this->subSelectUsers()))
                 ->renderer(new NumberColumnRenderer())
-                ->sortable(sortByDatabaseColumn: $this->subSelectUsers()),
+                ->sortable(sortByDatabaseColumn: $this->subSelectUsers(), defaultSortOrder: 'DESC'),
             GridViewColumn::for('variables')
                 ->label('wcf.acp.language.variables')
                 ->filter(new IntegerFilter('variables', 'wcf.acp.language.variables', $this->subSelectVariables()))
@@ -97,7 +97,7 @@ final class LanguageGridView extends AbstractGridView
                         }
                     }
                 )
-                ->sortable(sortByDatabaseColumn: $this->subSelectVariables()),
+                ->sortable(sortByDatabaseColumn: $this->subSelectVariables(), defaultSortOrder: 'DESC'),
             GridViewColumn::for('customVariables')
                 ->label('wcf.acp.language.customVariables')
                 ->filter(new IntegerFilter('customVariables', 'wcf.acp.language.customVariables', $this->subSelectCustomVariables()))
@@ -119,7 +119,7 @@ final class LanguageGridView extends AbstractGridView
                         }
                     }
                 )
-                ->sortable(sortByDatabaseColumn: $this->subSelectCustomVariables())
+                ->sortable(sortByDatabaseColumn: $this->subSelectCustomVariables(), defaultSortOrder: 'DESC')
         ]);
 
         $provider = new LanguageInteractions();

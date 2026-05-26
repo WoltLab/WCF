@@ -78,7 +78,7 @@ final class StyleGridView extends AbstractGridView
                 ->sortable(),
             GridViewColumn::for('styleDate')
                 ->label('wcf.global.date')
-                ->sortable(),
+                ->sortable(defaultSortOrder: 'DESC'),
             GridViewColumn::for('authorName')
                 ->label('wcf.acp.style.authorName')
                 ->sortable()
@@ -105,7 +105,7 @@ final class StyleGridView extends AbstractGridView
                 ->filter(TextFilter::class),
             GridViewColumn::for('users')
                 ->label('wcf.acp.style.users')
-                ->sortable(true, 'users')
+                ->sortable(true, 'users', 'DESC')
                 ->renderer(new NumberColumnRenderer()),
         ]);
 

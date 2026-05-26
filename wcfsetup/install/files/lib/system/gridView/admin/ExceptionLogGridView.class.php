@@ -46,7 +46,7 @@ final class ExceptionLogGridView extends AbstractGridView
                 ->sortable(),
             GridViewColumn::for('date')
                 ->label('wcf.acp.exceptionLog.exception.date')
-                ->sortable()
+                ->sortable(defaultSortOrder: 'DESC')
                 ->renderer(new TimeColumnRenderer()),
         ]);
 

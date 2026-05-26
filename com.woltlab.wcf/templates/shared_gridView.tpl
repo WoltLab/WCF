@@ -38,6 +38,7 @@
 							class="gridView__headerColumn {$column->getClasses()} {if $view->isSortedBy($column)}active {$view->getSortOrder()}{/if}"
 							data-id="{$column->getID()}"
 							data-sortable="{$column->isSortable()}"
+							{if $column->isSortable()}data-default-sort-order="{$column->getDefaultSortOrder()}"{/if}
 							{if $column->isSortable()}
 								{if $view->isSortedBy($column)}
 									aria-sort="{if $view->getSortOrder() === 'ASC'}ascending{else}descending{/if}"

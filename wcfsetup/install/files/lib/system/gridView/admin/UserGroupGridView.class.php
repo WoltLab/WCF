@@ -95,7 +95,7 @@ final class UserGroupGridView extends AbstractGridView
                     }
                 )
                 ->filter(new IntegerFilter('members', 'wcf.acp.group.members', $this->subSelectMembers()))
-                ->sortable(sortByDatabaseColumn: $this->subSelectMembers()),
+                ->sortable(sortByDatabaseColumn: $this->subSelectMembers(), defaultSortOrder: 'DESC'),
             GridViewColumn::for("priority")
                 ->label("wcf.acp.group.priority")
                 ->filter(IntegerFilter::class)

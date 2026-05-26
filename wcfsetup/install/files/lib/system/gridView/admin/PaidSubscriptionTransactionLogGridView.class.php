@@ -135,7 +135,7 @@ final class PaidSubscriptionTransactionLogGridView extends AbstractGridView
                 ->label('wcf.acp.paidSubscription.transactionLog.logTime')
                 ->renderer(new TimeColumnRenderer())
                 ->filter(TimeFilter::class)
-                ->sortable(),
+                ->sortable(defaultSortOrder: 'DESC'),
         ]);
 
         $this->addAvailableFilters([

@@ -121,7 +121,7 @@ final class EmailLogGridView extends AbstractGridView
                 ->label('wcf.acp.email.log.time')
                 ->renderer(new TimeColumnRenderer())
                 ->filter(TimeFilter::class)
-                ->sortable(),
+                ->sortable(defaultSortOrder: 'DESC'),
             GridViewColumn::for('status')
                 ->label('wcf.acp.email.log.status')
                 ->filter(new SelectFilter(

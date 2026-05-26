@@ -30,6 +30,7 @@ final class GridViewColumn
 
     private bool $sortable = false;
     private string $sortByDatabaseColumn = '';
+    private string $defaultSortOrder = 'ASC';
     private ?IViewFilter $filter = null;
     private bool $hidden = false;
     private bool $unsafeDisableEncoding = false;
@@ -117,10 +118,15 @@ final class GridViewColumn
     /**
      * Sets the sortable state of this column.
      */
-    public function sortable(bool $sortable = true, string $sortByDatabaseColumn = ''): static
+    public function sortable(bool $sortable = true, string $sortByDatabaseColumn = '', string $defaultSortOrder = 'ASC'): static
     {
+        if ($defaultSortOrder !== 'ASC' && $defaultSortOrder !== 'DESC') {
+            throw new \InvalidArgumentException("Invalid value '{$defaultSortOrder}' as default sort order given.");
+        }
+
         $this->sortable = $sortable;
         $this->sortByDatabaseColumn = $sortByDatabaseColumn;
+        $this->defaultSortOrder = $defaultSortOrder;
 
         return $this;
     }
@@ -165,6 +171,16 @@ final class GridViewColumn
     public function getSortByDatabaseColumn(): string
     {
         return $this->sortByDatabaseColumn;
+    }
+
+    /**
+     * Returns the default sort order used when the user switches to this column.
+     *
+     * @since 6.3
+     */
+    public function getDefaultSortOrder(): string
+    {
+        return $this->defaultSortOrder;
     }
 
     /**

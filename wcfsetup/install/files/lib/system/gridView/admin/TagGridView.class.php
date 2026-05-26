@@ -121,7 +121,7 @@ final class TagGridView extends AbstractGridView
                     }
                 )
                 ->filter(new IntegerFilter('usageCount', 'wcf.acp.tag.usageCount', $this->subSelectUsageCount()))
-                ->sortable(sortByDatabaseColumn: $this->subSelectUsageCount()),
+                ->sortable(sortByDatabaseColumn: $this->subSelectUsageCount(), defaultSortOrder: 'DESC'),
         ]);
 
         $provider = new TagInteractions();

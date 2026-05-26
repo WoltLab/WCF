@@ -29,7 +29,7 @@ define(["require", "exports"], function (require, exports) {
                 .forEach((element) => {
                 const button = element.querySelector(".gridView__headerColumn__button");
                 button?.addEventListener("click", () => {
-                    this.#sort(element.dataset.id);
+                    this.#sort(element.dataset.id, element.dataset.defaultSortOrder ?? "ASC");
                 });
             });
             this.#renderActiveSorting();
@@ -70,13 +70,13 @@ define(["require", "exports"], function (require, exports) {
             });
             this.#renderActiveSorting();
         }
-        #sort(sortField) {
-            if (this.#sortField == sortField && this.#sortOrder == "ASC") {
-                this.#sortOrder = "DESC";
+        #sort(sortField, defaultSortOrder) {
+            if (this.#sortField === sortField) {
+                this.#sortOrder = this.#sortOrder === "ASC" ? "DESC" : "ASC";
             }
             else {
                 this.#sortField = sortField;
-                this.#sortOrder = "ASC";
+                this.#sortOrder = defaultSortOrder;
             }
             this.#renderActiveSorting();
             this.dispatchEvent(new CustomEvent("grid-view:change"));

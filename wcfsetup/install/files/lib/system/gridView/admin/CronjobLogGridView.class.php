@@ -66,7 +66,7 @@ final class CronjobLogGridView extends AbstractGridView
                 ]),
             GridViewColumn::for('execTime')
                 ->label('wcf.acp.cronjob.log.execTime')
-                ->sortable()
+                ->sortable(defaultSortOrder: 'DESC')
                 ->filter(TimeFilter::class)
                 ->renderer(new TimeColumnRenderer()),
             GridViewColumn::for('success')

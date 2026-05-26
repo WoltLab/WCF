@@ -60,17 +60,17 @@ final class ACPSessionLogGridView extends AbstractGridView
                 ->filter(TextFilter::class),
             GridViewColumn::for('time')
                 ->label('wcf.acp.sessionLog.time')
-                ->sortable()
+                ->sortable(defaultSortOrder: 'DESC')
                 ->renderer(new TimeColumnRenderer())
                 ->filter(TimeFilter::class),
             GridViewColumn::for('lastActivityTime')
                 ->label('wcf.acp.sessionLog.lastActivityTime')
-                ->sortable()
+                ->sortable(defaultSortOrder: 'DESC')
                 ->renderer(new TimeColumnRenderer())
                 ->filter(TimeFilter::class),
             GridViewColumn::for('accesses')
                 ->label('wcf.acp.sessionLog.actions')
-                ->sortable(true, 'accesses')
+                ->sortable(true, 'accesses', 'DESC')
                 ->renderer(new NumberColumnRenderer()),
         ]);
 

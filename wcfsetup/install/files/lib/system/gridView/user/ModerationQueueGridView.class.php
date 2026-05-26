@@ -199,12 +199,12 @@ final class ModerationQueueGridView extends AbstractGridView
                 ),
             GridViewColumn::for("comments")
                 ->label("wcf.global.comments")
-                ->sortable(sortByDatabaseColumn: "moderation_queue.comments")
+                ->sortable(sortByDatabaseColumn: "moderation_queue.comments", defaultSortOrder: 'DESC')
                 ->filter(new IntegerFilter('comments', 'wcf.global.comments', 'moderation_queue.comments'))
                 ->renderer(new NumberColumnRenderer()),
             GridViewColumn::for("lastChangeTime")
                 ->label("wcf.moderation.lastChangeTime")
-                ->sortable(sortByDatabaseColumn: "moderation_queue.lastChangeTime")
+                ->sortable(sortByDatabaseColumn: "moderation_queue.lastChangeTime", defaultSortOrder: 'DESC')
                 ->filter(new TimeFilter('lastChangeTime', 'wcf.moderation.lastChangeTime', "moderation_queue.lastChangeTime"))
                 ->renderer(new TimeColumnRenderer()),
         ]);

@@ -59,7 +59,7 @@ final class PackageUpdateServerGridView extends AbstractGridView
                 ->label('wcf.acp.updateServer.packages')
                 ->renderer(new NumberColumnRenderer())
                 ->filter(new IntegerFilter('packages', 'wcf.acp.updateServer.packages', $this->subSelectPackages()))
-                ->sortable(sortByDatabaseColumn: $this->subSelectPackages()),
+                ->sortable(sortByDatabaseColumn: $this->subSelectPackages(), defaultSortOrder: 'DESC'),
             GridViewColumn::for('status')
                 ->label('wcf.acp.updateServer.status')
                 ->filter(
@@ -92,7 +92,7 @@ final class PackageUpdateServerGridView extends AbstractGridView
                 ->label('wcf.acp.updateServer.lastUpdateTime')
                 ->renderer(new TimeColumnRenderer())
                 ->filter(TimeFilter::class)
-                ->sortable(),
+                ->sortable(defaultSortOrder: 'DESC'),
         ]);
 
         $provider = new PackageUpdateServerInteractions();

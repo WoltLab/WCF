@@ -69,7 +69,7 @@ final class MenuGridView extends AbstractGridView
                         );
                     }
                 })
-                ->sortable(sortByDatabaseColumn: $this->subSelectItems()),
+                ->sortable(sortByDatabaseColumn: $this->subSelectItems(), defaultSortOrder: 'DESC'),
             GridViewColumn::for("position")
                 ->label("wcf.acp.box.position")
                 ->filter(

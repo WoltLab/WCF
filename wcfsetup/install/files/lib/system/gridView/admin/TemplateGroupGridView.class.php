@@ -55,7 +55,7 @@ final class TemplateGroupGridView extends AbstractGridView
                     'wcf.acp.template.group.templates',
                     $this->subQueryTemplates(),
                 ))
-                ->sortable(sortByDatabaseColumn: $this->subQueryTemplates()),
+                ->sortable(sortByDatabaseColumn: $this->subQueryTemplates(), defaultSortOrder: 'DESC'),
             GridViewColumn::for('styles')
                 ->label('wcf.acp.template.group.styles')
                 ->filter(new IntegerFilter(
@@ -63,7 +63,7 @@ final class TemplateGroupGridView extends AbstractGridView
                     'wcf.acp.template.group.styles',
                     $this->subQueryStyles(),
                 ))
-                ->sortable(sortByDatabaseColumn: $this->subQueryStyles()),
+                ->sortable(sortByDatabaseColumn: $this->subQueryStyles(), defaultSortOrder: 'DESC'),
         ]);
 
         $provider = new TemplateGroupInteractions();

@@ -104,7 +104,7 @@ class PackageGridView extends AbstractGridView
                 ->sortable(),
             GridViewColumn::for('updateDate')
                 ->label('wcf.acp.package.updateDate')
-                ->sortable()
+                ->sortable(defaultSortOrder: 'DESC')
                 ->renderer(new TimeColumnRenderer())
                 ->filter(TimeFilter::class),
         ]);

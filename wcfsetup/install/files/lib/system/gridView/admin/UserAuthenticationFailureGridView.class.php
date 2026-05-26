@@ -76,11 +76,11 @@ final class UserAuthenticationFailureGridView extends AbstractGridView
                 ->label("wcf.acp.user.authentication.failure.time")
                 ->filter(TimeFilter::class)
                 ->renderer(new TimeColumnRenderer())
-                ->sortable(),
+                ->sortable(defaultSortOrder: 'DESC'),
             GridViewColumn::for("lastActivityTime")
                 ->label("wcf.user.lastActivityTime")
                 ->renderer(new TimeColumnRenderer())
-                ->sortable(sortByDatabaseColumn: "lastActivityTime"),
+                ->sortable(sortByDatabaseColumn: "lastActivityTime", defaultSortOrder: 'DESC'),
             GridViewColumn::for("validationError")
                 ->label("wcf.acp.user.authentication.failure.validationError")
                 ->filter(

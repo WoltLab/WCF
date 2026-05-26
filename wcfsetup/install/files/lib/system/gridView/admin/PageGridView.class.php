@@ -86,7 +86,7 @@ final class PageGridView extends AbstractGridView
                 ->label('wcf.acp.page.lastUpdateTime')
                 ->renderer(new TimeColumnRenderer())
                 ->filter(TimeFilter::class)
-                ->sortable(),
+                ->sortable(defaultSortOrder: 'DESC'),
         ]);
 
         $this->addAvailableFilters([

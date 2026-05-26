@@ -77,7 +77,7 @@ final class TemplateGridView extends AbstractGridView
                 ->label("wcf.acp.template.lastModificationTime")
                 ->filter(TimeFilter::class)
                 ->renderer(new TimeColumnRenderer())
-                ->sortable(),
+                ->sortable(defaultSortOrder: 'DESC'),
         ]);
 
         $provider = new TemplateInteractions();
