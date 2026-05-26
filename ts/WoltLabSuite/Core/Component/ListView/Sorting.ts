@@ -32,7 +32,7 @@ export class Sorting extends EventTarget {
 
     this.#dropdownMenu?.querySelectorAll<HTMLElement>("[data-sort-id]").forEach((element) => {
       element.addEventListener("click", () => {
-        this.#sort(element.dataset.sortId!);
+        this.#sort(element.dataset.sortId!, element.dataset.defaultSortOrder ?? "ASC");
       });
     });
 
@@ -79,12 +79,12 @@ export class Sorting extends EventTarget {
     });
   }
 
-  #sort(sortField: string): void {
-    if (this.#sortField == sortField && this.#sortOrder == "ASC") {
-      this.#sortOrder = "DESC";
+  #sort(sortField: string, defaultSortOrder: string): void {
+    if (this.#sortField === sortField) {
+      this.#sortOrder = this.#sortOrder === "ASC" ? "DESC" : "ASC";
     } else {
       this.#sortField = sortField;
-      this.#sortOrder = "ASC";
+      this.#sortOrder = defaultSortOrder;
     }
 
     this.#renderActiveSorting();

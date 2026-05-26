@@ -50,7 +50,7 @@
 								<ul class="dropdownMenu" id="{$view->getID()}_sorting">
 									{foreach from=$view->getAvailableSortFields() item='sortField'}
 										<li>
-											<button type="button" class="listView__sorting__button" data-sort-id="{$sortField->id}">
+											<button type="button" class="listView__sorting__button" data-sort-id="{$sortField->id}" data-default-sort-order="{$sortField->defaultSortOrder}">
 												{unsafe:$sortField}
 											</button>
 										</li>

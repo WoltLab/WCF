@@ -17,8 +17,13 @@ final class ListViewSortField implements \Stringable
     public function __construct(
         public readonly string $id,
         public readonly string $languageItem,
-        public readonly string $sortByDatabaseColumn = ''
-    ) {}
+        public readonly string $sortByDatabaseColumn = '',
+        public readonly string $defaultSortOrder = 'ASC',
+    ) {
+        if ($this->defaultSortOrder !== 'ASC' && $this->defaultSortOrder !== 'DESC') {
+            throw new \InvalidArgumentException("Invalid value '{$this->defaultSortOrder}' as default sort order given.");
+        }
+    }
 
     #[\Override]
     public function __toString(): string

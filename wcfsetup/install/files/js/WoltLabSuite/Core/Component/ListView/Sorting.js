@@ -26,7 +26,7 @@ define(["require", "exports"], function (require, exports) {
             this.#dropdownMenu = dropdownMenu;
             this.#dropdownMenu?.querySelectorAll("[data-sort-id]").forEach((element) => {
                 element.addEventListener("click", () => {
-                    this.#sort(element.dataset.sortId);
+                    this.#sort(element.dataset.sortId, element.dataset.defaultSortOrder ?? "ASC");
                 });
             });
             this.#renderActiveSorting();
@@ -66,13 +66,13 @@ define(["require", "exports"], function (require, exports) {
                 }
             });
         }
-        #sort(sortField) {
-            if (this.#sortField == sortField && this.#sortOrder == "ASC") {
-                this.#sortOrder = "DESC";
+        #sort(sortField, defaultSortOrder) {
+            if (this.#sortField === sortField) {
+                this.#sortOrder = this.#sortOrder === "ASC" ? "DESC" : "ASC";
             }
             else {
                 this.#sortField = sortField;
-                this.#sortOrder = "ASC";
+                this.#sortOrder = defaultSortOrder;
             }
             this.#renderActiveSorting();
             this.dispatchEvent(new CustomEvent("list-view:change"));

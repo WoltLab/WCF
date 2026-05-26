@@ -33,10 +33,10 @@ class MembersListView extends AbstractListView
     {
         $this->addAvailableSortFields([
             new ListViewSortField('username', 'wcf.user.sortField.username'),
-            new ListViewSortField('registrationDate', 'wcf.user.sortField.registrationDate'),
-            new ListViewSortField('activityPoints', 'wcf.user.sortField.activityPoints'),
-            new ListViewSortField('likesReceived', 'wcf.user.sortField.likesReceived'),
-            new ListViewSortField('lastActivityTime', 'wcf.user.sortField.lastActivityTime'),
+            new ListViewSortField('registrationDate', 'wcf.user.sortField.registrationDate', defaultSortOrder: 'DESC'),
+            new ListViewSortField('activityPoints', 'wcf.user.sortField.activityPoints', defaultSortOrder: 'DESC'),
+            new ListViewSortField('likesReceived', 'wcf.user.sortField.likesReceived', defaultSortOrder: 'DESC'),
+            new ListViewSortField('lastActivityTime', 'wcf.user.sortField.lastActivityTime', defaultSortOrder: 'DESC'),
         ]);
 
         $this->addAvailableFilters([

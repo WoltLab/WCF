@@ -35,13 +35,13 @@ class ArticleListView extends AbstractListView
     public function __construct()
     {
         $this->addAvailableSortFields([
-            new ListViewSortField('time', 'wcf.global.date'),
+            new ListViewSortField('time', 'wcf.global.date', defaultSortOrder: 'DESC'),
             new ListViewSortField('title', 'wcf.global.title', 'title'),
-            new ListViewSortField('views', 'wcf.article.sortField.views'),
+            new ListViewSortField('views', 'wcf.article.sortField.views', defaultSortOrder: 'DESC'),
         ]);
         if (\MODULE_LIKE) {
             $this->addAvailableSortFields([
-                new ListViewSortField('cumulativeLikes', 'wcf.like.cumulativeLikes'),
+                new ListViewSortField('cumulativeLikes', 'wcf.like.cumulativeLikes', defaultSortOrder: 'DESC'),
             ]);
         }
         $this->addAvailableFilters([
