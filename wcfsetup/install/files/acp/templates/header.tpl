@@ -188,8 +188,8 @@
 		
 		<div id="acpPageContentContainer" class="acpPageContentContainer">
 			{include file='pageMenu'}
-			
+
 			<section id="main" class="main" role="main">
 				<div class="layoutBoundary">
 					<div id="content" class="content">
-					
+						{include file='breadcrumbs'}
