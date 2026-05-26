@@ -508,7 +508,7 @@ html[data-color-scheme="dark"] {
 	flex: 1 1 auto;
 
 	@include screen-lg {
-		padding: 40px 0;
+		padding: 30px 0;
 	}
 
 	@include screen-md-down {
@@ -1065,4 +1065,36 @@ html[data-color-scheme="dark"] {
 	margin-top: -5px;
 
 	@include wcfFontSmall;
+}
+
+.acpBreadcrumbs {
+	margin-bottom: 5px;
+}
+
+.acpBreadcrumbs__list {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	color: var(--wcfContentDimmedText);
+
+	@include wcfFontSmall;
+}
+
+.acpBreadcrumbs__item {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.acpBreadcrumbs__item__separator {
+	display: flex;
+}
+
+.acpBreadcrumbs__item__link {
+	color: inherit;
+
+	&:hover {
+		color: inherit;
+		text-decoration: underline;
+	}
 }

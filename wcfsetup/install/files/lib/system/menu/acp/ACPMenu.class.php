@@ -115,4 +115,31 @@ class ACPMenu extends TreeMenu
             }
         }
     }
+
+    /**
+     * Returns the breadcrumb items for the active menu path, ordered from the
+     * top-level section down to the immediate parent of the current page. The
+     * current page itself is omitted.
+     *
+     * @return AcpMenuItem[]
+     * @since 6.3
+     */
+    public function getBreadcrumbs(): array
+    {
+        if ($this->activeMenuItems === []) {
+            return [];
+        }
+
+        $names = \array_reverse($this->activeMenuItems);
+        \array_pop($names);
+
+        $breadcrumbs = [];
+        foreach ($names as $name) {
+            if (isset($this->menuItemList[$name])) {
+                $breadcrumbs[] = $this->menuItemList[$name];
+            }
+        }
+
+        return $breadcrumbs;
+    }
 }
