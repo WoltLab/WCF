@@ -39,6 +39,11 @@ class ArticleListView extends AbstractListView
             new ListViewSortField('title', 'wcf.global.title', 'title'),
             new ListViewSortField('views', 'wcf.article.sortField.views'),
         ]);
+        if (\MODULE_LIKE) {
+            $this->addAvailableSortFields([
+                new ListViewSortField('cumulativeLikes', 'wcf.like.cumulativeLikes'),
+            ]);
+        }
         $this->addAvailableFilters([
             $this->getTitleFilter(),
             new TextFilter('username', 'wcf.user.username'),
