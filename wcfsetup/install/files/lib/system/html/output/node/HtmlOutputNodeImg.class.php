@@ -63,12 +63,14 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
                     continue;
                 }
 
-                $element->setAttribute('data-type', 'image');
-                $element->setAttribute('data-fancybox', \sprintf(
-                    'message-%s-%d',
-                    MessageEmbeddedObjectManager::getInstance()->getActiveMessageObjectType(),
-                    MessageEmbeddedObjectManager::getInstance()->getActiveMessageID(),
-                ));
+                if (!DOMUtil::hasParent($element, 'a')) {
+                    $element->setAttribute('data-type', 'image');
+                    $element->setAttribute('data-fancybox', \sprintf(
+                        'message-%s-%d',
+                        MessageEmbeddedObjectManager::getInstance()->getActiveMessageObjectType(),
+                        MessageEmbeddedObjectManager::getInstance()->getActiveMessageID(),
+                    ));
+                }
 
                 if (MODULE_IMAGE_PROXY) {
                     if (!Url::is($src)) {
