@@ -136,6 +136,7 @@ class ACPMenu extends TreeMenu
         $breadcrumbs = [];
         foreach ($names as $name) {
             if (isset($this->menuItemList[$name])) {
+                \assert($this->menuItemList[$name] instanceof AcpMenuItem);
                 $breadcrumbs[] = $this->menuItemList[$name];
             }
         }
