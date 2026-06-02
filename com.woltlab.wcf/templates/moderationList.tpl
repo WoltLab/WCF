@@ -6,7 +6,21 @@
 {/capture}
 
 {capture assign='contentInteractionButtons'}
-	<button type="button" class="markAllAsReadButton contentInteractionButton button small jsOnly">{icon name='check'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
+	{if $gridView->canMarkAsRead()}
+		<button type="button" class="markAllModerationQueuesAsReadButton contentInteractionButton button small jsOnly">
+			{icon name='check'}
+			<span>{lang}wcf.global.button.markAllAsRead{/lang}</span>
+		</button>
+
+		<script data-relocate="true">
+			require(['WoltLabSuite/Core/Component/Moderation/MarkAllModerationQueuesAsRead'], ({ setup }) => {
+				setup(
+					document.querySelector('.markAllModerationQueuesAsReadButton'),
+					document.getElementById('{unsafe:$gridView->getID()|encodeJS}_table')
+				);
+			});
+		</script>
+	{/if}
 	<a href="{link controller='DeletedContentList'}{/link}" class="contentInteractionButton button small">{icon name='trash-can'} <span>{lang}wcf.moderation.showDeletedContent{/lang}</span></a>
 {/capture}
 
@@ -15,11 +29,5 @@
 <div class="section">
 	{unsafe:$gridView->render()}
 </div>
-
-<script data-relocate="true">
-	require(['WoltLabSuite/Core/Ui/Moderation/MarkAllAsRead'], (MarkAllAsRead) => {
-		MarkAllAsRead.setup();
-	});
-</script>
 
 {include file='footer'}
