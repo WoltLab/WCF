@@ -2,6 +2,7 @@
 
 namespace wcf\system\gridView;
 
+use wcf\action\ApiAction;
 use wcf\action\GridViewFilterAction;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
@@ -64,6 +65,7 @@ abstract class AbstractGridView
     private ?IInteractionProvider $interactionProvider = null;
     private ?IBulkInteractionProvider $bulkInteractionProvider = null;
     private InteractionContextMenuComponent $interactionContextMenuComponent;
+    private string $markAsReadEndpoint = '';
 
     /**
      * @var array<string, string|int>
@@ -311,6 +313,10 @@ abstract class AbstractGridView
             && $this->rowLink->isAvailable($row)
         ) {
             $value = $this->rowLink->render($value, $row, $column->isTitleColumn());
+        }
+
+        if ($column->hasMarkAsReadButton() && $this->rowIsNew($row)) {
+            $value = $this->renderMarkAsReadButton($row) . $value;
         }
 
         return $value;
@@ -950,6 +956,49 @@ abstract class AbstractGridView
         $this->init();
 
         return $this->availableFilters;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function setMarkAsReadEndpoint(string $endpoint): void
+    {
+        $this->markAsReadEndpoint = $endpoint;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function renderMarkAsReadButton(DatabaseObject $object): string
+    {
+        if (!$this->markAsReadEndpoint) {
+            throw new \BadMethodCallException("No mark as read endpoint has been specified.");
+        }
+
+        $endpoint = StringUtil::encodeHTML(
+            LinkHandler::getInstance()->getControllerLink(ApiAction::class, ['id' => 'rpc']) .
+                \sprintf($this->markAsReadEndpoint, $object->getObjectID())
+        );
+        $title = WCF::getLanguage()->get('wcf.global.button.markAsRead');
+
+        return <<<HTML
+            <button
+                type="button"
+                class="gridView__row__markAsRead jsTooltip"
+                title="{$title}"
+                data-endpoint="{$endpoint}"
+            >
+                <span class="gridView__row__unread__indicator" aria-hidden="true"></span>
+            </button>
+            HTML;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function rowIsNew(DatabaseObject $row): bool
+    {
+        return false;
     }
 
     private function init(): void

@@ -10,6 +10,7 @@
 import { getRow } from "../Api/GridViews/GetRow";
 import { getRows } from "../Api/GridViews/GetRows";
 import { getBulkContextMenuOptions } from "../Api/Interactions/GetBulkContextMenuOptions";
+import { postObject } from "../Api/PostObject";
 import DomChangeListener from "../Dom/Change/Listener";
 import DomUtil from "../Dom/Util";
 import { promiseMutex } from "../Helper/PromiseMutex";
@@ -103,6 +104,16 @@ export class GridView {
           });
         });
       }
+    });
+
+    wheneverFirstSeen(`#${this.#table.id} tbody tr .gridView__row__markAsRead`, (button: HTMLButtonElement) => {
+      button.addEventListener(
+        "click",
+        promiseMutex(async () => {
+          await postObject(button.dataset.endpoint!);
+          button.closest("tr")?.dispatchEvent(new CustomEvent("interaction:invalidate", { bubbles: true }));
+        }),
+      );
     });
   }
 

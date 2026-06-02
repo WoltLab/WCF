@@ -44,26 +44,15 @@ final class ModerationQueueGridView extends AbstractGridView
             GridViewColumn::for('title')
                 ->label('wcf.global.title')
                 ->titleColumn()
+                ->markAsReadButton()
                 ->renderer(
                     new class extends DefaultColumnRenderer {
                         #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
                             \assert($row instanceof ViewableModerationQueue);
-                            $title = StringUtil::encodeHTML($row->getTitle());
 
-                            if ($row->isNew()) {
-                                $badgeLabel = WCF::getLanguage()->get('wcf.message.new');
-                                $badge = <<<HTML
-                                        <span class="badge label newMessageBadge">{$badgeLabel}</span>
-                                    HTML;
-                            } else {
-                                $badge = '';
-                            }
-
-                            return <<<HTML
-                                    {$title}{$badge}
-                                HTML;
+                            return StringUtil::encodeHTML($row->getTitle());
                         }
                     }
                 ),
@@ -216,6 +205,16 @@ final class ModerationQueueGridView extends AbstractGridView
         $this->setDefaultSortField("lastChangeTime");
         $this->setDefaultSortOrder("DESC");
         $this->addRowLink(new GridViewRowLink(isLinkableObject: true));
+        $this->setMarkAsReadEndpoint('core/moderation-queues/%s/mark-as-read');
+    }
+
+    public function canMarkAsRead(): bool
+    {
+        if (!WCF::getUser()->userID) {
+            return false;
+        }
+
+        return ModerationQueueManager::getInstance()->getUnreadModerationCount() > 0;
     }
 
     private function getDefinitionFilter(): SelectFilter
@@ -274,5 +273,13 @@ final class ModerationQueueGridView extends AbstractGridView
     protected function getInitializedEvent(): ModerationQueueGridViewInitialized
     {
         return new ModerationQueueGridViewInitialized($this);
+    }
+
+    #[\Override]
+    public function rowIsNew(DatabaseObject $row): bool
+    {
+        \assert($row instanceof ViewableModerationQueue);
+
+        return $row->isNew();
     }
 }

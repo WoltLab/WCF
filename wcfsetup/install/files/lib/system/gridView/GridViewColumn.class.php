@@ -35,6 +35,7 @@ final class GridViewColumn
     private bool $hidden = false;
     private bool $unsafeDisableEncoding = false;
     private bool $titleColumn = false;
+    private bool $markAsReadButton = false;
 
     private function __construct(private readonly string $id) {}
 
@@ -300,6 +301,28 @@ final class GridViewColumn
             $this->getRenderers(),
             fn(IColumnRenderer $renderer) => $renderer instanceof ILinkColumnRenderer
         )) === 0;
+    }
+
+    /**
+     * Sets whether the mark as read button is rendered in this column for unread rows.
+     *
+     * @since 6.3
+     */
+    public function markAsReadButton(bool $markAsReadButton = true): static
+    {
+        $this->markAsReadButton = $markAsReadButton;
+
+        return $this;
+    }
+
+    /**
+     * Returns true if the mark as read button is rendered in this column for unread rows.
+     *
+     * @since 6.3
+     */
+    public function hasMarkAsReadButton(): bool
+    {
+        return $this->markAsReadButton;
     }
 
     /**

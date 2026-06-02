@@ -30,14 +30,6 @@ final class ModerationQueueInteractions extends AbstractInteractionProvider
     public function __construct()
     {
         $this->addInteractions([
-            new RpcInteraction(
-                "mark-as-read",
-                "core/moderation-queues/%s/mark-as-read",
-                "wcf.global.button.markAsRead",
-                isAvailableCallback: static function (ViewableModerationQueue $queue) {
-                    return $queue->isNew();
-                }
-            ),
             new FormBuilderDialogInteraction(
                 "assign-user",
                 LinkHandler::getInstance()->getControllerLink(ModerationQueueAssignUserAction::class, ["id" => "%s"]),
