@@ -77,6 +77,7 @@ class SmileyEditForm extends SmileyAddForm
                 'smileyTitle' => $this->smileyTitle,
                 'smileyCode' => $this->smileyCode,
                 'aliases' => $this->aliases,
+                'emoji' => $this->emoji,
                 'smileyPath' => $this->smileyPath,
                 'smileyPath2x' => $this->smileyPath2x,
                 'showOrder' => $this->showOrder,
@@ -106,6 +107,7 @@ class SmileyEditForm extends SmileyAddForm
 
             $this->smileyCode = $this->smiley->smileyCode;
             $this->aliases = $this->smiley->aliases;
+            $this->emoji = $this->smiley->emoji;
             $this->smileyPath = $this->smiley->smileyPath;
             $this->smileyPath2x = $this->smiley->smileyPath2x;
             $this->showOrder = $this->smiley->showOrder;

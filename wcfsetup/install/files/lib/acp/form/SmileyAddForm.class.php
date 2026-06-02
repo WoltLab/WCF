@@ -85,6 +85,11 @@ class SmileyAddForm extends AbstractForm
     public $aliases = '';
 
     /**
+     * unicode emoji that replaces this smiley during message reprocessing
+     */
+    public string $emoji = '';
+
+    /**
      * path to the smiley file
      * @var string
      */
@@ -140,6 +145,7 @@ class SmileyAddForm extends AbstractForm
             'categoryID' => $this->categoryID,
             'smileyCode' => $this->smileyCode,
             'aliases' => $this->aliases,
+            'emoji' => $this->emoji,
             'smileyPath' => $this->smileyPath,
             'smileyPath2x' => $this->smileyPath2x,
             'categoryNodeList' => $this->categoryNodeTree->getIterator(),
@@ -187,6 +193,9 @@ class SmileyAddForm extends AbstractForm
         if (isset($_POST['aliases'])) {
             $this->aliases = StringUtil::unifyNewlines(StringUtil::trim($_POST['aliases']));
         }
+        if (isset($_POST['emoji'])) {
+            $this->emoji = StringUtil::trim($_POST['emoji']);
+        }
         if (isset($_POST['smileyPath'])) {
             $this->smileyPath = FileUtil::removeLeadingSlash(StringUtil::trim($_POST['smileyPath']));
         }
@@ -217,6 +226,7 @@ class SmileyAddForm extends AbstractForm
                 'smileyTitle' => $this->smileyTitle,
                 'smileyCode' => $this->smileyCode,
                 'aliases' => $this->aliases,
+                'emoji' => $this->emoji,
                 'smileyPath' => $this->smileyPath,
                 'smileyPath2x' => $this->smileyPath2x,
                 'showOrder' => $this->showOrder,
@@ -246,6 +256,7 @@ class SmileyAddForm extends AbstractForm
         $this->showOrder = 0;
         $this->smileyPath = $this->smileyPath2x = '';
         $this->aliases = '';
+        $this->emoji = '';
         $this->uploadedFilename = $this->uploadedFilename2x = '';
 
         I18nHandler::getInstance()->reset();

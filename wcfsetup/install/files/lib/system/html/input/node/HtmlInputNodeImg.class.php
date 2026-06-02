@@ -255,6 +255,18 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         $code = $element->getAttribute('alt');
 
         $smiley = SmileyCache::getInstance()->getSmileyByCode($code);
+
+        // Migrate legacy smiley element to the mapped unicode emoji.
+        if ($smiley !== null && $smiley->emoji !== '') {
+            $element->parentNode->insertBefore(
+                $element->ownerDocument->createTextNode($smiley->emoji),
+                $element
+            );
+            $element->parentNode->removeChild($element);
+
+            return;
+        }
+
         if ($smiley === null || $this->smiliesFound === 50) {
             $element->parentNode->insertBefore($element->ownerDocument->createTextNode($code), $element);
             $element->parentNode->removeChild($element);

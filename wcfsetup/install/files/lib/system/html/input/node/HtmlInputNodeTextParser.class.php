@@ -607,12 +607,19 @@ class HtmlInputNodeTextParser
         foreach ($smileyPatterns as $smileyPattern) {
             $value = \preg_replace_callback($smileyPattern, function ($matches) use ($text) {
                 $smileyCode = $matches[0];
+                $smiley = self::$smilies[$smileyCode];
+
+                // Replace smiley with mapped unicode emoji so legacy smiley codes
+                // get migrated to native emojis whenever a message is reprocessed.
+                if ($smiley->emoji !== '') {
+                    return $smiley->emoji;
+                }
+
                 if ($this->smileyCount === 50) {
                     return $smileyCode;
                 }
 
                 $this->smileyCount++;
-                $smiley = self::$smilies[$smileyCode];
                 $element = $text->ownerDocument->createElement('img');
                 $element->setAttribute('src', $smiley->getURL());
                 $element->setAttribute('class', 'smiley');

@@ -41,6 +41,13 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
                 $code = $element->getAttribute('alt');
 
                 $smiley = SmileyCache::getInstance()->getSmileyByCode($code);
+
+                // Render the mapped unicode emoji instead of the legacy smiley image.
+                if ($smiley !== null && $smiley->emoji !== '') {
+                    $htmlNodeProcessor->replaceElementWithText($element, $smiley->emoji, false);
+                    continue;
+                }
+
                 if ($smiley === null || $this->outputType === 'text/plain') {
                     // output as raw code instead
                     $htmlNodeProcessor->replaceElementWithText($element, ' ' . $code . ' ', false);
