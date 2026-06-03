@@ -2855,6 +2855,8 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.smiley.smileyCode.error.notUnique"><![CDATA[Dieser Smiley-Code wird bereits von einem anderen Smiley verwendet]]></item>
 		<item name="wcf.acp.smiley.aliases"><![CDATA[Alternative Smiley-Codes]]></item>
 		<item name="wcf.acp.smiley.aliases.error.notUnique"><![CDATA[Mindestens ein alternativer Smiley-Code wird bereits von einem anderen Smiley verwendet]]></item>
+		<item name="wcf.acp.smiley.emoji"><![CDATA[Emoji]]></item>
+		<item name="wcf.acp.smiley.emoji.description"><![CDATA[Optionales Emoji, das diesen Smiley ersetzt, sobald eine bestehende Nachricht aktualisiert wird. Leer lassen, um den Smiley nicht zu ersetzen.]]></item>
 		<item name="wcf.acp.smiley.smileyPath"><![CDATA[Smiley-Pfad]]></item>
 		<item name="wcf.acp.smiley.smileyPath.description"><![CDATA[Der Smiley-Pfad wird relativ zu „{$__wcf->getPath()}“ interpretiert.]]></item>
 		<item name="wcf.acp.smiley.smileyPath.error.notFound"><![CDATA[Es wurde keine Datei unter dem angegebenen Pfad gefunden]]></item>

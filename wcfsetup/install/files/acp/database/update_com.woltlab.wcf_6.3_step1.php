@@ -57,4 +57,9 @@ return [
         ->columns([
             DefaultFalseBooleanDatabaseTableColumn::create('showOnUserCard'),
         ]),
+    PartialDatabaseTable::create('wcf1_smiley')
+        ->columns([
+            NotNullVarchar255DatabaseTableColumn::create('emoji')
+                ->defaultValue(''),
+        ]),
 ];

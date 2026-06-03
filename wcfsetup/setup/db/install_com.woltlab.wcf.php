@@ -3293,6 +3293,8 @@ return [
                 ->notNull(),
             NotNullInt10DatabaseTableColumn::create('showOrder')
                 ->defaultValue(0),
+            NotNullVarchar255DatabaseTableColumn::create('emoji')
+                ->defaultValue(''),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()

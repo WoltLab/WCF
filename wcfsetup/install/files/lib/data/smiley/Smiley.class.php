@@ -23,6 +23,7 @@ use wcf\util\StringUtil;
  * @property-read   string  $smileyCode     code used for displaying the smiley
  * @property-read   string  $aliases        alternative codes used for displaying the smiley
  * @property-read   int     $showOrder      position of the smiley in relation to the other smileys in the same category
+ * @property-read   string  $emoji          unicode emoji that replaces this smiley when content is reprocessed
  */
 class Smiley extends DatabaseObject implements ITitledObject
 {

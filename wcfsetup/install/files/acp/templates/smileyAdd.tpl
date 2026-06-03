@@ -80,12 +80,26 @@
 			<dt><label for="aliases">{lang}wcf.acp.smiley.aliases{/lang}</label></dt>
 			<dd>
 				<textarea id="aliases" name="aliases" cols="40" rows="10">{$aliases}</textarea>
-				
+
 				{if $errorField == 'aliases'}
 					<small class="innerError">
 						{lang}wcf.acp.smiley.aliases.error.{$errorType}{/lang}
 					</small>
 				{/if}
+			</dd>
+		</dl>
+
+		<dl{if $errorField == 'emoji'} class="formError"{/if}>
+			<dt><label for="emoji">{lang}wcf.acp.smiley.emoji{/lang}</label></dt>
+			<dd>
+				<input type="text" id="emoji" name="emoji" value="{$emoji}" class="short" maxlength="64">
+
+				{if $errorField == 'emoji'}
+					<small class="innerError">
+						{lang}wcf.acp.smiley.emoji.error.{$errorType}{/lang}
+					</small>
+				{/if}
+				<small>{lang}wcf.acp.smiley.emoji.description{/lang}</small>
 			</dd>
 		</dl>
 		

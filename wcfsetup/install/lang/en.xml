@@ -2784,6 +2784,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.smiley.smileyCode.error.notUnique"><![CDATA[This smiley code is already in use by another smiley.]]></item>
 		<item name="wcf.acp.smiley.aliases"><![CDATA[Alternative Smiley Codes]]></item>
 		<item name="wcf.acp.smiley.aliases.error.notUnique"><![CDATA[At least one alternative smiley code is already in use by another smiley.]]></item>
+		<item name="wcf.acp.smiley.emoji"><![CDATA[Emoji]]></item>
+		<item name="wcf.acp.smiley.emoji.description"><![CDATA[Optional emoji that replaces this smiley when an existing message is updated. Leave empty to keep the smiley unchanged.]]></item>
 		<item name="wcf.acp.smiley.smileyPath"><![CDATA[Smiley Path]]></item>
 		<item name="wcf.acp.smiley.smileyPath.description"><![CDATA[The smiley path is relative to “{$__wcf->getPath()}”.]]></item>
 		<item name="wcf.acp.smiley.smileyPath.error.notFound"><![CDATA[Unable to find a file on entered path.]]></item>
