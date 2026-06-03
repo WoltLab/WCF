@@ -3,8 +3,6 @@
 namespace wcf\data\acp\search\provider;
 
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\data\ISearchAction;
-use wcf\system\search\acp\ACPSearchHandler;
 
 /**
  * Executes ACP search provider-related actions.
@@ -14,61 +12,8 @@ use wcf\system\search\acp\ACPSearchHandler;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @extends AbstractDatabaseObjectAction<ACPSearchProvider, ACPSearchProviderEditor>
+ * @deprecated 6.3 ACP search providers are registered through the
+ *             `wcf\event\acp\search\provider\ProviderCollecting` event. The
+ *             search itself is served by the `/core/acp/search` RPC endpoint.
  */
-class ACPSearchProviderAction extends AbstractDatabaseObjectAction implements ISearchAction
-{
-    /**
-     * @inheritDoc
-     */
-    protected $requireACP = ['getSearchResultList'];
-
-    #[\Override]
-    public function validateGetSearchResultList()
-    {
-        $this->readString('searchString', false, 'data');
-    }
-
-    #[\Override]
-    public function getSearchResultList()
-    {
-        $data = [];
-        $results = ACPSearchHandler::getInstance()->search(
-            $this->parameters['data']['searchString'],
-            20,
-            (!empty($this->parameters['data']['providerName']) ? $this->parameters['data']['providerName'] : '')
-        );
-
-        foreach ($results as $resultList) {
-            $items = [];
-            foreach ($resultList as $item) {
-                $items[] = [
-                    'link' => $item->getLink(),
-                    'subtitle' => $item->getSubtitle(),
-                    'title' => $item->getTitle(),
-                ];
-            }
-
-            foreach ($items as $key => &$item) {
-                $double = false;
-                foreach ($items as $key2 => $item2) {
-                    if ($key != $key2 && !\strcasecmp($item['title'], $item2['title'])) {
-                        $double = true;
-                        break;
-                    }
-                }
-
-                if (!$double) {
-                    unset($item['subtitle']);
-                }
-            }
-            unset($item);
-
-            $data[] = [
-                'items' => $items,
-                'title' => $resultList->getTitle(),
-            ];
-        }
-
-        return $data;
-    }
-}
+class ACPSearchProviderAction extends AbstractDatabaseObjectAction {}

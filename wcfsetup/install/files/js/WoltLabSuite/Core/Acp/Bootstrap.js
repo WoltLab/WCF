@@ -5,7 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../Core", "../Bootstrap", "./Ui/Page/Menu", "./Ui/Page/Menu/Main/Backend"], function (require, exports, tslib_1, Core, Bootstrap_1, UiPageMenu, Backend_1) {
+define(["require", "exports", "tslib", "../Core", "../Bootstrap", "./Ui/Page/Menu", "./Ui/Page/Menu/Main/Backend", "./Ui/Search"], function (require, exports, tslib_1, Core, Bootstrap_1, UiPageMenu, Backend_1, Search_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -26,5 +26,6 @@ define(["require", "exports", "tslib", "../Core", "../Bootstrap", "./Ui/Page/Men
         }, options);
         (0, Bootstrap_1.setup)(options.bootstrap);
         UiPageMenu.init();
+        (0, Search_1.setup)();
     }
 });

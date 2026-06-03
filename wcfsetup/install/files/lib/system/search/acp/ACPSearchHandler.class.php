@@ -2,11 +2,13 @@
 
 namespace wcf\system\search\acp;
 
-use wcf\data\acp\search\provider\ACPSearchProvider;
+use wcf\event\acp\search\provider\ProviderCollecting;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\ImplementationException;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 
 /**
  * Handles ACP Search.
@@ -24,22 +26,47 @@ class ACPSearchHandler extends SingletonFactory
     public $abbreviations = [];
 
     /**
-     * list of acp search provider
-     * @var ACPSearchProvider[]
+     * @var array<string, IACPSearchResultProvider>
      */
-    protected $cache;
+    private array $providers = [];
 
     #[\Override]
     protected function init()
     {
-        $this->cache = ACPSearchProviderCacheBuilder::getInstance()->getData();
+        $event = new ProviderCollecting();
+        EventHandler::getInstance()->fire($event);
+        foreach ($event->getProviders() as $providerName => $provider) {
+            $this->providers[$providerName] = $provider;
+        }
+
+        foreach (ACPSearchProviderCacheBuilder::getInstance()->getData() as $acpSearchProvider) {
+            if (isset($this->providers[$acpSearchProvider->providerName])) {
+                continue;
+            }
+
+            $className = $acpSearchProvider->className;
+            if (!\is_subclass_of($className, IACPSearchResultProvider::class)) {
+                throw new ImplementationException($className, IACPSearchResultProvider::class);
+            }
+
+            $this->providers[$acpSearchProvider->providerName] = new $className();
+        }
+
+        $language = WCF::getLanguage();
+        $collator = new \Collator($language->getLocale());
+        \uksort(
+            $this->providers,
+            static fn(string $a, string $b) => $collator->compare(
+                $language->get('wcf.acp.search.provider.' . $a),
+                $language->get('wcf.acp.search.provider.' . $b)
+            )
+        );
     }
 
     /**
      * Returns a list of search result collections for given query.
      *
      * @return  ACPSearchResultList[]
-     * @throws  ImplementationException
      */
     public function search(string $query, int $limit = 10, string $providerName = '')
     {
@@ -51,22 +78,15 @@ class ACPSearchHandler extends SingletonFactory
         }
         $totalResultCount = 0;
 
-        foreach ($this->cache as $acpSearchProvider) {
-            if ($providerName && $acpSearchProvider->providerName != $providerName) {
+        foreach ($this->providers as $name => $provider) {
+            if ($providerName && $name !== $providerName) {
                 continue;
             }
 
-            $className = $acpSearchProvider->className;
-            if (!\is_subclass_of($className, IACPSearchResultProvider::class)) {
-                throw new ImplementationException($className, IACPSearchResultProvider::class);
-            }
-
-            /** @var IACPSearchResultProvider $provider */
-            $provider = new $className();
             $results = $provider->search($query);
 
             if (!empty($results)) {
-                $resultList = new ACPSearchResultList($acpSearchProvider->providerName);
+                $resultList = new ACPSearchResultList($name);
                 foreach ($results as $result) {
                     $resultList->addResult($result);
                 }
@@ -114,6 +134,17 @@ class ACPSearchHandler extends SingletonFactory
         }
 
         return $data;
+    }
+
+    /**
+     * Returns the names of all registered ACP search providers in display order.
+     *
+     * @return string[]
+     * @since 6.3
+     */
+    public function getProviderNames(): array
+    {
+        return \array_keys($this->providers);
     }
 
     /**

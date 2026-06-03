@@ -29,7 +29,6 @@
 		<instruction type="clipboardAction" />
 		<instruction type="objectTypeDefinition" />
 		<instruction type="objectType" />
-		<instruction type="acpSearchProvider" />
 		<instruction type="style">defaultStyle.tar</instruction>
 
 		<instruction type="userOption" run="standalone" />

@@ -10,6 +10,7 @@ import * as Core from "../Core";
 import { BoostrapOptions, setup as bootstrapSetup } from "../Bootstrap";
 import * as UiPageMenu from "./Ui/Page/Menu";
 import AcpUiPageMenuMainBackend from "./Ui/Page/Menu/Main/Backend";
+import { setup as setupAcpSearch } from "./Ui/Search";
 
 interface AcpBootstrapOptions {
   bootstrap: BoostrapOptions;
@@ -33,4 +34,5 @@ export function setup(options: AcpBootstrapOptions): void {
 
   bootstrapSetup(options.bootstrap);
   UiPageMenu.init();
+  setupAcpSearch();
 }

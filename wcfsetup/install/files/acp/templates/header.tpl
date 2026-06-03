@@ -135,11 +135,7 @@
 	<script>
 		$(function() {
 			if (jQuery.browser.touch) $('html').addClass('touch');
-			
-			{if $__wcf->user->userID && $__isLogin|empty}
-				new WCF.ACP.Search();
-			{/if}
-			
+
 			{event name='javascriptInit'}
 			
 			$('form[method=get]').attr('method', 'post');
