@@ -20,15 +20,9 @@ final class ProviderCollecting implements IPsr14Event
      */
     private array $providers = [];
 
-    /**
-     * @var array<string, int>
-     */
-    private array $showOrders = [];
-
-    public function register(string $providerName, IACPSearchResultProvider $provider, int $showOrder = 0): void
+    public function register(string $providerName, IACPSearchResultProvider $provider): void
     {
         $this->providers[$providerName] = $provider;
-        $this->showOrders[$providerName] = $showOrder;
     }
 
     /**
@@ -37,10 +31,5 @@ final class ProviderCollecting implements IPsr14Event
     public function getProviders(): array
     {
         return $this->providers;
-    }
-
-    public function getShowOrder(string $providerName): int
-    {
-        return $this->showOrders[$providerName] ?? 0;
     }
 }

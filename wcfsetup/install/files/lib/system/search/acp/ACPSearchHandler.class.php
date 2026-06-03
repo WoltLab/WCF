@@ -8,6 +8,7 @@ use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\ImplementationException;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 
 /**
  * Handles ACP Search.
@@ -29,11 +30,6 @@ class ACPSearchHandler extends SingletonFactory
      */
     private array $providers = [];
 
-    /**
-     * @var array<string, int>
-     */
-    private array $showOrders = [];
-
     #[\Override]
     protected function init()
     {
@@ -41,7 +37,6 @@ class ACPSearchHandler extends SingletonFactory
         EventHandler::getInstance()->fire($event);
         foreach ($event->getProviders() as $providerName => $provider) {
             $this->providers[$providerName] = $provider;
-            $this->showOrders[$providerName] = $event->getShowOrder($providerName);
         }
 
         foreach (ACPSearchProviderCacheBuilder::getInstance()->getData() as $acpSearchProvider) {
@@ -55,12 +50,16 @@ class ACPSearchHandler extends SingletonFactory
             }
 
             $this->providers[$acpSearchProvider->providerName] = new $className();
-            $this->showOrders[$acpSearchProvider->providerName] = (int)$acpSearchProvider->showOrder;
         }
 
+        $language = WCF::getLanguage();
+        $collator = new \Collator($language->getLocale());
         \uksort(
             $this->providers,
-            fn(string $a, string $b) => $this->showOrders[$a] <=> $this->showOrders[$b]
+            static fn(string $a, string $b) => $collator->compare(
+                $language->get('wcf.acp.search.provider.' . $a),
+                $language->get('wcf.acp.search.provider.' . $b)
+            )
         );
     }
 

@@ -25,14 +25,14 @@ final class AcpSearchProviderCollectingListener
 {
     public function __invoke(ProviderCollecting $event): void
     {
-        $event->register('com.woltlab.wcf.menuItem', new MenuItemACPSearchResultProvider(), 1);
-        $event->register('com.woltlab.wcf.option', new OptionACPSearchResultProvider(), 2);
-        $event->register('com.woltlab.wcf.user', new UserACPSearchResultProvider(), 3);
-        $event->register('com.woltlab.wcf.userGroupOption', new UserGroupOptionACPSearchResultProvider(), 4);
-        $event->register('com.woltlab.wcf.package', new PackageACPSearchResultProvider(), 5);
-        $event->register('com.woltlab.wcf.page', new PageACPSearchResultProvider(), 6);
-        $event->register('com.woltlab.wcf.box', new BoxACPSearchResultProvider(), 7);
-        $event->register('com.woltlab.wcf.article', new ArticleACPSearchResultProvider(), 8);
-        $event->register('com.woltlab.wcf.trophy', new TrophyACPSearchResultProvider(), 9);
+        $event->register('com.woltlab.wcf.article', new ArticleACPSearchResultProvider());
+        $event->register('com.woltlab.wcf.box', new BoxACPSearchResultProvider());
+        $event->register('com.woltlab.wcf.menuItem', new MenuItemACPSearchResultProvider());
+        $event->register('com.woltlab.wcf.option', new OptionACPSearchResultProvider());
+        $event->register('com.woltlab.wcf.package', new PackageACPSearchResultProvider());
+        $event->register('com.woltlab.wcf.page', new PageACPSearchResultProvider());
+        $event->register('com.woltlab.wcf.trophy', new TrophyACPSearchResultProvider());
+        $event->register('com.woltlab.wcf.user', new UserACPSearchResultProvider());
+        $event->register('com.woltlab.wcf.userGroupOption', new UserGroupOptionACPSearchResultProvider());
     }
 }
