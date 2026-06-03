@@ -10,6 +10,7 @@
 
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import { searchAcp, type AcpSearchResultGroup } from "WoltLabSuite/Core/Api/Acp/Search";
+import UiDropdownSimple from "WoltLabSuite/Core/Ui/Dropdown/Simple";
 
 const DELAY = 250;
 const TRIGGER_LENGTH = 3;
@@ -252,35 +253,45 @@ function onBlur(event: FocusEvent): void {
 }
 
 function initProviderSelection(): void {
-  const dropdown = document.getElementById("pageHeaderSearchType");
-  if (dropdown === null) {
+  // `UiDropdownSimple` reparents the dropdown menu to a global container
+  // during its lazy initialization, so the menu items are no longer
+  // descendants of `#pageHeaderSearchType` at this point. Look it up
+  // through the dropdown registry instead.
+  const menu = UiDropdownSimple.getDropdownMenu("pageHeaderSearchType");
+  if (menu === undefined) {
     return;
   }
 
-  dropdown.querySelectorAll<HTMLAnchorElement>("a[data-provider-name]").forEach((link) => {
-    link.addEventListener("click", (event) => {
-      event.preventDefault();
+  menu.addEventListener("click", (event) => {
+    const target = event.target as HTMLElement | null;
+    const link = target?.closest<HTMLAnchorElement>("a[data-provider-name]") ?? null;
+    if (link === null) {
+      return;
+    }
 
-      const label = document.querySelector<HTMLElement>(".pageHeaderSearchType > .button > .pageHeaderSearchTypeLabel");
-      if (label !== null) {
-        label.textContent = link.textContent;
-      }
+    event.preventDefault();
 
-      const oldProvider = providerName;
-      const newProvider = link.dataset.providerName === "everywhere" ? "" : link.dataset.providerName!;
-      providerName = newProvider;
+    const label = document.querySelector<HTMLElement>(
+      ".pageHeaderSearchType > .button > .pageHeaderSearchTypeLabel",
+    );
+    if (label !== null) {
+      label.textContent = link.textContent;
+    }
 
-      if (oldProvider !== newProvider) {
-        const input = getSearchInput();
-        if (input !== null) {
-          const query = input.value.trim();
-          if (query.length >= TRIGGER_LENGTH) {
-            lastQuery = query;
-            void performSearch(query);
-          }
+    const oldProvider = providerName;
+    const newProvider = link.dataset.providerName === "everywhere" ? "" : link.dataset.providerName!;
+    providerName = newProvider;
+
+    if (oldProvider !== newProvider) {
+      const input = getSearchInput();
+      if (input !== null) {
+        const query = input.value.trim();
+        if (query.length >= TRIGGER_LENGTH) {
+          lastQuery = query;
+          void performSearch(query);
         }
       }
-    });
+    }
   });
 }
 

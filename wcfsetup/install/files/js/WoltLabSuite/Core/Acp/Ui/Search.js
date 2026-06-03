@@ -7,10 +7,11 @@
  * @since 6.3
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Api/Acp/Search"], function (require, exports, Language_1, Search_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Api/Acp/Search", "WoltLabSuite/Core/Ui/Dropdown/Simple"], function (require, exports, tslib_1, Language_1, Search_1, Simple_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
+    Simple_1 = tslib_1.__importDefault(Simple_1);
     const DELAY = 250;
     const TRIGGER_LENGTH = 3;
     let providerName = "";
@@ -209,31 +210,38 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/A
         }, 250);
     }
     function initProviderSelection() {
-        const dropdown = document.getElementById("pageHeaderSearchType");
-        if (dropdown === null) {
+        // `UiDropdownSimple` reparents the dropdown menu to a global container
+        // during its lazy initialization, so the menu items are no longer
+        // descendants of `#pageHeaderSearchType` at this point. Look it up
+        // through the dropdown registry instead.
+        const menu = Simple_1.default.getDropdownMenu("pageHeaderSearchType");
+        if (menu === undefined) {
             return;
         }
-        dropdown.querySelectorAll("a[data-provider-name]").forEach((link) => {
-            link.addEventListener("click", (event) => {
-                event.preventDefault();
-                const label = document.querySelector(".pageHeaderSearchType > .button > .pageHeaderSearchTypeLabel");
-                if (label !== null) {
-                    label.textContent = link.textContent;
-                }
-                const oldProvider = providerName;
-                const newProvider = link.dataset.providerName === "everywhere" ? "" : link.dataset.providerName;
-                providerName = newProvider;
-                if (oldProvider !== newProvider) {
-                    const input = getSearchInput();
-                    if (input !== null) {
-                        const query = input.value.trim();
-                        if (query.length >= TRIGGER_LENGTH) {
-                            lastQuery = query;
-                            void performSearch(query);
-                        }
+        menu.addEventListener("click", (event) => {
+            const target = event.target;
+            const link = target?.closest("a[data-provider-name]") ?? null;
+            if (link === null) {
+                return;
+            }
+            event.preventDefault();
+            const label = document.querySelector(".pageHeaderSearchType > .button > .pageHeaderSearchTypeLabel");
+            if (label !== null) {
+                label.textContent = link.textContent;
+            }
+            const oldProvider = providerName;
+            const newProvider = link.dataset.providerName === "everywhere" ? "" : link.dataset.providerName;
+            providerName = newProvider;
+            if (oldProvider !== newProvider) {
+                const input = getSearchInput();
+                if (input !== null) {
+                    const query = input.value.trim();
+                    if (query.length >= TRIGGER_LENGTH) {
+                        lastQuery = query;
+                        void performSearch(query);
                     }
                 }
-            });
+            }
         });
     }
     function initShortcuts(input) {
