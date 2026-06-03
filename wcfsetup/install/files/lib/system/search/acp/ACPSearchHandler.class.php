@@ -22,6 +22,7 @@ class ACPSearchHandler extends SingletonFactory
     /**
      * list of application abbreviations
      * @var string[]
+     * @deprecated 6.3
      */
     public $abbreviations = [];
 
@@ -151,6 +152,7 @@ class ACPSearchHandler extends SingletonFactory
      * Returns a list of application abbreviations.
      *
      * @return  string[]
+     * @deprecated 6.3 No longer in use.
      */
     public function getAbbreviations(string $suffix = '')
     {
