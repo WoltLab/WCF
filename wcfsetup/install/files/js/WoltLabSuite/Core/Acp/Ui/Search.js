@@ -7,7 +7,7 @@
  * @since 6.3
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/StringUtil", "WoltLabSuite/Core/Api/Acp/Search"], function (require, exports, Language_1, StringUtil_1, Search_1) {
+define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Api/Acp/Search"], function (require, exports, Language_1, Search_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -82,7 +82,7 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/S
                 link.append(title);
                 if (item.subtitle) {
                     const subtitle = document.createElement("small");
-                    subtitle.innerHTML = (0, StringUtil_1.escapeHTML)(item.subtitle);
+                    subtitle.textContent = item.subtitle;
                     link.append(subtitle);
                 }
                 li.append(link);

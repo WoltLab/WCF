@@ -9,7 +9,6 @@
  */
 
 import { getPhrase } from "WoltLabSuite/Core/Language";
-import { escapeHTML } from "WoltLabSuite/Core/StringUtil";
 import { searchAcp, type AcpSearchResultGroup } from "WoltLabSuite/Core/Api/Acp/Search";
 
 const DELAY = 250;
@@ -101,7 +100,7 @@ function renderResults(list: HTMLUListElement, groups: AcpSearchResultGroup[]): 
 
       if (item.subtitle) {
         const subtitle = document.createElement("small");
-        subtitle.innerHTML = escapeHTML(item.subtitle);
+        subtitle.textContent = item.subtitle;
         link.append(subtitle);
       }
 
