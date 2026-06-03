@@ -4,9 +4,9 @@ namespace wcf\system;
 
 use Laminas\Diactoros\Uri;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\request\RouteHandler;
+use wcf\system\search\acp\ACPSearchHandler;
 use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\template\ACPTemplateEngine;
@@ -170,9 +170,9 @@ class WCFACP extends WCF
 
         // available acp search providers
         $availableAcpSearchProviders = [];
-        foreach (ACPSearchProviderCacheBuilder::getInstance()->getData() as $searchProvider) {
-            $availableAcpSearchProviders[$searchProvider->providerName] = self::getLanguage()->get(
-                'wcf.acp.search.provider.' . $searchProvider->providerName
+        foreach (ACPSearchHandler::getInstance()->getProviderNames() as $providerName) {
+            $availableAcpSearchProviders[$providerName] = self::getLanguage()->get(
+                'wcf.acp.search.provider.' . $providerName
             );
         }
         \asort($availableAcpSearchProviders);

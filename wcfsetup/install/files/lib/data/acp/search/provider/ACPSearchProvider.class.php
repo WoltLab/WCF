@@ -16,6 +16,8 @@ use wcf\data\DatabaseObject;
  * @property-read   string  $providerName   textual identifier of the ACP search provider
  * @property-read   string  $className      class name of the `wcf\system\search\acp\IACPSearchResultProvider` implementation executing the search
  * @property-read   int     $showOrder      position of the grouped results of the ACP search provider within the result list
+ *
+ * @deprecated 6.3 Register providers through the `wcf\event\acp\search\provider\ProviderCollecting` event.
  */
 class ACPSearchProvider extends DatabaseObject
 {

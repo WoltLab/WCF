@@ -14,6 +14,7 @@ return new class {
     {
         $this->initEventListeners();
         $this->initACPMenuItems();
+        $this->initACPSearchProviders();
         $this->initLicenseData();
     }
 
@@ -132,6 +133,14 @@ return new class {
         EventHandler::getInstance()->register(
             \wcf\event\acp\menu\item\ItemCollecting::class,
             \wcf\system\event\listener\AcpMenuItemCollectingListener::class
+        );
+    }
+
+    private function initACPSearchProviders(): void
+    {
+        EventHandler::getInstance()->register(
+            \wcf\event\acp\search\provider\ProviderCollecting::class,
+            \wcf\system\event\listener\AcpSearchProviderCollectingListener::class
         );
     }
 

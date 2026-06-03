@@ -13,6 +13,8 @@ use wcf\data\DatabaseObjectEditor;
  *
  * @mixin       ACPSearchProvider
  * @extends DatabaseObjectEditor<ACPSearchProvider>
+ *
+ * @deprecated 6.3
  */
 class ACPSearchProviderEditor extends DatabaseObjectEditor
 {
