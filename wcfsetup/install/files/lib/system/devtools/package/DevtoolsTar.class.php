@@ -81,6 +81,14 @@ class DevtoolsTar extends Tar
             return false;
         }
 
+        if (\file_exists($destination)) {
+            $sourceHash = \hash_file('xxh3', $this->files[$index], true);
+            $targetHash = \hash_file('xxh3', $destination, true);
+            if ($sourceHash === $targetHash) {
+                return false;
+            }
+        }
+
         \copy($this->files[$index], $destination);
 
         return true;

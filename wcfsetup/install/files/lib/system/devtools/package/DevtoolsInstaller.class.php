@@ -3,6 +3,7 @@
 namespace wcf\system\devtools\package;
 
 use wcf\data\devtools\project\DevtoolsProject;
+use wcf\system\io\Tar;
 use wcf\system\package\plugin\ACPTemplatePackageInstallationPlugin;
 use wcf\system\package\plugin\FilePackageInstallationPlugin;
 use wcf\system\package\plugin\TemplatePackageInstallationPlugin;
@@ -23,6 +24,11 @@ class DevtoolsInstaller extends Installer
      * @var DevtoolsProject
      */
     protected $project;
+
+    /**
+     * @var array<int, int>
+     */
+    private $skipIndices = [];
 
     public function __construct(DevtoolsProject $project, string $targetDir, string $source, ?IFileHandler $fileHandler = null, string $folder = '')
     {
@@ -109,5 +115,31 @@ class DevtoolsInstaller extends Installer
         }
 
         throw new \InvalidArgumentException("Unknown file '{$source}'");
+    }
+
+    #[\Override]
+    protected function createFile(string $file, int $index, Tar $tar)
+    {
+        if (!$tar->extract($index, $this->targetDir . $file)) {
+            $this->skipIndices[$index] = $index;
+
+            return;
+        }
+
+        if (FileUtil::isApacheModule() || !\is_writable($this->targetDir . $file)) {
+            $this->makeWriteable($this->targetDir . $file);
+        }
+    }
+
+    #[\Override]
+    protected function logFiles(&$files)
+    {
+        $newFiles = \array_filter(
+            $files,
+            fn($index) => !isset($this->skipIndices[$index]),
+            \ARRAY_FILTER_USE_KEY,
+        );
+
+        parent::logFiles($newFiles);
     }
 }
