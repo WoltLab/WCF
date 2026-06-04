@@ -241,7 +241,9 @@ export function initializeAutosave(
 
       return Promise.resolve();
     },
-    waitingTime: 15_000,
+    // This value defines the amount of time that has to elapse after the last
+    // change was made, not the interval between saves.
+    waitingTime: 1_000,
   };
 
   listenToCkeditor(element).reset(() => deleteDraft(identifier));
