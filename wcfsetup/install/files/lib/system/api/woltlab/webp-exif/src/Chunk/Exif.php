@@ -55,21 +55,27 @@ final class Exif extends Chunk
         // the two bytes for the length itself.
         $byteLength = \pack("n", 2 + 6 + \strlen($bytes));
 
-        // We must suppress warnings here to gracefully recover from bad EXIF data.
-        $exif = @\exif_read_data(
-            \sprintf(
-                "data://image/jpeg;base64,%s",
-                \base64_encode(
-                    $soiTag .
-                        $app1Tag .
-                        $byteLength .
-                        $exifHeader .
-                        $bytes .
-                        $jpegBody
-                ),
-            ),
-            as_arrays: $sectionsAsArrays,
+        // An in-memory stream is used instead of a `data://` URL because the
+        // latter requires `allow_url_fopen` to be enabled.
+        $stream = \fopen('php://memory', 'r+');
+        \assert($stream !== false);
+        \fwrite(
+            $stream,
+            $soiTag .
+                $app1Tag .
+                $byteLength .
+                $exifHeader .
+                $bytes .
+                $jpegBody,
         );
+        \rewind($stream);
+
+        try {
+            // We must suppress warnings here to gracefully recover from bad EXIF data.
+            $exif = @\exif_read_data($stream, as_arrays: $sectionsAsArrays);
+        } finally {
+            \fclose($stream);
+        }
 
         // Parsing the EXIF data can fail when processing malformed binary blobs
         // and is non-recoverable.
