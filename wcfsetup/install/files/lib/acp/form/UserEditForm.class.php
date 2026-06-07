@@ -82,6 +82,7 @@ class UserEditForm extends UserAddForm
     /**
      * avatar type
      * @var string
+     * @deprecated 6.2 No longer in use.
      */
     public $avatarType = 'none';
 
@@ -286,7 +287,7 @@ class UserEditForm extends UserAddForm
         parent::readData();
 
         // get the avatar object
-        if ($this->avatarType == 'custom' && $this->user->avatarFileID) {
+        if ($this->user->avatarFileID) {
             $this->userAvatar = FileRuntimeCache::getInstance()->getObject($this->user->avatarFileID);
         }
 
@@ -343,10 +344,6 @@ class UserEditForm extends UserAddForm
         $this->disableCoverPhoto = $this->user->disableCoverPhoto;
         $this->disableCoverPhotoReason = $this->user->disableCoverPhotoReason;
         $this->disableCoverPhotoExpires = $this->user->disableCoverPhotoExpires;
-
-        if ($this->user->avatarFileID) {
-            $this->avatarType = 'custom';
-        }
 
         $this->colorScheme = $this->user->getUserOption('colorScheme') ?? 'system';
     }

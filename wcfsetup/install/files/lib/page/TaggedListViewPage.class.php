@@ -12,6 +12,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\listView\AbstractListView;
 use wcf\system\request\LinkHandler;
+use wcf\system\tagging\ICombinedTaggable;
 use wcf\system\tagging\ITaggedListViewProvider;
 use wcf\system\tagging\TypedTagCloud;
 use wcf\system\WCF;
@@ -218,10 +219,11 @@ class TaggedListViewPage extends AbstractListViewPage
             $processor = $objectType->getProcessor();
             if ($processor instanceof ITaggedListViewProvider) {
                 $this->itemsPerType[$key] = $processor->getListView($this->tagIDs)->countItems();
-            } else {
+            } elseif ($processor instanceof ICombinedTaggable) {
                 $objectList = $processor->getObjectListFor($this->tags);
-                \assert($objectList instanceof DatabaseObjectList);
                 $this->itemsPerType[$key] = $objectList->countObjects();
+            } else {
+                $this->itemsPerType[$key] = 0;
             }
         }
     }

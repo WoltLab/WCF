@@ -184,7 +184,11 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 
         // validate action name
         if (!\method_exists($this, $this->getActionName())) {
-            throw new SystemException("unknown action '" . $this->getActionName() . "'");
+            throw new SystemException(\sprintf(
+                "unknown action '%s' for '%s'",
+                $this->getActionName(),
+                $this::class,
+            ));
         }
 
         $actionName = 'validate' . StringUtil::firstCharToUpperCase($this->getActionName());

@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Loads Prism while disabling automated highlighting.
  *

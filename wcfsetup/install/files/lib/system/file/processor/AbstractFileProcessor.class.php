@@ -98,10 +98,21 @@ abstract class AbstractFileProcessor implements IFileProcessor
         return null;
     }
 
+    /**
+     * @deprecated 6.2 Override `sourceFilenameChanged()` instead.
+     */
     #[\Override]
     public function replacedWithWebpVariant(File $file): void
     {
         // There is usually no need to react to this change.
+    }
+
+    #[\Override]
+    public function sourceFilenameChanged(File $file): void
+    {
+        // Forward to the deprecated method so subclasses that still override
+        // the previous name continue to receive notifications.
+        $this->replacedWithWebpVariant($file);
     }
 
     #[\Override]

@@ -229,10 +229,11 @@ class CombinedTaggedPage extends MultipleLinkPage
             $processor = $objectType->getProcessor();
             if ($processor instanceof ITaggedListViewProvider) {
                 $this->itemsPerType[$key] = $processor->getListView($this->tagIDs)->countItems();
-            } else {
+            } elseif ($processor instanceof ICombinedTaggable) {
                 $objectList = $processor->getObjectListFor($this->tags);
-                \assert($objectList instanceof DatabaseObjectList);
                 $this->itemsPerType[$key] = $objectList->countObjects();
+            } else {
+                $this->itemsPerType[$key] = 0;
             }
         }
     }

@@ -8,6 +8,7 @@ use CuyZ\Valinor\Cache\Cache;
 use CuyZ\Valinor\Library\Container;
 use CuyZ\Valinor\Library\Settings;
 use CuyZ\Valinor\Mapper\ArgumentsMapper;
+use CuyZ\Valinor\Mapper\Configurator\MapperBuilderConfigurator;
 use CuyZ\Valinor\Mapper\Tree\Message\ErrorMessage;
 use CuyZ\Valinor\Mapper\TreeMapper;
 use Throwable;
@@ -26,6 +27,53 @@ final class MapperBuilder
     public function __construct()
     {
         $this->settings = new Settings();
+    }
+
+    /**
+     * Allows applying one or more configurators to the builder, enabling
+     * reusable and shareable configuration logic.
+     *
+     * This is useful when the same mapping configuration needs to be applied in
+     * multiple places across an application, or when configuration logic needs
+     * to be distributed as a package.
+     *
+     * ```
+     * use CuyZ\Valinor\MapperBuilder;
+     * use CuyZ\Valinor\Mapper\Configurator\MapperBuilderConfigurator;
+     *
+     * final class ApplicationMappingConfigurator implements MapperBuilderConfigurator
+     * {
+     *     public function configureMapperBuilder(MapperBuilder $builder): MapperBuilder
+     *     {
+     *         return $builder
+     *             ->allowScalarValueCasting()
+     *             ->allowSuperfluousKeys()
+     *             ->registerConstructor(
+     *                 \App\Domain\CustomerId::fromString(...),
+     *             );
+     *     }
+     * }
+     *
+     * // The same configurator can be reused across multiple mapper instances
+     * $result = (new MapperBuilder())
+     *     ->configureWith(new ApplicationMappingConfigurator())
+     *     ->mapper()
+     *     ->map(SomeClass::class, [
+     *         // …
+     *     ]);
+     * ```
+     *
+     * @pure
+     */
+    public function configureWith(MapperBuilderConfigurator ...$configurators): self
+    {
+        $self = $this;
+
+        foreach ($configurators as $configurator) {
+            $self = $configurator->configureMapperBuilder($self);
+        }
+
+        return $self;
     }
 
     /**
@@ -541,6 +589,75 @@ final class MapperBuilder
         } else {
             $clone->settings->mapperConverterAttributes[$converter] = null;
         }
+
+        return $clone;
+    }
+
+    /**
+     * Registers a key converter that transforms source keys before they are
+     * matched against object properties or shaped array elements.
+     *
+     * This is useful when the input data uses a different naming convention
+     * than the PHP codebase — for instance `snake_case` keys in a JSON API
+     * response vs `camelCase` properties in a PHP class.
+     *
+     * Unlike value converters, key converters do not transform the input data
+     * itself; they only remap keys.
+     *
+     * Note: error messages will reference the *original* source key names, so
+     * the end user sees the key that was actually sent.
+     *
+     * ```
+     * $mapper = (new \CuyZ\Valinor\MapperBuilder())
+     *     ->registerKeyConverter(static function (string $key): string {
+     *         // Strips the `billing_` prefix from source keys
+     *         if (str_starts_with($key, 'billing_')) {
+     *             return substr($key, 8);
+     *         }
+     *
+     *         return $key;
+     *     })
+     *     ->mapper();
+     *
+     * final readonly class BillingAddress
+     * {
+     *     public function __construct(
+     *         public string $street,
+     *         public string $city,
+     *         public string $country,
+     *     ) {}
+     * }
+     *
+     * $source = [
+     *     'billing_street' => '221B Baker Street',
+     *     'billing_city' => 'London',
+     *     'billing_country' => 'UK',
+     * ];
+     *
+     * // Works with classes
+     * $mapper->map(BillingAddress::class, $source);
+     *
+     * // Also works with shaped arrays
+     * $mapper->map(
+     *     'array{street: string, city: string, country: string}',
+     *     $source,
+     * );
+     * ```
+     *
+     * Multiple key converters can be registered and are applied as a pipeline:
+     * each one transforms the result of the previous one, in registration
+     * order.
+     *
+     * The key converter *must* be pure, its output must be deterministic:
+     * {@see https://en.wikipedia.org/wiki/Pure_function}
+     *
+     * @pure
+     * @param pure-callable(string): string $keyConverter
+     */
+    public function registerKeyConverter(callable $keyConverter): self
+    {
+        $clone = clone $this;
+        $clone->settings->keyConverters[] = $keyConverter(...);
 
         return $clone;
     }

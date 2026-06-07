@@ -86,8 +86,26 @@ interface DefaultMessage
         'Value {source_value} does not match any of the following formats: {formats}.' => [
             'en' => 'Value {source_value} does not match any of the following formats: {formats}.',
         ],
-        'Unexpected key {key}.' => [
-            'en' => 'Unexpected key {key}.',
+        'Unexpected key `{node_name}`.' => [
+            'en' => 'Unexpected key `{node_name}`.',
+        ],
+        'Key must follow the camelCase format.' => [
+            'en' => 'Key must follow the camelCase format.',
+        ],
+        'Key must follow the PascalCase format.' => [
+            'en' => 'Key must follow the PascalCase format.',
+        ],
+        'Key must follow the snake_case format.' => [
+            'en' => 'Key must follow the snake_case format.',
+        ],
+        'Key must follow the kebab-case format.' => [
+            'en' => 'Key must follow the kebab-case format.',
+        ],
+        'Collision between keys `{key}` and `{duplicate_key}`.' => [
+            'en' => 'Collision between keys `{key}` and `{duplicate_key}`.',
+        ],
+        'Key `{key}` was found in several HTTP request sources. It must be sent in only one of route, query or body.' => [
+            'en' => 'Key `{key}` was found in several HTTP request sources. It must be sent in only one of route, query or body.',
         ],
     ];
 }

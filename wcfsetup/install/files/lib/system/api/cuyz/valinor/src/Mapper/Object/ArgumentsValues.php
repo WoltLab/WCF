@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace CuyZ\Valinor\Mapper\Object;
 
+use CuyZ\Valinor\Mapper\Http\HttpRequest;
 use CuyZ\Valinor\Mapper\Tree\Shell;
 use CuyZ\Valinor\Type\CompositeTraversableType;
 use CuyZ\Valinor\Type\ObjectType;
 use CuyZ\Valinor\Type\Type;
-use CuyZ\Valinor\Type\Types\ArrayKeyType;
 use CuyZ\Valinor\Type\Types\UnionType;
 
 use function array_filter;
@@ -68,6 +68,10 @@ final readonly class ArgumentsValues
             $shell = $shell->withValue(iterator_to_array($shell->value()));
         }
 
+        if ($shell->value() instanceof HttpRequest) {
+            return new self($shell->withType($arguments->toShapedArray()));
+        }
+
         if (count($arguments) !== 1) {
             return new self($shell->withType($arguments->toShapedArray()));
         }
@@ -77,16 +81,13 @@ final readonly class ArgumentsValues
         $type = $argument->type();
         $attributes = $argument->attributes();
 
-        $isTraversableAndAllowsStringKeys = $type instanceof CompositeTraversableType
-            && $type->keyType() !== ArrayKeyType::integer();
-
         if (is_array($shell->value()) && array_key_exists($name, $shell->value())) {
-            if (! $isTraversableAndAllowsStringKeys || $shell->allowSuperfluousKeys || count($shell->value()) === 1) {
+            if (! $type instanceof CompositeTraversableType || $shell->allowSuperfluousKeys || count($shell->value()) === 1) {
                 return new self($shell->withType($arguments->toShapedArray()));
             }
         }
 
-        if ($shell->value() === [] && ! $isTraversableAndAllowsStringKeys) {
+        if ($shell->value() === [] && ! $type instanceof CompositeTraversableType) {
             return new self($shell->withType($arguments->toShapedArray()));
         }
 

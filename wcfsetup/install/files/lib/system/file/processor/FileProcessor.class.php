@@ -453,7 +453,7 @@ final class FileProcessor extends SingletonFactory
                 // The files identity differs if the file has been replaced.
                 if ($file !== $newFile) {
                     $processor = $newFile->getProcessor();
-                    $processor?->replacedWithWebpVariant($newFile);
+                    $processor?->sourceFilenameChanged($newFile);
                 }
 
                 return $newFile;

@@ -120,7 +120,7 @@ final class AttachmentGridView extends AbstractGridView
                 ->label('wcf.user.username')
                 ->filter(new UserFilter('username', 'wcf.user.username', 'user_table.userID'))
                 ->renderer(
-                    new class extends AbstractColumnRenderer {
+                    new class extends AbstractColumnRenderer implements ILinkColumnRenderer {
                         #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {

@@ -191,7 +191,9 @@ define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"
                 saveDraft(element, identifier, editor.data.get());
                 return Promise.resolve();
             },
-            waitingTime: 15_000,
+            // This value defines the amount of time that has to elapse after the last
+            // change was made, not the interval between saves.
+            waitingTime: 1_000,
         };
         (0, Event_1.listenToCkeditor)(element).reset(() => deleteDraft(identifier));
         if (element instanceof HTMLTextAreaElement && element.form) {

@@ -603,7 +603,7 @@
 					<dl>
 						<dt></dt>
 						<dd>
-							{if $avatarType == 'custom' && $userAvatar !== null}
+							{if $userAvatar !== null}
 								<img src="{$userAvatar->getLink()}" alt="" class="userAvatarImage" height="96" width="96">
 							{else}
 								<img src="{$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage" height="96" width="96">

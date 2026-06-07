@@ -18,8 +18,8 @@
         "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^10.5",
-        "infection/infection": "^0.31",
+        "phpunit/phpunit": "^11.5",
+        "infection/infection": "^0.32",
         "phpstan/phpstan": "^2.0",
         "phpstan/phpstan-strict-rules": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
@@ -28,7 +28,8 @@
         "vimeo/psalm": "^6.0",
         "mikey179/vfsstream": "^1.6.10",
         "rector/rector": "^2.0",
-        "phpbench/phpbench": "^1.3"
+        "phpbench/phpbench": "^1.3",
+        "psr/http-message": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -67,7 +68,7 @@
             "phpunit"
         ],
         "mutation": [
-            "infection --threads=max --git-diff-lines --with-uncovered --min-msi=100"
+            "infection --threads=max --git-diff-lines --min-msi=100 --with-timeouts --with-uncovered --show-mutations"
         ],
         "doc": [
             "Composer\\Config::disableProcessTimeout",
