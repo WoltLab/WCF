@@ -156,6 +156,11 @@ class DevtoolsPackageXmlWriter
             $this->xmlWriter->startElement('instructions', $attributes);
 
             foreach ($instructions['instructions'] as $instruction) {
+                if ($instruction['pip'] === 'void') {
+                    $this->xmlWriter->writeElement('void', '', [], false);
+                    continue;
+                }
+
                 $attributes = ['type' => $instruction['pip']];
                 if (isset($instruction['runStandalone']) && $instruction['runStandalone'] !== "0") {
                     $attributes['run'] = 'standalone';

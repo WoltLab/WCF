@@ -725,6 +725,10 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                 }
 
                 foreach ($instructions['instructions'] as $instructionKey => $instruction) {
+                    if ($instruction['pip'] === 'void') {
+                        continue;
+                    }
+
                     $value = $instruction['value'];
                     $packageInstallationPlugin = $packageInstallationPlugins[$instruction['pip']];
 

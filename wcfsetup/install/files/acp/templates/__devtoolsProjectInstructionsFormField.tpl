@@ -64,6 +64,7 @@
 							{foreach from=$packageInstallationPlugins item=packageInstallationPlugin}
 								<option value="{$packageInstallationPlugin->pluginName}">{$packageInstallationPlugin->pluginName}</option>
 							{/foreach}
+							<option value="void">void</option>
 						</select>
 					</dd>
 				</dl>
@@ -131,6 +132,7 @@
 							{foreach from=$packageInstallationPlugins item=packageInstallationPlugin}
 								<option value="{$packageInstallationPlugin->pluginName}">{$packageInstallationPlugin->pluginName}</option>
 							{/foreach}
+							<option value="void">void</option>
 						</select>
 					</dd>
 				</dl>
@@ -188,6 +190,8 @@
 	) {
 		Language.addObject({
 			'wcf.acp.devtools.project.instruction.delete.confirmMessages': '{jslang}wcf.acp.devtools.project.instruction.delete.confirmMessages{/jslang}',
+			'wcf.acp.devtools.project.instruction.error.voidInInstall': '{jslang}wcf.acp.devtools.project.instruction.error.voidInInstall{/jslang}',
+			'wcf.acp.devtools.project.instruction.error.voidNotAlone': '{jslang}wcf.acp.devtools.project.instruction.error.voidNotAlone{/jslang}',
 			'wcf.acp.devtools.project.instruction.edit': '{jslang}wcf.acp.devtools.project.instruction.edit{/jslang}',
 			'wcf.acp.devtools.project.instruction.instruction': '{jslang __literal=true}wcf.acp.devtools.project.instruction.instruction{/jslang}',
 			'wcf.acp.devtools.project.instruction.value.description': '{jslang}wcf.acp.devtools.project.instruction.value.description{/jslang}',
@@ -214,6 +218,7 @@
 				{implode from=$packageInstallationPlugins item=packageInstallationPlugin}
 					'{$packageInstallationPlugin->pluginName}': '{$packageInstallationPlugin->getDefaultFilename()}'
 				{/implode}
+				, 'void': ''
 			},
 			[
 				{implode from=$field->getValue() key=instructionsKey item=instructions}

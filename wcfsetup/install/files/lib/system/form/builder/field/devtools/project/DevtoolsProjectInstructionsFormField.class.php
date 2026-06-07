@@ -172,7 +172,11 @@ final class DevtoolsProjectInstructionsFormField extends AbstractFormField
             }
 
             foreach ($instructions['instructions'] as $instruction) {
-                if (!isset($instruction['pip']) || !isset($this->getPackageInstallationPlugins()[$instruction['pip']])) {
+                if (!isset($instruction['pip'])) {
+                    return false;
+                }
+
+                if ($instruction['pip'] !== 'void' && !isset($this->getPackageInstallationPlugins()[$instruction['pip']])) {
                     return false;
                 }
 
@@ -188,6 +192,24 @@ final class DevtoolsProjectInstructionsFormField extends AbstractFormField
 
                 $instruction['runStandalone'] = $instruction['runStandalone'] ?? 0;
                 $instruction['value'] = $instruction['value'] ?? '';
+            }
+
+            // the `void` instruction is only allowed in update sections and
+            // must be the only instruction
+            $hasVoid = false;
+            foreach ($instructions['instructions'] as $instruction) {
+                if ($instruction['pip'] === 'void') {
+                    $hasVoid = true;
+                    break;
+                }
+            }
+            if ($hasVoid) {
+                if ($instructions['type'] !== 'update') {
+                    return false;
+                }
+                if (\count($instructions['instructions']) !== 1) {
+                    return false;
+                }
             }
 
             return true;

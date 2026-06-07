@@ -14,6 +14,7 @@ use wcf\system\form\builder\field\devtools\project\DevtoolsProjectOptionalPackag
 use wcf\system\form\builder\field\devtools\project\DevtoolsProjectRequiredPackagesFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\language\LanguageFactory;
+use wcf\system\package\PackageArchive;
 use wcf\system\WCF;
 
 /**
@@ -310,7 +311,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm
                 $versionUpdateInstructions[] = [
                     'application' => $instruction['attributes']['application'] ?? '',
                     'runStandalone' => isset($instruction['attributes']['run']) && $instruction['attributes']['run'] === 'standalone' ? 1 : 0,
-                    'pip' => $instruction['pip'],
+                    'pip' => $instruction['pip'] === PackageArchive::VOID_MARKER ? 'void' : $instruction['pip'],
                     'value' => $instruction['value'],
                 ];
             }
