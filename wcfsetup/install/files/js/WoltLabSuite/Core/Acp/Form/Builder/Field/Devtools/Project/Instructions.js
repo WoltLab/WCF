@@ -82,12 +82,15 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
         addInstruction(event) {
             event.preventDefault();
             event.stopPropagation();
-            const instructionsId = event.currentTarget.closest("li.section").dataset
-                .instructionsId;
+            const section = event.currentTarget.closest("li.section");
+            const instructionsId = section.dataset.instructionsId;
             // note: data will be validated/filtered by the server
             const pipField = document.getElementById(`${this.formFieldId}_instructions${instructionsId}_pip`);
             // ignore pressing button if no PIP has been selected
             if (!pipField.value) {
+                return;
+            }
+            if (!this.validateVoidUsage(pipField, section, pipField.value, null)) {
                 return;
             }
             const valueField = document.getElementById(`${this.formFieldId}_instructions${instructionsId}_value`);
@@ -262,8 +265,55 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
             }
             // toggle application selector
             this.toggleApplicationFormField(instructionsId);
-            const value = document.getElementById(`${this.formFieldId}_instructions${instructionsId}_value`);
-            value.focus();
+            // hide value/runStandalone fields when the void instruction is selected
+            this.toggleValueAndRunStandaloneFormFields(instructionsId, pip !== "void");
+            if (pip !== "void") {
+                const value = document.getElementById(`${this.formFieldId}_instructions${instructionsId}_value`);
+                value.focus();
+            }
+        }
+        /**
+         * Toggles the visibility of the value and runStandalone form fields based on the selected pip.
+         */
+        toggleValueAndRunStandaloneFormFields(instructionsId, show) {
+            const valueDl = document.getElementById(`${this.formFieldId}_instructions${instructionsId}_value`).closest("dl");
+            const runStandaloneDl = document
+                .getElementById(`${this.formFieldId}_instructions${instructionsId}_runStandalone`)
+                .closest("dl");
+            if (show) {
+                Util_1.default.show(valueDl);
+                Util_1.default.show(runStandaloneDl);
+            }
+            else {
+                Util_1.default.hide(valueDl);
+                Util_1.default.hide(runStandaloneDl);
+            }
+        }
+        /**
+         * Validates that the `void` instruction is only used inside `update` sections and that it is
+         * the only instruction within its section. Returns `false` and shows an inline error if the
+         * placement is invalid.
+         */
+        validateVoidUsage(errorTarget, section, pip, excludedInstructionId) {
+            const instructionList = section.querySelector(".sortableList");
+            const existingInstructions = Array.from(instructionList.children);
+            const otherInstructions = existingInstructions.filter((li) => li.dataset.instructionId !== excludedInstructionId);
+            if (pip === "void") {
+                if (section.dataset.type !== "update") {
+                    Util_1.default.innerError(errorTarget, Language.get("wcf.acp.devtools.project.instruction.error.voidInInstall"), true);
+                    return false;
+                }
+                if (otherInstructions.length > 0) {
+                    Util_1.default.innerError(errorTarget, Language.get("wcf.acp.devtools.project.instruction.error.voidNotAlone"), true);
+                    return false;
+                }
+            }
+            else if (otherInstructions.some((li) => li.dataset.pip === "void")) {
+                Util_1.default.innerError(errorTarget, Language.get("wcf.acp.devtools.project.instruction.error.voidNotAlone"), true);
+                return false;
+            }
+            Util_1.default.innerError(errorTarget, "");
+            return true;
         }
         /**
          * Opens a dialog to edit an existing instruction.
@@ -292,6 +342,10 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
                         pipSelect.value = pip;
                         const submit = () => {
                             const listItem = document.getElementById(`${this.formFieldId}_instruction${instructionId}`);
+                            const section = listItem.closest("li.section");
+                            if (!this.validateVoidUsage(pipSelect, section, pipSelect.value, instructionId)) {
+                                return;
+                            }
                             listItem.dataset.application =
                                 Instructions.applicationPips.indexOf(pipSelect.value) !== -1 ? applicationSelect.value : "";
                             listItem.dataset.pip = pipSelect.value;
@@ -320,6 +374,14 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
                             }
                             else {
                                 Util_1.default.hide(applicationSelect.closest("dl"));
+                            }
+                            if (pip === "void") {
+                                Util_1.default.hide(valueInput.closest("dl"));
+                                Util_1.default.hide(runStandaloneInput.closest("dl"));
+                            }
+                            else {
+                                Util_1.default.show(valueInput.closest("dl"));
+                                Util_1.default.show(runStandaloneInput.closest("dl"));
                             }
                             const description = DomTraverse.nextByTag(valueInput, "SMALL");
                             if (this.pipDefaultFilenames[pip] !== "") {

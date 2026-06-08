@@ -601,6 +601,8 @@
 		<item name="wcf.acp.devtools.project.instruction.language.error.missingFiles"><![CDATA[Das Verzeichnis <kbd>{$directory}</kbd> enthält keine XML-Dateien.]]></item>
 		<item name="wcf.acp.devtools.project.instruction.error.noXmlFile"><![CDATA[Die angegebene Datei ist keine XML-Datei.]]></item>
 		<item name="wcf.acp.devtools.project.instruction.delete.confirmMessages"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Anweisung wirklich löschen?]]></item>
+		<item name="wcf.acp.devtools.project.instruction.error.voidInInstall"><![CDATA[Die <kbd>void</kbd>-Anweisung ist nur für Aktualisierungsanweisungen zulässig.]]></item>
+		<item name="wcf.acp.devtools.project.instruction.error.voidNotAlone"><![CDATA[Die <kbd>void</kbd>-Anweisung muss die einzige Anweisung in ihrem Anweisungssatz sein.]]></item>
 		<item name="wcf.acp.devtools.project.add.info"><![CDATA[Inkompatible Pakete, Installations- und Aktualisierungsanweisungen können erst beim Bearbeiten eines vorhandenen Projekts hinzugefügt werden.]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackage.error.missingFiles"><![CDATA[Die folgenden Paketdateien fehlen: {implode from=$missingFiles item=missingFile}<kbd>{$missingFile}</kbd>{/implode}.]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackage.error.missingFiles"><![CDATA[Die folgenden Paketdateien fehlen: {implode from=$missingFiles item=missingFile}<kbd>{$missingFile}</kbd>{/implode}.]]></item>

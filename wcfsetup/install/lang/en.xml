@@ -579,6 +579,8 @@
 		<item name="wcf.acp.devtools.project.instruction.language.error.missingFiles"><![CDATA[The directory <kbd>{$directory}</kbd> contains no XML files.]]></item>
 		<item name="wcf.acp.devtools.project.instruction.error.noXmlFile"><![CDATA[The entered file is no XML file.]]></item>
 		<item name="wcf.acp.devtools.project.instruction.delete.confirmMessages"><![CDATA[Do you really want to delete this instruction?]]></item>
+		<item name="wcf.acp.devtools.project.instruction.error.voidInInstall"><![CDATA[The <kbd>void</kbd> instruction is only allowed for update instructions.]]></item>
+		<item name="wcf.acp.devtools.project.instruction.error.voidNotAlone"><![CDATA[The <kbd>void</kbd> instruction must be the only instruction in its set.]]></item>
 		<item name="wcf.acp.devtools.project.add.info"><![CDATA[Conflicting packages, installation instructions, and update instructions can only be added when editing an existing project.]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackage.error.missingFiles"><![CDATA[The following package files are missing: {implode from=$missingFiles item=missingFile}<kbd>{$missingFile}</kbd>{/implode}.]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackage.error.missingFiles"><![CDATA[The following package files are missing: {implode from=$missingFiles item=missingFile}<kbd>{$missingFile}</kbd>{/implode}.]]></item>

@@ -126,8 +126,8 @@ class Instructions {
     event.preventDefault();
     event.stopPropagation();
 
-    const instructionsId = ((event.currentTarget as HTMLElement).closest("li.section") as HTMLElement).dataset
-      .instructionsId!;
+    const section = (event.currentTarget as HTMLElement).closest("li.section") as HTMLElement;
+    const instructionsId = section.dataset.instructionsId!;
 
     // note: data will be validated/filtered by the server
 
@@ -137,6 +137,10 @@ class Instructions {
 
     // ignore pressing button if no PIP has been selected
     if (!pipField.value) {
+      return;
+    }
+
+    if (!this.validateVoidUsage(pipField, section, pipField.value, null)) {
       return;
     }
 
@@ -367,8 +371,64 @@ class Instructions {
     // toggle application selector
     this.toggleApplicationFormField(instructionsId);
 
-    const value = document.getElementById(`${this.formFieldId}_instructions${instructionsId}_value`)!;
-    value.focus();
+    // hide value/runStandalone fields when the void instruction is selected
+    this.toggleValueAndRunStandaloneFormFields(instructionsId, pip !== "void");
+
+    if (pip !== "void") {
+      const value = document.getElementById(`${this.formFieldId}_instructions${instructionsId}_value`)!;
+      value.focus();
+    }
+  }
+
+  /**
+   * Toggles the visibility of the value and runStandalone form fields based on the selected pip.
+   */
+  protected toggleValueAndRunStandaloneFormFields(instructionsId: InstructionsId, show: boolean): void {
+    const valueDl = document.getElementById(`${this.formFieldId}_instructions${instructionsId}_value`)!.closest("dl")!;
+    const runStandaloneDl = document
+      .getElementById(`${this.formFieldId}_instructions${instructionsId}_runStandalone`)!
+      .closest("dl")!;
+
+    if (show) {
+      DomUtil.show(valueDl);
+      DomUtil.show(runStandaloneDl);
+    } else {
+      DomUtil.hide(valueDl);
+      DomUtil.hide(runStandaloneDl);
+    }
+  }
+
+  /**
+   * Validates that the `void` instruction is only used inside `update` sections and that it is
+   * the only instruction within its section. Returns `false` and shows an inline error if the
+   * placement is invalid.
+   */
+  protected validateVoidUsage(
+    errorTarget: HTMLElement,
+    section: HTMLElement,
+    pip: string,
+    excludedInstructionId: string | null,
+  ): boolean {
+    const instructionList = section.querySelector(".sortableList") as HTMLElement;
+    const existingInstructions = Array.from(instructionList.children) as HTMLElement[];
+    const otherInstructions = existingInstructions.filter((li) => li.dataset.instructionId !== excludedInstructionId);
+
+    if (pip === "void") {
+      if (section.dataset.type !== "update") {
+        DomUtil.innerError(errorTarget, Language.get("wcf.acp.devtools.project.instruction.error.voidInInstall"), true);
+        return false;
+      }
+      if (otherInstructions.length > 0) {
+        DomUtil.innerError(errorTarget, Language.get("wcf.acp.devtools.project.instruction.error.voidNotAlone"), true);
+        return false;
+      }
+    } else if (otherInstructions.some((li) => li.dataset.pip === "void")) {
+      DomUtil.innerError(errorTarget, Language.get("wcf.acp.devtools.project.instruction.error.voidNotAlone"), true);
+      return false;
+    }
+
+    DomUtil.innerError(errorTarget, "");
+    return true;
   }
 
   /**
@@ -403,6 +463,11 @@ class Instructions {
 
           const submit = () => {
             const listItem = document.getElementById(`${this.formFieldId}_instruction${instructionId}`)!;
+            const section = listItem.closest("li.section") as HTMLElement;
+            if (!this.validateVoidUsage(pipSelect, section, pipSelect.value, instructionId)) {
+              return;
+            }
+
             listItem.dataset.application =
               Instructions.applicationPips.indexOf(pipSelect.value) !== -1 ? applicationSelect.value : "";
             listItem.dataset.pip = pipSelect.value;
@@ -441,6 +506,14 @@ class Instructions {
               DomUtil.show(applicationSelect.closest("dl")!);
             } else {
               DomUtil.hide(applicationSelect.closest("dl")!);
+            }
+
+            if (pip === "void") {
+              DomUtil.hide(valueInput.closest("dl")!);
+              DomUtil.hide(runStandaloneInput.closest("dl")!);
+            } else {
+              DomUtil.show(valueInput.closest("dl")!);
+              DomUtil.show(runStandaloneInput.closest("dl")!);
             }
 
             const description = DomTraverse.nextByTag(valueInput, "SMALL")!;
