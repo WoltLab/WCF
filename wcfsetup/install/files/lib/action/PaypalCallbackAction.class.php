@@ -34,7 +34,7 @@ final class PaypalCallbackAction extends AbstractAction
             $content = '';
             try {
                 $url = 'https://www.paypal.com/cgi-bin/webscr';
-                if (!empty($_POST['test_ipn'])) {
+                if (\ENABLE_DEBUG_MODE && !empty($_POST['test_ipn'])) {
                     // IPN simulator notification
                     $url = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
                 }
