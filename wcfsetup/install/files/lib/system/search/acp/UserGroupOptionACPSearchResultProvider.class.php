@@ -51,7 +51,7 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("languageID = ?", [WCF::getLanguage()->languageID]);
         $conditions->add("languageItem LIKE ?", ['wcf.acp.group.option.%']);
-        $conditions->add("languageItemValue LIKE ?", ['%' . $query . '%']);
+        $conditions->add("languageItemValue LIKE ?", ['%' . WCF::getDB()->escapeLikeValue($query) . '%']);
 
         $sql = "SELECT      languageItem
                 FROM        wcf1_language_item
@@ -79,7 +79,7 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
             $conditions->add("optionName IN (?)", [\array_keys($languageItems)]);
         }
         if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
-            $conditions->add('optionName LIKE ?', ['%' . $query . '%']);
+            $conditions->add('optionName LIKE ?', ['%' . WCF::getDB()->escapeLikeValue($query) . '%']);
         }
 
         $sql = "SELECT  optionID, optionName, categoryName, permissions, options

@@ -54,7 +54,7 @@ class TrophyPageHandler extends AbstractLookupPageHandler
             ON          language_item.languageItem = trophy.title";
         $trophyList->getConditionBuilder()->add(
             '(trophy.title LIKE ? OR language_item.languageItemValue LIKE ?)',
-            ['%' . $searchString . '%', '%' . $searchString . '%']
+            ['%' . WCF::getDB()->escapeLikeValue($searchString) . '%', '%' . WCF::getDB()->escapeLikeValue($searchString) . '%']
         );
         $trophyList->sqlLimit = 10;
         $trophyList->sqlOrderBy = 'title';

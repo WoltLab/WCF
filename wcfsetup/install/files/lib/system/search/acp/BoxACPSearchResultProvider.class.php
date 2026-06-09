@@ -28,7 +28,7 @@ class BoxACPSearchResultProvider implements IACPSearchResultProvider
 
         $boxList = new BoxList();
         $boxList->getConditionBuilder()->add('box.boxType <> ?', ['menu']);
-        $boxList->getConditionBuilder()->add('box.name LIKE ?', ['%' . $query . '%']);
+        $boxList->getConditionBuilder()->add('box.name LIKE ?', ['%' . WCF::getDB()->escapeLikeValue($query) . '%']);
         $boxList->sqlLimit = 10;
         $boxList->sqlOrderBy = 'box.name';
         $boxList->readObjects();

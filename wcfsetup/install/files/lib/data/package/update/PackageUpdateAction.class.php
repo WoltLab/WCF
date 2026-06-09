@@ -94,7 +94,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
 
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("package_update.packageUpdateServerID IN (?)", [\array_keys($availableUpdateServers)]);
-        $searchString = '%' . $this->parameters['searchString'] . '%';
+        $searchString = '%' . WCF::getDB()->escapeLikeValue($this->parameters['searchString']) . '%';
         $conditions->add(
             "(package_update.package LIKE ? OR package_update.packageDescription LIKE ? OR package_update.packageName LIKE ?)",
             [$searchString, $searchString, $searchString]

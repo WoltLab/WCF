@@ -606,7 +606,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         }
 
         // find users
-        $searchString = \addcslashes($searchString, '_%');
+        $searchString = WCF::getDB()->escapeLikeValue($searchString);
         $parameters = [
             'searchString' => $searchString,
         ];

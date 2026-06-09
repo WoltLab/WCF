@@ -209,7 +209,7 @@ class UserSearchForm extends UserOptionListForm
     protected function buildStaticConditions()
     {
         if (!empty($this->username)) {
-            $this->conditions->add("user_table.username LIKE ?", ['%' . \addcslashes($this->username, '_%') . '%']);
+            $this->conditions->add("user_table.username LIKE ?", ['%' . WCF::getDB()->escapeLikeValue($this->username) . '%']);
         }
     }
 

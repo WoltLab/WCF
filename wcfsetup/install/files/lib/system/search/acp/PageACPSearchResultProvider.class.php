@@ -27,7 +27,7 @@ class PageACPSearchResultProvider implements IACPSearchResultProvider
         $results = [];
 
         $pageList = new PageList();
-        $pageList->getConditionBuilder()->add('page.name LIKE ?', ['%' . $query . '%']);
+        $pageList->getConditionBuilder()->add('page.name LIKE ?', ['%' . WCF::getDB()->escapeLikeValue($query) . '%']);
         $pageList->sqlLimit = 10;
         $pageList->sqlOrderBy = 'page.name';
         $pageList->readObjects();

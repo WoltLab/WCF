@@ -4,6 +4,7 @@ namespace wcf\system\page\handler;
 
 use wcf\data\user\UserProfileList;
 use wcf\system\cache\runtime\UserRuntimeCache;
+use wcf\system\WCF;
 
 /**
  * Provides the `isValid` and `lookup` methods for looking up users.
@@ -38,7 +39,7 @@ trait TUserLookupPageHandler
     public function lookup($searchString)
     {
         $userList = new UserProfileList();
-        $userList->getConditionBuilder()->add('user_table.username LIKE ?', ['%' . $searchString . '%']);
+        $userList->getConditionBuilder()->add('user_table.username LIKE ?', ['%' . WCF::getDB()->escapeLikeValue($searchString) . '%']);
         $userList->readObjects();
 
         $results = [];

@@ -930,7 +930,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
                 ORDER BY    title";
         $statement = WCF::getDB()->prepare($sql, 5);
         $statement->execute([
-            '%' . $this->parameters['searchString'] . '%',
+            '%' . WCF::getDB()->escapeLikeValue($this->parameters['searchString']) . '%',
             WCF::getLanguage()->languageID,
         ]);
 

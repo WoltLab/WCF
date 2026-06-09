@@ -145,7 +145,7 @@ final class CopyStyle
                     AND styleID <> ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
-            $style->styleName . '%',
+            WCF::getDB()->escapeLikeValue($style->styleName) . '%',
             $style->styleID,
         ]);
         $numbers = [];

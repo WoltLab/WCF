@@ -129,7 +129,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction
         $list = [];
 
         $conditionBuilder = new PreparedStatementConditionBuilder();
-        $conditionBuilder->add("name LIKE ?", [$this->parameters['data']['searchString'] . '%']);
+        $conditionBuilder->add("name LIKE ?", [WCF::getDB()->escapeLikeValue($this->parameters['data']['searchString']) . '%']);
         if (!empty($excludedSearchValues)) {
             $conditionBuilder->add("name NOT IN (?)", [$excludedSearchValues]);
         }

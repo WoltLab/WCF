@@ -53,7 +53,7 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
                 WHERE       keyword LIKE ?
                 ORDER BY    searches DESC";
         $statement = WCF::getDB()->prepare($sql, 10);
-        $statement->execute([$this->parameters['data']['searchString'] . '%']);
+        $statement->execute([WCF::getDB()->escapeLikeValue($this->parameters['data']['searchString']) . '%']);
         while ($row = $statement->fetchArray()) {
             $list[] = [
                 'label' => $row['keyword'],

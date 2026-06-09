@@ -27,7 +27,7 @@ class ArticleACPSearchResultProvider implements IACPSearchResultProvider
         $results = [];
 
         $contentList = new ArticleContentList();
-        $contentList->getConditionBuilder()->add('article_content.title LIKE ?', ['%' . $query . '%']);
+        $contentList->getConditionBuilder()->add('article_content.title LIKE ?', ['%' . WCF::getDB()->escapeLikeValue($query) . '%']);
         $contentList->sqlLimit = 10;
         $contentList->sqlOrderBy = 'article_content.title';
         $contentList->readObjects();
