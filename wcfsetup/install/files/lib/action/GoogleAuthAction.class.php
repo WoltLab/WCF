@@ -95,7 +95,11 @@ final class GoogleAuthAction extends AbstractOauth2AuthAction
 
         $parsed['__id'] = $parsed['sub'];
         $parsed['__username'] = $parsed['name'];
-        if ($parsed['email']) {
+        if (
+            isset($parsed['email'])
+            && $parsed['email'] !== ''
+            && ($parsed['email_verified'] ?? false) === true
+        ) {
             $parsed['__email'] = $parsed['email'];
         }
         $parsed['accessToken'] = $accessToken;
