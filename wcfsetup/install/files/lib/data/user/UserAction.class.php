@@ -77,7 +77,11 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      */
     public function validateCreate()
     {
-        $this->readString('password', false, 'data');
+        // This method has been unused for over a decade. We cannot remove its
+        // definition because it would be implicitly enabled due to the
+        // `$permissionsUpdate` property which we cannot nullify to preserve
+        // the backwards-compatibility.
+        throw new PermissionDeniedException();
     }
 
     /**
@@ -167,33 +171,11 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      */
     public function validateUpdate()
     {
-        // read objects
-        if (empty($this->objects)) {
-            $this->readObjects();
-
-            if (empty($this->objects)) {
-                throw new UserInputException('objectIDs');
-            }
-        }
-
-        // disallow updating of anything except for options outside of ACP
-        if (RequestHandler::getInstance()->isACPRequest() && (\count($this->parameters) != 1 || !isset($this->parameters['options']))) {
-            throw new PermissionDeniedException();
-        }
-
-        try {
-            WCF::getSession()->checkPermissions($this->permissionsUpdate);
-        } catch (PermissionDeniedException $e) {
-            // check if we're editing ourselves
-            if (\count($this->objects) == 1 && ($this->objects[0]->userID == WCF::getUser()->userID)) {
-                $count = \count($this->parameters);
-                if ($count > 1 || ($count == 1 && !isset($this->parameters['options']))) {
-                    throw new PermissionDeniedException();
-                }
-            } else {
-                throw new PermissionDeniedException();
-            }
-        }
+        // This method has been unused for over a decade. We cannot remove its
+        // definition because it would be implicitly enabled due to the
+        // `$permissionsUpdate` property which we cannot nullify to preserve
+        // the backwards-compatibility.
+        throw new PermissionDeniedException();
     }
 
     /**
