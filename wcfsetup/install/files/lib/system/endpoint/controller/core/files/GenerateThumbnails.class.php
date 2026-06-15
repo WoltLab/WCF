@@ -10,6 +10,7 @@ use wcf\data\file\thumbnail\FileThumbnailList;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\file\processor\FileProcessor;
 
 #[PostRequest('/core/files/{id:\d+}/generatethumbnails')]
@@ -18,6 +19,8 @@ final class GenerateThumbnails implements IController
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $file = Helper::fetchObjectFromRequestParameter($variables['id'], File::class);
+
+        $this->assertCanGenerateThumbnails($file);
 
         FileProcessor::getInstance()->generateWebpVariant($file);
         FileProcessor::getInstance()->generateThumbnails($file);
@@ -31,6 +34,18 @@ final class GenerateThumbnails implements IController
         }
 
         return new JsonResponse($thumbnails);
+    }
+
+    private function assertCanGenerateThumbnails(File $file): void
+    {
+        $processor = $file->getProcessor();
+        if ($processor === null) {
+            throw new PermissionDeniedException();
+        }
+
+        if (!$processor->canDelete($file)) {
+            throw new PermissionDeniedException();
+        }
     }
 
     /**
