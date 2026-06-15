@@ -34,7 +34,6 @@ class MySQLDatabase extends Database
             }
 
             if (\defined('\\Pdo\\Mysql::ATTR_INIT_COMMAND')) {
-                // @phpstan-ignore class.notFound
                 $driverOptions[\Pdo\Mysql::ATTR_INIT_COMMAND] = $initCommand;
             } else {
                 $driverOptions[\PDO::MYSQL_ATTR_INIT_COMMAND] = $initCommand;
@@ -84,7 +83,6 @@ class MySQLDatabase extends Database
         parent::setAttributes();
 
         if (\defined('\\Pdo\\Mysql::ATTR_USE_BUFFERED_QUERY')) {
-            // @phpstan-ignore class.notFound
             $this->pdo->setAttribute(\Pdo\Mysql::ATTR_USE_BUFFERED_QUERY, true);
         } else {
             $this->pdo->setAttribute(\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
