@@ -18,7 +18,7 @@ define(["require", "exports", "tslib", "../../../Ui/Search/Input"], function (re
         }
         search(value) {
             void this.#geocoder.geocode({ address: value }, (results, status) => {
-                if (status === google.maps.GeocoderStatus.OK) {
+                if (status === "OK") {
                     const data = {
                         actionName: "",
                         objectIDs: [],

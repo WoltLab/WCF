@@ -28,10 +28,10 @@ class MediaListUpload extends MediaUpload<MediaListUploadOptions> {
   protected _getParameters(): ArbitraryObject {
     if (this._options.categoryId) {
       return Core.extend(
-        super._getParameters() as object,
+        super._getParameters(),
         {
           categoryID: this._options.categoryId,
-        } as object,
+        },
       ) as ArbitraryObject;
     }
 

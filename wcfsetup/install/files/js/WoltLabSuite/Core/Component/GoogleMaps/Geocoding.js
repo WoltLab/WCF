@@ -39,7 +39,7 @@ define(["require", "exports", "../../Helper/Selector", "./Geocoding/Suggestion",
                 void this.#map.getGeocoder().then((geocoder) => {
                     const location = new google.maps.LatLng(event.detail.latitude, event.detail.longitude);
                     void geocoder.geocode({ location }, (results, status) => {
-                        if (status === google.maps.GeocoderStatus.OK) {
+                        if (status === "OK") {
                             event.detail.callback(results[0].formatted_address);
                         }
                     });
@@ -57,7 +57,7 @@ define(["require", "exports", "../../Helper/Selector", "./Geocoding/Suggestion",
             this.#marker.addListener("dragend", () => {
                 void this.#map.getGeocoder().then((geocoder) => {
                     void geocoder.geocode({ location: this.#marker.position }, (results, status) => {
-                        if (status === google.maps.GeocoderStatus.OK) {
+                        if (status === "OK") {
                             this.#element.value = results[0].formatted_address;
                             this.#setLocation(results[0].geometry.location.lat(), results[0].geometry.location.lng());
                         }
@@ -75,7 +75,7 @@ define(["require", "exports", "../../Helper/Selector", "./Geocoding/Suggestion",
         async #moveMarkerToAddress(address) {
             const geocoder = await this.#map.getGeocoder();
             void geocoder.geocode({ address }, async (results, status) => {
-                if (status === google.maps.GeocoderStatus.OK) {
+                if (status === "OK") {
                     if (this.#marker) {
                         this.#marker.position = results[0].geometry.location;
                     }
