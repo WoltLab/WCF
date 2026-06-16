@@ -60,7 +60,7 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
                 FROM    wcf1_article_content
                 WHERE   title LIKE ?
             )',
-            ['%' . $searchString . '%']
+            ['%' . WCF::getDB()->escapeLikeValue($searchString) . '%']
         );
         $articleList->sqlLimit = 10;
         $articleList->sqlOrderBy = 'title';

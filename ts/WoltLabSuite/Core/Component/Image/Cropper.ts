@@ -235,6 +235,18 @@ abstract class ImageCropper {
       if (!inSelection(selection, maxSelection)) {
         event.preventDefault();
 
+        // A selection larger than the available area can never be repositioned
+        // to satisfy the boundary check. Clamping the position would oscillate
+        // between 0 and a negative value, re-dispatching `change` on every
+        // `$change` and freezing the browser in an infinite loop. Reject the
+        // change instead of repositioning it.
+        if (
+          Math.round(selection.width) > Math.round(maxSelection.width) ||
+          Math.round(selection.height) > Math.round(maxSelection.height)
+        ) {
+          return;
+        }
+
         // Clamp the position to the boundaries of the canvas.
         void this.cropperSelection!.$nextTick(() => {
           this.cropperSelection!.$change(

@@ -114,7 +114,7 @@ class MembersListView extends AbstractListView
                 if ($value == '#') {
                     $list->getConditionBuilder()->add("SUBSTRING(username,1,1) IN ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')");
                 } else {
-                    $list->getConditionBuilder()->add("username LIKE ?", [$value . '%']);
+                    $list->getConditionBuilder()->add("username LIKE ?", [WCF::getDB()->escapeLikeValue($value) . '%']);
                 }
             }
         };

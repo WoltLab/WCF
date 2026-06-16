@@ -180,6 +180,15 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Image/Resizer", "WoltL
                 };
                 if (!inSelection(selection, maxSelection)) {
                     event.preventDefault();
+                    // A selection larger than the available area can never be repositioned
+                    // to satisfy the boundary check. Clamping the position would oscillate
+                    // between 0 and a negative value, re-dispatching `change` on every
+                    // `$change` and freezing the browser in an infinite loop. Reject the
+                    // change instead of repositioning it.
+                    if (Math.round(selection.width) > Math.round(maxSelection.width) ||
+                        Math.round(selection.height) > Math.round(maxSelection.height)) {
+                        return;
+                    }
                     // Clamp the position to the boundaries of the canvas.
                     void this.cropperSelection.$nextTick(() => {
                         this.cropperSelection.$change(clampValue(selection.x, selection.width, maxSelection.width), clampValue(selection.y, selection.height, maxSelection.height));

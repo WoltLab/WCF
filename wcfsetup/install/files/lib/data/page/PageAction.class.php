@@ -355,7 +355,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
                 ORDER BY    name";
         $statement = WCF::getDB()->prepare($sql, 5);
         $statement->execute([
-            '%' . $this->parameters['searchString'] . '%',
+            '%' . WCF::getDB()->escapeLikeValue($this->parameters['searchString']) . '%',
             0,
         ]);
 

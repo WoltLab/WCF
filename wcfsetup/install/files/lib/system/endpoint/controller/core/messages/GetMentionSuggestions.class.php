@@ -70,7 +70,7 @@ final class GetMentionSuggestions implements IController
     private function getUsers(string $query): array
     {
         $userProfileList = new UserProfileList();
-        $userProfileList->getConditionBuilder()->add("username LIKE ?", [$query . '%']);
+        $userProfileList->getConditionBuilder()->add("username LIKE ?", [WCF::getDB()->escapeLikeValue($query) . '%']);
 
         $userProfileList->sqlLimit = 10;
         $userProfileList->readObjects();

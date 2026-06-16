@@ -285,7 +285,7 @@ class HtmlInputNodeTextParser
 
         if (!empty($likeValues)) {
             for ($i = 0, $length = \count($likeValues); $i < $length; $i++) {
-                $conditions->add('username LIKE ?', [\str_replace('%', '', $likeValues[$i]) . '%']);
+                $conditions->add('username LIKE ?', [WCF::getDB()->escapeLikeValue($likeValues[$i]) . '%']);
             }
         }
 
