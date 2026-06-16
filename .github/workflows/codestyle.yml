@@ -3,7 +3,10 @@ name: Code Style
 on:
   push:
     branches:
-    - master
+    - "6.0"
+    - "6.1"
+    - "6.2"
+    - "6.3"
   pull_request:
 
 permissions:
@@ -31,9 +34,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Set up node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
-        node-version: "18"
+        node-version: "24"
         cache: "npm"
     - run: npm install
     - name: Run prettier
@@ -51,9 +54,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Set up node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
-        node-version: "18"
+        node-version: "24"
         cache: "npm"
     - run: npm install
     - name: Run prettier
