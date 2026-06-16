@@ -75,7 +75,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
             if (tab === undefined) {
                 return true;
             }
-            return tab.hidden;
+            return tab.hidden !== false;
         }
         setTabCounter(tabName, value) {
             const tab = this.#tabs.find((element) => element.dataset.name === tabName);

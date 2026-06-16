@@ -25,8 +25,8 @@ export async function addMarker(
     title,
   });
 
-  if (focus) {
-    map.setCenter(marker.position!);
+  if (focus && marker.position !== null && marker.position !== undefined) {
+    map.setCenter(marker.position);
   }
 }
 
@@ -59,7 +59,9 @@ export async function addDraggableMarker(
     gmpClickable: false,
   });
 
-  map.setCenter(marker.position!);
+  if (marker.position !== null && marker.position !== undefined) {
+    map.setCenter(marker.position);
+  }
 
   return marker;
 }

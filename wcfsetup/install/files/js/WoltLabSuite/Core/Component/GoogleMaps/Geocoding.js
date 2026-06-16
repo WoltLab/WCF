@@ -1,10 +1,4 @@
-/**
- * Provides geocoding functions for searching map locations.
- *
- * @author  Marcel Werk
- * @copyright  2001-2022 WoltLab GmbH
- * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- */
+/// <reference types="google.maps" />
 define(["require", "exports", "../../Helper/Selector", "./Geocoding/Suggestion", "./Marker", "./woltlab-core-google-maps"], function (require, exports, Selector_1, Suggestion_1, Marker_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });

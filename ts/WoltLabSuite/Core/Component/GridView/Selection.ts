@@ -32,7 +32,7 @@ export class Selection extends EventTarget {
       this.#change(this.#markAll!.checked);
     });
 
-    this.#selectionBar = document.getElementById(`${gridId}_selectionBar`) as HTMLElement;
+    this.#selectionBar = document.getElementById(`${gridId}_selectionBar`);
     this.#bulkInteractionButton = document.getElementById(`${gridId}_bulkInteractionButton`) as HTMLButtonElement;
     this.#bulkInteractionButton?.addEventListener("click", () => {
       this.#showBulkInteractionMenu();

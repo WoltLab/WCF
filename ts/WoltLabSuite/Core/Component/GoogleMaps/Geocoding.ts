@@ -1,3 +1,5 @@
+/// <reference types="google.maps" />
+
 /**
  * Provides geocoding functions for searching map locations.
  *
