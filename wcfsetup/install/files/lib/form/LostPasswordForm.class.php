@@ -158,10 +158,10 @@ final class LostPasswordForm extends AbstractFormBuilderForm
         // generate a new lost password key
         $lostPasswordKey = Hex::encode(\random_bytes(20));
 
-        // save key and request time in database
+        // save hashed key and request time in database
         $this->objectAction = new UserAction([$this->user], 'update', [
             'data' => \array_merge($this->additionalFields, [
-                'lostPasswordKey' => $lostPasswordKey,
+                'lostPasswordKey' => \hash('sha256', $lostPasswordKey),
                 'lastLostPasswordRequestTime' => \TIME_NOW,
             ]),
         ]);
@@ -174,8 +174,8 @@ final class LostPasswordForm extends AbstractFormBuilderForm
         $email->addRecipient(new UserMailbox($this->user));
         $email->setSubject($this->user->getLanguage()->getDynamicVariable('wcf.user.lostPassword.mail.subject'));
         $email->setBody(new MimePartFacade([
-            new RecipientAwareTextMimePart('text/html', 'email_lostPassword'),
-            new RecipientAwareTextMimePart('text/plain', 'email_lostPassword'),
+            new RecipientAwareTextMimePart('text/html', 'email_lostPassword', 'wcf', ['lostPasswordKey' => $lostPasswordKey]),
+            new RecipientAwareTextMimePart('text/plain', 'email_lostPassword', 'wcf', ['lostPasswordKey' => $lostPasswordKey]),
         ]));
         $email->send();
 

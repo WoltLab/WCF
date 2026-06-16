@@ -40,7 +40,7 @@ use wcf\util\UserUtil;
  * @property-read   int     $activationCode         flag which determines, whether the user is activated (for legacy reasons an random integer, if the user is *not* activated)
  * @property-read   ?string $emailConfirmed         code sent to the user's email address used for account activation or null if the email is confirmed
  * @property-read   int     $lastLostPasswordRequestTime    timestamp at which the user has reported that they lost their password or 0 if password has not been reported as lost
- * @property-read   ?string $lostPasswordKey        code used for authenticating setting new password after password loss or empty if password has not been reported as lost
+ * @property-read   ?string $lostPasswordKey        SHA-256 hash of the code used for authenticating setting new password after password loss or empty if password has not been reported as lost
  * @property-read   int     $lastUsernameChange     timestamp at which the user changed their name the last time or 0 if username has not been changed
  * @property-read   string  $newEmail               new email address of the user that has to be manually confirmed or empty if no new email address has been set
  * @property-read   string  $oldUsername            previous name of the user or empty if they have had no previous name
