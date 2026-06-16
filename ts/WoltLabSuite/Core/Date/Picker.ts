@@ -953,7 +953,7 @@ const DatePicker = {
     element.dataset.value = date.getTime().toString();
     element.dataset.empty = "false";
 
-    let format = "";
+    let format: string;
     let value: string;
     if (data.isDateTime) {
       if (data.isTimeOnly) {

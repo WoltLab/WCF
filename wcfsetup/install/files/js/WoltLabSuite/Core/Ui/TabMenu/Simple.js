@@ -230,7 +230,7 @@ define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Dom/Util", "
                 }
             }
             tab.classList.add("active");
-            const newContent = this.containers.get(name);
+            const newContent = this.containers.get(name.toString());
             newContent.classList.add("active");
             newContent.classList.remove("hidden");
             if (this.isLegacy) {
@@ -238,7 +238,7 @@ define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Dom/Util", "
                 newContent.classList.add("ui-state-active");
             }
             if (this.store) {
-                this.store.value = name;
+                this.store.value = name.toString();
             }
             if (!disableEvent) {
                 EventHandler.fire("com.woltlab.wcf.simpleTabMenu_" + this.container.id, "select", {

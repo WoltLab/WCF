@@ -55,7 +55,7 @@ class UiToggleInput {
   private getElements(type: string, items: ElementOrSelector[]): HTMLElement[] {
     const elements: HTMLElement[] = [];
     items.forEach((item) => {
-      let element: HTMLElement | null = null;
+      let element: HTMLElement | null;
       if (typeof item === "string") {
         element = document.querySelector(item);
         if (element === null) {

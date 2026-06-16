@@ -1,3 +1,4 @@
+/// <reference types="facebook-js-sdk" />
 /**
  * Handles loading and initialization of Facebook's JavaScript SDK.
  *

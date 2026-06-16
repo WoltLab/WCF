@@ -179,7 +179,7 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
       allowFlip: "both",
     },
     options || {},
-  ) as AlignmentOptions;
+  );
 
   if (!Array.isArray(options.pointerClassNames) || options.pointerClassNames.length !== (options.pointer ? 1 : 2)) {
     options.pointerClassNames = [];

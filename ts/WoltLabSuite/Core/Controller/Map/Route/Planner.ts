@@ -137,7 +137,10 @@ class ControllerMapRoutePlanner implements DialogCallbackObject {
   /**
    * Handles the response of the direction service.
    */
-  private setRoute(result: google.maps.DirectionsResult | null, status: google.maps.DirectionsStatus): void {
+  private setRoute(
+    result: google.maps.DirectionsResult | null,
+    status: google.maps.DirectionsStatus | google.maps.DirectionsStatusString,
+  ): void {
     AjaxStatus.hide();
 
     if (status === google.maps.DirectionsStatus.OK) {

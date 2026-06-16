@@ -1,3 +1,4 @@
+/// <reference types="twitter-for-web" />
 /**
  * Wrapper around Twitter's createTweet API.
  *

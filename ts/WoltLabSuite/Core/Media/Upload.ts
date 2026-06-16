@@ -18,7 +18,6 @@ import * as DomChangeListener from "../Dom/Change/Listener";
 import {
   Media,
   MediaUploadOptions,
-  MediaUploadSuccessEventData,
   MediaUploadError,
   MediaUploadAjaxResponseData,
 } from "./Data";
@@ -43,8 +42,6 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
         options || {},
       ),
     );
-
-    options = options || {};
 
     this._elementTagSize = 144;
     if (this._options.elementTagSize) {
@@ -177,7 +174,7 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
       }
     }
 
-    return Core.extend(super._getParameters() as object, parameters as object) as ArbitraryObject;
+    return Core.extend(super._getParameters(), parameters) as ArbitraryObject;
   }
 
   protected _replaceFileIcon(fileIcon: FaIcon, media: Media, size: number): void {
@@ -305,7 +302,7 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
       media: data.returnValues.media,
       upload: this,
       uploadId: uploadId,
-    } as MediaUploadSuccessEventData);
+    });
   }
 }
 

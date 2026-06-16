@@ -27,7 +27,6 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                 multiple: options.mediaManager ? true : false,
                 singleFileRequests: true,
             }, options || {}));
-            options = options || {};
             this._elementTagSize = 144;
             if (this._options.elementTagSize) {
                 this._elementTagSize = this._options.elementTagSize;

@@ -19,7 +19,7 @@ class Suggestion extends UiSearchInput {
 
   protected search(value: string): void {
     void this.#geocoder.geocode({ address: value }, (results, status) => {
-      if (status === google.maps.GeocoderStatus.OK) {
+      if (status === "OK") {
         const data = {
           actionName: "",
           objectIDs: [],

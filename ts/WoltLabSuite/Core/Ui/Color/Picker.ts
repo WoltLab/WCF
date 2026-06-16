@@ -169,9 +169,9 @@ class UiColorPicker implements DialogCallbackObject {
           this.newColor = content.querySelector(".colorPickerColorNew > span") as HTMLElement;
           this.oldColor = content.querySelector(".colorPickerColorOld > span") as HTMLElement;
 
-          this.colorTextInput = content.querySelector("input[type=text]") as HTMLInputElement;
-          this.colorTextInput.addEventListener("blur", (ev) => this.updateColorFromHex(ev));
-          this.colorTextInput.addEventListener("input", (ev) => this.updateColorFromHex(ev));
+          this.colorTextInput = content.querySelector("input[type=text]");
+          this.colorTextInput!.addEventListener("blur", (ev) => this.updateColorFromHex(ev));
+          this.colorTextInput!.addEventListener("input", (ev) => this.updateColorFromHex(ev));
 
           if (ColorUtil.isValidColor(this.input.value)) {
             this.setInitialColor(this.input.value);

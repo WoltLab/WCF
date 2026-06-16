@@ -275,7 +275,7 @@ const UiDialog = {
           onShow: null,
         },
         options || {},
-      ) as InternalDialogOptions;
+      );
 
       if (!options.closable) options.backdropCloseOnClick = false;
       if (options.closeConfirmMessage) {
@@ -841,8 +841,8 @@ const UiDialog = {
         window.removeEventListener("keyup", _keyupListener);
       }
     } else {
-      data = _dialogs.get(_activeDialog) as DialogData;
-      _container.dataset.closeOnClick = data.backdropCloseOnClick ? "true" : "false";
+      data = _dialogs.get(_activeDialog);
+      _container.dataset.closeOnClick = data!.backdropCloseOnClick ? "true" : "false";
     }
 
     if (Environment.platform() !== "desktop") {

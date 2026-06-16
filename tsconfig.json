@@ -30,6 +30,10 @@
       "*": [
         "./ts/*"
       ]
-    }
+    },
+    "ignoreDeprecations": "6.0",
+    "strict": false,
+    "noUncheckedSideEffectImports": false,
+    "skipLibCheck": true
   }
 }

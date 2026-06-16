@@ -55,7 +55,7 @@ class MediaManagerSearch implements AjaxCallbackObject {
   }
 
   public _ajaxSuccess(data: AjaxResponseData): void {
-    this._mediaManager.setMedia(data.returnValues.media || ({} as Media), data.returnValues.template || "", {
+    this._mediaManager.setMedia(data.returnValues.media || ({}), data.returnValues.template || "", {
       pageCount: data.returnValues.pageCount || 0,
       pageNo: data.returnValues.pageNo || 0,
     });

@@ -37,7 +37,7 @@ define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Language", "
             };
         }
         _ajaxSuccess(data) {
-            this._mediaManager.setMedia(data.returnValues.media || {}, data.returnValues.template || "", {
+            this._mediaManager.setMedia(data.returnValues.media || ({}), data.returnValues.template || "", {
                 pageCount: data.returnValues.pageCount || 0,
                 pageNo: data.returnValues.pageNo || 0,
             });
