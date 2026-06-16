@@ -68,6 +68,10 @@ final class LicensePage extends AbstractPage
     {
         parent::readData();
 
+        if (PackageUpdateServer::isUpgradeOverrideEnabled()) {
+            throw new NamedUserException();
+        }
+
         if (!LicenseApi::hasLicenseCredentials()) {
             return new RedirectResponse(
                 LinkHandler::getInstance()->getControllerLink(

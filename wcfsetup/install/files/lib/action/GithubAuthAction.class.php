@@ -96,15 +96,24 @@ final class GithubAuthAction extends AbstractOauth2AuthAction
             $response = $this->getHttpClient()->send($request);
             $emails = \json_decode((string)$response->getBody(), true, flags: \JSON_THROW_ON_ERROR);
 
-            // search primary email
-            $email = $emails[0]['email'];
+            // Only trust verified emails. Prefer the primary, fall back to the
+            // first verified address.
+            $email = null;
             foreach ($emails as $tmp) {
-                if ($tmp['primary']) {
+                if (($tmp['verified'] ?? false) !== true) {
+                    continue;
+                }
+                if (($tmp['primary'] ?? false) === true) {
                     $email = $tmp['email'];
                     break;
                 }
+                if ($email === null) {
+                    $email = $tmp['email'];
+                }
             }
-            $oauthUser["__email"] = $email;
+            if ($email !== null) {
+                $oauthUser["__email"] = $email;
+            }
         } catch (ClientExceptionInterface $e) {
         }
 

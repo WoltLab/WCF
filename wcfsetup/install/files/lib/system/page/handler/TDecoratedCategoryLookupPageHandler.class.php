@@ -104,7 +104,7 @@ trait TDecoratedCategoryLookupPageHandler
         );
         $conditionBuilder->add(
             '(category.title LIKE ? OR language_item.languageItemValue LIKE ?)',
-            ['%' . $searchString . '%', '%' . $searchString . '%']
+            ['%' . WCF::getDB()->escapeLikeValue($searchString) . '%', '%' . WCF::getDB()->escapeLikeValue($searchString) . '%']
         );
         $sql = "SELECT      DISTINCT categoryID
                 FROM        wcf1_category category

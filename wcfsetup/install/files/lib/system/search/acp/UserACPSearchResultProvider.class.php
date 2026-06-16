@@ -26,10 +26,10 @@ class UserACPSearchResultProvider implements IACPSearchResultProvider
         }
 
         $conditionBuilder = new PreparedStatementConditionBuilder(true, 'OR');
-        $conditionBuilder->add("username LIKE ?", [[$query . '%']]);
+        $conditionBuilder->add("username LIKE ?", [[WCF::getDB()->escapeLikeValue($query) . '%']]);
 
         if (WCF::getSession()->hasPermission('admin.user.canEditMailAddress')) {
-            $conditionBuilder->add("email LIKE ?", [[$query . '%']]);
+            $conditionBuilder->add("email LIKE ?", [[WCF::getDB()->escapeLikeValue($query) . '%']]);
         }
 
         $sql = "SELECT  *
