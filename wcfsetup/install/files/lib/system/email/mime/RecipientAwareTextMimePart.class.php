@@ -48,7 +48,8 @@ class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAware
      */
     public function __construct(string $mimeType, string $template, string $application = 'wcf', mixed $content = null)
     {
-        parent::__construct($content, $mimeType);
+        parent::__construct('', $mimeType);
+        $this->content = $content;
 
         $this->template = $template;
         $this->application = $application;
