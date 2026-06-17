@@ -19,7 +19,7 @@ jobs:
     name: Check for differing synced templates.
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - run: sudo apt-get install -y jq diffutils
     - name: Check for differences
       run: |
