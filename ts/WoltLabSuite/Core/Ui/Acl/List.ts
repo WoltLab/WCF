@@ -41,7 +41,7 @@ interface AjaxResponse extends DatabaseObjectActionResponse {
   };
 }
 
-export = class AclList {
+class AclList {
   readonly #categoryName: string | undefined;
   readonly #container: HTMLElement;
   readonly #aclList: HTMLUListElement;
@@ -485,4 +485,6 @@ export = class AclList {
       form.appendChild(input);
     }
   }
-};
+}
+
+export = AclList;
