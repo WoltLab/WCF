@@ -7,7 +7,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
     Util_1 = tslib_1.__importDefault(Util_1);
     StringUtil = tslib_1.__importStar(StringUtil);
     Ajax = tslib_1.__importStar(Ajax);
-    return class AclList {
+    class AclList {
         #categoryName;
         #container;
         #aclList;
@@ -369,5 +369,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
                 form.appendChild(input);
             }
         }
-    };
+    }
+    return AclList;
 });

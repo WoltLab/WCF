@@ -93,7 +93,7 @@ class TabMenu {
       return true;
     }
 
-    return tab.hidden;
+    return tab.hidden !== false;
   }
 
   setTabCounter(tabName: string, value: number): void {

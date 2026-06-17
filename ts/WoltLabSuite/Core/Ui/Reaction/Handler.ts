@@ -151,9 +151,9 @@ class UiReactionHandler {
    */
   _initReactButton(element: HTMLElement, elementData: ElementData): void {
     if (this._options.isSingleItem) {
-      elementData.reactButton = document.querySelector(this._options.buttonSelector) as HTMLElement;
+      elementData.reactButton = document.querySelector(this._options.buttonSelector);
     } else {
-      elementData.reactButton = element.querySelector(this._options.buttonSelector) as HTMLElement;
+      elementData.reactButton = element.querySelector(this._options.buttonSelector);
     }
 
     if (elementData.reactButton === null) {

@@ -1,3 +1,5 @@
+/// <reference types="grecaptcha" />
+
 /**
  * Handles Google reCaptcha.
  *

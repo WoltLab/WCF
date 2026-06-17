@@ -247,7 +247,7 @@ class TabMenuSimple {
       }
     }
 
-    name = (name || tab.dataset.name || "") as string;
+    name = (name || tab.dataset.name || "");
 
     // unmark active tab
     const oldTab = this.getActiveTab();
@@ -278,7 +278,7 @@ class TabMenuSimple {
     }
 
     tab.classList.add("active");
-    const newContent = this.containers.get(name)!;
+    const newContent = this.containers.get(name.toString())!;
     newContent.classList.add("active");
     newContent.classList.remove("hidden");
 
@@ -288,7 +288,7 @@ class TabMenuSimple {
     }
 
     if (this.store) {
-      this.store.value = name;
+      this.store.value = name.toString();
     }
 
     if (!disableEvent) {

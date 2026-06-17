@@ -65,7 +65,7 @@ class UiSearchInput {
         suppressErrors: false,
       },
       options,
-    ) as SearchInputOptions;
+    );
 
     this.ajaxPayload = options.ajax as DatabaseObjectActionPayload;
     this.autoFocus = options.autoFocus!;

@@ -364,7 +364,7 @@ class ConfigurationBuilder {
       ui: {
         poweredBy: {
           label: null,
-        } as CKEditor5.UiConfig["poweredBy"],
+        },
         viewportOffset: {
           top: 50,
         },

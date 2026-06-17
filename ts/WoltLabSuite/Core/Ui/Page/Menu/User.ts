@@ -394,7 +394,7 @@ export class PageMenuUser implements PageMenuProvider {
           icon: button.querySelector(".icon")!.outerHTML,
           label: button.dataset.title || button.title,
           origin: listItem.id,
-        } as TabData;
+        };
       })
       .forEach((data: TabData) => {
         const [tab, tabPanel] = this.buildTabComponents(data);

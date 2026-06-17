@@ -9,7 +9,6 @@
 import * as Ajax from "../../Ajax";
 import * as EventHandler from "../../Event/Handler";
 import { DatabaseObjectActionResponse, ResponseData } from "../../Ajax/Data";
-import { ObjectActionData } from "./Data";
 import * as UiConfirmation from "../Confirmation";
 import * as Language from "../../Language";
 import * as StringUtil from "../../StringUtil";
@@ -92,7 +91,7 @@ function processAction(actionElement: HTMLElement, data: ResponseData | Database
       containerElement: actionElement.closest(containerSelector),
       data,
       objectElement: actionElement.closest(objectSelector),
-    } as ObjectActionData);
+    });
   }
 }
 

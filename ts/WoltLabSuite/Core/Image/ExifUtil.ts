@@ -106,7 +106,7 @@ export async function getExifBytesFromJpeg(blob: Blob | File): Promise<Exif> {
         // append the found EXIF sequence, usually only a single EXIF (APP1) sequence should be defined
         const sequence = bytes.slice(i, length + i);
         // The typings for buffers conflict with an implicit dependency on node.
-        exif = concatUint8Arrays(exif, sequence) as Uint8Array<ArrayBuffer>;
+        exif = concatUint8Arrays(exif, sequence);
       }
     }
 

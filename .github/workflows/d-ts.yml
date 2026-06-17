@@ -16,6 +16,7 @@ jobs:
         - '6.0'
         - '6.1'
         - '6.2'
+        - '6.3'
     steps:
     - run: |
         sudo apt-get install -y \
@@ -29,9 +30,9 @@ jobs:
       run: |
         echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
     - name: Set up node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
-        node-version: "18"
+        node-version: "24"
         cache: "npm"
     - run: npm install
     - uses: actions/checkout@v4

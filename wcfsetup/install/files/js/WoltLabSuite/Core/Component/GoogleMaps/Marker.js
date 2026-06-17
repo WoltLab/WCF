@@ -17,7 +17,7 @@ define(["require", "exports", "./woltlab-core-google-maps"], function (require, 
             position: new google.maps.LatLng(latitude, longitude),
             title,
         });
-        if (focus) {
+        if (focus && marker.position !== null && marker.position !== undefined) {
             map.setCenter(marker.position);
         }
     }
@@ -35,7 +35,9 @@ define(["require", "exports", "./woltlab-core-google-maps"], function (require, 
             gmpDraggable: true,
             gmpClickable: false,
         });
-        map.setCenter(marker.position);
+        if (marker.position !== null && marker.position !== undefined) {
+            map.setCenter(marker.position);
+        }
         return marker;
     }
 });

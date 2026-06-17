@@ -22,7 +22,7 @@ export class Filter extends EventTarget {
     super();
 
     this.#filterButton = document.getElementById(`${viewId}_filterButton`) as HTMLButtonElement;
-    this.#filterPills = document.getElementById(`${viewId}_filters`) as HTMLElement;
+    this.#filterPills = document.getElementById(`${viewId}_filters`);
 
     this.#setupEventListeners();
   }
