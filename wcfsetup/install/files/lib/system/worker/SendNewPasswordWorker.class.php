@@ -32,6 +32,11 @@ class SendNewPasswordWorker extends AbstractWorker
      */
     protected $limit = 20;
 
+    /**
+     * @var array<int, string>
+     */
+    private array $lostPasswordKeys = [];
+
     #[\Override]
     public function countObjects()
     {
@@ -104,11 +109,13 @@ class SendNewPasswordWorker extends AbstractWorker
         $userAction = new UserAction([$userEditor], 'update', [
             'data' => [
                 'password' => null,
-                'lostPasswordKey' => $lostPasswordKey,
+                'lostPasswordKey' => \hash('sha256', $lostPasswordKey),
                 'lastLostPasswordRequestTime' => $lastLostPasswordRequestTime,
             ],
         ]);
         $userAction->executeAction();
+
+        $this->lostPasswordKeys[$userEditor->userID] = $lostPasswordKey;
     }
 
     /**
@@ -128,9 +135,10 @@ class SendNewPasswordWorker extends AbstractWorker
         ));
         $email->addRecipient(new UserMailbox($user));
         $email->setSubject($user->getLanguage()->getDynamicVariable('wcf.acp.user.sendNewPassword.mail.subject'));
+        $lostPasswordKey = $this->lostPasswordKeys[$user->userID] ?? '';
         $email->setBody(new MimePartFacade([
-            new RecipientAwareTextMimePart('text/html', 'email_sendNewPassword'),
-            new RecipientAwareTextMimePart('text/plain', 'email_sendNewPassword'),
+            new RecipientAwareTextMimePart('text/html', 'email_sendNewPassword', 'wcf', ['lostPasswordKey' => $lostPasswordKey]),
+            new RecipientAwareTextMimePart('text/plain', 'email_sendNewPassword', 'wcf', ['lostPasswordKey' => $lostPasswordKey]),
         ]));
         $jobs = $email->getJobs();
         foreach ($jobs as $job) {

@@ -8,6 +8,7 @@
  * @license   GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
+use wcf\system\database\table\column\CharDatabaseTableColumn;
 use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
 use wcf\system\database\table\column\JsonDatabaseTableColumn;
 use wcf\system\database\table\column\MediumintDatabaseTableColumn;
@@ -61,5 +62,10 @@ return [
         ->columns([
             NotNullVarchar255DatabaseTableColumn::create('emoji')
                 ->defaultValue(''),
+        ]),
+    PartialDatabaseTable::create('wcf1_user')
+        ->columns([
+            CharDatabaseTableColumn::create('lostPasswordKey')
+                ->length(64),
         ]),
 ];

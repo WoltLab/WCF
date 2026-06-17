@@ -56,7 +56,7 @@ final class NewPasswordForm extends AbstractFormBuilderForm
             if (!$this->user->lostPasswordKey) {
                 $this->throwInvalidLinkException();
             }
-            if (!\hash_equals($this->user->lostPasswordKey, $this->lostPasswordKey)) {
+            if (!\hash_equals($this->user->lostPasswordKey, \hash('sha256', $this->lostPasswordKey))) {
                 $this->throwInvalidLinkException();
             }
             // expire lost password requests after a day
@@ -66,7 +66,7 @@ final class NewPasswordForm extends AbstractFormBuilderForm
 
             WCF::getSession()->register('lostPasswordRequest', [
                 'userID' => $this->user->userID,
-                'key' => $this->user->lostPasswordKey,
+                'key' => $this->lostPasswordKey,
             ]);
         } else {
             if (!\is_array(WCF::getSession()->getVar('lostPasswordRequest'))) {
@@ -78,7 +78,7 @@ final class NewPasswordForm extends AbstractFormBuilderForm
             if (!$this->user->userID) {
                 throw new IllegalLinkException();
             }
-            if (!\hash_equals($this->user->lostPasswordKey, WCF::getSession()->getVar('lostPasswordRequest')['key'])) {
+            if (!\hash_equals($this->user->lostPasswordKey, \hash('sha256', WCF::getSession()->getVar('lostPasswordRequest')['key']))) {
                 $this->throwInvalidLinkException();
             }
         }

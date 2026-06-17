@@ -3215,7 +3215,7 @@ erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} ein neues 
 Benutzerkonto {@$mailbox->getUser()->username} auf der Seite {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link}]
 weiterhin verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}:
 
-    {link controller='NewPassword' object=$mailbox->getUser() isEmail=true}k={@$mailbox->getUser()->lostPasswordKey}{/link} {* this line ends with a space *}
+    {link controller='NewPassword' object=$mailbox->getUser() isEmail=true}k={@$lostPasswordKey}{/link} {* this line ends with a space *}
 
 {if LANGUAGE_USE_INFORMAL_VARIANT}Solltest du{else}Sollten Sie{/if} diese Nachricht erst nach dem {@$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime} lesen, ist es
 aus Sicherheitsgründen erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Kennwort vergessen-Funktion [URL:{link controller='LostPassword' isEmail=true}{/link}] {if LANGUAGE_USE_INFORMAL_VARIANT}nutzt{else}nutzen{/if}.]]></item>
@@ -4607,7 +4607,7 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 {@$mailbox->getUser()->username} auf der Seite {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link}] vergessen zu haben. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst dein{else}Sie können Ihr{/if} Kennwort
 nach einem Klick auf den folgenden Link ändern:
 
-    {link controller='NewPassword' object=$mailbox->getUser() isEmail=true}k={@$mailbox->getUser()->lostPasswordKey}{/link} {* this line ends with a space *}
+    {link controller='NewPassword' object=$mailbox->getUser() isEmail=true}k={@$lostPasswordKey}{/link} {* this line ends with a space *}
 
 Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dein{else}Sie Ihr{/if} Kennwort nicht ändern {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, dann wird diese Anfrage
 am {@$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime} automatisch ablaufen.]]></item>

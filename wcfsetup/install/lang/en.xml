@@ -3142,7 +3142,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 An administrator has reset your password. You are now required to set a new password to be able to use your
 user account {@$mailbox->getUser()->username} on the website {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link}] again:
 
-    {link controller='NewPassword' object=$mailbox->getUser() isEmail=true}k={@$mailbox->getUser()->lostPasswordKey}{/link} {* this line ends with a space *}
+    {link controller='NewPassword' object=$mailbox->getUser() isEmail=true}k={@$lostPasswordKey}{/link} {* this line ends with a space *}
 
 If you read this message after {@$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime} you’ll have to use
 the lost password form [URL:{link controller='LostPassword' isEmail=true}{/link}] for security reasons.]]></item>
@@ -4606,7 +4606,7 @@ You (or someone else) claimed to have lost the password for the user account {@$
 the website {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link}]. You can change your password after clicking
 the following link:
 
-    {link controller='NewPassword' object=$mailbox->getUser() isEmail=true}k={@$mailbox->getUser()->lostPasswordKey}{/link} {* this line ends with a space *}
+    {link controller='NewPassword' object=$mailbox->getUser() isEmail=true}k={@$lostPasswordKey}{/link} {* this line ends with a space *}
 
 If you don’t want to change your password you can simply wait. The request will expire at {@$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime}.]]></item>
 		<item name="wcf.user.lostPassword.mail.html.headline"><![CDATA[Dear {$mailbox->getUser()->username},]]></item>

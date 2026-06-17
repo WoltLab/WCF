@@ -3786,7 +3786,7 @@ return [
             NotNullInt10DatabaseTableColumn::create('lastLostPasswordRequestTime')
                 ->defaultValue(0),
             CharDatabaseTableColumn::create('lostPasswordKey')
-                ->length(40),
+                ->length(64),
             NotNullInt10DatabaseTableColumn::create('lastUsernameChange')
                 ->defaultValue(0),
             NotNullVarchar255DatabaseTableColumn::create('newEmail')
