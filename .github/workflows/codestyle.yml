@@ -17,7 +17,7 @@ jobs:
     name: PHP
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Setup PHP with tools
       uses: shivammathur/setup-php@v2
       with:
@@ -32,7 +32,7 @@ jobs:
     name: TS Prettier
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Set up node.js
       uses: actions/setup-node@v6
       with:
@@ -52,7 +52,7 @@ jobs:
     name: SCSS Prettier
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Set up node.js
       uses: actions/setup-node@v6
       with:

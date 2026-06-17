@@ -18,6 +18,6 @@ jobs:
     steps:
     - run: sudo service mysql start
     - run: mysqladmin -uroot -proot create test
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - run: |
         cat wcfsetup/setup/db/install.sql |mysql -uroot -proot -Dtest
