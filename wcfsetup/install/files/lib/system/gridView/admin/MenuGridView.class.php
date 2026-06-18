@@ -76,12 +76,13 @@ final class MenuGridView extends AbstractGridView
                     new SelectFilter(
                         \array_combine(
                             Box::$availableMenuPositions,
-                            \array_map(static function (string $postion): string {
-                                return 'wcf.acp.box.position.' . $postion;
+                            \array_map(static function (string $position): string {
+                                return 'wcf.acp.box.position.' . $position;
                             }, Box::$availableMenuPositions)
                         ),
                         'position',
-                        'wcf.acp.box.position'
+                        'wcf.acp.box.position',
+                        $this->subSelectPosition()
                     )
                 )
                 ->renderer(
@@ -93,12 +94,12 @@ final class MenuGridView extends AbstractGridView
                         }
                     }
                 )
-                ->sortable(sortByDatabaseColumn: $this->subSelectItems()),
+                ->sortable(sortByDatabaseColumn: $this->subSelectPosition()),
             GridViewColumn::for("showOrder")
                 ->label("wcf.global.showOrder")
-                ->filter(new IntegerFilter('showOrder', 'wcf.global.showOrder', $this->subSelectItems()))
+                ->filter(new IntegerFilter('showOrder', 'wcf.global.showOrder', $this->subSelectShowOrder()))
                 ->renderer(new NumberColumnRenderer())
-                ->sortable(sortByDatabaseColumn: $this->subSelectItems()),
+                ->sortable(sortByDatabaseColumn: $this->subSelectShowOrder()),
         ]);
 
         $provider = new MenuInteractions();
