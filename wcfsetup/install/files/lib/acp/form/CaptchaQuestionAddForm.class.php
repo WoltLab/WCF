@@ -93,7 +93,7 @@ class CaptchaQuestionAddForm extends AbstractFormBuilderForm
         MultilineTextFormField $formField,
         ?Language $language = null
     ): void {
-        if (!\str_starts_with('~', $answer) || !\str_ends_with('~', $answer)) {
+        if (!\str_starts_with($answer, '~') || !\str_ends_with($answer, '~')) {
             return;
         }
 
