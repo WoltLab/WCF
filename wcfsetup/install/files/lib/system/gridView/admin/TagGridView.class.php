@@ -104,7 +104,7 @@ final class TagGridView extends AbstractGridView
                             }
 
                             return \sprintf(
-                                '<a href="%s">%s<a>',
+                                '<a href="%s">%s</a>',
                                 StringUtil::encodeHTML(
                                     LinkHandler::getInstance()->getControllerLink(
                                         TaggedListViewPage::class,
