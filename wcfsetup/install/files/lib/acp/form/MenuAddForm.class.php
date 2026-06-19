@@ -100,6 +100,8 @@ class MenuAddForm extends AbstractFormBuilderForm
                         BooleanFormField::create('showHeader')
                             ->label('wcf.acp.box.showHeader')
                             ->value(true),
+                        BooleanFormField::create('isDisabled')
+                            ->label('wcf.acp.box.isDisabled'),
                     ])
             ]);
     }
@@ -142,13 +144,15 @@ class MenuAddForm extends AbstractFormBuilderForm
                         $parameters['boxData']['showHeader'] = $parameters['data']['showHeader'];
                         $parameters['boxData']['visibleEverywhere'] = $parameters['data']['visibleEverywhere'];
                         $parameters['boxData']['position'] = $parameters['data']['position'];
+                        $parameters['boxData']['isDisabled'] = $parameters['data']['isDisabled'];
 
                         unset(
                             $parameters['data']['cssClassName'],
                             $parameters['data']['showOrder'],
                             $parameters['data']['showHeader'],
                             $parameters['data']['visibleEverywhere'],
-                            $parameters['data']['position']
+                            $parameters['data']['position'],
+                            $parameters['data']['isDisabled']
                         );
 
                         return $parameters;
@@ -162,6 +166,7 @@ class MenuAddForm extends AbstractFormBuilderForm
                         $data['visibleEverywhere'] = $object->getBox()->visibleEverywhere;
                         $data['pageIDs'] = $object->getBox()->getPageIDs();
                         $data['showHeader'] = $object->getBox()->showHeader;
+                        $data['isDisabled'] = $object->getBox()->isDisabled;
 
                         $data['acl'] = SimpleAclHandler::getInstance()->getValues(
                             'com.woltlab.wcf.box',

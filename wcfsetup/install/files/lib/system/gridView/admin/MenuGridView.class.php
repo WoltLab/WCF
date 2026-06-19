@@ -20,6 +20,7 @@ use wcf\system\gridView\renderer\PhraseColumnRenderer;
 use wcf\system\interaction\admin\MenuInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
+use wcf\system\interaction\ToggleInteraction;
 use wcf\system\request\LinkHandler;
 use wcf\system\view\filter\I18nTextFilter;
 use wcf\system\view\filter\IntegerFilter;
@@ -108,6 +109,13 @@ final class MenuGridView extends AbstractGridView
         ]);
         $this->setInteractionProvider($provider);
 
+        $this->addQuickInteraction(new ToggleInteraction(
+            'enable',
+            'core/menus/%s/enable',
+            'core/menus/%s/disable',
+            isAvailableCallback: static fn(Menu $menu) => !$menu->isMainMenu()
+        ));
+
         $this->setDefaultSortField("title");
         $this->addRowLink(new GridViewRowLink(MenuEditForm::class));
     }
@@ -136,10 +144,11 @@ final class MenuGridView extends AbstractGridView
         }
 
         $list->sqlSelects .= \sprintf(
-            "%s as items, %s as position, %s as showOrder",
+            "%s as items, %s as position, %s as showOrder, %s as isDisabled",
             $this->subSelectItems(),
             $this->subSelectPosition(),
-            $this->subSelectShowOrder()
+            $this->subSelectShowOrder(),
+            $this->subSelectIsDisabled()
         );
 
         return $list;
@@ -158,6 +167,15 @@ final class MenuGridView extends AbstractGridView
     {
         return "(
             SELECT  showOrder
+            FROM    wcf1_box
+            WHERE   menuID = menu.menuID
+        )";
+    }
+
+    private function subSelectIsDisabled(): string
+    {
+        return "(
+            SELECT  isDisabled
             FROM    wcf1_box
             WHERE   menuID = menu.menuID
         )";
