@@ -2,8 +2,6 @@
 
 namespace wcf\system\background\job;
 
-use BadMethodCallException;
-use LogicException;
 use Psr\Http\Message\ResponseInterface;
 use wcf\data\file\File;
 use wcf\data\unfurl\url\UnfurlUrl;
@@ -164,13 +162,26 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
                 $image
             );
 
+            $width = $height = 0;
+            if ($file !== null) {
+                $imageData = \getimagesizefromstring(
+                    \base64_decode(
+                        \file_get_contents($file->getPathname())
+                    )
+                );
+                if ($imageData !== false) {
+                    $width = $imageData[0];
+                    $height = $imageData[1];
+                }
+            }
+
             return [
                 'imageUrl' => $unfurlResponse->getImageUrl(),
                 'imageUrlHash' => \sha1($unfurlResponse->getImageUrl()),
                 'fileID' => $file?->fileID,
                 'isStored' => $file !== null ? 1 : 0,
-                'width' => $imageData[0],
-                'height' => $imageData[1],
+                'width' => $width,
+                'height' => $height,
             ];
         } catch (UrlInaccessible | DownloadFailed $e) {
             return [];
@@ -295,7 +306,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
         }
 
         if ($imageID !== null && !empty($imageData)) {
-            throw new BadMethodCallException("You cannot pass an imageID and imageData at the same time.");
+            throw new \BadMethodCallException("You cannot pass an imageID and imageData at the same time.");
         }
 
         $urlAction = new UnfurlUrlAction([$this->urlID], 'update', [
