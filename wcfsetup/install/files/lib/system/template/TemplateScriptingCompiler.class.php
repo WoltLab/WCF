@@ -36,9 +36,12 @@ class TemplateScriptingCompiler
      */
     protected $allowedModifierFunctions = [
         'abs',
+        'array_first',
         'array_key_exists',
         'array_keys',
+        'array_last',
         'array_pop',
+        'array_reverse',
         'array_values',
         'base64_decode',
         'base64_encode',
