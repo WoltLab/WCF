@@ -3,7 +3,6 @@
 namespace wcf\system\package\plugin;
 
 use wcf\data\acp\menu\item\ACPMenuItemEditor;
-use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\IconFormField;
@@ -20,8 +19,7 @@ use wcf\system\form\builder\IFormDocument;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPlugin implements
-    IGuiPackageInstallationPlugin
+class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPlugin
 {
     /**
      * @inheritDoc
