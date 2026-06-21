@@ -119,7 +119,7 @@
 	grid-template-areas: "previous next";
 	grid-template-columns: 1fr 1fr;
 
-	@include screen-sm-down {
+	@include screen-md-down {
 		column-gap: 0;
 		grid-template-areas:
 			"previous"
