@@ -49,7 +49,7 @@ final class GridViewFilterAction implements RequestHandlerInterface
             /** @var AbstractGridView<DatabaseObject, DatabaseObjectList<DatabaseObject>> $view */
             $view = new $parameters['gridView'](...$parameters['gridViewParameters']);
             // @phpstan-ignore catch.neverThrown
-        } catch (\ArgumentCountError $e) {
+        } catch (\ArgumentCountError | \TypeError $e) {
             if (\ENABLE_DEBUG_MODE) {
                 throw $e;
             } else {

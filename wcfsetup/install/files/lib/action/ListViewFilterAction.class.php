@@ -49,7 +49,7 @@ final class ListViewFilterAction implements RequestHandlerInterface
             /** @var AbstractListView<DatabaseObject, DatabaseObjectList<DatabaseObject>> $view */
             $view = new $parameters['listView'](...$parameters['listViewParameters']);
             // @phpstan-ignore catch.neverThrown
-        } catch (\ArgumentCountError $e) {
+        } catch (\ArgumentCountError | \TypeError $e) {
             if (\ENABLE_DEBUG_MODE) {
                 throw $e;
             } else {
