@@ -72,15 +72,14 @@ html[data-color-scheme="dark"] .unfurlUrlCard {
 }
 
 .unfurlUrlTitle {
-	@include wcfFontHeadline;
-	@include wcfFontBold;
-
 	color: inherit;
 	display: -webkit-box;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 2;
+
+	@include wcfFontHeadlineBold;
 
 	&::before {
 		content: "";
@@ -103,12 +102,12 @@ html[data-color-scheme="dark"] .unfurlUrlCard {
 }
 
 .unfurlUrlHost {
-	@include wcfFontSmall;
-
 	bottom: 5px;
 	color: var(--wcfContentDimmedText);
 	position: absolute;
 	right: 5px;
+
+	@include wcfFontSmall;
 
 	img {
 		height: 12px !important;

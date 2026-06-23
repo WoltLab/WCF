@@ -149,8 +149,7 @@
 .discussionList__item__title {
 	grid-area: title;
 
-	@include wcfFontHeadline;
-	@include wcfFontBold;
+	@include wcfFontHeadlineBold;
 }
 
 @include screen-xs {

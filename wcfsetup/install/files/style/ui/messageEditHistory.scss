@@ -16,11 +16,11 @@
 	}
 
 	.table {
+		width: 100%;
+
 		@include screen-lg {
 			table-layout: fixed;
 		}
-
-		width: 100%;
 
 		th {
 			text-align: center;

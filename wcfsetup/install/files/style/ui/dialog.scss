@@ -98,9 +98,7 @@
 		> span {
 			flex: 1 auto;
 
-			@include wcfFontHeadline;
-
-			font-weight: 600;
+			@include wcfFontHeadlineBold;
 		}
 
 		> .dialogCloseButton {
@@ -344,9 +342,7 @@ html[data-color-scheme="dark"] .dialog::backdrop {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 
-	@include wcfFontHeadline;
-
-	font-weight: 600;
+	@include wcfFontHeadlineBold;
 }
 
 .dialog__closeButton {
@@ -446,11 +442,11 @@ html[data-color-scheme="dark"] .dialog::backdrop {
 .dialogContent,
 .dialog__content {
 	.section .sectionTitle {
-		@include wcfFontDefault;
-
 		border-bottom-width: 0;
 		font-weight: 600;
 		padding-bottom: 0;
+
+		@include wcfFontDefault;
 	}
 
 	> .section:first-child,

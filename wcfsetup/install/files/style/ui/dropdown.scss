@@ -95,10 +95,10 @@
 	}
 
 	.userObjectWatchSelectDescription {
-		@include wcfFontSmall;
-
 		color: var(--wcfContentDimmedText);
 		padding-top: 0;
 		white-space: normal;
+
+		@include wcfFontSmall;
 	}
 }

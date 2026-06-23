@@ -41,8 +41,7 @@
 .entry__attachments__title {
 	margin-bottom: 10px;
 
-	@include wcfFontHeadline;
-	@include wcfFontBold;
+	@include wcfFontHeadlineBold;
 }
 
 .entry__footer {

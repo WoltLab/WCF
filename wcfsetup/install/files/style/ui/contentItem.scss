@@ -178,8 +178,7 @@
 .contentItemTitle {
 	color: var(--wcfContentHeadlineLink);
 
-	@include wcfFontHeadline;
-	@include wcfFontBold;
+	@include wcfFontHeadlineBold;
 
 	&:hover {
 		color: var(--wcfContentHeadlineLinkActive);

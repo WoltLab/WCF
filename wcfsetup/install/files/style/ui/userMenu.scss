@@ -47,9 +47,7 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 
-	@include wcfFontHeadline;
-
-	font-weight: 600;
+	@include wcfFontHeadlineBold;
 }
 
 .userMenuButtons {

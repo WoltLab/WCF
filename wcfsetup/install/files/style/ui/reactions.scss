@@ -45,9 +45,9 @@ html[data-color-scheme="dark"] .reactionPopover {
 }
 
 .reactionCount {
-	@include wcfFontSmall;
-
 	vertical-align: middle;
+
+	@include wcfFontSmall;
 
 	&::before {
 		content: "\202f×\202f";

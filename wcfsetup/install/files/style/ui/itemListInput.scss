@@ -1,10 +1,12 @@
 .inputItemList {
 	@include input;
 
-	display: flex;
-	flex-wrap: wrap;
-	padding-bottom: 0;
-	padding-top: 5px;
+	& {
+		display: flex;
+		flex-wrap: wrap;
+		padding-bottom: 0;
+		padding-top: 5px;
+	}
 
 	&[data-accepts-new-items="true"] {
 		cursor: text;

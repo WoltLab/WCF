@@ -674,8 +674,7 @@ html[data-color-scheme="dark"] {
 }
 
 .packageSearchName {
-	@include wcfFontHeadline;
-	@include wcfFontBold;
+	@include wcfFontHeadlineBold;
 }
 
 .packageSearchVersion {

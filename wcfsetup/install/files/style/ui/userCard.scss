@@ -128,8 +128,7 @@
 .userCard__username {
 	display: inline;
 
-	@include wcfFontHeadline;
-	@include wcfFontBold;
+	@include wcfFontHeadlineBold;
 }
 
 .userCard__link {
@@ -175,11 +174,12 @@
 }
 
 .userCard__footer__statsItem__key {
-	@include wcfFontSmall;
 	color: var(--wcfContentDimmedText);
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+
+	@include wcfFontSmall;
 }
 
 .userCard__buttons {
@@ -203,8 +203,9 @@
 }
 
 .userCard__details {
-	@include wcfFontSmall;
 	margin-top: 15px;
+
+	@include wcfFontSmall;
 }
 
 .userCard__details .dataList dd {

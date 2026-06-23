@@ -39,13 +39,13 @@ a.button {
 
 	// input elements do not inherit font family, size and line-height from body
 	font-family: var(--wcfFontFamily);
-	@include wcfFontDefault;
 	@include wcfLineHeight;
 
 	// removes UA styling enforced by Safari on iOS
 	-webkit-appearance: none;
 
 	@include userSelectNone;
+	@include wcfFontDefault;
 
 	&.active {
 		background-color: var(--wcfButtonBackgroundActive);
