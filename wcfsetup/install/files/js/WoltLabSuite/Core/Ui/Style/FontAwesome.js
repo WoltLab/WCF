@@ -74,7 +74,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "../ItemLis
     }
     /**
      * Shows the FontAwesome selection dialog, supplied callback will be
-     * invoked with the selection icon's name as the only argument.
+     * invoked with the selected icon's native data. Replacement
+     * implementations may pass an explicit stored value and preview html
+     * for non-native icons.
      */
     function open(callback) {
         const dialog = (0, Dialog_1.dialogFactory)().fromElement(getContent()).asConfirmation();

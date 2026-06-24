@@ -2,6 +2,8 @@
 
 namespace wcf\system\style;
 
+use wcf\event\style\StoredIconResolving;
+use wcf\system\event\EventHandler;
 use wcf\system\style\exception\InvalidIconFormat;
 use wcf\system\style\exception\InvalidIconSize;
 use wcf\system\style\exception\UnknownIcon;
@@ -28,9 +30,13 @@ final class FontAwesomeIcon implements IFontAwesomeIcon, \Stringable
 
     private function __construct(
         private readonly string $name,
-        private readonly bool $forceSolid
+        private readonly bool $forceSolid,
+        private readonly ?string $iconData = null,
+        private readonly ?IFontAwesomeIcon $icon = null
     ) {
-        self::validateName($name);
+        if ($this->icon === null) {
+            self::validateName($name);
+        }
     }
 
     /**
@@ -40,6 +46,10 @@ final class FontAwesomeIcon implements IFontAwesomeIcon, \Stringable
     #[\Override]
     public function __toString(): string
     {
+        if ($this->iconData !== null) {
+            return $this->iconData;
+        }
+
         return \sprintf(
             "%s;%s",
             $this->name,
@@ -52,6 +62,10 @@ final class FontAwesomeIcon implements IFontAwesomeIcon, \Stringable
     {
         if (!\in_array($size, self::SIZES)) {
             throw new InvalidIconSize($size);
+        }
+
+        if ($this->icon !== null) {
+            return $this->icon->toHtml($size);
         }
 
         if ($this->forceSolid) {
@@ -78,18 +92,21 @@ final class FontAwesomeIcon implements IFontAwesomeIcon, \Stringable
      */
     public static function fromString(string $iconData): self
     {
-        if (!\str_contains($iconData, ';')) {
+        $icon = self::parseIconData($iconData);
+        if ($icon !== null && self::isValidName($icon['name'])) {
+            return self::fromValues($icon['name'], $icon['forceSolid']);
+        }
+
+        $resolvedIcon = self::resolveStoredIcon($iconData);
+        if ($resolvedIcon !== null) {
+            return new self('question', true, $iconData, $resolvedIcon);
+        }
+
+        if ($icon === null) {
             throw new InvalidIconFormat();
         }
 
-        [$name, $solid] = \explode(';', $iconData, 2);
-        if ($solid !== 'true' && $solid !== 'false') {
-            throw new InvalidIconFormat();
-        }
-
-        $forceSolid = $solid === 'true';
-
-        return self::fromValues($name, $forceSolid);
+        return self::fromValues($icon['name'], $icon['forceSolid']);
     }
 
     public static function fromValues(string $name, bool $forceSolid = false): self
@@ -99,16 +116,40 @@ final class FontAwesomeIcon implements IFontAwesomeIcon, \Stringable
 
     public static function isValidString(string $iconData): bool
     {
+        $icon = self::parseIconData($iconData);
+        if ($icon !== null && self::isValidName($icon['name'])) {
+            return true;
+        }
+
+        return self::resolveStoredIcon($iconData) !== null;
+    }
+
+    /**
+     * @return ?array{name: string, forceSolid: bool}
+     */
+    private static function parseIconData(string $iconData): ?array
+    {
         if (!\str_contains($iconData, ';')) {
-            return false;
+            return null;
         }
 
         [$name, $solid] = \explode(';', $iconData, 2);
         if ($solid !== 'true' && $solid !== 'false') {
-            return false;
+            return null;
         }
 
-        return self::isValidName($name);
+        return [
+            'name' => $name,
+            'forceSolid' => $solid === 'true',
+        ];
+    }
+
+    private static function resolveStoredIcon(string $iconData): ?IFontAwesomeIcon
+    {
+        $event = new StoredIconResolving($iconData);
+        EventHandler::getInstance()->fire($event);
+
+        return $event->icon;
     }
 
     public static function isValidName(string $name): bool

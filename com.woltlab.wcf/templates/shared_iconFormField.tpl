@@ -13,34 +13,43 @@
 	{if $__iconFormFieldIncludeJavaScript}
 		{include file='shared_fontAwesomeJavaScript'}
 	{/if}
-	
+
 	<script data-relocate="true">
 		require(['WoltLabSuite/Core/Ui/Style/FontAwesome'], (UiStyleFontAwesome) => {
 			const iconContainer = document.getElementById('{unsafe:$field->getPrefixedId()|encodeJS}_icon');
 			const input = document.getElementById('{unsafe:$field->getPrefixedId()|encodeJS}');
 			const buttonRemoveIcon = document.getElementById('{unsafe:$field->getPrefixedId()|encodeJS}_removeIcon');
-			
-			const callback = (iconName, forceSolid) => {
-				input.value = `${ iconName };${ forceSolid }`;
 
+			const renderNativePreview = (iconName, forceSolid) => {
 				let icon = iconContainer.querySelector("fa-icon");
-				if (icon) {
-					icon.setIcon(iconName, forceSolid);
-				} else {
+				if (!icon || icon.parentElement !== iconContainer || iconContainer.childElementCount !== 1) {
+					iconContainer.replaceChildren();
+
 					icon = document.createElement("fa-icon");
 					icon.size = 64;
-					icon.setIcon(iconName, forceSolid);
 					iconContainer.append(icon);
+				}
+
+				icon.setIcon(iconName, forceSolid);
+			};
+
+			const callback = (iconName, forceSolid, value, previewHtml) => {
+				input.value = typeof value === 'string' ? value : `${ iconName };${ forceSolid }`;
+
+				if (typeof previewHtml === 'string') {
+					iconContainer.innerHTML = previewHtml;
+				} else {
+					renderNativePreview(iconName, forceSolid);
 				}
 
 				buttonRemoveIcon.hidden = false;
 			};
-			
+
 			const button = document.getElementById('{unsafe:$field->getPrefixedId()|encodeJS}_openIconDialog');
 			button.addEventListener('click', () => UiStyleFontAwesome.open(callback));
 			buttonRemoveIcon.addEventListener("click", () => {
 				input.value = "";
-				iconContainer.querySelector("fa-icon")?.remove();
+				iconContainer.replaceChildren();
 
 				buttonRemoveIcon.hidden = true;
 			});
