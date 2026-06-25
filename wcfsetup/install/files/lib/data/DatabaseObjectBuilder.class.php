@@ -94,6 +94,8 @@ abstract class DatabaseObjectBuilder
             throw new \BadMethodCallException("Missing value for '" . static::getBaseClass()::getDatabaseTableIndexName() . "'");
         }
 
+        $this->afterCreate($id);
+
         return $id;
     }
 
@@ -122,6 +124,8 @@ abstract class DatabaseObjectBuilder
                 WHERE   " . static::getBaseClass()::getDatabaseTableIndexName() . " = ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute($statementParameters);
+
+        $this->afterUpdate();
     }
 
     /**
@@ -246,5 +250,23 @@ abstract class DatabaseObjectBuilder
         $this->customProperties[$name] = $value;
 
         return $this;
+    }
+
+    /**
+     * This method is called after the creation of a new object.
+     * It can be overriden to handle additional tasks that are not handled by the default implementation.
+     */
+    protected function afterCreate(int|string $id): void
+    {
+        // does nothing
+    }
+
+    /**
+     * This method is called after an update.
+     * It can be overriden to handle additional tasks that are not handled by the default implementation.
+     */
+    protected function afterUpdate(): void
+    {
+        // does nothing
     }
 }

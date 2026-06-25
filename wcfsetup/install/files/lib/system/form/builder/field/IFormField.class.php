@@ -2,6 +2,7 @@
 
 namespace wcf\system\form\builder\field;
 
+use wcf\data\DatabaseObjectBuilder;
 use wcf\data\IStorableObject;
 use wcf\system\form\builder\field\validation\IFormFieldValidationError;
 use wcf\system\form\builder\field\validation\IFormFieldValidator;
@@ -93,6 +94,37 @@ interface IFormField extends IFormChildNode, IFormElement
      * @return mixed
      */
     public function getValue();
+
+    /**
+     * Sets a callback that transfers this field's save value into a
+     * `DatabaseObjectBuilder` instance and returns this field.
+     *
+     * The callback is invoked by `DatabaseObjectBuilderFormDocument` when the
+     * builder is populated from the form's fields, for example:
+     *
+     *     $field->saveValueCallback(
+     *         static fn(DatabaseObjectBuilder $builder, IFormField $formField) => $builder->setName($formField->getSaveValue())
+     *     )
+     *
+     * The builder type is a template parameter so that the callback may narrow
+     * it to a concrete `DatabaseObjectBuilder` implementation (e.g. `TagBuilder`)
+     * without triggering a contravariance error.
+     *
+     * @template TBuilder of DatabaseObjectBuilder
+     * @param \Closure(TBuilder, IFormField): mixed $callback
+     * @return static this field
+     * @since 6.3
+     */
+    public function saveValueCallback(\Closure $callback): static;
+
+    /**
+     * Returns the callback set via `saveValueCallback()` or `null` if no such
+     * callback has been set.
+     *
+     * @return ?\Closure(DatabaseObjectBuilder<*>, IFormField): mixed
+     * @since 6.3
+     */
+    public function getSaveValueCallback(): ?\Closure;
 
     /**
      * Returns `true` if this field has a validator with the given id and

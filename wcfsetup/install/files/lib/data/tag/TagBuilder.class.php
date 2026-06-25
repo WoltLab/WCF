@@ -3,6 +3,7 @@
 namespace wcf\data\tag;
 
 use wcf\data\DatabaseObjectBuilder;
+use wcf\system\WCF;
 
 /**
  * Builder for creating, updating and deleting tags.
@@ -16,6 +17,11 @@ use wcf\data\DatabaseObjectBuilder;
  */
 final class TagBuilder extends DatabaseObjectBuilder
 {
+    /**
+     * @var ?list<string>
+     */
+    private ?array $synonyms = null;
+
     public function setTagID(int $tagID): static
     {
         $this->properties['tagID'] = $tagID;
@@ -42,5 +48,68 @@ final class TagBuilder extends DatabaseObjectBuilder
         $this->properties['synonymFor'] = $tag->tagID;
 
         return $this;
+    }
+
+    /**
+     * @param list<string> $synonyms
+     */
+    public function setSynonyms(array $synonyms): static
+    {
+        $this->synonyms = $synonyms;
+
+        return $this;
+    }
+
+    #[\Override]
+    protected function afterCreate(int|string $id): void
+    {
+        if ($this->synonyms !== null && $this->synonyms !== []) {
+            $this->saveSynonyms(new Tag($id), $this->synonyms);
+        }
+    }
+
+    #[\Override]
+    protected function afterUpdate(): void
+    {
+        if ($this->synonyms !== null) {
+            $this->removeSynonyms($this->object);
+
+            if ($this->synonyms !== []) {
+                $this->saveSynonyms($this->object, $this->synonyms);
+            }
+        }
+    }
+
+    private function removeSynonyms(Tag $tag): void
+    {
+        $sql = "UPDATE  wcf1_tag
+                SET     synonymFor = ?
+                WHERE   synonymFor = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            null,
+            $tag->tagID,
+        ]);
+    }
+
+    /**
+     * @param list<string> $synonyms
+     */
+    private function saveSynonyms(Tag $tag, array $synonyms): void
+    {
+        foreach ($synonyms as $synonym) {
+            $synonymObj = Tag::getTag($synonym, $tag->languageID);
+            if ($synonymObj === null) {
+                TagBuilder::forCreate()
+                    ->setName($synonym)
+                    ->setLanguageID($tag->languageID)
+                    ->setSynonymFor($tag)
+                    ->save();
+            } else {
+                TagBuilder::forUpdate($synonymObj)
+                    ->setSynonymFor($tag)
+                    ->save();
+            }
+        }
     }
 }

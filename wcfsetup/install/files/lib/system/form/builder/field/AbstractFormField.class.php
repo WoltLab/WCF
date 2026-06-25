@@ -71,6 +71,13 @@ abstract class AbstractFormField implements IFormField
      */
     protected $value;
 
+    /**
+     * callback transferring this field's save value into a `DatabaseObjectBuilder`
+     * @var ?\Closure(\wcf\data\DatabaseObjectBuilder<*>, IFormField): mixed
+     * @since 6.3
+     */
+    protected ?\Closure $saveValueCallback = null;
+
     #[\Override]
     public function addValidationError(IFormFieldValidationError $error)
     {
@@ -163,6 +170,20 @@ abstract class AbstractFormField implements IFormField
     public function getValue()
     {
         return $this->value;
+    }
+
+    #[\Override]
+    public function saveValueCallback(\Closure $callback): static
+    {
+        $this->saveValueCallback = $callback;
+
+        return $this;
+    }
+
+    #[\Override]
+    public function getSaveValueCallback(): ?\Closure
+    {
+        return $this->saveValueCallback;
     }
 
     #[\Override]

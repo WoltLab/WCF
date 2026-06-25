@@ -88,6 +88,20 @@ abstract class AbstractFormFieldDecorator implements IFormField
     }
 
     #[\Override]
+    public function saveValueCallback(\Closure $callback): static
+    {
+        $this->field->saveValueCallback($callback);
+
+        return $this;
+    }
+
+    #[\Override]
+    public function getSaveValueCallback(): ?\Closure
+    {
+        return $this->field->getSaveValueCallback();
+    }
+
+    #[\Override]
     public function hasValidator(string $validatorId)
     {
         return $this->field->hasValidator($validatorId);
