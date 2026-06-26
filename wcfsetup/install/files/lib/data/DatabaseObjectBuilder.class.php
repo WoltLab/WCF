@@ -86,10 +86,10 @@ abstract class DatabaseObjectBuilder
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute($statementParameters);
 
-        if (static::getBaseClass()::getDatabaseTableIndexIsIdentity()) {
-            $id = WCF::getDB()->getInsertID(static::getBaseClass()::getDatabaseTableName(), static::getBaseClass()::getDatabaseTableIndexName());
-        } elseif (isset($this->properties[static::getBaseClass()::getDatabaseTableIndexName()])) {
+        if (isset($this->properties[static::getBaseClass()::getDatabaseTableIndexName()])) {
             $id = $this->properties[static::getBaseClass()::getDatabaseTableIndexName()];
+        } elseif (static::getBaseClass()::getDatabaseTableIndexIsIdentity()) {
+            $id = WCF::getDB()->getInsertID(static::getBaseClass()::getDatabaseTableName(), static::getBaseClass()::getDatabaseTableIndexName());
         } else {
             throw new \BadMethodCallException("Missing value for '" . static::getBaseClass()::getDatabaseTableIndexName() . "'");
         }
@@ -165,7 +165,7 @@ abstract class DatabaseObjectBuilder
      * Deletes the rows identified by the given primary keys in batches inside
      * a single transaction.
      *
-     * @param (string|int)[] $objectIDs
+     * @param (int|string)[] $objectIDs
      */
     final public static function deleteAll(array $objectIDs = []): void
     {
@@ -276,10 +276,30 @@ abstract class DatabaseObjectBuilder
      * This method is called before the deletion of objects.
      * It can be overriden to handle additional tasks that are not handled by the default implementation.
      *
-     * @param (string|int)[] $objectIDs
+     * @param (int|string)[] $objectIDs
      */
     protected static function beforeDeleteAll(array $objectIDs): void
     {
         // does nothing
+    }
+
+    /**
+     * Sets the ID of the object that is being created.
+     *
+     * This method should only be used in cases where the ID needs to be set
+     * explicitly, for example when importing existing records from another
+     * installation, where the ID should be preserved if possible.
+     *
+     * @throws \BadMethodCallException if an existing object is being updated
+     */
+    final public function setID(int|string $id): static
+    {
+        if ($this->object !== null) {
+            throw new \BadMethodCallException('The ID cannot be set when updating an existing object.');
+        }
+
+        $this->properties[static::getBaseClass()::getDatabaseTableIndexName()] = $id;
+
+        return $this;
     }
 }

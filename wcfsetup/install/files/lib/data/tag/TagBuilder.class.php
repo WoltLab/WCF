@@ -22,13 +22,6 @@ final class TagBuilder extends DatabaseObjectBuilder
      */
     private ?array $synonyms = null;
 
-    public function setTagID(int $tagID): static
-    {
-        $this->properties['tagID'] = $tagID;
-
-        return $this;
-    }
-
     public function setLanguageID(int $languageID): static
     {
         $this->properties['languageID'] = $languageID;
