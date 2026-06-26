@@ -69,7 +69,7 @@ abstract class DatabaseObjectBuilder
     {
         $keys = $values = '';
         $statementParameters = [];
-        foreach (array_merge($this->properties, $this->customProperties) as $key => $value) {
+        foreach (\array_merge($this->properties, $this->customProperties) as $key => $value) {
             if ($keys !== '') {
                 $keys .= ',';
                 $values .= ',';
@@ -110,7 +110,7 @@ abstract class DatabaseObjectBuilder
 
         $updateSQL = '';
         $statementParameters = [];
-        foreach (array_merge($this->properties, $this->customProperties) as $key => $value) {
+        foreach (\array_merge($this->properties, $this->customProperties) as $key => $value) {
             if ($updateSQL !== '') {
                 $updateSQL .= ', ';
             }
