@@ -42,7 +42,7 @@ abstract class DatabaseObjectBuilder
      *
      * @return TDatabaseObject
      */
-    public function save(): DatabaseObject
+    final public function save(): DatabaseObject
     {
         return new (static::getBaseClass())($this->fastSave());
     }
@@ -51,7 +51,7 @@ abstract class DatabaseObjectBuilder
      * Persists the pending changes and returns the object's identifier without
      * instantiating the full database object.
      */
-    public function fastSave(): int|string
+    final public function fastSave(): int|string
     {
         if ($this->object !== null) {
             $this->update();
@@ -133,7 +133,7 @@ abstract class DatabaseObjectBuilder
      *
      * @return ?TDatabaseObject
      */
-    public function createOrIgnore(): ?DatabaseObject
+    final public function createOrIgnore(): ?DatabaseObject
     {
         if ($this->object !== null) {
             throw new \BadMethodCallException("createOrIgnore() can only be used with forCreate().");
@@ -156,7 +156,7 @@ abstract class DatabaseObjectBuilder
      *
      * @param TDatabaseObject $object
      */
-    public static function delete(DatabaseObject $object): void
+    final public static function delete(DatabaseObject $object): void
     {
         static::deleteAll([$object->getObjectID()]);
     }
@@ -167,11 +167,13 @@ abstract class DatabaseObjectBuilder
      *
      * @param (string|int)[] $objectIDs
      */
-    public static function deleteAll(array $objectIDs = []): void
+    final public static function deleteAll(array $objectIDs = []): void
     {
         if ($objectIDs === []) {
             return;
         }
+
+        static::beforeDeleteAll($objectIDs);
 
         $itemsPerLoop = 1000;
         $loopCount = \ceil(\count($objectIDs) / $itemsPerLoop);
@@ -202,7 +204,7 @@ abstract class DatabaseObjectBuilder
     /**
      * Returns a builder instance for inserting a new row.
      */
-    public static function forCreate(): static
+    final public static function forCreate(): static
     {
         return new (static::class)();
     }
@@ -212,7 +214,7 @@ abstract class DatabaseObjectBuilder
      *
      * @param TDatabaseObject $object
      */
-    public static function forUpdate(DatabaseObject $object): static
+    final public static function forUpdate(DatabaseObject $object): static
     {
         return new static($object);
     }
@@ -223,7 +225,7 @@ abstract class DatabaseObjectBuilder
      *
      * @return class-string<DatabaseObject>
      */
-    public static function getBaseClass(): string
+    final public static function getBaseClass(): string
     {
         if (!\str_ends_with(static::class, 'Builder')) {
             throw new \LogicException("Builder class '" . static::class . "' must end with the 'Builder' suffix.");
@@ -245,7 +247,7 @@ abstract class DatabaseObjectBuilder
      * Sets a custom property value that is written alongside the regular
      * properties when the object is persisted.
      */
-    public function setCustomProperty(string $name, string|int|float|null $value): static
+    final public function setCustomProperty(string $name, string|int|float|null $value): static
     {
         $this->customProperties[$name] = $value;
 
@@ -266,6 +268,17 @@ abstract class DatabaseObjectBuilder
      * It can be overriden to handle additional tasks that are not handled by the default implementation.
      */
     protected function afterUpdate(): void
+    {
+        // does nothing
+    }
+
+    /**
+     * This method is called before the deletion of objects.
+     * It can be overriden to handle additional tasks that are not handled by the default implementation.
+     *
+     * @param (string|int)[] $objectIDs
+     */
+    protected static function beforeDeleteAll(array $objectIDs): void
     {
         // does nothing
     }
