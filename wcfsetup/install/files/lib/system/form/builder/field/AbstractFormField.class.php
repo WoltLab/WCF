@@ -78,6 +78,13 @@ abstract class AbstractFormField implements IFormField
      */
     protected ?\Closure $saveValueCallback = null;
 
+    /**
+     * callback loading this field's value from an `IStorableObject`
+     * @var ?\Closure(\wcf\data\IStorableObject, IFormField): void
+     * @since 6.3
+     */
+    protected ?\Closure $loadValueCallback = null;
+
     #[\Override]
     public function addValidationError(IFormFieldValidationError $error)
     {
@@ -187,6 +194,20 @@ abstract class AbstractFormField implements IFormField
     }
 
     #[\Override]
+    public function loadValueCallback(\Closure $callback): static
+    {
+        $this->loadValueCallback = $callback;
+
+        return $this;
+    }
+
+    #[\Override]
+    public function getLoadValueCallback(): ?\Closure
+    {
+        return $this->loadValueCallback;
+    }
+
+    #[\Override]
     public function hasValidator(string $validatorId)
     {
         FormFieldValidator::validateId($validatorId);
@@ -213,8 +234,12 @@ abstract class AbstractFormField implements IFormField
             $loadValues = true;
         }
 
-        if ($loadValues && isset($data[$this->getObjectProperty()])) {
-            $this->value($data[$this->getObjectProperty()]);
+        if ($loadValues) {
+            if ($this->loadValueCallback !== null) {
+                ($this->loadValueCallback)($object, $this);
+            } elseif (isset($data[$this->getObjectProperty()])) {
+                $this->value($data[$this->getObjectProperty()]);
+            }
         }
 
         return $this;
