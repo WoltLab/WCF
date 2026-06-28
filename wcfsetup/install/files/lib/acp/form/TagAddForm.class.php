@@ -84,11 +84,11 @@ class TagAddForm extends AbstractDatabaseObjectBuilderForm
                         ->label('wcf.global.name')
                         ->required()
                         ->maximumLength(\TAGGING_MAX_TAG_LENGTH)
-                        ->saveValueCallback(
-                            static fn(TagBuilder $builder, IFormField $field) => $builder->setName(
+                        ->saveValueCallback(static function (TagBuilder $builder, IFormField $field) {
+                            $builder->setName(
                                 \str_replace(',', '', StringUtil::trim($field->getSaveValue()))
-                            )
-                        )
+                            );
+                        })
                         ->loadValueCallback(static function (Tag $object, IFormField $field) {
                             $field->value($object->name);
                         })
@@ -115,21 +115,21 @@ class TagAddForm extends AbstractDatabaseObjectBuilderForm
                         ->value(isset($contentLanguages[WCF::getLanguage()->languageID]) ? WCF::getLanguage()->languageID : null)
                         ->immutable($this->formAction !== 'create')
                         ->required()
-                        ->saveValueCallback(
-                            static fn(TagBuilder $builder, IFormField $field) => $builder->setLanguageID(
+                        ->saveValueCallback(static function (TagBuilder $builder, IFormField $field) {
+                            $builder->setLanguageID(
                                 (int)$field->getSaveValue()
-                            )
-                        )->loadValueCallback(static function (Tag $object, IFormField $field) {
+                            );
+                        })->loadValueCallback(static function (Tag $object, IFormField $field) {
                             $field->value($object->languageID);
                         }),
                     TagFormField::create('synonyms')
                         ->available($this->formObject?->synonymFor === null)
                         ->label('wcf.acp.tag.synonyms')
-                        ->saveValueCallback(
-                            static fn(TagBuilder $builder, IFormField $field) => $builder->setSynonyms(
+                        ->saveValueCallback(static function (TagBuilder $builder, IFormField $field) {
+                            $builder->setSynonyms(
                                 $field->getSaveValue() ?? []
-                            )
-                        )->loadValueCallback(static function (Tag $object, IFormField $field) {
+                            );
+                        })->loadValueCallback(static function (Tag $object, IFormField $field) {
                             $synonymList = new TagList();
                             $synonymList->getConditionBuilder()->add('synonymFor = ?', [$object->getObjectID()]);
                             $synonymList->readObjects();

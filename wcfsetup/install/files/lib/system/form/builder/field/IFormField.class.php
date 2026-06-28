@@ -111,7 +111,7 @@ interface IFormField extends IFormChildNode, IFormElement
      * without triggering a contravariance error.
      *
      * @template TBuilder of DatabaseObjectBuilder
-     * @param \Closure(TBuilder, IFormField): mixed $callback
+     * @param \Closure(TBuilder, IFormField): void $callback
      * @return static this field
      * @since 6.3
      */
@@ -121,7 +121,7 @@ interface IFormField extends IFormChildNode, IFormElement
      * Returns the callback set via `saveValueCallback()` or `null` if no such
      * callback has been set.
      *
-     * @return ?\Closure(DatabaseObjectBuilder<*>, IFormField): mixed
+     * @return ?\Closure(DatabaseObjectBuilder<*>, IFormField): void
      * @since 6.3
      */
     public function getSaveValueCallback(): ?\Closure;

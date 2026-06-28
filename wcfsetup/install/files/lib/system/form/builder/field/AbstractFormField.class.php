@@ -73,7 +73,7 @@ abstract class AbstractFormField implements IFormField
 
     /**
      * callback transferring this field's save value into a `DatabaseObjectBuilder`
-     * @var ?\Closure(\wcf\data\DatabaseObjectBuilder<*>, IFormField): mixed
+     * @var ?\Closure(\wcf\data\DatabaseObjectBuilder<*>, IFormField): void
      * @since 6.3
      */
     protected ?\Closure $saveValueCallback = null;
