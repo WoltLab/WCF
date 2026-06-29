@@ -97,5 +97,5 @@
 }
 
 html[data-color-scheme="dark"] .pollMeterValue {
-	background-color: rgb(255 255 255 / 34%);
+	background-color: var(--wcfContentLink);
 }
