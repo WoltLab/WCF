@@ -63,7 +63,7 @@ function openDialog(event: Event): void {
         "wcf.global.rss.copy",
       )}">
         <fa-icon name="copy"></fa-icon>
-      </a>
+      </button>
     </div>
   </dd>
 </dl>
