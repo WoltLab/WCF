@@ -37,9 +37,11 @@ function openDialog(event: Event): void {
 
   const linkWithoutAccessToken = linkWithAccessToken.replace(/(\\?|&)at=[^&]*&?/, "$1").replace(/(\?|&)$/, "");
 
-  UiDialog.openStatic(
-    "feedLinkDialog",
-    `
+  // When `FORCE_LOGIN` is active, an RSS reader cannot access the feed without an
+  // access token. The anonymous link is therefore useless and must not be shown.
+  let withoutAccessToken = "";
+  if (!window.FORCE_LOGIN) {
+    withoutAccessToken = `
 <woltlab-core-notice type="info">${Language.get("wcf.global.rss.accessToken.info")}</woltlab-core-notice>
 <dl>
   <dt>${Language.get("wcf.global.rss.withoutAccessToken")}</dt>
@@ -53,7 +55,13 @@ function openDialog(event: Event): void {
       </button>
     </div>
   </dd>
-</dl>
+</dl>`;
+  }
+
+  UiDialog.openStatic(
+    "feedLinkDialog",
+    `
+${withoutAccessToken}
 <dl>
   <dt>${Language.get("wcf.global.rss.withAccessToken")}</dt>
   <dd>
