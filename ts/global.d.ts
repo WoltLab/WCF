@@ -30,6 +30,7 @@ declare global {
     Devtools?: typeof Devtools;
     ENABLE_DEBUG_MODE: boolean;
     ENABLE_DEVELOPER_TOOLS: boolean;
+    FORCE_LOGIN: boolean;
     LANGUAGE_ID: number;
     PAGE_TITLE: string;
     REACTION_TYPES: {

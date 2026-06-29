@@ -14,6 +14,7 @@
 	var ENABLE_DEBUG_MODE = {if ENABLE_DEBUG_MODE}true{else}false{/if};
 	var ENABLE_PRODUCTION_DEBUG_MODE = {if ENABLE_PRODUCTION_DEBUG_MODE}true{else}false{/if};
 	var ENABLE_DEVELOPER_TOOLS = {if ENABLE_DEVELOPER_TOOLS}true{else}false{/if};
+	var FORCE_LOGIN = {if FORCE_LOGIN}true{else}false{/if};
 	var PAGE_TITLE = '{unsafe:PAGE_TITLE|phrase|encodeJS}';
 	
 	var REACTION_TYPES = {unsafe:$__wcf->getReactionHandler()->getReactionsJSVariable()};

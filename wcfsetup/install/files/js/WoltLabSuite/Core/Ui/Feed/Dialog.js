@@ -31,7 +31,11 @@ define(["require", "exports", "tslib", "../Dialog", "../../StringUtil", "../../L
         const alternative = event.currentTarget;
         const linkWithAccessToken = alternative.href;
         const linkWithoutAccessToken = linkWithAccessToken.replace(/(\\?|&)at=[^&]*&?/, "$1").replace(/(\?|&)$/, "");
-        Dialog_1.default.openStatic("feedLinkDialog", `
+        // When `FORCE_LOGIN` is active, an RSS reader cannot access the feed without an
+        // access token. The anonymous link is therefore useless and must not be shown.
+        let withoutAccessToken = "";
+        if (!window.FORCE_LOGIN) {
+            withoutAccessToken = `
 <woltlab-core-notice type="info">${Language.get("wcf.global.rss.accessToken.info")}</woltlab-core-notice>
 <dl>
   <dt>${Language.get("wcf.global.rss.withoutAccessToken")}</dt>
@@ -43,7 +47,10 @@ define(["require", "exports", "tslib", "../Dialog", "../../StringUtil", "../../L
       </button>
     </div>
   </dd>
-</dl>
+</dl>`;
+        }
+        Dialog_1.default.openStatic("feedLinkDialog", `
+${withoutAccessToken}
 <dl>
   <dt>${Language.get("wcf.global.rss.withAccessToken")}</dt>
   <dd>
