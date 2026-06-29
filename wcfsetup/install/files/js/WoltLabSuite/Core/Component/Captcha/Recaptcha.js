@@ -78,7 +78,7 @@ define(["require", "exports", "WoltLabSuite/Core/Controller/Captcha"], function 
             }
             else {
                 const form = this.#container.closest("form");
-                const submitButton = form.querySelector("input[type=submit]");
+                const submitButton = form.querySelector("input[type=submit], button[type=submit]");
                 const listener = (event) => {
                     event.preventDefault();
                     submitButton.disabled = true;
