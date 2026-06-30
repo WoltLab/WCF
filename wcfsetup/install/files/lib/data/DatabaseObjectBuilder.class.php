@@ -44,19 +44,8 @@ abstract class DatabaseObjectBuilder
      */
     final public function save(): DatabaseObject
     {
-        return new (static::getBaseClass())($this->fastSave());
-    }
-
-    /**
-     * Persists the pending changes and returns the object's identifier without
-     * instantiating the full database object.
-     */
-    final public function fastSave(): int|string
-    {
         if ($this->object !== null) {
-            $this->update();
-
-            return $this->object->getObjectID();
+            return $this->update();
         }
 
         return $this->create();
@@ -64,8 +53,10 @@ abstract class DatabaseObjectBuilder
 
     /**
      * Inserts a new row and returns the primary key of the created object.
+     *
+     * @return TDatabaseObject
      */
-    private function create(): int|string
+    private function create(): DatabaseObject
     {
         $keys = $values = '';
         $statementParameters = [];
@@ -94,38 +85,46 @@ abstract class DatabaseObjectBuilder
             throw new \BadMethodCallException("Missing value for '" . static::getBaseClass()::getDatabaseTableIndexName() . "'");
         }
 
-        $this->afterCreate($id);
+        $object = new (static::getBaseClass())($id);
 
-        return $id;
+        $this->afterCreate($object);
+
+        return $object;
     }
 
     /**
      * Writes the pending property changes to the existing row.
+     *
+     * @return TDatabaseObject
      */
-    private function update(): void
+    private function update(): DatabaseObject
     {
-        if ($this->properties === [] && $this->customProperties === []) {
-            return;
-        }
-
-        $updateSQL = '';
-        $statementParameters = [];
-        foreach (\array_merge($this->properties, $this->customProperties) as $key => $value) {
-            if ($updateSQL !== '') {
-                $updateSQL .= ', ';
+        if ($this->properties !== [] || $this->customProperties !== []) {
+            $updateSQL = '';
+            $statementParameters = [];
+            foreach (\array_merge($this->properties, $this->customProperties) as $key => $value) {
+                if ($updateSQL !== '') {
+                    $updateSQL .= ', ';
+                }
+                $updateSQL .= $key . ' = ?';
+                $statementParameters[] = $value;
             }
-            $updateSQL .= $key . ' = ?';
-            $statementParameters[] = $value;
-        }
-        $statementParameters[] = $this->object->getObjectID();
+            $statementParameters[] = $this->object->getObjectID();
 
-        $sql = "UPDATE  " . static::getBaseClass()::getDatabaseTableName() . "
+            $sql = "UPDATE  " . static::getBaseClass()::getDatabaseTableName() . "
                 SET     " . $updateSQL . "
                 WHERE   " . static::getBaseClass()::getDatabaseTableIndexName() . " = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute($statementParameters);
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute($statementParameters);
 
-        $this->afterUpdate();
+            $object = new (static::getBaseClass())($this->object->getObjectID());
+        } else {
+            $object = $this->object;
+        }
+
+        $this->afterUpdate($object);
+
+        return $object;
     }
 
     /**
@@ -165,14 +164,10 @@ abstract class DatabaseObjectBuilder
      * Deletes the rows identified by the given primary keys in batches inside
      * a single transaction.
      *
-     * @param (int|string)[] $objectIDs
+     * @param non-empty-list<int>|non-empty-list<string> $objectIDs
      */
-    final public static function deleteAll(array $objectIDs = []): void
+    final public static function deleteAll(array $objectIDs): void
     {
-        if ($objectIDs === []) {
-            return;
-        }
-
         static::beforeDeleteAll($objectIDs);
 
         $itemsPerLoop = 1000;
@@ -257,8 +252,10 @@ abstract class DatabaseObjectBuilder
     /**
      * This method is called after the creation of a new object.
      * It can be overriden to handle additional tasks that are not handled by the default implementation.
+     *
+     * @param TDatabaseObject $object
      */
-    protected function afterCreate(int|string $id): void
+    protected function afterCreate(DatabaseObject $object): void
     {
         // does nothing
     }
@@ -266,8 +263,10 @@ abstract class DatabaseObjectBuilder
     /**
      * This method is called after an update.
      * It can be overriden to handle additional tasks that are not handled by the default implementation.
+     *
+     * @param TDatabaseObject $object
      */
-    protected function afterUpdate(): void
+    protected function afterUpdate(DatabaseObject $object): void
     {
         // does nothing
     }
@@ -276,7 +275,7 @@ abstract class DatabaseObjectBuilder
      * This method is called before the deletion of objects.
      * It can be overriden to handle additional tasks that are not handled by the default implementation.
      *
-     * @param (int|string)[] $objectIDs
+     * @param non-empty-list<int>|non-empty-list<string> $objectIDs
      */
     protected static function beforeDeleteAll(array $objectIDs): void
     {
@@ -307,14 +306,10 @@ abstract class DatabaseObjectBuilder
      * Updates counters for the given object.
      *
      * @param TDatabaseObject $object
-     * @param array<string, int|float> $counters
+     * @param non-empty-array<string, int|float> $counters
      */
     final public static function updateCounters(DatabaseObject $object, array $counters): void
     {
-        if ($counters === []) {
-            throw new \InvalidArgumentException("The list of counters to update must not be empty.");
-        }
-
         \assert($object instanceof (static::getBaseClass()));
 
         $updateSQL = '';

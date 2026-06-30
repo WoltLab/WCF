@@ -2,6 +2,7 @@
 
 namespace wcf\data\tag;
 
+use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\system\WCF;
 
@@ -54,21 +55,21 @@ final class TagBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(int|string $id): void
+    protected function afterCreate(DatabaseObject $object): void
     {
         if ($this->synonyms !== null && $this->synonyms !== []) {
-            $this->saveSynonyms(new Tag($id), $this->synonyms);
+            $this->saveSynonyms($object, $this->synonyms);
         }
     }
 
     #[\Override]
-    protected function afterUpdate(): void
+    protected function afterUpdate(DatabaseObject $object): void
     {
         if ($this->synonyms !== null) {
-            $this->removeSynonyms($this->object);
+            $this->removeSynonyms($object);
 
             if ($this->synonyms !== []) {
-                $this->saveSynonyms($this->object, $this->synonyms);
+                $this->saveSynonyms($object, $this->synonyms);
             }
         }
     }
