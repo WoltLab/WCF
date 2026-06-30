@@ -4,7 +4,6 @@ namespace wcf\form;
 
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
-use wcf\data\IStorableObject;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\form\builder\DatabaseObjectBuilderFormDocument;
@@ -28,7 +27,7 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
  *
- * @template TIStorableObject of IStorableObject|null
+ * @template TDatabaseObject of DatabaseObject|null
  * @template TDatabaseObjectBuilder of DatabaseObjectBuilder
  */
 abstract class AbstractDatabaseObjectBuilderForm extends AbstractForm
@@ -42,9 +41,9 @@ abstract class AbstractDatabaseObjectBuilderForm extends AbstractForm
 
     /**
      * updated object, not relevant for form action `create`
-     * @var ?TIStorableObject
+     * @var ?TDatabaseObject
      */
-    public ?IStorableObject $formObject = null;
+    public ?DatabaseObject $formObject = null;
 
     /**
      * name of the controller for the link to the edit form
@@ -53,6 +52,7 @@ abstract class AbstractDatabaseObjectBuilderForm extends AbstractForm
 
     /**
      * object persisted by the most recent `save()` call
+     * @var ?TDatabaseObject
      */
     public ?DatabaseObject $object = null;
 
@@ -188,6 +188,8 @@ abstract class AbstractDatabaseObjectBuilderForm extends AbstractForm
                 ])
             );
         }
+
+        $this->afterSave();
     }
 
     #[\Override]
@@ -255,5 +257,14 @@ abstract class AbstractDatabaseObjectBuilderForm extends AbstractForm
     protected function validateSecurityToken(): void
     {
         // does nothing, is handled by `IFormDocument` object
+    }
+
+    /**
+     * This method is called after a save.
+     * It can be overriden to handle additional tasks that are not handled by the default implementation.
+     */
+    protected function afterSave(): void
+    {
+        // does nothing
     }
 }
