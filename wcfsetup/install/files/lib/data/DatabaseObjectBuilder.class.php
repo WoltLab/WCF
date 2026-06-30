@@ -329,4 +329,12 @@ abstract class DatabaseObjectBuilder
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute($statementParameters);
     }
+
+    /**
+     * @return ?TDatabaseObject
+     */
+    public function getObject(): ?DatabaseObject
+    {
+        return $this->object;
+    }
 }
