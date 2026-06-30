@@ -290,14 +290,11 @@ class WysiwygFormContainer extends FormContainer
      * Returns the form field handling attachments.
      *
      * @return  WysiwygAttachmentFormField
-     * @throws  \BadMethodCallException     if the form field container has not been populated yet/form has not been built yet
      */
     public function getAttachmentField()
     {
         if ($this->attachmentField === null) {
-            throw new \BadMethodCallException(
-                "Wysiwyg form field can only be requested after the form has been built for container '{$this->getId()}'."
-            );
+            $this->attachmentField = WysiwygAttachmentFormField::create($this->wysiwygId . 'Attachments');
         }
 
         return $this->attachmentField;
@@ -385,14 +382,11 @@ class WysiwygFormContainer extends FormContainer
      * Returns the wysiwyg form field handling the actual text.
      *
      * @return  WysiwygFormField
-     * @throws  \BadMethodCallException     if the form field container has not been populated yet/form has not been built yet
      */
     public function getWysiwygField()
     {
         if ($this->wysiwygField === null) {
-            throw new \BadMethodCallException(
-                "Wysiwyg form field can only be requested after the form has been built for container '{$this->getId()}'."
-            );
+            $this->wysiwygField = WysiwygFormField::create($this->wysiwygId);
         }
 
         return $this->wysiwygField;
@@ -536,7 +530,7 @@ class WysiwygFormContainer extends FormContainer
     {
         parent::populate();
 
-        $this->wysiwygField = WysiwygFormField::create($this->wysiwygId)
+        $this->wysiwygField = $this->getWysiwygField()
             ->objectType($this->messageObjectType)
             ->minimumLength($this->getMinimumLength())
             ->maximumLength($this->getMaximumLength())
@@ -549,7 +543,7 @@ class WysiwygFormContainer extends FormContainer
             ->wysiwygId($this->getWysiwygId())
             ->label('wcf.message.smilies')
             ->available($this->supportSmilies);
-        $this->attachmentField = WysiwygAttachmentFormField::create($this->wysiwygId . 'Attachments')
+        $this->attachmentField = $this->getAttachmentField()
             ->wysiwygId($this->getWysiwygId());
         $this->settingsContainer = FormContainer::create($this->wysiwygId . 'SettingsContainer')
             ->appendChildren($this->settingsNodes);
