@@ -111,7 +111,8 @@ interface IFormField extends IFormChildNode, IFormElement
      * without triggering a contravariance error.
      *
      * @template TBuilder of DatabaseObjectBuilder
-     * @param \Closure(TBuilder, IFormField): void $callback
+     * @template TIFormField of IFormField
+     * @param \Closure(TBuilder, TIFormField): void $callback
      * @return static this field
      * @since 6.3
      */
@@ -152,7 +153,8 @@ interface IFormField extends IFormChildNode, IFormElement
      * triggering a contravariance error.
      *
      * @template TObject of IStorableObject
-     * @param \Closure(TObject, IFormField): void $callback
+     * @template TIFormField of IFormField
+     * @param \Closure(TObject, TIFormField): void $callback
      * @return static this field
      * @since 6.3
      */
