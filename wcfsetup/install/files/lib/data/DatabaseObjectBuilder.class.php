@@ -302,4 +302,36 @@ abstract class DatabaseObjectBuilder
 
         return $this;
     }
+
+    /**
+     * Updates counters for the given object.
+     *
+     * @param TDatabaseObject $object
+     * @param array<string, int|float> $counters
+     */
+    final public static function updateCounters(DatabaseObject $object, array $counters): void
+    {
+        if ($counters === []) {
+            throw new \InvalidArgumentException("The list of counters to update must not be empty.");
+        }
+
+        \assert($object instanceof (static::getBaseClass()));
+
+        $updateSQL = '';
+        $statementParameters = [];
+        foreach ($counters as $key => $value) {
+            if ($updateSQL !== '') {
+                $updateSQL .= ', ';
+            }
+            $updateSQL .= $key . ' = ' . $key . ' + ?';
+            $statementParameters[] = $value;
+        }
+        $statementParameters[] = $object->getObjectID();
+
+        $sql = "UPDATE  " . static::getBaseClass()::getDatabaseTableName() . "
+                SET     " . $updateSQL . "
+                WHERE   " . static::getBaseClass()::getDatabaseTableIndexName() . " = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($statementParameters);
+    }
 }
