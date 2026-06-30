@@ -393,4 +393,16 @@ final class WysiwygFormField extends AbstractFormField implements
         $upcastProcessor->process(parent::getValue() ?? '', $this->getObjectType()->objectType);
         return $upcastProcessor->getHtml();
     }
+
+    /**
+     * @since 6.3
+     */
+    public function getHtmlInputProcessor(): HtmlInputProcessor
+    {
+        if ($this->htmlInputProcessor === null) {
+            throw new \BadMethodCallException("The html input processor is not available before validate() has been called.");
+        }
+
+        return $this->htmlInputProcessor;
+    }
 }
