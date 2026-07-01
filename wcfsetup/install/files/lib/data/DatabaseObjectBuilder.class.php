@@ -58,6 +58,8 @@ abstract class DatabaseObjectBuilder
      */
     private function create(): DatabaseObject
     {
+        $this->validateCreate();
+
         $keys = $values = '';
         $statementParameters = [];
         foreach (\array_merge($this->properties, $this->customProperties) as $key => $value) {
@@ -90,6 +92,36 @@ abstract class DatabaseObjectBuilder
         $this->afterCreate($object);
 
         return $object;
+    }
+
+    /**
+     * Validates that the pending changes are sufficient to create a new object.
+     *
+     * @throws \BadMethodCallException if no properties are set or a required property is missing
+     */
+    private function validateCreate(): void
+    {
+        if ($this->properties === [] && $this->customProperties === []) {
+            throw new \BadMethodCallException("Cannot create an object without any properties.");
+        }
+
+        foreach ($this->getRequiredProperties() as $property) {
+            if (!\array_key_exists($property, $this->properties)) {
+                throw new \BadMethodCallException("Missing value for required property '{$property}'.");
+            }
+        }
+    }
+
+    /**
+     * Returns the names of the properties that must be set when creating a new
+     * object. Subclasses can override this method to enforce that required
+     * values are provided before the object is persisted.
+     *
+     * @return list<string>
+     */
+    protected function getRequiredProperties(): array
+    {
+        return [];
     }
 
     /**

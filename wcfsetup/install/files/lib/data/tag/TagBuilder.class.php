@@ -106,4 +106,10 @@ final class TagBuilder extends DatabaseObjectBuilder
             }
         }
     }
+
+    #[\Override]
+    protected function getRequiredProperties(): array
+    {
+        return ['name'];
+    }
 }
