@@ -3,6 +3,7 @@
 namespace wcf\system\style;
 
 use ScssPhp\ScssPhp\Compiler;
+use ScssPhp\ScssPhp\Deprecation;
 use ScssPhp\ScssPhp\Exception\SassException;
 use ScssPhp\ScssPhp\OutputStyle;
 use ScssPhp\ScssPhp\ValueConverter;
@@ -70,6 +71,7 @@ final class StyleCompiler extends SingletonFactory
     private function makeCompiler(): Compiler
     {
         $compiler = new Compiler();
+        $compiler->setSilenceDeprecations([Deprecation::mixedDecls]);
         $compiler->setImportPaths([WCF_DIR]);
 
         if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
