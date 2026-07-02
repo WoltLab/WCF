@@ -8,6 +8,7 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\devtools\project\DevtoolsProject;
 use wcf\data\option\OptionEditor;
 use wcf\event\package\PackageInstallationPluginSynced;
+use wcf\system\cache\builder\ApiEndpointCacheBuilder;
 use wcf\system\cache\CacheHandler;
 use wcf\system\devtools\pip\DevtoolsPackageInstallationDispatcher;
 use wcf\system\devtools\pip\DevtoolsPip;
@@ -139,6 +140,7 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
 
         switch ($this->packageInstallationPlugin->pluginName) {
             case 'file':
+                ApiEndpointCacheBuilder::getInstance()->reset();
                 StyleHandler::resetStylesheets(false);
 
                 (new SetLastUpdateTime())();
