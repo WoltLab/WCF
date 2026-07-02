@@ -2,6 +2,7 @@
 
 namespace wcf\data\package\installation\plugin;
 
+use wcf\command\package\RebuildBootstrapper;
 use wcf\command\package\SetLastUpdateTime;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\devtools\project\DevtoolsProject;
@@ -106,6 +107,13 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
             $this->devtoolsPip->getInstructions($this->project, $this->parameters['target'])
         );
 
+        $bootstrapPathname = \sprintf(
+            '%slib/bootstrap/%s.php',
+            \WCF_DIR,
+            $this->project->getPackage()->package,
+        );
+        $hadBootstrapFile = \file_exists($bootstrapPathname);
+
         $start = \microtime(true);
 
         $invokeAgain = false;
@@ -134,6 +142,13 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
                 StyleHandler::resetStylesheets(false);
 
                 (new SetLastUpdateTime())();
+
+                if (!$hadBootstrapFile) {
+                    \clearstatcache(filename: $bootstrapPathname);
+                    if (\file_exists($bootstrapPathname)) {
+                        (new RebuildBootstrapper())();
+                    }
+                }
                 break;
 
             case 'language':
