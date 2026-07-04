@@ -56,6 +56,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../Dialog", "../../Dom/Uti
             response.markers.forEach((data) => {
                 this.#addMarker(data);
             });
+            this.#clusterer.render();
         }
         #addMarker(data) {
             const marker = new google.maps.marker.AdvancedMarkerElement({
@@ -63,7 +64,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../Dialog", "../../Dom/Uti
                 position: new google.maps.LatLng(data.latitude, data.longitude),
                 title: data.title,
             });
-            this.#clusterer.addMarker(marker);
+            this.#clusterer.addMarker(marker, true);
             if (data.infoWindow) {
                 const content = document.createElement("div");
                 content.classList.add("googleMapsInfoWindow");
