@@ -14,7 +14,9 @@ use wcf\system\form\builder\field\IFormField;
  * `IFormField::saveValueCallback()`:
  *
  *     $field->saveValueCallback(
- *         static fn(DatabaseObjectBuilder $builder, IFormField $formField) => $builder->setName($formField->getSaveValue())
+ *         static function (DatabaseObjectBuilder $builder, IFormField $formField) {
+ *             return $builder->setName($formField->getSaveValue());
+ *         }
  *     )
  *
  * @author      Marcel Werk

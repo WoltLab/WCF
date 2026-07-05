@@ -40,6 +40,7 @@ final class TagBuilder extends DatabaseObjectBuilder
     public function setSynonymFor(Tag $tag): static
     {
         $this->properties['synonymFor'] = $tag->tagID;
+        $this->synonyms = [];
 
         return $this;
     }
@@ -50,6 +51,9 @@ final class TagBuilder extends DatabaseObjectBuilder
     public function setSynonyms(array $synonyms): static
     {
         $this->synonyms = $synonyms;
+        if ($synonyms !== []) {
+            $this->properties['synonymFor'] = null;
+        }
 
         return $this;
     }

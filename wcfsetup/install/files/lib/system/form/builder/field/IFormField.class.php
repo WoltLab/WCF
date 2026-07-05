@@ -103,7 +103,9 @@ interface IFormField extends IFormChildNode, IFormElement
      * builder is populated from the form's fields, for example:
      *
      *     $field->saveValueCallback(
-     *         static fn(DatabaseObjectBuilder $builder, IFormField $formField) => $builder->setName($formField->getSaveValue())
+     *         static function (DatabaseObjectBuilder $builder, IFormField $formField) {
+     *             return $builder->setName($formField->getSaveValue());
+     *         }
      *     )
      *
      * The builder type is a template parameter so that the callback may narrow

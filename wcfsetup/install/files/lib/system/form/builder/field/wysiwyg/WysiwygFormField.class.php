@@ -400,7 +400,7 @@ final class WysiwygFormField extends AbstractFormField implements
     public function getHtmlInputProcessor(): HtmlInputProcessor
     {
         if ($this->htmlInputProcessor === null) {
-            throw new \BadMethodCallException("The html input processor is not available before validate() has been called.");
+            throw new \BadMethodCallException("The HTML input processor is not available before validate() has been called.");
         }
 
         return $this->htmlInputProcessor;
