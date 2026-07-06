@@ -79,7 +79,13 @@ abstract class AbstractDatabaseObjectBuilderForm extends AbstractForm
      */
     protected function getCommand(DatabaseObjectBuilder $builder): callable
     {
-        return static fn() => $builder->save();
+        return function () use ($builder) {
+            if ($builder->isUpdate()) {
+                return $builder->update();
+            }
+
+            return $builder->create();
+        };
     }
 
     #[\Override]

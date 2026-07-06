@@ -43,26 +43,16 @@ abstract class DatabaseObjectBuilder
     private function __construct(protected readonly ?DatabaseObject $object = null) {}
 
     /**
-     * Persists the pending changes and returns the resulting database object.
+     * Inserts a new row and returns the created database object.
      *
      * @return TDatabaseObject
      */
-    final public function save(): DatabaseObject
+    final public function create(): DatabaseObject
     {
         if ($this->object !== null) {
-            return $this->update();
+            throw new \BadMethodCallException("create() can only be used with forCreate().");
         }
 
-        return $this->create();
-    }
-
-    /**
-     * Inserts a new row and returns the primary key of the created object.
-     *
-     * @return TDatabaseObject
-     */
-    private function create(): DatabaseObject
-    {
         $this->validateCreate();
         $this->afterValidateCreate();
 
@@ -135,8 +125,12 @@ abstract class DatabaseObjectBuilder
      *
      * @return TDatabaseObject
      */
-    private function update(): DatabaseObject
+    final public function update(): DatabaseObject
     {
+        if ($this->object === null) {
+            throw new \BadMethodCallException("update() can only be used with forUpdate().");
+        }
+
         if ($this->properties !== [] || $this->customProperties !== [] || $this->incrementProperties !== []) {
             $updateSQL = '';
             $statementParameters = [];
@@ -189,7 +183,7 @@ abstract class DatabaseObjectBuilder
         }
 
         try {
-            return $this->save();
+            return $this->create();
         } catch (DatabaseQueryExecutionException $e) {
             // Error code 23000 = duplicate key
             if (\intval($e->getCode()) === 23000 && $e->getDriverCode() === '1062') {

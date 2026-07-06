@@ -102,11 +102,11 @@ final class TagBuilder extends DatabaseObjectBuilder
                     ->setName($synonym)
                     ->setLanguageID($tag->languageID)
                     ->setSynonymFor($tag)
-                    ->save();
+                    ->create();
             } else {
                 TagBuilder::forUpdate($synonymObj)
                     ->setSynonymFor($tag)
-                    ->save();
+                    ->update();
             }
         }
     }

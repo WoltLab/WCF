@@ -23,7 +23,7 @@ final class CreateTag
 
     public function __invoke(): Tag
     {
-        $tag = $this->builder->save();
+        $tag = $this->builder->create();
 
         EventHandler::getInstance()->fire(new TagCreated($tag));
 
