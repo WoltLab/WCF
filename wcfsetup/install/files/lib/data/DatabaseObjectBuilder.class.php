@@ -31,6 +31,11 @@ abstract class DatabaseObjectBuilder
     protected array $customProperties = [];
 
     /**
+     * @var array<string, int|float>
+     */
+    protected array $incrementProperties = [];
+
+    /**
      * Use forCreate() or forUpdate() to obtain a builder instance.
      *
      * @param ?TDatabaseObject $object
@@ -59,10 +64,11 @@ abstract class DatabaseObjectBuilder
     private function create(): DatabaseObject
     {
         $this->validateCreate();
+        $this->afterValidateCreate();
 
         $keys = $values = '';
         $statementParameters = [];
-        foreach (\array_merge($this->properties, $this->customProperties) as $key => $value) {
+        foreach (\array_merge($this->properties, $this->customProperties, $this->incrementProperties) as $key => $value) {
             if ($keys !== '') {
                 $keys .= ',';
                 $values .= ',';
@@ -101,12 +107,12 @@ abstract class DatabaseObjectBuilder
      */
     private function validateCreate(): void
     {
-        if ($this->properties === [] && $this->customProperties === []) {
+        if ($this->properties === [] && $this->customProperties === [] && $this->incrementProperties === []) {
             throw new \BadMethodCallException("Cannot create an object without any properties.");
         }
 
         foreach ($this->getRequiredProperties() as $property) {
-            if (!\array_key_exists($property, $this->properties)) {
+            if (!\array_key_exists($property, $this->properties) && !\array_key_exists($property, $this->incrementProperties)) {
                 throw new \BadMethodCallException("Missing value for required property '{$property}'.");
             }
         }
@@ -131,7 +137,7 @@ abstract class DatabaseObjectBuilder
      */
     private function update(): DatabaseObject
     {
-        if ($this->properties !== [] || $this->customProperties !== []) {
+        if ($this->properties !== [] || $this->customProperties !== [] || $this->incrementProperties !== []) {
             $updateSQL = '';
             $statementParameters = [];
             foreach (\array_merge($this->properties, $this->customProperties) as $key => $value) {
@@ -139,6 +145,18 @@ abstract class DatabaseObjectBuilder
                     $updateSQL .= ', ';
                 }
                 $updateSQL .= $key . ' = ?';
+                $statementParameters[] = $value;
+            }
+            foreach ($this->incrementProperties as $key => $value) {
+                if ($updateSQL !== '') {
+                    $updateSQL .= ', ';
+                }
+
+                $updateSQL .= \sprintf(
+                    '%s = %s + ?',
+                    $key,
+                    $key,
+                );
                 $statementParameters[] = $value;
             }
             $statementParameters[] = $this->object->getObjectID();
@@ -282,6 +300,15 @@ abstract class DatabaseObjectBuilder
     }
 
     /**
+     * This method is called after the properties have been validated.
+     * It can be overriden to handle additional tasks that are not handled by the default implementation.
+     */
+    protected function afterValidateCreate(): void
+    {
+        // does nothing
+    }
+
+    /**
      * This method is called after the creation of a new object.
      * It can be overriden to handle additional tasks that are not handled by the default implementation.
      *
@@ -334,39 +361,20 @@ abstract class DatabaseObjectBuilder
         return $this;
     }
 
-    /**
-     * Updates counters for the given object.
-     *
-     * @param TDatabaseObject $object
-     * @param non-empty-array<string, int|float> $counters
-     */
-    final public static function updateCounters(DatabaseObject $object, array $counters): void
+    final public function isUpdate(): bool
     {
-        \assert($object instanceof (static::getBaseClass()));
-
-        $updateSQL = '';
-        $statementParameters = [];
-        foreach ($counters as $key => $value) {
-            if ($updateSQL !== '') {
-                $updateSQL .= ', ';
-            }
-            $updateSQL .= $key . ' = ' . $key . ' + ?';
-            $statementParameters[] = $value;
-        }
-        $statementParameters[] = $object->getObjectID();
-
-        $sql = "UPDATE  " . static::getBaseClass()::getDatabaseTableName() . "
-                SET     " . $updateSQL . "
-                WHERE   " . static::getBaseClass()::getDatabaseTableIndexName() . " = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute($statementParameters);
+        return $this->object !== null;
     }
 
     /**
-     * @return ?TDatabaseObject
+     * @return TDatabaseObject
      */
-    public function getObject(): ?DatabaseObject
+    final public function getObject(): DatabaseObject
     {
+        if ($this->object === null) {
+            throw new \BadMethodCallException('The object can only be retrieved for builders created with `forUpdate()`.');
+        }
+
         return $this->object;
     }
 }

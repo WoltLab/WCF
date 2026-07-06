@@ -23,6 +23,7 @@ final class UpdateTag
 
     public function __invoke(): Tag
     {
+        \assert($this->builder->isUpdate());
         $tag = $this->builder->save();
 
         EventHandler::getInstance()->fire(new TagUpdated($tag));
