@@ -5,6 +5,7 @@ namespace wcf\acp\form;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\option\OptionAction;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\cache\builder\ApiEndpointCacheBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\system\option\OptionHandler;
@@ -80,6 +81,10 @@ class OptionForm extends AbstractOptionListForm
 
         // reset styles to make sure the updated option values are used
         StyleHandler::resetStylesheets();
+
+        // Reset the cached list of API endpoints to make it possible to
+        // conditionally enable them through options only.
+        ApiEndpointCacheBuilder::getInstance()->reset();
 
         // show success message
         WCF::getTPL()->assign('success', true);
