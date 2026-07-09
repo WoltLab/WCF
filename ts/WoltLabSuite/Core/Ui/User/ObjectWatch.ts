@@ -8,7 +8,7 @@
  */
 
 import * as Ajax from "../../Ajax";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as EventHandler from "../../Event/Handler";
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
 
@@ -50,11 +50,11 @@ async function click(element: HTMLElement): Promise<void> {
       if (subscribe) {
         element.classList.add("active");
         icon.setIcon("bookmark", true);
-        label.textContent = Language.get(`wcf.user.objectWatch.button.subscribed`);
+        label.textContent = getPhrase(`wcf.user.objectWatch.button.subscribed`);
       } else {
         element.classList.remove("active");
         icon.setIcon("bookmark");
-        label.textContent = Language.get("wcf.user.objectWatch.button.subscribe");
+        label.textContent = getPhrase("wcf.user.objectWatch.button.subscribe");
       }
 
       element.dataset.isSubscribed = subscribe.toString();

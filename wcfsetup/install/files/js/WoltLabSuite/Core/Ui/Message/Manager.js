@@ -5,12 +5,11 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Language", "../../StringUtil"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Language, StringUtil) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "WoltLabSuite/Core/Language", "../../StringUtil"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Language_1, StringUtil) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     Listener_1 = tslib_1.__importDefault(Listener_1);
-    Language = tslib_1.__importStar(Language);
     StringUtil = tslib_1.__importStar(StringUtil);
     class UiMessageManager {
         _elements = new Map();
@@ -174,7 +173,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                 }
                 badge = document.createElement("span");
                 badge.className = `badge label ${badgeColor} ${className}`;
-                badge.textContent = Language.get(phrase);
+                badge.textContent = (0, Language_1.getPhrase)(phrase);
                 const listItem = document.createElement("li");
                 listItem.appendChild(badge);
                 messageStatus.appendChild(listItem);

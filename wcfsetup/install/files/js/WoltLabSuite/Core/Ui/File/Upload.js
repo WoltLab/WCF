@@ -7,12 +7,11 @@
  * @since  5.2
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Core", "./Delete", "../../Dom/Util", "../../Language", "../../Upload"], function (require, exports, tslib_1, Core, Delete_1, Util_1, Language, Upload_1) {
+define(["require", "exports", "tslib", "../../Core", "./Delete", "../../Dom/Util", "WoltLabSuite/Core/Language", "../../Upload"], function (require, exports, tslib_1, Core, Delete_1, Util_1, Language_1, Upload_1) {
     "use strict";
     Core = tslib_1.__importStar(Core);
     Delete_1 = tslib_1.__importDefault(Delete_1);
     Util_1 = tslib_1.__importDefault(Util_1);
-    Language = tslib_1.__importStar(Language);
     Upload_1 = tslib_1.__importDefault(Upload_1);
     class FileUpload extends Upload_1.default {
         _deleteHandler;
@@ -72,7 +71,7 @@ define(["require", "exports", "tslib", "../../Core", "./Delete", "../../Dom/Util
                 icon.setIcon("ban");
                 const innerError = document.createElement("span");
                 innerError.className = "innerError";
-                innerError.textContent = Language.get("wcf.upload.error.uploadFailed");
+                innerError.textContent = (0, Language_1.getPhrase)("wcf.upload.error.uploadFailed");
                 small.insertAdjacentElement("afterend", innerError);
             });
             throw new Error(`Upload failed: ${data.message}`);
@@ -172,7 +171,7 @@ define(["require", "exports", "tslib", "../../Core", "./Delete", "../../Dom/Util
                     innerError.className = "innerError";
                     this._buttonContainer.insertAdjacentElement("afterend", innerError);
                 }
-                innerError.textContent = Language.get("wcf.upload.error.reachedRemainingLimit", {
+                innerError.textContent = (0, Language_1.getPhrase)("wcf.upload.error.reachedRemainingLimit", {
                     maxFiles: this._options.maxFiles - this.countFiles(),
                 });
                 return false;

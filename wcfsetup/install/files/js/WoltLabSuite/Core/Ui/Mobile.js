@@ -5,7 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/Listener", "../Dom/Util", "../Environment", "./Alignment", "./CloseOverlay", "./Dropdown/Reusable", "./Page/Menu/Main", "./Page/Menu/User", "./Screen", "../Language"], function (require, exports, tslib_1, focus_trap_1, Core, Listener_1, Util_1, Environment, UiAlignment, CloseOverlay_1, UiDropdownReusable, Main_1, User_1, UiScreen, Language) {
+define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/Listener", "../Dom/Util", "../Environment", "./Alignment", "./CloseOverlay", "./Dropdown/Reusable", "./Page/Menu/Main", "./Page/Menu/User", "./Screen", "WoltLabSuite/Core/Language"], function (require, exports, tslib_1, focus_trap_1, Core, Listener_1, Util_1, Environment, UiAlignment, CloseOverlay_1, UiDropdownReusable, Main_1, User_1, UiScreen, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -23,7 +23,6 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
     CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
     UiDropdownReusable = tslib_1.__importStar(UiDropdownReusable);
     UiScreen = tslib_1.__importStar(UiScreen);
-    Language = tslib_1.__importStar(Language);
     let _dropdownMenu = null;
     let _dropdownMenuMessage = null;
     let _enabled = false;
@@ -101,7 +100,7 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
                     if (buttonWrapper === null) {
                         buttonWrapper = document.createElement("li");
                         buttonWrapper.innerHTML = `
-            <button type="button" aria-label="${Language.get("wcf.global.button.more")}">
+            <button type="button" aria-label="${(0, Language_1.getPhrase)("wcf.global.button.more")}">
               <fa-icon name="ellipsis"></fa-icon>
             </button>
           `;

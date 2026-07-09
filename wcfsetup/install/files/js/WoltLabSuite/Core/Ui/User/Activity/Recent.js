@@ -2,11 +2,10 @@
  * @woltlabExcludeBundle all
  * @deprecated 6.1 use `WoltLabSuite/Core/Components/User/RecentActivity/Loader` instead
  */
-define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../../Language", "../../../Dom/Util"], function (require, exports, tslib_1, Ajax, Core, Language, Util_1) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "WoltLabSuite/Core/Language", "../../../Dom/Util"], function (require, exports, tslib_1, Ajax, Core, Language_1, Util_1) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
-    Language = tslib_1.__importStar(Language);
     Util_1 = tslib_1.__importDefault(Util_1);
     class UiUserActivityRecent {
         containerId;
@@ -20,12 +19,12 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
             showMoreItem.className = "showMore";
             if (this.list.childElementCount) {
                 showMoreItem.innerHTML =
-                    '<button type="button" class="button small">' + Language.get("wcf.user.recentActivity.more") + "</button>";
+                    '<button type="button" class="button small">' + (0, Language_1.getPhrase)("wcf.user.recentActivity.more") + "</button>";
                 const button = showMoreItem.children[0];
                 button.addEventListener("click", (ev) => this.showMore(ev));
             }
             else {
-                showMoreItem.innerHTML = "<small>" + Language.get("wcf.user.recentActivity.noMoreEntries") + "</small>";
+                showMoreItem.innerHTML = "<small>" + (0, Language_1.getPhrase)("wcf.user.recentActivity.noMoreEntries") + "</small>";
             }
             this.list.appendChild(showMoreItem);
             this.showMoreItem = showMoreItem;
@@ -70,7 +69,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
                 button.disabled = false;
             }
             else {
-                this.showMoreItem.innerHTML = "<small>" + Language.get("wcf.user.recentActivity.noMoreEntries") + "</small>";
+                this.showMoreItem.innerHTML = "<small>" + (0, Language_1.getPhrase)("wcf.user.recentActivity.noMoreEntries") + "</small>";
             }
         }
         _ajaxSetup() {

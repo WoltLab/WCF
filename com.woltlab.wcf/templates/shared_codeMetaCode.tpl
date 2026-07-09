@@ -20,11 +20,9 @@
 	{/if}
 </div>
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Bbcode/Collapsible', 'WoltLabSuite/Core/Bbcode/Code'], function (Language, BbcodeCollapsible, BbcodeCode) {
-		Language.addObject({
-			'wcf.message.bbcode.code.copy': '{jslang}wcf.message.bbcode.code.copy{/jslang}',
-			'wcf.message.bbcode.code.copy.success': '{jslang}wcf.message.bbcode.code.copy.success{/jslang}'
-		});
+	require(['WoltLabSuite/Core/Bbcode/Collapsible', 'WoltLabSuite/Core/Bbcode/Code'], function (BbcodeCollapsible, BbcodeCode) {
+		{jsphrase name='wcf.message.bbcode.code.copy'}
+		{jsphrase name='wcf.message.bbcode.code.copy.success'}
 		BbcodeCollapsible.observe();
 		BbcodeCode.processAll();
 	});

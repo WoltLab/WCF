@@ -97,7 +97,7 @@
 			{event name='changePasswordFields'}
 			
 			<script data-relocate="true">
-				require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], function (PasswordStrength, Language) {
+				require(['WoltLabSuite/Core/Ui/User/PasswordStrength'], function (PasswordStrength) {
 					{include file='shared_passwordStrengthLanguage'}
 					
 					var relatedInputs = [];

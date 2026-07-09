@@ -12,7 +12,7 @@ import { AjaxCallbackObject, AjaxCallbackSetup } from "../../Ajax/Data";
 import * as Core from "../../Core";
 import { DialogCallbackObject, DialogCallbackSetup } from "../Dialog/Data";
 import DomUtil from "../../Dom/Util";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as StringUtil from "../../StringUtil";
 import UiDialog from "../Dialog";
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
@@ -102,7 +102,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
       const expireValue = document.getElementById("wcfUiUserEditorExpiresDatePicker") as HTMLInputElement;
       expires = expireValue.value;
       if (expires === "") {
-        errorMessage = Language.get("wcf.global.form.error.empty");
+        errorMessage = getPhrase("wcf.global.form.error.empty");
       }
     }
 
@@ -126,7 +126,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
       case "unban": {
         this.header.dataset.banned = data.actionName === "ban" ? "true" : "false";
         button = document.querySelector(".userProfileHeader__managementOptions .jsButtonUserBan") as HTMLElement;
-        button.textContent = Language.get("wcf.user." + (data.actionName === "ban" ? "unban" : "ban"));
+        button.textContent = getPhrase("wcf.user." + (data.actionName === "ban" ? "unban" : "ban"));
 
         const contentTitle = this.header.querySelector(".userProfileHeader__username") as HTMLElement;
         let banIcon = contentTitle.querySelector(".jsUserBanned") as HTMLElement;
@@ -148,7 +148,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
         button = document.querySelector(
           ".userProfileHeader__managementOptions .jsButtonUserDisableAvatar",
         ) as HTMLElement;
-        button.textContent = Language.get(
+        button.textContent = getPhrase(
           "wcf.user." + (data.actionName === "disableAvatar" ? "enable" : "disable") + "Avatar",
         );
         break;
@@ -159,7 +159,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
         button = document.querySelector(
           ".userProfileHeader__managementOptions .jsButtonUserDisableCoverPhoto",
         ) as HTMLElement;
-        button.textContent = Language.get(
+        button.textContent = getPhrase(
           "wcf.user." + (data.actionName === "disableCoverPhoto" ? "enable" : "disable") + "CoverPhoto",
         );
         break;
@@ -170,7 +170,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
         button = document.querySelector(
           ".userProfileHeader__managementOptions .jsButtonUserDisableSignature",
         ) as HTMLElement;
-        button.textContent = Language.get(
+        button.textContent = getPhrase(
           "wcf.user." + (data.actionName === "disableSignature" ? "enable" : "disable") + "Signature",
         );
         break;
@@ -179,7 +179,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
       case "disable":
         this.header.dataset.isDisabled = data.actionName === "disable" ? "true" : "false";
         button = document.querySelector(".userProfileHeader__managementOptions .jsButtonUserEnable") as HTMLElement;
-        button.textContent = Language.get("wcf.acp.user." + (data.actionName === "enable" ? "disable" : "enable"));
+        button.textContent = getPhrase("wcf.acp.user." + (data.actionName === "enable" ? "disable" : "enable"));
         break;
     }
 
@@ -214,12 +214,12 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
           submitButton.addEventListener("click", this._submit.bind(this));
         },
         onShow: (content) => {
-          UiDialog.setTitle("wcfUiUserEditor", Language.get("wcf.user." + this.actionName + ".confirmMessage"));
+          UiDialog.setTitle("wcfUiUserEditor", getPhrase("wcf.user." + this.actionName + ".confirmMessage"));
 
           const reason = document.getElementById("wcfUiUserEditorReason") as HTMLElement;
           let label = reason.nextElementSibling as HTMLElement;
           const phrase = "wcf.user." + this.actionName + ".reason.description";
-          label.textContent = Language.get(phrase);
+          label.textContent = getPhrase(phrase);
           if (label.textContent === phrase) {
             DomUtil.hide(label);
           } else {
@@ -227,18 +227,18 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
           }
 
           label = document.getElementById("wcfUiUserEditorNeverExpires")!.nextElementSibling as HTMLElement;
-          label.textContent = Language.get("wcf.user." + this.actionName + ".neverExpires");
+          label.textContent = getPhrase("wcf.user." + this.actionName + ".neverExpires");
 
           label = content.querySelector('label[for="wcfUiUserEditorExpires"]') as HTMLElement;
-          label.textContent = Language.get("wcf.user." + this.actionName + ".expires");
+          label.textContent = getPhrase("wcf.user." + this.actionName + ".expires");
 
           label = document.getElementById("wcfUiUserEditorExpiresLabel") as HTMLElement;
-          label.textContent = Language.get("wcf.user." + this.actionName + ".expires.description");
+          label.textContent = getPhrase("wcf.user." + this.actionName + ".expires.description");
         },
       },
       source: `<div class="section">
         <dl>
-          <dt><label for="wcfUiUserEditorReason">${Language.get("wcf.global.reason")}</label></dt>
+          <dt><label for="wcfUiUserEditorReason">${getPhrase("wcf.global.reason")}</label></dt>
           <dd><textarea id="wcfUiUserEditorReason" cols="40" rows="3"></textarea><small></small></dd>
         </dl>
         <dl>
@@ -256,7 +256,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
         </dl>
       </div>
       <div class="formSubmit">
-        <button type="button" class="button buttonPrimary">${Language.get("wcf.global.button.submit")}</button>
+        <button type="button" class="button buttonPrimary">${getPhrase("wcf.global.button.submit")}</button>
       </div>`,
     };
   }

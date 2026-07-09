@@ -4,38 +4,36 @@
 	{event name='javascriptInclude'}
 	<script data-relocate="true">
 		{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}
-			require(['Language', 'WoltLabSuite/Core/Ui/User/Editor'], function(Language, UiUserEditor) {
-				Language.addObject({
-					'wcf.acp.user.disable': '{jslang}wcf.acp.user.disable{/jslang}',
-					'wcf.acp.user.enable': '{jslang}wcf.acp.user.enable{/jslang}',
-					'wcf.user.ban': '{jslang}wcf.user.ban{/jslang}',
-					'wcf.user.banned': '{jslang}wcf.user.banned{/jslang}',
-					'wcf.user.ban.confirmMessage': '{jslang}wcf.user.ban.confirmMessage{/jslang}',
-					'wcf.user.ban.expires': '{jslang}wcf.user.ban.expires{/jslang}',
-					'wcf.user.ban.expires.description': '{jslang}wcf.user.ban.expires.description{/jslang}',
-					'wcf.user.ban.neverExpires': '{jslang}wcf.user.ban.neverExpires{/jslang}',
-					'wcf.user.ban.reason.description': '{jslang}wcf.user.ban.reason.description{/jslang}',
-					'wcf.user.disableAvatar': '{jslang}wcf.user.disableAvatar{/jslang}',
-					'wcf.user.disableAvatar.confirmMessage': '{jslang}wcf.user.disableAvatar.confirmMessage{/jslang}',
-					'wcf.user.disableAvatar.expires': '{jslang}wcf.user.disableAvatar.expires{/jslang}',
-					'wcf.user.disableAvatar.expires.description': '{jslang}wcf.user.disableAvatar.expires.description{/jslang}',
-					'wcf.user.disableAvatar.neverExpires': '{jslang}wcf.user.disableAvatar.neverExpires{/jslang}',
-					'wcf.user.disableCoverPhoto': '{jslang}wcf.user.disableCoverPhoto{/jslang}',
-					'wcf.user.disableCoverPhoto.confirmMessage': '{jslang}wcf.user.disableCoverPhoto.confirmMessage{/jslang}',
-					'wcf.user.disableCoverPhoto.expires': '{jslang}wcf.user.disableCoverPhoto.expires{/jslang}',
-					'wcf.user.disableCoverPhoto.expires.description': '{jslang}wcf.user.disableCoverPhoto.expires.description{/jslang}',
-					'wcf.user.disableCoverPhoto.neverExpires': '{jslang}wcf.user.disableCoverPhoto.neverExpires{/jslang}',
-					'wcf.user.disableSignature': '{jslang}wcf.user.disableSignature{/jslang}',
-					'wcf.user.disableSignature.confirmMessage': '{jslang}wcf.user.disableSignature.confirmMessage{/jslang}',
-					'wcf.user.disableSignature.expires': '{jslang}wcf.user.disableSignature.expires{/jslang}',
-					'wcf.user.disableSignature.expires.description': '{jslang}wcf.user.disableSignature.expires.description{/jslang}',
-					'wcf.user.disableSignature.neverExpires': '{jslang}wcf.user.disableSignature.neverExpires{/jslang}',
-					'wcf.user.edit': '{jslang}wcf.user.edit{/jslang}',
-					'wcf.user.enableAvatar': '{jslang}wcf.user.enableAvatar{/jslang}',
-					'wcf.user.enableCoverPhoto': '{jslang}wcf.user.enableCoverPhoto{/jslang}',
-					'wcf.user.enableSignature': '{jslang}wcf.user.enableSignature{/jslang}',
-					'wcf.user.unban': '{jslang}wcf.user.unban{/jslang}'
-				});
+			require(['WoltLabSuite/Core/Ui/User/Editor'], function(UiUserEditor) {
+				{jsphrase name='wcf.acp.user.disable'}
+				{jsphrase name='wcf.acp.user.enable'}
+				{jsphrase name='wcf.user.ban'}
+				{jsphrase name='wcf.user.banned'}
+				{jsphrase name='wcf.user.ban.confirmMessage'}
+				{jsphrase name='wcf.user.ban.expires'}
+				{jsphrase name='wcf.user.ban.expires.description'}
+				{jsphrase name='wcf.user.ban.neverExpires'}
+				{jsphrase name='wcf.user.ban.reason.description'}
+				{jsphrase name='wcf.user.disableAvatar'}
+				{jsphrase name='wcf.user.disableAvatar.confirmMessage'}
+				{jsphrase name='wcf.user.disableAvatar.expires'}
+				{jsphrase name='wcf.user.disableAvatar.expires.description'}
+				{jsphrase name='wcf.user.disableAvatar.neverExpires'}
+				{jsphrase name='wcf.user.disableCoverPhoto'}
+				{jsphrase name='wcf.user.disableCoverPhoto.confirmMessage'}
+				{jsphrase name='wcf.user.disableCoverPhoto.expires'}
+				{jsphrase name='wcf.user.disableCoverPhoto.expires.description'}
+				{jsphrase name='wcf.user.disableCoverPhoto.neverExpires'}
+				{jsphrase name='wcf.user.disableSignature'}
+				{jsphrase name='wcf.user.disableSignature.confirmMessage'}
+				{jsphrase name='wcf.user.disableSignature.expires'}
+				{jsphrase name='wcf.user.disableSignature.expires.description'}
+				{jsphrase name='wcf.user.disableSignature.neverExpires'}
+				{jsphrase name='wcf.user.edit'}
+				{jsphrase name='wcf.user.enableAvatar'}
+				{jsphrase name='wcf.user.enableCoverPhoto'}
+				{jsphrase name='wcf.user.enableSignature'}
+				{jsphrase name='wcf.user.unban'}
 				
 				{if $isAccessible}
 					UiUserEditor.init();
@@ -45,15 +43,11 @@
 
 		$(function() {
 			{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}
-				WCF.Language.addObject({
-					'wcf.user.activityPoint': '{jslang}wcf.user.activityPoint{/jslang}'
-				});
+				{jsphrase name='wcf.user.activityPoint'}
 			{/if}
 
 			{if $user->canEdit() || ($__wcf->getUser()->userID == $user->userID && $user->canEditOwnProfile())}
-				WCF.Language.addObject({
-					'wcf.user.editProfile': '{jslang}wcf.user.editProfile{/jslang}'
-				});
+				{jsphrase name='wcf.user.editProfile'}
 				
 				new WCF.User.Profile.Editor({$user->userID}, {if $editOnInit}true{else}false{/if});
 			{/if}

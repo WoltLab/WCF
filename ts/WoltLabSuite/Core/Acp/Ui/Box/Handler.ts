@@ -8,7 +8,7 @@
 
 import Dictionary from "../../../Dictionary";
 import DomUtil from "../../../Dom/Util";
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as UiPageSearchHandler from "../../../Ui/Page/Search/Handler";
 
 class AcpUiBoxHandler {
@@ -129,11 +129,11 @@ class AcpUiBoxHandler {
     const selectedOption = this.pageId.options[this.pageId.selectedIndex];
     const pageIdentifier = selectedOption.dataset.identifier!;
     let languageItem = `wcf.page.pageObjectID.${pageIdentifier}`;
-    if (Language.get(languageItem) === languageItem) {
+    if (getPhrase(languageItem) === languageItem) {
       languageItem = "wcf.page.pageObjectID";
     }
 
-    this.containerPageObjectId.querySelector("label")!.textContent = Language.get(languageItem);
+    this.containerPageObjectId.querySelector("label")!.textContent = getPhrase(languageItem);
 
     DomUtil.show(this.containerPageObjectId);
   }
@@ -149,7 +149,7 @@ class AcpUiBoxHandler {
     const languageItem = `wcf.page.pageObjectID.search.${pageIdentifier}`;
 
     let labelLanguageItem;
-    if (Language.get(languageItem) !== languageItem) {
+    if (getPhrase(languageItem) !== languageItem) {
       labelLanguageItem = languageItem;
     }
 

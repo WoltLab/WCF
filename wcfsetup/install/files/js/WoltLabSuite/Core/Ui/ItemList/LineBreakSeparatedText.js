@@ -8,12 +8,11 @@
  * @since 5.4
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../../Dom/Util"], function (require, exports, tslib_1, UiConfirmation, Language, Util_1) {
+define(["require", "exports", "tslib", "../Confirmation", "WoltLabSuite/Core/Language", "../../Dom/Util"], function (require, exports, tslib_1, UiConfirmation, Language_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UiItemListLineBreakSeparatedText = void 0;
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
-    Language = tslib_1.__importStar(Language);
     Util_1 = tslib_1.__importDefault(Util_1);
     class UiItemListLineBreakSeparatedText {
         addButton = undefined;
@@ -67,14 +66,14 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
             const itemInput = this.itemInput;
             const item = itemInput.value.trim();
             if (item === "") {
-                Util_1.default.innerError(itemInput.parentElement, Language.get("wcf.global.form.error.empty"));
+                Util_1.default.innerError(itemInput.parentElement, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
             }
             else if (!this.items.has(item)) {
                 this.insertItem(item);
                 this.resetInput();
             }
             else {
-                Util_1.default.innerError(itemInput.parentElement, Language.get("wcf.acp.option.type.lineBreakSeparatedText.error.duplicate", {
+                Util_1.default.innerError(itemInput.parentElement, (0, Language_1.getPhrase)("wcf.acp.option.type.lineBreakSeparatedText.error.duplicate", {
                     item,
                 }), true);
             }
@@ -94,7 +93,7 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
             this.itemInput = document.createElement("input");
             this.itemInput.classList.add("long");
             this.itemInput.type = "text";
-            this.itemInput.placeholder = Language.get("wcf.acp.option.type.lineBreakSeparatedText.placeholder");
+            this.itemInput.placeholder = (0, Language_1.getPhrase)("wcf.acp.option.type.lineBreakSeparatedText.placeholder");
             this.itemInput.addEventListener("keydown", (ev) => this.keydown(ev));
             this.itemInput.addEventListener("paste", (ev) => this.paste(ev));
             inputAddon.appendChild(this.itemInput);
@@ -104,14 +103,14 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
             this.addButton = document.createElement("a");
             this.addButton.href = "#";
             this.addButton.classList.add("button", "inputSuffix", "jsTooltip");
-            this.addButton.title = Language.get("wcf.global.button.add");
+            this.addButton.title = (0, Language_1.getPhrase)("wcf.global.button.add");
             this.addButton.innerHTML = '<fa-icon name="plus" solid></fa-icon>';
             this.addButton.addEventListener("click", (ev) => this.addItem(ev));
             inputAddon.appendChild(this.addButton);
             this.clearButton = document.createElement("a");
             this.clearButton.href = "#";
             this.clearButton.classList.add("button", "inputSuffix", "jsTooltip");
-            this.clearButton.title = Language.get("wcf.global.button.delete");
+            this.clearButton.title = (0, Language_1.getPhrase)("wcf.global.button.delete");
             this.clearButton.innerHTML = '<fa-icon name="times" solid></fa-icon>';
             this.clearButton.addEventListener("click", (ev) => this.clearList(ev));
             inputAddon.appendChild(this.clearButton);
@@ -133,7 +132,7 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
                     this.items.clear();
                     this.hideList();
                 },
-                message: Language.get("wcf.acp.option.type.lineBreakSeparatedText.clearList.confirmMessage"),
+                message: (0, Language_1.getPhrase)("wcf.acp.option.type.lineBreakSeparatedText.clearList.confirmMessage"),
                 messageIsHtml: true,
             });
         }
@@ -154,7 +153,7 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
                     }
                     this.items.delete(item);
                 },
-                message: Language.get("wcf.button.delete.confirmMessage", {
+                message: (0, Language_1.getPhrase)("wcf.button.delete.confirmMessage", {
                     objectTitle: item,
                 }),
                 messageIsHtml: true,
@@ -204,7 +203,7 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
             const deleteButton = document.createElement("span");
             deleteButton.innerHTML = '<fa-icon name="xmark" solid></fa-icon>';
             deleteButton.classList.add("jsDeleteItem", "jsTooltip", "pointer");
-            deleteButton.title = Language.get("wcf.global.button.delete");
+            deleteButton.title = (0, Language_1.getPhrase)("wcf.global.button.delete");
             deleteButton.addEventListener("click", (ev) => this.deleteItem(ev));
             itemElement.append(deleteButton);
             itemElement.append(document.createTextNode(" "));

@@ -16,10 +16,8 @@
 	</div>
 </div>
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Article/Add'], function(Language, AcpUiArticleAdd) {
-		Language.addObject({
-			'wcf.acp.article.add': '{jslang}wcf.acp.article.add{/jslang}'
-		});
+	require(['WoltLabSuite/Core/Acp/Ui/Article/Add'], function(AcpUiArticleAdd) {
+		{jsphrase name='wcf.acp.article.add'}
 		
 		AcpUiArticleAdd.init('{link controller='ArticleAdd' encode=false}{literal}isMultilingual={$isMultilingual}{/literal}{if $categoryID}&categoryID={$categoryID}{/if}{/link}');
 		

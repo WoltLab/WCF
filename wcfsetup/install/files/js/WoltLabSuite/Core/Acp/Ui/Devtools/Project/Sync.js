@@ -1,9 +1,8 @@
-define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language", "../../../../Component/Dialog", "WoltLabSuite/Core/Component/Snackbar", "WoltLabSuite/Core/Api/Devtools/Projects/SyncVersion"], function (require, exports, tslib_1, Ajax, Language, Dialog_1, Snackbar_1, SyncVersion_1) {
+define(["require", "exports", "tslib", "../../../../Ajax", "WoltLabSuite/Core/Language", "../../../../Component/Dialog", "WoltLabSuite/Core/Component/Snackbar", "WoltLabSuite/Core/Api/Devtools/Projects/SyncVersion"], function (require, exports, tslib_1, Ajax, Language_1, Dialog_1, Snackbar_1, SyncVersion_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
     Ajax = tslib_1.__importStar(Ajax);
-    Language = tslib_1.__importStar(Language);
     class AcpUiDevtoolsProjectSync {
         buttons = new Map();
         buttonStatus = new Map();
@@ -162,7 +161,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
             const identifier = this.getButtonIdentifier(requestData.parameters.pluginName, requestData.parameters.target);
             this.buttons.get(identifier).disabled = false;
             const buttonStatus = this.buttonStatus.get(identifier);
-            buttonStatus.innerHTML = '<a href="#">' + Language.get("wcf.acp.devtools.sync.status.failure") + "</a>";
+            buttonStatus.innerHTML = '<a href="#">' + (0, Language_1.getPhrase)("wcf.acp.devtools.sync.status.failure") + "</a>";
             buttonStatus.children[0].addEventListener("click", (event) => {
                 event.preventDefault();
                 const html = Ajax.getRequestObject(this).getErrorHtml(data, xhr);
@@ -170,12 +169,12 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
                     const dialog = (0, Dialog_1.dialogFactory)()
                         .fromHtml(`<div class="dialog__iframeContainer">${html.outerHTML}</div>`)
                         .asAlert();
-                    dialog.show(Language.get("wcf.global.error.title"));
+                    dialog.show((0, Language_1.getPhrase)("wcf.global.error.title"));
                     dialog.querySelector("dialog").classList.add("dialog--iframe");
                 }
                 else if (html) {
                     const dialog = (0, Dialog_1.dialogFactory)().fromHtml(html).asAlert();
-                    dialog.show(Language.get("wcf.global.error.title"));
+                    dialog.show((0, Language_1.getPhrase)("wcf.global.error.title"));
                 }
             });
             this.buttonSyncAll.classList.remove("disabled");
@@ -196,7 +195,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
             return {
                 id: "devtoolsProjectSyncPipError",
                 options: {
-                    title: Language.get("wcf.global.error.title"),
+                    title: (0, Language_1.getPhrase)("wcf.global.error.title"),
                 },
                 source: null,
             };

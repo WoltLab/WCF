@@ -5,7 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../../Language", "../Dropdown/Simple"], function (require, exports, tslib_1, Core, DomTraverse, Language, Simple_1) {
+define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "WoltLabSuite/Core/Language", "../Dropdown/Simple"], function (require, exports, tslib_1, Core, DomTraverse, Language_1, Simple_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
@@ -13,7 +13,6 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
     exports.setValues = setValues;
     Core = tslib_1.__importStar(Core);
     DomTraverse = tslib_1.__importStar(DomTraverse);
-    Language = tslib_1.__importStar(Language);
     Simple_1 = tslib_1.__importDefault(Simple_1);
     const _data = new Map();
     /**
@@ -87,7 +86,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
         }
         else if (!data.element.disabled) {
             data.element.disabled = true;
-            data.element.placeholder = Language.get("wcf.global.form.input.maxItems");
+            data.element.placeholder = (0, Language_1.getPhrase)("wcf.global.form.input.maxItems");
         }
     }
     /**

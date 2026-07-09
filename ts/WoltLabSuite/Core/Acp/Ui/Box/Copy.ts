@@ -1,5 +1,5 @@
 import { DialogCallbackObject, DialogCallbackSetup } from "../../../Ui/Dialog/Data";
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as UiDialog from "../../../Ui/Dialog";
 
 class AcpUiBoxCopy implements DialogCallbackObject {
@@ -19,7 +19,7 @@ class AcpUiBoxCopy implements DialogCallbackObject {
     return {
       id: "acpBoxCopyDialog",
       options: {
-        title: Language.get("wcf.acp.box.copy"),
+        title: getPhrase("wcf.acp.box.copy"),
       },
     };
   }

@@ -19,11 +19,9 @@
 	{jsphrase name='wcf.media.upload.success'}
 	{jsphrase name='wcf.media.setCategory'}
 
-	require(['Language', 'Permission'], function(Language, Permission) {
-		Language.addObject({
-			'wcf.media.delete.confirmMessage': '{jslang __encode=true __literal=true}wcf.media.delete.confirmMessage{/jslang}',
-			'wcf.media.search.info.searchStringThreshold': '{jslang __literal=true}wcf.media.search.info.searchStringThreshold{/jslang}',
-		});
+	require(['Language', 'Permission'], function({ registerPhrase }, Permission) {
+		registerPhrase('wcf.media.delete.confirmMessage', '{jslang __encode=true __literal=true}wcf.media.delete.confirmMessage{/jslang}');
+		registerPhrase('wcf.media.search.info.searchStringThreshold', '{jslang __literal=true}wcf.media.search.info.searchStringThreshold{/jslang}');
 		
 		Permission.add('admin.content.cms.canManageMedia', {if $__wcf->session->getPermission('admin.content.cms.canManageMedia')}true{else}false{/if});
 	});

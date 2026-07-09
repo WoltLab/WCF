@@ -1,5 +1,5 @@
 import { DialogCallbackObject, DialogCallbackSetup } from "../../../Ui/Dialog/Data";
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import UiDialog from "../../../Ui/Dialog";
 
 class AcpUiPageCopy implements DialogCallbackObject {
@@ -19,7 +19,7 @@ class AcpUiPageCopy implements DialogCallbackObject {
     return {
       id: "acpPageCopyDialog",
       options: {
-        title: Language.get("wcf.acp.page.copy"),
+        title: getPhrase("wcf.acp.page.copy"),
       },
     };
   }

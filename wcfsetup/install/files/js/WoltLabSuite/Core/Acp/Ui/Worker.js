@@ -5,11 +5,10 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Language", "../../Ui/Dialog"], function (require, exports, tslib_1, Ajax, Core, Language, Dialog_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Core", "WoltLabSuite/Core/Language", "../../Ui/Dialog"], function (require, exports, tslib_1, Ajax, Core, Language_1, Dialog_1) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
-    Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class AcpUiWorker {
         aborted = false;
@@ -69,7 +68,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Langua
                 const formSubmit = document.createElement("div");
                 formSubmit.className = "formSubmit";
                 formSubmit.innerHTML =
-                    '<button type="button" class="button buttonPrimary">' + Language.get("wcf.global.button.next") + "</button>";
+                    '<button type="button" class="button buttonPrimary">' + (0, Language_1.getPhrase)("wcf.global.button.next") + "</button>";
                 content.appendChild(formSubmit);
                 Dialog_1.default.rebuild(this);
                 const button = formSubmit.children[0];

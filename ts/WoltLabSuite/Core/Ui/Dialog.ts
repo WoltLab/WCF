@@ -19,7 +19,7 @@ import {
   DialogHtml,
   AjaxInitialization,
 } from "./Dialog/Data";
-import * as Language from "../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as Environment from "../Environment";
 import * as EventHandler from "../Event/Handler";
 import { AjaxCallbackSetup } from "../Ajax/Data";
@@ -265,7 +265,7 @@ const UiDialog = {
         {
           backdropCloseOnClick: true,
           closable: true,
-          closeButtonLabel: Language.get("wcf.global.button.close"),
+          closeButtonLabel: getPhrase("wcf.global.button.close"),
           closeConfirmMessage: "",
           disableContentPadding: false,
           title: "",
@@ -712,7 +712,7 @@ const UiDialog = {
     data!.inputFields.forEach((inputField) => {
       if (inputField.required) {
         if (inputField.value.trim() === "") {
-          DomUtil.innerError(inputField, Language.get("wcf.global.form.error.empty"));
+          DomUtil.innerError(inputField, getPhrase("wcf.global.form.error.empty"));
           inputField.closest("dl")?.classList.add("formError");
 
           isValid = false;

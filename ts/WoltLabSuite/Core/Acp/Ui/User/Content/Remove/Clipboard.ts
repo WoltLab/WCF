@@ -9,7 +9,7 @@
 
 import AcpUiWorker from "../../../Worker";
 import * as Ajax from "../../../../../Ajax";
-import * as Language from "../../../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import UiDialog from "../../../../../Ui/Dialog";
 import { AjaxCallbackSetup } from "../../../../../Ajax/Data";
 import { DialogCallbackSetup } from "../../../../../Ui/Dialog/Data";
@@ -58,7 +58,7 @@ export class AcpUserContentRemoveClipboard {
     new AcpUiWorker({
       // dialog
       dialogId: "removeContentWorker",
-      dialogTitle: Language.get("wcf.acp.content.removeContent"),
+      dialogTitle: getPhrase("wcf.acp.content.removeContent"),
 
       // ajax
       className: "wcf\\system\\worker\\UserContentRemoveWorker",
@@ -115,7 +115,7 @@ export class AcpUserContentRemoveClipboard {
     return {
       id: this.dialogId,
       options: {
-        title: Language.get("wcf.acp.content.removeContent"),
+        title: getPhrase("wcf.acp.content.removeContent"),
       },
       source: null,
     };

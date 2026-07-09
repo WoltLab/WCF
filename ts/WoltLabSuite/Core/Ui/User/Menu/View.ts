@@ -11,7 +11,7 @@ import { UserMenuButton, UserMenuData, UserMenuFooter, UserMenuProvider } from "
 import { getTimeElement } from "../../../Date/Util";
 import { escapeHTML } from "../../../StringUtil";
 import * as DomChangeListener from "../../../Dom/Change/Listener";
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import { createFocusTrap, FocusTrap } from "focus-trap";
 import PerfectScrollbar from "perfect-scrollbar";
 import * as UiScreen from "../../Screen";
@@ -35,7 +35,7 @@ export class UserMenuView {
       icon: '<fa-icon size="24" name="check" solid></fa-icon>',
       link: "#",
       name: "markAllAsRead",
-      title: Language.get("wcf.global.button.markAllAsRead"),
+      title: getPhrase("wcf.global.button.markAllAsRead"),
     });
 
     this.focusTrap = createFocusTrap(this.element, {
@@ -167,7 +167,7 @@ export class UserMenuView {
       </div>
       <div class="userMenuItemMeta"></div>
       <div class="userMenuItemUnread">
-        <button type="button" class="userMenuItemMarkAsRead jsTooltip" title="${Language.get(
+        <button type="button" class="userMenuItemMarkAsRead jsTooltip" title="${getPhrase(
           "wcf.global.button.markAsRead",
         )}">
           <fa-icon size="24" name="check"></fa-icon>

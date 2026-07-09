@@ -8,7 +8,7 @@
 import { AjaxCallbackObject, AjaxCallbackSetup } from "../../../../../../Ajax/Data";
 import * as UiConfirmation from "../../../../../../Ui/Confirmation";
 import * as Ajax from "../../../../../../Ajax";
-import * as Language from "../../../../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import { dialogFactory } from "../../../../../../Component/Dialog";
 
 export class List implements AjaxCallbackObject {
@@ -46,7 +46,7 @@ export class List implements AjaxCallbackObject {
           actionName: "clearLog",
         });
       },
-      message: Language.get("wcf.acp.devtools.missingLanguageItem.clearLog.confirmMessage"),
+      message: getPhrase("wcf.acp.devtools.missingLanguageItem.clearLog.confirmMessage"),
     });
   }
 
@@ -57,7 +57,7 @@ export class List implements AjaxCallbackObject {
           actionName: "clearExistingLog",
         });
       },
-      message: Language.get("wcf.acp.devtools.missingLanguageItem.clearExistingLog.confirmMessage"),
+      message: getPhrase("wcf.acp.devtools.missingLanguageItem.clearExistingLog.confirmMessage"),
     });
   }
 
@@ -65,7 +65,7 @@ export class List implements AjaxCallbackObject {
     const target = event.currentTarget as HTMLElement;
 
     const dialog = dialogFactory().fromHtml(target.dataset.stackTrace!).withoutControls();
-    dialog.show(Language.get("wcf.acp.devtools.missingLanguageItem.stackTrace"));
+    dialog.show(getPhrase("wcf.acp.devtools.missingLanguageItem.stackTrace"));
   }
 }
 

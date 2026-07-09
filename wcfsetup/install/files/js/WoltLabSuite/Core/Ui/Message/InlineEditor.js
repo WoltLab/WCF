@@ -5,14 +5,13 @@
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Event", "../../Ajax", "../../Component/Ckeditor", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../../Event/Handler", "../../Language", "../Dropdown/Reusable", "../Notification", "../Screen", "../Scroll", "WoltLabSuite/Core/Component/Quote/Storage", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Event_1, Ajax, Ckeditor_1, Core, Listener_1, Util_1, EventHandler, Language, UiDropdownReusable, UiNotification, UiScreen, UiScroll, Storage_1, Snackbar_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Event", "../../Ajax", "../../Component/Ckeditor", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../../Event/Handler", "WoltLabSuite/Core/Language", "../Dropdown/Reusable", "../Notification", "../Screen", "../Scroll", "WoltLabSuite/Core/Component/Quote/Storage", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Event_1, Ajax, Ckeditor_1, Core, Listener_1, Util_1, EventHandler, Language_1, UiDropdownReusable, UiNotification, UiScreen, UiScroll, Storage_1, Snackbar_1) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Util_1 = tslib_1.__importDefault(Util_1);
     EventHandler = tslib_1.__importStar(EventHandler);
-    Language = tslib_1.__importStar(Language);
     UiDropdownReusable = tslib_1.__importStar(UiDropdownReusable);
     UiNotification = tslib_1.__importStar(UiNotification);
     UiScreen = tslib_1.__importStar(UiScreen);
@@ -165,7 +164,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
                 }
                 else {
                     const label = document.createElement("span");
-                    label.textContent = Language.get(item.label);
+                    label.textContent = (0, Language_1.getPhrase)(item.label);
                     listItem.appendChild(label);
                     if (item.item === "editItem") {
                         listItem.addEventListener("click", (ev) => this._click(null, ev));

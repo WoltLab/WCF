@@ -8,7 +8,7 @@
  */
 import * as Ajax from "../../../Ajax";
 import * as Core from "../../../Core";
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import { AjaxCallbackObject, AjaxCallbackSetup } from "../../../Ajax/Data";
 import { AjaxResponse } from "../../../Controller/Clipboard/Data";
 import { DialogCallbackSetup } from "../../../Ui/Dialog/Data";
@@ -37,7 +37,7 @@ export class AcpUiDataImportManager implements AjaxCallbackObject {
       await prepareRequest(this.cacheClearEndpoint).post().fetchAsResponse();
       this.showCompletedDialog();
     } else {
-      this.run(Language.get("wcf.acp.dataImport.data." + this.queue[this.index]), this.queue[this.index]);
+      this.run(getPhrase("wcf.acp.dataImport.data." + this.queue[this.index]), this.queue[this.index]);
     }
   }
 
@@ -52,13 +52,13 @@ export class AcpUiDataImportManager implements AjaxCallbackObject {
 
   private showCompletedDialog(): void {
     const content = UiDialog.getDialog(this)!.content;
-    content.querySelector("h1")!.textContent = Language.get("wcf.acp.dataImport.completed");
+    content.querySelector("h1")!.textContent = getPhrase("wcf.acp.dataImport.completed");
     const spinner = content.querySelector("fa-icon")!;
     spinner.setIcon("check");
 
     const formSubmit = document.createElement("div");
     formSubmit.className = "formSubmit";
-    formSubmit.innerHTML = `<button type="button" class="button buttonPrimary">${Language.get(
+    formSubmit.innerHTML = `<button type="button" class="button buttonPrimary">${getPhrase(
       "wcf.global.button.next",
     )}</button>`;
 
@@ -114,7 +114,7 @@ export class AcpUiDataImportManager implements AjaxCallbackObject {
       id: DomUtil.getUniqueId(),
       options: {
         closable: false,
-        title: Language.get("wcf.acp.dataImport"),
+        title: getPhrase("wcf.acp.dataImport"),
       },
       source: null,
     };

@@ -6,12 +6,11 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manager", "../../../../Language", "../../../../Notification/Handler", "../../../../Notification/ServiceWorker"], function (require, exports, tslib_1, Ajax_1, View_1, Manager_1, Language, Handler_1, ServiceWorker_1) {
+define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manager", "WoltLabSuite/Core/Language", "../../../../Notification/Handler", "../../../../Notification/ServiceWorker"], function (require, exports, tslib_1, Ajax_1, View_1, Manager_1, Language_1, Handler_1, ServiceWorker_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     View_1 = tslib_1.__importDefault(View_1);
-    Language = tslib_1.__importStar(Language);
     let originalFavicon = "";
     function setFaviconCounter(counter) {
         const favicon = document.querySelector('link[rel="icon"]');
@@ -185,14 +184,14 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
             }
             const element = document.createElement("div");
             element.classList.add("userMenuNotifications");
-            element.textContent = Language.get("wcf.user.notification.enableDesktopNotifications");
+            element.textContent = (0, Language_1.getPhrase)("wcf.user.notification.enableDesktopNotifications");
             const buttonContainer = document.createElement("div");
             buttonContainer.classList.add("userMenuNotificationsButtons");
             element.append(buttonContainer);
             const button = document.createElement("button");
             button.type = "button";
             button.classList.add("button", "small", "userMenuNotificationsButton");
-            button.textContent = Language.get("wcf.user.notification.enableDesktopNotifications.button");
+            button.textContent = (0, Language_1.getPhrase)("wcf.user.notification.enableDesktopNotifications.button");
             button.addEventListener("click", async (event) => {
                 event.preventDefault();
                 const permission = await Notification.requestPermission();

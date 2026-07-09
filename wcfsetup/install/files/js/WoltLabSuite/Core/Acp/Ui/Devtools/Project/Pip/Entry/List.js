@@ -5,10 +5,9 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../../../../Ajax", "../../../../../../Language", "../../../../../../Ui/Confirmation", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Ajax, Language, Confirmation_1, Snackbar_1) {
+define(["require", "exports", "tslib", "../../../../../../Ajax", "WoltLabSuite/Core/Language", "../../../../../../Ui/Confirmation", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Ajax, Language_1, Confirmation_1, Snackbar_1) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
-    Language = tslib_1.__importStar(Language);
     class DevtoolsProjectPipEntryList {
         entryType;
         pip;
@@ -75,15 +74,15 @@ define(["require", "exports", "tslib", "../../../../../../Ajax", "../../../../..
   <dt></dt>
   <dd>
     <label>
-      <input type="checkbox" name="addDeleteInstruction" checked> ${Language.get("wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction")}
+      <input type="checkbox" name="addDeleteInstruction" checked> ${(0, Language_1.getPhrase)("wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction")}
     </label>
-    <small>${Language.get("wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description")}</small>
+    <small>${(0, Language_1.getPhrase)("wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description")}</small>
   </dd>
 </dl>`;
             }
             (0, Confirmation_1.show)({
                 confirm: (parameters, content) => this.deletePipEntry(parameters, content),
-                message: Language.get("wcf.acp.devtools.project.pip.entry.delete.confirmMessage"),
+                message: (0, Language_1.getPhrase)("wcf.acp.devtools.project.pip.entry.delete.confirmMessage"),
                 template,
                 parameters: {
                     pipEntry: pipEntry,

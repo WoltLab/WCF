@@ -9,7 +9,7 @@
  */
 
 import { dialogFactory } from "../Dialog";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import WoltlabCoreDialogElement from "../../Element/woltlab-core-dialog";
 
 type CallbackWithFormElements = (dialog: WoltlabCoreDialogElement) => void;
@@ -35,7 +35,7 @@ export class ConfirmationCustom {
     const dialog = dialogFactory()
       .fromHtml(`<p>${message}</p>`)
       .asConfirmation({
-        primary: Language.get("wcf.dialog.button.primary.confirm"),
+        primary: getPhrase("wcf.dialog.button.primary.confirm"),
       });
 
     dialog.show(this.#question);
@@ -50,7 +50,7 @@ export class ConfirmationCustom {
     const dialog = dialogFactory()
       .withoutContent()
       .asConfirmation({
-        primary: Language.get("wcf.dialog.button.primary.confirm"),
+        primary: getPhrase("wcf.dialog.button.primary.confirm"),
       });
 
     callback(dialog);
@@ -78,7 +78,7 @@ export class ConfirmationCustom {
     const dialog = dialogFactory()
       .withoutContent()
       .asConfirmation({
-        primary: Language.get("wcf.dialog.button.primary.confirm"),
+        primary: getPhrase("wcf.dialog.button.primary.confirm"),
       });
 
     dialog.show(this.#question);

@@ -1,11 +1,9 @@
 {include file='header' pageTitle='wcf.acp.rebuildData'}
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Maintenance/RebuildData'], (Language, RebuildData) => {
-		Language.addObject({
-			'wcf.acp.worker.abort.confirmMessage': '{jslang}wcf.acp.worker.abort.confirmMessage{/jslang}',
-			'wcf.acp.worker.success': '{jslang}wcf.acp.worker.success{/jslang}',
-		});
+	require(['WoltLabSuite/Core/Acp/Ui/Maintenance/RebuildData'], (RebuildData) => {
+		{jsphrase name='wcf.acp.worker.abort.confirmMessage'}
+		{jsphrase name='wcf.acp.worker.success'}
 		
 		document.querySelectorAll('.jsRebuildDataWorker').forEach((button) => {
 			RebuildData.register(button);

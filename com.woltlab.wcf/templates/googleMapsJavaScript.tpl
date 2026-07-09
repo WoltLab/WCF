@@ -6,22 +6,20 @@
 	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/oms.min.js?v={@LAST_UPDATE_TIME}"></script>
 	<script data-relocate="true">
 		$(function() {
-			WCF.Language.addObject({
-				'wcf.map.noLocationSuggestions': '{jslang}wcf.map.noLocationSuggestions{/jslang}',
-				'wcf.map.route.error.not_found': '{jslang}wcf.map.route.error.not_found{/jslang}',
-				'wcf.map.route.error.over_query_limit': '{jslang}wcf.map.route.error.over_query_limit{/jslang}',
-				'wcf.map.route.error.request_denied': '{jslang}wcf.map.route.error.request_denied{/jslang}',
-				'wcf.map.route.origin': '{jslang}wcf.map.route.origin{/jslang}',
-				'wcf.map.route.planner': '{jslang}wcf.map.route.planner{/jslang}',
-				'wcf.map.route.travelMode': '{jslang}wcf.map.route.travelMode{/jslang}',
-				'wcf.map.route.travelMode.bicycling': '{jslang}wcf.map.route.travelMode.bicycling{/jslang}',
-				'wcf.map.route.travelMode.driving': '{jslang}wcf.map.route.travelMode.driving{/jslang}',
-				'wcf.map.route.travelMode.transit': '{jslang}wcf.map.route.travelMode.transit{/jslang}',
-				'wcf.map.route.travelMode.walking': '{jslang}wcf.map.route.travelMode.walking{/jslang}',
-				'wcf.map.route.viewOnGoogleMaps': '{jslang}wcf.map.route.viewOnGoogleMaps{/jslang}',
-				'wcf.map.showLocationSuggestions': '{jslang}wcf.map.showLocationSuggestions{/jslang}',
-				'wcf.map.useLocationSuggestion': '{jslang}wcf.map.useLocationSuggestion{/jslang}'
-			});
+			{jsphrase name='wcf.map.noLocationSuggestions'}
+			{jsphrase name='wcf.map.route.error.not_found'}
+			{jsphrase name='wcf.map.route.error.over_query_limit'}
+			{jsphrase name='wcf.map.route.error.request_denied'}
+			{jsphrase name='wcf.map.route.origin'}
+			{jsphrase name='wcf.map.route.planner'}
+			{jsphrase name='wcf.map.route.travelMode'}
+			{jsphrase name='wcf.map.route.travelMode.bicycling'}
+			{jsphrase name='wcf.map.route.travelMode.driving'}
+			{jsphrase name='wcf.map.route.travelMode.transit'}
+			{jsphrase name='wcf.map.route.travelMode.walking'}
+			{jsphrase name='wcf.map.route.viewOnGoogleMaps'}
+			{jsphrase name='wcf.map.showLocationSuggestions'}
+			{jsphrase name='wcf.map.useLocationSuggestion'}
 			
 			WCF.Location.GoogleMaps.Settings.set({
 				disableDoubleClickZoom: {if GOOGLE_MAPS_ENABLE_DOUBLE_CLICK_ZOOM}0{else}1{/if},

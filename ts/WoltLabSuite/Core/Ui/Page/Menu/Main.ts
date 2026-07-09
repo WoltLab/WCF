@@ -8,7 +8,7 @@
 
 import PageMenuContainer from "./Container";
 import { PageMenuProvider } from "./Provider";
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import DomUtil from "../../../Dom/Util";
 import { MenuItem, PageMenuMainProvider } from "./Main/Provider";
 import * as DropDownSimple from "../../Dropdown/Simple";
@@ -189,7 +189,7 @@ export class PageMenuMain implements PageMenuProvider {
         counter: 0,
         depth: 0,
         identifier: "language",
-        title: Language.get("wcf.user.language"),
+        title: getPhrase("wcf.user.language"),
         icon,
       },
     ];
@@ -341,7 +341,7 @@ export class PageMenuMain implements PageMenuProvider {
 
       let ariaLabel = menuItem.title;
       if (menuItem.link) {
-        ariaLabel = Language.get("wcf.menu.page.button.toggle", { title: menuItem.title });
+        ariaLabel = getPhrase("wcf.menu.page.button.toggle", { title: menuItem.title });
       }
       button.setAttribute("aria-label", ariaLabel);
 

@@ -2,11 +2,9 @@
 
 <script data-relocate="true">
 	$(function() {
-		WCF.Language.addObject({
-			'wcf.acp.package.searchForUpdates': '{jslang}wcf.acp.package.searchForUpdates{/jslang}',
-			'wcf.acp.package.searchForUpdates.noResults': '{jslang}wcf.acp.package.searchForUpdates.noResults{/jslang}',
-			'wcf.acp.package.uninstallation.title': '{jslang}wcf.acp.package.uninstallation.title{/jslang}',
-		});
+		{jsphrase name='wcf.acp.package.searchForUpdates'}
+		{jsphrase name='wcf.acp.package.searchForUpdates.noResults'}
+		{jsphrase name='wcf.acp.package.uninstallation.title'}
 		
 		{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
 			new WCF.ACP.Package.Uninstallation($('.jsPackageRow .jsUninstallButton'));

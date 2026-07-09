@@ -2,7 +2,7 @@
  * @woltlabExcludeBundle all
  */
 
-import * as Language from "../../../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import UiUserProfileMenuItemAbstract from "./Abstract";
 import FormBuilderDialog from "../../../../../Form/Builder/Dialog";
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
@@ -22,7 +22,7 @@ class UiUserProfileMenuItemIgnore extends UiUserProfileMenuItemAbstract {
 
     this.dialog = new FormBuilderDialog("ignoreDialog", "wcf\\data\\user\\ignore\\UserIgnoreAction", "getDialog", {
       dialog: {
-        title: Language.get("wcf.user.button.ignore"),
+        title: getPhrase("wcf.user.button.ignore"),
       },
       actionParameters: {
         userID: this._userId,
@@ -34,7 +34,7 @@ class UiUserProfileMenuItemIgnore extends UiUserProfileMenuItemAbstract {
   }
 
   _getLabel(): string {
-    return Language.get("wcf.user.button." + (this._isActive ? "un" : "") + "ignore");
+    return getPhrase("wcf.user.button." + (this._isActive ? "un" : "") + "ignore");
   }
 
   _ajaxSuccess(data: AjaxResponse): void {

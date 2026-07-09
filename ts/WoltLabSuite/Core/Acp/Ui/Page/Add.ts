@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import WoltlabCoreDialogElement from "../../../Element/woltlab-core-dialog";
 import { dialogFactory } from "../../../Component/Dialog";
 
@@ -32,7 +32,7 @@ export class AcpUiPageAdd {
       this.#dialog = this.#createDialog();
     }
 
-    this.#dialog.show(Language.get("wcf.acp.page.add"));
+    this.#dialog.show(getPhrase("wcf.acp.page.add"));
   }
 
   #createDialog(): WoltlabCoreDialogElement {

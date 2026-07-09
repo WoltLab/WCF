@@ -7,7 +7,7 @@
  */
 
 import DomUtil from "../Dom/Util";
-import * as Language from "../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import { NotificationAction } from "../Ui/Dropdown/Data";
 import UiDropdownSimple from "../Ui/Dropdown/Simple";
 import * as StringUtil from "../StringUtil";
@@ -79,7 +79,7 @@ function initElement(
   button.className = "button dropdownToggle inputPrefix";
 
   const buttonLabel = document.createElement("span");
-  buttonLabel.textContent = Language.get("wcf.global.button.disabledI18n");
+  buttonLabel.textContent = getPhrase("wcf.global.button.disabledI18n");
 
   button.appendChild(buttonLabel);
   container.insertBefore(button, element);
@@ -134,7 +134,7 @@ function initElement(
     listItem.addEventListener("click", callbackClick);
 
     const span = document.createElement("span");
-    span.textContent = Language.get("wcf.global.button.disabledI18n");
+    span.textContent = getPhrase("wcf.global.button.disabledI18n");
     listItem.appendChild(span);
 
     dropdownMenu.appendChild(listItem);

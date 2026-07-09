@@ -8,7 +8,7 @@
 
 import UiDialog from "../Dialog";
 import * as StringUtil from "../../StringUtil";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as Clipboard from "../../Clipboard";
 import { showSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
 
@@ -23,7 +23,7 @@ async function copy(event: Event): Promise<void> {
 
   await Clipboard.copyTextToClipboard(input.value);
 
-  showSuccessSnackbar(Language.get("wcf.global.rss.copy.success"));
+  showSuccessSnackbar(getPhrase("wcf.global.rss.copy.success"));
 }
 
 /**
@@ -42,13 +42,13 @@ function openDialog(event: Event): void {
   let withoutAccessToken = "";
   if (!window.FORCE_LOGIN) {
     withoutAccessToken = `
-<woltlab-core-notice type="info">${Language.get("wcf.global.rss.accessToken.info")}</woltlab-core-notice>
+<woltlab-core-notice type="info">${getPhrase("wcf.global.rss.accessToken.info")}</woltlab-core-notice>
 <dl>
-  <dt>${Language.get("wcf.global.rss.withoutAccessToken")}</dt>
+  <dt>${getPhrase("wcf.global.rss.withoutAccessToken")}</dt>
   <dd>
     <div class="inputAddon">
       <input type="text" class="long" readonly value="${StringUtil.escapeHTML(linkWithoutAccessToken)}">
-      <button type="button" class="inputSuffix button jsTooltip feedLinkDialogCopyButton" title="${Language.get(
+      <button type="button" class="inputSuffix button jsTooltip feedLinkDialogCopyButton" title="${getPhrase(
         "wcf.global.rss.copy",
       )}">
         <fa-icon name="copy"></fa-icon>
@@ -63,11 +63,11 @@ function openDialog(event: Event): void {
     `
 ${withoutAccessToken}
 <dl>
-  <dt>${Language.get("wcf.global.rss.withAccessToken")}</dt>
+  <dt>${getPhrase("wcf.global.rss.withAccessToken")}</dt>
   <dd>
     <div class="inputAddon">
       <input type="text" class="long" readonly value="${StringUtil.escapeHTML(linkWithAccessToken)}">
-      <button type="button" class="inputSuffix button jsTooltip feedLinkDialogCopyButton" title="${Language.get(
+      <button type="button" class="inputSuffix button jsTooltip feedLinkDialogCopyButton" title="${getPhrase(
         "wcf.global.rss.copy",
       )}">
         <fa-icon name="copy"></fa-icon>
@@ -82,7 +82,7 @@ ${withoutAccessToken}
           .querySelectorAll(".feedLinkDialogCopyButton")
           .forEach((el) => el.addEventListener("click", (ev) => copy(ev)));
       },
-      title: alternative.title || Language.get("wcf.global.button.rss"),
+      title: alternative.title || getPhrase("wcf.global.button.rss"),
     },
   );
 }

@@ -7,7 +7,7 @@
  */
 
 import * as Ajax from "../../../../Ajax";
-import * as Language from "../../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import UiDialog from "../../../../Ui/Dialog";
 import { AjaxCallbackObject, AjaxCallbackSetup } from "../../../../Ajax/Data";
 import { DialogCallbackObject, DialogCallbackSetup } from "../../../../Ui/Dialog/Data";
@@ -79,7 +79,7 @@ class AcpUiDevtoolsNotificationTest implements AjaxCallbackObject, DialogCallbac
 
     // restore buttons
     this.buttons.forEach((button) => {
-      button.innerHTML = Language.get("wcf.acp.devtools.notificationTest.button.test");
+      button.innerHTML = getPhrase("wcf.acp.devtools.notificationTest.button.test");
       button.disabled = false;
     });
   }

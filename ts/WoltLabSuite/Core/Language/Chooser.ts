@@ -7,7 +7,7 @@
  */
 
 import * as Core from "../Core";
-import * as Language from "../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import DomUtil from "../Dom/Util";
 import UiDropdownSimple from "../Ui/Dropdown/Simple";
 
@@ -141,7 +141,7 @@ function initElement(
     dropdownMenu.appendChild(listItem);
 
     const link = document.createElement("a");
-    link.textContent = Language.get("wcf.global.language.noSelection");
+    link.textContent = getPhrase("wcf.global.language.noSelection");
     listItem.appendChild(link);
 
     if (languageId === 0) {
@@ -162,7 +162,7 @@ function initElement(
     div.appendChild(icon);
 
     const span = document.createElement("span");
-    span.textContent = Language.get("wcf.global.language.noSelection");
+    span.textContent = getPhrase("wcf.global.language.noSelection");
     span.append(icon);
     div.appendChild(span);
   }

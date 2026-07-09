@@ -10,7 +10,7 @@
 
 import AbstractPackageList from "./AbstractPackageList";
 import * as Core from "../../../../../../Core";
-import * as Language from "../../../../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import { RequiredPackageData } from "./Data";
 
 class RequiredPackages<
@@ -66,7 +66,7 @@ class RequiredPackages<
     listItem.dataset.minVersion = packageData.minVersion;
     listItem.dataset.file = packageData.file ? "1" : "0";
 
-    listItem.innerHTML = ` ${Language.get("wcf.acp.devtools.project.requiredPackage.requiredPackage", {
+    listItem.innerHTML = ` ${getPhrase("wcf.acp.devtools.project.requiredPackage.requiredPackage", {
       file: packageData.file,
       minVersion: packageData.minVersion,
       packageIdentifier: packageData.packageIdentifier,

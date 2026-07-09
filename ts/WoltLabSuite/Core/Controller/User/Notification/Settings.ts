@@ -7,7 +7,7 @@
  * @woltlabExcludeBundle tiny
  */
 
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as UiDropdownReusable from "../../../Ui/Dropdown/Reusable";
 
 let _dropDownMenu: HTMLUListElement;
@@ -56,7 +56,7 @@ function createDropDown(): void {
     } else {
       const link = document.createElement("a");
       link.href = "#";
-      link.textContent = Language.get(`wcf.user.notification.mailNotificationType.${value}`);
+      link.textContent = getPhrase(`wcf.user.notification.mailNotificationType.${value}`);
       listItem.appendChild(link);
       listItem.dataset.value = value;
       listItem.addEventListener("click", (ev) => setEmailType(ev));
@@ -94,7 +94,7 @@ function setEmailType(event: Event): void {
   const button = document.querySelector(
     `.notificationSettingsEmailType[data-object-id="${_objectId}"]`,
   ) as HTMLLIElement;
-  button.title = Language.get(`wcf.user.notification.mailNotificationType.${value}`);
+  button.title = getPhrase(`wcf.user.notification.mailNotificationType.${value}`);
 
   const icon = button.querySelector(".jsIconNotificationSettingsEmailType fa-icon") as FaIcon;
   switch (value) {

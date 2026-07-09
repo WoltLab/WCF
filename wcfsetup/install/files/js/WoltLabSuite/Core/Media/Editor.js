@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../Ui/Dialog", "../Language/Chooser", "../Language/Input", "../Dom/Util", "../Dom/Traverse", "../Dom/Change/Listener", "../Language", "../Ajax", "./Replace", "../Component/Snackbar"], function (require, exports, tslib_1, UiDialog, LanguageChooser, LanguageInput, DomUtil, DomTraverse, Listener_1, Language, Ajax, Replace_1, Snackbar_1) {
+define(["require", "exports", "tslib", "../Ui/Dialog", "../Language/Chooser", "../Language/Input", "../Dom/Util", "../Dom/Traverse", "../Dom/Change/Listener", "WoltLabSuite/Core/Language", "../Ajax", "./Replace", "../Component/Snackbar"], function (require, exports, tslib_1, UiDialog, LanguageChooser, LanguageInput, DomUtil, DomTraverse, Listener_1, Language_1, Ajax, Replace_1, Snackbar_1) {
     "use strict";
     UiDialog = tslib_1.__importStar(UiDialog);
     LanguageChooser = tslib_1.__importStar(LanguageChooser);
@@ -14,7 +14,6 @@ define(["require", "exports", "tslib", "../Ui/Dialog", "../Language/Chooser", ".
     DomUtil = tslib_1.__importStar(DomUtil);
     DomTraverse = tslib_1.__importStar(DomTraverse);
     Listener_1 = tslib_1.__importDefault(Listener_1);
-    Language = tslib_1.__importStar(Language);
     Ajax = tslib_1.__importStar(Ajax);
     Replace_1 = tslib_1.__importDefault(Replace_1);
     class MediaEditor {
@@ -187,19 +186,19 @@ define(["require", "exports", "tslib", "../Ui/Dialog", "../Language/Chooser", ".
                 if (altText && !LanguageInput.validate(altText.id, true)) {
                     hasError = true;
                     if (!altTextError) {
-                        DomUtil.innerError(altText, Language.get("wcf.global.form.error.multilingual"));
+                        DomUtil.innerError(altText, (0, Language_1.getPhrase)("wcf.global.form.error.multilingual"));
                     }
                 }
                 if (caption && !LanguageInput.validate(caption.id, true)) {
                     hasError = true;
                     if (!captionError) {
-                        DomUtil.innerError(caption, Language.get("wcf.global.form.error.multilingual"));
+                        DomUtil.innerError(caption, (0, Language_1.getPhrase)("wcf.global.form.error.multilingual"));
                     }
                 }
                 if (!LanguageInput.validate(title.id, true)) {
                     hasError = true;
                     if (!titleError) {
-                        DomUtil.innerError(title, Language.get("wcf.global.form.error.multilingual"));
+                        DomUtil.innerError(title, (0, Language_1.getPhrase)("wcf.global.form.error.multilingual"));
                     }
                 }
                 this._media.altText = altText ? this.mapToI18nValues(LanguageInput.getValues(altText.id)) : "";
@@ -316,7 +315,7 @@ define(["require", "exports", "tslib", "../Ui/Dialog", "../Language/Chooser", ".
                             options: {
                                 backdropCloseOnClick: false,
                                 onClose: () => this._close(),
-                                title: Language.get("wcf.media.edit"),
+                                title: (0, Language_1.getPhrase)("wcf.media.edit"),
                             },
                             source: {
                                 after: (content, responseData) => this._initEditor(content, responseData),

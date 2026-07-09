@@ -5,21 +5,17 @@
 	</ul>
 	<script data-relocate="true">
 		require([
-			'Language',
 			'WoltLabSuite/Core/Acp/Ui/CodeMirror/Media',
 			'WoltLabSuite/Core/Acp/Ui/CodeMirror/Page'
 		], function(
-			Language,
 			AcpUiCodeMirrorMedia,
 			AcpUiCodeMirrorPage
 		) {
-			Language.addObject({
-				'wcf.page.search': '{jslang}wcf.page.search{/jslang}',
-				'wcf.page.search.error.tooShort': '{jslang}wcf.page.search.error.tooShort{/jslang}',
-				'wcf.page.search.error.noResults': '{jslang}wcf.page.search.error.noResults{/jslang}',
-				'wcf.page.search.name': '{jslang}wcf.page.search.name{/jslang}',
-				'wcf.page.search.results': '{jslang}wcf.page.search.results{/jslang}',
-			});
+			{jsphrase name='wcf.page.search'}
+			{jsphrase name='wcf.page.search.error.tooShort'}
+			{jsphrase name='wcf.page.search.error.noResults'}
+			{jsphrase name='wcf.page.search.name'}
+			{jsphrase name='wcf.page.search.results'}
 			
 			new AcpUiCodeMirrorMedia('content{$languageID}');
 			new AcpUiCodeMirrorPage('content{$languageID}');

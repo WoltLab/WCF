@@ -9,7 +9,7 @@
 
 import PageMenuContainer from "./Container";
 import { PageMenuProvider } from "./Provider";
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import { getUserMenuProviders } from "../../User/Menu/Manager";
 import { UserMenuProvider } from "../../User/Menu/Data/Provider";
 import DomUtil from "../../../Dom/Util";
@@ -310,7 +310,7 @@ export class PageMenuUser implements PageMenuProvider {
     const tabList = document.createElement("div");
     tabList.classList.add("pageMenuUserTabList");
     tabList.setAttribute("role", "tablist");
-    tabList.setAttribute("aria-label", Language.get("wcf.menu.user"));
+    tabList.setAttribute("aria-label", getPhrase("wcf.menu.user"));
     tabContainer.append(tabList);
 
     this.buildControlPanelTab(tabList, tabContainer);

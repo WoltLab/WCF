@@ -9,7 +9,7 @@
 
 import * as Core from "../../Core";
 import { Media, MediaManagerOptions, MediaEditorCallbackObject, MediaUploadSuccessEventData } from "../Data";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as Permission from "../../Permission";
 import * as DomChangeListener from "../../Dom/Change/Listener";
 import * as EventHandler from "../../Event/Handler";
@@ -61,7 +61,7 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
   constructor(options: Partial<TOptions>) {
     this._options = Core.extend(
       {
-        dialogTitle: Language.get("wcf.media.manager"),
+        dialogTitle: getPhrase("wcf.media.manager"),
         imagesOnly: false,
         minSearchLength: 3,
       },
@@ -351,7 +351,7 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
       if (info === null) {
         info = document.createElement("p");
         info.className = "info";
-        info.textContent = Language.get("wcf.media.search.noResults");
+        info.textContent = getPhrase("wcf.media.search.noResults");
       }
 
       DomUtil.show(info);
@@ -522,9 +522,9 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
       buttons.appendChild(editButton);
 
       editButton.innerHTML = `
-        <a class="jsTooltip" title="${Language.get("wcf.global.button.edit")}">
+        <a class="jsTooltip" title="${getPhrase("wcf.global.button.edit")}">
           <fa-icon name="pencil"></fa-icon>
-          <span class="invisible">${Language.get("wcf.global.button.edit")}</span>
+          <span class="invisible">${getPhrase("wcf.global.button.edit")}</span>
         </a>`;
 
       const deleteButton = document.createElement("li");
@@ -534,16 +534,16 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
       // use temporary title to not unescape html in filename
       const uuid = Core.getUuid();
       deleteButton.dataset.confirmMessage = StringUtil.unescapeHTML(
-        Language.get("wcf.media.delete.confirmMessage", {
+        getPhrase("wcf.media.delete.confirmMessage", {
           title: uuid,
         }),
       ).replace(uuid, StringUtil.escapeHTML(media.filename));
       buttons.appendChild(deleteButton);
 
       deleteButton.innerHTML = `
-        <a class="jsTooltip" title="${Language.get("wcf.global.button.delete")}">
+        <a class="jsTooltip" title="${getPhrase("wcf.global.button.delete")}">
           <fa-icon name="xmark"></fa-icon>
-          <span class="invisible">${Language.get("wcf.global.button.delete")}</span>
+          <span class="invisible">${getPhrase("wcf.global.button.delete")}</span>
         </a>`;
     }
   }

@@ -6,12 +6,11 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUtil", "../../../Dom/Change/Listener", "../../../Language", "focus-trap", "perfect-scrollbar", "../../Screen"], function (require, exports, tslib_1, Util_1, StringUtil_1, DomChangeListener, Language, focus_trap_1, perfect_scrollbar_1, UiScreen) {
+define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUtil", "../../../Dom/Change/Listener", "WoltLabSuite/Core/Language", "focus-trap", "perfect-scrollbar", "../../Screen"], function (require, exports, tslib_1, Util_1, StringUtil_1, DomChangeListener, Language_1, focus_trap_1, perfect_scrollbar_1, UiScreen) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UserMenuView = void 0;
     DomChangeListener = tslib_1.__importStar(DomChangeListener);
-    Language = tslib_1.__importStar(Language);
     perfect_scrollbar_1 = tslib_1.__importDefault(perfect_scrollbar_1);
     UiScreen = tslib_1.__importStar(UiScreen);
     class UserMenuView {
@@ -29,7 +28,7 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
                 icon: '<fa-icon size="24" name="check" solid></fa-icon>',
                 link: "#",
                 name: "markAllAsRead",
-                title: Language.get("wcf.global.button.markAllAsRead"),
+                title: (0, Language_1.getPhrase)("wcf.global.button.markAllAsRead"),
             });
             this.focusTrap = (0, focus_trap_1.createFocusTrap)(this.element, {
                 allowOutsideClick: true,
@@ -138,7 +137,7 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
       </div>
       <div class="userMenuItemMeta"></div>
       <div class="userMenuItemUnread">
-        <button type="button" class="userMenuItemMarkAsRead jsTooltip" title="${Language.get("wcf.global.button.markAsRead")}">
+        <button type="button" class="userMenuItemMarkAsRead jsTooltip" title="${(0, Language_1.getPhrase)("wcf.global.button.markAsRead")}">
           <fa-icon size="24" name="check"></fa-icon>
         </button>
       </div>

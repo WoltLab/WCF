@@ -8,7 +8,7 @@
 
 import * as Core from "../../Core";
 import * as DomTraverse from "../../Dom/Traverse";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import UiDropdownSimple from "../Dropdown/Simple";
 
 export type CallbackChange = (elementId: string, values: ItemData[]) => void;
@@ -135,7 +135,7 @@ function handleLimit(elementId: string): void {
     }
   } else if (!data.element.disabled) {
     data.element.disabled = true;
-    data.element.placeholder = Language.get("wcf.global.form.input.maxItems");
+    data.element.placeholder = getPhrase("wcf.global.form.input.maxItems");
   }
 }
 

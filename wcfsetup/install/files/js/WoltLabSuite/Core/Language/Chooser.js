@@ -5,7 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../Core", "../Language", "../Dom/Util", "../Ui/Dropdown/Simple"], function (require, exports, tslib_1, Core, Language, Util_1, Simple_1) {
+define(["require", "exports", "tslib", "../Core", "WoltLabSuite/Core/Language", "../Dom/Util", "../Ui/Dropdown/Simple"], function (require, exports, tslib_1, Core, Language_1, Util_1, Simple_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
@@ -14,7 +14,6 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../Dom/Util", 
     exports.removeChooser = removeChooser;
     exports.setLanguageId = setLanguageId;
     Core = tslib_1.__importStar(Core);
-    Language = tslib_1.__importStar(Language);
     Util_1 = tslib_1.__importDefault(Util_1);
     Simple_1 = tslib_1.__importDefault(Simple_1);
     const _choosers = new Map();
@@ -101,7 +100,7 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../Dom/Util", 
             listItem.addEventListener("click", callbackClick);
             dropdownMenu.appendChild(listItem);
             const link = document.createElement("a");
-            link.textContent = Language.get("wcf.global.language.noSelection");
+            link.textContent = (0, Language_1.getPhrase)("wcf.global.language.noSelection");
             listItem.appendChild(link);
             if (languageId === 0) {
                 dropdownToggle.innerHTML = link.innerHTML;
@@ -118,7 +117,7 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../Dom/Util", 
             icon.setIcon("question");
             div.appendChild(icon);
             const span = document.createElement("span");
-            span.textContent = Language.get("wcf.global.language.noSelection");
+            span.textContent = (0, Language_1.getPhrase)("wcf.global.language.noSelection");
             span.append(icon);
             div.appendChild(span);
         }

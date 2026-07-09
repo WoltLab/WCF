@@ -6,12 +6,11 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Snackbar", "../../../Form/Builder/Dialog", "../../../Language"], function (require, exports, tslib_1, Snackbar_1, Dialog_1, Language) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Snackbar", "../../../Form/Builder/Dialog", "WoltLabSuite/Core/Language"], function (require, exports, tslib_1, Snackbar_1, Dialog_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UiUserIgnoreList = void 0;
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
-    Language = tslib_1.__importStar(Language);
     class UiUserIgnoreList {
         dialogs = new Map();
         constructor() {
@@ -25,7 +24,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Snackbar", "
             if (!this.dialogs.has(userId)) {
                 this.dialogs.set(userId, new Dialog_1.default("ignoreDialog", "wcf\\data\\user\\ignore\\UserIgnoreAction", "getDialog", {
                     dialog: {
-                        title: Language.get("wcf.user.button.ignore"),
+                        title: (0, Language_1.getPhrase)("wcf.user.button.ignore"),
                     },
                     actionParameters: {
                         userID: userId,

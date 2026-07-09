@@ -8,7 +8,7 @@
  * @woltlabExcludeBundle all
  */
 
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as StringUtil from "../../../StringUtil";
 import DomUtil from "../../../Dom/Util";
 import UiDialog from "../../Dialog";
@@ -47,7 +47,7 @@ class UiPageSearchHandler implements DialogCallbackObject {
     UiDialog.open(this);
     UiDialog.setTitle(this, title);
 
-    this.searchInputLabel!.textContent = Language.get(labelLanguageItem || "wcf.page.pageObjectID.search.terms");
+    this.searchInputLabel!.textContent = getPhrase(labelLanguageItem || "wcf.page.pageObjectID.search.terms");
 
     this._getSearchInputHandler().setPageId(pageId);
   }
@@ -59,7 +59,7 @@ class UiPageSearchHandler implements DialogCallbackObject {
     this.resetList();
 
     if (!Array.isArray(data.returnValues) || data.returnValues.length === 0) {
-      DomUtil.innerError(this.searchInput!, Language.get("wcf.page.pageObjectID.search.noResults"));
+      DomUtil.innerError(this.searchInput!, getPhrase("wcf.page.pageObjectID.search.noResults"));
       return;
     }
 
@@ -69,7 +69,7 @@ class UiPageSearchHandler implements DialogCallbackObject {
         const [iconName, forceSolid] = image;
 
         image = `
-          <button type="button" class="jsTooltip" title="${Language.get("wcf.global.select")}">
+          <button type="button" class="jsTooltip" title="${getPhrase("wcf.global.select")}">
             <fa-icon size="48" name="${iconName}"${forceSolid ? " solid" : ""}></fa-icon>
           </button>
         `;
@@ -161,7 +161,7 @@ class UiPageSearchHandler implements DialogCallbackObject {
       source: `<div class="section">
         <dl>
           <dt>
-            <label for="wcfUiPageSearchInput">${Language.get("wcf.page.pageObjectID.search.terms")}</label>
+            <label for="wcfUiPageSearchInput">${getPhrase("wcf.page.pageObjectID.search.terms")}</label>
           </dt>
           <dd>
             <input type="text" id="wcfUiPageSearchInput" class="long">
@@ -170,7 +170,7 @@ class UiPageSearchHandler implements DialogCallbackObject {
       </div>
       <section id="wcfUiPageSearchResultListContainer" class="section sectionContainerList">
         <header class="sectionHeader">
-          <h2 class="sectionTitle">${Language.get("wcf.page.pageObjectID.search.results")}</h2>
+          <h2 class="sectionTitle">${getPhrase("wcf.page.pageObjectID.search.results")}</h2>
         </header>
         <ul id="wcfUiPageSearchResultList" class="containerList wcfUiPageSearchResultList"></ul>
       </section>`,

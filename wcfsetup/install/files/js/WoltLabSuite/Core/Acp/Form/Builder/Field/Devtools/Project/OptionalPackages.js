@@ -7,14 +7,13 @@
  * @see module:WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/AbstractPackageList
  * @since 5.2
  */
-define(["require", "exports", "tslib", "./AbstractPackageList", "../../../../../../Language"], function (require, exports, tslib_1, AbstractPackageList_1, Language) {
+define(["require", "exports", "tslib", "./AbstractPackageList", "WoltLabSuite/Core/Language"], function (require, exports, tslib_1, AbstractPackageList_1, Language_1) {
     "use strict";
     AbstractPackageList_1 = tslib_1.__importDefault(AbstractPackageList_1);
-    Language = tslib_1.__importStar(Language);
     class OptionalPackages extends AbstractPackageList_1.default {
         populateListItem(listItem, packageData) {
             super.populateListItem(listItem, packageData);
-            listItem.innerHTML = ` ${Language.get("wcf.acp.devtools.project.optionalPackage.optionalPackage", {
+            listItem.innerHTML = ` ${(0, Language_1.getPhrase)("wcf.acp.devtools.project.optionalPackage.optionalPackage", {
                 packageIdentifier: packageData.packageIdentifier,
             })}`;
         }

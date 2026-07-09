@@ -13,7 +13,7 @@ import * as Core from "../../Core";
 import { FileCollection, FileLikeObject, UploadId, UploadOptions } from "../../Upload/Data";
 import { default as DeleteHandler } from "./Delete";
 import DomUtil from "../../Dom/Util";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import Upload from "../../Upload";
 import { FileUploadHandler } from "./Data";
 
@@ -127,7 +127,7 @@ class FileUpload extends Upload<FileUploadOptions> implements FileUploadHandler 
 
       const innerError = document.createElement("span");
       innerError.className = "innerError";
-      innerError.textContent = Language.get("wcf.upload.error.uploadFailed");
+      innerError.textContent = getPhrase("wcf.upload.error.uploadFailed");
       small.insertAdjacentElement("afterend", innerError);
     });
 
@@ -241,7 +241,7 @@ class FileUpload extends Upload<FileUploadOptions> implements FileUploadHandler 
         this._buttonContainer.insertAdjacentElement("afterend", innerError);
       }
 
-      innerError.textContent = Language.get("wcf.upload.error.reachedRemainingLimit", {
+      innerError.textContent = getPhrase("wcf.upload.error.reachedRemainingLimit", {
         maxFiles: this._options.maxFiles - this.countFiles(),
       });
 

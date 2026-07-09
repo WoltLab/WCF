@@ -27,20 +27,18 @@
 	{jsphrase name='wcf.page.pageObjectID.search.results'}
 	{jsphrase name='wcf.page.pageObjectID.search.terms'}
 
-	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Menu/Item/Handler'], (Language, { AcpUiMenuItemHandler }) => {
-		Language.addObject({
-			{foreach from=$pageNodeList item=pageNode}
+	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Menu/Item/Handler'], ({ registerPhrase }, { AcpUiMenuItemHandler }) => {
+		{foreach from=$pageNodeList item=pageNode}
 			{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.pageObjectID.{$pageNode->identifier}{/lang}{/capture}
 			{if $pageObjectIDLanguageItem}
-				'wcf.page.pageObjectID.{$pageNode->identifier}': '{unsafe:$pageObjectIDLanguageItem|encodeJS}',
+				registerPhrase('wcf.page.pageObjectID.{$pageNode->identifier}', '{unsafe:$pageObjectIDLanguageItem|encodeJS}');
 			{/if}
 			{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.pageObjectID.search.{$pageNode->identifier}{/lang}{/capture}
 			{if $pageObjectIDLanguageItem}
-				'wcf.page.pageObjectID.search.{$pageNode->identifier}': '{unsafe:$pageObjectIDLanguageItem|encodeJS}',
+				registerPhrase('wcf.page.pageObjectID.search.{$pageNode->identifier}', '{unsafe:$pageObjectIDLanguageItem|encodeJS}');
 			{/if}
-			{/foreach}
-		});
-
+		{/foreach}
+		
 		new AcpUiMenuItemHandler('{unsafe:$field->getPrefixedId()|encodeJS}', new Map([
 			{implode from=$pageHandlers key=handlerPageID item=requireObjectID glue=', '}[{$handlerPageID}, {if $requireObjectID}true{else}false{/if}]{/implode}
 		]), new Map([

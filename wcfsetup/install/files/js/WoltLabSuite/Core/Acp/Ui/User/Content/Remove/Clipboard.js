@@ -6,13 +6,12 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       5.4
  */
-define(["require", "exports", "tslib", "../../../Worker", "../../../../../Ajax", "../../../../../Language", "../../../../../Ui/Dialog", "../../../../../Event/Handler"], function (require, exports, tslib_1, Worker_1, Ajax, Language, Dialog_1, EventHandler) {
+define(["require", "exports", "tslib", "../../../Worker", "../../../../../Ajax", "WoltLabSuite/Core/Language", "../../../../../Ui/Dialog", "../../../../../Event/Handler"], function (require, exports, tslib_1, Worker_1, Ajax, Language_1, Dialog_1, EventHandler) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.AcpUserContentRemoveClipboard = void 0;
     Worker_1 = tslib_1.__importDefault(Worker_1);
     Ajax = tslib_1.__importStar(Ajax);
-    Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     EventHandler = tslib_1.__importStar(EventHandler);
     class AcpUserContentRemoveClipboard {
@@ -36,7 +35,7 @@ define(["require", "exports", "tslib", "../../../Worker", "../../../../../Ajax",
             new Worker_1.default({
                 // dialog
                 dialogId: "removeContentWorker",
-                dialogTitle: Language.get("wcf.acp.content.removeContent"),
+                dialogTitle: (0, Language_1.getPhrase)("wcf.acp.content.removeContent"),
                 // ajax
                 className: "wcf\\system\\worker\\UserContentRemoveWorker",
                 parameters: {
@@ -82,7 +81,7 @@ define(["require", "exports", "tslib", "../../../Worker", "../../../../../Ajax",
             return {
                 id: this.dialogId,
                 options: {
-                    title: Language.get("wcf.acp.content.removeContent"),
+                    title: (0, Language_1.getPhrase)("wcf.acp.content.removeContent"),
                 },
                 source: null,
             };

@@ -5,14 +5,13 @@
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Event/Handler", "../Confirmation", "../../Language", "../../StringUtil", "../../Dom/Change/Listener"], function (require, exports, tslib_1, Ajax, EventHandler, UiConfirmation, Language, StringUtil, Listener_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Event/Handler", "../Confirmation", "WoltLabSuite/Core/Language", "../../StringUtil", "../../Dom/Change/Listener"], function (require, exports, tslib_1, Ajax, EventHandler, UiConfirmation, Language_1, StringUtil, Listener_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     Ajax = tslib_1.__importStar(Ajax);
     EventHandler = tslib_1.__importStar(EventHandler);
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
-    Language = tslib_1.__importStar(Language);
     StringUtil = tslib_1.__importStar(StringUtil);
     Listener_1 = tslib_1.__importDefault(Listener_1);
     const containerSelector = ".jsObjectActionContainer[data-object-action-class-name]";
@@ -67,7 +66,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Event/Handler", "../
         if (actionElement.dataset.confirmMessage) {
             UiConfirmation.show({
                 confirm: sendRequest,
-                message: Language.get(actionElement.dataset.confirmMessage),
+                message: (0, Language_1.getPhrase)(actionElement.dataset.confirmMessage),
                 messageIsHtml: true,
             });
         }

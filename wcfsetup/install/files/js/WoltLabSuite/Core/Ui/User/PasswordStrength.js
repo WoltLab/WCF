@@ -7,9 +7,8 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Language", "../../Dom/Util"], function (require, exports, tslib_1, Language, Util_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "../../Dom/Util"], function (require, exports, tslib_1, Language_1, Util_1) {
     "use strict";
-    Language = tslib_1.__importStar(Language);
     Util_1 = tslib_1.__importDefault(Util_1);
     const STATIC_DICTIONARY = [];
     const siteName = document.querySelector('meta[property="og:site_name"]')?.getAttribute("content");
@@ -30,7 +29,7 @@ define(["require", "exports", "tslib", "../../Language", "../../Dom/Util"], func
             localizedPhrases[type] = {};
             Object.entries(phrases).forEach(([identifier, phrase]) => {
                 const languageItem = `wcf.user.password.zxcvbn.${type}.${identifier}`;
-                const localizedValue = Language.get(languageItem);
+                const localizedValue = (0, Language_1.getPhrase)(languageItem);
                 localizedPhrases[type][identifier] = localizedValue !== languageItem ? localizedValue : phrase;
             });
         });
@@ -65,7 +64,7 @@ define(["require", "exports", "tslib", "../../Language", "../../Dom/Util"], func
                 const rating = document.createElement("div");
                 rating.className = "passwordStrengthRating";
                 const ratingLabel = document.createElement("small");
-                ratingLabel.textContent = Language.get("wcf.user.password.strength");
+                ratingLabel.textContent = (0, Language_1.getPhrase)("wcf.user.password.strength");
                 rating.appendChild(ratingLabel);
                 this.score.className = "passwordStrengthScore";
                 this.score.dataset.score = "-1";

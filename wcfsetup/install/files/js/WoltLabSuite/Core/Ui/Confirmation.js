@@ -6,13 +6,12 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @deprecated 6.0 Use `confirmationFactory()` instead.
  */
-define(["require", "exports", "tslib", "../Core", "../Language", "./Dialog"], function (require, exports, tslib_1, Core, Language, Dialog_1) {
+define(["require", "exports", "tslib", "../Core", "WoltLabSuite/Core/Language", "./Dialog"], function (require, exports, tslib_1, Core, Language_1, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.show = show;
     exports.getContentElement = getContentElement;
     Core = tslib_1.__importStar(Core);
-    Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class UiConfirmation {
         _active = false;
@@ -39,12 +38,12 @@ define(["require", "exports", "tslib", "../Core", "../Language", "./Dialog"], fu
             this.confirmButton.type = "button";
             this.confirmButton.dataset.type = "submit";
             this.confirmButton.classList.add("button", "buttonPrimary");
-            this.confirmButton.textContent = Language.get("wcf.global.confirmation.confirm");
+            this.confirmButton.textContent = (0, Language_1.getPhrase)("wcf.global.confirmation.confirm");
             formSubmit.appendChild(this.confirmButton);
             const cancelButton = document.createElement("button");
             cancelButton.type = "button";
             cancelButton.classList.add("button");
-            cancelButton.textContent = Language.get("wcf.global.confirmation.cancel");
+            cancelButton.textContent = (0, Language_1.getPhrase)("wcf.global.confirmation.cancel");
             cancelButton.addEventListener("click", () => {
                 Dialog_1.default.close(this);
             });
@@ -114,7 +113,7 @@ define(["require", "exports", "tslib", "../Core", "../Language", "./Dialog"], fu
                 options: {
                     onClose: this._onClose.bind(this),
                     onShow: this._onShow.bind(this),
-                    title: Language.get("wcf.global.confirmation.title"),
+                    title: (0, Language_1.getPhrase)("wcf.global.confirmation.title"),
                 },
             };
         }

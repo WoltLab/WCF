@@ -5,12 +5,11 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"], function (require, exports, tslib_1, Language, Dialog_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "../../../Ui/Dialog"], function (require, exports, tslib_1, Language_1, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
     exports.openDialog = openDialog;
-    Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class ArticleAdd {
         link;
@@ -38,7 +37,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"
                             window.location.href = this.link.replace("{$isMultilingual}", input.value);
                         });
                     },
-                    title: Language.get("wcf.acp.article.add"),
+                    title: (0, Language_1.getPhrase)("wcf.acp.article.add"),
                 },
             };
         }

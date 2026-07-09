@@ -9,7 +9,7 @@
 
 import UiDialog from "../../../../../../Ui/Dialog";
 import { DialogCallbackSetup } from "../../../../../../Ui/Dialog/Data";
-import * as Language from "../../../../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as Ajax from "../../../../../../Ajax";
 import DatePicker from "../../../../../../Date/Picker";
 
@@ -101,15 +101,15 @@ export class BanDialog {
             }
           });
         },
-        title: Language.get("wcf.acp.user.ban.sure"),
+        title: getPhrase("wcf.acp.user.ban.sure"),
       },
       source: `
  <div class="section">
    <dl>
-     <dt><label for="userBanReason">${Language.get("wcf.acp.user.banReason")}</label></dt>
+     <dt><label for="userBanReason">${getPhrase("wcf.acp.user.banReason")}</label></dt>
      <dd>
        <textarea id="userBanReason" cols="40" rows="3" class=""></textarea>
-       <small>${Language.get("wcf.acp.user.banReason.description")}</small>
+       <small>${getPhrase("wcf.acp.user.banReason.description")}</small>
      </dd>
    </dl>
    <dl>
@@ -117,13 +117,13 @@ export class BanDialog {
      <dd>
        <label for="userBanNeverExpires">
          <input type="checkbox" name="userBanNeverExpires" id="userBanNeverExpires" checked="">
-         ${Language.get("wcf.acp.user.ban.neverExpires")}
+         ${getPhrase("wcf.acp.user.ban.neverExpires")}
        </label>
      </dd>
    </dl>
    <dl id="userBanExpiresSettings" style="display: none;">
      <dt>
-       <label for="userBanExpires">${Language.get("wcf.acp.user.ban.expires")}</label>
+       <label for="userBanExpires">${getPhrase("wcf.acp.user.ban.expires")}</label>
      </dt>
      <dd>
        <div class="inputAddon">
@@ -135,12 +135,12 @@ export class BanDialog {
                  data-ignore-timezone="true"
          />
        </div>
-       <small>${Language.get("wcf.acp.user.ban.expires.description")}</small>
+       <small>${getPhrase("wcf.acp.user.ban.expires.description")}</small>
      </dd>
    </dl>
  </div>
  <div class="formSubmit dialogFormSubmit">
-   <button type="button" class="button buttonPrimary formSubmitButton" accesskey="s">${Language.get(
+   <button type="button" class="button buttonPrimary formSubmitButton" accesskey="s">${getPhrase(
      "wcf.global.button.submit",
    )}</button>
  </div>`,

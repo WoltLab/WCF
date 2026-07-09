@@ -8,7 +8,7 @@
  */
 
 import QrCreator from "qr-creator";
-import * as Language from "../../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 
 export function render(container: HTMLElement): void {
   const secret: HTMLElement | null = container.querySelector(".totpSecret");
@@ -40,7 +40,7 @@ export function render(container: HTMLElement): void {
 
   const a = document.createElement("a");
   a.href = getUrl(window.location.hostname, label, secret.textContent);
-  a.ariaLabel = Language.get("wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.link");
+  a.ariaLabel = getPhrase("wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.link");
 
   canvas.parentElement!.insertAdjacentElement("afterbegin", a);
 

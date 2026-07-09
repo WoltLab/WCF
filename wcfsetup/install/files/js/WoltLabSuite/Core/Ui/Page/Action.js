@@ -5,7 +5,7 @@
  * @copyright  2001-2020 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Ui/Screen"], function (require, exports, tslib_1, Core, Language, UiScreen) {
+define(["require", "exports", "tslib", "../../Core", "WoltLabSuite/Core/Language", "../../Ui/Screen"], function (require, exports, tslib_1, Core, Language_1, UiScreen) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -16,7 +16,6 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Ui
     exports.hide = hide;
     exports.show = show;
     Core = tslib_1.__importStar(Core);
-    Language = tslib_1.__importStar(Language);
     UiScreen = tslib_1.__importStar(UiScreen);
     const _buttons = new Map();
     let _container;
@@ -32,7 +31,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Ui
         const button = document.createElement("button");
         button.type = "button";
         button.classList.add("button", "buttonPrimary", "pageActionButtonToTop", "initiallyHidden", "jsTooltip");
-        button.title = Language.get("wcf.global.scrollUp");
+        button.title = (0, Language_1.getPhrase)("wcf.global.scrollUp");
         button.setAttribute("aria-hidden", "true");
         button.innerHTML = '<fa-icon size="32" name="angle-up" solid></fa-icon>';
         button.addEventListener("click", scrollToTop);

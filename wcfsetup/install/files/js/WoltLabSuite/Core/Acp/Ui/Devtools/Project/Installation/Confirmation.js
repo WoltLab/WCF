@@ -5,12 +5,11 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../../../Ajax", "../../../../../Language", "../../../../../Ui/Confirmation"], function (require, exports, tslib_1, Ajax, Language, UiConfirmation) {
+define(["require", "exports", "tslib", "../../../../../Ajax", "WoltLabSuite/Core/Language", "../../../../../Ui/Confirmation"], function (require, exports, tslib_1, Ajax, Language_1, UiConfirmation) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
     Ajax = tslib_1.__importStar(Ajax);
-    Language = tslib_1.__importStar(Language);
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
     let _projectId;
     let _projectName;
@@ -37,7 +36,7 @@ define(["require", "exports", "tslib", "../../../../../Ajax", "../../../../../La
         event.preventDefault();
         UiConfirmation.show({
             confirm: () => installPackage(),
-            message: Language.get("wcf.acp.devtools.project.installPackage.confirmMessage", {
+            message: (0, Language_1.getPhrase)("wcf.acp.devtools.project.installPackage.confirmMessage", {
                 packageIdentifier: _projectName,
             }),
             messageIsHtml: true,

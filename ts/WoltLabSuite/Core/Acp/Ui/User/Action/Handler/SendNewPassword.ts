@@ -7,7 +7,7 @@
  * @since       5.5
  */
 
-import * as Language from "../../../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as UiConfirmation from "../../../../../Ui/Confirmation";
 import AcpUiWorker from "../../../Worker";
 
@@ -35,7 +35,7 @@ export class SendNewPassword {
       confirm: () => {
         new AcpUiWorker({
           dialogId: "sendingNewPasswords",
-          dialogTitle: Language.get("wcf.acp.user.sendNewPassword.workerTitle"),
+          dialogTitle: getPhrase("wcf.acp.user.sendNewPassword.workerTitle"),
           className: "wcf\\system\\worker\\SendNewPasswordWorker",
           parameters: {
             userIDs: this.userIDs,
@@ -43,7 +43,7 @@ export class SendNewPassword {
           callbackSuccess: this.successCallback,
         });
       },
-      message: Language.get("wcf.acp.user.action.sendNewPassword.confirmMessage"),
+      message: getPhrase("wcf.acp.user.action.sendNewPassword.confirmMessage"),
     });
   }
 }

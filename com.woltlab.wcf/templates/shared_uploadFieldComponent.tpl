@@ -39,12 +39,10 @@
 <input type="hidden" id="{$uploadFieldId}" name="{$uploadFieldId}" value="{$uploadField->getInternalId()}">
 
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Ui/File/Upload', 'Language'], function(Upload, Language) {
-		Language.addObject({
-			'wcf.upload.error.reachedRemainingLimit': '{jslang __literal=true}wcf.upload.error.reachedRemainingLimit{/jslang}',
-			'wcf.upload.error.noImage': '{jslang}wcf.upload.error.noImage{/jslang}',
-			'wcf.upload.error.uploadFailed': '{jslang}wcf.upload.error.uploadFailed{/jslang}',
-		});
+	require(['WoltLabSuite/Core/Ui/File/Upload', 'Language'], function(Upload, { registerPhrase }) {
+		{jsphrase name='wcf.upload.error.noImage'}
+		{jsphrase name='wcf.upload.error.uploadFailed'}
+		registerPhrase('wcf.upload.error.reachedRemainingLimit', '{jslang __literal=true}wcf.upload.error.reachedRemainingLimit{/jslang}');
 		
 		new Upload("{$uploadFieldId}UploadButtonDiv", "{$uploadFieldId}uploadFileList", {
 			internalId: '{$uploadField->getInternalId()}',

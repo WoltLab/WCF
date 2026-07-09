@@ -20,16 +20,14 @@
 </div>
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/OptionalPackages'], function(Language, OptionalPackagesFormField) {
-		Language.addObject({
-			'wcf.acp.devtools.project.packageIdentifier.error.duplicate': '{jslang}wcf.acp.devtools.project.packageIdentifier.error.duplicate{/jslang}',
-			'wcf.acp.devtools.project.packageIdentifier.error.format': '{jslang}wcf.acp.devtools.project.packageIdentifier.error.format{/jslang}',
-			'wcf.acp.devtools.project.packageIdentifier.error.maximumLength': '{jslang}wcf.acp.devtools.project.packageIdentifier.error.maximumLength{/jslang}',
-			'wcf.acp.devtools.project.packageIdentifier.error.minimumLength': '{jslang}wcf.acp.devtools.project.packageIdentifier.error.minimumLength{/jslang}',
-			'wcf.acp.devtools.project.packageVersion.error.format': '{jslang}wcf.acp.devtools.project.packageVersion.error.format{/jslang}',
-			'wcf.acp.devtools.project.packageVersion.error.maximumLength': '{jslang}wcf.acp.devtools.project.packageVersion.error.maximumLength{/jslang}',
-			'wcf.acp.devtools.project.optionalPackage.optionalPackage': '{jslang __literal=true}wcf.acp.devtools.project.optionalPackage.optionalPackage{/jslang}'
-		});
+	require(['Language', 'WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/OptionalPackages'], function({ registerPhrase }, OptionalPackagesFormField) {
+		{jsphrase name='wcf.acp.devtools.project.packageIdentifier.error.duplicate'}
+		{jsphrase name='wcf.acp.devtools.project.packageIdentifier.error.format'}
+		{jsphrase name='wcf.acp.devtools.project.packageIdentifier.error.maximumLength'}
+		{jsphrase name='wcf.acp.devtools.project.packageIdentifier.error.minimumLength'}
+		{jsphrase name='wcf.acp.devtools.project.packageVersion.error.format'}
+		{jsphrase name='wcf.acp.devtools.project.packageVersion.error.maximumLength'}
+		registerPhrase('wcf.acp.devtools.project.optionalPackage.optionalPackage', '{jslang __literal=true}wcf.acp.devtools.project.optionalPackage.optionalPackage{/jslang}');
 		
 		new OptionalPackagesFormField('{unsafe:$field->getPrefixedId()|encodeJS}', [
 			{implode from=$field->getValue() item=optionalPackage}

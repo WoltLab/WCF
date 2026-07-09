@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import UiObjectActionHandler from "./Handler";
 import { ObjectActionData } from "../Data";
 
@@ -22,12 +22,12 @@ function toggleObject(data: ObjectActionData): void {
     if (icon.name === "square") {
       icon.setIcon("square-check");
 
-      const newTitle = actionElement.dataset.disableTitle || Language.get("wcf.global.button.disable");
+      const newTitle = actionElement.dataset.disableTitle || getPhrase("wcf.global.button.disable");
       actionElement.title = newTitle;
     } else {
       icon.setIcon("square");
 
-      const newTitle = actionElement.dataset.enableTitle || Language.get("wcf.global.button.enable");
+      const newTitle = actionElement.dataset.enableTitle || getPhrase("wcf.global.button.enable");
       actionElement.title = newTitle;
     }
   }

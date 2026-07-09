@@ -5,14 +5,13 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Util", "../Language", "../Environment"], function (require, exports, tslib_1, Core, DomTraverse, Util_1, Language, Environment) {
+define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Util", "WoltLabSuite/Core/Language", "../Environment"], function (require, exports, tslib_1, Core, DomTraverse, Util_1, Language_1, Environment) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.set = set;
     Core = tslib_1.__importStar(Core);
     DomTraverse = tslib_1.__importStar(DomTraverse);
     Util_1 = tslib_1.__importDefault(Util_1);
-    Language = tslib_1.__importStar(Language);
     Environment = tslib_1.__importStar(Environment);
     /**
      * Calculates top/bottom position and verifies if the element would be still within the page's boundaries.
@@ -172,7 +171,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Uti
             }
         }
         // in rtl languages we simply swap the value for 'horizontal'
-        if (Language.get("wcf.global.pageDirection") === "rtl") {
+        if ((0, Language_1.getPhrase)("wcf.global.pageDirection") === "rtl") {
             options.horizontal = options.horizontal === "left" ? "right" : "left";
         }
         if (horizontal === null || !horizontal.result) {

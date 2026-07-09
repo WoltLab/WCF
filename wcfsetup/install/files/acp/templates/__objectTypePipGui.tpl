@@ -1,11 +1,9 @@
 <script data-relocate="true">
-	require(['Language'], function(Language) {
-		Language.addObject({
-			'wcf.form.field.className.description.interface': '{jslang __literal=true}wcf.form.field.className.description.interface{/jslang}',
-			{implode from=$definitionNames item=definitionName}
-				'wcf.acp.pip.objectType.definitionName.{$definitionName}.description': '{jslang __literal=true __optional=true}wcf.acp.pip.objectType.definitionName.{$definitionName}.description{/jslang}'
-			{/implode}
-		});
+	require(['Language'], function({ registerPhrase }) {
+		registerPhrase('wcf.form.field.className.description.interface', '{jslang __literal=true}wcf.form.field.className.description.interface{/jslang}');
+		{implode from=$definitionNames item=definitionName}
+			registerPhrase('wcf.acp.pip.objectType.definitionName.{$definitionName}.description', '{jslang __literal=true __optional=true}wcf.acp.pip.objectType.definitionName.{$definitionName}.description{/jslang}');
+		{/implode}
 		
 		var definitionInterfaces = {
 			{implode from=$definitionInterfaces key=definitionID item=interfaceName}

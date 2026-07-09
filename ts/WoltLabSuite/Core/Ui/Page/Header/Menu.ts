@@ -7,7 +7,7 @@
  */
 
 import * as Environment from "../../../Environment";
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as UiScreen from "../../Screen";
 
 let _enabled = false;
@@ -186,7 +186,7 @@ function setupA11y(): void {
     const showMenuButton = document.createElement("button");
     showMenuButton.type = "button";
     showMenuButton.className = "visuallyHidden";
-    showMenuButton.setAttribute("aria-label", Language.get("wcf.global.button.showMenu"));
+    showMenuButton.setAttribute("aria-label", getPhrase("wcf.global.button.showMenu"));
     element.insertBefore(showMenuButton, link.nextSibling);
 
     let showMenu = false;
@@ -195,7 +195,7 @@ function setupA11y(): void {
       link.setAttribute("aria-expanded", showMenu ? "true" : "false");
       showMenuButton.setAttribute(
         "aria-label",
-        Language.get(showMenu ? "wcf.global.button.hideMenu" : "wcf.global.button.showMenu"),
+        getPhrase(showMenu ? "wcf.global.button.hideMenu" : "wcf.global.button.showMenu"),
       );
     });
   });

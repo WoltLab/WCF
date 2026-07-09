@@ -26,16 +26,14 @@
 </div>
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/ExcludedPackages'], function(Language, ExcludedPackagesFormField) {
-		Language.addObject({
-			'wcf.acp.devtools.project.packageIdentifier.error.duplicate': '{jslang}wcf.acp.devtools.project.packageIdentifier.error.duplicate{/jslang}',
-			'wcf.acp.devtools.project.packageIdentifier.error.format': '{jslang}wcf.acp.devtools.project.packageIdentifier.error.format{/jslang}',
-			'wcf.acp.devtools.project.packageIdentifier.error.maximumLength': '{jslang}wcf.acp.devtools.project.packageIdentifier.error.maximumLength{/jslang}',
-			'wcf.acp.devtools.project.packageIdentifier.error.minimumLength': '{jslang}wcf.acp.devtools.project.packageIdentifier.error.minimumLength{/jslang}',
-			'wcf.acp.devtools.project.packageVersion.error.format': '{jslang}wcf.acp.devtools.project.packageVersion.error.format{/jslang}',
-			'wcf.acp.devtools.project.packageVersion.error.maximumLength': '{jslang}wcf.acp.devtools.project.packageVersion.error.maximumLength{/jslang}',
-			'wcf.acp.devtools.project.excludedPackage.excludedPackage': '{jslang __literal=true}wcf.acp.devtools.project.excludedPackage.excludedPackage{/jslang}'
-		});
+	require(['Language', 'WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/ExcludedPackages'], function({ registerPhrase }, ExcludedPackagesFormField) {
+		{jsphrase name='wcf.acp.devtools.project.packageIdentifier.error.duplicate'}
+		{jsphrase name='wcf.acp.devtools.project.packageIdentifier.error.format'}
+		{jsphrase name='wcf.acp.devtools.project.packageIdentifier.error.maximumLength'}
+		{jsphrase name='wcf.acp.devtools.project.packageIdentifier.error.minimumLength'}
+		{jsphrase name='wcf.acp.devtools.project.packageVersion.error.format'}
+		{jsphrase name='wcf.acp.devtools.project.packageVersion.error.maximumLength'}
+		registerPhrase('wcf.acp.devtools.project.excludedPackage.excludedPackage', '{jslang __literal=true}wcf.acp.devtools.project.excludedPackage.excludedPackage{/jslang}');
 		
 		new ExcludedPackagesFormField('{unsafe:$field->getPrefixedId()|encodeJS}', [
 			{implode from=$field->getValue() item=excludedPackage}

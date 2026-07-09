@@ -66,12 +66,10 @@
 </form>
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Controller/User/Notification/Settings'], function(Language, ControllerUserNotificationSettings) {
-		Language.addObject({
-			'wcf.user.notification.mailNotificationType.daily': '{jslang}wcf.user.notification.mailNotificationType.daily{/jslang}',
-			'wcf.user.notification.mailNotificationType.instant': '{jslang}wcf.user.notification.mailNotificationType.instant{/jslang}',
-			'wcf.user.notification.mailNotificationType.none': '{jslang}wcf.user.notification.mailNotificationType.none{/jslang}'
-		});
+	require(['WoltLabSuite/Core/Controller/User/Notification/Settings'], function(ControllerUserNotificationSettings) {
+		{jsphrase name='wcf.user.notification.mailNotificationType.daily'}
+		{jsphrase name='wcf.user.notification.mailNotificationType.instant'}
+		{jsphrase name='wcf.user.notification.mailNotificationType.none'}
 		
 		ControllerUserNotificationSettings.init();
 	});

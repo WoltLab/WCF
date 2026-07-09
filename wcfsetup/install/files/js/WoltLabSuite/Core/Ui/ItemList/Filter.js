@@ -6,11 +6,10 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Language", "../../StringUtil", "../Dropdown/Simple"], function (require, exports, tslib_1, Core, Util_1, Language, StringUtil, Simple_1) {
+define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "WoltLabSuite/Core/Language", "../../StringUtil", "../Dropdown/Simple"], function (require, exports, tslib_1, Core, Util_1, Language_1, StringUtil, Simple_1) {
     "use strict";
     Core = tslib_1.__importStar(Core);
     Util_1 = tslib_1.__importDefault(Util_1);
-    Language = tslib_1.__importStar(Language);
     StringUtil = tslib_1.__importStar(StringUtil);
     Simple_1 = tslib_1.__importDefault(Simple_1);
     class UiItemListFilter {
@@ -60,7 +59,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../La
             const input = document.createElement("input");
             input.className = "long";
             input.type = "text";
-            input.placeholder = Language.get("wcf.global.filter.placeholder");
+            input.placeholder = (0, Language_1.getPhrase)("wcf.global.filter.placeholder");
             input.addEventListener("keydown", (event) => {
                 if (event.key === "Enter") {
                     event.preventDefault();
@@ -70,7 +69,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../La
             this._clearButton = document.createElement("a");
             this._clearButton.href = "#";
             this._clearButton.className = "button inputSuffix disabled jsTooltip";
-            this._clearButton.title = Language.get("wcf.global.filter.button.clear");
+            this._clearButton.title = (0, Language_1.getPhrase)("wcf.global.filter.button.clear");
             this._clearButton.innerHTML = '<fa-icon name="xmark" solid></fa-icon>';
             this._clearButton.addEventListener("click", (event) => {
                 event.preventDefault();
@@ -82,7 +81,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../La
                 const visibilityButton = document.createElement("a");
                 visibilityButton.href = "#";
                 visibilityButton.className = "button inputSuffix jsTooltip";
-                visibilityButton.title = Language.get("wcf.global.filter.button.visibility");
+                visibilityButton.title = (0, Language_1.getPhrase)("wcf.global.filter.button.visibility");
                 visibilityButton.innerHTML = '<fa-icon name="eye"></fa-icon>';
                 visibilityButton.addEventListener("click", (ev) => this._toggleVisibility(ev));
                 inputAddon.appendChild(visibilityButton);
@@ -186,7 +185,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../La
                 this._container.insertAdjacentElement("beforeend", this._element);
             }
             this._value = value;
-            Util_1.default.innerError(this._container, hasVisibleItems ? false : Language.get("wcf.global.filter.error.noMatches"));
+            Util_1.default.innerError(this._container, hasVisibleItems ? false : (0, Language_1.getPhrase)("wcf.global.filter.error.noMatches"));
         }
         /**
          * Toggles the visibility mode for marked items.
@@ -202,7 +201,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../La
                     const link = document.createElement("a");
                     link.dataset.type = type;
                     link.href = "#";
-                    link.textContent = Language.get(`wcf.global.filter.visibility.${type}`);
+                    link.textContent = (0, Language_1.getPhrase)(`wcf.global.filter.visibility.${type}`);
                     link.addEventListener("click", (ev) => this._setVisibility(ev));
                     const li = document.createElement("li");
                     li.appendChild(link);

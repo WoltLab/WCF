@@ -2,7 +2,7 @@
  * @woltlabExcludeBundle all
  */
 
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as StringUtil from "../../StringUtil";
 import DomChangeListener from "../../Dom/Change/Listener";
 import DomUtil from "../../Dom/Util";
@@ -91,7 +91,7 @@ class UiAclSimple {
     const iconName = type === "group" ? "users" : "user";
     const html = `<fa-icon name="${iconName}"></fa-icon>
       <span class="aclLabel">${StringUtil.escapeHTML(label)}</span>
-      <button type="button" class="aclItemDeleteButton jsTooltip" title="${Language.get("wcf.global.button.delete")}">
+      <button type="button" class="aclItemDeleteButton jsTooltip" title="${getPhrase("wcf.global.button.delete")}">
         <fa-icon name="xmark"></fa-icon>
       </button>
       <input type="hidden" name="${this.inputName}[${type}][]" value="${objectId}">`;
@@ -136,8 +136,8 @@ class UiAclSimple {
     const aclListContainerDt = document.getElementById(this.prefix + "aclListContainerDt");
     const aclSearchInputLabel = document.getElementById(this.prefix + "aclSearchInputLabel");
 
-    aclListContainerDt!.textContent = Language.get(invert ? "wcf.acl.access.denied" : "wcf.acl.access.granted");
-    aclSearchInputLabel!.textContent = Language.get(invert ? "wcf.acl.access.deny" : "wcf.acl.access.grant");
+    aclListContainerDt!.textContent = getPhrase(invert ? "wcf.acl.access.denied" : "wcf.acl.access.granted");
+    aclSearchInputLabel!.textContent = getPhrase(invert ? "wcf.acl.access.deny" : "wcf.acl.access.grant");
   }
 }
 

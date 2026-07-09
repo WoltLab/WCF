@@ -7,7 +7,7 @@
  */
 
 import { DialogCallbackObject, DialogCallbackSetup } from "../Dialog/Data";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import UiDialog from "../Dialog";
 
 class UiPageJumpTo implements DialogCallbackObject {
@@ -59,7 +59,7 @@ class UiPageJumpTo implements DialogCallbackObject {
     this.input.max = pages;
     this.input.select();
 
-    this.description.textContent = Language.get("wcf.page.jumpTo.description").replace(/#pages#/, pages);
+    this.description.textContent = getPhrase("wcf.page.jumpTo.description").replace(/#pages#/, pages);
   }
 
   /**
@@ -89,14 +89,14 @@ class UiPageJumpTo implements DialogCallbackObject {
 
   _dialogSetup(): ReturnType<DialogCallbackSetup> {
     const source = `<dl>
-        <dt><label for="jsPaginationPageNo">${Language.get("wcf.page.jumpTo")}</label></dt>
+        <dt><label for="jsPaginationPageNo">${getPhrase("wcf.page.jumpTo")}</label></dt>
                 <dd>
           <input type="number" id="jsPaginationPageNo" value="1" min="1" max="1" class="tiny">
           <small></small>
         </dd>
       </dl>
       <div class="formSubmit">
-        <button type="button" class="button buttonPrimary">${Language.get("wcf.global.button.submit")}</button>
+        <button type="button" class="button buttonPrimary">${getPhrase("wcf.global.button.submit")}</button>
       </div>`;
 
     return {
@@ -111,7 +111,7 @@ class UiPageJumpTo implements DialogCallbackObject {
           this.submitButton = content.querySelector("button")!;
           this.submitButton.addEventListener("click", () => this.submit());
         },
-        title: Language.get("wcf.global.page.pagination"),
+        title: getPhrase("wcf.global.page.pagination"),
       },
       source: source,
     };

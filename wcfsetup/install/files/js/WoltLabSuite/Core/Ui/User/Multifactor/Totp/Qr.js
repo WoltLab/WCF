@@ -6,13 +6,12 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle  all
  */
-define(["require", "exports", "tslib", "qr-creator", "../../../../Language"], function (require, exports, tslib_1, qr_creator_1, Language) {
+define(["require", "exports", "tslib", "qr-creator", "WoltLabSuite/Core/Language"], function (require, exports, tslib_1, qr_creator_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.render = render;
     exports.renderAll = renderAll;
     qr_creator_1 = tslib_1.__importDefault(qr_creator_1);
-    Language = tslib_1.__importStar(Language);
     function render(container) {
         const secret = container.querySelector(".totpSecret");
         if (!secret) {
@@ -34,7 +33,7 @@ define(["require", "exports", "tslib", "qr-creator", "../../../../Language"], fu
         }, canvas);
         const a = document.createElement("a");
         a.href = getUrl(window.location.hostname, label, secret.textContent);
-        a.ariaLabel = Language.get("wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.link");
+        a.ariaLabel = (0, Language_1.getPhrase)("wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.link");
         canvas.parentElement.insertAdjacentElement("afterbegin", a);
         a.appendChild(canvas);
     }

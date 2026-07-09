@@ -9,7 +9,7 @@
 
 import { dialogFactory } from "../Component/Dialog";
 import * as Core from "../Core";
-import * as Language from "../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import { escapeHTML } from "../StringUtil";
 
 type ErrorResponsePrevious = {
@@ -34,11 +34,11 @@ async function genericError(error: ApiError): Promise<void> {
   const html = await getErrorHtml(error);
   if (html instanceof HTMLIFrameElement) {
     const dialog = dialogFactory().fromHtml(`<div class="dialog__iframeContainer">${html.outerHTML}</div>`).asAlert();
-    dialog.show(Language.get("wcf.global.error.title"));
+    dialog.show(getPhrase("wcf.global.error.title"));
     dialog.querySelector("dialog")!.classList.add("dialog--iframe");
   } else if (html !== "") {
     const dialog = dialogFactory().fromHtml(html).asAlert();
-    dialog.show(Language.get("wcf.global.error.title"));
+    dialog.show(getPhrase("wcf.global.error.title"));
   }
 }
 
@@ -49,7 +49,7 @@ async function getErrorHtml(error: ApiError): Promise<string | HTMLIFrameElement
   if (error instanceof ConnectionError) {
     // `fetch()` will yield a `TypeError` for network errors and CORS violations.
     if (error.originalError instanceof TypeError) {
-      message = Language.get("wcf.global.error.ajax.network", { message: error.message });
+      message = getPhrase("wcf.global.error.ajax.network", { message: error.message });
     } else {
       message = error.message;
     }

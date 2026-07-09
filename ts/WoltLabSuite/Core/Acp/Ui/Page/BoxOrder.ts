@@ -8,7 +8,7 @@
 
 import * as Ajax from "../../../Ajax";
 import DomChangeListener from "../../../Dom/Change/Listener";
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as UiConfirmation from "../../../Ui/Confirmation";
 import { AjaxCallbackSetup } from "../../../Ajax/Data";
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
@@ -42,7 +42,7 @@ class AcpUiPageBoxOrder {
 
         let icon = "";
         if (box.isDisabled) {
-          icon = ` <span class="jsTooltip" title="${Language.get("wcf.acp.box.isDisabled")}">
+          icon = ` <span class="jsTooltip" title="${getPhrase("wcf.acp.box.isDisabled")}">
             <fa-icon name="triangle-exclamation" solid></fa-icon>
           </span>`;
         }
@@ -114,7 +114,7 @@ class AcpUiPageBoxOrder {
           actionName: "resetPosition",
         });
       },
-      message: Language.get("wcf.acp.page.boxOrder.discard.confirmMessage"),
+      message: getPhrase("wcf.acp.page.boxOrder.discard.confirmMessage"),
     });
   }
 

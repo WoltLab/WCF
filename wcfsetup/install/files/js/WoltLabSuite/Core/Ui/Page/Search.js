@@ -1,13 +1,12 @@
 /**
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../Language", "../../StringUtil", "../Dialog"], function (require, exports, tslib_1, Ajax, Util_1, Language, StringUtil, Dialog_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "WoltLabSuite/Core/Language", "../../StringUtil", "../Dialog"], function (require, exports, tslib_1, Ajax, Util_1, Language_1, StringUtil, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.open = open;
     Ajax = tslib_1.__importStar(Ajax);
     Util_1 = tslib_1.__importDefault(Util_1);
-    Language = tslib_1.__importStar(Language);
     StringUtil = tslib_1.__importStar(StringUtil);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class UiPageSearch {
@@ -24,7 +23,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../La
             const inputContainer = this.searchInput.parentNode;
             const value = this.searchInput.value.trim();
             if (value.length < 3) {
-                Util_1.default.innerError(inputContainer, Language.get("wcf.page.search.error.tooShort"));
+                Util_1.default.innerError(inputContainer, (0, Language_1.getPhrase)("wcf.page.search.error.tooShort"));
                 return;
             }
             else {
@@ -64,7 +63,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../La
                 });
             }
             else {
-                Util_1.default.innerError(this.searchInput.parentElement, Language.get("wcf.page.search.error.noResults"));
+                Util_1.default.innerError(this.searchInput.parentElement, (0, Language_1.getPhrase)("wcf.page.search.error.noResults"));
             }
         }
         _ajaxSetup() {
@@ -93,11 +92,11 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../La
                     onShow: () => {
                         this.searchInput.focus();
                     },
-                    title: Language.get("wcf.page.search"),
+                    title: (0, Language_1.getPhrase)("wcf.page.search"),
                 },
                 source: `<div class="section">
         <dl>
-          <dt><label for="wcfUiPageSearchInput">${Language.get("wcf.page.search.name")}</label></dt>
+          <dt><label for="wcfUiPageSearchInput">${(0, Language_1.getPhrase)("wcf.page.search.name")}</label></dt>
           <dd>
             <div class="inputAddon">
               <input type="text" id="wcfUiPageSearchInput" class="long">
@@ -108,7 +107,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../La
       </div>
       <section id="wcfUiPageSearchResultContainer" class="section" style="display: none;">
         <header class="sectionHeader">
-          <h2 class="sectionTitle">${Language.get("wcf.page.search.results")}</h2>
+          <h2 class="sectionTitle">${(0, Language_1.getPhrase)("wcf.page.search.results")}</h2>
         </header>
         <ol id="wcfUiPageSearchResultList" class="containerList"></ol>
       </section>`,

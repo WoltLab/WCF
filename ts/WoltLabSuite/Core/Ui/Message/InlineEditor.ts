@@ -14,7 +14,7 @@ import * as Core from "../../Core";
 import DomChangeListener from "../../Dom/Change/Listener";
 import DomUtil from "../../Dom/Util";
 import * as EventHandler from "../../Event/Handler";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import { NotificationAction } from "../Dropdown/Data";
 import * as UiDropdownReusable from "../Dropdown/Reusable";
 import * as UiNotification from "../Notification";
@@ -229,7 +229,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
         listItem.className = "dropdownDivider";
       } else {
         const label = document.createElement("span");
-        label.textContent = Language.get(item.label!);
+        label.textContent = getPhrase(item.label!);
         listItem.appendChild(label);
 
         if (item.item === "editItem") {

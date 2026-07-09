@@ -1,9 +1,8 @@
 /**
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../../../../Language", "./Abstract", "../../../../../Form/Builder/Dialog", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Language, Abstract_1, Dialog_1, Snackbar_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "./Abstract", "../../../../../Form/Builder/Dialog", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Language_1, Abstract_1, Dialog_1, Snackbar_1) {
     "use strict";
-    Language = tslib_1.__importStar(Language);
     Abstract_1 = tslib_1.__importDefault(Abstract_1);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     /**
@@ -15,7 +14,7 @@ define(["require", "exports", "tslib", "../../../../../Language", "./Abstract", 
             super(userId, isActive);
             this.dialog = new Dialog_1.default("ignoreDialog", "wcf\\data\\user\\ignore\\UserIgnoreAction", "getDialog", {
                 dialog: {
-                    title: Language.get("wcf.user.button.ignore"),
+                    title: (0, Language_1.getPhrase)("wcf.user.button.ignore"),
                 },
                 actionParameters: {
                     userID: this._userId,
@@ -26,7 +25,7 @@ define(["require", "exports", "tslib", "../../../../../Language", "./Abstract", 
             });
         }
         _getLabel() {
-            return Language.get("wcf.user.button." + (this._isActive ? "un" : "") + "ignore");
+            return (0, Language_1.getPhrase)("wcf.user.button." + (this._isActive ? "un" : "") + "ignore");
         }
         _ajaxSuccess(data) {
             this._isActive = !!data.isIgnoredUser;

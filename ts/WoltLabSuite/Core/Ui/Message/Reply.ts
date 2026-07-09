@@ -11,7 +11,7 @@ import * as Ajax from "../../Ajax";
 import { AjaxCallbackSetup, ResponseData } from "../../Ajax/Data";
 import * as Core from "../../Core";
 import * as EventHandler from "../../Event/Handler";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import DomChangeListener from "../../Dom/Change/Listener";
 import DomUtil from "../../Dom/Util";
 import UiDialog from "../Dialog";
@@ -103,7 +103,7 @@ class UiMessageReply {
     const dialogContent = target.closest(".dialogContent")!;
     const usernameInput = dialogContent.querySelector("input[name=username]") as HTMLInputElement;
     if (usernameInput.value === "") {
-      DomUtil.innerError(usernameInput, Language.get("wcf.global.form.error.empty"));
+      DomUtil.innerError(usernameInput, getPhrase("wcf.global.form.error.empty"));
       usernameInput.closest("dl")!.classList.add("formError");
 
       return;
@@ -218,7 +218,7 @@ class UiMessageReply {
     // check if editor contains actual content
     const message = this._getCKEditor().getHtml();
     if (message === "") {
-      this.throwError(this._getCKEditor().element, Language.get("wcf.global.form.error.empty"));
+      this.throwError(this._getCKEditor().element, getPhrase("wcf.global.form.error.empty"));
       return false;
     }
 
@@ -241,7 +241,7 @@ class UiMessageReply {
    * @param       {string}        message         error message
    */
   throwError(element: HTMLElement, message: string): void {
-    DomUtil.innerError(element, message === "empty" ? Language.get("wcf.global.form.error.empty") : message);
+    DomUtil.innerError(element, message === "empty" ? getPhrase("wcf.global.form.error.empty") : message);
   }
 
   /**
@@ -348,7 +348,7 @@ class UiMessageReply {
         UiScroll.element(document.getElementById(elementId)!);
       }
 
-      showSuccessSnackbar(Language.get(this._options.successMessage));
+      showSuccessSnackbar(getPhrase(this._options.successMessage));
 
       if (this._options.quoteManager) {
         this._options.quoteManager.countQuotes();
@@ -377,7 +377,7 @@ class UiMessageReply {
             ControllerCaptcha.delete(guestDialogId);
           }
         },
-        title: Language.get("wcf.global.confirmation.title"),
+        title: getPhrase("wcf.global.confirmation.title"),
       });
 
       const dialog = UiDialog.getDialog(guestDialogId)!;

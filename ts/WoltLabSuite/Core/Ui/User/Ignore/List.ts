@@ -9,7 +9,7 @@
 
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
 import FormBuilderDialog from "../../../Form/Builder/Dialog";
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 
 interface AjaxResponse {
   isIgnoredUser: 0 | 1;
@@ -33,7 +33,7 @@ export class UiUserIgnoreList {
         userId,
         new FormBuilderDialog("ignoreDialog", "wcf\\data\\user\\ignore\\UserIgnoreAction", "getDialog", {
           dialog: {
-            title: Language.get("wcf.user.button.ignore"),
+            title: getPhrase("wcf.user.button.ignore"),
           },
           actionParameters: {
             userID: userId,

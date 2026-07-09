@@ -9,7 +9,7 @@
 import * as Core from "../Core";
 import * as DateUtil from "./Util";
 import * as EventHandler from "../Event/Handler";
-import * as Language from "../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as UiAlignment from "../Ui/Alignment";
 import UiCloseOverlay from "../Ui/CloseOverlay";
 import DomUtil from "../Dom/Util";
@@ -58,8 +58,8 @@ function createPicker() {
   _dateMonthPrevious = document.createElement("button");
   _dateMonthPrevious.type = "button";
   _dateMonthPrevious.className = "previous jsTooltip";
-  _dateMonthPrevious.title = Language.get("wcf.date.datePicker.previousMonth");
-  _dateMonthPrevious.setAttribute("aria-label", Language.get("wcf.date.datePicker.previousMonth"));
+  _dateMonthPrevious.title = getPhrase("wcf.date.datePicker.previousMonth");
+  _dateMonthPrevious.setAttribute("aria-label", getPhrase("wcf.date.datePicker.previousMonth"));
   _dateMonthPrevious.innerHTML = '<fa-icon name="arrow-left" solid></fa-icon>';
   _dateMonthPrevious.addEventListener("click", () => DatePicker.previousMonth());
   header.appendChild(_dateMonthPrevious);
@@ -69,8 +69,8 @@ function createPicker() {
 
   _dateMonth = document.createElement("select");
   _dateMonth.className = "month jsTooltip";
-  _dateMonth.title = Language.get("wcf.date.datePicker.month");
-  _dateMonth.setAttribute("aria-label", Language.get("wcf.date.datePicker.month"));
+  _dateMonth.title = getPhrase("wcf.date.datePicker.month");
+  _dateMonth.setAttribute("aria-label", getPhrase("wcf.date.datePicker.month"));
   _dateMonth.addEventListener("change", changeMonth);
   monthYearContainer.appendChild(_dateMonth);
 
@@ -84,16 +84,16 @@ function createPicker() {
 
   _dateYear = document.createElement("select");
   _dateYear.className = "year jsTooltip";
-  _dateYear.title = Language.get("wcf.date.datePicker.year");
-  _dateYear.setAttribute("aria-label", Language.get("wcf.date.datePicker.year"));
+  _dateYear.title = getPhrase("wcf.date.datePicker.year");
+  _dateYear.setAttribute("aria-label", getPhrase("wcf.date.datePicker.year"));
   _dateYear.addEventListener("change", changeYear);
   monthYearContainer.appendChild(_dateYear);
 
   _dateMonthNext = document.createElement("button");
   _dateMonthNext.type = "button";
   _dateMonthNext.className = "next jsTooltip";
-  _dateMonthNext.title = Language.get("wcf.date.datePicker.nextMonth");
-  _dateMonthNext.setAttribute("aria-label", Language.get("wcf.date.datePicker.nextMonth"));
+  _dateMonthNext.title = getPhrase("wcf.date.datePicker.nextMonth");
+  _dateMonthNext.setAttribute("aria-label", getPhrase("wcf.date.datePicker.nextMonth"));
   _dateMonthNext.innerHTML = '<fa-icon name="arrow-right" solid></fa-icon>';
   _dateMonthNext.addEventListener("click", () => DatePicker.nextMonth());
   header.appendChild(_dateMonthNext);
@@ -140,8 +140,8 @@ function createPicker() {
 
   _dateHour = document.createElement("select");
   _dateHour.className = "hour";
-  _dateHour.title = Language.get("wcf.date.datePicker.hour");
-  _dateHour.setAttribute("aria-label", Language.get("wcf.date.datePicker.hour"));
+  _dateHour.title = getPhrase("wcf.date.datePicker.hour");
+  _dateHour.setAttribute("aria-label", getPhrase("wcf.date.datePicker.hour"));
   _dateHour.addEventListener("change", formatValue);
 
   const date = new Date(2000, 0, 1);
@@ -175,8 +175,8 @@ function createPicker() {
 
   _dateMinute = document.createElement("select");
   _dateMinute.className = "minute";
-  _dateMinute.title = Language.get("wcf.date.datePicker.minute");
-  _dateMinute.setAttribute("aria-label", Language.get("wcf.date.datePicker.minute"));
+  _dateMinute.title = getPhrase("wcf.date.datePicker.minute");
+  _dateMinute.setAttribute("aria-label", getPhrase("wcf.date.datePicker.minute"));
   _dateMinute.addEventListener("change", formatValue);
 
   tmp = "";
@@ -658,7 +658,7 @@ const DatePicker = {
     }
     _didInit = true;
 
-    _firstDayOfWeek = parseInt(Language.get("wcf.date.firstDayOfTheWeek"), 10);
+    _firstDayOfWeek = parseInt(getPhrase("wcf.date.firstDayOfTheWeek"), 10);
 
     wheneverSeen(
       `input[type="date"]:not(.inputDatePicker), input[type="datetime"]:not(.inputDatePicker)`,
@@ -797,9 +797,9 @@ const DatePicker = {
         openButton.type = "button";
         openButton.className = "inputSuffix button jsTooltip";
         if (isTimeOnly) {
-          openButton.title = Language.getPhrase("wcf.date.datePicker.time");
+          openButton.title = getPhrase("wcf.date.datePicker.time");
         } else {
-          openButton.title = Language.getPhrase("wcf.date.datePicker");
+          openButton.title = getPhrase("wcf.date.datePicker");
         }
         openButton.setAttribute("aria-haspopup", "true");
         openButton.setAttribute("aria-expanded", "false");
@@ -827,9 +827,9 @@ const DatePicker = {
           clearButton.type = "button";
           clearButton.className = "inputSuffix button jsTooltip";
           if (isTimeOnly) {
-            clearButton.title = Language.getPhrase("wcf.date.datePicker.time.clear");
+            clearButton.title = getPhrase("wcf.date.datePicker.time.clear");
           } else {
-            clearButton.title = Language.getPhrase("wcf.date.datePicker.clear");
+            clearButton.title = getPhrase("wcf.date.datePicker.clear");
           }
           clearButton.addEventListener("click", () => {
             if (!element.disabled) {

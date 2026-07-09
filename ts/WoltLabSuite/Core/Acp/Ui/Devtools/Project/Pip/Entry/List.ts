@@ -7,7 +7,7 @@
  */
 
 import * as Ajax from "../../../../../../Ajax";
-import * as Language from "../../../../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import { ConfirmationCallbackParameters, show as showConfirmation } from "../../../../../../Ui/Confirmation";
 import { AjaxCallbackSetup } from "../../../../../../Ajax/Data";
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
@@ -93,18 +93,18 @@ class DevtoolsProjectPipEntryList {
   <dt></dt>
   <dd>
     <label>
-      <input type="checkbox" name="addDeleteInstruction" checked> ${Language.get(
+      <input type="checkbox" name="addDeleteInstruction" checked> ${getPhrase(
         "wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction",
       )}
     </label>
-    <small>${Language.get("wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description")}</small>
+    <small>${getPhrase("wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description")}</small>
   </dd>
 </dl>`;
     }
 
     showConfirmation({
       confirm: (parameters, content) => this.deletePipEntry(parameters, content),
-      message: Language.get("wcf.acp.devtools.project.pip.entry.delete.confirmMessage"),
+      message: getPhrase("wcf.acp.devtools.project.pip.entry.delete.confirmMessage"),
       template,
       parameters: {
         pipEntry: pipEntry,

@@ -60,10 +60,8 @@
 	</footer>
 	
 	<script data-relocate="true">
-		require(['Language', 'WoltLabSuite/Core/Ui/User/Ignore/List'], (Language, { UiUserIgnoreList }) => {
-			Language.addObject({
-				'wcf.user.button.ignore': '{jslang}wcf.user.button.ignore{/jslang}',
-			});
+		require(['WoltLabSuite/Core/Ui/User/Ignore/List'], ({ UiUserIgnoreList }) => {
+			{jsphrase name='wcf.user.button.ignore'}
 			
 			new UiUserIgnoreList();
 		});

@@ -7,12 +7,11 @@
  * @since  5.2
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Language"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Language) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "WoltLabSuite/Core/Language"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Language_1) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     Listener_1 = tslib_1.__importDefault(Listener_1);
-    Language = tslib_1.__importStar(Language);
     class UiFileDelete {
         buttonContainer;
         containers = new Map();
@@ -77,7 +76,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             const li = document.createElement("li");
             const span = document.createElement("span");
             span.className = "button jsDeleteButton small";
-            span.textContent = Language.get("wcf.global.button.delete");
+            span.textContent = (0, Language_1.getPhrase)("wcf.global.button.delete");
             li.appendChild(span);
             buttonGroup.appendChild(li);
             li.addEventListener("click", this.deleteElement.bind(this, elementData.uniqueFileId));
@@ -111,7 +110,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                     this.deleteButton = document.createElement("p");
                     this.deleteButton.className = "button deleteButton";
                     const span = document.createElement("span");
-                    span.textContent = Language.get("wcf.global.button.delete");
+                    span.textContent = (0, Language_1.getPhrase)("wcf.global.button.delete");
                     this.deleteButton.appendChild(span);
                     this.buttonContainer.appendChild(this.deleteButton);
                     this.deleteButton.addEventListener("click", this.deleteElement.bind(this, elementData.uniqueFileId));

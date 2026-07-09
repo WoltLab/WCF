@@ -7,11 +7,10 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../Dialog", "../../Language"], function (require, exports, tslib_1, Dialog_1, Language) {
+define(["require", "exports", "../Dialog", "WoltLabSuite/Core/Language"], function (require, exports, Dialog_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ConfirmationCustom = void 0;
-    Language = tslib_1.__importStar(Language);
     class ConfirmationCustom {
         #question;
         constructor(question) {
@@ -24,7 +23,7 @@ define(["require", "exports", "tslib", "../Dialog", "../../Language"], function 
             const dialog = (0, Dialog_1.dialogFactory)()
                 .fromHtml(`<p>${message}</p>`)
                 .asConfirmation({
-                primary: Language.get("wcf.dialog.button.primary.confirm"),
+                primary: (0, Language_1.getPhrase)("wcf.dialog.button.primary.confirm"),
             });
             dialog.show(this.#question);
             return new Promise((resolve) => {
@@ -36,7 +35,7 @@ define(["require", "exports", "tslib", "../Dialog", "../../Language"], function 
             const dialog = (0, Dialog_1.dialogFactory)()
                 .withoutContent()
                 .asConfirmation({
-                primary: Language.get("wcf.dialog.button.primary.confirm"),
+                primary: (0, Language_1.getPhrase)("wcf.dialog.button.primary.confirm"),
             });
             callback(dialog);
             dialog.show(this.#question);
@@ -59,7 +58,7 @@ define(["require", "exports", "tslib", "../Dialog", "../../Language"], function 
             const dialog = (0, Dialog_1.dialogFactory)()
                 .withoutContent()
                 .asConfirmation({
-                primary: Language.get("wcf.dialog.button.primary.confirm"),
+                primary: (0, Language_1.getPhrase)("wcf.dialog.button.primary.confirm"),
             });
             dialog.show(this.#question);
             return new Promise((resolve) => {

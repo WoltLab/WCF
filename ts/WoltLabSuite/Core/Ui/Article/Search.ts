@@ -6,7 +6,7 @@ import * as Ajax from "../../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup, DatabaseObjectActionResponse } from "../../Ajax/Data";
 import { DialogCallbackObject, DialogCallbackSetup } from "../Dialog/Data";
 import DomUtil from "../../Dom/Util";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as StringUtil from "../../StringUtil";
 import UiDialog from "../Dialog";
 
@@ -41,7 +41,7 @@ class UiArticleSearch implements AjaxCallbackObject, DialogCallbackObject {
 
     const value = this.searchInput!.value.trim();
     if (value.length < 3) {
-      DomUtil.innerError(inputContainer, Language.get("wcf.article.search.error.tooShort"));
+      DomUtil.innerError(inputContainer, getPhrase("wcf.article.search.error.tooShort"));
       return;
     } else {
       DomUtil.innerError(inputContainer, false);
@@ -89,7 +89,7 @@ class UiArticleSearch implements AjaxCallbackObject, DialogCallbackObject {
       });
     } else {
       const parent = this.searchInput!.parentElement!;
-      DomUtil.innerError(parent, Language.get("wcf.article.search.error.noResults"));
+      DomUtil.innerError(parent, getPhrase("wcf.article.search.error.noResults"));
     }
   }
 
@@ -123,12 +123,12 @@ class UiArticleSearch implements AjaxCallbackObject, DialogCallbackObject {
         onShow: () => {
           this.searchInput!.focus();
         },
-        title: Language.get("wcf.article.search"),
+        title: getPhrase("wcf.article.search"),
       },
       source: `<div class="section">
           <dl>
             <dt>
-              <label for="wcfUiArticleSearchInput">${Language.get("wcf.article.search.name")}</label>
+              <label for="wcfUiArticleSearchInput">${getPhrase("wcf.article.search.name")}</label>
             </dt>
             <dd>
               <div class="inputAddon">
@@ -140,7 +140,7 @@ class UiArticleSearch implements AjaxCallbackObject, DialogCallbackObject {
         </div>
         <section id="wcfUiArticleSearchResultContainer" class="section" style="display: none;">
           <header class="sectionHeader">
-            <h2 class="sectionTitle">${Language.get("wcf.article.search.results")}</h2>
+            <h2 class="sectionTitle">${getPhrase("wcf.article.search.results")}</h2>
           </header>
           <ol id="wcfUiArticleSearchResultList" class="containerList"></ol>
         </section>`,

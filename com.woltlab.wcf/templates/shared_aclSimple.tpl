@@ -79,13 +79,11 @@
 </section>
 
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Ui/Acl/Simple', 'Language'], function(UiAclSimple, Language) {
-		Language.addObject({
-			'wcf.acl.access.grant': '{jslang}wcf.acl.access.grant{/jslang}',
-			'wcf.acl.access.deny': '{jslang}wcf.acl.access.deny{/jslang}',
-			'wcf.acl.access.granted': '{jslang}wcf.acl.access.granted{/jslang}',
-			'wcf.acl.access.denied': '{jslang}wcf.acl.access.denied{/jslang}',
-		});
+	require(['WoltLabSuite/Core/Ui/Acl/Simple'], function(UiAclSimple) {
+		{jsphrase name='wcf.acl.access.grant'}
+		{jsphrase name='wcf.acl.access.deny'}
+		{jsphrase name='wcf.acl.access.granted'}
+		{jsphrase name='wcf.acl.access.denied'}
 
 		new UiAclSimple('{$__aclSimplePrefix}', '{unsafe:$__aclInputName|encodeJS}');
 	});

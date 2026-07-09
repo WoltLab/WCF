@@ -9,14 +9,14 @@
  */
 
 import AbstractPackageList from "./AbstractPackageList";
-import * as Language from "../../../../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import { PackageData } from "./Data";
 
 class OptionalPackages extends AbstractPackageList {
   protected populateListItem(listItem: HTMLLIElement, packageData: PackageData): void {
     super.populateListItem(listItem, packageData);
 
-    listItem.innerHTML = ` ${Language.get("wcf.acp.devtools.project.optionalPackage.optionalPackage", {
+    listItem.innerHTML = ` ${getPhrase("wcf.acp.devtools.project.optionalPackage.optionalPackage", {
       packageIdentifier: packageData.packageIdentifier,
     })}`;
   }

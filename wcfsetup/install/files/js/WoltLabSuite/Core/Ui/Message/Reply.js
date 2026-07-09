@@ -6,12 +6,11 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/Handler", "../../Language", "../../Dom/Change/Listener", "../../Dom/Util", "../Dialog", "../../User", "../../Controller/Captcha", "../Scroll", "../../Component/Ckeditor", "WoltLabSuite/Core/Component/Ckeditor/Event", "WoltLabSuite/Core/Component/Quote/Storage", "WoltLabSuite/Core/Component/Quote/Message", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Ajax, Core, EventHandler, Language, Listener_1, Util_1, Dialog_1, User_1, Captcha_1, UiScroll, Ckeditor_1, Event_1, Storage_1, Message_1, Snackbar_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/Handler", "WoltLabSuite/Core/Language", "../../Dom/Change/Listener", "../../Dom/Util", "../Dialog", "../../User", "../../Controller/Captcha", "../Scroll", "../../Component/Ckeditor", "WoltLabSuite/Core/Component/Ckeditor/Event", "WoltLabSuite/Core/Component/Quote/Storage", "WoltLabSuite/Core/Component/Quote/Message", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Ajax, Core, EventHandler, Language_1, Listener_1, Util_1, Dialog_1, User_1, Captcha_1, UiScroll, Ckeditor_1, Event_1, Storage_1, Message_1, Snackbar_1) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     EventHandler = tslib_1.__importStar(EventHandler);
-    Language = tslib_1.__importStar(Language);
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Util_1 = tslib_1.__importDefault(Util_1);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
@@ -67,7 +66,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
             const dialogContent = target.closest(".dialogContent");
             const usernameInput = dialogContent.querySelector("input[name=username]");
             if (usernameInput.value === "") {
-                Util_1.default.innerError(usernameInput, Language.get("wcf.global.form.error.empty"));
+                Util_1.default.innerError(usernameInput, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
                 usernameInput.closest("dl").classList.add("formError");
                 return;
             }
@@ -161,7 +160,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
             // check if editor contains actual content
             const message = this._getCKEditor().getHtml();
             if (message === "") {
-                this.throwError(this._getCKEditor().element, Language.get("wcf.global.form.error.empty"));
+                this.throwError(this._getCKEditor().element, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
                 return false;
             }
             const data = {
@@ -180,7 +179,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
          * @param       {string}        message         error message
          */
         throwError(element, message) {
-            Util_1.default.innerError(element, message === "empty" ? Language.get("wcf.global.form.error.empty") : message);
+            Util_1.default.innerError(element, message === "empty" ? (0, Language_1.getPhrase)("wcf.global.form.error.empty") : message);
         }
         /**
          * Displays a loading spinner while the request is processed by the server.
@@ -271,7 +270,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
                     window.history.replaceState(undefined, "", `#${elementId}`);
                     UiScroll.element(document.getElementById(elementId));
                 }
-                (0, Snackbar_1.showSuccessSnackbar)(Language.get(this._options.successMessage));
+                (0, Snackbar_1.showSuccessSnackbar)((0, Language_1.getPhrase)(this._options.successMessage));
                 if (this._options.quoteManager) {
                     this._options.quoteManager.countQuotes();
                 }
@@ -295,7 +294,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
                             Captcha_1.default.delete(guestDialogId);
                         }
                     },
-                    title: Language.get("wcf.global.confirmation.title"),
+                    title: (0, Language_1.getPhrase)("wcf.global.confirmation.title"),
                 });
                 const dialog = Dialog_1.default.getDialog(guestDialogId);
                 const submit = dialog.content.querySelector("input[type=submit]");

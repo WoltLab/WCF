@@ -6,12 +6,11 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       5.5
  */
-define(["require", "exports", "tslib", "../../../../../../Ui/Dialog", "../../../../../../Language", "../../../../../../Ajax", "../../../../../../Date/Picker"], function (require, exports, tslib_1, Dialog_1, Language, Ajax, Picker_1) {
+define(["require", "exports", "tslib", "../../../../../../Ui/Dialog", "WoltLabSuite/Core/Language", "../../../../../../Ajax", "../../../../../../Date/Picker"], function (require, exports, tslib_1, Dialog_1, Language_1, Ajax, Picker_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.BanDialog = void 0;
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
-    Language = tslib_1.__importStar(Language);
     Ajax = tslib_1.__importStar(Ajax);
     Picker_1 = tslib_1.__importDefault(Picker_1);
     class BanDialog {
@@ -87,15 +86,15 @@ define(["require", "exports", "tslib", "../../../../../../Ui/Dialog", "../../../
                             }
                         });
                     },
-                    title: Language.get("wcf.acp.user.ban.sure"),
+                    title: (0, Language_1.getPhrase)("wcf.acp.user.ban.sure"),
                 },
                 source: `
  <div class="section">
    <dl>
-     <dt><label for="userBanReason">${Language.get("wcf.acp.user.banReason")}</label></dt>
+     <dt><label for="userBanReason">${(0, Language_1.getPhrase)("wcf.acp.user.banReason")}</label></dt>
      <dd>
        <textarea id="userBanReason" cols="40" rows="3" class=""></textarea>
-       <small>${Language.get("wcf.acp.user.banReason.description")}</small>
+       <small>${(0, Language_1.getPhrase)("wcf.acp.user.banReason.description")}</small>
      </dd>
    </dl>
    <dl>
@@ -103,13 +102,13 @@ define(["require", "exports", "tslib", "../../../../../../Ui/Dialog", "../../../
      <dd>
        <label for="userBanNeverExpires">
          <input type="checkbox" name="userBanNeverExpires" id="userBanNeverExpires" checked="">
-         ${Language.get("wcf.acp.user.ban.neverExpires")}
+         ${(0, Language_1.getPhrase)("wcf.acp.user.ban.neverExpires")}
        </label>
      </dd>
    </dl>
    <dl id="userBanExpiresSettings" style="display: none;">
      <dt>
-       <label for="userBanExpires">${Language.get("wcf.acp.user.ban.expires")}</label>
+       <label for="userBanExpires">${(0, Language_1.getPhrase)("wcf.acp.user.ban.expires")}</label>
      </dt>
      <dd>
        <div class="inputAddon">
@@ -121,12 +120,12 @@ define(["require", "exports", "tslib", "../../../../../../Ui/Dialog", "../../../
                  data-ignore-timezone="true"
          />
        </div>
-       <small>${Language.get("wcf.acp.user.ban.expires.description")}</small>
+       <small>${(0, Language_1.getPhrase)("wcf.acp.user.ban.expires.description")}</small>
      </dd>
    </dl>
  </div>
  <div class="formSubmit dialogFormSubmit">
-   <button type="button" class="button buttonPrimary formSubmitButton" accesskey="s">${Language.get("wcf.global.button.submit")}</button>
+   <button type="button" class="button buttonPrimary formSubmitButton" accesskey="s">${(0, Language_1.getPhrase)("wcf.global.button.submit")}</button>
  </div>`,
             };
         }

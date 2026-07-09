@@ -12,7 +12,7 @@ import * as Ajax from "../../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup, DatabaseObjectActionResponse } from "../../Ajax/Data";
 import * as Core from "../../Core";
 import DomChangeListener from "../../Dom/Change/Listener";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import { FileUploadHandler } from "./Data";
 
 interface AjaxResponse extends DatabaseObjectActionResponse {
@@ -106,7 +106,7 @@ class UiFileDelete implements AjaxCallbackObject {
     const li = document.createElement("li");
     const span = document.createElement("span");
     span.className = "button jsDeleteButton small";
-    span.textContent = Language.get("wcf.global.button.delete");
+    span.textContent = getPhrase("wcf.global.button.delete");
     li.appendChild(span);
     buttonGroup.appendChild(li);
 
@@ -148,7 +148,7 @@ class UiFileDelete implements AjaxCallbackObject {
         this.deleteButton.className = "button deleteButton";
 
         const span = document.createElement("span");
-        span.textContent = Language.get("wcf.global.button.delete");
+        span.textContent = getPhrase("wcf.global.button.delete");
         this.deleteButton.appendChild(span);
 
         this.buttonContainer.appendChild(this.deleteButton);

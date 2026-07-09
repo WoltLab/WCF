@@ -87,12 +87,10 @@
 	</footer>
 	
 	<script data-relocate="true">
-		require(['Ajax', 'Language', 'WoltLabSuite/Core/Acp/Ui/Devtools/Missing/Language/Item/List'], function(Ajax, Language, UiDevtoolsMissingLanguageItemList) {
-			Language.addObject({
-				'wcf.acp.devtools.missingLanguageItem.stackTrace': '{jslang}wcf.acp.devtools.missingLanguageItem.stackTrace{/jslang}',
-				'wcf.acp.devtools.missingLanguageItem.clearLog.confirmMessage': '{jslang}wcf.acp.devtools.missingLanguageItem.clearLog.confirmMessage{/jslang}',
-				'wcf.acp.devtools.missingLanguageItem.clearExistingLog.confirmMessage': '{jslang}wcf.acp.devtools.missingLanguageItem.clearExistingLog.confirmMessage{/jslang}',
-			});
+		require(['Ajax', 'WoltLabSuite/Core/Acp/Ui/Devtools/Missing/Language/Item/List'], function(Ajax, UiDevtoolsMissingLanguageItemList) {
+			{jsphrase name='wcf.acp.devtools.missingLanguageItem.stackTrace'}
+			{jsphrase name='wcf.acp.devtools.missingLanguageItem.clearLog.confirmMessage'}
+			{jsphrase name='wcf.acp.devtools.missingLanguageItem.clearExistingLog.confirmMessage'}
 			
 			new UiDevtoolsMissingLanguageItemList.default();
 		});

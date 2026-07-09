@@ -5,12 +5,11 @@
  * @copyright	2001-2021 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Language"], function (require, exports, tslib_1, Listener_1, Language) {
+define(["require", "exports", "tslib", "../Dom/Change/Listener", "WoltLabSuite/Core/Language"], function (require, exports, tslib_1, Listener_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     Listener_1 = tslib_1.__importDefault(Listener_1);
-    Language = tslib_1.__importStar(Language);
     const _knownElements = new WeakSet();
     function setup() {
         initElements();
@@ -32,7 +31,7 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Language"],
         inputAddon.appendChild(input);
         const button = document.createElement("button");
         button.type = "button";
-        button.title = Language.get("wcf.global.form.password.button.show");
+        button.title = (0, Language_1.getPhrase)("wcf.global.form.password.button.show");
         button.classList.add("button", "inputSuffix", "jsTooltip");
         inputAddon.appendChild(button);
         const icon = document.createElement("fa-icon");
@@ -56,12 +55,12 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Language"],
     function toggle(input, button, icon) {
         if (input.type === "password") {
             icon.setIcon("eye-slash");
-            button.dataset.tooltip = Language.get("wcf.global.form.password.button.hide");
+            button.dataset.tooltip = (0, Language_1.getPhrase)("wcf.global.form.password.button.hide");
             input.type = "text";
         }
         else {
             icon.setIcon("eye");
-            button.dataset.tooltip = Language.get("wcf.global.form.password.button.show");
+            button.dataset.tooltip = (0, Language_1.getPhrase)("wcf.global.form.password.button.show");
             input.type = "password";
         }
     }

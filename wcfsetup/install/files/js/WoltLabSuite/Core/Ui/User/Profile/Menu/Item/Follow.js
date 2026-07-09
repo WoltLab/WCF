@@ -1,9 +1,8 @@
 /**
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../../../../Language", "./Abstract", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Language, Abstract_1, Snackbar_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "./Abstract", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Language_1, Abstract_1, Snackbar_1) {
     "use strict";
-    Language = tslib_1.__importStar(Language);
     Abstract_1 = tslib_1.__importDefault(Abstract_1);
     /**
      * @deprecated 6.2 Use `WoltLabSuite/Core/Component/User/Follow` instead.
@@ -13,7 +12,7 @@ define(["require", "exports", "tslib", "../../../../../Language", "./Abstract", 
             super(userId, isActive);
         }
         _getLabel() {
-            return Language.get("wcf.user.button." + (this._isActive ? "un" : "") + "follow");
+            return (0, Language_1.getPhrase)("wcf.user.button." + (this._isActive ? "un" : "") + "follow");
         }
         _getAjaxActionName() {
             return this._isActive ? "unfollow" : "follow";

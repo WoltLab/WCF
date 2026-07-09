@@ -26,10 +26,8 @@
 	{/if}
 </template>
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Box/Add'], (Language, { AcpUiBoxAdd }) => {
-		Language.addObject({
-			'wcf.acp.box.add': '{jslang}wcf.acp.box.add{/jslang}'
-		});
+	require(['WoltLabSuite/Core/Acp/Ui/Box/Add'], ({ AcpUiBoxAdd }) => {
+		{jsphrase name='wcf.acp.box.add'}
 		
 		const boxAddDialog = new AcpUiBoxAdd(
 			'{link controller='BoxAdd' encode=false}{literal}boxType={$boxType}&isMultilingual={$isMultilingual}{/literal}{/link}',

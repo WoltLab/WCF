@@ -13,7 +13,7 @@
 import { tabbable } from "tabbable";
 import DomUtil from "../Dom/Util";
 import { adoptPageOverlayContainer, releasePageOverlayContainer } from "../Helper/PageOverlay";
-import * as Language from "../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import { scrollDisable, scrollEnable } from "../Ui/Screen";
 
 type ValidateCallback = Promise<boolean>;
@@ -265,7 +265,7 @@ export class WoltlabCoreDialogElement extends HTMLElement {
       closeButton.type = "button";
       closeButton.innerHTML = '<fa-icon size="24" name="xmark"></fa-icon>';
       closeButton.classList.add("dialog__closeButton", "jsTooltip");
-      closeButton.title = Language.get("wcf.dialog.button.close");
+      closeButton.title = getPhrase("wcf.dialog.button.close");
       closeButton.addEventListener("click", () => {
         if (this.#shouldClose()) {
           const evt = new CustomEvent("cancel", { cancelable: false });

@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../Ajax", "../Core", "../Dom/Change/Listener", "../Dom/Util", "../Event/Handler", "../Language", "../Ui/Confirmation", "../Ui/Dropdown/Simple", "../Ui/Page/Action", "../Ui/Screen"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, EventHandler, Language, UiConfirmation, Simple_1, UiPageAction, UiScreen) {
+define(["require", "exports", "tslib", "../Ajax", "../Core", "../Dom/Change/Listener", "../Dom/Util", "../Event/Handler", "WoltLabSuite/Core/Language", "../Ui/Confirmation", "../Ui/Dropdown/Simple", "../Ui/Page/Action", "../Ui/Screen"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, EventHandler, Language_1, UiConfirmation, Simple_1, UiPageAction, UiScreen) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -19,7 +19,6 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Dom/Change/List
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Util_1 = tslib_1.__importDefault(Util_1);
     EventHandler = tslib_1.__importStar(EventHandler);
-    Language = tslib_1.__importStar(Language);
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
     Simple_1 = tslib_1.__importDefault(Simple_1);
     UiPageAction = tslib_1.__importStar(UiPageAction);
@@ -404,7 +403,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Dom/Change/List
                 const unmarkAll = document.createElement("li");
                 unmarkAll.dataset.type = typeName;
                 const label = document.createElement("span");
-                label.textContent = Language.get("wcf.clipboard.item.unmarkAll");
+                label.textContent = (0, Language_1.getPhrase)("wcf.clipboard.item.unmarkAll");
                 unmarkAll.appendChild(label);
                 unmarkAll.addEventListener("click", (ev) => this.unmarkAll(ev));
                 dropdown.appendChild(unmarkAll);

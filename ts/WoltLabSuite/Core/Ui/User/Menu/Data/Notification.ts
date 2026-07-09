@@ -11,7 +11,7 @@ import { dboAction } from "../../../../Ajax";
 import UserMenuView from "../View";
 import { EventUpdateCounter, UserMenuButton, UserMenuData, UserMenuFooter, UserMenuProvider } from "./Provider";
 import { registerProvider } from "../Manager";
-import * as Language from "../../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import { enableNotifications } from "../../../../Notification/Handler";
 import { registerServiceWorker, updateNotificationLastReadTime } from "../../../../Notification/ServiceWorker";
 
@@ -250,7 +250,7 @@ class UserMenuDataNotification implements DesktopNotifications, UserMenuProvider
 
     const element = document.createElement("div");
     element.classList.add("userMenuNotifications");
-    element.textContent = Language.get("wcf.user.notification.enableDesktopNotifications");
+    element.textContent = getPhrase("wcf.user.notification.enableDesktopNotifications");
 
     const buttonContainer = document.createElement("div");
     buttonContainer.classList.add("userMenuNotificationsButtons");
@@ -259,7 +259,7 @@ class UserMenuDataNotification implements DesktopNotifications, UserMenuProvider
     const button = document.createElement("button");
     button.type = "button";
     button.classList.add("button", "small", "userMenuNotificationsButton");
-    button.textContent = Language.get("wcf.user.notification.enableDesktopNotifications.button");
+    button.textContent = getPhrase("wcf.user.notification.enableDesktopNotifications.button");
     button.addEventListener("click", async (event) => {
       event.preventDefault();
 

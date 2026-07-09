@@ -137,12 +137,10 @@
 {/if}
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Devtools/Project/Pip/Entry/List'], function(Language, DevtoolsProjectPipEntryList) {
-		Language.addObject({
-			'wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction': '{jslang}wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction{/jslang}',
-			'wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description': '{jslang}wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description{/jslang}',
-			'wcf.acp.devtools.project.pip.entry.delete.confirmMessage': '{jslang}wcf.acp.devtools.project.pip.entry.delete.confirmMessage{/jslang}'
-		});
+	require(['WoltLabSuite/Core/Acp/Ui/Devtools/Project/Pip/Entry/List'], function(DevtoolsProjectPipEntryList) {
+		{jsphrase name='wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction'}
+		{jsphrase name='wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description'}
+		{jsphrase name='wcf.acp.devtools.project.pip.entry.delete.confirmMessage'}
 
 		new DevtoolsProjectPipEntryList('devtoolsProjectPipEntryList', {$project->projectID}, '{unsafe:$pip|encodeJS}', '{if $entryType !== null}{unsafe:$entryType|encodeJS}{/if}', {if $pipObject->getPip()->supportsDeleteInstruction()}true{else}false{/if});
 	});

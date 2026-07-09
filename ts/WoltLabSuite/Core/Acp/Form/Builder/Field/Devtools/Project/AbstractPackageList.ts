@@ -7,7 +7,7 @@
  * @since 5.2
  */
 
-import * as Language from "../../../../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as DomTraverse from "../../../../../../Dom/Traverse";
 import DomChangeListener from "../../../../../../Dom/Change/Listener";
 import DomUtil from "../../../../../../Dom/Util";
@@ -91,7 +91,7 @@ abstract class AbstractPackageList<TPackageData extends PackageData = PackageDat
     const deleteButton = document.createElement("button");
     deleteButton.type = "button";
     deleteButton.innerHTML = '<fa-icon name="xmark" solid></fa-icon>';
-    deleteButton.title = Language.get("wcf.global.button.delete");
+    deleteButton.title = getPhrase("wcf.global.button.delete");
     deleteButton.addEventListener("click", (ev) => this.removePackage(ev));
     listItem.insertAdjacentElement("afterbegin", deleteButton);
 
@@ -178,7 +178,7 @@ abstract class AbstractPackageList<TPackageData extends PackageData = PackageDat
     const packageIdentifier = this.packageIdentifier.value;
 
     if (packageIdentifier === "") {
-      DomUtil.innerError(this.packageIdentifier, Language.get("wcf.global.form.error.empty"));
+      DomUtil.innerError(this.packageIdentifier, getPhrase("wcf.global.form.error.empty"));
 
       return false;
     }
@@ -186,14 +186,14 @@ abstract class AbstractPackageList<TPackageData extends PackageData = PackageDat
     if (packageIdentifier.length < 3) {
       DomUtil.innerError(
         this.packageIdentifier,
-        Language.get("wcf.acp.devtools.project.packageIdentifier.error.minimumLength"),
+        getPhrase("wcf.acp.devtools.project.packageIdentifier.error.minimumLength"),
       );
 
       return false;
     } else if (packageIdentifier.length > 191) {
       DomUtil.innerError(
         this.packageIdentifier,
-        Language.get("wcf.acp.devtools.project.packageIdentifier.error.maximumLength"),
+        getPhrase("wcf.acp.devtools.project.packageIdentifier.error.maximumLength"),
       );
 
       return false;
@@ -202,7 +202,7 @@ abstract class AbstractPackageList<TPackageData extends PackageData = PackageDat
     if (!AbstractPackageList.packageIdentifierRegExp.test(packageIdentifier)) {
       DomUtil.innerError(
         this.packageIdentifier,
-        Language.get("wcf.acp.devtools.project.packageIdentifier.error.format"),
+        getPhrase("wcf.acp.devtools.project.packageIdentifier.error.format"),
       );
 
       return false;
@@ -216,7 +216,7 @@ abstract class AbstractPackageList<TPackageData extends PackageData = PackageDat
     if (duplicate) {
       DomUtil.innerError(
         this.packageIdentifier,
-        Language.get("wcf.acp.devtools.project.packageIdentifier.error.duplicate"),
+        getPhrase("wcf.acp.devtools.project.packageIdentifier.error.duplicate"),
       );
 
       return false;
@@ -238,13 +238,13 @@ abstract class AbstractPackageList<TPackageData extends PackageData = PackageDat
     // the version is no a required attribute
     if (version !== "") {
       if (version.length > 255) {
-        DomUtil.innerError(versionElement, Language.get("wcf.acp.devtools.project.packageVersion.error.maximumLength"));
+        DomUtil.innerError(versionElement, getPhrase("wcf.acp.devtools.project.packageVersion.error.maximumLength"));
 
         return false;
       }
 
       if (!AbstractPackageList.versionRegExp.test(version)) {
-        DomUtil.innerError(versionElement, Language.get("wcf.acp.devtools.project.packageVersion.error.format"));
+        DomUtil.innerError(versionElement, getPhrase("wcf.acp.devtools.project.packageVersion.error.format"));
 
         return false;
       }

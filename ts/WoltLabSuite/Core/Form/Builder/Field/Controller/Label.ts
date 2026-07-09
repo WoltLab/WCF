@@ -9,7 +9,7 @@
 
 import * as Core from "../../../../Core";
 import * as DomUtil from "../../../../Dom/Util";
-import * as Language from "../../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import UiDropdownSimple from "../../../../Ui/Dropdown/Simple";
 import { LabelFormFieldOptions } from "../../Data";
 
@@ -67,7 +67,7 @@ class Label {
 
       const label = document.createElement("span");
       label.classList.add("badge", "label");
-      label.innerHTML = Language.get("wcf.label.withoutSelection");
+      label.innerHTML = getPhrase("wcf.label.withoutSelection");
       span.appendChild(label);
     }
 
@@ -82,7 +82,7 @@ class Label {
 
       const label = document.createElement("span");
       label.classList.add("badge", "label");
-      label.innerHTML = Language.get("wcf.label.none");
+      label.innerHTML = getPhrase("wcf.label.none");
       span.appendChild(label);
     }
 

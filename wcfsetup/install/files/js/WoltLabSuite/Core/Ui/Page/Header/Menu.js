@@ -5,12 +5,11 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../Environment", "../../../Language", "../../Screen"], function (require, exports, tslib_1, Environment, Language, UiScreen) {
+define(["require", "exports", "tslib", "../../../Environment", "WoltLabSuite/Core/Language", "../../Screen"], function (require, exports, tslib_1, Environment, Language_1, UiScreen) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
     Environment = tslib_1.__importStar(Environment);
-    Language = tslib_1.__importStar(Language);
     UiScreen = tslib_1.__importStar(UiScreen);
     let _enabled = false;
     let _buttonShowNext;
@@ -160,13 +159,13 @@ define(["require", "exports", "tslib", "../../../Environment", "../../../Languag
             const showMenuButton = document.createElement("button");
             showMenuButton.type = "button";
             showMenuButton.className = "visuallyHidden";
-            showMenuButton.setAttribute("aria-label", Language.get("wcf.global.button.showMenu"));
+            showMenuButton.setAttribute("aria-label", (0, Language_1.getPhrase)("wcf.global.button.showMenu"));
             element.insertBefore(showMenuButton, link.nextSibling);
             let showMenu = false;
             showMenuButton.addEventListener("click", () => {
                 showMenu = !showMenu;
                 link.setAttribute("aria-expanded", showMenu ? "true" : "false");
-                showMenuButton.setAttribute("aria-label", Language.get(showMenu ? "wcf.global.button.hideMenu" : "wcf.global.button.showMenu"));
+                showMenuButton.setAttribute("aria-label", (0, Language_1.getPhrase)(showMenu ? "wcf.global.button.hideMenu" : "wcf.global.button.showMenu"));
             });
         });
     }

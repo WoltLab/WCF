@@ -3,11 +3,9 @@
 <script data-relocate="true">
 	{include file='mediaJavaScript'}
 	
-	require(['Language', 'WoltLabSuite/Core/Controller/Media/List'], function (Language, ControllerMediaList) {
-		Language.addObject({
-			'wcf.media.delete.confirmMessage': '{jslang __literal=true}wcf.media.delete.confirmMessage{/jslang}',
-			'wcf.media.setCategory': '{jslang}wcf.media.setCategory{/jslang}'
-		});
+	require(['Language', 'WoltLabSuite/Core/Controller/Media/List'], function ({ registerPhrase }, ControllerMediaList) {
+		{jsphrase name='wcf.media.setCategory'}
+		registerPhrase('wcf.media.delete.confirmMessage', '{jslang __literal=true}wcf.media.delete.confirmMessage{/jslang}');
 		
 		ControllerMediaList.init({
 			{if $categoryID}

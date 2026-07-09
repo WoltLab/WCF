@@ -9,7 +9,7 @@
 import AcpUserContentRemoveHandler from "./Content/Remove/Handler";
 import * as Core from "../../../Core";
 import * as EventHandler from "../../../Event/Handler";
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import UiDropdownSimple from "../../../Ui/Dropdown/Simple";
 import DomUtil from "../../../Dom/Util";
 import SendNewPasswordAction from "./Action/SendNewPasswordAction";
@@ -157,7 +157,7 @@ class AcpUiUserEditor {
           iconBanned = document.createElement("span");
           iconBanned.innerHTML = '<fa-icon name="lock"></fa-icon>';
           iconBanned.classList.add("jsUserStatusBanned", "jsTooltip");
-          iconBanned.title = Language.get("wcf.user.status.banned");
+          iconBanned.title = getPhrase("wcf.user.status.banned");
 
           userStatusIcons.appendChild(iconBanned);
         } else if (!banned && iconBanned !== null) {
@@ -170,7 +170,7 @@ class AcpUiUserEditor {
           iconIsDisabled = document.createElement("span");
           iconIsDisabled.innerHTML = '<fa-icon name="power-off"></fa-icon>';
           iconIsDisabled.classList.add("jsUserStatusIsDisabled", "jsTooltip");
-          iconIsDisabled.title = Language.get("wcf.user.status.isDisabled");
+          iconIsDisabled.title = getPhrase("wcf.user.status.isDisabled");
           userStatusIcons.appendChild(iconIsDisabled);
         } else if (!isDisabled && iconIsDisabled !== null) {
           iconIsDisabled.remove();

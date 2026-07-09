@@ -5,12 +5,11 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../Ajax", "../../../Language", "../../../Ui/Dialog"], function (require, exports, tslib_1, Ajax, Language, Dialog_1) {
+define(["require", "exports", "tslib", "../../../Ajax", "WoltLabSuite/Core/Language", "../../../Ui/Dialog"], function (require, exports, tslib_1, Ajax, Language_1, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
     Ajax = tslib_1.__importStar(Ajax);
-    Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class RewriteGenerator {
         buttonGenerate;
@@ -31,11 +30,11 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Language", "..
             this.buttonGenerate = document.createElement("a");
             this.buttonGenerate.className = "button";
             this.buttonGenerate.href = "#";
-            this.buttonGenerate.textContent = Language.get("wcf.acp.rewrite.generate");
+            this.buttonGenerate.textContent = (0, Language_1.getPhrase)("wcf.acp.rewrite.generate");
             this.buttonGenerate.addEventListener("click", (ev) => this._onClick(ev));
             dd.appendChild(this.buttonGenerate);
             const description = document.createElement("small");
-            description.textContent = Language.get("wcf.acp.rewrite.description");
+            description.textContent = (0, Language_1.getPhrase)("wcf.acp.rewrite.description");
             dd.appendChild(description);
             this.container.appendChild(dt);
             this.container.appendChild(dd);
@@ -54,7 +53,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Language", "..
                 id: "dialogRewriteRules",
                 source: null,
                 options: {
-                    title: Language.get("wcf.acp.rewrite"),
+                    title: (0, Language_1.getPhrase)("wcf.acp.rewrite"),
                 },
             };
         }

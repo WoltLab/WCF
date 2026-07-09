@@ -6,7 +6,7 @@ import * as Ajax from "../../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup, DatabaseObjectActionResponse } from "../../Ajax/Data";
 import { DialogCallbackObject, DialogCallbackSetup } from "../Dialog/Data";
 import DomUtil from "../../Dom/Util";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as StringUtil from "../../StringUtil";
 import UiDialog from "../Dialog";
 
@@ -41,7 +41,7 @@ class UiPageSearch implements AjaxCallbackObject, DialogCallbackObject {
 
     const value = this.searchInput!.value.trim();
     if (value.length < 3) {
-      DomUtil.innerError(inputContainer, Language.get("wcf.page.search.error.tooShort"));
+      DomUtil.innerError(inputContainer, getPhrase("wcf.page.search.error.tooShort"));
       return;
     } else {
       DomUtil.innerError(inputContainer, false);
@@ -89,7 +89,7 @@ class UiPageSearch implements AjaxCallbackObject, DialogCallbackObject {
         item.addEventListener("click", (ev) => this.click(ev));
       });
     } else {
-      DomUtil.innerError(this.searchInput!.parentElement!, Language.get("wcf.page.search.error.noResults"));
+      DomUtil.innerError(this.searchInput!.parentElement!, getPhrase("wcf.page.search.error.noResults"));
     }
   }
 
@@ -122,11 +122,11 @@ class UiPageSearch implements AjaxCallbackObject, DialogCallbackObject {
         onShow: () => {
           this.searchInput!.focus();
         },
-        title: Language.get("wcf.page.search"),
+        title: getPhrase("wcf.page.search"),
       },
       source: `<div class="section">
         <dl>
-          <dt><label for="wcfUiPageSearchInput">${Language.get("wcf.page.search.name")}</label></dt>
+          <dt><label for="wcfUiPageSearchInput">${getPhrase("wcf.page.search.name")}</label></dt>
           <dd>
             <div class="inputAddon">
               <input type="text" id="wcfUiPageSearchInput" class="long">
@@ -137,7 +137,7 @@ class UiPageSearch implements AjaxCallbackObject, DialogCallbackObject {
       </div>
       <section id="wcfUiPageSearchResultContainer" class="section" style="display: none;">
         <header class="sectionHeader">
-          <h2 class="sectionTitle">${Language.get("wcf.page.search.results")}</h2>
+          <h2 class="sectionTitle">${getPhrase("wcf.page.search.results")}</h2>
         </header>
         <ol id="wcfUiPageSearchResultList" class="containerList"></ol>
       </section>`,

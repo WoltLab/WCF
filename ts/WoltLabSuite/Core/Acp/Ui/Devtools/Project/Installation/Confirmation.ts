@@ -7,7 +7,7 @@
  */
 
 import * as Ajax from "../../../../../Ajax";
-import * as Language from "../../../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as UiConfirmation from "../../../../../Ui/Confirmation";
 
 let _projectId: number;
@@ -45,7 +45,7 @@ function showConfirmation(event: Event): void {
 
   UiConfirmation.show({
     confirm: () => installPackage(),
-    message: Language.get("wcf.acp.devtools.project.installPackage.confirmMessage", {
+    message: getPhrase("wcf.acp.devtools.project.installPackage.confirmMessage", {
       packageIdentifier: _projectName,
     }),
     messageIsHtml: true,

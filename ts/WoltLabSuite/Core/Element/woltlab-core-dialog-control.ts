@@ -11,7 +11,7 @@
  * @since 6.0
  */
 
-import * as Language from "../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 
 interface WoltlabCoreDialogControlEventMap {
   cancel: CustomEvent;
@@ -40,7 +40,7 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
   get primary(): string {
     let label = this.getAttribute("primary")!;
     if (!label) {
-      label = Language.get("wcf.dialog.button.primary");
+      label = getPhrase("wcf.dialog.button.primary");
     }
 
     return label;
@@ -61,7 +61,7 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
     }
 
     if (label === "") {
-      label = Language.get("wcf.global.confirmation.cancel");
+      label = getPhrase("wcf.global.confirmation.cancel");
     }
 
     return label;

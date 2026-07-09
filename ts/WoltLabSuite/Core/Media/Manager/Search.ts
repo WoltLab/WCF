@@ -11,7 +11,7 @@ import MediaManager from "./Base";
 import { AjaxCallbackObject, AjaxCallbackSetup } from "../../Ajax/Data";
 import { Media } from "../Data";
 import * as DomTraverse from "../../Dom/Traverse";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as Ajax from "../../Ajax";
 import DomUtil from "../../Dom/Util";
 
@@ -118,7 +118,7 @@ class MediaManagerSearch implements AjaxCallbackObject {
     } else {
       innerInfo = document.createElement("p");
       innerInfo.className = "innerInfo";
-      innerInfo.textContent = Language.get("wcf.media.search.info.searchStringThreshold", {
+      innerInfo.textContent = getPhrase("wcf.media.search.info.searchStringThreshold", {
         minSearchLength: this._mediaManager.getOption("minSearchLength"),
       });
 
