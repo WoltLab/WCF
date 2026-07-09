@@ -1,8 +1,8 @@
 {include file='header' pageTitle='wcf.acp.user.activityPoint.option'}
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Worker'], function (Language, AcpUiWorker) {
-		Language.add('wcf.acp.worker.abort.confirmMessage', '{jslang}wcf.acp.worker.abort.confirmMessage{/jslang}');
+	require(['WoltLabSuite/Core/Acp/Ui/Worker'], function (AcpUiWorker) {
+		{jsphrase name='wcf.acp.worker.abort.confirmMessage'}
 		
 		document.getElementById('updateEvents').addEventListener('click', () => {
 			new AcpUiWorker({

@@ -1,8 +1,8 @@
 {include file='header' pageTitle='wcf.acp.devtools.project.list'}
 
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Acp/Ui/Devtools/Project/FilterByName', 'WoltLabSuite/Core/Acp/Ui/Devtools/Project/QuickSetup', 'Language'], function({ setup: setupFilterByName }, AcpUiDevtoolsProjectQuickSetup, Language) {
-		Language.add('wcf.acp.devtools.project.quickSetup', '{jslang}wcf.acp.devtools.project.quickSetup{/jslang}');
+	require(['WoltLabSuite/Core/Acp/Ui/Devtools/Project/FilterByName', 'WoltLabSuite/Core/Acp/Ui/Devtools/Project/QuickSetup'], function({ setup: setupFilterByName }, AcpUiDevtoolsProjectQuickSetup) {
+		{jsphrase name='wcf.acp.devtools.project.quickSetup'}
 		
 		AcpUiDevtoolsProjectQuickSetup.init();
 
