@@ -24,10 +24,8 @@
 	{/if}
 </template>
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Page/Add'], (Language, { AcpUiPageAdd }) => {
-		Language.addObject({
-			'wcf.acp.page.add': '{jslang}wcf.acp.page.add{/jslang}'
-		});
+	require(['WoltLabSuite/Core/Acp/Ui/Page/Add'], ({ AcpUiPageAdd }) => {
+		{jsphrase name='wcf.acp.page.add'}
 		
 		const pageAddDialog = new AcpUiPageAdd(
 			'{link controller='PageAdd' encode=false}{literal}pageType={$pageType}&isMultilingual={$isMultilingual}{/literal}{/link}',

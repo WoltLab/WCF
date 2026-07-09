@@ -2,9 +2,7 @@
 
 <script data-relocate="true">
 	$(function() {
-		WCF.Language.addObject({
-			'wcf.acp.package.uninstallation.title': '{jslang}wcf.acp.package.uninstallation.title{/jslang}'
-		});
+		{jsphrase name='wcf.acp.package.uninstallation.title'}
 		
 		new WCF.ACP.Package.Uninstallation($('.jsUninstallButton'));
 	});

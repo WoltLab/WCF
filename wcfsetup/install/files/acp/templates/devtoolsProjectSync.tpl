@@ -102,11 +102,9 @@
 	</div>
 	
 	<script data-relocate="true">
-		require(['Language', 'WoltLabSuite/Core/Acp/Ui/Devtools/Project/Sync'], function(Language, AcpUiDevtoolsProjectSync) {
-			Language.addObject({
-				'wcf.acp.devtools.sync.status.failure': '{jslang}wcf.acp.devtools.sync.status.failure{/jslang}',
-				'wcf.acp.devtools.sync.syncAll': '{jslang}wcf.acp.devtools.sync.syncAll{/jslang}'
-			});
+		require(['WoltLabSuite/Core/Acp/Ui/Devtools/Project/Sync'], function(AcpUiDevtoolsProjectSync) {
+			{jsphrase name='wcf.acp.devtools.sync.status.failure'}
+			{jsphrase name='wcf.acp.devtools.sync.syncAll'}
 			
 			AcpUiDevtoolsProjectSync.init({$object->projectID});
 		});

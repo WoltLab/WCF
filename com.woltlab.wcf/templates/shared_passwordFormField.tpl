@@ -18,7 +18,7 @@
 
 {if $field->getStrengthMeter()}
 	<script data-relocate="true">
-		require(["WoltLabSuite/Core/Ui/User/PasswordStrength", "Language"], (PasswordStrength, Language) => {
+		require(["WoltLabSuite/Core/Ui/User/PasswordStrength"], (PasswordStrength) => {
 			{include file='shared_passwordStrengthLanguage'}
 
 			new PasswordStrength(document.getElementById('{unsafe:$field->getPrefixedId()|encodeJS}'), {

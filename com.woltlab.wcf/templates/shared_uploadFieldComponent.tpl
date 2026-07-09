@@ -40,10 +40,10 @@
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Ui/File/Upload', 'Language'], function(Upload, Language) {
+		{jsphrase name='wcf.upload.error.noImage'}
+		{jsphrase name='wcf.upload.error.uploadFailed'}
 		Language.addObject({
 			'wcf.upload.error.reachedRemainingLimit': '{jslang __literal=true}wcf.upload.error.reachedRemainingLimit{/jslang}',
-			'wcf.upload.error.noImage': '{jslang}wcf.upload.error.noImage{/jslang}',
-			'wcf.upload.error.uploadFailed': '{jslang}wcf.upload.error.uploadFailed{/jslang}',
 		});
 		
 		new Upload("{$uploadFieldId}UploadButtonDiv", "{$uploadFieldId}uploadFileList", {

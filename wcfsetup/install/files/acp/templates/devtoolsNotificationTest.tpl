@@ -30,10 +30,8 @@
 {/foreach}
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Devtools/Notification/Test'], function(Language, AcpUiDevtoolsNotificationTest) {
-		Language.addObject({
-			'wcf.acp.devtools.notificationTest.button.test': '{jslang}wcf.acp.devtools.notificationTest.button.test{/jslang}'
-		});
+	require(['WoltLabSuite/Core/Acp/Ui/Devtools/Notification/Test'], function(AcpUiDevtoolsNotificationTest) {
+		{jsphrase name='wcf.acp.devtools.notificationTest.button.test'}
 		
 		AcpUiDevtoolsNotificationTest.init();
 	});

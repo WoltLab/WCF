@@ -95,7 +95,6 @@
 					</li>
 					<script data-relocate="true">
 						require([
-							'WoltLabSuite/Core/Language',
 							'WoltLabSuite/Core/Acp/Ui/User/Editor',
 							'WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler',
 							'WoltLabSuite/Core/Acp/Ui/User/Action/Handler/Delete',
@@ -104,7 +103,6 @@
 							'WoltLabSuite/Core/Acp/Ui/User/Action/ToggleConfirmEmailAction',
 							'WoltLabSuite/Core/Controller/Clipboard',
 						], (
-							Language,
 							AcpUiUserList,
 							AcpUserContentRemoveHandler,
 							{ Delete },
@@ -113,12 +111,10 @@
 							{ ToggleConfirmEmailAction },
 							Clipboard
 						) => {
-								Language.addObject({
-									'wcf.acp.user.sendNewPassword.workerTitle': '{jslang}wcf.acp.user.sendNewPassword.workerTitle{/jslang}',
-									'wcf.acp.user.action.sendNewPassword.confirmMessage': '{jslang}wcf.acp.user.action.sendNewPassword.confirmMessage{/jslang}',
-									'wcf.acp.worker.abort.confirmMessage': '{jslang}wcf.acp.worker.abort.confirmMessage{/jslang}',
-									'wcf.acp.content.removeContent': '{jslang}wcf.acp.content.removeContent{/jslang}',
-								});
+								{jsphrase name='wcf.acp.user.sendNewPassword.workerTitle'}
+								{jsphrase name='wcf.acp.user.action.sendNewPassword.confirmMessage'}
+								{jsphrase name='wcf.acp.worker.abort.confirmMessage'}
+								{jsphrase name='wcf.acp.content.removeContent'}
 
 								const dropdownElement = document.querySelector("#userListDropdown{$user->userID}");
 
@@ -251,7 +247,7 @@
 					</dl>
 
 					<script data-relocate="true">
-						require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], function (PasswordStrength, Language) {
+						require(['WoltLabSuite/Core/Ui/User/PasswordStrength'], function (PasswordStrength) {
 							{include file='shared_passwordStrengthLanguage'}
 
 							var relatedInputs = [];

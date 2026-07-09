@@ -9,10 +9,8 @@
 	
 	<script>
 	(function (script) {
-		require(['WoltLabSuite/Core/Ui/User/Multifactor/Totp/Qr', 'Language'], (Qr, Language) => {
-			Language.addObject({
-				'wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.link': '{jslang}wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.link{/jslang}',
-			});
+		require(['WoltLabSuite/Core/Ui/User/Multifactor/Totp/Qr'], (Qr) => {
+			{jsphrase name='wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.link'}
 
 			Qr.render(script.closest(".totpSecretContainer"));
 		});

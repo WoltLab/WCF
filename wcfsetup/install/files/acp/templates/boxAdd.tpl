@@ -10,8 +10,11 @@
 	{/if}
 
 	require(['Dictionary', 'Language', 'WoltLabSuite/Core/Acp/Ui/Box/Handler'], function(Dictionary, Language, AcpUiBoxHandler) {
+		{jsphrase name='wcf.page.pageObjectID'}
+		{jsphrase name='wcf.page.pageObjectID.search.noResults'}
+		{jsphrase name='wcf.page.pageObjectID.search.results'}
+		{jsphrase name='wcf.page.pageObjectID.search.terms'}
 		Language.addObject({
-			'wcf.page.pageObjectID': '{jslang}wcf.page.pageObjectID{/jslang}',
 			{foreach from=$pageNodeList item=pageNode}
 				{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.pageObjectID.{$pageNode->identifier}{/lang}{/capture}
 				{if $pageObjectIDLanguageItem}
@@ -22,9 +25,6 @@
 					'wcf.page.pageObjectID.search.{$pageNode->identifier}': '{unsafe:$pageObjectIDLanguageItem|encodeJS}',
 				{/if}
 			{/foreach}
-			'wcf.page.pageObjectID.search.noResults': '{jslang}wcf.page.pageObjectID.search.noResults{/jslang}',
-			'wcf.page.pageObjectID.search.results': '{jslang}wcf.page.pageObjectID.search.results{/jslang}',
-			'wcf.page.pageObjectID.search.terms': '{jslang}wcf.page.pageObjectID.search.terms{/jslang}'
 		});
 
 		var handlers = new Dictionary();
@@ -45,10 +45,8 @@
 	{/if}
 
 	{if $action === 'edit'}
-		require(['Language', 'WoltLabSuite/Core/Acp/Ui/Box/Copy'], function (Language, AcpUiBoxCopy) {
-			Language.addObject({
-				'wcf.acp.box.copy': '{jslang}wcf.acp.box.copy{/jslang}'
-			});
+		require(['WoltLabSuite/Core/Acp/Ui/Box/Copy'], function (AcpUiBoxCopy) {
+			{jsphrase name='wcf.acp.box.copy'}
 
 			AcpUiBoxCopy.init();
 		});

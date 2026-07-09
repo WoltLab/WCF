@@ -4,14 +4,12 @@
 {include file='shared_fontAwesomeJavaScript'}
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Trophy/Editor'], (Language, { setup }) => {
-		Language.addObject({
-			'wcf.acp.style.image.error.invalidExtension': '{jslang}wcf.acp.style.image.error.invalidExtension{/jslang}',
-			'wcf.acp.trophy.badge.edit': '{jslang}wcf.acp.trophy.badge.edit{/jslang}',
-			'wcf.acp.trophy.imageUpload.error.notSquared': '{jslang}wcf.acp.trophy.imageUpload.error.notSquared{/jslang}',
-			'wcf.acp.trophy.imageUpload.error.tooSmall': '{jslang}wcf.acp.trophy.imageUpload.error.tooSmall{/jslang}',
-			'wcf.acp.trophy.imageUpload.error.noImage': '{jslang}wcf.acp.trophy.imageUpload.error.noImage{/jslang}'
-		});
+	require(['WoltLabSuite/Core/Acp/Ui/Trophy/Editor'], ({ setup }) => {
+		{jsphrase name='wcf.acp.style.image.error.invalidExtension'}
+		{jsphrase name='wcf.acp.trophy.badge.edit'}
+		{jsphrase name='wcf.acp.trophy.imageUpload.error.notSquared'}
+		{jsphrase name='wcf.acp.trophy.imageUpload.error.tooSmall'}
+		{jsphrase name='wcf.acp.trophy.imageUpload.error.noImage'}
 		
 		setup();
 	});

@@ -15,10 +15,10 @@
 
 <script data-relocate="true">
 	require(['Language', 'WoltLabSuite/Core/Ui/ItemList/LineBreakSeparatedText'], (Language, { UiItemListLineBreakSeparatedText }) => {
+		{jsphrase name='wcf.acp.option.type.lineBreakSeparatedText.placeholder'}
+		{jsphrase name='wcf.acp.option.type.lineBreakSeparatedText.clearList.confirmMessage'}
 		Language.addObject({
-			'wcf.acp.option.type.lineBreakSeparatedText.placeholder': '{jslang}wcf.acp.option.type.lineBreakSeparatedText.placeholder{/jslang}',
 			'wcf.acp.option.type.lineBreakSeparatedText.error.duplicate': '{jslang __literal=true}wcf.acp.option.type.lineBreakSeparatedText.error.duplicate{/jslang}',
-			'wcf.acp.option.type.lineBreakSeparatedText.clearList.confirmMessage': '{jslang}wcf.acp.option.type.lineBreakSeparatedText.clearList.confirmMessage{/jslang}',
 		});
 		
 		new UiItemListLineBreakSeparatedText(

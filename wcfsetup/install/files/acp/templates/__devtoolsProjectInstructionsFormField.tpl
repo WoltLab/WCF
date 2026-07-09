@@ -188,21 +188,21 @@
 		InstructionsFormField,
 		Template
 	) {
+		{jsphrase name='wcf.acp.devtools.project.instruction.delete.confirmMessages'}
+		{jsphrase name='wcf.acp.devtools.project.instruction.error.voidInInstall'}
+		{jsphrase name='wcf.acp.devtools.project.instruction.error.voidNotAlone'}
+		{jsphrase name='wcf.acp.devtools.project.instruction.edit'}
+		{jsphrase name='wcf.acp.devtools.project.instruction.value.description'}
+		{jsphrase name='wcf.acp.devtools.project.instructions.delete.confirmMessages'}
+		{jsphrase name='wcf.acp.devtools.project.instructions.edit'}
+		{jsphrase name='wcf.acp.devtools.project.instructions.instructions.description'}
+		{jsphrase name='wcf.acp.devtools.project.instructions.type.install.title'}
+		{jsphrase name='wcf.acp.devtools.project.instructions.type.update.error.duplicate'}
+		{jsphrase name='wcf.global.form.error.noValidSelection'}
 		Language.addObject({
-			'wcf.acp.devtools.project.instruction.delete.confirmMessages': '{jslang}wcf.acp.devtools.project.instruction.delete.confirmMessages{/jslang}',
-			'wcf.acp.devtools.project.instruction.error.voidInInstall': '{jslang}wcf.acp.devtools.project.instruction.error.voidInInstall{/jslang}',
-			'wcf.acp.devtools.project.instruction.error.voidNotAlone': '{jslang}wcf.acp.devtools.project.instruction.error.voidNotAlone{/jslang}',
-			'wcf.acp.devtools.project.instruction.edit': '{jslang}wcf.acp.devtools.project.instruction.edit{/jslang}',
 			'wcf.acp.devtools.project.instruction.instruction': '{jslang __literal=true}wcf.acp.devtools.project.instruction.instruction{/jslang}',
-			'wcf.acp.devtools.project.instruction.value.description': '{jslang}wcf.acp.devtools.project.instruction.value.description{/jslang}',
 			'wcf.acp.devtools.project.instruction.value.description.defaultFilename': '{jslang __literal=true}wcf.acp.devtools.project.instruction.value.description.defaultFilename{/jslang}',
-			'wcf.acp.devtools.project.instructions.delete.confirmMessages': '{jslang}wcf.acp.devtools.project.instructions.delete.confirmMessages{/jslang}',
-			'wcf.acp.devtools.project.instructions.edit': '{jslang}wcf.acp.devtools.project.instructions.edit{/jslang}',
-			'wcf.acp.devtools.project.instructions.instructions.description': '{jslang}wcf.acp.devtools.project.instructions.instructions.description{/jslang}',
-			'wcf.acp.devtools.project.instructions.type.install.title': '{jslang}wcf.acp.devtools.project.instructions.type.install.title{/jslang}',
-			'wcf.acp.devtools.project.instructions.type.update.error.duplicate': '{jslang}wcf.acp.devtools.project.instructions.type.update.error.duplicate{/jslang}',
 			'wcf.acp.devtools.project.instructions.type.update.title': '{jslang __literal=true}wcf.acp.devtools.project.instructions.type.update.title{/jslang}',
-			'wcf.global.form.error.noValidSelection': '{jslang}wcf.global.form.error.noValidSelection{/jslang}'
 		});
 		
 		var instructionsTemplate = new Template('{unsafe:$instructionsTemplate|encodeJS}');

@@ -87,9 +87,8 @@
 	</script>
 	<script>
 		require(['Language', 'WoltLabSuite/Core/Acp/Bootstrap', 'User'], function(Language, AcpBootstrap, User) {
+			{jsphrase name='wcf.acp.search.noResults'}
 			Language.addObject({
-				'wcf.acp.search.noResults': '{jslang}wcf.acp.search.noResults{/jslang}',
-
 				{event name='javascriptLanguageImport'}
 			});
 			

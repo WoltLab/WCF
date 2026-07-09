@@ -3,9 +3,9 @@
 {if $queue|isset}
 	<script data-relocate="true">
 		require(['Language', 'WoltLabSuite/Core/Acp/Ui/DataImport/Manager'], (Language, { AcpUiDataImportManager }) => {
+			{jsphrase name='wcf.acp.dataImport'}
+			{jsphrase name='wcf.acp.dataImport.completed'}
 			Language.addObject({
-				'wcf.acp.dataImport': '{jslang}wcf.acp.dataImport{/jslang}',
-				'wcf.acp.dataImport.completed': '{jslang}wcf.acp.dataImport.completed{/jslang}',
 				{implode from=$importers item=importer}'wcf.acp.dataImport.data.{$importer}': '{jslang}wcf.acp.dataImport.data.{$importer}{/jslang}'{/implode}
 			});
 			

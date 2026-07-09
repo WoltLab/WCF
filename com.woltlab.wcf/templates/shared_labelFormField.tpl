@@ -24,11 +24,9 @@
 </noscript>
 
 <script data-relocate="true">
-	require(['Dom/Util', 'Language', 'WoltLabSuite/Core/Form/Builder/Field/Controller/Label'], function(DomUtil, Language, FormBuilderFieldLabel) {
-		Language.addObject({
-			'wcf.label.none': '{jslang}wcf.label.none{/jslang}',
-			'wcf.label.withoutSelection': '{jslang}wcf.label.withoutSelection{/jslang}'
-		});
+	require(['Dom/Util', 'WoltLabSuite/Core/Form/Builder/Field/Controller/Label'], function(DomUtil, FormBuilderFieldLabel) {
+		{jsphrase name='wcf.label.none'}
+		{jsphrase name='wcf.label.withoutSelection'}
 		
 		new FormBuilderFieldLabel(
 			'{unsafe:$field->getPrefixedId()|encodeJS}',

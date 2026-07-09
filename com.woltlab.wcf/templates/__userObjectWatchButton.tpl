@@ -21,12 +21,9 @@
 	</div>
 
 	<script data-relocate="true">
-		require(['WoltLabSuite/Core/Ui/User/ObjectWatch', 'WoltLabSuite/Core/Language'], (ObjectWatch, Language) => {
-			Language.addObject({
-				'wcf.user.objectWatch.button.subscribe': '{jslang}wcf.user.objectWatch.button.subscribe{/jslang}',
-				'wcf.user.objectWatch.button.subscribed': '{jslang}wcf.user.objectWatch.button.subscribed{/jslang}',
-			})
-
+		require(['WoltLabSuite/Core/Ui/User/ObjectWatch'], (ObjectWatch) => {
+			{jsphrase name='wcf.user.objectWatch.button.subscribe'}
+			{jsphrase name='wcf.user.objectWatch.button.subscribed'}
 			ObjectWatch.setup();
 		});
 	</script>

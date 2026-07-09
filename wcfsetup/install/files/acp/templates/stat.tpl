@@ -5,12 +5,12 @@
 <script data-relocate="true" src="{$__wcf->getPath()}js/3rdParty/flot/jquery.flot.resize.js"></script>
 <script data-relocate="true">
 	$(function() {
+		{jsphrase name='wcf.acp.stat.timeFormat.daily'}
+		{jsphrase name='wcf.acp.stat.timeFormat.weekly'}
+		{jsphrase name='wcf.acp.stat.timeFormat.monthly'}
+		{jsphrase name='wcf.acp.stat.timeFormat.yearly'}
+		{jsphrase name='wcf.acp.stat.noData'}
 		WCF.Language.addObject({
-			'wcf.acp.stat.timeFormat.daily': '{jslang}wcf.acp.stat.timeFormat.daily{/jslang}',
-			'wcf.acp.stat.timeFormat.weekly': '{jslang}wcf.acp.stat.timeFormat.weekly{/jslang}',
-			'wcf.acp.stat.timeFormat.monthly': '{jslang}wcf.acp.stat.timeFormat.monthly{/jslang}',
-			'wcf.acp.stat.timeFormat.yearly': '{jslang}wcf.acp.stat.timeFormat.yearly{/jslang}',
-			'wcf.acp.stat.noData': '{jslang}wcf.acp.stat.noData{/jslang}',
 			'__monthsShort': [ '{jslang}wcf.date.month.short.jan{/jslang}', '{jslang}wcf.date.month.short.feb{/jslang}', '{jslang}wcf.date.month.short.mar{/jslang}', '{jslang}wcf.date.month.short.apr{/jslang}', '{jslang}wcf.date.month.short.may{/jslang}', '{jslang}wcf.date.month.short.jun{/jslang}', '{jslang}wcf.date.month.short.jul{/jslang}', '{jslang}wcf.date.month.short.aug{/jslang}', '{jslang}wcf.date.month.short.sep{/jslang}', '{jslang}wcf.date.month.short.oct{/jslang}', '{jslang}wcf.date.month.short.nov{/jslang}', '{jslang}wcf.date.month.short.dec{/jslang}' ],
 		});
 		

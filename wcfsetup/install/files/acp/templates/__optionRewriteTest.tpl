@@ -24,12 +24,10 @@
 		</div>
 	</div>
 	<script data-relocate="true">
-		require(['Dictionary', 'Language', 'WoltLabSuite/Core/Acp/Ui/Option/RewriteTest'], function (Dictionary, Language, AcpUiOptionRewriteTest) {
-			Language.addObject({
-				'wcf.acp.option.url_omit_index_php': '{jslang}wcf.acp.option.url_omit_index_php{/jslang}',
-				'wcf.acp.option.url_omit_index_php.test.status.failure': '{jslang}wcf.acp.option.url_omit_index_php.test.status.failure{/jslang}',
-				'wcf.acp.option.url_omit_index_php.test.status.success': '{jslang}wcf.acp.option.url_omit_index_php.test.status.success{/jslang}'
-			});
+		require(['Dictionary', 'WoltLabSuite/Core/Acp/Ui/Option/RewriteTest'], function (Dictionary, AcpUiOptionRewriteTest) {
+			{jsphrase name='wcf.acp.option.url_omit_index_php'}
+			{jsphrase name='wcf.acp.option.url_omit_index_php.test.status.failure'}
+			{jsphrase name='wcf.acp.option.url_omit_index_php.test.status.success'}
 			
 			const apps = new Map(Object.entries({
 				{* this bypasses the route system to force rewritten urls *}
