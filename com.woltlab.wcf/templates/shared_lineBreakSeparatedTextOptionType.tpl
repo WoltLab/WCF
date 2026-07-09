@@ -14,12 +14,10 @@
 <input type="hidden" name="values[{$option->optionName}]">
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Ui/ItemList/LineBreakSeparatedText'], (Language, { UiItemListLineBreakSeparatedText }) => {
+	require(['Language', 'WoltLabSuite/Core/Ui/ItemList/LineBreakSeparatedText'], ({ registerPhrase }, { UiItemListLineBreakSeparatedText }) => {
 		{jsphrase name='wcf.acp.option.type.lineBreakSeparatedText.placeholder'}
 		{jsphrase name='wcf.acp.option.type.lineBreakSeparatedText.clearList.confirmMessage'}
-		Language.addObject({
-			'wcf.acp.option.type.lineBreakSeparatedText.error.duplicate': '{jslang __literal=true}wcf.acp.option.type.lineBreakSeparatedText.error.duplicate{/jslang}',
-		});
+		registerPhrase('wcf.acp.option.type.lineBreakSeparatedText.error.duplicate', '{jslang __literal=true}wcf.acp.option.type.lineBreakSeparatedText.error.duplicate{/jslang}');
 		
 		new UiItemListLineBreakSeparatedText(
 			document.getElementById("lineBreakSeparatedTextOption_{unsafe:$identifier|encodeJS}")

@@ -9,24 +9,22 @@
 		});
 	{/if}
 
-	require(['Dictionary', 'Language', 'WoltLabSuite/Core/Acp/Ui/Box/Handler'], function(Dictionary, Language, AcpUiBoxHandler) {
+	require(['Dictionary', 'Language', 'WoltLabSuite/Core/Acp/Ui/Box/Handler'], function(Dictionary, { registerPhrase }, AcpUiBoxHandler) {
 		{jsphrase name='wcf.page.pageObjectID'}
 		{jsphrase name='wcf.page.pageObjectID.search.noResults'}
 		{jsphrase name='wcf.page.pageObjectID.search.results'}
 		{jsphrase name='wcf.page.pageObjectID.search.terms'}
-		Language.addObject({
-			{foreach from=$pageNodeList item=pageNode}
+		{foreach from=$pageNodeList item=pageNode}
 				{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.pageObjectID.{$pageNode->identifier}{/lang}{/capture}
 				{if $pageObjectIDLanguageItem}
-					'wcf.page.pageObjectID.{$pageNode->identifier}': '{unsafe:$pageObjectIDLanguageItem|encodeJS}',
+					registerPhrase('wcf.page.pageObjectID.{$pageNode->identifier}', '{unsafe:$pageObjectIDLanguageItem|encodeJS}');
 				{/if}
 				{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.pageObjectID.search.{$pageNode->identifier}{/lang}{/capture}
 				{if $pageObjectIDLanguageItem}
-					'wcf.page.pageObjectID.search.{$pageNode->identifier}': '{unsafe:$pageObjectIDLanguageItem|encodeJS}',
+					registerPhrase('wcf.page.pageObjectID.search.{$pageNode->identifier}', '{unsafe:$pageObjectIDLanguageItem|encodeJS}');
 				{/if}
-			{/foreach}
-		});
-
+		{/foreach}
+		
 		var handlers = new Dictionary();
 		{foreach from=$pageHandlers key=handlerPageID item=requireObjectID}
 			handlers.set({$handlerPageID}, {if $requireObjectID}true{else}false{/if});

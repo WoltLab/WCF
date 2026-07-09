@@ -184,7 +184,7 @@
 		'WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/Instructions',
 		'WoltLabSuite/Core/Template'
 	], function(
-		Language,
+		{ registerPhrase },
 		InstructionsFormField,
 		Template
 	) {
@@ -199,11 +199,9 @@
 		{jsphrase name='wcf.acp.devtools.project.instructions.type.install.title'}
 		{jsphrase name='wcf.acp.devtools.project.instructions.type.update.error.duplicate'}
 		{jsphrase name='wcf.global.form.error.noValidSelection'}
-		Language.addObject({
-			'wcf.acp.devtools.project.instruction.instruction': '{jslang __literal=true}wcf.acp.devtools.project.instruction.instruction{/jslang}',
-			'wcf.acp.devtools.project.instruction.value.description.defaultFilename': '{jslang __literal=true}wcf.acp.devtools.project.instruction.value.description.defaultFilename{/jslang}',
-			'wcf.acp.devtools.project.instructions.type.update.title': '{jslang __literal=true}wcf.acp.devtools.project.instructions.type.update.title{/jslang}',
-		});
+		registerPhrase('wcf.acp.devtools.project.instruction.instruction', '{jslang __literal=true}wcf.acp.devtools.project.instruction.instruction{/jslang}');
+		registerPhrase('wcf.acp.devtools.project.instruction.value.description.defaultFilename', '{jslang __literal=true}wcf.acp.devtools.project.instruction.value.description.defaultFilename{/jslang}');
+		registerPhrase('wcf.acp.devtools.project.instructions.type.update.title', '{jslang __literal=true}wcf.acp.devtools.project.instructions.type.update.title{/jslang}');
 		
 		var instructionsTemplate = new Template('{unsafe:$instructionsTemplate|encodeJS}');
 		var instructionsEditDialogTemplate = new Template('{unsafe:$instructionsEditDialogContent|encodeJS}');

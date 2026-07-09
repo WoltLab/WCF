@@ -32,16 +32,14 @@
 </div>
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/RequiredPackages'], function(Language, RequiredPackagesFormField) {
+	require(['Language', 'WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/RequiredPackages'], function({ registerPhrase }, RequiredPackagesFormField) {
 		{jsphrase name='wcf.acp.devtools.project.packageIdentifier.error.duplicate'}
 		{jsphrase name='wcf.acp.devtools.project.packageIdentifier.error.format'}
 		{jsphrase name='wcf.acp.devtools.project.packageIdentifier.error.maximumLength'}
 		{jsphrase name='wcf.acp.devtools.project.packageIdentifier.error.minimumLength'}
 		{jsphrase name='wcf.acp.devtools.project.packageVersion.error.format'}
 		{jsphrase name='wcf.acp.devtools.project.packageVersion.error.maximumLength'}
-		Language.addObject({
-			'wcf.acp.devtools.project.requiredPackage.requiredPackage': '{jslang __literal=true}wcf.acp.devtools.project.requiredPackage.requiredPackage{/jslang}'
-		});
+		registerPhrase('wcf.acp.devtools.project.requiredPackage.requiredPackage', '{jslang __literal=true}wcf.acp.devtools.project.requiredPackage.requiredPackage{/jslang}');
 		
 		new RequiredPackagesFormField('{unsafe:$field->getPrefixedId()|encodeJS}', [
 			{implode from=$field->getValue() item=requiredPackage}

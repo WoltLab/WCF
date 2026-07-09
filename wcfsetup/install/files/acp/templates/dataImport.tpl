@@ -2,12 +2,12 @@
 
 {if $queue|isset}
 	<script data-relocate="true">
-		require(['Language', 'WoltLabSuite/Core/Acp/Ui/DataImport/Manager'], (Language, { AcpUiDataImportManager }) => {
+		require(['Language', 'WoltLabSuite/Core/Acp/Ui/DataImport/Manager'], ({ registerPhrase }, { AcpUiDataImportManager }) => {
 			{jsphrase name='wcf.acp.dataImport'}
 			{jsphrase name='wcf.acp.dataImport.completed'}
-			Language.addObject({
-				{implode from=$importers item=importer}'wcf.acp.dataImport.data.{$importer}': '{jslang}wcf.acp.dataImport.data.{$importer}{/jslang}'{/implode}
-			});
+			{foreach from=$importers item=importer}
+				registerPhrase('wcf.acp.dataImport.data.{$importer}', '{jslang}wcf.acp.dataImport.data.{$importer}{/jslang}');
+			{/foreach}
 			
 			const queue = [ {implode from=$queue item=item}'{unsafe:$item|encodeJS}'{/implode} ];
 			new AcpUiDataImportManager(queue, '{link controller='RebuildData' encode=false}{/link}', '{unsafe:$cacheClearEndpoint|encodeJS}');
