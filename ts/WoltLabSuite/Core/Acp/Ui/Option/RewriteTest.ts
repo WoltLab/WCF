@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import UiDialog from "../../../Ui/Dialog";
 import { DialogCallbackSetup } from "../../../Ui/Dialog/Data";
 import DomUtil from "../../../Dom/Util";
@@ -119,7 +119,7 @@ class RewriteTest {
       const testFailureResults = document.getElementById("dialogRewriteTestFailureResults")!;
       testFailureResults.innerHTML = results
         .map((result) => {
-          return `<li><span class="badge label ${result.pass ? "green" : "red"}">${Language.get(
+          return `<li><span class="badge label ${result.pass ? "green" : "red"}">${getPhrase(
             "wcf.acp.option.url_omit_index_php.test.status." + (result.pass ? "success" : "failure"),
           )}</span> ${result.app}</li>`;
         })
@@ -167,7 +167,7 @@ class RewriteTest {
           });
         },
         onShow: () => this.runTest(),
-        title: Language.get("wcf.acp.option.url_omit_index_php"),
+        title: getPhrase("wcf.acp.option.url_omit_index_php"),
       },
     };
   }

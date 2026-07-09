@@ -10,7 +10,7 @@
 import { dboAction } from "../../../Ajax";
 import * as AjaxStatus from "../../../Ajax/Status";
 import { isPlainObject } from "../../../Core";
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import { innerError } from "../../../Dom/Util";
 import UiDialog from "../../../Ui/Dialog";
 import { StatusNotOk } from "WoltLabSuite/Core/Ajax/Error";
@@ -64,7 +64,7 @@ function detectCode(versionNumber: string): void {
   if (isValid) {
     innerError(codeInput, false);
   } else {
-    innerError(codeInput, Language.get("wcf.acp.package.quickInstallation.code.error.invalid"));
+    innerError(codeInput, getPhrase("wcf.acp.package.quickInstallation.code.error.invalid"));
   }
 }
 
@@ -110,7 +110,7 @@ async function prepareInstallation(data: InstallationCode, versionNumber: string
           codeInput.value = "";
           innerError(
             codeInput,
-            Language.getPhrase("wcf.acp.package.error.incompatibleStoreProduct", { versionNumber }),
+            getPhrase("wcf.acp.package.error.incompatibleStoreProduct", { versionNumber }),
           );
 
           return;
@@ -127,7 +127,7 @@ async function prepareInstallation(data: InstallationCode, versionNumber: string
     if (response.queueID === null) {
       codeInput.value = "";
 
-      innerError(codeInput, Language.get("wcf.acp.package.error.uniqueAlreadyInstalled"));
+      innerError(codeInput, getPhrase("wcf.acp.package.error.uniqueAlreadyInstalled"));
     } else {
       const installation = new window.WCF.ACP.Package.Installation(response.queueID, undefined, false);
       installation.prepareInstallation();
@@ -139,7 +139,7 @@ async function prepareInstallation(data: InstallationCode, versionNumber: string
           return {
             id: "quickInstallationError",
             options: {
-              title: Language.get("wcf.global.error.title"),
+              title: getPhrase("wcf.global.error.title"),
             },
             source: null,
           };

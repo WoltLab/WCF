@@ -5,12 +5,11 @@
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "./Container", "../../../Language", "../../../Dom/Util", "../../Dropdown/Simple"], function (require, exports, tslib_1, Container_1, Language, Util_1, DropDownSimple) {
+define(["require", "exports", "tslib", "./Container", "WoltLabSuite/Core/Language", "../../../Dom/Util", "../../Dropdown/Simple"], function (require, exports, tslib_1, Container_1, Language_1, Util_1, DropDownSimple) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.PageMenuMain = void 0;
     Container_1 = tslib_1.__importDefault(Container_1);
-    Language = tslib_1.__importStar(Language);
     Util_1 = tslib_1.__importDefault(Util_1);
     DropDownSimple = tslib_1.__importStar(DropDownSimple);
     class PageMenuMain {
@@ -151,7 +150,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                     counter: 0,
                     depth: 0,
                     identifier: "language",
-                    title: Language.get("wcf.user.language"),
+                    title: (0, Language_1.getPhrase)("wcf.user.language"),
                     icon,
                 },
             ];
@@ -274,7 +273,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 button.innerHTML = '<fa-icon size="24" name="angle-down"></fa-icon>';
                 let ariaLabel = menuItem.title;
                 if (menuItem.link) {
-                    ariaLabel = Language.get("wcf.menu.page.button.toggle", { title: menuItem.title });
+                    ariaLabel = (0, Language_1.getPhrase)("wcf.menu.page.button.toggle", { title: menuItem.title });
                 }
                 button.setAttribute("aria-label", ariaLabel);
                 const list = this.buildMenuItemList(menuItem.children, isLanguageSelection);

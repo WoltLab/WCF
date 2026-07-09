@@ -8,7 +8,7 @@
  */
 
 import * as Core from "../Core";
-import * as Language from "../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import UiDialog from "./Dialog";
 import { DialogCallbackObject, DialogCallbackSetup } from "./Dialog/Data";
 
@@ -44,13 +44,13 @@ class UiConfirmation implements DialogCallbackObject {
     this.confirmButton.type = "button";
     this.confirmButton.dataset.type = "submit";
     this.confirmButton.classList.add("button", "buttonPrimary");
-    this.confirmButton.textContent = Language.get("wcf.global.confirmation.confirm");
+    this.confirmButton.textContent = getPhrase("wcf.global.confirmation.confirm");
     formSubmit.appendChild(this.confirmButton);
 
     const cancelButton = document.createElement("button");
     cancelButton.type = "button";
     cancelButton.classList.add("button");
-    cancelButton.textContent = Language.get("wcf.global.confirmation.cancel");
+    cancelButton.textContent = getPhrase("wcf.global.confirmation.cancel");
     cancelButton.addEventListener("click", () => {
       UiDialog.close(this);
     });
@@ -136,7 +136,7 @@ class UiConfirmation implements DialogCallbackObject {
       options: {
         onClose: this._onClose.bind(this),
         onShow: this._onShow.bind(this),
-        title: Language.get("wcf.global.confirmation.title"),
+        title: getPhrase("wcf.global.confirmation.title"),
       },
     };
   }

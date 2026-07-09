@@ -6,10 +6,9 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sortable/List", "../../Event/Handler", "../../Date/Picker", "../../Component/Ckeditor/Event", "WoltLabSuite/Core/Dom/Util"], function (require, exports, tslib_1, Core, Language, List_1, EventHandler, DatePicker, Event_1, Util_1) {
+define(["require", "exports", "tslib", "../../Core", "WoltLabSuite/Core/Language", "../Sortable/List", "../../Event/Handler", "../../Date/Picker", "../../Component/Ckeditor/Event", "WoltLabSuite/Core/Dom/Util"], function (require, exports, tslib_1, Core, Language_1, List_1, EventHandler, DatePicker, Event_1, Util_1) {
     "use strict";
     Core = tslib_1.__importStar(Core);
-    Language = tslib_1.__importStar(Language);
     List_1 = tslib_1.__importDefault(List_1);
     EventHandler = tslib_1.__importStar(EventHandler);
     DatePicker = tslib_1.__importStar(DatePicker);
@@ -119,14 +118,14 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
             addButton.type = "button";
             addButton.innerHTML = '<fa-icon name="plus" solid></fa-icon>';
             addButton.classList.add("jsTooltip", "jsAddOption");
-            addButton.title = Language.get("wcf.poll.button.addOption");
+            addButton.title = (0, Language_1.getPhrase)("wcf.poll.button.addOption");
             addButton.addEventListener("click", () => this.createOption());
             const deleteButton = document.createElement("button");
             deleteButton.classList.add("button", "small");
             deleteButton.type = "button";
             deleteButton.innerHTML = '<fa-icon name="xmark" solid></fa-icon>';
             deleteButton.classList.add("jsTooltip", "jsDeleteOption");
-            deleteButton.title = Language.get("wcf.poll.button.removeOption");
+            deleteButton.title = (0, Language_1.getPhrase)("wcf.poll.button.removeOption");
             deleteButton.addEventListener("click", () => this.removeOption(deleteButton));
             // input field
             const optionInput = document.createElement("input");
@@ -166,7 +165,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
                 case "pollMaxVotes": {
                     let fieldName = data.returnValues.fieldName.replace("poll", "");
                     fieldName = fieldName.charAt(0).toLowerCase() + fieldName.slice(1);
-                    Util_1.default.innerError(document.getElementById(this.wysiwygId + data.returnValues.fieldName), Language.get("wcf.poll." + fieldName + ".error." + data.returnValues.errorType), true);
+                    Util_1.default.innerError(document.getElementById(this.wysiwygId + data.returnValues.fieldName), (0, Language_1.getPhrase)("wcf.poll." + fieldName + ".error." + data.returnValues.errorType), true);
                     data.cancel = true;
                     break;
                 }
@@ -284,13 +283,13 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
                 }
             });
             if (nonEmptyOptionCount === 0) {
-                data.api.throwError(this.container, Language.get("wcf.global.form.error.empty"));
+                data.api.throwError(this.container, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
                 data.valid = false;
             }
             else {
                 const maxVotes = ~~this.maxVotesField.value;
                 if (maxVotes && maxVotes > nonEmptyOptionCount) {
-                    data.api.throwError(this.maxVotesField.parentElement, Language.get("wcf.poll.maxVotes.error.invalid"));
+                    data.api.throwError(this.maxVotesField.parentElement, (0, Language_1.getPhrase)("wcf.poll.maxVotes.error.invalid"));
                     data.valid = false;
                 }
                 else {

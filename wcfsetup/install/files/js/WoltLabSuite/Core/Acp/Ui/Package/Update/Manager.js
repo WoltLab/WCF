@@ -6,11 +6,10 @@
  * @copyright   2001-2022 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language", "../../../../Ui/Dialog", "../../../../Dom/Util"], function (require, exports, tslib_1, Ajax_1, Language, UiDialog, Util_1) {
+define(["require", "exports", "tslib", "../../../../Ajax", "WoltLabSuite/Core/Language", "../../../../Ui/Dialog", "../../../../Dom/Util"], function (require, exports, tslib_1, Ajax_1, Language_1, UiDialog, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
-    Language = tslib_1.__importStar(Language);
     UiDialog = tslib_1.__importStar(UiDialog);
     Util_1 = tslib_1.__importDefault(Util_1);
     class AcpUiPackageUpdateManager {
@@ -86,11 +85,11 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
         }
         promptCredentials(template) {
             UiDialog.open(this, template);
-            UiDialog.setTitle(this, Language.get("wcf.acp.package.update.unauthorized"));
+            UiDialog.setTitle(this, (0, Language_1.getPhrase)("wcf.acp.package.update.unauthorized"));
         }
         showConflict(template) {
             UiDialog.open(this, template);
-            UiDialog.setTitle(this, Language.get("wcf.acp.package.update.excludedPackages"));
+            UiDialog.setTitle(this, (0, Language_1.getPhrase)("wcf.acp.package.update.excludedPackages"));
         }
         startInstallation(queueId) {
             if (UiDialog.isOpen(this)) {
@@ -103,7 +102,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
             return {
                 id: "acpUiPackageUpdateManager",
                 options: {
-                    title: Language.get("wcf.acp.package.update.title"),
+                    title: (0, Language_1.getPhrase)("wcf.acp.package.update.title"),
                 },
                 source: null,
             };
@@ -113,7 +112,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
             const usernameField = document.getElementById("packageUpdateServerUsername");
             const username = usernameField.value.trim();
             if (username === "") {
-                Util_1.default.innerError(usernameField, Language.get("wcf.global.form.error.empty"));
+                Util_1.default.innerError(usernameField, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
                 isValid = false;
             }
             else {
@@ -122,7 +121,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
             const passwordField = document.getElementById("packageUpdateServerPassword");
             const password = passwordField.value.trim();
             if (password === "") {
-                Util_1.default.innerError(passwordField, Language.get("wcf.global.form.error.empty"));
+                Util_1.default.innerError(passwordField, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
                 isValid = false;
             }
             else {

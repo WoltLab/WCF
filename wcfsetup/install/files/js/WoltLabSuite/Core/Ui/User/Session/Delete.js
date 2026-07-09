@@ -6,15 +6,14 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../Confirmation", "../../../Language", "WoltLabSuite/Core/Api/Sessions/DeleteSession", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, UiConfirmation, Language, DeleteSession_1, Snackbar_1) {
+define(["require", "exports", "tslib", "../../Confirmation", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Api/Sessions/DeleteSession", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, UiConfirmation, Language_1, DeleteSession_1, Snackbar_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
-    Language = tslib_1.__importStar(Language);
     function onClick(button) {
         UiConfirmation.show({
-            message: Language.get("wcf.user.security.deleteSession.confirmMessage"),
+            message: (0, Language_1.getPhrase)("wcf.user.security.deleteSession.confirmMessage"),
             confirm: async (_parameters) => {
                 await (0, DeleteSession_1.deleteSession)(button.dataset.sessionId);
                 button.closest("li")?.remove();

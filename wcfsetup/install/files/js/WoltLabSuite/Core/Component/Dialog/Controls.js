@@ -7,11 +7,10 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../../Language"], function (require, exports, tslib_1, Language) {
+define(["require", "exports", "WoltLabSuite/Core/Language"], function (require, exports, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DialogControls = void 0;
-    Language = tslib_1.__importStar(Language);
     class DialogControls {
         #dialog;
         constructor(dialog) {
@@ -22,7 +21,7 @@ define(["require", "exports", "tslib", "../../Language"], function (require, exp
                 cancel: undefined,
                 extra: undefined,
                 isAlert: true,
-                primary: options?.primary || Language.get("wcf.dialog.button.primary"),
+                primary: options?.primary || (0, Language_1.getPhrase)("wcf.dialog.button.primary"),
             };
             this.#dialog.attachControls(formControlOptions);
             return this.#dialog;
@@ -32,7 +31,7 @@ define(["require", "exports", "tslib", "../../Language"], function (require, exp
                 cancel: "",
                 extra: undefined,
                 isAlert: true,
-                primary: options?.primary || Language.get("wcf.dialog.button.primary.confirm"),
+                primary: options?.primary || (0, Language_1.getPhrase)("wcf.dialog.button.primary.confirm"),
             };
             this.#dialog.attachControls(formControlOptions);
             return this.#dialog;
@@ -42,7 +41,7 @@ define(["require", "exports", "tslib", "../../Language"], function (require, exp
                 cancel: "",
                 extra: options?.extra,
                 isAlert: false,
-                primary: options?.primary || Language.get("wcf.dialog.button.primary.submit"),
+                primary: options?.primary || (0, Language_1.getPhrase)("wcf.dialog.button.primary.submit"),
             };
             this.#dialog.attachControls(formControlOptions);
             return this.#dialog;

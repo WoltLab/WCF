@@ -8,7 +8,7 @@
  */
 
 import * as Core from "../../Core";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import UiSortableList from "../Sortable/List";
 import * as EventHandler from "../../Event/Handler";
 import * as DatePicker from "../../Date/Picker";
@@ -187,7 +187,7 @@ class UiPollEditor {
     addButton.type = "button";
     addButton.innerHTML = '<fa-icon name="plus" solid></fa-icon>';
     addButton.classList.add("jsTooltip", "jsAddOption");
-    addButton.title = Language.get("wcf.poll.button.addOption");
+    addButton.title = getPhrase("wcf.poll.button.addOption");
     addButton.addEventListener("click", () => this.createOption());
 
     const deleteButton = document.createElement("button");
@@ -195,7 +195,7 @@ class UiPollEditor {
     deleteButton.type = "button";
     deleteButton.innerHTML = '<fa-icon name="xmark" solid></fa-icon>';
     deleteButton.classList.add("jsTooltip", "jsDeleteOption");
-    deleteButton.title = Language.get("wcf.poll.button.removeOption");
+    deleteButton.title = getPhrase("wcf.poll.button.removeOption");
     deleteButton.addEventListener("click", () => this.removeOption(deleteButton));
 
     // input field
@@ -245,7 +245,7 @@ class UiPollEditor {
 
         DomUtil.innerError(
           document.getElementById(this.wysiwygId + data.returnValues.fieldName)!,
-          Language.get("wcf.poll." + fieldName + ".error." + data.returnValues.errorType),
+          getPhrase("wcf.poll." + fieldName + ".error." + data.returnValues.errorType),
           true,
         );
         data.cancel = true;
@@ -382,13 +382,13 @@ class UiPollEditor {
     });
 
     if (nonEmptyOptionCount === 0) {
-      data.api.throwError(this.container, Language.get("wcf.global.form.error.empty"));
+      data.api.throwError(this.container, getPhrase("wcf.global.form.error.empty"));
       data.valid = false;
     } else {
       const maxVotes = ~~this.maxVotesField.value;
 
       if (maxVotes && maxVotes > nonEmptyOptionCount) {
-        data.api.throwError(this.maxVotesField.parentElement!, Language.get("wcf.poll.maxVotes.error.invalid"));
+        data.api.throwError(this.maxVotesField.parentElement!, getPhrase("wcf.poll.maxVotes.error.invalid"));
         data.valid = false;
       } else {
         EventHandler.fire("com.woltlab.wcf.poll.editor", "validate", {

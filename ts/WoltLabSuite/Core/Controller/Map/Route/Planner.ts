@@ -10,7 +10,7 @@
 
 import * as AjaxStatus from "../../../Ajax/Status";
 import DomUtil from "../../../Dom/Util";
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import UiDialog from "../../../Ui/Dialog";
 import { DialogCallbackObject, DialogCallbackSetup } from "../../../Ui/Dialog/Data";
 
@@ -165,7 +165,7 @@ class ControllerMapRoutePlanner implements DialogCallbackObject {
         status = google.maps.DirectionsStatus.NOT_FOUND;
       }
 
-      DomUtil.innerError(this.originInput!, Language.get(`wcf.map.route.error.${status.toLowerCase()}`));
+      DomUtil.innerError(this.originInput!, getPhrase(`wcf.map.route.error.${status.toLowerCase()}`));
     }
   }
 
@@ -186,7 +186,7 @@ class ControllerMapRoutePlanner implements DialogCallbackObject {
       id: this.button.id + "Dialog",
       options: {
         onShow: this.initDialog.bind(this),
-        title: Language.get("wcf.map.route.planner"),
+        title: getPhrase("wcf.map.route.planner"),
       },
       source: `
 <div class="googleMapsDirectionsContainer" style="display: none;">
@@ -194,24 +194,24 @@ class ControllerMapRoutePlanner implements DialogCallbackObject {
   <div class="googleMapsDirections"></div>
 </div>
 <small class="googleMapsDirectionsGoogleLinkContainer">
-  <a href="${this.getGoogleMapsLink()}" class="googleMapsDirectionsGoogleLink" target="_blank" style="display: none;">${Language.get(
+  <a href="${this.getGoogleMapsLink()}" class="googleMapsDirectionsGoogleLink" target="_blank" style="display: none;">${getPhrase(
     "wcf.map.route.viewOnGoogleMaps",
   )}</a>
 </small>
 <dl>
-  <dt>${Language.get("wcf.map.route.origin")}</dt>
+  <dt>${getPhrase("wcf.map.route.origin")}</dt>
   <dd>
     <input type="text" name="origin" class="long" autofocus>
   </dd>
 </dl>
 <dl style="display: none;">
-  <dt>${Language.get("wcf.map.route.travelMode")}</dt>
+  <dt>${getPhrase("wcf.map.route.travelMode")}</dt>
   <dd>
     <select name="travelMode">
-      <option value="driving">${Language.get("wcf.map.route.travelMode.driving")}</option>
-      <option value="walking">${Language.get("wcf.map.route.travelMode.walking")}</option>
-      <option value="bicycling">${Language.get("wcf.map.route.travelMode.bicycling")}</option>
-      <option value="transit">${Language.get("wcf.map.route.travelMode.transit")}</option>
+      <option value="driving">${getPhrase("wcf.map.route.travelMode.driving")}</option>
+      <option value="walking">${getPhrase("wcf.map.route.travelMode.walking")}</option>
+      <option value="bicycling">${getPhrase("wcf.map.route.travelMode.bicycling")}</option>
+      <option value="transit">${getPhrase("wcf.map.route.travelMode.transit")}</option>
     </select>
   </dd>
 </dl>`,

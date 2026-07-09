@@ -8,7 +8,7 @@
 
 import * as Core from "../Core";
 import * as DomTraverse from "../Dom/Traverse";
-import * as Language from "../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import UiSuggestion from "./Suggestion";
 import UiDropdownSimple from "./Dropdown/Simple";
 import { DatabaseObjectActionPayload } from "../Ajax/Data";
@@ -62,7 +62,7 @@ function createUI(element: ItemListInputElement, options: ItemListOptions): UiDa
 
   const limitReached = document.createElement("span");
   limitReached.className = "inputItemListLimitReached";
-  limitReached.textContent = Language.get("wcf.global.form.input.maxItems");
+  limitReached.textContent = getPhrase("wcf.global.form.input.maxItems");
   DomUtil.hide(limitReached);
   listItem.appendChild(limitReached);
 

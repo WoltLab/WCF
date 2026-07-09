@@ -7,11 +7,10 @@
  * @woltlabExcludeBundle all
  * @deprecated 6.0 This feature is discontinued, opening Google Maps in a separate window already offers a route planer.
  */
-define(["require", "exports", "tslib", "../../../Ajax/Status", "../../../Dom/Util", "../../../Language", "../../../Ui/Dialog"], function (require, exports, tslib_1, AjaxStatus, Util_1, Language, Dialog_1) {
+define(["require", "exports", "tslib", "../../../Ajax/Status", "../../../Dom/Util", "WoltLabSuite/Core/Language", "../../../Ui/Dialog"], function (require, exports, tslib_1, AjaxStatus, Util_1, Language_1, Dialog_1) {
     "use strict";
     AjaxStatus = tslib_1.__importStar(AjaxStatus);
     Util_1 = tslib_1.__importDefault(Util_1);
-    Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class ControllerMapRoutePlanner {
         button;
@@ -125,7 +124,7 @@ define(["require", "exports", "tslib", "../../../Ajax/Status", "../../../Dom/Uti
                     status !== google.maps.DirectionsStatus.REQUEST_DENIED) {
                     status = google.maps.DirectionsStatus.NOT_FOUND;
                 }
-                Util_1.default.innerError(this.originInput, Language.get(`wcf.map.route.error.${status.toLowerCase()}`));
+                Util_1.default.innerError(this.originInput, (0, Language_1.getPhrase)(`wcf.map.route.error.${status.toLowerCase()}`));
             }
         }
         /**
@@ -144,7 +143,7 @@ define(["require", "exports", "tslib", "../../../Ajax/Status", "../../../Dom/Uti
                 id: this.button.id + "Dialog",
                 options: {
                     onShow: this.initDialog.bind(this),
-                    title: Language.get("wcf.map.route.planner"),
+                    title: (0, Language_1.getPhrase)("wcf.map.route.planner"),
                 },
                 source: `
 <div class="googleMapsDirectionsContainer" style="display: none;">
@@ -152,22 +151,22 @@ define(["require", "exports", "tslib", "../../../Ajax/Status", "../../../Dom/Uti
   <div class="googleMapsDirections"></div>
 </div>
 <small class="googleMapsDirectionsGoogleLinkContainer">
-  <a href="${this.getGoogleMapsLink()}" class="googleMapsDirectionsGoogleLink" target="_blank" style="display: none;">${Language.get("wcf.map.route.viewOnGoogleMaps")}</a>
+  <a href="${this.getGoogleMapsLink()}" class="googleMapsDirectionsGoogleLink" target="_blank" style="display: none;">${(0, Language_1.getPhrase)("wcf.map.route.viewOnGoogleMaps")}</a>
 </small>
 <dl>
-  <dt>${Language.get("wcf.map.route.origin")}</dt>
+  <dt>${(0, Language_1.getPhrase)("wcf.map.route.origin")}</dt>
   <dd>
     <input type="text" name="origin" class="long" autofocus>
   </dd>
 </dl>
 <dl style="display: none;">
-  <dt>${Language.get("wcf.map.route.travelMode")}</dt>
+  <dt>${(0, Language_1.getPhrase)("wcf.map.route.travelMode")}</dt>
   <dd>
     <select name="travelMode">
-      <option value="driving">${Language.get("wcf.map.route.travelMode.driving")}</option>
-      <option value="walking">${Language.get("wcf.map.route.travelMode.walking")}</option>
-      <option value="bicycling">${Language.get("wcf.map.route.travelMode.bicycling")}</option>
-      <option value="transit">${Language.get("wcf.map.route.travelMode.transit")}</option>
+      <option value="driving">${(0, Language_1.getPhrase)("wcf.map.route.travelMode.driving")}</option>
+      <option value="walking">${(0, Language_1.getPhrase)("wcf.map.route.travelMode.walking")}</option>
+      <option value="bicycling">${(0, Language_1.getPhrase)("wcf.map.route.travelMode.bicycling")}</option>
+      <option value="transit">${(0, Language_1.getPhrase)("wcf.map.route.travelMode.transit")}</option>
     </select>
   </dd>
 </dl>`,

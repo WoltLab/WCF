@@ -5,13 +5,12 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Dom/Util", "../../../../Language", "../../../../Ui/Dialog", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Ajax, Util_1, Language, Dialog_1, Snackbar_1) {
+define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Dom/Util", "WoltLabSuite/Core/Language", "../../../../Ui/Dialog", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Ajax, Util_1, Language_1, Dialog_1, Snackbar_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
     Ajax = tslib_1.__importStar(Ajax);
     Util_1 = tslib_1.__importDefault(Util_1);
-    Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class AcpUiDevtoolsProjectQuickSetup {
         pathInput;
@@ -61,7 +60,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Dom/Util
                 id: "projectQuickSetup",
                 options: {
                     onShow: () => this.onDialogShow(),
-                    title: Language.get("wcf.acp.devtools.project.quickSetup"),
+                    title: (0, Language_1.getPhrase)("wcf.acp.devtools.project.quickSetup"),
                 },
             };
         }
@@ -97,7 +96,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Dom/Util
             event.preventDefault();
             // check if path is empty
             if (this.pathInput.value === "") {
-                Util_1.default.innerError(this.pathInput, Language.get("wcf.global.form.error.empty"));
+                Util_1.default.innerError(this.pathInput, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
                 return;
             }
             Ajax.api(this, {

@@ -7,11 +7,10 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil", "../../../Dom/Util", "../../Dialog", "./Input"], function (require, exports, tslib_1, Language, StringUtil, Util_1, Dialog_1, Input_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "../../../StringUtil", "../../../Dom/Util", "../../Dialog", "./Input"], function (require, exports, tslib_1, Language_1, StringUtil, Util_1, Dialog_1, Input_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.open = open;
-    Language = tslib_1.__importStar(Language);
     StringUtil = tslib_1.__importStar(StringUtil);
     Util_1 = tslib_1.__importDefault(Util_1);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
@@ -30,7 +29,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil
             this.callbackSuccess = callback;
             Dialog_1.default.open(this);
             Dialog_1.default.setTitle(this, title);
-            this.searchInputLabel.textContent = Language.get(labelLanguageItem || "wcf.page.pageObjectID.search.terms");
+            this.searchInputLabel.textContent = (0, Language_1.getPhrase)(labelLanguageItem || "wcf.page.pageObjectID.search.terms");
             this._getSearchInputHandler().setPageId(pageId);
         }
         /**
@@ -39,7 +38,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil
         buildList(data) {
             this.resetList();
             if (!Array.isArray(data.returnValues) || data.returnValues.length === 0) {
-                Util_1.default.innerError(this.searchInput, Language.get("wcf.page.pageObjectID.search.noResults"));
+                Util_1.default.innerError(this.searchInput, (0, Language_1.getPhrase)("wcf.page.pageObjectID.search.noResults"));
                 return;
             }
             data.returnValues.forEach((item) => {
@@ -47,7 +46,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil
                 if (Array.isArray(image)) {
                     const [iconName, forceSolid] = image;
                     image = `
-          <button type="button" class="jsTooltip" title="${Language.get("wcf.global.select")}">
+          <button type="button" class="jsTooltip" title="${(0, Language_1.getPhrase)("wcf.global.select")}">
             <fa-icon size="48" name="${iconName}"${forceSolid ? " solid" : ""}></fa-icon>
           </button>
         `;
@@ -123,7 +122,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil
                 source: `<div class="section">
         <dl>
           <dt>
-            <label for="wcfUiPageSearchInput">${Language.get("wcf.page.pageObjectID.search.terms")}</label>
+            <label for="wcfUiPageSearchInput">${(0, Language_1.getPhrase)("wcf.page.pageObjectID.search.terms")}</label>
           </dt>
           <dd>
             <input type="text" id="wcfUiPageSearchInput" class="long">
@@ -132,7 +131,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil
       </div>
       <section id="wcfUiPageSearchResultListContainer" class="section sectionContainerList">
         <header class="sectionHeader">
-          <h2 class="sectionTitle">${Language.get("wcf.page.pageObjectID.search.results")}</h2>
+          <h2 class="sectionTitle">${(0, Language_1.getPhrase)("wcf.page.pageObjectID.search.results")}</h2>
         </header>
         <ul id="wcfUiPageSearchResultList" class="containerList wcfUiPageSearchResultList"></ul>
       </section>`,

@@ -9,7 +9,7 @@
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
 import * as Core from "../../../Core";
 import DomUtil from "../../../Dom/Util";
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import Upload from "../../../Upload";
 import { UploadOptions } from "../../../Upload/Data";
 
@@ -61,7 +61,7 @@ class TrophyUpload extends Upload {
   }
 
   protected _failure(uploadId: number, data: AjaxResponseError): boolean {
-    DomUtil.innerError(this._button, Language.get(`wcf.acp.trophy.imageUpload.error.${data.returnValues.errorType}`));
+    DomUtil.innerError(this._button, getPhrase(`wcf.acp.trophy.imageUpload.error.${data.returnValues.errorType}`));
 
     // remove previous images
     this._target.innerHTML = "";

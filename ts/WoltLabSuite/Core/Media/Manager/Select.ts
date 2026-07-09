@@ -12,7 +12,7 @@ import * as Core from "../../Core";
 import { Media, MediaManagerSelectOptions } from "../Data";
 import * as DomTraverse from "../../Dom/Traverse";
 import * as FileUtil from "../../FileUtil";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as UiDialog from "../../Ui/Dialog";
 
 class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
@@ -39,7 +39,7 @@ class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
           const removeButton = document.createElement("button");
           removeButton.type = "button";
           removeButton.classList.add("button", "jsTooltip");
-          removeButton.title = Language.getPhrase("wcf.global.button.delete");
+          removeButton.title = getPhrase("wcf.global.button.delete");
           removeButton.innerHTML = '<fa-icon name="xmark"></fa-icon>';
 
           if (button.parentElement!.tagName === "LI") {
@@ -174,9 +174,9 @@ class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
     buttons.appendChild(listItem);
 
     listItem.innerHTML = `
-        <a class="jsTooltip" title="${Language.get("wcf.media.button.select")}">
+        <a class="jsTooltip" title="${getPhrase("wcf.media.button.select")}">
           <fa-icon name="check"></fa-icon>
-          <span class="invisible">${Language.get("wcf.media.button.select")}</span>
+          <span class="invisible">${getPhrase("wcf.media.button.select")}</span>
         </a>
       `;
   }

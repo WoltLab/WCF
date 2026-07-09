@@ -1,9 +1,8 @@
 /**
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../Language", "../../StringUtil", "../../Dom/Change/Listener", "../../Dom/Util", "../User/Search/Input"], function (require, exports, tslib_1, Language, StringUtil, Listener_1, Util_1, Input_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "../../StringUtil", "../../Dom/Change/Listener", "../../Dom/Util", "../User/Search/Input"], function (require, exports, tslib_1, Language_1, StringUtil, Listener_1, Util_1, Input_1) {
     "use strict";
-    Language = tslib_1.__importStar(Language);
     StringUtil = tslib_1.__importStar(StringUtil);
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Util_1 = tslib_1.__importDefault(Util_1);
@@ -73,7 +72,7 @@ define(["require", "exports", "tslib", "../../Language", "../../StringUtil", "..
             const iconName = type === "group" ? "users" : "user";
             const html = `<fa-icon name="${iconName}"></fa-icon>
       <span class="aclLabel">${StringUtil.escapeHTML(label)}</span>
-      <button type="button" class="aclItemDeleteButton jsTooltip" title="${Language.get("wcf.global.button.delete")}">
+      <button type="button" class="aclItemDeleteButton jsTooltip" title="${(0, Language_1.getPhrase)("wcf.global.button.delete")}">
         <fa-icon name="xmark"></fa-icon>
       </button>
       <input type="hidden" name="${this.inputName}[${type}][]" value="${objectId}">`;
@@ -107,8 +106,8 @@ define(["require", "exports", "tslib", "../../Language", "../../StringUtil", "..
         invertPermissions(invert) {
             const aclListContainerDt = document.getElementById(this.prefix + "aclListContainerDt");
             const aclSearchInputLabel = document.getElementById(this.prefix + "aclSearchInputLabel");
-            aclListContainerDt.textContent = Language.get(invert ? "wcf.acl.access.denied" : "wcf.acl.access.granted");
-            aclSearchInputLabel.textContent = Language.get(invert ? "wcf.acl.access.deny" : "wcf.acl.access.grant");
+            aclListContainerDt.textContent = (0, Language_1.getPhrase)(invert ? "wcf.acl.access.denied" : "wcf.acl.access.granted");
+            aclSearchInputLabel.textContent = (0, Language_1.getPhrase)(invert ? "wcf.acl.access.deny" : "wcf.acl.access.grant");
         }
     }
     return UiAclSimple;

@@ -5,11 +5,10 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../Language", "../Dialog"], function (require, exports, tslib_1, Language, Dialog_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "../Dialog"], function (require, exports, tslib_1, Language_1, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
-    Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class UiPageJumpTo {
         activeElement;
@@ -55,7 +54,7 @@ define(["require", "exports", "tslib", "../../Language", "../Dialog"], function 
             this.input.value = pages;
             this.input.max = pages;
             this.input.select();
-            this.description.textContent = Language.get("wcf.page.jumpTo.description").replace(/#pages#/, pages);
+            this.description.textContent = (0, Language_1.getPhrase)("wcf.page.jumpTo.description").replace(/#pages#/, pages);
         }
         /**
          * Handles changes to the page number input field.
@@ -80,14 +79,14 @@ define(["require", "exports", "tslib", "../../Language", "../Dialog"], function 
         }
         _dialogSetup() {
             const source = `<dl>
-        <dt><label for="jsPaginationPageNo">${Language.get("wcf.page.jumpTo")}</label></dt>
+        <dt><label for="jsPaginationPageNo">${(0, Language_1.getPhrase)("wcf.page.jumpTo")}</label></dt>
                 <dd>
           <input type="number" id="jsPaginationPageNo" value="1" min="1" max="1" class="tiny">
           <small></small>
         </dd>
       </dl>
       <div class="formSubmit">
-        <button type="button" class="button buttonPrimary">${Language.get("wcf.global.button.submit")}</button>
+        <button type="button" class="button buttonPrimary">${(0, Language_1.getPhrase)("wcf.global.button.submit")}</button>
       </div>`;
             return {
                 id: "paginationOverlay",
@@ -99,7 +98,7 @@ define(["require", "exports", "tslib", "../../Language", "../Dialog"], function 
                         this.submitButton = content.querySelector("button");
                         this.submitButton.addEventListener("click", () => this.submit());
                     },
-                    title: Language.get("wcf.global.page.pagination"),
+                    title: (0, Language_1.getPhrase)("wcf.global.page.pagination"),
                 },
                 source: source,
             };

@@ -6,12 +6,11 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Dom/Change/Listener", "./Language"], function (require, exports, tslib_1, Request_1, Core, Listener_1, Language) {
+define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Dom/Change/Listener", "WoltLabSuite/Core/Language"], function (require, exports, tslib_1, Request_1, Core, Listener_1, Language_1) {
     "use strict";
     Request_1 = tslib_1.__importDefault(Request_1);
     Core = tslib_1.__importStar(Core);
     Listener_1 = tslib_1.__importDefault(Listener_1);
-    Language = tslib_1.__importStar(Language);
     class Upload {
         _button = document.createElement("p");
         _buttonContainer;
@@ -89,7 +88,7 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Dom/Change
                 this._button.classList.remove("active");
             });
             const span = document.createElement("span");
-            span.textContent = Language.get("wcf.global.button.upload");
+            span.textContent = (0, Language_1.getPhrase)("wcf.global.button.upload");
             this._button.appendChild(span);
             this._button.insertAdjacentElement("afterbegin", this._fileUpload);
             this._insertButton();

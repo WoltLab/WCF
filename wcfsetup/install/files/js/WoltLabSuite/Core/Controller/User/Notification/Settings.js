@@ -6,11 +6,10 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dropdown/Reusable"], function (require, exports, tslib_1, Language, UiDropdownReusable) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "../../../Ui/Dropdown/Reusable"], function (require, exports, tslib_1, Language_1, UiDropdownReusable) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
-    Language = tslib_1.__importStar(Language);
     UiDropdownReusable = tslib_1.__importStar(UiDropdownReusable);
     let _dropDownMenu;
     let _objectId = 0;
@@ -50,7 +49,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dropdow
             else {
                 const link = document.createElement("a");
                 link.href = "#";
-                link.textContent = Language.get(`wcf.user.notification.mailNotificationType.${value}`);
+                link.textContent = (0, Language_1.getPhrase)(`wcf.user.notification.mailNotificationType.${value}`);
                 listItem.appendChild(link);
                 listItem.dataset.value = value;
                 listItem.addEventListener("click", (ev) => setEmailType(ev));
@@ -79,7 +78,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dropdow
         const value = listItem.dataset.value;
         getCurrentEmailTypeInputElement().value = value;
         const button = document.querySelector(`.notificationSettingsEmailType[data-object-id="${_objectId}"]`);
-        button.title = Language.get(`wcf.user.notification.mailNotificationType.${value}`);
+        button.title = (0, Language_1.getPhrase)(`wcf.user.notification.mailNotificationType.${value}`);
         const icon = button.querySelector(".jsIconNotificationSettingsEmailType fa-icon");
         switch (value) {
             case "daily":

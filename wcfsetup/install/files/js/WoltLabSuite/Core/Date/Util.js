@@ -5,7 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../Language"], function (require, exports, tslib_1, Language) {
+define(["require", "exports", "WoltLabSuite/Core/Language"], function (require, exports, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.formatDate = formatDate;
@@ -15,7 +15,6 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
     exports.gmdate = gmdate;
     exports.getTimeElement = getTimeElement;
     exports.getTimezoneDate = getTimezoneDate;
-    Language = tslib_1.__importStar(Language);
     const locale = document.documentElement.lang;
     const dateFormatter = new Intl.DateTimeFormat(locale, { dateStyle: "long" });
     const timeFormatter = new Intl.DateTimeFormat(locale, {
@@ -128,11 +127,11 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                     break;
                 case "l":
                     // `Monday` through `Sunday` (localized)
-                    char = Language.get("__days")[date.getDay()];
+                    char = (0, Language_1.getPhrase)("__days")[date.getDay()];
                     break;
                 case "D":
                     // `Mon` through `Sun` (localized)
-                    char = Language.get("__daysShort")[date.getDay()];
+                    char = (0, Language_1.getPhrase)("__daysShort")[date.getDay()];
                     break;
                 case "S":
                     // ignore english ordinal suffix
@@ -149,11 +148,11 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                     break;
                 case "F":
                     // `January` through `December` (localized)
-                    char = Language.get("__months")[date.getMonth()];
+                    char = (0, Language_1.getPhrase)("__months")[date.getMonth()];
                     break;
                 case "M":
                     // `Jan` through `Dec` (localized)
-                    char = Language.get("__monthsShort")[date.getMonth()];
+                    char = (0, Language_1.getPhrase)("__monthsShort")[date.getMonth()];
                     break;
                 // year
                 case "y":

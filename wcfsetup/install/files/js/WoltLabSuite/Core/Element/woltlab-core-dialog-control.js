@@ -10,11 +10,10 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../Language"], function (require, exports, tslib_1, Language) {
+define(["require", "exports", "WoltLabSuite/Core/Language"], function (require, exports, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.WoltlabCoreDialogControlElement = void 0;
-    Language = tslib_1.__importStar(Language);
     // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
     class WoltlabCoreDialogControlElement extends HTMLElement {
         #cancelButton;
@@ -33,7 +32,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
         get primary() {
             let label = this.getAttribute("primary");
             if (!label) {
-                label = Language.get("wcf.dialog.button.primary");
+                label = (0, Language_1.getPhrase)("wcf.dialog.button.primary");
             }
             return label;
         }
@@ -51,7 +50,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                 return undefined;
             }
             if (label === "") {
-                label = Language.get("wcf.global.confirmation.cancel");
+                label = (0, Language_1.getPhrase)("wcf.global.confirmation.cancel");
             }
             return label;
         }

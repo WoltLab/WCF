@@ -6,12 +6,11 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", "../Language", "../User", "../Date/Util", "../FileUtil", "../Dom/Change/Listener", "../Event/Handler"], function (require, exports, tslib_1, Upload_1, Core, DomUtil, Language, User_1, DateUtil, FileUtil, DomChangeListener, EventHandler) {
+define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", "WoltLabSuite/Core/Language", "../User", "../Date/Util", "../FileUtil", "../Dom/Change/Listener", "../Event/Handler"], function (require, exports, tslib_1, Upload_1, Core, DomUtil, Language_1, User_1, DateUtil, FileUtil, DomChangeListener, EventHandler) {
     "use strict";
     Upload_1 = tslib_1.__importDefault(Upload_1);
     Core = tslib_1.__importStar(Core);
     DomUtil = tslib_1.__importStar(DomUtil);
-    Language = tslib_1.__importStar(Language);
     User_1 = tslib_1.__importDefault(User_1);
     DateUtil = tslib_1.__importStar(DateUtil);
     FileUtil = tslib_1.__importStar(FileUtil);
@@ -64,7 +63,7 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                         cell.querySelectorAll("[data-object-id]").forEach((el) => DomUtil.hide(el));
                         cell.querySelector(".mediaEditButton").classList.add("jsMediaEditButton");
                         cell.querySelector(".jsObjectAction[data-object-action='delete']").dataset.confirmMessage =
-                            Language.get("wcf.media.delete.confirmMessage", {
+                            (0, Language_1.getPhrase)("wcf.media.delete.confirmMessage", {
                                 title: file.name,
                             });
                     }
@@ -195,7 +194,7 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                         const deleteButton = document.createElement("button");
                         deleteButton.type = "button";
                         deleteButton.classList.add("jsTooltip");
-                        deleteButton.title = Language.get("wcf.global.button.delete");
+                        deleteButton.title = (0, Language_1.getPhrase)("wcf.global.button.delete");
                         deleteButton.addEventListener("click", () => {
                             deleteButton.closest(".mediaFile").remove();
                             EventHandler.fire("com.woltlab.wcf.media.upload", "removedErroneousUploadRow");
@@ -206,7 +205,7 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                         deleteButton.append(fileIcon);
                         file.classList.add("uploadFailed");
                         const p = file.querySelectorAll(".columnFilename .box48 > div > p")[1];
-                        DomUtil.innerError(p, Language.get(`wcf.media.upload.error.${error.errorType}`, {
+                        DomUtil.innerError(p, (0, Language_1.getPhrase)(`wcf.media.upload.error.${error.errorType}`, {
                             filename: error.filename,
                         }));
                         p.remove();
@@ -235,10 +234,10 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                         const fileIcon = file.querySelector(".mediaThumbnail fa-icon");
                         fileIcon.setIcon("xmark");
                         file.classList.add("uploadFailed", "pointer", "jsTooltip");
-                        file.title = Language.get("wcf.global.button.delete");
+                        file.title = (0, Language_1.getPhrase)("wcf.global.button.delete");
                         file.addEventListener("click", () => file.remove());
                         const title = file.querySelector(".mediaInformation .mediaTitle");
-                        title.textContent = Language.get(`wcf.media.upload.error.${error.errorType}`, {
+                        title.textContent = (0, Language_1.getPhrase)(`wcf.media.upload.error.${error.errorType}`, {
                             filename: error.filename,
                         });
                     }

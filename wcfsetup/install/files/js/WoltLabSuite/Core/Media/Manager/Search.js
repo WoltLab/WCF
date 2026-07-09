@@ -6,10 +6,9 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Language", "../../Ajax", "../../Dom/Util"], function (require, exports, tslib_1, DomTraverse, Language, Ajax, Util_1) {
+define(["require", "exports", "tslib", "../../Dom/Traverse", "WoltLabSuite/Core/Language", "../../Ajax", "../../Dom/Util"], function (require, exports, tslib_1, DomTraverse, Language_1, Ajax, Util_1) {
     "use strict";
     DomTraverse = tslib_1.__importStar(DomTraverse);
-    Language = tslib_1.__importStar(Language);
     Ajax = tslib_1.__importStar(Ajax);
     Util_1 = tslib_1.__importDefault(Util_1);
     class MediaManagerSearch {
@@ -88,7 +87,7 @@ define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Language", "
             else {
                 innerInfo = document.createElement("p");
                 innerInfo.className = "innerInfo";
-                innerInfo.textContent = Language.get("wcf.media.search.info.searchStringThreshold", {
+                innerInfo.textContent = (0, Language_1.getPhrase)("wcf.media.search.info.searchStringThreshold", {
                     minSearchLength: this._mediaManager.getOption("minSearchLength"),
                 });
                 this._input.parentNode.insertAdjacentElement("afterend", innerInfo);

@@ -18,7 +18,7 @@ import { PageMenuMain } from "./Page/Menu/Main";
 import { PageMenuMainProvider } from "./Page/Menu/Main/Provider";
 import { hasValidUserMenu, PageMenuUser } from "./Page/Menu/User";
 import * as UiScreen from "./Screen";
-import * as Language from "../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 
 let _dropdownMenu: HTMLUListElement | null = null;
 let _dropdownMenuMessage: HTMLElement | null = null;
@@ -112,7 +112,7 @@ function initMessages(): void {
         if (buttonWrapper === null) {
           buttonWrapper = document.createElement("li");
           buttonWrapper.innerHTML = `
-            <button type="button" aria-label="${Language.get("wcf.global.button.more")}">
+            <button type="button" aria-label="${getPhrase("wcf.global.button.more")}">
               <fa-icon name="ellipsis"></fa-icon>
             </button>
           `;

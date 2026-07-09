@@ -5,11 +5,10 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog", "../../../Dom/Util", "WoltLabSuite/Core/Ajax/Backend"], function (require, exports, tslib_1, Language, Dialog_1, Util_1, Backend_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "../../../Ui/Dialog", "../../../Dom/Util", "WoltLabSuite/Core/Ajax/Backend"], function (require, exports, tslib_1, Language_1, Dialog_1, Util_1, Backend_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
-    Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     Util_1 = tslib_1.__importDefault(Util_1);
     class RewriteTest {
@@ -92,7 +91,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"
                 const testFailureResults = document.getElementById("dialogRewriteTestFailureResults");
                 testFailureResults.innerHTML = results
                     .map((result) => {
-                    return `<li><span class="badge label ${result.pass ? "green" : "red"}">${Language.get("wcf.acp.option.url_omit_index_php.test.status." + (result.pass ? "success" : "failure"))}</span> ${result.app}</li>`;
+                    return `<li><span class="badge label ${result.pass ? "green" : "red"}">${(0, Language_1.getPhrase)("wcf.acp.option.url_omit_index_php.test.status." + (result.pass ? "success" : "failure"))}</span> ${result.app}</li>`;
                 })
                     .join("");
                 this.setStatus("failure");
@@ -133,7 +132,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"
                         });
                     },
                     onShow: () => this.runTest(),
-                    title: Language.get("wcf.acp.option.url_omit_index_php"),
+                    title: (0, Language_1.getPhrase)("wcf.acp.option.url_omit_index_php"),
                 },
             };
         }

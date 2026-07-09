@@ -7,11 +7,10 @@
  * @since 5.3
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../Core", "./Upload", "../Language", "../Dom/Util", "../Dom/Change/Listener", "../Component/Snackbar"], function (require, exports, tslib_1, Core, Upload_1, Language, Util_1, DomChangeListener, Snackbar_1) {
+define(["require", "exports", "tslib", "../Core", "./Upload", "WoltLabSuite/Core/Language", "../Dom/Util", "../Dom/Change/Listener", "../Component/Snackbar"], function (require, exports, tslib_1, Core, Upload_1, Language_1, Util_1, DomChangeListener, Snackbar_1) {
     "use strict";
     Core = tslib_1.__importStar(Core);
     Upload_1 = tslib_1.__importDefault(Upload_1);
-    Language = tslib_1.__importStar(Language);
     Util_1 = tslib_1.__importDefault(Util_1);
     DomChangeListener = tslib_1.__importStar(DomChangeListener);
     class MediaReplace extends Upload_1.default {
@@ -25,7 +24,7 @@ define(["require", "exports", "tslib", "../Core", "./Upload", "../Language", "..
         _createButton() {
             super._createButton();
             this._button.classList.add("small");
-            this._button.querySelector("span").textContent = Language.get("wcf.media.button.replaceFile");
+            this._button.querySelector("span").textContent = (0, Language_1.getPhrase)("wcf.media.button.replaceFile");
         }
         _createFileElement() {
             return this._target;
@@ -62,7 +61,7 @@ define(["require", "exports", "tslib", "../Core", "./Upload", "../Language", "..
                             filename: file.dataset.filename,
                         };
                     }
-                    Util_1.default.innerError(this._buttonContainer, Language.get("wcf.media.upload.error." + error.errorType, {
+                    Util_1.default.innerError(this._buttonContainer, (0, Language_1.getPhrase)("wcf.media.upload.error." + error.errorType, {
                         filename: error.filename,
                     }));
                 }

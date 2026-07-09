@@ -2,7 +2,7 @@
  * @woltlabExcludeBundle all
  */
 
-import * as Language from "../../../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import { AjaxCallbackSetup, ResponseData } from "../../../../../Ajax/Data";
 import UiUserProfileMenuItemAbstract from "./Abstract";
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
@@ -22,7 +22,7 @@ class UiUserProfileMenuItemFollow extends UiUserProfileMenuItemAbstract {
   }
 
   protected _getLabel(): string {
-    return Language.get("wcf.user.button." + (this._isActive ? "un" : "") + "follow");
+    return getPhrase("wcf.user.button." + (this._isActive ? "un" : "") + "follow");
   }
 
   protected _getAjaxActionName(): string {

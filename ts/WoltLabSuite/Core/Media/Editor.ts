@@ -16,7 +16,7 @@ import * as LanguageInput from "../Language/Input";
 import * as DomUtil from "../Dom/Util";
 import * as DomTraverse from "../Dom/Traverse";
 import DomChangeListener from "../Dom/Change/Listener";
-import * as Language from "../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as Ajax from "../Ajax";
 import MediaReplace from "./Replace";
 import { I18nValues } from "../Language/Input";
@@ -234,19 +234,19 @@ class MediaEditor implements AjaxCallbackObject {
       if (altText && !LanguageInput.validate(altText.id, true)) {
         hasError = true;
         if (!altTextError) {
-          DomUtil.innerError(altText, Language.get("wcf.global.form.error.multilingual"));
+          DomUtil.innerError(altText, getPhrase("wcf.global.form.error.multilingual"));
         }
       }
       if (caption && !LanguageInput.validate(caption.id, true)) {
         hasError = true;
         if (!captionError) {
-          DomUtil.innerError(caption, Language.get("wcf.global.form.error.multilingual"));
+          DomUtil.innerError(caption, getPhrase("wcf.global.form.error.multilingual"));
         }
       }
       if (!LanguageInput.validate(title.id, true)) {
         hasError = true;
         if (!titleError) {
-          DomUtil.innerError(title, Language.get("wcf.global.form.error.multilingual"));
+          DomUtil.innerError(title, getPhrase("wcf.global.form.error.multilingual"));
         }
       }
 
@@ -379,7 +379,7 @@ class MediaEditor implements AjaxCallbackObject {
             options: {
               backdropCloseOnClick: false,
               onClose: () => this._close(),
-              title: Language.get("wcf.media.edit"),
+              title: getPhrase("wcf.media.edit"),
             },
             source: {
               after: (content: HTMLElement, responseData: InitEditorData) => this._initEditor(content, responseData),

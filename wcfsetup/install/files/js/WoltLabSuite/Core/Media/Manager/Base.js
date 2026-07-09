@@ -6,10 +6,9 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Permission", "../../Dom/Change/Listener", "../../Event/Handler", "../../Dom/Traverse", "../../Dom/Util", "../../Ui/Dialog", "../../Controller/Clipboard", "../../Ui/Pagination", "../../StringUtil", "./Search", "../Upload", "../Editor", "../Clipboard", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Core, Language, Permission, DomChangeListener, EventHandler, DomTraverse, DomUtil, UiDialog, Clipboard, Pagination_1, StringUtil, Search_1, Upload_1, Editor_1, MediaClipboard, Snackbar_1) {
+define(["require", "exports", "tslib", "../../Core", "WoltLabSuite/Core/Language", "../../Permission", "../../Dom/Change/Listener", "../../Event/Handler", "../../Dom/Traverse", "../../Dom/Util", "../../Ui/Dialog", "../../Controller/Clipboard", "../../Ui/Pagination", "../../StringUtil", "./Search", "../Upload", "../Editor", "../Clipboard", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Core, Language_1, Permission, DomChangeListener, EventHandler, DomTraverse, DomUtil, UiDialog, Clipboard, Pagination_1, StringUtil, Search_1, Upload_1, Editor_1, MediaClipboard, Snackbar_1) {
     "use strict";
     Core = tslib_1.__importStar(Core);
-    Language = tslib_1.__importStar(Language);
     Permission = tslib_1.__importStar(Permission);
     DomChangeListener = tslib_1.__importStar(DomChangeListener);
     EventHandler = tslib_1.__importStar(EventHandler);
@@ -39,7 +38,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
         _options;
         constructor(options) {
             this._options = Core.extend({
-                dialogTitle: Language.get("wcf.media.manager"),
+                dialogTitle: (0, Language_1.getPhrase)("wcf.media.manager"),
                 imagesOnly: false,
                 minSearchLength: 3,
             }, options);
@@ -283,7 +282,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
                 if (info === null) {
                     info = document.createElement("p");
                     info.className = "info";
-                    info.textContent = Language.get("wcf.media.search.noResults");
+                    info.textContent = (0, Language_1.getPhrase)("wcf.media.search.noResults");
                 }
                 DomUtil.show(info);
                 DomUtil.insertAfter(info, this._mediaManagerMediaList);
@@ -425,23 +424,23 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
                 editButton.dataset.objectId = media.mediaID.toString();
                 buttons.appendChild(editButton);
                 editButton.innerHTML = `
-        <a class="jsTooltip" title="${Language.get("wcf.global.button.edit")}">
+        <a class="jsTooltip" title="${(0, Language_1.getPhrase)("wcf.global.button.edit")}">
           <fa-icon name="pencil"></fa-icon>
-          <span class="invisible">${Language.get("wcf.global.button.edit")}</span>
+          <span class="invisible">${(0, Language_1.getPhrase)("wcf.global.button.edit")}</span>
         </a>`;
                 const deleteButton = document.createElement("li");
                 deleteButton.classList.add("jsObjectAction");
                 deleteButton.dataset.objectAction = "delete";
                 // use temporary title to not unescape html in filename
                 const uuid = Core.getUuid();
-                deleteButton.dataset.confirmMessage = StringUtil.unescapeHTML(Language.get("wcf.media.delete.confirmMessage", {
+                deleteButton.dataset.confirmMessage = StringUtil.unescapeHTML((0, Language_1.getPhrase)("wcf.media.delete.confirmMessage", {
                     title: uuid,
                 })).replace(uuid, StringUtil.escapeHTML(media.filename));
                 buttons.appendChild(deleteButton);
                 deleteButton.innerHTML = `
-        <a class="jsTooltip" title="${Language.get("wcf.global.button.delete")}">
+        <a class="jsTooltip" title="${(0, Language_1.getPhrase)("wcf.global.button.delete")}">
           <fa-icon name="xmark"></fa-icon>
-          <span class="invisible">${Language.get("wcf.global.button.delete")}</span>
+          <span class="invisible">${(0, Language_1.getPhrase)("wcf.global.button.delete")}</span>
         </a>`;
             }
         }

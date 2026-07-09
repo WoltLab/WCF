@@ -8,7 +8,7 @@
 
 import * as Ajax from "../../../../Ajax";
 import DomUtil from "../../../../Dom/Util";
-import * as Language from "../../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import UiDialog from "../../../../Ui/Dialog";
 import { AjaxCallbackObject, AjaxCallbackSetup } from "../../../../Ajax/Data";
 import { DialogCallbackObject, DialogCallbackSetup } from "../../../../Ui/Dialog/Data";
@@ -79,7 +79,7 @@ class AcpUiDevtoolsProjectQuickSetup implements AjaxCallbackObject, DialogCallba
       id: "projectQuickSetup",
       options: {
         onShow: () => this.onDialogShow(),
-        title: Language.get("wcf.acp.devtools.project.quickSetup"),
+        title: getPhrase("wcf.acp.devtools.project.quickSetup"),
       },
     };
   }
@@ -122,7 +122,7 @@ class AcpUiDevtoolsProjectQuickSetup implements AjaxCallbackObject, DialogCallba
 
     // check if path is empty
     if (this.pathInput.value === "") {
-      DomUtil.innerError(this.pathInput, Language.get("wcf.global.form.error.empty"));
+      DomUtil.innerError(this.pathInput, getPhrase("wcf.global.form.error.empty"));
 
       return;
     }

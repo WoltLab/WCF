@@ -6,13 +6,12 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "./Container", "../../../Language", "../../User/Menu/Manager", "../../../Dom/Util", "../../User/Menu/ControlPanel", "../../../Event/Handler", "../../Screen"], function (require, exports, tslib_1, Container_1, Language, Manager_1, Util_1, ControlPanel_1, EventHandler, Screen_1) {
+define(["require", "exports", "tslib", "./Container", "WoltLabSuite/Core/Language", "../../User/Menu/Manager", "../../../Dom/Util", "../../User/Menu/ControlPanel", "../../../Event/Handler", "../../Screen"], function (require, exports, tslib_1, Container_1, Language_1, Manager_1, Util_1, ControlPanel_1, EventHandler, Screen_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.PageMenuUser = void 0;
     exports.hasValidUserMenu = hasValidUserMenu;
     Container_1 = tslib_1.__importDefault(Container_1);
-    Language = tslib_1.__importStar(Language);
     Util_1 = tslib_1.__importDefault(Util_1);
     EventHandler = tslib_1.__importStar(EventHandler);
     class PageMenuUser {
@@ -243,7 +242,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             const tabList = document.createElement("div");
             tabList.classList.add("pageMenuUserTabList");
             tabList.setAttribute("role", "tablist");
-            tabList.setAttribute("aria-label", Language.get("wcf.menu.user"));
+            tabList.setAttribute("aria-label", (0, Language_1.getPhrase)("wcf.menu.user"));
             tabContainer.append(tabList);
             this.buildControlPanelTab(tabList, tabContainer);
             (0, Manager_1.getUserMenuProviders)().forEach((provider) => {

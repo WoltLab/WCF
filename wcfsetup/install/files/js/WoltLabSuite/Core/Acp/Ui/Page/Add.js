@@ -5,11 +5,10 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../Language", "../../../Component/Dialog"], function (require, exports, tslib_1, Language, Dialog_1) {
+define(["require", "exports", "WoltLabSuite/Core/Language", "../../../Component/Dialog"], function (require, exports, Language_1, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.AcpUiPageAdd = void 0;
-    Language = tslib_1.__importStar(Language);
     class AcpUiPageAdd {
         #supportsI18n;
         #link;
@@ -28,7 +27,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Component/
             if (!this.#dialog) {
                 this.#dialog = this.#createDialog();
             }
-            this.#dialog.show(Language.get("wcf.acp.page.add"));
+            this.#dialog.show((0, Language_1.getPhrase)("wcf.acp.page.add"));
         }
         #createDialog() {
             const dialog = (0, Dialog_1.dialogFactory)().fromId("pageAddDialog").asPrompt();

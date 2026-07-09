@@ -6,12 +6,11 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Language", "../../Event/Handler", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Ajax, Language, EventHandler, Snackbar_1) {
+define(["require", "exports", "tslib", "../../Ajax", "WoltLabSuite/Core/Language", "../../Event/Handler", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Ajax, Language_1, EventHandler, Snackbar_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     Ajax = tslib_1.__importStar(Ajax);
-    Language = tslib_1.__importStar(Language);
     EventHandler = tslib_1.__importStar(EventHandler);
     const dropdowns = new Map();
     async function click(element) {
@@ -47,12 +46,12 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Language", "../../Ev
             if (subscribe) {
                 element.classList.add("active");
                 icon.setIcon("bookmark", true);
-                label.textContent = Language.get(`wcf.user.objectWatch.button.subscribed`);
+                label.textContent = (0, Language_1.getPhrase)(`wcf.user.objectWatch.button.subscribed`);
             }
             else {
                 element.classList.remove("active");
                 icon.setIcon("bookmark");
-                label.textContent = Language.get("wcf.user.objectWatch.button.subscribe");
+                label.textContent = (0, Language_1.getPhrase)("wcf.user.objectWatch.button.subscribe");
             }
             element.dataset.isSubscribed = subscribe.toString();
         });

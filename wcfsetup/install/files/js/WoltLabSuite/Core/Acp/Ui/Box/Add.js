@@ -5,11 +5,10 @@
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../Language", "../../../Component/Dialog"], function (require, exports, tslib_1, Language, Dialog_1) {
+define(["require", "exports", "WoltLabSuite/Core/Language", "../../../Component/Dialog"], function (require, exports, Language_1, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.AcpUiBoxAdd = void 0;
-    Language = tslib_1.__importStar(Language);
     class AcpUiBoxAdd {
         #supportsI18n;
         #link;
@@ -31,7 +30,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Component/
             if (!this.#dialog) {
                 this.#dialog = this.#createDialog();
             }
-            this.#dialog.show(Language.get("wcf.acp.box.add"));
+            this.#dialog.show((0, Language_1.getPhrase)("wcf.acp.box.add"));
         }
         #createDialog() {
             const dialog = (0, Dialog_1.dialogFactory)().fromId("boxAddDialog").asPrompt();

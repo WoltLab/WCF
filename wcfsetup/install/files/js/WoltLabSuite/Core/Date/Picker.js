@@ -5,12 +5,11 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", "../Language", "../Ui/Alignment", "../Ui/CloseOverlay", "../Dom/Util", "../Helper/PageOverlay", "focus-trap", "../Helper/Selector"], function (require, exports, tslib_1, Core, DateUtil, EventHandler, Language, UiAlignment, CloseOverlay_1, Util_1, PageOverlay_1, focus_trap_1, Selector_1) {
+define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", "WoltLabSuite/Core/Language", "../Ui/Alignment", "../Ui/CloseOverlay", "../Dom/Util", "../Helper/PageOverlay", "focus-trap", "../Helper/Selector"], function (require, exports, tslib_1, Core, DateUtil, EventHandler, Language_1, UiAlignment, CloseOverlay_1, Util_1, PageOverlay_1, focus_trap_1, Selector_1) {
     "use strict";
     Core = tslib_1.__importStar(Core);
     DateUtil = tslib_1.__importStar(DateUtil);
     EventHandler = tslib_1.__importStar(EventHandler);
-    Language = tslib_1.__importStar(Language);
     UiAlignment = tslib_1.__importStar(UiAlignment);
     CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
     Util_1 = tslib_1.__importDefault(Util_1);
@@ -49,8 +48,8 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
         _dateMonthPrevious = document.createElement("button");
         _dateMonthPrevious.type = "button";
         _dateMonthPrevious.className = "previous jsTooltip";
-        _dateMonthPrevious.title = Language.get("wcf.date.datePicker.previousMonth");
-        _dateMonthPrevious.setAttribute("aria-label", Language.get("wcf.date.datePicker.previousMonth"));
+        _dateMonthPrevious.title = (0, Language_1.getPhrase)("wcf.date.datePicker.previousMonth");
+        _dateMonthPrevious.setAttribute("aria-label", (0, Language_1.getPhrase)("wcf.date.datePicker.previousMonth"));
         _dateMonthPrevious.innerHTML = '<fa-icon name="arrow-left" solid></fa-icon>';
         _dateMonthPrevious.addEventListener("click", () => DatePicker.previousMonth());
         header.appendChild(_dateMonthPrevious);
@@ -58,8 +57,8 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
         header.appendChild(monthYearContainer);
         _dateMonth = document.createElement("select");
         _dateMonth.className = "month jsTooltip";
-        _dateMonth.title = Language.get("wcf.date.datePicker.month");
-        _dateMonth.setAttribute("aria-label", Language.get("wcf.date.datePicker.month"));
+        _dateMonth.title = (0, Language_1.getPhrase)("wcf.date.datePicker.month");
+        _dateMonth.setAttribute("aria-label", (0, Language_1.getPhrase)("wcf.date.datePicker.month"));
         _dateMonth.addEventListener("change", changeMonth);
         monthYearContainer.appendChild(_dateMonth);
         let months = "";
@@ -71,15 +70,15 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
         _dateMonth.innerHTML = months;
         _dateYear = document.createElement("select");
         _dateYear.className = "year jsTooltip";
-        _dateYear.title = Language.get("wcf.date.datePicker.year");
-        _dateYear.setAttribute("aria-label", Language.get("wcf.date.datePicker.year"));
+        _dateYear.title = (0, Language_1.getPhrase)("wcf.date.datePicker.year");
+        _dateYear.setAttribute("aria-label", (0, Language_1.getPhrase)("wcf.date.datePicker.year"));
         _dateYear.addEventListener("change", changeYear);
         monthYearContainer.appendChild(_dateYear);
         _dateMonthNext = document.createElement("button");
         _dateMonthNext.type = "button";
         _dateMonthNext.className = "next jsTooltip";
-        _dateMonthNext.title = Language.get("wcf.date.datePicker.nextMonth");
-        _dateMonthNext.setAttribute("aria-label", Language.get("wcf.date.datePicker.nextMonth"));
+        _dateMonthNext.title = (0, Language_1.getPhrase)("wcf.date.datePicker.nextMonth");
+        _dateMonthNext.setAttribute("aria-label", (0, Language_1.getPhrase)("wcf.date.datePicker.nextMonth"));
         _dateMonthNext.innerHTML = '<fa-icon name="arrow-right" solid></fa-icon>';
         _dateMonthNext.addEventListener("click", () => DatePicker.nextMonth());
         header.appendChild(_dateMonthNext);
@@ -117,8 +116,8 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
         _datePicker.appendChild(_dateTime);
         _dateHour = document.createElement("select");
         _dateHour.className = "hour";
-        _dateHour.title = Language.get("wcf.date.datePicker.hour");
-        _dateHour.setAttribute("aria-label", Language.get("wcf.date.datePicker.hour"));
+        _dateHour.title = (0, Language_1.getPhrase)("wcf.date.datePicker.hour");
+        _dateHour.setAttribute("aria-label", (0, Language_1.getPhrase)("wcf.date.datePicker.hour"));
         _dateHour.addEventListener("change", formatValue);
         const date = new Date(2000, 0, 1);
         const timeFormatter = new Intl.DateTimeFormat(document.documentElement.lang, { hour: "numeric" });
@@ -145,8 +144,8 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
         _dateTime.appendChild(document.createTextNode("\u00A0:\u00A0"));
         _dateMinute = document.createElement("select");
         _dateMinute.className = "minute";
-        _dateMinute.title = Language.get("wcf.date.datePicker.minute");
-        _dateMinute.setAttribute("aria-label", Language.get("wcf.date.datePicker.minute"));
+        _dateMinute.title = (0, Language_1.getPhrase)("wcf.date.datePicker.minute");
+        _dateMinute.setAttribute("aria-label", (0, Language_1.getPhrase)("wcf.date.datePicker.minute"));
         _dateMinute.addEventListener("change", formatValue);
         tmp = "";
         for (let i = 0; i < 60; i++) {
@@ -542,7 +541,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
                 return;
             }
             _didInit = true;
-            _firstDayOfWeek = parseInt(Language.get("wcf.date.firstDayOfTheWeek"), 10);
+            _firstDayOfWeek = parseInt((0, Language_1.getPhrase)("wcf.date.firstDayOfTheWeek"), 10);
             (0, Selector_1.wheneverSeen)(`input[type="date"]:not(.inputDatePicker), input[type="datetime"]:not(.inputDatePicker)`, (element) => {
                 const now = new Date();
                 element.classList.add("inputDatePicker");
@@ -663,10 +662,10 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
                 openButton.type = "button";
                 openButton.className = "inputSuffix button jsTooltip";
                 if (isTimeOnly) {
-                    openButton.title = Language.getPhrase("wcf.date.datePicker.time");
+                    openButton.title = (0, Language_1.getPhrase)("wcf.date.datePicker.time");
                 }
                 else {
-                    openButton.title = Language.getPhrase("wcf.date.datePicker");
+                    openButton.title = (0, Language_1.getPhrase)("wcf.date.datePicker");
                 }
                 openButton.setAttribute("aria-haspopup", "true");
                 openButton.setAttribute("aria-expanded", "false");
@@ -692,10 +691,10 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
                     clearButton.type = "button";
                     clearButton.className = "inputSuffix button jsTooltip";
                     if (isTimeOnly) {
-                        clearButton.title = Language.getPhrase("wcf.date.datePicker.time.clear");
+                        clearButton.title = (0, Language_1.getPhrase)("wcf.date.datePicker.time.clear");
                     }
                     else {
-                        clearButton.title = Language.getPhrase("wcf.date.datePicker.clear");
+                        clearButton.title = (0, Language_1.getPhrase)("wcf.date.datePicker.clear");
                     }
                     clearButton.addEventListener("click", () => {
                         if (!element.disabled) {

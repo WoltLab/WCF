@@ -12,7 +12,7 @@ import * as Core from "../../Core";
 import UiDialog from "../Dialog";
 import { DialogCallbackObject, DialogCallbackSetup } from "../Dialog/Data";
 import DomUtil from "../../Dom/Util";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as ColorUtil from "../../ColorUtil";
 
 type CallbackSubmit = (data: ColorUtil.RGBA) => void;
@@ -88,19 +88,19 @@ class UiColorPicker implements DialogCallbackObject {
 <div class="colorPickerDialog">
   <div class="colorPickerHsvContainer" style="--hue: 0; --saturation: 0%; --lightness: 0%">
     <dl>
-        <dt>${Language.get("wcf.style.colorPicker.hue")}</dt>
+        <dt>${getPhrase("wcf.style.colorPicker.hue")}</dt>
         <dd>
           <input type="range" min="0" max="359" class="colorPickerHslRange" data-coordinate="hue">
         </dd>
     </dl>
     <dl>
-        <dt>${Language.get("wcf.style.colorPicker.saturation")}</dt>
+        <dt>${getPhrase("wcf.style.colorPicker.saturation")}</dt>
         <dd>
           <input type="range" min="0" max="100" class="colorPickerHslRange" data-coordinate="saturation">
         </dd>
     </dl>
     <dl>
-        <dt>${Language.get("wcf.style.colorPicker.lightness")}</dt>
+        <dt>${getPhrase("wcf.style.colorPicker.lightness")}</dt>
         <dd>
           <input type="range" min="0" max="100" class="colorPickerHslRange" data-coordinate="lightness">
         </dd>
@@ -109,7 +109,7 @@ class UiColorPicker implements DialogCallbackObject {
   <div class="colorPickerValueContainer">
     <div>
       <dl>
-        <dt>${Language.get("wcf.style.colorPicker.opacity")}</dt>
+        <dt>${getPhrase("wcf.style.colorPicker.opacity")}</dt>
         <dd>
           <div class="inputAddon">
           <input type="number" class="tiny colorPickerOpacity" min="0" max="100" step="1" value="0">
@@ -118,7 +118,7 @@ class UiColorPicker implements DialogCallbackObject {
         </dd>
       </dl>
       <dl>
-        <dt>${Language.get("wcf.style.colorPicker.color")}</dt>
+        <dt>${getPhrase("wcf.style.colorPicker.color")}</dt>
         <dd class="colorPickerChannels">
           rgba(
           <input type="number" min="0" max="255" size="3" class="colorPickerChannel" data-channel="r" data-dialog-submit-on-enter="true">
@@ -130,7 +130,7 @@ class UiColorPicker implements DialogCallbackObject {
         </dd>
       </dl>
       <dl>
-        <dt>${Language.get("wcf.style.colorPicker.hexAlpha")}</dt>
+        <dt>${getPhrase("wcf.style.colorPicker.hexAlpha")}</dt>
         <dd>
           <div class="inputAddon">
             <span class="inputPrefix">#</span>
@@ -140,18 +140,18 @@ class UiColorPicker implements DialogCallbackObject {
       </dl>
     </div>
     <div class="colorPickerComparison">
-      <small>${Language.get("wcf.style.colorPicker.new")}</small>
+      <small>${getPhrase("wcf.style.colorPicker.new")}</small>
       <div class="colorPickerColorNew">
         <span style="background-color: ${this.input.value}"></span>
       </div>
       <div class="colorPickerColorOld">
         <span style="background-color: ${this.input.value}"></span>
       </div>
-      <small>${Language.get("wcf.style.colorPicker.current")}</small>
+      <small>${getPhrase("wcf.style.colorPicker.current")}</small>
     </div>
   </div>
   <div class="formSubmit">
-    <button type="button" class="button buttonPrimary" data-type="submit">${Language.get(
+    <button type="button" class="button buttonPrimary" data-type="submit">${getPhrase(
       "wcf.style.colorPicker.button.apply",
     )}</button>
   </div>
@@ -204,7 +204,7 @@ class UiColorPicker implements DialogCallbackObject {
           this.colorTextInput!.focus();
           this.colorTextInput!.select();
         },
-        title: Language.get("wcf.style.colorPicker"),
+        title: getPhrase("wcf.style.colorPicker"),
       },
     };
   }
@@ -250,7 +250,7 @@ class UiColorPicker implements DialogCallbackObject {
       if (ColorUtil.isValidColor(`#${color}`)) {
         color = `#${color}`;
       } else {
-        DomUtil.innerError(colorTextInput, Language.get("wcf.style.colorPicker.error.invalidColor"));
+        DomUtil.innerError(colorTextInput, getPhrase("wcf.style.colorPicker.error.invalidColor"));
         return;
       }
     }

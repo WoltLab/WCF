@@ -7,7 +7,7 @@
  */
 
 import * as Core from "../../Core";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as UiScreen from "../../Ui/Screen";
 
 const _buttons = new Map<string, HTMLElement>();
@@ -27,7 +27,7 @@ function buildToTopButton(): HTMLButtonElement {
   const button = document.createElement("button");
   button.type = "button";
   button.classList.add("button", "buttonPrimary", "pageActionButtonToTop", "initiallyHidden", "jsTooltip");
-  button.title = Language.get("wcf.global.scrollUp");
+  button.title = getPhrase("wcf.global.scrollUp");
   button.setAttribute("aria-hidden", "true");
   button.innerHTML = '<fa-icon size="32" name="angle-up" solid></fa-icon>';
 

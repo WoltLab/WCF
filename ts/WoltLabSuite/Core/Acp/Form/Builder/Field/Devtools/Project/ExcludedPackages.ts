@@ -10,7 +10,7 @@
 
 import AbstractPackageList from "./AbstractPackageList";
 import * as Core from "../../../../../../Core";
-import * as Language from "../../../../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import { ExcludedPackageData } from "./Data";
 import DomUtil from "../../../../../../Dom/Util";
 
@@ -56,7 +56,7 @@ class ExcludedPackages<
 
     listItem.dataset.version = packageData.version;
 
-    listItem.innerHTML = ` ${Language.get("wcf.acp.devtools.project.excludedPackage.excludedPackage", {
+    listItem.innerHTML = ` ${getPhrase("wcf.acp.devtools.project.excludedPackage.excludedPackage", {
       packageIdentifier: packageData.packageIdentifier,
       version: packageData.version,
     })}`;
@@ -70,7 +70,7 @@ class ExcludedPackages<
     const version = versionElement.value;
 
     if (version === "") {
-      DomUtil.innerError(versionElement, Language.get("wcf.global.form.error.empty"));
+      DomUtil.innerError(versionElement, getPhrase("wcf.global.form.error.empty"));
 
       return false;
     } else if (version !== "*") {

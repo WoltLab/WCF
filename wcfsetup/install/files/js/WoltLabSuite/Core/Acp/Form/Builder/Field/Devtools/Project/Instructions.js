@@ -6,10 +6,9 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 5.2
  */
-define(["require", "exports", "tslib", "../../../../../../Core", "../../../../../../Language", "../../../../../../Dom/Traverse", "../../../../../../Dom/Change/Listener", "../../../../../../Dom/Util", "../../../../../../Ui/Sortable/List", "../../../../../../Ui/Dialog", "../../../../../../Ui/Confirmation"], function (require, exports, tslib_1, Core, Language, DomTraverse, Listener_1, Util_1, List_1, Dialog_1, UiConfirmation) {
+define(["require", "exports", "tslib", "../../../../../../Core", "WoltLabSuite/Core/Language", "../../../../../../Dom/Traverse", "../../../../../../Dom/Change/Listener", "../../../../../../Dom/Util", "../../../../../../Ui/Sortable/List", "../../../../../../Ui/Dialog", "../../../../../../Ui/Confirmation"], function (require, exports, tslib_1, Core, Language_1, DomTraverse, Listener_1, Util_1, List_1, Dialog_1, UiConfirmation) {
     "use strict";
     Core = tslib_1.__importStar(Core);
-    Language = tslib_1.__importStar(Language);
     DomTraverse = tslib_1.__importStar(DomTraverse);
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Util_1 = tslib_1.__importDefault(Util_1);
@@ -108,7 +107,7 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
             runStandaloneField.checked = false;
             applicationField.value = "";
             document.getElementById(`${this.formFieldId}_instructions${instructionsId}_valueDescription`).innerHTML =
-                Language.get("wcf.acp.devtools.project.instruction.value.description");
+                (0, Language_1.getPhrase)("wcf.acp.devtools.project.instruction.value.description");
             this.toggleApplicationFormField(instructionsId);
             Listener_1.default.trigger();
         }
@@ -129,7 +128,7 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
             let content = `
       <div class="sortableNodeLabel">
         <div class="jsDevtoolsProjectInstruction">
-          ${Language.get("wcf.acp.devtools.project.instruction.instruction", instructionData)}
+          ${(0, Language_1.getPhrase)("wcf.acp.devtools.project.instruction.instruction", instructionData)}
     `;
             if (instructionData.errors) {
                 instructionData.errors.forEach((error) => {
@@ -139,10 +138,10 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
             content += `
         </div>
         <span class="statusDisplay sortableButtonContainer">
-          <button type="button" class="jsTooltip" id="${this.formFieldId}_instruction${instructionId}_editButton" title="${Language.get("wcf.global.button.edit")}">
+          <button type="button" class="jsTooltip" id="${this.formFieldId}_instruction${instructionId}_editButton" title="${(0, Language_1.getPhrase)("wcf.global.button.edit")}">
             <fa-icon name="pencil" solid></fa-icon>
           </button>
-          <button type="button" class="jsTooltip" id="${this.formFieldId}_instruction${instructionId}_deleteButton" title="${Language.get("wcf.global.button.delete")}">
+          <button type="button" class="jsTooltip" id="${this.formFieldId}_instruction${instructionId}_deleteButton" title="${(0, Language_1.getPhrase)("wcf.global.button.delete")}">
             <fa-icon name="xmark" solid></fa-icon>
           </span>
         </span>
@@ -189,7 +188,7 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
             listItem.className = "section";
             listItem.innerHTML = this.instructionsTemplate.fetch({
                 instructionsId: instructionsId,
-                sectionTitle: Language.get(`wcf.acp.devtools.project.instructions.type.${instructionsData.type}.title`, {
+                sectionTitle: (0, Language_1.getPhrase)(`wcf.acp.devtools.project.instructions.type.${instructionsData.type}.title`, {
                     fromVersion: instructionsData.fromVersion,
                 }),
                 type: instructionsData.type,
@@ -256,12 +255,12 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
             const description = document.getElementById(`${this.formFieldId}_instructions${instructionsId}_valueDescription`);
             // update value description
             if (this.pipDefaultFilenames[pip] !== "") {
-                description.innerHTML = Language.get("wcf.acp.devtools.project.instruction.value.description.defaultFilename", {
+                description.innerHTML = (0, Language_1.getPhrase)("wcf.acp.devtools.project.instruction.value.description.defaultFilename", {
                     defaultFilename: this.pipDefaultFilenames[pip],
                 });
             }
             else {
-                description.innerHTML = Language.get("wcf.acp.devtools.project.instruction.value.description");
+                description.innerHTML = (0, Language_1.getPhrase)("wcf.acp.devtools.project.instruction.value.description");
             }
             // toggle application selector
             this.toggleApplicationFormField(instructionsId);
@@ -300,16 +299,16 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
             const otherInstructions = existingInstructions.filter((li) => li.dataset.instructionId !== excludedInstructionId);
             if (pip === "void") {
                 if (section.dataset.type !== "update") {
-                    Util_1.default.innerError(errorTarget, Language.get("wcf.acp.devtools.project.instruction.error.voidInInstall"), true);
+                    Util_1.default.innerError(errorTarget, (0, Language_1.getPhrase)("wcf.acp.devtools.project.instruction.error.voidInInstall"), true);
                     return false;
                 }
                 if (otherInstructions.length > 0) {
-                    Util_1.default.innerError(errorTarget, Language.get("wcf.acp.devtools.project.instruction.error.voidNotAlone"), true);
+                    Util_1.default.innerError(errorTarget, (0, Language_1.getPhrase)("wcf.acp.devtools.project.instruction.error.voidNotAlone"), true);
                     return false;
                 }
             }
             else if (otherInstructions.some((li) => li.dataset.pip === "void")) {
-                Util_1.default.innerError(errorTarget, Language.get("wcf.acp.devtools.project.instruction.error.voidNotAlone"), true);
+                Util_1.default.innerError(errorTarget, (0, Language_1.getPhrase)("wcf.acp.devtools.project.instruction.error.voidNotAlone"), true);
                 return false;
             }
             Util_1.default.innerError(errorTarget, "");
@@ -352,7 +351,7 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
                             listItem.dataset.runStandalone = runStandaloneInput.checked ? "1" : "0";
                             listItem.dataset.value = valueInput.value;
                             // note: data will be validated/filtered by the server
-                            listItem.querySelector(".jsDevtoolsProjectInstruction").innerHTML = Language.get("wcf.acp.devtools.project.instruction.instruction", {
+                            listItem.querySelector(".jsDevtoolsProjectInstruction").innerHTML = (0, Language_1.getPhrase)("wcf.acp.devtools.project.instruction.instruction", {
                                 application: listItem.dataset.application,
                                 pip: listItem.dataset.pip,
                                 runStandalone: Core.stringToBool(listItem.dataset.runStandalone),
@@ -385,18 +384,18 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
                             }
                             const description = DomTraverse.nextByTag(valueInput, "SMALL");
                             if (this.pipDefaultFilenames[pip] !== "") {
-                                description.innerHTML = Language.get("wcf.acp.devtools.project.instruction.value.description.defaultFilename", {
+                                description.innerHTML = (0, Language_1.getPhrase)("wcf.acp.devtools.project.instruction.value.description.defaultFilename", {
                                     defaultFilename: this.pipDefaultFilenames[pip],
                                 });
                             }
                             else {
-                                description.innerHTML = Language.get("wcf.acp.devtools.project.instruction.value.description");
+                                description.innerHTML = (0, Language_1.getPhrase)("wcf.acp.devtools.project.instruction.value.description");
                             }
                         };
                         pipSelect.addEventListener("change", pipChange);
                         pipChange();
                     },
-                    title: Language.get("wcf.acp.devtools.project.instruction.edit"),
+                    title: (0, Language_1.getPhrase)("wcf.acp.devtools.project.instruction.edit"),
                 });
             }
             else {
@@ -424,7 +423,7 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
                             }
                             const instructions = document.getElementById(`${this.formFieldId}_instructions${instructionsId}`);
                             instructions.dataset.fromVersion = fromVersion.value;
-                            instructions.querySelector(".jsInstructionsTitle").innerHTML = Language.get("wcf.acp.devtools.project.instructions.type.update.title", {
+                            instructions.querySelector(".jsInstructionsTitle").innerHTML = (0, Language_1.getPhrase)("wcf.acp.devtools.project.instructions.type.update.title", {
                                 fromVersion: fromVersion.value,
                             });
                             Listener_1.default.trigger();
@@ -437,7 +436,7 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
                         });
                         content.querySelector("button[data-type=submit]").addEventListener("click", submit);
                     },
-                    title: Language.get("wcf.acp.devtools.project.instructions.edit"),
+                    title: (0, Language_1.getPhrase)("wcf.acp.devtools.project.instructions.edit"),
                 });
             }
             else {
@@ -469,7 +468,7 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
                 confirm: () => {
                     instruction.remove();
                 },
-                message: Language.get("wcf.acp.devtools.project.instruction.delete.confirmMessages"),
+                message: (0, Language_1.getPhrase)("wcf.acp.devtools.project.instruction.delete.confirmMessages"),
             });
         }
         /**
@@ -483,7 +482,7 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
                 confirm: () => {
                     instructions.remove();
                 },
-                message: Language.get("wcf.acp.devtools.project.instructions.delete.confirmMessages"),
+                message: (0, Language_1.getPhrase)("wcf.acp.devtools.project.instructions.delete.confirmMessages"),
             });
         }
         /**
@@ -570,17 +569,17 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
         validateFromVersion(inputField) {
             const version = inputField.value;
             if (version === "") {
-                Util_1.default.innerError(inputField, Language.get("wcf.global.form.error.empty"));
+                Util_1.default.innerError(inputField, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
                 return false;
             }
             if (version.length > 50) {
-                Util_1.default.innerError(inputField, Language.get("wcf.acp.devtools.project.packageVersion.error.maximumLength"));
+                Util_1.default.innerError(inputField, (0, Language_1.getPhrase)("wcf.acp.devtools.project.packageVersion.error.maximumLength"));
                 return false;
             }
             // Allow either a single asterisk, an asterisk in the last digit or a regular version.
             if (version !== "*") {
                 if (!Instructions.versionRegExp.test(version.replace(/\.\*$/, ".0"))) {
-                    Util_1.default.innerError(inputField, Language.get("wcf.acp.devtools.project.packageVersion.error.format"));
+                    Util_1.default.innerError(inputField, (0, Language_1.getPhrase)("wcf.acp.devtools.project.packageVersion.error.format"));
                     return false;
                 }
             }
@@ -595,10 +594,10 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
         validateInstructionsType() {
             if (this.instructionsType.value !== "install" && this.instructionsType.value !== "update") {
                 if (this.instructionsType.value === "") {
-                    Util_1.default.innerError(this.instructionsType, Language.get("wcf.global.form.error.empty"));
+                    Util_1.default.innerError(this.instructionsType, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
                 }
                 else {
-                    Util_1.default.innerError(this.instructionsType, Language.get("wcf.global.form.error.noValidSelection"));
+                    Util_1.default.innerError(this.instructionsType, (0, Language_1.getPhrase)("wcf.global.form.error.noValidSelection"));
                 }
                 return false;
             }
@@ -606,7 +605,7 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
             if (this.instructionsType.value === "install") {
                 const hasInstall = Array.from(this.instructionsList.children).some((instructions) => instructions.dataset.type === "install");
                 if (hasInstall) {
-                    Util_1.default.innerError(this.instructionsType, Language.get("wcf.acp.devtools.project.instructions.type.update.error.duplicate"));
+                    Util_1.default.innerError(this.instructionsType, (0, Language_1.getPhrase)("wcf.acp.devtools.project.instructions.type.update.error.duplicate"));
                     return false;
                 }
             }

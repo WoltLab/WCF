@@ -12,7 +12,7 @@ import * as Core from "../../Core";
 import { Media, MediaInsertType, MediaManagerEditorOptions, MediaUploadSuccessEventData } from "../Data";
 import * as EventHandler from "../../Event/Handler";
 import * as DomTraverse from "../../Dom/Traverse";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as UiDialog from "../../Ui/Dialog";
 import * as Clipboard from "../../Controller/Clipboard";
 import DomUtil from "../../Dom/Util";
@@ -93,15 +93,15 @@ export class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> 
         '<option value="' +
         thumbnailSize +
         '">' +
-        Language.get("wcf.media.insert.imageSize." + thumbnailSize) +
+        getPhrase("wcf.media.insert.imageSize." + thumbnailSize) +
         "</option>";
     });
-    thumbnailOptions += '<option value="original">' + Language.get("wcf.media.insert.imageSize.original") + "</option>";
+    thumbnailOptions += '<option value="original">' + getPhrase("wcf.media.insert.imageSize.original") + "</option>";
 
     const dialog = `
       <div class="section">
         <dl class="thumbnailSizeSelection">
-          <dt>${Language.get("wcf.media.insert.imageSize")}</dt>
+          <dt>${getPhrase("wcf.media.insert.imageSize")}</dt>
           <dd>
             <select name="thumbnailSize">
               ${thumbnailOptions}
@@ -110,7 +110,7 @@ export class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> 
         </dl>
       </div>
       <div class="formSubmit">
-        <button type="button" class="button buttonPrimary">${Language.get("wcf.global.button.insert")}</button>
+        <button type="button" class="button buttonPrimary">${getPhrase("wcf.global.button.insert")}</button>
       </div>`;
 
     UiDialog.open({
@@ -124,7 +124,7 @@ export class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> 
 
               DomUtil.show(content.querySelector(".thumbnailSizeSelection") as HTMLElement);
             },
-            title: Language.get("wcf.media.insert"),
+            title: getPhrase("wcf.media.insert"),
           },
           source: dialog,
         };
@@ -360,9 +360,9 @@ export class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> 
     buttons.appendChild(listItem);
 
     listItem.innerHTML = `
-      <a class="jsTooltip" title="${Language.get("wcf.global.button.insert")}">
+      <a class="jsTooltip" title="${getPhrase("wcf.global.button.insert")}">
         <fa-icon name="plus"></fa-icon>
-        <span class="invisible">${Language.get("wcf.global.button.insert")}</span>
+        <span class="invisible">${getPhrase("wcf.global.button.insert")}</span>
       </a>`;
   }
 }

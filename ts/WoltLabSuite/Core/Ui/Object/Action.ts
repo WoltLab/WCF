@@ -10,7 +10,7 @@ import * as Ajax from "../../Ajax";
 import * as EventHandler from "../../Event/Handler";
 import { DatabaseObjectActionResponse, ResponseData } from "../../Ajax/Data";
 import * as UiConfirmation from "../Confirmation";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as StringUtil from "../../StringUtil";
 import DomChangeListener from "../../Dom/Change/Listener";
 
@@ -75,7 +75,7 @@ function executeAction(event: Event): void {
   if (actionElement.dataset.confirmMessage) {
     UiConfirmation.show({
       confirm: sendRequest,
-      message: Language.get(actionElement.dataset.confirmMessage),
+      message: getPhrase(actionElement.dataset.confirmMessage),
       messageIsHtml: true,
     });
   } else {

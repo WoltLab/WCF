@@ -9,7 +9,7 @@
 
 import * as Core from "../../../../../../Core";
 import Template from "../../../../../../Template";
-import * as Language from "../../../../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as DomTraverse from "../../../../../../Dom/Traverse";
 import DomChangeListener from "../../../../../../Dom/Change/Listener";
 import DomUtil from "../../../../../../Dom/Util";
@@ -167,7 +167,7 @@ class Instructions {
     runStandaloneField.checked = false;
     applicationField.value = "";
     document.getElementById(`${this.formFieldId}_instructions${instructionsId}_valueDescription`)!.innerHTML =
-      Language.get("wcf.acp.devtools.project.instruction.value.description");
+      getPhrase("wcf.acp.devtools.project.instruction.value.description");
     this.toggleApplicationFormField(instructionsId);
 
     DomChangeListener.trigger();
@@ -195,7 +195,7 @@ class Instructions {
     let content = `
       <div class="sortableNodeLabel">
         <div class="jsDevtoolsProjectInstruction">
-          ${Language.get("wcf.acp.devtools.project.instruction.instruction", instructionData)}
+          ${getPhrase("wcf.acp.devtools.project.instruction.instruction", instructionData)}
     `;
 
     if (instructionData.errors) {
@@ -209,12 +209,12 @@ class Instructions {
         <span class="statusDisplay sortableButtonContainer">
           <button type="button" class="jsTooltip" id="${
             this.formFieldId
-          }_instruction${instructionId}_editButton" title="${Language.get("wcf.global.button.edit")}">
+          }_instruction${instructionId}_editButton" title="${getPhrase("wcf.global.button.edit")}">
             <fa-icon name="pencil" solid></fa-icon>
           </button>
           <button type="button" class="jsTooltip" id="${
             this.formFieldId
-          }_instruction${instructionId}_deleteButton" title="${Language.get("wcf.global.button.delete")}">
+          }_instruction${instructionId}_deleteButton" title="${getPhrase("wcf.global.button.delete")}">
             <fa-icon name="xmark" solid></fa-icon>
           </span>
         </span>
@@ -274,7 +274,7 @@ class Instructions {
     listItem.className = "section";
     listItem.innerHTML = this.instructionsTemplate.fetch({
       instructionsId: instructionsId,
-      sectionTitle: Language.get(`wcf.acp.devtools.project.instructions.type.${instructionsData.type}.title`, {
+      sectionTitle: getPhrase(`wcf.acp.devtools.project.instructions.type.${instructionsData.type}.title`, {
         fromVersion: instructionsData.fromVersion,
       }),
       type: instructionsData.type,
@@ -361,11 +361,11 @@ class Instructions {
 
     // update value description
     if (this.pipDefaultFilenames[pip] !== "") {
-      description.innerHTML = Language.get("wcf.acp.devtools.project.instruction.value.description.defaultFilename", {
+      description.innerHTML = getPhrase("wcf.acp.devtools.project.instruction.value.description.defaultFilename", {
         defaultFilename: this.pipDefaultFilenames[pip],
       });
     } else {
-      description.innerHTML = Language.get("wcf.acp.devtools.project.instruction.value.description");
+      description.innerHTML = getPhrase("wcf.acp.devtools.project.instruction.value.description");
     }
 
     // toggle application selector
@@ -415,15 +415,15 @@ class Instructions {
 
     if (pip === "void") {
       if (section.dataset.type !== "update") {
-        DomUtil.innerError(errorTarget, Language.get("wcf.acp.devtools.project.instruction.error.voidInInstall"), true);
+        DomUtil.innerError(errorTarget, getPhrase("wcf.acp.devtools.project.instruction.error.voidInInstall"), true);
         return false;
       }
       if (otherInstructions.length > 0) {
-        DomUtil.innerError(errorTarget, Language.get("wcf.acp.devtools.project.instruction.error.voidNotAlone"), true);
+        DomUtil.innerError(errorTarget, getPhrase("wcf.acp.devtools.project.instruction.error.voidNotAlone"), true);
         return false;
       }
     } else if (otherInstructions.some((li) => li.dataset.pip === "void")) {
-      DomUtil.innerError(errorTarget, Language.get("wcf.acp.devtools.project.instruction.error.voidNotAlone"), true);
+      DomUtil.innerError(errorTarget, getPhrase("wcf.acp.devtools.project.instruction.error.voidNotAlone"), true);
       return false;
     }
 
@@ -476,7 +476,7 @@ class Instructions {
 
             // note: data will be validated/filtered by the server
 
-            listItem.querySelector(".jsDevtoolsProjectInstruction")!.innerHTML = Language.get(
+            listItem.querySelector(".jsDevtoolsProjectInstruction")!.innerHTML = getPhrase(
               "wcf.acp.devtools.project.instruction.instruction",
               {
                 application: listItem.dataset.application,
@@ -518,21 +518,21 @@ class Instructions {
 
             const description = DomTraverse.nextByTag(valueInput, "SMALL")!;
             if (this.pipDefaultFilenames[pip] !== "") {
-              description.innerHTML = Language.get(
+              description.innerHTML = getPhrase(
                 "wcf.acp.devtools.project.instruction.value.description.defaultFilename",
                 {
                   defaultFilename: this.pipDefaultFilenames[pip],
                 },
               );
             } else {
-              description.innerHTML = Language.get("wcf.acp.devtools.project.instruction.value.description");
+              description.innerHTML = getPhrase("wcf.acp.devtools.project.instruction.value.description");
             }
           };
 
           pipSelect.addEventListener("change", pipChange);
           pipChange();
         },
-        title: Language.get("wcf.acp.devtools.project.instruction.edit"),
+        title: getPhrase("wcf.acp.devtools.project.instruction.edit"),
       });
     } else {
       UiDialog.openStatic(dialogId, null);
@@ -566,7 +566,7 @@ class Instructions {
             const instructions = document.getElementById(`${this.formFieldId}_instructions${instructionsId}`)!;
             instructions.dataset.fromVersion = fromVersion.value;
 
-            instructions.querySelector(".jsInstructionsTitle")!.innerHTML = Language.get(
+            instructions.querySelector(".jsInstructionsTitle")!.innerHTML = getPhrase(
               "wcf.acp.devtools.project.instructions.type.update.title",
               {
                 fromVersion: fromVersion.value,
@@ -586,7 +586,7 @@ class Instructions {
 
           content.querySelector("button[data-type=submit]")!.addEventListener("click", submit);
         },
-        title: Language.get("wcf.acp.devtools.project.instructions.edit"),
+        title: getPhrase("wcf.acp.devtools.project.instructions.edit"),
       });
     } else {
       UiDialog.openStatic(dialogId, null);
@@ -621,7 +621,7 @@ class Instructions {
       confirm: () => {
         instruction.remove();
       },
-      message: Language.get("wcf.acp.devtools.project.instruction.delete.confirmMessages"),
+      message: getPhrase("wcf.acp.devtools.project.instruction.delete.confirmMessages"),
     });
   }
 
@@ -637,7 +637,7 @@ class Instructions {
       confirm: () => {
         instructions.remove();
       },
-      message: Language.get("wcf.acp.devtools.project.instructions.delete.confirmMessages"),
+      message: getPhrase("wcf.acp.devtools.project.instructions.delete.confirmMessages"),
     });
   }
 
@@ -737,13 +737,13 @@ class Instructions {
     const version = inputField.value;
 
     if (version === "") {
-      DomUtil.innerError(inputField, Language.get("wcf.global.form.error.empty"));
+      DomUtil.innerError(inputField, getPhrase("wcf.global.form.error.empty"));
 
       return false;
     }
 
     if (version.length > 50) {
-      DomUtil.innerError(inputField, Language.get("wcf.acp.devtools.project.packageVersion.error.maximumLength"));
+      DomUtil.innerError(inputField, getPhrase("wcf.acp.devtools.project.packageVersion.error.maximumLength"));
 
       return false;
     }
@@ -751,7 +751,7 @@ class Instructions {
     // Allow either a single asterisk, an asterisk in the last digit or a regular version.
     if (version !== "*") {
       if (!Instructions.versionRegExp.test(version.replace(/\.\*$/, ".0"))) {
-        DomUtil.innerError(inputField, Language.get("wcf.acp.devtools.project.packageVersion.error.format"));
+        DomUtil.innerError(inputField, getPhrase("wcf.acp.devtools.project.packageVersion.error.format"));
 
         return false;
       }
@@ -770,9 +770,9 @@ class Instructions {
   protected validateInstructionsType(): boolean {
     if (this.instructionsType.value !== "install" && this.instructionsType.value !== "update") {
       if (this.instructionsType.value === "") {
-        DomUtil.innerError(this.instructionsType, Language.get("wcf.global.form.error.empty"));
+        DomUtil.innerError(this.instructionsType, getPhrase("wcf.global.form.error.empty"));
       } else {
-        DomUtil.innerError(this.instructionsType, Language.get("wcf.global.form.error.noValidSelection"));
+        DomUtil.innerError(this.instructionsType, getPhrase("wcf.global.form.error.noValidSelection"));
       }
 
       return false;
@@ -787,7 +787,7 @@ class Instructions {
       if (hasInstall) {
         DomUtil.innerError(
           this.instructionsType,
-          Language.get("wcf.acp.devtools.project.instructions.type.update.error.duplicate"),
+          getPhrase("wcf.acp.devtools.project.instructions.type.update.error.duplicate"),
         );
 
         return false;

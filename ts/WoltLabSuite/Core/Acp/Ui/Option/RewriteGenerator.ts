@@ -9,7 +9,7 @@
 import * as Ajax from "../../../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup, ResponseData } from "../../../Ajax/Data";
 import { DialogCallbackObject, DialogCallbackSetup } from "../../../Ui/Dialog/Data";
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import UiDialog from "../../../Ui/Dialog";
 
 class RewriteGenerator implements AjaxCallbackObject, DialogCallbackObject {
@@ -35,12 +35,12 @@ class RewriteGenerator implements AjaxCallbackObject, DialogCallbackObject {
     this.buttonGenerate = document.createElement("a");
     this.buttonGenerate.className = "button";
     this.buttonGenerate.href = "#";
-    this.buttonGenerate.textContent = Language.get("wcf.acp.rewrite.generate");
+    this.buttonGenerate.textContent = getPhrase("wcf.acp.rewrite.generate");
     this.buttonGenerate.addEventListener("click", (ev) => this._onClick(ev));
     dd.appendChild(this.buttonGenerate);
 
     const description = document.createElement("small");
-    description.textContent = Language.get("wcf.acp.rewrite.description");
+    description.textContent = getPhrase("wcf.acp.rewrite.description");
     dd.appendChild(description);
 
     this.container.appendChild(dt);
@@ -64,7 +64,7 @@ class RewriteGenerator implements AjaxCallbackObject, DialogCallbackObject {
       id: "dialogRewriteRules",
       source: null,
       options: {
-        title: Language.get("wcf.acp.rewrite"),
+        title: getPhrase("wcf.acp.rewrite"),
       },
     };
   }

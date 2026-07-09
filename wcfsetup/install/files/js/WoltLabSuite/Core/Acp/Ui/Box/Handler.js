@@ -5,12 +5,11 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language", "../../../Ui/Page/Search/Handler"], function (require, exports, tslib_1, Util_1, Language, UiPageSearchHandler) {
+define(["require", "exports", "tslib", "../../../Dom/Util", "WoltLabSuite/Core/Language", "../../../Ui/Page/Search/Handler"], function (require, exports, tslib_1, Util_1, Language_1, UiPageSearchHandler) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
     Util_1 = tslib_1.__importDefault(Util_1);
-    Language = tslib_1.__importStar(Language);
     UiPageSearchHandler = tslib_1.__importStar(UiPageSearchHandler);
     class AcpUiBoxHandler {
         activePageId = 0;
@@ -108,10 +107,10 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
             const selectedOption = this.pageId.options[this.pageId.selectedIndex];
             const pageIdentifier = selectedOption.dataset.identifier;
             let languageItem = `wcf.page.pageObjectID.${pageIdentifier}`;
-            if (Language.get(languageItem) === languageItem) {
+            if ((0, Language_1.getPhrase)(languageItem) === languageItem) {
                 languageItem = "wcf.page.pageObjectID";
             }
-            this.containerPageObjectId.querySelector("label").textContent = Language.get(languageItem);
+            this.containerPageObjectId.querySelector("label").textContent = (0, Language_1.getPhrase)(languageItem);
             Util_1.default.show(this.containerPageObjectId);
         }
         /**
@@ -123,7 +122,7 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
             const pageIdentifier = selectedOption.dataset.identifier;
             const languageItem = `wcf.page.pageObjectID.search.${pageIdentifier}`;
             let labelLanguageItem;
-            if (Language.get(languageItem) !== languageItem) {
+            if ((0, Language_1.getPhrase)(languageItem) !== languageItem) {
                 labelLanguageItem = languageItem;
             }
             UiPageSearchHandler.open(this.activePageId, selectedOption.textContent.trim(), (objectId) => {

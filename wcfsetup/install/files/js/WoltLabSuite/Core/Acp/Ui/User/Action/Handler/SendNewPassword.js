@@ -6,11 +6,10 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       5.5
  */
-define(["require", "exports", "tslib", "../../../../../Language", "../../../../../Ui/Confirmation", "../../../Worker"], function (require, exports, tslib_1, Language, UiConfirmation, Worker_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "../../../../../Ui/Confirmation", "../../../Worker"], function (require, exports, tslib_1, Language_1, UiConfirmation, Worker_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.SendNewPassword = void 0;
-    Language = tslib_1.__importStar(Language);
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
     Worker_1 = tslib_1.__importDefault(Worker_1);
     class SendNewPassword {
@@ -25,7 +24,7 @@ define(["require", "exports", "tslib", "../../../../../Language", "../../../../.
                 confirm: () => {
                     new Worker_1.default({
                         dialogId: "sendingNewPasswords",
-                        dialogTitle: Language.get("wcf.acp.user.sendNewPassword.workerTitle"),
+                        dialogTitle: (0, Language_1.getPhrase)("wcf.acp.user.sendNewPassword.workerTitle"),
                         className: "wcf\\system\\worker\\SendNewPasswordWorker",
                         parameters: {
                             userIDs: this.userIDs,
@@ -33,7 +32,7 @@ define(["require", "exports", "tslib", "../../../../../Language", "../../../../.
                         callbackSuccess: this.successCallback,
                     });
                 },
-                message: Language.get("wcf.acp.user.action.sendNewPassword.confirmMessage"),
+                message: (0, Language_1.getPhrase)("wcf.acp.user.action.sendNewPassword.confirmMessage"),
             });
         }
     }

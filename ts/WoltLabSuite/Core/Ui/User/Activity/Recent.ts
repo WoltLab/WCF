@@ -6,7 +6,7 @@
 import * as Ajax from "../../../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup } from "../../../Ajax/Data";
 import * as Core from "../../../Core";
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import DomUtil from "../../../Dom/Util";
 
 interface AjaxResponse {
@@ -31,12 +31,12 @@ class UiUserActivityRecent implements AjaxCallbackObject {
     showMoreItem.className = "showMore";
     if (this.list.childElementCount) {
       showMoreItem.innerHTML =
-        '<button type="button" class="button small">' + Language.get("wcf.user.recentActivity.more") + "</button>";
+        '<button type="button" class="button small">' + getPhrase("wcf.user.recentActivity.more") + "</button>";
 
       const button = showMoreItem.children[0] as HTMLButtonElement;
       button.addEventListener("click", (ev) => this.showMore(ev));
     } else {
-      showMoreItem.innerHTML = "<small>" + Language.get("wcf.user.recentActivity.noMoreEntries") + "</small>";
+      showMoreItem.innerHTML = "<small>" + getPhrase("wcf.user.recentActivity.noMoreEntries") + "</small>";
     }
 
     this.list.appendChild(showMoreItem);
@@ -94,7 +94,7 @@ class UiUserActivityRecent implements AjaxCallbackObject {
       const button = this.showMoreItem.children[0] as HTMLButtonElement;
       button.disabled = false;
     } else {
-      this.showMoreItem.innerHTML = "<small>" + Language.get("wcf.user.recentActivity.noMoreEntries") + "</small>";
+      this.showMoreItem.innerHTML = "<small>" + getPhrase("wcf.user.recentActivity.noMoreEntries") + "</small>";
     }
   }
 

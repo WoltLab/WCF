@@ -6,23 +6,22 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 5.5
  */
-define(["require", "exports", "tslib", "../Component/Dialog", "../Core", "../Language", "../StringUtil"], function (require, exports, tslib_1, Dialog_1, Core, Language, StringUtil_1) {
+define(["require", "exports", "tslib", "../Component/Dialog", "../Core", "WoltLabSuite/Core/Language", "../StringUtil"], function (require, exports, tslib_1, Dialog_1, Core, Language_1, StringUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.InvalidJson = exports.ExpectedJson = exports.StatusNotOk = exports.ConnectionError = exports.ApiError = void 0;
     exports.registerGlobalRejectionHandler = registerGlobalRejectionHandler;
     Core = tslib_1.__importStar(Core);
-    Language = tslib_1.__importStar(Language);
     async function genericError(error) {
         const html = await getErrorHtml(error);
         if (html instanceof HTMLIFrameElement) {
             const dialog = (0, Dialog_1.dialogFactory)().fromHtml(`<div class="dialog__iframeContainer">${html.outerHTML}</div>`).asAlert();
-            dialog.show(Language.get("wcf.global.error.title"));
+            dialog.show((0, Language_1.getPhrase)("wcf.global.error.title"));
             dialog.querySelector("dialog").classList.add("dialog--iframe");
         }
         else if (html !== "") {
             const dialog = (0, Dialog_1.dialogFactory)().fromHtml(html).asAlert();
-            dialog.show(Language.get("wcf.global.error.title"));
+            dialog.show((0, Language_1.getPhrase)("wcf.global.error.title"));
         }
     }
     async function getErrorHtml(error) {
@@ -31,7 +30,7 @@ define(["require", "exports", "tslib", "../Component/Dialog", "../Core", "../Lan
         if (error instanceof ConnectionError) {
             // `fetch()` will yield a `TypeError` for network errors and CORS violations.
             if (error.originalError instanceof TypeError) {
-                message = Language.get("wcf.global.error.ajax.network", { message: error.message });
+                message = (0, Language_1.getPhrase)("wcf.global.error.ajax.network", { message: error.message });
             }
             else {
                 message = error.message;

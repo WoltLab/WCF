@@ -10,7 +10,7 @@
 import Upload from "../Upload";
 import * as Core from "../Core";
 import * as DomUtil from "../Dom/Util";
-import * as Language from "../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import User from "../User";
 import * as DateUtil from "../Date/Util";
 import * as FileUtil from "../FileUtil";
@@ -84,7 +84,7 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
 
           cell.querySelector(".mediaEditButton")!.classList.add("jsMediaEditButton");
           (cell.querySelector(".jsObjectAction[data-object-action='delete']") as HTMLElement).dataset.confirmMessage =
-            Language.get("wcf.media.delete.confirmMessage", {
+            getPhrase("wcf.media.delete.confirmMessage", {
               title: file.name,
             });
         } else if (cell.classList.contains("columnFilename")) {
@@ -231,7 +231,7 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
           const deleteButton = document.createElement("button");
           deleteButton.type = "button";
           deleteButton.classList.add("jsTooltip");
-          deleteButton.title = Language.get("wcf.global.button.delete");
+          deleteButton.title = getPhrase("wcf.global.button.delete");
           deleteButton.addEventListener("click", () => {
             deleteButton.closest(".mediaFile")!.remove();
 
@@ -249,7 +249,7 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
 
           DomUtil.innerError(
             p,
-            Language.get(`wcf.media.upload.error.${error.errorType}`, {
+            getPhrase(`wcf.media.upload.error.${error.errorType}`, {
               filename: error.filename,
             }),
           );
@@ -283,11 +283,11 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
           fileIcon.setIcon("xmark");
 
           file.classList.add("uploadFailed", "pointer", "jsTooltip");
-          file.title = Language.get("wcf.global.button.delete");
+          file.title = getPhrase("wcf.global.button.delete");
           file.addEventListener("click", () => file.remove());
 
           const title = file.querySelector(".mediaInformation .mediaTitle") as HTMLElement;
-          title.textContent = Language.get(`wcf.media.upload.error.${error.errorType}`, {
+          title.textContent = getPhrase(`wcf.media.upload.error.${error.errorType}`, {
             filename: error.filename,
           });
         }

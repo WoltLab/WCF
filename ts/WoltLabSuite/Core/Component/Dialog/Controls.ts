@@ -9,7 +9,7 @@
  */
 
 import WoltlabCoreDialogElement, { WoltlabCoreDialogControlOptions } from "../../Element/woltlab-core-dialog";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 
 type AlertOptions = {
   primary: string;
@@ -36,7 +36,7 @@ export class DialogControls {
       cancel: undefined,
       extra: undefined,
       isAlert: true,
-      primary: options?.primary || Language.get("wcf.dialog.button.primary"),
+      primary: options?.primary || getPhrase("wcf.dialog.button.primary"),
     };
 
     this.#dialog.attachControls(formControlOptions);
@@ -49,7 +49,7 @@ export class DialogControls {
       cancel: "",
       extra: undefined,
       isAlert: true,
-      primary: options?.primary || Language.get("wcf.dialog.button.primary.confirm"),
+      primary: options?.primary || getPhrase("wcf.dialog.button.primary.confirm"),
     };
 
     this.#dialog.attachControls(formControlOptions);
@@ -62,7 +62,7 @@ export class DialogControls {
       cancel: "",
       extra: options?.extra,
       isAlert: false,
-      primary: options?.primary || Language.get("wcf.dialog.button.primary.submit"),
+      primary: options?.primary || getPhrase("wcf.dialog.button.primary.submit"),
     };
 
     this.#dialog.attachControls(formControlOptions);

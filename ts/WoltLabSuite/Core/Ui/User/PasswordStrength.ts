@@ -8,7 +8,7 @@
  * @woltlabExcludeBundle tiny
  */
 
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import DomUtil from "../../Dom/Util";
 
 // zxcvbn is imported for the types only. It is loaded on demand, due to its size.
@@ -40,7 +40,7 @@ function initializeFeedbacker(Feedback: typeof zxcvbn.Feedback): zxcvbn.Feedback
     localizedPhrases[type] = {};
     Object.entries(phrases).forEach(([identifier, phrase]) => {
       const languageItem = `wcf.user.password.zxcvbn.${type}.${identifier}`;
-      const localizedValue = Language.get(languageItem);
+      const localizedValue = getPhrase(languageItem);
       localizedPhrases[type][identifier] = localizedValue !== languageItem ? localizedValue : phrase;
     });
   });
@@ -86,7 +86,7 @@ class PasswordStrength {
       rating.className = "passwordStrengthRating";
 
       const ratingLabel = document.createElement("small");
-      ratingLabel.textContent = Language.get("wcf.user.password.strength");
+      ratingLabel.textContent = getPhrase("wcf.user.password.strength");
       rating.appendChild(ratingLabel);
 
       this.score.className = "passwordStrengthScore";

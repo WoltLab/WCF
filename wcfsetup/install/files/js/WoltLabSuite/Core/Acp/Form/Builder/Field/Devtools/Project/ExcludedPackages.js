@@ -7,11 +7,10 @@
  * @see module:WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/AbstractPackageList
  * @since 5.2
  */
-define(["require", "exports", "tslib", "./AbstractPackageList", "../../../../../../Core", "../../../../../../Language", "../../../../../../Dom/Util"], function (require, exports, tslib_1, AbstractPackageList_1, Core, Language, Util_1) {
+define(["require", "exports", "tslib", "./AbstractPackageList", "../../../../../../Core", "WoltLabSuite/Core/Language", "../../../../../../Dom/Util"], function (require, exports, tslib_1, AbstractPackageList_1, Core, Language_1, Util_1) {
     "use strict";
     AbstractPackageList_1 = tslib_1.__importDefault(AbstractPackageList_1);
     Core = tslib_1.__importStar(Core);
-    Language = tslib_1.__importStar(Language);
     Util_1 = tslib_1.__importDefault(Util_1);
     class ExcludedPackages extends AbstractPackageList_1.default {
         version;
@@ -43,7 +42,7 @@ define(["require", "exports", "tslib", "./AbstractPackageList", "../../../../../
         populateListItem(listItem, packageData) {
             super.populateListItem(listItem, packageData);
             listItem.dataset.version = packageData.version;
-            listItem.innerHTML = ` ${Language.get("wcf.acp.devtools.project.excludedPackage.excludedPackage", {
+            listItem.innerHTML = ` ${(0, Language_1.getPhrase)("wcf.acp.devtools.project.excludedPackage.excludedPackage", {
                 packageIdentifier: packageData.packageIdentifier,
                 version: packageData.version,
             })}`;
@@ -54,7 +53,7 @@ define(["require", "exports", "tslib", "./AbstractPackageList", "../../../../../
         validateVersion(versionElement) {
             const version = versionElement.value;
             if (version === "") {
-                Util_1.default.innerError(versionElement, Language.get("wcf.global.form.error.empty"));
+                Util_1.default.innerError(versionElement, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
                 return false;
             }
             else if (version !== "*") {

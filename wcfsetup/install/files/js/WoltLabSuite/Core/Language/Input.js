@@ -5,7 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Dropdown/Simple", "../StringUtil"], function (require, exports, tslib_1, Util_1, Language, Simple_1, StringUtil) {
+define(["require", "exports", "tslib", "../Dom/Util", "WoltLabSuite/Core/Language", "../Ui/Dropdown/Simple", "../StringUtil"], function (require, exports, tslib_1, Util_1, Language_1, Simple_1, StringUtil) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
@@ -18,7 +18,6 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Drop
     exports.isEnabled = isEnabled;
     exports.validate = validate;
     Util_1 = tslib_1.__importDefault(Util_1);
-    Language = tslib_1.__importStar(Language);
     Simple_1 = tslib_1.__importDefault(Simple_1);
     StringUtil = tslib_1.__importStar(StringUtil);
     const _elements = new Map();
@@ -48,7 +47,7 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Drop
         const button = document.createElement("span");
         button.className = "button dropdownToggle inputPrefix";
         const buttonLabel = document.createElement("span");
-        buttonLabel.textContent = Language.get("wcf.global.button.disabledI18n");
+        buttonLabel.textContent = (0, Language_1.getPhrase)("wcf.global.button.disabledI18n");
         button.appendChild(buttonLabel);
         container.insertBefore(button, element);
         const dropdownMenu = document.createElement("ul");
@@ -91,7 +90,7 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Drop
             listItem.dataset.languageId = "0";
             listItem.addEventListener("click", callbackClick);
             const span = document.createElement("span");
-            span.textContent = Language.get("wcf.global.button.disabledI18n");
+            span.textContent = (0, Language_1.getPhrase)("wcf.global.button.disabledI18n");
             listItem.appendChild(span);
             dropdownMenu.appendChild(listItem);
         }

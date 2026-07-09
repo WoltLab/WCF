@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Handler", "../../Dom/Traverse", "../../Language", "../../Ui/Dialog", "../../Controller/Clipboard", "../../Dom/Util", "../../Component/Ckeditor/Event", "WoltLabSuite/Core/StringUtil"], function (require, exports, tslib_1, Base_1, Core, EventHandler, DomTraverse, Language, UiDialog, Clipboard, Util_1, Event_1, StringUtil_1) {
+define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Handler", "../../Dom/Traverse", "WoltLabSuite/Core/Language", "../../Ui/Dialog", "../../Controller/Clipboard", "../../Dom/Util", "../../Component/Ckeditor/Event", "WoltLabSuite/Core/StringUtil"], function (require, exports, tslib_1, Base_1, Core, EventHandler, DomTraverse, Language_1, UiDialog, Clipboard, Util_1, Event_1, StringUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.MediaManagerEditor = void 0;
@@ -14,7 +14,6 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
     Core = tslib_1.__importStar(Core);
     EventHandler = tslib_1.__importStar(EventHandler);
     DomTraverse = tslib_1.__importStar(DomTraverse);
-    Language = tslib_1.__importStar(Language);
     UiDialog = tslib_1.__importStar(UiDialog);
     Clipboard = tslib_1.__importStar(Clipboard);
     Util_1 = tslib_1.__importDefault(Util_1);
@@ -77,14 +76,14 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
                     '<option value="' +
                         thumbnailSize +
                         '">' +
-                        Language.get("wcf.media.insert.imageSize." + thumbnailSize) +
+                        (0, Language_1.getPhrase)("wcf.media.insert.imageSize." + thumbnailSize) +
                         "</option>";
             });
-            thumbnailOptions += '<option value="original">' + Language.get("wcf.media.insert.imageSize.original") + "</option>";
+            thumbnailOptions += '<option value="original">' + (0, Language_1.getPhrase)("wcf.media.insert.imageSize.original") + "</option>";
             const dialog = `
       <div class="section">
         <dl class="thumbnailSizeSelection">
-          <dt>${Language.get("wcf.media.insert.imageSize")}</dt>
+          <dt>${(0, Language_1.getPhrase)("wcf.media.insert.imageSize")}</dt>
           <dd>
             <select name="thumbnailSize">
               ${thumbnailOptions}
@@ -93,7 +92,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
         </dl>
       </div>
       <div class="formSubmit">
-        <button type="button" class="button buttonPrimary">${Language.get("wcf.global.button.insert")}</button>
+        <button type="button" class="button buttonPrimary">${(0, Language_1.getPhrase)("wcf.global.button.insert")}</button>
       </div>`;
             UiDialog.open({
                 _dialogSetup: () => {
@@ -105,7 +104,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
                                 content.querySelector(".buttonPrimary").addEventListener("click", (ev) => this._insertMedia(ev));
                                 Util_1.default.show(content.querySelector(".thumbnailSizeSelection"));
                             },
-                            title: Language.get("wcf.media.insert"),
+                            title: (0, Language_1.getPhrase)("wcf.media.insert"),
                         },
                         source: dialog,
                     };
@@ -297,9 +296,9 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
             listItem.dataset.objectId = media.mediaID.toString();
             buttons.appendChild(listItem);
             listItem.innerHTML = `
-      <a class="jsTooltip" title="${Language.get("wcf.global.button.insert")}">
+      <a class="jsTooltip" title="${(0, Language_1.getPhrase)("wcf.global.button.insert")}">
         <fa-icon name="plus"></fa-icon>
-        <span class="invisible">${Language.get("wcf.global.button.insert")}</span>
+        <span class="invisible">${(0, Language_1.getPhrase)("wcf.global.button.insert")}</span>
       </a>`;
         }
     }

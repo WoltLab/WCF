@@ -10,7 +10,7 @@ import * as Ajax from "../../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup, ResponseData } from "../../Ajax/Data";
 import * as Core from "../../Core";
 import DomChangeListener from "../../Dom/Change/Listener";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as StringUtil from "../../StringUtil";
 
 interface MessageManagerOptions {
@@ -237,7 +237,7 @@ class UiMessageManager implements AjaxCallbackObject {
 
       badge = document.createElement("span");
       badge.className = `badge label ${badgeColor} ${className}`;
-      badge.textContent = Language.get(phrase);
+      badge.textContent = getPhrase(phrase);
 
       const listItem = document.createElement("li");
       listItem.appendChild(badge);

@@ -6,9 +6,8 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 5.2
  */
-define(["require", "exports", "tslib", "../../../../../../Language", "../../../../../../Dom/Traverse", "../../../../../../Dom/Change/Listener", "../../../../../../Dom/Util"], function (require, exports, tslib_1, Language, DomTraverse, Listener_1, Util_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "../../../../../../Dom/Traverse", "../../../../../../Dom/Change/Listener", "../../../../../../Dom/Util"], function (require, exports, tslib_1, Language_1, DomTraverse, Listener_1, Util_1) {
     "use strict";
-    Language = tslib_1.__importStar(Language);
     DomTraverse = tslib_1.__importStar(DomTraverse);
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Util_1 = tslib_1.__importDefault(Util_1);
@@ -73,7 +72,7 @@ define(["require", "exports", "tslib", "../../../../../../Language", "../../../.
             const deleteButton = document.createElement("button");
             deleteButton.type = "button";
             deleteButton.innerHTML = '<fa-icon name="xmark" solid></fa-icon>';
-            deleteButton.title = Language.get("wcf.global.button.delete");
+            deleteButton.title = (0, Language_1.getPhrase)("wcf.global.button.delete");
             deleteButton.addEventListener("click", (ev) => this.removePackage(ev));
             listItem.insertAdjacentElement("afterbegin", deleteButton);
             this.packageList.appendChild(listItem);
@@ -145,25 +144,25 @@ define(["require", "exports", "tslib", "../../../../../../Language", "../../../.
         validatePackageIdentifier() {
             const packageIdentifier = this.packageIdentifier.value;
             if (packageIdentifier === "") {
-                Util_1.default.innerError(this.packageIdentifier, Language.get("wcf.global.form.error.empty"));
+                Util_1.default.innerError(this.packageIdentifier, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
                 return false;
             }
             if (packageIdentifier.length < 3) {
-                Util_1.default.innerError(this.packageIdentifier, Language.get("wcf.acp.devtools.project.packageIdentifier.error.minimumLength"));
+                Util_1.default.innerError(this.packageIdentifier, (0, Language_1.getPhrase)("wcf.acp.devtools.project.packageIdentifier.error.minimumLength"));
                 return false;
             }
             else if (packageIdentifier.length > 191) {
-                Util_1.default.innerError(this.packageIdentifier, Language.get("wcf.acp.devtools.project.packageIdentifier.error.maximumLength"));
+                Util_1.default.innerError(this.packageIdentifier, (0, Language_1.getPhrase)("wcf.acp.devtools.project.packageIdentifier.error.maximumLength"));
                 return false;
             }
             if (!AbstractPackageList.packageIdentifierRegExp.test(packageIdentifier)) {
-                Util_1.default.innerError(this.packageIdentifier, Language.get("wcf.acp.devtools.project.packageIdentifier.error.format"));
+                Util_1.default.innerError(this.packageIdentifier, (0, Language_1.getPhrase)("wcf.acp.devtools.project.packageIdentifier.error.format"));
                 return false;
             }
             // check if package has already been added
             const duplicate = DomTraverse.childrenByTag(this.packageList, "LI").some((listItem) => listItem.dataset.packageIdentifier === packageIdentifier);
             if (duplicate) {
-                Util_1.default.innerError(this.packageIdentifier, Language.get("wcf.acp.devtools.project.packageIdentifier.error.duplicate"));
+                Util_1.default.innerError(this.packageIdentifier, (0, Language_1.getPhrase)("wcf.acp.devtools.project.packageIdentifier.error.duplicate"));
                 return false;
             }
             // remove outdated errors
@@ -179,11 +178,11 @@ define(["require", "exports", "tslib", "../../../../../../Language", "../../../.
             // the version is no a required attribute
             if (version !== "") {
                 if (version.length > 255) {
-                    Util_1.default.innerError(versionElement, Language.get("wcf.acp.devtools.project.packageVersion.error.maximumLength"));
+                    Util_1.default.innerError(versionElement, (0, Language_1.getPhrase)("wcf.acp.devtools.project.packageVersion.error.maximumLength"));
                     return false;
                 }
                 if (!AbstractPackageList.versionRegExp.test(version)) {
-                    Util_1.default.innerError(versionElement, Language.get("wcf.acp.devtools.project.packageVersion.error.format"));
+                    Util_1.default.innerError(versionElement, (0, Language_1.getPhrase)("wcf.acp.devtools.project.packageVersion.error.format"));
                     return false;
                 }
             }

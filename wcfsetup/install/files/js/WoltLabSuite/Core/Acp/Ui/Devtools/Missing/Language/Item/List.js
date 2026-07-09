@@ -4,13 +4,12 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 5.4
  */
-define(["require", "exports", "tslib", "../../../../../../Ui/Confirmation", "../../../../../../Ajax", "../../../../../../Language", "../../../../../../Component/Dialog"], function (require, exports, tslib_1, UiConfirmation, Ajax, Language, Dialog_1) {
+define(["require", "exports", "tslib", "../../../../../../Ui/Confirmation", "../../../../../../Ajax", "WoltLabSuite/Core/Language", "../../../../../../Component/Dialog"], function (require, exports, tslib_1, UiConfirmation, Ajax, Language_1, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.List = void 0;
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
     Ajax = tslib_1.__importStar(Ajax);
-    Language = tslib_1.__importStar(Language);
     class List {
         clearExistingLogButton;
         clearLogButton;
@@ -40,7 +39,7 @@ define(["require", "exports", "tslib", "../../../../../../Ui/Confirmation", "../
                         actionName: "clearLog",
                     });
                 },
-                message: Language.get("wcf.acp.devtools.missingLanguageItem.clearLog.confirmMessage"),
+                message: (0, Language_1.getPhrase)("wcf.acp.devtools.missingLanguageItem.clearLog.confirmMessage"),
             });
         }
         clearExistingLog() {
@@ -50,13 +49,13 @@ define(["require", "exports", "tslib", "../../../../../../Ui/Confirmation", "../
                         actionName: "clearExistingLog",
                     });
                 },
-                message: Language.get("wcf.acp.devtools.missingLanguageItem.clearExistingLog.confirmMessage"),
+                message: (0, Language_1.getPhrase)("wcf.acp.devtools.missingLanguageItem.clearExistingLog.confirmMessage"),
             });
         }
         showStackTrace(event) {
             const target = event.currentTarget;
             const dialog = (0, Dialog_1.dialogFactory)().fromHtml(target.dataset.stackTrace).withoutControls();
-            dialog.show(Language.get("wcf.acp.devtools.missingLanguageItem.stackTrace"));
+            dialog.show((0, Language_1.getPhrase)("wcf.acp.devtools.missingLanguageItem.stackTrace"));
         }
     }
     exports.List = List;

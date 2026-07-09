@@ -5,7 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Language", "./Suggestion", "./Dropdown/Simple", "../Dom/Util"], function (require, exports, tslib_1, Core, DomTraverse, Language, Suggestion_1, Simple_1, Util_1) {
+define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "WoltLabSuite/Core/Language", "./Suggestion", "./Dropdown/Simple", "../Dom/Util"], function (require, exports, tslib_1, Core, DomTraverse, Language_1, Suggestion_1, Simple_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
@@ -13,7 +13,6 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
     exports.setValues = setValues;
     Core = tslib_1.__importStar(Core);
     DomTraverse = tslib_1.__importStar(DomTraverse);
-    Language = tslib_1.__importStar(Language);
     Suggestion_1 = tslib_1.__importDefault(Suggestion_1);
     Simple_1 = tslib_1.__importDefault(Simple_1);
     Util_1 = tslib_1.__importDefault(Util_1);
@@ -58,7 +57,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
         }
         const limitReached = document.createElement("span");
         limitReached.className = "inputItemListLimitReached";
-        limitReached.textContent = Language.get("wcf.global.form.input.maxItems");
+        limitReached.textContent = (0, Language_1.getPhrase)("wcf.global.form.input.maxItems");
         Util_1.default.hide(limitReached);
         listItem.appendChild(limitReached);
         let shadow = null;

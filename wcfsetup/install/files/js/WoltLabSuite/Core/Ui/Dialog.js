@@ -6,13 +6,12 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @deprecated 6.0 Use `dialogFactory()` instead.
  */
-define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./Screen", "../Dom/Util", "../Language", "../Environment", "../Event/Handler", "./CloseOverlay", "focus-trap", "../Helper/PageOverlay"], function (require, exports, tslib_1, Core, Listener_1, UiScreen, Util_1, Language, Environment, EventHandler, CloseOverlay_1, focus_trap_1, PageOverlay_1) {
+define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./Screen", "../Dom/Util", "WoltLabSuite/Core/Language", "../Environment", "../Event/Handler", "./CloseOverlay", "focus-trap", "../Helper/PageOverlay"], function (require, exports, tslib_1, Core, Listener_1, UiScreen, Util_1, Language_1, Environment, EventHandler, CloseOverlay_1, focus_trap_1, PageOverlay_1) {
     "use strict";
     Core = tslib_1.__importStar(Core);
     Listener_1 = tslib_1.__importDefault(Listener_1);
     UiScreen = tslib_1.__importStar(UiScreen);
     Util_1 = tslib_1.__importDefault(Util_1);
-    Language = tslib_1.__importStar(Language);
     Environment = tslib_1.__importStar(Environment);
     EventHandler = tslib_1.__importStar(EventHandler);
     CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
@@ -219,7 +218,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                 options = Core.extend({
                     backdropCloseOnClick: true,
                     closable: true,
-                    closeButtonLabel: Language.get("wcf.global.button.close"),
+                    closeButtonLabel: (0, Language_1.getPhrase)("wcf.global.button.close"),
                     closeConfirmMessage: "",
                     disableContentPadding: false,
                     title: "",
@@ -585,7 +584,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             data.inputFields.forEach((inputField) => {
                 if (inputField.required) {
                     if (inputField.value.trim() === "") {
-                        Util_1.default.innerError(inputField, Language.get("wcf.global.form.error.empty"));
+                        Util_1.default.innerError(inputField, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
                         inputField.closest("dl")?.classList.add("formError");
                         isValid = false;
                     }

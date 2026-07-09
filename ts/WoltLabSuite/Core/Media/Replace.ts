@@ -11,7 +11,7 @@
 import * as Core from "../Core";
 import { MediaUploadAjaxResponseData, MediaUploadError, MediaUploadOptions } from "./Data";
 import MediaUpload from "./Upload";
-import * as Language from "../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import DomUtil from "../Dom/Util";
 import * as DomChangeListener from "../Dom/Change/Listener";
 import { showDefaultSuccessSnackbar } from "../Component/Snackbar";
@@ -36,7 +36,7 @@ class MediaReplace extends MediaUpload {
 
     this._button.classList.add("small");
 
-    this._button.querySelector("span")!.textContent = Language.get("wcf.media.button.replaceFile");
+    this._button.querySelector("span")!.textContent = getPhrase("wcf.media.button.replaceFile");
   }
 
   protected _createFileElement(): HTMLElement {
@@ -83,7 +83,7 @@ class MediaReplace extends MediaUpload {
 
         DomUtil.innerError(
           this._buttonContainer,
-          Language.get("wcf.media.upload.error." + error.errorType, {
+          getPhrase("wcf.media.upload.error." + error.errorType, {
             filename: error.filename,
           }),
         );

@@ -10,7 +10,7 @@
 import * as Ajax from "../../../Ajax";
 import { AjaxCallbackSetup } from "../../../Ajax/Data";
 import { DialogCallbackSetup } from "../../../Ui/Dialog/Data";
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import UiDialog from "../../../Ui/Dialog";
 import DomUtil from "../../../Dom/Util";
 
@@ -66,11 +66,11 @@ class AcpUiPackagePrepareInstallation {
 
     const username = usernameInput.value.trim();
     if (username === "") {
-      DomUtil.innerError(usernameInput, Language.get("wcf.global.form.error.empty"));
+      DomUtil.innerError(usernameInput, getPhrase("wcf.global.form.error.empty"));
     } else {
       const password = passwordInput.value.trim();
       if (password === "") {
-        DomUtil.innerError(passwordInput, Language.get("wcf.global.form.error.empty"));
+        DomUtil.innerError(passwordInput, getPhrase("wcf.global.form.error.empty"));
       } else {
         const saveCredentials = document.getElementById("packageUpdateServerSaveCredentials") as HTMLInputElement;
 
@@ -124,7 +124,7 @@ class AcpUiPackagePrepareInstallation {
             this.submit(packageUpdateServerId);
           });
         },
-        title: Language.get("wcf.acp.package.update.unauthorized"),
+        title: getPhrase("wcf.acp.package.update.unauthorized"),
       },
       source: null,
     };

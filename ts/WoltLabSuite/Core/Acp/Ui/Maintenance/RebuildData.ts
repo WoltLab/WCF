@@ -7,7 +7,7 @@
  */
 
 import Worker from "../Worker";
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 
 const workers = new Map<HTMLElement, number>();
 
@@ -59,7 +59,7 @@ async function runWorker(
         }
 
         span = document.createElement("span");
-        span.innerHTML = `<fa-icon name="check" solid></fa-icon> ${Language.get("wcf.acp.worker.success")}`;
+        span.innerHTML = `<fa-icon name="check" solid></fa-icon> ${getPhrase("wcf.acp.worker.success")}`;
         button.parentNode!.insertBefore(span, button.nextElementSibling);
         resolve();
       },

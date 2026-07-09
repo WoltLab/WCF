@@ -1,8 +1,7 @@
-define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"], function (require, exports, tslib_1, Language, UiDialog) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "../../../Ui/Dialog"], function (require, exports, tslib_1, Language_1, UiDialog) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
-    Language = tslib_1.__importStar(Language);
     UiDialog = tslib_1.__importStar(UiDialog);
     class AcpUiBoxCopy {
         constructor() {
@@ -18,7 +17,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"
             return {
                 id: "acpBoxCopyDialog",
                 options: {
-                    title: Language.get("wcf.acp.box.copy"),
+                    title: (0, Language_1.getPhrase)("wcf.acp.box.copy"),
                 },
             };
         }

@@ -9,12 +9,11 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "tabbable", "../Dom/Util", "../Helper/PageOverlay", "../Language", "../Ui/Screen"], function (require, exports, tslib_1, tabbable_1, Util_1, PageOverlay_1, Language, Screen_1) {
+define(["require", "exports", "tslib", "tabbable", "../Dom/Util", "../Helper/PageOverlay", "WoltLabSuite/Core/Language", "../Ui/Screen"], function (require, exports, tslib_1, tabbable_1, Util_1, PageOverlay_1, Language_1, Screen_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.WoltlabCoreDialogElement = void 0;
     Util_1 = tslib_1.__importDefault(Util_1);
-    Language = tslib_1.__importStar(Language);
     const dialogContainer = document.createElement("div");
     // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
     class WoltlabCoreDialogElement extends HTMLElement {
@@ -202,7 +201,7 @@ define(["require", "exports", "tslib", "tabbable", "../Dom/Util", "../Helper/Pag
                 closeButton.type = "button";
                 closeButton.innerHTML = '<fa-icon size="24" name="xmark"></fa-icon>';
                 closeButton.classList.add("dialog__closeButton", "jsTooltip");
-                closeButton.title = Language.get("wcf.dialog.button.close");
+                closeButton.title = (0, Language_1.getPhrase)("wcf.dialog.button.close");
                 closeButton.addEventListener("click", () => {
                     if (this.#shouldClose()) {
                         const evt = new CustomEvent("cancel", { cancelable: false });

@@ -9,7 +9,7 @@
 
 import { dboAction } from "../../../../Ajax";
 import { DialogCallbackObject, DialogCallbackSetup } from "../../../../Ui/Dialog/Data";
-import * as Language from "../../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as UiDialog from "../../../../Ui/Dialog";
 import DomUtil from "../../../../Dom/Util";
 
@@ -137,12 +137,12 @@ class AcpUiPackageUpdateManager implements DialogCallbackObject {
 
   private promptCredentials(template: string): void {
     UiDialog.open(this, template);
-    UiDialog.setTitle(this, Language.get("wcf.acp.package.update.unauthorized"));
+    UiDialog.setTitle(this, getPhrase("wcf.acp.package.update.unauthorized"));
   }
 
   private showConflict(template: string): void {
     UiDialog.open(this, template);
-    UiDialog.setTitle(this, Language.get("wcf.acp.package.update.excludedPackages"));
+    UiDialog.setTitle(this, getPhrase("wcf.acp.package.update.excludedPackages"));
   }
 
   private startInstallation(queueId: number): void {
@@ -158,7 +158,7 @@ class AcpUiPackageUpdateManager implements DialogCallbackObject {
     return {
       id: "acpUiPackageUpdateManager",
       options: {
-        title: Language.get("wcf.acp.package.update.title"),
+        title: getPhrase("wcf.acp.package.update.title"),
       },
       source: null,
     };
@@ -170,7 +170,7 @@ class AcpUiPackageUpdateManager implements DialogCallbackObject {
     const usernameField = document.getElementById("packageUpdateServerUsername") as HTMLInputElement;
     const username = usernameField.value.trim();
     if (username === "") {
-      DomUtil.innerError(usernameField, Language.get("wcf.global.form.error.empty"));
+      DomUtil.innerError(usernameField, getPhrase("wcf.global.form.error.empty"));
       isValid = false;
     } else {
       DomUtil.innerError(usernameField, false);
@@ -179,7 +179,7 @@ class AcpUiPackageUpdateManager implements DialogCallbackObject {
     const passwordField = document.getElementById("packageUpdateServerPassword") as HTMLInputElement;
     const password = passwordField.value.trim();
     if (password === "") {
-      DomUtil.innerError(passwordField, Language.get("wcf.global.form.error.empty"));
+      DomUtil.innerError(passwordField, getPhrase("wcf.global.form.error.empty"));
       isValid = false;
     } else {
       DomUtil.innerError(passwordField, false);

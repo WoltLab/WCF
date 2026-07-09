@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import UiDialog from "../../../Ui/Dialog";
 import { DialogCallbackObject, DialogCallbackSetup } from "../../../Ui/Dialog/Data";
 
@@ -39,7 +39,7 @@ class ArticleAdd implements DialogCallbackObject {
             window.location.href = this.link.replace("{$isMultilingual}", input.value);
           });
         },
-        title: Language.get("wcf.acp.article.add"),
+        title: getPhrase("wcf.acp.article.add"),
       },
     };
   }

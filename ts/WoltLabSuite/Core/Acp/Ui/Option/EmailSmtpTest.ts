@@ -9,7 +9,7 @@
 import * as Ajax from "../../../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup } from "../../../Ajax/Data";
 import DomUtil from "../../../Dom/Util";
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 
 interface AjaxResponse {
   returnValues: {
@@ -39,10 +39,10 @@ class EmailSmtpTest implements AjaxCallbackObject {
     }
 
     this.container = document.createElement("dl");
-    this.container.innerHTML = `<dt>${Language.get("wcf.acp.email.smtp.test")}</dt>
+    this.container.innerHTML = `<dt>${getPhrase("wcf.acp.email.smtp.test")}</dt>
 <dd>
-  <a href="#" class="button">${Language.get("wcf.acp.email.smtp.test.run")}</a>
-  <small>${Language.get("wcf.acp.email.smtp.test.description")}</small>
+  <a href="#" class="button">${getPhrase("wcf.acp.email.smtp.test.run")}</a>
+  <small>${getPhrase("wcf.acp.email.smtp.test.description")}</small>
 </dd>`;
 
     this.buttonRunTest = this.container.querySelector("a")!;
@@ -74,7 +74,7 @@ class EmailSmtpTest implements AjaxCallbackObject {
     event.preventDefault();
 
     this.buttonRunTest.classList.add("disabled");
-    this.buttonRunTest.innerHTML = `<fa-icon name="spinner" solid></fa-icon> ${Language.get("wcf.global.loading")}`;
+    this.buttonRunTest.innerHTML = `<fa-icon name="spinner" solid></fa-icon> ${getPhrase("wcf.global.loading")}`;
 
     DomUtil.innerError(this.buttonRunTest, false);
 
@@ -110,7 +110,7 @@ class EmailSmtpTest implements AjaxCallbackObject {
   _ajaxFailure(data: AjaxResponse): boolean {
     let result = "";
     if (data && data.returnValues && data.returnValues.fieldName) {
-      result = Language.get(`wcf.acp.email.smtp.test.error.empty.${data.returnValues.fieldName}`);
+      result = getPhrase(`wcf.acp.email.smtp.test.error.empty.${data.returnValues.fieldName}`);
     }
 
     this.resetButton(false, result);
@@ -122,11 +122,11 @@ class EmailSmtpTest implements AjaxCallbackObject {
     this.buttonRunTest.classList.remove("disabled");
 
     if (success) {
-      this.buttonRunTest.innerHTML = `<fa-icon name="check" solid></fa-icon> ${Language.get(
+      this.buttonRunTest.innerHTML = `<fa-icon name="check" solid></fa-icon> ${getPhrase(
         "wcf.acp.email.smtp.test.run.success",
       )}`;
     } else {
-      this.buttonRunTest.innerHTML = Language.get("wcf.acp.email.smtp.test.run");
+      this.buttonRunTest.innerHTML = getPhrase("wcf.acp.email.smtp.test.run");
     }
 
     if (errorMessage) {

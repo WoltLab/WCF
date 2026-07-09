@@ -5,13 +5,12 @@
  * @copyright  2001-2018 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "../../../Language"], function (require, exports, tslib_1, Ajax, Util_1, Language) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "WoltLabSuite/Core/Language"], function (require, exports, tslib_1, Ajax, Util_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
     Ajax = tslib_1.__importStar(Ajax);
     Util_1 = tslib_1.__importDefault(Util_1);
-    Language = tslib_1.__importStar(Language);
     class EmailSmtpTest {
         buttonRunTest;
         container;
@@ -29,10 +28,10 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
                 return;
             }
             this.container = document.createElement("dl");
-            this.container.innerHTML = `<dt>${Language.get("wcf.acp.email.smtp.test")}</dt>
+            this.container.innerHTML = `<dt>${(0, Language_1.getPhrase)("wcf.acp.email.smtp.test")}</dt>
 <dd>
-  <a href="#" class="button">${Language.get("wcf.acp.email.smtp.test.run")}</a>
-  <small>${Language.get("wcf.acp.email.smtp.test.description")}</small>
+  <a href="#" class="button">${(0, Language_1.getPhrase)("wcf.acp.email.smtp.test.run")}</a>
+  <small>${(0, Language_1.getPhrase)("wcf.acp.email.smtp.test.description")}</small>
 </dd>`;
             this.buttonRunTest = this.container.querySelector("a");
             this.buttonRunTest.addEventListener("click", (ev) => this.onClick(ev));
@@ -58,7 +57,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
         onClick(event) {
             event.preventDefault();
             this.buttonRunTest.classList.add("disabled");
-            this.buttonRunTest.innerHTML = `<fa-icon name="spinner" solid></fa-icon> ${Language.get("wcf.global.loading")}`;
+            this.buttonRunTest.innerHTML = `<fa-icon name="spinner" solid></fa-icon> ${(0, Language_1.getPhrase)("wcf.global.loading")}`;
             Util_1.default.innerError(this.buttonRunTest, false);
             window.setTimeout(() => {
                 const startTls = document.querySelector('input[name="values[mail_smtp_starttls]"]:checked');
@@ -89,7 +88,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
         _ajaxFailure(data) {
             let result = "";
             if (data && data.returnValues && data.returnValues.fieldName) {
-                result = Language.get(`wcf.acp.email.smtp.test.error.empty.${data.returnValues.fieldName}`);
+                result = (0, Language_1.getPhrase)(`wcf.acp.email.smtp.test.error.empty.${data.returnValues.fieldName}`);
             }
             this.resetButton(false, result);
             return result === "";
@@ -97,10 +96,10 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
         resetButton(success, errorMessage) {
             this.buttonRunTest.classList.remove("disabled");
             if (success) {
-                this.buttonRunTest.innerHTML = `<fa-icon name="check" solid></fa-icon> ${Language.get("wcf.acp.email.smtp.test.run.success")}`;
+                this.buttonRunTest.innerHTML = `<fa-icon name="check" solid></fa-icon> ${(0, Language_1.getPhrase)("wcf.acp.email.smtp.test.run.success")}`;
             }
             else {
-                this.buttonRunTest.innerHTML = Language.get("wcf.acp.email.smtp.test.run");
+                this.buttonRunTest.innerHTML = (0, Language_1.getPhrase)("wcf.acp.email.smtp.test.run");
             }
             if (errorMessage) {
                 Util_1.default.innerError(this.buttonRunTest, errorMessage);

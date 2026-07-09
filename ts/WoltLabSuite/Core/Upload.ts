@@ -11,7 +11,7 @@ import { RequestOptions, ResponseData } from "./Ajax/Data";
 import AjaxRequest from "./Ajax/Request";
 import * as Core from "./Core";
 import DomChangeListener from "./Dom/Change/Listener";
-import * as Language from "./Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import { FileCollection, FileElements, FileLikeObject, UploadId, UploadOptions } from "./Upload/Data";
 
 abstract class Upload<TOptions extends UploadOptions = UploadOptions> {
@@ -106,7 +106,7 @@ abstract class Upload<TOptions extends UploadOptions = UploadOptions> {
     });
 
     const span = document.createElement("span");
-    span.textContent = Language.get("wcf.global.button.upload");
+    span.textContent = getPhrase("wcf.global.button.upload");
     this._button.appendChild(span);
 
     this._button.insertAdjacentElement("afterbegin", this._fileUpload);

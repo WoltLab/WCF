@@ -9,7 +9,7 @@
 
 import * as Core from "../../Core";
 import DomUtil from "../../Dom/Util";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as StringUtil from "../../StringUtil";
 import UiDropdownSimple from "../Dropdown/Simple";
 
@@ -85,7 +85,7 @@ class UiItemListFilter {
     const input = document.createElement("input");
     input.className = "long";
     input.type = "text";
-    input.placeholder = Language.get("wcf.global.filter.placeholder");
+    input.placeholder = getPhrase("wcf.global.filter.placeholder");
     input.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
         event.preventDefault();
@@ -96,7 +96,7 @@ class UiItemListFilter {
     this._clearButton = document.createElement("a");
     this._clearButton.href = "#";
     this._clearButton.className = "button inputSuffix disabled jsTooltip";
-    this._clearButton.title = Language.get("wcf.global.filter.button.clear");
+    this._clearButton.title = getPhrase("wcf.global.filter.button.clear");
     this._clearButton.innerHTML = '<fa-icon name="xmark" solid></fa-icon>';
     this._clearButton.addEventListener("click", (event) => {
       event.preventDefault();
@@ -111,7 +111,7 @@ class UiItemListFilter {
       const visibilityButton = document.createElement("a");
       visibilityButton.href = "#";
       visibilityButton.className = "button inputSuffix jsTooltip";
-      visibilityButton.title = Language.get("wcf.global.filter.button.visibility");
+      visibilityButton.title = getPhrase("wcf.global.filter.button.visibility");
       visibilityButton.innerHTML = '<fa-icon name="eye"></fa-icon>';
       visibilityButton.addEventListener("click", (ev) => this._toggleVisibility(ev));
       inputAddon.appendChild(visibilityButton);
@@ -232,7 +232,7 @@ class UiItemListFilter {
 
     this._value = value;
 
-    DomUtil.innerError(this._container, hasVisibleItems ? false : Language.get("wcf.global.filter.error.noMatches"));
+    DomUtil.innerError(this._container, hasVisibleItems ? false : getPhrase("wcf.global.filter.error.noMatches"));
   }
 
   /**
@@ -251,7 +251,7 @@ class UiItemListFilter {
         const link = document.createElement("a");
         link.dataset.type = type;
         link.href = "#";
-        link.textContent = Language.get(`wcf.global.filter.visibility.${type}`);
+        link.textContent = getPhrase(`wcf.global.filter.visibility.${type}`);
         link.addEventListener("click", (ev) => this._setVisibility(ev));
 
         const li = document.createElement("li");

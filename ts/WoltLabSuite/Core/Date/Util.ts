@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
-import * as Language from "../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 
 const locale = document.documentElement.lang;
 const dateFormatter = new Intl.DateTimeFormat(locale, { dateStyle: "long" });
@@ -127,11 +127,11 @@ export function format(date: Date, format: string): string {
         break;
       case "l":
         // `Monday` through `Sunday` (localized)
-        char = (Language.get("__days") as any as string[])[date.getDay()];
+        char = (getPhrase("__days") as any as string[])[date.getDay()];
         break;
       case "D":
         // `Mon` through `Sun` (localized)
-        char = (Language.get("__daysShort") as any as string[])[date.getDay()];
+        char = (getPhrase("__daysShort") as any as string[])[date.getDay()];
         break;
       case "S":
         // ignore english ordinal suffix
@@ -149,11 +149,11 @@ export function format(date: Date, format: string): string {
         break;
       case "F":
         // `January` through `December` (localized)
-        char = (Language.get("__months") as any as string[])[date.getMonth()];
+        char = (getPhrase("__months") as any as string[])[date.getMonth()];
         break;
       case "M":
         // `Jan` through `Dec` (localized)
-        char = (Language.get("__monthsShort") as any as string[])[date.getMonth()];
+        char = (getPhrase("__monthsShort") as any as string[])[date.getMonth()];
         break;
 
       // year

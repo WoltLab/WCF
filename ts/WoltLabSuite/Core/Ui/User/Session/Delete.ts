@@ -8,13 +8,13 @@
  */
 
 import * as UiConfirmation from "../../Confirmation";
-import * as Language from "../../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import { deleteSession } from "WoltLabSuite/Core/Api/Sessions/DeleteSession";
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
 
 function onClick(button: HTMLElement): void {
   UiConfirmation.show({
-    message: Language.get("wcf.user.security.deleteSession.confirmMessage"),
+    message: getPhrase("wcf.user.security.deleteSession.confirmMessage"),
     confirm: async (_parameters) => {
       await deleteSession(button.dataset.sessionId!);
 

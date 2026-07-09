@@ -12,7 +12,7 @@ import * as AjaxStatus from "./Status";
 import { ResponseData, RequestOptions, RequestData, AjaxResponseException } from "./Data";
 import * as Core from "../Core";
 import DomChangeListener from "../Dom/Change/Listener";
-import * as Language from "../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import { dialogFactory } from "../Component/Dialog";
 import { escapeHTML } from "../StringUtil";
 
@@ -293,11 +293,11 @@ class AjaxRequest {
         const dialog = dialogFactory()
           .fromHtml(`<div class="dialog__iframeContainer">${html.outerHTML}</div>`)
           .asAlert();
-        dialog.show(Language.get("wcf.global.error.title"));
+        dialog.show(getPhrase("wcf.global.error.title"));
         dialog.querySelector("dialog")!.classList.add("dialog--iframe");
       } else if (html) {
         const dialog = dialogFactory().fromHtml(html).asAlert();
-        dialog.show(Language.get("wcf.global.error.title"));
+        dialog.show(getPhrase("wcf.global.error.title"));
       }
     }
 

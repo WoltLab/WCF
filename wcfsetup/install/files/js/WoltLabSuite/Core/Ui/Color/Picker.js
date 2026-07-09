@@ -7,12 +7,11 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Util", "../../Language", "../../ColorUtil"], function (require, exports, tslib_1, Core, Dialog_1, Util_1, Language, ColorUtil) {
+define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Util", "WoltLabSuite/Core/Language", "../../ColorUtil"], function (require, exports, tslib_1, Core, Dialog_1, Util_1, Language_1, ColorUtil) {
     "use strict";
     Core = tslib_1.__importStar(Core);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     Util_1 = tslib_1.__importDefault(Util_1);
-    Language = tslib_1.__importStar(Language);
     ColorUtil = tslib_1.__importStar(ColorUtil);
     class UiColorPicker {
         channels = new Map();
@@ -50,19 +49,19 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
 <div class="colorPickerDialog">
   <div class="colorPickerHsvContainer" style="--hue: 0; --saturation: 0%; --lightness: 0%">
     <dl>
-        <dt>${Language.get("wcf.style.colorPicker.hue")}</dt>
+        <dt>${(0, Language_1.getPhrase)("wcf.style.colorPicker.hue")}</dt>
         <dd>
           <input type="range" min="0" max="359" class="colorPickerHslRange" data-coordinate="hue">
         </dd>
     </dl>
     <dl>
-        <dt>${Language.get("wcf.style.colorPicker.saturation")}</dt>
+        <dt>${(0, Language_1.getPhrase)("wcf.style.colorPicker.saturation")}</dt>
         <dd>
           <input type="range" min="0" max="100" class="colorPickerHslRange" data-coordinate="saturation">
         </dd>
     </dl>
     <dl>
-        <dt>${Language.get("wcf.style.colorPicker.lightness")}</dt>
+        <dt>${(0, Language_1.getPhrase)("wcf.style.colorPicker.lightness")}</dt>
         <dd>
           <input type="range" min="0" max="100" class="colorPickerHslRange" data-coordinate="lightness">
         </dd>
@@ -71,7 +70,7 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
   <div class="colorPickerValueContainer">
     <div>
       <dl>
-        <dt>${Language.get("wcf.style.colorPicker.opacity")}</dt>
+        <dt>${(0, Language_1.getPhrase)("wcf.style.colorPicker.opacity")}</dt>
         <dd>
           <div class="inputAddon">
           <input type="number" class="tiny colorPickerOpacity" min="0" max="100" step="1" value="0">
@@ -80,7 +79,7 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
         </dd>
       </dl>
       <dl>
-        <dt>${Language.get("wcf.style.colorPicker.color")}</dt>
+        <dt>${(0, Language_1.getPhrase)("wcf.style.colorPicker.color")}</dt>
         <dd class="colorPickerChannels">
           rgba(
           <input type="number" min="0" max="255" size="3" class="colorPickerChannel" data-channel="r" data-dialog-submit-on-enter="true">
@@ -92,7 +91,7 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
         </dd>
       </dl>
       <dl>
-        <dt>${Language.get("wcf.style.colorPicker.hexAlpha")}</dt>
+        <dt>${(0, Language_1.getPhrase)("wcf.style.colorPicker.hexAlpha")}</dt>
         <dd>
           <div class="inputAddon">
             <span class="inputPrefix">#</span>
@@ -102,18 +101,18 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
       </dl>
     </div>
     <div class="colorPickerComparison">
-      <small>${Language.get("wcf.style.colorPicker.new")}</small>
+      <small>${(0, Language_1.getPhrase)("wcf.style.colorPicker.new")}</small>
       <div class="colorPickerColorNew">
         <span style="background-color: ${this.input.value}"></span>
       </div>
       <div class="colorPickerColorOld">
         <span style="background-color: ${this.input.value}"></span>
       </div>
-      <small>${Language.get("wcf.style.colorPicker.current")}</small>
+      <small>${(0, Language_1.getPhrase)("wcf.style.colorPicker.current")}</small>
     </div>
   </div>
   <div class="formSubmit">
-    <button type="button" class="button buttonPrimary" data-type="submit">${Language.get("wcf.style.colorPicker.button.apply")}</button>
+    <button type="button" class="button buttonPrimary" data-type="submit">${(0, Language_1.getPhrase)("wcf.style.colorPicker.button.apply")}</button>
   </div>
 </div>`,
                 options: {
@@ -158,7 +157,7 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
                         this.colorTextInput.focus();
                         this.colorTextInput.select();
                     },
-                    title: Language.get("wcf.style.colorPicker"),
+                    title: (0, Language_1.getPhrase)("wcf.style.colorPicker"),
                 },
             };
         }
@@ -199,7 +198,7 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
                     color = `#${color}`;
                 }
                 else {
-                    Util_1.default.innerError(colorTextInput, Language.get("wcf.style.colorPicker.error.invalidColor"));
+                    Util_1.default.innerError(colorTextInput, (0, Language_1.getPhrase)("wcf.style.colorPicker.error.invalidColor"));
                     return;
                 }
             }

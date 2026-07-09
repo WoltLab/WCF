@@ -7,11 +7,10 @@
  * @see module:WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/AbstractPackageList
  * @since 5.2
  */
-define(["require", "exports", "tslib", "./AbstractPackageList", "../../../../../../Core", "../../../../../../Language"], function (require, exports, tslib_1, AbstractPackageList_1, Core, Language) {
+define(["require", "exports", "tslib", "./AbstractPackageList", "../../../../../../Core", "WoltLabSuite/Core/Language"], function (require, exports, tslib_1, AbstractPackageList_1, Core, Language_1) {
     "use strict";
     AbstractPackageList_1 = tslib_1.__importDefault(AbstractPackageList_1);
     Core = tslib_1.__importStar(Core);
-    Language = tslib_1.__importStar(Language);
     class RequiredPackages extends AbstractPackageList_1.default {
         file;
         minVersion;
@@ -52,7 +51,7 @@ define(["require", "exports", "tslib", "./AbstractPackageList", "../../../../../
             super.populateListItem(listItem, packageData);
             listItem.dataset.minVersion = packageData.minVersion;
             listItem.dataset.file = packageData.file ? "1" : "0";
-            listItem.innerHTML = ` ${Language.get("wcf.acp.devtools.project.requiredPackage.requiredPackage", {
+            listItem.innerHTML = ` ${(0, Language_1.getPhrase)("wcf.acp.devtools.project.requiredPackage.requiredPackage", {
                 file: packageData.file,
                 minVersion: packageData.minVersion,
                 packageIdentifier: packageData.packageIdentifier,

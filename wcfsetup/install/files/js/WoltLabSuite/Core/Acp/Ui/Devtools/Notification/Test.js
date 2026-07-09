@@ -5,12 +5,11 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language", "../../../../Ui/Dialog", "../../../../Dom/Util"], function (require, exports, tslib_1, Ajax, Language, Dialog_1, Util_1) {
+define(["require", "exports", "tslib", "../../../../Ajax", "WoltLabSuite/Core/Language", "../../../../Ui/Dialog", "../../../../Dom/Util"], function (require, exports, tslib_1, Ajax, Language_1, Dialog_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
     Ajax = tslib_1.__importStar(Ajax);
-    Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     Util_1 = tslib_1.__importDefault(Util_1);
     class AcpUiDevtoolsNotificationTest {
@@ -61,7 +60,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
             document.getElementById("notificationTestDialog").parentElement.scrollTop = 0;
             // restore buttons
             this.buttons.forEach((button) => {
-                button.innerHTML = Language.get("wcf.acp.devtools.notificationTest.button.test");
+                button.innerHTML = (0, Language_1.getPhrase)("wcf.acp.devtools.notificationTest.button.test");
                 button.disabled = false;
             });
         }

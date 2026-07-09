@@ -8,7 +8,7 @@
 
 import * as Ajax from "../../Ajax";
 import * as Core from "../../Core";
-import * as Language from "../../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import UiDialog from "../../Ui/Dialog";
 import { AjaxCallbackObject, AjaxCallbackSetup } from "../../Ajax/Data";
 import { DialogCallbackObject, DialogCallbackSetup } from "../../Ui/Dialog/Data";
@@ -113,7 +113,7 @@ class AcpUiWorker implements AjaxCallbackObject, DialogCallbackObject {
       const formSubmit = document.createElement("div");
       formSubmit.className = "formSubmit";
       formSubmit.innerHTML =
-        '<button type="button" class="button buttonPrimary">' + Language.get("wcf.global.button.next") + "</button>";
+        '<button type="button" class="button buttonPrimary">' + getPhrase("wcf.global.button.next") + "</button>";
 
       content.appendChild(formSubmit);
       UiDialog.rebuild(this);

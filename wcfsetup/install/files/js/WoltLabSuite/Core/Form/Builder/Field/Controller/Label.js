@@ -6,11 +6,10 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 5.2
  */
-define(["require", "exports", "tslib", "../../../../Core", "../../../../Dom/Util", "../../../../Language", "../../../../Ui/Dropdown/Simple"], function (require, exports, tslib_1, Core, DomUtil, Language, Simple_1) {
+define(["require", "exports", "tslib", "../../../../Core", "../../../../Dom/Util", "WoltLabSuite/Core/Language", "../../../../Ui/Dropdown/Simple"], function (require, exports, tslib_1, Core, DomUtil, Language_1, Simple_1) {
     "use strict";
     Core = tslib_1.__importStar(Core);
     DomUtil = tslib_1.__importStar(DomUtil);
-    Language = tslib_1.__importStar(Language);
     Simple_1 = tslib_1.__importDefault(Simple_1);
     class Label {
         _formFieldContainer;
@@ -54,7 +53,7 @@ define(["require", "exports", "tslib", "../../../../Core", "../../../../Dom/Util
                 listItem.appendChild(span);
                 const label = document.createElement("span");
                 label.classList.add("badge", "label");
-                label.innerHTML = Language.get("wcf.label.withoutSelection");
+                label.innerHTML = (0, Language_1.getPhrase)("wcf.label.withoutSelection");
                 span.appendChild(label);
             }
             if (!this._options.forceSelection) {
@@ -66,7 +65,7 @@ define(["require", "exports", "tslib", "../../../../Core", "../../../../Dom/Util
                 listItem.appendChild(span);
                 const label = document.createElement("span");
                 label.classList.add("badge", "label");
-                label.innerHTML = Language.get("wcf.label.none");
+                label.innerHTML = (0, Language_1.getPhrase)("wcf.label.none");
                 span.appendChild(label);
             }
             dropdownMenu.querySelectorAll("li:not(.dropdownDivider)").forEach((listItem) => {

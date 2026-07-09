@@ -5,13 +5,12 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Listener", "../../../Language", "../../../Ui/Confirmation", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Ajax, Listener_1, Language, UiConfirmation, Snackbar_1) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Listener", "WoltLabSuite/Core/Language", "../../../Ui/Confirmation", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Ajax, Listener_1, Language_1, UiConfirmation, Snackbar_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
     Ajax = tslib_1.__importStar(Ajax);
     Listener_1 = tslib_1.__importDefault(Listener_1);
-    Language = tslib_1.__importStar(Language);
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
     class AcpUiPageBoxOrder {
         pageId;
@@ -29,7 +28,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Lis
                     item.dataset.boxId = box.boxId.toString();
                     let icon = "";
                     if (box.isDisabled) {
-                        icon = ` <span class="jsTooltip" title="${Language.get("wcf.acp.box.isDisabled")}">
+                        icon = ` <span class="jsTooltip" title="${(0, Language_1.getPhrase)("wcf.acp.box.isDisabled")}">
             <fa-icon name="triangle-exclamation" solid></fa-icon>
           </span>`;
                     }
@@ -86,7 +85,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Lis
                         actionName: "resetPosition",
                     });
                 },
-                message: Language.get("wcf.acp.page.boxOrder.discard.confirmMessage"),
+                message: (0, Language_1.getPhrase)("wcf.acp.page.boxOrder.discard.confirmMessage"),
             });
         }
         _ajaxSuccess(data) {

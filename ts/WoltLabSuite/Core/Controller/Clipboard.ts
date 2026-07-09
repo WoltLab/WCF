@@ -13,7 +13,7 @@ import * as Core from "../Core";
 import DomChangeListener from "../Dom/Change/Listener";
 import DomUtil from "../Dom/Util";
 import * as EventHandler from "../Event/Handler";
-import * as Language from "../Language";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as UiConfirmation from "../Ui/Confirmation";
 import UiDropdownSimple from "../Ui/Dropdown/Simple";
 import * as UiPageAction from "../Ui/Page/Action";
@@ -484,7 +484,7 @@ class ControllerClipboard {
       const unmarkAll = document.createElement("li");
       unmarkAll.dataset.type = typeName;
       const label = document.createElement("span");
-      label.textContent = Language.get("wcf.clipboard.item.unmarkAll");
+      label.textContent = getPhrase("wcf.clipboard.item.unmarkAll");
       unmarkAll.appendChild(label);
       unmarkAll.addEventListener("click", (ev) => this.unmarkAll(ev));
       dropdown.appendChild(unmarkAll);

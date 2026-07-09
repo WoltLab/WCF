@@ -7,12 +7,11 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Listener", "../Language", "../Component/Dialog", "../StringUtil"], function (require, exports, tslib_1, AjaxStatus, Core, Listener_1, Language, Dialog_1, StringUtil_1) {
+define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Listener", "WoltLabSuite/Core/Language", "../Component/Dialog", "../StringUtil"], function (require, exports, tslib_1, AjaxStatus, Core, Listener_1, Language_1, Dialog_1, StringUtil_1) {
     "use strict";
     AjaxStatus = tslib_1.__importStar(AjaxStatus);
     Core = tslib_1.__importStar(Core);
     Listener_1 = tslib_1.__importDefault(Listener_1);
-    Language = tslib_1.__importStar(Language);
     let _didInit = false;
     let _ignoreAllErrors = false;
     /**
@@ -250,12 +249,12 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
                     const dialog = (0, Dialog_1.dialogFactory)()
                         .fromHtml(`<div class="dialog__iframeContainer">${html.outerHTML}</div>`)
                         .asAlert();
-                    dialog.show(Language.get("wcf.global.error.title"));
+                    dialog.show((0, Language_1.getPhrase)("wcf.global.error.title"));
                     dialog.querySelector("dialog").classList.add("dialog--iframe");
                 }
                 else if (html) {
                     const dialog = (0, Dialog_1.dialogFactory)().fromHtml(html).asAlert();
-                    dialog.show(Language.get("wcf.global.error.title"));
+                    dialog.show((0, Language_1.getPhrase)("wcf.global.error.title"));
                 }
             }
             this._finalize(xhr, options);

@@ -6,13 +6,12 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traverse", "../../FileUtil", "../../Language", "../../Ui/Dialog"], function (require, exports, tslib_1, Base_1, Core, DomTraverse, FileUtil, Language, UiDialog) {
+define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traverse", "../../FileUtil", "WoltLabSuite/Core/Language", "../../Ui/Dialog"], function (require, exports, tslib_1, Base_1, Core, DomTraverse, FileUtil, Language_1, UiDialog) {
     "use strict";
     Base_1 = tslib_1.__importDefault(Base_1);
     Core = tslib_1.__importStar(Core);
     DomTraverse = tslib_1.__importStar(DomTraverse);
     FileUtil = tslib_1.__importStar(FileUtil);
-    Language = tslib_1.__importStar(Language);
     UiDialog = tslib_1.__importStar(UiDialog);
     class MediaManagerSelect extends Base_1.default {
         _activeButton = null;
@@ -32,7 +31,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
                         const removeButton = document.createElement("button");
                         removeButton.type = "button";
                         removeButton.classList.add("button", "jsTooltip");
-                        removeButton.title = Language.getPhrase("wcf.global.button.delete");
+                        removeButton.title = (0, Language_1.getPhrase)("wcf.global.button.delete");
                         removeButton.innerHTML = '<fa-icon name="xmark"></fa-icon>';
                         if (button.parentElement.tagName === "LI") {
                             const listItem = document.createElement("li");
@@ -147,9 +146,9 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
             listItem.dataset.objectId = media.mediaID.toString();
             buttons.appendChild(listItem);
             listItem.innerHTML = `
-        <a class="jsTooltip" title="${Language.get("wcf.media.button.select")}">
+        <a class="jsTooltip" title="${(0, Language_1.getPhrase)("wcf.media.button.select")}">
           <fa-icon name="check"></fa-icon>
-          <span class="invisible">${Language.get("wcf.media.button.select")}</span>
+          <span class="invisible">${(0, Language_1.getPhrase)("wcf.media.button.select")}</span>
         </a>
       `;
         }
