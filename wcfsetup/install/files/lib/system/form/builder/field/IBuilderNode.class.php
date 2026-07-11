@@ -47,7 +47,7 @@ interface IBuilderNode
      * Returns the callback set via `saveValueCallback()` or `null` if no such
      * callback has been set.
      *
-     * @return ?\Closure(DatabaseObjectBuilder<*>, IFormField): void
+     * @return ?\Closure(DatabaseObjectBuilder<*>, static): void
      * @since 6.3
      */
     public function getSaveValueCallback(): ?\Closure;
@@ -78,8 +78,7 @@ interface IBuilderNode
      * triggering a contravariance error.
      *
      * @template TObject of IStorableObject
-     * @template TIFormField of IFormField
-     * @param \Closure(TObject, TIFormField): void $callback
+     * @param \Closure(TObject, static): void $callback
      * @return static this field
      * @since 6.3
      */
@@ -89,7 +88,7 @@ interface IBuilderNode
      * Returns the callback set via `loadValueCallback()` or `null` if no such
      * callback has been set.
      *
-     * @return ?\Closure(IStorableObject, IFormField): void
+     * @return ?\Closure(IStorableObject, static): void
      * @since 6.3
      */
     public function getLoadValueCallback(): ?\Closure;
