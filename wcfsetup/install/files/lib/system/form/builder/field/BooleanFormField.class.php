@@ -34,6 +34,9 @@ class BooleanFormField extends AbstractFormField implements
      */
     protected $templateName = 'shared_booleanFormField';
 
+    /**
+     * @return 0|1
+     */
     #[\Override]
     public function getSaveValue()
     {

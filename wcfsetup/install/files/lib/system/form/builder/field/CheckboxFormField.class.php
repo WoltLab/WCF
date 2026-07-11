@@ -29,6 +29,9 @@ class CheckboxFormField extends BooleanFormField implements INullableFormField
         return $this;
     }
 
+    /**
+     * @return 0|1|null
+     */
     #[\Override]
     public function getSaveValue()
     {

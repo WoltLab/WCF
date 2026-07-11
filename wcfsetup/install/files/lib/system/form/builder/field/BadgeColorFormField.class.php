@@ -100,6 +100,9 @@ final class BadgeColorFormField extends RadioButtonFormField implements IPattern
         return $this;
     }
 
+    /**
+     * @return string
+     */
     #[\Override]
     public function getSaveValue()
     {

@@ -7,6 +7,7 @@ use wcf\data\IStorableObject;
 use wcf\data\poll\Poll;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
+use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\DateFormField;
 use wcf\system\form\builder\field\IntegerFormField;
@@ -377,5 +378,26 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
         ]);
 
         return $this;
+    }
+
+    public function getPollData(): array
+    {
+        if (!$this->isAvailable()) {
+            return [];
+        }
+
+        $wysiwygId = $this->getWysiwygId();
+
+        $pollData = [];
+        foreach ($this->children() as $child) {
+            \assert($child instanceof AbstractFormField);
+            $pollData[$child->getId()] = $child->getSaveValue();
+        }
+
+        // this will always add a poll array to the parameters but
+        // `PollManager::savePoll()` is capable of correctly detecting
+        // when, based on the given data, nothing has to be done
+
+        return $pollData;
     }
 }

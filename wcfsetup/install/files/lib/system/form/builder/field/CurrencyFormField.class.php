@@ -16,6 +16,9 @@ namespace wcf\system\form\builder\field;
  */
 class CurrencyFormField extends AbstractNumericFormField
 {
+    /**
+     * @return 0|float
+     */
     #[\Override]
     public function getSaveValue()
     {

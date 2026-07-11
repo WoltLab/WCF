@@ -45,6 +45,9 @@ class DateRangeFormField extends AbstractFormField implements
 
     const TIME_FORMAT = 'Y-m-d\TH:i:sP';
 
+    /**
+     * @return ?string
+     */
     #[\Override]
     public function getSaveValue()
     {

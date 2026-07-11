@@ -218,12 +218,15 @@ class DateFormField extends AbstractFormField implements
         return $dateTime;
     }
 
+    /**
+     * @return ?string
+     */
     #[\Override]
     public function getSaveValue()
     {
         if ($this->getValue() === null) {
             if ($this->isNullable()) {
-                return;
+                return null;
             } else {
                 return DateUtil::getDateTimeByTimestamp(0)->format($this->getSaveValueFormat());
             }

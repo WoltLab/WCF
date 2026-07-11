@@ -8,6 +8,7 @@ use wcf\system\attachment\AttachmentHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\form\builder\button\wysiwyg\WysiwygPreviewFormButton;
 use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\IBuilderNode;
 use wcf\system\form\builder\field\TMaximumLengthFormField;
 use wcf\system\form\builder\field\TMinimumLengthFormField;
 use wcf\system\form\builder\field\wysiwyg\WysiwygAttachmentFormField;
@@ -30,7 +31,7 @@ use wcf\system\style\FontAwesomeIcon;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class WysiwygFormContainer extends FormContainer
+class WysiwygFormContainer extends FormContainer implements IBuilderNode
 {
     use TMaximumLengthFormField;
     use TMinimumLengthFormField;
@@ -151,6 +152,20 @@ class WysiwygFormContainer extends FormContainer
     protected $wysiwygField;
 
     protected WysiwygQuoteFormContainer $quoteContainer;
+
+    /**
+     * callback transferring this field's save value into a `DatabaseObjectBuilder`
+     * @var ?\Closure(\wcf\data\DatabaseObjectBuilder<*>, IFormField): void
+     * @since 6.3
+     */
+    protected ?\Closure $saveValueCallback = null;
+
+    /**
+     * callback loading this field's value from an `IStorableObject`
+     * @var ?\Closure(\wcf\data\IStorableObject, IFormField): void
+     * @since 6.3
+     */
+    protected ?\Closure $loadValueCallback = null;
 
     /**
      * @return  static
@@ -733,5 +748,33 @@ class WysiwygFormContainer extends FormContainer
         }
 
         return $this;
+    }
+
+    #[\Override]
+    public function saveValueCallback(\Closure $callback): static
+    {
+        $this->saveValueCallback = $callback;
+
+        return $this;
+    }
+
+    #[\Override]
+    public function getSaveValueCallback(): ?\Closure
+    {
+        return $this->saveValueCallback;
+    }
+
+    #[\Override]
+    public function loadValueCallback(\Closure $callback): static
+    {
+        $this->loadValueCallback = $callback;
+
+        return $this;
+    }
+
+    #[\Override]
+    public function getLoadValueCallback(): ?\Closure
+    {
+        return $this->loadValueCallback;
     }
 }
