@@ -118,7 +118,8 @@ final class FileDownloadAction implements RequestHandlerInterface
         if ($lifetimeInSeconds !== null) {
             $expiresAt = (new \DateTimeImmutable('@' . \TIME_NOW))
                 ->modify("+{$lifetimeInSeconds} seconds")
-                ->format(\DateTimeImmutable::RFC7231);
+                ->setTimezone(new \DateTimeZone('UTC'))
+                ->format('D, d M Y H:i:s \\G\\M\\T');
             $maxAge = \sprintf(
                 'max-age=%d, private',
                 $lifetimeInSeconds ?: 0,
