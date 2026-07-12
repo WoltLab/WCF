@@ -2,6 +2,7 @@
 
 namespace wcf\system\form\builder\field;
 
+use wcf\data\DatabaseObjectBuilder;
 use wcf\data\IStorableObject;
 use wcf\system\form\builder\field\dependency\IFormFieldDependency;
 use wcf\system\form\builder\field\validation\IFormFieldValidationError;
@@ -16,14 +17,19 @@ use wcf\system\form\builder\IFormParentNode;
  * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.4
+ *
+ * @template T of IFormField
  */
 abstract class AbstractFormFieldDecorator implements IFormField
 {
     /**
-     * @var IFormField
+     * @var T
      */
     protected $field;
 
+    /**
+     * @param T $field
+     */
     public function __construct(IFormField $field)
     {
         $this->field = $field;
@@ -87,6 +93,10 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this->field->getValue();
     }
 
+    /**
+     * @template TBuilder of DatabaseObjectBuilder
+     * @param \Closure(TBuilder, T): void $callback
+     */
     #[\Override]
     public function saveValueCallback(\Closure $callback): static
     {
@@ -95,12 +105,19 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
+    /**
+     * @return ?\Closure(DatabaseObjectBuilder<*>, T): void
+     */
     #[\Override]
     public function getSaveValueCallback(): ?\Closure
     {
         return $this->field->getSaveValueCallback();
     }
 
+    /**
+     * @template TObject of IStorableObject
+     * @param \Closure(TObject, T): void $callback
+     */
     #[\Override]
     public function loadValueCallback(\Closure $callback): static
     {
@@ -109,6 +126,9 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this;
     }
 
+    /**
+     * @return ?\Closure(IStorableObject, T): void
+     */
     #[\Override]
     public function getLoadValueCallback(): ?\Closure
     {

@@ -14,7 +14,7 @@ use wcf\system\language\LanguageFactory;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  *
- * @method string getSaveValue()
+ * @method ?string getSaveValue()
  */
 class TextFormField extends AbstractFormField implements
     IAttributeFormField,

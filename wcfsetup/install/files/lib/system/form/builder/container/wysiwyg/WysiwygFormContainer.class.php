@@ -155,14 +155,14 @@ class WysiwygFormContainer extends FormContainer implements IBuilderNode
 
     /**
      * callback transferring this field's save value into a `DatabaseObjectBuilder`
-     * @var ?\Closure(\wcf\data\DatabaseObjectBuilder<*>, IFormField): void
+     * @var ?\Closure(\wcf\data\DatabaseObjectBuilder<*>, static): void
      * @since 6.3
      */
     protected ?\Closure $saveValueCallback = null;
 
     /**
      * callback loading this field's value from an `IStorableObject`
-     * @var ?\Closure(\wcf\data\IStorableObject, IFormField): void
+     * @var ?\Closure(\wcf\data\IStorableObject, static): void
      * @since 6.3
      */
     protected ?\Closure $loadValueCallback = null;
