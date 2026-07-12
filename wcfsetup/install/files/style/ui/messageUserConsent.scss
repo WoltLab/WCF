@@ -1,5 +1,6 @@
 .messageUserConsent {
 	background-color: var(--wcfContentBackground);
+	color: var(--wcfContentText);
 	border-radius: 2px;
 	box-shadow:
 		0 0 3px rgba(0, 0, 0, 0.12),
@@ -10,6 +11,14 @@
 
 	@include screen-sm-down {
 		padding: 10px;
+	}
+
+	a {
+		color: var(--wcfContentLink);
+
+		&:hover {
+			color: var(--wcfContentLinkActive);
+		}
 	}
 }
 

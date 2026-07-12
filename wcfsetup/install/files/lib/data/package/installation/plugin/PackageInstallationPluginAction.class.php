@@ -2,11 +2,13 @@
 
 namespace wcf\data\package\installation\plugin;
 
+use wcf\command\package\RebuildBootstrapper;
 use wcf\command\package\SetLastUpdateTime;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\devtools\project\DevtoolsProject;
 use wcf\data\option\OptionEditor;
 use wcf\event\package\PackageInstallationPluginSynced;
+use wcf\system\cache\builder\ApiEndpointCacheBuilder;
 use wcf\system\cache\CacheHandler;
 use wcf\system\devtools\pip\DevtoolsPackageInstallationDispatcher;
 use wcf\system\devtools\pip\DevtoolsPip;
@@ -116,6 +118,13 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
             );
         }
 
+        $bootstrapPathname = \sprintf(
+            '%slib/bootstrap/%s.php',
+            \WCF_DIR,
+            $this->project->getPackage()->package,
+        );
+        $hadBootstrapFile = \file_exists($bootstrapPathname);
+
         $start = \microtime(true);
 
         $invokeAgain = false;
@@ -141,9 +150,17 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
 
         switch ($this->packageInstallationPlugin->pluginName) {
             case 'file':
+                ApiEndpointCacheBuilder::getInstance()->reset();
                 StyleHandler::resetStylesheets(false);
 
                 (new SetLastUpdateTime())();
+
+                if (!$hadBootstrapFile) {
+                    \clearstatcache(filename: $bootstrapPathname);
+                    if (\file_exists($bootstrapPathname)) {
+                        (new RebuildBootstrapper())();
+                    }
+                }
                 break;
 
             case 'language':

@@ -87,6 +87,8 @@ class MarkerLoader {
     response.markers.forEach((data) => {
       this.#addMarker(data);
     });
+
+    this.#clusterer.render();
   }
 
   #addMarker(data: MarkerData) {
@@ -96,7 +98,7 @@ class MarkerLoader {
       title: data.title,
     });
 
-    this.#clusterer.addMarker(marker);
+    this.#clusterer.addMarker(marker, true);
 
     if (data.infoWindow) {
       const content = document.createElement("div");

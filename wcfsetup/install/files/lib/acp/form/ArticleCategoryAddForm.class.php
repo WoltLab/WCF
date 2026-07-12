@@ -47,12 +47,11 @@ class ArticleCategoryAddForm extends CategoryAddFormBuilderForm
             ...$formFields,
             SelectFormField::create('sortField')
                 ->label('wcf.acp.article.category.sortField')
-                ->required()
                 ->options([
-                    'publicationDate' => 'wcf.acp.article.category.sortField.publicationDate',
-                    'title' => 'wcf.acp.article.category.sortField.title',
-                ])
-                ->value('publicationDate'),
+                    'time' => 'wcf.global.date',
+                    'title' => 'wcf.global.title',
+                    'views' => 'wcf.article.sortField.views',
+                ]),
             SortOrderFormField::create()
                 ->required()
                 ->value('DESC'),
@@ -86,6 +85,12 @@ class ArticleCategoryAddForm extends CategoryAddFormBuilderForm
 
                     if ($object->sortField && \in_array($object->sortField, \array_keys($sortField->getOptions()))) {
                         $data['sortField'] = $object->sortField;
+                    } else if ($object->sortField === 'publicationDate') {
+                        // Legacy value: `publicationDate` was previously offered as an option
+                        // but never matched a registered sort field. Pre-select `time`, which
+                        // is the semantically equivalent column, so editing the category does
+                        // not silently flip the sort field to the form default.
+                        $data['sortField'] = 'time';
                     }
 
                     if ($object->sortOrder) {

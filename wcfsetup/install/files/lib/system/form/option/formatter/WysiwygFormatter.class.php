@@ -25,6 +25,6 @@ final class WysiwygFormatter implements IFormOptionFormatter
         $processor = new HtmlOutputProcessor();
         $processor->process($value, $this->objectType, $this->objectID, true, $languageID);
 
-        return $processor->getHtml();
+        return \sprintf('<div class="htmlContent">%s</div>', $processor->getHtml());
     }
 }

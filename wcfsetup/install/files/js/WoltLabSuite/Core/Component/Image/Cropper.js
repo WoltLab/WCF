@@ -200,9 +200,26 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Image/Resizer", "WoltL
             this.cropperSelection.aspectRatio = this.configuration.aspectRatio;
         }
         centerSelection() {
-            // Set to the maximum size
+            // Expand the canvas to the natural image size. This forces the dialog to its
+            // final (maximum) width, which in turn lets the button controls of
+            // `woltlab-core-dialog-control` leave their stacked (narrow) layout.
             this.cropperCanvas.style.width = `${this.width}px`;
             this.cropperCanvas.style.height = `${this.height}px`;
+            // The controls re-flow through a `ResizeObserver`, and those callbacks run
+            // *after* the `requestAnimationFrame` callbacks of the same frame. Measuring
+            // any earlier still observes the taller, stacked controls and yields a
+            // too-small selection that then jumps larger on reset. Wait for the second
+            // frame: the first lays the dialog out at full width and lets the observer
+            // un-stack the controls, the second measures the now settled layout. This
+            // keeps the result identical across the initial open, reset and window
+            // resizes while remaining fully dependent on the current viewport.
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    this.applyCenteredSelection();
+                });
+            });
+        }
+        applyCenteredSelection() {
             const dimension = Util_1.default.innerDimensions(this.cropperCanvas.parentElement);
             const ratio = Math.min(dimension.width / this.width, dimension.height / this.height);
             const imageRatio = this.width / this.height;

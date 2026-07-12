@@ -37,7 +37,9 @@ class SetCookie
         // Create the default return array
         $data = self::$defaults;
         // Explode the cookie string using a series of semicolons
-        $pieces = \array_filter(\array_map('trim', \explode(';', $cookie)));
+        $pieces = \array_filter(\array_map(static function (string $piece): string {
+            return \trim($piece, " \n\r\t\0\x0B");
+        }, \explode(';', $cookie)));
         // The name of the cookie (first kvp) must exist and include an equal sign.
         if (!isset($pieces[0]) || \strpos($pieces[0], '=') === false) {
             return new self($data);
@@ -46,7 +48,7 @@ class SetCookie
         // Add the cookie pieces into the parsed data array
         foreach ($pieces as $part) {
             $cookieParts = \explode('=', $part, 2);
-            $key = \trim($cookieParts[0]);
+            $key = \trim($cookieParts[0], " \n\r\t\0\x0B");
             $value = isset($cookieParts[1])
                 ? \trim($cookieParts[1], " \n\r\t\0\x0B")
                 : true;
@@ -128,12 +130,25 @@ class SetCookie
         }
 
         // Extract the Expires value and turn it into a UNIX timestamp if needed
-        if (!$this->getExpires() && $this->getMaxAge()) {
+        $maxAge = $this->getMaxAge();
+        if (!$this->getExpires() && $maxAge !== null) {
             // Calculate the Expires date
-            $this->setExpires(\time() + $this->getMaxAge());
+            $this->setExpires(self::maxAgeToExpires($maxAge, \time()));
         } elseif (null !== ($expires = $this->getExpires()) && !\is_numeric($expires)) {
             $this->setExpires($expires);
         }
+    }
+
+    private static function maxAgeToExpires(int $maxAge, int $now): int
+    {
+        if ($maxAge <= 0) {
+            return $now - 1;
+        }
+        if ($maxAge > \PHP_INT_MAX - $now) {
+            return \PHP_INT_MAX;
+        }
+
+        return $now + $maxAge;
     }
 
     public function __toString()
@@ -401,7 +416,7 @@ class SetCookie
         $cookiePath = $this->getPath();
 
         // Match on exact matches or when path is the default empty "/"
-        if ($cookiePath === '/' || $cookiePath == $requestPath) {
+        if ($cookiePath === '/' || $cookiePath === $requestPath) {
             return true;
         }
 
@@ -433,13 +448,24 @@ class SetCookie
 
         // Remove the leading '.' as per spec in RFC 6265.
         // https://datatracker.ietf.org/doc/html/rfc6265#section-5.2.3
-        $cookieDomain = \ltrim(\strtolower($cookieDomain), '.');
+        $cookieDomain = \strtolower($cookieDomain);
+        if ($cookieDomain !== '' && $cookieDomain[0] === '.') {
+            /** @var string */
+            $cookieDomain = \substr($cookieDomain, 1);
+        }
+        if ('' === $cookieDomain) {
+            return false;
+        }
 
         $domain = \strtolower($domain);
-
-        // Domain not set or exact match.
-        if ('' === $cookieDomain || $domain === $cookieDomain) {
+        if ($domain === $cookieDomain) {
             return true;
+        }
+
+        // IP literals and numeric hosts are exact-match-only per RFC 6265.
+        // Only the exact match above may succeed for those cookie domains.
+        if (self::isIpAddressOrNumericHost($cookieDomain)) {
+            return false;
         }
 
         // Matching the subdomain according to RFC 6265.
@@ -448,7 +474,31 @@ class SetCookie
             return false;
         }
 
-        return (bool) \preg_match('/\.'.\preg_quote($cookieDomain, '/').'$/', $domain);
+        return (bool) \preg_match('/\.'.\preg_quote($cookieDomain, '/').'$/D', $domain);
+    }
+
+    private static function isIpAddressOrNumericHost(string $host): bool
+    {
+        // Strip one root dot before detection so trailing-dot numeric hosts
+        // still cannot be matched by subdomains.
+        if ($host !== '' && \str_ends_with($host, '.')) {
+            $host = \substr($host, 0, -1);
+        }
+
+        if (\str_starts_with($host, '[') && \str_ends_with($host, ']')) {
+            $host = \substr($host, 1, -1);
+        }
+
+        if (\filter_var($host, \FILTER_VALIDATE_IP) !== false) {
+            return true;
+        }
+
+        // Public DNS names do not have an all-numeric rightmost label; treat
+        // those private/internal hosts as exact-match-only too.
+        $labels = \explode('.', $host);
+        $last = (string) \end($labels);
+
+        return $last !== '' && \ctype_digit($last);
     }
 
     /**
@@ -472,10 +522,7 @@ class SetCookie
         }
 
         // Check if any of the invalid characters are present in the cookie name
-        if (\preg_match(
-            '/[\x00-\x20\x22\x28-\x29\x2c\x2f\x3a-\x40\x5c\x7b\x7d\x7f]/',
-            $name
-        )) {
+        if (\preg_match('/[\x00-\x20\x22\x28-\x29\x2c\x2f\x3a-\x40\x5c\x7b\x7d\x7f]/', $name) !== 0) {
             return 'Cookie name must not contain invalid characters: ASCII '
                 .'Control characters (0-31;127), space, tab and the '
                 .'following characters: ()<>@,;:\"/?={}';
@@ -491,7 +538,7 @@ class SetCookie
         // Domains must not be empty, but may be omitted. "0" is not a valid
         // internet domain, but may be used as server name in a private network.
         $domain = $this->getDomain();
-        if ($domain === '') {
+        if ($domain === '' || (null !== $domain && '' === \ltrim(\trim($domain, " \n\r\t\0\x0B"), '.'))) {
             return 'The cookie domain must not be empty';
         }
 

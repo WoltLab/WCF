@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 /*
  * This file is part of sebastian/diff.
  *
@@ -9,7 +7,6 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\Diff;
 
 use function array_fill;
@@ -82,6 +79,8 @@ final class MemoryEfficientLongestCommonSubsequenceCalculator implements Longest
                     $current[$j + 1] = $prev[$j] + 1;
                 } else {
                     /**
+                     * @noinspection PhpConditionCanBeReplacedWithMinMaxCallInspection
+                     *
                      * We do not use max() here to avoid the function call overhead
                      */
                     if ($current[$j] > $prev[$j + 1]) {

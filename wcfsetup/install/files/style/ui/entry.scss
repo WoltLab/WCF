@@ -119,7 +119,7 @@
 	grid-template-areas: "previous next";
 	grid-template-columns: 1fr 1fr;
 
-	@include screen-sm-down {
+	@include screen-md-down {
 		column-gap: 0;
 		grid-template-areas:
 			"previous"
@@ -132,7 +132,6 @@
 .entry__navigation__item {
 	color: var(--wcfContentText);
 	display: grid;
-	grid-template-rows: repeat(2, minmax(0, max-content));
 	position: relative;
 
 	&.entry__navigation__item--previous {

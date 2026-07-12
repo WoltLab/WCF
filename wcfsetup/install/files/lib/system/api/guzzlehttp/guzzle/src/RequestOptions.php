@@ -5,7 +5,7 @@ namespace GuzzleHttp;
 /**
  * This class contains a list of built-in Guzzle request options.
  *
- * @see https://github.com/guzzle/guzzle/blob/7.11/docs/request-options.md
+ * @see https://github.com/guzzle/guzzle/blob/7.14/docs/request-options.md
  */
 final class RequestOptions
 {
@@ -20,7 +20,9 @@ final class RequestOptions
      * - max: (int, default=5) maximum number of allowed redirects.
      * - strict: (bool, default=false) Set to true to use strict redirects
      *   meaning redirect POST requests with POST requests vs. doing what most
-     *   browsers do which is redirect POST requests with GET requests
+     *   browsers do which is redirect POST requests with GET requests. The
+     *   QUERY method keeps its method and body across non-strict 301 and 302
+     *   redirects, and a 303 redirect is followed with a body-less GET.
      * - referer: (bool, default=false) Set to true to enable the Referer
      *   header.
      * - protocols: (non-empty-array<array-key, string>, default=['http', 'https'])
@@ -95,6 +97,23 @@ final class RequestOptions
      * required to use TLS 1.3.
      */
     public const CRYPTO_METHOD = 'crypto_method';
+
+    /**
+     * crypto_method_max: (int) A value describing the maximum TLS protocol
+     * version to use.
+     *
+     * This setting must be set to one of the
+     * ``STREAM_CRYPTO_METHOD_TLS*_CLIENT`` constants. On the stream handler,
+     * PHP 7.3 or higher is required to set a maximum TLS version, and PHP 7.4
+     * or higher is required to use TLS 1.3. cURL 7.54.0 or higher is required
+     * in order to specify a maximum TLS version with the cURL handler.
+     */
+    public const CRYPTO_METHOD_MAX = 'crypto_method_max';
+
+    /**
+     * curl: (array) Raw cURL options to apply when using a built-in cURL handler.
+     */
+    public const CURL = 'curl';
 
     /**
      * debug: (bool|resource) Set to true or set to a PHP stream returned by
@@ -184,6 +203,22 @@ final class RequestOptions
     public const MULTIPART = 'multipart';
 
     /**
+     * multiplex: (string) Controls how an HTTP/2 request sent through a
+     * built-in cURL handler pursues a shared, multiplexed connection. When the
+     * option is not set, multiplexing is left to libcurl: nothing waits, and
+     * established multiplex-capable connections are still shared. Use
+     * Multiplexing::EAGER to explicitly never wait for pending connections,
+     * Multiplexing::WAIT to wait on libcurl-eligible pending connections with
+     * CURLOPT_PIPEWAIT, normally to the same origin,
+     * Multiplexing::REQUIRE_EAGER to fail unless a multiplexed protocol is
+     * guaranteed while dialing eagerly, or Multiplexing::REQUIRE_WAIT for the
+     * same guarantee while also waiting on pending connections. The stream
+     * handler ignores EAGER and WAIT, and rejects the required family;
+     * CurlHandler has no multi handle to multiplex over.
+     */
+    public const MULTIPLEX = 'multiplex';
+
+    /**
      * on_headers: (callable) A callable that is invoked when the HTTP headers
      * of the response have been received but the body has not yet begun to
      * download.
@@ -200,6 +235,16 @@ final class RequestOptions
      * taken to send the request.
      */
     public const ON_STATS = 'on_stats';
+
+    /**
+     * on_trailers: (callable) A callable that is invoked once per successful
+     * transfer, after the response body has been received, with an
+     * associative array of the parsed HTTP trailers followed by the response.
+     * Malformed trailer field lines are discarded before parsing. Trailer
+     * fields are reported separately from response headers and are never
+     * merged into the response.
+     */
+    public const ON_TRAILERS = 'on_trailers';
 
     /**
      * progress: (callable) Defines a function to invoke when transfer
@@ -271,6 +316,12 @@ final class RequestOptions
     public const STREAM = 'stream';
 
     /**
+     * stream_context: (array) PHP stream context options to merge into the
+     * context used by the built-in stream handler.
+     */
+    public const STREAM_CONTEXT = 'stream_context';
+
+    /**
      * verify: (bool|string, default=true) Describes the SSL certificate
      * verification behavior of a request. Set to true to enable SSL
      * certificate verification using the system CA bundle when available
@@ -291,6 +342,11 @@ final class RequestOptions
      * Number describing the body read timeout, for stream requests.
      */
     public const READ_TIMEOUT = 'read_timeout';
+
+    /**
+     * retries: (int) Current retry count used by the retry middleware.
+     */
+    public const RETRIES = 'retries';
 
     /**
      * version: (string|int|float) Specifies the HTTP protocol version to attempt

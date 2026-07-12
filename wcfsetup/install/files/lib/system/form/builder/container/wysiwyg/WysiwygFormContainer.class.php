@@ -54,11 +54,23 @@ class WysiwygFormContainer extends FormContainer
     protected $attachmentData;
 
     /**
+     * identifier used to autosave the wysiwyg field value; if empty, autosave is disabled
+     * @since 6.2
+     */
+    protected string $autosaveId = '';
+
+    /**
      * `true` if the preview button should be shown and `false` otherwise
      * @var         bool
      * @since       5.3
      */
     protected $enablePreviewButton = true;
+
+    /**
+     * last time the wysiwyg field has been edited
+     * @since 6.2
+     */
+    protected int $lastEditTime = 0;
 
     /**
      * name of the relevant message object type
@@ -225,6 +237,34 @@ class WysiwygFormContainer extends FormContainer
     }
 
     /**
+     * Sets the identifier used to autosave the wysiwyg field value and returns this form container.
+     * If an empty string is given, autosave is disabled.
+     *
+     * @since 6.2
+     */
+    public function autosaveId(string $autosaveId): static
+    {
+        $this->autosaveId = $autosaveId;
+
+        if ($this->wysiwygField !== null) {
+            $this->wysiwygField->autosaveId($autosaveId);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Returns the identifier used to autosave the field value. If autosave is disabled,
+     * an empty string is returned.
+     *
+     * @since 6.2
+     */
+    public function getAutosaveId(): string
+    {
+        return $this->autosaveId;
+    }
+
+    /**
      * Sets whether the preview button should be shown or not and returns this form container.
      *
      * By default, the preview button is shown.
@@ -367,6 +407,33 @@ class WysiwygFormContainer extends FormContainer
     }
 
     /**
+     * Sets the last time the wysiwyg field has been edited and returns this form container.
+     *
+     * @since 6.2
+     */
+    public function lastEditTime(int $lastEditTime): static
+    {
+        $this->lastEditTime = $lastEditTime;
+
+        if ($this->wysiwygField !== null) {
+            $this->wysiwygField->lastEditTime($lastEditTime);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Returns the last time the field has been edited. If no last edit time has
+     * been set, `0` is returned.
+     *
+     * @since 6.2
+     */
+    public function getLastEditTime(): int
+    {
+        return $this->lastEditTime;
+    }
+
+    /**
      * Returns `true` if the wysiwyg field has to be filled out and returns `false` otherwise.
      * By default, the wysiwyg field does not have to be filled out.
      *
@@ -475,7 +542,9 @@ class WysiwygFormContainer extends FormContainer
             ->maximumLength($this->getMaximumLength())
             ->required($this->isRequired())
             ->supportMentions($this->supportMentions)
-            ->supportQuotes($this->supportQuotes);
+            ->supportQuotes($this->supportQuotes)
+            ->autosaveId($this->autosaveId)
+            ->lastEditTime($this->lastEditTime);
         $this->smiliesContainer = WysiwygSmileyFormContainer::create($this->wysiwygId . 'SmiliesTab')
             ->wysiwygId($this->getWysiwygId())
             ->label('wcf.message.smilies')

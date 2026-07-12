@@ -19,6 +19,18 @@ class CategoryArticleListView extends ArticleListView
     public function __construct(public readonly int $categoryID)
     {
         parent::__construct();
+
+        $category = ArticleCategory::getCategory($this->categoryID);
+        if ($category?->sortField) {
+            // Legacy categories may still store the previously offered `publicationDate` value,
+            // which never matched a registered sort field. Map it to `time`, which is the
+            // semantically equivalent column actually exposed by the list view.
+            $sortField = $category->sortField === 'publicationDate' ? 'time' : $category->sortField;
+            $this->setDefaultSortField($sortField);
+            if ($category->sortOrder === 'ASC' || $category->sortOrder === 'DESC') {
+                $this->setDefaultSortOrder($category->sortOrder);
+            }
+        }
     }
 
     #[\Override]

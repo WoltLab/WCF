@@ -48,7 +48,7 @@ final class GridViewFilterAction implements RequestHandlerInterface
         try {
             /** @var AbstractGridView<DatabaseObject, DatabaseObjectList<DatabaseObject>> $view */
             $view = new $parameters['gridView'](...$parameters['gridViewParameters']);
-        } catch (\ArgumentCountError $e) {
+        } catch (\ArgumentCountError | \TypeError $e) {
             if (\ENABLE_DEBUG_MODE) {
                 throw $e;
             } else {

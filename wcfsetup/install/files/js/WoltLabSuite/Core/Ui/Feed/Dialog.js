@@ -57,7 +57,7 @@ ${withoutAccessToken}
       <input type="text" class="long" readonly value="${StringUtil.escapeHTML(linkWithAccessToken)}">
       <button type="button" class="inputSuffix button jsTooltip feedLinkDialogCopyButton" title="${(0, Language_1.getPhrase)("wcf.global.rss.copy")}">
         <fa-icon name="copy"></fa-icon>
-      </a>
+      </button>
     </div>
   </dd>
 </dl>
