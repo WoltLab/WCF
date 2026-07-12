@@ -28,7 +28,7 @@
 		<dt>{lang}wcf.acp.systemCheck.php{/lang}</dt>
 		<dd>
 			{if $results[status][php]}
-				{if $results[php][version][result] === 'sufficient'}
+				{if $results[php][version][result] === 'sufficient' || $results[php][version][result] === 'deprecated'}
 					{unsafe:$statusSufficient} {lang}wcf.acp.systemCheck.sufficient{/lang}
 				{else}
 					{unsafe:$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
