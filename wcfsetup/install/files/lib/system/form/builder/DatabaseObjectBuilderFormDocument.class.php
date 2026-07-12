@@ -3,7 +3,7 @@
 namespace wcf\system\form\builder;
 
 use wcf\data\DatabaseObjectBuilder;
-use wcf\system\form\builder\field\IFormField;
+use wcf\system\form\builder\field\IBuilderNode;
 
 /**
  * Represents a form document whose field values are written into a
@@ -55,14 +55,16 @@ class DatabaseObjectBuilderFormDocument extends FormDocument
             return;
         }
 
-        if ($node instanceof IFormParentNode) {
-            foreach ($node as $childNode) {
-                $this->applyNodeValues($childNode, $builder);
-            }
-        } elseif ($node instanceof IFormField) {
+        if ($node instanceof IBuilderNode) {
             $callback = $node->getSaveValueCallback();
             if ($callback !== null) {
                 $callback($builder, $node);
+            }
+        }
+
+        if ($node instanceof IFormParentNode) {
+            foreach ($node as $childNode) {
+                $this->applyNodeValues($childNode, $builder);
             }
         }
     }

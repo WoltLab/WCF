@@ -511,6 +511,10 @@ class WysiwygFormContainer extends FormContainer implements IBuilderNode
 
         $this->setAttachmentHandler();
 
+        if ($this->loadValueCallback !== null) {
+            ($this->loadValueCallback)($object, $this);
+        }
+
         return parent::updatedObject($data, $object);
     }
 
