@@ -172,7 +172,6 @@ final class ReactionHandler extends SingletonFactory
         // @phpstan-ignore instanceof.alwaysTrue
         if (!($likeableObject instanceof ILikeObject)) {
             throw new ImplementationException(
-                // @phpstan-ignore argument.type
                 \get_class($likeableObject),
                 ILikeObject::class
             );

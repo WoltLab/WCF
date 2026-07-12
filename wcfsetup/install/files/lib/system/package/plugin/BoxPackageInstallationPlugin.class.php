@@ -327,21 +327,24 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 
         // updating boxes is only supported for 'system' type boxes, all other
         // types would potentially overwrite changes made by the user if updated
-        if (!empty($row) && $row['boxType'] !== 'system') {
-            $box = new Box(null, $row);
+        if ($row === []) {
+            /** @var Box|BoxEditor $box */
+            $box = parent::import($row, $data);
         } else {
             // Updating 'system' type boxes is allowed, but we must not modify
             // the visibility settings in order to preserve user modifications.
-            if (!empty($row) && $row['boxType'] === 'system') {
+            if ($row['boxType'] === 'system') {
                 unset($data['visibleEverywhere']);
                 unset($this->visibilityExceptions[$data['identifier']]);
                 unset($data['showOrder']);
                 unset($data['position']);
                 unset($data['additionalData']);
-            }
 
-            /** @var Box|BoxEditor $box */
-            $box = parent::import($row, $data);
+                /** @var Box|BoxEditor $box */
+                $box = parent::import($row, $data);
+            } else {
+                $box = new Box(null, $row);
+            }
         }
 
         // store content for later import
@@ -642,10 +645,6 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
         }
     }
 
-    /**
-     * @return array<string, int|string>
-     * @since   5.2
-     */
     #[\Override]
     protected function fetchElementData(\DOMElement $element, bool $saveData)
     {

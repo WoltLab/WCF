@@ -106,7 +106,6 @@ final class SearchResultHandler
             if ($message !== null) {
                 // @phpstan-ignore instanceof.alwaysTrue
                 if (!($message instanceof ISearchResultObject)) {
-                    // @phpstan-ignore argument.type
                     throw new ImplementationException(\get_class($message), ISearchResultObject::class);
                 }
 

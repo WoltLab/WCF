@@ -67,12 +67,6 @@ parameters:
 			path: wcfsetup/install/files/lib/page/SearchResultPage.class.php
 
 		-
-			message: '#^Parameter \#1 \$className of class wcf\\system\\exception\\ImplementationException constructor expects string, false given\.$#'
-			identifier: argument.type
-			count: 1
-			path: wcfsetup/install/files/lib/page/SearchResultPage.class.php
-
-		-
 			message: '#^Access to an undefined property Zend\\Console\\Getopt\:\:\$exitOnFail\.$#'
 			identifier: property.notFound
 			count: 4
@@ -147,12 +141,6 @@ parameters:
 		-
 			message: '#^Instanceof between wcf\\system\\background\\job\\AbstractBackgroundJob and wcf\\system\\background\\job\\AbstractBackgroundJob will always evaluate to true\.$#'
 			identifier: instanceof.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/system/background/BackgroundQueueHandler.class.php
-
-		-
-			message: '#^Parameter \#1 \$className of class wcf\\system\\exception\\ParentClassException constructor expects string, false given\.$#'
-			identifier: argument.type
 			count: 1
 			path: wcfsetup/install/files/lib/system/background/BackgroundQueueHandler.class.php
 
@@ -355,172 +343,10 @@ parameters:
 			path: wcfsetup/install/files/lib/system/file/upload/UploadHandler.class.php
 
 		-
-			message: '#^Call to function is_bool\(\) with string will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/CustomFormNode.class.php
-
-		-
 			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/CustomFormNode.class.php
-
-		-
-			message: '#^Result of && is always false\.$#'
-			identifier: booleanAnd.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/CustomFormNode.class.php
-
-		-
-			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
-			identifier: identical.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/CustomFormNode.class.php
-
-		-
-			message: '#^Call to function is_bool\(\) with string will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 1
+			count: 2
 			path: wcfsetup/install/files/lib/system/form/builder/FormDocument.class.php
-
-		-
-			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 3
-			path: wcfsetup/install/files/lib/system/form/builder/FormDocument.class.php
-
-		-
-			message: '#^Result of && is always false\.$#'
-			identifier: booleanAnd.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/FormDocument.class.php
-
-		-
-			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
-			identifier: identical.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/FormDocument.class.php
-
-		-
-			message: '#^Call to function is_bool\(\) with string will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/GridViewFormNode.class.php
-
-		-
-			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/GridViewFormNode.class.php
-
-		-
-			message: '#^Result of && is always false\.$#'
-			identifier: booleanAnd.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/GridViewFormNode.class.php
-
-		-
-			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
-			identifier: identical.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/GridViewFormNode.class.php
-
-		-
-			message: '#^Call to function is_bool\(\) with string will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/LanguageItemFormNode.class.php
-
-		-
-			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/LanguageItemFormNode.class.php
-
-		-
-			message: '#^Result of && is always false\.$#'
-			identifier: booleanAnd.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/LanguageItemFormNode.class.php
-
-		-
-			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
-			identifier: identical.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/LanguageItemFormNode.class.php
-
-		-
-			message: '#^Call to function is_bool\(\) with string will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/TemplateFormNode.class.php
-
-		-
-			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/TemplateFormNode.class.php
-
-		-
-			message: '#^Result of && is always false\.$#'
-			identifier: booleanAnd.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/TemplateFormNode.class.php
-
-		-
-			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
-			identifier: identical.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/TemplateFormNode.class.php
-
-		-
-			message: '#^Call to function is_bool\(\) with string will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/button/FormButton.class.php
-
-		-
-			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 3
-			path: wcfsetup/install/files/lib/system/form/builder/button/FormButton.class.php
-
-		-
-			message: '#^Result of && is always false\.$#'
-			identifier: booleanAnd.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/button/FormButton.class.php
-
-		-
-			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
-			identifier: identical.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/button/FormButton.class.php
-
-		-
-			message: '#^Call to function is_bool\(\) with string will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/container/FormContainer.class.php
-
-		-
-			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 3
-			path: wcfsetup/install/files/lib/system/form/builder/container/FormContainer.class.php
-
-		-
-			message: '#^Result of && is always false\.$#'
-			identifier: booleanAnd.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/container/FormContainer.class.php
-
-		-
-			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
-			identifier: identical.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/container/FormContainer.class.php
 
 		-
 			message: '#^Call to an undefined method wcf\\system\\form\\builder\\container\\wysiwyg\\WysiwygFormContainer\:\:addValidationError\(\)\.$#'
@@ -529,84 +355,6 @@ parameters:
 			path: wcfsetup/install/files/lib/system/form/builder/container/wysiwyg/WysiwygFormContainer.class.php
 
 		-
-			message: '#^Call to function is_int\(\) with int will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/container/wysiwyg/WysiwygFormContainer.class.php
-
-		-
-			message: '#^Call to function is_bool\(\) with string will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/AbstractFormField.class.php
-
-		-
-			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 3
-			path: wcfsetup/install/files/lib/system/form/builder/field/AbstractFormField.class.php
-
-		-
-			message: '#^Result of && is always false\.$#'
-			identifier: booleanAnd.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/AbstractFormField.class.php
-
-		-
-			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
-			identifier: identical.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/AbstractFormField.class.php
-
-		-
-			message: '#^Call to function is_numeric\(\) with array\<string\> will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/EmailFormField.class.php
-
-		-
-			message: '#^Call to function is_callable\(\) with callable\(\)\: mixed will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/MultipleSelectionFormField.class.php
-
-		-
-			message: '#^Result of && is always false\.$#'
-			identifier: booleanAnd.alwaysFalse
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/MultipleSelectionFormField.class.php
-
-		-
-			message: '#^Call to function is_int\(\) with int will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/PasswordFormField.class.php
-
-		-
-			message: '#^Call to function is_callable\(\) with callable\(\)\: mixed will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/RadioButtonFormField.class.php
-
-		-
-			message: '#^Result of && is always false\.$#'
-			identifier: booleanAnd.alwaysFalse
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/RadioButtonFormField.class.php
-
-		-
-			message: '#^Call to function is_callable\(\) with callable\(\)\: mixed will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/SelectFormField.class.php
-
-		-
-			message: '#^Result of && is always false\.$#'
-			identifier: booleanAnd.alwaysFalse
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/SelectFormField.class.php
-
-		-
 			message: '#^Call to function is_callable\(\) with callable\(\)\: mixed will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 2
@@ -617,18 +365,6 @@ parameters:
 			identifier: booleanAnd.alwaysFalse
 			count: 2
 			path: wcfsetup/install/files/lib/system/form/builder/field/SingleSelectionFormField.class.php
-
-		-
-			message: '#^Call to function is_int\(\) with int will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/SourceCodeFormField.class.php
-
-		-
-			message: '#^Call to function is_int\(\) with int will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/TextFormField.class.php
 
 		-
 			message: '#^Call to function is_numeric\(\) with array\<string\> will always evaluate to false\.$#'
@@ -679,12 +415,6 @@ parameters:
 			path: wcfsetup/install/files/lib/system/form/builder/field/dependency/ValueFormFieldDependency.class.php
 
 		-
-			message: '#^Call to function is_int\(\) with int will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/user/UsernameFormField.class.php
-
-		-
 			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 1
@@ -695,30 +425,6 @@ parameters:
 			identifier: function.alreadyNarrowedType
 			count: 2
 			path: wcfsetup/install/files/lib/system/form/builder/field/wysiwyg/WysiwygFormField.class.php
-
-		-
-			message: '#^Call to function is_bool\(\) with string will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/wysiwyg/WysiwygSmileyFormNode.class.php
-
-		-
-			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/wysiwyg/WysiwygSmileyFormNode.class.php
-
-		-
-			message: '#^Result of && is always false\.$#'
-			identifier: booleanAnd.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/wysiwyg/WysiwygSmileyFormNode.class.php
-
-		-
-			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
-			identifier: identical.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/wysiwyg/WysiwygSmileyFormNode.class.php
 
 		-
 			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
@@ -787,12 +493,6 @@ parameters:
 			path: wcfsetup/install/files/lib/system/message/QuickReplyManager.class.php
 
 		-
-			message: '#^Loose comparison using \=\= between non\-falsy\-string and ''0'' will always evaluate to false\.$#'
-			identifier: equal.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/system/option/user/FloatUserOptionOutput.class.php
-
-		-
 			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
 			identifier: identical.alwaysFalse
 			count: 1
@@ -832,30 +532,6 @@ parameters:
 			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/ACPSearchProviderPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/ACPSearchProviderPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/AbstractMenuPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/AbstractMenuPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
 			path: wcfsetup/install/files/lib/system/package/plugin/AbstractOptionPackageInstallationPlugin.class.php
 
 		-
@@ -863,204 +539,12 @@ parameters:
 			identifier: notIdentical.alwaysTrue
 			count: 1
 			path: wcfsetup/install/files/lib/system/package/plugin/AbstractOptionPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/BBCodePackageInstallationPlugin.class.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/BBCodePackageInstallationPlugin.class.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/BoxPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/BoxPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/ClipboardActionPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/ClipboardActionPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/CoreObjectPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/CoreObjectPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/CronjobPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/CronjobPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/EventListenerPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/EventListenerPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/LanguagePackageInstallationPlugin.class.php
 
 		-
 			message: '#^Method wcf\\system\\package\\plugin\\LanguagePackageInstallationPlugin\:\:getEmptyXml\(\) invoked with 0 parameters, 1 required\.$#'
 			identifier: arguments.count
 			count: 1
 			path: wcfsetup/install/files/lib/system/package/plugin/LanguagePackageInstallationPlugin.class.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/LanguagePackageInstallationPlugin.class.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/MediaProviderPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/MediaProviderPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/MenuItemPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/MenuItemPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/MenuPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/MenuPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/ObjectTypeDefinitionPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/ObjectTypeDefinitionPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/ObjectTypePackageInstallationPlugin.class.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/ObjectTypePackageInstallationPlugin.class.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/PIPPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/PIPPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/PagePackageInstallationPlugin.class.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/PagePackageInstallationPlugin.class.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/SmileyPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/SmileyPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/TemplateListenerPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/TemplateListenerPackageInstallationPlugin.class.php
 
 		-
 			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
@@ -1073,18 +557,6 @@ parameters:
 			identifier: instanceof.alwaysTrue
 			count: 2
 			path: wcfsetup/install/files/lib/system/package/plugin/UserMenuPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/UserNotificationEventPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/UserNotificationEventPackageInstallationPlugin.class.php
 
 		-
 			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'

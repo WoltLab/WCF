@@ -331,7 +331,6 @@ class UploadHandler extends SingletonFactory
 
         foreach ($files as $file) {
             if (!($file instanceof UploadFile)) {
-                // @phpstan-ignore argument.type
                 throw new ImplementationException(\get_class($file), UploadFile::class);
             }
         }

@@ -107,7 +107,7 @@ class SimpleAclHandler extends SingletonFactory
     /**
      * Sets the user and group values for provided object type and object id.
      *
-     * @param array{allowAll?: bool, user?: (User|null)[], group?: UserGroup[]} $values list of user and group ids
+     * @param array{allowAll?: bool, user?: (int|string)[], group?: (int|string)[]} $values list of user and group ids
      * @return void
      * @throws \InvalidArgumentException
      */
