@@ -296,6 +296,7 @@ abstract class DatabaseObjectBuilder
     /**
      * This method is called after the properties have been validated.
      * It can be overriden to handle additional tasks that are not handled by the default implementation.
+     * You SHOULD NOT modify any properties in this method.
      */
     protected function afterValidateCreate(): void
     {
