@@ -62,10 +62,10 @@ class SystemCheckPage extends AbstractPage
      */
     public $mysqlVersions = [
         'mysql' => [
-            '8' => '8.0.30',
+            '8' => '8.4.0',
         ],
         'mariadb' => [
-            '10' => '10.5.15',
+            '10' => '10.11.0',
         ],
     ];
 

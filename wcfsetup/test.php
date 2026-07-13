@@ -82,8 +82,8 @@ $phrases = [
         'en' => 'MySQL Requirements',
     ],
     'mysql_version' => [
-        'de' => 'Bitte stellen Sie sicher, dass MySQL 8.0.30+  oder MariaDB 10.5.15+ mit InnoDB-Unterstützung vorhanden ist.',
-        'en' => 'Please make sure that MySQL 8.0.30+ or MariaDB 10.5.15+, with InnoDB support is available.',
+        'de' => 'Bitte stellen Sie sicher, dass MySQL 8.4+  oder MariaDB 10.11+ mit InnoDB-Unterstützung vorhanden ist.',
+        'en' => 'Please make sure that MySQL 8.4+ or MariaDB 10.11+, with InnoDB support is available.',
     ],
     'tls_failure' => [
         'de' => 'Die Seite wird nicht über HTTPS aufgerufen. Wichtige Funktionen stehen dadurch nicht zur Verfügung, die für die korrekte Funktionsweise der Software erforderlich sind.',
