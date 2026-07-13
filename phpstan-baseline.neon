@@ -571,27 +571,9 @@ parameters:
 			path: wcfsetup/install/files/lib/system/package/plugin/UserProfileMenuPackageInstallationPlugin.class.php
 
 		-
-			message: '#^Call to function is_bool\(\) with string will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 1
-			path: wcfsetup/install/files/lib/system/user/multifactor/totp/DeviceNode.class.php
-
-		-
 			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
-			count: 3
-			path: wcfsetup/install/files/lib/system/user/multifactor/totp/DeviceNode.class.php
-
-		-
-			message: '#^Result of && is always false\.$#'
-			identifier: booleanAnd.alwaysFalse
-			count: 1
-			path: wcfsetup/install/files/lib/system/user/multifactor/totp/DeviceNode.class.php
-
-		-
-			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
-			identifier: identical.alwaysFalse
-			count: 1
+			count: 2
 			path: wcfsetup/install/files/lib/system/user/multifactor/totp/DeviceNode.class.php
 
 		-

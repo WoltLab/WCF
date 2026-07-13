@@ -5,7 +5,7 @@
     "optimize-autoloader": true,
     "sort-packages": true,
     "platform": {
-      "php": "8.3.30",
+      "php": "8.4.23",
       "ext-gd": "0"
     }
   },
@@ -30,7 +30,6 @@
     "psr/log": "^3.0.2",
     "scssphp/scssphp": "^2.1.0",
     "sebastian/diff": "^5.1.1",
-    "symfony/polyfill-php84": "^1.38.1",
     "symfony/polyfill-php85": "^1.38.1",
     "willdurand/negotiation": "^3.1",
     "woltlab/laminas-progressbar": "^2.99.1",

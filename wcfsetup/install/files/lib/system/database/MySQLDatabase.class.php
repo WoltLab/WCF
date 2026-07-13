@@ -33,11 +33,7 @@ class MySQLDatabase extends Database
                 $initCommand = "SET NAMES 'utf8mb4', SESSION sql_mode = 'ANSI,ONLY_FULL_GROUP_BY,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'";
             }
 
-            if (\defined('\\Pdo\\Mysql::ATTR_INIT_COMMAND')) {
-                $driverOptions[\Pdo\Mysql::ATTR_INIT_COMMAND] = $initCommand;
-            } else {
-                $driverOptions[\PDO::MYSQL_ATTR_INIT_COMMAND] = $initCommand;
-            }
+            $driverOptions[\Pdo\Mysql::ATTR_INIT_COMMAND] = $initCommand;
 
             // disable prepared statement emulation since MySQL 5.1.17 is the minimum required version
             $driverOptions[\PDO::ATTR_EMULATE_PREPARES] = false;
@@ -82,11 +78,7 @@ class MySQLDatabase extends Database
     {
         parent::setAttributes();
 
-        if (\defined('\\Pdo\\Mysql::ATTR_USE_BUFFERED_QUERY')) {
-            $this->pdo->setAttribute(\Pdo\Mysql::ATTR_USE_BUFFERED_QUERY, true);
-        } else {
-            $this->pdo->setAttribute(\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
-        }
+        $this->pdo->setAttribute(\Pdo\Mysql::ATTR_USE_BUFFERED_QUERY, true);
     }
 
     #[\Override]

@@ -81,7 +81,7 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
     {
         $messages = [];
         // @phpstan-ignore smallerOrEqual.alwaysTrue, smallerOrEqual.alwaysTrue, booleanAnd.alwaysTrue
-        if (!(80300 <= \PHP_VERSION_ID && \PHP_VERSION_ID <= 80599)) {
+        if (!(80400 <= \PHP_VERSION_ID && \PHP_VERSION_ID <= 80599)) {
             $messages[] = new StatusMessage(
                 StatusMessageType::Error,
                 WCF::getLanguage()->getDynamicVariable('wcf.global.incompatiblePhpVersion')

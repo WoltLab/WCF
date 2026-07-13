@@ -3430,6 +3430,6 @@
             "install-path": "../woltlab/webp-exif"
         }
     ],
-    "dev": false,
+    "dev": true,
     "dev-package-names": []
 }

@@ -119,12 +119,6 @@ trait TFormNode
     {
         static::validateAttribute($name);
 
-        if ($value !== null && !\is_bool($value) && !\is_numeric($value) && !\is_string($value)) {
-            throw new \InvalidArgumentException(
-                "Value argument is of invalid type, " . \gettype($value) . " for node '{$this->getId()}'."
-            );
-        }
-
         $this->attributes[$name] = $value;
 
         return $this;
@@ -417,12 +411,6 @@ trait TFormNode
         // add dependent fields
         foreach ($this->getDependencies() as $dependency) {
             if ($dependency->getField() === null) {
-                if ($dependency->getFieldId() === null) {
-                    throw new \UnexpectedValueException(
-                        "Dependency '{$dependency->getId()}' for node '{$this->getId()}' has no field."
-                    );
-                }
-
                 /** @var ?IFormField $field */
                 $field = $this->getDocument()->getNodeById($dependency->getFieldId());
                 if ($field === null) {
