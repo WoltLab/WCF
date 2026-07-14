@@ -147,11 +147,25 @@ class DynamicRequestRoute implements IRequestRoute
         // drop application component to avoid being appended as query string
         unset($components['application']);
 
-        // handle default values for controller
+        // The default controller of an application is never represented in the
+        // URL. It can be dropped regardless of additional query parameters (e.g.
+        // `pageNo`), but only when no other positional route components (e.g.
+        // `id`, `title`) are present, because those require the build schema.
         $useBuildSchema = true;
-        if (\count($components) == 1 && isset($components['controller'])) {
+        if (
+            isset($components['controller'])
+            && !RequestHandler::getInstance()->isACPRequest()
+        ) {
+            $hasPositionalComponents = \array_any(
+                $this->buildSchema,
+                static fn ($component) => $component['type'] !== 'separator'
+                    && $component['value'] !== 'controller'
+                    && isset($components[$component['value']])
+                    && $components[$component['value']] !== ''
+            );
+
             if (
-                !RequestHandler::getInstance()->isACPRequest()
+                !$hasPositionalComponents
                 && ControllerMap::getInstance()->isDefaultController($application, $components['controller'])
             ) {
                 // drops controller from route
