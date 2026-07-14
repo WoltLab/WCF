@@ -102,11 +102,11 @@ class Option extends DatabaseObject
      *
      * @return array{disableOptions: string, enableOptions: string}
      */
-    public static function parseEnableOptions(string $optionData)
+    public static function parseEnableOptions(?string $optionData)
     {
         $disableOptions = $enableOptions = '';
 
-        if (!empty($optionData)) {
+        if ($optionData !== null && $optionData !== '') {
             $options = ArrayUtil::trim(\explode(',', $optionData));
 
             foreach ($options as $item) {
