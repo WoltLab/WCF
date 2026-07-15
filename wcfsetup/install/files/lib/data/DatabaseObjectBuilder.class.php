@@ -35,6 +35,8 @@ abstract class DatabaseObjectBuilder
      */
     public protected(set) array $incrementProperties = [];
 
+    private bool $consumed = false;
+
     /**
      * Use forCreate() or forUpdate() to obtain a builder instance.
      *
@@ -52,6 +54,8 @@ abstract class DatabaseObjectBuilder
         if ($this->object !== null) {
             throw new \BadMethodCallException("create() can only be used with forCreate().");
         }
+
+        $this->markConsumed();
 
         $this->validateCreate();
         $this->afterValidateCreate();
@@ -131,6 +135,8 @@ abstract class DatabaseObjectBuilder
             throw new \BadMethodCallException("update() can only be used with forUpdate().");
         }
 
+        $this->markConsumed();
+
         if ($this->properties !== [] || $this->customProperties !== [] || $this->incrementProperties !== []) {
             $updateSQL = '';
             $statementParameters = [];
@@ -169,6 +175,21 @@ abstract class DatabaseObjectBuilder
         $this->afterUpdate($object);
 
         return $object;
+    }
+
+    /**
+     * Marks this builder as consumed, preventing it from being reused. A
+     * builder instance may only be executed once via create() or update().
+     *
+     * @throws \BadMethodCallException if the builder has already been consumed
+     */
+    private function markConsumed(): void
+    {
+        if ($this->consumed) {
+            throw new \BadMethodCallException('This builder has already been consumed and cannot be reused.');
+        }
+
+        $this->consumed = true;
     }
 
     /**
