@@ -99,8 +99,8 @@ class HtmlInputNodeTextParser
 
                 foreach ($smilies as $categoryID => $categorySmilies) {
                     if (
-                        !\array_key_exists($categoryID ?: null, $categories)
-                        || $categories[$categoryID ?: null]->isDisabled
+                        !\array_key_exists($categoryID ?: 0, $categories)
+                        || $categories[$categoryID ?: 0]->isDisabled
                     ) {
                         continue;
                     }
