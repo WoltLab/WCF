@@ -3,6 +3,7 @@
 namespace GuzzleHttp\Handler;
 
 use Closure;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Multiplexing;
 use GuzzleHttp\Promise as P;
 use GuzzleHttp\Promise\Promise;
@@ -35,6 +36,16 @@ class CurlMultiHandler
     private const CONNECTION_CAP_OPTIONS = [
         'max_host_connections' => 'CURLMOPT_MAX_HOST_CONNECTIONS',
         'max_total_connections' => 'CURLMOPT_MAX_TOTAL_CONNECTIONS',
+    ];
+
+    /**
+     * cURL options that isolate a transfer from foreign proxy tunnel
+     * connections. Failing to apply either one would fall open into
+     * credential-bearing connection reuse.
+     */
+    private const PROXY_TUNNEL_ISOLATION_OPTIONS = [
+        'CURLOPT_FRESH_CONNECT',
+        'CURLOPT_FORBID_REUSE',
     ];
 
     /**
@@ -102,10 +113,12 @@ class CurlMultiHandler
     private $activeProxyTunnelHandles = [];
 
     /**
-     * @var bool Guards against multi-handle recreation re-entrancy from
-     *           processMessages (a retried transfer re-invokes the handler)
+     * @var int Depth of nested processMessages() calls. Guards against
+     *          multi-handle recreation re-entrancy from processMessages (a
+     *          retried transfer re-invokes the handler); a depth is tracked
+     *          because a completion callback can re-enter tick().
      */
-    private $processingMessages = false;
+    private $messageProcessingDepth = 0;
 
     /**
      * This handler accepts the following options:
@@ -232,13 +245,16 @@ class CurlMultiHandler
 
         try {
             $this->rejectMultiplexPipeliningConflict($easy, $options);
+            $this->applyProxyTunnelOwnership($easy);
         } catch (\Throwable $e) {
-            $this->factory->release($easy);
+            try {
+                $this->factory->release($easy);
+            } catch (\Throwable $releaseFailure) {
+                // Preserve the original failure.
+            }
 
             throw $e;
         }
-
-        $this->applyProxyTunnelOwnership($easy);
 
         $id = (int) $easy->handle;
 
@@ -253,12 +269,18 @@ class CurlMultiHandler
                     $this->execute();
                 }
             },
-            function () use ($id) {
-                return $this->cancel($id);
+            function () use ($id, $waitToken) {
+                return $this->cancel($id, $waitToken);
             }
         );
 
-        $this->addRequest(['easy' => $easy, 'deferred' => $promise, 'wait_token' => $waitToken]);
+        $entry = ['easy' => $easy, 'deferred' => $promise, 'wait_token' => $waitToken];
+
+        try {
+            $this->addRequest($entry);
+        } catch (\Throwable $e) {
+            throw $this->discardPendingRequest($id, $entry, $e);
+        }
 
         return $promise;
     }
@@ -270,11 +292,29 @@ class CurlMultiHandler
      * handler configured against it is a configuration error. The required
      * family conflicts marker-independently: a required guarantee on a handler
      * that disables multiplexing is contradictory even when the transfer would
-     * not wait.
+     * not wait. A raw CURLOPT_PIPEWAIT cURL option conflicts with every
+     * explicit mode on this handler, where waiting is operationally
+     * meaningful: whatever its value, it is a second wait/eager authority
+     * applied after the mode's own decision.
      */
     private function rejectMultiplexPipeliningConflict(EasyHandle $easy, array $options): void
     {
         $multiplex = $options['multiplex'] ?? null;
+
+        if (null === $multiplex) {
+            return;
+        }
+
+        if (\defined('CURLOPT_PIPEWAIT')
+            && isset($options['curl'])
+            && \is_array($options['curl'])
+            && \array_key_exists((int) \constant('CURLOPT_PIPEWAIT'), $options['curl'])
+        ) {
+            // Key presence alone conflicts, and it must be rejected before
+            // the marker below is consulted: the marker reflects the final
+            // merged configuration, which the raw value has falsified.
+            throw new \InvalidArgumentException('The "multiplex" request option cannot be combined with the raw CURLOPT_PIPEWAIT cURL option on the cURL multi handler; remove the raw option.');
+        }
 
         if (Multiplexing::WAIT === $multiplex && !$easy->usesPipewait) {
             // Explicit wait only conflicts when the transfer would actually
@@ -286,13 +326,18 @@ class CurlMultiHandler
             return;
         }
 
-        if (!\array_key_exists(\CURLMOPT_PIPELINING, $this->options)) {
+        if (!\is_array($this->options) || !\array_key_exists(\CURLMOPT_PIPELINING, $this->options)) {
+            // A legacy non-array "options" value is tolerated by the
+            // constructor and cannot contain the option.
             return;
         }
 
         $pipelining = $this->options[\CURLMOPT_PIPELINING];
         if (!\is_scalar($pipelining)) {
-            return;
+            // ext-curl derives the integer mask from non-scalar values with
+            // type-dependent zval semantics, so the effective mask cannot be
+            // predicted here; require an explicit integer instead.
+            throw new \InvalidArgumentException('The CurlMultiHandler CURLMOPT_PIPELINING option must be an integer when combined with the "multiplex" request option.');
         }
 
         $multiplexBit = \defined('CURLPIPE_MULTIPLEX') ? \CURLPIPE_MULTIPLEX : 2;
@@ -461,7 +506,7 @@ class CurlMultiHandler
         if (
             $this->handles === []
             && !$this->executingMulti
-            && !$this->processingMessages
+            && 0 === $this->messageProcessingDepth
             && $this->deferredCancels === []
         ) {
             // Idle: hand the connection cache over by recreating the multi
@@ -483,7 +528,23 @@ class CurlMultiHandler
     private function addCurlHandle(EasyHandle $easy): void
     {
         $this->isolateFromForeignActiveProxyTunnel($easy);
-        \curl_multi_add_handle($this->_mh, $easy->handle);
+
+        // Unqualified curl_multi_add_handle so the test bootstrap shadow can
+        // override the result.
+        $result = curl_multi_add_handle($this->_mh, $easy->handle);
+
+        if (\CURLM_OK !== $result) {
+            if (\PHP_VERSION_ID < 80226 || (\PHP_VERSION_ID >= 80300 && \PHP_VERSION_ID < 80314)) {
+                // Before PHP 8.2.26 and 8.3.14, ext-curl kept the easy handle
+                // in its multi bookkeeping even when the native add failed
+                // (https://github.com/php/php-src/pull/16302); remove it so
+                // the handle can be pooled or closed safely.
+                \curl_multi_remove_handle($this->_mh, $easy->handle);
+            }
+
+            throw new RequestException(\sprintf('Unable to add the cURL handle to the cURL multi handler: %s (%d).', (string) \curl_multi_strerror($result), $result), $easy->request);
+        }
+
         $this->markProxyTunnelActive($easy);
     }
 
@@ -513,9 +574,23 @@ class CurlMultiHandler
 
     private function isolateProxyTunnelTransfer(EasyHandle $easy): void
     {
-        // Unqualified curl_setopt so the test bootstrap shadow records it.
-        curl_setopt($easy->handle, \CURLOPT_FRESH_CONNECT, true);
-        curl_setopt($easy->handle, \CURLOPT_FORBID_REUSE, true);
+        foreach (self::PROXY_TUNNEL_ISOLATION_OPTIONS as $name) {
+            try {
+                // Unqualified curl_setopt so the test bootstrap shadow records it.
+                $applied = curl_setopt($easy->handle, (int) \constant($name), true);
+            } catch (\Throwable $e) {
+                throw new RequestException(self::proxyTunnelIsolationFailureMessage($name), $easy->request, null, $e);
+            }
+
+            if (true !== $applied) {
+                throw new RequestException(self::proxyTunnelIsolationFailureMessage($name), $easy->request);
+            }
+        }
+    }
+
+    private static function proxyTunnelIsolationFailureMessage(string $name): string
+    {
+        return \sprintf('Unable to apply the %s cURL option required to isolate the transfer from foreign proxy tunnel connections.', $name);
     }
 
     private function markProxyTunnelActive(EasyHandle $easy): void
@@ -568,24 +643,55 @@ class CurlMultiHandler
      */
     public function tick(): void
     {
+        $this->tickFor(null, null);
+    }
+
+    /**
+     * Ticks the curl event loop, returning before the blocking select if the
+     * targeted transfer has settled, been canceled, or been replaced by a
+     * request that reused its native handle ID.
+     */
+    private function tickFor(?int $targetId, ?object $waitToken): void
+    {
         // Add any delayed handles if needed.
         if ($this->delays) {
             $currentTime = Utils::currentTime();
             foreach ($this->delays as $id => $delay) {
                 if ($currentTime >= $delay) {
+                    $entry = $this->handles[$id];
                     unset($this->delays[$id]);
-                    $this->addCurlHandle($this->handles[$id]['easy']);
+
+                    try {
+                        $this->addCurlHandle($entry['easy']);
+                    } catch (\Throwable $e) {
+                        // The promise has already escaped, so reject it
+                        // rather than throw.
+                        $rejection = $this->discardPendingRequest($id, $entry, $e);
+                        if (P\Is::pending($entry['deferred'])) {
+                            $entry['deferred']->reject($rejection);
+                        }
+                    }
                 }
             }
         }
 
-        // Run curl_multi_exec in the queue to enable other async tasks to run
-        P\Utils::queue()->add(Closure::fromCallable([$this, 'tickInQueue']));
+        // Run curl_multi_exec in the queue to enable other async tasks to
+        // run, surface completions, and drain any work they queued so a
+        // ready cancellation or new transfer is not held behind the select.
+        do {
+            P\Utils::queue()->add(Closure::fromCallable([$this, 'tickInQueue']));
 
-        // Step through the task queue which may add additional requests.
-        P\Utils::queue()->run();
+            // Step through the task queue which may add additional requests.
+            P\Utils::queue()->run();
 
-        if ($this->active && \curl_multi_select($this->_mh, $this->selectTimeout) === -1) {
+            $this->processMessages();
+        } while (!P\Utils::queue()->isEmpty());
+
+        if ($targetId !== null && !$this->hasRequest($targetId, $waitToken)) {
+            return;
+        }
+
+        if ($this->active && \curl_multi_select($this->_mh, $this->effectiveSelectTimeout()) === -1) {
             // Perform a usleep if a select returns -1.
             // See: https://bugs.php.net/bug.php?id=61141
             \usleep(250);
@@ -603,7 +709,7 @@ class CurlMultiHandler
 
             // Prevent busy looping for slow HTTP requests.
             if ($exec === \CURLM_CALL_MULTI_PERFORM) {
-                \curl_multi_select($this->_mh, $this->selectTimeout);
+                \curl_multi_select($this->_mh, $this->effectiveSelectTimeout());
             }
         } while ($exec === \CURLM_CALL_MULTI_PERFORM);
 
@@ -638,8 +744,9 @@ class CurlMultiHandler
         $queue = P\Utils::queue();
 
         while ($this->handles || !$queue->isEmpty()) {
-            // If there are no transfers, then sleep for the next delay
-            if (!$this->active && $this->delays) {
+            // If there are no transfers, then sleep for the next delay,
+            // unless ready queue work could change what is pending.
+            if (!$this->active && $this->delays && $queue->isEmpty()) {
                 \usleep($this->timeToNext());
             }
             $this->tick();
@@ -659,17 +766,32 @@ class CurlMultiHandler
     {
         $queue = P\Utils::queue();
 
-        while (isset($this->handles[$id]) && ($this->handles[$id]['wait_token'] ?? null) === $waitToken) {
-            // If the transfer is delayed, then sleep until it is due
-            if (!$this->active && isset($this->delays[$id])) {
+        while ($this->hasRequest($id, $waitToken)) {
+            // If the transfer is delayed, then sleep until it is due, unless
+            // ready queue work could cancel or replace it first.
+            if (!$this->active && isset($this->delays[$id]) && $queue->isEmpty()) {
                 \usleep($this->timeToNext());
             }
-            $this->tick();
+            $this->tickFor($id, $waitToken);
         }
 
         if (!$queue->isEmpty()) {
             $queue->run();
         }
+    }
+
+    /**
+     * Checks that the request with the given handle ID is still pending and,
+     * when a wait token is given, has not been replaced by a request that
+     * reused the ID.
+     */
+    private function hasRequest(int $id, ?object $waitToken = null): bool
+    {
+        if (!isset($this->handles[$id])) {
+            return false;
+        }
+
+        return $waitToken === null || ($this->handles[$id]['wait_token'] ?? null) === $waitToken;
     }
 
     private function addRequest(array $entry): void
@@ -685,20 +807,42 @@ class CurlMultiHandler
     }
 
     /**
+     * Rolls back a request that can no longer be attached, releasing the
+     * easy handle exactly once and preserving the original failure.
+     *
+     * @param array{easy: EasyHandle, deferred: Promise, wait_token?: object|null} $entry
+     */
+    private function discardPendingRequest(int $id, array $entry, \Throwable $failure): \Throwable
+    {
+        unset($this->handles[$id], $this->delays[$id]);
+
+        try {
+            $this->factory->release($entry['easy']);
+        } catch (\Throwable $e) {
+            // Preserve the original failure.
+        }
+
+        return $failure;
+    }
+
+    /**
      * Cancels a handle from sending and removes references to it.
      *
-     * @param int $id Handle ID to cancel and remove.
+     * @param int         $id        Handle ID to cancel and remove.
+     * @param object|null $waitToken Identity token that must still match the
+     *                               entry when given.
      *
      * @return bool True on success, false on failure.
      */
-    private function cancel($id): bool
+    private function cancel($id, ?object $waitToken = null): bool
     {
         if (!is_int($id)) {
             \trigger_deprecation('guzzlehttp/guzzle', '7.4', 'Not passing an int to %s::%s() is deprecated and will cause an error in 8.0.', __CLASS__, __FUNCTION__);
         }
 
-        // Cannot cancel if it has been processed.
-        if (!isset($this->handles[$id])) {
+        // Cannot cancel if it has been processed or replaced by a request
+        // that reused the native handle ID.
+        if (!isset($this->handles[$id]) || ($waitToken !== null && ($this->handles[$id]['wait_token'] ?? null) !== $waitToken)) {
             return false;
         }
 
@@ -745,8 +889,10 @@ class CurlMultiHandler
     {
         // CurlFactory::finish can retry a transfer by re-invoking this handler
         // from inside this loop; the guard keeps that re-entry from recreating
-        // the multi handle mid-iteration (see applyProxyTunnelOwnership).
-        $this->processingMessages = true;
+        // the multi handle mid-iteration (see applyProxyTunnelOwnership). A
+        // depth is tracked because a completion callback can re-enter tick(),
+        // and the nested frame must not clear the outer loop's guard.
+        ++$this->messageProcessingDepth;
 
         try {
             while ($done = \curl_multi_info_read($this->_mh)) {
@@ -772,31 +918,63 @@ class CurlMultiHandler
                 unset($this->handles[$id], $this->delays[$id]);
                 $entry['easy']->errno = $done['result'];
 
+                // finish() can run completion callbacks that cancel this
+                // promise; a settled promise must not be settled again.
                 try {
                     $result = CurlFactory::finish($this, $entry['easy'], $this->factory);
                 } catch (\Throwable $e) {
-                    $entry['deferred']->reject($e);
+                    if (P\Is::pending($entry['deferred'])) {
+                        $entry['deferred']->reject($e);
+                    }
 
                     continue;
                 }
 
-                $entry['deferred']->resolve($result);
+                if (P\Is::pending($entry['deferred'])) {
+                    $entry['deferred']->resolve($result);
+                }
             }
         } finally {
-            $this->processingMessages = false;
+            --$this->messageProcessingDepth;
         }
     }
 
-    private function timeToNext(): int
+    /**
+     * Bounds a blocking select by the earliest pending request delay so a
+     * delayed transfer becoming due does not wait out an unrelated
+     * transfer's full select timeout.
+     *
+     * @return float|int
+     */
+    private function effectiveSelectTimeout()
+    {
+        if ($this->delays === []) {
+            return $this->selectTimeout;
+        }
+
+        return \min($this->selectTimeout, $this->secondsToNext());
+    }
+
+    /**
+     * @return float Seconds until the earliest pending delay is due
+     */
+    private function secondsToNext(): float
     {
         $currentTime = Utils::currentTime();
-        $nextTime = \PHP_INT_MAX;
+        $nextTime = \PHP_FLOAT_MAX;
         foreach ($this->delays as $time) {
             if ($time < $nextTime) {
                 $nextTime = $time;
             }
         }
 
-        return (int) \max(0, ($nextTime - $currentTime) * 1000000);
+        return \max(0.0, $nextTime - $currentTime);
+    }
+
+    private function timeToNext(): int
+    {
+        // PHP_INT_MAX first: min() then returns the int operand whenever the
+        // microseconds exceed it, so the cast never sees an oversized float.
+        return (int) \min(\PHP_INT_MAX, $this->secondsToNext() * 1000000);
     }
 }

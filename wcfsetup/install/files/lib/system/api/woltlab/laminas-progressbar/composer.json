@@ -25,13 +25,13 @@
         }
     },
     "require": {
-        "php": "~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
-        "laminas/laminas-stdlib": "^3.2.1"
+        "php": "~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0 || ~8.6.0",
+        "laminas/laminas-stdlib": "^3.16.1"
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~2.5.0",
         "laminas/laminas-session": "^2.16",
-        "phpunit/phpunit": "^9.5.25"
+        "phpunit/phpunit": "^9.6.35"
     },
     "suggest": {
         "laminas/laminas-session": "To support progressbar persistent"

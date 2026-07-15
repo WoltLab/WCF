@@ -214,7 +214,19 @@ final class RequestOptions
      * guaranteed while dialing eagerly, or Multiplexing::REQUIRE_WAIT for the
      * same guarantee while also waiting on pending connections. The stream
      * handler ignores EAGER and WAIT, and rejects the required family;
-     * CurlHandler has no multi handle to multiplex over.
+     * CurlHandler has no multi handle to multiplex over. Explicit modes
+     * reject deprecated raw cURL options they conflict with: the required
+     * family cannot be combined with a raw CURLOPT_HTTP_VERSION, CURLOPT_URL,
+     * or CURLOPT_FOLLOWLOCATION, and no explicit mode can be combined with a
+     * raw CURLOPT_PIPEWAIT on the CurlMultiHandler. The required family also
+     * rejects final CURLOPT_HTTPAUTH masks that permit NTLM, which libcurl
+     * retries over HTTP/1.1. The required family validates its cleartext
+     * proxy rule against the final cURL configuration, after raw options
+     * such as CURLOPT_PROXY and CURLOPT_PRE_PROXY are applied; only the
+     * exact raw CURLOPT_NOPROXY wildcard '*' disables the primary proxy and
+     * pre-proxy there, and raw host-specific patterns are conservatively
+     * treated as leaving them active. These rejections are
+     * configuration-conflict checks, not remote security checks.
      */
     public const MULTIPLEX = 'multiplex';
 
@@ -237,12 +249,13 @@ final class RequestOptions
     public const ON_STATS = 'on_stats';
 
     /**
-     * on_trailers: (callable) A callable that is invoked once per successful
-     * transfer, after the response body has been received, with an
-     * associative array of the parsed HTTP trailers followed by the response.
-     * Malformed trailer field lines are discarded before parsing. Trailer
-     * fields are reported separately from response headers and are never
-     * merged into the response.
+     * on_trailers: (callable) A callable that is invoked by the built-in cURL
+     * handlers once per successful transfer, after the response body has been
+     * received, with an associative array of the parsed HTTP trailers followed
+     * by the response. Trailer field names are lowercased and grouped
+     * case-insensitively; values keep their wire order. Malformed trailer
+     * field lines are discarded before parsing. Trailer fields are reported
+     * separately from response headers and are never merged into the response.
      */
     public const ON_TRAILERS = 'on_trailers';
 

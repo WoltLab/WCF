@@ -3,6 +3,47 @@
 Please refer to [UPGRADING](UPGRADING.md) guide for upgrading to a major version.
 
 
+## 7.14.2 - 2026-07-14
+
+### Security
+
+- Prevent first-class and proxy URL credentials from reaching origins (GHSA-94pj-82f3-465w)
+
+
+## 7.14.1 - 2026-07-13
+
+### Changed
+
+- Adjusted `guzzlehttp/psr7` version constraint to `^2.12.5`
+
+### Fixed
+
+- Fail closed when a proxy tunnel isolation cURL option cannot be applied
+- Normalize Stringable proxy credential values before computing connection-reuse section signatures
+- Restore conservative credential redaction for unparseable proxies with multiple `@` separators
+- Redact request URI credentials from the stream handler connection error message
+- Reject enabled response streaming (`stream => true`) on cap-configured stream handlers
+- Distinguish CurlMultiHandler and StreamHandler outcomes in connection-cap custom-handler guidance
+- Reject raw cURL options that conflict with explicit multiplexing guarantees
+- Stop explicit multiplexing conflict checks faulting on non-array cURL multi `options` values
+- Reject required multiplexing when the final `CURLOPT_HTTPAUTH` mask permits NTLM
+- Require an integer `CURLMOPT_PIPELINING` when combined with explicit multiplexing
+- Check the required multiplexing cleartext proxy rule against the final cURL configuration
+- Bound cURL multi handler blocking selects by the earliest pending request delay
+- Stop synchronous cURL multi handler waits blocking on other transfers once the target has settled
+- Stop cURL multi completion processing double-settling promises canceled from completion callbacks
+- Run ready promise queue tasks before sleeping for delayed cURL multi requests
+- Avoid integer overflow in cURL multi delay timing on 32-bit platforms
+- Roll back failed cURL multi handle attachment instead of leaving requests pending
+- Release the cURL easy handle when the `on_stats` callback throws
+- Normalize response trailer field names to lowercase with values in wire order
+- Retain response trailers only when an `on_trailers` callback is configured
+- Validate the `on_trailers` callback before starting a cURL transfer
+- Reject the `on_trailers` request option on the stream handler, which cannot observe trailers
+- Match cookies, proxy schemes, auth types, and header names with locale-independent ASCII folding
+- Reject proxy option values that Guzzle cannot classify identically to ext-curl
+
+
 ## 7.14.0 - 2026-07-08
 
 ### Added
