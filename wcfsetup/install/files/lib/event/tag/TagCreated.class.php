@@ -3,6 +3,7 @@
 namespace wcf\event\tag;
 
 use wcf\data\tag\Tag;
+use wcf\data\tag\TagBuilder;
 use wcf\event\IPsr14Event;
 
 /**
@@ -16,6 +17,7 @@ use wcf\event\IPsr14Event;
 final class TagCreated implements IPsr14Event
 {
     public function __construct(
-        public readonly Tag $tag
+        public readonly Tag $tag,
+        public readonly TagBuilder $builder,
     ) {}
 }

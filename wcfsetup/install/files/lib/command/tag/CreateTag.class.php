@@ -25,7 +25,7 @@ final class CreateTag
     {
         $tag = $this->builder->create();
 
-        EventHandler::getInstance()->fire(new TagCreated($tag));
+        EventHandler::getInstance()->fire(new TagCreated($tag, $this->builder));
 
         return $tag;
     }

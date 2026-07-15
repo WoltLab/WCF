@@ -25,7 +25,7 @@ final class UpdateTag
     {
         $tag = $this->builder->update();
 
-        EventHandler::getInstance()->fire(new TagUpdated($tag));
+        EventHandler::getInstance()->fire(new TagUpdated($tag, $this->builder));
 
         return $tag;
     }
