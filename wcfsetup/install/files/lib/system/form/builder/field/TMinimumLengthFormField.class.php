@@ -43,12 +43,6 @@ trait TMinimumLengthFormField
     public function minimumLength(?int $minimumLength = null)
     {
         if ($minimumLength !== null) {
-            if (!\is_int($minimumLength)) {
-                throw new \InvalidArgumentException(
-                    "Given minimum length is no int, '" . \gettype($minimumLength) . "' given for field '{$this->getId()}'."
-                );
-            }
-
             if ($minimumLength < 0) {
                 throw new \InvalidArgumentException(
                     "Minimum length must be non-negative, '{$minimumLength}' given for field '{$this->getId()}'."

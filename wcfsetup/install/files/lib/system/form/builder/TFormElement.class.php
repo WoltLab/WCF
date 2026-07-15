@@ -50,12 +50,6 @@ trait TFormElement
 
             $this->description = null;
         } else {
-            if (!\is_string($languageItem)) {
-                throw new \InvalidArgumentException(
-                    "Given description language item is no string, " . \gettype($languageItem) . " given for element '{$this->getId()}'."
-                );
-            }
-
             $this->description = WCF::getLanguage()->getDynamicVariable($languageItem, $variables);
         }
 
@@ -104,12 +98,6 @@ trait TFormElement
 
             $this->label = null;
         } else {
-            if (!\is_string($languageItem)) {
-                throw new \InvalidArgumentException(
-                    "Given label language item is no string, " . \gettype($languageItem) . " given for element '{$this->getId()}'."
-                );
-            }
-
             $this->label = WCF::getLanguage()->getDynamicVariable($languageItem, $variables);
         }
 

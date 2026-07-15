@@ -421,12 +421,6 @@ parameters:
 			path: wcfsetup/install/files/lib/system/form/builder/field/validation/FormFieldValidationError.class.php
 
 		-
-			message: '#^Call to function is_int\(\) with int will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/wysiwyg/WysiwygFormField.class.php
-
-		-
 			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 1
@@ -569,12 +563,6 @@ parameters:
 			identifier: notIdentical.alwaysTrue
 			count: 1
 			path: wcfsetup/install/files/lib/system/package/plugin/UserProfileMenuPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 2
-			path: wcfsetup/install/files/lib/system/user/multifactor/totp/DeviceNode.class.php
 
 		-
 			message: '#^Parameter \#1 \$iterator of class RecursiveIteratorIterator constructor expects T of IteratorAggregate\|RecursiveIterator, DirectoryIterator given\.$#'

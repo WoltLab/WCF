@@ -43,12 +43,6 @@ trait TMaximumLengthFormField
     public function maximumLength(?int $maximumLength = null)
     {
         if ($maximumLength !== null) {
-            if (!\is_int($maximumLength)) {
-                throw new \InvalidArgumentException(
-                    "Given maximum length is no int, '" . \gettype($maximumLength) . "' given for field '{$this->getId()}'."
-                );
-            }
-
             if ($maximumLength <= 0) {
                 throw new \InvalidArgumentException(
                     "Maximum length must be positive, '{$maximumLength}' given for field '{$this->getId()}'."
