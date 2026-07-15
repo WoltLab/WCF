@@ -23,17 +23,17 @@ abstract class DatabaseObjectBuilder
     /**
      * @var array<string, string|int|float|null>
      */
-    protected array $properties = [];
+    public protected(set) array $properties = [];
 
     /**
      * @var array<string, string|int|float|null>
      */
-    protected array $customProperties = [];
+    public protected(set) array $customProperties = [];
 
     /**
      * @var array<string, int|float>
      */
-    protected array $incrementProperties = [];
+    public protected(set) array $incrementProperties = [];
 
     /**
      * Use forCreate() or forUpdate() to obtain a builder instance.
