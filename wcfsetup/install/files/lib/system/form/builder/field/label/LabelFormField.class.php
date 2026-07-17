@@ -174,15 +174,15 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
      */
     public function validate()
     {
-        if ($this->isRequired()) {
-            if ($this->value <= 0) {
-                $this->addValidationError(new FormFieldValidationError('empty'));
+        if ($this->value > 0) {
+            if (!\in_array($this->value, $this->getLabelGroup()->getLabelIDs())) {
+                $this->addValidationError(new FormFieldValidationError(
+                    'invalidValue',
+                    'wcf.global.form.error.noValidSelection'
+                ));
             }
-        } elseif ($this->value > 0 && !\in_array($this->value, $this->getLabelGroup()->getLabelIDs())) {
-            $this->addValidationError(new FormFieldValidationError(
-                'invalidValue',
-                'wcf.global.form.error.noValidSelection'
-            ));
+        } elseif ($this->isRequired()) {
+            $this->addValidationError(new FormFieldValidationError('empty'));
         }
     }
 
