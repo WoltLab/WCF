@@ -116,6 +116,13 @@ final class ArticleContentBuilder extends DatabaseObjectBuilder
         return $this;
     }
 
+    public function incrementComments(int $comments): static
+    {
+        $this->incrementProperties['comments'] = $comments;
+
+        return $this;
+    }
+
     /**
      * @param list<string> $tags
      */

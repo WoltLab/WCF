@@ -3,7 +3,7 @@
 namespace wcf\system\comment\manager;
 
 use wcf\data\article\content\ArticleContent;
-use wcf\data\article\content\ArticleContentEditor;
+use wcf\data\article\content\ArticleContentBuilder;
 use wcf\data\article\content\ArticleContentList;
 use wcf\data\comment\Comment;
 use wcf\data\comment\response\CommentResponse;
@@ -110,10 +110,10 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
     #[\Override]
     public function updateCounter(int $objectID, int $value)
     {
-        $editor = new ArticleContentEditor(new ArticleContent($objectID));
-        $editor->updateCounters([
-            'comments' => $value,
-        ]);
+        $content = new ArticleContent($objectID);
+        ArticleContentBuilder::forUpdate($content)
+            ->incrementComments($value)
+            ->update();
     }
 
     #[\Override]

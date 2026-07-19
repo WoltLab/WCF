@@ -5,7 +5,7 @@ namespace wcf\system\worker;
 use wcf\data\article\Article;
 use wcf\data\article\ArticleEditor;
 use wcf\data\article\ArticleList;
-use wcf\data\article\content\ArticleContentEditor;
+use wcf\data\article\content\ArticleContentBuilder;
 use wcf\data\article\content\ArticleContentList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -88,12 +88,12 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker
         );
         $articleContentList->readObjects();
         foreach ($articleContentList as $articleContent) {
-            $data = [];
+            $builder = ArticleContentBuilder::forUpdate($articleContent);
 
             // count comments
             $commentStatement->execute([$commentObjectType->objectTypeID, $articleContent->articleContentID]);
             $row = $commentStatement->fetchSingleRow();
-            $data['comments'] = $row['comments'] + $row['responses'];
+            $builder->incrementComments($row['comments'] + $row['responses'] - $articleContent->comments);
 
             // update search index
             SearchIndexManager::getInstance()->set(
@@ -121,15 +121,14 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker
             }
 
             if ($hasEmbeddedObjects != $articleContent->hasEmbeddedObjects) {
-                $data['hasEmbeddedObjects'] = $hasEmbeddedObjects;
+                $builder->setHasEmbeddedObjects((bool)$hasEmbeddedObjects);
             }
 
             // count attachments
             $attachmentStatement->execute([$attachmentObjectType->objectTypeID, $articleContent->articleContentID]);
-            $data['attachments'] = $attachmentStatement->fetchSingleColumn();
+            $builder->setAttachments($attachmentStatement->fetchSingleColumn());
 
-            $articleContentEditor = new ArticleContentEditor($articleContent);
-            $articleContentEditor->update($data);
+            $builder->update();
         }
 
         // fetch cumulative likes

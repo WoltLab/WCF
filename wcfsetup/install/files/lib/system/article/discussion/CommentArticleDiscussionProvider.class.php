@@ -4,7 +4,7 @@ namespace wcf\system\article\discussion;
 
 use wcf\data\article\Article;
 use wcf\data\article\content\ArticleContent;
-use wcf\data\article\content\ArticleContentEditor;
+use wcf\data\article\content\ArticleContentBuilder;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\view\CommentsView;
 use wcf\system\WCF;
@@ -73,9 +73,9 @@ class CommentArticleDiscussionProvider extends AbstractArticleDiscussionProvider
             $oldContent->articleContentID,
         ]);
 
-        (new ArticleContentEditor($newContent))->update([
-            'comments' => $oldContent->comments,
-        ]);
+        ArticleContentBuilder::forUpdate($newContent)
+            ->incrementComments($oldContent->comments)
+            ->update();
     }
 
     #[\Override]

@@ -9,6 +9,7 @@ use wcf\data\ILinkableObject;
 use wcf\data\language\Language;
 use wcf\data\media\ViewableMedia;
 use wcf\page\ArticlePage;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\IRouteController;
@@ -260,5 +261,39 @@ class ArticleContent extends CollectionDatabaseObject implements ILinkableObject
     public function getAttachments(): array
     {
         return $this->getCollection()->getAttachments($this);
+    }
+
+    /**
+     * Returns the article content with the given slug, within the given language scope.
+     * The `$excludedArticleID` is excluded from the lookup to allow updates of
+     * an existing article.
+     *
+     * @since 6.3
+     */
+    public static function findBySlug(string $slug, ?int $languageID, ?int $excludedArticleID = null): ?ArticleContent
+    {
+        if ($slug === '') {
+            return null;
+        }
+
+        $conditionBuilder = new PreparedStatementConditionBuilder();
+        $conditionBuilder->add('slug = ?', [$slug]);
+
+        if ($languageID === null) {
+            $conditionBuilder->add('languageID IS NULL');
+        } else {
+            $conditionBuilder->add('(languageID = ? OR languageID IS NULL)', [$languageID]);
+        }
+        if ($excludedArticleID !== null) {
+            $conditionBuilder->add('articleID <> ?', [$excludedArticleID]);
+        }
+
+        $sql = "SELECT  *
+                FROM    wcf1_article_content
+                " . $conditionBuilder;
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($conditionBuilder->getParameters());
+
+        return $statement->fetchSingleObject(ArticleContent::class);
     }
 }

@@ -8,7 +8,6 @@ use wcf\data\article\Article;
 use wcf\data\article\ArticleBuilder;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;
-use wcf\data\article\content\ArticleContentEditor;
 use wcf\data\category\CategoryNodeTree;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\data\language\Language;
@@ -536,7 +535,7 @@ class ArticleAddForm extends AbstractDatabaseObjectBuilderForm
             }
 
             $excludedArticleID = $this->formObject !== null ? $this->formObject->articleID : null;
-            if (!ArticleContentEditor::isUniqueSlug($slug, $languageID, $excludedArticleID)) {
+            if (ArticleContent::findBySlug($slug, $languageID, $excludedArticleID) !== null) {
                 $field->addValidationError(new FormFieldValidationError(
                     'notUnique',
                     'wcf.acp.article.slug.error.notUnique'

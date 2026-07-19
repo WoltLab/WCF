@@ -2,16 +2,13 @@
 
 namespace wcf\command\article;
 
+use wcf\command\article\content\DeleteArticleContent;
 use wcf\data\article\Article;
 use wcf\data\article\ArticleAction;
 use wcf\data\article\content\ArticleContent;
-use wcf\data\article\content\ArticleContentAction;
-use wcf\data\article\content\ArticleContentEditor;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\article\discussion\IArticleDiscussionProvider;
 use wcf\system\language\LanguageFactory;
 use wcf\system\version\VersionTracker;
-use wcf\system\WCF;
 
 /**
  * Converts a monolingual article to a multilingual.
@@ -55,8 +52,7 @@ final class EnableI18n
 
         $this->migrateDiscussions($discussionProvider, $this->article, $articleContent);
 
-        $action = new ArticleContentAction([$articleContent], 'delete');
-        $action->executeAction();
+        (new DeleteArticleContent($articleContent))();
 
         VersionTracker::getInstance()->reset(
             'com.woltlab.wcf.article',
