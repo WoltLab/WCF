@@ -2,6 +2,7 @@
 
 namespace wcf\system\form\builder\field\wysiwyg;
 
+use wcf\data\IStorableObject;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\AbstractFormField;
@@ -91,6 +92,12 @@ final class WysiwygFormField extends AbstractFormField implements
      * @inheritDoc
      */
     protected $templateName = 'shared_wysiwygFormField';
+
+    /**
+     * Id of the edited object.
+     * @since 6.3
+     */
+    protected ?int $objectID = null;
 
     public function __construct()
     {
@@ -341,7 +348,7 @@ final class WysiwygFormField extends AbstractFormField implements
         ));
 
         $this->htmlInputProcessor = new HtmlInputProcessor();
-        $this->htmlInputProcessor->process($this->getValue(), $this->getObjectType()->objectType);
+        $this->htmlInputProcessor->process($this->getValue(), $this->getObjectType()->objectType, $this->objectID ?? 0);
 
         if ($this->isRequired() && $this->htmlInputProcessor->appearsToBeEmpty()) {
             $this->addValidationError(new FormFieldValidationError('empty'));
@@ -404,5 +411,16 @@ final class WysiwygFormField extends AbstractFormField implements
         }
 
         return $this->htmlInputProcessor;
+    }
+
+    /**
+     * @since 6.3
+     */
+    #[\Override]
+    public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true)
+    {
+        $this->objectID = $object->{$object::getDatabaseTableIndexName()};
+
+        return parent::updatedObject($data, $object, $loadValues);
     }
 }

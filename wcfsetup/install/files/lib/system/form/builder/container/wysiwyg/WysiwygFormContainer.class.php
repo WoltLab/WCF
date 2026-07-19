@@ -515,7 +515,7 @@ class WysiwygFormContainer extends FormContainer implements IBuilderNode
             ($this->loadValueCallback)($object, $this);
         }
 
-        return parent::updatedObject($data, $object);
+        return parent::updatedObject($data, $object, $loadValues);
     }
 
     /**
