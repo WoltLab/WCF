@@ -3,7 +3,7 @@
 namespace wcf\system\worker;
 
 use wcf\data\article\Article;
-use wcf\data\article\ArticleEditor;
+use wcf\data\article\ArticleBuilder;
 use wcf\data\article\ArticleList;
 use wcf\data\article\content\ArticleContentBuilder;
 use wcf\data\article\content\ArticleContentList;
@@ -147,11 +147,9 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker
         $cumulativeLikes = $statement->fetchMap('objectID', 'cumulativeLikes');
 
         foreach ($this->objectList as $article) {
-            $data = [
-                'cumulativeLikes' => $cumulativeLikes[$article->articleID] ?? 0,
-            ];
-
-            (new ArticleEditor($article))->update($data);
+            ArticleBuilder::forUpdate($article)
+                ->incrementReactions(($cumulativeLikes[$article->articleID] ?? 0) - $article->cumulativeLikes)
+                ->update();
         }
     }
 

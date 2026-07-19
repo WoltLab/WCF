@@ -4,7 +4,7 @@ namespace wcf\page;
 
 use wcf\command\article\MarkArticleAsRead;
 use wcf\data\article\Article;
-use wcf\data\article\ArticleEditor;
+use wcf\data\article\ArticleBuilder;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\CategoryArticleList;
 use wcf\data\article\content\ArticleContent;
@@ -114,10 +114,9 @@ class ArticlePage extends AbstractPage
             return;
         }
 
-        $articleEditor = new ArticleEditor($this->article);
-        $articleEditor->updateCounters([
-            'views' => 1,
-        ]);
+        ArticleBuilder::forUpdate($this->article)
+            ->incrementViews(1)
+            ->update();
     }
 
     protected function markAsRead(): void

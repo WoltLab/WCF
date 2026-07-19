@@ -3,7 +3,7 @@
 namespace wcf\command\article;
 
 use wcf\data\article\Article;
-use wcf\data\article\ArticleEditor;
+use wcf\data\article\ArticleBuilder;
 use wcf\event\article\ArticleUnpublished;
 use wcf\system\event\EventHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
@@ -23,14 +23,16 @@ final class UnpublishArticle
 
     public function __invoke(): void
     {
-        (new ArticleEditor($this->article))->update(['publicationStatus' => Article::UNPUBLISHED]);
+        ArticleBuilder::forUpdate($this->article)
+            ->setPublicationStatus(Article::UNPUBLISHED)
+            ->update();
 
         $this->removeNotifications($this->article->articleID);
         $this->removeUserActivity($this->article->articleID);
 
-        ArticleEditor::updateArticleCounter([
-            $this->article->userID => -1,
-        ]);
+        if ($this->article->userID !== null) {
+            ArticleBuilder::incrementArticleCounter($this->article->userID, -1);
+        }
 
         $event = new ArticleUnpublished($this->article);
         EventHandler::getInstance()->fire($event);

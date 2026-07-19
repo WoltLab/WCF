@@ -3,7 +3,7 @@
 namespace wcf\command\article;
 
 use wcf\data\article\Article;
-use wcf\data\article\ArticleEditor;
+use wcf\data\article\ArticleBuilder;
 use wcf\event\article\ArticleSoftDeleted;
 use wcf\system\event\EventHandler;
 
@@ -21,7 +21,9 @@ final class SoftDeleteArticle
 
     public function __invoke(): void
     {
-        (new ArticleEditor($this->article))->update(['isDeleted' => 1]);
+        ArticleBuilder::forUpdate($this->article)
+            ->setIsDeleted(true)
+            ->update();
 
         (new ResetUserStorageForUnreadArticles())();
 

@@ -4,7 +4,6 @@ namespace wcf\command\article;
 
 use wcf\data\article\Article;
 use wcf\data\article\ArticleBuilder;
-use wcf\data\article\ArticleEditor;
 use wcf\data\article\ArticleVersionTracker;
 use wcf\data\article\content\ArticleContent;
 use wcf\system\search\SearchIndexManager;
@@ -86,9 +85,9 @@ final class UpdateArticle
     private function handlePublicationStatusChange(Article $article, int $oldStatus, int $newStatus): void
     {
         if ($newStatus == Article::PUBLISHED || $oldStatus == Article::PUBLISHED) {
-            ArticleEditor::updateArticleCounter([
-                $article->userID => $newStatus == Article::PUBLISHED ? 1 : -1,
-            ]);
+            if ($article->userID !== null) {
+                ArticleBuilder::incrementArticleCounter($article->userID, $newStatus == Article::PUBLISHED ? 1 : -1);
+            }
         }
 
         if ($newStatus == Article::PUBLISHED) {

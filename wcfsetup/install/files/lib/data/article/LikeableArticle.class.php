@@ -53,9 +53,9 @@ class LikeableArticle extends AbstractLikeObject implements IReactionObject
     #[\Override]
     public function updateLikeCounter(int $cumulativeLikes)
     {
-        // update cumulative likes
-        $editor = new ArticleEditor($this->getDecoratedObject());
-        $editor->update(['cumulativeLikes' => $cumulativeLikes]);
+        ArticleBuilder::forUpdate($this->getDecoratedObject())
+            ->incrementReactions($cumulativeLikes - $this->getDecoratedObject()->cumulativeLikes)
+            ->update();
     }
 
     #[\Override]

@@ -2,9 +2,9 @@
 
 namespace wcf\system\cronjob;
 
+use wcf\command\article\UpdateArticle;
 use wcf\data\article\Article;
-use wcf\data\article\ArticleAction;
-use wcf\data\article\ArticleEditor;
+use wcf\data\article\ArticleBuilder;
 use wcf\data\article\ArticleList;
 use wcf\data\cronjob\Cronjob;
 
@@ -27,18 +27,14 @@ class ArticlePublicationCronjob extends AbstractCronjob
         $articleList->getConditionBuilder()->add('article.publicationDate > ?', [0]);
         $articleList->getConditionBuilder()->add('article.publicationDate <= ?', [\TIME_NOW]);
         $articleList->getConditionBuilder()->add('article.isDeleted = ?', [0]);
-        $articleList->decoratorClassName = ArticleEditor::class;
         $articleList->readObjects();
 
-        foreach ($articleList as $article) {
-            $action = new ArticleAction([$article], 'update', [
-                'data' => [
-                    'time' => $article->publicationDate,
-                    'publicationStatus' => Article::PUBLISHED,
-                    'publicationDate' => 0,
-                ],
-            ]);
-            $action->executeAction();
+        foreach ($articleList->getObjects() as $article) {
+            $builder = ArticleBuilder::forUpdate($article)
+                ->setTime($article->publicationDate)
+                ->setPublicationStatus(Article::PUBLISHED)
+                ->setPublicationDate(0);
+            (new UpdateArticle($builder))();
         }
     }
 }

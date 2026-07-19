@@ -9,6 +9,7 @@ use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\data\user\User;
 use wcf\system\label\object\ArticleLabelObjectHandler;
+use wcf\system\WCF;
 
 /**
  * Builder for creating and updating articles.
@@ -204,5 +205,21 @@ final class ArticleBuilder extends DatabaseObjectBuilder
     protected function getRequiredProperties(): array
     {
         return ['userID', 'username', 'time', 'categoryID'];
+    }
+
+    /**
+     * Increases or decreases the number of articles attributed to the given user by
+     * the specified value.
+     */
+    public static function incrementArticleCounter(int $userID, int $value): void
+    {
+        $sql = "UPDATE  wcf1_user
+                SET     articles = articles + ?
+                WHERE   userID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            $value,
+            $userID,
+        ]);
     }
 }

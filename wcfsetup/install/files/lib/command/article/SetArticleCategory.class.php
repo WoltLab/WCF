@@ -3,7 +3,7 @@
 namespace wcf\command\article;
 
 use wcf\data\article\Article;
-use wcf\data\article\ArticleEditor;
+use wcf\data\article\ArticleBuilder;
 use wcf\data\article\category\ArticleCategory;
 use wcf\event\article\ArticleCategorySet;
 use wcf\system\event\EventHandler;
@@ -25,7 +25,9 @@ final class SetArticleCategory
 
     public function __invoke(): void
     {
-        (new ArticleEditor($this->article))->update(['categoryID' => $this->category->categoryID]);
+        ArticleBuilder::forUpdate($this->article)
+            ->setCategory($this->category)
+            ->update();
 
         $event = new ArticleCategorySet($this->article, $this->article->getCategory(), $this->category);
         EventHandler::getInstance()->fire($event);

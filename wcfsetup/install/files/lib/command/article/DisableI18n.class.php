@@ -4,7 +4,7 @@ namespace wcf\command\article;
 
 use wcf\command\article\content\DeleteArticleContent;
 use wcf\data\article\Article;
-use wcf\data\article\ArticleAction;
+use wcf\data\article\ArticleBuilder;
 use wcf\data\article\content\ArticleContentBuilder;
 use wcf\data\language\Language;
 use wcf\system\version\VersionTracker;
@@ -44,12 +44,9 @@ final class DisableI18n
             }
         }
 
-        $action = new ArticleAction([$this->article], 'update', [
-            'data' => [
-                'isMultilingual' => 0,
-            ],
-        ]);
-        $action->executeAction();
+        ArticleBuilder::forUpdate($this->article)
+            ->setIsMultilingual(false)
+            ->update();
 
         VersionTracker::getInstance()->reset(
             'com.woltlab.wcf.article',

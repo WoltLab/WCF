@@ -4,7 +4,6 @@ namespace wcf\command\article;
 
 use wcf\data\article\Article;
 use wcf\data\article\ArticleBuilder;
-use wcf\data\article\ArticleEditor;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\ArticleUserNotificationObject;
@@ -33,7 +32,9 @@ final class CreateArticle
         (new ResetUserStorageForUnreadArticles())();
 
         if ($article->publicationStatus == Article::PUBLISHED) {
-            ArticleEditor::updateArticleCounter([$article->userID => 1]);
+            if ($article->userID !== null) {
+                ArticleBuilder::incrementArticleCounter($article->userID, 1);
+            }
 
             UserObjectWatchHandler::getInstance()->updateObject(
                 'com.woltlab.wcf.article.category',

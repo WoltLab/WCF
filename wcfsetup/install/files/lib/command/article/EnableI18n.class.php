@@ -4,7 +4,7 @@ namespace wcf\command\article;
 
 use wcf\command\article\content\DeleteArticleContent;
 use wcf\data\article\Article;
-use wcf\data\article\ArticleAction;
+use wcf\data\article\ArticleBuilder;
 use wcf\data\article\content\ArticleContent;
 use wcf\system\article\discussion\IArticleDiscussionProvider;
 use wcf\system\language\LanguageFactory;
@@ -27,28 +27,21 @@ final class EnableI18n
     public function __invoke(): void
     {
         $articleContent = $this->article->getArticleContent();
-        $data = [];
+        $discussionProvider = $this->article->getDiscussionProvider();
+        $builder = ArticleBuilder::forUpdate($this->article)
+            ->setIsMultilingual(true);
+
         foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
-            $data[$language->languageID] = [
-                'title' => $articleContent->title,
-                'slug' => $articleContent->slug,
-                'teaser' => $articleContent->teaser,
-                'content' => $articleContent->content,
-                'imageID' => $articleContent->imageID ?: null,
-                'teaserImageID' => $articleContent->teaserImageID ?: null,
-            ];
+            $builder->getArticleContentBuilder($language->languageID)
+                ->setTitle($articleContent->title)
+                ->setSlug($articleContent->slug)
+                ->setTeaser($articleContent->teaser)
+                ->setContent($articleContent->content)
+                ->setImageID($articleContent->imageID ?: null)
+                ->setTeaserImageID($articleContent->teaserImageID ?: null);
         }
 
-        $discussionProvider = $this->article->getDiscussionProvider();
-
-        $action = new ArticleAction([$this->article], 'update', [
-            'content' => $data,
-            'data' => [
-                'isMultilingual' => 1,
-            ],
-            'migrateDiscussions' => true,
-        ]);
-        $action->executeAction();
+        (new UpdateArticle($builder))();
 
         $this->migrateDiscussions($discussionProvider, $this->article, $articleContent);
 
