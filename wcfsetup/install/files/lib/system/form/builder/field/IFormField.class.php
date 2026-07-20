@@ -2,6 +2,7 @@
 
 namespace wcf\system\form\builder\field;
 
+use wcf\data\DatabaseObjectBuilder;
 use wcf\data\IStorableObject;
 use wcf\system\form\builder\field\validation\IFormFieldValidationError;
 use wcf\system\form\builder\field\validation\IFormFieldValidator;
@@ -16,7 +17,7 @@ use wcf\system\form\builder\IFormElement;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-interface IFormField extends IFormChildNode, IFormElement
+interface IFormField extends IBuilderNode, IFormChildNode, IFormElement
 {
     /**
      * Adds the given validation error to this field and returns this field.

@@ -7,6 +7,7 @@ use wcf\data\IStorableObject;
 use wcf\data\poll\Poll;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
+use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\DateFormField;
 use wcf\system\form\builder\field\IntegerFormField;
@@ -377,5 +378,60 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
         ]);
 
         return $this;
+    }
+
+    /**
+     * Returns the unprefixed poll data for use with AbstractDatabaseObjectBuilderForm.
+     *
+     * @return array<string, mixed>
+     * @since 6.3
+     */
+    public function getPollData(): array
+    {
+        if (!$this->isAvailable()) {
+            return [];
+        }
+
+        $id = $this->wysiwygId . 'poll';
+
+        $pollData = [];
+        foreach ($this->children() as $child) {
+            \assert($child instanceof AbstractFormField);
+            $name = \lcfirst(
+                \substr(
+                    $child->getId(),
+                    \strlen($id),
+                )
+            );
+            $pollData[$name] = $child->getSaveValue();
+        }
+
+        // this will always add a poll array to the parameters but
+        // `PollManager::savePoll()` is capable of correctly detecting
+        // when, based on the given data, nothing has to be done
+
+        return $pollData;
+    }
+
+    /**
+     * Sets the poll using the data for use with AbstractDatabaseObjectBuilderForm.
+     *
+     * @since 6.3
+     */
+    public function setPoll(Poll $poll): void
+    {
+        $this->poll = $poll;
+
+        // `isPublic` cannot be changed when editing polls
+        $this->getIsPublicField()->available(false);
+
+        $this->getQuestionField()->value($this->poll->question);
+        $this->getOptionsField()->value($this->poll->getOptions());
+        $this->getEndTimeField()->value($this->poll->endTime);
+        $this->getMaxVotesField()->value($this->poll->maxVotes);
+        $this->getIsChangeableField()->value($this->poll->isChangeable);
+        $this->getIsPublicField()->value($this->poll->isPublic);
+        $this->getResultsRequireVoteField()->value($this->poll->resultsRequireVote);
+        $this->getSortByVotesField()->value($this->poll->sortByVotes);
     }
 }

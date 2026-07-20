@@ -49,6 +49,9 @@ class NumericRangeFormField extends AbstractFormField implements
         $this->addFieldClass('short');
     }
 
+    /**
+     * @return ?string
+     */
     #[\Override]
     public function getSaveValue()
     {

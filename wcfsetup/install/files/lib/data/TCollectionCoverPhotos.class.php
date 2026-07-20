@@ -27,7 +27,12 @@ trait TCollectionCoverPhotos
     ): ?FileCoverPhoto {
         $this->loadCoverPhotos($coverPhotoIdProperty);
 
-        return $this->coverPhotos[$object->{$coverPhotoIdProperty}] ?? null;
+        $coverPhotoFileID = $object->{$coverPhotoIdProperty};
+        if ($coverPhotoFileID === null) {
+            return null;
+        }
+
+        return $this->coverPhotos[$coverPhotoFileID] ?? null;
     }
 
     private function loadCoverPhotos(string $coverPhotoIdProperty): void

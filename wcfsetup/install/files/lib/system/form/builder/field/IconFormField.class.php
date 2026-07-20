@@ -47,6 +47,9 @@ class IconFormField extends AbstractFormField implements IImmutableFormField
         ];
     }
 
+    /**
+     * @return string
+     */
     #[\Override]
     public function getSaveValue()
     {

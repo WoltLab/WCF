@@ -2,8 +2,8 @@
 
 namespace wcf\system\moderation\queue\report;
 
+use wcf\command\article\SoftDeleteArticle;
 use wcf\data\article\Article;
-use wcf\data\article\ArticleAction;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\system\cache\runtime\ArticleRuntimeCache;
@@ -152,7 +152,7 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
     public function removeContent(ModerationQueue $queue, string $message)
     {
         if ($this->isValid($queue->objectID)) {
-            (new ArticleAction([$this->getArticle($queue->objectID)], 'trash'))->executeAction();
+            (new SoftDeleteArticle($this->getArticle($queue->objectID)))();
         }
     }
 

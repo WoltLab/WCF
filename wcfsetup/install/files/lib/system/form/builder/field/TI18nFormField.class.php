@@ -279,16 +279,20 @@ trait TI18nFormField
             $loadValues = true;
         }
 
-        if ($loadValues && isset($data[$this->getObjectProperty()])) {
-            $value = $data[$this->getObjectProperty()];
+        if ($loadValues) {
+            if ($this->loadValueCallback !== null) {
+                ($this->loadValueCallback)($object, $this);
+            } elseif (isset($data[$this->getObjectProperty()])) {
+                $value = $data[$this->getObjectProperty()];
 
-            if ($this->isI18n()) {
-                // do not use `I18nHandler::setOptions()` because then `I18nHandler` only
-                // reads the values when assigning the template variables and the values
-                // are not available in this class via `getValue()`
-                $this->setStringValue($value);
-            } else {
-                $this->value = $value;
+                if ($this->isI18n()) {
+                    // do not use `I18nHandler::setOptions()` because then `I18nHandler` only
+                    // reads the values when assigning the template variables and the values
+                    // are not available in this class via `getValue()`
+                    $this->setStringValue($value);
+                } else {
+                    $this->value = $value;
+                }
             }
         }
 

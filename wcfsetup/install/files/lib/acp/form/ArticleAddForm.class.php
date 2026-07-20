@@ -2,21 +2,24 @@
 
 namespace wcf\acp\form;
 
-use wcf\command\article\MarkArticleAsRead;
+use wcf\command\article\CreateArticle;
+use wcf\command\article\UpdateArticle;
 use wcf\data\article\Article;
-use wcf\data\article\ArticleAction;
+use wcf\data\article\ArticleBuilder;
 use wcf\data\article\category\ArticleCategory;
-use wcf\data\article\content\ArticleContentEditor;
+use wcf\data\article\content\ArticleContent;
 use wcf\data\category\CategoryNodeTree;
+use wcf\data\DatabaseObjectBuilder;
+use wcf\data\language\Language;
 use wcf\data\user\User;
-use wcf\form\AbstractFormBuilderForm;
+use wcf\form\AbstractDatabaseObjectBuilderForm;
 use wcf\system\cache\builder\ArticleCategoryLabelCacheBuilder;
 use wcf\system\exception\NamedUserException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\container\TabFormContainer;
 use wcf\system\form\builder\container\TabMenuFormContainer;
 use wcf\system\form\builder\container\wysiwyg\WysiwygFormContainer;
-use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
+use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\DateFormField;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
@@ -33,11 +36,13 @@ use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\user\UserFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
-use wcf\system\form\builder\IFormDocument;
+use wcf\system\form\builder\field\wysiwyg\WysiwygAttachmentFormField;
+use wcf\system\form\builder\field\wysiwyg\WysiwygFormField;
 use wcf\system\label\LabelHandler;
 use wcf\system\label\object\ArticleLabelObjectHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
+use wcf\system\tagging\TagEngine;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\HtmlString;
@@ -50,9 +55,9 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @extends AbstractFormBuilderForm<Article>
+ * @extends AbstractDatabaseObjectBuilderForm<Article, ArticleBuilder>
  */
-class ArticleAddForm extends AbstractFormBuilderForm
+class ArticleAddForm extends AbstractDatabaseObjectBuilderForm
 {
     /**
      * @inheritDoc
@@ -76,12 +81,7 @@ class ArticleAddForm extends AbstractFormBuilderForm
     /**
      * @inheritDoc
      */
-    public $objectActionClass = ArticleAction::class;
-
-    /**
-     * @inheritDoc
-     */
-    public $objectEditLinkController = ArticleEditForm::class;
+    public string $objectEditLinkController = ArticleEditForm::class;
 
     /**
      * true if created article is multi-lingual
@@ -147,7 +147,10 @@ class ArticleAddForm extends AbstractFormBuilderForm
 
         $this->form->appendChildren([
             HiddenFormField::create('isMultilingual')
-                ->value($this->isMultilingual),
+                ->value($this->isMultilingual)
+                ->saveValueCallback(static function (ArticleBuilder $builder, IFormField $field) {
+                    $builder->setIsMultilingual((bool)$field->getSaveValue());
+                }),
             FormContainer::create('information')
                 ->label('wcf.global.category')
                 ->appendChildren([
@@ -162,12 +165,24 @@ class ArticleAddForm extends AbstractFormBuilderForm
                             if ($category === null || !$category->isAccessible()) {
                                 $field->addValidationError(new FormFieldValidationError('invalid'));
                             }
-                        })),
+                        }))
+                        ->saveValueCallback(static function (ArticleBuilder $builder, IFormField $field) {
+                            $builder->setCategory(ArticleCategory::getCategory((int)$field->getSaveValue()));
+                        })
+                        ->loadValueCallback(static function (Article $object, IFormField $field) {
+                            $field->value($object->categoryID);
+                        }),
                     ...$labelFormFields,
                     UserFormField::create('userID')
                         ->label('wcf.acp.article.author')
                         ->required()
-                        ->value(WCF::getUser()->userID),
+                        ->value(WCF::getUser()->userID)
+                        ->saveValueCallback(static function (ArticleBuilder $builder, UserFormField $field) {
+                            $builder->setUser(new User((int)$field->getSaveValue()));
+                        })
+                        ->loadValueCallback(static function (Article $object, IFormField $field) {
+                            $field->value($object->userID);
+                        }),
                     DateFormField::create('time')
                         ->supportTime()
                         ->required()
@@ -181,7 +196,13 @@ class ArticleAddForm extends AbstractFormBuilderForm
                             if ($status === Article::PUBLISHED && (int)$field->getSaveValue() > \TIME_NOW) {
                                 $field->addValidationError(new FormFieldValidationError('invalid'));
                             }
-                        })),
+                        }))
+                        ->saveValueCallback(static function (ArticleBuilder $builder, IFormField $field) {
+                            $builder->setTime((int)$field->getSaveValue());
+                        })
+                        ->loadValueCallback(static function (Article $object, IFormField $field) {
+                            $field->value($object->time);
+                        }),
                     RadioButtonFormField::create('publicationStatus')
                         ->label('wcf.acp.article.publicationStatus')
                         ->options([
@@ -191,7 +212,25 @@ class ArticleAddForm extends AbstractFormBuilderForm
                         ])
                         ->available($canManage)
                         ->value(Article::PUBLISHED)
-                        ->required(),
+                        ->required()
+                        // The publication status drives the publication date; the
+                        // date is only relevant for a delayed publication.
+                        ->saveValueCallback(static function (ArticleBuilder $builder, IFormField $field) {
+                            $status = (int)$field->getSaveValue();
+                            $builder->setPublicationStatus($status);
+
+                            $dateField = $field->getDocument()->getFormField('publicationDate');
+                            $builder->setPublicationDate(
+                                $status === Article::DELAYED_PUBLICATION
+                                    && $dateField !== null
+                                    && $dateField->getSaveValue()
+                                    ? (int)$dateField->getSaveValue()
+                                    : 0
+                            );
+                        })
+                        ->loadValueCallback(static function (Article $object, IFormField $field) {
+                            $field->value($object->publicationStatus);
+                        }),
                     DateFormField::create('publicationDate')
                         ->supportTime()
                         ->required()
@@ -209,10 +248,21 @@ class ArticleAddForm extends AbstractFormBuilderForm
                             ) {
                                 $field->addValidationError(new FormFieldValidationError('invalid'));
                             }
-                        })),
+                        }))
+                        ->loadValueCallback(static function (Article $object, IFormField $field) {
+                            if ($object->publicationDate !== 0) {
+                                $field->value($object->publicationDate);
+                            }
+                        }),
                     BooleanFormField::create('enableComments')
                         ->label('wcf.acp.article.enableComments')
-                        ->value(\ARTICLE_ENABLE_COMMENTS_DEFAULT_VALUE),
+                        ->value(\ARTICLE_ENABLE_COMMENTS_DEFAULT_VALUE)
+                        ->saveValueCallback(static function (ArticleBuilder $builder, IFormField $field) {
+                            $builder->setEnableComments((bool)$field->getSaveValue());
+                        })
+                        ->loadValueCallback(static function (Article $object, IFormField $field) {
+                            $field->value((bool)$object->enableComments);
+                        }),
                 ]),
         ]);
 
@@ -260,7 +310,22 @@ class ArticleAddForm extends AbstractFormBuilderForm
                         ->fieldId('categoryID')
                         ->values($categoryIDs)
                 )
-                ->labelGroup($labelGroup);
+                ->labelGroup($labelGroup)
+                ->saveValueCallback(static function (ArticleBuilder $builder, IFormField $field) {
+                    // `-1` and `0` are special values that are irrelevant for saving.
+                    $labelID = (int)$field->getSaveValue();
+                    if ($labelID > 0) {
+                        $builder->setLabelID($labelID);
+                    }
+                })
+                ->loadValueCallback(static function (Article $object, LabelFormField $field) use ($groupID) {
+                    foreach ($object->getLabels() as $label) {
+                        if ($label->groupID === $groupID) {
+                            $field->value($label->labelID);
+                            break;
+                        }
+                    }
+                });
         }
 
         return $labelFormFields;
@@ -268,46 +333,11 @@ class ArticleAddForm extends AbstractFormBuilderForm
 
     protected function createMonolingualForm(): void
     {
-        $contentFields = [];
-        if (WCF::getSession()->hasPermission('admin.content.cms.canUseMedia')) {
-            $contentFields[] = SingleMediaSelectionFormField::create('imageID')
-                ->label('wcf.acp.article.image')
-                ->imageOnly();
-            $contentFields[] = SingleMediaSelectionFormField::create('teaserImageID')
-                ->label('wcf.acp.article.teaserImage')
-                ->imageOnly();
-        }
-
-        $contentFields = \array_merge($contentFields, [
-            TitleFormField::create('title')
-                ->required()
-                ->maximumLength(255),
-            TextFormField::create('slug')
-                ->label('wcf.acp.article.slug')
-                ->description('wcf.acp.article.slug.description')
-                ->maximumLength(255)
-                ->addValidator($this->getSlugValidator(null)),
-            MultilineTextFormField::create('teaser')
-                ->label('wcf.acp.article.teaser'),
-            TagFormField::create('tags')
-                ->available(\MODULE_TAGGING !== 0)
-                ->objectType('com.woltlab.wcf.article'),
-            TextFormField::create('metaTitle')
-                ->label('wcf.acp.article.metaTitle')
-                ->maximumLength(255),
-            MultilineTextFormField::create('metaDescription')
-                ->label('wcf.acp.article.metaDescription'),
-        ]);
-
         $this->form->appendChildren([
             FormContainer::create('contentSection')
                 ->label('wcf.acp.article.content')
-                ->appendChildren($contentFields),
-            WysiwygFormContainer::create('content')
-                ->label('wcf.acp.article.content')
-                ->messageObjectType('com.woltlab.wcf.article.content')
-                ->attachmentData('com.woltlab.wcf.article.content', objectID: $this->getAttachmentObjectID())
-                ->required(),
+                ->appendChildren($this->getContentFormFields(null)),
+            $this->createContentContainer(null),
         ]);
     }
 
@@ -319,55 +349,169 @@ class ArticleAddForm extends AbstractFormBuilderForm
         foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
             $lc = $language->languageCode;
 
-            $contentFields = [];
-            if (WCF::getSession()->hasPermission('admin.content.cms.canUseMedia')) {
-                $contentFields[] = SingleMediaSelectionFormField::create("imageID_{$lc}")
-                    ->label('wcf.acp.article.image')
-                    ->imageOnly();
-                $contentFields[] = SingleMediaSelectionFormField::create("teaserImageID_{$lc}")
-                    ->label('wcf.acp.article.teaserImage')
-                    ->imageOnly();
-            }
-
-            $contentFields = \array_merge($contentFields, [
-                TitleFormField::create("title_{$lc}")
-                    ->required()
-                    ->maximumLength(255),
-                TextFormField::create("slug_{$lc}")
-                    ->label('wcf.acp.article.slug')
-                    ->description('wcf.acp.article.slug.description')
-                    ->maximumLength(255)
-                    ->addValidator($this->getSlugValidator($language->languageID)),
-                MultilineTextFormField::create("teaser_{$lc}")
-                    ->label('wcf.acp.article.teaser'),
-                TagFormField::create("tags_{$lc}")
-                    ->available(\MODULE_TAGGING !== 0)
-                    ->objectType('com.woltlab.wcf.article'),
-                TextFormField::create("metaTitle_{$lc}")
-                    ->label('wcf.acp.article.metaTitle')
-                    ->maximumLength(255),
-                MultilineTextFormField::create("metaDescription_{$lc}")
-                    ->label('wcf.acp.article.metaDescription'),
-            ]);
-
             $tabContainer->appendChild(
                 TabFormContainer::create("language_{$lc}")
                     ->label($language->languageName)
                     ->appendChildren([
                         FormContainer::create("contentSection_{$lc}")
-                            ->appendChildren($contentFields),
-                        WysiwygFormContainer::create("content_{$lc}")
-                            ->label('wcf.acp.article.content')
-                            ->messageObjectType('com.woltlab.wcf.article.content')
-                            ->attachmentData(
-                                'com.woltlab.wcf.article.content',
-                                objectID: $this->getAttachmentObjectID($language->languageID)
-                            )
-                            ->required()
-                            ->enablePreviewButton(false),
+                            ->appendChildren($this->getContentFormFields($language)),
+                        $this->createContentContainer($language),
                     ])
             );
         }
+    }
+
+    /**
+     * Returns the content form fields for the given language. Pass `null` for the
+     * monolingual content.
+     *
+     * @return AbstractFormField[]
+     */
+    protected function getContentFormFields(?Language $language): array
+    {
+        $languageID = $language?->languageID;
+        $suffix = $language !== null ? "_{$language->languageCode}" : '';
+
+        $fields = [];
+        if (WCF::getSession()->hasPermission('admin.content.cms.canUseMedia')) {
+            $fields[] = SingleMediaSelectionFormField::create("imageID{$suffix}")
+                ->label('wcf.acp.article.image')
+                ->imageOnly()
+                ->saveValueCallback(function (ArticleBuilder $builder, IFormField $field) use ($languageID) {
+                    $value = $field->getSaveValue();
+                    $builder->getArticleContentBuilder($languageID)->setImageID($value ? (int)$value : null);
+                })
+                ->loadValueCallback(function (Article $object, IFormField $field) use ($languageID) {
+                    $field->value($this->getArticleContent($object, $languageID)?->imageID);
+                });
+            $fields[] = SingleMediaSelectionFormField::create("teaserImageID{$suffix}")
+                ->label('wcf.acp.article.teaserImage')
+                ->imageOnly()
+                ->saveValueCallback(function (ArticleBuilder $builder, IFormField $field) use ($languageID) {
+                    $value = $field->getSaveValue();
+                    $builder->getArticleContentBuilder($languageID)->setTeaserImageID($value ? (int)$value : null);
+                })
+                ->loadValueCallback(function (Article $object, IFormField $field) use ($languageID) {
+                    $field->value($this->getArticleContent($object, $languageID)?->teaserImageID);
+                });
+        }
+
+        $fields[] = TitleFormField::create("title{$suffix}")
+            ->required()
+            ->maximumLength(255)
+            ->saveValueCallback(function (ArticleBuilder $builder, IFormField $field) use ($languageID) {
+                $builder->getArticleContentBuilder($languageID)->setTitle((string)$field->getSaveValue());
+            })
+            ->loadValueCallback(function (Article $object, IFormField $field) use ($languageID) {
+                $field->value($this->getArticleContent($object, $languageID)?->title);
+            });
+        $fields[] = TextFormField::create("slug{$suffix}")
+            ->label('wcf.acp.article.slug')
+            ->description('wcf.acp.article.slug.description')
+            ->maximumLength(255)
+            ->addValidator($this->getSlugValidator($languageID))
+            ->saveValueCallback(function (ArticleBuilder $builder, IFormField $field) use ($languageID) {
+                $builder->getArticleContentBuilder($languageID)
+                    ->setSlug(\mb_strtolower(StringUtil::trim((string)$field->getSaveValue())));
+            })
+            ->loadValueCallback(function (Article $object, IFormField $field) use ($languageID) {
+                $field->value($this->getArticleContent($object, $languageID)?->slug);
+            });
+        $fields[] = MultilineTextFormField::create("teaser{$suffix}")
+            ->label('wcf.acp.article.teaser')
+            ->saveValueCallback(function (ArticleBuilder $builder, IFormField $field) use ($languageID) {
+                $builder->getArticleContentBuilder($languageID)->setTeaser((string)$field->getSaveValue());
+            })
+            ->loadValueCallback(function (Article $object, IFormField $field) use ($languageID) {
+                $field->value($this->getArticleContent($object, $languageID)?->teaser);
+            });
+        $fields[] = TagFormField::create("tags{$suffix}")
+            ->available(\MODULE_TAGGING !== 0)
+            ->objectType('com.woltlab.wcf.article')
+            ->saveValueCallback(function (ArticleBuilder $builder, IFormField $field) use ($languageID) {
+                $builder->getArticleContentBuilder($languageID)->setTags($field->getSaveValue() ?? []);
+            })
+            ->loadValueCallback(function (Article $object, IFormField $field) use ($languageID) {
+                $content = $this->getArticleContent($object, $languageID);
+                if ($content === null) {
+                    return;
+                }
+
+                $field->value(\array_map(
+                    static fn($tag) => $tag->name,
+                    TagEngine::getInstance()->getObjectTags(
+                        'com.woltlab.wcf.article',
+                        $content->articleContentID,
+                        [$content->languageID ?: LanguageFactory::getInstance()->getDefaultLanguageID()]
+                    )
+                ));
+            });
+        $fields[] = TextFormField::create("metaTitle{$suffix}")
+            ->label('wcf.acp.article.metaTitle')
+            ->maximumLength(255)
+            ->saveValueCallback(function (ArticleBuilder $builder, IFormField $field) use ($languageID) {
+                $builder->getArticleContentBuilder($languageID)->setMetaTitle((string)$field->getSaveValue());
+            })
+            ->loadValueCallback(function (Article $object, IFormField $field) use ($languageID) {
+                $field->value($this->getArticleContent($object, $languageID)?->metaTitle);
+            });
+        $fields[] = MultilineTextFormField::create("metaDescription{$suffix}")
+            ->label('wcf.acp.article.metaDescription')
+            ->saveValueCallback(function (ArticleBuilder $builder, IFormField $field) use ($languageID) {
+                $builder->getArticleContentBuilder($languageID)->setMetaDescription((string)$field->getSaveValue());
+            })
+            ->loadValueCallback(function (Article $object, IFormField $field) use ($languageID) {
+                $field->value($this->getArticleContent($object, $languageID)?->metaDescription);
+            });
+
+        return $fields;
+    }
+
+    /**
+     * Creates and configures the WYSIWYG container for the given language. Pass
+     * `null` for the monolingual content.
+     */
+    protected function createContentContainer(?Language $language): WysiwygFormContainer
+    {
+        $languageID = $language?->languageID;
+        $suffix = $language !== null ? "_{$language->languageCode}" : '';
+
+        $container = WysiwygFormContainer::create("content{$suffix}")
+            ->label('wcf.acp.article.content')
+            ->messageObjectType('com.woltlab.wcf.article.content')
+            ->attachmentData('com.woltlab.wcf.article.content', objectID: $this->getAttachmentObjectID($languageID))
+            ->required();
+        if ($language !== null) {
+            $container->enablePreviewButton(false);
+        }
+
+        $container->getWysiwygField()
+            ->saveValueCallback(function (ArticleBuilder $builder, WysiwygFormField $field) use ($languageID) {
+                $builder->getArticleContentBuilder($languageID)->setHtmlInputProcessor($field->getHtmlInputProcessor());
+            })
+            ->loadValueCallback(function (Article $object, IFormField $field) use ($languageID) {
+                $field->value($this->getArticleContent($object, $languageID)?->content);
+            });
+        $container->getAttachmentField()->saveValueCallback(
+            function (ArticleBuilder $builder, WysiwygAttachmentFormField $field) use ($languageID) {
+                $builder->getArticleContentBuilder($languageID)->setAttachmentHandler($field->getAttachmentHandler());
+            }
+        );
+
+        return $container;
+    }
+
+    /**
+     * Returns the article content for the given language or `null` if it does not
+     * exist. Pass `null` for the monolingual content.
+     */
+    protected function getArticleContent(Article $object, ?int $languageID): ?ArticleContent
+    {
+        if ($languageID !== null) {
+            return $object->getArticleContents()[$languageID] ?? null;
+        }
+
+        return $object->getArticleContent();
     }
 
     /**
@@ -391,7 +535,7 @@ class ArticleAddForm extends AbstractFormBuilderForm
             }
 
             $excludedArticleID = $this->formObject !== null ? $this->formObject->articleID : null;
-            if (!ArticleContentEditor::isUniqueSlug($slug, $languageID, $excludedArticleID)) {
+            if (ArticleContent::findBySlug($slug, $languageID, $excludedArticleID) !== null) {
                 $field->addValidationError(new FormFieldValidationError(
                     'notUnique',
                     'wcf.acp.article.slug.error.notUnique'
@@ -401,154 +545,65 @@ class ArticleAddForm extends AbstractFormBuilderForm
     }
 
     #[\Override]
-    public function finalizeForm(): void
+    protected function getDatabaseObjectBuilder(): ArticleBuilder
     {
-        parent::finalizeForm();
+        $canManage = WCF::getSession()->hasPermission('admin.content.article.canManageArticle')
+            || WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles');
 
-        $this->form->getDataHandler()
-            ->addProcessor(
-                new CustomFormDataProcessor(
-                    'authorProcessor',
-                    function (IFormDocument $document, array $parameters) {
-                        $user = new User($parameters['data']['userID']);
-                        $parameters['data']['username'] = $user->username;
+        if ($this->formObject !== null) {
+            $builder = ArticleBuilder::forUpdate($this->formObject);
 
-                        return $parameters;
-                    }
-                )
-            )
-            ->addProcessor(
-                new CustomFormDataProcessor(
-                    'publicationDateProcessor',
-                    static function (IFormDocument $document, array $parameters) {
-                        if (
-                            !isset($parameters['data']['publicationDate'])
-                            || $parameters['data']['publicationDate'] === ''
-                        ) {
-                            $parameters['data']['publicationDate'] = 0;
-                        }
+            // The labels are saved without validating permissions and the label
+            // form fields of label groups that the active user is not allowed to
+            // set are unavailable, thus their existing labels have to be preserved
+            // explicitly.
+            $optionID = LabelHandler::getInstance()->getOptionID('canSetLabel');
+            $labelIDs = [];
+            $labels = ArticleLabelObjectHandler::getInstance()->getAssignedLabels(
+                [$this->formObject->articleID],
+                false
+            )[$this->formObject->articleID] ?? [];
+            foreach ($labels as $label) {
+                $labelGroup = LabelHandler::getInstance()->getLabelGroup($label->groupID);
+                if (
+                    $labelGroup !== null
+                    && $labelGroup->hasPermissions()
+                    && !$labelGroup->getPermission($optionID)
+                ) {
+                    $labelIDs[] = $label->labelID;
+                }
+            }
+            $builder->setLabelIDs($labelIDs);
 
-                        return $parameters;
-                    }
-                )
-            )
-            ->addProcessor(
-                new CustomFormDataProcessor(
-                    'contentProcessor',
-                    function (IFormDocument $document, array $parameters) {
-                        $parameters['content'] = [];
+            // Users without management permissions must not change the publication
+            // status; the existing values are preserved by not setting them because
+            // the corresponding form field is unavailable.
 
-                        if ($this->isMultilingual) {
-                            foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
-                                $lc = $language->languageCode;
-                                $lid = $language->languageID;
+            return $builder;
+        }
 
-                                $parameters['content'][$lid] = [
-                                    'title' => $parameters['data']["title_{$lc}"] ?? '',
-                                    'slug' => \mb_strtolower(StringUtil::trim($parameters['data']["slug_{$lc}"] ?? '')),
-                                    'tags' => $parameters["tags_{$lc}"] ?? [],
-                                    'teaser' => $parameters['data']["teaser_{$lc}"] ?? '',
-                                    'content' => $parameters['data']["content_{$lc}"] ?? '',
-                                    'htmlInputProcessor' => $parameters["content_{$lc}_htmlInputProcessor"] ?? null,
-                                    'imageID' => $parameters['data']["imageID_{$lc}"] ?? null,
-                                    'teaserImageID' => $parameters['data']["teaserImageID_{$lc}"] ?? null,
-                                    'metaTitle' => $parameters['data']["metaTitle_{$lc}"] ?? '',
-                                    'metaDescription' => $parameters['data']["metaDescription_{$lc}"] ?? '',
-                                ];
-                                if (isset($parameters["content_{$lc}_attachmentHandler"])) {
-                                    $parameters['content'][$lid]['attachmentHandler'] = $parameters["content_{$lc}_attachmentHandler"];
-                                }
+        $builder = ArticleBuilder::forCreate()
+            ->setUser(WCF::getUser())
+            ->setTime(\TIME_NOW)
+            ->setIsMultilingual($this->isMultilingual === 1);
 
-                                unset(
-                                    $parameters['data']["title_{$lc}"],
-                                    $parameters['data']["slug_{$lc}"],
-                                    $parameters['data']["teaser_{$lc}"],
-                                    $parameters['data']["content_{$lc}"],
-                                    $parameters['data']["imageID_{$lc}"],
-                                    $parameters['data']["teaserImageID_{$lc}"],
-                                    $parameters['data']["metaTitle_{$lc}"],
-                                    $parameters['data']["metaDescription_{$lc}"],
-                                    $parameters["tags_{$lc}"],
-                                    $parameters["content_{$lc}_htmlInputProcessor"],
-                                    $parameters["content_{$lc}_attachmentHandler"],
-                                );
-                            }
-                        } else {
-                            $parameters['content'][0] = [
-                                'title' => $parameters['data']['title'] ?? '',
-                                'slug' => \mb_strtolower(StringUtil::trim($parameters['data']['slug'] ?? '')),
-                                'tags' => $parameters['tags'] ?? [],
-                                'teaser' => $parameters['data']['teaser'] ?? '',
-                                'content' => $parameters['data']['content'] ?? '',
-                                'htmlInputProcessor' => $parameters['content_htmlInputProcessor'] ?? null,
-                                'imageID' => $parameters['data']['imageID'] ?? null,
-                                'teaserImageID' => $parameters['data']['teaserImageID'] ?? null,
-                                'metaTitle' => $parameters['data']['metaTitle'] ?? '',
-                                'metaDescription' => $parameters['data']['metaDescription'] ?? '',
-                            ];
+        if (!$canManage) {
+            $builder
+                ->setPublicationStatus(Article::UNPUBLISHED)
+                ->setPublicationDate(0);
+        }
 
-                            if (isset($parameters['content_attachmentHandler'])) {
-                                $parameters['content'][0]['attachmentHandler'] = $parameters['content_attachmentHandler'];
-                            }
-
-                            unset(
-                                $parameters['data']['title'],
-                                $parameters['data']['slug'],
-                                $parameters['data']['teaser'],
-                                $parameters['data']['content'],
-                                $parameters['data']['imageID'],
-                                $parameters['data']['teaserImageID'],
-                                $parameters['data']['metaTitle'],
-                                $parameters['data']['metaDescription'],
-                                $parameters['tags'],
-                                $parameters['content_htmlInputProcessor'],
-                                $parameters['content_attachmentHandler'],
-                            );
-                        }
-
-                        return $parameters;
-                    }
-                )
-            )
-            ->addProcessor(
-                new CustomFormDataProcessor(
-                    'labelProcessor',
-                    static function (IFormDocument $document, array $parameters) {
-                        $parameters['labelIDs'] = $parameters['labelIDs'] ?? [];
-                        $parameters['data']['hasLabels'] = $parameters['labelIDs'] !== [] ? 1 : 0;
-
-                        return $parameters;
-                    }
-                )
-            );
+        return $builder;
     }
 
     #[\Override]
-    public function save(): void
+    protected function getCommand(DatabaseObjectBuilder $builder): callable
     {
-        if (
-            !WCF::getSession()->hasPermission('admin.content.article.canManageArticle')
-            && !WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles')
-        ) {
-            $this->additionalFields['publicationStatus'] = Article::UNPUBLISHED;
-            $this->additionalFields['publicationDate'] = 0;
+        if ($this->formObject !== null) {
+            return new UpdateArticle($builder);
         }
 
-        parent::save();
-
-        /** @var Article $article */
-        $article = $this->objectAction->getReturnValues()['returnValues'];
-
-        // save labels
-        $labelIDs = $this->objectAction->getParameters()['labelIDs'] ?? [];
-        if (!empty($labelIDs)) {
-            ArticleLabelObjectHandler::getInstance()->setLabels($labelIDs, $article->articleID);
-        }
-
-        // mark published article as read
-        if ($article->publicationStatus == Article::PUBLISHED) {
-            (new MarkArticleAsRead($article))();
-        }
+        return new CreateArticle($builder);
     }
 
     protected function getAttachmentObjectID(?int $languageID = null): ?int

@@ -35,6 +35,9 @@ class SingleSelectionFormField extends AbstractFormField implements
      */
     protected $templateName = 'shared_singleSelectionFormField';
 
+    /**
+     * @return ?string
+     */
     #[\Override]
     public function getSaveValue()
     {
@@ -43,7 +46,7 @@ class SingleSelectionFormField extends AbstractFormField implements
             && isset($this->getOptions()[$this->getValue()])
             && $this->isNullable()
         ) {
-            return;
+            return null;
         }
 
         return parent::getSaveValue();

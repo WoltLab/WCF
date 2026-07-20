@@ -3,7 +3,7 @@
 namespace wcf\command\article;
 
 use wcf\data\article\Article;
-use wcf\data\article\ArticleEditor;
+use wcf\data\article\ArticleBuilder;
 use wcf\event\article\ArticlePublished;
 use wcf\system\event\EventHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
@@ -24,18 +24,18 @@ final class PublishArticle
 
     public function __invoke(): void
     {
-        (new ArticleEditor($this->article))->update([
-            'time' => \TIME_NOW,
-            'publicationStatus' => Article::PUBLISHED,
-            'publicationDate' => 0,
-        ]);
+        ArticleBuilder::forUpdate($this->article)
+            ->setTime(\TIME_NOW)
+            ->setPublicationStatus(Article::PUBLISHED)
+            ->setPublicationDate(0)
+            ->update();
 
         $this->updateUserWatch($this->article);
         $this->addUserActivity($this->article->articleID, $this->article->userID);
 
-        ArticleEditor::updateArticleCounter([
-            $this->article->userID => 1,
-        ]);
+        if ($this->article->userID !== null) {
+            ArticleBuilder::incrementArticleCounter($this->article->userID, 1);
+        }
 
         (new ResetUserStorageForUnreadArticles())();
 

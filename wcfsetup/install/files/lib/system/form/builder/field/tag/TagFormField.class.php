@@ -66,7 +66,9 @@ final class TagFormField extends AbstractFormField implements IAttributeFormFiel
     public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true)
     {
         if ($loadValues) {
-            if (isset($data[$this->getObjectProperty()])) {
+            if ($this->loadValueCallback !== null) {
+                ($this->loadValueCallback)($object, $this);
+            } elseif (isset($data[$this->getObjectProperty()])) {
                 $this->value($data[$this->getObjectProperty()]);
             } else {
                 $objectID = $object->{$object::getDatabaseTableIndexName()};

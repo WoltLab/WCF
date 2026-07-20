@@ -8,6 +8,7 @@ use wcf\system\attachment\AttachmentHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\form\builder\button\wysiwyg\WysiwygPreviewFormButton;
 use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\IBuilderNode;
 use wcf\system\form\builder\field\TMaximumLengthFormField;
 use wcf\system\form\builder\field\TMinimumLengthFormField;
 use wcf\system\form\builder\field\wysiwyg\WysiwygAttachmentFormField;
@@ -30,7 +31,7 @@ use wcf\system\style\FontAwesomeIcon;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class WysiwygFormContainer extends FormContainer
+class WysiwygFormContainer extends FormContainer implements IBuilderNode
 {
     use TMaximumLengthFormField;
     use TMinimumLengthFormField;
@@ -151,6 +152,20 @@ class WysiwygFormContainer extends FormContainer
     protected $wysiwygField;
 
     protected WysiwygQuoteFormContainer $quoteContainer;
+
+    /**
+     * callback transferring this field's save value into a `DatabaseObjectBuilder`
+     * @var ?\Closure(\wcf\data\DatabaseObjectBuilder<*>, static): void
+     * @since 6.3
+     */
+    protected ?\Closure $saveValueCallback = null;
+
+    /**
+     * callback loading this field's value from an `IStorableObject`
+     * @var ?\Closure(\wcf\data\IStorableObject, static): void
+     * @since 6.3
+     */
+    protected ?\Closure $loadValueCallback = null;
 
     /**
      * @return  static
@@ -290,14 +305,11 @@ class WysiwygFormContainer extends FormContainer
      * Returns the form field handling attachments.
      *
      * @return  WysiwygAttachmentFormField
-     * @throws  \BadMethodCallException     if the form field container has not been populated yet/form has not been built yet
      */
     public function getAttachmentField()
     {
         if ($this->attachmentField === null) {
-            throw new \BadMethodCallException(
-                "Wysiwyg form field can only be requested after the form has been built for container '{$this->getId()}'."
-            );
+            $this->attachmentField = WysiwygAttachmentFormField::create($this->wysiwygId . 'Attachments');
         }
 
         return $this->attachmentField;
@@ -385,14 +397,11 @@ class WysiwygFormContainer extends FormContainer
      * Returns the wysiwyg form field handling the actual text.
      *
      * @return  WysiwygFormField
-     * @throws  \BadMethodCallException     if the form field container has not been populated yet/form has not been built yet
      */
     public function getWysiwygField()
     {
         if ($this->wysiwygField === null) {
-            throw new \BadMethodCallException(
-                "Wysiwyg form field can only be requested after the form has been built for container '{$this->getId()}'."
-            );
+            $this->wysiwygField = WysiwygFormField::create($this->wysiwygId);
         }
 
         return $this->wysiwygField;
@@ -502,7 +511,11 @@ class WysiwygFormContainer extends FormContainer
 
         $this->setAttachmentHandler();
 
-        return parent::updatedObject($data, $object);
+        if ($this->loadValueCallback !== null) {
+            ($this->loadValueCallback)($object, $this);
+        }
+
+        return parent::updatedObject($data, $object, $loadValues);
     }
 
     /**
@@ -536,7 +549,7 @@ class WysiwygFormContainer extends FormContainer
     {
         parent::populate();
 
-        $this->wysiwygField = WysiwygFormField::create($this->wysiwygId)
+        $this->wysiwygField = $this->getWysiwygField()
             ->objectType($this->messageObjectType)
             ->minimumLength($this->getMinimumLength())
             ->maximumLength($this->getMaximumLength())
@@ -549,7 +562,7 @@ class WysiwygFormContainer extends FormContainer
             ->wysiwygId($this->getWysiwygId())
             ->label('wcf.message.smilies')
             ->available($this->supportSmilies);
-        $this->attachmentField = WysiwygAttachmentFormField::create($this->wysiwygId . 'Attachments')
+        $this->attachmentField = $this->getAttachmentField()
             ->wysiwygId($this->getWysiwygId());
         $this->settingsContainer = FormContainer::create($this->wysiwygId . 'SettingsContainer')
             ->appendChildren($this->settingsNodes);
@@ -739,5 +752,33 @@ class WysiwygFormContainer extends FormContainer
         }
 
         return $this;
+    }
+
+    #[\Override]
+    public function saveValueCallback(\Closure $callback): static
+    {
+        $this->saveValueCallback = $callback;
+
+        return $this;
+    }
+
+    #[\Override]
+    public function getSaveValueCallback(): ?\Closure
+    {
+        return $this->saveValueCallback;
+    }
+
+    #[\Override]
+    public function loadValueCallback(\Closure $callback): static
+    {
+        $this->loadValueCallback = $callback;
+
+        return $this;
+    }
+
+    #[\Override]
+    public function getLoadValueCallback(): ?\Closure
+    {
+        return $this->loadValueCallback;
     }
 }

@@ -3,7 +3,7 @@
 namespace wcf\command\article;
 
 use wcf\data\article\Article;
-use wcf\data\article\ArticleEditor;
+use wcf\data\article\ArticleBuilder;
 use wcf\event\article\ArticleRestored;
 use wcf\system\event\EventHandler;
 
@@ -21,7 +21,9 @@ final class RestoreArticle
 
     public function __invoke(): void
     {
-        (new ArticleEditor($this->article))->update(['isDeleted' => 0]);
+        ArticleBuilder::forUpdate($this->article)
+            ->setIsDeleted(false)
+            ->update();
 
         (new ResetUserStorageForUnreadArticles())();
 

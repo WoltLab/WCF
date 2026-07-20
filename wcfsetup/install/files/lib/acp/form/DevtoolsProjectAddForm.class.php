@@ -2,7 +2,6 @@
 
 namespace wcf\acp\form;
 
-use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\devtools\project\DevtoolsProject;
 use wcf\data\devtools\project\DevtoolsProjectAction;
 use wcf\data\devtools\project\DevtoolsProjectList;

@@ -53,7 +53,7 @@ abstract class AbstractNumericFormField extends AbstractFormField implements
 
     /**
      * step value for the input element
-     * @var null|number
+     * @var ?int
      */
     protected $step;
 
@@ -70,7 +70,7 @@ abstract class AbstractNumericFormField extends AbstractFormField implements
     /**
      * Returns the default value for the input element's step attribute.
      *
-     * @return  number|string
+     * @return  int|string
      */
     protected function getDefaultStep()
     {
@@ -81,6 +81,9 @@ abstract class AbstractNumericFormField extends AbstractFormField implements
         }
     }
 
+    /**
+     * @return int|float
+     */
     #[\Override]
     public function getSaveValue()
     {
@@ -102,7 +105,7 @@ abstract class AbstractNumericFormField extends AbstractFormField implements
      * If no step value has been set, the return value of `getDefaultStep()`
      * is set and returned.
      *
-     * @return  number|string
+     * @return  int|string
      */
     public function getStep()
     {

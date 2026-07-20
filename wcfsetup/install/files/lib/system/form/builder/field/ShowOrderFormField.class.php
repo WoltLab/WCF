@@ -45,6 +45,9 @@ final class ShowOrderFormField extends SingleSelectionFormField
         $this->label('wcf.form.field.showOrder');
     }
 
+    /**
+     * @return ?int
+     */
     #[\Override]
     public function getSaveValue()
     {
@@ -55,7 +58,7 @@ final class ShowOrderFormField extends SingleSelectionFormField
                 return $index + 1;
             }
 
-            return;
+            return null;
         }
 
         return $this->value;

@@ -4,7 +4,6 @@ namespace wcf\form;
 
 use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\data\article\Article;
-use wcf\system\WCF;
 
 /**
  * Shows the article add form.
@@ -19,17 +18,17 @@ class ArticleAddForm extends \wcf\acp\form\ArticleAddForm
     /**
      * @inheritDoc
      */
-    public $objectEditLinkController = ArticleEditForm::class;
+    public string $objectEditLinkController = ArticleEditForm::class;
 
     #[\Override]
-    public function save(): void
+    protected function afterSave(): void
     {
-        parent::save();
+        parent::afterSave();
 
-        /** @var Article $article */
-        $article = $this->objectAction->getReturnValues()['returnValues'];
-        if ($article->publicationStatus === Article::PUBLISHED) {
-            $this->setPsr7Response(new RedirectResponse($article->getLink(), 303));
+        \assert($this->object instanceof Article);
+
+        if ($this->object->publicationStatus === Article::PUBLISHED) {
+            $this->setPsr7Response(new RedirectResponse($this->object->getLink(), 303));
         }
     }
 }

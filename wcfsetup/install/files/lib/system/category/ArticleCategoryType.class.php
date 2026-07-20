@@ -4,7 +4,8 @@ namespace wcf\system\category;
 
 use wcf\acp\form\ArticleCategoryAddForm;
 use wcf\acp\form\ArticleCategoryEditForm;
-use wcf\data\article\ArticleAction;
+use wcf\command\article\DeleteArticle;
+use wcf\data\article\ArticleList;
 use wcf\data\category\CategoryEditor;
 use wcf\system\WCF;
 
@@ -46,18 +47,12 @@ class ArticleCategoryType extends AbstractCategoryType
         parent::beforeDeletion($categoryEditor);
 
         // Delete articles in this category.
-        $sql = "SELECT  articleID
-                FROM    wcf1_article
-                WHERE   categoryID = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            $categoryEditor->categoryID,
-        ]);
-        $articleIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+        $articleList = new ArticleList();
+        $articleList->getConditionBuilder()->add("categoryID = ?", [$categoryEditor->categoryID]);
+        $articleList->readObjects();
 
-        if ($articleIDs !== []) {
-            $articleAction = new ArticleAction($articleIDs, 'delete');
-            $articleAction->executeAction();
+        foreach ($articleList->getObjects() as $article) {
+            (new DeleteArticle($article))();
         }
     }
 

@@ -78,6 +78,9 @@ class ItemListFormField extends AbstractFormField implements
         $this->addFieldClass('long');
     }
 
+    /**
+     * @return string
+     */
     #[\Override]
     public function getSaveValue()
     {
