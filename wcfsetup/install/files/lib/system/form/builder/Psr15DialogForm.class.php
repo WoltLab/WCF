@@ -40,7 +40,7 @@ final class Psr15DialogForm extends FormDocument
      */
     public function validateRequest(ServerRequestInterface $request): ?ResponseInterface
     {
-        $this->requestData($request->getParsedBody());
+        $this->requestData($request->getParsedBody() ?? []);
         $this->readValues();
         $this->validate();
 
