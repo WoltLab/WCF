@@ -56,7 +56,7 @@ final class UserRankGridView extends AbstractGridView
 
                             return '<span class="badge label' . ($row->cssClassName ? ' ' . $row->cssClassName : '') . '">'
                                 . StringUtil::encodeHTML($row->getTitle())
-                                . '<span>';
+                                . '</span>';
                         }
                     }
                 ]),
