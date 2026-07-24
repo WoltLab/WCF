@@ -17,7 +17,6 @@ use wcf\util\UserUtil;
  * @property-read   string  $sessionID          id of the acp session the acp session log entry belongs to
  * @property-read   ?int    $userID             id of the user who has caused the acp session log entry or `null`
  * @property-read   string  $ipAddress          ip address of the user who has caused the acp session access log entry
- * @property-read   string  $hostname           name of the internet host corresponding to the user's IP address
  * @property-read   string  $userAgent          user agent of the user who has caused the acp session access log entry
  * @property-read   int     $time               timestamp at which the acp session log entry has been created
  * @property-read   int     $lastActivityTime   timestamp at which the associated session has been active for the last time

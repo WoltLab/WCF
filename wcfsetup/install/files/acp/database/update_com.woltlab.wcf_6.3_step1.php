@@ -68,4 +68,10 @@ return [
             CharDatabaseTableColumn::create('lostPasswordKey')
                 ->length(64),
         ]),
+    PartialDatabaseTable::create('wcf1_acp_session_log')
+        ->columns([
+            NotNullVarchar255DatabaseTableColumn::create('hostname')
+                ->defaultValue('')
+                ->drop(),
+        ]),
 ];

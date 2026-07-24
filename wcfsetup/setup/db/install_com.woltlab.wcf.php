@@ -316,8 +316,6 @@ return [
                 ->notNull()
                 ->length(39)
                 ->defaultValue(''),
-            NotNullVarchar255DatabaseTableColumn::create('hostname')
-                ->defaultValue(''),
             NotNullVarchar255DatabaseTableColumn::create('userAgent')
                 ->defaultValue(''),
             NotNullInt10DatabaseTableColumn::create('time')
