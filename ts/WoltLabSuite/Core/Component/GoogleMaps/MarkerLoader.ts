@@ -12,39 +12,36 @@ import { dialogFactory } from "../Dialog";
 import DomUtil from "../../Dom/Util";
 import WoltlabCoreDialogElement from "../../Element/woltlab-core-dialog";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
+import { getMapMarkers, MarkerData } from "../../Api/GoogleMaps/GetMapMarkers";
 import "./woltlab-core-google-maps";
 
 type AdditionalParameters = Record<string, unknown>;
-
-type MarkerData = {
-  dialog?: string;
-  infoWindow: string;
-  items: number;
-  latitude: number;
-  location: string;
-  longitude: number;
-  objectIDs?: number[];
-  objectID?: number;
-  title: string;
-};
 
 type ResponseGetMapMarkers = {
   markers: MarkerData[];
 };
 
+/**
+ * Fetches the markers located within the given boundaries, excluding the
+ * markers that have already been loaded.
+ */
+type MarkerFetcher = (
+  northEast: google.maps.LatLng,
+  southWest: google.maps.LatLng,
+  excludedObjectIDs: number[],
+) => Promise<ResponseGetMapMarkers>;
+
 class MarkerLoader {
   readonly #map: google.maps.Map;
-  readonly #actionClassName: string;
-  readonly #additionalParameters: AdditionalParameters;
+  readonly #fetchMarkers: MarkerFetcher;
   readonly #clusterer: MarkerClusterer;
   #previousNorthEast: google.maps.LatLng;
   #previousSouthWest: google.maps.LatLng;
   #objectIDs: number[] = [];
 
-  constructor(map: google.maps.Map, actionClassName: string, additionalParameters: AdditionalParameters) {
+  constructor(map: google.maps.Map, fetchMarkers: MarkerFetcher) {
     this.#map = map;
-    this.#actionClassName = actionClassName;
-    this.#additionalParameters = additionalParameters;
+    this.#fetchMarkers = fetchMarkers;
 
     this.#clusterer = new MarkerClusterer({
       map,
@@ -73,16 +70,7 @@ class MarkerLoader {
       return;
     }
 
-    const response = (await dboAction("getMapMarkers", this.#actionClassName)
-      .payload({
-        ...this.#additionalParameters,
-        excludedObjectIDs: JSON.stringify(this.#objectIDs),
-        eastLongitude: northEast.lng(),
-        northLatitude: northEast.lat(),
-        southLatitude: southWest.lat(),
-        westLongitude: southWest.lng(),
-      })
-      .dispatch()) as ResponseGetMapMarkers;
+    const response = await this.#fetchMarkers(northEast, southWest, this.#objectIDs);
 
     response.markers.forEach((data) => {
       this.#addMarker(data);
@@ -158,11 +146,53 @@ class MarkerLoader {
   }
 }
 
+/**
+ * Loads the markers using the legacy `getMapMarkers` DBO action of the given class.
+ *
+ * @deprecated 6.3 use `setupWithEndpoint()` with a dedicated RPC endpoint instead
+ */
 export async function setup(
   googleMaps: WoltlabCoreGoogleMapsElement,
   actionClassName: string,
   additionalParameters: AdditionalParameters,
 ): Promise<void> {
   const map = await googleMaps.getMap();
-  new MarkerLoader(map, actionClassName, additionalParameters);
+  new MarkerLoader(map, (northEast, southWest, excludedObjectIDs) => {
+    return dboAction("getMapMarkers", actionClassName)
+      .payload({
+        ...additionalParameters,
+        excludedObjectIDs: JSON.stringify(excludedObjectIDs),
+        eastLongitude: northEast.lng(),
+        northLatitude: northEast.lat(),
+        southLatitude: southWest.lat(),
+        westLongitude: southWest.lng(),
+      })
+      .dispatch() as Promise<ResponseGetMapMarkers>;
+  });
+}
+
+/**
+ * Loads the markers using an RPC endpoint, e.g. `calendar/events/map-markers`.
+ *
+ * @since 6.3
+ */
+export async function setupWithEndpoint(
+  googleMaps: WoltlabCoreGoogleMapsElement,
+  endpoint: string,
+  additionalParameters: AdditionalParameters = {},
+): Promise<void> {
+  const map = await googleMaps.getMap();
+  new MarkerLoader(map, (northEast, southWest, excludedObjectIDs) => {
+    return getMapMarkers(
+      endpoint,
+      {
+        northLatitude: northEast.lat(),
+        southLatitude: southWest.lat(),
+        eastLongitude: northEast.lng(),
+        westLongitude: southWest.lng(),
+      },
+      excludedObjectIDs,
+      additionalParameters,
+    );
+  });
 }

@@ -5,23 +5,22 @@
  * @copyright  2001-2022 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../Ajax", "../Dialog", "../../Dom/Util", "@googlemaps/markerclusterer", "./woltlab-core-google-maps"], function (require, exports, tslib_1, Ajax_1, Dialog_1, Util_1, markerclusterer_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../Dialog", "../../Dom/Util", "@googlemaps/markerclusterer", "../../Api/GoogleMaps/GetMapMarkers", "./woltlab-core-google-maps"], function (require, exports, tslib_1, Ajax_1, Dialog_1, Util_1, markerclusterer_1, GetMapMarkers_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
+    exports.setupWithEndpoint = setupWithEndpoint;
     Util_1 = tslib_1.__importDefault(Util_1);
     class MarkerLoader {
         #map;
-        #actionClassName;
-        #additionalParameters;
+        #fetchMarkers;
         #clusterer;
         #previousNorthEast;
         #previousSouthWest;
         #objectIDs = [];
-        constructor(map, actionClassName, additionalParameters) {
+        constructor(map, fetchMarkers) {
             this.#map = map;
-            this.#actionClassName = actionClassName;
-            this.#additionalParameters = additionalParameters;
+            this.#fetchMarkers = fetchMarkers;
             this.#clusterer = new markerclusterer_1.MarkerClusterer({
                 map,
             });
@@ -43,16 +42,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../Dialog", "../../Dom/Uti
             if (!this.#checkPreviousLocation(northEast, southWest)) {
                 return;
             }
-            const response = (await (0, Ajax_1.dboAction)("getMapMarkers", this.#actionClassName)
-                .payload({
-                ...this.#additionalParameters,
-                excludedObjectIDs: JSON.stringify(this.#objectIDs),
-                eastLongitude: northEast.lng(),
-                northLatitude: northEast.lat(),
-                southLatitude: southWest.lat(),
-                westLongitude: southWest.lng(),
-            })
-                .dispatch());
+            const response = await this.#fetchMarkers(northEast, southWest, this.#objectIDs);
             response.markers.forEach((data) => {
                 this.#addMarker(data);
             });
@@ -112,8 +102,40 @@ define(["require", "exports", "tslib", "../../Ajax", "../Dialog", "../../Dom/Uti
             return true;
         }
     }
+    /**
+     * Loads the markers using the legacy `getMapMarkers` DBO action of the given class.
+     *
+     * @deprecated 6.3 use `setupWithEndpoint()` with a dedicated RPC endpoint instead
+     */
     async function setup(googleMaps, actionClassName, additionalParameters) {
         const map = await googleMaps.getMap();
-        new MarkerLoader(map, actionClassName, additionalParameters);
+        new MarkerLoader(map, (northEast, southWest, excludedObjectIDs) => {
+            return (0, Ajax_1.dboAction)("getMapMarkers", actionClassName)
+                .payload({
+                ...additionalParameters,
+                excludedObjectIDs: JSON.stringify(excludedObjectIDs),
+                eastLongitude: northEast.lng(),
+                northLatitude: northEast.lat(),
+                southLatitude: southWest.lat(),
+                westLongitude: southWest.lng(),
+            })
+                .dispatch();
+        });
+    }
+    /**
+     * Loads the markers using an RPC endpoint, e.g. `calendar/events/map-markers`.
+     *
+     * @since 6.3
+     */
+    async function setupWithEndpoint(googleMaps, endpoint, additionalParameters = {}) {
+        const map = await googleMaps.getMap();
+        new MarkerLoader(map, (northEast, southWest, excludedObjectIDs) => {
+            return (0, GetMapMarkers_1.getMapMarkers)(endpoint, {
+                northLatitude: northEast.lat(),
+                southLatitude: southWest.lat(),
+                eastLongitude: northEast.lng(),
+                westLongitude: southWest.lng(),
+            }, excludedObjectIDs, additionalParameters);
+        });
     }
 });
