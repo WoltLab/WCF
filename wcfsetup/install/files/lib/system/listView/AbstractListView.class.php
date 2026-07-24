@@ -473,6 +473,11 @@ abstract class AbstractListView
         $this->allowSorting = $allowSorting;
     }
 
+    public function getAllowSorting(): bool
+    {
+        return $this->allowSorting;
+    }
+
     /**
      * @return ListViewSortField[]
      */
@@ -499,6 +504,11 @@ abstract class AbstractListView
     public function setAllowFiltering(bool $allowFiltering): void
     {
         $this->allowFiltering = $allowFiltering;
+    }
+
+    public function getAllowFiltering(): bool
+    {
+        return $this->allowFiltering;
     }
 
     /**
@@ -595,9 +605,19 @@ abstract class AbstractListView
         $this->allowInteractions = $allowInteractions;
     }
 
+    public function getAllowInteractions(): bool
+    {
+        return $this->allowInteractions;
+    }
+
     public function setAllowBulkInteractions(bool $allowBulkInteractions): void
     {
         $this->allowBulkInteractions = $allowBulkInteractions;
+    }
+
+    public function getAllowBulkInteractions(): bool
+    {
+        return $this->allowBulkInteractions;
     }
 
     /**

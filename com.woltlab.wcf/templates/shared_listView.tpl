@@ -113,6 +113,10 @@
 			'{unsafe:$view->getDefaultSortField()|encodeJS}',
 			'{unsafe:$view->getDefaultSortOrder()|encodeJS}',
 			'{unsafe:$view->getBulkInteractionProviderClassName()|encodeJS}',
+			{if $view->getAllowFiltering()}true{else}false{/if},
+			{if $view->getAllowSorting()}true{else}false{/if},
+			{if $view->getAllowInteractions()}true{else}false{/if},
+			{if $view->getAllowBulkInteractions()}true{else}false{/if},
 			new Map([
 				{foreach from=$view->getParameters() key='name' item='value'}
 					['{unsafe:$name|encodeJS}', {unsafe:$value|json}],

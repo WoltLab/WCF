@@ -19,10 +19,14 @@ export async function getItem(
   objectId: string | number,
   filters?: Map<string, string>,
   listViewParameters?: Map<string, string>,
+  allowInteractions = true,
+  allowBulkInteractions = true,
 ): Promise<Response> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/list-views/item`);
   url.searchParams.set("listView", listViewClass);
   url.searchParams.set("objectID", objectId.toString());
+  url.searchParams.set("allowInteractions", allowInteractions.toString());
+  url.searchParams.set("allowBulkInteractions", allowBulkInteractions.toString());
   if (filters) {
     filters.forEach((value, key) => {
       url.searchParams.set(`filters[${key}]`, value);

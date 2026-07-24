@@ -24,12 +24,20 @@ export async function getItems(
   sortOrder: string = "ASC",
   filters?: Map<string, string>,
   listViewParameters?: Map<string, string>,
+  allowFiltering = true,
+  allowSorting = true,
+  allowInteractions = true,
+  allowBulkInteractions = true,
 ): Promise<Response> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/list-views/items`);
   url.searchParams.set("listView", listViewClass);
   url.searchParams.set("pageNo", pageNo.toString());
   url.searchParams.set("sortField", sortField);
   url.searchParams.set("sortOrder", sortOrder);
+  url.searchParams.set("allowFiltering", allowFiltering.toString());
+  url.searchParams.set("allowSorting", allowSorting.toString());
+  url.searchParams.set("allowInteractions", allowInteractions.toString());
+  url.searchParams.set("allowBulkInteractions", allowBulkInteractions.toString());
   if (filters) {
     filters.forEach((value, key) => {
       url.searchParams.set(`filters[${key}]`, value);

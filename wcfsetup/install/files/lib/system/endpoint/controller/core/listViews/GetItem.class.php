@@ -40,6 +40,9 @@ final class GetItem implements IController
             throw new PermissionDeniedException();
         }
 
+        $view->setAllowInteractions($parameters->allowInteractions);
+        $view->setAllowBulkInteractions($parameters->allowBulkInteractions);
+
         if ($parameters->filters !== []) {
             $view->setActiveFilters($parameters->filters);
         }
@@ -63,5 +66,7 @@ final class GetItemParameters
         public readonly array $filters,
         /** @var array<string, string|string[]> */
         public readonly array $listViewParameters,
+        public readonly bool $allowInteractions = true,
+        public readonly bool $allowBulkInteractions = true,
     ) {}
 }
