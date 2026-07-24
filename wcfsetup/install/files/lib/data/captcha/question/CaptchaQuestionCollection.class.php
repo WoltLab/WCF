@@ -1,0 +1,54 @@
+<?php
+
+namespace wcf\data\captcha\question;
+
+use wcf\data\captcha\question\CaptchaQuestion;
+use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectCollection;
+use wcf\system\l10n\L10nStorage;
+
+/**
+ * Represents a collection of captcha questions.
+ *
+ * @author      Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since       6.3
+ *
+ * @extends DatabaseObjectCollection<CaptchaQuestion>
+ */
+class CaptchaQuestionCollection extends DatabaseObjectCollection
+{
+    /**
+     * @var array<int, array<string, array<int, string>>>
+     */
+    private array $l10nValues;
+
+    public function getResolvedL10nValue(DatabaseObject $object, string $columnName): string
+    {
+        $this->loadL10nValues();
+
+        return L10nStorage::resolveValue($this->l10nValues[$object->getObjectID()][$columnName] ?? []);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function getL10nValues(DatabaseObject $object, string $columnName): array
+    {
+        $this->loadL10nValues();
+
+        return $this->l10nValues[$object->getObjectID()][$columnName] ?? [];
+    }
+
+    private function loadL10nValues(): void
+    {
+        if (isset($this->l10nValues)) {
+            return;
+        }
+
+        $this->l10nValues = (new L10nStorage(CaptchaQuestion::getL10nDefinition()))->getValuesForObjects(
+            $this->getObjectIDs()
+        );
+    }
+}

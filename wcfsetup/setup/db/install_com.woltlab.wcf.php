@@ -902,8 +902,6 @@ return [
     DatabaseTable::create('wcf1_captcha_question')
         ->columns([
             ObjectIdDatabaseTableColumn::create('questionID'),
-            NotNullVarchar255DatabaseTableColumn::create('question'),
-            MediumtextDatabaseTableColumn::create('answers'),
             DefaultFalseBooleanDatabaseTableColumn::create('isDisabled'),
             NotNullInt10DatabaseTableColumn::create('views')
                 ->defaultValue(0),
@@ -915,6 +913,31 @@ return [
         ->indices([
             DatabaseTablePrimaryIndex::create()
                 ->columns(['questionID']),
+        ]),
+    DatabaseTable::create('wcf1_captcha_question_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('questionID'),
+            IntDatabaseTableColumn::create('languageID'),
+            NotNullVarchar255DatabaseTableColumn::create('question'),
+            MediumtextDatabaseTableColumn::create('answers'),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('questionID')
+                ->columns(['questionID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['questionID'])
+                ->referencedTable('wcf1_captcha_question')
+                ->referencedColumns(['questionID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
         ]),
     DatabaseTable::create('wcf1_category')
         ->columns([
