@@ -10,11 +10,17 @@
 
 use wcf\system\database\table\column\CharDatabaseTableColumn;
 use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
+use wcf\system\database\table\column\IntDatabaseTableColumn;
 use wcf\system\database\table\column\JsonDatabaseTableColumn;
 use wcf\system\database\table\column\MediumintDatabaseTableColumn;
+use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
+use wcf\system\database\table\column\NotNullInt10DatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
 use wcf\system\database\table\column\SmallintDatabaseTableColumn;
 use wcf\system\database\table\column\TextDatabaseTableColumn;
+use wcf\system\database\table\DatabaseTable;
+use wcf\system\database\table\index\DatabaseTableForeignKey;
+use wcf\system\database\table\index\DatabaseTableIndex;
 use wcf\system\database\table\PartialDatabaseTable;
 
 return [
@@ -73,5 +79,30 @@ return [
             NotNullVarchar255DatabaseTableColumn::create('hostname')
                 ->defaultValue('')
                 ->drop(),
+        ]),
+    DatabaseTable::create('wcf1_captcha_question_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('questionID'),
+            IntDatabaseTableColumn::create('languageID'),
+            NotNullVarchar255DatabaseTableColumn::create('question'),
+            MediumtextDatabaseTableColumn::create('answers'),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('questionID')
+                ->columns(['questionID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['questionID'])
+                ->referencedTable('wcf1_captcha_question')
+                ->referencedColumns(['questionID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
         ]),
 ];

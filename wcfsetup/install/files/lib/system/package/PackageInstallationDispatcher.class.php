@@ -208,8 +208,6 @@ class PackageInstallationDispatcher
 
             VersionTracker::getInstance()->createStorageTables();
 
-            (new \wcf\command\l10n\SyncL10nTables())();
-
             $command = new \wcf\command\package\RebuildBootstrapper();
             $command();
 

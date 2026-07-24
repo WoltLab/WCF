@@ -2,13 +2,13 @@
 
 namespace wcf\system\l10n;
 
-use wcf\data\DatabaseObject;
-use wcf\system\database\table\column\IDatabaseTableColumn;
-
 /**
- * Describes the localizable payload columns of a database object. The payload
- * columns are stored in a separate table named after the database object's
- * table with the suffix `_l10n`.
+ * Describes the localized (`*_l10n`) table of a content type.
+ *
+ * The localized table stores one row per object and language with the fixed
+ * skeleton columns `objectColumnName` (referencing the primary table),
+ * `languageID` (`NULL` for monolingual content) followed by
+ * the localized payload columns.
  *
  * @author      Marcel Werk
  * @copyright   2001-2026 WoltLab GmbH
@@ -18,47 +18,25 @@ use wcf\system\database\table\column\IDatabaseTableColumn;
 final class L10nDefinition
 {
     /**
-     * @param class-string<DatabaseObject> $class
-     * @param list<IDatabaseTableColumn> $columns
+     * @param string $primaryTableName name of the primary table
+     * @param string $l10nTableName name of the localized table
+     * @param string $objectColumnName name of the primary key column shared by both tables
+     * @param list<string> $columnNames names of the localized payload columns
      */
     public function __construct(
-        public readonly string $class,
-        public readonly array $columns,
+        public readonly string $primaryTableName,
+        public readonly string $l10nTableName,
+        public readonly string $objectColumnName,
+        public readonly array $columnNames,
     ) {
-        if (!\is_subclass_of($this->class, DatabaseObject::class)) {
+        if (!\str_ends_with($l10nTableName, '_l10n')) {
             throw new \InvalidArgumentException(
-                "Given class '{$this->class}' is no subclass of '" . DatabaseObject::class . "'."
+                "The localized table name '{$l10nTableName}' must use the '_l10n' suffix."
             );
         }
 
-        $columnNames = [];
-        foreach ($this->columns as $column) {
-            $name = \strtolower($column->getName());
-            if ($name === 'objectid' || $name === 'languageid') {
-                throw new \InvalidArgumentException(
-                    "The column name '{$column->getName()}' is reserved for the default columns."
-                );
-            }
-
-            if (isset($columnNames[$name])) {
-                throw new \InvalidArgumentException("Duplicate column with name '{$column->getName()}'.");
-            }
-            $columnNames[$name] = true;
+        if ($columnNames === []) {
+            throw new \InvalidArgumentException('At least one localized column must be defined.');
         }
-    }
-
-    public function getBaseTableName(): string
-    {
-        return $this->class::getDatabaseTableName();
-    }
-
-    public function getL10nTableName(): string
-    {
-        return $this->getBaseTableName() . '_l10n';
-    }
-
-    public function getBaseTableIndexName(): string
-    {
-        return $this->class::getDatabaseTableIndexName();
     }
 }

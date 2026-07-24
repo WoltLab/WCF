@@ -6,10 +6,13 @@ use wcf\command\captcha\question\DisableCaptchaQuestion;
 use wcf\command\captcha\question\EnableCaptchaQuestion;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
-use wcf\data\TI18nDatabaseObjectAction;
 
 /**
  * Executes captcha question-related actions.
+ *
+ * Captcha questions should be created and updated through the
+ * `CreateCaptchaQuestion` and `UpdateCaptchaQuestion` commands, the `create`
+ * and `update` actions are `@deprecated 6.3`.
  *
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
@@ -19,8 +22,6 @@ use wcf\data\TI18nDatabaseObjectAction;
  */
 class CaptchaQuestionAction extends AbstractDatabaseObjectAction implements IToggleAction
 {
-    use TI18nDatabaseObjectAction;
-
     /**
      * @inheritDoc
      */
@@ -30,63 +31,6 @@ class CaptchaQuestionAction extends AbstractDatabaseObjectAction implements ITog
      * @inheritDoc
      */
     protected $permissionsUpdate = ['admin.captcha.canManageCaptchaQuestion'];
-
-    /**
-     * @return array<string, string>
-     */
-    #[\Override]
-    public function getI18nSaveTypes(): array
-    {
-        return [
-            'question' => 'wcf.captcha.question.question.question\d+',
-            'answers' => 'wcf.captcha.question.answers.question\d+',
-        ];
-    }
-
-    #[\Override]
-    public function getLanguageCategory(): string
-    {
-        return 'wcf.captcha.question';
-    }
-
-    #[\Override]
-    public function getPackageID(): int
-    {
-        return \PACKAGE_ID;
-    }
-
-    #[\Override]
-    public function update()
-    {
-        parent::update();
-
-        foreach ($this->objects as $object) {
-            $this->saveI18nValue($object->getDecoratedObject());
-        }
-    }
-
-    #[\Override]
-    public function create()
-    {
-        // Question column doesn't have a default value
-        $this->parameters['data']['question'] = $this->parameters['data']['question'] ?? '';
-
-        $captchaQuestion = parent::create();
-
-        $this->saveI18nValue($captchaQuestion);
-
-        return $captchaQuestion;
-    }
-
-    #[\Override]
-    public function delete()
-    {
-        $returnValue = parent::delete();
-
-        $this->deleteI18nValues();
-
-        return $returnValue;
-    }
 
     /**
      * @deprecated 6.3
