@@ -85,16 +85,23 @@ class ArticleRssFeedPage extends AbstractRssFeedPage
         $feed->channel($channel);
 
         foreach ($this->articles as $article) {
+            $content = $article->getArticleContent();
+            if ($content === null) {
+                continue;
+            }
+
+            $link = $content->getLink();
+
             $item = new RssFeedItem();
             $item
-                ->title($article->getTitle())
-                ->link($article->getLink())
-                ->description(StringUtil::truncateHTML($article->getFormattedTeaser(), 255))
+                ->title($content->getTitle())
+                ->link($link)
+                ->description(StringUtil::truncateHTML($content->getFormattedTeaser(), 255))
                 ->pubDateFromTimestamp($article->time)
                 ->creator($article->username)
-                ->guid($article->getLink())
-                ->contentEncoded($article->getArticleContent()->getSimplifiedFormattedContent())
-                ->slashComments($article->getArticleContent()->comments);
+                ->guid($link)
+                ->contentEncoded($content->getSimplifiedFormattedContent())
+                ->slashComments($content->comments);
 
             if ($article->getImage() !== null) {
                 $item->enclosure(
