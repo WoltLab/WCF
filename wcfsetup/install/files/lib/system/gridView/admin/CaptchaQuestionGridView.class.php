@@ -4,7 +4,7 @@ namespace wcf\system\gridView\admin;
 
 use wcf\acp\form\CaptchaQuestionEditForm;
 use wcf\data\captcha\question\CaptchaQuestion;
-use wcf\data\captcha\question\I18nCaptchaQuestionList;
+use wcf\data\captcha\question\L10nCaptchaQuestionList;
 use wcf\event\gridView\admin\CaptchaQuestionGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\GridViewColumn;
@@ -15,8 +15,8 @@ use wcf\system\interaction\bulk\admin\CaptchaQuestionBulkInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
-use wcf\system\view\filter\I18nTextFilter;
 use wcf\system\view\filter\IntegerFilter;
+use wcf\system\view\filter\L10nTextFilter;
 use wcf\system\WCF;
 
 /**
@@ -27,7 +27,7 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  *
- * @extends AbstractGridView<CaptchaQuestion, I18nCaptchaQuestionList>
+ * @extends AbstractGridView<CaptchaQuestion, L10nCaptchaQuestionList>
  */
 final class CaptchaQuestionGridView extends AbstractGridView
 {
@@ -41,8 +41,13 @@ final class CaptchaQuestionGridView extends AbstractGridView
             GridViewColumn::for('question')
                 ->label('wcf.acp.captcha.question.question')
                 ->titleColumn()
-                ->filter(I18nTextFilter::class)
-                ->sortable(sortByDatabaseColumn: 'questionI18n'),
+                ->filter(new L10nTextFilter(
+                    CaptchaQuestion::getL10nDefinition(),
+                    'question',
+                    'question',
+                    'wcf.acp.captcha.question.question',
+                ))
+                ->sortable(sortByDatabaseColumn: 'question'),
             GridViewColumn::for('views')
                 ->label('wcf.acp.captcha.question.views')
                 ->sortable(defaultSortOrder: 'DESC')
@@ -84,9 +89,9 @@ final class CaptchaQuestionGridView extends AbstractGridView
     }
 
     #[\Override]
-    protected function createObjectList(): I18nCaptchaQuestionList
+    protected function createObjectList(): L10nCaptchaQuestionList
     {
-        return new I18nCaptchaQuestionList();
+        return new L10nCaptchaQuestionList();
     }
 
     #[\Override]
