@@ -1717,6 +1717,7 @@ return [
     'long-arrow-left' => true,
     'long-arrow-right' => true,
     'long-arrow-up' => true,
+    'lotus' => true,
     'low-vision' => true,
     'luggage-cart' => true,
     'magic' => true,
