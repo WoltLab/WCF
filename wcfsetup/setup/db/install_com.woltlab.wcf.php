@@ -918,7 +918,8 @@ return [
         ->columns([
             NotNullInt10DatabaseTableColumn::create('questionID'),
             IntDatabaseTableColumn::create('languageID'),
-            NotNullVarchar255DatabaseTableColumn::create('question'),
+            VarcharDatabaseTableColumn::create('question')
+                ->length(255),
             MediumtextDatabaseTableColumn::create('answers'),
         ])
         ->indices([

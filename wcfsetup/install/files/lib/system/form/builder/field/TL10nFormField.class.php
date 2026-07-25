@@ -137,6 +137,9 @@ trait TL10nFormField
         if (\is_string($value) || \is_numeric($value)) {
             I18nHandler::getInstance()->setValue($this->getPrefixedId(), (string)$value, true);
         } elseif (\is_array($value)) {
+            // A stored value map can contain `NULL` for languages that only
+            // exist because of another column, drop them before dispatching.
+            $value = \array_filter($value, static fn($v) => $v !== null);
             if ($value !== []) {
                 if (\array_key_exists(L10nStorage::MONOLINGUAL, $value)) {
                     if (\count($value) !== 1) {
