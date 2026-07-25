@@ -11,10 +11,12 @@ use wcf\system\WCF;
  *
  * Values are exchanged as a map of `languageID => value` per column. The key
  * `L10nStorage::MONOLINGUAL` (`0`) represents monolingual content which is
- * stored as a single row with `languageID = NULL`. Monolingual and
- * multilingual values are mutually exclusive for the same object, this is
- * enforced by this class because the database itself cannot enforce it
- * (unique indices treat `NULL` values as distinct).
+ * stored with `languageID = NULL`. Monolingual and multilingual values are
+ * mutually exclusive per column, not per object: different columns may use
+ * different language sets, so an object may hold a `languageID = NULL` row for
+ * a monolingual column alongside per-language rows for a multilingual column.
+ * A column that has no value for a written language id is stored as `NULL` and
+ * treated as absent on read.
  *
  * All writes to a `*_l10n` table must go through this class.
  *
@@ -81,9 +83,11 @@ final class L10nStorage
     /**
      * Replaces the localized values of the given object.
      *
-     * Expects a value for every localized column, each with an identical set
-     * of language ids. Passing values for `MONOLINGUAL` in combination with
-     * actual language ids is invalid.
+     * Expects a value map for every localized column. Each column may use its
+     * own set of language ids; a row is written for every language id that
+     * appears in any column and a column that lacks a value for that language
+     * id is stored as `NULL`. Combining `MONOLINGUAL` with actual language ids
+     * within the same column is invalid.
      *
      * @param array<string, array<int, string>> $values `columnName => [languageID => value]`
      */
@@ -114,7 +118,7 @@ final class L10nStorage
                     $languageID === self::MONOLINGUAL ? null : $languageID,
                 ];
                 foreach ($this->definition->columnNames as $columnName) {
-                    $parameters[] = $values[$columnName][$languageID];
+                    $parameters[] = $values[$columnName][$languageID] ?? null;
                 }
 
                 $insertStatement->execute($parameters);
@@ -156,6 +160,13 @@ final class L10nStorage
             return $values[$defaultLanguageID];
         }
 
+        // A column can be `NULL` for a given language, drop those before
+        // falling back to the value with the lowest language id.
+        $values = \array_filter($values, static fn($value) => $value !== null);
+        if ($values === []) {
+            return '';
+        }
+
         return $values[\min(\array_keys($values))];
     }
 
@@ -177,6 +188,7 @@ final class L10nStorage
             SELECT      {$columnName}
             FROM        {$this->definition->l10nTableName}
             WHERE       {$this->definition->objectColumnName} = {$tableAlias}.{$this->definition->objectColumnName}
+                    AND {$columnName} IS NOT NULL
             ORDER BY    CASE
                             WHEN languageID IS NULL THEN -3
                             WHEN languageID = {$languageID} THEN -2
@@ -188,7 +200,8 @@ final class L10nStorage
     }
 
     /**
-     * Validates the given values and returns the common list of language ids.
+     * Validates the given values and returns the union of language ids across
+     * all columns.
      *
      * @param array<string, array<int, string>> $values
      * @return list<int>
@@ -207,29 +220,25 @@ final class L10nStorage
             ));
         }
 
-        $languageIDs = null;
+        $languageIDs = [];
         foreach ($values as $columnName => $columnValues) {
             if ($columnValues === []) {
                 throw new \InvalidArgumentException("Missing values for column '{$columnName}'.");
             }
 
             $columnLanguageIDs = \array_keys($columnValues);
-            \sort($columnLanguageIDs);
-
-            if ($languageIDs === null) {
-                $languageIDs = $columnLanguageIDs;
-            } elseif ($languageIDs !== $columnLanguageIDs) {
-                throw new \InvalidArgumentException(
-                    'All localized columns must provide values for the same set of languages.'
-                );
+            if (\in_array(self::MONOLINGUAL, $columnLanguageIDs, true) && \count($columnLanguageIDs) > 1) {
+                throw new \InvalidArgumentException(\sprintf(
+                    "The monolingual value of column '%s' cannot be combined with language specific values.",
+                    $columnName,
+                ));
             }
+
+            $languageIDs = [...$languageIDs, ...$columnLanguageIDs];
         }
 
-        if (\in_array(self::MONOLINGUAL, $languageIDs, true) && \count($languageIDs) > 1) {
-            throw new \InvalidArgumentException(
-                'Monolingual values cannot be combined with language specific values.'
-            );
-        }
+        $languageIDs = \array_values(\array_unique($languageIDs));
+        \sort($languageIDs);
 
         return $languageIDs;
     }
