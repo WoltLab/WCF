@@ -18,6 +18,7 @@ use wcf\system\database\table\column\NotNullInt10DatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
 use wcf\system\database\table\column\SmallintDatabaseTableColumn;
 use wcf\system\database\table\column\TextDatabaseTableColumn;
+use wcf\system\database\table\column\VarcharDatabaseTableColumn;
 use wcf\system\database\table\DatabaseTable;
 use wcf\system\database\table\index\DatabaseTableForeignKey;
 use wcf\system\database\table\index\DatabaseTableIndex;
@@ -84,7 +85,8 @@ return [
         ->columns([
             NotNullInt10DatabaseTableColumn::create('questionID'),
             IntDatabaseTableColumn::create('languageID'),
-            NotNullVarchar255DatabaseTableColumn::create('question'),
+            VarcharDatabaseTableColumn::create('question')
+                ->length(255),
             MediumtextDatabaseTableColumn::create('answers'),
         ])
         ->indices([
