@@ -138,7 +138,7 @@ final class L10nStorage
      * deterministic fallback chain: monolingual value, requested language,
      * default language, lowest language id.
      *
-     * @param array<int, string> $values
+     * @param array<int, ?string> $values
      */
     public static function resolveValue(array $values, ?int $languageID = null): string
     {
