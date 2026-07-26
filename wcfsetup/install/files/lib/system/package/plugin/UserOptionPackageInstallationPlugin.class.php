@@ -8,6 +8,7 @@ use wcf\data\option\Option;
 use wcf\data\user\option\category\UserOptionCategory;
 use wcf\data\user\option\category\UserOptionCategoryEditor;
 use wcf\data\user\option\UserOption;
+use wcf\data\user\option\UserOptionBuilder;
 use wcf\data\user\option\UserOptionEditor;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
@@ -210,18 +211,52 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
         // update option
         if (!empty($result['optionID']) && $this->installation->getAction() == 'update') {
             $userOption = new UserOption(null, $result);
-            $userOptionEditor = new UserOptionEditor($userOption);
-            $userOptionEditor->update($data);
+            $builder = UserOptionBuilder::forUpdate($userOption);
+            $this->applyOptionData($builder, $data, $additionalData);
+            $builder->update();
         } // insert new option
         else {
-            // append option name
-            $data['optionName'] = $optionName;
-            // append disabled state
-            $data['isDisabled'] = $isDisabled;
+            $builder = UserOptionBuilder::forCreate()
+                ->setOptionName($optionName)
+                ->setIsDisabled((bool)$isDisabled)
+                ->setPackageID($this->installation->getPackageID());
+            $this->applyOptionData($builder, $data, $additionalData);
+            $builder->create();
+        }
+    }
 
-            // create option
-            $data['packageID'] = $this->installation->getPackageID();
-            UserOptionEditor::create($data);
+    /**
+     * Applies the shared option data to the given builder.
+     *
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $additionalData
+     */
+    private function applyOptionData(UserOptionBuilder $builder, array $data, array $additionalData): void
+    {
+        $builder
+            ->setCategoryName($data['categoryName'])
+            ->setOptionType($data['optionType'])
+            ->setDefaultValue($data['defaultValue'])
+            ->setValidationPattern($data['validationPattern'])
+            ->setSelectOptions($data['selectOptions'])
+            ->setEnableOptions($data['enableOptions'])
+            ->setEditable((int)$data['editable'])
+            ->setVisible((int)$data['visible'])
+            ->setOutputClass($data['outputClass'])
+            ->setShowOrder((int)$data['showOrder'])
+            ->setPermissions($data['permissions'])
+            ->setOptions($data['options'])
+            ->setAdditionalData($additionalData)
+            ->setOriginIsSystem((bool)$data['originIsSystem']);
+
+        if (isset($data['required'])) {
+            $builder->setRequired((bool)$data['required']);
+        }
+        if (isset($data['askDuringRegistration'])) {
+            $builder->setAskDuringRegistration((bool)$data['askDuringRegistration']);
+        }
+        if (isset($data['searchable'])) {
+            $builder->setSearchable((bool)$data['searchable']);
         }
     }
 
