@@ -4,7 +4,7 @@ namespace wcf\acp\form;
 
 use wcf\acp\page\UserOptionListPage;
 use wcf\data\user\option\UserOption;
-use wcf\form\AbstractFormBuilderForm;
+use wcf\form\AbstractDatabaseObjectBuilderForm;
 use wcf\http\Helper;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\interaction\admin\UserOptionInteractions;
@@ -30,7 +30,7 @@ class UserOptionEditForm extends UserOptionAddForm
     /**
      * @inheritDoc
      */
-    public $formAction = 'edit';
+    public string $formAction = 'edit';
 
     #[\Override]
     public function readParameters()
@@ -41,7 +41,7 @@ class UserOptionEditForm extends UserOptionAddForm
     }
 
     #[\Override]
-    public function createForm()
+    protected function createForm(): void
     {
         parent::createForm();
 
@@ -57,7 +57,7 @@ class UserOptionEditForm extends UserOptionAddForm
     }
 
     #[\Override]
-    public function saved()
+    public function saved(): void
     {
         I18nHandler::getInstance()->save(
             'optionName',
@@ -70,7 +70,7 @@ class UserOptionEditForm extends UserOptionAddForm
             'wcf.user.option'
         );
 
-        AbstractFormBuilderForm::saved();
+        AbstractDatabaseObjectBuilderForm::saved();
     }
 
     #[\Override]
