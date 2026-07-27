@@ -215,7 +215,8 @@ class AccountManagementForm extends AbstractForm
             && UserAuthenticationConfigurationFactory::getInstance()->getConfigration()->canChangeUsername
         ) {
             if (\mb_strtolower($this->username) != \mb_strtolower(WCF::getUser()->username)) {
-                if (WCF::getUser()->lastUsernameChange + WCF::getSession()->getPermission('user.profile.renamePeriod') * 86400 > \TIME_NOW) {
+                $lastUsernameChange = WCF::getUser()->lastUsernameChange ?: WCF::getUser()->registrationDate;
+                if ($lastUsernameChange + WCF::getSession()->getPermission('user.profile.renamePeriod') * 86400 > \TIME_NOW) {
                     throw new UserInputException('username', 'alreadyRenamed');
                 }
 
