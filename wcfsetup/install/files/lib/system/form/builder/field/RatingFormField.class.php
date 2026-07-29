@@ -9,9 +9,7 @@ use wcf\system\WCF;
  * Implementation of a form field to set the rating of an object.
  *
  * The minimum and maximum rating are handled via `minimum()` and `maximum()`. Fields of this type
- * must have a minimum value and a maximum value. If no value has been set for a field of this class
- * the the field is not nullable, the minimum value will be automatically set when the field's value
- * is requested the first time.
+ * must have a minimum value and a maximum value.
  *
  * This field uses the `wcf.form.field.rating` language item as the default form field label and has
  * a minimum rating of `1` and a maximum rating of `5`.
@@ -113,7 +111,11 @@ final class RatingFormField extends AbstractFormField implements
     #[\Override]
     public function validate()
     {
-        if ($this->getValue() !== null) {
+        if ($this->getValue() === null) {
+            if ($this->isRequired()) {
+                $this->addValidationError(new FormFieldValidationError('empty'));
+            }
+        } else {
             if ($this->getValue() < $this->getMinimum() || $this->getValue() > $this->getMaximum()) {
                 $this->addValidationError(new FormFieldValidationError(
                     'invalid',
