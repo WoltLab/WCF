@@ -50,6 +50,9 @@ final class ReplaceWithWebpVariant
             $this->file->filename,
         );
 
+        // Make sure the new file name is no longer than 255 characters.
+        $filename = \mb_substr($filename, 0, 250);
+
         return \sprintf(
             "%s.webp",
             $filename,
