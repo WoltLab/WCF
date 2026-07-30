@@ -2,7 +2,7 @@
 
 namespace wcf\data\option;
 
-use wcf\data\DatabaseObject;
+use wcf\data\CollectionDatabaseObject;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\WCF;
@@ -32,11 +32,19 @@ use wcf\util\StringUtil;
  * @property-read   0|1     $supportI18n        is `1` if the option supports different values for all available languages, otherwise `0`
  * @property-read   0|1     $requireI18n        is `1` if `$supportI18n = 1` and the option's value has to explicitly set for all values so that the `monolingual` option is not available, otherwise `0`
  * @property-read   mixed[] $additionalData     array with additional data of the option
+ *
+ * @extends CollectionDatabaseObject<OptionCollection>
  */
-class Option extends DatabaseObject
+class Option extends CollectionDatabaseObject
 {
     use TDatabaseObjectOptions;
     use TDatabaseObjectPermissions;
+
+    #[\Override]
+    public function getCollectionClassName(): string
+    {
+        return OptionCollection::class;
+    }
 
     #[\Override]
     public function __get(string $name)

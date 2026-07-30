@@ -89,14 +89,23 @@ final class L10nStorage
      * id is stored as `NULL`. Combining `MONOLINGUAL` with actual language ids
      * within the same column is invalid.
      *
+     * `$isPristine` marks the written rows as an untouched copy of a language
+     * variable (see `L10nStorage`); it is only meaningful for definitions that
+     * support the synchronization with language variables and is ignored
+     * otherwise.
+     *
      * @param array<string, array<int, string>> $values `columnName => [languageID => value]`
      */
-    public function setValues(int $objectID, array $values): void
+    public function setValues(int $objectID, array $values, bool $isPristine = false): void
     {
         $languageIDs = $this->validateValues($values);
 
-        $columnList = \implode(', ', $this->definition->columnNames);
-        $placeholders = \implode(', ', \array_fill(0, \count($this->definition->columnNames), '?'));
+        $columns = $this->definition->columnNames;
+        if ($this->definition->supportsLanguageItemSync()) {
+            $columns[] = 'isPristine';
+        }
+        $columnList = \implode(', ', $columns);
+        $placeholders = \implode(', ', \array_fill(0, \count($columns), '?'));
 
         $sql = "INSERT INTO {$this->definition->l10nTableName}
                             ({$this->definition->objectColumnName}, languageID, {$columnList})
@@ -113,6 +122,87 @@ final class L10nStorage
             $deleteStatement->execute([$objectID]);
 
             foreach ($languageIDs as $languageID) {
+                $parameters = [
+                    $objectID,
+                    $languageID === self::MONOLINGUAL ? null : $languageID,
+                ];
+                foreach ($this->definition->columnNames as $columnName) {
+                    $parameters[] = $values[$columnName][$languageID] ?? null;
+                }
+                if ($this->definition->supportsLanguageItemSync()) {
+                    $parameters[] = $isPristine ? 1 : 0;
+                }
+
+                $insertStatement->execute($parameters);
+            }
+
+            WCF::getDB()->commitTransaction();
+            $committed = true;
+        } finally {
+            if (!$committed) {
+                WCF::getDB()->rollBackTransaction();
+            }
+        }
+    }
+
+    /**
+     * Synchronizes the given localized values into the table, only writing rows
+     * that are still pristine (`isPristine = 1`) or missing. Rows an
+     * administrator modified (`isPristine = 0`) are preserved. All written rows
+     * are marked pristine.
+     *
+     * Only valid for definitions that support the synchronization with language
+     * variables.
+     *
+     * @param array<string, array<int, string>> $values `columnName => [languageID => value]`
+     */
+    public function syncValues(int $objectID, array $values): void
+    {
+        if (!$this->definition->supportsLanguageItemSync()) {
+            throw new \BadMethodCallException(
+                "The l10n definition of '{$this->definition->l10nTableName}' does not support the synchronization with language variables."
+            );
+        }
+
+        $languageIDs = $this->validateValues($values);
+
+        // determine the language ids that were modified by an administrator and
+        // must not be overwritten by the synchronization
+        $sql = "SELECT  languageID, isPristine
+                FROM    {$this->definition->l10nTableName}
+                WHERE   {$this->definition->objectColumnName} = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([$objectID]);
+        $modifiedLanguageIDs = [];
+        while ($row = $statement->fetchArray()) {
+            if (!$row['isPristine']) {
+                $modifiedLanguageIDs[] = $row['languageID'] === null ? self::MONOLINGUAL : (int)$row['languageID'];
+            }
+        }
+
+        $columnList = \implode(', ', $this->definition->columnNames);
+        $placeholders = \implode(', ', \array_fill(0, \count($this->definition->columnNames), '?'));
+        $sql = "INSERT INTO {$this->definition->l10nTableName}
+                            ({$this->definition->objectColumnName}, languageID, {$columnList}, isPristine)
+                VALUES      (?, ?, {$placeholders}, 1)";
+        $insertStatement = WCF::getDB()->prepare($sql);
+
+        // only the pristine rows are replaced, administrator changes are kept
+        $sql = "DELETE FROM {$this->definition->l10nTableName}
+                WHERE       {$this->definition->objectColumnName} = ?
+                        AND isPristine = ?";
+        $deleteStatement = WCF::getDB()->prepare($sql);
+
+        WCF::getDB()->beginTransaction();
+        $committed = false;
+        try {
+            $deleteStatement->execute([$objectID, 1]);
+
+            foreach ($languageIDs as $languageID) {
+                if (\in_array($languageID, $modifiedLanguageIDs, true)) {
+                    continue;
+                }
+
                 $parameters = [
                     $objectID,
                     $languageID === self::MONOLINGUAL ? null : $languageID,

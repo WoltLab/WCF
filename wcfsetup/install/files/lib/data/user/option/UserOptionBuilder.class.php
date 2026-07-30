@@ -4,15 +4,17 @@ namespace wcf\data\user\option;
 
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
+use wcf\system\l10n\L10nStorage;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
  * Builder for creating, updating and deleting user options.
  *
- * The option's localized name and description are not handled here; they are
- * stored as i18n phrases (`wcf.user.option.<optionName>[.description]`) by the
- * calling form.
+ * The option's localized title and description are stored in the
+ * `wcf1_user_option_l10n` table (see `L10nStorage`). `l10nIdentifier` links a
+ * system option to its language variable; it is `NULL` for options created by
+ * an administrator.
  *
  * @author      Marcel Werk
  * @copyright   2001-2026 WoltLab GmbH
@@ -24,6 +26,43 @@ use wcf\util\StringUtil;
 final class UserOptionBuilder extends DatabaseObjectBuilder
 {
     private bool $isGenericOptionName = false;
+
+    /**
+     * @var array<int, string>
+     */
+    private array $l10nTitle;
+
+    /**
+     * @var array<int, string>
+     */
+    private array $l10nDescription;
+
+    /**
+     * @param array<int, string> $title
+     */
+    public function setL10nTitle(array $title): static
+    {
+        $this->l10nTitle = $title;
+
+        return $this;
+    }
+
+    /**
+     * @param array<int, string> $description
+     */
+    public function setL10nDescription(array $description): static
+    {
+        $this->l10nDescription = $description;
+
+        return $this;
+    }
+
+    public function setL10nIdentifier(?string $l10nIdentifier): static
+    {
+        $this->properties['l10nIdentifier'] = $l10nIdentifier;
+
+        return $this;
+    }
 
     public function setOptionName(string $optionName): static
     {
@@ -232,6 +271,8 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
                 ->setOptionName('option' . $object->optionID)
                 ->update();
         }
+
+        $this->saveL10nValues($object);
     }
 
     #[\Override]
@@ -246,6 +287,33 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
                 UserOptionEditor::getColumnDefinition($object->optionType)
             );
         }
+
+        $this->saveL10nValues($object);
+    }
+
+    /**
+     * Writes the localized title and description into the `*_l10n` table when
+     * they have been set. Both must be provided together because
+     * `L10nStorage::setValues()` replaces all rows of the object.
+     */
+    private function saveL10nValues(UserOption $object): void
+    {
+        if (!isset($this->l10nTitle) && !isset($this->l10nDescription)) {
+            return;
+        }
+        if (!isset($this->l10nTitle) || !isset($this->l10nDescription)) {
+            throw new \BadMethodCallException(
+                "The localized title and description of a user option must be set together."
+            );
+        }
+
+        (new L10nStorage(UserOption::getL10nDefinition()))->setValues(
+            $object->optionID,
+            [
+                'title' => $this->l10nTitle,
+                'description' => $this->l10nDescription,
+            ],
+        );
     }
 
     #[\Override]
