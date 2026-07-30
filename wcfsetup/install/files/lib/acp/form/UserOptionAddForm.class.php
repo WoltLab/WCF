@@ -25,7 +25,6 @@ use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
-use wcf\system\language\I18nHandler;
 use wcf\system\option\user\DateUserOptionOutput;
 use wcf\system\option\user\IUserOptionOutput;
 use wcf\system\option\user\LabeledUrlUserOptionOutput;
@@ -151,26 +150,27 @@ class UserOptionAddForm extends AbstractDatabaseObjectBuilderForm
         $this->form->appendChildren([
             FormContainer::create('general')
                 ->appendChildren([
-                    // The name and description are stored as i18n phrases keyed
-                    // `wcf.user.option.option<optionID>[.description]` and never
-                    // as columns, hence they are persisted in `saved()` and not
-                    // written to the builder.
+                    // The localized title and description are stored in the
+                    // `wcf1_user_option_l10n` table via the builder, not in
+                    // columns of `wcf1_user_option`.
                     TextFormField::create('optionName')
                         ->label('wcf.global.name')
                         ->required()
-                        ->i18n()
-                        ->i18nRequired()
-                        ->languageItemPattern('wcf.user.option.(option\d+|\w+)')
+                        ->l10n()
+                        ->saveValueCallback(static function (UserOptionBuilder $builder, TextFormField $field) {
+                            $builder->setL10nTitle($field->getL10nValues());
+                        })
                         ->loadValueCallback(static function (UserOption $object, IFormField $field) {
-                            $field->value('wcf.user.option.' . $object->optionName);
+                            $field->value($object->getL10nValues('title'));
                         }),
                     MultilineTextFormField::create('optionDescription')
                         ->label('wcf.acp.user.option.description')
-                        ->i18n()
-                        ->i18nRequired()
-                        ->languageItemPattern('wcf.user.option.(option\d+|\w+).description')
+                        ->l10n()
+                        ->saveValueCallback(static function (UserOptionBuilder $builder, MultilineTextFormField $field) {
+                            $builder->setL10nDescription($field->getL10nValues());
+                        })
                         ->loadValueCallback(static function (UserOption $object, IFormField $field) {
-                            $field->value('wcf.user.option.' . $object->optionName . '.description');
+                            $field->value($object->getL10nValues('description'));
                         }),
                     BooleanFormField::create('isDisabled')
                         ->label('wcf.global.button.disable')
@@ -422,25 +422,6 @@ class UserOptionAddForm extends AbstractDatabaseObjectBuilderForm
         $this->additionalFields['additionalData'] = \serialize($additionalData);
 
         parent::save();
-    }
-
-    #[\Override]
-    public function saved(): void
-    {
-        \assert($this->object instanceof UserOption);
-
-        I18nHandler::getInstance()->save(
-            'optionName',
-            'wcf.user.option.option' . $this->object->optionID,
-            'wcf.user.option'
-        );
-        I18nHandler::getInstance()->save(
-            'optionDescription',
-            'wcf.user.option.option' . $this->object->optionID . '.description',
-            'wcf.user.option'
-        );
-
-        parent::saved();
     }
 
     /**

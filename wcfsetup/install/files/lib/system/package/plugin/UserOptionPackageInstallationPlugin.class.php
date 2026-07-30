@@ -208,16 +208,23 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
             $data['searchable'] = \intval($option['searchable']);
         }
 
+        // the localized title/description are shipped as `wcf.user.option.*`
+        // language variables and synchronized into the l10n storage at the end
+        // of the installation, see `SyncL10nLanguageItems`
+        $l10nIdentifier = 'wcf.user.option.' . $optionName;
+
         // update option
         if (!empty($result['optionID']) && $this->installation->getAction() == 'update') {
             $userOption = new UserOption(null, $result);
-            $builder = UserOptionBuilder::forUpdate($userOption);
+            $builder = UserOptionBuilder::forUpdate($userOption)
+                ->setL10nIdentifier($l10nIdentifier);
             $this->applyOptionData($builder, $data, $additionalData);
             $builder->update();
         } // insert new option
         else {
             $builder = UserOptionBuilder::forCreate()
                 ->setOptionName($optionName)
+                ->setL10nIdentifier($l10nIdentifier)
                 ->setIsDisabled((bool)$isDisabled)
                 ->setPackageID($this->installation->getPackageID());
             $this->applyOptionData($builder, $data, $additionalData);
