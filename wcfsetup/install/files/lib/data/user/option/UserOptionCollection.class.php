@@ -2,9 +2,9 @@
 
 namespace wcf\data\user\option;
 
-use wcf\data\DatabaseObject;
 use wcf\data\option\OptionCollection;
-use wcf\system\l10n\L10nStorage;
+use wcf\data\TCollectionL10n;
+use wcf\system\l10n\L10nDefinition;
 
 /**
  * Collection of user options that batch-loads their localized values from the
@@ -17,37 +17,11 @@ use wcf\system\l10n\L10nStorage;
  */
 class UserOptionCollection extends OptionCollection
 {
-    /**
-     * @var array<int, array<string, array<int, string>>>
-     */
-    private array $l10nValues;
+    use TCollectionL10n;
 
-    public function getResolvedL10nValue(DatabaseObject $object, string $columnName): string
+    #[\Override]
+    protected function getL10nDefinition(): L10nDefinition
     {
-        $this->loadL10nValues();
-
-        return L10nStorage::resolveValue($this->l10nValues[$object->getObjectID()][$columnName] ?? []);
-    }
-
-    /**
-     * @return array<int, string>
-     */
-    public function getL10nValues(DatabaseObject $object, string $columnName): array
-    {
-        $this->loadL10nValues();
-
-        return $this->l10nValues[$object->getObjectID()][$columnName] ?? [];
-    }
-
-    private function loadL10nValues(): void
-    {
-        if (isset($this->l10nValues)) {
-            return;
-        }
-
-        $objectIDs = $this->getObjectIDs();
-        $this->l10nValues = $objectIDs === []
-            ? []
-            : (new L10nStorage(UserOption::getL10nDefinition()))->getValuesForObjects($objectIDs);
+        return UserOption::getL10nDefinition();
     }
 }

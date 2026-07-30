@@ -2,10 +2,9 @@
 
 namespace wcf\data\captcha\question;
 
-use wcf\data\captcha\question\CaptchaQuestion;
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectCollection;
-use wcf\system\l10n\L10nStorage;
+use wcf\data\TCollectionL10n;
+use wcf\system\l10n\L10nDefinition;
 
 /**
  * Represents a collection of captcha questions.
@@ -19,36 +18,11 @@ use wcf\system\l10n\L10nStorage;
  */
 class CaptchaQuestionCollection extends DatabaseObjectCollection
 {
-    /**
-     * @var array<int, array<string, array<int, string>>>
-     */
-    private array $l10nValues;
+    use TCollectionL10n;
 
-    public function getResolvedL10nValue(DatabaseObject $object, string $columnName): string
+    #[\Override]
+    protected function getL10nDefinition(): L10nDefinition
     {
-        $this->loadL10nValues();
-
-        return L10nStorage::resolveValue($this->l10nValues[$object->getObjectID()][$columnName] ?? []);
-    }
-
-    /**
-     * @return array<int, string>
-     */
-    public function getL10nValues(DatabaseObject $object, string $columnName): array
-    {
-        $this->loadL10nValues();
-
-        return $this->l10nValues[$object->getObjectID()][$columnName] ?? [];
-    }
-
-    private function loadL10nValues(): void
-    {
-        if (isset($this->l10nValues)) {
-            return;
-        }
-
-        $this->l10nValues = (new L10nStorage(CaptchaQuestion::getL10nDefinition()))->getValuesForObjects(
-            $this->getObjectIDs()
-        );
+        return CaptchaQuestion::getL10nDefinition();
     }
 }
