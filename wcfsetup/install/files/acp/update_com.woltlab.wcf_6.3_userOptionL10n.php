@@ -50,7 +50,6 @@ L10nLanguageItemSync::migrate(
         $identifier = 'wcf.user.option.' . $row['optionName'];
 
         return [
-            'isPristine' => !$adminCreated,
             'sources' => [
                 'title' => new L10nLanguageItemSource(
                     languageItem: $identifier,
