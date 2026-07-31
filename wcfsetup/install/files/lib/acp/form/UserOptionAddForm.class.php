@@ -251,7 +251,7 @@ class UserOptionAddForm extends AbstractDatabaseObjectBuilderForm
                             $builder->setSelectOptions((string)$field->getSaveValue());
                         })
                         ->loadValueCallback(static function (UserOption $object, IFormField $field) {
-                            $field->value($object->selectOptions);
+                            $field->value($object->selectOptions ?? '');
                         })
                         ->addDependency(
                             ValueFormFieldDependency::create('optionType')
@@ -355,7 +355,7 @@ class UserOptionAddForm extends AbstractDatabaseObjectBuilderForm
                             $builder->setValidationPattern((string)$field->getSaveValue());
                         })
                         ->loadValueCallback(static function (UserOption $object, IFormField $field) {
-                            $field->value($object->validationPattern);
+                            $field->value($object->validationPattern ?? '');
                         })
                         ->addDependency(
                             ValueFormFieldDependency::create('validationPatternOptionTypeDependency')
