@@ -24,7 +24,7 @@ use wcf\system\WCF;
  * @property-read   0|1     $searchable         is `1` if the user option can be searched, otherwise `0`
  * @property-read   0|1     $isDisabled         is `1` if the user option is disabled and thus neither shown nor editable, otherwise `0`
  * @property-read   0|1     $originIsSystem     is `1` if the user option was created by the system and not manually by an administrator, otherwise `0`
- * @property-read   string  $labeledUrl         the url, if the option type is `labeledUrl`
+ * @property-read   ?string $labeledUrl         the url, if the option type is `labeledUrl`
  * @property-read   0|1     $showOnUserCard     is `1` if the user option should be displayed on the user card, otherwise `0`
  * @property-read   ?string $l10nIdentifier     base name of the language variable the localized title/description are derived from, `null` for options created by an administrator
  */
