@@ -31,8 +31,7 @@ final class PipSyncedPhrasePreloadListener
 
         if ($event->pluginName === 'file' || $event->pluginName === 'language') {
             foreach ($this->languageFactory->getLanguages() as $language) {
-                $command = new ResetPreloadCache($language);
-                $command();
+                (new ResetPreloadCache($language))();
             }
         }
     }

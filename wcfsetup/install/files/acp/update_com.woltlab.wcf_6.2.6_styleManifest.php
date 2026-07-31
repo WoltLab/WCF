@@ -10,6 +10,5 @@ $styleList->readObjects();
 
 foreach ($styleList->getObjects() as $style) {
     // Regenerate the `manifest.json` for all styles to drop the `start_url`.
-    $command = new CreateManifest($style);
-    $command();
+    (new CreateManifest($style))();
 }

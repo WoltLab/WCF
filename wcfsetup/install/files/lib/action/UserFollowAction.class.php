@@ -57,11 +57,9 @@ final class UserFollowAction implements RequestHandlerInterface
             if ($bodyParameters['action'] === 'follow') {
                 $this->assertUserIsNotIgnored($user);
 
-                $command = new Follow(WCF::getUser(), $user);
-                $command();
+                (new Follow(WCF::getUser(), $user))();
             } else {
-                $command = new Unfollow(WCF::getUser(), $user);
-                $command();
+                (new Unfollow(WCF::getUser(), $user))();
             }
 
             return new EmptyResponse();

@@ -78,8 +78,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
                     $step = $this->executePIP($nodeData);
 
                     if ($nodeData['pluginName'] == 'file') {
-                        $command = new \wcf\command\package\RebuildBootstrapper();
-                        $command();
+                        (new \wcf\command\package\RebuildBootstrapper())();
                     }
                     break;
 
@@ -124,8 +123,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->queue->processNo]);
 
-            $command = new ClearCache();
-            $command();
+            (new ClearCache())();
 
             (new AuditLogger())->log(
                 <<<EOT

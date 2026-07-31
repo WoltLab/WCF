@@ -60,8 +60,7 @@ final class DashboardConfigureAction implements RequestHandlerInterface
 
             $data = $form->getData();
 
-            $command = new ConfigureBoxes($this->dashboard, WCF::getUser(), $data['boxes'] ?? []);
-            $command();
+            (new ConfigureBoxes($this->dashboard, WCF::getUser(), $data['boxes'] ?? []))();
 
             return new JsonResponse([]);
         } else {

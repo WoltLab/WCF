@@ -72,8 +72,7 @@ class BoxHandler extends SingletonFactory
      */
     public function createBoxCondition(string $boxIdentifier, string $conditionDefinition, string $conditionObjectType, array $conditionData)
     {
-        $command = new CreateBoxCondition($boxIdentifier, $conditionDefinition, $conditionObjectType, $conditionData);
-        $command();
+        (new CreateBoxCondition($boxIdentifier, $conditionDefinition, $conditionObjectType, $conditionData))();
     }
 
     /**
@@ -118,8 +117,7 @@ class BoxHandler extends SingletonFactory
      */
     public function addBoxToPageAssignments(string $boxIdentifier, array $pageIdentifiers, bool $visible = true)
     {
-        $command = new CreateBoxToPageAssignments($boxIdentifier, $pageIdentifiers, $visible);
-        $command();
+        (new CreateBoxToPageAssignments($boxIdentifier, $pageIdentifiers, $visible))();
     }
 
     /**

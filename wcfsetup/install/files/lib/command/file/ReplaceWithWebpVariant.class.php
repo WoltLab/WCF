@@ -31,13 +31,12 @@ final class ReplaceWithWebpVariant
             return $this->file;
         }
 
-        $command = new ReplaceFileSource(
+        $newFile = (new ReplaceFileSource(
             $this->file,
             $pathnameWebp,
             $this->getNewFilename(),
             false,
-        );
-        $newFile = $command();
+        ))();
 
         return $newFile;
     }

@@ -122,11 +122,10 @@ final class ModerationQueueAssignUserAction extends AbstractModerationAction
             'other' => new User($data['other']),
         };
 
-        $command = new AssignUser(
+        (new AssignUser(
             $queue,
             $user
-        );
-        $command();
+        ))();
 
         // Reload the moderation queue to fetch the new status.
         $queue = new ModerationQueue($queue->queueID);

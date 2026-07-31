@@ -63,16 +63,14 @@ return new class {
             \wcf\event\package\PackageListChanged::class,
             static function () {
                 foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
-                    $command = new ResetPreloadCache($language);
-                    $command();
+                    (new ResetPreloadCache($language))();
                 }
             }
         );
         $eventHandler->register(
             \wcf\event\language\LanguageImported::class,
             static function (\wcf\event\language\LanguageImported $event) {
-                $command = new ResetPreloadCache($event->language);
-                $command();
+                (new ResetPreloadCache($event->language))();
             }
         );
         $eventHandler->register(

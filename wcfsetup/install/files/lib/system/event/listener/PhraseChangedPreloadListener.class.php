@@ -39,8 +39,7 @@ final class PhraseChangedPreloadListener
         }
 
         if ($resetCache) {
-            $command = new ResetPreloadCache($event->language);
-            $command();
+            (new ResetPreloadCache($event->language))();
         }
     }
 

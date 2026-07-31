@@ -208,8 +208,7 @@ class PackageInstallationDispatcher
 
             VersionTracker::getInstance()->createStorageTables();
 
-            $command = new \wcf\command\package\RebuildBootstrapper();
-            $command();
+            (new \wcf\command\package\RebuildBootstrapper())();
 
             EventHandler::getInstance()->fire(new PackageListChanged());
 
@@ -231,8 +230,7 @@ class PackageInstallationDispatcher
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->queue->processNo]);
 
-            $command = new ClearCache();
-            $command();
+            (new ClearCache())();
 
             $this->logInstallationStep([], 'finished cleanup');
 

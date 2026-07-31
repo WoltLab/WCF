@@ -76,8 +76,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
      */
     public function follow()
     {
-        $command = new Follow(WCF::getUser(), new User($this->parameters['data']['userID']));
-        $command();
+        (new Follow(WCF::getUser(), new User($this->parameters['data']['userID'])))();
 
         return [
             'following' => 1,
@@ -101,8 +100,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
      */
     public function unfollow()
     {
-        $command = new Unfollow(WCF::getUser(), new User($this->parameters['data']['userID']));
-        $command();
+        (new Unfollow(WCF::getUser(), new User($this->parameters['data']['userID'])))();
 
         return [
             'following' => 0,

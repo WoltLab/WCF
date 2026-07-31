@@ -128,14 +128,13 @@ class ContactForm extends AbstractFormBuilderForm
             $optionValues
         );
 
-        $command = new SubmitContactForm(
+        (new SubmitContactForm(
             $recipient,
             $data['name'],
             $data['email'],
             $optionValues,
             $formData['attachments'] ?? []
-        );
-        $command();
+        ))();
 
         $this->saved();
 

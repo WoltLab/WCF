@@ -459,8 +459,7 @@ class RegisterForm extends UserAddForm
             $this->message = 'wcf.user.register.success.awaitActivation';
         }
 
-        $command = new CreateRegistrationNotification($user);
-        $command();
+        (new CreateRegistrationNotification($user))();
 
         if ($this->captchaObjectType) {
             $this->captchaObjectType->getProcessor()->reset();

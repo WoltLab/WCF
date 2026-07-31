@@ -30,8 +30,7 @@ final class CacheClearAction implements RequestHandlerInterface
         if ($request->getMethod() === 'GET') {
             return new TextResponse('Unsupported', 400);
         } elseif ($request->getMethod() === 'POST') {
-            $command = new ClearCache();
-            $command();
+            (new ClearCache())();
 
             return new EmptyResponse();
         } else {
