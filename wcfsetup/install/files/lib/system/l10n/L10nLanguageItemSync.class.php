@@ -31,12 +31,13 @@ final class L10nLanguageItemSync
      * table.
      *
      * `$rowMapper` is called for every row of the primary table and returns
-     * either `null` (skip the row) or an array with the keys `sources`
-     * (`columnName => L10nLanguageItemSource` for every localized column) and
-     * the optional `isPristine` flag (defaults to `false`). Language variables
-     * of sources flagged with `deleteAfterMigration` are removed afterwards.
+     * either `null` (skip the row) or an array with the key `sources`
+     * (`columnName => L10nLanguageItemSource` for every localized column).
+     * Language variables of sources flagged with `deleteAfterMigration` are
+     * removed afterwards. Objects linked to a language variable are seeded as
+     * pristine, everything else is written as owned content (see `L10nStorage`).
      *
-     * @param \Closure(array<string, mixed>): (array{sources: array<string, L10nLanguageItemSource>, isPristine?: bool}|null) $rowMapper
+     * @param \Closure(array<string, mixed>): (array{sources: array<string, L10nLanguageItemSource>}|null) $rowMapper
      */
     public static function migrate(L10nDefinition $definition, \Closure $rowMapper): void
     {
@@ -92,7 +93,17 @@ final class L10nLanguageItemSync
                     $defaultLanguageID
                 );
 
-                $storage->setValues($objectID, $values, $descriptor['isPristine'] ?? false);
+                // Objects linked to a language variable are delivered content
+                // and seeded as pristine so the synchronization keeps them up to
+                // date; everything else is owned by the administrator.
+                $identifier = $definition->supportsLanguageItemSync()
+                    ? ($row[$definition->identifierColumnName] ?? null)
+                    : null;
+                if ($identifier !== null) {
+                    $storage->syncValues($objectID, $values);
+                } else {
+                    $storage->setValues($objectID, $values);
+                }
             }
 
             WCF::getDB()->commitTransaction();

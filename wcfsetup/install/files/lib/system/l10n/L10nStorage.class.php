@@ -89,23 +89,34 @@ final class L10nStorage
      * id is stored as `NULL`. Combining `MONOLINGUAL` with actual language ids
      * within the same column is invalid.
      *
-     * `$isPristine` marks the written rows as an untouched copy of a language
-     * variable (see `L10nStorage`); it is only meaningful for definitions that
-     * support the synchronization with language variables and is ignored
-     * otherwise.
+     * For definitions that support the synchronization with language variables
+     * the `isPristine` flag is maintained automatically: rows of a delivered
+     * object (`identifier IS NOT NULL`) keep the flag for languages whose values
+     * did not change, rows of user-created objects and changed values are
+     * written as modified (`isPristine = 0`).
      *
      * @param array<string, array<int, string>> $values `columnName => [languageID => value]`
      */
-    public function setValues(int $objectID, array $values, bool $isPristine = false): void
+    public function setValues(int $objectID, array $values): void
     {
         $languageIDs = $this->validateValues($values);
 
-        $columns = $this->definition->columnNames;
-        if ($this->definition->supportsLanguageItemSync()) {
-            $columns[] = 'isPristine';
+        $supportsSync = $this->definition->supportsLanguageItemSync();
+        $previousValues = [];
+        $previousPristineLanguageIDs = [];
+        $isDeliveredObject = false;
+        if ($supportsSync) {
+            $previousValues = $this->getValues($objectID);
+            $previousPristineLanguageIDs = $this->getPristineLanguageIDs($objectID);
+            $isDeliveredObject = $this->getIdentifier($objectID) !== null;
         }
-        $columnList = \implode(', ', $columns);
-        $placeholders = \implode(', ', \array_fill(0, \count($columns), '?'));
+
+        $columnList = \implode(', ', $this->definition->columnNames);
+        $placeholders = \implode(', ', \array_fill(0, \count($this->definition->columnNames), '?'));
+        if ($supportsSync) {
+            $columnList .= ', isPristine';
+            $placeholders .= ', ?';
+        }
 
         $sql = "INSERT INTO {$this->definition->l10nTableName}
                             ({$this->definition->objectColumnName}, languageID, {$columnList})
@@ -129,8 +140,14 @@ final class L10nStorage
                 foreach ($this->definition->columnNames as $columnName) {
                     $parameters[] = $values[$columnName][$languageID] ?? null;
                 }
-                if ($this->definition->supportsLanguageItemSync()) {
-                    $parameters[] = $isPristine ? 1 : 0;
+                if ($supportsSync) {
+                    $parameters[] = $this->getPristineFlag(
+                        $languageID,
+                        $values,
+                        $previousValues,
+                        $previousPristineLanguageIDs,
+                        $isDeliveredObject
+                    );
                 }
 
                 $insertStatement->execute($parameters);
@@ -143,6 +160,35 @@ final class L10nStorage
                 WCF::getDB()->rollBackTransaction();
             }
         }
+    }
+
+    /**
+     * Determines the `isPristine` flag of a single row: a delivered object keeps
+     * the flag for a language whose values did not change, everything else is
+     * marked as modified.
+     *
+     * @param array<string, array<int, string>> $values
+     * @param array<string, array<int, string>> $previousValues
+     * @param list<int> $previousPristineLanguageIDs
+     */
+    private function getPristineFlag(
+        int $languageID,
+        array $values,
+        array $previousValues,
+        array $previousPristineLanguageIDs,
+        bool $isDeliveredObject
+    ): int {
+        if (!$isDeliveredObject || !\in_array($languageID, $previousPristineLanguageIDs, true)) {
+            return 0;
+        }
+
+        foreach ($this->definition->columnNames as $columnName) {
+            if (($previousValues[$columnName][$languageID] ?? null) !== ($values[$columnName][$languageID] ?? null)) {
+                return 0;
+            }
+        }
+
+        return 1;
     }
 
     /**
@@ -329,6 +375,43 @@ final class L10nStorage
 
         $languageIDs = \array_values(\array_unique($languageIDs));
         \sort($languageIDs);
+
+        return $languageIDs;
+    }
+
+    /**
+     * Returns the language variable identifier of the given object or `null`
+     * for user-created objects.
+     */
+    private function getIdentifier(int $objectID): ?string
+    {
+        $sql = "SELECT  {$this->definition->identifierColumnName}
+                FROM    {$this->definition->primaryTableName}
+                WHERE   {$this->definition->objectColumnName} = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([$objectID]);
+
+        return $statement->fetchSingleColumn() ?: null;
+    }
+
+    /**
+     * Returns the language ids of the object's rows that are still pristine.
+     *
+     * @return list<int>
+     */
+    private function getPristineLanguageIDs(int $objectID): array
+    {
+        $sql = "SELECT  languageID
+                FROM    {$this->definition->l10nTableName}
+                WHERE   {$this->definition->objectColumnName} = ?
+                    AND isPristine = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([$objectID, 1]);
+
+        $languageIDs = [];
+        while ($row = $statement->fetchArray()) {
+            $languageIDs[] = $row['languageID'] === null ? self::MONOLINGUAL : (int)$row['languageID'];
+        }
 
         return $languageIDs;
     }
