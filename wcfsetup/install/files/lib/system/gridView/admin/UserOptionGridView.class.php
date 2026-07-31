@@ -4,6 +4,7 @@ namespace wcf\system\gridView\admin;
 
 use wcf\acp\form\UserOptionEditForm;
 use wcf\data\DatabaseObject;
+use wcf\data\user\option\L10nUserOptionList;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionList;
 use wcf\event\gridView\admin\UserOptionGridViewInitialized;
@@ -40,21 +41,10 @@ final class UserOptionGridView extends AbstractGridView
                 ->label('wcf.global.objectID')
                 ->renderer(new ObjectIdColumnRenderer())
                 ->sortable(),
-            GridViewColumn::for('optionName')
+            GridViewColumn::for('title')
                 ->label('wcf.global.name')
-                ->sortable()
                 ->titleColumn()
-                ->renderer([
-                    new class extends DefaultColumnRenderer {
-                        #[\Override]
-                        public function render(mixed $value, DatabaseObject $row): string
-                        {
-                            \assert($row instanceof UserOption);
-
-                            return StringUtil::encodeHTML($row->getTitle());
-                        }
-                    }
-                ]),
+                ->sortable(sortByDatabaseColumn: 'title'),
             GridViewColumn::for('categoryName')
                 ->label('wcf.global.category')
                 ->sortable()
@@ -107,7 +97,7 @@ final class UserOptionGridView extends AbstractGridView
     #[\Override]
     protected function createObjectList(): UserOptionList
     {
-        $list = new UserOptionList();
+        $list = new L10nUserOptionList();
         $list->getConditionBuilder()->add(
             "option_table.categoryName IN (
                 SELECT  categoryName
