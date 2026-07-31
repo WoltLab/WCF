@@ -228,7 +228,7 @@ class UserOptionAddForm extends AbstractDatabaseObjectBuilderForm
                         ->description('wcf.acp.user.option.defaultValue.description')
                         ->addFieldClass('long')
                         ->loadValueCallback(static function (UserOption $object, IFormField $field) {
-                            $field->value($object->defaultValue);
+                            $field->value($object->defaultValue ?? '');
                         })
                         ->saveValueCallback(static function (UserOptionBuilder $builder, IFormField $field) {
                             // type-cast the default value
@@ -279,7 +279,7 @@ class UserOptionAddForm extends AbstractDatabaseObjectBuilderForm
                             $builder->setLabeledUrl((string)$field->getSaveValue());
                         })
                         ->loadValueCallback(static function (UserOption $object, IFormField $field) {
-                            $field->value($object->labeledUrl);
+                            $field->value($object->labeledUrl ?? '');
                         })
                         ->addDependency(
                             ValueFormFieldDependency::create('optionType')
