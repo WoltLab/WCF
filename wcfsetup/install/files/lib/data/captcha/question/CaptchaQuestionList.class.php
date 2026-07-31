@@ -13,4 +13,10 @@ use wcf\data\DatabaseObjectList;
  *
  * @extends DatabaseObjectList<CaptchaQuestion>
  */
-class CaptchaQuestionList extends DatabaseObjectList {}
+class CaptchaQuestionList extends DatabaseObjectList
+{
+    /**
+     * @inheritDoc
+     */
+    public $className = CaptchaQuestion::class;
+}
