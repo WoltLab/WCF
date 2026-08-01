@@ -3,8 +3,8 @@
 namespace wcf\acp\page;
 
 use wcf\data\devtools\project\DevtoolsProject;
+use wcf\http\Helper;
 use wcf\page\AbstractPage;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
 
 /**
@@ -38,24 +38,12 @@ class DevtoolsProjectPipListPage extends AbstractPage
      */
     public $project;
 
-    /**
-     * project id
-     * @var int
-     */
-    public $projectID = 0;
-
     #[\Override]
     public function readParameters()
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->projectID = \intval($_REQUEST['id']);
-        }
-        $this->project = new DevtoolsProject($this->projectID);
-        if ($this->project->isNil()) {
-            throw new IllegalLinkException();
-        }
+        $this->project = Helper::fetchObjectFromQueryParameter(DevtoolsProject::class);
     }
 
     #[\Override]

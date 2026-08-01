@@ -6,6 +6,7 @@ use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentEditor;
+use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
@@ -27,12 +28,6 @@ class AttachmentPage extends AbstractPage
      * @inheritDoc
      */
     public $useTemplate = false;
-
-    /**
-     * attachment id
-     * @var int
-     */
-    public $attachmentID = 0;
 
     /**
      * attachment object
@@ -88,13 +83,7 @@ class AttachmentPage extends AbstractPage
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->attachmentID = \intval($_REQUEST['id']);
-        }
-        $this->attachment = new Attachment($this->attachmentID);
-        if ($this->attachment->isNil()) {
-            throw new IllegalLinkException();
-        }
+        $this->attachment = Helper::fetchObjectFromQueryParameter(Attachment::class);
 
         $parameters = ['object' => $this->attachment];
         if (isset($_REQUEST['tiny']) && $this->attachment->tinyThumbnailType) {
@@ -154,17 +143,17 @@ class AttachmentPage extends AbstractPage
             $mimeType = $this->attachment->tinyThumbnailType;
             $filesize = $this->attachment->tinyThumbnailSize;
             $location = $this->attachment->getTinyThumbnailLocation();
-            $this->eTag = 'TINY_' . $this->attachmentID;
+            $this->eTag = 'TINY_' . $this->attachment->attachmentID;
         } elseif ($this->thumbnail) {
             $mimeType = $this->attachment->thumbnailType;
             $filesize = $this->attachment->thumbnailSize;
             $location = $this->attachment->getThumbnailLocation();
-            $this->eTag = 'THUMB_' . $this->attachmentID;
+            $this->eTag = 'THUMB_' . $this->attachment->attachmentID;
         } else {
             $mimeType = $this->attachment->fileType;
             $filesize = $this->attachment->filesize;
             $location = $this->attachment->getLocation();
-            $this->eTag = (string)$this->attachmentID;
+            $this->eTag = (string)$this->attachment->attachmentID;
         }
 
         // unsaved attachments may be cached by the browser for up to 5 minutes only

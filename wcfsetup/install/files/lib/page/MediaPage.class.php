@@ -5,6 +5,7 @@ namespace wcf\page;
 use Laminas\Diactoros\Response\EmptyResponse;
 use wcf\data\media\Media;
 use wcf\data\media\MediaEditor;
+use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\util\FileReader;
@@ -38,12 +39,6 @@ class MediaPage extends AbstractPage
      * @var Media
      */
     public $media;
-
-    /**
-     * id of the requested media file
-     * @var int
-     */
-    public $mediaID = 0;
 
     /**
      * size of the requested thumbnail
@@ -80,12 +75,12 @@ class MediaPage extends AbstractPage
             $mimeType = $this->media->{$this->thumbnail . 'ThumbnailType'};
             $filesize = $this->media->{$this->thumbnail . 'ThumbnailSize'};
             $location = $this->media->getThumbnailLocation($this->thumbnail);
-            $this->eTag = \strtoupper($this->thumbnail) . '_' . $this->mediaID;
+            $this->eTag = \strtoupper($this->thumbnail) . '_' . $this->media->mediaID;
         } else {
             $mimeType = $this->media->fileType;
             $filesize = $this->media->filesize;
             $location = $this->media->getLocation();
-            $this->eTag = (string)$this->mediaID;
+            $this->eTag = (string)$this->media->mediaID;
         }
 
         $this->eTag .= '_' . $this->media->fileHash;
@@ -113,13 +108,7 @@ class MediaPage extends AbstractPage
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->mediaID = \intval($_REQUEST['id']);
-        }
-        $this->media = new Media($this->mediaID);
-        if ($this->media->isNil()) {
-            throw new IllegalLinkException();
-        }
+        $this->media = Helper::fetchObjectFromQueryParameter(Media::class);
         if (!$this->media->isAccessible()) {
             throw new PermissionDeniedException();
         }

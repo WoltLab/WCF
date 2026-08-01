@@ -6,8 +6,8 @@ use wcf\acp\page\UserGroupAssignmentListPage;
 use wcf\data\user\group\assignment\UserGroupAssignment;
 use wcf\data\user\group\assignment\UserGroupAssignmentAction;
 use wcf\form\AbstractForm;
+use wcf\http\Helper;
 use wcf\system\condition\ConditionHandler;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\interaction\admin\UserGroupAssignmentInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\request\LinkHandler;
@@ -32,12 +32,6 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm
      * @var UserGroupAssignment
      */
     public $assignment;
-
-    /**
-     * id of the edited automatic user group assignment
-     * @var int
-     */
-    public $assignmentID = 0;
 
     #[\Override]
     public function assignVariables()
@@ -76,13 +70,7 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->assignmentID = \intval($_REQUEST['id']);
-        }
-        $this->assignment = new UserGroupAssignment($this->assignmentID);
-        if ($this->assignment->isNil()) {
-            throw new IllegalLinkException();
-        }
+        $this->assignment = Helper::fetchObjectFromQueryParameter(UserGroupAssignment::class);
     }
 
     #[\Override]

@@ -6,6 +6,7 @@ use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\group\TemplateGroupList;
 use wcf\data\template\Template;
 use wcf\data\template\TemplateList;
+use wcf\http\Helper;
 use wcf\page\AbstractPage;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
@@ -25,12 +26,6 @@ class TemplateDiffPage extends AbstractPage
      * @inheritDoc
      */
     public $activeMenuItem = 'wcf.acp.menu.link.template';
-
-    /**
-     * template id
-     * @var int
-     */
-    public $templateID = 0;
 
     /**
      * template object
@@ -67,13 +62,7 @@ class TemplateDiffPage extends AbstractPage
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->templateID = \intval($_REQUEST['id']);
-        }
-        $this->template = new Template($this->templateID);
-        if ($this->template->isNil()) {
-            throw new IllegalLinkException();
-        }
+        $this->template = Helper::fetchObjectFromQueryParameter(Template::class);
         if (isset($_REQUEST['parentID'])) {
             $this->parentID = \intval($_REQUEST['parentID']);
         }
@@ -142,7 +131,7 @@ class TemplateDiffPage extends AbstractPage
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'templateID' => $this->templateID,
+            'templateID' => $this->template->templateID,
             'template' => $this->template,
             'parentID' => $this->parentID,
             'parent' => $this->parent,

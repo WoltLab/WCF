@@ -4,7 +4,7 @@ namespace wcf\acp\form;
 
 use wcf\acp\page\ReactionTypeListPage;
 use wcf\data\reaction\type\ReactionType;
-use wcf\system\exception\IllegalLinkException;
+use wcf\http\Helper;
 use wcf\system\interaction\admin\ReactionTypeInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\request\LinkHandler;
@@ -35,14 +35,7 @@ class ReactionTypeEditForm extends ReactionTypeAddForm
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->formObject = new ReactionType($_REQUEST['id']);
-            if (!$this->formObject->reactionTypeID) {
-                throw new IllegalLinkException();
-            }
-        } else {
-            throw new IllegalLinkException();
-        }
+        $this->formObject = Helper::fetchObjectFromQueryParameter(ReactionType::class);
     }
 
     #[\Override]

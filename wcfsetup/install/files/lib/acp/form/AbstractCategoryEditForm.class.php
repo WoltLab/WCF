@@ -6,6 +6,7 @@ use wcf\data\category\Category;
 use wcf\data\category\CategoryAction;
 use wcf\data\category\CategoryNodeTree;
 use wcf\form\AbstractForm;
+use wcf\http\Helper;
 use wcf\system\acl\ACLHandler;
 use wcf\system\category\CategoryHandler;
 use wcf\system\category\CategoryPermissionHandler;
@@ -31,12 +32,6 @@ abstract class AbstractCategoryEditForm extends AbstractCategoryAddForm
      * @var Category
      */
     public $category;
-
-    /**
-     * id of the edited category
-     * @var int
-     */
-    public $categoryID = 0;
 
     /**
      * @inheritDoc
@@ -86,13 +81,7 @@ abstract class AbstractCategoryEditForm extends AbstractCategoryAddForm
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->categoryID = \intval($_REQUEST['id']);
-        }
-        $this->category = new Category($this->categoryID);
-        if ($this->category->isNil()) {
-            throw new IllegalLinkException();
-        }
+        $this->category = Helper::fetchObjectFromQueryParameter(Category::class);
     }
 
     #[\Override]
@@ -199,7 +188,7 @@ abstract class AbstractCategoryEditForm extends AbstractCategoryAddForm
 
         // check if new parent category is no child category of the category
         $childCategories = CategoryHandler::getInstance()->getChildCategories(
-            $this->categoryID,
+            $this->category->categoryID,
             $this->objectType->objectTypeID
         );
         if (isset($childCategories[$this->parentCategoryID])) {

@@ -7,7 +7,7 @@ use wcf\data\bbcode\attribute\BBCodeAttributeAction;
 use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeAction;
 use wcf\form\AbstractForm;
-use wcf\system\exception\IllegalLinkException;
+use wcf\http\Helper;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 
@@ -29,12 +29,6 @@ class BBCodeEditForm extends BBCodeAddForm
      * @inheritDoc
      */
     public $neededPermissions = ['admin.content.bbcode.canManageBBCode'];
-
-    /**
-     * bbcode id
-     * @var int
-     */
-    public $bbcodeID = 0;
 
     /**
      * bbcode object
@@ -69,13 +63,7 @@ class BBCodeEditForm extends BBCodeAddForm
     {
         AbstractForm::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->bbcodeID = \intval($_REQUEST['id']);
-        }
-        $this->bbcode = new BBCode($this->bbcodeID);
-        if ($this->bbcode->isNil()) {
-            throw new IllegalLinkException();
-        }
+        $this->bbcode = Helper::fetchObjectFromQueryParameter(BBCode::class);
 
         if (!\in_array($this->bbcode->bbcodeTag, self::$nativeBBCodes)) {
             I18nHandler::getInstance()->register('buttonLabel');
@@ -114,7 +102,7 @@ class BBCodeEditForm extends BBCodeAddForm
         }
 
         // update bbcode
-        $this->objectAction = new BBCodeAction([$this->bbcodeID], 'update', [
+        $this->objectAction = new BBCodeAction([$this->bbcode], 'update', [
             'data' => \array_merge($this->additionalFields, [
                 'bbcodeTag' => $this->bbcodeTag,
                 'buttonLabel' => $this->buttonLabel,
@@ -133,12 +121,12 @@ class BBCodeEditForm extends BBCodeAddForm
         $sql = "DELETE FROM wcf1_bbcode_attribute
                 WHERE       bbcodeID = ?";
         $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([$this->bbcodeID]);
+        $statement->execute([$this->bbcode->bbcodeID]);
 
         foreach ($this->attributes as $attribute) {
             $attributeAction = new BBCodeAttributeAction([], 'create', [
                 'data' => [
-                    'bbcodeID' => $this->bbcodeID,
+                    'bbcodeID' => $this->bbcode->bbcodeID,
                     'attributeNo' => $attribute->attributeNo,
                     'attributeHtml' => $attribute->attributeHtml,
                     'validationPattern' => $attribute->validationPattern,

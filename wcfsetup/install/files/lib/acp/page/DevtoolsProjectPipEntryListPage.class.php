@@ -3,6 +3,7 @@
 namespace wcf\acp\page;
 
 use wcf\data\devtools\project\DevtoolsProject;
+use wcf\http\Helper;
 use wcf\page\AbstractPage;
 use wcf\system\devtools\pip\DevtoolsPip;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
@@ -115,12 +116,6 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage
     public $project;
 
     /**
-     * project id
-     * @var int
-     */
-    public $projectID = 0;
-
-    /**
      * indicates the range of the listed items
      * @var int
      */
@@ -131,13 +126,7 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->projectID = \intval($_REQUEST['id']);
-        }
-        $this->project = new DevtoolsProject($this->projectID);
-        if ($this->project->isNil()) {
-            throw new IllegalLinkException();
-        }
+        $this->project = Helper::fetchObjectFromQueryParameter(DevtoolsProject::class);
 
         if ($this->project->validatePackageXml() !== '') {
             throw new IllegalLinkException();

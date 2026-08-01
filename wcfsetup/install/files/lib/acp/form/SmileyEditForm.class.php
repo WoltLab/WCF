@@ -6,7 +6,7 @@ use wcf\acp\page\SmileyListPage;
 use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyAction;
 use wcf\form\AbstractForm;
-use wcf\system\exception\IllegalLinkException;
+use wcf\http\Helper;
 use wcf\system\interaction\admin\SmileyInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\language\I18nHandler;
@@ -33,12 +33,6 @@ class SmileyEditForm extends SmileyAddForm
     public $neededPermissions = ['admin.content.smiley.canManageSmiley'];
 
     /**
-     * smiley id
-     * @var int
-     */
-    public $smileyID = 0;
-
-    /**
      * smiley object
      * @var Smiley
      */
@@ -49,13 +43,7 @@ class SmileyEditForm extends SmileyAddForm
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->smileyID = \intval($_REQUEST['id']);
-        }
-        $this->smiley = new Smiley($this->smileyID);
-        if ($this->smiley->isNil()) {
-            throw new IllegalLinkException();
-        }
+        $this->smiley = Helper::fetchObjectFromQueryParameter(Smiley::class);
     }
 
     #[\Override]
@@ -72,7 +60,7 @@ class SmileyEditForm extends SmileyAddForm
         }
 
         // update bbcode
-        $this->objectAction = new SmileyAction([$this->smileyID], 'update', [
+        $this->objectAction = new SmileyAction([$this->smiley], 'update', [
             'data' => \array_merge($this->additionalFields, [
                 'smileyTitle' => $this->smileyTitle,
                 'smileyCode' => $this->smileyCode,

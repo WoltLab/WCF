@@ -8,7 +8,7 @@ use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\notification\UserNotification;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
-use wcf\system\exception\IllegalLinkException;
+use wcf\http\Helper;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\user\notification\event\IUserNotificationEvent;
 use wcf\system\user\notification\UserNotificationHandler;
@@ -34,25 +34,12 @@ final class NotificationConfirmAction extends AbstractAction
      */
     public $notification;
 
-    /**
-     * user notification id
-     * @var int
-     */
-    public $notificationID = 0;
-
     #[\Override]
     public function readParameters()
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->notificationID = \intval($_REQUEST['id']);
-        }
-
-        $this->notification = new UserNotification($this->notificationID);
-        if ($this->notification->isNil()) {
-            throw new IllegalLinkException();
-        }
+        $this->notification = Helper::fetchObjectFromQueryParameter(UserNotification::class);
 
         if ($this->notification->userID != WCF::getUser()->userID) {
             throw new PermissionDeniedException();

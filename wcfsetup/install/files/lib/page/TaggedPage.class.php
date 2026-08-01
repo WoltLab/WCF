@@ -8,6 +8,7 @@ use wcf\data\DatabaseObjectList;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\tag\Tag;
+use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\request\LinkHandler;
 use wcf\system\tagging\ITaggedListViewProvider;
@@ -44,12 +45,6 @@ class TaggedPage extends MultipleLinkPage
     public $neededPermissions = ['user.tag.canViewTag'];
 
     /**
-     * tag id
-     * @var int
-     */
-    public $tagID = 0;
-
-    /**
      * tag object
      * @var Tag
      */
@@ -78,14 +73,7 @@ class TaggedPage extends MultipleLinkPage
     {
         parent::readParameters();
 
-        // get tag id
-        if (isset($_REQUEST['id'])) {
-            $this->tagID = \intval($_REQUEST['id']);
-        }
-        $this->tag = new Tag($this->tagID);
-        if ($this->tag->isNil()) {
-            throw new IllegalLinkException();
-        }
+        $this->tag = Helper::fetchObjectFromQueryParameter(Tag::class);
 
         // filter taggable object types by options and permissions
         $this->availableObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.tagging.taggableObject');
@@ -125,7 +113,7 @@ class TaggedPage extends MultipleLinkPage
             return new RedirectResponse(
                 LinkHandler::getInstance()->getControllerLink(TaggedListViewPage::class, [
                     'objectType' => $this->objectType->objectType,
-                    'tagIDs' => [$this->tagID],
+                    'tagIDs' => [$this->tag->tagID],
                 ]),
             );
         }
@@ -199,7 +187,7 @@ class TaggedPage extends MultipleLinkPage
                     $controller,
                     [
                         'objectType' => $objectType->objectType,
-                        'tagIDs' => [$this->tagID]
+                        'tagIDs' => [$this->tag->tagID]
                     ]
                 ),
                 'items' => $items,
@@ -214,7 +202,7 @@ class TaggedPage extends MultipleLinkPage
         foreach ($this->availableObjectTypes as $key => $objectType) {
             $processor = $objectType->getProcessor();
             if ($processor instanceof ITaggedListViewProvider) {
-                $this->itemsPerType[$key] = $processor->getListView([$this->tagID])->countItems();
+                $this->itemsPerType[$key] = $processor->getListView([$this->tag->tagID])->countItems();
             } else {
                 $objectList = $processor->getObjectList($this->tag);
                 \assert($objectList instanceof DatabaseObjectList);

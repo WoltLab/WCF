@@ -6,8 +6,8 @@ use wcf\acp\page\AdListPage;
 use wcf\data\ad\Ad;
 use wcf\data\ad\AdAction;
 use wcf\form\AbstractForm;
+use wcf\http\Helper;
 use wcf\system\condition\ConditionHandler;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\interaction\admin\AdInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\request\LinkHandler;
@@ -26,12 +26,6 @@ class AdEditForm extends AdAddForm
      * @inheritDoc
      */
     public $activeMenuItem = 'wcf.acp.menu.link.ad.list';
-
-    /**
-     * id of the edited ad
-     * @var int
-     */
-    public $adID = 0;
 
     /**
      * edited ad object
@@ -100,13 +94,7 @@ class AdEditForm extends AdAddForm
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->adID = \intval($_REQUEST['id']);
-        }
-        $this->adObject = new Ad($this->adID);
-        if (!$this->adObject->adID) {
-            throw new IllegalLinkException();
-        }
+        $this->adObject = Helper::fetchObjectFromQueryParameter(Ad::class);
     }
 
     #[\Override]

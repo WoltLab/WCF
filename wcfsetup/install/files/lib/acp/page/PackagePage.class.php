@@ -3,8 +3,8 @@
 namespace wcf\acp\page;
 
 use wcf\data\package\Package;
+use wcf\http\Helper;
 use wcf\page\AbstractPage;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\gridView\admin\DependentPackageGridView;
 use wcf\system\gridView\admin\RequiredPackageGridView;
 use wcf\system\interaction\admin\PackageInteractions;
@@ -35,12 +35,6 @@ class PackagePage extends AbstractPage
     ];
 
     /**
-     * id of the package
-     * @var int
-     */
-    public $packageID = 0;
-
-    /**
      * package object
      * @var Package
      */
@@ -60,13 +54,7 @@ class PackagePage extends AbstractPage
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->packageID = \intval($_REQUEST['id']);
-        }
-        $this->package = new Package($this->packageID);
-        if ($this->package->isNil()) {
-            throw new IllegalLinkException();
-        }
+        $this->package = Helper::fetchObjectFromQueryParameter(Package::class);
     }
 
     #[\Override]
@@ -82,8 +70,8 @@ class PackagePage extends AbstractPage
         $statement->execute([$this->package->package]);
         $this->pluginStoreFileID = \intval($statement->fetchSingleColumn());
 
-        $this->requiredPackageGridView = new RequiredPackageGridView($this->packageID);
-        $this->dependentPackageGridView = new DependentPackageGridView($this->packageID);
+        $this->requiredPackageGridView = new RequiredPackageGridView($this->package->packageID);
+        $this->dependentPackageGridView = new DependentPackageGridView($this->package->packageID);
     }
 
     #[\Override]

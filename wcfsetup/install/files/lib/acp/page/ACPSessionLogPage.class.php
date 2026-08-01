@@ -3,8 +3,8 @@
 namespace wcf\acp\page;
 
 use wcf\data\acp\session\log\ACPSessionLog;
+use wcf\http\Helper;
 use wcf\page\AbstractGridViewPage;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\gridView\admin\ACPSessionGridView;
 use wcf\system\WCF;
 
@@ -41,14 +41,7 @@ final class ACPSessionLogPage extends AbstractGridViewPage
     {
         parent::readParameters();
 
-        // get session log
-        if (!isset($_REQUEST['id'])) {
-            throw new IllegalLinkException();
-        }
-        $this->sessionLog = new ACPSessionLog(\intval($_REQUEST['id']));
-        if ($this->sessionLog->isNil()) {
-            throw new IllegalLinkException();
-        }
+        $this->sessionLog = Helper::fetchObjectFromQueryParameter(ACPSessionLog::class);
     }
 
     #[\Override]

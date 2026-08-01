@@ -4,6 +4,7 @@ namespace wcf\acp\form;
 
 use wcf\data\option\category\OptionCategory;
 use wcf\data\option\OptionAction;
+use wcf\http\Helper;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\ApiEndpointCacheBuilder;
 use wcf\system\exception\IllegalLinkException;
@@ -31,12 +32,6 @@ class OptionForm extends AbstractOptionListForm
     public $category;
 
     /**
-     * category id
-     * @var int
-     */
-    public $categoryID = 0;
-
-    /**
      * the option tree
      * @var mixed[]
      */
@@ -50,13 +45,7 @@ class OptionForm extends AbstractOptionListForm
     #[\Override]
     public function readParameters()
     {
-        if (isset($_REQUEST['id'])) {
-            $this->categoryID = \intval($_REQUEST['id']);
-        }
-        $this->category = new OptionCategory($this->categoryID);
-        if ($this->category->isNil()) {
-            throw new IllegalLinkException();
-        }
+        $this->category = Helper::fetchObjectFromQueryParameter(OptionCategory::class);
         $this->categoryName = $this->category->categoryName;
 
         parent::readParameters();

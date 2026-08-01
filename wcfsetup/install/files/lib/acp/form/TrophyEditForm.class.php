@@ -6,9 +6,9 @@ use wcf\acp\page\TrophyListPage;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyAction;
 use wcf\data\user\UserAction;
+use wcf\http\Helper;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\interaction\admin\TrophyInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
@@ -38,12 +38,6 @@ class TrophyEditForm extends TrophyAddForm
     public $action = 'edit';
 
     /**
-     * trophy id
-     * @var int
-     */
-    public $trophyID = 0;
-
-    /**
      * trophy object
      * @var Trophy
      */
@@ -52,14 +46,7 @@ class TrophyEditForm extends TrophyAddForm
     #[\Override]
     public function readParameters()
     {
-        if (!empty($_REQUEST['id'])) {
-            $this->trophyID = \intval($_REQUEST['id']);
-        }
-        $this->trophy = new Trophy($this->trophyID);
-
-        if ($this->trophy->isNil()) {
-            throw new IllegalLinkException();
-        }
+        $this->trophy = Helper::fetchObjectFromQueryParameter(Trophy::class);
 
         parent::readParameters();
     }
@@ -207,7 +194,7 @@ class TrophyEditForm extends TrophyAddForm
             $sql = "DELETE FROM wcf1_user_special_trophy
                     WHERE       trophyID = ?";
             $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$this->trophyID]);
+            $statement->execute([$this->trophy->trophyID]);
 
             UserStorageHandler::getInstance()->resetAll('specialTrophies');
         }
@@ -215,7 +202,7 @@ class TrophyEditForm extends TrophyAddForm
         if ($this->isDisabled != $this->trophy->isDisabled) {
             // update trophy points
             $conditionBuilder = new PreparedStatementConditionBuilder();
-            $conditionBuilder->add('trophyID = ?', [$this->trophyID]);
+            $conditionBuilder->add('trophyID = ?', [$this->trophy->trophyID]);
             $sql = "SELECT      COUNT(*) as count, userID
                     FROM        wcf1_user_trophy
                     " . $conditionBuilder . "

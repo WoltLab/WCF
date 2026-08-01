@@ -6,8 +6,8 @@ use wcf\acp\page\NoticeListPage;
 use wcf\data\notice\Notice;
 use wcf\data\notice\NoticeAction;
 use wcf\form\AbstractForm;
+use wcf\http\Helper;
 use wcf\system\condition\ConditionHandler;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\interaction\admin\NoticeInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\language\I18nHandler;
@@ -34,12 +34,6 @@ class NoticeEditForm extends NoticeAddForm
      * @var Notice
      */
     public $notice;
-
-    /**
-     * id of the edited notice object
-     * @var int
-     */
-    public $noticeID = 0;
 
     /**
      * 1 if the notice will be displayed for all users again
@@ -123,13 +117,7 @@ class NoticeEditForm extends NoticeAddForm
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->noticeID = \intval($_REQUEST['id']);
-        }
-        $this->notice = new Notice($this->noticeID);
-        if ($this->notice->isNil()) {
-            throw new IllegalLinkException();
-        }
+        $this->notice = Helper::fetchObjectFromQueryParameter(Notice::class);
     }
 
     #[\Override]
@@ -197,7 +185,7 @@ class NoticeEditForm extends NoticeAddForm
         $this->saved();
 
         // reload notice object for proper 'isDismissible' value
-        $this->notice = new Notice($this->noticeID);
+        $this->notice = new Notice($this->notice->noticeID);
 
         WCF::getTPL()->assign('success', true);
     }

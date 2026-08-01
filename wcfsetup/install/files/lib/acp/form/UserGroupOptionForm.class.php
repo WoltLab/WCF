@@ -8,8 +8,8 @@ use wcf\data\user\group\option\UserGroupOption;
 use wcf\data\user\group\option\UserGroupOptionAction;
 use wcf\data\user\group\UserGroup;
 use wcf\form\AbstractForm;
+use wcf\http\Helper;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
@@ -72,24 +72,12 @@ class UserGroupOptionForm extends AbstractForm
      */
     public $userGroupOption;
 
-    /**
-     * user group option id
-     * @var int
-     */
-    public $userGroupOptionID = 0;
-
     #[\Override]
     public function readParameters()
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->userGroupOptionID = \intval($_REQUEST['id']);
-        }
-        $this->userGroupOption = new UserGroupOption($this->userGroupOptionID);
-        if (!$this->userGroupOption->optionID) {
-            throw new IllegalLinkException();
-        }
+        $this->userGroupOption = Helper::fetchObjectFromQueryParameter(UserGroupOption::class);
 
         // verify options and permissions for current option
         if ($this->userGroupOption->validateOptions() && $this->userGroupOption->validatePermissions()) {

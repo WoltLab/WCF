@@ -25,7 +25,7 @@
 
 {include file='shared_formError'}
 
-<form method="post" action="{link controller='TemplateDiff'}{/link}">
+<form method="post" action="{link controller='TemplateDiff' id=$templateID}{/link}">
 	<section class="section">
 		<h2 class="sectionTitle">{lang}wcf.acp.template.group{/lang}</h2>
 		

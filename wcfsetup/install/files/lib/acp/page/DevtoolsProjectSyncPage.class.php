@@ -3,8 +3,8 @@
 namespace wcf\acp\page;
 
 use wcf\data\devtools\project\DevtoolsProject;
+use wcf\http\Helper;
 use wcf\page\AbstractPage;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
 
 /**
@@ -32,12 +32,6 @@ class DevtoolsProjectSyncPage extends AbstractPage
     public $neededPermissions = ['admin.configuration.package.canInstallPackage'];
 
     /**
-     * project id
-     * @var int
-     */
-    public $objectID = 0;
-
-    /**
      * devtools project
      * @var DevtoolsProject
      */
@@ -48,13 +42,7 @@ class DevtoolsProjectSyncPage extends AbstractPage
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->objectID = \intval($_REQUEST['id']);
-        }
-        $this->object = new DevtoolsProject($this->objectID);
-        if (!$this->object->projectID) {
-            throw new IllegalLinkException();
-        }
+        $this->object = Helper::fetchObjectFromQueryParameter(DevtoolsProject::class);
     }
 
     #[\Override]
@@ -63,7 +51,7 @@ class DevtoolsProjectSyncPage extends AbstractPage
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'objectID' => $this->objectID,
+            'objectID' => $this->object->projectID,
             'object' => $this->object,
             'project' => $this->object,
         ]);

@@ -5,6 +5,7 @@ namespace wcf\acp\form;
 use wcf\data\devtools\project\DevtoolsProject;
 use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
+use wcf\http\Helper;
 use wcf\system\devtools\pip\DevtoolsPip;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\event\EventHandler;
@@ -60,12 +61,6 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm
     public $project;
 
     /**
-     * project id
-     * @var int
-     */
-    public $projectID = 0;
-
-    /**
      * devtools pip object for the requested pip
      * @var DevtoolsPip
      */
@@ -76,13 +71,7 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->projectID = \intval($_REQUEST['id']);
-        }
-        $this->project = new DevtoolsProject($this->projectID);
-        if ($this->project->isNil()) {
-            throw new IllegalLinkException();
-        }
+        $this->project = Helper::fetchObjectFromQueryParameter(DevtoolsProject::class);
 
         if ($this->project->validatePackageXml() !== '') {
             throw new IllegalLinkException();

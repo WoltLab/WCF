@@ -4,7 +4,7 @@ namespace wcf\acp\form;
 
 use wcf\acp\page\ContactRecipientListPage;
 use wcf\data\contact\recipient\ContactRecipient;
-use wcf\system\exception\IllegalLinkException;
+use wcf\http\Helper;
 use wcf\system\interaction\admin\ContactRecipientInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\request\LinkHandler;
@@ -44,14 +44,7 @@ class ContactRecipientEditForm extends ContactRecipientAddForm
     {
         parent::readParameters();
 
-        if (!isset($_REQUEST['id'])) {
-            throw new IllegalLinkException();
-        }
-
-        $this->formObject = new ContactRecipient(\intval($_REQUEST['id']));
-        if (!$this->formObject->recipientID) {
-            throw new IllegalLinkException();
-        }
+        $this->formObject = Helper::fetchObjectFromQueryParameter(ContactRecipient::class);
     }
 
     #[\Override]

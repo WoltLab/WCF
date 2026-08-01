@@ -5,7 +5,7 @@ namespace wcf\acp\form;
 use wcf\data\style\Style;
 use wcf\data\style\StyleEditor;
 use wcf\form\AbstractForm;
-use wcf\system\exception\IllegalLinkException;
+use wcf\http\Helper;
 use wcf\system\WCF;
 
 /**
@@ -57,24 +57,12 @@ class StyleExportForm extends AbstractForm
      */
     public $style;
 
-    /**
-     * style id
-     * @var int
-     */
-    public $styleID = 0;
-
     #[\Override]
     public function readParameters()
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->styleID = \intval($_REQUEST['id']);
-        }
-        $this->style = new Style($this->styleID);
-        if ($this->style->isNil()) {
-            throw new IllegalLinkException();
-        }
+        $this->style = Helper::fetchObjectFromQueryParameter(Style::class);
 
         if ($this->style->templateGroupID) {
             $this->canExportTemplates = true;
@@ -140,7 +128,7 @@ class StyleExportForm extends AbstractForm
             'exportAsPackage' => $this->exportAsPackage,
             'exportTemplates' => $this->exportTemplates,
             'style' => $this->style,
-            'styleID' => $this->styleID,
+            'styleID' => $this->style->styleID,
         ]);
     }
 }

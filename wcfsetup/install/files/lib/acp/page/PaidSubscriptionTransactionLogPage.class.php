@@ -3,8 +3,8 @@
 namespace wcf\acp\page;
 
 use wcf\data\paid\subscription\transaction\log\PaidSubscriptionTransactionLog;
+use wcf\http\Helper;
 use wcf\page\AbstractPage;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
 
 /**
@@ -32,12 +32,6 @@ class PaidSubscriptionTransactionLogPage extends AbstractPage
     public $neededPermissions = ['admin.paidSubscription.canManageSubscription'];
 
     /**
-     * log entry id
-     * @var int
-     */
-    public $logID = 0;
-
-    /**
      * log entry object
      * @var PaidSubscriptionTransactionLog
      */
@@ -48,13 +42,7 @@ class PaidSubscriptionTransactionLogPage extends AbstractPage
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->logID = \intval($_REQUEST['id']);
-        }
-        $this->log = new PaidSubscriptionTransactionLog($this->logID);
-        if ($this->log->isNil()) {
-            throw new IllegalLinkException();
-        }
+        $this->log = Helper::fetchObjectFromQueryParameter(PaidSubscriptionTransactionLog::class);
     }
 
     #[\Override]
@@ -63,7 +51,7 @@ class PaidSubscriptionTransactionLogPage extends AbstractPage
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'logID' => $this->logID,
+            'logID' => $this->log->logID,
             'log' => $this->log,
         ]);
     }

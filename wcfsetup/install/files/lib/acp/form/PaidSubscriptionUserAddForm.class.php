@@ -8,7 +8,7 @@ use wcf\data\paid\subscription\user\PaidSubscriptionUser;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserAction;
 use wcf\data\user\User;
 use wcf\form\AbstractForm;
-use wcf\system\exception\IllegalLinkException;
+use wcf\http\Helper;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -37,12 +37,6 @@ class PaidSubscriptionUserAddForm extends AbstractForm
      * @inheritDoc
      */
     public $neededPermissions = ['admin.paidSubscription.canManageSubscription'];
-
-    /**
-     * subscription id
-     * @var int
-     */
-    public $subscriptionID = 0;
 
     /**
      * subscription object
@@ -79,13 +73,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->subscriptionID = \intval($_REQUEST['id']);
-        }
-        $this->subscription = new PaidSubscription($this->subscriptionID);
-        if ($this->subscription->isNil()) {
-            throw new IllegalLinkException();
-        }
+        $this->subscription = Helper::fetchObjectFromQueryParameter(PaidSubscription::class);
     }
 
     #[\Override]
@@ -148,7 +136,10 @@ class PaidSubscriptionUserAddForm extends AbstractForm
     {
         parent::save();
 
-        $userSubscription = PaidSubscriptionUser::getSubscriptionUser($this->subscriptionID, $this->user->userID);
+        $userSubscription = PaidSubscriptionUser::getSubscriptionUser(
+            $this->subscription->subscriptionID,
+            $this->user->userID
+        );
         $data = [];
         if ($this->subscription->subscriptionLength) {
             $data['endDate'] = $this->endDateTime->getTimestamp();
@@ -207,7 +198,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'subscriptionID' => $this->subscriptionID,
+            'subscriptionID' => $this->subscription->subscriptionID,
             'subscription' => $this->subscription,
             'username' => $this->username,
             'endDate' => $this->endDate,

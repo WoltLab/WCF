@@ -7,9 +7,9 @@ use wcf\data\page\Page;
 use wcf\data\page\PageAction;
 use wcf\data\page\PageCache;
 use wcf\form\AbstractForm;
+use wcf\http\Helper;
 use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\interaction\admin\PageInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
@@ -38,12 +38,6 @@ class PageEditForm extends PageAddForm
     public $overrideApplicationPackageID;
 
     /**
-     * page id
-     * @var int
-     */
-    public $pageID = 0;
-
-    /**
      * page object
      * @var Page
      */
@@ -60,13 +54,7 @@ class PageEditForm extends PageAddForm
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->pageID = \intval($_REQUEST['id']);
-        }
-        $this->page = new Page($this->pageID);
-        if ($this->page->isNil()) {
-            throw new IllegalLinkException();
-        }
+        $this->page = Helper::fetchObjectFromQueryParameter(Page::class);
         if ($this->page->isMultilingual) {
             $this->isMultilingual = 1;
         }
@@ -147,14 +135,14 @@ class PageEditForm extends PageAddForm
             parent::validateParentPageID();
 
             if ($this->parentPageID) {
-                if ($this->parentPageID == $this->pageID) {
+                if ($this->parentPageID == $this->page->pageID) {
                     throw new UserInputException('parentPageID', 'invalid');
                 }
 
                 $page = PageCache::getInstance()->getPage($this->parentPageID);
                 while ($page->parentPageID !== null) {
                     $page = PageCache::getInstance()->getPage($page->parentPageID);
-                    if ($page->pageID == $this->pageID) {
+                    if ($page->pageID == $this->page->pageID) {
                         throw new UserInputException('parentPageID', 'invalid');
                     }
                 }
@@ -338,9 +326,9 @@ class PageEditForm extends PageAddForm
 
         WCF::getTPL()->assign([
             'action' => 'edit',
-            'pageID' => $this->pageID,
+            'pageID' => $this->page->pageID,
             'page' => $this->page,
-            'lastVersion' => VersionTracker::getInstance()->getLastVersion('com.woltlab.wcf.page', $this->pageID),
+            'lastVersion' => VersionTracker::getInstance()->getLastVersion('com.woltlab.wcf.page', $this->page->pageID),
             'overrideApplicationPackageID' => $this->overrideApplicationPackageID,
             'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
                 new PageInteractions(),
