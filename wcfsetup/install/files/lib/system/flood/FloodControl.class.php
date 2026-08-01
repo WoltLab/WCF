@@ -60,7 +60,7 @@ final class FloodControl extends SingletonFactory
      */
     public function countContent(string $objectType, \DateInterval $interval, int $time = \TIME_NOW): array
     {
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             return $this->countUserContent($objectType, WCF::getUser()->userID, $interval, $time);
         } else {
             return $this->countGuestContent($objectType, UserUtil::getIpAddress(), $interval, $time);
@@ -160,7 +160,7 @@ final class FloodControl extends SingletonFactory
      */
     public function getLastTime(string $objectType): ?int
     {
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             return $this->getUserLastTime($objectType, WCF::getUser()->userID);
         } else {
             return $this->getGuestLastTime($objectType, UserUtil::getIpAddress());
@@ -243,7 +243,7 @@ final class FloodControl extends SingletonFactory
      */
     public function registerContent(string $objectType, int $time = \TIME_NOW): void
     {
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             $this->registerUserContent($objectType, WCF::getUser()->userID, $time);
         } else {
             $this->registerGuestContent($objectType, UserUtil::getIpAddress(), $time);

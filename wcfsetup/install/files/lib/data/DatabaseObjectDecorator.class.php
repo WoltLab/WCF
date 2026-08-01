@@ -68,6 +68,12 @@ abstract class DatabaseObjectDecorator extends DatabaseObject
         return $this->object->getData();
     }
 
+    #[\Override]
+    public function isNil(): bool
+    {
+        return $this->object->isNil();
+    }
+
     /**
      * Delegates inaccessible methods calls to the decorated object.
      *

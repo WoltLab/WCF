@@ -72,7 +72,7 @@ final class EmailNewActivationCodeForm extends AbstractFormBuilderForm
         $value = $formField->getValue();
         $this->user = User::getUserByUsername($value);
 
-        if (!$this->user->userID) {
+        if ($this->user->isGuest()) {
             $formField->addValidationError(
                 new FormFieldValidationError(
                     'notFound',
@@ -98,7 +98,7 @@ final class EmailNewActivationCodeForm extends AbstractFormBuilderForm
 
     private function validatePassword(PasswordFormField $formField): void
     {
-        if (!$this->user->userID) {
+        if ($this->user->isGuest()) {
             return;
         }
 

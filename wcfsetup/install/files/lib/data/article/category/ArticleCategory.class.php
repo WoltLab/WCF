@@ -220,7 +220,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
         if (self::$subscribedCategories === null) {
             self::$subscribedCategories = [];
 
-            if (WCF::getUser()->userID) {
+            if (!WCF::getUser()->isGuest()) {
                 $data = UserStorageHandler::getInstance()->getField('articleSubscribedCategories');
 
                 // cache does not exist or is outdated

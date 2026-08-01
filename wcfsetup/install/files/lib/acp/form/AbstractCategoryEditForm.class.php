@@ -90,7 +90,7 @@ abstract class AbstractCategoryEditForm extends AbstractCategoryAddForm
             $this->categoryID = \intval($_REQUEST['id']);
         }
         $this->category = new Category($this->categoryID);
-        if (!$this->category->categoryID) {
+        if ($this->category->isNil()) {
             throw new IllegalLinkException();
         }
     }

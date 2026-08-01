@@ -24,7 +24,7 @@ final class DismissNotice
 
     public function __invoke(): void
     {
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             $this->dismissForUser($this->notice, WCF::getUser()->userID);
         } else {
             $this->dismissForGuest($this->notice);

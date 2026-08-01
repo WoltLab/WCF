@@ -446,7 +446,7 @@ class ClipboardHandler extends SingletonFactory
      */
     public function hasMarkedItems(?int $objectTypeID = null)
     {
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             return 0;
         }
 

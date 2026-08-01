@@ -82,7 +82,7 @@ class UserCollapsibleContentHandler extends SingletonFactory
         if (!isset($this->collapsedContent[$objectTypeID])) {
             $this->collapsedContent[$objectTypeID] = [];
 
-            if (WCF::getUser()->userID) {
+            if (!WCF::getUser()->isGuest()) {
                 $data = UserStorageHandler::getInstance()->getField('collapsedContent-' . $objectTypeID);
 
                 // cache does not exist or is outdated
@@ -220,7 +220,7 @@ class UserCollapsibleContentHandler extends SingletonFactory
      */
     public function reset(int $objectTypeID)
     {
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             $sql = "DELETE FROM wcf1_user_collapsible_content
                     WHERE       objectTypeID = ?
                             AND userID = ?";

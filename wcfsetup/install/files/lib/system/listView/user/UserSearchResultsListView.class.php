@@ -43,7 +43,7 @@ class UserSearchResultsListView extends MembersListView
             return false;
         }
 
-        if (!$this->search->searchID || $this->search->userID !== WCF::getUser()->userID || $this->search->searchType !== 'users') {
+        if ($this->search->isNil() || $this->search->userID !== WCF::getUser()->userID || $this->search->searchType !== 'users') {
             return false;
         }
 

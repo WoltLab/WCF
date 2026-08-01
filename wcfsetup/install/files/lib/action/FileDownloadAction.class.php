@@ -43,7 +43,7 @@ final class FileDownloadAction implements RequestHandlerInterface
         );
 
         $file = new File($parameters['id']);
-        if (!$file->fileID) {
+        if ($file->isNil()) {
             throw new IllegalLinkException();
         }
 

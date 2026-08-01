@@ -49,7 +49,7 @@ final class NewPasswordForm extends AbstractFormBuilderForm
             }
 
             $this->user = new User($this->userID);
-            if (!$this->user->userID) {
+            if ($this->user->isGuest()) {
                 throw new IllegalLinkException();
             }
 
@@ -75,7 +75,7 @@ final class NewPasswordForm extends AbstractFormBuilderForm
             $this->userID = \intval(WCF::getSession()->getVar('lostPasswordRequest')['userID']);
 
             $this->user = new User($this->userID);
-            if (!$this->user->userID) {
+            if ($this->user->isGuest()) {
                 throw new IllegalLinkException();
             }
             if (!\hash_equals($this->user->lostPasswordKey, \hash('sha256', WCF::getSession()->getVar('lostPasswordRequest')['key']))) {

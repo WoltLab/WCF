@@ -65,7 +65,7 @@ final class RegisterActivationForm extends AbstractFormBuilderForm
         $value = $formField->getValue();
         $this->user = User::getUserByUsername($value);
 
-        if (!$this->user->userID) {
+        if ($this->user->isGuest()) {
             $formField->addValidationError(
                 new FormFieldValidationError(
                     'notFound',

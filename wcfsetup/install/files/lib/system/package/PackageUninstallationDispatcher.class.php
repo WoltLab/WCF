@@ -57,7 +57,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
                     $step = $this->handleStartMarker($nodeData);
 
                     $package = new Package($this->queue->packageID);
-                    \assert($package->packageID !== 0);
+                    \assert(!$package->isNil());
                     $event = new PackageUninstallationStarted($package);
                     EventHandler::getInstance()->fire($event);
                     break;

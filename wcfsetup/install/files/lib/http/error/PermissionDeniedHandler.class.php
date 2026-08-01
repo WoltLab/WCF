@@ -61,7 +61,7 @@ final class PermissionDeniedHandler implements RequestHandlerInterface
                     WCF::getLanguage()->getDynamicVariable('wcf.page.error.permissionDenied.title'),
                     $message,
                     $errorDetail?->getThrowable(),
-                    !WCF::getUser()->userID,
+                    WCF::getUser()->isGuest(),
                 ),
                 self::STATUS_CODE
             ),

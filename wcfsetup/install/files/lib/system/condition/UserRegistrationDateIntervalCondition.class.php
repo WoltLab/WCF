@@ -78,7 +78,7 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
     #[\Override]
     public function showContent(Condition $condition): bool
     {
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             return false;
         }
 

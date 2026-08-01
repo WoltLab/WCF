@@ -35,7 +35,7 @@ final class RenderUserActivityEvents implements IController
         $boxController = null;
         if ($parameters->boxID !== 0) {
             $box = new Box($parameters->boxID);
-            if (!$box->boxID) {
+            if ($box->isNil()) {
                 throw new UserInputException('boxID');
             }
 

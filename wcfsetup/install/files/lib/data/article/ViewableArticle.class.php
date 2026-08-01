@@ -83,7 +83,7 @@ class ViewableArticle extends DatabaseObjectDecorator
         if (self::$unreadArticlesByCategory === null) {
             self::$unreadArticlesByCategory = [];
 
-            if (WCF::getUser()->userID) {
+            if (!WCF::getUser()->isGuest()) {
                 $unreadArticlesByCategory = UserStorageHandler::getInstance()->getField('unreadArticlesByCategory');
 
                 // cache does not exist or is outdated
@@ -116,7 +116,7 @@ class ViewableArticle extends DatabaseObjectDecorator
                 self::$unreadArticlesByCategory[$articleCategoryID] = 0;
             }
         } elseif (!isset(self::$unreadArticlesByCategory[$articleCategoryID])) {
-            if (WCF::getUser()->userID) {
+            if (!WCF::getUser()->isGuest()) {
                 self::$unreadArticlesByCategory[$articleCategoryID] = self::fetchUnreadArticlesForCategory($articleCategoryID);
 
                 // update storage unreadEntries
@@ -194,7 +194,7 @@ class ViewableArticle extends DatabaseObjectDecorator
         if (self::$unreadWatchedArticles === null) {
             self::$unreadWatchedArticles = 0;
 
-            if (WCF::getUser()->userID) {
+            if (!WCF::getUser()->isGuest()) {
                 $unreadArticles = UserStorageHandler::getInstance()->getField('unreadWatchedArticles');
 
                 // cache does not exist or is outdated

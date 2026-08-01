@@ -27,7 +27,7 @@ final class RegisterServiceWorkerAction implements RequestHandlerInterface
         if ($request->getMethod() !== 'POST') {
             return new TextResponse('Unsupported', 400);
         }
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             // Notifications are not supported for guests.
             throw new PermissionDeniedException();
         }

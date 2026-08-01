@@ -49,7 +49,7 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction
 
         if ($this->parameters['boxID']) {
             $box = new Box($this->parameters['boxID']);
-            if ($box->boxID) {
+            if (!$box->isNil()) {
                 $boxController = $box->getController();
                 if ($boxController instanceof RecentActivityListBoxController) {
                     // all checks passed, end validation; otherwise throw the exception below

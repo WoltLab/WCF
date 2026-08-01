@@ -144,7 +144,7 @@ class Poll extends DatabaseObject
     public function canVote()
     {
         // guest voting is not possible
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             return false;
         } elseif ($this->isFinished()) {
             return false;

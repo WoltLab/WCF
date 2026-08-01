@@ -117,7 +117,7 @@ class MediaPage extends AbstractPage
             $this->mediaID = \intval($_REQUEST['id']);
         }
         $this->media = new Media($this->mediaID);
-        if (!$this->media->mediaID) {
+        if ($this->media->isNil()) {
             throw new IllegalLinkException();
         }
         if (!$this->media->isAccessible()) {

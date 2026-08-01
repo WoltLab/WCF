@@ -46,7 +46,7 @@ final class VaryAcceptLanguage implements MiddlewareInterface
             return $response;
         }
 
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             return $response->withAddedHeader('vary', 'accept-language');
         } else {
             return $response;

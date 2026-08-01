@@ -108,7 +108,7 @@ class UserAssignToGroupForm extends AbstractForm
         // groups
         foreach ($this->groupIDs as $groupID) {
             $group = new UserGroup($groupID);
-            if (!$group->groupID) {
+            if ($group->isNil()) {
                 throw new UserInputException('groupIDs');
             }
             if (!$group->isAccessible()) {

@@ -30,7 +30,7 @@ final class DisclaimerPage extends AbstractPage
 
         // registration disabled
         if (
-            !WCF::getUser()->userID
+            WCF::getUser()->isGuest()
             && !UserAuthenticationConfigurationFactory::getInstance()->getConfigration()->canRegister
         ) {
             throw new NamedUserException(HtmlString::fromSafeHtml(

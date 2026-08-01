@@ -29,7 +29,7 @@ final class Unfollow
     {
         $follow = UserFollow::getFollow($this->user->userID, $this->target->userID);
 
-        if ($follow->followID) {
+        if (!$follow->isNil()) {
             $followEditor = new UserFollowEditor($follow);
             $followEditor->delete();
 

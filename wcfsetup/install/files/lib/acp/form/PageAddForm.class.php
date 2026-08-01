@@ -429,7 +429,7 @@ class PageAddForm extends AbstractForm
     {
         if ($this->parentPageID) {
             $page = new Page($this->parentPageID);
-            if (!$page->pageID) {
+            if ($page->isNil()) {
                 throw new UserInputException('parentPageID', 'invalid');
             }
 

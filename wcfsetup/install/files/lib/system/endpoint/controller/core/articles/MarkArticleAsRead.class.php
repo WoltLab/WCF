@@ -41,7 +41,7 @@ final class MarkArticleAsRead implements IController
 
     private function assertArticleIsAccessible(Article $article): void
     {
-        if (!WCF::getUser()->userID || !$article->canRead()) {
+        if (WCF::getUser()->isGuest() || !$article->canRead()) {
             throw new PermissionDeniedException();
         }
     }

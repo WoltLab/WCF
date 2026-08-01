@@ -122,7 +122,7 @@ class UserOptionAddForm extends AbstractFormBuilderForm
                         WCF::getLanguage()->getDynamicVariable('wcf.global.error.title'),
                         WCF::getLanguage()->getDynamicVariable('wcf.acp.user.option.error.noCategories'),
                         null,
-                        !WCF::getUser()->userID,
+                        WCF::getUser()->isGuest(),
                     ),
                     403
                 )

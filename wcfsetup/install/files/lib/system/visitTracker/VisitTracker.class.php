@@ -71,7 +71,7 @@ class VisitTracker extends SingletonFactory
      */
     public function getVisitTime(string $objectType)
     {
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             return \TIME_NOW;
         }
 
@@ -119,7 +119,7 @@ class VisitTracker extends SingletonFactory
      */
     public function getObjectVisitTime(string $objectType, int $objectID)
     {
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             return \TIME_NOW;
         }
 
@@ -145,7 +145,7 @@ class VisitTracker extends SingletonFactory
      */
     public function deleteObjectVisits(string $objectType)
     {
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             $sql = "DELETE FROM wcf1_tracked_visit
                     WHERE       objectTypeID = ?
                             AND userID = ?";
@@ -184,7 +184,7 @@ class VisitTracker extends SingletonFactory
      */
     public function trackObjectVisit(string $objectType, int $objectID, int $time = \TIME_NOW)
     {
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             return;
         }
 
@@ -202,7 +202,7 @@ class VisitTracker extends SingletonFactory
      */
     public function trackTypeVisit(string $objectType, int $time = \TIME_NOW)
     {
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             return;
         }
 

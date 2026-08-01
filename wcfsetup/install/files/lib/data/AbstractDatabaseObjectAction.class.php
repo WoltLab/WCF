@@ -170,7 +170,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
     public function validateAction()
     {
         // validate if user is logged in
-        if (!WCF::getUser()->userID && !\in_array($this->getActionName(), $this->allowGuestAccess)) {
+        if (WCF::getUser()->isGuest() && !\in_array($this->getActionName(), $this->allowGuestAccess)) {
             throw new PermissionDeniedException();
         } elseif (
             !RequestHandler::getInstance()->isACPRequest() && \in_array(

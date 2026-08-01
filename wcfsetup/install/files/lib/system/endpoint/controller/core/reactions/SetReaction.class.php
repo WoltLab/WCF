@@ -45,7 +45,7 @@ final class SetReaction implements IController
         }
 
         $reactionType = ReactionTypeCache::getInstance()->getReactionTypeByID($parameters->reactionTypeID);
-        if (!$reactionType->reactionTypeID) {
+        if ($reactionType === null) {
             throw new UserInputException('reactionTypeID');
         }
 
@@ -78,7 +78,7 @@ final class SetReaction implements IController
             WCF::getUser()->userID
         );
 
-        if (!$like->likeID || $like->reactionTypeID !== $reactionType->reactionTypeID) {
+        if ($like->isNil() || $like->reactionTypeID !== $reactionType->reactionTypeID) {
             new \wcf\command\reaction\SetReaction(
                 $likeable,
                 WCF::getUser(),
@@ -105,7 +105,7 @@ final class SetReaction implements IController
 
     private function assertUserCanReact(): void
     {
-        if (!WCF::getUser()->userID || !WCF::getSession()->hasPermission('user.like.canLike')) {
+        if (WCF::getUser()->isGuest() || !WCF::getSession()->hasPermission('user.like.canLike')) {
             throw new PermissionDeniedException();
         }
     }

@@ -352,7 +352,7 @@ class ModerationQueueManager extends SingletonFactory
             $user = WCF::getUser();
         }
 
-        if (!$user->userID) {
+        if ($user->isGuest()) {
             throw new \InvalidArgumentException(
                 "Assigning moderation queue items to guests is not supported."
             );

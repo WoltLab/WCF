@@ -189,7 +189,7 @@ final class Helper
         /** @var DatabaseObject $dbo */
         $dbo = new $className($objectID);
 
-        if (!$dbo->getObjectID()) {
+        if ($dbo->isNil()) {
             throw new UserInputException(
                 $dbo->getDatabaseTableIndexName(),
             );
@@ -233,7 +233,7 @@ final class Helper
         /** @var DatabaseObject $dbo */
         $dbo = new $className($queryParameters['id']);
 
-        if (!$dbo->getObjectID()) {
+        if ($dbo->isNil()) {
             throw new IllegalLinkException();
         }
 

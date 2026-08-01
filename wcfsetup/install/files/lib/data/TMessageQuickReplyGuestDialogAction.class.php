@@ -74,7 +74,7 @@ trait TMessageQuickReplyGuestDialogAction
     protected function validateGuestDialogCaptcha()
     {
         // only relevant for guests
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             throw new \BadMethodCallException("Guest dialogs are only relevant for guests");
         }
 
@@ -102,7 +102,7 @@ trait TMessageQuickReplyGuestDialogAction
     protected function validateGuestDialogUsername()
     {
         // only relevant for guests
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             throw new \BadMethodCallException("Guest dialogs are only relevant for guests");
         }
 

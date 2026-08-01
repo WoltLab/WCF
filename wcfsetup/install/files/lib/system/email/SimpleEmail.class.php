@@ -63,7 +63,7 @@ class SimpleEmail
      */
     public function setRecipient(User $user)
     {
-        if (!$user->userID) {
+        if ($user->isGuest()) {
             throw new \InvalidArgumentException('The $user must not be a guest');
         }
 

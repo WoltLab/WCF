@@ -92,7 +92,7 @@ class AttachmentPage extends AbstractPage
             $this->attachmentID = \intval($_REQUEST['id']);
         }
         $this->attachment = new Attachment($this->attachmentID);
-        if (!$this->attachment->attachmentID) {
+        if ($this->attachment->isNil()) {
             throw new IllegalLinkException();
         }
 

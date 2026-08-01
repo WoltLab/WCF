@@ -48,7 +48,7 @@ class ReauthenticationForm extends AbstractFormBuilderForm
             throw new IllegalLinkException();
         }
 
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             throw new PermissionDeniedException();
         }
 

@@ -79,7 +79,7 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
         $this->readString('target');
 
         $this->project = new DevtoolsProject($this->parameters['projectID']);
-        if (!$this->project->projectID || $this->project->validate() !== '') {
+        if ($this->project->isNil() || $this->project->validate() !== '') {
             throw new UserInputException('projectID');
         }
 

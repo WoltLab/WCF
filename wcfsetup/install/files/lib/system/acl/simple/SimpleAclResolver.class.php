@@ -43,7 +43,7 @@ class SimpleAclResolver extends SingletonFactory
             return true;
         }
 
-        if ($user->userID) {
+        if (!$user->isGuest()) {
             // user is explicitly allowed
             if (\in_array($user->userID, $this->cache[$objectType][$objectID]['user'])) {
                 return true;

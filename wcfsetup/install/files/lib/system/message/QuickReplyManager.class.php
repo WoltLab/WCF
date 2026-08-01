@@ -175,7 +175,7 @@ class QuickReplyManager extends SingletonFactory
         }
 
         $allowedDataParameters = ['message'];
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             $allowedDataParameters[] = 'username';
         }
         if ($object instanceof IMessageQuickReplyParametersAction) {

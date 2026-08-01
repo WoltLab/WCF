@@ -74,7 +74,7 @@ abstract class AbstractCommentManager implements ICommentManager
     #[\Override]
     public function canAdd(int $objectID)
     {
-        if (\VISITOR_USE_TINY_BUILD && !WCF::getUser()->userID) {
+        if (\VISITOR_USE_TINY_BUILD && WCF::getUser()->isGuest()) {
             return false;
         }
 
@@ -88,7 +88,7 @@ abstract class AbstractCommentManager implements ICommentManager
     #[\Override]
     public function canAddWithoutApproval(int $objectID)
     {
-        if (\VISITOR_USE_TINY_BUILD && !WCF::getUser()->userID) {
+        if (\VISITOR_USE_TINY_BUILD && WCF::getUser()->isGuest()) {
             return false;
         }
 
@@ -151,7 +151,7 @@ abstract class AbstractCommentManager implements ICommentManager
     protected function canEdit(bool $isOwner)
     {
         // disallow guests
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             return false;
         }
 
@@ -176,7 +176,7 @@ abstract class AbstractCommentManager implements ICommentManager
     protected function canDelete(bool $isOwner)
     {
         // disallow guests
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             return false;
         }
 

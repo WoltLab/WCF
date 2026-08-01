@@ -108,7 +108,7 @@ class UsersOnlineList extends SessionList
             $this->stats['total']++;
 
             $user = new UserOnline(new User(null, $row));
-            if ($user->userID) {
+            if (!$user->isGuest()) {
                 $this->stats['members']++;
                 $users[] = $user;
                 $userIDs[] = $user->userID;
@@ -197,7 +197,7 @@ class UsersOnlineList extends SessionList
                 break;
 
             case UserProfile::ACCESS_REGISTERED:
-                if (WCF::getUser()->userID) {
+                if (!WCF::getUser()->isGuest()) {
                     $data['result'] = true;
                 }
                 break;
@@ -238,7 +238,7 @@ class UsersOnlineList extends SessionList
                 break;
 
             case UserProfile::ACCESS_REGISTERED:
-                if (WCF::getUser()->userID) {
+                if (!WCF::getUser()->isGuest()) {
                     $data['result'] = true;
                 }
                 break;

@@ -66,7 +66,7 @@ abstract class AbstractModerationForm extends AbstractForm
     {
         parent::readParameters();
 
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             throw new PermissionDeniedException();
         }
 

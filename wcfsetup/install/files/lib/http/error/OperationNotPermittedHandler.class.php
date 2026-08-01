@@ -61,7 +61,7 @@ final class OperationNotPermittedHandler implements RequestHandlerInterface
                     WCF::getLanguage()->getDynamicVariable('wcf.global.error.title'),
                     $message,
                     $errorDetail?->getThrowable(),
-                    !WCF::getUser()->userID,
+                    WCF::getUser()->isGuest(),
                 ),
                 self::STATUS_CODE
             ),

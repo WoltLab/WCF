@@ -70,7 +70,7 @@ final class UserFollowAction implements RequestHandlerInterface
 
     private function assertUserIsLoggedIn(): void
     {
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             throw new PermissionDeniedException();
         }
     }

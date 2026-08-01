@@ -37,7 +37,7 @@ class PageBoxOrderPage extends AbstractPage
 
     /**
      * page object
-     * @var Page
+     * @var ?Page
      */
     public $page;
 
@@ -57,7 +57,7 @@ class PageBoxOrderPage extends AbstractPage
         }
 
         $this->page = PageCache::getInstance()->getPage($this->pageID);
-        if (!$this->page->pageID) {
+        if ($this->page === null) {
             throw new IllegalLinkException();
         }
     }

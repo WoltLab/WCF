@@ -91,7 +91,7 @@ class UserTrophyListBoxController extends AbstractDatabaseObjectListBoxControlle
         $list->getConditionBuilder()->add('category.isDisabled = ?', [0]);
 
         $canViewTrophiesOptionID = User::getUserOptionID('canViewTrophies');
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             $list->getConditionBuilder()->add('user_trophy.userID IN (
                 SELECT  userID
                 FROM    wcf1_user_option_value

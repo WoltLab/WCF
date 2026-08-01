@@ -81,7 +81,7 @@ class CmsPage extends AbstractPage
         $this->canonicalURL = LinkHandler::getInstance()->getCmsLink($this->pageID, $this->languageID);
 
         // update interface language
-        if (!WCF::getUser()->userID && $this->page->isMultilingual && $this->languageID != WCF::getLanguage()->languageID) {
+        if (WCF::getUser()->isGuest() && $this->page->isMultilingual && $this->languageID != WCF::getLanguage()->languageID) {
             WCF::setLanguage($this->languageID);
         }
     }

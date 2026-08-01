@@ -253,7 +253,7 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
     {
         if ($loadValues && $object instanceof IPollContainer && $object->getPollID() !== null) {
             $this->poll = new Poll($object->getPollID());
-            if (!$this->poll->pollID) {
+            if ($this->poll->isNil()) {
                 $this->poll = null;
             } else {
                 // `isPublic` cannot be changed when editing polls

@@ -60,7 +60,7 @@ class PageImporter extends AbstractImporter
         // check old id
         if (\ctype_digit((string)$oldID)) {
             $page = new Page($oldID);
-            if (!$page->pageID) {
+            if ($page->isNil()) {
                 $data['pageID'] = $oldID;
             }
         }

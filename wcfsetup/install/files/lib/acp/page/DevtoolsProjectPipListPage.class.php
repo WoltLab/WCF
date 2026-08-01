@@ -53,7 +53,7 @@ class DevtoolsProjectPipListPage extends AbstractPage
             $this->projectID = \intval($_REQUEST['id']);
         }
         $this->project = new DevtoolsProject($this->projectID);
-        if (!$this->project->projectID) {
+        if ($this->project->isNil()) {
             throw new IllegalLinkException();
         }
     }

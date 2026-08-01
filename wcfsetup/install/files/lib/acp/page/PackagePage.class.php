@@ -64,7 +64,7 @@ class PackagePage extends AbstractPage
             $this->packageID = \intval($_REQUEST['id']);
         }
         $this->package = new Package($this->packageID);
-        if (!$this->package->packageID) {
+        if ($this->package->isNil()) {
             throw new IllegalLinkException();
         }
     }

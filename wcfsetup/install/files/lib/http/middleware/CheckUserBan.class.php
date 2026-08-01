@@ -47,7 +47,7 @@ final class CheckUserBan implements MiddlewareInterface
 
     private function isBanned(User $user): bool
     {
-        if (!$user->userID) {
+        if ($user->isGuest()) {
             return false;
         }
 

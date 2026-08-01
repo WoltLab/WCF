@@ -26,7 +26,7 @@ final class GuestTokenDialogAction implements RequestHandlerInterface
     #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             throw new PermissionDeniedException();
         }
 

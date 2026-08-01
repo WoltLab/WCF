@@ -59,7 +59,7 @@ class NotificationUnsubscribeForm extends AbstractForm
 
         if (isset($_REQUEST['userID'])) {
             $this->user = new User(\intval($_REQUEST['userID']));
-            if (!$this->user->userID) {
+            if ($this->user->isGuest()) {
                 throw new IllegalLinkException();
             }
         } else {
@@ -74,7 +74,7 @@ class NotificationUnsubscribeForm extends AbstractForm
 
         if (!empty($_REQUEST['eventID'])) {
             $this->event = new UserNotificationEvent(\intval($_REQUEST['eventID']));
-            if (!$this->event->eventID) {
+            if ($this->event->isNil()) {
                 throw new IllegalLinkException();
             }
         }

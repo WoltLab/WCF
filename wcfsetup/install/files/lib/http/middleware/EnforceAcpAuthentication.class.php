@@ -61,7 +61,7 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
             return $handler->handle($request);
         }
 
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             return $this->handleGuest($request);
         }
 

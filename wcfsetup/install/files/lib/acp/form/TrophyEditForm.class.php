@@ -57,7 +57,7 @@ class TrophyEditForm extends TrophyAddForm
         }
         $this->trophy = new Trophy($this->trophyID);
 
-        if (!$this->trophy->trophyID) {
+        if ($this->trophy->isNil()) {
             throw new IllegalLinkException();
         }
 

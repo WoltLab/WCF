@@ -89,7 +89,7 @@ abstract class AbstractAction implements IAction
     public function execute()
     {
         // check if active user is logged in
-        if ($this->loginRequired && !WCF::getUser()->userID) {
+        if ($this->loginRequired && WCF::getUser()->isGuest()) {
             throw new PermissionDeniedException();
         }
 

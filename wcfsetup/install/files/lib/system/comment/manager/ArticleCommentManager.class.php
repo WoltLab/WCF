@@ -65,7 +65,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
     {
         // check object id
         $articleContent = new ArticleContent($objectID);
-        if (!$articleContent->articleContentID || !$articleContent->getArticle()->canRead()) {
+        if ($articleContent->isNil() || !$articleContent->getArticle()->canRead()) {
             return false;
         }
 
@@ -76,7 +76,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
     public function canModerateObject(int $objectTypeID, int $objectID, UserProfile $user): bool
     {
         $articleContent = ArticleContentRuntimeCache::getInstance()->getObject($objectID);
-        if (!$articleContent->articleContentID) {
+        if ($articleContent === null) {
             return false;
         }
         if (!$articleContent->getArticle()->canRead($user)) {

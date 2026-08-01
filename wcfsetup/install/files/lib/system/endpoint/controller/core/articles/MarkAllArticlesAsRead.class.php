@@ -38,7 +38,7 @@ final class MarkAllArticlesAsRead implements IController
 
     private function assertUserIsLoggedIn(): void
     {
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             throw new PermissionDeniedException();
         }
     }

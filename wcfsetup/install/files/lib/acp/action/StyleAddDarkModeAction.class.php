@@ -37,7 +37,7 @@ final class StyleAddDarkModeAction implements RequestHandlerInterface
         );
 
         $style = new Style($parameters['id']);
-        if (!$style->styleID || !$style->isTainted) {
+        if ($style->isNil() || !$style->isTainted) {
             throw new IllegalLinkException();
         }
 

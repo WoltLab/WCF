@@ -162,7 +162,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         $this->poll = $this->getSingleObject();
         $this->loadRelatedObject();
 
-        if (!$this->poll->pollID) {
+        if ($this->poll->isNil()) {
             throw new UserInputException('pollID');
         }
 
@@ -309,7 +309,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 
         // read poll
         $this->poll = new PollEditor(new Poll($this->parameters['pollID']));
-        if (!$this->poll->pollID) {
+        if ($this->poll->isNil()) {
             throw new UserInputException('pollID');
         } elseif (!$this->poll->canViewParticipants()) {
             throw new PermissionDeniedException();
@@ -326,7 +326,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         $this->poll = $this->getSingleObject();
         $this->loadRelatedObject();
 
-        if (!$this->poll->pollID) {
+        if ($this->poll->isNil()) {
             throw new UserInputException('pollID');
         }
 
@@ -358,7 +358,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         $this->poll = $this->getSingleObject();
         $this->loadRelatedObject();
 
-        if (!$this->poll->pollID) {
+        if ($this->poll->isNil()) {
             throw new UserInputException('pollID');
         }
 

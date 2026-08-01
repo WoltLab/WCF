@@ -37,7 +37,7 @@ abstract class AbstractAuthedPage extends AbstractPage
         // check security token
         $this->checkAccessToken();
 
-        if (\FORCE_LOGIN && !WCF::getUser()->userID) {
+        if (\FORCE_LOGIN && WCF::getUser()->isGuest()) {
             throw new PermissionDeniedException();
         }
     }
@@ -54,7 +54,7 @@ abstract class AbstractAuthedPage extends AbstractPage
                 $userID = $matches['userID'];
                 $token = $matches['token'];
 
-                if (WCF::getUser()->userID) {
+                if (!WCF::getUser()->isGuest()) {
                     if ($userID == WCF::getUser()->userID && \hash_equals(WCF::getUser()->accessToken, $token)) {
                         // everything is fine, but we are already logged in
                         return;

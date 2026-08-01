@@ -49,7 +49,7 @@ final class CreateResponse implements IController
         $this->assertResponseIsPossible($comment);
 
         $username = '';
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             $username = UserUtil::verifyGuestToken($parameters->guestToken);
             if ($username === null) {
                 throw new UserInputException('guestToken');

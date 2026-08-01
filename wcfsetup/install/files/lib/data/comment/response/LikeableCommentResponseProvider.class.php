@@ -50,7 +50,7 @@ class LikeableCommentResponseProvider extends AbstractObjectTypeProvider impleme
             return false;
         }
         $comment = new Comment($object->commentID);
-        if (!$comment->commentID) {
+        if ($comment->isNil()) {
             return false;
         }
 

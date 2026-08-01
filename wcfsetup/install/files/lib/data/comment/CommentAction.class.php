@@ -198,7 +198,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
         if (!empty($this->parameters['responseID'])) {
             $this->response = new CommentResponse($this->parameters['responseID']);
-            if (!$this->response->responseID) {
+            if ($this->response->isNil()) {
                 throw new UserInputException('responseID');
             }
             if ($this->response->commentID != $this->comment->commentID) {
@@ -248,7 +248,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         $this->readInteger('responseID');
         $this->readInteger('objectTypeID', true);
         $this->response = new CommentResponse($this->parameters['responseID']);
-        if (!$this->response->responseID) {
+        if ($this->response->isNil()) {
             throw new UserInputException('responseID');
         }
 
@@ -762,7 +762,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     {
         $this->readInteger('responseID', false, 'data');
         $this->response = new CommentResponse($this->parameters['data']['responseID']);
-        if (!$this->response->responseID) {
+        if ($this->response->isNil()) {
             throw new UserInputException('responseID');
         }
 
@@ -962,7 +962,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      */
     private function validateGetGuestDialog(): void
     {
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             if (isset($this->parameters['data']['username'])) {
                 $this->validateUsername();
                 $this->validateCaptcha();
@@ -980,7 +980,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      */
     private function getGuestDialog(): ?string
     {
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             return null;
         }
 
@@ -1239,7 +1239,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         $this->readInteger('commentID', false, 'data');
 
         $this->comment = new Comment($this->parameters['data']['commentID']);
-        if ($this->comment === null || !$this->comment->commentID) {
+        if ($this->comment === null || $this->comment->isNil()) {
             throw new UserInputException('commentID');
         }
     }
@@ -1256,7 +1256,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         if (isset($this->parameters['data']['responseID'])) {
             $this->response = new CommentResponse($this->parameters['data']['responseID']);
         }
-        if ($this->response === null || !$this->response->responseID) {
+        if ($this->response === null || $this->response->isNil()) {
             throw new UserInputException('responseID');
         }
     }
@@ -1269,7 +1269,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      */
     protected function validateUsername()
     {
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             return;
         }
 
@@ -1296,7 +1296,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      */
     protected function validateCaptcha()
     {
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             return;
         }
 

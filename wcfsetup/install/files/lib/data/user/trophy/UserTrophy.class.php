@@ -96,7 +96,7 @@ class UserTrophy extends DatabaseObject
             $user = WCF::getUser();
         }
 
-        if (!$user->userID) {
+        if ($user->isGuest()) {
             $userProfile = new UserProfile(new User(null, []));
         } else {
             $userProfile = UserProfileRuntimeCache::getInstance()->getObject($user->userID);

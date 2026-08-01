@@ -59,7 +59,7 @@ class AbstractAttachmentImporter extends AbstractImporter
         // check existing attachment id
         if (\ctype_digit((string)$oldID)) {
             $attachment = new Attachment($oldID);
-            if (!$attachment->attachmentID) {
+            if ($attachment->isNil()) {
                 $data['attachmentID'] = $oldID;
             }
         }

@@ -65,7 +65,7 @@ final class RevertReaction implements IController
             WCF::getUser()->userID
         );
 
-        if ($like->likeID) {
+        if (!$like->isNil()) {
             new \wcf\command\reaction\RevertReaction(
                 $like,
                 $likeable
@@ -91,7 +91,7 @@ final class RevertReaction implements IController
 
     private function assertUserCanReact(): void
     {
-        if (!WCF::getUser()->userID || !WCF::getSession()->hasPermission('user.like.canLike')) {
+        if (WCF::getUser()->isGuest() || !WCF::getSession()->hasPermission('user.like.canLike')) {
             throw new PermissionDeniedException();
         }
     }

@@ -316,7 +316,7 @@ class StyleHandler extends SingletonFactory
             return 'light';
         }
 
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             return 'system';
         }
 

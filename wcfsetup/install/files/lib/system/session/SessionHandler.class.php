@@ -343,7 +343,7 @@ final class SessionHandler extends SingletonFactory
     private function maybeRefreshCookie(array $cookieData): void
     {
         // Guests use short-lived sessions with an actual session cookie.
-        if (!$this->user->userID) {
+        if ($this->user->isGuest()) {
             return;
         }
 
@@ -702,7 +702,7 @@ final class SessionHandler extends SingletonFactory
     private function createLegacySession(): LegacySession
     {
         $spiderIdentifier = null;
-        if (!$this->user->userID) {
+        if ($this->user->isGuest()) {
             $spiderIdentifier = SpiderHandler::getInstance()->getIdentifier(UserUtil::getUserAgent());
         }
 
@@ -728,7 +728,7 @@ final class SessionHandler extends SingletonFactory
     {
         // check if a users only permission is checked for a guest and return
         // false if that is the case
-        if (!$this->user->userID && \in_array($permission, $this->usersOnlyPermissions)) {
+        if ($this->user->isGuest() && \in_array($permission, $this->usersOnlyPermissions)) {
             return false;
         }
 
@@ -818,7 +818,7 @@ final class SessionHandler extends SingletonFactory
      */
     public function getLanguageIDs(): array
     {
-        if (!$this->user->userID) {
+        if ($this->user->isGuest()) {
             return [];
         }
 
@@ -904,7 +904,7 @@ final class SessionHandler extends SingletonFactory
 
         $user = new User($userId);
 
-        if (!$user->userID) {
+        if ($user->isGuest()) {
             return null;
         }
 
@@ -979,7 +979,7 @@ final class SessionHandler extends SingletonFactory
         $this->delete();
 
         // If the target user is a registered user ...
-        if ($user->userID) {
+        if (!$user->isGuest()) {
             // ... we create a new session with a new session ID ...
             $this->create();
 
@@ -1243,7 +1243,7 @@ final class SessionHandler extends SingletonFactory
     public function delete(): void
     {
         // clear storage
-        if ($this->user->userID) {
+        if (!$this->user->isGuest()) {
             self::resetSessions([$this->user->userID]);
 
             // update last activity time
@@ -1347,7 +1347,7 @@ final class SessionHandler extends SingletonFactory
      */
     public function getUserSessions(User $user): array
     {
-        if (!$user->userID) {
+        if ($user->isGuest()) {
             throw new \InvalidArgumentException("The given user is a guest.");
         }
 
@@ -1375,7 +1375,7 @@ final class SessionHandler extends SingletonFactory
      */
     public function deleteUserSessionsExcept(User $user, ?string $sessionID = null): void
     {
-        if (!$user->userID) {
+        if ($user->isGuest()) {
             throw new \InvalidArgumentException("The given user is a guest.");
         }
 

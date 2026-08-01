@@ -66,7 +66,7 @@ final class UninstallPackageAction extends AbstractSecureAction
                 $this->queue = new PackageInstallationQueue(\intval($_POST['queueID']));
             }
 
-            if (!isset($this->queue) || !$this->queue->queueID) {
+            if (!isset($this->queue) || $this->queue->isNil()) {
                 throw new IllegalLinkException();
             }
 
@@ -95,7 +95,7 @@ final class UninstallPackageAction extends AbstractSecureAction
     protected function stepPrepare(): ResponseInterface
     {
         $package = new Package($this->packageID);
-        if (!$package->packageID || !$package->canUninstall()) {
+        if ($package->isNil() || !$package->canUninstall()) {
             throw new IllegalLinkException();
         }
 

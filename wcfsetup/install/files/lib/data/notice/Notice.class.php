@@ -90,7 +90,7 @@ class Notice extends DatabaseObject implements IRouteController, \Stringable
         }
 
         if ($this->isDismissed === null) {
-            if (WCF::getUser()->userID) {
+            if (!WCF::getUser()->isGuest()) {
                 $dismissedNotices = UserStorageHandler::getInstance()->getField('dismissedNotices');
                 if ($dismissedNotices === null) {
                     $sql = "SELECT  noticeID

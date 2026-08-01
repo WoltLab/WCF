@@ -172,7 +172,7 @@ class UserEditForm extends UserAddForm
             $this->userID = \intval($_REQUEST['id']);
         }
         $user = new User($this->userID);
-        if (!$user->userID) {
+        if ($user->isGuest()) {
             throw new IllegalLinkException();
         }
 

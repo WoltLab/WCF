@@ -133,7 +133,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
         $ignore = UserIgnore::getIgnore($this->parameters['userID']);
 
         // Check if the user is not yet ignored and cannot be ignored.
-        if (!$ignore->ignoreID && $userProfile->getPermission('user.profile.cannotBeIgnored')) {
+        if ($ignore->isNil() && $userProfile->getPermission('user.profile.cannotBeIgnored')) {
             throw new PermissionDeniedException();
         }
     }

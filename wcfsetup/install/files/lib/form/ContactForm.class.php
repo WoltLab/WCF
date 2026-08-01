@@ -66,7 +66,7 @@ class ContactForm extends AbstractFormBuilderForm
             $this->form->appendChild($this->getFileUploadFormField());
         }
 
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             $this->form->appendChild(
                 CaptchaFormField::create()
                     ->objectType(\CAPTCHA_TYPE)

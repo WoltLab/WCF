@@ -50,7 +50,7 @@ final class NotificationConfirmAction extends AbstractAction
         }
 
         $this->notification = new UserNotification($this->notificationID);
-        if (!$this->notification->notificationID) {
+        if ($this->notification->isNil()) {
             throw new IllegalLinkException();
         }
 

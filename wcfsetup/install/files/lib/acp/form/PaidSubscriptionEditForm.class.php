@@ -48,7 +48,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
             $this->subscriptionID = \intval($_REQUEST['id']);
         }
         $this->subscription = new PaidSubscription($this->subscriptionID);
-        if (!$this->subscription->subscriptionID) {
+        if ($this->subscription->isNil()) {
             throw new PermissionDeniedException();
         }
 

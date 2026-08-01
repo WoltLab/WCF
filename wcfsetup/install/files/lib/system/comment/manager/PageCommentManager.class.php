@@ -62,7 +62,7 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
     {
         // check object id
         $page = new Page($objectID);
-        if (!$page->pageID || !$page->isAccessible()) {
+        if ($page->isNil() || !$page->isAccessible()) {
             return false;
         }
 
@@ -73,7 +73,7 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
     public function canModerateObject(int $objectTypeID, int $objectID, UserProfile $user): bool
     {
         $page = new Page($objectID);
-        if (!$page->pageID) {
+        if ($page->isNil()) {
             return false;
         }
         if (!$page->isAccessible($user->getDecoratedObject())) {

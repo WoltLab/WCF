@@ -69,7 +69,7 @@ class ReactionAction extends AbstractDatabaseObjectAction
 
     /**
      * reaction type for the reaction
-     * @var ReactionType
+     * @var ?ReactionType
      */
     public $reactionType;
 
@@ -199,12 +199,12 @@ class ReactionAction extends AbstractDatabaseObjectAction
 
         $this->reactionType = ReactionTypeCache::getInstance()->getReactionTypeByID($this->parameters['reactionTypeID']);
 
-        if (!$this->reactionType->reactionTypeID) {
+        if ($this->reactionType === null) {
             throw new IllegalLinkException();
         }
 
         // check permissions
-        if (!WCF::getUser()->userID || !WCF::getSession()->hasPermission('user.like.canLike')) {
+        if (WCF::getUser()->isGuest() || !WCF::getSession()->hasPermission('user.like.canLike')) {
             throw new PermissionDeniedException();
         }
 
@@ -231,7 +231,7 @@ class ReactionAction extends AbstractDatabaseObjectAction
                 WCF::getUser()->userID
             );
 
-            if (!$like->likeID || $like->reactionTypeID !== $this->reactionType->reactionTypeID) {
+            if ($like->isNil() || $like->reactionTypeID !== $this->reactionType->reactionTypeID) {
                 throw new IllegalLinkException();
             }
         }

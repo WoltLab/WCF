@@ -73,7 +73,7 @@ class BBCodeEditForm extends BBCodeAddForm
             $this->bbcodeID = \intval($_REQUEST['id']);
         }
         $this->bbcode = new BBCode($this->bbcodeID);
-        if (!$this->bbcode->bbcodeID) {
+        if ($this->bbcode->isNil()) {
             throw new IllegalLinkException();
         }
 

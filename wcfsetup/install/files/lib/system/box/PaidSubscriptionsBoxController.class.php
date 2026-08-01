@@ -41,7 +41,7 @@ class PaidSubscriptionsBoxController extends AbstractBoxController
             // get available subscriptions
             $subscriptions = PaidSubscriptionCacheBuilder::getInstance()->getData();
 
-            if (WCF::getUser()->userID) {
+            if (!WCF::getUser()->isGuest()) {
                 // get purchased subscriptions
                 $userSubscriptionList = new PaidSubscriptionUserList();
                 $userSubscriptionList->getConditionBuilder()->add('userID = ?', [WCF::getUser()->userID]);

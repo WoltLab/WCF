@@ -325,7 +325,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
             $this->readString('assignedUsername', false);
 
             $this->user = User::getUserByUsername($this->parameters['assignedUsername']);
-            if (!$this->user->userID) {
+            if ($this->user->isGuest()) {
                 throw new UserInputException('assignedUsername', 'notFound');
             }
 

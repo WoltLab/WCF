@@ -72,7 +72,7 @@ class StyleExportForm extends AbstractForm
             $this->styleID = \intval($_REQUEST['id']);
         }
         $this->style = new Style($this->styleID);
-        if (!$this->style->styleID) {
+        if ($this->style->isNil()) {
             throw new IllegalLinkException();
         }
 

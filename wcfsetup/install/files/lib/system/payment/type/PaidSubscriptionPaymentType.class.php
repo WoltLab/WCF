@@ -42,13 +42,13 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType
 
             // get user object
             $user = new User(\intval($userID));
-            if (!$user->userID) {
+            if ($user->isGuest()) {
                 throw new SystemException('invalid user');
             }
 
             // get subscription object
             $subscription = new PaidSubscription(\intval($subscriptionID));
-            if (!$subscription->subscriptionID) {
+            if ($subscription->isNil()) {
                 throw new SystemException('invalid subscription');
             }
 

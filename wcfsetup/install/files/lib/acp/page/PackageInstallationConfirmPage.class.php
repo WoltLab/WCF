@@ -63,7 +63,7 @@ class PackageInstallationConfirmPage extends AbstractPage
             $this->queueID = \intval($_REQUEST['queueID']);
         }
         $this->queue = new PackageInstallationQueue($this->queueID);
-        if (!$this->queue->queueID || $this->queue->done) {
+        if ($this->queue->isNil() || $this->queue->done) {
             throw new IllegalLinkException();
         }
 

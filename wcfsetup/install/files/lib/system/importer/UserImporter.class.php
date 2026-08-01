@@ -119,7 +119,7 @@ class UserImporter extends AbstractImporter
         // check existing user id
         if (\ctype_digit((string)$oldID)) {
             $user = new User($oldID);
-            if (!$user->userID) {
+            if ($user->isGuest()) {
                 $data['userID'] = $oldID;
             }
         }

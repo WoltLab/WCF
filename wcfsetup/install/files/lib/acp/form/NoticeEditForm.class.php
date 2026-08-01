@@ -127,7 +127,7 @@ class NoticeEditForm extends NoticeAddForm
             $this->noticeID = \intval($_REQUEST['id']);
         }
         $this->notice = new Notice($this->noticeID);
-        if (!$this->notice->noticeID) {
+        if ($this->notice->isNil()) {
             throw new IllegalLinkException();
         }
     }

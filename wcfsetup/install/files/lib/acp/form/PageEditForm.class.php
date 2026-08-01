@@ -64,7 +64,7 @@ class PageEditForm extends PageAddForm
             $this->pageID = \intval($_REQUEST['id']);
         }
         $this->page = new Page($this->pageID);
-        if (!$this->page->pageID) {
+        if ($this->page->isNil()) {
             throw new IllegalLinkException();
         }
         if ($this->page->isMultilingual) {

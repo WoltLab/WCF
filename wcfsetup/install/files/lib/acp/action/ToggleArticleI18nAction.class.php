@@ -44,7 +44,7 @@ final class ToggleArticleI18nAction implements RequestHandlerInterface
             );
             $article = new Article($parameters['id']);
 
-            if (!$article->getObjectID()) {
+            if ($article->isNil()) {
                 throw new IllegalLinkException();
             }
         } catch (MappingError) {

@@ -83,7 +83,7 @@ class TaggedPage extends MultipleLinkPage
             $this->tagID = \intval($_REQUEST['id']);
         }
         $this->tag = new Tag($this->tagID);
-        if (!$this->tag->tagID) {
+        if ($this->tag->isNil()) {
             throw new IllegalLinkException();
         }
 

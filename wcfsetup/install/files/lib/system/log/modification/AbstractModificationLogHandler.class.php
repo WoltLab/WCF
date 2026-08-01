@@ -63,7 +63,7 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
     ) {
         // set default user data
         if ($userID === null) {
-            if (WCF::getUser()->userID) {
+            if (!WCF::getUser()->isGuest()) {
                 $userID = WCF::getUser()->userID;
             } elseif ($username === null) {
                 $username = 'System';

@@ -49,7 +49,7 @@ class BoxEditForm extends BoxAddForm
             $this->boxID = \intval($_REQUEST['id']);
         }
         $this->box = new Box($this->boxID);
-        if (!$this->box->boxID) {
+        if ($this->box->isNil()) {
             throw new IllegalLinkException();
         }
         if ($this->box->boxType == 'menu') {

@@ -87,7 +87,7 @@ class MenuItemAddForm extends AbstractFormBuilderForm
             $this->menuID = \intval($_REQUEST['menuID']);
         }
         $this->menu = new Menu($this->menuID);
-        if (!$this->menu->menuID) {
+        if ($this->menu->isNil()) {
             throw new IllegalLinkException();
         }
 
@@ -174,7 +174,7 @@ class MenuItemAddForm extends AbstractFormBuilderForm
                                 $page = new Page($pageID);
                                 $pageObjectID = $formField->getValue();
 
-                                if (!$page->pageID) {
+                                if ($page->isNil()) {
                                     return;
                                 }
 

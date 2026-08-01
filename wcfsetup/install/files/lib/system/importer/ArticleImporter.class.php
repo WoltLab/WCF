@@ -78,7 +78,7 @@ class ArticleImporter extends AbstractImporter
         // check old id
         if (\ctype_digit((string)$oldID)) {
             $article = new Article($oldID);
-            if (!$article->articleID) {
+            if ($article->isNil()) {
                 $data['articleID'] = $oldID;
             }
         }

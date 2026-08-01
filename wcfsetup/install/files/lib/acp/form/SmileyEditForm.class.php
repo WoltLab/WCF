@@ -53,7 +53,7 @@ class SmileyEditForm extends SmileyAddForm
             $this->smileyID = \intval($_REQUEST['id']);
         }
         $this->smiley = new Smiley($this->smileyID);
-        if (!$this->smiley->smileyID) {
+        if ($this->smiley->isNil()) {
             throw new IllegalLinkException();
         }
     }

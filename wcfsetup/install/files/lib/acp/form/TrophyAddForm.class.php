@@ -243,7 +243,7 @@ class TrophyAddForm extends AbstractAcpForm
             throw new UserInputException('categoryID');
         }
 
-        if (!$this->category->getObjectID()) {
+        if ($this->category->isNil()) {
             throw new UserInputException('categoryID');
         }
 

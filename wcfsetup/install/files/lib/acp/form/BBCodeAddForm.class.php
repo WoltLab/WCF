@@ -228,7 +228,7 @@ class BBCodeAddForm extends AbstractForm
     protected function validateBBCodeTagUsage()
     {
         $bbcode = BBCode::getBBCodeByTag($this->bbcodeTag);
-        if ($bbcode->bbcodeID) {
+        if (!$bbcode->isNil()) {
             throw new UserInputException('bbcodeTag', 'inUse');
         }
     }

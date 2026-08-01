@@ -66,7 +66,7 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm
     {
         parent::readParameters();
 
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             $this->performRedirect();
         }
 

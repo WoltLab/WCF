@@ -72,7 +72,7 @@ final class UserPasswordField extends AbstractFormField implements
     #[\Override]
     public function isAvailable()
     {
-        return WCF::getUser()->userID != 0 && !WCF::getUser()->authData && parent::isAvailable();
+        return !WCF::getUser()->isGuest() && !WCF::getUser()->authData && parent::isAvailable();
     }
 
     #[\Override]

@@ -81,7 +81,7 @@ final class HandleAccessToken implements MiddlewareInterface
         $userID = $matches['userID'];
         $token = $matches['token'];
 
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             if ($userID == WCF::getUser()->userID && \hash_equals(WCF::getUser()->accessToken, $token)) {
                 // Everything is fine, but the user is already logged in.
                 return true;

@@ -58,7 +58,7 @@ class ArticleCommentUserNotificationObjectType extends AbstractUserNotificationO
         $articleContent = new ArticleContent($comment->objectID);
         $article = $articleContent->getArticle();
 
-        \assert($article->articleID !== 0);
+        \assert(!$article->isNil());
 
         $subscribers = $article->getCategory()->getSubscribedUserIDs();
 

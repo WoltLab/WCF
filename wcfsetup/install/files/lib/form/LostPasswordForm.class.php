@@ -79,11 +79,11 @@ final class LostPasswordForm extends AbstractFormBuilderForm
     {
         $value = $formField->getValue();
         $this->user = User::getUserByUsername($value);
-        if (!$this->user->userID) {
+        if ($this->user->isGuest()) {
             $this->user = User::getUserByEmail($value);
         }
 
-        if (!$this->user->userID) {
+        if ($this->user->isGuest()) {
             if (UserUtil::isValidEmail($value)) {
                 $formField->addValidationError(
                     new FormFieldValidationError(

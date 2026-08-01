@@ -466,7 +466,7 @@ class BoxAddForm extends AbstractForm
                 throw new UserInputException('linkPageID');
             }
             $page = new Page($this->linkPageID);
-            if (!$page->pageID) {
+            if ($page->isNil()) {
                 throw new UserInputException('linkPageID', 'invalid');
             }
 

@@ -71,7 +71,7 @@ class TemplateDiffPage extends AbstractPage
             $this->templateID = \intval($_REQUEST['id']);
         }
         $this->template = new Template($this->templateID);
-        if (!$this->template->templateID) {
+        if ($this->template->isNil()) {
             throw new IllegalLinkException();
         }
         if (isset($_REQUEST['parentID'])) {

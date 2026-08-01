@@ -83,7 +83,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm
             $this->subscriptionID = \intval($_REQUEST['id']);
         }
         $this->subscription = new PaidSubscription($this->subscriptionID);
-        if (!$this->subscription->subscriptionID) {
+        if ($this->subscription->isNil()) {
             throw new IllegalLinkException();
         }
     }
@@ -122,7 +122,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm
             throw new UserInputException('username');
         }
         $this->user = User::getUserByUsername($this->username);
-        if (!$this->user->userID) {
+        if ($this->user->isGuest()) {
             throw new UserInputException('username', 'notFound');
         }
     }

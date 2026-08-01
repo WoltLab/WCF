@@ -335,7 +335,7 @@ final class SearchHandler
             $conditionBuilder->add('searchHash = ?', [$this->searchHash]);
             $conditionBuilder->add('searchType = ?', ['messages']);
             $conditionBuilder->add('searchTime > ?', [\TIME_NOW - 1800]);
-            if (WCF::getUser()->userID) {
+            if (!WCF::getUser()->isGuest()) {
                 $conditionBuilder->add('userID = ?', [WCF::getUser()->userID]);
             } else {
                 $conditionBuilder->add('userID IS NULL');

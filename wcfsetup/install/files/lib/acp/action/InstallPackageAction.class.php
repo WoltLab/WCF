@@ -58,7 +58,7 @@ class InstallPackageAction extends AbstractSecureAction
             $this->queue = new PackageInstallationQueue(\intval($_POST['queueID']));
         }
 
-        if (!isset($this->queue) || !$this->queue->queueID) {
+        if (!isset($this->queue) || $this->queue->isNil()) {
             throw new IllegalLinkException();
         }
 

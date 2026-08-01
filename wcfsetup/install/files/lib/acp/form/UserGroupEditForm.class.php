@@ -61,7 +61,7 @@ class UserGroupEditForm extends UserGroupAddForm
             $this->groupID = \intval($_REQUEST['id']);
         }
         $group = new UserGroup($this->groupID);
-        if (!$group->groupID) {
+        if ($group->isNil()) {
             throw new IllegalLinkException();
         }
         if (!$group->isAccessible()) {

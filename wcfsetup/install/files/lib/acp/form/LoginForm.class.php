@@ -108,7 +108,7 @@ class LoginForm extends AbstractFormBuilderForm
             LoginRedirect::setUrl(StringUtil::trim($_REQUEST['url']));
         }
 
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             // User is already logged in
             $this->performRedirect();
         }
@@ -126,11 +126,11 @@ class LoginForm extends AbstractFormBuilderForm
             } elseif (\USER_AUTHENTICATION_FAILURE_USER_CAPTCHA) {
                 if (isset($_POST['username'])) {
                     $user = User::getUserByUsername(StringUtil::trim($_POST['username']));
-                    if (!$user->userID) {
+                    if ($user->isGuest()) {
                         $user = User::getUserByEmail(StringUtil::trim($_POST['username']));
                     }
 
-                    if ($user->userID) {
+                    if (!$user->isGuest()) {
                         $failures = UserAuthenticationFailure::countUserFailures($user->userID);
                         if (
                             // @phpstan-ignore booleanAnd.leftAlwaysTrue
@@ -242,7 +242,7 @@ class LoginForm extends AbstractFormBuilderForm
         }
 
         $user = User::getUserByUsername($username);
-        if (!$user->userID) {
+        if ($user->isGuest()) {
             $user = User::getUserByEmail($username);
         }
 

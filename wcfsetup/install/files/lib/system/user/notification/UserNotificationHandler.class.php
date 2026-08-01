@@ -343,7 +343,7 @@ class UserNotificationHandler extends SingletonFactory
         if ($this->notificationCount === null || $skipCache) {
             $this->notificationCount = 0;
 
-            if (WCF::getUser()->userID) {
+            if (!WCF::getUser()->isGuest()) {
                 $data = UserStorageHandler::getInstance()->getField('userNotificationCount');
 
                 // cache does not exist or is outdated

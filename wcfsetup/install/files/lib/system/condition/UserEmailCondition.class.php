@@ -52,7 +52,7 @@ class UserEmailCondition extends AbstractTextCondition implements
     #[\Override]
     public function showContent(Condition $condition)
     {
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             return false;
         }
 

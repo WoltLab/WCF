@@ -608,7 +608,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
      */
     public function markAsRead()
     {
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             return;
         }
 

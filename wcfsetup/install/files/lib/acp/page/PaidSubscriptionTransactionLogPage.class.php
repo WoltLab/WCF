@@ -52,7 +52,7 @@ class PaidSubscriptionTransactionLogPage extends AbstractPage
             $this->logID = \intval($_REQUEST['id']);
         }
         $this->log = new PaidSubscriptionTransactionLog($this->logID);
-        if (!$this->log->logID) {
+        if ($this->log->isNil()) {
             throw new IllegalLinkException();
         }
     }

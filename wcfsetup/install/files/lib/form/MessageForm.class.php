@@ -145,7 +145,7 @@ abstract class MessageForm extends AbstractCaptchaForm
 
         if ($this->enableMultilingualism) {
             $this->availableContentLanguages = LanguageFactory::getInstance()->getContentLanguages();
-            if (WCF::getUser()->userID) {
+            if (!WCF::getUser()->isGuest()) {
                 foreach ($this->availableContentLanguages as $key => $value) {
                     if (!\in_array($key, WCF::getUser()->getLanguageIDs())) {
                         unset($this->availableContentLanguages[$key]);

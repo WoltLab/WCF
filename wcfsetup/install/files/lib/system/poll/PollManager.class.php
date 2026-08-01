@@ -122,7 +122,7 @@ class PollManager extends SingletonFactory
         // load poll
         if ($this->pollID) {
             $this->poll = new Poll($this->pollID);
-            if (!$this->poll->pollID) {
+            if ($this->poll->isNil()) {
                 $this->poll = null;
                 $this->pollID = 0;
 
@@ -440,7 +440,7 @@ class PollManager extends SingletonFactory
         $optionList->getConditionBuilder()->add("poll_option.pollID IN (?)", [$pollIDs]);
 
         // check for user votes
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             $optionList->sqlSelects = "CASE WHEN poll_option_vote.optionID IS NULL THEN '0' ELSE '1' END AS voted";
             $optionList->sqlJoins = "
                 LEFT JOIN   wcf1_poll_option_vote poll_option_vote

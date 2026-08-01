@@ -471,7 +471,7 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
     public function getEffectiveVisitTime(): int
     {
         if (!isset($this->effectiveVisitTime)) {
-            if (WCF::getUser()->userID !== 0) {
+            if (!WCF::getUser()->isGuest()) {
                 $this->effectiveVisitTime = \max(
                     0,
                     $this->getVisitTime(),

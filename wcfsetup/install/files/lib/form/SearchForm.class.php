@@ -289,7 +289,7 @@ class SearchForm extends AbstractCaptchaForm
         // check search hash
         if (!empty($this->query)) {
             $parameters = [$this->searchHash, 'messages', \TIME_NOW - 1800];
-            if (WCF::getUser()->userID) {
+            if (!WCF::getUser()->isGuest()) {
                 $parameters[] = WCF::getUser()->userID;
             }
 

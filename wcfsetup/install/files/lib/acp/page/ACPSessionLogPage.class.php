@@ -46,7 +46,7 @@ final class ACPSessionLogPage extends AbstractGridViewPage
             throw new IllegalLinkException();
         }
         $this->sessionLog = new ACPSessionLog(\intval($_REQUEST['id']));
-        if (!$this->sessionLog->sessionLogID) {
+        if ($this->sessionLog->isNil()) {
             throw new IllegalLinkException();
         }
     }

@@ -49,7 +49,7 @@ final class TemplateGroupCopyAction implements RequestHandlerInterface
             );
             $templateGroup = new TemplateGroup($queryParameters['id']);
 
-            if (!$templateGroup->getObjectID()) {
+            if ($templateGroup->isNil()) {
                 throw new IllegalLinkException();
             }
         } catch (MappingError) {

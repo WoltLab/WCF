@@ -31,7 +31,7 @@ final class ChangeStyle
             return;
         }
 
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             $this->saveUserStyle($this->style->styleID, (bool)$this->style->isDefault);
         } else {
             $this->saveGuestStyle($this->style->styleID, (bool)$this->style->isDefault);

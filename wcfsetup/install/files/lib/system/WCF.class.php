@@ -658,7 +658,7 @@ class WCF
             $package = new Package($application->packageID);
 
             // package cache is outdated, discard cache
-            if ($package->packageID) {
+            if (!$package->isNil()) {
                 PackageEditor::resetCache();
             } else {
                 // package id is invalid

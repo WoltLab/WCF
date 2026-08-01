@@ -63,7 +63,7 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
         }
 
         $style = new Style($user->styleID);
-        if (!$style->styleID) {
+        if ($style->isNil()) {
             $style = StyleHandler::getInstance()->getStyle();
         }
 
@@ -81,7 +81,7 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
 
         $notification = $statement->fetchObject(UserNotification::class);
         $statement->closeCursor();
-        if (!$notification || !$notification->notificationID) {
+        if ($notification === null) {
             return;
         }
         $user = WCF::getUser();

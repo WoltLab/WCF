@@ -246,7 +246,7 @@ class CommentHandler extends SingletonFactory
     public function markNotificationsAsConfirmed(string $objectType, array $objectIDs, int $time = \TIME_NOW)
     {
         // notifications are only relevant for logged-in users
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             return;
         }
 
@@ -477,7 +477,7 @@ class CommentHandler extends SingletonFactory
     public function markNotificationsAsConfirmedForComments(string $objectType, array $comments)
     {
         // notifications are only relevant for logged-in users
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             return;
         }
 
@@ -659,7 +659,7 @@ class CommentHandler extends SingletonFactory
     public function markNotificationsAsConfirmedForResponses(string $objectType, array $responses)
     {
         // notifications are only relevant for logged-in users
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             return;
         }
 

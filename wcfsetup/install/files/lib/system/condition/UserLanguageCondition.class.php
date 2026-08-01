@@ -120,7 +120,7 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements
     #[\Override]
     public function showContent(Condition $condition)
     {
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             return $this->checkUser($condition, WCF::getUser());
         }
 

@@ -84,7 +84,7 @@ class MediaImporter extends AbstractImporter
         // check old id
         if (\ctype_digit((string)$oldID)) {
             $media = new Media($oldID);
-            if (!$media->mediaID) {
+            if ($media->isNil()) {
                 $data['mediaID'] = $oldID;
             }
         }

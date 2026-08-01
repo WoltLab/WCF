@@ -72,7 +72,7 @@ class Ad extends DatabaseObject implements IRouteController
 
         $objectType = ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID);
 
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             $output = \strtr($output, ['{$username}' => StringUtil::encodeHTML(WCF::getUser()->username)]);
         } else {
             $output = \strtr(

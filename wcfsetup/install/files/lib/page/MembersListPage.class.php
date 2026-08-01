@@ -45,7 +45,7 @@ class MembersListPage extends AbstractListViewPage
         if (!empty($_REQUEST['id'])) {
             $this->searchID = \intval($_REQUEST['id']);
             $search = new Search($this->searchID);
-            if (!$search->searchID || $search->userID != WCF::getUser()->userID || $search->searchType != 'users') {
+            if ($search->isNil() || $search->userID != WCF::getUser()->userID || $search->searchType != 'users') {
                 throw new IllegalLinkException();
             }
         }

@@ -146,7 +146,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm
                 $this->optionID = \intval($_REQUEST['id']);
             }
             $this->option = new $this->baseClass($this->optionID);
-            if (!$this->option->getObjectID()) {
+            if ($this->option->isNil()) {
                 throw new IllegalLinkException();
             }
         }

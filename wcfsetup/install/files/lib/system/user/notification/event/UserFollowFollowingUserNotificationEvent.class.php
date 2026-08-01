@@ -90,7 +90,7 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
     public static function getTestObjects(UserProfile $recipient, UserProfile $author)
     {
         $follow = UserFollow::getFollow($recipient->userID, $author->userID);
-        if (!$follow->followID) {
+        if ($follow->isNil()) {
             $follow = (new UserFollowAction([], 'create', [
                 'data' => [
                     'userID' => $recipient->userID,

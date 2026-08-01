@@ -165,7 +165,7 @@ class TrophyPage extends MultipleLinkPage
         $canViewTrophyDefaultValue = UserOptionCacheBuilder::getInstance()->getData()['options']['canViewTrophies']->defaultValue;
         $canViewTrophiesOptionID = User::getUserOptionID('canViewTrophies');
 
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             $this->objectList->getConditionBuilder()->add('user_trophy.userID IN (
                 SELECT  userID
                 FROM    wcf1_user_option_value

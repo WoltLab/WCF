@@ -54,7 +54,7 @@ class OptionForm extends AbstractOptionListForm
             $this->categoryID = \intval($_REQUEST['id']);
         }
         $this->category = new OptionCategory($this->categoryID);
-        if (!$this->category->categoryID) {
+        if ($this->category->isNil()) {
             throw new IllegalLinkException();
         }
         $this->categoryName = $this->category->categoryName;

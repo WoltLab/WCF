@@ -87,7 +87,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
         $this->readInteger('lastResponseID', true, 'data');
 
         $this->comment = new Comment($this->parameters['data']['commentID']);
-        if (!$this->comment->commentID) {
+        if ($this->comment->isNil()) {
             throw new UserInputException('commentID');
         }
 

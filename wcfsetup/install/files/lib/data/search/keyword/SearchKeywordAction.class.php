@@ -31,7 +31,7 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
     #[\Override]
     public function validateGetSearchResultList()
     {
-        if (\FORCE_LOGIN && !WCF::getUser()->userID) {
+        if (\FORCE_LOGIN && WCF::getUser()->isGuest()) {
             throw new PermissionDeniedException();
         }
 

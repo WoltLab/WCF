@@ -24,7 +24,7 @@ class NotificationRssFeedPage extends AbstractRssFeedPage
     {
         parent::readParameters();
 
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             throw new IllegalLinkException();
         }
     }

@@ -64,7 +64,7 @@ final class EmailActivationForm extends AbstractFormBuilderForm
     private function validateUserID(IntegerFormField $formField): void
     {
         $this->user = new User($formField->getValue());
-        if (!$this->user->userID) {
+        if ($this->user->isGuest()) {
             $formField->addValidationError(
                 new FormFieldValidationError(
                     'invalid',

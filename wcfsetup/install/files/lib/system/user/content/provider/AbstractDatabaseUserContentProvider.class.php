@@ -52,7 +52,7 @@ abstract class AbstractDatabaseUserContentProvider implements IUserContentProvid
     #[\Override]
     public function getContentListForUser(User $user)
     {
-        if ($user->userID == 0) {
+        if ($user->isGuest()) {
             throw new \RuntimeException('Removing content for guests is not allowed.');
         }
 

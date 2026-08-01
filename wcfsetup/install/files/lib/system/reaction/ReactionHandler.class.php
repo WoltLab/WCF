@@ -235,7 +235,7 @@ final class ReactionHandler extends SingletonFactory
         $conditions->add("like_object.objectID IN (?)", [$objectIDs]);
         $parameters = $conditions->getParameters();
 
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             $sql = "SELECT      like_object.*,
                                 COALESCE(like_table.reactionTypeID, 0) AS reactionTypeID,
                                 COALESCE(like_table.likeValue, 0) AS liked
@@ -321,7 +321,7 @@ final class ReactionHandler extends SingletonFactory
      */
     public function revertReact(Like $like, ILikeObject $likeable, LikeObject $likeObject, User $user): array
     {
-        if (!$like->likeID) {
+        if ($like->isNil()) {
             throw new \InvalidArgumentException('The given parameter $like is invalid.');
         }
 

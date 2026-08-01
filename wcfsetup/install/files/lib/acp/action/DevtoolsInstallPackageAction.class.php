@@ -59,7 +59,7 @@ final class DevtoolsInstallPackageAction extends InstallPackageAction
             $this->project = new DevtoolsProject(\intval($_POST['projectID']));
         }
 
-        if (!isset($this->project) || !$this->project->projectID) {
+        if (!isset($this->project) || $this->project->isNil()) {
             throw new IllegalLinkException();
         }
 
@@ -72,7 +72,7 @@ final class DevtoolsInstallPackageAction extends InstallPackageAction
             $this->queue = new PackageInstallationQueue($queueID);
         }
 
-        if (!isset($this->queue) || !$this->queue->queueID) {
+        if (!isset($this->queue) || $this->queue->isNil()) {
             throw new IllegalLinkException();
         }
 

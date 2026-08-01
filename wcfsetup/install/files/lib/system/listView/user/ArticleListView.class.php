@@ -49,7 +49,7 @@ class ArticleListView extends AbstractListView
             new TextFilter('username', 'wcf.user.username'),
             ...$this->getLabelFilters()
         ]);
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             $this->addAvailableFilter($this->getUnreadFilter());
             if (ArticleCategory::getSubscribedCategoryIDs() !== []) {
                 $this->addAvailableFilter($this->getWatchedFilter());
@@ -196,7 +196,7 @@ class ArticleListView extends AbstractListView
 
     public function canMarkAsRead(): bool
     {
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             return false;
         }
 

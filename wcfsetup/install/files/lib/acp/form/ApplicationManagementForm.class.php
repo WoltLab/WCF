@@ -131,7 +131,7 @@ final class ApplicationManagementForm extends AbstractForm
             }
 
             $page = new Page($landingPageID);
-            if (!$page->pageID) {
+            if ($page->isNil()) {
                 throw new UserInputException('landingPageID');
             } elseif ($page->requireObjectID || $page->excludeFromLandingPage || $page->isDisabled) {
                 throw new UserInputException('landingPageID', 'invalid');

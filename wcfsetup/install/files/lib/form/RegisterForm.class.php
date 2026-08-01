@@ -123,7 +123,7 @@ class RegisterForm extends UserAddForm
         }
 
         // user is already registered
-        if (WCF::getUser()->userID) {
+        if (!WCF::getUser()->isGuest()) {
             throw new PermissionDeniedException();
         }
 

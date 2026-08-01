@@ -110,7 +110,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
         }
 
         // validate by user id
-        if ($user->userID) {
+        if (!$user->isGuest()) {
             if (
                 isset($this->permissions['user'][$user->userID])
                 && isset($this->permissions['user'][$user->userID][$optionID])

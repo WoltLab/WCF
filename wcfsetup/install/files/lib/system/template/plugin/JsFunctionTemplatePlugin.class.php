@@ -96,7 +96,7 @@ class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin
             if (
                 \defined('VISITOR_USE_TINY_BUILD')
                 && \VISITOR_USE_TINY_BUILD
-                && !WCF::getUser()->userID
+                && WCF::getUser()->isGuest()
                 && !empty($tagArgs['hasTiny'])
             ) {
                 $src .= '.tiny';

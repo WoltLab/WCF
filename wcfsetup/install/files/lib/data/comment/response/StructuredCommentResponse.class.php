@@ -78,7 +78,7 @@ class StructuredCommentResponse extends DatabaseObjectDecorator
     public static function getResponse(int $responseID)
     {
         $response = new CommentResponse($responseID);
-        if (!$response->responseID) {
+        if ($response->isNil()) {
             return null;
         }
 

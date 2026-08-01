@@ -39,7 +39,7 @@ final class UserCoverPhotoAction implements RequestHandlerInterface
                 EOT
         );
 
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             throw new PermissionDeniedException();
         }
 

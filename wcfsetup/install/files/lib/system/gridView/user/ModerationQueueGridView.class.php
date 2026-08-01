@@ -210,7 +210,7 @@ final class ModerationQueueGridView extends AbstractGridView
 
     public function canMarkAsRead(): bool
     {
-        if (!WCF::getUser()->userID) {
+        if (WCF::getUser()->isGuest()) {
             return false;
         }
 

@@ -260,8 +260,8 @@ abstract class AbstractOauth2AuthAction implements RequestHandlerInterface
     {
         $user = $this->getInternalUser($oauthUser);
 
-        if ($user->userID) {
-            if (WCF::getUser()->userID) {
+        if (!$user->isGuest()) {
+            if (!WCF::getUser()->isGuest()) {
                 // This account belongs to an existing user, but we are already logged in.
                 // This can't be handled.
 
@@ -283,7 +283,7 @@ abstract class AbstractOauth2AuthAction implements RequestHandlerInterface
         } else {
             WCF::getSession()->register('__3rdPartyProvider', $this->getProviderName());
 
-            if (WCF::getUser()->userID) {
+            if (!WCF::getUser()->isGuest()) {
                 // This account does not belong to anyone and we are already logged in.
                 // Thus we want to connect this account.
 

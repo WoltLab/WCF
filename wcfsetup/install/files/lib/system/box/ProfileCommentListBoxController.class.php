@@ -34,7 +34,7 @@ class ProfileCommentListBoxController extends AbstractCommentListBoxController
                 INNER JOIN  wcf1_user_option_value user_option_value
                 ON          user_option_value.userID = comment.objectID';
 
-            if (WCF::getUser()->userID) {
+            if (!WCF::getUser()->isGuest()) {
                 $followers = UserProfileHandler::getInstance()->getFollowers();
                 if (empty($followers)) {
                     $commentList->getConditionBuilder()->add("(

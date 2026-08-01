@@ -51,7 +51,7 @@ class UserTrophyEditForm extends UserTrophyAddForm
         }
         $this->userTrophy = new UserTrophy($this->userTrophyID);
 
-        if (!$this->userTrophy->userTrophyID) {
+        if ($this->userTrophy->isNil()) {
             throw new IllegalLinkException();
         }
 

@@ -80,7 +80,7 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm
             $this->assignmentID = \intval($_REQUEST['id']);
         }
         $this->assignment = new UserGroupAssignment($this->assignmentID);
-        if (!$this->assignment->assignmentID) {
+        if ($this->assignment->isNil()) {
             throw new IllegalLinkException();
         }
     }

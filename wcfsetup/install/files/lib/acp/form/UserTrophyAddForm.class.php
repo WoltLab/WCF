@@ -164,7 +164,7 @@ class UserTrophyAddForm extends AbstractAcpForm
             throw new UserInputException('user');
         }
 
-        if (!$this->trophy->trophyID) {
+        if ($this->trophy->isNil()) {
             throw new UserInputException('trophyID');
         }
 
