@@ -26,11 +26,11 @@ final class ReplaceFileSource
 
     public function __invoke(): File
     {
-        return (new \wcf\command\file\ReplaceFileSource(
+        return new \wcf\command\file\ReplaceFileSource(
             $this->file,
             $this->pathname,
             $this->filename,
             $this->regenerateThumbnails
-        ))();
+        )();
     }
 }

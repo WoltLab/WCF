@@ -30,7 +30,7 @@ final class EnableNotice implements IController
         $this->assertNoticeCanBeEnabled();
 
         if ($notice->isDisabled) {
-            (new \wcf\command\notice\EnableNotice($notice))();
+            new \wcf\command\notice\EnableNotice($notice)();
         }
 
         return new JsonResponse([]);

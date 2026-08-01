@@ -22,9 +22,9 @@ final class Follow
 
     public function __invoke(): void
     {
-        (new \wcf\command\user\Follow(
+        new \wcf\command\user\Follow(
             $this->user,
             $this->target
-        ))();
+        )();
     }
 }

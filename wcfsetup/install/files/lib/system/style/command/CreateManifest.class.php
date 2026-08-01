@@ -22,8 +22,8 @@ final class CreateManifest
 
     public function __invoke(): void
     {
-        (new \wcf\command\style\CreateManifest(
+        new \wcf\command\style\CreateManifest(
             $this->style
-        ))();
+        )();
     }
 }

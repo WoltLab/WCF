@@ -22,8 +22,8 @@ final class CreateRegistrationNotification
 
     public function __invoke(): void
     {
-        (new \wcf\command\user\CreateRegistrationNotification(
+        new \wcf\command\user\CreateRegistrationNotification(
             $this->user
-        ))();
+        )();
     }
 }

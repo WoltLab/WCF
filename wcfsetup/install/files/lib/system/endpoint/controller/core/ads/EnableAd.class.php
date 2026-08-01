@@ -31,7 +31,7 @@ class EnableAd implements IController
         $this->assertAdCanBeEnabled();
 
         if ($ad->isDisabled) {
-            (new \wcf\command\ad\EnableAd($ad))();
+            new \wcf\command\ad\EnableAd($ad)();
         }
 
         return new JsonResponse([]);

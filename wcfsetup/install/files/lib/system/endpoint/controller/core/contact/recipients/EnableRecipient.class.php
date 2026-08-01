@@ -32,7 +32,7 @@ final class EnableRecipient implements IController
         $recipient = Helper::fetchObjectFromRequestParameter($variables['id'], ContactRecipient::class);
 
         if ($recipient->isDisabled) {
-            (new EnableContactRecipient($recipient))();
+            new EnableContactRecipient($recipient)();
         }
 
         return new JsonResponse([]);

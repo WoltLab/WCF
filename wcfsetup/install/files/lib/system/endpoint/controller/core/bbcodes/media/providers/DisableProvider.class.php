@@ -30,7 +30,7 @@ final class DisableProvider implements IController
         $this->assertMediaProviderCanBeDisabled();
 
         if (!$provider->isDisabled) {
-            (new \wcf\command\bbcode\media\provider\DisableBBCodeMediaProvider($provider))();
+            new \wcf\command\bbcode\media\provider\DisableBBCodeMediaProvider($provider)();
         }
 
         return new JsonResponse([]);

@@ -30,7 +30,7 @@ final class DisableCategory implements IController
         $this->assertCategoryCanBeDisabled($category);
 
         if (!$category->isDisabled) {
-            (new \wcf\command\category\DisableCategory($category))();
+            new \wcf\command\category\DisableCategory($category)();
         }
 
         return new JsonResponse([]);

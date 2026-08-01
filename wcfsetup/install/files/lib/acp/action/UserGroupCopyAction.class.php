@@ -65,12 +65,12 @@ final class UserGroupCopyAction implements RequestHandlerInterface
 
             $data = $form->getData();
 
-            $group = (new CopyUserGroup(
+            $group = new CopyUserGroup(
                 $userGroup,
                 $data['data']['copyUserGroupOptions'],
                 $data['data']['copyMembers'],
                 $data['data']['copyACLOptions']
-            ))();
+            )();
 
             return new JsonResponse([
                 'result' => [

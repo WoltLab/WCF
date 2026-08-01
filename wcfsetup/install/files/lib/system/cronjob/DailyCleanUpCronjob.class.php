@@ -210,6 +210,6 @@ class DailyCleanUpCronjob extends AbstractCronjob
 
         FloodControl::getInstance()->prune();
         EmailMultifactorMethod::prune();
-        (new PruneEmailLogEntries())();
+        new PruneEmailLogEntries()();
     }
 }

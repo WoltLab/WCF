@@ -30,10 +30,10 @@ final class RevokePaidSubscriptionUser
         $this->revokeSubscription($this->subscriptionUser);
         $user = $this->subscriptionUser->getUser();
 
-        (new RemoveGroupMembership($this->subscriptionUser->getSubscription(), $user))();
+        new RemoveGroupMembership($this->subscriptionUser->getSubscription(), $user)();
 
         foreach ($this->getActiveSubscriptions($this->subscriptionUser->userID) as $activeSubscription) {
-            (new AddGroupMembership($activeSubscription, $user))();
+            new AddGroupMembership($activeSubscription, $user)();
         }
 
         $event = new PaidSubscriptionUserRevoked($this->subscriptionUser);

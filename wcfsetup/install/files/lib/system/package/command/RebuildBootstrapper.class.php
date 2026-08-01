@@ -17,6 +17,6 @@ final class RebuildBootstrapper
 {
     public function __invoke(): void
     {
-        (new \wcf\command\package\RebuildBootstrapper())();
+        new \wcf\command\package\RebuildBootstrapper()();
     }
 }

@@ -121,7 +121,7 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
     public function checkAccess()
     {
         if (!ArticleRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID)->canRead()) {
-            (new ResetUserStorageForUnreadArticles())();
+            new ResetUserStorageForUnreadArticles()();
 
             return false;
         }

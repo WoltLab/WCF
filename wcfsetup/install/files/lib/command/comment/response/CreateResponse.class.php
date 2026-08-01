@@ -59,7 +59,7 @@ final class CreateResponse
         }
 
         if (!$response->isDisabled) {
-            (new PublishResponse($response))();
+            new PublishResponse($response)();
         } else {
             ModerationQueueActivationManager::getInstance()->addModeratedContent(
                 'com.woltlab.wcf.comment.response',

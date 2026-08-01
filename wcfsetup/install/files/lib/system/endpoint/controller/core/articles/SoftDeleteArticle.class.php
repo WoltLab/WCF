@@ -38,7 +38,7 @@ final class SoftDeleteArticle implements IController
             throw new IllegalLinkException();
         }
 
-        (new \wcf\command\article\SoftDeleteArticle($article))();
+        new \wcf\command\article\SoftDeleteArticle($article)();
 
         return new JsonResponse([]);
     }

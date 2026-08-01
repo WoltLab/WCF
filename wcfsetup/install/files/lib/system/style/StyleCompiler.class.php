@@ -325,7 +325,7 @@ final class StyleCompiler extends SingletonFactory
 
         $this->writeCss($this->getFilenameForStyle($style), $css, $preloadManifest);
 
-        (new CreateManifest($style))();
+        new CreateManifest($style)();
     }
 
     /**

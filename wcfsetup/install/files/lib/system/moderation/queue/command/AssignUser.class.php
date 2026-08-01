@@ -23,9 +23,9 @@ final class AssignUser
 
     public function __invoke(): void
     {
-        (new \wcf\command\moderation\queue\AssignUser(
+        new \wcf\command\moderation\queue\AssignUser(
             $this->moderationQueue,
             $this->user
-        ))();
+        )();
     }
 }

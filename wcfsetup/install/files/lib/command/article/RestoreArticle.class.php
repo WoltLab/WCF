@@ -25,7 +25,7 @@ final class RestoreArticle
             ->setIsDeleted(false)
             ->update();
 
-        (new ResetUserStorageForUnreadArticles())();
+        new ResetUserStorageForUnreadArticles()();
 
         $event = new ArticleRestored($this->article);
         EventHandler::getInstance()->fire($event);

@@ -78,12 +78,12 @@ class AttachmentAction extends AbstractDatabaseObjectAction
     public function copy()
     {
         return [
-            'attachmentIDs' => (new CopyAttachments(
+            'attachmentIDs' => new CopyAttachments(
                 $this->parameters['sourceObjectType'],
                 $this->parameters['sourceObjectID'],
                 $this->parameters['targetObjectType'],
                 $this->parameters['targetObjectID']
-            ))()
+            )()
         ];
     }
 }

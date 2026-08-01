@@ -30,7 +30,7 @@ final class MarkArticleAsRead
             $this->visitTime
         );
 
-        (new ResetUserStorageForUnreadArticles([WCF::getUser()->userID]))();
+        new ResetUserStorageForUnreadArticles([WCF::getUser()->userID])();
 
         $this->deleteObsoleteNotifications();
     }

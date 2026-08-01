@@ -153,12 +153,12 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
                 ApiEndpointCacheBuilder::getInstance()->reset();
                 StyleHandler::resetStylesheets(false);
 
-                (new SetLastUpdateTime())();
+                new SetLastUpdateTime()();
 
                 if (!$hadBootstrapFile) {
                     \clearstatcache(filename: $bootstrapPathname);
                     if (\file_exists($bootstrapPathname)) {
-                        (new RebuildBootstrapper())();
+                        new RebuildBootstrapper()();
                     }
                 }
                 break;

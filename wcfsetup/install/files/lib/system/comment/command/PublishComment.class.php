@@ -21,6 +21,6 @@ final class PublishComment
 
     public function __invoke(): void
     {
-        (new \wcf\command\comment\PublishComment($this->comment))();
+        new \wcf\command\comment\PublishComment($this->comment)();
     }
 }

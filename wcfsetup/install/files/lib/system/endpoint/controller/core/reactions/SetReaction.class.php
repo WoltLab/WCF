@@ -79,11 +79,11 @@ final class SetReaction implements IController
         );
 
         if (!$like->likeID || $like->reactionTypeID !== $reactionType->reactionTypeID) {
-            (new \wcf\command\reaction\SetReaction(
+            new \wcf\command\reaction\SetReaction(
                 $likeable,
                 WCF::getUser(),
                 $reactionType
-            ))();
+            )();
         }
 
         $likeObject = LikeObject::getLikeObject(

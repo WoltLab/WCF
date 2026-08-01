@@ -78,7 +78,7 @@ final class UserAvatarFileProcessor extends AbstractFileProcessor
             WCF::getSession()->update();
         }
 
-        (new SetAvatar($user->getDecoratedObject(), $file))();
+        new SetAvatar($user->getDecoratedObject(), $file)();
     }
 
     #[\Override]

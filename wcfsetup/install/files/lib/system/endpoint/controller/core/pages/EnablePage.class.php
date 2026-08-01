@@ -31,7 +31,7 @@ final class EnablePage implements IController
         $this->assertPageCanBeEnabled($page);
 
         if ($page->isDisabled) {
-            (new \wcf\command\page\EnablePage($page))();
+            new \wcf\command\page\EnablePage($page)();
         }
 
         return new JsonResponse([]);

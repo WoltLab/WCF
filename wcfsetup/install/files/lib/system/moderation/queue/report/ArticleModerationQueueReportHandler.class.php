@@ -152,7 +152,7 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
     public function removeContent(ModerationQueue $queue, string $message)
     {
         if ($this->isValid($queue->objectID)) {
-            (new SoftDeleteArticle($this->getArticle($queue->objectID)))();
+            new SoftDeleteArticle($this->getArticle($queue->objectID))();
         }
     }
 

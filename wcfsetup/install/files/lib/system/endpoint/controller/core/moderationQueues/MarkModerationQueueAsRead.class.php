@@ -30,7 +30,7 @@ final class MarkModerationQueueAsRead implements IController
 
         $this->assertQueueCanBeMarkedAsRead($queue);
 
-        (new \wcf\command\moderation\queue\MarkModerationQueueAsRead($queue))();
+        new \wcf\command\moderation\queue\MarkModerationQueueAsRead($queue)();
 
         return new JsonResponse([
             'unreadModerationItems' => ModerationQueueManager::getInstance()->getUnreadModerationCount(true)

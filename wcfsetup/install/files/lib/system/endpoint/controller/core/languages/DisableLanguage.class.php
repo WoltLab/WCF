@@ -31,7 +31,7 @@ final class DisableLanguage implements IController
         $this->assertLanguageCanBeDisabled($language);
 
         if (!$language->isDisabled) {
-            (new \wcf\command\language\DisableLanguage($language))();
+            new \wcf\command\language\DisableLanguage($language)();
         }
 
         return new JsonResponse([]);

@@ -518,9 +518,9 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
     {
         foreach ($this->objects as $editor) {
             if ($editor->isDisabled) {
-                (new EnablePage($editor->getDecoratedObject()))();
+                new EnablePage($editor->getDecoratedObject())();
             } else {
-                (new DisablePage($editor->getDecoratedObject()))();
+                new DisablePage($editor->getDecoratedObject())();
             }
         }
     }

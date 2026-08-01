@@ -80,7 +80,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
         $type = $this->parameters['data']['type'] ?? UserIgnore::TYPE_BLOCK_DIRECT_CONTACT;
         $userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['data']['userID']);
 
-        (new IgnoreUser(WCF::getUser(), $userProfile->getDecoratedObject(), $type))();
+        new IgnoreUser(WCF::getUser(), $userProfile->getDecoratedObject(), $type)();
 
         return ['isIgnoredUser' => 1];
     }
@@ -113,7 +113,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
     {
         $userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['data']['userID']);
 
-        (new UnignoreUser(WCF::getUser(), $userProfile->getDecoratedObject()))();
+        new UnignoreUser(WCF::getUser(), $userProfile->getDecoratedObject())();
 
         return ['isIgnoredUser' => 0];
     }

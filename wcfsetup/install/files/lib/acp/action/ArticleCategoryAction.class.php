@@ -67,7 +67,7 @@ final class ArticleCategoryAction implements RequestHandlerInterface
             WCF::getDB()->beginTransaction();
 
             foreach ($articleList as $article) {
-                (new SetArticleCategory($article, $category))();
+                new SetArticleCategory($article, $category)();
             }
 
             WCF::getDB()->commitTransaction();

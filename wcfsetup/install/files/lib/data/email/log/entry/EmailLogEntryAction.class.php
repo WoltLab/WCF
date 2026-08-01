@@ -29,6 +29,6 @@ class EmailLogEntryAction extends AbstractDatabaseObjectAction
      */
     public function prune()
     {
-        (new PruneEmailLogEntries())();
+        new PruneEmailLogEntries()();
     }
 }

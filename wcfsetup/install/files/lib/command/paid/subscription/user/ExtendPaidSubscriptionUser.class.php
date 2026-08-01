@@ -32,10 +32,10 @@ final class ExtendPaidSubscriptionUser
         $this->extendSubscription($this->subscriptionUser, $endDate);
 
         if (!$this->subscriptionUser->isActive) {
-            (new AddGroupMembership(
+            new AddGroupMembership(
                 $this->subscriptionUser->getSubscription(),
                 $this->subscriptionUser->getUser()
-            ))();
+            )();
         }
 
         $event = new PaidSubscriptionUserExtended($this->subscriptionUser, $endDate);

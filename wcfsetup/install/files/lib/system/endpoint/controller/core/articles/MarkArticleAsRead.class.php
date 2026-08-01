@@ -34,7 +34,7 @@ final class MarkArticleAsRead implements IController
         $article = Helper::fetchObjectFromRequestParameter($variables['id'], Article::class);
         $this->assertArticleIsAccessible($article);
 
-        (new \wcf\command\article\MarkArticleAsRead($article))();
+        new \wcf\command\article\MarkArticleAsRead($article)();
 
         return new JsonResponse([]);
     }

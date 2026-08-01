@@ -29,7 +29,7 @@ final class DismissNotice implements IController
 
         $this->assertNoticeCanBeDismissed($notice);
 
-        (new \wcf\command\notice\DismissNotice($notice))();
+        new \wcf\command\notice\DismissNotice($notice)();
 
         return new JsonResponse([]);
     }

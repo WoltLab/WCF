@@ -60,7 +60,7 @@ final class CreateComment
         }
 
         if (!$comment->isDisabled) {
-            (new PublishComment($comment))();
+            new PublishComment($comment)();
         } else {
             ModerationQueueActivationManager::getInstance()->addModeratedContent(
                 'com.woltlab.wcf.comment.comment',

@@ -38,7 +38,7 @@ final class UnpublishArticle implements IController
             throw new IllegalLinkException();
         }
 
-        (new \wcf\command\article\UnpublishArticle($article))();
+        new \wcf\command\article\UnpublishArticle($article)();
 
         return new JsonResponse([]);
     }

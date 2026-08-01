@@ -164,11 +164,11 @@ class CommentHandler extends SingletonFactory
             $notificationObjectTypes[] = $objectTypeObj->objectType . '.like.notification';
         }
 
-        (new DeleteObjectReactions(
+        new DeleteObjectReactions(
             'com.woltlab.wcf.comment',
             $commentIDs,
             $notificationObjectTypes
-        ))();
+        )();
 
         // delete activity events
         if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.recentActivityEvent')) {
@@ -188,11 +188,11 @@ class CommentHandler extends SingletonFactory
                 $notificationObjectTypes[] = $objectTypeObj->objectType . '.response.like.notification';
             }
 
-            (new DeleteObjectReactions(
+            new DeleteObjectReactions(
                 'com.woltlab.wcf.comment.response',
                 $responseIDs,
                 $notificationObjectTypes
-            ))();
+            )();
 
             // delete activity events (for responses)
             if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.response.recentActivityEvent')) {

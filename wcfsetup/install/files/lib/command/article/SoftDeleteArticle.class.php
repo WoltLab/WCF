@@ -25,7 +25,7 @@ final class SoftDeleteArticle
             ->setIsDeleted(true)
             ->update();
 
-        (new ResetUserStorageForUnreadArticles())();
+        new ResetUserStorageForUnreadArticles()();
 
         $event = new ArticleSoftDeleted($this->article);
         EventHandler::getInstance()->fire($event);

@@ -447,7 +447,7 @@ final class FileProcessor extends SingletonFactory
                 return $file;
 
             case 'webp':
-                $newFile = (new ReplaceWithWebpVariant($file))();
+                $newFile = new ReplaceWithWebpVariant($file)();
 
                 // The files identity differs if the file has been replaced.
                 if ($file !== $newFile) {
@@ -474,7 +474,7 @@ final class FileProcessor extends SingletonFactory
             return $file;
         }
 
-        $newFile = (new ReplaceFileSource($file, $fileWithoutExif, $file->filename, false))();
+        $newFile = new ReplaceFileSource($file, $fileWithoutExif, $file->filename, false)();
 
         return $newFile;
     }

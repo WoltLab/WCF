@@ -39,7 +39,7 @@ final class DeleteArticle
         ArticleBuilder::delete($this->article);
 
         // delete like data
-        (new DeleteObjectReactions('com.woltlab.wcf.likeableArticle', [$this->article->articleID]))();
+        new DeleteObjectReactions('com.woltlab.wcf.likeableArticle', [$this->article->articleID])();
         // delete comments
         CommentHandler::getInstance()->deleteObjects('com.woltlab.wcf.articleComment', $articleContentIDs);
         // delete tag to object entries

@@ -42,6 +42,6 @@ final class PhrasePreloader
 
     private function rebuild(Language $language): void
     {
-        (new CachePreloadPhrases($language))();
+        new CachePreloadPhrases($language)();
     }
 }

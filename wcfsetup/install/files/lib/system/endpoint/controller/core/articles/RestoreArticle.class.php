@@ -38,7 +38,7 @@ final class RestoreArticle implements IController
             throw new IllegalLinkException();
         }
 
-        (new \wcf\command\article\RestoreArticle($article))();
+        new \wcf\command\article\RestoreArticle($article)();
 
         return new JsonResponse([]);
     }

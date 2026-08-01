@@ -31,7 +31,7 @@ final class EnableResponse implements IController
         $this->assertResponseCanBeEnabled($response);
 
         if ($response->isDisabled) {
-            (new \wcf\system\comment\response\command\PublishResponse($response))();
+            new \wcf\system\comment\response\command\PublishResponse($response)();
         }
 
         return new JsonResponse([]);

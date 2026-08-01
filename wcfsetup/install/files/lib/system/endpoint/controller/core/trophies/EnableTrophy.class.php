@@ -31,7 +31,7 @@ final class EnableTrophy implements IController
         $this->assertTrophyCanBeEnabled();
 
         if ($trophy->isDisabled) {
-            (new \wcf\command\trophy\EnableTrophy($trophy))();
+            new \wcf\command\trophy\EnableTrophy($trophy)();
         }
 
         return new JsonResponse([]);

@@ -30,7 +30,7 @@ final class DeleteComment implements IController
 
         $this->assertCommentIsDeletable($comment);
 
-        (new \wcf\command\comment\DeleteComments([$comment]))();
+        new \wcf\command\comment\DeleteComments([$comment])();
 
         return new JsonResponse([]);
     }

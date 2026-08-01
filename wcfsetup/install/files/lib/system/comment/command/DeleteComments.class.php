@@ -25,6 +25,6 @@ final class DeleteComments
 
     public function __invoke(): void
     {
-        (new \wcf\command\comment\DeleteComments($this->comments, $this->updateCounters))();
+        new \wcf\command\comment\DeleteComments($this->comments, $this->updateCounters)();
     }
 }

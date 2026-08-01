@@ -121,9 +121,9 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
     {
         foreach ($this->objects as $editor) {
             if ($editor->isDisabled) {
-                (new EnableLanguage($editor->getDecoratedObject()))();
+                new EnableLanguage($editor->getDecoratedObject())();
             } else {
-                (new DisableLanguage($editor->getDecoratedObject()))();
+                new DisableLanguage($editor->getDecoratedObject())();
             }
         }
     }

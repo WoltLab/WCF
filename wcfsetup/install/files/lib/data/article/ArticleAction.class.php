@@ -158,7 +158,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
             }
         }
 
-        (new ResetUserStorageForUnreadArticles())();
+        new ResetUserStorageForUnreadArticles()();
 
         if ($article->publicationStatus == Article::PUBLISHED) {
             ArticleEditor::updateArticleCounter([$article->userID => 1]);
@@ -303,7 +303,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
             }
         }
 
-        (new ResetUserStorageForUnreadArticles())();
+        new ResetUserStorageForUnreadArticles()();
 
         $publicationStatus = (isset($this->parameters['data']['publicationStatus'])) ? $this->parameters['data']['publicationStatus'] : null;
         if ($publicationStatus !== null) {
@@ -440,7 +440,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
 
         if (!empty($articleIDs)) {
             // delete like data
-            (new DeleteObjectReactions('com.woltlab.wcf.likeableArticle', $articleIDs))();
+            new DeleteObjectReactions('com.woltlab.wcf.likeableArticle', $articleIDs)();
             // delete comments
             CommentHandler::getInstance()->deleteObjects('com.woltlab.wcf.articleComment', $articleContentIDs);
             // delete tag to object entries
@@ -520,7 +520,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
     public function trash()
     {
         foreach ($this->getObjects() as $articleEditor) {
-            (new SoftDeleteArticle($articleEditor->getDecoratedObject()))();
+            new SoftDeleteArticle($articleEditor->getDecoratedObject())();
         }
 
         return ['objectIDs' => $this->objectIDs];
@@ -549,7 +549,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
     public function restore()
     {
         foreach ($this->getObjects() as $articleEditor) {
-            (new RestoreArticle($articleEditor->getDecoratedObject()))();
+            new RestoreArticle($articleEditor->getDecoratedObject())();
         }
 
         return ['objectIDs' => $this->objectIDs];
@@ -593,9 +593,9 @@ class ArticleAction extends AbstractDatabaseObjectAction
     public function toggleI18n()
     {
         if ($this->articleEditor->isMultilingual) {
-            (new DisableI18n($this->articleEditor->getDecoratedObject(), $this->language))();
+            new DisableI18n($this->articleEditor->getDecoratedObject(), $this->language)();
         } else {
-            (new EnableI18n($this->articleEditor->getDecoratedObject()))();
+            new EnableI18n($this->articleEditor->getDecoratedObject())();
         }
     }
 
@@ -621,7 +621,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
         }
 
         foreach ($this->getObjects() as $articleEditor) {
-            (new MarkArticleAsRead($articleEditor->getDecoratedObject(), $this->parameters['visitTime']))();
+            new MarkArticleAsRead($articleEditor->getDecoratedObject(), $this->parameters['visitTime'])();
         }
     }
 
@@ -634,7 +634,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
      */
     public function markAllAsRead()
     {
-        (new MarkAllArticlesAsRead())();
+        new MarkAllArticlesAsRead()();
     }
 
     /**
@@ -698,7 +698,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
         $category = ArticleCategory::getCategory($this->parameters['categoryID']);
 
         foreach ($this->getObjects() as $articleEditor) {
-            (new SetArticleCategory($articleEditor->getDecoratedObject(), $category))();
+            new SetArticleCategory($articleEditor->getDecoratedObject(), $category)();
         }
     }
 
@@ -742,7 +742,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
     public function publish()
     {
         foreach ($this->getObjects() as $articleEditor) {
-            (new PublishArticle($articleEditor->getDecoratedObject()))();
+            new PublishArticle($articleEditor->getDecoratedObject())();
         }
     }
 
@@ -786,7 +786,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
     public function unpublish()
     {
         foreach ($this->getObjects() as $articleEditor) {
-            (new UnpublishArticle($articleEditor->getDecoratedObject()))();
+            new UnpublishArticle($articleEditor->getDecoratedObject())();
         }
     }
 

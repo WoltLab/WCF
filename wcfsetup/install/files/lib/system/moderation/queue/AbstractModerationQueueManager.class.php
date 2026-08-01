@@ -247,7 +247,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
         $queueList->readObjects();
 
         foreach ($queueList->getObjects() as $queue) {
-            (new MarkModerationQueueAsDone($queue))();
+            new MarkModerationQueueAsDone($queue)();
         }
     }
 

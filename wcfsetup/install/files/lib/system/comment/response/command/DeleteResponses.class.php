@@ -25,9 +25,9 @@ final class DeleteResponses
 
     public function __invoke(): void
     {
-        (new \wcf\command\comment\response\DeleteResponses(
+        new \wcf\command\comment\response\DeleteResponses(
             $this->responses,
             $this->updateCounters
-        ))();
+        )();
     }
 }

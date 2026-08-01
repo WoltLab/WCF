@@ -216,7 +216,7 @@ class WCF
         try {
             $bootstrappers = require(self::BOOTSTRAP_LOADER);
         } catch (\Exception $e) {
-            (new \wcf\command\package\RebuildBootstrapper())();
+            new \wcf\command\package\RebuildBootstrapper()();
 
             $bootstrappers = require(self::BOOTSTRAP_LOADER);
         }

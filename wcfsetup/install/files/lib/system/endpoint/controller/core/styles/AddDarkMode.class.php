@@ -30,7 +30,7 @@ final class AddDarkMode implements IController
 
         $this->assertDarkModeCanBeAdded($style);
 
-        (new \wcf\command\style\AddDarkMode($style))();
+        new \wcf\command\style\AddDarkMode($style)();
 
         return new JsonResponse([]);
     }

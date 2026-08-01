@@ -63,9 +63,9 @@ final class UserIgnoreAction implements RequestHandlerInterface
 
             $user = UserRuntimeCache::getInstance()->getObject($parameters['id']);
             if ($type === UserIgnore::TYPE_NO_IGNORE) {
-                (new UnignoreUser(WCF::getUser(), $user))();
+                new UnignoreUser(WCF::getUser(), $user)();
             } else {
-                (new IgnoreUser(WCF::getUser(), $user, $type))();
+                new IgnoreUser(WCF::getUser(), $user, $type)();
             }
 
             return new JsonResponse([

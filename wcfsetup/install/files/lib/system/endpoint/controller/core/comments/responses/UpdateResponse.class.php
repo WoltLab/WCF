@@ -51,10 +51,10 @@ final class UpdateResponse implements IController
             throw new PermissionDeniedException();
         }
 
-        (new \wcf\command\comment\response\UpdateResponse(
+        new \wcf\command\comment\response\UpdateResponse(
             $response,
             $htmlInputProcessor,
-        ))();
+        )();
 
         return new JsonResponse([]);
     }

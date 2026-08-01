@@ -109,12 +109,12 @@ class UserGroupAction extends AbstractDatabaseObjectAction
      */
     public function copy()
     {
-        $group = (new CopyUserGroup(
+        $group = new CopyUserGroup(
             $this->groupEditor->getDecoratedObject(),
             $this->parameters['copyUserGroupOptions'],
             $this->parameters['copyMembers'],
             $this->parameters['copyACLOptions']
-        ))();
+        )();
 
         return [
             'groupID' => $group->groupID,

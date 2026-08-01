@@ -15,6 +15,6 @@ final class ClearCache
 {
     public function __invoke(): void
     {
-        (new \wcf\command\cache\ClearCache())();
+        new \wcf\command\cache\ClearCache()();
     }
 }

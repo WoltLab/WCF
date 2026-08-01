@@ -19,9 +19,9 @@ final class SetColorScheme
 
     public function __invoke(): void
     {
-        (new \wcf\command\user\SetColorScheme(
+        new \wcf\command\user\SetColorScheme(
             $this->user,
             $this->colorScheme
-        ))();
+        )();
     }
 }

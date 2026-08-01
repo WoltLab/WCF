@@ -25,7 +25,7 @@ final class MarkAllModerationQueuesAsRead implements IController
     {
         WCF::getSession()->checkPermissions(['mod.general.canUseModeration']);
 
-        (new \wcf\command\moderation\queue\MarkAllModerationQueuesAsRead())();
+        new \wcf\command\moderation\queue\MarkAllModerationQueuesAsRead()();
 
         return new JsonResponse([]);
     }

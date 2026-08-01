@@ -48,7 +48,7 @@ final class StyleAddDarkModeAction implements RequestHandlerInterface
         if ($request->getMethod() === 'GET') {
             return new TextResponse('Unsupported', 400);
         } elseif ($request->getMethod() === 'POST') {
-            (new \wcf\command\style\AddDarkMode($style))();
+            new \wcf\command\style\AddDarkMode($style)();
 
             return new EmptyResponse();
         } else {

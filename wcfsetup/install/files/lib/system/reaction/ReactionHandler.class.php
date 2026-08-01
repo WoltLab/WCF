@@ -294,7 +294,7 @@ final class ReactionHandler extends SingletonFactory
 
         $reaction = ReactionTypeCache::getInstance()->getReactionTypeByID($reactionTypeID);
 
-        (new SetReaction($likeable, $user, $reaction))();
+        new SetReaction($likeable, $user, $reaction)();
 
         $like = Like::getLike($likeable->getObjectType()->objectTypeID, $likeable->getObjectID(), $user->userID);
         $likeObject = LikeObject::getLikeObject($likeable->getObjectType()->objectTypeID, $likeable->getObjectID());
@@ -325,7 +325,7 @@ final class ReactionHandler extends SingletonFactory
             throw new \InvalidArgumentException('The given parameter $like is invalid.');
         }
 
-        (new RevertReaction($like, $likeable))();
+        new RevertReaction($like, $likeable)();
 
         $likeObject = LikeObject::getLikeObject($likeable->getObjectType()->objectTypeID, $likeable->getObjectID());
 
@@ -346,11 +346,11 @@ final class ReactionHandler extends SingletonFactory
      */
     public function removeReactions(string $objectType, array $objectIDs, array $notificationObjectTypes = []): void
     {
-        (new DeleteObjectReactions(
+        new DeleteObjectReactions(
             $objectType,
             $objectIDs,
             $notificationObjectTypes
-        ))();
+        )();
     }
 
     /**

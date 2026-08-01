@@ -70,13 +70,13 @@ final class CreateResponse implements IController
             $isDisabled = true;
         }
 
-        $response = (new \wcf\command\comment\response\CreateResponse(
+        $response = new \wcf\command\comment\response\CreateResponse(
             $comment,
             $htmlInputProcessor,
             WCF::getUser()->userID ? WCF::getUser() : null,
             $username,
             $isDisabled,
-        ))();
+        )();
 
         FloodControl::getInstance()->registerContent('com.woltlab.wcf.comment');
 

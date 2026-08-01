@@ -321,7 +321,7 @@ final class RescueModeForm extends AbstractForm
             ]);
         }
 
-        (new SynchronizeCookieDomain())();
+        new SynchronizeCookieDomain()();
 
         // reload currently active application to avoid outdated cache data
         $application = ApplicationHandler::getInstance()->getActiveApplication();

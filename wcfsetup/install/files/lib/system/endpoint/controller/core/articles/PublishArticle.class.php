@@ -36,7 +36,7 @@ final class PublishArticle implements IController
         }
 
         if ($article->publicationStatus !== Article::PUBLISHED) {
-            (new \wcf\command\article\PublishArticle($article))();
+            new \wcf\command\article\PublishArticle($article)();
         }
 
         return new JsonResponse([]);

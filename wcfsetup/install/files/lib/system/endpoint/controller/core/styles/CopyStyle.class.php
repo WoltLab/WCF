@@ -29,7 +29,7 @@ final class CopyStyle implements IController
 
         $this->assertStyleCanBeCopied();
 
-        (new \wcf\command\style\CopyStyle($style))();
+        new \wcf\command\style\CopyStyle($style)();
 
         return new JsonResponse([]);
     }

@@ -55,9 +55,9 @@ class BBCodeMediaProviderAction extends AbstractDatabaseObjectAction implements 
     {
         foreach ($this->objects as $editor) {
             if ($editor->isDisabled) {
-                (new EnableBBCodeMediaProvider($editor->getDecoratedObject()))();
+                new EnableBBCodeMediaProvider($editor->getDecoratedObject())();
             } else {
-                (new DisableBBCodeMediaProvider($editor->getDecoratedObject()))();
+                new DisableBBCodeMediaProvider($editor->getDecoratedObject())();
             }
         }
     }

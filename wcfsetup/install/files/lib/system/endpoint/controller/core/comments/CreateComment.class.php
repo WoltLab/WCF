@@ -73,14 +73,14 @@ final class CreateComment implements IController
             $isDisabled = true;
         }
 
-        $comment = (new \wcf\command\comment\CreateComment(
+        $comment = new \wcf\command\comment\CreateComment(
             $objectType,
             $parameters->objectID,
             $htmlInputProcessor,
             WCF::getUser()->userID ? WCF::getUser() : null,
             $username,
             $isDisabled,
-        ))();
+        )();
 
         FloodControl::getInstance()->registerContent('com.woltlab.wcf.comment');
 

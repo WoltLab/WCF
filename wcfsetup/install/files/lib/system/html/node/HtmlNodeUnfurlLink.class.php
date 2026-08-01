@@ -97,7 +97,7 @@ class HtmlNodeUnfurlLink extends HtmlNodePlainLink
     private static function findOrCreate(Uri $uri): ?int
     {
         try {
-            $unfurlUrl = (new FindOrCreateUnfurlUrl($uri->__toString()))();
+            $unfurlUrl = new FindOrCreateUnfurlUrl($uri->__toString())();
         } catch (\InvalidArgumentException) {
             return null;
         }

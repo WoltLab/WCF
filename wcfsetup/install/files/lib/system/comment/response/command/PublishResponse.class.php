@@ -21,8 +21,8 @@ final class PublishResponse
 
     public function __invoke(): void
     {
-        (new \wcf\command\comment\response\PublishResponse(
+        new \wcf\command\comment\response\PublishResponse(
             $this->response,
-        ))();
+        )();
     }
 }

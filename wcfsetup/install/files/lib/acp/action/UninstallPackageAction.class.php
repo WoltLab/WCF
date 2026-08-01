@@ -119,7 +119,7 @@ final class UninstallPackageAction extends AbstractSecureAction
             $application = ApplicationHandler::getInstance()->getApplicationByID($package->packageID);
             \assert($application !== null);
 
-            (new MarkApplicationAsTainted($application))();
+            new MarkApplicationAsTainted($application)();
         }
 
         $this->installation->nodeBuilder->purgeNodes();

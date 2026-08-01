@@ -90,7 +90,7 @@ final class UserCoverPhotoFileProcessor extends AbstractFileProcessor
             WCF::getSession()->update();
         }
 
-        (new SetCoverPhoto($user->getDecoratedObject(), $file))();
+        new SetCoverPhoto($user->getDecoratedObject(), $file)();
     }
 
     #[\Override]

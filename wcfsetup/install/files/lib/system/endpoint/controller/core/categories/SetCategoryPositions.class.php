@@ -40,7 +40,7 @@ final class SetCategoryPositions implements IController
         $parameters = Helper::mapApiParameters($request, SetCategoryPositionsParameters::class);
         $positions = $this->validatePositions($objectType->objectTypeID, $parameters->positions);
 
-        (new \wcf\command\category\SetCategoryPositions($positions))();
+        new \wcf\command\category\SetCategoryPositions($positions)();
 
         return new JsonResponse([]);
     }

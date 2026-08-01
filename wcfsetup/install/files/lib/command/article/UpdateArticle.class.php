@@ -67,7 +67,7 @@ final class UpdateArticle
             $this->updateSearchIndex($article);
         }
 
-        (new ResetUserStorageForUnreadArticles())();
+        new ResetUserStorageForUnreadArticles()();
 
         $newStatus = $this->builder->properties['publicationStatus'] ?? $oldStatus;
         if ($newStatus != $oldStatus) {

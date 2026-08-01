@@ -31,7 +31,7 @@ final class EnableCronjob implements IController
         $this->assertCronjobCanBeEnabled($cronjob);
 
         if ($cronjob->isDisabled) {
-            (new \wcf\command\cronjob\EnableCronjob($cronjob))();
+            new \wcf\command\cronjob\EnableCronjob($cronjob)();
         }
 
         return new JsonResponse([]);

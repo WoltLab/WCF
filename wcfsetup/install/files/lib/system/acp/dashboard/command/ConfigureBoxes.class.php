@@ -28,6 +28,6 @@ final class ConfigureBoxes
 
     public function __invoke(): void
     {
-        (new \wcf\command\acp\dashboard\ConfigureBoxes($this->dashboard, $this->user, $this->boxes))();
+        new \wcf\command\acp\dashboard\ConfigureBoxes($this->dashboard, $this->user, $this->boxes)();
     }
 }

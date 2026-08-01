@@ -41,11 +41,11 @@ final class EnableI18n
                 ->setTeaserImageID($articleContent->teaserImageID ?: null);
         }
 
-        (new UpdateArticle($builder))();
+        new UpdateArticle($builder)();
 
         $this->migrateDiscussions($discussionProvider, $this->article, $articleContent);
 
-        (new DeleteArticleContent($articleContent))();
+        new DeleteArticleContent($articleContent)();
 
         VersionTracker::getInstance()->reset(
             'com.woltlab.wcf.article',

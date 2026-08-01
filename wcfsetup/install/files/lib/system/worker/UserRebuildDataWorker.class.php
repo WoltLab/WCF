@@ -371,7 +371,7 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
                     'com.woltlab.wcf.user.coverPhoto',
                 );
 
-                (new SetCoverPhoto($user, $file))();
+                new SetCoverPhoto($user, $file)();
 
                 // Delete the old cover photo files.
                 $oldCoverPhotoLocation = UserCoverPhoto::getLegacyLocation($user, false);

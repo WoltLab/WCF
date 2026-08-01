@@ -32,7 +32,7 @@ final class EnableType implements IController
         $this->assertReactionTypeCanBeEnabled();
 
         if (!$reactionType->isAssignable) {
-            (new EnableReactionType($reactionType))();
+            new EnableReactionType($reactionType)();
         }
 
         return new JsonResponse([]);

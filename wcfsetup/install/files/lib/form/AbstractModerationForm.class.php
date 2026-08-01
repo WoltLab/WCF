@@ -109,7 +109,7 @@ abstract class AbstractModerationForm extends AbstractForm
 
         // update queue visit
         if ($this->queue->isNew()) {
-            (new MarkModerationQueueAsRead($this->queue->getDecoratedObject()))();
+            new MarkModerationQueueAsRead($this->queue->getDecoratedObject())();
         }
     }
 

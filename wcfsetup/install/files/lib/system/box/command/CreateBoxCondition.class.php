@@ -32,11 +32,11 @@ final class CreateBoxCondition
      */
     public function __invoke(): void
     {
-        (new \wcf\command\box\CreateBoxCondition(
+        new \wcf\command\box\CreateBoxCondition(
             $this->boxIdentifier,
             $this->conditionDefinition,
             $this->conditionObjectType,
             $this->conditionData
-        ))();
+        )();
     }
 }

@@ -251,7 +251,7 @@ final class ApplicationHandler extends SingletonFactory
      */
     public static function rebuild(): void
     {
-        (new SynchronizeCookieDomain())();
+        new SynchronizeCookieDomain()();
     }
 
     /**

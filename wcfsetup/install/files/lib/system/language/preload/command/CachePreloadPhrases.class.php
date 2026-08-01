@@ -22,8 +22,8 @@ final class CachePreloadPhrases
 
     public function __invoke(): void
     {
-        (new \wcf\command\language\preload\CachePreloadPhrases(
+        new \wcf\command\language\preload\CachePreloadPhrases(
             $this->language
-        ))();
+        )();
     }
 }

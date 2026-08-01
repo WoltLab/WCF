@@ -84,19 +84,19 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType
                     $returnValues = $action->executeAction();
                     $userSubscription = $returnValues['returnValues'];
                 } else {
-                    (new ExtendPaidSubscriptionUser($userSubscription))();
+                    new ExtendPaidSubscriptionUser($userSubscription)();
                 }
                 $logMessage = 'payment completed';
             }
             if ($status == 'reversed') {
                 if ($userSubscription !== null) {
-                    (new RevokePaidSubscriptionUser($userSubscription))();
+                    new RevokePaidSubscriptionUser($userSubscription)();
                 }
                 $logMessage = 'payment reversed';
             }
             if ($status == 'canceled_reversal') {
                 if ($userSubscription?->isActive === 1) {
-                    (new RestorePaidSubscriptionUser($userSubscription))();
+                    new RestorePaidSubscriptionUser($userSubscription)();
                 }
                 $logMessage = 'reversal canceled';
             }

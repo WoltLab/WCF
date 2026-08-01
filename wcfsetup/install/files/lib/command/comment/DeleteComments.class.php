@@ -89,13 +89,13 @@ final class DeleteComments
 
     private function deleteReactions(): void
     {
-        (new DeleteObjectReactions(
+        new DeleteObjectReactions(
             'com.woltlab.wcf.comment',
             $this->commentIDs,
             UserNotificationHandler::getInstance()->getObjectTypeID($this->objectType->objectType . '.like.notification')
                 ? [$this->objectType->objectType . '.like.notification']
                 : []
-        ))();
+        )();
     }
 
     private function deleteResponses(): void
@@ -107,7 +107,7 @@ final class DeleteComments
             return;
         }
 
-        (new DeleteResponses($responseList->getObjects(), $this->updateCounters))();
+        new DeleteResponses($responseList->getObjects(), $this->updateCounters)();
     }
 
     private function deleteModerationQueues(): void

@@ -323,9 +323,9 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
     {
         foreach ($this->objects as $editor) {
             if ($editor->isDisabled) {
-                (new EnableBox($editor->getDecoratedObject()))();
+                new EnableBox($editor->getDecoratedObject())();
             } else {
-                (new DisableBox($editor->getDecoratedObject()))();
+                new DisableBox($editor->getDecoratedObject())();
             }
         }
     }

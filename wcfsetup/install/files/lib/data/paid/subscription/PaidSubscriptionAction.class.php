@@ -81,9 +81,9 @@ class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements ITo
     {
         foreach ($this->objects as $editor) {
             if ($editor->isDisabled) {
-                (new EnablePaidSubscription($editor->getDecoratedObject()))();
+                new EnablePaidSubscription($editor->getDecoratedObject())();
             } else {
-                (new DisablePaidSubscription($editor->getDecoratedObject()))();
+                new DisablePaidSubscription($editor->getDecoratedObject())();
             }
         }
     }

@@ -109,10 +109,10 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
         $target = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['data']['ownerID']);
         \assert($target !== null);
 
-        (new TrackUserProfileVisitor(
+        new TrackUserProfileVisitor(
             $user->getDecoratedObject(),
             $target->getDecoratedObject(),
             $this->parameters['data']['time'] ?? \TIME_NOW
-        ))();
+        )();
     }
 }

@@ -21,8 +21,8 @@ final class ResetPreloadCache
 
     public function __invoke(): void
     {
-        (new \wcf\command\language\preload\ResetPreloadCache(
+        new \wcf\command\language\preload\ResetPreloadCache(
             $this->language
-        ))();
+        )();
     }
 }

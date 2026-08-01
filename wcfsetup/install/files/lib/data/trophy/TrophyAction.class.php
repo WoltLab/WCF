@@ -134,9 +134,9 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
     {
         foreach ($this->getObjects() as $editor) {
             if ($editor->isDisabled) {
-                (new EnableTrophy($editor->getDecoratedObject()))();
+                new EnableTrophy($editor->getDecoratedObject())();
             } else {
-                (new DisableTrophy($editor->getDecoratedObject()))();
+                new DisableTrophy($editor->getDecoratedObject())();
             }
         }
     }

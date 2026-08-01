@@ -65,9 +65,9 @@ final class ToggleArticleI18nAction implements RequestHandlerInterface
 
             $data = $form->getData()['data'];
             if ($article->isMultilingual) {
-                (new DisableI18n($article, LanguageFactory::getInstance()->getLanguage($data['languageID'])))();
+                new DisableI18n($article, LanguageFactory::getInstance()->getLanguage($data['languageID']))();
             } else {
-                (new EnableI18n($article))();
+                new EnableI18n($article)();
             }
 
             return new JsonResponse([]);

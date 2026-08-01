@@ -40,7 +40,7 @@ final class DisableI18n
 
         if ($removeContents !== []) {
             foreach ($removeContents as $articleContent) {
-                (new DeleteArticleContent($articleContent))();
+                new DeleteArticleContent($articleContent)();
             }
         }
 

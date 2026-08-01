@@ -29,7 +29,7 @@ final class RestorePaidSubscriptionUser
 
         $this->restoreSubscription($this->subscriptionUser);
 
-        (new AddGroupMembership($subscription, $user))();
+        new AddGroupMembership($subscription, $user)();
 
         $event = new PaidSubscriptionUserRestored($this->subscriptionUser);
         EventHandler::getInstance()->fire($event);

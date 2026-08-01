@@ -62,9 +62,9 @@ class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements 
     {
         foreach ($this->objects as $editor) {
             if ($editor->isDisabled) {
-                (new EnableUserGroupAssignment($editor->getDecoratedObject()))();
+                new EnableUserGroupAssignment($editor->getDecoratedObject())();
             } else {
-                (new DisableUserGroupAssignment($editor->getDecoratedObject()))();
+                new DisableUserGroupAssignment($editor->getDecoratedObject())();
             }
         }
     }

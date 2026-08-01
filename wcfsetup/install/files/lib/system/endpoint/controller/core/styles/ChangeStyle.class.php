@@ -30,7 +30,7 @@ final class ChangeStyle implements IController
 
         $this->assertStyleCanBeChanged($style);
 
-        (new \wcf\command\style\ChangeStyle($style))();
+        new \wcf\command\style\ChangeStyle($style)();
 
         return new JsonResponse([]);
     }

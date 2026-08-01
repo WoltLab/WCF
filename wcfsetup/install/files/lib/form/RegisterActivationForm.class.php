@@ -144,7 +144,7 @@ final class RegisterActivationForm extends AbstractFormBuilderForm
         }
 
         // User must be reloaded to get the correct activation status.
-        (new \wcf\command\user\CreateRegistrationNotification(new User($this->user->userID)))();
+        new \wcf\command\user\CreateRegistrationNotification(new User($this->user->userID))();
 
         HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), $redirectText, 10, 'success', true);
 

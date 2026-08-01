@@ -475,7 +475,7 @@ class UserEditForm extends UserAddForm
         }
 
         if ($this->user->getUserOption('colorScheme') !== $this->colorScheme) {
-            (new SetColorScheme($this->user->getDecoratedObject(), $this->colorScheme))();
+            new SetColorScheme($this->user->getDecoratedObject(), $this->colorScheme)();
         }
 
         // reload user

@@ -30,7 +30,7 @@ final class DeleteOption implements IController
 
         $this->assertOptionCanBeDeleted($option);
 
-        (new \wcf\command\user\option\DeleteOption($option))();
+        new \wcf\command\user\option\DeleteOption($option)();
 
         return new JsonResponse([]);
     }

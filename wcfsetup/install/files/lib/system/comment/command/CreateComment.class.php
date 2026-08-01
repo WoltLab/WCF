@@ -29,13 +29,13 @@ final class CreateComment
 
     public function __invoke(): Comment
     {
-        return (new \wcf\command\comment\CreateComment(
+        return new \wcf\command\comment\CreateComment(
             $this->objectType,
             $this->objectID,
             $this->htmlInputProcessor,
             $this->user,
             $this->username,
             $this->isDisabled
-        ))();
+        )();
     }
 }

@@ -31,7 +31,7 @@ class ApplicationAction extends AbstractDatabaseObjectAction
      */
     public function rebuild()
     {
-        (new SynchronizeCookieDomain())();
+        new SynchronizeCookieDomain()();
     }
 
     /**
@@ -43,6 +43,6 @@ class ApplicationAction extends AbstractDatabaseObjectAction
      */
     public function markAsTainted()
     {
-        (new MarkApplicationAsTainted($this->getSingleObject()->getDecoratedObject()))();
+        new MarkApplicationAsTainted($this->getSingleObject()->getDecoratedObject())();
     }
 }

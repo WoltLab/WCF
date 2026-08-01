@@ -31,7 +31,7 @@ final class DisableMenuItem implements IController
         $this->assertMenuItemCanBeDisabled($menuItem);
 
         if (!$menuItem->isDisabled) {
-            (new \wcf\command\menu\item\DisableMenuItem($menuItem))();
+            new \wcf\command\menu\item\DisableMenuItem($menuItem)();
         }
 
         return new JsonResponse([]);

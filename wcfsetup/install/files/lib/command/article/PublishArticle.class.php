@@ -37,7 +37,7 @@ final class PublishArticle
             ArticleBuilder::incrementArticleCounter($this->article->userID, 1);
         }
 
-        (new ResetUserStorageForUnreadArticles())();
+        new ResetUserStorageForUnreadArticles()();
 
         $event = new ArticlePublished($this->article);
         EventHandler::getInstance()->fire($event);

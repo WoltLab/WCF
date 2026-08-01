@@ -174,7 +174,7 @@ class PackageInstallationDispatcher
 
             $this->logInstallationStep([], 'start cleanup');
 
-            (new SetLastUpdateTime())();
+            new SetLastUpdateTime()();
 
             if ($this->action == 'install') {
                 // save localized package infos
@@ -208,7 +208,7 @@ class PackageInstallationDispatcher
 
             VersionTracker::getInstance()->createStorageTables();
 
-            (new \wcf\command\package\RebuildBootstrapper())();
+            new \wcf\command\package\RebuildBootstrapper()();
 
             EventHandler::getInstance()->fire(new PackageListChanged());
 
@@ -230,7 +230,7 @@ class PackageInstallationDispatcher
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->queue->processNo]);
 
-            (new ClearCache())();
+            new ClearCache()();
 
             $this->logInstallationStep([], 'finished cleanup');
 

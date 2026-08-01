@@ -80,7 +80,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
         }
 
         foreach ($this->getObjects() as $queue) {
-            (new MarkModerationQueueAsDone($queue->getDecoratedObject()))();
+            new MarkModerationQueueAsDone($queue->getDecoratedObject())();
         }
     }
 
@@ -235,7 +235,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
         }
 
         foreach ($this->getObjects() as $queueEditor) {
-            (new MarkModerationQueueAsRead($queueEditor->getDecoratedObject(), $this->parameters["visitTime"]))();
+            new MarkModerationQueueAsRead($queueEditor->getDecoratedObject(), $this->parameters["visitTime"])();
         }
 
         if (\count($this->objects) == 1) {
@@ -275,7 +275,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      */
     public function markAllAsRead()
     {
-        (new MarkAllModerationQueuesAsRead())();
+        new MarkAllModerationQueuesAsRead()();
 
         return [
             'markAllAsRead' => true,

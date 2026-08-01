@@ -79,9 +79,9 @@ class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements 
     {
         foreach ($this->objects as $editor) {
             if ($editor->isDisabled) {
-                (new EnablePackageUpdateServer($editor->getDecoratedObject()))();
+                new EnablePackageUpdateServer($editor->getDecoratedObject())();
             } else {
-                (new DisablePackageUpdateServer($editor->getDecoratedObject()))();
+                new DisablePackageUpdateServer($editor->getDecoratedObject())();
             }
         }
     }

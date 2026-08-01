@@ -83,6 +83,6 @@ class UnfurlUrlAction extends AbstractDatabaseObjectAction
      */
     public function findOrCreate(): UnfurlUrl
     {
-        return (new FindOrCreateUnfurlUrl($this->parameters['data']['url']))();
+        return new FindOrCreateUnfurlUrl($this->parameters['data']['url'])();
     }
 }

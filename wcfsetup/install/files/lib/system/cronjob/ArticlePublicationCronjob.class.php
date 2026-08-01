@@ -34,7 +34,7 @@ class ArticlePublicationCronjob extends AbstractCronjob
                 ->setTime($article->publicationDate)
                 ->setPublicationStatus(Article::PUBLISHED)
                 ->setPublicationDate(0);
-            (new UpdateArticle($builder))();
+            new UpdateArticle($builder)();
         }
     }
 }

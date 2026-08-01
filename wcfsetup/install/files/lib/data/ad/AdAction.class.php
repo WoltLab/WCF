@@ -76,9 +76,9 @@ class AdAction extends AbstractDatabaseObjectAction implements IToggleAction
     {
         foreach ($this->objects as $adEditor) {
             if ($adEditor->isDisabled) {
-                (new EnableAd($adEditor->getDecoratedObject()))();
+                new EnableAd($adEditor->getDecoratedObject())();
             } else {
-                (new DisableAd($adEditor->getDecoratedObject()))();
+                new DisableAd($adEditor->getDecoratedObject())();
             }
         }
     }

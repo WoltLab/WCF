@@ -62,10 +62,10 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
 
         $subscriptionUser = parent::create();
 
-        (new AddGroupMembership(
+        new AddGroupMembership(
             $this->parameters['subscription'],
             $this->parameters['user']
-        ))();
+        )();
 
         return $subscriptionUser;
     }
@@ -101,12 +101,12 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
 
         foreach ($this->getObjects() as $editor) {
             if (isset($this->parameters['data']['endDate'])) {
-                (new ExtendPaidSubscriptionUser(
+                new ExtendPaidSubscriptionUser(
                     $editor->getDecoratedObject(),
                     $this->parameters['data']['endDate']
-                ))();
+                )();
             } else {
-                (new ExtendPaidSubscriptionUser($editor->getDecoratedObject()))();
+                new ExtendPaidSubscriptionUser($editor->getDecoratedObject())();
             }
         }
     }
@@ -133,7 +133,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
         }
 
         foreach ($this->getObjects() as $editor) {
-            (new RevokePaidSubscriptionUser($editor->getDecoratedObject()))();
+            new RevokePaidSubscriptionUser($editor->getDecoratedObject())();
         }
     }
 
@@ -171,7 +171,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
         }
 
         foreach ($this->getObjects() as $editor) {
-            (new RestorePaidSubscriptionUser($editor->getDecoratedObject()))();
+            new RestorePaidSubscriptionUser($editor->getDecoratedObject())();
         }
     }
 
@@ -209,10 +209,10 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
         }
 
         foreach ($this->getObjects() as $subscriptionUser) {
-            (new AddGroupMembership(
+            new AddGroupMembership(
                 $subscriptionUser->getSubscription(),
                 $subscriptionUser->getUser()
-            ))();
+            )();
         }
     }
 
@@ -230,7 +230,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
         }
 
         foreach ($this->getObjects() as $editor) {
-            (new RemoveGroupMembership($editor->getSubscription(), $editor->getUser()))();
+            new RemoveGroupMembership($editor->getSubscription(), $editor->getUser())();
         }
     }
 }

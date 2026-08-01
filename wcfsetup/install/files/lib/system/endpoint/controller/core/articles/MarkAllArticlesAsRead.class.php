@@ -31,7 +31,7 @@ final class MarkAllArticlesAsRead implements IController
 
         $this->assertUserIsLoggedIn();
 
-        (new \wcf\command\article\MarkAllArticlesAsRead())();
+        new \wcf\command\article\MarkAllArticlesAsRead()();
 
         return new JsonResponse([]);
     }

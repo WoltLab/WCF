@@ -19,6 +19,6 @@ final class MarkAllArticlesAsRead
     {
         VisitTracker::getInstance()->trackTypeVisit('com.woltlab.wcf.article');
 
-        (new ResetUserStorageForUnreadArticles([WCF::getUser()->userID]))();
+        new ResetUserStorageForUnreadArticles([WCF::getUser()->userID])();
     }
 }

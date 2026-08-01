@@ -38,7 +38,7 @@ final class DeleteArticle implements IController
             throw new IllegalLinkException();
         }
 
-        (new \wcf\command\article\DeleteArticle($article))();
+        new \wcf\command\article\DeleteArticle($article)();
 
         return new JsonResponse([]);
     }

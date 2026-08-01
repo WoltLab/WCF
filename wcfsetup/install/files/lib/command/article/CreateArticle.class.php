@@ -29,7 +29,7 @@ final class CreateArticle
 
         $this->updateSearchIndex($article);
 
-        (new ResetUserStorageForUnreadArticles())();
+        new ResetUserStorageForUnreadArticles()();
 
         if ($article->publicationStatus == Article::PUBLISHED) {
             if ($article->userID !== null) {
@@ -52,7 +52,7 @@ final class CreateArticle
                 $article->time
             );
 
-            (new MarkArticleAsRead($article))();
+            new MarkArticleAsRead($article)();
         }
 
         return $article;

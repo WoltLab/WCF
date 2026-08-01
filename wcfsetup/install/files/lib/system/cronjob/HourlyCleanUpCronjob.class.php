@@ -28,7 +28,7 @@ class HourlyCleanUpCronjob extends AbstractCronjob
             $subscriptionUserList->readObjects();
 
             foreach ($subscriptionUserList->getObjects() as $subscriptionUser) {
-                (new RevokePaidSubscriptionUser($subscriptionUser))();
+                new RevokePaidSubscriptionUser($subscriptionUser)();
             }
         }
     }

@@ -34,7 +34,7 @@ final class SetMenuItemPositions implements IController
         $parameters = Helper::mapApiParameters($request, SetMenuItemPositionsParameters::class);
         $positions = $this->validatePositions($menu, $parameters->positions);
 
-        (new \wcf\command\menu\item\SetMenuItemPositions($positions))();
+        new \wcf\command\menu\item\SetMenuItemPositions($positions)();
 
         return new JsonResponse([]);
     }

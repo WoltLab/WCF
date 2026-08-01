@@ -125,7 +125,7 @@ class ArticlePage extends AbstractPage
             return;
         }
 
-        (new MarkArticleAsRead($this->article))();
+        new MarkArticleAsRead($this->article)();
     }
 
     protected function loadTags(): void

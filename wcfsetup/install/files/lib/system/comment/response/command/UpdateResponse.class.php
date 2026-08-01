@@ -23,9 +23,9 @@ final class UpdateResponse
 
     public function __invoke(): void
     {
-        (new \wcf\command\comment\response\UpdateResponse(
+        new \wcf\command\comment\response\UpdateResponse(
             $this->response,
             $this->htmlInputProcessor
-        ))();
+        )();
     }
 }

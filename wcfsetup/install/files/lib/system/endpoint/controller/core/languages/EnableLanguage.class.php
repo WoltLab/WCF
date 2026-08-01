@@ -31,7 +31,7 @@ final class EnableLanguage implements IController
         $this->assertLanguageCanBeEnabled($language);
 
         if ($language->isDisabled) {
-            (new \wcf\command\language\EnableLanguage($language))();
+            new \wcf\command\language\EnableLanguage($language)();
         }
 
         return new JsonResponse([]);

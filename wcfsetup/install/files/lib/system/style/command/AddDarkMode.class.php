@@ -21,8 +21,8 @@ final class AddDarkMode
 
     public function __invoke(): void
     {
-        (new \wcf\command\style\AddDarkMode(
+        new \wcf\command\style\AddDarkMode(
             $this->style
-        ))();
+        )();
     }
 }

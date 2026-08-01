@@ -30,7 +30,7 @@ final class EnableQuestion implements IController
         $this->assertQuestionCanBeEnabled();
 
         if ($question->isDisabled) {
-            (new \wcf\command\captcha\question\EnableCaptchaQuestion($question))();
+            new \wcf\command\captcha\question\EnableCaptchaQuestion($question)();
         }
 
         return new JsonResponse([]);

@@ -31,10 +31,10 @@ final class CreateBoxToPageAssignments
      */
     public function __invoke(): void
     {
-        (new \wcf\command\box\CreateBoxToPageAssignments(
+        new \wcf\command\box\CreateBoxToPageAssignments(
             $this->boxIdentifier,
             $this->pageIdentifiers,
             $this->visible
-        ))();
+        )();
     }
 }

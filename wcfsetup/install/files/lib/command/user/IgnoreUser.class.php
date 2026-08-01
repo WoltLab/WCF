@@ -31,7 +31,7 @@ final class IgnoreUser
     {
         $this->ignoreUser($this->user, $this->target, $this->type);
 
-        (new Unfollow($this->target, $this->user))();
+        new Unfollow($this->target, $this->user)();
 
         $this->resetStorage($this->user, $this->target);
 

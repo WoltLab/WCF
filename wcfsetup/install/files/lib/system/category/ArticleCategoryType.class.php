@@ -52,7 +52,7 @@ class ArticleCategoryType extends AbstractCategoryType
         $articleList->readObjects();
 
         foreach ($articleList->getObjects() as $article) {
-            (new DeleteArticle($article))();
+            new DeleteArticle($article)();
         }
     }
 

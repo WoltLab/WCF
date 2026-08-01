@@ -32,7 +32,7 @@ final class EnableMenu implements IController
 
         $box = $menu->getBox();
         if ($box->isDisabled) {
-            (new \wcf\command\box\EnableBox($box))();
+            new \wcf\command\box\EnableBox($box)();
         }
 
         return new JsonResponse([]);

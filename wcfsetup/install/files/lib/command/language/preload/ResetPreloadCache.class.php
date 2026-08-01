@@ -27,6 +27,6 @@ final class ResetPreloadCache
             \unlink($filename);
         }
 
-        (new SetLastUpdateTime())();
+        new SetLastUpdateTime()();
     }
 }

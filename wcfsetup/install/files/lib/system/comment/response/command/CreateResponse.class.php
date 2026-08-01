@@ -28,12 +28,12 @@ final class CreateResponse
 
     public function __invoke(): CommentResponse
     {
-        return (new \wcf\command\comment\response\CreateResponse(
+        return new \wcf\command\comment\response\CreateResponse(
             $this->comment,
             $this->htmlInputProcessor,
             $this->user,
             $this->username,
             $this->isDisabled
-        ))();
+        )();
     }
 }

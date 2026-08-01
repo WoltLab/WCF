@@ -70,10 +70,10 @@ final class TagSynonymAction implements RequestHandlerInterface
             }
 
             $tagID = $form->getData()["data"]["tagID"];
-            (new SetTagSynonym(
+            new SetTagSynonym(
                 $tagList->search($tagID),
                 $tagList->getObjects()
-            ))();
+            )();
 
             return new JsonResponse([]);
         } else {

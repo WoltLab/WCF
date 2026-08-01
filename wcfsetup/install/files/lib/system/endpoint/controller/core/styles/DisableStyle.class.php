@@ -31,7 +31,7 @@ final class DisableStyle implements IController
         $this->assertStyleCanBeDisabled($style);
 
         if (!$style->isDisabled) {
-            (new \wcf\command\style\DisableStyle($style))();
+            new \wcf\command\style\DisableStyle($style)();
         }
 
         return new JsonResponse([]);

@@ -32,7 +32,7 @@ final class DisableServer implements IController
         $this->assertServerCanBeDisabled($server);
 
         if (!$server->isDisabled) {
-            (new DisablePackageUpdateServer($server))();
+            new DisablePackageUpdateServer($server)();
         }
 
         return new JsonResponse([]);

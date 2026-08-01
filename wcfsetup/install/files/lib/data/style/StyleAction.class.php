@@ -377,7 +377,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
         }
         // need to reload the style object to get the updated hasFavicon value
         $style = new Style($style->styleID);
-        (new CreateManifest($style))();
+        new CreateManifest($style)();
 
         if ($style->hasFavicon) {
             $style->loadVariables();
@@ -497,7 +497,7 @@ BROWSERCONFIG;
      */
     public function copy()
     {
-        $newStyle = (new CopyStyle($this->styleEditor->getDecoratedObject()))();
+        $newStyle = new CopyStyle($this->styleEditor->getDecoratedObject())();
 
         return [
             'redirectURL' => LinkHandler::getInstance()->getControllerLink(
@@ -531,7 +531,7 @@ BROWSERCONFIG;
      */
     public function changeStyle()
     {
-        (new ChangeStyle($this->style))();
+        new ChangeStyle($this->style)();
     }
 
     /**
@@ -638,9 +638,9 @@ BROWSERCONFIG;
     {
         foreach ($this->objects as $editor) {
             if ($editor->isDisabled) {
-                (new EnableStyle($editor->getDecoratedObject()))();
+                new EnableStyle($editor->getDecoratedObject())();
             } else {
-                (new DisableStyle($editor->getDecoratedObject()))();
+                new DisableStyle($editor->getDecoratedObject())();
             }
         }
     }

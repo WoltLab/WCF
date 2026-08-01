@@ -276,7 +276,7 @@ class SettingsForm extends AbstractForm
             $userProfileAction->executeAction();
 
             if (WCF::getUser()->getUserOption('colorScheme') !== $this->colorScheme) {
-                (new SetColorScheme(WCF::getUser(), $this->colorScheme))();
+                new SetColorScheme(WCF::getUser(), $this->colorScheme)();
             }
         }
         $this->saved();

@@ -22,9 +22,9 @@ final class Unfollow
 
     public function __invoke(): void
     {
-        (new \wcf\command\user\Unfollow(
+        new \wcf\command\user\Unfollow(
             $this->user,
             $this->target
-        ))();
+        )();
     }
 }

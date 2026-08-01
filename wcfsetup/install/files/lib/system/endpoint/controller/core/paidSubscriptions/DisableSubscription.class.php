@@ -31,7 +31,7 @@ final class DisableSubscription implements IController
         $this->assertSubscriptionCanBeDisabled();
 
         if (!$subscription->isDisabled) {
-            (new DisablePaidSubscription($subscription))();
+            new DisablePaidSubscription($subscription)();
         }
 
         return new JsonResponse([]);

@@ -138,9 +138,9 @@ class ContactRecipientAction extends AbstractDatabaseObjectAction implements ITo
     {
         foreach ($this->objects as $editor) {
             if ($editor->isDisabled) {
-                (new EnableContactRecipient($editor->getDecoratedObject()))();
+                new EnableContactRecipient($editor->getDecoratedObject())();
             } else {
-                (new DisableContactRecipient($editor->getDecoratedObject()))();
+                new DisableContactRecipient($editor->getDecoratedObject())();
             }
         }
     }

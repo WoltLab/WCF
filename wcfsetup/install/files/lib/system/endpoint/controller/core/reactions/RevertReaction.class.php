@@ -66,10 +66,10 @@ final class RevertReaction implements IController
         );
 
         if ($like->likeID) {
-            (new \wcf\command\reaction\RevertReaction(
+            new \wcf\command\reaction\RevertReaction(
                 $like,
                 $likeable
-            ))();
+            )();
         }
 
         $likeObject = LikeObject::getLikeObject(

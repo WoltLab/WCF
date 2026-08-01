@@ -23,6 +23,6 @@ final class UpdateComment
 
     public function __invoke(): void
     {
-        (new \wcf\command\comment\UpdateComment($this->comment, $this->htmlInputProcessor))();
+        new \wcf\command\comment\UpdateComment($this->comment, $this->htmlInputProcessor)();
     }
 }

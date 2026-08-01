@@ -247,9 +247,9 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
     {
         foreach ($this->objects as $editor) {
             if ($editor->isDisabled) {
-                (new EnableCronjob($editor->getDecoratedObject()))();
+                new EnableCronjob($editor->getDecoratedObject())();
             } else {
-                (new DisableCronjob($editor->getDecoratedObject()))();
+                new DisableCronjob($editor->getDecoratedObject())();
             }
         }
     }
