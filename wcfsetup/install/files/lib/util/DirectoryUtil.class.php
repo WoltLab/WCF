@@ -57,11 +57,11 @@ final class DirectoryUtil
 
     /**
      * all recursive and non-recursive instances of DirectoryUtil
-     * @var DirectoryUtil[][]
+     * @var array<int, DirectoryUtil[]>
      */
     protected static $instances = [
-        true => [], // recursive instances
-        false => [],        // non-recursive instances
+        1 => [], // recursive instances
+        0 => [], // non-recursive instances
     ];
 
     /**
@@ -100,11 +100,11 @@ final class DirectoryUtil
             throw new SystemException("'" . $tmpDirectory . "' is no directory");
         }
 
-        if (!isset(static::$instances[$recursive][$directory])) {
-            static::$instances[$recursive][$directory] = new static($directory, $recursive);
+        if (!isset(static::$instances[(int)$recursive][$directory])) {
+            static::$instances[(int)$recursive][$directory] = new static($directory, $recursive);
         }
 
-        return static::$instances[$recursive][$directory];
+        return static::$instances[(int)$recursive][$directory];
     }
 
     /**
@@ -287,7 +287,7 @@ final class DirectoryUtil
         $this->removePattern(new Regex('.'));
 
         // destroy cached instance
-        unset(static::$instances[$this->recursive][$this->directory]);
+        unset(static::$instances[(int)$this->recursive][$this->directory]);
     }
 
     /**
