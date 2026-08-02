@@ -17,6 +17,7 @@ use wcf\system\form\builder\IFormParentNode;
  * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.4
+ * @deprecated 6.3 Not in use anymore.
  *
  * @template T of IFormField
  */
