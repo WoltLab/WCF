@@ -32,6 +32,11 @@ class DefaultUserAuthentication extends AbstractUserAuthentication
         // Does nothing
     }
 
+    /**
+     * @template T of User
+     * @param class-string<T> $userClassname class name of user class
+     * @return T
+     */
     #[\Override]
     public function loginManually(
         string $username,

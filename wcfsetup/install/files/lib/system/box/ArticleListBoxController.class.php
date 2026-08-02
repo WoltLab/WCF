@@ -2,6 +2,7 @@
 
 namespace wcf\system\box;
 
+use wcf\data\article\AccessibleArticleList;
 use wcf\data\article\Article;
 use wcf\system\listView\user\ArticleListView;
 use wcf\system\WCF;
@@ -62,7 +63,7 @@ class ArticleListBoxController extends AbstractListViewBoxController
     }
 
     #[\Override]
-    protected function getObjectList()
+    protected function getObjectList(): AccessibleArticleList
     {
         $objectList = $this->getListView()->getObjectList();
         $objectList->getConditionBuilder()->add('article.isDeleted = ?', [0]);

@@ -452,6 +452,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 
     /**
      * @see \wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
+     * @return string
      */
     #[\Override]
     public static function getDefaultFilename()

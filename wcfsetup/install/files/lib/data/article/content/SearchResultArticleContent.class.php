@@ -4,6 +4,7 @@ namespace wcf\data\article\content;
 
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\search\ISearchResultObject;
+use wcf\data\user\UserProfile;
 use wcf\page\ArticlePage;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\request\LinkHandler;
@@ -26,9 +27,8 @@ class SearchResultArticleContent extends DatabaseObjectDecorator implements ISea
      */
     protected static $baseClass = ArticleContent::class;
 
-
     #[\Override]
-    public function getUserProfile()
+    public function getUserProfile(): UserProfile
     {
         return $this->getArticle()->getUserProfile();
     }

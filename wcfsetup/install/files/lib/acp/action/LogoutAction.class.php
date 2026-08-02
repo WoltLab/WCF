@@ -21,6 +21,9 @@ class LogoutAction extends AbstractSecureAction
      */
     public $loginRequired = true;
 
+    /**
+     * @return RedirectResponse
+     */
     #[\Override]
     public function execute()
     {

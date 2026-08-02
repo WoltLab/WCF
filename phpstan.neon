@@ -31,7 +31,7 @@ parameters:
     reportMaybesInMethodSignatures: true
     reportMaybesInPropertyPhpDocTypes: true
     reportStaticMethodSignatures: true
-    checkTooWideReturnTypesInProtectedAndPublicMethods: false
+    checkTooWideReturnTypesInProtectedAndPublicMethods: true
     checkTooWideParameterOutInProtectedAndPublicMethods: true
     checkTooWideThrowTypesInProtectedAndPublicMethods: true
     rememberPossiblyImpureFunctionValues: true

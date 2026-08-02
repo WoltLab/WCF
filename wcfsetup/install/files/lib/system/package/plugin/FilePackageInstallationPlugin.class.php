@@ -112,7 +112,7 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin im
     }
 
     #[\Override]
-    public static function getDefaultFilename()
+    public static function getDefaultFilename(): string
     {
         return 'files.tar';
     }

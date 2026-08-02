@@ -82,7 +82,7 @@ class BoxVersionTracker extends DatabaseObjectDecorator implements IVersionTrack
     }
 
     #[\Override]
-    public function getUserID()
+    public function getUserID(): int
     {
         return 0;
     }

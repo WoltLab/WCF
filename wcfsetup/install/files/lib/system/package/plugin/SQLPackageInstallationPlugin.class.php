@@ -140,7 +140,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin
     }
 
     #[\Override]
-    public static function getDefaultFilename()
+    public static function getDefaultFilename(): string
     {
         return 'install.sql';
     }

@@ -97,6 +97,9 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
         ];
     }
 
+    /**
+     * @return mixed[]
+     */
     #[\Override]
     protected function findExistingItem(array $data)
     {
@@ -118,13 +121,13 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
     }
 
     #[\Override]
-    protected function import(array $row, array $data)
+    protected function import(array $row, array $data): ClipboardAction|ClipboardActionEditor
     {
         // extract pages
         $pages = $data['pages'];
         unset($data['pages']);
 
-        /** @var ClipboardAction $action */
+        /** @var ClipboardAction|ClipboardActionEditor $action */
         $action = parent::import($row, $data);
 
         // store pages for later import

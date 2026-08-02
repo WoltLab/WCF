@@ -242,6 +242,9 @@ abstract class AbstractOauth2Action extends AbstractAction
         return new RedirectResponse($url);
     }
 
+    /**
+     * @return ResponseInterface
+     */
     #[\Override]
     public function execute()
     {

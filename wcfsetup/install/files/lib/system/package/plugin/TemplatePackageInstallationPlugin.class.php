@@ -95,11 +95,8 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
         }
     }
 
-    /**
-     * @see \wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
-     */
     #[\Override]
-    public static function getDefaultFilename()
+    public static function getDefaultFilename(): string
     {
         return 'templates.tar';
     }

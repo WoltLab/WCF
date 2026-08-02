@@ -78,7 +78,7 @@ class ArticleSearch extends AbstractSearchProvider
     }
 
     #[\Override]
-    public function getConditionBuilder(array $parameters): ?PreparedStatementConditionBuilder
+    public function getConditionBuilder(array $parameters): PreparedStatementConditionBuilder
     {
         if (!empty($parameters['articleCategoryID'])) {
             $this->articleCategoryID = \intval($parameters['articleCategoryID']);
@@ -138,8 +138,11 @@ class ArticleSearch extends AbstractSearchProvider
         return 'searchArticle';
     }
 
+    /**
+     * @return array{articleCategoryID: int}
+     */
     #[\Override]
-    public function getAdditionalData(): ?array
+    public function getAdditionalData(): array
     {
         return ['articleCategoryID' => $this->articleCategoryID];
     }

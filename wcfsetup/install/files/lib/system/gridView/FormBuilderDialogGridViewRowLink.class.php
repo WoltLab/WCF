@@ -49,7 +49,7 @@ class FormBuilderDialogGridViewRowLink extends AbstractGridViewRowLink
     }
 
     #[\Override]
-    public function renderInitialization(string $containerId): ?string
+    public function renderInitialization(string $containerId): string
     {
         $identifier = StringUtil::encodeJS($this->identifier);
         $containerId = StringUtil::encodeJS($containerId);

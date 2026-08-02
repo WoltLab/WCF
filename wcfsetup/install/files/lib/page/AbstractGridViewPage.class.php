@@ -52,6 +52,9 @@ abstract class AbstractGridViewPage extends AbstractPage
         }
     }
 
+    /**
+     * @phpstan-ignore return.unusedType
+     */
     #[\Override]
     public function show()
     {

@@ -83,6 +83,9 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         return $data['smileyCode'];
     }
 
+    /**
+     * @return mixed[]
+     */
     #[\Override]
     protected function findExistingItem(array $data)
     {

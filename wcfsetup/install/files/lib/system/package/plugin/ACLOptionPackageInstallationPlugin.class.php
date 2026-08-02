@@ -330,7 +330,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
     }
 
     #[\Override]
-    public static function getDefaultFilename()
+    public static function getDefaultFilename(): string
     {
         return 'aclOption.xml';
     }

@@ -46,6 +46,9 @@ abstract class AbstractRssFeedPage extends AbstractPage
         }
     }
 
+    /**
+     * @return void
+     */
     #[\Override]
     public function show()
     {

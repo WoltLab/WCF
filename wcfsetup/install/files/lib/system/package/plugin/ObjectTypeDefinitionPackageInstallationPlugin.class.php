@@ -70,6 +70,9 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
         return $data['definitionName'];
     }
 
+    /**
+     * @return mixed[]
+     */
     #[\Override]
     protected function findExistingItem(array $data)
     {

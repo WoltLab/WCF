@@ -93,6 +93,9 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
         }
     }
 
+    /**
+     * @return mixed[]
+     */
     #[\Override]
     protected function findExistingItem(array $data)
     {

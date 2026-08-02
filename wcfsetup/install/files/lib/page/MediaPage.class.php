@@ -129,6 +129,9 @@ class MediaPage extends AbstractPage
         }
     }
 
+    /**
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     #[\Override]
     public function show()
     {

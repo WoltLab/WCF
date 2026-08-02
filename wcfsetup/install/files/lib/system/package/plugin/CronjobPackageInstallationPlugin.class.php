@@ -180,6 +180,9 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
         ));
     }
 
+    /**
+     * @return mixed[]
+     */
     #[\Override]
     protected function findExistingItem(array $data)
     {

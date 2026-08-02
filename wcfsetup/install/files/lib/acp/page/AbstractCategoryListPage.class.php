@@ -62,6 +62,9 @@ abstract class AbstractCategoryListPage extends AbstractPage
      */
     public $templateName = 'categoryList';
 
+    /**
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     #[\Override]
     public function __run()
     {

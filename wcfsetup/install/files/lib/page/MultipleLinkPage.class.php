@@ -108,6 +108,9 @@ abstract class MultipleLinkPage extends AbstractPage
         }
     }
 
+    /**
+     * @return void
+     */
     #[\Override]
     public function readData()
     {

@@ -91,6 +91,9 @@ abstract class AbstractListViewBoxController extends AbstractDatabaseObjectListB
         EventHandler::getInstance()->fireAction($this, 'afterLoadContent');
     }
 
+    /**
+     * @return TDatabaseObjectList
+     */
     #[\Override]
     protected function getObjectList()
     {

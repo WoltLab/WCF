@@ -215,6 +215,9 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         return $statement->fetchSingleColumn();
     }
 
+    /**
+     * @return mixed[]
+     */
     #[\Override]
     protected function findExistingItem(array $data)
     {

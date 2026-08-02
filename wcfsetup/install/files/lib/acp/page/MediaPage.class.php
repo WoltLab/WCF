@@ -34,9 +34,9 @@ class MediaPage extends AbstractPage
             $args['thumbnail'] = $_REQUEST['thumbnail'];
         }
 
-        return new RedirectResponse(
+        $this->setPsr7Response(new RedirectResponse(
             LinkHandler::getInstance()->getControllerLink(\wcf\page\MediaPage::class, $args),
             302
-        );
+        ));
     }
 }

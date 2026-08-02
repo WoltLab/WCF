@@ -50,6 +50,10 @@ class DevtoolsTar extends Tar
         $this->files[$filename] = $fullPath;
     }
 
+    /**
+     * @return string|false
+     * @phpstan-ignore method.childReturnType, method.childReturnType
+     */
     #[\Override]
     public function getIndexByFilename(string $filename)
     {

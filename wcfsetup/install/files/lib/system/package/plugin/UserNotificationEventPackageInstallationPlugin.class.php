@@ -94,9 +94,9 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
     }
 
     #[\Override]
-    protected function import(array $row, array $data)
+    protected function import(array $row, array $data): UserNotificationEvent|UserNotificationEventEditor
     {
-        /** @var UserNotificationEvent $event */
+        /** @var UserNotificationEvent|UserNotificationEventEditor $event */
         $event = parent::import($row, $data);
 
         if (empty($row) && $data['preset']) {
@@ -125,6 +125,9 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
         WCF::getDB()->commitTransaction();
     }
 
+    /**
+     * @return mixed[]
+     */
     #[\Override]
     protected function findExistingItem(array $data)
     {

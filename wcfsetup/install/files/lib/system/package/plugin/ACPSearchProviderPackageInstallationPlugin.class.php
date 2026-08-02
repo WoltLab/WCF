@@ -72,6 +72,9 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
         ];
     }
 
+    /**
+     * @return mixed[]
+     */
     #[\Override]
     protected function findExistingItem(array $data)
     {
@@ -102,11 +105,8 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
         return $data['providerName'];
     }
 
-    /**
-     * @see \wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
-     */
     #[\Override]
-    public static function getDefaultFilename()
+    public static function getDefaultFilename(): string
     {
         return 'acpSearchProvider.xml';
     }

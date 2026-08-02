@@ -24,7 +24,7 @@ class PageCommentListBoxController extends AbstractDatabaseObjectListBoxControll
     protected static $supportedPositions = ['contentTop', 'contentBottom'];
 
     #[\Override]
-    protected function getObjectList()
+    protected function getObjectList(): StructuredCommentList
     {
         $commentObjectTypeID = CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.page');
         $commentManager = CommentHandler::getInstance()->getObjectType($commentObjectTypeID)->getProcessor();

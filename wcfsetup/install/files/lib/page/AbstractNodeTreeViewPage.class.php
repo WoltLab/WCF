@@ -24,6 +24,9 @@ abstract class AbstractNodeTreeViewPage extends AbstractPage
      */
     protected AbstractNodeTreeView $nodeTreeView;
 
+    /**
+     * @phpstan-ignore return.unusedType
+     */
     #[\Override]
     public function show()
     {

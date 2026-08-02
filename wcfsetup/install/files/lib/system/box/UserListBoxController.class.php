@@ -123,7 +123,7 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
     }
 
     #[\Override]
-    protected function getObjectList()
+    protected function getObjectList(): UserProfileList
     {
         // use specialized cache builders
         if ($this->sortOrder && $this->sortField) {

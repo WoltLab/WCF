@@ -72,7 +72,7 @@ class PageSearch extends AbstractSearchProvider
     }
 
     #[\Override]
-    public function getConditionBuilder(array $parameters): ?PreparedStatementConditionBuilder
+    public function getConditionBuilder(array $parameters): PreparedStatementConditionBuilder
     {
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add(

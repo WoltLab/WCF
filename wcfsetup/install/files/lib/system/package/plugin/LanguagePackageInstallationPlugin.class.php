@@ -302,11 +302,8 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         LanguageFactory::getInstance()->deleteLanguageCache();
     }
 
-    /**
-     * @see \wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
-     */
     #[\Override]
-    public static function getDefaultFilename()
+    public static function getDefaultFilename(): string
     {
         return 'language/*.xml';
     }

@@ -144,6 +144,9 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
         return $this->getTitle();
     }
 
+    /**
+     * @phpstan-ignore return.unusedType
+     */
     #[\Override]
     public function getEmailMessage(string $notificationType = 'instant')
     {
@@ -301,6 +304,9 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
         return $this->getNotification()->time;
     }
 
+    /**
+     * @return int
+     */
     #[\Override]
     public function getUserID()
     {

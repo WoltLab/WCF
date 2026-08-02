@@ -81,6 +81,9 @@ abstract class AbstractFeedPage extends AbstractAuthedPage
         }
     }
 
+    /**
+     * @return void
+     */
     #[\Override]
     public function show()
     {

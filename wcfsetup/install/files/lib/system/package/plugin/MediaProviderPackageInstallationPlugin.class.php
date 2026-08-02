@@ -77,6 +77,9 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
         return $data['name'];
     }
 
+    /**
+     * @return mixed[]
+     */
     #[\Override]
     protected function findExistingItem(array $data)
     {

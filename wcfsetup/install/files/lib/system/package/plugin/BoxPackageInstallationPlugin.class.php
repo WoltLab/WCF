@@ -280,6 +280,9 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
         return $data['identifier'];
     }
 
+    /**
+     * @return mixed[]
+     */
     #[\Override]
     protected function findExistingItem(array $data)
     {
@@ -319,7 +322,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
     }
 
     #[\Override]
-    protected function import(array $row, array $data)
+    protected function import(array $row, array $data): Box|BoxEditor
     {
         // extract content
         $content = $data['content'];

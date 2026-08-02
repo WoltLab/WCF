@@ -64,7 +64,7 @@ class BulkRpcInteraction extends AbstractBulkInteraction
     }
 
     #[\Override]
-    public function renderInitialization(string $containerId): ?string
+    public function renderInitialization(string $containerId): string
     {
         $identifier = StringUtil::encodeJS($this->getIdentifier());
         $containerId = StringUtil::encodeJS($containerId);

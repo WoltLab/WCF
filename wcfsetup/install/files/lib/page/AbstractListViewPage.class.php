@@ -53,6 +53,9 @@ abstract class AbstractListViewPage extends AbstractPage
         }
     }
 
+    /**
+     * @phpstan-ignore return.unusedType
+     */
     #[\Override]
     public function show()
     {

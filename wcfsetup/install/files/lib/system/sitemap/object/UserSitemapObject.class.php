@@ -25,7 +25,7 @@ class UserSitemapObject extends AbstractSitemapObjectObjectType
     }
 
     #[\Override]
-    public function getLastModifiedColumn()
+    public function getLastModifiedColumn(): string
     {
         return 'lastActivityTime';
     }

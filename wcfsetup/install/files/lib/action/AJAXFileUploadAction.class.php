@@ -33,6 +33,9 @@ class AJAXFileUploadAction extends AbstractSecureAction
      */
     public $uploadedFiles = [];
 
+    /**
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     #[\Override]
     public function __run()
     {

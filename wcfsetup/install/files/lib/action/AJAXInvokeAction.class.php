@@ -54,6 +54,9 @@ class AJAXInvokeAction extends AbstractSecureAction
      */
     protected $response;
 
+    /**
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     #[\Override]
     public function __run()
     {

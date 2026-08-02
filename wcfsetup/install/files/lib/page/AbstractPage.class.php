@@ -221,6 +221,9 @@ abstract class AbstractPage implements IPage
         }
     }
 
+    /**
+     * @phpstan-ignore return.unusedType
+     */
     #[\Override]
     public function show()
     {

@@ -89,6 +89,9 @@ class LoginForm extends AbstractFormBuilderForm
         $this->renameSubmitButton();
     }
 
+    /**
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     #[\Override]
     public function __run()
     {

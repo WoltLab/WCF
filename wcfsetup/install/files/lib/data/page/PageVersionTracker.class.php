@@ -82,7 +82,7 @@ class PageVersionTracker extends DatabaseObjectDecorator implements IVersionTrac
     }
 
     #[\Override]
-    public function getUserID()
+    public function getUserID(): int
     {
         return 0;
     }

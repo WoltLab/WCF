@@ -111,6 +111,9 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
         'title' => '',
     ];
 
+    /**
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     #[\Override]
     public function __run()
     {

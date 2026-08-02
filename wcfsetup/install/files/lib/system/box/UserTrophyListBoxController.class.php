@@ -62,7 +62,7 @@ class UserTrophyListBoxController extends AbstractDatabaseObjectListBoxControlle
     protected $conditionDefinition = 'com.woltlab.wcf.box.userTrophyList.condition';
 
     #[\Override]
-    protected function getObjectList()
+    protected function getObjectList(): UserTrophyList
     {
         $list = new UserTrophyList();
 

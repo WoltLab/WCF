@@ -161,6 +161,9 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
         return parent::import($row, $data);
     }
 
+    /**
+     * @return mixed[]
+     */
     #[\Override]
     protected function findExistingItem(array $data)
     {

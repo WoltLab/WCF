@@ -70,6 +70,9 @@ class InstallPackageAction extends AbstractSecureAction
         $this->installation = new PackageInstallationDispatcher($this->queue);
     }
 
+    /**
+     * @return ResponseInterface
+     */
     #[\Override]
     public function execute()
     {

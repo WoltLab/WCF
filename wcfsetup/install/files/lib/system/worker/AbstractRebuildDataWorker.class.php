@@ -39,6 +39,9 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
      */
     protected $objectList;
 
+    /**
+     * @return T
+     */
     #[\Override]
     public function getObjectList()
     {

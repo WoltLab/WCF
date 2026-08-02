@@ -155,6 +155,9 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         }
     }
 
+    /**
+     * @return mixed[]
+     */
     #[\Override]
     protected function findExistingItem(array $data)
     {
@@ -170,7 +173,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
     }
 
     #[\Override]
-    protected function import(array $row, array $data)
+    protected function import(array $row, array $data): BBCode|BBCodeEditor
     {
         // extract attributes
         $attributes = $data['attributes'];
@@ -183,7 +186,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
             unset($data['showButton']);
         }
 
-        /** @var BBCode $bbcode */
+        /** @var BBCode|BBCodeEditor $bbcode */
         $bbcode = parent::import($row, $data);
 
         // store attributes for later import
@@ -224,9 +227,8 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         }
     }
 
-
     #[\Override]
-    public static function getDefaultFilename()
+    public static function getDefaultFilename(): string
     {
         return 'bbcode.xml';
     }

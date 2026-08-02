@@ -117,6 +117,9 @@ abstract class AbstractCategoryAddForm extends AbstractForm
      */
     public $templateName = 'categoryAdd';
 
+    /**
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     #[\Override]
     public function __run()
     {

@@ -90,6 +90,9 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
         ];
     }
 
+    /**
+     * @return mixed[]
+     */
     #[\Override]
     protected function findExistingItem(array $data)
     {

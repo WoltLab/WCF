@@ -86,6 +86,9 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
         return $data['menuItem'];
     }
 
+    /**
+     * @return mixed[]
+     */
     #[\Override]
     protected function findExistingItem(array $data)
     {

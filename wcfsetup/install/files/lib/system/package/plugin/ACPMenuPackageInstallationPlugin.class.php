@@ -59,7 +59,7 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
     }
 
     #[\Override]
-    public static function getDefaultFilename()
+    public static function getDefaultFilename(): string
     {
         return 'acpMenu.xml';
     }

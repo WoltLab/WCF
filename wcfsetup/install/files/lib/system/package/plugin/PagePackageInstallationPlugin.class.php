@@ -273,6 +273,9 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
         return $data['identifier'];
     }
 
+    /**
+     * @return mixed[]
+     */
     #[\Override]
     protected function findExistingItem(array $data)
     {

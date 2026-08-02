@@ -597,6 +597,7 @@ XML;
         if ($oldElement !== null) {
             $sqlData = $this->findExistingItem($this->getElementData($oldElement, true));
 
+            // @phpstan-ignore notIdentical.alwaysTrue (some implementations of `findExistingItem()` cannot return null)
             if ($sqlData !== null) {
                 $statement = WCF::getDB()->prepare($sqlData['sql']);
                 $statement->execute($sqlData['parameters']);

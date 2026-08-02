@@ -117,6 +117,9 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
         ];
     }
 
+    /**
+     * @return mixed[]
+     */
     #[\Override]
     protected function findExistingItem(array $data)
     {

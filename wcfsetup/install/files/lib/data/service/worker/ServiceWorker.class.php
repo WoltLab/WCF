@@ -33,13 +33,13 @@ class ServiceWorker extends DatabaseObject implements SubscriptionInterface
     }
 
     #[\Override]
-    public function getPublicKey(): ?string
+    public function getPublicKey(): string
     {
         return $this->publicKey;
     }
 
     #[\Override]
-    public function getAuthToken(): ?string
+    public function getAuthToken(): string
     {
         return $this->authToken;
     }

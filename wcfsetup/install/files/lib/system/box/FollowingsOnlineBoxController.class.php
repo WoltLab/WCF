@@ -28,7 +28,7 @@ class FollowingsOnlineBoxController extends AbstractDatabaseObjectListBoxControl
     protected static $supportedPositions = ['sidebarLeft', 'sidebarRight'];
 
     #[\Override]
-    protected function getObjectList()
+    protected function getObjectList(): UsersOnlineList
     {
         $objectList = new UsersOnlineList();
         $objectList->getConditionBuilder()->add(

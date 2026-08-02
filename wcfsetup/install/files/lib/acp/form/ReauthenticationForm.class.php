@@ -14,6 +14,9 @@ use wcf\system\WCF;
  */
 class ReauthenticationForm extends \wcf\form\ReauthenticationForm
 {
+    /**
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     #[\Override]
     public function __run()
     {

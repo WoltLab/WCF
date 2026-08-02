@@ -56,6 +56,9 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
         ];
     }
 
+    /**
+     * @return mixed[]
+     */
     #[\Override]
     protected function findExistingItem(array $data)
     {

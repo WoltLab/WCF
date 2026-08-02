@@ -50,6 +50,9 @@ abstract class AbstractFileProcessor implements IFileProcessor
         return FileCacheDuration::oneYear();
     }
 
+    /**
+     * @phpstan-ignore return.unusedType
+     */
     #[\Override]
     public function getMaximumCount(array $context): ?int
     {

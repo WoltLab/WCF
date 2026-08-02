@@ -68,7 +68,7 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
     }
 
     #[\Override]
-    protected function getObjectList()
+    protected function getObjectList(): UsersOnlineList
     {
         return new UsersOnlineList();
     }

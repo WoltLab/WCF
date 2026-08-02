@@ -72,7 +72,7 @@ class WysiwygSmileyFormContainer extends TabTabMenuFormContainer implements IWys
     }
 
     #[\Override]
-    public function getIcon(): ?FontAwesomeIcon
+    public function getIcon(): FontAwesomeIcon
     {
         return FontAwesomeIcon::fromValues('face-smile');
     }

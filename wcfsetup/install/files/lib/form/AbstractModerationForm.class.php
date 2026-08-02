@@ -91,6 +91,9 @@ abstract class AbstractModerationForm extends AbstractForm
         }
     }
 
+    /**
+     * @return void
+     */
     #[\Override]
     public function readData()
     {

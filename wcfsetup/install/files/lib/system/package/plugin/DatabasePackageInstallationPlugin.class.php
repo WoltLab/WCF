@@ -86,7 +86,7 @@ class DatabasePackageInstallationPlugin extends AbstractPackageInstallationPlugi
     }
 
     #[\Override]
-    public static function getDefaultFilename()
+    public static function getDefaultFilename(): string
     {
         return static::SCRIPT_DIR . '*.php';
     }
