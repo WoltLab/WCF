@@ -522,7 +522,7 @@ class UploadFormField extends AbstractFormField
     }
 
     /**
-     * @param UploadFile[] $value
+     * @param mixed $value new field value, expects an array of `UploadFile` objects
      *
      * @throws      \InvalidArgumentException       if the value is not an array
      * @throws      \InvalidArgumentException       if the value contains objects, which are not an instance of UploadFile
@@ -534,18 +534,21 @@ class UploadFormField extends AbstractFormField
             throw new \InvalidArgumentException("Given value must be an array for field '{$this->getId()}'.");
         }
 
-        foreach ($value as $file) {
+        $files = [];
+        foreach ($value as $key => $file) {
             if (!($file instanceof UploadFile)) {
                 throw new \InvalidArgumentException(
                     "All given files must be an instance of " . UploadFile::class . " for field '{$this->getId()}'."
                 );
             }
+
+            $files[$key] = $file;
         }
 
         if ($this->isRegistered()) {
-            UploadHandler::getInstance()->registerFilesByField($this->getPrefixedId(), $value);
+            UploadHandler::getInstance()->registerFilesByField($this->getPrefixedId(), $files);
         } else {
-            $this->values = $value;
+            $this->values = $files;
         }
 
         return $this;

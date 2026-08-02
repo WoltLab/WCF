@@ -186,7 +186,7 @@ trait TI18nFormField
      * Sets whether this field is supports i18n input and returns this field.
      *
      * @param bool $i18n determines if field supports i18n input
-     * @return II18nFormField this field
+     * @return static this field
      */
     public function i18n(bool $i18n = true)
     {
@@ -250,7 +250,7 @@ trait TI18nFormField
      * Sets the pattern for the language item used to save the i18n values
      * and returns this field.
      *
-     * @return II18nFormField this field
+     * @return static this field
      *
      * @throws \BadMethodCallException if i18n is disabled for this field
      * @throws \InvalidArgumentException if the given pattern is invalid
@@ -305,7 +305,7 @@ trait TI18nFormField
      * This method enables this node to perform actions that require the whole document having
      * finished constructing itself and every parent-child relationship being established.
      *
-     * @return IFormNode this node
+     * @return static this node
      *
      * @throws \BadMethodCallException if this node has already been populated
      */
@@ -337,7 +337,7 @@ trait TI18nFormField
     /**
      * Reads the value of this field from request data and return this field.
      *
-     * @return IFormField this field
+     * @return static this field
      */
     public function readValue()
     {
@@ -390,7 +390,7 @@ trait TI18nFormField
     /**
      * Sets the value of this field and returns this field.
      *
-     * @param string|string[] $value new field value
+     * @param mixed $value new field value, expects a string or an array of strings
      * @return static this field
      *
      * @throws  \InvalidArgumentException       if the given value is of an invalid type or otherwise is invalid
@@ -399,8 +399,7 @@ trait TI18nFormField
     {
         if ($this->isI18n()) {
             if (\is_string($value) || \is_numeric($value)) {
-                $this->setStringValue($value);
-                // @phpstan-ignore function.alreadyNarrowedType
+                $this->setStringValue((string)$value);
             } elseif (\is_array($value)) {
                 if (!empty($value)) {
                     I18nHandler::getInstance()->setValues($this->getPrefixedId(), $value);

@@ -22,14 +22,14 @@ interface IAttributeFormField extends IFormField
      * Returns the value of the additional attribute of the actual field element with the given name.
      *
      * @throws \InvalidArgumentException if the given attribute is invalid or no such attribute exists
-     * @return mixed
+     * @return ?string
      */
     public function getFieldAttribute(string $name);
 
     /**
      * Returns all additional attributes of the actual field element.
      *
-     * @return array<string, string>
+     * @return array<string, ?string>
      */
     public function getFieldAttributes(): array;
 

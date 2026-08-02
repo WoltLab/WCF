@@ -2,6 +2,7 @@
 
 namespace wcf\system\log\modification;
 
+use wcf\data\DatabaseObject;
 use wcf\data\modification\log\IViewableModificationLog;
 use wcf\data\modification\log\ModificationLog;
 
@@ -36,7 +37,7 @@ interface IExtendedModificationLogHandler
      * instances and pre-loading their data.
      *
      * @param ModificationLog[] $items
-     * @return  IViewableModificationLog[]
+     * @return  array<DatabaseObject&IViewableModificationLog>
      */
     public function processItems(array $items);
 }

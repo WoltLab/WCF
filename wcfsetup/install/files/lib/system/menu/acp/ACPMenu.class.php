@@ -29,9 +29,6 @@ class ACPMenu extends TreeMenu
         'wcf.acp.menu.link.systemCheck',
     ];
 
-    /**
-     * @param AcpMenuItem $item
-     */
     #[\Override]
     protected function checkMenuItem(ITreeMenuItem $item)
     {

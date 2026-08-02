@@ -4,10 +4,6 @@ namespace wcf\system\form\builder\field;
 
 use wcf\data\DatabaseObjectBuilder;
 use wcf\data\IStorableObject;
-use wcf\system\form\builder\field\validation\IFormFieldValidationError;
-use wcf\system\form\builder\field\validation\IFormFieldValidator;
-use wcf\system\form\builder\IFormChildNode;
-use wcf\system\form\builder\IFormElement;
 
 /**
  * Represents an actual form field storing a value.

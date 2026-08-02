@@ -15,7 +15,7 @@ use wcf\system\form\builder\IFormNode;
 trait TAttributeFormField
 {
     /**
-     * @var array<string, mixed>
+     * @var array<string, ?string>
      */
     protected $fieldAttributes = [];
 
@@ -39,7 +39,7 @@ trait TAttributeFormField
      * Returns the value of the additional attribute of the actual field element with the given name.
      *
      * @throws \InvalidArgumentException if the given attribute is invalid or no such attribute exists
-     * @return mixed
+     * @return ?string
      */
     public function getFieldAttribute(string $name)
     {
@@ -53,7 +53,7 @@ trait TAttributeFormField
     /**
      * Returns all additional attributes of the actual field element.
      *
-     * @return array<string, mixed>
+     * @return array<string, ?string>
      */
     public function getFieldAttributes(): array
     {

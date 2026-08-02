@@ -28,7 +28,7 @@ parameters:
     checkExplicitMixedMissingReturn: true
     checkFunctionNameCase: true
     checkInternalClassCaseSensitivity: true
-    reportMaybesInMethodSignatures: false
+    reportMaybesInMethodSignatures: true
     reportMaybesInPropertyPhpDocTypes: true
     reportStaticMethodSignatures: true
     checkTooWideReturnTypesInProtectedAndPublicMethods: false

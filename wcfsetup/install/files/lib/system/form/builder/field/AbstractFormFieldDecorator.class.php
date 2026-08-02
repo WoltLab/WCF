@@ -96,6 +96,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @template TBuilder of DatabaseObjectBuilder
      * @param \Closure(TBuilder, T): void $callback
+     * @phpstan-ignore method.childParameterType, method.childParameterType
      */
     #[\Override]
     public function saveValueCallback(\Closure $callback): static
@@ -117,6 +118,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @template TObject of IStorableObject
      * @param \Closure(TObject, T): void $callback
+     * @phpstan-ignore method.childParameterType, method.childParameterType
      */
     #[\Override]
     public function loadValueCallback(\Closure $callback): static

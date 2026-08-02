@@ -43,7 +43,7 @@ class MultipartAlternativeMimePart extends AbstractMultipartMimePart
      * The given priority determines the ordering within the Email. A higher priority
      * mime part will be further down the email (see RFC 2046, 5.1.4).
      *
-     * @param int $data The priority.
+     * @param mixed $data The priority, must be an integer.
      * @throws  \InvalidArgumentException
      * @throws  \DomainException
      */
@@ -51,6 +51,10 @@ class MultipartAlternativeMimePart extends AbstractMultipartMimePart
     #[\Override]
     public function addMimePart(AbstractMimePart $part, mixed $data = 1000)
     {
+        if (!\is_int($data)) {
+            throw new \InvalidArgumentException("The priority must be an integer.");
+        }
+
         parent::addMimePart($part, $data);
     }
 

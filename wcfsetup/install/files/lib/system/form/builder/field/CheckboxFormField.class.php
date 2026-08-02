@@ -31,6 +31,7 @@ class CheckboxFormField extends BooleanFormField implements INullableFormField
 
     /**
      * @return 0|1|null
+     * @phpstan-ignore method.childReturnType
      */
     #[\Override]
     public function getSaveValue()

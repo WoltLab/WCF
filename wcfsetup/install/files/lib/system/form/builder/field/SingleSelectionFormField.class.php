@@ -36,7 +36,7 @@ class SingleSelectionFormField extends AbstractFormField implements
     protected $templateName = 'shared_singleSelectionFormField';
 
     /**
-     * @return ?string
+     * @return int|string|null
      */
     #[\Override]
     public function getSaveValue()

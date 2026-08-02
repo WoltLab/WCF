@@ -35,12 +35,12 @@ use wcf\util\StringUtil;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  *
- * @extends AbstractGridView<ModificationLog, ModificationLogList>
+ * @extends AbstractGridView<DatabaseObject, ModificationLogList>
  */
 final class ModificationLogGridView extends AbstractGridView
 {
     /**
-     * @var IViewableModificationLog[]
+     * @var array<DatabaseObject&IViewableModificationLog>
      */
     private array $logItems;
 
@@ -194,7 +194,7 @@ final class ModificationLogGridView extends AbstractGridView
     }
 
     /**
-     * @return IViewableModificationLog[]
+     * @return array<DatabaseObject&IViewableModificationLog>
      */
     #[\Override]
     public function getRows(): array

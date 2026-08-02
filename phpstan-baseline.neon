@@ -367,18 +367,6 @@ parameters:
 			path: wcfsetup/install/files/lib/system/form/builder/field/SingleSelectionFormField.class.php
 
 		-
-			message: '#^Call to function is_numeric\(\) with array\<string\> will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/TextFormField.class.php
-
-		-
-			message: '#^Call to function is_array\(\) with array\<wcf\\system\\file\\upload\\UploadFile\> will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/UploadFormField.class.php
-
-		-
 			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 1
@@ -387,7 +375,7 @@ parameters:
 		-
 			message: '#^Instanceof between wcf\\system\\file\\upload\\UploadFile and wcf\\system\\file\\upload\\UploadFile will always evaluate to true\.$#'
 			identifier: instanceof.alwaysTrue
-			count: 2
+			count: 1
 			path: wcfsetup/install/files/lib/system/form/builder/field/UploadFormField.class.php
 
 		-
