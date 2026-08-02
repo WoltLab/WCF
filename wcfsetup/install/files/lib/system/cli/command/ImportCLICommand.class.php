@@ -132,7 +132,6 @@ class ImportCLICommand implements ICLICommand
             CLIWCF::getReader()->println(StringUtil::stripHTML(WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.existingMapping.notice')));
             CLIWCF::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.existingMapping.confirmMessage') . ' [YN]');
 
-            /** @var ?string */
             $answer = CLIWCF::getReader()->readLine('> ');
             if ($answer === null) {
                 exit;
@@ -208,17 +207,14 @@ class ImportCLICommand implements ICLICommand
     {
         for (;;) {
             CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database'));
-            /** @var ?string */
             $dbHost = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.host') . '> ');
             if ($dbHost === null) {
                 exit;
             }
-            /** @var ?string */
             $dbUser = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.user') . '> ');
             if ($dbUser === null) {
                 exit;
             }
-            /** @var ?string */
             $dbPassword = CLIWCF::getReader()->readLine(
                 WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.password') . '> ',
                 '*'
@@ -226,12 +222,10 @@ class ImportCLICommand implements ICLICommand
             if ($dbPassword === null) {
                 exit;
             }
-            /** @var ?string */
             $dbName = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.name') . '> ');
             if ($dbName === null) {
                 exit;
             }
-            /** @var ?string */
             $dbPrefix = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.prefix') . '> ');
             if ($dbPrefix === null) {
                 exit;
@@ -303,7 +297,6 @@ class ImportCLICommand implements ICLICommand
         ]));
 
         for (;;) {
-            /** @var string|null $exporterIndex */
             $exporterIndex = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.exporter') . '> ');
             if ($exporterIndex === null) {
                 exit;
@@ -344,7 +337,6 @@ class ImportCLICommand implements ICLICommand
     {
         CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.configure.fileSystem.path'));
         for (;;) {
-            /** @var ?string */
             $fileSystemPath = CLIWCF::getReader()->readLine('> ');
             if ($fileSystemPath === null) {
                 exit;
@@ -416,7 +408,6 @@ class ImportCLICommand implements ICLICommand
             }
 
             // read index of selected primary import data type
-            /** @var string|null $selectedObjectTypeIndex */
             $selectedObjectTypeIndex = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.data') . '> ');
             if ($selectedObjectTypeIndex === null) {
                 exit;
@@ -469,7 +460,6 @@ class ImportCLICommand implements ICLICommand
 
                 for (;;) {
                     // read index of selected secondary import data type
-                    /** @var ?string */
                     $selectedSecondaryObjectTypeIndex = CLIWCF::getReader()->readLine('  ' . WCF::getLanguage()->get('wcf.acp.dataImport.configure.data') . '> ');
                     if ($selectedSecondaryObjectTypeIndex === null) {
                         exit;
@@ -545,7 +535,6 @@ class ImportCLICommand implements ICLICommand
         ]));
 
         for (;;) {
-            /** @var ?string */
             $userMergeMode = CLIWCF::getReader()->readLine('> ');
             if ($userMergeMode === null) {
                 exit;

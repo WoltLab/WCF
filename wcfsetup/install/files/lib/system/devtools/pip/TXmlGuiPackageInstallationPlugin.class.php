@@ -517,7 +517,6 @@ XML;
             $data = $xml->xpath()->query('/ns:data')->item(0);
             \assert($data instanceof \DOMElement);
             $import = $xml->getDocument()->createElement('import');
-            \assert($import !== false);
             DOMUtil::prepend($import, $data);
         }
 

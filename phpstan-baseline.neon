@@ -541,18 +541,6 @@ parameters:
 			path: wcfsetup/install/files/lib/system/package/plugin/UserMenuPackageInstallationPlugin.class.php
 
 		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/UserProfileMenuPackageInstallationPlugin.class.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between DOMElement and false will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: wcfsetup/install/files/lib/system/package/plugin/UserProfileMenuPackageInstallationPlugin.class.php
-
-		-
 			message: '#^Parameter \#1 \$iterator of class RecursiveIteratorIterator constructor expects T of IteratorAggregate\|RecursiveIterator, DirectoryIterator given\.$#'
 			identifier: argument.type
 			count: 2

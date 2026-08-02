@@ -186,7 +186,6 @@ final class Helper
             throw new ParentClassException($className, DatabaseObject::class);
         }
 
-        /** @var DatabaseObject $dbo */
         $dbo = new $className($objectID);
 
         if ($dbo->isNil()) {
@@ -230,7 +229,6 @@ final class Helper
             throw new IllegalLinkException();
         }
 
-        /** @var DatabaseObject $dbo */
         $dbo = new $className($queryParameters['id']);
 
         if ($dbo->isNil()) {

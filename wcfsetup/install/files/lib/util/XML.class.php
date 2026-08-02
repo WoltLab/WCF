@@ -311,7 +311,6 @@ class XML
     public function getAttributes(\DOMElement $element)
     {
         $attributes = [];
-        /** @var \DOMNode $attribute */
         foreach ($element->attributes as $attribute) {
             $attributes[$attribute->nodeName] = $attribute->nodeValue;
         }

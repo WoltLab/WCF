@@ -1,0 +1,15 @@
+<?php
+
+namespace phpline\console;
+
+class ConsoleReader
+{
+    /**
+     * @param string|null $prompt
+     * @param string|null $mask
+     * @return string|null
+     */
+    public function readLine($prompt = null, $mask = null)
+    {
+    }
+}

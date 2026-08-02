@@ -22,7 +22,6 @@ final class AttachMetacodeUpcast extends AbstractImageMetacodeUpcast
     {
         $attachmentID = \intval($attributes[0]);
         $alignment = $attributes[1] ?? 'none';
-        /** @var string|bool|int $width */
         $width = $attributes[2] ?? 'auto';
         $attachment = AttachmentRuntimeCache::getInstance()->getObject($attachmentID);
         $parentLink = $element->parentNode;

@@ -219,7 +219,6 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
     {
         $newElement = $this->document->createElement($tagName);
         if ($preserveAttributes) {
-            /** @var \DOMNode $attribute */
             foreach ($element->attributes as $attribute) {
                 $newElement->setAttribute($attribute->nodeName, $attribute->nodeValue);
             }

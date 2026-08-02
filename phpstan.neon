@@ -14,6 +14,8 @@ parameters:
             - wcfsetup/install/files/lib/system/api/
     bootstrapFiles:
             - wcfsetup/install/files/lib/system/api/phpline/phpline.phar
+    stubFiles:
+        - phpstan-stubs/phpline.stub
     scanFiles:
         - constants.php
     ignoreErrors:
@@ -38,6 +40,6 @@ parameters:
     reportPossiblyNonexistentGeneralArrayOffset: true
     reportAlwaysTrueInLastCondition: true
     reportNonIntStringArrayKey: true
-    reportWrongPhpDocTypeInVarTag: false
+    reportWrongPhpDocTypeInVarTag: true
     reportAnyTypeWideningInVarTag: true
     checkStrictPrintfPlaceholderTypes: true

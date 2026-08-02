@@ -212,7 +212,6 @@ class CLIWCF extends WCF
             }
         } else {
             do {
-                /** @var ?string */
                 $line = self::getReader()->readLine(WCF::getLanguage()->get('wcf.user.username') . '> ');
                 if ($line === null) {
                     exit;
@@ -221,7 +220,6 @@ class CLIWCF extends WCF
             } while ($username === '');
 
             do {
-                /** @var ?string */
                 $line = self::getReader()->readLine(WCF::getLanguage()->get('wcf.user.password') . '> ', '*');
                 if ($line === null) {
                     exit;
@@ -270,7 +268,6 @@ class CLIWCF extends WCF
             }
             self::getReader()->setHistoryEnabled(true);
             $now = new \DateTimeImmutable('now', WCF::getUser()->getTimeZone());
-            /** @var ?string */
             $line = self::getReader()->readLine(\sprintf(
                 '%s> ',
                 $now->format('H:i:s'),

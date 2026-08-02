@@ -65,8 +65,9 @@ class LabelCacheBuilder extends AbstractCacheBuilder
             $labelList = new LabelList();
             $labelList->readObjects();
             foreach ($labelList as $label) {
-                /** @var ViewableLabelGroup $labelGroup */
                 $labelGroup = $data['groups'][$label->groupID];
+                // @phpstan-ignore function.impossibleType, instanceof.alwaysFalse
+                \assert($labelGroup instanceof ViewableLabelGroup);
                 $labelGroup->addLabel($label);
             }
         }
