@@ -85,5 +85,7 @@ class AbstractACLImporter extends AbstractImporter
 
             return 1;
         }
+
+        return 0;
     }
 }

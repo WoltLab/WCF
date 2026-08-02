@@ -19,7 +19,7 @@ class InfiniteIntegerUserGroupOptionType extends IntegerUserGroupOptionType
     public function merge(mixed $defaultValue, mixed $groupValue)
     {
         if ($defaultValue == -1) {
-            return;
+            return null;
         } elseif ($groupValue == -1) {
             return $groupValue;
         } else {

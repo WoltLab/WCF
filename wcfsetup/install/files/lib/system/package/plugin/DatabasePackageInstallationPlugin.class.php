@@ -51,6 +51,8 @@ class DatabasePackageInstallationPlugin extends AbstractPackageInstallationPlugi
         }
 
         $this->updateDatabase($packageDir . $this->instruction['value']);
+
+        return null;
     }
 
     /**

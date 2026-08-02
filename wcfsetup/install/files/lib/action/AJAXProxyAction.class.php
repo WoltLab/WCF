@@ -116,6 +116,6 @@ class AJAXProxyAction extends AJAXInvokeAction
             );
         }
 
-        parent::sendResponse();
+        return parent::sendResponse();
     }
 }

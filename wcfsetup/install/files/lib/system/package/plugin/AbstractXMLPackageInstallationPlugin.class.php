@@ -67,6 +67,8 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 
         // execute cleanup
         $this->cleanup();
+
+        return null;
     }
 
     #[\Override]

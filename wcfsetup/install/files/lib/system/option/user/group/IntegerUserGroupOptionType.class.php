@@ -21,5 +21,7 @@ class IntegerUserGroupOptionType extends IntegerOptionType implements IUserGroup
         if ($groupValue > $defaultValue) {
             return $groupValue;
         }
+
+        return null;
     }
 }

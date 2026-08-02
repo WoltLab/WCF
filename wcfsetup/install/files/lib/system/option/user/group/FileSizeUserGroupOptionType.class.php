@@ -21,5 +21,7 @@ class FileSizeUserGroupOptionType extends FileSizeOptionType implements IUserGro
         if ($groupValue > $defaultValue) {
             return $groupValue;
         }
+
+        return null;
     }
 }

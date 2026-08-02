@@ -85,6 +85,8 @@ class FormDocument
                 return $value;
             }
         }
+
+        return null;
     }
 
     /**

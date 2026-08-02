@@ -25,7 +25,7 @@ parameters:
     polluteScopeWithLoopInitialAssignments: true
     polluteScopeWithAlwaysIterableForeach: true
     polluteScopeWithBlock: true
-    checkExplicitMixedMissingReturn: false
+    checkExplicitMixedMissingReturn: true
     checkFunctionNameCase: true
     checkInternalClassCaseSensitivity: true
     reportMaybesInMethodSignatures: false

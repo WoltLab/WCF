@@ -86,6 +86,8 @@ abstract class AbstractFormElementContainer implements IFormElementContainer
                 }
             }
         }
+
+        return null;
     }
 
     #[\Override]

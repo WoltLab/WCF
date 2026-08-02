@@ -114,7 +114,7 @@ final class UserStorageHandler extends SingletonFactory
         }
 
         if (!$userID) {
-            return;
+            return null;
         }
 
         // make sure stored data is loaded
@@ -125,6 +125,8 @@ final class UserStorageHandler extends SingletonFactory
         if (isset($this->cache[$userID][$field])) {
             return $this->cache[$userID][$field];
         }
+
+        return null;
     }
 
     /**

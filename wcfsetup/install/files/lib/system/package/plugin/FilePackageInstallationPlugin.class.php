@@ -86,6 +86,8 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin im
         @\unlink($sourceFile);
 
         StyleHandler::resetStylesheets(true);
+
+        return null;
     }
 
     #[\Override]

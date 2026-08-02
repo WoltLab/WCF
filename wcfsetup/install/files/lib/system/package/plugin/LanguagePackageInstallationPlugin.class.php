@@ -170,6 +170,8 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                 );
             }
         }
+
+        return null;
     }
 
     #[\Override]

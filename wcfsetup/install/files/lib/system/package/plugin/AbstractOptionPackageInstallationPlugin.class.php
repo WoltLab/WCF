@@ -100,6 +100,8 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 
         // import or update options
         $this->importOptions($xpath);
+
+        return null;
     }
 
     #[\Override]

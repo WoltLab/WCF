@@ -51,6 +51,8 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
 
         // delete temporary sourceArchive
         @\unlink($sourceFile);
+
+        return null;
     }
 
     /**

@@ -52,6 +52,8 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
 
         // delete temporary sourceArchive
         @\unlink($sourceFile);
+
+        return null;
     }
 
     #[\Override]

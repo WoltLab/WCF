@@ -62,6 +62,7 @@ abstract class AbstractSearchableObjectType extends AbstractObjectTypeProcessor 
     #[\Override]
     public function getAdditionalData()
     {
+        return null;
     }
 
     #[\Override]

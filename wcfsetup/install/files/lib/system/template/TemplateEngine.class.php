@@ -962,6 +962,8 @@ class TemplateEngine extends SingletonFactory
         if (isset($this->v[$varname])) {
             return $this->v[$varname];
         }
+
+        return null;
     }
 
     /**

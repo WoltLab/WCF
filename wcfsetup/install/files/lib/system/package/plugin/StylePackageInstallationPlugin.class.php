@@ -43,6 +43,8 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin
 
         // remove tmp file
         @\unlink($filename);
+
+        return null;
     }
 
     #[\Override]

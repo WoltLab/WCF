@@ -58,6 +58,8 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin
             // log changes
             $parser->log();
         }
+
+        return null;
     }
 
     #[\Override]
