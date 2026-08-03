@@ -67,6 +67,13 @@ return new class {
                 }
             }
         );
+
+        $eventHandler->register(
+            \wcf\event\l10n\L10nDefinitionCollecting::class,
+            static function (\wcf\event\l10n\L10nDefinitionCollecting $event) {
+                $event->register(\wcf\data\user\option\UserOption::getL10nDefinition());
+            }
+        );
         $eventHandler->register(
             \wcf\event\language\LanguageImported::class,
             static function (\wcf\event\language\LanguageImported $event) {

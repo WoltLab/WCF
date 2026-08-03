@@ -5,6 +5,7 @@ namespace wcf\data\user\option;
 use wcf\data\ITitledObject;
 use wcf\data\option\Option;
 use wcf\data\user\User;
+use wcf\system\l10n\L10nDefinition;
 use wcf\system\WCF;
 
 /**
@@ -14,7 +15,7 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @property-read   string  $defaultValue       default value of the user option
+ * @property-read   ?string $defaultValue       default value of the user option
  * @property-read   0|1     $required           is `1` if the user option has to be filled out, otherwise `0`
  * @property-read   0|1     $askDuringRegistration  is `1` if the user option will be shown during registration to be filled out, otherwise `0`
  * @property-read   int     $editable           setting for who can edit the user option, see `UserOption::EDITABILITY_*` constants
@@ -23,8 +24,9 @@ use wcf\system\WCF;
  * @property-read   0|1     $searchable         is `1` if the user option can be searched, otherwise `0`
  * @property-read   0|1     $isDisabled         is `1` if the user option is disabled and thus neither shown nor editable, otherwise `0`
  * @property-read   0|1     $originIsSystem     is `1` if the user option was created by the system and not manually by an administrator, otherwise `0`
- * @property-read   string  $labeledUrl         the url, if the option type is `labeledUrl`
+ * @property-read   ?string $labeledUrl         the url, if the option type is `labeledUrl`
  * @property-read   0|1     $showOnUserCard     is `1` if the user option should be displayed on the user card, otherwise `0`
+ * @property-read   ?string $l10nIdentifier     base name of the language variable the localized title/description are derived from, `null` for options created by an administrator
  */
 class UserOption extends Option implements ITitledObject
 {
@@ -118,9 +120,71 @@ class UserOption extends Option implements ITitledObject
     public $user;
 
     #[\Override]
+    public function getCollectionClassName(): string
+    {
+        return UserOptionCollection::class;
+    }
+
+    #[\Override]
+    public function getCollection(): UserOptionCollection
+    {
+        $collection = parent::getCollection();
+        if (!($collection instanceof UserOptionCollection)) {
+            throw new \RuntimeException('Expected a UserOptionCollection.');
+        }
+
+        return $collection;
+    }
+
+    #[\Override]
     public function getTitle(): string
     {
-        return WCF::getLanguage()->get('wcf.user.option.' . $this->optionName);
+        return $this->getCollection()->getResolvedL10nValue($this, 'title');
+    }
+
+    /**
+     * Returns the localized description of this option in the active user's
+     * language.
+     *
+     * @since 6.3
+     */
+    public function getDescription(): string
+    {
+        return $this->getCollection()->getResolvedL10nValue($this, 'description');
+    }
+
+    /**
+     * Returns the localized values of the given column as a
+     * `languageID => value` map (see `L10nStorage`).
+     *
+     * @return array<int, string>
+     * @since 6.3
+     */
+    public function getL10nValues(string $columnName): array
+    {
+        if ($columnName !== 'title' && $columnName !== 'description') {
+            throw new \InvalidArgumentException("Invalid column name given.");
+        }
+
+        return $this->getCollection()->getL10nValues($this, $columnName);
+    }
+
+    /**
+     * @since 6.3
+     */
+    public static function getL10nDefinition(): L10nDefinition
+    {
+        return new L10nDefinition(
+            'wcf1_user_option',
+            'wcf1_user_option_l10n',
+            'optionID',
+            ['title', 'description'],
+            'l10nIdentifier',
+            [
+                'title' => '',
+                'description' => '.description',
+            ],
+        );
     }
 
     /**

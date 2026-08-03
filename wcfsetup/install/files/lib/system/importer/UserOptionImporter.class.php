@@ -5,11 +5,8 @@ namespace wcf\system\importer;
 use wcf\data\user\option\category\UserOptionCategoryEditor;
 use wcf\data\user\option\category\UserOptionCategoryList;
 use wcf\data\user\option\UserOption;
-use wcf\data\user\option\UserOptionAction;
-use wcf\data\user\option\UserOptionEditor;
-use wcf\system\language\LanguageFactory;
-use wcf\system\WCF;
-use wcf\util\StringUtil;
+use wcf\data\user\option\UserOptionBuilder;
+use wcf\system\l10n\L10nStorage;
 
 /**
  * Imports user options.
@@ -26,36 +23,14 @@ class UserOptionImporter extends AbstractImporter
     protected $className = UserOption::class;
 
     /**
-     * language category id
-     * @var int
-     */
-    protected $languageCategoryID;
-
-    /**
      * list of available user option categories
      * @var string[]
      */
     protected $categoryCache;
 
-    public function __construct()
-    {
-        // get language category id
-        $sql = "SELECT  languageCategoryID
-                FROM    wcf1_language_category
-                WHERE   languageCategory = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute(['wcf.user.option']);
-        $row = $statement->fetchArray();
-        $this->languageCategoryID = $row['languageCategoryID'];
-    }
-
     #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
-        $data['packageID'] = 1;
-        // set temporary option name
-        $data['optionName'] = StringUtil::getRandomID();
-
         if ($data['optionType'] == 'boolean' || $data['optionType'] == 'integer') {
             if (isset($data['defaultValue'])) {
                 $data['defaultValue'] = \intval($data['defaultValue']);
@@ -65,30 +40,31 @@ class UserOptionImporter extends AbstractImporter
         // create category
         $this->createCategory($data['categoryName']);
 
-        // save option
-        $action = new UserOptionAction([], 'create', ['data' => $data]);
-        $returnValues = $action->executeAction();
-        $userOption = $returnValues['returnValues'];
+        // Imported options are owned by the administrator: they are not linked
+        // to a language variable (`l10nIdentifier` stays `NULL`) and their
+        // localized title/description are stored as monolingual values.
+        $builder = UserOptionBuilder::forCreate()
+            ->setGenericOptionName()
+            ->setPackageID(1)
+            ->setOptionType($data['optionType'])
+            ->setCategoryName($data['categoryName'])
+            ->setL10nTitle([L10nStorage::MONOLINGUAL => (string)$additionalData['name']])
+            ->setL10nDescription([L10nStorage::MONOLINGUAL => (string)($additionalData['description'] ?? '')]);
 
-        // update generic option name
-        $editor = new UserOptionEditor($userOption);
-        $editor->update([
-            'optionName' => 'option' . $userOption->optionID,
-        ]);
+        // carry over the remaining columns of the imported option
+        $handledColumns = ['optionName', 'packageID', 'optionType', 'categoryName', 'l10nIdentifier'];
+        foreach ($data as $key => $value) {
+            if (\in_array($key, $handledColumns, true)) {
+                continue;
+            }
+            if ($value !== null && !\is_string($value) && !\is_int($value) && !\is_float($value)) {
+                continue;
+            }
 
-        // save name
-        $sql = "INSERT IGNORE INTO  wcf1_language_item
-                                    (languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
-                VALUES              (?, ?, ?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            LanguageFactory::getInstance()->getDefaultLanguageID(),
-            'wcf.user.option.option' . $userOption->optionID,
-            $additionalData['name'],
-            0,
-            $this->languageCategoryID,
-            1,
-        ]);
+            $builder->setCustomProperty($key, $value);
+        }
+
+        $userOption = $builder->create();
 
         ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.user.option', $oldID, $userOption->optionID);
 

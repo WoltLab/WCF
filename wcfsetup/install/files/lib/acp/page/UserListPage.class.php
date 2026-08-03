@@ -419,7 +419,11 @@ class UserListPage extends SortablePage
             }
 
             if (isset($this->options[$column]) && $column != 'email') {
-                $this->columnHeads[$column] = 'wcf.user.option.' . $column;
+                // system options keep their `wcf.user.option.*` phrase, options
+                // created by an administrator only have their localized title in
+                // the l10n storage
+                $this->columnHeads[$column] = $this->options[$column]->l10nIdentifier
+                    ?? $this->options[$column]->getTitle();
             } else {
                 $this->columnHeads[$column] = 'wcf.user.' . $column;
             }

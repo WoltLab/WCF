@@ -5387,7 +5387,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.option.adminComment"><![CDATA[Kommentar (intern)]]></item>
 		<item name="wcf.user.option.birthday"><![CDATA[Geburtstag]]></item>
 		<item name="wcf.user.option.birthdayShowYear"><![CDATA[Geburtsjahr im Profil anzeigen]]></item>
-		<item name="wcf.user.option.birthdayShowYear.description"><![CDATA[Mitglieder können dadurch {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Alter sehen.]]></item>
+		<item name="wcf.user.option.birthdayShowYear.description"><![CDATA[Mitglieder können dadurch das Alter sehen.]]></item>
 		<item name="wcf.user.option.canViewEmailAddress"><![CDATA[Kann E-Mail-Adresse sehen]]></item>
 		<item name="wcf.user.option.canViewOnlineStatus"><![CDATA[Kann Online-Status sehen]]></item>
 		<item name="wcf.user.option.canViewProfile"><![CDATA[Kann Benutzerprofil sehen]]></item>

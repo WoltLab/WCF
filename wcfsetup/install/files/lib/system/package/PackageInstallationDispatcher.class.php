@@ -210,6 +210,8 @@ class PackageInstallationDispatcher
 
             new \wcf\command\package\RebuildBootstrapper()();
 
+            (new \wcf\command\l10n\SyncL10nLanguageItems())();
+
             EventHandler::getInstance()->fire(new PackageListChanged());
 
             EventHandler::getInstance()->fireAction($this, 'postInstall');
