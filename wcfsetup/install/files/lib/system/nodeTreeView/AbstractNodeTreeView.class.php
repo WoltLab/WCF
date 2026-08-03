@@ -127,7 +127,7 @@ abstract class AbstractNodeTreeView
     public function getNode(int $objectID): ?IObjectTreeNode
     {
         foreach ($this->getNodes() as $node) {
-            if ($node->getObjectID() == $objectID) {
+            if ($node->getObjectID() === $objectID) {
                 return $node;
             }
         }

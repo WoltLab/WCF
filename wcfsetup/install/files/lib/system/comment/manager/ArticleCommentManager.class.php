@@ -124,7 +124,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
 
         $commentIDs = $responseIDs = [];
         foreach ($likes as $like) {
-            if ($like->objectTypeID == $commentLikeObjectType->objectTypeID) {
+            if ($like->objectTypeID === $commentLikeObjectType->objectTypeID) {
                 $commentIDs[] = $like->objectID;
             } else {
                 $responseIDs[] = $like->objectID;
@@ -171,7 +171,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
 
         // set message
         foreach ($likes as $like) {
-            if ($like->objectTypeID == $commentLikeObjectType->objectTypeID) {
+            if ($like->objectTypeID === $commentLikeObjectType->objectTypeID) {
                 // comment like
                 if (isset($comments[$like->objectID])) {
                     $comment = $comments[$like->objectID];
@@ -232,6 +232,6 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
         $articleContent = ArticleContentRuntimeCache::getInstance()
             ->getObject($this->getObjectID($commentOrResponse));
 
-        return $commentOrResponse->userID && $articleContent->getArticle()->userID == $commentOrResponse->userID;
+        return $commentOrResponse->userID && $articleContent->getArticle()->userID === $commentOrResponse->userID;
     }
 }

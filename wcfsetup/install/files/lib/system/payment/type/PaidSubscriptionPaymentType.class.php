@@ -35,7 +35,7 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType
         $userSubscription = $user = $subscription = null;
         try {
             $tokenParts = \explode(':', $token);
-            if (\count($tokenParts) != 2) {
+            if (\count($tokenParts) !== 2) {
                 throw new SystemException('invalid token');
             }
             [$userID, $subscriptionID] = $tokenParts;
@@ -68,9 +68,9 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType
             }
 
             $logMessage = '';
-            if ($status == 'completed') {
+            if ($status === 'completed') {
                 // validate payment amount
-                if ($amount != $subscription->cost || $currency != $subscription->currency) {
+                if ($amount !== (float)$subscription->cost || $currency !== $subscription->currency) {
                     throw new SystemException('invalid payment amount');
                 }
 
@@ -88,13 +88,13 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType
                 }
                 $logMessage = 'payment completed';
             }
-            if ($status == 'reversed') {
+            if ($status === 'reversed') {
                 if ($userSubscription !== null) {
                     new RevokePaidSubscriptionUser($userSubscription)();
                 }
                 $logMessage = 'payment reversed';
             }
-            if ($status == 'canceled_reversal') {
+            if ($status === 'canceled_reversal') {
                 if ($userSubscription?->isActive === 1) {
                     new RestorePaidSubscriptionUser($userSubscription)();
                 }

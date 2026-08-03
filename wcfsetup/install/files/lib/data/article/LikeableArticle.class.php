@@ -67,7 +67,7 @@ class LikeableArticle extends AbstractLikeObject implements IReactionObject
     #[\Override]
     public function sendNotification(Like $like)
     {
-        if ($this->getDecoratedObject()->userID != WCF::getUser()->userID) {
+        if ($this->getDecoratedObject()->userID !== WCF::getUser()->userID) {
             $notificationObject = new LikeUserNotificationObject($like);
             UserNotificationHandler::getInstance()->fireEvent(
                 'like',

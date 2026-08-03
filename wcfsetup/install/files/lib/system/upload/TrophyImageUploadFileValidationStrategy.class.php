@@ -34,7 +34,7 @@ class TrophyImageUploadFileValidationStrategy implements IUploadFileValidationSt
             return false;
         }
 
-        if ($uploadFile->getImageData()['width'] != $uploadFile->getImageData()['height']) {
+        if ($uploadFile->getImageData()['width'] !== $uploadFile->getImageData()['height']) {
             $uploadFile->setValidationErrorType('notSquared');
 
             return false;

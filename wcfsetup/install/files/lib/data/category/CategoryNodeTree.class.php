@@ -108,7 +108,7 @@ class CategoryNodeTree implements \IteratorAggregate
      */
     protected function buildTreeLevel(CategoryNode $parentNode, int $depth = 0)
     {
-        if ($this->maxDepth != -1 && $depth < 0) {
+        if ($this->maxDepth !== -1 && $depth < 0) {
             return;
         }
 
@@ -175,7 +175,7 @@ class CategoryNodeTree implements \IteratorAggregate
 
         // decorate category if necessary
         $decoratorClassName = \call_user_func([$this->nodeClassName, 'getBaseClass']);
-        if ($decoratorClassName != Category::class) {
+        if ($decoratorClassName !== Category::class) {
             $category = new $decoratorClassName($category);
         }
 

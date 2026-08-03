@@ -133,7 +133,7 @@ final class RegisterNewActivationCodeForm extends AbstractFormBuilderForm
             return;
         }
 
-        if (\mb_strtolower($value) != \mb_strtolower($this->user->email)) {
+        if (\mb_strtolower($value) !== \mb_strtolower($this->user->email)) {
             if (User::getUserByEmail($value)->userID) {
                 $formField->addValidationError(
                     new FormFieldValidationError(

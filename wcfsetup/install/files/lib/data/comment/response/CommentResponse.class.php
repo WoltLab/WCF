@@ -132,7 +132,7 @@ class CommentResponse extends DatabaseObject implements IMessage
      */
     public function setComment(Comment $comment)
     {
-        if ($this->commentID == $comment->commentID) {
+        if ($this->commentID === $comment->commentID) {
             $this->comment = $comment;
         }
     }

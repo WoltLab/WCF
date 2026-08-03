@@ -126,7 +126,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     public function resize(int $originX, int $originY, int $originWidth, int $originHeight, int $targetWidth, int $targetHeight)
     {
         // use origin dimensions if target dimensions are both zero
-        if ($targetWidth == 0 && $targetHeight == 0) {
+        if ($targetWidth === 0 && $targetHeight === 0) {
             $targetWidth = $originWidth;
             $targetHeight = $originHeight;
         }
@@ -365,7 +365,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
             return $this->adapter->checkMemoryLimit($width, $height, $mimeType);
         }
 
-        $channels = $mimeType == 'image/png' ? 4 : 3;
+        $channels = $mimeType === 'image/png' ? 4 : 3;
 
         return FileUtil::checkMemoryLimit((int)($width * $height * $channels * 2.1));
     }

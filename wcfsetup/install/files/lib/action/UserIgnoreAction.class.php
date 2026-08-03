@@ -96,7 +96,7 @@ final class UserIgnoreAction implements RequestHandlerInterface
         }
 
         // Check if the user is not yet ignored and cannot be ignored.
-        if ($ignore->type == UserIgnore::TYPE_NO_IGNORE && $target->getPermission('user.profile.cannotBeIgnored')) {
+        if ($ignore->type === UserIgnore::TYPE_NO_IGNORE && $target->getPermission('user.profile.cannotBeIgnored')) {
             throw new PermissionDeniedException();
         }
     }
@@ -121,7 +121,7 @@ final class UserIgnoreAction implements RequestHandlerInterface
                 ->value($ignore->type ?: 0)
                 ->addValidator(new FormFieldValidator('type', function (RadioButtonFormField $formField) use ($user) {
                     if ($user->getPermission('user.profile.cannotBeIgnored')) {
-                        if ($formField->getValue() != UserIgnore::TYPE_NO_IGNORE) {
+                        if ($formField->getValue() !== UserIgnore::TYPE_NO_IGNORE) {
                             $formField->addValidationError(
                                 new FormFieldValidationError(
                                     'cannotBeIgnored',

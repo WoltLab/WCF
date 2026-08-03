@@ -92,7 +92,7 @@ class AdHandler extends SingletonFactory
 
         $objectTypes = [];
         foreach ($this->objectTypes as $key => $objectType) {
-            if ($objectType->categoryname == $categoryName) {
+            if ($objectType->categoryname === $categoryName) {
                 $objectTypes[$key] = $objectType;
             }
         }

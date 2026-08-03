@@ -28,7 +28,7 @@ foreach ($contactOptionList as $contactOption) {
         $configuration['required'] = 1;
     }
     // @phpstan-ignore property.notFound
-    if ($contactOption->defaultValue && $contactOption->optionType == 'text') {
+    if ($contactOption->defaultValue && $contactOption->optionType === 'text') {
         $configuration['defaultValue'] = $contactOption->defaultValue;
     }
     // @phpstan-ignore property.notFound

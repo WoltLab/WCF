@@ -107,7 +107,7 @@ class TrophyPage extends MultipleLinkPage
             );
         }
 
-        if ($this->trophy->type == Trophy::TYPE_IMAGE) {
+        if ($this->trophy->type === Trophy::TYPE_IMAGE) {
             MetaTagHandler::getInstance()->addTag(
                 'og:image',
                 'og:image',

@@ -39,11 +39,11 @@ final class AssignUser
         ];
 
         if ($this->user !== null) {
-            if ($moderationQueueEditor->status == ModerationQueue::STATUS_OUTSTANDING) {
+            if ($moderationQueueEditor->status === ModerationQueue::STATUS_OUTSTANDING) {
                 $data['status'] = ModerationQueue::STATUS_PROCESSING;
             }
         } else {
-            if ($moderationQueueEditor->status == ModerationQueue::STATUS_PROCESSING) {
+            if ($moderationQueueEditor->status === ModerationQueue::STATUS_PROCESSING) {
                 $data['status'] = ModerationQueue::STATUS_OUTSTANDING;
             }
         }

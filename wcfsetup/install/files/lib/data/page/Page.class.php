@@ -108,7 +108,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject, \St
      */
     public function canDisable()
     {
-        if (WCF::getSession()->hasPermission('admin.content.cms.canManagePage') && (!$this->originIsSystem || $this->pageType != 'system')) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canManagePage') && (!$this->originIsSystem || $this->pageType !== 'system')) {
             return true;
         }
 
@@ -342,7 +342,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject, \St
      */
     public function getTplName(?int $languageID = null)
     {
-        if ($this->pageType == 'tpl') {
+        if ($this->pageType === 'tpl') {
             if ($this->isMultilingual) {
                 return '__cms_page_' . $this->pageID . '_' . $languageID;
             }

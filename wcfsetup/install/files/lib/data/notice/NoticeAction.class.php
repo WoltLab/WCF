@@ -101,9 +101,9 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
         parent::update();
 
         if (
-            \count($this->objects) == 1
+            \count($this->objects) === 1
             && isset($this->parameters['data']['showOrder'])
-            && $this->parameters['data']['showOrder'] != \reset($this->objects)->showOrder
+            && $this->parameters['data']['showOrder'] !== \reset($this->objects)->showOrder
         ) {
             \reset($this->objects)->setShowOrder($this->parameters['data']['showOrder']);
         }

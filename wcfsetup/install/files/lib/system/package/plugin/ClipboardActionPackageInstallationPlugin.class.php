@@ -71,7 +71,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
         $nodeValue = $element->nodeValue;
 
         // read pages
-        if ($element->tagName == 'pages') {
+        if ($element->tagName === 'pages') {
             $nodeValue = [];
 
             $pages = $xpath->query('child::ns:page', $element);

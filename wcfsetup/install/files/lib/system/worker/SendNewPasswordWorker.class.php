@@ -85,7 +85,7 @@ class SendNewPasswordWorker extends AbstractWorker
     {
         $progress = parent::getProgress();
 
-        if ($progress == 100) {
+        if ($progress === 100) {
             // unmark users
             ClipboardHandler::getInstance()->unmark(
                 $this->parameters['userIDs'],

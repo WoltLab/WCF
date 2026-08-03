@@ -91,7 +91,7 @@ final class PasswordUtil
         $currentCost = \intval(self::BCRYPT_COST);
         $hashCost = \intval(\substr($hash, 4, 2));
 
-        if ($currentCost != $hashCost) {
+        if ($currentCost !== $hashCost) {
             return true;
         }
 
@@ -113,7 +113,7 @@ final class PasswordUtil
 
         // check for salt
         $parts = \explode(':', $dbHash, 2);
-        if (\count($parts) == 2) {
+        if (\count($parts) === 2) {
             [$dbHash, $salt] = $parts;
         } else {
             $dbHash = $parts[0];
@@ -260,7 +260,7 @@ final class PasswordUtil
 
         // The following loop only supports the multi-hash variant.
         // Everything else should already be handled at this point.
-        if (\count($algorithms) == 1) {
+        if (\count($algorithms) === 1) {
             return false;
         }
         foreach ($algorithms as $algorithm) {
@@ -306,7 +306,7 @@ final class PasswordUtil
         $count = 1 << $count_log2;
         $salt = \substr($setting, 4, 8);
 
-        if (\strlen($salt) != 8) {
+        if (\strlen($salt) !== 8) {
             return $output;
         }
 
@@ -456,7 +456,7 @@ final class PasswordUtil
 
         $hash = '';
         if ($enableSalting) {
-            if ($saltPosition == 'b') {
+            if ($saltPosition === 'b') {
                 $hash .= $salt;
             }
 
@@ -466,7 +466,7 @@ final class PasswordUtil
                 $hash .= $password;
             }
 
-            if ($saltPosition == 'a') {
+            if ($saltPosition === 'a') {
                 $hash .= $salt;
             }
 

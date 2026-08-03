@@ -192,7 +192,7 @@ HTML;
      */
     protected function getUserGroups()
     {
-        if ($this->userGroups == null) {
+        if ($this->userGroups === null) {
             $invalidGroupTypes = [
                 UserGroup::EVERYONE,
                 UserGroup::USERS,

@@ -79,7 +79,7 @@ class TarWriter extends Tar
         }
 
         $i = 0;
-        while (($buffer = \substr($string, ($i++) * 512, 512)) != '') {
+        while (($buffer = \substr($string, ($i++) * 512, 512)) !== '') {
             $this->file->write(\pack('a512', $buffer));
         }
 
@@ -113,7 +113,7 @@ class TarWriter extends Tar
                 break;
             }
 
-            if (!$filename || $filename == $this->archiveName) {
+            if (!$filename || $filename === $this->archiveName) {
                 continue;
             }
 
@@ -131,8 +131,8 @@ class TarWriter extends Tar
                 $handle = \opendir($filename);
 
                 while (($dirFile = \readdir($handle)) !== false) {
-                    if (($dirFile != '.') && ($dirFile != '..')) {
-                        if ($filename != ".") {
+                    if (($dirFile !== '.') && ($dirFile !== '..')) {
+                        if ($filename !== ".") {
                             $dirFile = $filename . '/' . $dirFile;
                         }
                         $result = $this->add($dirFile, $addDir, $removeDir);
@@ -172,7 +172,7 @@ class TarWriter extends Tar
             }
 
             // write file content
-            while (($buffer = $file->read(512)) != '') {
+            while (($buffer = \strval($file->read(512))) !== '') {
                 $this->file->write(\pack('a512', $buffer));
             }
 
@@ -231,7 +231,7 @@ class TarWriter extends Tar
             }
         }
 
-        if ($typeFlag == "5") {
+        if ($typeFlag === "5") {
             $size = \sprintf("%11s ", \decoct(0));
         } else {
             $size = \sprintf("%11s ", \decoct($size));
@@ -294,7 +294,7 @@ class TarWriter extends Tar
         $this->file->write($binaryDataLast, 356);
 
         $i = 0;
-        while (($buffer = \substr($filename, ($i++) * 512, 512)) != '') {
+        while (($buffer = \substr($filename, ($i++) * 512, 512)) !== '') {
             $this->file->write(\pack('a512', $buffer));
         }
 

@@ -213,7 +213,7 @@ class ReactionAction extends AbstractDatabaseObjectAction
         \assert($likeableObject instanceof ILikeObject);
         $this->likeableObject = $likeableObject;
         $this->likeableObject->setObjectType($this->objectType);
-        if ($this->likeableObject->getUserID() == WCF::getUser()->userID) {
+        if ($this->likeableObject->getUserID() === WCF::getUser()->userID) {
             throw new PermissionDeniedException();
         }
 
@@ -277,7 +277,7 @@ class ReactionAction extends AbstractDatabaseObjectAction
         if ($this->parameters['lastLikeTime']) {
             $likeList->getConditionBuilder()->add("like_table.time < ?", [$this->parameters['lastLikeTime']]);
         }
-        if ($this->parameters['targetType'] == 'received') {
+        if ($this->parameters['targetType'] === 'received') {
             $likeList->getConditionBuilder()->add("like_table.objectUserID = ?", [$this->parameters['userID']]);
         } else {
             $likeList->getConditionBuilder()->add("like_table.userID = ?", [$this->parameters['userID']]);

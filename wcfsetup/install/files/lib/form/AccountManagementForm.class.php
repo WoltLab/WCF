@@ -211,10 +211,10 @@ class AccountManagementForm extends AbstractForm
         // user name
         if (
             WCF::getSession()->hasPermission('user.profile.canRename')
-            && $this->username != WCF::getUser()->username
+            && $this->username !== WCF::getUser()->username
             && UserAuthenticationConfigurationFactory::getInstance()->getConfigration()->canChangeUsername
         ) {
-            if (\mb_strtolower($this->username) != \mb_strtolower(WCF::getUser()->username)) {
+            if (\mb_strtolower($this->username) !== \mb_strtolower(WCF::getUser()->username)) {
                 $lastUsernameChange = WCF::getUser()->lastUsernameChange ?: WCF::getUser()->registrationDate;
                 if ($lastUsernameChange + WCF::getSession()->getPermission('user.profile.renamePeriod') * 86400 > \TIME_NOW) {
                     throw new UserInputException('username', 'alreadyRenamed');
@@ -227,7 +227,7 @@ class AccountManagementForm extends AbstractForm
 
                 // checks if user name exists already.
                 $user2 = User::getUserByUsername($this->username);
-                if ($user2->userID && $user2->userID != WCF::getUser()->userID) {
+                if ($user2->userID && $user2->userID !== WCF::getUser()->userID) {
                     throw new UserInputException('username', 'notUnique');
                 }
             }
@@ -248,8 +248,8 @@ class AccountManagementForm extends AbstractForm
         // email
         if (
             WCF::getSession()->hasPermission('user.profile.canChangeEmail')
-            && $this->email != WCF::getUser()->email
-            && $this->email != WCF::getUser()->newEmail
+            && $this->email !== WCF::getUser()->email
+            && $this->email !== WCF::getUser()->newEmail
             && UserAuthenticationConfigurationFactory::getInstance()->getConfigration()->canChangeEmail
         ) {
             if (empty($this->email)) {
@@ -257,7 +257,7 @@ class AccountManagementForm extends AbstractForm
             }
 
             // checks if only letter case has changed
-            if (\mb_strtolower($this->email) != \mb_strtolower(WCF::getUser()->email)) {
+            if (\mb_strtolower($this->email) !== \mb_strtolower(WCF::getUser()->email)) {
                 // check for valid email (one @ etc.)
                 if (!UserRegistrationUtil::isValidEmail($this->email)) {
                     throw new UserInputException('email', 'invalid');
@@ -328,11 +328,11 @@ class AccountManagementForm extends AbstractForm
 
         // quit
         if (WCF::getUser()->quitStarted || WCF::getSession()->hasPermission('user.profile.canQuit')) {
-            if (!WCF::getUser()->quitStarted && $this->quit == 1) {
+            if (!WCF::getUser()->quitStarted && $this->quit === 1) {
                 $updateParameters['quitStarted'] = \TIME_NOW;
                 $this->quitStarted = \TIME_NOW;
                 $success[] = 'wcf.user.quit.success';
-            } elseif (WCF::getUser()->quitStarted && $this->cancelQuit == 1) {
+            } elseif (WCF::getUser()->quitStarted && $this->cancelQuit === 1) {
                 $updateParameters['quitStarted'] = 0;
                 $this->quitStarted = 0;
                 $success[] = 'wcf.user.quit.cancel.success';
@@ -340,8 +340,8 @@ class AccountManagementForm extends AbstractForm
         }
 
         // user name
-        if (WCF::getSession()->hasPermission('user.profile.canRename') && $this->username != WCF::getUser()->username) {
-            if (\mb_strtolower($this->username) != \mb_strtolower(WCF::getUser()->username)) {
+        if (WCF::getSession()->hasPermission('user.profile.canRename') && $this->username !== WCF::getUser()->username) {
+            if (\mb_strtolower($this->username) !== \mb_strtolower(WCF::getUser()->username)) {
                 $updateParameters['lastUsernameChange'] = \TIME_NOW;
                 $updateParameters['oldUsername'] = WCF::getUser()->username;
             }
@@ -352,8 +352,8 @@ class AccountManagementForm extends AbstractForm
         // email
         if (
             WCF::getSession()->hasPermission('user.profile.canChangeEmail')
-            && $this->email != WCF::getUser()->email
-            && $this->email != WCF::getUser()->newEmail
+            && $this->email !== WCF::getUser()->email
+            && $this->email !== WCF::getUser()->newEmail
         ) {
             if (!((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
                 // update email
@@ -383,7 +383,7 @@ class AccountManagementForm extends AbstractForm
         if (\GITHUB_PUBLIC_KEY !== '' && \GITHUB_PRIVATE_KEY !== '') {
             if (
                 $this->githubConnect
-                && WCF::getSession()->getVar('__3rdPartyProvider') == 'github'
+                && WCF::getSession()->getVar('__3rdPartyProvider') === 'github'
                 && ($oauthUser = WCF::getSession()->getVar('__oauthUser'))
             ) {
                 $updateParameters['authData'] = 'github:' . $oauthUser->getId();
@@ -401,7 +401,7 @@ class AccountManagementForm extends AbstractForm
         if (\TWITTER_PUBLIC_KEY !== '' && \TWITTER_PRIVATE_KEY !== '') {
             if (
                 $this->twitterConnect
-                && WCF::getSession()->getVar('__3rdPartyProvider') == 'twitter'
+                && WCF::getSession()->getVar('__3rdPartyProvider') === 'twitter'
                 && ($oauthUser = WCF::getSession()->getVar('__oauthUser'))
             ) {
                 $updateParameters['authData'] = 'twitter:' . $oauthUser->getId();
@@ -419,7 +419,7 @@ class AccountManagementForm extends AbstractForm
         if (\FACEBOOK_PUBLIC_KEY !== '' && \FACEBOOK_PRIVATE_KEY !== '') {
             if (
                 $this->facebookConnect
-                && WCF::getSession()->getVar('__3rdPartyProvider') == 'facebook'
+                && WCF::getSession()->getVar('__3rdPartyProvider') === 'facebook'
                 && ($oauthUser = WCF::getSession()->getVar('__oauthUser'))
             ) {
                 $updateParameters['authData'] = 'facebook:' . $oauthUser->getId();
@@ -437,7 +437,7 @@ class AccountManagementForm extends AbstractForm
         if (\GOOGLE_PUBLIC_KEY !== '' && \GOOGLE_PRIVATE_KEY !== '') {
             if (
                 $this->googleConnect
-                && WCF::getSession()->getVar('__3rdPartyProvider') == 'google'
+                && WCF::getSession()->getVar('__3rdPartyProvider') === 'google'
                 && ($oauthUser = WCF::getSession()->getVar('__oauthUser'))
             ) {
                 $updateParameters['authData'] = 'google:' . $oauthUser->getId();

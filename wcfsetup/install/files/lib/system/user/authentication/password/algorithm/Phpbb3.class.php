@@ -40,7 +40,7 @@ final class Phpbb3 implements IPasswordAlgorithm
 
         // The following loop only supports the multi-hash variant.
         // Everything else should already be handled at this point.
-        if (\count($algorithms) == 1) {
+        if (\count($algorithms) === 1) {
             return false;
         }
 

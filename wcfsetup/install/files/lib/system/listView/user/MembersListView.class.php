@@ -111,7 +111,7 @@ class MembersListView extends AbstractListView
                     throw new InvalidFilterValue("Invalid value '{$value}' for filter '{$this->id}' given.");
                 }
 
-                if ($value == '#') {
+                if ($value === '#') {
                     $list->getConditionBuilder()->add("SUBSTRING(username,1,1) IN ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')");
                 } else {
                     $list->getConditionBuilder()->add("username LIKE ?", [WCF::getDB()->escapeLikeValue($value) . '%']);

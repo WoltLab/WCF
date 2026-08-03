@@ -117,7 +117,7 @@ final class RouteHandler extends SingletonFactory
     public function matches(): bool
     {
         foreach ($this->routes as $route) {
-            if (RequestHandler::getInstance()->isACPRequest() != $route->isACP()) {
+            if (RequestHandler::getInstance()->isACPRequest() !== $route->isACP()) {
                 continue;
             }
 
@@ -204,7 +204,7 @@ final class RouteHandler extends SingletonFactory
         $components['application'] = $application;
 
         foreach ($this->routes as $route) {
-            if ($isACP != $route->isACP()) {
+            if ($isACP !== $route->isACP()) {
                 continue;
             }
 
@@ -244,9 +244,9 @@ final class RouteHandler extends SingletonFactory
             self::$secure = false;
 
             if (
-                (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
-                || $_SERVER['SERVER_PORT'] == 443
-                || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
+                (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+                || (int)$_SERVER['SERVER_PORT'] === 443
+                || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
             ) {
                 self::$secure = true;
             }

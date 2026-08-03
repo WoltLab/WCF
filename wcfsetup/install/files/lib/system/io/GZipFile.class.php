@@ -90,7 +90,7 @@ final class GZipFile extends File
         // the correction is for zip files that are too small
         // to get in the first while loop
         $correction = 1;
-        while ($this->seek($eof) == 0) {
+        while ($this->seek($eof) === 0) {
             $eof += $byteBlock;
             $correction = 0;
         }
@@ -100,7 +100,7 @@ final class GZipFile extends File
             $eof += $byteBlock * ($this->seek($eof) ? -1 : 1);
         }
 
-        if ($this->seek($eof) == -1) {
+        if ($this->seek($eof) === -1) {
             $eof--;
         }
 

@@ -349,7 +349,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
     #[\Override]
     public function setTransparentColor(int $red, int $green, int $blue)
     {
-        if ($this->type == \IMAGETYPE_PNG) {
+        if ($this->type === \IMAGETYPE_PNG) {
             $color = \imagecolorallocate($this->image, $red, $green, $blue);
             \imagecolortransparent($this->image, $color);
         }
@@ -369,11 +369,11 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
         \imagealphablending($image, false);
         \imagesavealpha($image, true);
 
-        if ($this->type == \IMAGETYPE_GIF) {
+        if ($this->type === \IMAGETYPE_GIF) {
             \imagegif($image);
-        } elseif ($this->type == \IMAGETYPE_PNG) {
+        } elseif ($this->type === \IMAGETYPE_PNG) {
             \imagepng($image);
-        } elseif ($this->type == \IMAGETYPE_WEBP) {
+        } elseif ($this->type === \IMAGETYPE_WEBP) {
             \imagepalettetotruecolor($image);
             \imagewebp($image);
         } elseif (\function_exists('imageJPEG')) {

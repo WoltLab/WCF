@@ -58,7 +58,7 @@ class CaptchaSelectOptionType extends AbstractOptionType
                 $tmp = \explode(',', $optionData);
 
                 foreach ($tmp as $item) {
-                    if ($item[0] == '!') {
+                    if ($item[0] === '!') {
                         if (!empty($disableOptions)) {
                             $disableOptions .= ',';
                         }

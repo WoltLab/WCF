@@ -94,7 +94,7 @@ class HtmlOutputNodeWoltlabQuote extends AbstractHtmlOutputNode
             $quoteAuthorLC = \mb_strtolower(StringUtil::decodeHTML($data['author']));
             foreach (MessageEmbeddedObjectManager::getInstance()->getObjects('com.woltlab.wcf.quote') as $user) {
                 \assert($user instanceof UserProfile);
-                if (\mb_strtolower($user->username) == $quoteAuthorLC) {
+                if (\mb_strtolower($user->username) === $quoteAuthorLC) {
                     $quoteAuthorObject = $user;
                     break;
                 }

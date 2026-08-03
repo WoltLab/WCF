@@ -95,7 +95,7 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
         // thus the parent menu item must be on zeroth level (no parent menu item)
         // or on the third level
         $iconParentMenuItems = \array_keys(\array_filter($menuItemLevels, static function ($value) {
-            return $value === 0 || $value == 3;
+            return $value === 0 || $value === 3;
         }));
 
         $dataContainer->appendChild(

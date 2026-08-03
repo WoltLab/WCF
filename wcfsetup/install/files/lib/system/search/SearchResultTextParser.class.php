@@ -38,7 +38,7 @@ class SearchResultTextParser extends SingletonFactory
             // remove search operators
             $keywordString = \preg_replace('/[\+\-><()~\*]+/', '', $keywordString);
 
-            if (\mb_substr($keywordString, 0, 1) == '"' && \mb_substr($keywordString, -1) == '"') {
+            if (\mb_substr($keywordString, 0, 1) === '"' && \mb_substr($keywordString, -1) === '"') {
                 // phrases search
                 $keywordString = StringUtil::trim(\mb_substr($keywordString, 1, -1));
 
@@ -49,7 +49,7 @@ class SearchResultTextParser extends SingletonFactory
                 $this->searchQuery = ArrayUtil::trim(\explode(' ', $keywordString));
                 if (empty($this->searchQuery)) {
                     $this->searchQuery = false;
-                } elseif (\count($this->searchQuery) == 1) {
+                } elseif (\count($this->searchQuery) === 1) {
                     $this->searchQuery = \reset($this->searchQuery);
                 }
             }
@@ -161,7 +161,7 @@ class SearchResultTextParser extends SingletonFactory
                             $newText .= StringUtil::HELLIP;
                         }
                         $newText .= \mb_substr($text, $position['start'], $position['end'] - $position['start']);
-                        if ($i == $length - 1 && $position['end'] < $end) {
+                        if ($i === $length - 1 && $position['end'] < $end) {
                             $newText .= StringUtil::HELLIP;
                         }
 

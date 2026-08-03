@@ -74,7 +74,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
                         break;
 
                     default:
-                        if ($typeMatches[2] == (int)$typeMatches[2]) {
+                        if (\strval($typeMatches[2]) === \strval((int)$typeMatches[2])) {
                             $length = $typeMatches[2];
                         }
                         break;
@@ -86,10 +86,10 @@ class MySQLDatabaseEditor extends DatabaseEditor
                 'data' => [
                     'type' => $type,
                     'length' => $length,
-                    'notNull' => $row['Null'] == 'YES' ? false : true,
-                    'key' => ($row['Key'] == 'PRI') ? 'PRIMARY' : (($row['Key'] == 'UNI') ? 'UNIQUE' : ''),
+                    'notNull' => $row['Null'] === 'YES' ? false : true,
+                    'key' => ($row['Key'] === 'PRI') ? 'PRIMARY' : (($row['Key'] === 'UNI') ? 'UNIQUE' : ''),
                     'default' => $row['Default'],
-                    'autoIncrement' => $row['Extra'] == 'auto_increment' ? true : false,
+                    'autoIncrement' => $row['Extra'] === 'auto_increment' ? true : false,
                     'enumValues' => $enumValues,
                     'decimals' => $decimals,
                 ],
@@ -178,7 +178,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
                     $type = 'FULLTEXT';
                 } elseif ($index['Key_name'] === 'PRIMARY') {
                     $type = 'PRIMARY';
-                } elseif ($index['Non_unique'] == 0) {
+                } elseif ($index['Non_unique'] === 0) {
                     $type = 'UNIQUE';
                 }
 
@@ -308,7 +308,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
             $statement = $this->dbObj->prepare($sql);
             $statement->execute();
         } catch (DatabaseQueryExecutionException $e) {
-            if ($e->getCode() != '42000') {
+            if ((int)$e->getCode() !== 42000) {
                 throw $e;
             }
             if (\in_array($columnName, \array_column($this->getColumns($tableName), 'name'))) {
@@ -367,7 +367,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
             $statement = $this->dbObj->prepare($sql);
             $statement->execute();
         } catch (DatabaseQueryExecutionException $e) {
-            if ($e->getCode() != '42000') {
+            if ((int)$e->getCode() !== 42000) {
                 throw $e;
             }
             if (\in_array($indexName, $this->getIndices($tableName))) {
@@ -384,7 +384,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
             $statement = $this->dbObj->prepare($sql);
             $statement->execute();
         } catch (DatabaseQueryExecutionException $e) {
-            if ($e->getCode() != '42000') {
+            if ((int)$e->getCode() !== 42000) {
                 throw $e;
             }
             if (\in_array("PRIMARY", $this->getIndices($tableName))) {
@@ -401,7 +401,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
             $statement = $this->dbObj->prepare($sql);
             $statement->execute();
         } catch (DatabaseQueryExecutionException $e) {
-            if ($e->getCode() != '42000') {
+            if ((int)$e->getCode() !== 42000) {
                 throw $e;
             }
             if (\in_array($indexName, \array_keys($this->getForeignKeys($tableName)))) {
@@ -428,7 +428,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
             $definition .= "(" . $columnData['length'] . (!empty($columnData['decimals']) ? "," . $columnData['decimals'] : "") . ")";
         }
         // enum / set
-        if ($columnData['type'] == 'enum' && !empty($columnData['values'])) {
+        if ($columnData['type'] === 'enum' && !empty($columnData['values'])) {
             $definition .= "(" . $columnData['values'] . ")";
         }
         // not null / null
@@ -462,11 +462,11 @@ class MySQLDatabaseEditor extends DatabaseEditor
     protected function buildIndexDefinition(string $indexName, array $indexData)
     {
         // index type
-        if ($indexData['type'] == 'PRIMARY') {
+        if ($indexData['type'] === 'PRIMARY') {
             $definition = "PRIMARY KEY";
-        } elseif ($indexData['type'] == 'UNIQUE') {
+        } elseif ($indexData['type'] === 'UNIQUE') {
             $definition = "UNIQUE KEY";
-        } elseif ($indexData['type'] == 'FULLTEXT') {
+        } elseif ($indexData['type'] === 'FULLTEXT') {
             $definition = "FULLTEXT KEY";
         } else {
             $definition = "KEY";

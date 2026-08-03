@@ -119,7 +119,7 @@ class DevtoolsProjectPipEntryEditForm extends DevtoolsProjectPipEntryAddForm
 
         // check if a success message has been stored in session variables
         // from previous request
-        if (WCF::getSession()->getVar($this->project->projectID . '-' . $this->pip . '-success') == 1) {
+        if ((int)WCF::getSession()->getVar($this->project->projectID . '-' . $this->pip . '-success') === 1) {
             WCF::getSession()->unregister($this->project->projectID . '-' . $this->pip . '-success');
 
             WCF::getTPL()->assign('success', true);

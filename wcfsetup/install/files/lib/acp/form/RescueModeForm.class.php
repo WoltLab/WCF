@@ -176,14 +176,14 @@ final class RescueModeForm extends AbstractForm
                 $this->password
             );
         } catch (UserInputException $e) {
-            if ($e->getField() == 'username') {
+            if ($e->getField() === 'username') {
                 try {
                     $this->user = EmailUserAuthentication::getInstance()->loginManually(
                         $this->username,
                         $this->password
                     );
                 } catch (UserInputException $e2) {
-                    if ($e2->getField() == 'username') {
+                    if ($e2->getField() === 'username') {
                         throw $e;
                     }
                     throw $e2;
@@ -252,7 +252,7 @@ final class RescueModeForm extends AbstractForm
     {
         parent::submit();
 
-        if ($this->errorField == 'username' || $this->errorField == 'password') {
+        if ($this->errorField === 'username' || $this->errorField === 'password') {
             FloodControl::getInstance()->registerGuestContent(
                 'com.woltlab.wcf.rescueMode',
                 UserUtil::getIpAddress()

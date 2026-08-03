@@ -36,7 +36,7 @@ final class WoltLabSuiteArticleBBCode extends AbstractBBCode
 
         if (!$article->canRead()) {
             return ContentNotVisibleView::forNoPermission();
-        } elseif ($parser->getOutputType() == 'text/html') {
+        } elseif ($parser->getOutputType() === 'text/html') {
             return WCF::getTPL()->render('wcf', 'shared_bbcode_wsa', [
                 'article' => $article,
                 'articleID' => $article->articleID,

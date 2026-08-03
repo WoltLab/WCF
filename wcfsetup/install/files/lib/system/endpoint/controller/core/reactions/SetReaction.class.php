@@ -64,7 +64,7 @@ final class SetReaction implements IController
             throw new PermissionDeniedException();
         }
 
-        if ($likeable->getUserID() == WCF::getUser()->userID) {
+        if ($likeable->getUserID() === WCF::getUser()->userID) {
             throw new PermissionDeniedException();
         }
 

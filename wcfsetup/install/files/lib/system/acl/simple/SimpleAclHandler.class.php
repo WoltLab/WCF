@@ -130,6 +130,7 @@ class SimpleAclHandler extends SingletonFactory
             $objectID,
         ]);
 
+        // @phpstan-ignore equal.notAllowed (the value can be an integer or a numeric string)
         if ($values['allowAll'] == 0 && !empty($values['user'])) {
             $values['user'] = ArrayUtil::toIntegerArray($values['user']);
             if (!empty($values['user'])) {
@@ -160,6 +161,7 @@ class SimpleAclHandler extends SingletonFactory
             $objectID,
         ]);
 
+        // @phpstan-ignore equal.notAllowed (the value can be an integer or a numeric string)
         if ($values['allowAll'] == 0 && !empty($values['group'])) {
             $values['group'] = ArrayUtil::toIntegerArray($values['group']);
             if (!empty($values['group'])) {
@@ -199,6 +201,7 @@ class SimpleAclHandler extends SingletonFactory
             'group' => [],
         ];
 
+        // @phpstan-ignore equal.notAllowed (the value can be an integer or a numeric string)
         if (isset($rawValues['allowAll']) && $rawValues['allowAll'] == 0) {
             if (!empty($rawValues['user'])) {
                 $first = \current($rawValues['user']);

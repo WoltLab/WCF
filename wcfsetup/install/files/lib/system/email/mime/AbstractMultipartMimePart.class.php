@@ -125,7 +125,7 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
     {
         foreach ($part->getAdditionalHeaders() as $header) {
             $header[0] = \mb_strtolower($header[0]);
-            if ($header[0] == 'content-type' || $header[0] == 'content-transfer-encoding') {
+            if ($header[0] === 'content-type' || $header[0] === 'content-transfer-encoding') {
                 throw new \InvalidArgumentException(
                     "The header '" . $header[0] . "' may not be set. Use the proper methods."
                 );

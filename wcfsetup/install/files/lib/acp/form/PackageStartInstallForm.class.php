@@ -210,7 +210,7 @@ class PackageStartInstallForm extends AbstractForm
             'packageName' => PackageValidationManager::getInstance()->getPackageValidationArchive()->getArchive()->getLocalizedPackageInfo('packageName'),
             'packageID' => $packageID,
             'archive' => $archive,
-            'action' => $this->package != null ? 'update' : 'install',
+            'action' => $this->package !== null ? 'update' : 'install',
             'isApplication' => !$isApplication ? '0' : '1',
         ]);
 
@@ -235,7 +235,7 @@ class PackageStartInstallForm extends AbstractForm
 
         WCF::getTPL()->assign([
             'package' => $this->package,
-            'installingImportedStyle' => $this->stylePackageImportLocation != '',
+            'installingImportedStyle' => $this->stylePackageImportLocation !== '',
             'majorMinorVersion' => $majorMinorVersion,
         ]);
     }

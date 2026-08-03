@@ -41,7 +41,7 @@ final class NotificationConfirmAction extends AbstractAction
 
         $this->notification = Helper::fetchObjectFromQueryParameter(UserNotification::class);
 
-        if ($this->notification->userID != WCF::getUser()->userID) {
+        if ($this->notification->userID !== WCF::getUser()->userID) {
             throw new PermissionDeniedException();
         }
     }

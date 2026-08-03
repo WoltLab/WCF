@@ -94,7 +94,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
     #[\Override]
     public function getTemplate()
     {
-        if ($this->getBox()->position == 'contentTop' || $this->getBox()->position == 'contentBottom') {
+        if ($this->getBox()->position === 'contentTop' || $this->getBox()->position === 'contentBottom') {
             return WCF::getTPL()->render('wcf', 'boxRecentActivity', [
                 'boxID' => $this->getBox()->boxID,
                 'canFilterByFollowedUsers' => $this->canFilterByFollowedUsers,
@@ -122,7 +122,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
         $hasContent = parent::hasContent();
 
         if (!$hasContent) {
-            if (($this->getBox()->position == 'contentTop' || $this->getBox()->position == 'contentBottom') && $this->filteredByFollowedUsers) {
+            if (($this->getBox()->position === 'contentTop' || $this->getBox()->position === 'contentBottom') && $this->filteredByFollowedUsers) {
                 // Box is empty, but we show it anyway so that the user can change the filtering.
                 return true;
             }
@@ -135,7 +135,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
     protected function readObjects()
     {
         // apply filter
-        if (($this->getBox()->position == 'contentTop' || $this->getBox()->position == 'contentBottom') && $this->filteredByFollowedUsers) {
+        if (($this->getBox()->position === 'contentTop' || $this->getBox()->position === 'contentBottom') && $this->filteredByFollowedUsers) {
             $this->objectList->getConditionBuilder()->add(
                 'user_activity_event.userID IN (?)',
                 [UserProfileHandler::getInstance()->getFollowingUsers()]
@@ -186,7 +186,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
         }
 
         // apply filter
-        if (($this->getBox()->position == 'contentTop' || $this->getBox()->position == 'contentBottom') && $this->filteredByFollowedUsers) {
+        if (($this->getBox()->position === 'contentTop' || $this->getBox()->position === 'contentBottom') && $this->filteredByFollowedUsers) {
             $this->objectList->getConditionBuilder()->add(
                 'user_activity_event.userID IN (?)',
                 [UserProfileHandler::getInstance()->getFollowingUsers()]

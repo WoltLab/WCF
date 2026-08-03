@@ -112,17 +112,17 @@ class ACPSearchHandler extends SingletonFactory
             // remove one result per result list with hits the $max value
             foreach ($data as $index => $resultList) {
                 // break if we hit the $limit during reduction
-                if ($totalResultCount == $limit) {
+                if ($totalResultCount === $limit) {
                     break;
                 }
 
                 $count = \count($resultList);
-                if ($count == $max) {
+                if ($count === $max) {
                     $resultList->reduceResults(1);
                     $totalResultCount--;
 
                     // the last element of this result was removed
-                    if ($count == 1) {
+                    if ($count === 1) {
                         unset($data[$index]);
                     }
                 }

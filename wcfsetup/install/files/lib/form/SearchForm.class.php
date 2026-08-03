@@ -176,7 +176,7 @@ class SearchForm extends AbstractCaptchaForm
             $this->modifySearchID = \intval($_REQUEST['modify']);
             $this->modifySearch = new Search($this->modifySearchID);
 
-            if (!$this->modifySearch->searchID || ($this->modifySearch->userID && $this->modifySearch->userID != WCF::getUser()->userID)) {
+            if (!$this->modifySearch->searchID || ($this->modifySearch->userID && $this->modifySearch->userID !== WCF::getUser()->userID)) {
                 throw new IllegalLinkException();
             }
 
@@ -468,7 +468,7 @@ class SearchForm extends AbstractCaptchaForm
     #[\Override]
     public function show()
     {
-        if (\count($_POST) == 1 && $this->submit) {
+        if (\count($_POST) === 1 && $this->submit) {
             if ($this->userID) {
                 $this->useCaptcha = false;
             }

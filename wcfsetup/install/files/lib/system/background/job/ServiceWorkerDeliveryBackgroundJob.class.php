@@ -93,7 +93,7 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
 
             SessionHandler::getInstance()->changeUser($targetUser, true);
             $processedNotifications = UserNotificationHandler::getInstance()->processNotifications([$notification]);
-            if ($processedNotifications['count'] == 0) {
+            if ($processedNotifications['count'] === 0) {
                 return;
             }
             \assert($processedNotifications['count'] === 1);

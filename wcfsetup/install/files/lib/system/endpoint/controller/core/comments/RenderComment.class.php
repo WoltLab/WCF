@@ -83,7 +83,7 @@ final class RenderComment implements IController
     {
         $commentManager = CommentHandler::getInstance()->getCommentManagerByID($comment->objectTypeID);
 
-        if ($response->commentID != $comment->commentID) {
+        if ($response->commentID !== $comment->commentID) {
             throw new PermissionDeniedException();
         }
         if ($response->isDisabled && !$commentManager->canModerate($comment->objectTypeID, $comment->objectID)) {

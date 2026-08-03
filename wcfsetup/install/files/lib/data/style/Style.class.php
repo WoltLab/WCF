@@ -129,7 +129,7 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
     {
         if (isset($this->variables[$variableName])) {
             // check if variable is empty
-            if ($this->variables[$variableName] == '~""') {
+            if ($this->variables[$variableName] === '~""') {
                 return '';
             }
 

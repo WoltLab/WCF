@@ -79,8 +79,8 @@ final class CronjobUtil
             'dow' => $dow,
         ];
 
-        self::$domRestricted = ($dom != '*') ? true : false;
-        self::$dowRestricted = ($dow != '*') ? true : false;
+        self::$domRestricted = ($dom !== '*') ? true : false;
+        self::$dowRestricted = ($dow !== '*') ? true : false;
 
         $dayNames = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
         $monthNames = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
@@ -97,18 +97,18 @@ final class CronjobUtil
 
             switch ($fieldName) {
                 case 'dow':
-                    if (\strlen($fieldValue) == 3 && \in_array($fieldValue, $dayNames)) {
+                    if (\strlen($fieldValue) === 3 && \in_array($fieldValue, $dayNames)) {
                         $fieldValue = \array_search($fieldValue, $dayNames);
                     }
                     // When specifying day of week, both day 0 and day 7
                     // will be considered Sunday. -- crontab(5)
-                    elseif ($fieldValue == 7) {
+                    elseif ((int)$fieldValue === 7) {
                         $fieldValue = 0;
                     }
                     break;
 
                 case 'month':
-                    if (\strlen($fieldValue) == 3 && \in_array($fieldValue, $monthNames)) {
+                    if (\strlen($fieldValue) === 3 && \in_array($fieldValue, $monthNames)) {
                         $fieldValue = \array_search($fieldValue, $monthNames) + 1;
                     }
                     break;
@@ -195,7 +195,7 @@ final class CronjobUtil
 
         // calculate month of next execution and if its not the current one reset previous calculations
         $dateMonth = self::calculateMonth($month, $year, $values);
-        if ($month != $dateMonth['month'] || $year != $dateMonth['year']) {
+        if ($month !== $dateMonth['month'] || $year !== $dateMonth['year']) {
             $day = 1;
             $month = $dateMonth['month'];
             $year = $dateMonth['year'];
@@ -244,7 +244,7 @@ final class CronjobUtil
         }
 
         // compare day, month and year whether we have to recalculate hour and minute
-        if (($day != self::$result['day']) || ($month != self::$result['month']) || ($year != self::$result['year'])) {
+        if (($day !== self::$result['day']) || ($month !== self::$result['month']) || ($year !== self::$result['year'])) {
             // calculate new time base
             $timeBase = \mktime(0, 0, 1, self::$result['month'], self::$result['day'], self::$result['year']);
 
@@ -331,7 +331,7 @@ final class CronjobUtil
 
         // only add an hour (potentially a day) if the current hour is the same
         // for which the minute-declaration has already elapsed
-        if ($addAnHour && $hour == $currentHour) {
+        if ($addAnHour && (int)$hour === $currentHour) {
             $hour++;
             $index = self::findKey($hour, $values['hour'], false);
 
@@ -425,7 +425,7 @@ final class CronjobUtil
                 $values = \array_merge($values, self::getRanges($item));
             }
         } // asterisk may be followed by a step value
-        elseif ($char == '*') {
+        elseif ($char === '*') {
             $step = 1;
 
             if (\str_contains($fieldValue, '/')) {
@@ -565,7 +565,7 @@ final class CronjobUtil
 
         $longPattern = '/^' . $range . '(,' . $range . ')*$/i';
 
-        if ($value != '*' && !\preg_match($longPattern, $value)) {
+        if ($value !== '*' && !\preg_match($longPattern, $value)) {
             throw new SystemException("invalid value '" . $value . "' given for cronjob attribute '" . $name . "'");
         } // test whether the user provided a meaningful order inside a range.
         else {
@@ -577,7 +577,7 @@ final class CronjobUtil
                 ) {
                     $compare = \explode('-', $testField);
                     $compareSlash = \explode('/', $compare[1]);
-                    if (\count($compareSlash) == 2) {
+                    if (\count($compareSlash) === 2) {
                         $compare[1] = $compareSlash[0];
                     }
 

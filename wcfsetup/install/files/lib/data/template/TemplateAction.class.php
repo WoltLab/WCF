@@ -74,7 +74,7 @@ class TemplateAction extends AbstractDatabaseObjectAction
             // rename file
             $templateName = ($this->parameters['data']['templateName'] ?? $template->templateName);
             $templateGroupID = ($this->parameters['data']['templateGroupID'] ?? $template->templateGroupID);
-            if ($templateName != $template->templateName || $templateGroupID != $template->templateGroupID) {
+            if ($templateName !== $template->templateName || $templateGroupID !== $template->templateGroupID) {
                 $template->rename($templateName, $templateGroupID);
             }
 

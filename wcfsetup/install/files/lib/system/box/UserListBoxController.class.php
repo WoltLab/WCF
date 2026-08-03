@@ -155,7 +155,7 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
     protected function getTemplate()
     {
         $templateName = 'boxUserList';
-        if ($this->getBox()->position == 'sidebarLeft' || $this->getBox()->position == 'sidebarRight') {
+        if ($this->getBox()->position === 'sidebarLeft' || $this->getBox()->position === 'sidebarRight') {
             $templateName = 'boxUserListSidebar';
         }
 
@@ -194,7 +194,7 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
     #[\Override]
     public function hasLink()
     {
-        return \MODULE_MEMBERS_LIST == 1;
+        return \MODULE_MEMBERS_LIST === 1;
     }
 
     #[\Override]

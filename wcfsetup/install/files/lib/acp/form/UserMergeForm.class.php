@@ -109,7 +109,7 @@ class UserMergeForm extends AbstractForm
     public function save()
     {
         foreach ($this->userIDs as $userID) {
-            if ($userID != $this->destinationUserID) {
+            if ($userID !== $this->destinationUserID) {
                 $this->mergedUserIDs[] = $userID;
             }
         }

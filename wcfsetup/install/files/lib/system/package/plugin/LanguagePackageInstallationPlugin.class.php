@@ -129,7 +129,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                 } // use english (if installed)
                 elseif (isset($languageFiles['en'])) {
                     foreach ($installedLanguages as $installedLanguage2) {
-                        if ($installedLanguage2['languageCode'] == 'en') {
+                        if ($installedLanguage2['languageCode'] === 'en') {
                             $languageFile = $languageFiles['en'];
                             break;
                         }
@@ -261,7 +261,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         $statement->execute($conditions->getParameters());
         $categoriesToDelete = [];
         while ($row = $statement->fetchArray()) {
-            if ($row['count'] == 0) {
+            if ($row['count'] === 0) {
                 $categoriesToDelete[$row['languageCategoryID']] = $row['languageCategory'];
             }
         }

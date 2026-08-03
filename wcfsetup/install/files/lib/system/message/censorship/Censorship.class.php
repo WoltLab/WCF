@@ -87,7 +87,7 @@ class Censorship extends SingletonFactory
             $word = $this->words[$i];
             foreach ($this->censoredWords as $displayedCensoredWord => $censoredWord) {
                 // check for direct matches ("badword" == "badword")
-                if ($censoredWord == $word) {
+                if ($censoredWord === $word) {
                     // store censored word
                     if (isset($matches[$word])) {
                         $matches[$word]++;

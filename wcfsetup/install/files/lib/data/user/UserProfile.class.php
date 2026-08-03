@@ -253,7 +253,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
             } elseif ($type === UserIgnore::TYPE_BLOCK_DIRECT_CONTACT) {
                 return \in_array($userType, [UserIgnore::TYPE_BLOCK_DIRECT_CONTACT, UserIgnore::TYPE_HIDE_MESSAGES]);
             } elseif ($type === UserIgnore::TYPE_HIDE_MESSAGES) {
-                return $userType == UserIgnore::TYPE_HIDE_MESSAGES;
+                return $userType === UserIgnore::TYPE_HIDE_MESSAGES;
             } else {
                 return false;
             }
@@ -402,9 +402,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
     public function canSeeAvatar()
     {
         return
-            WCF::getUser()->userID == $this->userID
+            WCF::getUser()->userID === $this->userID
             || WCF::getSession()->hasPermission('user.profile.avatar.canSeeAvatars')
-            || (($pending = WCF::getSession()->getPendingUserChange()) && $pending->userID == $this->userID);
+            || (($pending = WCF::getSession()->getPendingUserChange()) && $pending->userID === $this->userID);
     }
 
     /**
@@ -446,7 +446,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function canSeeCoverPhoto()
     {
-        return WCF::getUser()->userID == $this->userID || WCF::getSession()->hasPermission('user.profile.coverPhoto.canSeeCoverPhotos');
+        return WCF::getUser()->userID === $this->userID || WCF::getSession()->hasPermission('user.profile.coverPhoto.canSeeCoverPhotos');
     }
 
     /**
@@ -470,7 +470,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function canViewOnlineStatus()
     {
-        return WCF::getUser()->userID == $this->userID
+        return WCF::getUser()->userID === $this->userID
             || WCF::getSession()->hasPermission('admin.user.canViewInvisible')
             || $this->isAccessible('canViewOnlineStatus');
     }
@@ -755,7 +755,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
             case self::ACCESS_FOLLOWING:
                 $result = false;
                 if ($userID) {
-                    if ($userID == $this->userID) {
+                    if ($userID === $this->userID) {
                         $result = true;
                     } elseif ($this->isFollowing($userID)) {
                         $result = true;
@@ -782,7 +782,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function isProtected()
     {
-        return !WCF::getSession()->hasPermission('admin.general.canViewPrivateUserOptions') && !$this->isAccessible('canViewProfile') && $this->userID != WCF::getUser()->userID;
+        return !WCF::getSession()->hasPermission('admin.general.canViewPrivateUserOptions') && !$this->isAccessible('canViewProfile') && $this->userID !== WCF::getUser()->userID;
     }
 
     /**
@@ -1155,7 +1155,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
 
         if ($this->userOnlineGroupID) {
             $group = UserGroup::getGroupByID($this->userOnlineGroupID);
-            if ($group !== null && $group->userOnlineMarking && $group->userOnlineMarking != '%s') {
+            if ($group !== null && $group->userOnlineMarking && $group->userOnlineMarking !== '%s') {
                 return \str_replace('%s', $username, $group->userOnlineMarking);
             }
         }
@@ -1216,7 +1216,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
         return \MODULE_TROPHY
             && WCF::getSession()->hasPermission('user.profile.trophy.canSeeTrophies')
             && $this->trophyPoints
-            && ($this->isAccessible('canViewTrophies') || $this->userID == WCF::getSession()->userID);
+            && ($this->isAccessible('canViewTrophies') || $this->userID === WCF::getSession()->userID);
     }
 
     /**

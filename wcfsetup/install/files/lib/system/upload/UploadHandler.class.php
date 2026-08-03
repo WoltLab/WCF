@@ -156,9 +156,9 @@ class UploadHandler
     protected static function getMimeType(string $file, string $mimeType)
     {
         if (
-            $mimeType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-            || $mimeType == 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
-            || $mimeType == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            $mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            || $mimeType === 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+            || $mimeType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         ) {
             // libmagic can not detect mime type of docx, xlsx and pttx files
             return $mimeType;

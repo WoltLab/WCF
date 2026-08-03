@@ -374,7 +374,7 @@ class PollManager extends SingletonFactory
             'pollOptions' => $this->pollOptions,
         ];
         foreach ($this->pollData as $key => $value) {
-            if ($key == 'endTime') {
+            if ($key === 'endTime') {
                 if (!$value) {
                     $value = '';
                 }
@@ -481,7 +481,7 @@ class PollManager extends SingletonFactory
     {
         if ($objectTypeID !== null) {
             foreach ($this->cache as $objectTypeObj) {
-                if ($objectTypeObj->objectTypeID == $objectTypeID) {
+                if ($objectTypeObj->objectTypeID === $objectTypeID) {
                     $objectType = $objectTypeObj->objectType;
                     break;
                 }

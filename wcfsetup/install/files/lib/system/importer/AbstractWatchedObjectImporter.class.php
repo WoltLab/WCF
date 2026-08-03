@@ -40,7 +40,7 @@ class AbstractWatchedObjectImporter extends AbstractImporter
             return $watch->watchID;
         } catch (DatabaseException $e) {
             // 23000 = INTEGRITY CONSTRAINT VIOLATION a.k.a. duplicate key
-            if ($e->getCode() != 23000) {
+            if ((int)$e->getCode() !== 23000) {
                 throw $e;
             }
         }

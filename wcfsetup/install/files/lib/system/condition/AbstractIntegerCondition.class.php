@@ -149,10 +149,10 @@ HTML;
     {
         $attributes = '';
         if ($this->getMinValue() !== null) {
-            $attributes .= ' min="' . ($this->getMinValue() + ($type == 'lessThan' ? 1 : 0)) . '"';
+            $attributes .= ' min="' . ($this->getMinValue() + ($type === 'lessThan' ? 1 : 0)) . '"';
         }
         if ($this->getMaxValue() !== null) {
-            $attributes .= ' max="' . ($this->getMaxValue() - ($type == 'greaterThan' ? 1 : 0)) . '"';
+            $attributes .= ' max="' . ($this->getMaxValue() - ($type === 'greaterThan' ? 1 : 0)) . '"';
         }
 
         return $attributes;

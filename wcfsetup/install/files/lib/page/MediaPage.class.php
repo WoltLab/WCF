@@ -138,7 +138,7 @@ class MediaPage extends AbstractPage
         parent::show();
 
         // etag caching
-        if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == '"' . $this->eTag . '"') {
+        if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] === '"' . $this->eTag . '"') {
             return new EmptyResponse(304);
         }
 

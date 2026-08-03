@@ -238,7 +238,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
             new MarkModerationQueueAsRead($queueEditor->getDecoratedObject(), $this->parameters["visitTime"])();
         }
 
-        if (\count($this->objects) == 1) {
+        if (\count($this->objects) === 1) {
             $queue = \reset($this->objects);
 
             return [
@@ -321,7 +321,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
 
         if ($this->parameters['assignedUserID'] < -1) {
             throw new UserInputException('assignedUserID');
-        } elseif ($this->parameters['assignedUserID'] == -1) {
+        } elseif ($this->parameters['assignedUserID'] === -1) {
             $this->readString('assignedUsername', false);
 
             $this->user = User::getUserByUsername($this->parameters['assignedUsername']);
@@ -346,7 +346,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
 
             $this->parameters['assignedUserID'] = $this->user->userID;
             $this->parameters['assignedUsername'] = '';
-        } elseif ($this->parameters['assignedUserID'] == WCF::getUser()->userID) {
+        } elseif ($this->parameters['assignedUserID'] === WCF::getUser()->userID) {
             $this->user = WCF::getUser();
         }
     }
@@ -366,11 +366,11 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
                 'assignedUserID' => $this->user ? $this->user->userID : null,
             ];
             if ($this->user) {
-                if ($moderationQueueEditor->status == ModerationQueue::STATUS_OUTSTANDING) {
+                if ($moderationQueueEditor->status === ModerationQueue::STATUS_OUTSTANDING) {
                     $data['status'] = ModerationQueue::STATUS_PROCESSING;
                 }
             } else {
-                if ($moderationQueueEditor->status == ModerationQueue::STATUS_PROCESSING) {
+                if ($moderationQueueEditor->status === ModerationQueue::STATUS_PROCESSING) {
                     $data['status'] = ModerationQueue::STATUS_OUTSTANDING;
                 }
             }

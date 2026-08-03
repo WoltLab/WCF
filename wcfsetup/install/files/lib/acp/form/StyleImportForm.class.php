@@ -89,7 +89,7 @@ class StyleImportForm extends AbstractForm
             $containsStyle = false;
             $installInstructions = $archive->getInstallInstructions();
             foreach ($installInstructions as $instruction) {
-                if ($instruction['pip'] == 'style') {
+                if ($instruction['pip'] === 'style') {
                     $containsStyle = true;
                     break;
                 }

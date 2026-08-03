@@ -263,7 +263,7 @@ class Diff implements \Stringable
         for ($i = 0, $max = \count($d); $i < $max; $i++) {
             [$type] = $d[$i];
 
-            if ($type == self::REMOVED || $type == self::ADDED) {
+            if ($type === self::REMOVED || $type === self::ADDED) {
                 // calculate start of context
                 $start = \max($i - $context, 0);
 
@@ -299,7 +299,7 @@ class Diff implements \Stringable
                                 // context is zero, but this isn't an addition or removal
                                 // check whether the next context would overlap
                                 for ($k = $j; $k < $max && $k <= $j + $context; $k++) {
-                                    if ($d[$k][0] != self::SAME) {
+                                    if ($d[$k][0] !== self::SAME) {
                                         $inContext = $k - $j;
                                         continue 3;
                                     }

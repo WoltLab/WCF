@@ -39,7 +39,7 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
         } elseif (isset($tagArgs['output']) && \is_array($tagArgs['output'])) {
             if (\count($tagArgs['output'])) {
                 if (isset($tagArgs['values']) && \is_array($tagArgs['values'])) {
-                    if (\count($tagArgs['output']) == \count($tagArgs['values'])) {
+                    if (\count($tagArgs['output']) === \count($tagArgs['values'])) {
                         $tagArgs['options'] = \array_combine($tagArgs['values'], $tagArgs['output']);
                     } else {
                         $tagArgs['options'] = [];

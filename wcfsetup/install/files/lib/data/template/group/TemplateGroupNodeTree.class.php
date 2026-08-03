@@ -97,7 +97,7 @@ final class TemplateGroupNodeTree implements \IteratorAggregate
      */
     private function buildTreeLevel(TemplateGroupNode $parentNode, int $depth = 0): void
     {
-        if ($this->maxDepth != -1 && $depth < 0) {
+        if ($this->maxDepth !== -1 && $depth < 0) {
             return;
         }
 

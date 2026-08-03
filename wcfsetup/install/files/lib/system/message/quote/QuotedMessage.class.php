@@ -138,7 +138,7 @@ class QuotedMessage implements \Countable, \Iterator, \Stringable
             return $this->overrideIsFullQuote[$quoteID];
         }
 
-        if (isset($this->fullQuotes[$quoteID]) && $this->quotes[$quoteID] != $this->fullQuotes[$quoteID]) {
+        if (isset($this->fullQuotes[$quoteID]) && $this->quotes[$quoteID] !== $this->fullQuotes[$quoteID]) {
             // full quotes are parsed and differ from their original
             return true;
         }

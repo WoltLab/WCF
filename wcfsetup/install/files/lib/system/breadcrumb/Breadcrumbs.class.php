@@ -59,7 +59,7 @@ final class Breadcrumbs extends SingletonFactory implements \Countable, \Iterato
         $landingPage = PageCache::getInstance()->getLandingPage();
         $addLandingPage = true;
         for ($i = 0, $length = \count($locations); $i < $length; $i++) {
-            if ($locations[$i]['pageID'] == $landingPage->pageID) {
+            if ($locations[$i]['pageID'] === $landingPage->pageID) {
                 $addLandingPage = false;
                 break;
             }

@@ -107,7 +107,7 @@ class BoxVersionTrackerProvider extends AbstractVersionTrackerProvider
     public function isI18n(IVersionTrackerObject $object)
     {
         \assert($object instanceof Box);
-        return $object->isMultilingual == 1;
+        return $object->isMultilingual === 1;
     }
 
     #[\Override]

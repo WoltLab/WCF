@@ -256,7 +256,7 @@ class HtmlBBCodeParser extends BBCodeParser
                 $openingTag = \end($bufferedTagStack);
 
                 // closing tag
-                if ($openingTag && $openingTag['name'] == $tag['name']) {
+                if ($openingTag && $openingTag['name'] === $tag['name']) {
                     $hideBuffer = false;
                     // insert buffered content as attribute value
                     if (!empty($buffer)) {
@@ -481,7 +481,7 @@ class HtmlBBCodeParser extends BBCodeParser
                 if ($bbcode->bbcodeTag === 'wsm') {
                     $targetAttribute = false;
                     foreach ($bbcode->getAttributes() as $attribute) {
-                        if ($attribute->attributeNo == 1) {
+                        if ($attribute->attributeNo === 1) {
                             $targetAttribute = $attribute;
                         }
                     }

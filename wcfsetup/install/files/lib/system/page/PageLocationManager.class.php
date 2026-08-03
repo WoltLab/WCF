@@ -89,7 +89,7 @@ class PageLocationManager extends SingletonFactory
 
         // check if the provided location is already part of the stack
         for ($i = 0, $length = \count($this->stack); $i < $length; $i++) {
-            if ($this->stack[$i]['identifier'] == $identifier && $this->stack[$i]['pageObjectID'] == $pageObjectID) {
+            if ($this->stack[$i]['identifier'] === $identifier && $this->stack[$i]['pageObjectID'] === $pageObjectID) {
                 return;
             }
         }
@@ -103,7 +103,7 @@ class PageLocationManager extends SingletonFactory
         }
 
         $landingPage = PageCache::getInstance()->getLandingPage();
-        if ($page->pageID == $landingPage->pageID && \BREADCRUMBS_HOME_USE_PAGE_TITLE) {
+        if ($page->pageID === $landingPage->pageID && \BREADCRUMBS_HOME_USE_PAGE_TITLE) {
             $title = WCF::getLanguage()->get(\PAGE_TITLE);
         }
 
@@ -152,7 +152,7 @@ class PageLocationManager extends SingletonFactory
                         continue;
                     }
 
-                    if ($page->pageID == $landingPage->pageID && \BREADCRUMBS_HOME_USE_PAGE_TITLE) {
+                    if ($page->pageID === $landingPage->pageID && \BREADCRUMBS_HOME_USE_PAGE_TITLE) {
                         $title = WCF::getLanguage()->get(\PAGE_TITLE);
                     } else {
                         $title = $page->getTitle();

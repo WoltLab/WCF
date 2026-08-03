@@ -66,7 +66,7 @@ class TemplateEditor extends DatabaseObjectEditor
         $currentPath = $this->getPath();
 
         // get new path
-        if ($templateGroupID != $this->templateGroupID) {
+        if ($templateGroupID !== $this->templateGroupID) {
             // get folder name
             $sql = "SELECT  templateGroupFolderName
                     FROM    wcf1_template_group

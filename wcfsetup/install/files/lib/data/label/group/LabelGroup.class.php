@@ -64,7 +64,7 @@ class LabelGroup extends DatabaseObject implements IRouteController, \Stringable
      */
     public static function sortLabelGroups(DatabaseObject $groupA, DatabaseObject $groupB)
     {
-        if ($groupA->showOrder == $groupB->showOrder) {
+        if ($groupA->showOrder === $groupB->showOrder) {
             return ($groupA->groupID > $groupB->groupID) ? 1 : -1;
         }
 

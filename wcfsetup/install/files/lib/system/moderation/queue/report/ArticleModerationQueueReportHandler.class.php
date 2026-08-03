@@ -172,6 +172,6 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
             return true;
         }
         return $userProfile->getPermission('admin.content.article.canManageOwnArticles')
-            && $article->userID == $userProfile->userID;
+            && $article->userID === $userProfile->userID;
     }
 }

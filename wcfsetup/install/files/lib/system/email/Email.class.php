@@ -505,9 +505,9 @@ class Email implements \Stringable
         $to = [];
         $cc = [];
         foreach ($this->getRecipients() as $recipient) {
-            if ($recipient['type'] == 'to') {
+            if ($recipient['type'] === 'to') {
                 $to[] = $recipient['mailbox'];
-            } elseif ($recipient['type'] == 'cc') {
+            } elseif ($recipient['type'] === 'cc') {
                 $cc[] = $recipient['mailbox'];
             }
         }

@@ -65,7 +65,7 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
      */
     protected function updateShowOrder(int $showOrder)
     {
-        if ($this->showOrder != $showOrder) {
+        if ($this->showOrder !== $showOrder) {
             if ($showOrder < $this->showOrder) {
                 $sql = "UPDATE  wcf1_user_profile_menu_item
                         SET     showOrder = showOrder + 1
@@ -97,7 +97,7 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
      */
     protected static function getShowOrder(int $showOrder = 0)
     {
-        if ($showOrder == 0) {
+        if ($showOrder === 0) {
             // get next number in row
             $sql = "SELECT  MAX(showOrder) AS showOrder
                     FROM    wcf1_user_profile_menu_item";

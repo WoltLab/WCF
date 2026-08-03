@@ -69,7 +69,7 @@ class UserProfileInteractions extends AbstractInteractionProvider
             },
             new class(
                 'homepage',
-                static fn(UserProfile $user) => $user->homepage && $user->homepage != 'http://' && !$user->isProtected()
+                static fn(UserProfile $user) => $user->homepage && $user->homepage !== 'http://' && !$user->isProtected()
             ) extends AbstractInteraction {
                 #[\Override]
                 public function render(DatabaseObject $object): string

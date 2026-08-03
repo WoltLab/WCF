@@ -179,7 +179,7 @@ class LoginForm extends AbstractFormBuilderForm
         }
 
         if ($validationError !== null) {
-            if ($validationError->getField() == 'username') {
+            if ($validationError->getField() === 'username') {
                 $usernameFormField->addValidationError(
                     new FormFieldValidationError(
                         $validationError->getType(),
@@ -189,7 +189,7 @@ class LoginForm extends AbstractFormBuilderForm
                         ]
                     )
                 );
-            } else if ($validationError->getField() == 'password') {
+            } else if ($validationError->getField() === 'password') {
                 $passwordFormField->addValidationError(
                     new FormFieldValidationError(
                         $validationError->getType(),

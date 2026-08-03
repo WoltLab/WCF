@@ -144,7 +144,7 @@ class UploadField
         } else {
             // Using == here is safe, because we match a single element array containing
             // a scalar value.
-            if ($this->getAcceptableFiles() == ['image/*']) {
+            if ($this->getAcceptableFiles() === ['image/*']) {
                 $this->setAcceptableFiles(null);
             }
         }

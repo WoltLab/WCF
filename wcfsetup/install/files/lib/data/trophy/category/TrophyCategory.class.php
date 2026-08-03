@@ -31,7 +31,7 @@ class TrophyCategory extends AbstractDecoratedCategory implements ITitledLinkObj
      */
     public function isAccessible(?User $user = null)
     {
-        if ($this->getObjectType()->objectType != self::OBJECT_TYPE_NAME) {
+        if ($this->getObjectType()->objectType !== self::OBJECT_TYPE_NAME) {
             return false;
         }
 

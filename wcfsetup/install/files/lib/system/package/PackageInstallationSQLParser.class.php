@@ -121,7 +121,7 @@ class PackageInstallationSQLParser extends SQLParser
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$logEntry['tableName']]);
 
-            if ($logEntry['action'] == 'insert') {
+            if ($logEntry['action'] === 'insert') {
                 $sql = "INSERT INTO wcf1_package_installation_sql_log
                                     (packageID, sqlTable)
                         VALUES      (?, ?)";
@@ -151,7 +151,7 @@ class PackageInstallationSQLParser extends SQLParser
                     $logEntry['columnName'],
                 ]);
 
-                if ($logEntry['action'] == 'insert') {
+                if ($logEntry['action'] === 'insert') {
                     $insertStatement->execute([
                         $logEntry['packageID'],
                         $logEntry['tableName'],
@@ -179,7 +179,7 @@ class PackageInstallationSQLParser extends SQLParser
                     $logEntry['indexName'],
                 ]);
 
-                if ($logEntry['action'] == 'insert') {
+                if ($logEntry['action'] === 'insert') {
                     $insertStatement->execute([
                         $logEntry['packageID'],
                         $logEntry['tableName'],
@@ -265,7 +265,7 @@ class PackageInstallationSQLParser extends SQLParser
             if (\in_array($tableName, $this->existingTables)) {
                 if (
                     isset($this->knownTables[$tableName])
-                    && $this->knownTables[$tableName] != $this->package->packageID
+                    && $this->knownTables[$tableName] !== $this->package->packageID
                 ) {
                     throw new SystemException("Cannot recreate table '" . $tableName . "'. A package can only overwrite own tables.");
                 } else {
@@ -314,13 +314,13 @@ class PackageInstallationSQLParser extends SQLParser
     {
         if ($this->test) {
             if ($ownerPackageID = $this->getColumnOwnerID($tableName, $oldColumnName)) {
-                if ($ownerPackageID != $this->package->packageID) {
+                if ($ownerPackageID !== $this->package->packageID) {
                     throw new SystemException("Cannot alter column '" . $oldColumnName . "'. A package can only change own columns.");
                 }
             }
         } else {
             // log
-            if ($oldColumnName != $newColumnName) {
+            if ($oldColumnName !== $newColumnName) {
                 $this->columnLog[] = [
                     'tableName' => $tableName,
                     'columnName' => $oldColumnName,
@@ -379,7 +379,7 @@ class PackageInstallationSQLParser extends SQLParser
     {
         if ($this->test) {
             if ($ownerPackageID = $this->getColumnOwnerID($tableName, $columnName)) {
-                if ($ownerPackageID != $this->package->packageID) {
+                if ($ownerPackageID !== $this->package->packageID) {
                     throw new SystemException("Cannot drop column '" . $columnName . "'. A package can only drop own columns.");
                 }
             }
@@ -402,7 +402,7 @@ class PackageInstallationSQLParser extends SQLParser
     {
         if ($this->test) {
             if ($ownerPackageID = $this->getIndexOwnerID($tableName, $indexName)) {
-                if ($ownerPackageID != $this->package->packageID) {
+                if ($ownerPackageID !== $this->package->packageID) {
                     throw new SystemException("Cannot drop index '" . $indexName . "'. A package can only drop own indices.");
                 }
             }
@@ -425,7 +425,7 @@ class PackageInstallationSQLParser extends SQLParser
     {
         if ($this->test) {
             if ($ownerPackageID = $this->getIndexOwnerID($tableName, '')) {
-                if ($ownerPackageID != $this->package->packageID) {
+                if ($ownerPackageID !== $this->package->packageID) {
                     throw new SystemException("Cannot drop primary key from '" . $tableName . "'. A package can only drop own indices.");
                 }
             }
@@ -443,7 +443,7 @@ class PackageInstallationSQLParser extends SQLParser
     {
         if ($this->test) {
             if ($ownerPackageID = $this->getIndexOwnerID($tableName, $indexName)) {
-                if ($ownerPackageID != $this->package->packageID) {
+                if ($ownerPackageID !== $this->package->packageID) {
                     throw new SystemException("Cannot drop index '" . $indexName . "'. A package can only drop own indices.");
                 }
             }
@@ -466,7 +466,7 @@ class PackageInstallationSQLParser extends SQLParser
     {
         if ($this->test) {
             if (\in_array($tableName, $this->existingTables)) {
-                if (isset($this->knownTables[$tableName]) && $this->knownTables[$tableName] != $this->package->packageID) {
+                if (isset($this->knownTables[$tableName]) && $this->knownTables[$tableName] !== $this->package->packageID) {
                     throw new SystemException("Cannot drop table '" . $tableName . "'. A package can only drop own tables.");
                 }
             }

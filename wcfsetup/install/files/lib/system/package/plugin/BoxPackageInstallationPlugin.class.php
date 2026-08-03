@@ -392,7 +392,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 
                 foreach ($contentData as $languageCode => $content) {
                     $languageID = null;
-                    if ($languageCode != '') {
+                    if ($languageCode !== '') {
                         $language = LanguageFactory::getInstance()->getLanguageByCode($languageCode);
                         if ($language === null) {
                             continue;

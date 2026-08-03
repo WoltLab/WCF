@@ -254,7 +254,7 @@ class Box extends DatabaseObject
      */
     public function getTitle(): string
     {
-        if ($this->boxType == 'menu') {
+        if ($this->boxType === 'menu') {
             return $this->getMenu()->getTitle();
         }
 
@@ -268,9 +268,9 @@ class Box extends DatabaseObject
      */
     public function getContent()
     {
-        if ($this->boxType == 'system') {
+        if ($this->boxType === 'system') {
             return $this->getController()->getContent();
-        } elseif ($this->boxType == 'menu') {
+        } elseif ($this->boxType === 'menu') {
             return $this->getMenu()->getContent();
         }
 
@@ -287,11 +287,11 @@ class Box extends DatabaseObject
         }
 
         if ($boxContent !== null) {
-            if ($this->boxType == 'text') {
+            if ($this->boxType === 'text') {
                 return $boxContent->getFormattedContent();
-            } elseif ($this->boxType == 'html') {
+            } elseif ($this->boxType === 'html') {
                 return $boxContent->getParsedContent();
-            } elseif ($this->boxType == 'tpl') {
+            } elseif ($this->boxType === 'tpl') {
                 return $boxContent->getParsedTemplate($this->getTplName(WCF::getLanguage()->languageID));
             }
         }
@@ -322,9 +322,9 @@ class Box extends DatabaseObject
      */
     public function hasContent()
     {
-        if ($this->boxType == 'system') {
+        if ($this->boxType === 'system') {
             return $this->getController()->hasContent();
-        } elseif ($this->boxType == 'menu') {
+        } elseif ($this->boxType === 'menu') {
             return $this->getMenu()->hasContent();
         }
 
@@ -412,9 +412,9 @@ class Box extends DatabaseObject
      */
     public function getLink(): string
     {
-        if ($this->boxType == 'system') {
+        if ($this->boxType === 'system') {
             return $this->getController()->getLink();
-        } elseif ($this->boxType == 'menu') {
+        } elseif ($this->boxType === 'menu') {
             return '';
         }
 
@@ -439,9 +439,9 @@ class Box extends DatabaseObject
      */
     public function hasLink()
     {
-        if ($this->boxType == 'system') {
+        if ($this->boxType === 'system') {
             return $this->getController()->hasLink();
-        } elseif ($this->boxType == 'menu') {
+        } elseif ($this->boxType === 'menu') {
             return false;
         }
 
@@ -491,7 +491,7 @@ class Box extends DatabaseObject
      */
     public function getTplName(?int $languageID = null)
     {
-        if ($this->boxType == 'tpl') {
+        if ($this->boxType === 'tpl') {
             if ($this->isMultilingual) {
                 return '__cms_box_' . $this->boxID . '_' . $languageID;
             }

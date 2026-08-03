@@ -121,7 +121,7 @@ class SettingsForm extends AbstractForm
         $this->optionHandler = new UserOptionHandler(false, '', 'settings.' . $this->category);
         $this->optionHandler->setUser(WCF::getUser());
 
-        if ($this->category == 'general') {
+        if ($this->category === 'general') {
             $this->availableContentLanguages = LanguageFactory::getInstance()->getContentLanguages();
             $this->availableLanguages = LanguageFactory::getInstance()->getLanguages();
             $this->availableStyles = StyleHandler::getInstance()->getAvailableStyles();
@@ -147,7 +147,7 @@ class SettingsForm extends AbstractForm
         $this->optionHandler->readUserInput($_POST);
 
         // static options
-        if ($this->category == 'general') {
+        if ($this->category === 'general') {
             if (isset($_POST['contentLanguageIDs']) && \is_array($_POST['contentLanguageIDs'])) {
                 $this->contentLanguageIDs = ArrayUtil::toIntegerArray($_POST['contentLanguageIDs']);
             }
@@ -179,7 +179,7 @@ class SettingsForm extends AbstractForm
         }
 
         // static options
-        if ($this->category == 'general') {
+        if ($this->category === 'general') {
             // validate language id
             if (!isset($this->availableLanguages[$this->languageID])) {
                 $this->languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
@@ -230,7 +230,7 @@ class SettingsForm extends AbstractForm
         // default values
         if (empty($_POST)) {
             // static options
-            if ($this->category == 'general') {
+            if ($this->category === 'general') {
                 $this->contentLanguageIDs = WCF::getUser()->getLanguageIDs();
                 if (isset($this->availableLanguages[WCF::getUser()->languageID])) {
                     $this->languageID = WCF::getUser()->languageID;
@@ -254,7 +254,7 @@ class SettingsForm extends AbstractForm
         $saveOptions = $this->optionHandler->save();
         $parameters = ['options' => $saveOptions];
         // static options
-        if ($this->category == 'general') {
+        if ($this->category === 'general') {
             $parameters['data'] = \array_merge($this->additionalFields, [
                 'languageID' => $this->languageID,
                 'styleID' => $this->styleID,
@@ -266,7 +266,7 @@ class SettingsForm extends AbstractForm
         $this->objectAction->executeAction();
 
         // static options
-        if ($this->category == 'general') {
+        if ($this->category === 'general') {
             // reset user language ids cache
             UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'languageIDs');
 
@@ -304,7 +304,7 @@ class SettingsForm extends AbstractForm
         ]);
 
         // static options
-        if ($this->category == 'general') {
+        if ($this->category === 'general') {
             WCF::getTPL()->assign([
                 'availableContentLanguages' => $this->availableContentLanguages,
                 'availableLanguages' => $this->availableLanguages,

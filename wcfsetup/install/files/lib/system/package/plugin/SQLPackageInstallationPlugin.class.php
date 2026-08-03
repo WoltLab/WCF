@@ -91,7 +91,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin
                 $isDropped = false;
                 foreach ($entries as $entry2) {
                     if (
-                        $entry['sqlTable'] == $entry2['sqlTable']
+                        $entry['sqlTable'] === $entry2['sqlTable']
                         && empty($entry2['sqlColumn'])
                         && empty($entry2['sqlIndex'])
                     ) {
@@ -110,7 +110,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin
                 WCF::getDB()->getEditor()->dropColumn($entry['sqlTable'], $entry['sqlColumn']);
             } // drop index
             elseif (\in_array($entry['sqlTable'], $existingTableNames) && !empty($entry['sqlIndex'])) {
-                if (\substr($entry['sqlIndex'], -3) == '_fk') {
+                if (\substr($entry['sqlIndex'], -3) === '_fk') {
                     WCF::getDB()->getEditor()->dropForeignKey($entry['sqlTable'], $entry['sqlIndex']);
                 } else {
                     WCF::getDB()->getEditor()->dropIndex($entry['sqlTable'], $entry['sqlIndex']);

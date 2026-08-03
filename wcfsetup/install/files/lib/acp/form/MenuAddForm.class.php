@@ -184,7 +184,7 @@ class MenuAddForm extends AbstractFormBuilderForm
     {
         $formData = $this->form->getData();
 
-        if ($this->formAction == 'create') {
+        if ($this->formAction === 'create') {
             $menu = $this->objectAction->getReturnValues()['returnValues'];
             \assert($menu instanceof Menu);
         } else {

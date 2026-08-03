@@ -88,6 +88,7 @@ final class EventHandler extends SingletonFactory
             // get parent classes
             $familyTree = [];
             $member = (\is_object($eventObj) ? \get_class($eventObj) : $eventObj);
+            // @phpstan-ignore notEqual.notAllowed (`get_parent_class()` returns `false` or a non-empty string)
             while ($member != false) {
                 $familyTree[] = $member;
                 $member = \get_parent_class($member);

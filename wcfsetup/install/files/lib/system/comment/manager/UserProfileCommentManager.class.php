@@ -78,7 +78,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements
         if ($validateWritePermission) {
             if (
                 !$userProfile->isAccessible('canWriteProfileComments')
-                && $userProfile->userID != WCF::getUser()->userID
+                && $userProfile->userID !== WCF::getUser()->userID
             ) {
                 return false;
             }
@@ -157,7 +157,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements
     public function canDeleteComment(Comment $comment)
     {
         if (
-            $comment->objectID == WCF::getUser()->userID
+            $comment->objectID === WCF::getUser()->userID
             && WCF::getSession()->hasPermission('user.profileComment.canDeleteCommentInOwnProfile')
         ) {
             return true;
@@ -170,7 +170,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements
     public function canDeleteResponse(CommentResponse $response)
     {
         if (
-            $response->getComment()->objectID == WCF::getUser()->userID
+            $response->getComment()->objectID === WCF::getUser()->userID
             && WCF::getSession()->hasPermission('user.profileComment.canDeleteCommentInOwnProfile')
         ) {
             return true;
@@ -191,7 +191,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements
 
         $commentIDs = $responseIDs = [];
         foreach ($likes as $like) {
-            if ($like->objectTypeID == $commentLikeObjectType->objectTypeID) {
+            if ($like->objectTypeID === $commentLikeObjectType->objectTypeID) {
                 $commentIDs[] = $like->objectID;
             } else {
                 $responseIDs[] = $like->objectID;
@@ -228,7 +228,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements
 
         // set message
         foreach ($likes as $like) {
-            if ($like->objectTypeID == $commentLikeObjectType->objectTypeID) {
+            if ($like->objectTypeID === $commentLikeObjectType->objectTypeID) {
                 // comment like
                 if (isset($comments[$like->objectID])) {
                     $comment = $comments[$like->objectID];

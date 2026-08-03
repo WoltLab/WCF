@@ -183,7 +183,7 @@ class NotificationPresetSettingsForm extends AbstractForm
                     }
                 }
 
-                if ($event->preset != $preset || $event->presetMailNotificationType != $presetMailNotificationType) {
+                if ($event->preset !== $preset || $event->presetMailNotificationType !== $presetMailNotificationType) {
                     $editor = new UserNotificationEventEditor(new UserNotificationEvent(
                         null,
                         ['eventID' => $event->eventID]

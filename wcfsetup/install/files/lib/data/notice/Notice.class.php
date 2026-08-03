@@ -105,7 +105,7 @@ class Notice extends DatabaseObject implements IRouteController, \Stringable
                     while ($noticeID = $statement->fetchColumn()) {
                         $noticeIDs[] = $noticeID;
 
-                        if ($noticeID == $this->noticeID) {
+                        if ($noticeID === $this->noticeID) {
                             $this->isDismissed = true;
                         }
                     }

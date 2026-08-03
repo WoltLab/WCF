@@ -36,6 +36,7 @@ class BooleanUserGroupOptionType extends BooleanOptionType implements IUserGroup
     #[\Override]
     public function getData(Option $option, mixed $newValue)
     {
+        // @phpstan-ignore equal.notAllowed (option values are untyped and can differ in type)
         return ($newValue == -1) ? -1 : parent::getData($option, $newValue);
     }
 
@@ -43,11 +44,13 @@ class BooleanUserGroupOptionType extends BooleanOptionType implements IUserGroup
     public function merge(mixed $defaultValue, mixed $groupValue)
     {
         // force value for 'Never'
+        // @phpstan-ignore equal.notAllowed, equal.notAllowed (option values are untyped and can differ in type)
         if ($defaultValue == -1 || $groupValue == -1) {
             return -1;
         }
 
         // don't save if values are equal or $defaultValue is better
+        // @phpstan-ignore equal.notAllowed (option values are untyped and can differ in type)
         if ($defaultValue == $groupValue || ($defaultValue && !$groupValue)) {
             return;
         }
@@ -58,8 +61,10 @@ class BooleanUserGroupOptionType extends BooleanOptionType implements IUserGroup
     #[\Override]
     public function compare(mixed $value1, mixed $value2)
     {
+        // @phpstan-ignore equal.notAllowed (option values are untyped and can differ in type)
         if ($value1 == $value2) {
             return 0;
+            // @phpstan-ignore equal.notAllowed (option values are untyped and can differ in type)
         } elseif ($value1 == -1) {
             // this is the `never` permission
             return -1;

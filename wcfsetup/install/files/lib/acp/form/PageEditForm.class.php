@@ -101,7 +101,7 @@ class PageEditForm extends PageAddForm
     protected function validateOverrideApplicationPackageID()
     {
         if ($this->overrideApplicationPackageID) {
-            if ($this->overrideApplicationPackageID == $this->applicationPackageID) {
+            if ($this->overrideApplicationPackageID === $this->applicationPackageID) {
                 // Picking the same app would have the same result, but also creates some overhead in the internal routing.
                 $this->overrideApplicationPackageID = null;
             } elseif (ApplicationHandler::getInstance()->getApplicationByID($this->overrideApplicationPackageID) === null) {
@@ -113,7 +113,7 @@ class PageEditForm extends PageAddForm
     #[\Override]
     protected function validateName()
     {
-        if (\mb_strtolower($this->name) != \mb_strtolower($this->page->name)) {
+        if (\mb_strtolower($this->name) !== \mb_strtolower($this->page->name)) {
             parent::validateName();
         }
     }
@@ -128,21 +128,21 @@ class PageEditForm extends PageAddForm
     protected function validateParentPageID()
     {
         if ($this->page->hasFixedParent) {
-            if ($this->parentPageID != $this->page->parentPageID) {
+            if ($this->parentPageID !== $this->page->parentPageID) {
                 throw new UserInputException('parentPageID', 'invalid');
             }
         } else {
             parent::validateParentPageID();
 
             if ($this->parentPageID) {
-                if ($this->parentPageID == $this->page->pageID) {
+                if ($this->parentPageID === $this->page->pageID) {
                     throw new UserInputException('parentPageID', 'invalid');
                 }
 
                 $page = PageCache::getInstance()->getPage($this->parentPageID);
                 while ($page->parentPageID !== null) {
                     $page = PageCache::getInstance()->getPage($page->parentPageID);
-                    if ($page->pageID == $this->page->pageID) {
+                    if ($page->pageID === $this->page->pageID) {
                         throw new UserInputException('parentPageID', 'invalid');
                     }
                 }
@@ -157,12 +157,12 @@ class PageEditForm extends PageAddForm
             return;
         }
 
-        if ($this->pageType == 'system') {
-            if ($customURL != $this->page->controllerCustomURL) {
+        if ($this->pageType === 'system') {
+            if ($customURL !== $this->page->controllerCustomURL) {
                 parent::validateCustomUrl($languageID, $customURL);
             }
         } else {
-            if (isset($this->page->getPageContents()[$languageID]) && \mb_strtolower($customURL) != \mb_strtolower($this->page->getPageContents()[$languageID]->customURL)) {
+            if (isset($this->page->getPageContents()[$languageID]) && \mb_strtolower($customURL) !== \mb_strtolower($this->page->getPageContents()[$languageID]->customURL)) {
                 parent::validateCustomUrl($languageID, $customURL);
             }
         }
@@ -187,7 +187,7 @@ class PageEditForm extends PageAddForm
             'invertPermissions' => $this->invertPermissions,
         ];
 
-        if ($this->pageType == 'system') {
+        if ($this->pageType === 'system') {
             $content = [];
             foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                 $content[$language->languageID] = [
@@ -242,7 +242,7 @@ class PageEditForm extends PageAddForm
         }
 
         // save acl
-        if ($this->page->pageType != 'system') {
+        if ($this->page->pageType !== 'system') {
             SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.page', $this->page->pageID, $this->aclValues);
         }
 
@@ -250,7 +250,7 @@ class PageEditForm extends PageAddForm
         $this->saved();
 
         // Ensure that the CKEditor has the correct content after save.
-        if ($this->pageType == 'text') {
+        if ($this->pageType === 'text') {
             if ($this->isMultilingual) {
                 foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                     $this->content[$language->languageID] = isset($this->htmlInputProcessors[$language->languageID]) ?

@@ -211,7 +211,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         $this->readBoolean('imagesOnly', true);
 
         $this->readString('mode');
-        if ($this->parameters['mode'] != 'editor' && $this->parameters['mode'] != 'select') {
+        if ($this->parameters['mode'] !== 'editor' && $this->parameters['mode'] !== 'select') {
             throw new UserInputException('mode');
         }
     }
@@ -365,7 +365,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 
         if (WCF::getSession()->hasPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
             foreach ($this->getObjects() as $media) {
-                if ($media->userID != WCF::getUser()->userID) {
+                if ($media->userID !== WCF::getUser()->userID) {
                     throw new PermissionDeniedException();
                 }
             }
@@ -421,7 +421,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 
         parent::update();
 
-        if (\count($this->objects) == 1 && (isset($this->parameters['title']) || isset($this->parameters['caption']) || isset($this->parameters['altText']))) {
+        if (\count($this->objects) === 1 && (isset($this->parameters['title']) || isset($this->parameters['caption']) || isset($this->parameters['altText']))) {
             $media = \reset($this->objects);
 
             $isMultilingual = $media->isMultilingual;
@@ -508,7 +508,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         $this->readBoolean('imagesOnly', true);
 
         $this->readString('mode');
-        if ($this->parameters['mode'] != 'editor' && $this->parameters['mode'] != 'select') {
+        if ($this->parameters['mode'] !== 'editor' && $this->parameters['mode'] !== 'select') {
             throw new UserInputException('mode');
         }
 
@@ -533,7 +533,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             $mediaList->getConditionBuilder()->add('media.isImage = ?', [1]);
         }
         if ($this->parameters['categoryID']) {
-            if ($this->parameters['categoryID'] == -1) {
+            if ($this->parameters['categoryID'] === -1) {
                 $mediaList->getConditionBuilder()->add('media.categoryID IS NULL');
             } else {
                 $mediaList->getConditionBuilder()->add('media.categoryID = ?', [$this->parameters['categoryID']]);
@@ -590,7 +590,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 
         if (WCF::getSession()->hasPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
             foreach ($this->getObjects() as $media) {
-                if ($media->userID != WCF::getUser()->userID) {
+                if ($media->userID !== WCF::getUser()->userID) {
                     throw new PermissionDeniedException();
                 }
             }
@@ -694,7 +694,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 
         if (WCF::getSession()->hasPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
             foreach ($this->getObjects() as $media) {
-                if ($media->userID != WCF::getUser()->userID) {
+                if ($media->userID !== WCF::getUser()->userID) {
                     throw new PermissionDeniedException();
                 }
             }

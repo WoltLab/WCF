@@ -189,7 +189,7 @@ HTML;
      */
     protected function getTrophies()
     {
-        if ($this->trophies == null) {
+        if ($this->trophies === null) {
             $trophyList = new TrophyList();
             $trophyList->readObjects();
             $this->trophies = $trophyList->getObjects();

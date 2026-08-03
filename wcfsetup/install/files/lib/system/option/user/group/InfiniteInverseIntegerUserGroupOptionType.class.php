@@ -17,10 +17,12 @@ class InfiniteInverseIntegerUserGroupOptionType extends InverseIntegerUserGroupO
     #[\Override]
     public function merge(mixed $defaultValue, mixed $groupValue)
     {
+        // @phpstan-ignore equal.notAllowed, equal.notAllowed (option values are untyped and can differ in type)
         if ($groupValue == -1 || $defaultValue == $groupValue) {
             return;
         }
 
+        // @phpstan-ignore equal.notAllowed (option values are untyped and can differ in type)
         if ($defaultValue == -1) {
             return $groupValue;
         }
@@ -31,12 +33,15 @@ class InfiniteInverseIntegerUserGroupOptionType extends InverseIntegerUserGroupO
     #[\Override]
     public function compare(mixed $value1, mixed $value2)
     {
+        // @phpstan-ignore equal.notAllowed (option values are untyped and can differ in type)
         if ($value1 == $value2) {
             return 0;
         }
 
+        // @phpstan-ignore equal.notAllowed (option values are untyped and can differ in type)
         if ($value1 == -1) {
             return 1;
+            // @phpstan-ignore equal.notAllowed (option values are untyped and can differ in type)
         } elseif ($value2 == -1) {
             return -1;
         }

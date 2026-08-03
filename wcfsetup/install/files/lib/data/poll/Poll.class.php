@@ -55,7 +55,7 @@ class Poll extends DatabaseObject
      */
     public function addOption(PollOption $option)
     {
-        if ($option->pollID == $this->pollID) {
+        if ($option->pollID === $this->pollID) {
             $this->options[$option->optionID] = $option;
 
             // @phpstan-ignore property.notFound
@@ -76,7 +76,7 @@ class Poll extends DatabaseObject
 
         if ($isResultDisplay && $this->sortByVotes) {
             \uasort($this->options, static function ($a, $b) {
-                if ($a->votes == $b->votes) {
+                if ($a->votes === $b->votes) {
                     return 0;
                 }
 

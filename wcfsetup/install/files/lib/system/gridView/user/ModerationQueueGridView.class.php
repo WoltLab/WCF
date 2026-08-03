@@ -155,7 +155,7 @@ final class ModerationQueueGridView extends AbstractGridView
                         #[\Override]
                         public function applyFilter(DatabaseObjectList $list, string $value): void
                         {
-                            if ($value == ModerationQueue::STATUS_DONE) {
+                            if ((int)$value === ModerationQueue::STATUS_DONE) {
                                 $list->getConditionBuilder()->add(
                                     "moderation_queue.status IN (?)",
                                     [

@@ -205,7 +205,7 @@ final class DomBBCodeParser extends SingletonFactory
     private function createMetacodeMarker(string $bbcodeTag): ?\DOMElement
     {
         $attributes = [];
-        if (\mb_substr($bbcodeTag, 1, 1) == '/') {
+        if (\mb_substr($bbcodeTag, 1, 1) === '/') {
             // closing tag
             $name = \mb_strtolower(\mb_substr($bbcodeTag, 2, \mb_strlen($bbcodeTag) - 3));
             $isClosingTag = true;

@@ -152,7 +152,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
 
             $reply = \json_decode((string)$response->getBody(), true, flags: \JSON_THROW_ON_ERROR);
 
-            if ($reply['status'] == 200) {
+            if ((int)$reply['status'] === 200) {
                 $this->hasAuthCode = true;
                 $this->purchasedVersions = [
                     'woltlab' => ($reply['woltlab'] ?? []),
@@ -251,7 +251,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
 
         // parse given package update xml
         $allNewPackages = false;
-        if ($apiVersion === '2.0' || $response->getStatusCode() != 304) {
+        if ($apiVersion === '2.0' || $response->getStatusCode() !== 304) {
             if (!$response->getBody()->getSize()) {
                 throw new SystemException(WCF::getLanguage()->get('wcf.acp.package.update.error.listNotFound'));
             }
@@ -412,11 +412,11 @@ final class PackageUpdateDispatcher extends SingletonFactory
         foreach ($elements as $element) {
             $versionNo = $element->getAttribute('name');
 
-            $isAccessible = ($element->getAttribute('accessible') == 'true') ? 1 : 0;
-            if ($key && $element->getAttribute('requireAuth') == 'true') {
+            $isAccessible = ($element->getAttribute('accessible') === 'true') ? 1 : 0;
+            if ($key && $element->getAttribute('requireAuth') === 'true') {
                 $packageName = $package->getAttribute('name');
                 if (isset($this->purchasedVersions[$key][$packageName])) {
-                    if ($this->purchasedVersions[$key][$packageName] == '*') {
+                    if ($this->purchasedVersions[$key][$packageName] === '*') {
                         $isAccessible = 1;
                     } else {
                         $isAccessible = (Package::compareVersion(

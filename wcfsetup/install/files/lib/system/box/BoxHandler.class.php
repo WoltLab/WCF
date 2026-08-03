@@ -230,7 +230,7 @@ class BoxHandler extends SingletonFactory
 
         foreach ($boxes as &$positionBoxes) {
             \usort($positionBoxes, static function ($a, $b) {
-                if ($a->virtualShowOrder == $b->virtualShowOrder) {
+                if ($a->virtualShowOrder === $b->virtualShowOrder) {
                     return 0;
                 }
 

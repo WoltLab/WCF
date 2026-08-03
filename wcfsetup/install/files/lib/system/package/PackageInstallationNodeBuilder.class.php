@@ -143,7 +143,7 @@ class PackageInstallationNodeBuilder
         $this->buildStartMarkerNode($currentPackageVersion);
 
         // install package itself
-        if ($this->installation->getAction() == 'install') {
+        if ($this->installation->getAction() === 'install') {
             $this->buildPackageNode();
         }
 
@@ -167,11 +167,11 @@ class PackageInstallationNodeBuilder
         self::$pendingPackages[$this->installation->getArchive()->getPackageInfo('name')] = $this->installation->getArchive()->getPackageInfo('version');
 
         // optional packages (ignored on update)
-        if ($this->installation->getAction() == 'install') {
+        if ($this->installation->getAction() === 'install') {
             $this->buildOptionalNodes();
         }
 
-        if ($this->installation->getAction() == 'update') {
+        if ($this->installation->getAction() === 'update') {
             $this->buildPackageNode();
         }
 
@@ -557,7 +557,7 @@ class PackageInstallationNodeBuilder
                 continue;
             }
 
-            if ($this->node == '' && !empty($this->parentNode)) {
+            if ($this->node === '' && !empty($this->parentNode)) {
                 $this->node = $this->parentNode;
             }
 
@@ -565,7 +565,7 @@ class PackageInstallationNodeBuilder
             $index = $this->installation->getArchive()->getTar()->getIndexByFilename($package['file']);
             if ($index === false) {
                 // workaround for WCFSetup
-                if (!\PACKAGE_ID && $packageName == 'com.woltlab.wcf') {
+                if (!\PACKAGE_ID && $packageName === 'com.woltlab.wcf') {
                     continue;
                 }
 
@@ -583,7 +583,7 @@ class PackageInstallationNodeBuilder
             $archive->openArchive();
 
             // check if delivered package has correct identifier
-            if ($archive->getPackageInfo('name') != $packageName) {
+            if ($archive->getPackageInfo('name') !== $packageName) {
                 throw new SystemException("Invalid package file delivered for '" . $packageName . "' requirement of package '" . $this->installation->getArchive()->getPackageInfo('name') . "' (delivered package: '" . $archive->getPackageInfo('name') . "').");
             }
 

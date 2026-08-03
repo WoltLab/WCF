@@ -112,7 +112,7 @@ class RadioButtonOptionType extends AbstractOptionType implements
     #[\Override]
     public function checkUser(User $user, Option $option, mixed $value)
     {
-        return \mb_strtolower($user->getUserOption($option->optionName)) == \mb_strtolower(StringUtil::trim($value));
+        return \mb_strtolower($user->getUserOption($option->optionName)) === \mb_strtolower(StringUtil::trim($value));
     }
 
     #[\Override]
@@ -154,12 +154,12 @@ class RadioButtonOptionType extends AbstractOptionType implements
                 $enableOptionValues = $valueToOption;
             }
 
-            if ($key == $value) {
+            if ($key === $value) {
                 $options = ArrayUtil::trim(\explode(',', $enableOptionValues));
                 $result = [];
 
                 foreach ($options as $item) {
-                    if ($item[0] == '!') {
+                    if ($item[0] === '!') {
                         $result[] = $item;
                     } else {
                         $result[] = $item;

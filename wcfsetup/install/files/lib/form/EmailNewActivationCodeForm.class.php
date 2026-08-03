@@ -85,7 +85,7 @@ final class EmailNewActivationCodeForm extends AbstractFormBuilderForm
             return;
         }
 
-        if ($this->user->reactivationCode == 0) {
+        if ($this->user->reactivationCode === 0) {
             $formField->addValidationError(
                 new FormFieldValidationError(
                     'userAlreadyEnabled',

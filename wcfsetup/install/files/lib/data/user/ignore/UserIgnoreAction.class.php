@@ -46,7 +46,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
         $this->readInteger('userID', false, 'data');
 
         $userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['data']['userID']);
-        if ($userProfile === null || $userProfile->userID == WCF::getUser()->userID) {
+        if ($userProfile === null || $userProfile->userID === WCF::getUser()->userID) {
             throw new IllegalLinkException();
         }
 
@@ -126,7 +126,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
         $this->readInteger('userID');
 
         $userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
-        if ($userProfile === null || $userProfile->userID == WCF::getUser()->userID) {
+        if ($userProfile === null || $userProfile->userID === WCF::getUser()->userID) {
             throw new IllegalLinkException();
         }
 
@@ -221,7 +221,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
                     ->addValidator(new FormFieldValidator('type', function (RadioButtonFormField $formField) {
                         $userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
                         if ($userProfile->getPermission('user.profile.cannotBeIgnored')) {
-                            if ($formField->getValue() != UserIgnore::TYPE_NO_IGNORE) {
+                            if ($formField->getValue() !== UserIgnore::TYPE_NO_IGNORE) {
                                 $formField->addValidationError(
                                     new FormFieldValidationError(
                                         'cannotBeIgnored',
@@ -264,7 +264,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
 
         // validate ownership
         foreach ($this->getObjects() as $ignore) {
-            if ($ignore->userID != WCF::getUser()->userID) {
+            if ($ignore->userID !== WCF::getUser()->userID) {
                 throw new PermissionDeniedException();
             }
         }

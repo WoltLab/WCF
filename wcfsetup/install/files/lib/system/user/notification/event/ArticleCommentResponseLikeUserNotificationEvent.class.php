@@ -60,7 +60,7 @@ class ArticleCommentResponseLikeUserNotificationEvent extends AbstractSharedUser
         $authors = \array_values($this->getAuthors());
         $count = \count($authors);
         $commentUser = null;
-        if ($this->additionalData['commentUserID'] != WCF::getUser()->userID) {
+        if ($this->additionalData['commentUserID'] !== WCF::getUser()->userID) {
             $commentUser = UserRuntimeCache::getInstance()->getObject($this->additionalData['commentUserID']);
         }
 

@@ -372,7 +372,7 @@ class RegisterForm extends UserAddForm
             // Accounts connected to a 3rdParty login do not have passwords.
             $this->password = null;
 
-            if (WCF::getSession()->getVar('__email') && WCF::getSession()->getVar('__email') == $this->email) {
+            if (WCF::getSession()->getVar('__email') && WCF::getSession()->getVar('__email') === $this->email) {
                 $registerVia3rdParty = true;
             }
         }
@@ -430,7 +430,7 @@ class RegisterForm extends UserAddForm
         WCF::getSession()->changeUser($user);
 
         // activation management
-        if (\REGISTER_ACTIVATION_METHOD == User::REGISTER_ACTIVATION_NONE && !$this->spamCheckEvent->hasMatches()) {
+        if ((int)\REGISTER_ACTIVATION_METHOD === User::REGISTER_ACTIVATION_NONE && !$this->spamCheckEvent->hasMatches()) {
             $this->message = 'wcf.user.register.success';
 
             UserGroupAssignmentHandler::getInstance()->checkUsers([$user->userID]);

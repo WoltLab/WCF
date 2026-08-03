@@ -58,7 +58,7 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
         if (empty($this->abbreviation)) {
             $classParts = \explode('\\', static::class);
             $this->abbreviation = $classParts[0];
-        } elseif ($this->abbreviation == 'wcf') {
+        } elseif ($this->abbreviation === 'wcf') {
             throw new SystemException("Unable to determine application, abbreviation is missing");
         }
 
@@ -79,7 +79,7 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
     #[\Override]
     public function isActiveApplication()
     {
-        return $this->packageID == ApplicationHandler::getInstance()->getActiveApplication()->packageID;
+        return $this->packageID === ApplicationHandler::getInstance()->getActiveApplication()->packageID;
     }
 
     #[\Override]

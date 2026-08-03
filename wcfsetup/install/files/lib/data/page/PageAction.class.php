@@ -96,7 +96,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
                 $pageContentEditor = new PageContentEditor($pageContent);
 
                 // update search index
-                if ($page->pageType == 'text' || $page->pageType == 'html') {
+                if ($page->pageType === 'text' || $page->pageType === 'html') {
                     SearchIndexManager::getInstance()->set(
                         'com.woltlab.wcf.page',
                         $pageContent->pageContentID,
@@ -115,7 +115,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
                     if (MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
                         $pageContentEditor->update(['hasEmbeddedObjects' => 1]);
                     }
-                } elseif ($page->pageType == 'html' || $page->pageType == 'tpl') {
+                } elseif ($page->pageType === 'html' || $page->pageType === 'tpl') {
                     HtmlSimpleParser::getInstance()->parse(
                         'com.woltlab.wcf.page.content',
                         $pageContent->pageContentID,
@@ -142,7 +142,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
         }
 
         // save template
-        if ($page->pageType == 'tpl') {
+        if ($page->pageType === 'tpl') {
             if (!empty($this->parameters['content'])) {
                 $pageEditor = new PageEditor($page);
                 foreach ($this->parameters['content'] as $languageID => $content) {
@@ -184,7 +184,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 
                         $versionData[] = $pageContent;
                         foreach (['title', 'content', 'metaDescription', 'customURL'] as $property) {
-                            if ($pageContent->{$property} != ($content[$property] ?? '')) {
+                            if (($pageContent->{$property} ?? '') !== ($content[$property] ?? '')) {
                                 $hasChanges = true;
                                 break;
                             }
@@ -208,7 +208,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
                     }
 
                     // update search index
-                    if ($page->pageType == 'text' || $page->pageType == 'html') {
+                    if ($page->pageType === 'text' || $page->pageType === 'html') {
                         SearchIndexManager::getInstance()->set(
                             'com.woltlab.wcf.page',
                             $pageContent->pageContentID,
@@ -224,10 +224,10 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
                     // save embedded objects
                     if (!empty($content['htmlInputProcessor'])) {
                         $content['htmlInputProcessor']->setObjectID($pageContent->pageContentID);
-                        if ($pageContent->hasEmbeddedObjects != MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
+                        if ((bool)$pageContent->hasEmbeddedObjects !== MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
                             $pageContentEditor->update(['hasEmbeddedObjects' => $pageContent->hasEmbeddedObjects ? 0 : 1]);
                         }
-                    } elseif ($page->pageType == 'html' || $page->pageType == 'tpl') {
+                    } elseif ($page->pageType === 'html' || $page->pageType === 'tpl') {
                         HtmlSimpleParser::getInstance()->parse(
                             'com.woltlab.wcf.page.content',
                             $pageContent->pageContentID,
@@ -237,7 +237,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
                 }
 
                 // save template
-                if ($page->pageType == 'tpl') {
+                if ($page->pageType === 'tpl') {
                     foreach ($this->parameters['content'] as $languageID => $content) {
                         $page->updateTemplate($languageID ?: null, $content['content']);
                     }
@@ -377,7 +377,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
     {
         $pageContentIDs = [];
         foreach ($this->getObjects() as $page) {
-            if ($page->pageType == 'tpl') {
+            if ($page->pageType === 'tpl') {
                 foreach ($page->getPageContents() as $languageID => $content) {
                     $file = \WCF_DIR . 'templates/' . $page->getTplName(($languageID ?: null)) . '.tpl';
                     if (\file_exists($file)) {

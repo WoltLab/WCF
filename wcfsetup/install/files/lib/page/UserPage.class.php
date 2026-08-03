@@ -92,7 +92,7 @@ class UserPage extends AbstractPage
             throw new IllegalLinkException();
         }
 
-        if ($this->user->userID != WCF::getUser()->userID && !WCF::getSession()->hasPermission('user.profile.canViewUserProfile')) {
+        if ($this->user->userID !== WCF::getUser()->userID && !WCF::getSession()->hasPermission('user.profile.canViewUserProfile')) {
             throw new PermissionDeniedException();
         }
 
@@ -195,7 +195,7 @@ class UserPage extends AbstractPage
     public function show()
     {
         // update profile hits
-        if ($this->user->userID != WCF::getUser()->userID && !WCF::getSession()->spiderIdentifier && !$this->user->isProtected()) {
+        if ($this->user->userID !== WCF::getUser()->userID && !WCF::getSession()->spiderIdentifier && !$this->user->isProtected()) {
             if (\PROFILE_ENABLE_VISITORS && WCF::getUser()->userID && !WCF::getUser()->canViewOnlineStatus) {
                 new TrackUserProfileVisitor(WCF::getUser(), $this->user->getDecoratedObject(), \TIME_NOW)();
             }

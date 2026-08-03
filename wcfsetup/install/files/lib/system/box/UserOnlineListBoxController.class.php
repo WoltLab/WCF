@@ -97,7 +97,7 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
     protected function getTemplate()
     {
         $templateName = 'boxUsersOnlineSidebar';
-        if ($this->getBox()->position == 'footerBoxes') {
+        if ($this->getBox()->position === 'footerBoxes') {
             $templateName = 'boxUsersOnline';
         }
 

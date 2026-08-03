@@ -89,7 +89,7 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
                     if (MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
                         $boxContentEditor->update(['hasEmbeddedObjects' => 1]);
                     }
-                } elseif ($box->boxType == 'html' || $box->boxType == 'tpl') {
+                } elseif ($box->boxType === 'html' || $box->boxType === 'tpl') {
                     if (
                         HtmlSimpleParser::getInstance()->parse(
                             'com.woltlab.wcf.box.content',
@@ -120,7 +120,7 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
         }
 
         // save template
-        if ($box->boxType == 'tpl') {
+        if ($box->boxType === 'tpl') {
             if (!empty($this->parameters['content'])) {
                 foreach ($this->parameters['content'] as $languageID => $content) {
                     \file_put_contents(
@@ -164,7 +164,7 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
                         ]);
 
                         $versionData[] = $boxContent;
-                        if ($boxContent->content != $content['content'] || $boxContent->title != $content['title']) {
+                        if ($boxContent->content !== $content['content'] || $boxContent->title !== $content['title']) {
                             $hasChanges = true;
                         }
 
@@ -187,12 +187,12 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
                     // save embedded objects
                     if (!empty($content['htmlInputProcessor'])) {
                         $content['htmlInputProcessor']->setObjectID($boxContent->boxContentID);
-                        if ($boxContent->hasEmbeddedObjects != MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
+                        if ((bool)$boxContent->hasEmbeddedObjects !== MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
                             $boxContentEditor->update(['hasEmbeddedObjects' => $boxContent->hasEmbeddedObjects ? 0 : 1]);
                         }
-                    } elseif ($box->boxType == 'html' || $box->boxType == 'tpl') {
+                    } elseif ($box->boxType === 'html' || $box->boxType === 'tpl') {
                         if (
-                            $boxContent->hasEmbeddedObjects != HtmlSimpleParser::getInstance()->parse(
+                            (bool)$boxContent->hasEmbeddedObjects !== HtmlSimpleParser::getInstance()->parse(
                                 'com.woltlab.wcf.box.content',
                                 $boxContent->boxContentID,
                                 $boxContent->content
@@ -204,7 +204,7 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
                 }
 
                 // save template
-                if ($box->boxType == 'tpl') {
+                if ($box->boxType === 'tpl') {
                     foreach ($this->parameters['content'] as $languageID => $content) {
                         $box->writeTemplate($languageID, $content['content']);
                     }
@@ -258,7 +258,7 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
         $boxContentIDs = [];
         foreach ($this->getObjects() as $box) {
             foreach ($box->getBoxContents() as $languageID => $content) {
-                if ($box->boxType == 'tpl') {
+                if ($box->boxType === 'tpl') {
                     $file = \WCF_DIR . 'templates/' . $box->getTplName(($languageID ?: null)) . '.tpl';
                     if (\file_exists($file)) {
                         @\unlink($file);

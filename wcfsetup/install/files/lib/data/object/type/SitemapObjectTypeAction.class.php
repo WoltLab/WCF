@@ -70,7 +70,7 @@ class SitemapObjectTypeAction extends ObjectTypeAction implements IToggleAction
         WCF::getSession()->checkPermissions(['admin.management.canRebuildData']);
 
         foreach ($this->getObjects() as $objectEditor) {
-            if ($objectEditor->definitionID != ObjectTypeCache::getInstance()->getDefinitionByName('com.woltlab.wcf.sitemap.object')->definitionID) {
+            if ($objectEditor->definitionID !== ObjectTypeCache::getInstance()->getDefinitionByName('com.woltlab.wcf.sitemap.object')->definitionID) {
                 throw new IllegalLinkException();
             }
         }

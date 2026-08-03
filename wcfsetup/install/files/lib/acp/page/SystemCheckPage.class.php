@@ -280,7 +280,7 @@ class SystemCheckPage extends AbstractPage
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {
-            if ($row['Engine'] == 'InnoDB' && \in_array($row['Support'], ['DEFAULT', 'YES'])) {
+            if ($row['Engine'] === 'InnoDB' && \in_array($row['Support'], ['DEFAULT', 'YES'])) {
                 $this->results['mysql']['innodb'] = true;
                 break;
             }
@@ -314,7 +314,7 @@ class SystemCheckPage extends AbstractPage
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
 
-        $this->results['mysql']['foreignKeys'] = $statement->fetchSingleColumn() == $expectedForeignKeyCount;
+        $this->results['mysql']['foreignKeys'] = $statement->fetchSingleColumn() === $expectedForeignKeyCount;
 
         $sql = "SELECT  @@innodb_buffer_pool_size";
         $statement = WCF::getDB()->prepare($sql);
@@ -324,7 +324,7 @@ class SystemCheckPage extends AbstractPage
             // More than 134217728 bytes indicates that the web hoster at
             // the very least touched the MySQL configuration once.
             $this->results['mysql']['bufferPool']['result'] = 'recommended';
-        } elseif ($this->results['mysql']['bufferPool']['value'] == 134217728) {
+        } elseif ($this->results['mysql']['bufferPool']['value'] === 134217728) {
             // The default of 134217728 bytes is okay, but the web hoster did not care.
             $this->results['mysql']['bufferPool']['result'] = 'sufficient';
         } else {
@@ -387,7 +387,7 @@ class SystemCheckPage extends AbstractPage
         $memoryLimit = FileUtil::getMemoryLimit();
 
         // Memory is not limited through PHP.
-        if ($memoryLimit == -1) {
+        if ($memoryLimit === -1) {
             $this->results['php']['memoryLimit']['value'] = "\u{221E}";
             $this->results['php']['memoryLimit']['result'] = true;
         } else {
@@ -403,7 +403,7 @@ class SystemCheckPage extends AbstractPage
      */
     protected function validatePhpX64()
     {
-        $this->results['php']['x64'] = \PHP_INT_SIZE == 8;
+        $this->results['php']['x64'] = \PHP_INT_SIZE === 8;
 
         $this->results['status']['php'] = $this->results['status']['php'] && $this->results['php']['x64'];
     }

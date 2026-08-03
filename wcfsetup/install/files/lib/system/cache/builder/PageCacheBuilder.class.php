@@ -64,7 +64,7 @@ class PageCacheBuilder extends AbstractCacheBuilder
             $data['identifier'][$page->identifier] = $page->pageID;
             $data['controller'][$page->controller] = $page->pageID;
 
-            if ($page->pageID == $landingPageID || ($data['landingPage'] === null && $page->identifier === 'com.woltlab.wcf.ArticleList')) {
+            if ($page->pageID === $landingPageID || ($data['landingPage'] === null && $page->identifier === 'com.woltlab.wcf.ArticleList')) {
                 $data['landingPage'] = $page;
             }
         }

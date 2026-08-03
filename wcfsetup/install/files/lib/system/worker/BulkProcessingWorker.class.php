@@ -70,7 +70,7 @@ final class BulkProcessingWorker extends AbstractWorker
     {
         $progress = parent::getProgress();
 
-        if ($progress == 100) {
+        if ($progress === 100) {
             // clear session
             $bulkProcessingData = WCF::getSession()->getVar('bulkProcessingData');
             unset($bulkProcessingData[$this->parameters['bulkProcessingID']]);

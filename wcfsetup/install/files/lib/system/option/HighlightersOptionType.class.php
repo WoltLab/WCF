@@ -20,7 +20,7 @@ class HighlightersOptionType extends MultiSelectOptionType
         $meta = BBCodeHandler::getInstance()->getHighlighterMeta();
         $result = [];
         foreach ($meta as $identifier => $data) {
-            $result[$identifier] = $data['title'] . (\strtolower($data['title']) != $identifier ? ' (' . $identifier . ')' : '');
+            $result[$identifier] = $data['title'] . (\strtolower($data['title']) !== $identifier ? ' (' . $identifier . ')' : '');
         }
 
         \asort($result);

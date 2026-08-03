@@ -95,7 +95,7 @@ final class EmailGrammar
             if (\ord($character) < 0x20 || \ord($character) >= 0x7f) {
                 return true;
             }
-            if (\ord($character) == 0x20) {
+            if (\ord($character) === 0x20) {
                 return true;
             }
             if (\in_array($character, ["=", "?", "_"])) {
@@ -171,7 +171,7 @@ final class EmailGrammar
                     // RFC 2047#4.2
                     // > The 8-bit hexadecimal value 20 (e.g., ISO-8859-1 SPACE) may be represented
                     // > as "_" (underscore, ASCII 95.).
-                    if (\ord($character) == 0x20) {
+                    if (\ord($character) === 0x20) {
                         $encodedCharacter = '_';
                     } else {
                         $encodedCharacter = \sprintf('=%02X', \ord($character));

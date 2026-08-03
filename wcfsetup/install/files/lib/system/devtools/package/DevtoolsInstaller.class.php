@@ -96,7 +96,7 @@ class DevtoolsInstaller extends Installer
                     );
                 }
 
-                if ($source == $archive && \is_dir($directory)) {
+                if ($source === $archive && \is_dir($directory)) {
                     $files = $this->project->getPackageArchive()->getTar()->getFiles();
 
                     foreach ($this->project->getPips() as $pip) {

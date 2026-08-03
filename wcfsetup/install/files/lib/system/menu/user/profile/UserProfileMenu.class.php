@@ -98,7 +98,7 @@ class UserProfileMenu extends SingletonFactory
     public function setActiveMenuItem(string $menuItem)
     {
         foreach ($this->menuItems as $item) {
-            if ($item->menuItem == $menuItem) {
+            if ($item->menuItem === $menuItem) {
                 $this->activeMenuItem = $item;
 
                 return true;
@@ -143,7 +143,7 @@ class UserProfileMenu extends SingletonFactory
     public function getMenuItem(string $menuItem)
     {
         foreach ($this->menuItems as $item) {
-            if ($item->menuItem == $menuItem) {
+            if ($item->menuItem === $menuItem) {
                 return $item;
             }
         }

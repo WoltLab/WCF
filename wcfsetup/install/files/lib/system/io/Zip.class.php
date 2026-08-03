@@ -130,7 +130,7 @@ class Zip extends File implements IArchive
         }
 
         // check filesize
-        if (\filesize($destination) != $file['header']['size']) {
+        if (\filesize($destination) !== $file['header']['size']) {
             throw new SystemException("Could not unzip file '" . $file['header']['filename'] . "' to '" . $destination . "'. Maybe disk quota exceeded in folder '" . \dirname($destination) . "'.");
         }
 
@@ -208,7 +208,7 @@ class Zip extends File implements IArchive
             );
             $data['offset'] = $this->readAndUnpack(4, 'V');
             $data['filename'] = $this->read($data['filenameLength']);
-            if (\substr($data['filename'], -1) == '/') {
+            if (\substr($data['filename'], -1) === '/') {
                 $data['type'] = 'folder';
             } else {
                 $data['type'] = 'file';
@@ -334,7 +334,7 @@ class Zip extends File implements IArchive
 
         // read contents
         $header['type'] = 'file';
-        if (\substr($header['filename'], -1) != '/') {
+        if (\substr($header['filename'], -1) !== '/') {
             $content = $this->read($header['compressedSize']);
         } else {
             $header['type'] = 'folder';
@@ -363,7 +363,7 @@ class Zip extends File implements IArchive
         }
 
         // check crc32
-        if (\crc32($content) != $header['crc32']) {
+        if (\crc32($content) !== $header['crc32']) {
             throw new SystemException('Checksum does not match');
         }
 

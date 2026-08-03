@@ -45,7 +45,7 @@ class Label extends DatabaseObject implements IRouteController, \Stringable
      */
     public function getClassNames()
     {
-        if ($this->cssClassName == 'none') {
+        if ($this->cssClassName === 'none') {
             return '';
         }
 

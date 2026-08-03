@@ -145,7 +145,7 @@ class BBCodeParser extends SingletonFactory
                 if (\in_array($tag['name'], $openTagStack)) {
                     // close unclosed tags
                     $tmpOpenTags = [];
-                    while (($previousTag = \end($openTagStack)) != $tag['name']) {
+                    while (($previousTag = \end($openTagStack)) !== $tag['name']) {
                         $nextIndex = \count($newTagArray);
                         $newTagArray[$nextIndex] = $this->buildTag('[/' . $previousTag . ']');
                         if (!isset($newTextArray[$nextIndex])) {
@@ -249,7 +249,7 @@ class BBCodeParser extends SingletonFactory
         $bbcodeAttributes = $this->bbcodes[$tag['name']]->getAttributes();
         // reverse sort the bbcode attributes to start with the last attribute
         \usort($bbcodeAttributes, static function (BBCodeAttribute $a, BBCodeAttribute $b) {
-            if ($a->attributeNo == $b->attributeNo) {
+            if ($a->attributeNo === $b->attributeNo) {
                 return 0;
             }
 
@@ -414,7 +414,7 @@ class BBCodeParser extends SingletonFactory
                 $openingTag = \end($bufferedTagStack);
 
                 // closing tag
-                if ($openingTag && $openingTag['name'] == $tag['name']) {
+                if ($openingTag && $openingTag['name'] === $tag['name']) {
                     $hideBuffer = false;
                     // insert buffered content as attribute value
                     foreach ($this->bbcodes[$tag['name']]->getAttributes() as $attribute) {
@@ -531,7 +531,7 @@ class BBCodeParser extends SingletonFactory
     {
         $tag = ['name' => '', 'closing' => false, 'source' => $string];
 
-        if (\mb_substr($string, 1, 1) == '/') {
+        if (\mb_substr($string, 1, 1) === '/') {
             // closing tag
             $tag['name'] = \mb_strtolower(\mb_substr($string, 2, \mb_strlen($string) - 3));
             $tag['closing'] = true;
@@ -562,7 +562,7 @@ class BBCodeParser extends SingletonFactory
 
         // remove quotes
         for ($i = 0, $j = \count($matches[1]); $i < $j; $i++) {
-            if (\mb_substr($matches[1][$i], 0, 1) == "'" && \mb_substr($matches[1][$i], -1) == "'") {
+            if (\mb_substr($matches[1][$i], 0, 1) === "'" && \mb_substr($matches[1][$i], -1) === "'") {
                 $matches[1][$i] = \str_replace("\\'", "'", $matches[1][$i]);
                 $matches[1][$i] = \str_replace("\\\\", "\\", $matches[1][$i]);
 

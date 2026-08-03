@@ -87,6 +87,7 @@ class UserOptionSetDefaultsForm extends AbstractForm
             $statement->execute($optionIDs);
             $optionIDs = $optionValues = [];
             while ($row = $statement->fetchArray()) {
+                // @phpstan-ignore notEqual.notAllowed (values from the database are always strings)
                 if ($row['defaultValue'] != $saveOptions[$row['optionID']]) {
                     $optionIDs[] = $row['optionID'];
                     $optionValues[] = $saveOptions[$row['optionID']];

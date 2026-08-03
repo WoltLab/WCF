@@ -613,7 +613,7 @@ class WCF
 
         // start main application
         $application = ApplicationHandler::getInstance()->getActiveApplication();
-        if ($application->packageID != 1) {
+        if ($application->packageID !== 1) {
             $loadedApplications[] = $this->loadApplication($application);
 
             // register primary application
@@ -624,7 +624,7 @@ class WCF
         // start dependent applications
         $applications = ApplicationHandler::getInstance()->getDependentApplications();
         foreach ($applications as $application) {
-            if ($application->packageID == 1) {
+            if ($application->packageID === 1) {
                 // ignore WCF
                 continue;
             } elseif ($application->isTainted) {
@@ -682,7 +682,6 @@ class WCF
                 $packageDir = FileUtil::getRealPath(\WCF_DIR . $relativePath);
                 self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
 
-                // @phpstan-ignore if.alwaysFalse
                 if (\class_exists($className)) {
                     // the class can now be found, update the `packageDir` value
                     (new PackageEditor($package))->update(['packageDir' => $relativePath]);
@@ -779,7 +778,7 @@ class WCF
     protected function initCoreObjects(): void
     {
         // ignore core objects if installing WCF
-        if (\PACKAGE_ID == 0) {
+        if (\PACKAGE_ID === 0) {
             return;
         }
 
@@ -802,7 +801,7 @@ class WCF
             '__wcf' => $wcf,
         ]);
 
-        $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
+        $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest');
         // Execute background queue in this request, if it was requested and AJAX isn't used.
         if (!$isAjax) {
             if (self::getSession()->getVar('forceBackgroundQueuePerform')) {
@@ -841,7 +840,7 @@ class WCF
      */
     public function isActiveApplication(): bool
     {
-        return ApplicationHandler::getInstance()->getActiveApplication()->packageID == 1;
+        return ApplicationHandler::getInstance()->getActiveApplication()->packageID === 1;
     }
 
     /**

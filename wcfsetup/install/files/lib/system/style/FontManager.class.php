@@ -167,7 +167,7 @@ final class FontManager extends SingletonFactory
 
             return $manifest;
         } catch (ClientException $e) {
-            if ($e->getResponse()->getStatusCode() == 404) {
+            if ($e->getResponse()->getStatusCode() === 404) {
                 throw new FontDownloadFailed("Unable to download font family '{$family}'.", 'notFound', $e);
             } else {
                 throw new FontDownloadFailed("Unable to download font family '{$family}'.", '', $e);

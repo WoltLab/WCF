@@ -90,7 +90,7 @@ class MediaClipboardAction extends AbstractClipboardAction
 
             /** @var Media $media */
             foreach ($this->objects as $media) {
-                if ($media->userID == WCF::getUser()->userID) {
+                if ($media->userID === WCF::getUser()->userID) {
                     $mediaIDs[] = $media->mediaID;
                 }
             }
@@ -132,7 +132,7 @@ class MediaClipboardAction extends AbstractClipboardAction
 
             /** @var Media $media */
             foreach ($this->objects as $media) {
-                if ($media->userID == WCF::getUser()->userID) {
+                if ($media->userID === WCF::getUser()->userID) {
                     $mediaIDs[] = $media->mediaID;
                 }
             }

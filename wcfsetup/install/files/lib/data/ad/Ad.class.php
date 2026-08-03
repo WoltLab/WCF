@@ -47,7 +47,7 @@ class Ad extends DatabaseObject implements IRouteController
         $objectType = ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID);
 
         $location = WCF::getLanguage()->get('wcf.acp.ad.location.' . $objectType->objectType);
-        if ($objectType->categoryname != 'com.woltlab.wcf.global') {
+        if ($objectType->categoryname !== 'com.woltlab.wcf.global') {
             $location = WCF::getLanguage()->get('wcf.acp.ad.location.category.' . $objectType->categoryname) . ': ' . $location;
         }
 

@@ -18,7 +18,7 @@ class DateUserOptionOutput implements IUserOptionOutput
     #[\Override]
     public function getOutput(User $user, UserOption $option, string $value)
     {
-        if (empty($value) || $value == '0000-00-00') {
+        if (empty($value) || $value === '0000-00-00') {
             return '';
         }
 

@@ -114,7 +114,7 @@ class UserProfileAction extends UserAction
      */
     public function validateGetDetailedActivityPointList()
     {
-        if (\count($this->objectIDs) != 1) {
+        if (\count($this->objectIDs) !== 1) {
             throw new UserInputException('objectIDs');
         }
         $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject(\reset($this->objectIDs));
@@ -176,7 +176,7 @@ class UserProfileAction extends UserAction
      */
     public function validateBeginEdit()
     {
-        if (!empty($this->objectIDs) && \count($this->objectIDs) == 1) {
+        if (!empty($this->objectIDs) && \count($this->objectIDs) === 1) {
             $userID = \reset($this->objectIDs);
             $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($userID);
         }
@@ -185,7 +185,7 @@ class UserProfileAction extends UserAction
             throw new UserInputException('objectIDs');
         }
 
-        if ($this->userProfile->userID != WCF::getUser()->userID) {
+        if ($this->userProfile->userID !== WCF::getUser()->userID) {
             if (!$this->userProfile->canEdit()) {
                 throw new PermissionDeniedException();
             }
@@ -358,7 +358,7 @@ class UserProfileAction extends UserAction
                     $userToRank[$user->userID] = null;
                 }
             } else {
-                if ($row['rankID'] != $user->rankID) {
+                if ($row['rankID'] !== $user->rankID) {
                     $userToRank[$user->userID] = $row['rankID'];
                 }
             }
@@ -445,7 +445,7 @@ class UserProfileAction extends UserAction
             $statement = WCF::getDB()->prepare($sql, 1);
             $statement->execute($conditionBuilder->getParameters());
             $row = $statement->fetchArray();
-            if ($row['groupID'] != $user->userOnlineGroupID) {
+            if ($row['groupID'] !== $user->userOnlineGroupID) {
                 $userToGroup[$user->userID] = $row['groupID'];
             }
         }

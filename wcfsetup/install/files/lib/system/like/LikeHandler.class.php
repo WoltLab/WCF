@@ -107,7 +107,7 @@ class LikeHandler extends SingletonFactory
     public function like(ILikeObject $likeable, User $user, int $likeValue, int $time = \TIME_NOW)
     {
         $reactionTypeID = null;
-        if ($likeValue == 1) {
+        if ($likeValue === 1) {
             $reactionTypeID = ReactionHandler::getInstance()->getFirstReactionTypeID();
         }
 

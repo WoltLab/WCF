@@ -63,7 +63,7 @@ final class PaypalCallbackAction extends AbstractAction
 
         try {
             // fix encoding
-            if (!empty($_POST['charset']) && \strtoupper($_POST['charset']) != 'UTF-8') {
+            if (!empty($_POST['charset']) && \strtoupper($_POST['charset']) !== 'UTF-8') {
                 foreach ($_POST as &$value) {
                     $value = \mb_convert_encoding($value, 'UTF-8', \strtoupper($_POST['charset']));
                 }
@@ -71,7 +71,7 @@ final class PaypalCallbackAction extends AbstractAction
 
             // Check that receiver_email is your Primary PayPal email
             $paypalEmail = \strtolower(\PAYPAL_EMAIL_ADDRESS);
-            if (\strtolower($_POST['receiver_email']) != $paypalEmail && (!isset($_POST['business']) || \strtolower($_POST['business']) != $paypalEmail)) {
+            if (\strtolower($_POST['receiver_email']) !== $paypalEmail && (!isset($_POST['business']) || \strtolower($_POST['business']) !== $paypalEmail)) {
                 $exceptionMessage = "Mismatching receiver_email ('" . $_POST['receiver_email'] . "')";
                 if (isset($_POST['business'])) {
                     $exceptionMessage .= " and business ('" . $_POST['business'] . "')";
@@ -85,7 +85,7 @@ final class PaypalCallbackAction extends AbstractAction
                 throw new \Exception('invalid custom item');
             }
             $tokenParts = \explode(':', $_POST['custom'], 2);
-            if (\count($tokenParts) != 2) {
+            if (\count($tokenParts) !== 2) {
                 throw new \Exception('invalid custom item');
             }
             // get payment type object type
@@ -100,15 +100,15 @@ final class PaypalCallbackAction extends AbstractAction
             $paymentStatus = (!empty($_POST['payment_status']) ? $_POST['payment_status'] : '');
 
             $status = '';
-            if ($transactionType == 'web_accept' || $transactionType == 'subscr_payment') {
-                if ($paymentStatus == 'Completed') {
+            if ($transactionType === 'web_accept' || $transactionType === 'subscr_payment') {
+                if ($paymentStatus === 'Completed') {
                     $status = 'completed';
                 }
             }
-            if ($paymentStatus == 'Refunded' || $paymentStatus == 'Reversed') {
+            if ($paymentStatus === 'Refunded' || $paymentStatus === 'Reversed') {
                 $status = 'reversed';
             }
-            if ($paymentStatus == 'Canceled_Reversal') {
+            if ($paymentStatus === 'Canceled_Reversal') {
                 $status = 'canceled_reversal';
             }
 

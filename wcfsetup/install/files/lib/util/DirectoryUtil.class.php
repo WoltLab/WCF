@@ -137,11 +137,11 @@ final class DirectoryUtil
             }
         }
 
-        if ($order == \SORT_DESC) {
+        if ($order === \SORT_DESC) {
             \krsort($files, $order);
-        } elseif ($order == \SORT_ASC) {
+        } elseif ($order === \SORT_ASC) {
             \ksort($files, $order);
-        } elseif ($order == self::SORT_NONE) {
+        } elseif ($order === self::SORT_NONE) {
             // nothing to do here :)
         } else {
             throw new SystemException('The given sorting is not supported');
@@ -172,11 +172,11 @@ final class DirectoryUtil
             }
         }
 
-        if ($order == \SORT_DESC) {
+        if ($order === \SORT_DESC) {
             \krsort($objects, $order);
-        } elseif ($order == \SORT_ASC) {
+        } elseif ($order === \SORT_ASC) {
             \ksort($objects, $order);
-        } elseif ($order == self::SORT_NONE) {
+        } elseif ($order === self::SORT_NONE) {
             // nothing to do here :)
         } else {
             throw new SystemException('The given sorting is not supported');

@@ -279,7 +279,7 @@ final class RequestHandler extends SingletonFactory
 
                     // append the remaining query parameters
                     foreach ($_GET as $key => $value) {
-                        if (!empty($value) && $key != 'controller') {
+                        if (!empty($value) && $key !== 'controller') {
                             $routeData[$key] = $value;
                         }
                     }
@@ -303,7 +303,7 @@ final class RequestHandler extends SingletonFactory
 
                 if (
                     $routeData['cmsPageLanguageID']
-                    && $routeData['cmsPageLanguageID'] != WCF::getLanguage()->languageID
+                    && $routeData['cmsPageLanguageID'] !== WCF::getLanguage()->languageID
                 ) {
                     WCF::setLanguage($routeData['cmsPageLanguageID']);
                 }

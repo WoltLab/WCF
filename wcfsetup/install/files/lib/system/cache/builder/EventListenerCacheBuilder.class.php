@@ -39,7 +39,7 @@ class EventListenerCacheBuilder extends AbstractCacheBuilder
 
         while ($eventListener = $statement->fetchObject(EventListener::class)) {
             $eventNames = $eventListener->getEventNames();
-            $environments = $eventListener->environment == 'all' ? ['admin', 'user'] : [$eventListener->environment];
+            $environments = $eventListener->environment === 'all' ? ['admin', 'user'] : [$eventListener->environment];
 
             foreach ($environments as $environment) {
                 if (!$eventListener->inherit) {

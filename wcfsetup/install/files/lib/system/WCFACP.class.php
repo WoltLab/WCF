@@ -117,7 +117,7 @@ class WCFACP extends WCF
 
         if (self::inRescueMode()) {
             if (!\preg_match('~^/?rescue-mode/~', $pathInfo)) {
-                if (\PACKAGE_ID != 1) {
+                if (\PACKAGE_ID !== 1) {
                     $uri = new Uri(self::$rescueModePageURL);
                     $uri = $uri->withPath(FileUtil::getRealPath($uri->getPath() . 'acp/' . \RELATIVE_WCF_DIR));
                     $pageURL = $uri->__toString();

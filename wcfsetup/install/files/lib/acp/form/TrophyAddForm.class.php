@@ -313,7 +313,7 @@ class TrophyAddForm extends AbstractAcpForm
         parent::save();
 
         $data = [];
-        if ($this->type == Trophy::TYPE_BADGE) {
+        if ($this->type === Trophy::TYPE_BADGE) {
             $data['iconName'] = $this->iconName;
             $data['iconColor'] = $this->iconColor;
             $data['badgeColor'] = $this->badgeColor;

@@ -209,9 +209,9 @@ class PackageArchive
                     case 'license':
                         // fix case-sensitive names
                         $name = $element->tagName;
-                        if ($name == 'packagename') {
+                        if ($name === 'packagename') {
                             $name = 'packageName';
-                        } elseif ($name == 'packagedescription') {
+                        } elseif ($name === 'packagedescription') {
                             $name = 'packageDescription';
                         }
 
@@ -341,7 +341,7 @@ class PackageArchive
                     case 'authorurl':
                         // fix case-sensitive names
                         $name = $element->tagName;
-                        if ($name == 'authorurl') {
+                        if ($name === 'authorurl') {
                             $name = 'authorURL';
                         }
 
@@ -414,7 +414,7 @@ class PackageArchive
 
         if (!isset($this->requirements['com.woltlab.wcf'])) {
             // Reject missing explicit com.woltlab.wcf requirement
-            if ($this->packageInfo['name'] != 'com.woltlab.wcf') {
+            if ($this->packageInfo['name'] !== 'com.woltlab.wcf') {
                 throw new PackageValidationException(PackageValidationException::MISSING_COM_WOLTLAB_WCF_REQUIREMENT);
             }
         } else {
@@ -535,11 +535,11 @@ class PackageArchive
             $void = $xpath->query('./ns:void', $element);
             if ($void->length > 1) {
                 throw new PackageValidationException(PackageValidationException::VOID_NOT_ALONE);
-            } elseif ($void->length == 1) {
+            } elseif ($void->length === 1) {
                 if (!empty($instructionData)) {
                     throw new PackageValidationException(PackageValidationException::VOID_NOT_ALONE);
                 }
-                if ($type == 'install') {
+                if ($type === 'install') {
                     throw new PackageValidationException(PackageValidationException::VOID_ON_INSTALL);
                 }
 
@@ -549,7 +549,7 @@ class PackageArchive
                 ];
             }
 
-            if ($type == 'install') {
+            if ($type === 'install') {
                 $this->instructions['install'] = $instructionData;
             } else {
                 $this->instructions['update'][$fromVersion] = $instructionData;

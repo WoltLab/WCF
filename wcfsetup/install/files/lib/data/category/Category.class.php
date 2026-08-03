@@ -79,7 +79,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
     public function __get(string $name)
     {
         // forward 'className' property requests to object type
-        if ($name == 'className') {
+        if ($name === 'className') {
             return $this->getObjectType()->className;
         }
 

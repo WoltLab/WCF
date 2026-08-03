@@ -104,7 +104,7 @@ class AttachmentPage extends AbstractPage
         parent::checkPermissions();
 
         if ($this->attachment->tmpHash) {
-            if ($this->attachment->userID && $this->attachment->userID != WCF::getUser()->userID) {
+            if ($this->attachment->userID && $this->attachment->userID !== WCF::getUser()->userID) {
                 throw new IllegalLinkException();
             }
         } else {
@@ -204,7 +204,7 @@ class AttachmentPage extends AbstractPage
         }
 
         // etag caching
-        if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == '"' . $this->eTag . '"') {
+        if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] === '"' . $this->eTag . '"') {
             return new EmptyResponse(304);
         }
 

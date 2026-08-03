@@ -178,7 +178,7 @@ class PackageUpdateServerAddForm extends AbstractFormBuilderForm
         $packageServerList = new PackageUpdateServerList();
         $packageServerList->readObjects();
         foreach ($packageServerList as $packageServer) {
-            if ($packageServer->serverURL == $serverURL) {
+            if ($packageServer->serverURL === $serverURL) {
                 return $packageServer;
             }
         }

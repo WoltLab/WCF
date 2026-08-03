@@ -96,7 +96,7 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
         foreach ($groupedFiles as $application => $files) {
             foreach ($files as $file) {
                 $filePackageID = $logFiles[$application][$file] ?? null;
-                if ($filePackageID !== null && $filePackageID != $this->installation->getPackageID()) {
+                if ($filePackageID !== null && $filePackageID !== $this->installation->getPackageID()) {
                     continue;
                 }
 

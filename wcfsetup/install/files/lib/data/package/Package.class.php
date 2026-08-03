@@ -218,7 +218,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
         }
 
         // disallow uninstallation of WCF
-        if ($this->package == 'com.woltlab.wcf') {
+        if ($this->package === 'com.woltlab.wcf') {
             return false;
         }
 

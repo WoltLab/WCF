@@ -112,7 +112,7 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
             }
         }
 
-        if (\count($this->objects) == 1 && isset($this->parameters['data']['showOrder']) && $this->parameters['data']['showOrder'] != \reset($this->objects)->showOrder) {
+        if (\count($this->objects) === 1 && isset($this->parameters['data']['showOrder']) && $this->parameters['data']['showOrder'] !== \reset($this->objects)->showOrder) {
             \reset($this->objects)->setShowOrder($this->parameters['data']['showOrder']);
         }
     }
@@ -234,7 +234,7 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
                 $filename = 'trophyImage-' . $trophy->trophyID . '.' . $fileExtension;
                 if (@\rename($oldFilename, \WCF_DIR . 'images/trophy/' . $filename)) {
                     // delete old file if it has a different file extension
-                    if ($trophy->iconFile != $filename) {
+                    if ($trophy->iconFile !== $filename) {
                         @\unlink(\WCF_DIR . 'images/trophy/' . $trophy->iconFile);
 
                         $trophyEditor = new TrophyEditor($trophy);

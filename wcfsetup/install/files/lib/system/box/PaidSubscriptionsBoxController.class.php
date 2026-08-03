@@ -73,7 +73,7 @@ class PaidSubscriptionsBoxController extends AbstractBoxController
             }
 
             if (!empty($subscriptions)) {
-                if ($this->getBox()->position == 'contentTop' || $this->getBox()->position == 'contentBottom') {
+                if ($this->getBox()->position === 'contentTop' || $this->getBox()->position === 'contentBottom') {
                     $templateName = 'boxPaidSubscriptions';
                 } else {
                     $templateName = 'boxPaidSubscriptionsSidebar';

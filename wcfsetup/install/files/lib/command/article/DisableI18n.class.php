@@ -29,7 +29,7 @@ final class DisableI18n
         $removeContents = [];
 
         foreach ($this->article->getArticleContents() as $articleContent) {
-            if ($articleContent->languageID == $this->language->languageID) {
+            if ($articleContent->languageID === $this->language->languageID) {
                 ArticleContentBuilder::forUpdate($articleContent)
                     ->setLanguageID(null)
                     ->update();

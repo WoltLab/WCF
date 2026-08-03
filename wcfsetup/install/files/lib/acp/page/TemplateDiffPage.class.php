@@ -68,7 +68,7 @@ class TemplateDiffPage extends AbstractPage
         }
         $this->parent = new Template($this->parentID);
         if ($this->parent->templateID) {
-            if ($this->parent->templateName != $this->template->templateName || $this->parent->application != $this->template->application) {
+            if ($this->parent->templateName !== $this->template->templateName || $this->parent->application !== $this->template->application) {
                 throw new IllegalLinkException();
             }
         }

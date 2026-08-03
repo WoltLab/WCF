@@ -39,7 +39,7 @@ class EmbeddedObjectBlockTemplatePlugin implements IBlockTemplatePlugin
     #[\Override]
     public function next(TemplateEngine $tplObj)
     {
-        if ($this->counter == 0) {
+        if ($this->counter === 0) {
             $this->counter++;
 
             return true;

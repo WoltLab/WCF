@@ -830,7 +830,7 @@ final class DatabaseTableChangeProcessor
                         $oldColumn instanceof AbstractIntDatabaseTableColumn
                         && (
                             !($oldColumn instanceof TinyintDatabaseTableColumn)
-                            || $oldColumn->getLength() != 1
+                            || $oldColumn->getLength() !== 1
                         )
                     )
                     || $oldColumn instanceof YearDatabaseTableColumn
@@ -882,6 +882,7 @@ final class DatabaseTableChangeProcessor
 
         // for all other cases, use weak comparison so that `'1'` (from database) and `1`
         // (from script PIP) match, for example
+        // @phpstan-ignore notEqual.notAllowed (the weak comparison is intentional, see above)
         return $oldColumn->getDefaultValue() != $newColumn->getDefaultValue();
     }
 

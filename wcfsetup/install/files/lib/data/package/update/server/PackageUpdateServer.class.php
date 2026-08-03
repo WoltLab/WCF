@@ -197,7 +197,7 @@ class PackageUpdateServer extends DatabaseObject implements ITitledObject
 
         $authData = [];
         // database data
-        if ($this->loginUsername != '' && $this->loginPassword != '') {
+        if ($this->loginUsername !== '' && $this->loginPassword !== '') {
             $authData = [
                 'username' => $this->loginUsername,
                 'password' => $this->loginPassword,
@@ -278,7 +278,7 @@ class PackageUpdateServer extends DatabaseObject implements ITitledObject
             $url = $url->withScheme('https');
         }
 
-        if ($this->apiVersion == '2.0') {
+        if ($this->apiVersion === '2.0') {
             return (string)$url;
         }
 

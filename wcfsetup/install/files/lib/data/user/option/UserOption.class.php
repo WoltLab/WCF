@@ -160,7 +160,7 @@ class UserOption extends Option implements ITitledObject
 
         // check owner state
         if ($this->visible & self::VISIBILITY_OWNER) {
-            if ($this->user !== null && $this->user->userID == WCF::getUser()->userID) {
+            if ($this->user !== null && $this->user->userID === WCF::getUser()->userID) {
                 return true;
             }
         }
@@ -189,7 +189,7 @@ class UserOption extends Option implements ITitledObject
 
         // check owner state
         if ($this->editable & self::EDITABILITY_OWNER) {
-            if ($this->user === null || $this->user->userID == WCF::getUser()->userID) {
+            if ($this->user === null || $this->user->userID === WCF::getUser()->userID) {
                 return true;
             }
         }

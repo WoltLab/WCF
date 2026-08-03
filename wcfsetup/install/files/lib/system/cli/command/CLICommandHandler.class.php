@@ -112,13 +112,13 @@ class CLICommandHandler
                 $tmp .= $char;
                 $escaped = false;
             } // escaping is enabled
-            elseif ($char == '\\') {
+            elseif ($char === '\\') {
                 $escaped = true;
             } // quoting is toggled
-            elseif ($char == '"') {
+            elseif ($char === '"') {
                 $quoted = !$quoted;
             } // new parameter is begun
-            elseif ($char == ' ' && !$quoted) {
+            elseif ($char === ' ' && !$quoted) {
                 $return[] = $tmp;
                 $tmp = '';
             } // other chars are added

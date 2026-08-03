@@ -53,7 +53,7 @@ trait TPhpass
         $count = 1 << $count_log2;
         $salt = \mb_substr($settings, 4, 8, '8bit');
 
-        if (\mb_strlen($salt, '8bit') != 8) {
+        if (\mb_strlen($salt, '8bit') !== 8) {
             return $output;
         }
 

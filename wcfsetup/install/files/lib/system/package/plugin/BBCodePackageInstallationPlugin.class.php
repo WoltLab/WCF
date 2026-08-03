@@ -85,7 +85,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         $nodeValue = $element->nodeValue;
 
         // read pages
-        if ($element->tagName == 'attributes') {
+        if ($element->tagName === 'attributes') {
             $nodeValue = [];
 
             $attributes = $xpath->query('child::*', $element);
@@ -149,7 +149,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         $statement = WCF::getDB()->prepare($sqlData['sql']);
         $statement->execute($sqlData['parameters']);
         $row = $statement->fetchArray();
-        if ($row && $row['packageID'] != $this->installation->getPackageID()) {
+        if ($row && $row['packageID'] !== $this->installation->getPackageID()) {
             $package = PackageCache::getInstance()->getPackage($row['packageID']);
             throw new SystemException("BBCode '" . $data['bbcodeTag'] . "' is already provided by '" . $package . "' ('" . $package->package . "').");
         }
@@ -209,6 +209,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 
         if (!empty($this->attributes)) {
             foreach ($this->attributes as $bbcodeID => $bbcodeAttributes) {
+                // @phpstan-ignore notEqual.notAllowed
                 if ($bbcodeID != \intval($bbcodeID)) {
                     $bbcodeID = BBCode::getBBCodeByTag($bbcodeID)->bbcodeID;
                 }

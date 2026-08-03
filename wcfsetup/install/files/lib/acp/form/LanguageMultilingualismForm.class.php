@@ -79,7 +79,7 @@ class LanguageMultilingualismForm extends AbstractForm
     {
         parent::validate();
 
-        if ($this->enable == 1) {
+        if ($this->enable === 1) {
             // add default language
             if (!\in_array(LanguageFactory::getInstance()->getDefaultLanguageID(), $this->languageIDs)) {
                 $this->languageIDs[] = LanguageFactory::getInstance()->getDefaultLanguageID();
@@ -105,7 +105,7 @@ class LanguageMultilingualismForm extends AbstractForm
         parent::save();
 
         // save
-        LanguageEditor::enableMultilingualism(($this->enable == 1 ? $this->languageIDs : []));
+        LanguageEditor::enableMultilingualism(($this->enable === 1 ? $this->languageIDs : []));
 
         // clear cache
         (new LanguageCache())->rebuild();

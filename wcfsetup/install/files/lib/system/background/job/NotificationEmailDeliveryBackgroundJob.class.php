@@ -46,7 +46,7 @@ class NotificationEmailDeliveryBackgroundJob extends AbstractBackgroundJob
         $this->job = $job;
         $this->notificationID = $notification->notificationID;
 
-        if ($notification->userID != $recipient->userID) {
+        if ($notification->userID !== $recipient->userID) {
             throw new \InvalidArgumentException("Mismatching userIDs within notification (" . $notification->userID . ") and recipient (" . $recipient->userID . ").");
         }
     }
@@ -123,7 +123,7 @@ class NotificationEmailDeliveryBackgroundJob extends AbstractBackgroundJob
             $processedNotifications = UserNotificationHandler::getInstance()->processNotifications([$notification]);
 
             // Drop email if the processing dropped the notification (most likely due to a lack of permissions).
-            if ($processedNotifications['count'] == 0) {
+            if ($processedNotifications['count'] === 0) {
                 $this->job->updateStatus(
                     EmailLogEntry::STATUS_DISCARDED,
                     'lack of permissions to see notification'
@@ -133,14 +133,14 @@ class NotificationEmailDeliveryBackgroundJob extends AbstractBackgroundJob
             }
 
             // If no notification was dropped we expect to get back exactly one notification ...
-            if ($processedNotifications['count'] != 1) {
+            if ($processedNotifications['count'] !== 1) {
                 throw new \LogicException("Unreachable");
             }
 
             $processedNotification = $processedNotifications['notifications'][0];
 
             // ... and we expect that this one notification is the one we passed in.
-            if ($processedNotification['notificationID'] != $notification->notificationID) {
+            if ($processedNotification['notificationID'] !== $notification->notificationID) {
                 throw new \LogicException("Unreachable");
             }
 

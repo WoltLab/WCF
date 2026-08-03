@@ -62,7 +62,7 @@ final class DeleteArticle
             $articleContentIDs
         );
         // update wcf1_user.articles
-        if ($this->article->publicationStatus == Article::PUBLISHED) {
+        if ($this->article->publicationStatus === Article::PUBLISHED) {
             if ($this->article->userID !== null) {
                 ArticleBuilder::incrementArticleCounter($this->article->userID, -1);
             }

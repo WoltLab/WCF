@@ -120,7 +120,7 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker
                 $hasEmbeddedObjects = 1;
             }
 
-            if ($hasEmbeddedObjects != $articleContent->hasEmbeddedObjects) {
+            if ($hasEmbeddedObjects !== $articleContent->hasEmbeddedObjects) {
                 $builder->setHasEmbeddedObjects((bool)$hasEmbeddedObjects);
             }
 

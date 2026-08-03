@@ -343,7 +343,7 @@ class TemplateScriptingCompiler
         $compiledContent = '';
         // Interleave the compiled contents and text blocks to get the final result.
         for ($i = 0, $j = \count($compiledTags); $i < $j; $i++) {
-            if ($compiledTags[$i] == '') {
+            if ($compiledTags[$i] === '') {
                 // tag result empty, remove first newline from following text block
                 $textBlocks[$i + 1] = \preg_replace('%^(\r\n|\r|\n)%', '', $textBlocks[$i + 1]);
             }
@@ -416,7 +416,7 @@ class TemplateScriptingCompiler
                 case 'elseif':
                     \assert($this->tagStack !== []);
                     [$openTag] = \end($this->tagStack);
-                    if ($openTag != 'if' && $openTag != 'elseif') {
+                    if ($openTag !== 'if' && $openTag !== 'elseif') {
                         throw new SystemException(
                             static::formatSyntaxError(
                                 'unxepected {elseif}',
@@ -424,7 +424,7 @@ class TemplateScriptingCompiler
                                 $this->currentLineNo
                             )
                         );
-                    } elseif ($openTag == 'if') {
+                    } elseif ($openTag === 'if') {
                         $this->pushTag('elseif');
                     }
 
@@ -433,7 +433,7 @@ class TemplateScriptingCompiler
                 case 'else':
                     \assert($this->tagStack !== []);
                     [$openTag] = \end($this->tagStack);
-                    if ($openTag != 'if' && $openTag != 'elseif') {
+                    if ($openTag !== 'if' && $openTag !== 'elseif') {
                         throw new SystemException(
                             static::formatSyntaxError(
                                 'unexpected {else}',
@@ -449,7 +449,7 @@ class TemplateScriptingCompiler
                 case '/if':
                     \assert($this->tagStack !== []);
                     [$openTag] = \end($this->tagStack);
-                    if ($openTag != 'if' && $openTag != 'elseif' && $openTag != 'else') {
+                    if ($openTag !== 'if' && $openTag !== 'elseif' && $openTag !== 'else') {
                         throw new SystemException(
                             static::formatSyntaxError(
                                 'unexpected {/if}',
@@ -473,7 +473,7 @@ class TemplateScriptingCompiler
                 case 'foreachelse':
                     \assert($this->tagStack !== []);
                     [$openTag] = \end($this->tagStack);
-                    if ($openTag != 'foreach') {
+                    if ($openTag !== 'foreach') {
                         throw new SystemException(
                             static::formatSyntaxError(
                                 'unexpected {foreachelse}',
@@ -489,7 +489,7 @@ class TemplateScriptingCompiler
                 case '/foreach':
                     \assert($this->tagStack !== []);
                     [$openTag] = \end($this->tagStack);
-                    if ($openTag != 'foreach' && $openTag != 'foreachelse') {
+                    if ($openTag !== 'foreach' && $openTag !== 'foreachelse') {
                         throw new SystemException(
                             static::formatSyntaxError(
                                 'unexpected {/foreach}',
@@ -510,7 +510,7 @@ class TemplateScriptingCompiler
                 case 'sectionelse':
                     \assert($this->tagStack !== []);
                     [$openTag] = \end($this->tagStack);
-                    if ($openTag != 'section') {
+                    if ($openTag !== 'section') {
                         throw new SystemException(
                             static::formatSyntaxError(
                                 'unexpected {sectionelse}',
@@ -526,7 +526,7 @@ class TemplateScriptingCompiler
                 case '/section':
                     \assert($this->tagStack !== []);
                     [$openTag] = \end($this->tagStack);
-                    if ($openTag != 'section' && $openTag != 'sectionelse') {
+                    if ($openTag !== 'section' && $openTag !== 'sectionelse') {
                         throw new SystemException(
                             static::formatSyntaxError(
                                 'unexpected {/section}',
@@ -546,7 +546,7 @@ class TemplateScriptingCompiler
 
                 case '/capture':
                     [$openTag] = \end($this->tagStack);
-                    if ($openTag != 'capture') {
+                    if ($openTag !== 'capture') {
                         throw new SystemException(
                             static::formatSyntaxError(
                                 'unexpected {/capture}',
@@ -620,7 +620,7 @@ class TemplateScriptingCompiler
     {
         // check whether this is the start ({block}) or the
         // end tag ({/block})
-        if (\substr($tagCommand, 0, 1) == '/') {
+        if (\substr($tagCommand, 0, 1) === '/') {
             $tagCommand = \substr($tagCommand, 1);
             $startTag = false;
         } else {
@@ -643,7 +643,7 @@ class TemplateScriptingCompiler
             $phpCode .= "while (\$this->pluginObjects['" . $className . "']->next(\$this)) { ob_start(); ?>";
         } else {
             [$openTag] = \end($this->tagStack);
-            if ($openTag != $tagCommand) {
+            if ($openTag !== $tagCommand) {
                 throw new SystemException(
                     static::formatSyntaxError(
                         'unexpected {/' . $tagCommand . '}',
@@ -671,7 +671,7 @@ class TemplateScriptingCompiler
     {
         // check whether this is the start ({block}) or the
         // end tag ({/block})
-        if (\substr($tagCommand, 0, 1) == '/') {
+        if (\substr($tagCommand, 0, 1) === '/') {
             $tagCommand = \substr($tagCommand, 1);
             $startTag = false;
         } else {
@@ -874,7 +874,7 @@ class TemplateScriptingCompiler
         $phpCode = "<?php\n";
         $phpCode .= $foreachHash . " = " . $args['from'] . ";\n";
 
-        $itemVar = \mb_substr($args['item'], 0, 1) != '$' ? "\$this->v[" . $args['item'] . "]" : $args['item'];
+        $itemVar = \mb_substr($args['item'], 0, 1) !== '$' ? "\$this->v[" . $args['item'] . "]" : $args['item'];
         $foreachData['itemVar'] = $itemVar;
 
         $phpCode .= "\$this->foreachVars['{$hash}'] = [];\n";
@@ -894,7 +894,7 @@ class TemplateScriptingCompiler
         }
 
         if (isset($args['key'])) {
-            $keyVar = \mb_substr($args['key'], 0, 1) != '$' ? "\$this->v[" . $args['key'] . "]" : $args['key'];
+            $keyVar = \mb_substr($args['key'], 0, 1) !== '$' ? "\$this->v[" . $args['key'] . "]" : $args['key'];
             $foreachData['keyVar'] = $keyVar;
 
             $phpCode .= "\$this->foreachVars['{$hash}']['key'] = {$keyVar} ?? null;\n";
@@ -1038,7 +1038,7 @@ class TemplateScriptingCompiler
             // pass remaining tag args as variables
             if (!empty($args)) {
                 foreach ($args as $variable => $value) {
-                    if (\substr($value, 0, 1) == "'") {
+                    if (\substr($value, 0, 1) === "'") {
                         // string values
                         $phpCode .= "\$this->v['" . $variable . "'] = " . $value . ";\n";
                     } else {
@@ -1165,7 +1165,7 @@ class TemplateScriptingCompiler
     {
         $argString = '';
         foreach ($args as $key => $val) {
-            if ($argString != '') {
+            if ($argString !== '') {
                 $argString .= ', ';
             }
             $argString .= "'{$key}' => {$val}";
@@ -1213,7 +1213,7 @@ class TemplateScriptingCompiler
         for ($i = 0, $j = \count($values); $i < $j; $i++) {
             $operator = ($operators[$i] ?? null);
 
-            if ($operator !== '!' && $values[$i] == '') {
+            if ($operator !== '!' && $values[$i] === '') {
                 throw new SystemException(
                     static::formatSyntaxError(
                         'syntax error in tag {' . ($elseif ? 'elseif' : 'if') . '}',
@@ -1230,7 +1230,7 @@ class TemplateScriptingCompiler
                 $value = \mb_substr($values[$i], $leftParenthesis - $rightParenthesis);
                 $result .= \str_repeat('(', $leftParenthesis - $rightParenthesis);
 
-                if (\str_replace('(', '', \mb_substr($values[$i], 0, $leftParenthesis - $rightParenthesis)) != '') {
+                if (\str_replace('(', '', \mb_substr($values[$i], 0, $leftParenthesis - $rightParenthesis)) !== '') {
                     throw new SystemException(
                         static::formatSyntaxError(
                             'syntax error in tag {' . ($elseif ? 'elseif' : 'if') . '}',
@@ -1248,7 +1248,7 @@ class TemplateScriptingCompiler
                         ')',
                         '',
                         \mb_substr($values[$i], $leftParenthesis - $rightParenthesis)
-                    ) != ''
+                    ) !== ''
                 ) {
                     throw new SystemException(
                         static::formatSyntaxError(
@@ -1306,16 +1306,16 @@ class TemplateScriptingCompiler
     public function popTag(string $tag)
     {
         [$openTag] = \array_pop($this->tagStack);
-        if ($tag == $openTag) {
+        if ($tag === $openTag) {
             return $openTag;
         }
-        if ($tag == 'if' && ($openTag == 'else' || $openTag == 'elseif')) {
+        if ($tag === 'if' && ($openTag === 'else' || $openTag === 'elseif')) {
             return $this->popTag($tag);
         }
-        if ($tag == 'foreach' && $openTag == 'foreachelse') {
+        if ($tag === 'foreach' && $openTag === 'foreachelse') {
             return $this->popTag($tag);
         }
-        if ($tag == 'section' && $openTag == 'sectionelse') {
+        if ($tag === 'section' && $openTag === 'sectionelse') {
             return $this->popTag($tag);
         }
 
@@ -1332,11 +1332,11 @@ class TemplateScriptingCompiler
     {
         $encodeHTML = false;
         $formatNumeric = false;
-        if ($tag[0] == '@') {
+        if ($tag[0] === '@') {
             $tag = \mb_substr($tag, 1);
         } elseif (\str_starts_with($tag, 'unsafe:')) {
             $tag = \mb_substr($tag, 7);
-        } elseif ($tag[0] == '#') {
+        } elseif ($tag[0] === '#') {
             $tag = \mb_substr($tag, 1);
             $formatNumeric = true;
         } else {
@@ -1346,7 +1346,7 @@ class TemplateScriptingCompiler
         // check for forbidden constants
         if (\preg_match('~^(RELATIVE_)?([A-Z]+)_DIR$~', $tag, $matches)) {
             $application = \mb_strtolower($matches[2]);
-            if ($application == 'wcf') {
+            if ($application === 'wcf') {
                 $application = '';
             } else {
                 $application = "'{$application}'";
@@ -1378,20 +1378,20 @@ class TemplateScriptingCompiler
      */
     protected function compileSimpleVariable(string $variable, string $type = '', bool $allowConstants = true)
     {
-        if ($type == '') {
+        if ($type === '') {
             $type = $this->getVariableType($variable);
         }
 
-        if ($type == 'variable') {
+        if ($type === 'variable') {
             return '$this->v[\'' . \substr($variable, 1) . '\']';
-        } elseif ($type == 'string') {
+        } elseif ($type === 'string') {
             return $variable;
         } elseif (
             $allowConstants
-            && ($variable == 'true'
-                || $variable == 'false'
-                || $variable == 'null'
-                || $variable == '[]'
+            && ($variable === 'true'
+                || $variable === 'false'
+                || $variable === 'null'
+                || $variable === '[]'
                 || \preg_match('/^[A-Z0-9_]*$/', $variable)
             )
         ) {
@@ -1426,9 +1426,9 @@ class TemplateScriptingCompiler
      */
     protected function getVariableType(string $variable)
     {
-        if (\substr($variable, 0, 1) == '$') {
+        if (\substr($variable, 0, 1) === '$') {
             return 'variable';
-        } elseif (\substr($variable, 0, 2) == '@@') {
+        } elseif (\substr($variable, 0, 2) === '@@') {
             return 'string';
         } else {
             return 'constant';
@@ -1588,8 +1588,8 @@ class TemplateScriptingCompiler
             if ($operator !== null) {
                 switch ($operator) {
                     case '.':
-                        if ($status == 'variable' || $status == 'object') {
-                            if ($status == 'object') {
+                        if ($status === 'variable' || $status === 'object') {
+                            if ($status === 'object') {
                                 $statusStack[\count($statusStack) - 1] = 'variable';
                             }
                             $result .= '[';
@@ -1607,7 +1607,7 @@ class TemplateScriptingCompiler
 
                     case '->': // object access
                     case '?->':
-                        if ($status == 'variable' || $status == 'object') {
+                        if ($status === 'variable' || $status === 'object') {
                             $result .= $operator;
                             $statusStack[\count($statusStack) - 1] = 'object access';
                             break;
@@ -1622,19 +1622,19 @@ class TemplateScriptingCompiler
                         );
 
                     case '(': // left parenthesis
-                        if ($status == 'object') {
+                        if ($status === 'object') {
                             $statusStack[\count($statusStack) - 1] = 'variable';
                             $statusStack[] = 'object method start';
                             $result .= $operator;
                             break;
                         } elseif (
-                            $status == 'math'
-                            || $status == 'start'
-                            || $status == 'left parenthesis'
-                            || $status == 'bracket open'
-                            || $status == 'modifier end'
+                            $status === 'math'
+                            || $status === 'start'
+                            || $status === 'left parenthesis'
+                            || $status === 'bracket open'
+                            || $status === 'modifier end'
                         ) {
-                            if ($status == 'start') {
+                            if ($status === 'start') {
                                 $statusStack[\count($statusStack) - 1] = 'constant';
                             }
                             $statusStack[] = 'left parenthesis';
@@ -1653,15 +1653,15 @@ class TemplateScriptingCompiler
                     case ')': // right parenthesis
                         while ($oldStatus = \array_pop($statusStack)) {
                             if (
-                                $oldStatus != 'variable'
-                                && $oldStatus != 'object'
-                                && $oldStatus != 'constant'
-                                && $oldStatus != 'string'
+                                $oldStatus !== 'variable'
+                                && $oldStatus !== 'object'
+                                && $oldStatus !== 'constant'
+                                && $oldStatus !== 'string'
                             ) {
                                 if (
-                                    $oldStatus == 'object method start'
-                                    || $oldStatus == 'object method'
-                                    || $oldStatus == 'left parenthesis'
+                                    $oldStatus === 'object method start'
+                                    || $oldStatus === 'object method'
+                                    || $oldStatus === 'left parenthesis'
                                 ) {
                                     $result .= $operator;
                                     break 2;
@@ -1680,8 +1680,8 @@ class TemplateScriptingCompiler
                         );
 
                     case '[': // bracket open
-                        if ($status == 'variable' || $status == 'object') {
-                            if ($status == 'object') {
+                        if ($status === 'variable' || $status === 'object') {
+                            if ($status === 'object') {
                                 $statusStack[\count($statusStack) - 1] = 'variable';
                             }
                             $statusStack[] = 'bracket open';
@@ -1700,12 +1700,12 @@ class TemplateScriptingCompiler
                     case ']': // bracket close
                         while ($oldStatus = \array_pop($statusStack)) {
                             if (
-                                $oldStatus != 'variable'
-                                && $oldStatus != 'object'
-                                && $oldStatus != 'constant'
-                                && $oldStatus != 'string'
+                                $oldStatus !== 'variable'
+                                && $oldStatus !== 'object'
+                                && $oldStatus !== 'constant'
+                                && $oldStatus !== 'string'
                             ) {
-                                if ($oldStatus == 'bracket open') {
+                                if ($oldStatus === 'bracket open') {
                                     $result .= $operator;
                                     break 2;
                                 } else {
@@ -1734,11 +1734,11 @@ class TemplateScriptingCompiler
                         // clear status stack
                         while ($oldStatus = \array_pop($statusStack)) {
                             if (
-                                $oldStatus != 'variable'
-                                && $oldStatus != 'object'
-                                && $oldStatus != 'constant'
-                                && $oldStatus != 'string'
-                                && $oldStatus != 'modifier end'
+                                $oldStatus !== 'variable'
+                                && $oldStatus !== 'object'
+                                && $oldStatus !== 'constant'
+                                && $oldStatus !== 'string'
+                                && $oldStatus !== 'modifier end'
                             ) {
                                 throw new SystemException(
                                     static::formatSyntaxError(
@@ -1758,12 +1758,12 @@ class TemplateScriptingCompiler
                     case ':': // modifier parameter
                         while ($oldStatus = \array_pop($statusStack)) {
                             if (
-                                $oldStatus != 'variable'
-                                && $oldStatus != 'object'
-                                && $oldStatus != 'constant'
-                                && $oldStatus != 'string'
+                                $oldStatus !== 'variable'
+                                && $oldStatus !== 'object'
+                                && $oldStatus !== 'constant'
+                                && $oldStatus !== 'string'
                             ) {
-                                if ($oldStatus == 'modifier end') {
+                                if ($oldStatus === 'modifier end') {
                                     $statusStack[] = 'modifier end';
                                     if ($result !== '') {
                                         $modifierData['parameter'][] = $result;
@@ -1787,12 +1787,12 @@ class TemplateScriptingCompiler
                     case ',':
                         while ($oldStatus = \array_pop($statusStack)) {
                             if (
-                                $oldStatus != 'variable'
-                                && $oldStatus != 'object'
-                                && $oldStatus != 'constant'
-                                && $oldStatus != 'string'
+                                $oldStatus !== 'variable'
+                                && $oldStatus !== 'object'
+                                && $oldStatus !== 'constant'
+                                && $oldStatus !== 'string'
                             ) {
-                                if ($oldStatus == 'object method') {
+                                if ($oldStatus === 'object method') {
                                     $result .= $operator;
                                     $statusStack[] = 'object method';
                                     $statusStack[] = 'object method parameter separator';
@@ -1818,11 +1818,11 @@ class TemplateScriptingCompiler
                     case '%':
                     case '^':
                         if (
-                            $status == 'variable'
-                            || $status == 'object'
-                            || $status == 'constant'
-                            || $status == 'string'
-                            || $status == 'modifier end'
+                            $status === 'variable'
+                            || $status === 'object'
+                            || $status === 'constant'
+                            || $status === 'string'
+                            || $status === 'modifier end'
                         ) {
                             $result .= $operator;
                             $statusStack[\count($statusStack) - 1] = 'math';

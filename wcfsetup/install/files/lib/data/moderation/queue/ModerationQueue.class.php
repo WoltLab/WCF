@@ -99,7 +99,7 @@ class ModerationQueue extends DatabaseObject
      */
     public function isDone()
     {
-        return $this->status == self::STATUS_DONE || $this->status == self::STATUS_CONFIRMED || $this->status == self::STATUS_REJECTED;
+        return $this->status === self::STATUS_DONE || $this->status === self::STATUS_CONFIRMED || $this->status === self::STATUS_REJECTED;
     }
 
     /**
@@ -126,7 +126,7 @@ class ModerationQueue extends DatabaseObject
                 $definition = ObjectTypeCache::getInstance()->getDefinition($objectType->definitionID);
 
                 $phrase = 'confirmed';
-                if ($status == self::STATUS_REJECTED) {
+                if ($status === self::STATUS_REJECTED) {
                     $phrase = ($this->markAsJustified) ? 'rejectedButJustified' : 'rejected';
                 }
 

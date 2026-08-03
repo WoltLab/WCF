@@ -233,7 +233,7 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
             $objects = [];
             \array_multisort(
                 $sortArray,
-                $sortOrder == 'ASC' ? \SORT_ASC : \SORT_DESC,
+                $sortOrder === 'ASC' ? \SORT_ASC : \SORT_DESC,
                 \SORT_NATURAL | \SORT_FLAG_CASE,
                 $objects2
             );
@@ -245,7 +245,7 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
         } else {
             \array_multisort(
                 $sortArray,
-                $sortOrder == 'ASC' ? \SORT_ASC : \SORT_DESC,
+                $sortOrder === 'ASC' ? \SORT_ASC : \SORT_DESC,
                 \SORT_NATURAL | \SORT_FLAG_CASE,
                 $objects
             );

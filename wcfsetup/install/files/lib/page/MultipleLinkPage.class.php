@@ -234,7 +234,7 @@ abstract class MultipleLinkPage extends AbstractPage
      */
     public function isFirstPage()
     {
-        return $this->pageNo == 1;
+        return $this->pageNo === 1;
     }
 
     /**
@@ -244,7 +244,7 @@ abstract class MultipleLinkPage extends AbstractPage
      */
     public function isLastPage()
     {
-        return $this->items == $this->endIndex;
+        return $this->items === $this->endIndex;
     }
 
     #[\Override]

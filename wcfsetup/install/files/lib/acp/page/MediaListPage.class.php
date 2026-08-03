@@ -177,7 +177,7 @@ class MediaListPage extends SortablePage
     #[\Override]
     protected function readObjects()
     {
-        if ($this->sqlOrderBy && $this->sortField == 'mediaID') {
+        if ($this->sqlOrderBy && $this->sortField === 'mediaID') {
             $this->sqlOrderBy = 'media.' . $this->sortField . ' ' . $this->sortOrder;
         }
 

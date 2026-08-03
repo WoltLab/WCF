@@ -74,7 +74,7 @@ final class EmailActivationForm extends AbstractFormBuilderForm
             return;
         }
 
-        if ($this->user->reactivationCode == 0) {
+        if ($this->user->reactivationCode === 0) {
             throw new NamedUserException(HtmlString::fromSafeHtml(
                 WCF::getLanguage()->get('wcf.user.registerActivation.error.userAlreadyEnabled')
             ));
@@ -94,7 +94,7 @@ final class EmailActivationForm extends AbstractFormBuilderForm
             return;
         }
 
-        if ($this->user->reactivationCode != $formField->getValue()) {
+        if ($this->user->reactivationCode !== $formField->getValue()) {
             $formField->addValidationError(
                 new FormFieldValidationError(
                     'invalid',

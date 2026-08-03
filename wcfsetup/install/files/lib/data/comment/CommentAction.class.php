@@ -201,7 +201,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             if ($this->response->isNil()) {
                 throw new UserInputException('responseID');
             }
-            if ($this->response->commentID != $this->comment->commentID) {
+            if ($this->response->commentID !== $this->comment->commentID) {
                 throw new PermissionDeniedException();
             }
             if ($this->response->isDisabled && !$this->commentProcessor->canModerate($this->comment->objectTypeID, $this->comment->objectID)) {
@@ -682,7 +682,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
                 // notify the container owner
                 if (UserNotificationHandler::getInstance()->getEvent($objectType->objectType . '.response.notification', 'commentResponseOwner')) {
-                    if ($userID && $userID != $comment->userID && $userID != $response->getUserID()) {
+                    if ($userID && $userID !== $comment->userID && $userID !== $response->getUserID()) {
                         UserNotificationHandler::getInstance()->fireEvent(
                             'commentResponseOwner',
                             $objectType->objectType . '.response.notification',
@@ -873,7 +873,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
         $htmlInputProcessor->setObjectID($this->comment->getObjectID());
         $hasEmbeddedObjects = MessageEmbeddedObjectManager::getInstance()->registerObjects($htmlInputProcessor);
-        if ($this->comment->hasEmbeddedObjects != $hasEmbeddedObjects) {
+        if ((bool)$this->comment->hasEmbeddedObjects !== $hasEmbeddedObjects) {
             $data['hasEmbeddedObjects'] = $this->comment->hasEmbeddedObjects ? 0 : 1;
         }
 
@@ -1044,7 +1044,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         if ($response !== null) {
             // check if response is not visible
             foreach ($comment as $visibleResponse) {
-                if ($visibleResponse->responseID == $response->responseID) {
+                if ($visibleResponse->responseID === $response->responseID) {
                     $response = null;
                     break;
                 }

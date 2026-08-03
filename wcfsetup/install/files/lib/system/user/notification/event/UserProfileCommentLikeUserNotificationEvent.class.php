@@ -54,7 +54,7 @@ class UserProfileCommentLikeUserNotificationEvent extends AbstractSharedUserNoti
         $authors = \array_values($this->getAuthors());
         $count = \count($authors);
         $owner = null;
-        if ($this->additionalData['objectID'] != WCF::getUser()->userID) {
+        if ($this->additionalData['objectID'] !== WCF::getUser()->userID) {
             $owner = UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID']);
         }
 
@@ -98,7 +98,7 @@ class UserProfileCommentLikeUserNotificationEvent extends AbstractSharedUserNoti
     public function getLink(): string
     {
         $owner = WCF::getUser();
-        if ($this->additionalData['objectID'] != WCF::getUser()->userID) {
+        if ($this->additionalData['objectID'] !== WCF::getUser()->userID) {
             $owner = UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID']);
         }
 

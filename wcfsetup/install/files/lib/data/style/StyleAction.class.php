@@ -207,7 +207,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
             }
 
             $value = null;
-            if ($this->parameters['variables'][$variableName] != $compareAgainst) {
+            if ($this->parameters['variables'][$variableName] !== $compareAgainst) {
                 $value = $this->parameters['variables'][$variableName];
             }
 

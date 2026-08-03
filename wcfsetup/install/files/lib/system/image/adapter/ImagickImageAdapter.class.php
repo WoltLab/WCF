@@ -354,7 +354,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         // quality loss.
         //
         // See https://github.com/Imagick/imagick/issues/360
-        if ($image->getImageFormat() == 'GIF') {
+        if ($image->getImageFormat() === 'GIF') {
             $image = $image->deconstructImages();
             $image->quantizeImages(256, \Imagick::COLORSPACE_SRGB, 0, false, false);
         }
@@ -473,7 +473,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         // quality loss.
         //
         // See https://github.com/Imagick/imagick/issues/360
-        if ($image->getImageFormat() == "GIF") {
+        if ($image->getImageFormat() === "GIF") {
             $image = $image->deconstructImages();
             $image->quantizeImages(256, \Imagick::COLORSPACE_SRGB, 0, false, false);
         }
@@ -499,7 +499,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         // When converting an animated WEBP to another format,
         // we need to make sure that only the 1st frame is used.
         // Otherwise Imagick will create a separate file for each frame.
-        if ($image->getImageFormat() == 'WEBP' && $filename != 'webp') {
+        if ($image->getImageFormat() === 'WEBP' && $filename !== 'webp') {
             $sourceImage = $image;
             $image = new \Imagick();
             foreach ($sourceImage as $frame) {

@@ -126,7 +126,7 @@ final class PublishResponse
 
         // notify the container owner
         if (UserNotificationHandler::getInstance()->getEvent($this->objectType->objectType . '.response.notification', 'commentResponseOwner')) {
-            if ($userID && $userID != $this->comment->userID && $userID != $this->response->getUserID()) {
+            if ($userID && $userID !== $this->comment->userID && $userID !== $this->response->getUserID()) {
                 UserNotificationHandler::getInstance()->fireEvent(
                     'commentResponseOwner',
                     $this->objectType->objectType . '.response.notification',

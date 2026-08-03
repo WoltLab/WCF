@@ -424,7 +424,7 @@ class UserEditForm extends UserAddForm
             'signatureAttachmentHandler' => $this->attachmentHandler,
         ];
         // handle changed username
-        if (\mb_strtolower($this->username) != \mb_strtolower($this->user->username)) {
+        if (\mb_strtolower($this->username) !== \mb_strtolower($this->user->username)) {
             $data['data']['lastUsernameChange'] = \TIME_NOW;
             $data['data']['oldUsername'] = $this->user->username;
         }
@@ -515,13 +515,13 @@ class UserEditForm extends UserAddForm
     protected function validateUsername(string $username)
     {
         try {
-            if (\mb_strtolower($this->user->username) != \mb_strtolower($username)) {
+            if (\mb_strtolower($this->user->username) !== \mb_strtolower($username)) {
                 parent::validateUsername($username);
             }
         } catch (UserInputException $e) {
             if ($e->getField() === 'username' && $e->getType() === 'notUnique') {
                 $user2 = User::getUserByUsername($username);
-                if ($user2->userID != $this->user->userID) {
+                if ($user2->userID !== $this->user->userID) {
                     throw $e;
                 }
             } else {
@@ -533,7 +533,7 @@ class UserEditForm extends UserAddForm
     #[\Override]
     protected function validateEmail(string $email): void
     {
-        if (\mb_strtolower($this->user->email) != \mb_strtolower($email)) {
+        if (\mb_strtolower($this->user->email) !== \mb_strtolower($email)) {
             parent::validateEmail($email);
         }
     }
@@ -551,7 +551,7 @@ class UserEditForm extends UserAddForm
     #[\Override]
     public function validate()
     {
-        if ($this->user->userID == WCF::getUser()->userID && WCF::getUser()->hasOwnerAccess()) {
+        if ($this->user->userID === WCF::getUser()->userID && WCF::getUser()->hasOwnerAccess()) {
             $ownerGroupID = UserGroup::getOwnerGroupID();
             if ($ownerGroupID && !\in_array($ownerGroupID, $this->groupIDs)) {
                 // Members of the owner group cannot remove themselves.

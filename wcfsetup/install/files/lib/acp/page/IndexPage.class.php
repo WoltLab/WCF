@@ -46,7 +46,7 @@ class IndexPage extends AbstractPage
     public function show()
     {
         // check package installation queue
-        if (!\PACKAGE_ID && $this->action == 'WCFSetup') {
+        if (!\PACKAGE_ID && $this->action === 'WCFSetup') {
             $queue = new PackageInstallationQueue(1);
 
             \assert($queue->queueID === 1);
@@ -59,7 +59,7 @@ class IndexPage extends AbstractPage
             exit;
         }
 
-        if (\FIRST_TIME_SETUP_STATE != -1) {
+        if (\FIRST_TIME_SETUP_STATE !== -1) {
             HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(
                 FirstTimeSetupAction::class,
             ));

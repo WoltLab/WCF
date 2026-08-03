@@ -154,7 +154,7 @@ final class UninstallPackageAction extends AbstractSecureAction
             $step->getNode()
         );
 
-        if ($step->getNode() == '') {
+        if ($step->getNode() === '') {
             return new JsonResponse([
                 'currentAction' => WCF::getLanguage()->get('wcf.acp.package.uninstallation.step.success'),
                 'progress' => 100,

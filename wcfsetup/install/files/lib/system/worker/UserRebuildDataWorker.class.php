@@ -397,7 +397,7 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
     private function updateUserOnlineStatus(array $users): void
     {
         foreach ($users as $user) {
-            if ($user->canViewOnlineStatus == UserProfile::ACCESS_EVERYONE) {
+            if ((int)$user->canViewOnlineStatus === UserProfile::ACCESS_EVERYONE) {
                 continue;
             }
             $userProfile = new UserProfile($user->getDecoratedObject());

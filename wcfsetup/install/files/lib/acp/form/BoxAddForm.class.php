@@ -309,7 +309,7 @@ class BoxAddForm extends AbstractForm
         }
 
         // work-around to force adding boxes via dialog overlay
-        if (empty($_POST) && $this->boxType == '') {
+        if (empty($_POST) && $this->boxType === '') {
             HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(BoxListPage::class, ['showBoxAddDialog' => 1]));
 
             exit;
@@ -444,7 +444,7 @@ class BoxAddForm extends AbstractForm
 
         // validate controller
         if ($this->boxType === 'system') {
-            if ($this->boxController === null || $this->boxController->getDefinition()->definitionName != 'com.woltlab.wcf.boxController') {
+            if ($this->boxController === null || $this->boxController->getDefinition()->definitionName !== 'com.woltlab.wcf.boxController') {
                 throw new UserInputException('boxController');
             }
 
@@ -459,7 +459,7 @@ class BoxAddForm extends AbstractForm
         $this->validateBoxPosition();
 
         // validate link
-        if ($this->boxType !== 'system' && $this->linkType == 'internal') {
+        if ($this->boxType !== 'system' && $this->linkType === 'internal') {
             $this->externalURL = '';
 
             if (!$this->linkPageID) {
@@ -482,7 +482,7 @@ class BoxAddForm extends AbstractForm
                     throw new UserInputException('linkPageObjectID', 'invalid');
                 }
             }
-        } elseif ($this->boxType !== 'system' && $this->linkType == 'external') {
+        } elseif ($this->boxType !== 'system' && $this->linkType === 'external') {
             $this->linkPageID = $this->linkPageObjectID = 0;
 
             if (empty($this->externalURL)) {
@@ -508,7 +508,7 @@ class BoxAddForm extends AbstractForm
 
         // box title
         if ($this->showHeader) {
-            if ($this->boxType == 'system' || $this->isMultilingual) {
+            if ($this->boxType === 'system' || $this->isMultilingual) {
                 foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                     if (empty($this->title[$language->languageID])) {
                         throw new UserInputException('title' . $language->languageID);
@@ -521,7 +521,7 @@ class BoxAddForm extends AbstractForm
             }
         }
 
-        if ($this->boxType == 'text') {
+        if ($this->boxType === 'text') {
             if ($this->isMultilingual) {
                 foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                     $this->htmlInputProcessors[$language->languageID] = new HtmlInputProcessor();
@@ -582,7 +582,7 @@ class BoxAddForm extends AbstractForm
             throw new UserInputException('position');
         }
 
-        if ($this->boxType == 'system') {
+        if ($this->boxType === 'system') {
             if (!\in_array($this->position, $this->availableBoxPositions[$this->boxController->objectTypeID])) {
                 throw new UserInputException('position', 'invalid');
             }
@@ -595,7 +595,7 @@ class BoxAddForm extends AbstractForm
         parent::save();
 
         $content = [];
-        if ($this->boxType == 'system' || $this->isMultilingual) {
+        if ($this->boxType === 'system' || $this->isMultilingual) {
             foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                 $content[$language->languageID] = [
                     'title' => !empty($this->title[$language->languageID]) ? $this->title[$language->languageID] : '',
@@ -816,7 +816,7 @@ class BoxAddForm extends AbstractForm
 
         SmileyCache::getInstance()->assignVariables();
 
-        if ($this->boxType == 'text') {
+        if ($this->boxType === 'text') {
             if ($this->isMultilingual) {
                 foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                     $upcastProcessor = new HtmlUpcastProcessor();

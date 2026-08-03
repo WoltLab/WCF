@@ -40,7 +40,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
     #[\Override]
     public function getData(Option $option, mixed $newValue)
     {
-        if ($newValue == 1) {
+        if ((bool)$newValue) {
             // @phpstan-ignore return.type
             return 1;
         }
@@ -103,6 +103,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
     #[\Override]
     public function compare(mixed $value1, mixed $value2)
     {
+        // @phpstan-ignore equal.notAllowed
         if ($value1 == $value2) {
             return 0;
         }
@@ -117,7 +118,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
         $result = [];
 
         foreach ($options as $item) {
-            if ($item[0] == '!') {
+            if ($item[0] === '!') {
                 if ($value) {
                     $result[] = $item;
                 }

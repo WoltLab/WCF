@@ -109,7 +109,7 @@ final class PackageInstallationScheduler
                 $stackPosition = -1;
                 // remove installation of older version
                 foreach ($this->packageInstallationStack as $key => $value) {
-                    if ($value['package'] == $package) {
+                    if ($value['package'] === $package) {
                         $stackPosition = $key;
                         break;
                     }
@@ -167,7 +167,7 @@ final class PackageInstallationScheduler
             'archive' => $download,
             'action' => 'install',
         ];
-        if ($stackPosition == -1) {
+        if ($stackPosition === -1) {
             $this->packageInstallationStack[] = $data;
         } else {
             $this->packageInstallationStack[$stackPosition] = $data;
@@ -403,7 +403,7 @@ final class PackageInstallationScheduler
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {
                 foreach ($packageInstallations as $key => $packageInstallation) {
-                    if ($packageInstallation['package'] == $row['package']) {
+                    if ($packageInstallation['package'] === $row['package']) {
                         $packageInstallations[$key]['packageUpdateID'] = $row['packageUpdateID'];
                     }
                 }
@@ -443,7 +443,7 @@ final class PackageInstallationScheduler
             $statement->execute($statementParameters);
             while ($row = $statement->fetchArray()) {
                 foreach ($packageInstallations as $key => $packageInstallation) {
-                    if ($packageInstallation['package'] == $row['package']) {
+                    if ($packageInstallation['package'] === $row['package']) {
                         if (!isset($packageInstallations[$key]['excludedPackages'])) {
                             $packageInstallations[$key]['excludedPackages'] = [];
                         }
@@ -488,7 +488,7 @@ final class PackageInstallationScheduler
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {
                 foreach ($packageInstallations as $packageInstallation) {
-                    if ($packageInstallation['package'] == $row['excludedPackage']) {
+                    if ($packageInstallation['package'] === $row['excludedPackage']) {
                         if (!empty($row['excludedPackageVersion'])) {
                             // check version
                             if (
@@ -504,7 +504,7 @@ final class PackageInstallationScheduler
 
                             // search exclusing package in stack
                             foreach ($packageInstallations as $packageUpdate) {
-                                if ($packageUpdate['packageID'] == $row['packageID']) {
+                                if ($packageUpdate['packageID'] === $row['packageID']) {
                                     // check new exclusions
                                     if (
                                         !isset($packageUpdate['excludedPackages']) || !isset($packageUpdate['excludedPackages'][$row['excludedPackage']]) || (!empty($packageUpdate['excludedPackages'][$row['excludedPackage']]['version']) && Package::compareVersion(

@@ -622,7 +622,7 @@ final class SessionHandler extends SingletonFactory
                 } catch (DatabaseQueryExecutionException $e) {
                     // Creation of the legacy session might fail due to duplicate key errors for
                     // concurrent requests.
-                    if ($e->getCode() == '23000' && $e->getDriverCode() == '1062') {
+                    if ((int)$e->getCode() === 23000 && (int)$e->getDriverCode() === 1062) {
                         // Attempt to load the legacy session once again. If the legacy session for some
                         // reason *still* is null then we simply continue without a legacy session. It is
                         // not required for proper request processing and consumers of the values stored

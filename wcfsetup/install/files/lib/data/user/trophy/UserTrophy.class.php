@@ -110,7 +110,7 @@ class UserTrophy extends DatabaseObject
             return false;
         }
 
-        return $this->getUserProfile()->isAccessible('canViewTrophies') || $user->userID == $this->userID;
+        return $this->getUserProfile()->isAccessible('canViewTrophies') || $user->userID === $this->userID;
     }
 
     /**
@@ -120,7 +120,7 @@ class UserTrophy extends DatabaseObject
      */
     protected function getReplacements()
     {
-        if ($this->replacements == null) {
+        if ($this->replacements === null) {
             $replacements = [
                 '{$username}' => $this->getUserProfile()->username,
             ];

@@ -77,7 +77,7 @@ class ExceptionMailerCronjob extends AbstractCronjob
                     $seen[$message] = true;
                 }
             }
-            if ($count == 0) {
+            if ($count === 0) {
                 unset($files[$file]);
                 continue;
             }

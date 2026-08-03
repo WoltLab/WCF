@@ -154,7 +154,7 @@ class UserGroup extends DatabaseObject implements ITitledObject, \Stringable
      */
     public static function getGroupByType(int $type)
     {
-        if ($type != self::EVERYONE && $type != self::GUESTS && $type != self::USERS && $type != self::OWNER) {
+        if ($type !== self::EVERYONE && $type !== self::GUESTS && $type !== self::USERS && $type !== self::OWNER) {
             throw new SystemException('invalid value for type argument');
         }
 
@@ -222,7 +222,7 @@ class UserGroup extends DatabaseObject implements ITitledObject, \Stringable
      */
     public function isEveryone()
     {
-        return $this->groupType == self::EVERYONE;
+        return $this->groupType === self::EVERYONE;
     }
 
     /**
@@ -232,7 +232,7 @@ class UserGroup extends DatabaseObject implements ITitledObject, \Stringable
      */
     public function isUsers()
     {
-        return $this->groupType == self::USERS;
+        return $this->groupType === self::USERS;
     }
 
     /**
@@ -243,7 +243,7 @@ class UserGroup extends DatabaseObject implements ITitledObject, \Stringable
      */
     public function isOwner()
     {
-        return $this->groupType == self::OWNER;
+        return $this->groupType === self::OWNER;
     }
 
     /**
@@ -334,7 +334,7 @@ class UserGroup extends DatabaseObject implements ITitledObject, \Stringable
     public function isAdminGroup()
     {
         // WCFSetup
-        if (!\PACKAGE_ID && $this->groupID == 4) {
+        if (!\PACKAGE_ID && $this->groupID === 4) {
             return true;
         }
 
@@ -346,7 +346,7 @@ class UserGroup extends DatabaseObject implements ITitledObject, \Stringable
         $accessibleGroupIDs = \explode(',', (string)$this->getGroupOption('admin.user.accessibleGroups'));
 
         // no differences -> all groups are included
-        return \count(\array_diff($groupIDs, $accessibleGroupIDs)) == 0 ? true : false;
+        return \count(\array_diff($groupIDs, $accessibleGroupIDs)) === 0 ? true : false;
     }
 
     /**
@@ -357,7 +357,7 @@ class UserGroup extends DatabaseObject implements ITitledObject, \Stringable
     public function isModGroup()
     {
         // workaround for WCF-Setup
-        if (!\PACKAGE_ID && ($this->groupID == 5 || $this->groupID == 4)) {
+        if (!\PACKAGE_ID && ($this->groupID === 5 || $this->groupID === 4)) {
             return true;
         }
 
@@ -438,7 +438,7 @@ class UserGroup extends DatabaseObject implements ITitledObject, \Stringable
         }
 
         // cannot delete static groups
-        if ($this->groupType == self::EVERYONE || $this->groupType == self::GUESTS || $this->groupType == self::USERS || $this->groupType == self::OWNER) {
+        if ($this->groupType === self::EVERYONE || $this->groupType === self::GUESTS || $this->groupType === self::USERS || $this->groupType === self::OWNER) {
             return false;
         }
 

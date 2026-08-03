@@ -70,7 +70,7 @@ class Template extends DatabaseObject
      */
     private function getPackageDir(): string
     {
-        if ($this->application != 'wcf') {
+        if ($this->application !== 'wcf') {
             $application = ApplicationHandler::getInstance()->getApplication($this->application);
         } else {
             $application = ApplicationHandler::getInstance()->getWCF();

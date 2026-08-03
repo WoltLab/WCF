@@ -461,7 +461,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
         $processor = $this->getObjectTypeProcessor();
         $updateData = [];
 
-        if ($this->formAction == 'create') {
+        if ($this->formAction === 'create') {
             $category = $this->objectAction->getReturnValues()['returnValues'];
             \assert($category instanceof Category);
         } else {

@@ -39,7 +39,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
             $showOrder = \PHP_INT_MAX;
         }
 
-        if ($parentCategoryID != $this->parentCategoryID) {
+        if ($parentCategoryID !== $this->parentCategoryID) {
             $sql = "UPDATE  " . static::getDatabaseTableName() . "
                     SET     showOrder = showOrder - 1
                     WHERE   showOrder > ?

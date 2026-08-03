@@ -127,7 +127,7 @@ class NoticeEditForm extends NoticeAddForm
 
         $this->objectAction = new NoticeAction([$this->notice], 'update', [
             'data' => \array_merge($this->additionalFields, [
-                'cssClassName' => $this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName,
+                'cssClassName' => $this->cssClassName === 'custom' ? $this->customCssClassName : $this->cssClassName,
                 'isDisabled' => $this->isDisabled,
                 'isDismissible' => $this->isDismissible,
                 'notice' => I18nHandler::getInstance()->isPlainValue('notice') ? I18nHandler::getInstance()->getValue('notice') : 'wcf.notice.notice.notice' . $this->notice->noticeID,
@@ -139,7 +139,7 @@ class NoticeEditForm extends NoticeAddForm
         $this->objectAction->executeAction();
 
         if (I18nHandler::getInstance()->isPlainValue('notice')) {
-            if ($this->notice->notice == 'wcf.notice.notice.notice' . $this->notice->noticeID) {
+            if ($this->notice->notice === 'wcf.notice.notice.notice' . $this->notice->noticeID) {
                 I18nHandler::getInstance()->remove($this->notice->notice);
             }
         } else {

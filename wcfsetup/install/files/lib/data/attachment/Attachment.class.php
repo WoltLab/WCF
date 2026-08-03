@@ -130,7 +130,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
             $this->permissions[$permission] = true;
 
             if ($this->tmpHash) {
-                if ($this->userID && $this->userID != WCF::getUser()->userID) {
+                if ($this->userID && $this->userID !== WCF::getUser()->userID) {
                     $this->permissions[$permission] = false;
                 }
             } else {
@@ -186,7 +186,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
     #[\Override]
     public function getThumbnailLocation(string $size = '')
     {
-        if ($size == 'tiny') {
+        if ($size === 'tiny') {
             $location = self::getStorage() . \substr(
                 $this->fileHash,
                 0,

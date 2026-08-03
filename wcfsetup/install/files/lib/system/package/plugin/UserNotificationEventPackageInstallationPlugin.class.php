@@ -78,7 +78,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
     protected function prepareImport(array $data)
     {
         $presetMailNotificationType = 'none';
-        if (isset($data['elements']['presetmailnotificationtype']) && ($data['elements']['presetmailnotificationtype'] == 'instant' || $data['elements']['presetmailnotificationtype'] == 'daily')) {
+        if (isset($data['elements']['presetmailnotificationtype']) && ($data['elements']['presetmailnotificationtype'] === 'instant' || $data['elements']['presetmailnotificationtype'] === 'daily')) {
             $presetMailNotificationType = $data['elements']['presetmailnotificationtype'];
         }
 

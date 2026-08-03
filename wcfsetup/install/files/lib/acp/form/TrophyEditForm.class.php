@@ -71,7 +71,7 @@ class TrophyEditForm extends TrophyAddForm
             $this->showOrder = $this->trophy->showOrder;
 
             // reset badge values for non badge trophies
-            if ($this->trophy->type != Trophy::TYPE_BADGE) {
+            if ($this->trophy->type !== Trophy::TYPE_BADGE) {
                 $this->iconName = 'trophy;false';
                 $this->iconColor = 'rgba(255, 255, 255, 1)';
                 $this->badgeColor = 'rgba(50, 92, 132, 1)';
@@ -133,11 +133,11 @@ class TrophyEditForm extends TrophyAddForm
         $this->beforeSaveI18n($this->trophy);
 
         $data = [];
-        if ($this->type == Trophy::TYPE_IMAGE) {
+        if ($this->type === Trophy::TYPE_IMAGE) {
             $data['iconName'] = '';
             $data['iconColor'] = '';
             $data['badgeColor'] = '';
-        } elseif ($this->type == Trophy::TYPE_BADGE) {
+        } elseif ($this->type === Trophy::TYPE_BADGE) {
             // delete old image icon
             if (\is_file(\WCF_DIR . 'images/trophy/' . $this->trophy->iconFile)) {
                 @\unlink(\WCF_DIR . 'images/trophy/' . $this->trophy->iconFile);
@@ -199,7 +199,7 @@ class TrophyEditForm extends TrophyAddForm
             UserStorageHandler::getInstance()->resetAll('specialTrophies');
         }
 
-        if ($this->isDisabled != $this->trophy->isDisabled) {
+        if ($this->isDisabled !== $this->trophy->isDisabled) {
             // update trophy points
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('trophyID = ?', [$this->trophy->trophyID]);

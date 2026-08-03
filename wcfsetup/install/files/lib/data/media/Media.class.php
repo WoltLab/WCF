@@ -251,7 +251,7 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
     {
         if (WCF::getSession()->hasPermission('admin.content.cms.canManageMedia')) {
             if (WCF::getSession()->hasPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
-                return WCF::getUser()->userID == $this->userID;
+                return WCF::getUser()->userID === $this->userID;
             }
 
             return true;

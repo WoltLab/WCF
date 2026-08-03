@@ -20,7 +20,7 @@ class FilesFileHandler extends PackageInstallationFileHandler
     #[\Override]
     public function checkFiles(array $files)
     {
-        if ($this->packageInstallation->getPackage()->package != 'com.woltlab.wcf') {
+        if ($this->packageInstallation->getPackage()->package !== 'com.woltlab.wcf') {
             if (!empty($files)) {
                 // get registered files of other packages for the
                 // same application

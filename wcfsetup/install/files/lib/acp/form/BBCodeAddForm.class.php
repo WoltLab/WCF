@@ -179,7 +179,7 @@ class BBCodeAddForm extends AbstractForm
         }
 
         // disallow the Pseudo-BBCodes all and none
-        if ($this->bbcodeTag == 'all' || $this->bbcodeTag == 'none') {
+        if ($this->bbcodeTag === 'all' || $this->bbcodeTag === 'none') {
             throw new UserInputException('bbcodeTag', 'invalid');
         }
 

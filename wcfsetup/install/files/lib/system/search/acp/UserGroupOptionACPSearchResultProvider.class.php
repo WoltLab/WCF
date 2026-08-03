@@ -61,7 +61,7 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
         $languageItems = [];
         while ($languageItem = $statement->fetchColumn()) {
             // ignore descriptions
-            if (\substr($languageItem, -12) == '.description') {
+            if (\substr($languageItem, -12) === '.description') {
                 continue;
             }
 

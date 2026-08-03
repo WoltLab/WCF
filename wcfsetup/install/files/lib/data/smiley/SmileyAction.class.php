@@ -82,7 +82,7 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
             $this->readObjects();
         }
 
-        if (\count($this->objects) == 1) {
+        if (\count($this->objects) === 1) {
             if (!empty($this->parameters['fileLocation'])) {
                 $smiley = \reset($this->objects);
                 $smileyFilename = 'smiley' . $smiley->smileyID . '.' . \mb_strtolower(\mb_substr(

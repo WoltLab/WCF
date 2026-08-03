@@ -43,11 +43,11 @@ class UserMailForm extends AbstractFormBuilderForm
     {
         parent::createForm();
 
-        if ($this->action == 'group') {
+        if ($this->action === 'group') {
             $this->form->appendChild($this->getGroupFormField());
         }
 
-        if ($this->action == '') {
+        if ($this->action === '') {
             $this->form->appendChild($this->getUserFormField());
         }
 

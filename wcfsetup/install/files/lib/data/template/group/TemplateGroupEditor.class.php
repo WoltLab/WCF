@@ -33,7 +33,7 @@ class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCache
     {
         parent::update($parameters);
 
-        if (isset($parameters['templateGroupFolderName']) && ($parameters['templateGroupFolderName'] != $this->templateGroupFolderName)) {
+        if (isset($parameters['templateGroupFolderName']) && ($parameters['templateGroupFolderName'] !== $this->templateGroupFolderName)) {
             @\rename(
                 \WCF_DIR . 'templates/' . $this->templateGroupFolderName,
                 \WCF_DIR . 'templates/' . $parameters['templateGroupFolderName']

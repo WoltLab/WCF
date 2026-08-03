@@ -72,13 +72,13 @@ class MailWorker extends AbstractWorker
     public function countObjects()
     {
         $this->conditions = new PreparedStatementConditionBuilder();
-        if ($this->mailData['action'] == '') {
+        if ($this->mailData['action'] === '') {
             $this->conditions->add("user.userID IN (?)", [$this->mailData['userIDs']]);
         } else {
             $this->conditions->add("user.emailConfirmed IS NULL");
             $this->conditions->add("user.banned = ?", [0]);
 
-            if ($this->mailData['action'] == 'group') {
+            if ($this->mailData['action'] === 'group') {
                 $this->conditions->add(
                     "user.userID IN (
                         SELECT  userID
@@ -104,7 +104,7 @@ class MailWorker extends AbstractWorker
     {
         $progress = parent::getProgress();
 
-        if ($progress == 100) {
+        if ($progress === 100) {
             // clear markings
             $typeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
             ClipboardHandler::getInstance()->removeItems($typeID);

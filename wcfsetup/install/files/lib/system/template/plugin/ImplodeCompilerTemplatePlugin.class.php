@@ -49,10 +49,10 @@ class ImplodeCompilerTemplatePlugin implements ICompilerTemplatePlugin
         }
 
         $glue = $tagArgs['glue'] ?? "', '";
-        $itemVar = \mb_substr($tagArgs['item'], 0, 1) != '$' ? "\$this->v[" . $tagArgs['item'] . "]" : $tagArgs['item'];
+        $itemVar = \mb_substr($tagArgs['item'], 0, 1) !== '$' ? "\$this->v[" . $tagArgs['item'] . "]" : $tagArgs['item'];
         $keyVar = null;
         if (isset($tagArgs['key'])) {
-            $keyVar = \mb_substr($tagArgs['key'], 0, 1) != '$' ? "\$this->v[" . $tagArgs['key'] . "]" : $tagArgs['key'];
+            $keyVar = \mb_substr($tagArgs['key'], 0, 1) !== '$' ? "\$this->v[" . $tagArgs['key'] . "]" : $tagArgs['key'];
         }
         $hash = StringUtil::getRandomID();
         $this->tagStack[] = ['hash' => $hash, 'glue' => $glue, 'itemVar' => $itemVar, 'keyVar' => $keyVar];

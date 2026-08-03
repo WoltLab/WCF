@@ -66,7 +66,7 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType
             return true;
         }
 
-        if ($objectID != WCF::getUser()->userID) {
+        if ($objectID !== WCF::getUser()->userID) {
             return false;
         }
 

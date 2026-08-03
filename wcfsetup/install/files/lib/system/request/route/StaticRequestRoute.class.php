@@ -92,8 +92,8 @@ class StaticRequestRoute extends DynamicRequestRoute
     #[\Override]
     public function canHandle(array $components)
     {
-        if (isset($components['application']) && $components['application'] == $this->staticApplication) {
-            if (isset($components['controller']) && $components['controller'] == $this->staticController) {
+        if (isset($components['application']) && $components['application'] === $this->staticApplication) {
+            if (isset($components['controller']) && $components['controller'] === $this->staticController) {
                 return parent::canHandle($components);
             }
         }

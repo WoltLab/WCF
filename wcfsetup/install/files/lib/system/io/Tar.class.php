@@ -119,7 +119,7 @@ class Tar implements IArchive
             } else {
                 // test compression
                 $this->file = new File($this->archiveName, $this->mode);
-                if ($this->file->read(2) == "\37\213") {
+                if ($this->file->read(2) === "\37\213") {
                     $this->file->close();
                     $this->isZipped = true;
                     $this->file = new GZipFile($this->archiveName, $this->mode);
@@ -173,7 +173,7 @@ class Tar implements IArchive
     public function getIndexByFilename(string $filename)
     {
         foreach ($this->contentList as $index => $file) {
-            if ($file['filename'] == $filename) {
+            if ($file['filename'] === $filename) {
                 return $index;
             }
         }
@@ -191,7 +191,7 @@ class Tar implements IArchive
         $header = $this->getFileInfo($index);
 
         // can not extract a folder
-        if ($header['type'] != 'file') {
+        if ($header['type'] !== 'file') {
             return false;
         }
 
@@ -201,7 +201,7 @@ class Tar implements IArchive
         // read data
         $content = $this->file->read($header['size']);
 
-        if (\strlen($content) != $header['size']) {
+        if (\strlen($content) !== $header['size']) {
             throw new SystemException(
                 "Could not untar file '" . $header['filename'] . "' to string. Maybe the archive is truncated?"
             );
@@ -285,7 +285,7 @@ class Tar implements IArchive
         }
 
         // check filesize
-        if (\filesize($destination) != $header['size']) {
+        if (\filesize($destination) !== $header['size']) {
             throw new SystemException("Could not untar file '" . $header['filename'] . "' to '" . $destination . "'. Maybe disk quota exceeded in folder '" . \dirname($destination) . "'.");
         }
 
@@ -306,7 +306,7 @@ class Tar implements IArchive
 
         // Read the 512 bytes header
         $longFilename = null;
-        while (\strlen($binaryData = $this->file->read(512)) != 0) {
+        while (\strlen($binaryData = $this->file->read(512)) !== 0) {
             // read header
             $header = $this->readHeader($binaryData);
             if ($header === false) {
@@ -319,7 +319,7 @@ class Tar implements IArchive
                 $header['filename'] = $longFilename;
                 $longFilename = null;
             }
-            if ($header['typeflag'] == 'L') {
+            if ($header['typeflag'] === 'L') {
                 $format = 'Z' . $header['size'] . 'filename';
 
                 $fileData = \unpack($format, $this->file->read(512));
@@ -343,7 +343,7 @@ class Tar implements IArchive
      */
     protected function readHeader(string $binaryData)
     {
-        if (\strlen($binaryData) != 512) {
+        if (\strlen($binaryData) !== 512) {
             return false;
         }
 
@@ -370,7 +370,7 @@ class Tar implements IArchive
 
         // Extract the properties
         $header['checksum'] = @\octdec(\trim($data['checksum']));
-        if ($header['checksum'] == $checksum) {
+        if ($header['checksum'] === $checksum) {
             $header['filename'] = \trim($data['filename']);
             $header['mode'] = \octdec(\trim($data['mode']));
             $header['uid'] = \octdec(\trim($data['uid']));
@@ -382,10 +382,10 @@ class Tar implements IArchive
                 $header['filename'] = $header['prefix'] . '/' . $header['filename'];
             }
             $header['typeflag'] = $data['typeflag'];
-            if ($header['typeflag'] == '5') {
+            if ($header['typeflag'] === '5') {
                 $header['size'] = 0;
                 $header['type'] = 'folder';
-            } elseif ($header['typeflag'] == '2') {
+            } elseif ($header['typeflag'] === '2') {
                 $header['type'] = 'symlink';
                 $header['target'] = $data['link'];
             } else {

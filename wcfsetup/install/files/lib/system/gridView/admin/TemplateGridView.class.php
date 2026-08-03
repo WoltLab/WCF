@@ -160,7 +160,7 @@ final class TemplateGridView extends AbstractGridView
             {
                 $columnName = $this->getDatabaseColumnName($list);
 
-                if ($value == TemplateGridView::DEFAULT_TEMPLATE_GROUP_ID) {
+                if ((int)$value === TemplateGridView::DEFAULT_TEMPLATE_GROUP_ID) {
                     $list->getConditionBuilder()->add("{$columnName} IS NULL");
                 } else {
                     $list->getConditionBuilder()->add("{$columnName} = ?", [$value]);
@@ -170,7 +170,7 @@ final class TemplateGridView extends AbstractGridView
             #[\Override]
             public function renderValue(string $value): string
             {
-                if ($value == TemplateGridView::DEFAULT_TEMPLATE_GROUP_ID) {
+                if ((int)$value === TemplateGridView::DEFAULT_TEMPLATE_GROUP_ID) {
                     return WCF::getLanguage()->get('wcf.acp.template.group.default');
                 }
 

@@ -486,7 +486,7 @@ final class LicensePage extends AbstractPage
                 Package::compareVersion(
                     $excludedPackages[$packageUpdateVersionID][$package],
                     $packageVersion
-                ) == 1
+                ) === 1
             ) {
                 $excludedPackages[$packageUpdateVersionID][$package] = $packageVersion;
             }
@@ -516,7 +516,7 @@ final class LicensePage extends AbstractPage
             $packageVersion = $row['packageVersion'];
             $packageUpdateVersionID = $row['packageUpdateVersionID'];
 
-            if ($minVersion !== null && Package::compareVersion($packageVersion, $minVersion) == -1) {
+            if ($minVersion !== null && Package::compareVersion($packageVersion, $minVersion) === -1) {
                 continue;
             }
 
@@ -636,7 +636,7 @@ final class LicensePage extends AbstractPage
                     !isset($installedPackages[$package]) || Package::compareVersion(
                         $installedPackages[$package],
                         $minVersion
-                    ) == -1
+                    ) === -1
                 ) {
                     $requirements[$package] = $minVersion;
                 }

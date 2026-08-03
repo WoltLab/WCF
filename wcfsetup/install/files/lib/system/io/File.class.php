@@ -30,7 +30,7 @@ use wcf\system\exception\SystemException;
  * @method bool     lock(int $operation, int &$would_block = null)
  * @method resource open($mode, $use_include_path = false, $context = null)
  * @method int      puts($string, $length = null)       alias of `write`
- * @method string   read($length)
+ * @method string|false   read($length)
  * @method int      seek($offset, $whence = 0)
  * @method array<string, mixed> stat()
  * @method bool     sync()

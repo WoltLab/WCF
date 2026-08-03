@@ -35,7 +35,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 
     /**
      * list of permissions by type
-     * @var int[][]
+     * @var int[][][]
      */
     protected $permissions = [
         'group' => [],
@@ -115,6 +115,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
                 isset($this->permissions['user'][$user->userID])
                 && isset($this->permissions['user'][$user->userID][$optionID])
             ) {
+                // @phpstan-ignore equal.notAllowed
                 if ($this->permissions['user'][$user->userID][$optionID] == 1) {
                     return true;
                 }
@@ -127,6 +128,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
                 isset($this->permissions['group'][$groupID])
                 && isset($this->permissions['group'][$groupID][$optionID])
             ) {
+                // @phpstan-ignore equal.notAllowed
                 if ($this->permissions['group'][$groupID][$optionID] == 1) {
                     return true;
                 }

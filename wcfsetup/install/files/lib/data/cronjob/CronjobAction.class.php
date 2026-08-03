@@ -171,7 +171,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
                     }
 
                     // cronjob failed too often: disable it
-                    if ($cronjob->failCount + 1 == Cronjob::MAX_FAIL_COUNT) {
+                    if ($cronjob->failCount + 1 === Cronjob::MAX_FAIL_COUNT) {
                         $data['isDisabled'] = 1;
                     }
                 } // if no error: reset fail counter
@@ -180,7 +180,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 
                     // if cronjob has been disabled because of too many
                     // failed executions, enable it again
-                    if ($cronjob->failCount == Cronjob::MAX_FAIL_COUNT && $cronjob->isDisabled) {
+                    if ($cronjob->failCount === Cronjob::MAX_FAIL_COUNT && $cronjob->isDisabled) {
                         $data['isDisabled'] = 0;
                     }
                 }

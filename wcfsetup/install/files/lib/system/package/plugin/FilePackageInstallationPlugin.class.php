@@ -54,10 +54,10 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin im
 
         // if this is an application, write config.inc.php for this package
         if (
-            $this->installation->getPackage()->isApplication == 1
-            && $this->installation->getPackage()->package != 'com.woltlab.wcf'
-            && $this->installation->getAction() == 'install'
-            && $abbreviation != 'wcf'
+            $this->installation->getPackage()->isApplication === 1
+            && $this->installation->getPackage()->package !== 'com.woltlab.wcf'
+            && $this->installation->getAction() === 'install'
+            && $abbreviation !== 'wcf'
         ) {
             // touch file
             $fileInstaller->touchFile(PackageInstallationDispatcher::CONFIG_FILE);

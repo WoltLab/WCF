@@ -263,7 +263,7 @@ class PageAddForm extends AbstractForm
         }
 
         // work-around to force adding pages via dialog overlay
-        if (empty($_POST) && $this->pageType == '') {
+        if (empty($_POST) && $this->pageType === '') {
             HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(PageListPage::class, ['showPageAddDialog' => 1]));
 
             exit;
@@ -410,11 +410,11 @@ class PageAddForm extends AbstractForm
      */
     protected function validatePageType()
     {
-        if (!\in_array($this->pageType, Page::$availablePageTypes) || $this->pageType == 'system') {
+        if (!\in_array($this->pageType, Page::$availablePageTypes) || $this->pageType === 'system') {
             throw new UserInputException('pageType');
         }
 
-        if ($this->pageType == 'system' || \count($this->availableLanguages) === 1) {
+        if ($this->pageType === 'system' || \count($this->availableLanguages) === 1) {
             $this->isMultilingual = 0;
         }
     }
@@ -460,7 +460,7 @@ class PageAddForm extends AbstractForm
      */
     protected function validateCustomUrls()
     {
-        if (empty($this->customURL) && $this->pageType != 'system') {
+        if (empty($this->customURL) && $this->pageType !== 'system') {
             if ($this->isMultilingual) {
                 $language1 = \reset($this->availableLanguages);
                 throw new UserInputException('customURL_' . $language1->languageID);
@@ -488,7 +488,7 @@ class PageAddForm extends AbstractForm
     protected function validateCustomUrl(int $languageID, string $customURL)
     {
         if (empty($customURL)) {
-            if ($this->pageType != 'system') {
+            if ($this->pageType !== 'system') {
                 throw new UserInputException('customURL_' . $languageID);
             }
         } elseif (!RouteHandler::isValidCustomUrl($customURL)) {
@@ -500,7 +500,7 @@ class PageAddForm extends AbstractForm
             }
 
             foreach ($this->customURL as $languageID2 => $customURL2) {
-                if ($languageID != $languageID2 && $customURL == $customURL2) {
+                if ($languageID !== $languageID2 && $customURL === $customURL2) {
                     throw new UserInputException('customURL_' . $languageID, 'notUnique');
                 }
             }
@@ -552,7 +552,7 @@ class PageAddForm extends AbstractForm
     {
         if ($this->addPageToMainMenu && $this->parentMenuItemID) {
             $parentMenuItem = new MenuItem($this->parentMenuItemID);
-            if (!$parentMenuItem->itemID || $parentMenuItem->menuID != MenuCache::getInstance()->getMainMenuID()) {
+            if (!$parentMenuItem->itemID || $parentMenuItem->menuID !== MenuCache::getInstance()->getMainMenuID()) {
                 throw new UserInputException('parentMenuItemID', 'invalid');
             }
         }

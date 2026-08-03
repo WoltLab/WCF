@@ -49,7 +49,7 @@ final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
     {
         parent::readParameters();
 
-        if (\FIRST_TIME_SETUP_STATE == -1) {
+        if (\FIRST_TIME_SETUP_STATE === -1) {
             throw new PermissionDeniedException();
         }
     }

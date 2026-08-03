@@ -76,7 +76,7 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
     protected function getSearchEngine()
     {
         if ($this->searchEngine === null) {
-            if (\SEARCH_ENGINE != 'mysql') {
+            if (\SEARCH_ENGINE !== 'mysql') {
                 $className = 'wcf\system\search\\' . \SEARCH_ENGINE . '\\' . \ucfirst(\SEARCH_ENGINE) . 'SearchEngine';
                 if (!\class_exists($className)) {
                     $className = MysqlSearchEngine::class;

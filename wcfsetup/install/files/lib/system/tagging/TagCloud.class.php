@@ -112,7 +112,7 @@ class TagCloud
      */
     private function calculateWeight(int $counter)
     {
-        if ($this->maxCounter == $this->minCounter) {
+        if ($this->maxCounter === $this->minCounter) {
             return 2;
         } else {
             $weight = \round(\log($counter) / \log($this->maxCounter) * 7);

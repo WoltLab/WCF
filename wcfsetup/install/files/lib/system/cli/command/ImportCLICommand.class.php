@@ -136,7 +136,7 @@ class ImportCLICommand implements ICLICommand
             if ($answer === null) {
                 exit;
             }
-            if (\mb_strtolower($answer) == 'y') {
+            if (\mb_strtolower($answer) === 'y') {
                 ImportHandler::getInstance()->resetMapping();
             }
         }
@@ -391,7 +391,7 @@ class ImportCLICommand implements ICLICommand
                         CLIWCF::getReader()->println($supportedDataIndex . ') ' . WCF::getLanguage()->get('wcf.acp.dataImport.data.' . $objectType));
                         $supportedDataSelection[''][$supportedDataIndex++] = $objectType;
                     } else {
-                        if ($minSupportedDataIndex == $supportedDataIndex) {
+                        if ($minSupportedDataIndex === $supportedDataIndex) {
                             $minSupportedDataIndex++;
                         }
                         $supportedDataIndex++;
@@ -414,7 +414,7 @@ class ImportCLICommand implements ICLICommand
             }
 
             // if no primary import data type is selected, finish data selection
-            if ($selectedObjectTypeIndex == '') {
+            if ($selectedObjectTypeIndex === '') {
                 // if no data is selected, quit import
                 if (empty($selectedData)) {
                     CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.cli.configure.data.error.noSelection'));
@@ -466,12 +466,12 @@ class ImportCLICommand implements ICLICommand
                     }
 
                     // continue with primary import data type selection
-                    if ($selectedSecondaryObjectTypeIndex == '') {
+                    if ($selectedSecondaryObjectTypeIndex === '') {
                         break;
                     }
 
                     // validate selected secondary import data type
-                    if ($selectedSecondaryObjectTypeIndex == \intval($selectedSecondaryObjectTypeIndex) && !$selectedSecondaryObjectTypeIndex) {
+                    if ($selectedSecondaryObjectTypeIndex === '0') {
                         // selected all secondary import data type
                         $selectedData[$selectedObjectType] = \array_merge(
                             $selectedData[$selectedObjectType],
@@ -491,7 +491,7 @@ class ImportCLICommand implements ICLICommand
                     }
 
                     // check if all possible secondary import data types are selected
-                    if (\count($selectedData[$selectedObjectType]) == \count($this->supportedData[$selectedObjectType])) {
+                    if (\count($selectedData[$selectedObjectType]) === \count($this->supportedData[$selectedObjectType])) {
                         $printPrimaryTypes = true;
                         break;
                     }
@@ -503,7 +503,7 @@ class ImportCLICommand implements ICLICommand
             }
 
             // check if all possible primary import data types are selected
-            if (\count($selectedData) == \count($this->supportedData)) {
+            if (\count($selectedData) === \count($this->supportedData)) {
                 break;
             }
         }

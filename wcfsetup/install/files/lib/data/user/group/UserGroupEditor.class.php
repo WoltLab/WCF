@@ -171,22 +171,22 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
         while ($row = $statement->fetchArray()) {
             $valueIDs = \array_filter(
                 \explode(',', $row['optionValue']),
-                static function ($groupID) use ($ownerGroupID) {
-                    return $groupID != $ownerGroupID;
+                static function ($valueID) use ($ownerGroupID) {
+                    return (int)$valueID !== $ownerGroupID;
                 }
             );
 
             if ($delete) {
-                $valueIDs = \array_filter($valueIDs, static function ($item) use ($groupID) {
-                    return $item != $groupID;
+                $valueIDs = \array_filter($valueIDs, static function ($valueID) use ($groupID) {
+                    return (int)$valueID !== $groupID;
                 });
             } else {
-                if (\count(\array_diff($groupIDs, $valueIDs)) == 0) {
+                if (\count(\array_diff($groupIDs, $valueIDs)) === 0) {
                     $valueIDs[] = $groupID;
                 }
             }
 
-            if ($row['groupID'] == $ownerGroupID) {
+            if ($row['groupID'] === $ownerGroupID) {
                 $valueIDs[] = $ownerGroupID;
             }
 

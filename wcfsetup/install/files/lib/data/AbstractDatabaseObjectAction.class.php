@@ -121,7 +121,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
         if (empty($this->className)) {
             $className = static::class;
 
-            if (\mb_substr($className, -6) == 'Action') {
+            if (\mb_substr($className, -6) === 'Action') {
                 $this->className = \mb_substr($className, 0, -6) . 'Editor';
             }
         }
@@ -433,7 +433,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
             $this->readObjects();
         }
 
-        if (\count($this->objects) != 1) {
+        if (\count($this->objects) !== 1) {
             throw new UserInputException('objectIDs');
         }
 
@@ -599,7 +599,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
                     if (\is_numeric($target[$variableName])) {
                         $target[$variableName] = (bool)$target[$variableName];
                     } else {
-                        $target[$variableName] = $target[$variableName] != 'false';
+                        $target[$variableName] = $target[$variableName] !== 'false';
                     }
                 }
                 break;

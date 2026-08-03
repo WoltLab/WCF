@@ -21,7 +21,7 @@ final class MediaBBCode extends AbstractBBCode
         $alignment = $openingTag['attributes'][1] ?? 'none';
 
         /** @var HtmlBBCodeParser $parser */
-        if ($parser->getOutputType() == 'text/html') {
+        if ($parser->getOutputType() === 'text/html') {
             foreach (BBCodeMediaProvider::getCache() as $provider) {
                 if ($provider->matches($content)) {
                     return \sprintf(
@@ -31,7 +31,7 @@ final class MediaBBCode extends AbstractBBCode
                     );
                 }
             }
-        } elseif ($parser->getOutputType() == 'text/simplified-html') {
+        } elseif ($parser->getOutputType() === 'text/simplified-html') {
             foreach (BBCodeMediaProvider::getCache() as $provider) {
                 if ($provider->matches($content)) {
                     return StringUtil::getAnchorTag($content, '', true, true);

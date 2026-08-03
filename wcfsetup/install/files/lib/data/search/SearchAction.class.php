@@ -152,10 +152,10 @@ class SearchAction extends AbstractDatabaseObjectAction
         $this->readInteger('pageNo');
 
         $search = new Search($this->parameters['searchID']);
-        if ($search->isNil() || $search->searchType != 'messages') {
+        if ($search->isNil() || $search->searchType !== 'messages') {
             throw new IllegalLinkException();
         }
-        if ($search->userID && $search->userID != WCF::getUser()->userID) {
+        if ($search->userID && $search->userID !== WCF::getUser()->userID) {
             throw new IllegalLinkException();
         }
     }

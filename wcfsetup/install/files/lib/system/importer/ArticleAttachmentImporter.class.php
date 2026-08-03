@@ -42,6 +42,7 @@ final class ArticleAttachmentImporter extends AbstractAttachmentImporter
         $data['objectID'] = $firstContent->getObjectID();
 
         $attachmentID = parent::import($oldID, $data, $additionalData);
+        // @phpstan-ignore notEqual.notAllowed (the old id originates from the import data and can be a numeric string)
         if ($attachmentID && $attachmentID != $oldID) {
             foreach ($articleContents as $content) {
                 $newMessage = $this->fixEmbeddedAttachments(

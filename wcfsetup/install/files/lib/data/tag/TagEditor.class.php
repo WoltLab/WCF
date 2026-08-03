@@ -29,7 +29,7 @@ class TagEditor extends DatabaseObjectEditor
      */
     public function addSynonym(Tag $synonym)
     {
-        if ($synonym->tagID == $this->tagID) {
+        if ($synonym->tagID === $this->tagID) {
             return;
         }
 

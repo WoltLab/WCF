@@ -92,13 +92,13 @@ class UserGroupOptionForm extends AbstractForm
 
             // verify categories
             $category = $categories[$this->userGroupOption->categoryName];
-            while ($category != null) {
+            while ($category !== null) {
                 if (!$category->validateOptions() || !$category->validatePermissions()) {
                     throw new PermissionDeniedException();
                 }
 
                 \array_unshift($this->parentCategories, $category);
-                $category = ($category->parentCategoryName != '') ? $categories[$category->parentCategoryName] : null;
+                $category = ($category->parentCategoryName !== '') ? $categories[$category->parentCategoryName] : null;
             }
         } else {
             throw new PermissionDeniedException();
@@ -172,20 +172,20 @@ class UserGroupOptionForm extends AbstractForm
                 $this->optionType->compare(
                     $optionValue,
                     WCF::getSession()->getPermission($this->userGroupOption->optionName)
-                ) == 1
+                ) === 1
             ) {
                 $this->errorType[$groupID] = 'exceedsOwnPermission';
             }
         }
 
         // add missing values for option type 'boolean'
-        if ($this->userGroupOption->optionType == 'boolean') {
+        if ($this->userGroupOption->optionType === 'boolean') {
             foreach ($this->groups as $groupID => $group) {
                 if (!isset($this->values[$groupID])) {
                     $this->values[$groupID] = 0;
                 }
             }
-        } elseif ($this->userGroupOption->optionType == 'BBCodeSelect') {
+        } elseif ($this->userGroupOption->optionType === 'BBCodeSelect') {
             foreach ($this->groups as $groupID => $group) {
                 if (!isset($this->values[$groupID])) {
                     $this->values[$groupID] = '';
@@ -256,13 +256,13 @@ class UserGroupOptionForm extends AbstractForm
 
         $everyoneGroupID = $guestGroupID = $ownerGroupID = $userGroupID = 0;
         foreach ($this->groups as $group) {
-            if ($group->groupType == UserGroup::EVERYONE) {
+            if ($group->groupType === UserGroup::EVERYONE) {
                 $everyoneGroupID = $group->groupID;
-            } elseif ($group->groupType == UserGroup::GUESTS) {
+            } elseif ($group->groupType === UserGroup::GUESTS) {
                 $guestGroupID = $group->groupID;
-            } elseif ($group->groupType == UserGroup::OWNER) {
+            } elseif ($group->groupType === UserGroup::OWNER) {
                 $ownerGroupID = $group->groupID;
-            } elseif ($group->groupType == UserGroup::USERS) {
+            } elseif ($group->groupType === UserGroup::USERS) {
                 $userGroupID = $group->groupID;
             }
         }

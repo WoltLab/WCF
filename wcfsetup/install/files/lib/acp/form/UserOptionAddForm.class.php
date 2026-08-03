@@ -298,9 +298,9 @@ class UserOptionAddForm extends AbstractFormBuilderForm
                     function (IFormDocument $document, array $parameters) {
                         $additionalData = $this->formObject?->additionalData ?: [];
 
-                        if ($parameters['data']['optionType'] == 'select') {
+                        if ($parameters['data']['optionType'] === 'select') {
                             $additionalData['allowEmptyValue'] = true;
-                        } elseif ($parameters['data']['optionType'] == 'message') {
+                        } elseif ($parameters['data']['optionType'] === 'message') {
                             $additionalData['messageObjectType'] = 'com.woltlab.wcf.user.option.generic';
                         }
 

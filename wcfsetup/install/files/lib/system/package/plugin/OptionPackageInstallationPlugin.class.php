@@ -150,9 +150,9 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
         // result was 'false' thus create a new item
         if (!$row) {
             // set the value of 'app_install_date' to the current timestamp
-            if ($hidden && $optionType == 'integer' && $this->installation->getPackage()->isApplication) {
+            if ($hidden && $optionType === 'integer' && $this->installation->getPackage()->isApplication) {
                 $abbreviation = Package::getAbbreviation($this->installation->getPackage()->package);
-                if ($optionName == $abbreviation . '_install_date') {
+                if ($optionName === $abbreviation . '_install_date') {
                     $defaultValue = \TIME_NOW;
                 }
             }
@@ -164,7 +164,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
             OptionEditor::create($data);
         } else {
             // editing an option from a different package
-            if ($row['packageID'] != $this->installation->getPackageID()) {
+            if ($row['packageID'] !== $this->installation->getPackageID()) {
                 throw new SystemException("Option '" . $optionName . "' already exists, but is owned by a different package");
             }
 

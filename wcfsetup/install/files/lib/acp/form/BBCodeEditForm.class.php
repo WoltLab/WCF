@@ -81,7 +81,7 @@ class BBCodeEditForm extends BBCodeAddForm
     #[\Override]
     protected function validateBBCodeTagUsage()
     {
-        if ($this->bbcodeTag != $this->bbcode->bbcodeTag) {
+        if ($this->bbcodeTag !== $this->bbcode->bbcodeTag) {
             parent::validateBBCodeTagUsage();
         }
     }

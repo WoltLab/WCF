@@ -185,14 +185,14 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm
             $this->isDisabled = 1;
         }
 
-        if ($this->optionType == 'boolean' || $this->optionType == 'integer') {
+        if ($this->optionType === 'boolean' || $this->optionType === 'integer') {
             $this->defaultValue = \intval($this->defaultValue);
 
-            if ($this->optionType == 'boolean') {
+            if ($this->optionType === 'boolean') {
                 $this->validationPattern = '';
             }
         }
-        if ($this->optionType == 'float') {
+        if ($this->optionType === 'float') {
             $this->defaultValue = \floatval($this->defaultValue);
         }
     }

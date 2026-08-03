@@ -524,7 +524,7 @@ final class StyleCompiler extends SingletonFactory
      */
     private function getAcpStylesheets(Application $application): array
     {
-        if ($application->packageID == 1) {
+        if ($application->packageID === 1) {
             return [];
         }
 

@@ -163,7 +163,7 @@ class PackageInstallationDispatcher
         $step->setNode($node);
 
         // perform post-install/update actions
-        if ($node == '') {
+        if ($node === '') {
             (new AuditLogger())->log(
                 <<<EOT
                 Finalizing process
@@ -176,7 +176,7 @@ class PackageInstallationDispatcher
 
             new SetLastUpdateTime()();
 
-            if ($this->action == 'install') {
+            if ($this->action === 'install') {
                 // save localized package infos
                 $this->saveLocalizedPackageInfos();
 
@@ -467,7 +467,7 @@ class PackageInstallationDispatcher
             // check if we're doing an iterative update of the same package
             if (
                 $this->previousPackageData !== null
-                && $this->getPackage()->package == $this->previousPackageData['package']
+                && $this->getPackage()->package === $this->previousPackageData['package']
             ) {
                 if (
                     Package::compareVersion(
@@ -572,7 +572,7 @@ class PackageInstallationDispatcher
                 $path = RouteHandler::getPath(['acp']);
 
                 $isTainted = 1;
-                if ($this->getPackage()->package == 'com.woltlab.wcf') {
+                if ($this->getPackage()->package === 'com.woltlab.wcf') {
                     // com.woltlab.wcf is special, because promptPackageDir() will not be executed.
                     $isTainted = 0;
                 }
@@ -622,8 +622,8 @@ class PackageInstallationDispatcher
 
         if (
             $this->getPackage()->isApplication
-            && $this->getPackage()->package != 'com.woltlab.wcf'
-            && $this->getAction() == 'install'
+            && $this->getPackage()->package !== 'com.woltlab.wcf'
+            && $this->getAction() === 'install'
             && empty($this->getPackage()->packageDir)
         ) {
             $document = $this->promptPackageDir($applicationDirectory);
@@ -725,7 +725,7 @@ class PackageInstallationDispatcher
         } elseif (isset($infoValues[WCF::getLanguage()->getFixedLanguageCode()])) {
             // fallback to the language of the current user
             $defaultValue = $infoValues[WCF::getLanguage()->getFixedLanguageCode()];
-        } elseif ($infoName == 'packageName') {
+        } elseif ($infoName === 'packageName') {
             // fallback to the package identifier for the package name
             $defaultValue = $this->getArchive()->getPackageInfo('name');
         }
@@ -756,7 +756,7 @@ class PackageInstallationDispatcher
     {
         $step = new PackageInstallationStep();
 
-        if ($nodeData['pip'] == PackageArchive::VOID_MARKER) {
+        if ($nodeData['pip'] === PackageArchive::VOID_MARKER) {
             return $step;
         }
 

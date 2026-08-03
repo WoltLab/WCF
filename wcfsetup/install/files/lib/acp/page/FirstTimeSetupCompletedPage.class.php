@@ -26,7 +26,7 @@ final class FirstTimeSetupCompletedPage extends AbstractPage
     {
         parent::readData();
 
-        if (\FIRST_TIME_SETUP_STATE != -1) {
+        if (\FIRST_TIME_SETUP_STATE !== -1) {
             $objectAction = new OptionAction(
                 [],
                 'updateAll',

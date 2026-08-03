@@ -90,7 +90,7 @@ final class UnfurlResponse
 
             $acceptLanguages = [];
             $acceptLanguages[] = $defaultLanguage->getBcp47();
-            if ($defaultLanguage->getBcp47() != $defaultLanguage->languageCode) {
+            if ($defaultLanguage->getBcp47() !== $defaultLanguage->languageCode) {
                 $acceptLanguages[] = \sprintf("%s; q=0.8", $defaultLanguage->languageCode);
             }
             $acceptLanguages[] = "*; q=0.1";

@@ -158,7 +158,7 @@ class UserClipboardAction extends AbstractClipboardAction
     {
         if ($ignoreOwnUser) {
             foreach ($userIDs as $index => $userID) {
-                if ($userID == WCF::getUser()->userID) {
+                if ($userID === WCF::getUser()->userID) {
                     unset($userIDs[$index]);
                 }
             }

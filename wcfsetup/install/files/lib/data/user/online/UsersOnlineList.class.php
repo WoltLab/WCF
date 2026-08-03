@@ -136,7 +136,7 @@ class UsersOnlineList extends SessionList
 
             // get groups
             foreach (UserGroup::getGroupsByType() as $group) {
-                if ($group->userOnlineMarking != '%s') {
+                if ($group->userOnlineMarking !== '%s') {
                     $priorities[] = $group->priority;
                     $this->usersOnlineMarkings[] = \str_replace(
                         '%s',
@@ -181,7 +181,7 @@ class UsersOnlineList extends SessionList
      */
     public static function isVisible(int $userID, int $canViewOnlineStatus)
     {
-        if (WCF::getSession()->hasPermission('admin.user.canViewInvisible') || $userID == WCF::getUser()->userID) {
+        if (WCF::getSession()->hasPermission('admin.user.canViewInvisible') || $userID === WCF::getUser()->userID) {
             return true;
         }
 
@@ -223,7 +223,7 @@ class UsersOnlineList extends SessionList
      */
     public static function isVisibleUser(UserOnline $userOnline)
     {
-        if (WCF::getSession()->hasPermission('admin.user.canViewInvisible') || $userOnline->userID == WCF::getUser()->userID) {
+        if (WCF::getSession()->hasPermission('admin.user.canViewInvisible') || $userOnline->userID === WCF::getUser()->userID) {
             return true;
         }
 

@@ -31,7 +31,7 @@ final class CreateArticle
 
         new ResetUserStorageForUnreadArticles()();
 
-        if ($article->publicationStatus == Article::PUBLISHED) {
+        if ($article->publicationStatus === Article::PUBLISHED) {
             if ($article->userID !== null) {
                 ArticleBuilder::incrementArticleCounter($article->userID, 1);
             }

@@ -336,7 +336,7 @@ class TemplateEngine extends SingletonFactory
     {
         if (\is_array($variable)) {
             foreach ($variable as $key => $val) {
-                if ($key != '') {
+                if ($key !== '') {
                     $this->append($key, $val);
                 }
             }
@@ -372,7 +372,7 @@ class TemplateEngine extends SingletonFactory
     {
         if (\is_array($variable)) {
             foreach ($variable as $key => $val) {
-                if ($key != '') {
+                if ($key !== '') {
                     $this->prepend($key, $val);
                 }
             }
@@ -498,7 +498,7 @@ class TemplateEngine extends SingletonFactory
         }
 
         // try to find template within WCF if not already searching WCF
-        if ($application != 'wcf') {
+        if ($application !== 'wcf') {
             $sourceFilename = $this->getSourceFilename($templateName, 'wcf');
             if (!empty($sourceFilename)) {
                 return $sourceFilename;
@@ -521,7 +521,7 @@ class TemplateEngine extends SingletonFactory
             } else {
                 $templateGroupID = $this->getTemplateGroupID();
             }
-            while ($templateGroupID != 0) {
+            while ((int)$templateGroupID !== 0) {
                 $templateGroup = $this->templateGroupCache[$templateGroupID];
 
                 $path = $templatePath . $templateGroup->templateGroupFolderName . $templateName . '.tpl';

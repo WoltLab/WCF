@@ -413,7 +413,7 @@ class ACLHandler extends SingletonFactory
             if (!empty($data[$type]['option'])) {
                 $conditions = new PreparedStatementConditionBuilder();
 
-                if ($type == 'group') {
+                if ($type === 'group') {
                     $conditions->add("groupID IN (?)", [\array_keys($data[$type]['option'])]);
                     $sql = "SELECT  groupID, groupName
                             FROM    wcf1_user_group

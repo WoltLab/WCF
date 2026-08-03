@@ -185,7 +185,7 @@ class UserListPage extends SortablePage
 
         // get marked users
         $this->markedUsers = WCF::getSession()->getVar('markedUsers');
-        if ($this->markedUsers == null || !\is_array($this->markedUsers)) {
+        if ($this->markedUsers === null || !\is_array($this->markedUsers)) {
             $this->markedUsers = [];
         }
 
@@ -257,7 +257,7 @@ class UserListPage extends SortablePage
                     ON          user_option_value.userID = user_table.userID
                     " : '') . "
                 " . $this->conditions . "
-                ORDER BY    " . (($this->sortField != 'email' && isset($this->options[$this->sortField])) ? 'user_option_value.userOption' . $this->options[$this->sortField]->optionID : $this->sortField) . " " . $this->sortOrder;
+                ORDER BY    " . (($this->sortField !== 'email' && isset($this->options[$this->sortField])) ? 'user_option_value.userOption' . $this->options[$this->sortField]->optionID : $this->sortField) . " " . $this->sortOrder;
         $statement = WCF::getDB()->prepare(
             $sql,
             $this->itemsPerPage,
@@ -284,7 +284,7 @@ class UserListPage extends SortablePage
                     LEFT JOIN   wcf1_user_option_value option_value
                     ON          option_value.userID = user_table.userID
                     " . $conditions . "
-                    ORDER BY    " . (($this->sortField != 'email' && isset($this->options[$this->sortField])) ? 'option_value.userOption' . $this->options[$this->sortField]->optionID : 'user_table.' . $this->sortField) . " " . $this->sortOrder;
+                    ORDER BY    " . (($this->sortField !== 'email' && isset($this->options[$this->sortField])) ? 'option_value.userOption' . $this->options[$this->sortField]->optionID : 'user_table.' . $this->sortField) . " " . $this->sortOrder;
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
 
@@ -295,10 +295,10 @@ class UserListPage extends SortablePage
                 $row['groupIDs'] = \implode(',', $groupIDs);
                 $accessible = (!empty($groupIDs) ? UserGroup::isAccessibleGroup($groupIDs) : true);
                 $row['accessible'] = $accessible;
-                $row['deletable'] = ($accessible && WCF::getSession()->hasPermission('admin.user.canDeleteUser') && $row['userID'] != WCF::getUser()->userID) ? 1 : 0;
+                $row['deletable'] = ($accessible && WCF::getSession()->hasPermission('admin.user.canDeleteUser') && $row['userID'] !== WCF::getUser()->userID) ? 1 : 0;
                 $row['editable'] = ($accessible && WCF::getSession()->hasPermission('admin.user.canEditUser')) ? 1 : 0;
-                $row['bannable'] = ($accessible && WCF::getSession()->hasPermission('admin.user.canBanUser') && $row['userID'] != WCF::getUser()->userID) ? 1 : 0;
-                $row['canBeEnabled'] = ($accessible && WCF::getSession()->hasPermission('admin.user.canEnableUser') && $row['userID'] != WCF::getUser()->userID) ? 1 : 0;
+                $row['bannable'] = ($accessible && WCF::getSession()->hasPermission('admin.user.canBanUser') && $row['userID'] !== WCF::getUser()->userID) ? 1 : 0;
+                $row['canBeEnabled'] = ($accessible && WCF::getSession()->hasPermission('admin.user.canEnableUser') && $row['userID'] !== WCF::getUser()->userID) ? 1 : 0;
                 $row['isMarked'] = \intval(\in_array($row['userID'], $this->markedUsers));
 
                 $this->users[] = new UserProfile(new User(null, $row));
@@ -409,16 +409,16 @@ class UserListPage extends SortablePage
     protected function readColumnsHeads()
     {
         foreach ($this->columns as $column) {
-            if ($column == 'likesReceived') {
+            if ($column === 'likesReceived') {
                 $this->columnHeads[$column] = 'wcf.like.likesReceived';
                 continue;
             }
-            if ($column == 'activityPoints') {
+            if ($column === 'activityPoints') {
                 $this->columnHeads[$column] = 'wcf.user.activityPoint';
                 continue;
             }
 
-            if (isset($this->options[$column]) && $column != 'email') {
+            if (isset($this->options[$column]) && $column !== 'email') {
                 $this->columnHeads[$column] = 'wcf.user.option.' . $column;
             } else {
                 $this->columnHeads[$column] = 'wcf.user.' . $column;

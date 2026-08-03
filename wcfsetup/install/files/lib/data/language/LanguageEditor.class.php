@@ -102,7 +102,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                 $writer->write("\$this->items['" . $languageItem . "'] = " . \var_export($languageItemValue, true) . ";\n");
 
                 // compile dynamic language variables
-                if ($category->languageCategory != 'wcf.global' && \strpos($languageItemValue, '{') !== false) {
+                if ($category->languageCategory !== 'wcf.global' && \strpos($languageItemValue, '{') !== false) {
                     try {
                         $output = LanguageFactory::getInstance()->getScriptingCompiler()->compileString(
                             $languageItem,
@@ -377,7 +377,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
             $categoryName = $category->getAttribute('name');
             $elements = $xpath->query('child::*', $category);
 
-            if ($categoryName == 'shadow.invalid.page') {
+            if ($categoryName === 'shadow.invalid.page') {
                 /** @var \DOMElement $element */
                 foreach ($elements as $element) {
                     if (
@@ -393,7 +393,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                         $pageContents[$match[1]][$match[2]] = $element->nodeValue;
                     }
                 }
-            } elseif ($categoryName == 'shadow.invalid.box') {
+            } elseif ($categoryName === 'shadow.invalid.box') {
                 /** @var \DOMElement $element */
                 foreach ($elements as $element) {
                     if (
@@ -425,7 +425,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                     $itemData[] = $itemValue;
                     $itemData[] = $categoryID;
                     if ($packageID) {
-                        if ($packageID == -1) {
+                        if ($packageID === -1) {
                             throw new \BadMethodCallException('Specifying `-1` as the packageID is no longer supported.');
                         }
 
@@ -463,7 +463,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                     }
 
                     // also save old values of custom language items
-                    if ($row['isCustomLanguageItem'] || $row['languageItemValue'] != $languageItemValues[$row['languageItem']]) {
+                    if ($row['isCustomLanguageItem'] || $row['languageItemValue'] !== $languageItemValues[$row['languageItem']]) {
                         $updateValues[] = $row['languageItemID'];
                     }
                 }
@@ -691,10 +691,10 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
      */
     public static function deleteLanguageFiles(string $languageID = '.*', string $category = '.*')
     {
-        if ($category != '.*') {
+        if ($category !== '.*') {
             $category = \preg_quote($category, '~');
         }
-        if ($languageID != '.*') {
+        if ($languageID !== '.*') {
             $languageID = \intval($languageID);
         }
 
@@ -736,7 +736,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         $attributes = $xml->xpath()->query('attribute::*', $rootNode);
         foreach ($attributes as $attribute) {
             \assert($attribute instanceof \DOMAttr);
-            if ($attribute->name == 'languagecode') {
+            if ($attribute->name === 'languagecode') {
                 return $attribute->value;
             }
         }
@@ -756,7 +756,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         $attributes = $xml->xpath()->query('attribute::*', $rootNode);
         foreach ($attributes as $attribute) {
             \assert($attribute instanceof \DOMAttr);
-            if ($attribute->name == 'languagename') {
+            if ($attribute->name === 'languagename') {
                 return $attribute->value;
             }
         }
@@ -776,7 +776,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         $attributes = $xml->xpath()->query('attribute::*', $rootNode);
         foreach ($attributes as $attribute) {
             \assert($attribute instanceof \DOMAttr);
-            if ($attribute->name == 'countrycode') {
+            if ($attribute->name === 'countrycode') {
                 return $attribute->value;
             }
         }

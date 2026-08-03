@@ -40,7 +40,7 @@ class TrophyImporter extends AbstractImporter
             $data['categoryID'] = $this->getImportCategoryID();
         }
 
-        if ($data['type'] == Trophy::TYPE_IMAGE) {
+        if ((int)$data['type'] === Trophy::TYPE_IMAGE) {
             if (!@\file_exists($additionalData['fileLocation'])) {
                 return 0;
             }

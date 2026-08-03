@@ -155,7 +155,7 @@ final class CopyStyle
                 $matches = $regEx->getMatches();
 
                 // check if name matches the pattern 'styleName (x)'
-                if ($styleName == $styleName . ' (' . $matches[1] . ')') {
+                if ($styleName === $styleName . ' (' . $matches[1] . ')') {
                     $numbers[] = $matches[1];
                 }
             }

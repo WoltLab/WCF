@@ -4,6 +4,7 @@ namespace wcf\acp\form;
 
 use wcf\data\category\Category;
 use wcf\data\category\CategoryNodeTree;
+use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyAction;
 use wcf\data\smiley\SmileyEditor;
 use wcf\form\AbstractForm;
@@ -53,6 +54,12 @@ class SmileyAddForm extends AbstractForm
      * @inheritDoc
      */
     public $neededModules = ['MODULE_SMILEY'];
+
+    /**
+     * smiley object
+     * @var Smiley|null
+     */
+    public $smiley;
 
     /**
      * primary smiley code

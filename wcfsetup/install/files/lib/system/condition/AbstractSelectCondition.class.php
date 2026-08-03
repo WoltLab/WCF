@@ -37,7 +37,7 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition
     #[\Override]
     public function getData()
     {
-        if ($this->fieldValue != self::NO_SELECTION_VALUE) {
+        if ($this->fieldValue !== self::NO_SELECTION_VALUE) {
             return [$this->fieldName => $this->fieldValue];
         }
 
@@ -96,7 +96,7 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition
      */
     protected function getOptionCode(string $value, string $label)
     {
-        return '<option value="' . $value . '"' . ($this->fieldValue == $value ? ' selected' : '') . '>' . StringUtil::encodeHTML(WCF::getLanguage()->get($label)) . '</option>';
+        return '<option value="' . $value . '"' . ($this->fieldValue === $value ? ' selected' : '') . '>' . StringUtil::encodeHTML(WCF::getLanguage()->get($label)) . '</option>';
     }
 
     /**
@@ -129,7 +129,7 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition
     #[\Override]
     public function validate()
     {
-        if ($this->fieldValue != self::NO_SELECTION_VALUE) {
+        if ($this->fieldValue !== self::NO_SELECTION_VALUE) {
             $options = $this->getOptions();
 
             if (!isset($options[$this->fieldValue])) {

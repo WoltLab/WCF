@@ -145,7 +145,7 @@ final class ImageUtil
             $exifData = ExifUtil::getExifData($filename);
             if (!empty($exifData)) {
                 $orientation = ExifUtil::getOrientation($exifData);
-                if ($orientation != ExifUtil::ORIENTATION_ORIGINAL) {
+                if ($orientation !== ExifUtil::ORIENTATION_ORIGINAL) {
                     $adapter = ImageHandler::getInstance()->getAdapter();
                     $adapter->loadFile($filename);
 

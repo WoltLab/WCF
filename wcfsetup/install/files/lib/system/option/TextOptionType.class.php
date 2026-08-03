@@ -68,7 +68,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
         }
 
         $value = StringUtil::trim($value ?: '');
-        if ($value == '') {
+        if ($value === '') {
             $conditions->add("option_value.userOption" . $option->optionID . " = ?", ['']);
         } else {
             $conditions->add(
@@ -120,7 +120,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
     public function addCondition(UserList $userList, Option $option, mixed $value)
     {
         $value = StringUtil::trim($value);
-        if ($value == '') {
+        if ($value === '') {
             $userList->getConditionBuilder()->add('user_option_value.userOption' . $option->optionID . ' = ?', ['']);
         } else {
             $userList->getConditionBuilder()->add(
@@ -134,8 +134,8 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
     public function checkUser(User $user, Option $option, mixed $value)
     {
         $value = StringUtil::trim($value);
-        if ($value == '') {
-            return $user->getUserOption($option->optionName) == '';
+        if ($value === '') {
+            return ($user->getUserOption($option->optionName) ?? '') === '';
         } else {
             return \mb_stripos($user->getUserOption($option->optionName), $value) !== false;
         }

@@ -53,7 +53,7 @@ class UserActivityPointUpdateEventsWorker extends AbstractWorker
     {
         $i = 0;
         foreach ($this->objectTypes as $objectType) {
-            if ($i == $this->loopCount) {
+            if ($i === $this->loopCount) {
                 $sql = "UPDATE  wcf1_user_activity_point
                         SET     activityPoints = items * ?
                         WHERE   objectTypeID = ?";

@@ -85,7 +85,7 @@ final class WorkerProxyAction extends AJAXInvokeAction
     {
         AbstractSecureAction::execute();
 
-        if ($this->loopCount == -1) {
+        if ($this->loopCount === -1) {
             $this->sendResponse();
         }
 
@@ -131,7 +131,7 @@ final class WorkerProxyAction extends AJAXInvokeAction
         ];
 
         // include template on startup
-        if ($this->loopCount == -1) {
+        if ($this->loopCount === -1) {
             $returnValues['template'] = WCF::getTPL()->render('wcf', 'shared_worker', []);
         }
 

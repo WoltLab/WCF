@@ -47,7 +47,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
     {
         $this->readInteger('userID', false, 'data');
 
-        if ($this->parameters['data']['userID'] == WCF::getUser()->userID) {
+        if ($this->parameters['data']['userID'] === WCF::getUser()->userID) {
             throw new PermissionDeniedException();
         }
 
@@ -121,7 +121,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 
         // validate ownership
         foreach ($this->getObjects() as $follow) {
-            if ($follow->userID != WCF::getUser()->userID) {
+            if ($follow->userID !== WCF::getUser()->userID) {
                 throw new PermissionDeniedException();
             }
         }

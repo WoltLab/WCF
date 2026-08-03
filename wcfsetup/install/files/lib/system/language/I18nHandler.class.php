@@ -234,7 +234,7 @@ final class I18nHandler extends SingletonFactory
     public function validateValue(string $elementID, bool $requireI18n = false, bool $permitEmptyValue = false): bool
     {
         // do not force i18n if only one language is available
-        if ($requireI18n && \count($this->availableLanguages) == 1) {
+        if ($requireI18n && \count($this->availableLanguages) === 1) {
             $requireI18n = false;
         }
 
@@ -244,7 +244,7 @@ final class I18nHandler extends SingletonFactory
                 return true;
             }
 
-            if ($requireI18n || $this->getValue($elementID) == '') {
+            if ($requireI18n || $this->getValue($elementID) === '') {
                 return false;
             }
         } elseif ($requireI18n && (!isset($this->i18nValues[$elementID]) || empty($this->i18nValues[$elementID]))) {
@@ -283,7 +283,7 @@ final class I18nHandler extends SingletonFactory
         $row = $statement->fetchArray();
         $languageCategoryID = $row['languageCategoryID'];
 
-        if (\count($this->availableLanguages) == 1) {
+        if (\count($this->availableLanguages) === 1) {
             $languageIDs = \array_keys($this->availableLanguages);
         } else {
             if (\is_array($elementID)) {
@@ -445,7 +445,7 @@ final class I18nHandler extends SingletonFactory
                         $languageItemValue = StringUtil::unifyNewlines($row['languageItemValue']);
                         $i18nValues[$row['languageID']] = StringUtil::encodeJS($languageItemValue);
 
-                        if ($row['languageID'] == LanguageFactory::getInstance()->getDefaultLanguageID()) {
+                        if ($row['languageID'] === LanguageFactory::getInstance()->getDefaultLanguageID()) {
                             $value = $languageItemValue;
                         }
                     }

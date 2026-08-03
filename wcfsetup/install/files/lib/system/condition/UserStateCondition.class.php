@@ -95,7 +95,7 @@ class UserStateCondition extends AbstractSingleFieldCondition implements
     public function checkUser(Condition $condition, User $user)
     {
         $userIsBanned = $condition->userIsBanned;
-        if ($userIsBanned !== null && $user->banned != $userIsBanned) {
+        if ($userIsBanned !== null && $user->banned !== $userIsBanned) {
             return false;
         }
 

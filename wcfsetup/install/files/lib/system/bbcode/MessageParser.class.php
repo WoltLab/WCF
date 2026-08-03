@@ -49,7 +49,7 @@ class MessageParser extends BBCodeParser
     {
         parent::init();
 
-        if (\MODULE_SMILEY == 1) {
+        if (\MODULE_SMILEY === 1) {
             // get smilies
             $smilies = SmileyCache::getInstance()->getSmilies();
             $categories = SmileyCache::getInstance()->getCategories();
@@ -98,11 +98,11 @@ class MessageParser extends BBCodeParser
             $this->message = StringUtil::encodeHTML($this->message);
 
             // converts newlines to <br>'s
-            if ($this->getOutputType() == 'text/html') {
+            if ($this->getOutputType() === 'text/html') {
                 $this->message = \nl2br($this->message, false);
             }
         } else {
-            if ($this->getOutputType() == 'text/simplified-html') {
+            if ($this->getOutputType() === 'text/simplified-html') {
                 $this->message = StringUtil::stripHTML($this->message);
             }
         }

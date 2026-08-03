@@ -221,7 +221,7 @@ final class PackageValidationArchive implements \RecursiveIterator
                 );
             }
 
-            if ($validationMode == PackageValidationManager::VALIDATION_RECURSIVE) {
+            if ($validationMode === PackageValidationManager::VALIDATION_RECURSIVE) {
                 $this->validatePackageInstallationPlugins('install', $instructions);
             }
         } else {

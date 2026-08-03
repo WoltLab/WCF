@@ -61,7 +61,7 @@ namespace {
 	}
 
 	// define DOCUMENT_ROOT on IIS if not set
-	if (PHP_EOL == "\r\n") {
+	if (PHP_EOL === "\r\n") {
 		if (!isset($_SERVER['DOCUMENT_ROOT']) && isset($_SERVER['SCRIPT_FILENAME'])) {
 			$_SERVER['DOCUMENT_ROOT'] = str_replace('\\', '/', substr($_SERVER['SCRIPT_FILENAME'], 0, 0 - strlen($_SERVER['PHP_SELF'])));
 		}

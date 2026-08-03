@@ -258,7 +258,7 @@ abstract class AbstractPage implements IPage
 
             $requestURL = Url::parse($requestURI);
             $redirect = false;
-            if ($canonicalURL['path'] != $requestURL['path']) {
+            if ($canonicalURL['path'] !== $requestURL['path']) {
                 $redirect = true;
             } elseif (isset($canonicalURL['query'])) {
                 if (!isset($requestURL['query'])) {
@@ -268,7 +268,7 @@ abstract class AbstractPage implements IPage
                     \parse_str($requestURL['query'], $rQueryString);
 
                     foreach ($cQueryString as $key => $value) {
-                        if (!isset($rQueryString[$key]) || $rQueryString[$key] != $value) {
+                        if (!isset($rQueryString[$key]) || $rQueryString[$key] !== $value) {
                             $redirect = true;
                             break;
                         }
@@ -335,7 +335,7 @@ abstract class AbstractPage implements IPage
             $className = \preg_replace('~(Form|Page)$~', '', \array_pop($classParts));
 
             // check if this an *Edit page and use the add-template instead
-            if (\substr($className, -4) == 'Edit') {
+            if (\substr($className, -4) === 'Edit') {
                 $className = \substr($className, 0, -4) . 'Add';
             }
 

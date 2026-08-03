@@ -38,7 +38,7 @@ class CycleFunctionTemplatePlugin implements IFunctionTemplatePlugin
                 throw new SystemException("missing 'values' argument in cycle tag");
             }
         } else {
-            if (isset($this->cycles[$name]['values']) && $this->cycles[$name]['values'] != $tagArgs['values']) {
+            if (isset($this->cycles[$name]['values']) && $this->cycles[$name]['values'] !== $tagArgs['values']) {
                 $this->cycles[$name]['index'] = 0;
             }
             $this->cycles[$name]['values'] = $tagArgs['values'];

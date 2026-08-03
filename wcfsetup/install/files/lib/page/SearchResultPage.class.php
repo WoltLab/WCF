@@ -86,10 +86,10 @@ class SearchResultPage extends MultipleLinkPage
             $this->searchID = \intval($_REQUEST['id']);
         }
         $this->search = new Search($this->searchID);
-        if ($this->search->isNil() || $this->search->searchType != 'messages') {
+        if ($this->search->isNil() || $this->search->searchType !== 'messages') {
             $this->redirectOrReject();
         }
-        if ($this->search->userID && $this->search->userID != WCF::getUser()->userID) {
+        if ($this->search->userID && $this->search->userID !== WCF::getUser()->userID) {
             $this->redirectOrReject();
         }
 
@@ -128,7 +128,7 @@ class SearchResultPage extends MultipleLinkPage
         $this->readMessages();
 
         // set active menu item
-        if (isset($this->searchData['selectedObjectTypes']) && \count($this->searchData['selectedObjectTypes']) == 1) {
+        if (isset($this->searchData['selectedObjectTypes']) && \count($this->searchData['selectedObjectTypes']) === 1) {
             $objectType = SearchEngine::getInstance()->getObjectType(\reset($this->searchData['selectedObjectTypes']));
             $objectType->setLocation();
         }

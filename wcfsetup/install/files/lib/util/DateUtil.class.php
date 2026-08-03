@@ -316,7 +316,7 @@ final class DateUtil
      */
     public static function localizeDate(string $date, string $format, Language $language)
     {
-        if ($language->languageCode != 'en') {
+        if ($language->languageCode !== 'en') {
             // full textual representation of the day of the week (l)
             if (\strpos($format, 'l') !== false) {
                 $date = \str_replace(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], [
@@ -455,7 +455,7 @@ final class DateUtil
             $age = $now->format('Y') - $year;
             if ($now->format('n') < $month) {
                 $age--;
-            } elseif ($now->format('n') == $month && $now->format('j') < $day) {
+            } elseif ((int)$now->format('n') === $month && $now->format('j') < $day) {
                 $age--;
             }
 
@@ -491,7 +491,7 @@ final class DateUtil
     {
         if (self::$firstDayOfTheWeek === null) {
             self::$firstDayOfTheWeek = \intval(WCF::getLanguage()->get('wcf.date.firstDayOfTheWeek'));
-            if (self::$firstDayOfTheWeek != 1 && self::$firstDayOfTheWeek != 0) {
+            if (self::$firstDayOfTheWeek !== 1 && self::$firstDayOfTheWeek !== 0) {
                 self::$firstDayOfTheWeek = 0;
             }
         }
@@ -507,7 +507,7 @@ final class DateUtil
     public static function getWeekDays()
     {
         if (self::$weekDays === null) {
-            if (self::getFirstDayOfTheWeek() == 1) {
+            if (self::getFirstDayOfTheWeek() === 1) {
                 self::$weekDays = [
                     1 => 'monday',
                     2 => 'tuesday',
@@ -541,7 +541,7 @@ final class DateUtil
     public static function getShortWeekDays()
     {
         if (self::$shortWeekDays === null) {
-            if (self::getFirstDayOfTheWeek() == 1) {
+            if (self::getFirstDayOfTheWeek() === 1) {
                 self::$shortWeekDays = [
                     1 => 'mon',
                     2 => 'tue',
@@ -577,7 +577,7 @@ final class DateUtil
         $date = new \DateTime();
         $date->setISODate($year, 53, self::getFirstDayOfTheWeek());
 
-        return $date->format('W') == 53 ? 53 : 52;
+        return (int)$date->format('W') === 53 ? 53 : 52;
     }
 
     /**

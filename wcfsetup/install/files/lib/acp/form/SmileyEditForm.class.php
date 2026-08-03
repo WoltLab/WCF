@@ -32,12 +32,6 @@ class SmileyEditForm extends SmileyAddForm
      */
     public $neededPermissions = ['admin.content.smiley.canManageSmiley'];
 
-    /**
-     * smiley object
-     * @var Smiley
-     */
-    public $smiley;
-
     #[\Override]
     public function readParameters()
     {

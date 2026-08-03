@@ -51,11 +51,11 @@ abstract class AbstractAuthedPage extends AbstractPage
     {
         if (isset($_REQUEST['at'])) {
             if (\preg_match('~^(?P<userID>\d{1,10})-(?P<token>[a-f0-9]{40})$~', $_REQUEST['at'], $matches)) {
-                $userID = $matches['userID'];
+                $userID = (int)$matches['userID'];
                 $token = $matches['token'];
 
                 if (!WCF::getUser()->isGuest()) {
-                    if ($userID == WCF::getUser()->userID && \hash_equals(WCF::getUser()->accessToken, $token)) {
+                    if ($userID === WCF::getUser()->userID && \hash_equals(WCF::getUser()->accessToken, $token)) {
                         // everything is fine, but we are already logged in
                         return;
                     } else {

@@ -189,7 +189,7 @@ class ClipboardHandler extends SingletonFactory
     public function getObjectTypeByName(string $objectType)
     {
         foreach ($this->cache['objectTypes'] as $objectTypeID => $objectTypeObj) {
-            if ($objectTypeObj->objectType == $objectType) {
+            if ($objectTypeObj->objectType === $objectType) {
                 return $objectTypeID;
             }
         }
@@ -242,8 +242,8 @@ class ClipboardHandler extends SingletonFactory
             }
 
             if (!isset($data[$objectType->objectType])) {
-                $listClassName = $objectType->listclassname;
-                if ($listClassName == '') {
+                $listClassName = $objectType->listclassname ?? '';
+                if ($listClassName === '') {
                     throw new SystemException("Missing list class for object type '" . $objectType->objectType . "'");
                 }
 

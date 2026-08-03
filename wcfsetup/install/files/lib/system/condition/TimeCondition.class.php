@@ -157,7 +157,7 @@ HTML;
     #[\Override]
     public function validate()
     {
-        if ($this->startTime == '00:00' && $this->endTime == '00:00') {
+        if ($this->startTime === '00:00' && $this->endTime === '00:00') {
             $this->startTime = $this->endTime = '';
 
             return;

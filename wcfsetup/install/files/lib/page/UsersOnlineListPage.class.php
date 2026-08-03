@@ -129,7 +129,7 @@ class UsersOnlineListPage extends SortablePage
     protected function readObjects()
     {
         if ($this->sqlOrderBy) {
-            $this->sqlOrderBy = ($this->sortField == 'lastActivityTime' ? 'session.' : '') . $this->sqlOrderBy;
+            $this->sqlOrderBy = ($this->sortField === 'lastActivityTime' ? 'session.' : '') . $this->sqlOrderBy;
         }
 
         $originalSqlOrderBy = $this->sqlOrderBy;

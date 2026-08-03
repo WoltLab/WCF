@@ -104,11 +104,11 @@ class EditHistoryPage extends AbstractPage
             // if new version isn't 'current' check whether they are comparable
             if ($this->new) {
                 // different objectTypes cannot be compared
-                if ($this->old->objectTypeID != $this->new->objectTypeID) {
+                if ($this->old->objectTypeID !== $this->new->objectTypeID) {
                     throw new IllegalLinkException();
                 }
                 // different items cannot be compared
-                if ($this->old->objectID != $this->new->objectID) {
+                if ($this->old->objectID !== $this->new->objectID) {
                     throw new IllegalLinkException();
                 }
             }
@@ -146,7 +146,7 @@ class EditHistoryPage extends AbstractPage
             $this->newID = 'current';
         }
 
-        if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'raw') {
+        if (isset($_REQUEST['mode']) && $_REQUEST['mode'] === 'raw') {
             $this->mode = 'raw';
         }
 

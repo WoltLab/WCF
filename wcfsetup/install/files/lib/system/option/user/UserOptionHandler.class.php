@@ -232,7 +232,7 @@ class UserOptionHandler extends OptionHandler
                 $hasProperty = \property_exists($optionType, 'forceSearchOption');
 
                 if ($hasProperty && isset($this->optionValues[$option->optionName])) {
-                    $optionType->forceSearchOption = $this->optionValues[$option->optionName] == $option->defaultValue;
+                    $optionType->forceSearchOption = $this->optionValues[$option->optionName] === $option->defaultValue;
                 }
 
                 $element = $optionType->getSearchFormElement($option, ($this->optionValues[$option->optionName] ?? null));
@@ -257,18 +257,18 @@ class UserOptionHandler extends OptionHandler
 
         parent::validateOption($option);
 
-        if ($option->required && $option->optionType != 'boolean' && empty($this->optionValues[$option->optionName])) {
+        if ($option->required && $option->optionType !== 'boolean' && empty($this->optionValues[$option->optionName])) {
             // Do not throw an error if the current user is an administrator and is not editing themselves.
             if (
                 !WCF::getUser()->hasAdministrativeAccess()
-                || ($this->user && $this->user->userID == WCF::getUser()->userID)
+                || ($this->user && $this->user->userID === WCF::getUser()->userID)
             ) {
                 throw new UserInputException($option->optionName);
             }
         }
 
         if (\REGISTER_MIN_USER_AGE) {
-            if ($this->inRegistration && $option->optionName == 'birthday') {
+            if ($this->inRegistration && $option->optionName === 'birthday') {
                 if (empty($this->optionValues[$option->optionName])) {
                     throw new UserInputException($option->optionName);
                 }
@@ -283,7 +283,7 @@ class UserOptionHandler extends OptionHandler
     #[\Override]
     protected function checkCategory(OptionCategory $category)
     {
-        if ($category->categoryName == 'hidden') {
+        if ($category->categoryName === 'hidden') {
             return false;
         }
 
@@ -305,7 +305,7 @@ class UserOptionHandler extends OptionHandler
             && !$option->askDuringRegistration
             && !$option->required
             && !($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION)
-            && ($option->optionName != 'birthday' || !\REGISTER_MIN_USER_AGE)
+            && ($option->optionName !== 'birthday' || !\REGISTER_MIN_USER_AGE)
         ) {
             return false;
         }
@@ -348,7 +348,7 @@ class UserOptionHandler extends OptionHandler
                     && !$option->askDuringRegistration
                     && !($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION)
                     && !$option->required
-                    && ($option->optionName != 'birthday' || !\REGISTER_MIN_USER_AGE)
+                    && ($option->optionName !== 'birthday' || !\REGISTER_MIN_USER_AGE)
                 ) {
                     unset($options[$option->optionID]);
                 }

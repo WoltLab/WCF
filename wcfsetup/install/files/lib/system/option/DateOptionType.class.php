@@ -43,7 +43,7 @@ class DateOptionType extends TextOptionType
     #[\Override]
     public function compare(mixed $value1, mixed $value2)
     {
-        if ($value1 == $value2) {
+        if ($value1 === $value2) {
             return 0;
         }
 
@@ -53,7 +53,7 @@ class DateOptionType extends TextOptionType
     #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
-        if ($value == '0000-00-00') {
+        if ($value === '0000-00-00') {
             $value = '';
         }
 

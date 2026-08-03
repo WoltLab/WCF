@@ -48,7 +48,7 @@ class ACPMenu extends TreeMenu
     {
         parent::loadCache();
 
-        if (\PACKAGE_ID == 0) {
+        if (\PACKAGE_ID === 0) {
             return;
         }
 

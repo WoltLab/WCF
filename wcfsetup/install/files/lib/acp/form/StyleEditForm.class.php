@@ -174,7 +174,7 @@ class StyleEditForm extends StyleAddForm
 
         // fix empty values ~""
         foreach ($this->variables as &$variableValue) {
-            if ($variableValue == '~""') {
+            if ($variableValue === '~""') {
                 $variableValue = '';
             }
         }

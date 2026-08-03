@@ -85,7 +85,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
         $flushPermissions = false;
         WCF::getDB()->beginTransaction();
         foreach ($options as $id => $value) {
-            if (isset($oldValues[$id]) && $value != $oldValues[$id]['optionValue']) {
+            if (isset($oldValues[$id]) && $value !== $oldValues[$id]['optionValue']) {
                 $flushPermissions = true;
             }
 
@@ -147,7 +147,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
             $writeValue = $option->optionValue;
             if ($writeValue === null) {
                 $writeValue = "''";
-            } elseif ($option->optionType == 'boolean' || $option->optionType == 'integer') {
+            } elseif ($option->optionType === 'boolean' || $option->optionType === 'integer') {
                 $writeValue = \intval($option->optionValue);
             } else {
                 $writeValue = "'" . \addcslashes($option->optionValue, "'\\") . "'";

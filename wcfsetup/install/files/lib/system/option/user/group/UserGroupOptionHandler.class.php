@@ -75,7 +75,7 @@ class UserGroupOptionHandler extends OptionHandler
     {
         if (parent::checkOption($option)) {
             // check if permission is available for guests if group is guests
-            if ($this->group && $this->group->groupType == UserGroup::GUESTS && $option->usersOnly) {
+            if ($this->group && $this->group->groupType === UserGroup::GUESTS && $option->usersOnly) {
                 return false;
             }
 
@@ -168,7 +168,7 @@ class UserGroupOptionHandler extends OptionHandler
             $typeObj->compare(
                 $this->optionValues[$option->optionName],
                 WCF::getSession()->getPermission($option->optionName)
-            ) == 1
+            ) === 1
         ) {
             throw new UserInputException($option->optionName, 'exceedsOwnPermission');
         }

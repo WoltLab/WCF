@@ -188,7 +188,7 @@ class NoticeAddForm extends AbstractForm
 
         $this->objectAction = new NoticeAction([], 'create', [
             'data' => \array_merge($this->additionalFields, [
-                'cssClassName' => $this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName,
+                'cssClassName' => $this->cssClassName === 'custom' ? $this->customCssClassName : $this->cssClassName,
                 'isDisabled' => $this->isDisabled,
                 'isDismissible' => $this->isDismissible,
                 'notice' => I18nHandler::getInstance()->isPlainValue('notice') ? I18nHandler::getInstance()->getValue('notice') : '',
@@ -273,7 +273,7 @@ class NoticeAddForm extends AbstractForm
         // validate class name
         if (empty($this->cssClassName)) {
             throw new UserInputException('cssClassName');
-        } elseif ($this->cssClassName == 'custom') {
+        } elseif ($this->cssClassName === 'custom') {
             if (empty($this->cssClassName)) {
                 throw new UserInputException('cssClassName');
             }

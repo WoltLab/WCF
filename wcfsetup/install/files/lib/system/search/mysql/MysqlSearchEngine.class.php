@@ -72,7 +72,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
                                 " . $objectType->getTimeFieldName() . " AS time,
                                 " . $objectType->getUsernameFieldName() . " AS username,
                                 '" . $objectTypeName . "' AS objectType
-                                " . ($orderBy == 'relevance ASC' || $orderBy == 'relevance DESC' ? ',search_index.relevance' : '') . "
+                                " . ($orderBy === 'relevance ASC' || $orderBy === 'relevance DESC' ? ',search_index.relevance' : '') . "
                     FROM        " . $objectType->getTableName() . "
                     INNER JOIN  ({WCF_SEARCH_INNER_JOIN}) search_index
                     ON          " . $objectType->getIDFieldName() . " = search_index.objectID
@@ -148,7 +148,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
                 [$q]
             );
 
-            if ($orderBy == 'relevance ASC' || $orderBy == 'relevance DESC') {
+            if ($orderBy === 'relevance ASC' || $orderBy === 'relevance DESC') {
                 $escapedQuery = WCF::getDB()->escapeString($q);
                 $relevanceCalc = "MATCH (subject" . (!$subjectOnly ? ', message, metaData' : '') . ") AGAINST ('" . $escapedQuery . "') + (5 / (1 + POW(LN(1 + (" . \TIME_NOW . " - time) / 2592000), 2))) AS relevance";
             }
@@ -160,7 +160,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
                 WHERE   " . ($fulltextCondition !== null ? $fulltextCondition : '') . "
                 " . (($searchIndexCondition !== null && $searchIndexCondition->__toString()) ? ($fulltextCondition !== null ? "AND " : '') . $searchIndexCondition : '') . "
                 " . (!empty($orderBy) && $fulltextCondition === null ? 'ORDER BY ' . $orderBy : '') . "
-                LIMIT   " . ($limit == 1000 ? SearchEngine::INNER_SEARCH_LIMIT : $limit);
+                LIMIT   " . ($limit === 1000 ? SearchEngine::INNER_SEARCH_LIMIT : $limit);
 
         return [
             'fulltextCondition' => $fulltextCondition,
@@ -353,7 +353,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
             $char = $query[$i];
 
             // Treat ASCII control characters as spaces.
-            if (\ord($query[$i]) < 0x20 || \ord($query[$i]) == 0x7f) {
+            if (\ord($query[$i]) < 0x20 || \ord($query[$i]) === 0x7f) {
                 $char = " ";
             }
 
@@ -459,7 +459,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
                     $suffix = $char;
                     $i++;
                     continue;
-                } elseif ($char == '@') {
+                } elseif ($char === '@') {
                     $state = 'atSign';
                     $i++;
                     continue;

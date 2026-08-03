@@ -503,7 +503,7 @@ final class StringUtil
         $filter = self::trim($filter);
         $word = \mb_strtolower($word);
 
-        if ($filter != '') {
+        if ($filter !== '') {
             $forbiddenNames = \explode("\n", \mb_strtolower(self::unifyNewlines($filter)));
             foreach ($forbiddenNames as $forbiddenName) {
                 // ignore empty lines in between actual values
@@ -518,7 +518,7 @@ final class StringUtil
                         return false;
                     }
                 } else {
-                    if ($word == $forbiddenName) {
+                    if ($word === $forbiddenName) {
                         return false;
                     }
                 }
@@ -537,7 +537,7 @@ final class StringUtil
         string $etc = self::HELLIP,
         bool $breakWords = false
     ): string {
-        if ($length == 0) {
+        if ($length === 0) {
             return '';
         }
 

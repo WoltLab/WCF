@@ -107,7 +107,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 
             // save level 1 categories
             // @phpstan-ignore property.notFound
-            if ($category->parentCategoryName == '') {
+            if ($category->parentCategoryName === '') {
                 // @phpstan-ignore property.notFound
                 $this->topCategories[] = $category->categoryName;
             }

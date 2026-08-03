@@ -183,7 +183,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
                             $exifData = ExifUtil::getExifData($object->getLocation());
                             if (!empty($exifData)) {
                                 $orientation = ExifUtil::getOrientation($exifData);
-                                if ($orientation != ExifUtil::ORIENTATION_ORIGINAL) {
+                                if ($orientation !== ExifUtil::ORIENTATION_ORIGINAL) {
                                     $adapter->loadFile($object->getLocation());
 
                                     $newImage = null;
@@ -219,7 +219,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
                                     $adapter->writeImage($object->getLocation());
 
                                     // update width, height and filesize of the object
-                                    $isRotatedBy90Degrees = $orientation == ExifUtil::ORIENTATION_90_ROTATE || $orientation == ExifUtil::ORIENTATION_270_ROTATE;
+                                    $isRotatedBy90Degrees = $orientation === ExifUtil::ORIENTATION_90_ROTATE || $orientation === ExifUtil::ORIENTATION_270_ROTATE;
                                     if ($newImage !== null && $isRotatedBy90Degrees) {
                                         $updateData = \array_merge($updateData, [
                                             'height' => $object->width,
@@ -228,7 +228,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
                                         ]);
                                     } elseif (
                                         $newImage !== null
-                                        && $orientation == ExifUtil::ORIENTATION_180_ROTATE
+                                        && $orientation === ExifUtil::ORIENTATION_180_ROTATE
                                     ) {
                                         $updateData = \array_merge($updateData, [
                                             'filesize' => \filesize($object->getLocation()),

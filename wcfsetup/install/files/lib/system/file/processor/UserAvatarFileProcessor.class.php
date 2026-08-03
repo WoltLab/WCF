@@ -118,8 +118,8 @@ final class UserAvatarFileProcessor extends AbstractFileProcessor
         }
 
         if (
-            $imageData[0] != UserAvatarFileProcessor::AVATAR_SIZE
-            && $imageData[0] != UserAvatarFileProcessor::AVATAR_SIZE_2X
+            $imageData[0] !== UserAvatarFileProcessor::AVATAR_SIZE
+            && $imageData[0] !== UserAvatarFileProcessor::AVATAR_SIZE_2X
         ) {
             throw new UserInputException('file', 'wrongSize');
         }

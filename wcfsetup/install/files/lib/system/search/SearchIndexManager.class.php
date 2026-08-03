@@ -79,7 +79,7 @@ class SearchIndexManager extends SingletonFactory implements IContextAwareSearch
     protected function getSearchIndexManager(): ISearchIndexManager
     {
         if ($this->searchIndexManager === null) {
-            if (\SEARCH_ENGINE != 'mysql') {
+            if (\SEARCH_ENGINE !== 'mysql') {
                 $className = 'wcf\system\search\\' . \SEARCH_ENGINE . '\\' . \ucfirst(\SEARCH_ENGINE) . 'SearchIndexManager';
                 if (!\class_exists($className)) {
                     $className = MysqlSearchIndexManager::class;

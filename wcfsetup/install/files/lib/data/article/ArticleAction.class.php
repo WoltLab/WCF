@@ -160,7 +160,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
 
         new ResetUserStorageForUnreadArticles()();
 
-        if ($article->publicationStatus == Article::PUBLISHED) {
+        if ($article->publicationStatus === Article::PUBLISHED) {
             ArticleEditor::updateArticleCounter([$article->userID => 1]);
 
             UserObjectWatchHandler::getInstance()->updateObject(
@@ -222,7 +222,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
                         $articleContentEditor->update($updateData);
 
                         $versionData[] = $articleContent;
-                        if ($articleContent->content != $content['content'] || $articleContent->teaser != $content['teaser'] || $articleContent->title != $content['title']) {
+                        if ($articleContent->content !== $content['content'] || $articleContent->teaser !== $content['teaser'] || $articleContent->title !== $content['title']) {
                             $hasChanges = true;
                         }
 
@@ -289,7 +289,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
                     // save embedded objects
                     if (!empty($content['htmlInputProcessor'])) {
                         $content['htmlInputProcessor']->setObjectID($articleContent->articleContentID);
-                        if ($articleContent->hasEmbeddedObjects != MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
+                        if ((bool)$articleContent->hasEmbeddedObjects !== MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
                             $articleContentEditor->update(['hasEmbeddedObjects' => $articleContent->hasEmbeddedObjects ? 0 : 1]);
                         }
                     }
@@ -307,20 +307,21 @@ class ArticleAction extends AbstractDatabaseObjectAction
 
         $publicationStatus = (isset($this->parameters['data']['publicationStatus'])) ? $this->parameters['data']['publicationStatus'] : null;
         if ($publicationStatus !== null) {
+            $publicationStatus = (int)$publicationStatus;
             $usersToArticles = $resetArticleIDs = [];
             /** @var ArticleEditor $articleEditor */
             foreach ($this->objects as $articleEditor) {
-                if ($publicationStatus != $articleEditor->publicationStatus) {
+                if ($publicationStatus !== $articleEditor->publicationStatus) {
                     // The article was published before or was now published.
-                    if ($publicationStatus == Article::PUBLISHED || $articleEditor->publicationStatus == Article::PUBLISHED) {
+                    if ($publicationStatus === Article::PUBLISHED || $articleEditor->publicationStatus === Article::PUBLISHED) {
                         if (!isset($usersToArticles[$articleEditor->userID])) {
                             $usersToArticles[$articleEditor->userID] = 0;
                         }
 
-                        $usersToArticles[$articleEditor->userID] += ($publicationStatus == Article::PUBLISHED) ? 1 : -1;
+                        $usersToArticles[$articleEditor->userID] += ($publicationStatus === Article::PUBLISHED) ? 1 : -1;
                     }
 
-                    if ($publicationStatus == Article::PUBLISHED) {
+                    if ($publicationStatus === Article::PUBLISHED) {
                         UserObjectWatchHandler::getInstance()->updateObject(
                             'com.woltlab.wcf.article.category',
                             $articleEditor->getCategory()->categoryID,
@@ -369,7 +370,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
             $statement = WCF::getDB()->prepare($sql);
 
             foreach ($this->objects as $articleEditor) {
-                if ($articleEditor->userID != $this->parameters['data']['userID']) {
+                if ($articleEditor->userID !== $this->parameters['data']['userID']) {
                     $statement->execute([
                         $this->parameters['data']['userID'],
                         UserActivityEventHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.article.recentActivityEvent'),
@@ -427,7 +428,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
                 }
             }
 
-            if ($article->publicationStatus == Article::PUBLISHED) {
+            if ($article->publicationStatus === Article::PUBLISHED) {
                 if (!isset($usersToArticles[$article->userID])) {
                     $usersToArticles[$article->userID] = 0;
                 }
@@ -726,7 +727,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
                 throw new PermissionDeniedException();
             }
 
-            if ($article->publicationStatus == Article::PUBLISHED) {
+            if ($article->publicationStatus === Article::PUBLISHED) {
                 throw new UserInputException('objectIDs');
             }
         }
@@ -770,7 +771,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
                 throw new PermissionDeniedException();
             }
 
-            if ($article->publicationStatus != Article::PUBLISHED) {
+            if ($article->publicationStatus !== Article::PUBLISHED) {
                 throw new UserInputException('objectIDs');
             }
         }

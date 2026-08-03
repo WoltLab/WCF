@@ -52,7 +52,7 @@ class BoxEditForm extends BoxAddForm
         if ($this->box->isNil()) {
             throw new IllegalLinkException();
         }
-        if ($this->box->boxType == 'menu') {
+        if ($this->box->boxType === 'menu') {
             // it's not allowed to edit menu boxes directly
             throw new IllegalLinkException();
         }
@@ -70,7 +70,7 @@ class BoxEditForm extends BoxAddForm
     #[\Override]
     protected function validateName()
     {
-        if (\mb_strtolower($this->name) != \mb_strtolower($this->box->name)) {
+        if (\mb_strtolower($this->name) !== \mb_strtolower($this->box->name)) {
             parent::validateName();
         }
     }
@@ -81,7 +81,7 @@ class BoxEditForm extends BoxAddForm
         AbstractForm::save();
 
         $content = [];
-        if ($this->boxType == 'system' || $this->isMultilingual) {
+        if ($this->boxType === 'system' || $this->isMultilingual) {
             foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                 $content[$language->languageID] = [
                     'title' => !empty($this->title[$language->languageID]) ? $this->title[$language->languageID] : '',
@@ -173,7 +173,7 @@ class BoxEditForm extends BoxAddForm
         $this->saved();
 
         // Ensure that the CKEditor has the correct content after save.
-        if ($this->boxType == 'text') {
+        if ($this->boxType === 'text') {
             if ($this->isMultilingual) {
                 foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                     $this->content[$language->languageID] = isset($this->htmlInputProcessors[$language->languageID]) ?

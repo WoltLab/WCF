@@ -405,7 +405,7 @@ final class UserExportGdprAction extends AbstractAction
 
                 $optionValue = $this->user->getUserOption($option->optionName);
                 if ($option->optionType === 'boolean') {
-                    $optionValue = ($optionValue == 1);
+                    $optionValue = (bool)$optionValue;
                 } else {
                     if ($option->optionType === 'select' || $option->optionType === 'timezone') {
                         $formattedValue = $this->user->getFormattedUserOption($option->optionName);

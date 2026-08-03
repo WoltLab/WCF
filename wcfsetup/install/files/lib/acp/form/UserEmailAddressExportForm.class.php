@@ -94,7 +94,7 @@ class UserEmailAddressExportForm extends AbstractForm
     {
         parent::readFormParameters();
 
-        if (isset($_POST['fileType']) && $_POST['fileType'] == 'xml') {
+        if (isset($_POST['fileType']) && $_POST['fileType'] === 'xml') {
             $this->fileType = $_POST['fileType'];
         }
         if (isset($_POST['separator'])) {
@@ -114,7 +114,7 @@ class UserEmailAddressExportForm extends AbstractForm
         \header('Content-Type: text/' . $this->fileType . '; charset=UTF-8');
         \header('Content-Disposition: attachment; filename="export.' . $this->fileType . '"');
 
-        if ($this->fileType == 'xml') {
+        if ($this->fileType === 'xml') {
             echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<users>\n";
         }
 
@@ -130,14 +130,14 @@ class UserEmailAddressExportForm extends AbstractForm
         $statement->execute($conditions->getParameters());
 
         while ($row = $statement->fetchArray()) {
-            if ($this->fileType == 'xml') {
+            if ($this->fileType === 'xml') {
                 echo "<user><username><![CDATA[" . StringUtil::escapeCDATA($row['username']) . "]]></username><email><![CDATA[" . StringUtil::escapeCDATA($row['email']) . "]]></email></user>\n";
             } else {
                 echo $this->textSeparator . \str_replace($this->textSeparator, $this->textSeparator . $this->textSeparator, $row['username']) . $this->textSeparator . $this->separator . $this->textSeparator . \str_replace($this->textSeparator, $this->textSeparator . $this->textSeparator, $row['email']) . $this->textSeparator . "\n";
             }
         }
 
-        if ($this->fileType == 'xml') {
+        if ($this->fileType === 'xml') {
             echo "</users>";
         }
 

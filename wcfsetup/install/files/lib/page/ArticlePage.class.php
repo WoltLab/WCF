@@ -79,7 +79,7 @@ class ArticlePage extends AbstractPage
             WCF::getUser()->isGuest()
             && $this->article->isMultilingual
             && $this->articleContent->languageID !== null
-            && $this->articleContent->languageID != WCF::getLanguage()->languageID
+            && $this->articleContent->languageID !== WCF::getLanguage()->languageID
         ) {
             WCF::setLanguage($this->articleContent->languageID);
         }
@@ -171,10 +171,10 @@ class ArticlePage extends AbstractPage
     {
         $articleList = new CategoryArticleList($this->article->categoryID);
         $articleList->getConditionBuilder()->add(
-            'article.time ' . (\ARTICLE_SORT_ORDER == 'DESC' ? '>' : '<') . ' ?',
+            'article.time ' . (\ARTICLE_SORT_ORDER === 'DESC' ? '>' : '<') . ' ?',
             [$this->article->time]
         );
-        $articleList->sqlOrderBy = 'article.time ' . (\ARTICLE_SORT_ORDER == 'DESC' ? 'ASC' : 'DESC');
+        $articleList->sqlOrderBy = 'article.time ' . (\ARTICLE_SORT_ORDER === 'DESC' ? 'ASC' : 'DESC');
         $articleList->sqlLimit = 1;
         $articleList->readObjects();
         foreach ($articleList as $article) {
@@ -186,7 +186,7 @@ class ArticlePage extends AbstractPage
     {
         $articleList = new CategoryArticleList($this->article->categoryID);
         $articleList->getConditionBuilder()->add(
-            'article.time ' . (\ARTICLE_SORT_ORDER == 'DESC' ? '<' : '>') . ' ?',
+            'article.time ' . (\ARTICLE_SORT_ORDER === 'DESC' ? '<' : '>') . ' ?',
             [$this->article->time]
         );
         $articleList->sqlOrderBy = 'article.time ' . \ARTICLE_SORT_ORDER;

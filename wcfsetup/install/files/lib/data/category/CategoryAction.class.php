@@ -103,9 +103,9 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
     public function update()
     {
         // check if showOrder needs to be recalculated
-        if (\count($this->objects) == 1 && isset($this->parameters['data']['parentCategoryID']) && isset($this->parameters['data']['showOrder'])) {
+        if (\count($this->objects) === 1 && isset($this->parameters['data']['parentCategoryID']) && isset($this->parameters['data']['showOrder'])) {
             $categoryEditor = $this->getObjects()[0];
-            if ($categoryEditor->parentCategoryID != $this->parameters['data']['parentCategoryID'] || $categoryEditor->showOrder != $this->parameters['data']['showOrder']) {
+            if ($categoryEditor->parentCategoryID !== $this->parameters['data']['parentCategoryID'] || $categoryEditor->showOrder !== $this->parameters['data']['showOrder']) {
                 $this->parameters['data']['showOrder'] = $categoryEditor->updateShowOrder(
                     $this->parameters['data']['parentCategoryID'],
                     $this->parameters['data']['showOrder']
@@ -124,7 +124,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
                     $objectType = $category->getObjectType();
                 }
 
-                if ($category->parentCategoryID != $this->parameters['data']['parentCategoryID']) {
+                if ($category->parentCategoryID !== $this->parameters['data']['parentCategoryID']) {
                     $parentUpdates[$category->categoryID] = [
                         'oldParentCategoryID' => $category->parentCategoryID,
                         'newParentCategoryID' => $this->parameters['data']['parentCategoryID'],
@@ -153,7 +153,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
                     $objectType = $category->getObjectType();
                 }
 
-                if ($category->parentCategoryID != $parentCategoryID) {
+                if ($category->parentCategoryID !== $parentCategoryID) {
                     $parentUpdates[$categoryID] = [
                         'oldParentCategoryID' => $category->parentCategoryID,
                         'newParentCategoryID' => $parentCategoryID,

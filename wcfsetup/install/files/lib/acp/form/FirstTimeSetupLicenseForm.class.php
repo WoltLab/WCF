@@ -50,7 +50,7 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
     {
         parent::readParameters();
 
-        if (\FIRST_TIME_SETUP_STATE == -1) {
+        if (\FIRST_TIME_SETUP_STATE === -1) {
             throw new PermissionDeniedException();
         }
     }

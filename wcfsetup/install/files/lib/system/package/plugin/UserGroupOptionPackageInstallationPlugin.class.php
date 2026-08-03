@@ -244,7 +244,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
                 $group = new UserGroup(null, $row);
                 $this->groupIDs['all'][] = $group->groupID;
 
-                if ($group->groupType != UserGroup::EVERYONE && $group->groupType != UserGroup::GUESTS) {
+                if ($group->groupType !== UserGroup::EVERYONE && $group->groupType !== UserGroup::GUESTS) {
                     $this->groupIDs['registered'][] = $group->groupID;
 
                     if ($group->isModGroup()) {

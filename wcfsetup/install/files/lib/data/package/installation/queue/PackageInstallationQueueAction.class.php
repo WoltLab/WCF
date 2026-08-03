@@ -59,7 +59,7 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction
             throw new UserInputException('objectIDs');
         }
 
-        if ($this->queue->userID != WCF::getUser()->userID) {
+        if ($this->queue->userID !== WCF::getUser()->userID) {
             throw new PermissionDeniedException();
         }
     }

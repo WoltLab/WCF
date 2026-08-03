@@ -107,7 +107,7 @@ class TodaysBirthdaysBoxController extends AbstractDatabaseObjectListBoxControll
                     }
 
                     // show a maximum of x users
-                    if ($i == $this->limit) {
+                    if ($i === $this->limit) {
                         break;
                     }
 
@@ -125,7 +125,7 @@ class TodaysBirthdaysBoxController extends AbstractDatabaseObjectListBoxControll
                         !$userProfile->isProtected() && $birthdayUserOption->isVisible() && \substr(
                             $userProfile->birthday,
                             5
-                        ) == $currentDay
+                        ) === $currentDay
                     ) {
                         $visibleUserProfiles[] = $userProfile;
                         $i++;

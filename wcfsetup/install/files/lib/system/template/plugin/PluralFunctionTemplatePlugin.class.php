@@ -52,6 +52,7 @@ final class PluralFunctionTemplatePlugin implements IFunctionTemplatePlugin
         $value = $tagArgs['value'];
         if (\is_countable($value)) {
             $value = \count($value);
+            // @phpstan-ignore notEqual.notAllowed
         } else if (\is_numeric($value) && \floor($value) != $value) {
             // ICU represents fractional values with up to 3 decimal places
             // which differs from the behavior in `StringUtil::formatNumeric`.
@@ -63,6 +64,7 @@ final class PluralFunctionTemplatePlugin implements IFunctionTemplatePlugin
         // handle numeric attributes
         foreach ($tagArgs as $key => $_value) {
             if (\is_numeric($key)) {
+                // @phpstan-ignore equal.notAllowed
                 if ($key == $value) {
                     return $_value;
                 }

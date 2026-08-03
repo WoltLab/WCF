@@ -68,7 +68,7 @@ class PageRebuildDataWorker extends AbstractRebuildDataWorker
         foreach ($pageContentList as $pageContent) {
             /** @var Page $page */
             $page = $pages[$pageContent->pageID];
-            if ($page->pageType == 'text' || $page->pageType == 'html') {
+            if ($page->pageType === 'text' || $page->pageType === 'html') {
                 // update search index
                 SearchIndexManager::getInstance()->set(
                     'com.woltlab.wcf.page',
@@ -84,7 +84,7 @@ class PageRebuildDataWorker extends AbstractRebuildDataWorker
 
             // update embedded objects
             $data = [];
-            if ($page->pageType == 'text') {
+            if ($page->pageType === 'text') {
                 $this->getHtmlInputProcessor()->reprocess(
                     $pageContent->content,
                     'com.woltlab.wcf.page.content',
@@ -97,10 +97,10 @@ class PageRebuildDataWorker extends AbstractRebuildDataWorker
                     $hasEmbeddedObjects = 1;
                 }
 
-                if ($hasEmbeddedObjects != $pageContent->hasEmbeddedObjects) {
+                if ($hasEmbeddedObjects !== $pageContent->hasEmbeddedObjects) {
                     $data['hasEmbeddedObjects'] = $hasEmbeddedObjects;
                 }
-            } elseif ($page->pageType == 'html' || $page->pageType == 'tpl') {
+            } elseif ($page->pageType === 'html' || $page->pageType === 'tpl') {
                 HtmlSimpleParser::getInstance()->parse(
                     'com.woltlab.wcf.page.content',
                     $pageContent->pageContentID,

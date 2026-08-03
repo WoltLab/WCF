@@ -31,7 +31,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler
     #[\Override]
     public function checkFiles(array $files)
     {
-        if ($this->packageInstallation->getPackage()->package != 'com.woltlab.wcf') {
+        if ($this->packageInstallation->getPackage()->package !== 'com.woltlab.wcf') {
             // check if files are existing already
             if (!empty($files)) {
                 $files = \array_map(static function (string $file) {

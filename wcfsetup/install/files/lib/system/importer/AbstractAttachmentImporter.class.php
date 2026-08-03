@@ -122,6 +122,7 @@ class AbstractAttachmentImporter extends AbstractImporter
                 if ($base64Decoded) {
                     try {
                         $attributes = \json_decode($base64Decoded, true, flags: \JSON_THROW_ON_ERROR);
+                        // @phpstan-ignore equal.notAllowed (the decoded attribute can be an integer or a numeric string)
                         if ($attributes[0] == $oldID) {
                             $attributes[0] = $newID;
                         }

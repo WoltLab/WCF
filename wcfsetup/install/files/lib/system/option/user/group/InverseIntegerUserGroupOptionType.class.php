@@ -28,6 +28,7 @@ class InverseIntegerUserGroupOptionType extends IntegerOptionType implements IUs
     #[\Override]
     public function compare(mixed $value1, mixed $value2)
     {
+        // @phpstan-ignore equal.notAllowed
         if ($value1 == $value2) {
             return 0;
         }

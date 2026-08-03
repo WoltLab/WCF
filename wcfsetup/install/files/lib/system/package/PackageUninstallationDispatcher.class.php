@@ -69,7 +69,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
                 case 'pip':
                     // the file pip is always executed last, thus, just before it,
                     // execute the uninstall script
-                    if ($nodeData['pluginName'] == 'file' && !$this->didExecuteUninstallScript) {
+                    if ($nodeData['pluginName'] === 'file' && !$this->didExecuteUninstallScript) {
                         $this->executeUninstallScript();
 
                         $this->didExecuteUninstallScript = true;
@@ -77,7 +77,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
 
                     $step = $this->executePIP($nodeData);
 
-                    if ($nodeData['pluginName'] == 'file') {
+                    if ($nodeData['pluginName'] === 'file') {
                         new \wcf\command\package\RebuildBootstrapper()();
                     }
                     break;
@@ -101,7 +101,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
         $step->setNode($node);
 
         // perform post-uninstall actions
-        if ($node == '') {
+        if ($node === '') {
             (new AuditLogger())->log(
                 <<<EOT
                 Finalizing process

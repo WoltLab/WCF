@@ -211,7 +211,7 @@ final class SmtpEmailTransport implements IStatusReportingEmailTransport
                     }
                 }
 
-                if ($code == $matches[1]) {
+                if ($code === \intval($matches[1])) {
                     $reply .= \trim($matches[3]) . "\r\n";
 
                     // no more continuation lines
@@ -300,7 +300,7 @@ final class SmtpEmailTransport implements IStatusReportingEmailTransport
                 \explode("\n", StringUtil::unifyNewlines($this->read([250])[1]))
             );
         } catch (\Exception $e) {
-            if ($this->starttls == 'encrypt') {
+            if ($this->starttls === 'encrypt') {
                 throw new PermanentFailure(
                     "Remote SMTP server does not support EHLO, but \$starttls is set to 'encrypt'.",
                     0,
@@ -367,7 +367,7 @@ final class SmtpEmailTransport implements IStatusReportingEmailTransport
         foreach ($this->features as $feature) {
             $parameters = \explode(" ", $feature);
 
-            if ($parameters[0] == 'auth') {
+            if ($parameters[0] === 'auth') {
                 // Try mechanisms in order of preference.
                 foreach (['login', 'plain'] as $method) {
                     if (\in_array($method, $parameters)) {

@@ -67,7 +67,7 @@ class PackageInstallationConfirmPage extends AbstractPage
             throw new IllegalLinkException();
         }
 
-        if ($this->queue->action == 'install') {
+        if ($this->queue->action === 'install') {
             WCF::getSession()->checkPermissions(['admin.configuration.package.canInstallPackage']);
         } else {
             WCF::getSession()->checkPermissions(['admin.configuration.package.canUpdatePackage']);

@@ -21,7 +21,7 @@ final class SelectFormatter implements IFormOptionFormatter
     public function format(string $value, int $languageID, array $configuration): string
     {
         foreach (\json_decode($configuration['selectOptions'], true, flags: \JSON_THROW_ON_ERROR) as $selectOption) {
-            if ($selectOption['key'] == $value) {
+            if ($selectOption['key'] === $value) {
                 if (isset($selectOption['value'][0])) {
                     $value = $selectOption['value'][0];
                 } else if (isset($selectOption['value'][$languageID])) {

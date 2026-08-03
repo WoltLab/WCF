@@ -110,7 +110,7 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
 
         $commentIDs = $responseIDs = [];
         foreach ($likes as $like) {
-            if ($like->objectTypeID == $commentLikeObjectType->objectTypeID) {
+            if ($like->objectTypeID === $commentLikeObjectType->objectTypeID) {
                 $commentIDs[] = $like->objectID;
             } else {
                 $responseIDs[] = $like->objectID;
@@ -157,7 +157,7 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
 
         // set message
         foreach ($likes as $like) {
-            if ($like->objectTypeID == $commentLikeObjectType->objectTypeID) {
+            if ($like->objectTypeID === $commentLikeObjectType->objectTypeID) {
                 // comment like
                 if (isset($comments[$like->objectID])) {
                     $comment = $comments[$like->objectID];

@@ -96,6 +96,7 @@ class SuffixFormFieldContainer extends FormContainer
                 if ($option['isSelectable']) {
                     return $option;
                 }
+                // @phpstan-ignore equal.notAllowed (the option value and the field value can differ in type)
             } elseif ($option['value'] == $this->getSuffixField()->getValue()) {
                 return $option;
             }

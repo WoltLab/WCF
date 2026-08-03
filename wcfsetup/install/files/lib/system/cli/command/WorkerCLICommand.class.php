@@ -77,7 +77,7 @@ class WorkerCLICommand implements ICLICommand
 
         $args = $this->argv->getRemainingArgs();
         // validate parameters
-        if (\count($args) != 1) {
+        if (\count($args) !== 1) {
             throw new ArgvException('', $this->getUsage());
         }
 
@@ -351,7 +351,7 @@ class WorkerCLICommand implements ICLICommand
                     $cursorOffset++;
 
                     // Check the exit code after processing the status line, to allow for dumping the error message.
-                    if (!$status['running'] && $status['exitcode'] != -1) {
+                    if (!$status['running'] && $status['exitcode'] !== -1) {
                         if ($status['exitcode']) {
                             throw new \Exception(
                                 'Unclean exit of thread ' . $processData['threadId'] . ' detected. Exiting.'

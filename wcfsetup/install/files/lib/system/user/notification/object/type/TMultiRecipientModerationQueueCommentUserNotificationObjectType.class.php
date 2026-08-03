@@ -29,7 +29,7 @@ trait TMultiRecipientModerationQueueCommentUserNotificationObjectType
     public function getRecipientIDs(Comment $comment)
     {
         $objectTypeID = CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue');
-        if ($comment->objectTypeID != $objectTypeID) {
+        if ($comment->objectTypeID !== $objectTypeID) {
             return [];
         }
 

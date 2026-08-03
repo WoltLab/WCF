@@ -32,7 +32,7 @@ final class UpdateResponse
 
         $this->htmlInputProcessor->setObjectID($this->response->getObjectID());
         $hasEmbeddedObjects = MessageEmbeddedObjectManager::getInstance()->registerObjects($this->htmlInputProcessor);
-        if ($this->response->hasEmbeddedObjects != $hasEmbeddedObjects) {
+        if ((bool)$this->response->hasEmbeddedObjects !== $hasEmbeddedObjects) {
             $data['hasEmbeddedObjects'] = $this->response->hasEmbeddedObjects ? 0 : 1;
         }
 

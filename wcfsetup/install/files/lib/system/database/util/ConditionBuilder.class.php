@@ -32,7 +32,7 @@ class ConditionBuilder implements \Stringable
     public function __construct(bool $addWhereKeyword = true, string $concat = 'AND')
     {
         $this->addWhereKeyword = $addWhereKeyword;
-        $this->concat = ($concat == 'OR') ? ' OR ' : ' AND ';
+        $this->concat = ($concat === 'OR') ? ' OR ' : ' AND ';
     }
 
     /**

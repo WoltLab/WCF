@@ -33,7 +33,7 @@ final class DebugFolderEmailTransport implements IStatusReportingEmailTransport
 
         $this->folder = FileUtil::addTrailingSlash($folder);
         FileUtil::makePath($this->folder);
-        if (\PHP_EOL != "\r\n") {
+        if (\PHP_EOL !== "\r\n") {
             FileUtil::makePath($this->folder . 'new');
             FileUtil::makePath($this->folder . 'cur');
             FileUtil::makePath($this->folder . 'tmp');
@@ -72,7 +72,7 @@ final class DebugFolderEmailTransport implements IStatusReportingEmailTransport
 
         \file_put_contents($this->folder . $filename, $eml);
 
-        if (\PHP_EOL != "\r\n") {
+        if (\PHP_EOL !== "\r\n") {
             @\symlink('../' . $filename, $this->folder . 'new/' . $filename);
         }
 

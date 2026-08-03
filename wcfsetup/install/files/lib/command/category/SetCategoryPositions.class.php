@@ -44,7 +44,7 @@ final class SetCategoryPositions
                     $objectType = $category->getObjectType();
                 }
 
-                if ($category->parentCategoryID != $parentCategoryID) {
+                if ($category->parentCategoryID !== $parentCategoryID) {
                     $parentUpdates[$categoryID] = [
                         'oldParentCategoryID' => $category->parentCategoryID,
                         'newParentCategoryID' => $parentCategoryID,

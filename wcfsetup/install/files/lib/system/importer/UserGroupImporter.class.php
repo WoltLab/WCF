@@ -28,7 +28,7 @@ class UserGroupImporter extends AbstractImporter
             $newGroupID = UserGroup::getGroupByType($data['groupType'])->groupID;
         } else {
             // Imported owner groups must be degraded, there can be only one owner group.
-            if ($data['groupType'] == UserGroup::OWNER) {
+            if ((int)$data['groupType'] === UserGroup::OWNER) {
                 $data['groupType'] = UserGroup::OTHER;
             }
 

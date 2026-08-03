@@ -154,7 +154,7 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction
                 }
 
                 // for instant emails, a notification can only be triggered once
-                if ($event->getNotification()->timesTriggered == 1) {
+                if ($event->getNotification()->timesTriggered === 1) {
                     try {
                         $eventData['instantEmail'] = TestableUserNotificationEventHandler::getInstance()->getEmailBody(
                             $event,

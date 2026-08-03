@@ -54,11 +54,11 @@ class UserOnline extends UserProfile
     {
         $username = StringUtil::encodeHTML($this->username);
 
-        if ($this->userOnlineMarking && $this->userOnlineMarking != '%s') {
+        if ($this->userOnlineMarking && $this->userOnlineMarking !== '%s') {
             $username = \str_replace('%s', $username, $this->userOnlineMarking);
         }
 
-        if ($this->canViewOnlineStatus == UserProfile::ACCESS_NOBODY) {
+        if ($this->canViewOnlineStatus === UserProfile::ACCESS_NOBODY) {
             $username .= WCF::getLanguage()->get('wcf.user.usersOnline.invisible');
         }
 
@@ -85,14 +85,14 @@ class UserOnline extends UserProfile
                     } elseif ($page->isVisible() && $page->isAccessible()) {
                         $title = $page->getTitle();
                         if (!empty($title)) {
-                            if ($page->pageType != 'system') {
+                            if ($page->pageType !== 'system') {
                                 $this->location = '<a href="' . StringUtil::encodeHTML($page->getLink()) . '">' . StringUtil::encodeHTML($title) . '</a>';
                             } else {
                                 $this->location = StringUtil::encodeHTML($title);
                             }
                         }
 
-                        return $this->location != '';
+                        return $this->location !== '';
                     }
                 }
             }

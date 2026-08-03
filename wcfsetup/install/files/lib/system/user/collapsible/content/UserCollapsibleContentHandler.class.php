@@ -203,6 +203,7 @@ class UserCollapsibleContentHandler extends SingletonFactory
 
             if (isset($collapsedContent[$objectTypeID])) {
                 foreach ($collapsedContent[$objectTypeID] as $index => $collapsedObjectID) {
+                    // @phpstan-ignore equal.notAllowed
                     if ($collapsedObjectID == $objectID) {
                         unset($collapsedContent[$objectTypeID][$index]);
                     }

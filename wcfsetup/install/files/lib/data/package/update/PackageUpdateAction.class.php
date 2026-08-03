@@ -315,7 +315,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
                 Package::compareVersion(
                     $excludedPackages[$packageUpdateVersionID][$package],
                     $packageVersion
-                ) == 1
+                ) === 1
             ) {
                 $excludedPackages[$packageUpdateVersionID][$package] = $packageVersion;
             }
@@ -337,7 +337,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
             $packageVersion = $row['packageVersion'];
             $packageUpdateVersionID = $row['packageUpdateVersionID'];
 
-            if ($minVersion !== null && Package::compareVersion($packageVersion, $minVersion) == -1) {
+            if ($minVersion !== null && Package::compareVersion($packageVersion, $minVersion) === -1) {
                 continue;
             }
 
@@ -457,7 +457,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
                     !isset($installedPackages[$package]) || Package::compareVersion(
                         $installedPackages[$package],
                         $minVersion
-                    ) == -1
+                    ) === -1
                 ) {
                     $requirements[$package] = $minVersion;
                 }
@@ -643,7 +643,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
             $isValid = false;
 
             foreach ($availableUpdates as $package) {
-                if ($package['package'] == $packageName) {
+                if ($package['package'] === $packageName) {
                     // validate version
                     if (isset($package['versions'][$versionNumber])) {
                         $isValid = true;
@@ -689,7 +689,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
     {
         WCF::getSession()->checkPermissions(['admin.configuration.package.canInstallPackage']);
 
-        if (!isset($this->parameters['packages']) || !\is_array($this->parameters['packages']) || \count($this->parameters['packages']) != 1) {
+        if (!isset($this->parameters['packages']) || !\is_array($this->parameters['packages']) || \count($this->parameters['packages']) !== 1) {
             throw new UserInputException('packages');
         }
 
@@ -766,7 +766,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         $scheduler = new PackageInstallationScheduler($this->parameters['packages']);
 
         try {
-            $scheduler->buildPackageInstallationStack($queueType == 'install');
+            $scheduler->buildPackageInstallationStack($queueType === 'install');
         } catch (PackageUpdateUnauthorizedException $e) {
             return [
                 'template' => $e->getRenderedTemplate(),
@@ -797,7 +797,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
                 if ($update['package'] === 'com.woltlab.wcf') {
                     \preg_match('~^(?P<version>\d+\.\d+)\.~', $update['fromversion'], $matchFromVersion);
                     \preg_match('~^(?P<version>\d+\.\d+)\.~', $update['toVersion'], $matchToVersion);
-                    if ($matchFromVersion['version'] != $matchToVersion['version']) {
+                    if ($matchFromVersion['version'] !== $matchToVersion['version']) {
                         // version mismatch, this is a major upgrade
                         if ($i > 0) {
                             // the Core upgrade must be the first package in the stack, but there appears to be

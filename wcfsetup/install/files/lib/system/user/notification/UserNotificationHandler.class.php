@@ -113,7 +113,7 @@ class UserNotificationHandler extends SingletonFactory
         // get author's profile
         $userProfile = null;
         if ($notificationObject->getAuthorID()) {
-            if ($notificationObject->getAuthorID() == WCF::getUser()->userID) {
+            if ($notificationObject->getAuthorID() === WCF::getUser()->userID) {
                 $userProfile = new UserProfile(WCF::getUser());
             } else {
                 $userProfile = UserProfileRuntimeCache::getInstance()->getObject($notificationObject->getAuthorID());
@@ -285,7 +285,7 @@ class UserNotificationHandler extends SingletonFactory
             // send notifications
             if ($event->supportsEmailNotification()) {
                 foreach ($recipients as $recipient) {
-                    if ($recipient->mailNotificationType == 'instant') {
+                    if ($recipient->mailNotificationType === 'instant') {
                         if (isset($notifications[$recipient->userID]) && $notifications[$recipient->userID]['isNew']) {
                             $event->setObject(
                                 $notifications[$recipient->userID]['object'],
@@ -445,7 +445,7 @@ class UserNotificationHandler extends SingletonFactory
 
         if ($filterByConfirmed !== null) {
             // consider only unconfirmed notifications
-            if ($filterByConfirmed == 0) {
+            if ($filterByConfirmed === 0) {
                 $conditions->add("notification.confirmTime = ?", [0]);
             } else {
                 // consider only notifications marked as confirmed in the past 48 hours (86400 = 1 day)

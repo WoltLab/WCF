@@ -139,7 +139,7 @@ final class WCFSetup extends WCF
     protected function initTPL(): void
     {
         self::$tplObj = SetupTemplateEngine::getInstance();
-        self::getTPL()->setLanguageID((self::$selectedLanguageCode == 'en' ? 0 : 1));
+        self::getTPL()->setLanguageID((self::$selectedLanguageCode === 'en' ? 0 : 1));
         self::getTPL()->setCompileDir(\TMP_DIR);
         self::getTPL()->addApplication('wcf', \TMP_DIR);
         self::getTPL()->assign([
@@ -374,7 +374,7 @@ final class WCFSetup extends WCF
         $system['phpVersion']['result'] = \version_compare($comparePhpVersion, $phpVersionLowerBound, '>=')
             && \version_compare($comparePhpVersion, \str_replace('x', '999', $phpVersionUpperBound), '<=');
 
-        $system['x64']['result'] = \PHP_INT_SIZE == 8;
+        $system['x64']['result'] = \PHP_INT_SIZE === 8;
 
         // sql
         $system['sql']['result'] = MySQLDatabase::isSupported();
@@ -417,10 +417,10 @@ final class WCFSetup extends WCF
         [$system['hostname']['value']] = \explode(':', $_SERVER['HTTP_HOST'], 2);
         if (!empty($_SERVER['HTTP_REFERER'])) {
             $refererHostname = \parse_url($_SERVER['HTTP_REFERER'], \PHP_URL_HOST);
-            $system['hostname']['result'] = $_SERVER['HTTP_HOST'] == $refererHostname;
+            $system['hostname']['result'] = $_SERVER['HTTP_HOST'] === $refererHostname;
         }
 
-        $system['cookie']['result'] = !empty($_COOKIE['wcfsetup_cookietest']) && $_COOKIE['wcfsetup_cookietest'] == \TMP_FILE_PREFIX;
+        $system['cookie']['result'] = !empty($_COOKIE['wcfsetup_cookietest']) && $_COOKIE['wcfsetup_cookietest'] === \TMP_FILE_PREFIX;
 
         $system['tls']['result'] = RouteHandler::secureContext();
 
@@ -556,7 +556,7 @@ final class WCFSetup extends WCF
                 $statement->execute();
                 $hasInnoDB = false;
                 while ($row = $statement->fetchArray()) {
-                    if ($row['Engine'] == 'InnoDB' && \in_array($row['Support'], ['DEFAULT', 'YES'])) {
+                    if ($row['Engine'] === 'InnoDB' && \in_array($row['Support'], ['DEFAULT', 'YES'])) {
                         $hasInnoDB = true;
                         break;
                     }
@@ -647,7 +647,7 @@ final class WCFSetup extends WCF
         $conflictedTables = [];
         foreach ($existingTables as $existingTableName) {
             foreach ($matches[1] as $wcfTableName) {
-                if ($existingTableName == $wcfTableName) {
+                if ($existingTableName === $wcfTableName) {
                     $conflictedTables[] = $wcfTableName;
                 }
             }
@@ -898,7 +898,7 @@ final class WCFSetup extends WCF
                 }
 
                 // confirm e-mail address
-                if ($email != $confirmEmail) {
+                if ($email !== $confirmEmail) {
                     throw new UserInputException('confirmEmail', 'notEqual');
                 }
 
@@ -908,7 +908,7 @@ final class WCFSetup extends WCF
                 }
 
                 // confirm e-mail address
-                if ($password != $confirmPassword) {
+                if ($password !== $confirmPassword) {
                     throw new UserInputException('confirmPassword', 'notEqual');
                 }
 
@@ -997,14 +997,14 @@ final class WCFSetup extends WCF
         $otherPackages = [];
         $tar = new Tar(\SETUP_FILE);
         foreach ($tar->getContentList() as $file) {
-            if ($file['type'] != 'folder' && \str_starts_with($file['filename'], 'install/packages/')) {
+            if ($file['type'] !== 'folder' && \str_starts_with($file['filename'], 'install/packages/')) {
                 $packageFile = \basename($file['filename']);
 
                 // ignore any files which aren't an archive
                 if (\preg_match('~\.(tar\.gz|tgz|tar)$~', $packageFile)) {
                     $packageName = \preg_replace('!\.(tar\.gz|tgz|tar)$!', '', $packageFile);
 
-                    if ($packageName == 'com.woltlab.wcf') {
+                    if ($packageName === 'com.woltlab.wcf') {
                         $wcfPackageFile = $packageFile;
                     } else {
                         $otherPackages[$packageName] = $packageFile;

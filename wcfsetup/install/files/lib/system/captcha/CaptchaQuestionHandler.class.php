@@ -126,7 +126,7 @@ final class CaptchaQuestionHandler implements ICaptchaHandler
             return;
         }
 
-        if ($this->captchaAnswer == '') {
+        if ($this->captchaAnswer === '') {
             throw new UserInputException('captchaAnswer');
         } elseif (!$this->question->isAnswer($this->captchaAnswer)) {
             $this->question->updateCounters([

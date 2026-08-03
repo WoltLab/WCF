@@ -72,7 +72,7 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject
         );
         foreach ($files as $file) {
             $filename = \preg_replace('/(Action|Page|Form)(\.class)?\.php$/', '', \basename($file));
-            if ($customURL == ControllerMap::transformController($filename)) {
+            if ($customURL === ControllerMap::transformController($filename)) {
                 return false;
             }
         }

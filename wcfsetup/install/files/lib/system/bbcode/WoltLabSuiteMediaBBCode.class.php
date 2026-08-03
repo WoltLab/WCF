@@ -58,7 +58,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
                 return StringUtil::encodeHTML($media->getLink());
             }
 
-            if ($parser->getOutputType() == 'text/html') {
+            if ($parser->getOutputType() === 'text/html') {
                 $float = (!empty($openingTag['attributes'][2])) ? $openingTag['attributes'][2] : 'none';
                 $localizedMedia = MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID()
                     ? $media->getLocalizedVersion(MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID())
@@ -94,7 +94,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
                         'media' => $localizedMedia,
                     ]);
                 }
-            } elseif ($parser->getOutputType() == 'text/simplified-html') {
+            } elseif ($parser->getOutputType() === 'text/simplified-html') {
                 return StringUtil::getAnchorTag($media->getLink(), $media->getTitle());
             }
 

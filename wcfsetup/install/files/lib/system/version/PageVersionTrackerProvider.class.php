@@ -109,7 +109,7 @@ class PageVersionTrackerProvider extends AbstractVersionTrackerProvider
     public function isI18n(IVersionTrackerObject $object)
     {
         \assert($object instanceof Page);
-        return $object->isMultilingual == 1;
+        return $object->isMultilingual === 1;
     }
 
     #[\Override]

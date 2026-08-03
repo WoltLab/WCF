@@ -57,7 +57,7 @@ abstract class AbstractCategoryMultiSelectOptionType extends AbstractOptionType
             if ($category === null) {
                 throw new UserInputException($option->optionName, 'validationFailed');
             }
-            if ($category->getObjectType()->objectType != $this->objectType) {
+            if ($category->getObjectType()->objectType !== $this->objectType) {
                 throw new UserInputException($option->optionName, 'validationFailed');
             }
         }

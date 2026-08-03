@@ -87,10 +87,10 @@ class SQLParser
                         for ($i = 0, $j = \count($matches[0]); $i < $j; $i++) {
                             $columName = \strtoupper($matches[1][$i]);
                             if (
-                                $columName == 'UNIQUE'
-                                || $columName == 'KEY'
-                                || $columName == 'PRIMARY'
-                                || $columName == 'FULLTEXT'
+                                $columName === 'UNIQUE'
+                                || $columName === 'KEY'
+                                || $columName === 'PRIMARY'
+                                || $columName === 'FULLTEXT'
                             ) {
                                 break;
                             }
@@ -99,13 +99,13 @@ class SQLParser
                             $columnType = \strtolower($matches[2][$i]);
                             $column['data'] = [
                                 'type' => $columnType,
-                                'notNull' => (!empty($matches[4][$i]) && \strtoupper($matches[4][$i]) == 'NOT NULL') ? true : false,
+                                'notNull' => (!empty($matches[4][$i]) && \strtoupper($matches[4][$i]) === 'NOT NULL') ? true : false,
                                 'default' => $matches[5][$i],
                                 'autoIncrement' => !empty($matches[6][$i]) ? true : false,
                                 'key' => \strtoupper($matches[7][$i]),
                             ];
                             if (!empty($matches[3][$i])) {
-                                if ($columnType == 'enum') {
+                                if ($columnType === 'enum') {
                                     $column['data']['values'] = $matches[3][$i];
                                 } else {
                                     if (
@@ -195,13 +195,13 @@ class SQLParser
                     $columnType = \strtolower($match[6]);
                     $columnData = [
                         'type' => $columnType,
-                        'notNull' => (!empty($match[8]) && \strtoupper($match[8]) == 'NOT NULL') ? true : false,
+                        'notNull' => (!empty($match[8]) && \strtoupper($match[8]) === 'NOT NULL') ? true : false,
                         'default' => $match[9] ?? '',
                         'autoIncrement' => !empty($match[10]) ? true : false,
                         'key' => !empty($match[11]) ? \strtoupper($match[11]) : '',
                     ];
                     if (!empty($match[7])) {
-                        if ($columnType == 'enum') {
+                        if ($columnType === 'enum') {
                             $columnData['values'] = $match[7];
                         } else {
                             if (\preg_match('~^(\d+)(?:\s*,\s*(\d+))?$~', StringUtil::trim($match[7]), $match2)) {
@@ -215,7 +215,7 @@ class SQLParser
                         }
                     }
 
-                    if (\strtoupper($match[2]) == 'ADD') {
+                    if (\strtoupper($match[2]) === 'ADD') {
                         $this->executeAddColumnStatement($match[1], $match[5], $columnData);
                     } else {
                         $this->executeAlterColumnStatement($match[1], $match[4], $match[5], $columnData);

@@ -152,7 +152,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
             }
 
             // write sitemap index file if we have no active sitemap objects to prevent an outdated index file
-            if (empty($this->sitemapObjects) && $this->loopCount == 0) {
+            if (empty($this->sitemapObjects) && $this->loopCount === 0) {
                 $this->writeIndexFile();
             }
 
@@ -292,7 +292,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
 
                 // if we don't have to refresh any data, we set loopCount to one
                 // so that we no init a new $workerData session
-                if ($this->loopCount == 0) {
+                if ($this->loopCount === 0) {
                     $this->loopCount = 1;
                 }
                 $this->storeWorkerData();
@@ -438,7 +438,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
     {
         $this->workerData = WCF::getSession()->getVar('sitemapRebuildWorkerData');
 
-        if ($this->loopCount == 0) {
+        if ($this->loopCount === 0) {
             $this->workerData = [
                 'sitemap' => 0,
                 'sitemapLoopCount' => 0,

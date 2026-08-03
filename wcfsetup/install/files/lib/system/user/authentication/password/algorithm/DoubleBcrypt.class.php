@@ -122,7 +122,7 @@ final class DoubleBcrypt implements IPasswordAlgorithm
         $currentCost = \intval(self::BCRYPT_COST);
         $hashCost = \intval(\mb_substr($hash, 4, 2, '8bit'));
 
-        if ($currentCost != $hashCost) {
+        if ($currentCost !== $hashCost) {
             return true;
         }
 

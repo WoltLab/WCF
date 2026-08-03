@@ -173,7 +173,7 @@ class VersionTrackerListPage extends AbstractPage
         if ($this->old && $this->new) {
             $languageIDs = $this->new->getLanguageIDs();
 
-            if (\count($languageIDs) > 1 || $languageIDs[0] != 0) {
+            if (\count($languageIDs) > 1 || $languageIDs[0] !== 0) {
                 foreach ($languageIDs as $i => $languageID) {
                     $language = LanguageFactory::getInstance()->getLanguage($languageID);
                     if ($language === null) {
@@ -193,7 +193,7 @@ class VersionTrackerListPage extends AbstractPage
                 foreach ($properties as $property) {
                     $a = \explode("\n", StringUtil::unifyNewlines($this->old->getPayload($property, $languageID)));
                     $b = \explode("\n", StringUtil::unifyNewlines($this->new->getPayload($property, $languageID)));
-                    if ($a == $b) {
+                    if ($a === $b) {
                         continue;
                     }
 
@@ -241,7 +241,7 @@ class VersionTrackerListPage extends AbstractPage
             }
 
             // simply template logic by treating diffs with only one language as "no i18n"
-            if (\count($this->diffs) == 1 && !isset($this->diffs[0])) {
+            if (\count($this->diffs) === 1 && !isset($this->diffs[0])) {
                 $this->diffs = [\reset($this->diffs)];
             }
         }

@@ -263,10 +263,10 @@ class PaidSubscriptionAddForm extends AbstractForm
             if ($this->subscriptionLength < 1) {
                 throw new UserInputException('subscriptionLength');
             }
-            if ($this->subscriptionLengthUnit != 'D' && $this->subscriptionLengthUnit != 'M' && $this->subscriptionLengthUnit != 'Y') {
+            if ($this->subscriptionLengthUnit !== 'D' && $this->subscriptionLengthUnit !== 'M' && $this->subscriptionLengthUnit !== 'Y') {
                 throw new UserInputException('subscriptionLength');
             }
-            if (($this->subscriptionLengthUnit == 'D' && $this->subscriptionLength > 90) || ($this->subscriptionLengthUnit == 'M' && $this->subscriptionLength > 24) || ($this->subscriptionLengthUnit == 'Y' && $this->subscriptionLength > 5)) {
+            if (($this->subscriptionLengthUnit === 'D' && $this->subscriptionLength > 90) || ($this->subscriptionLengthUnit === 'M' && $this->subscriptionLength > 24) || ($this->subscriptionLengthUnit === 'Y' && $this->subscriptionLength > 5)) {
                 throw new UserInputException('subscriptionLength', 'invalid');
             }
         }
@@ -343,7 +343,7 @@ class PaidSubscriptionAddForm extends AbstractForm
         if (!I18nHandler::getInstance()->isPlainValue($columnName)) {
             I18nHandler::getInstance()->save(
                 $columnName,
-                'wcf.paidSubscription.subscription' . $subscription->subscriptionID . ($columnName == 'description' ? '.description' : ''),
+                'wcf.paidSubscription.subscription' . $subscription->subscriptionID . ($columnName === 'description' ? '.description' : ''),
                 'wcf.paidSubscription',
                 1
             );
@@ -351,7 +351,7 @@ class PaidSubscriptionAddForm extends AbstractForm
             // update database
             $editor = new PaidSubscriptionEditor($subscription);
             $editor->update([
-                $columnName => 'wcf.paidSubscription.subscription' . $subscription->subscriptionID . ($columnName == 'description' ? '.description' : ''),
+                $columnName => 'wcf.paidSubscription.subscription' . $subscription->subscriptionID . ($columnName === 'description' ? '.description' : ''),
             ]);
         }
     }

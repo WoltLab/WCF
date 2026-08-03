@@ -187,7 +187,7 @@ final class BackgroundQueueHandler extends SingletonFactory
                 $row['jobID'],
                 'ready',
             ]);
-            if ($statement->getAffectedRows() != 1) {
+            if ($statement->getAffectedRows() !== 1) {
                 // somebody stole the job
                 // this cannot happen unless MySQL violates it's contract to lock the row
                 // -> silently ignore, there will be plenty of other opportunities to perform a job

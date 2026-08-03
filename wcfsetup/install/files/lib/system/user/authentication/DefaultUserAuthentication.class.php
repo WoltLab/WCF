@@ -46,9 +46,9 @@ class DefaultUserAuthentication extends AbstractUserAuthentication
     ) {
         $user = $this->getUserByLogin($username);
         // @phpstan-ignore argument.type
-        $userSession = (\get_class($user) == $userClassname ? $user : new $userClassname(null, null, $user));
+        $userSession = (\get_class($user) === $userClassname ? $user : new $userClassname(null, null, $user));
 
-        if ($userSession->userID == 0) {
+        if ((int)$userSession->userID === 0) {
             throw new UserInputException('username', 'notFound');
         }
 

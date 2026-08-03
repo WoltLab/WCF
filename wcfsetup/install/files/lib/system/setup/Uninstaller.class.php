@@ -66,7 +66,7 @@ class Uninstaller
     {
         if (\is_dir($dir)) {
             // subtract default directories . and ..
-            return \count(\scandir($dir)) - 2 == 0;
+            return \count(\scandir($dir)) - 2 === 0;
         }
 
         return false;
@@ -107,7 +107,7 @@ class Uninstaller
 
                 // store directory if this file is not direct in the targetdirectory
                 $dirname = \dirname($file);
-                if ($dirname != '.') {
+                if ($dirname !== '.') {
                     // split the directory
                     $path = \explode("/", $dirname);
 

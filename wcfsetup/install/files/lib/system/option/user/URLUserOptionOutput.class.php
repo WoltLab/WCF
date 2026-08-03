@@ -18,7 +18,7 @@ class URLUserOptionOutput implements IUserOptionOutput
     #[\Override]
     public function getOutput(User $user, UserOption $option, string $value)
     {
-        if (empty($value) || $value == 'http://') {
+        if (empty($value) || $value === 'http://') {
             return '';
         }
 

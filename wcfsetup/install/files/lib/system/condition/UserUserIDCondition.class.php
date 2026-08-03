@@ -43,7 +43,7 @@ class UserUserIDCondition extends AbstractSingleFieldCondition implements
     #[\Override]
     public function checkUser(Condition $condition, User $user)
     {
-        return $user->userID == $condition->userID;
+        return $user->userID === $condition->userID;
     }
 
     #[\Override]

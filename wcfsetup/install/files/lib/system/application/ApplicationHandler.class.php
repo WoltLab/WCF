@@ -118,7 +118,7 @@ final class ApplicationHandler extends SingletonFactory
     {
         $applications = $this->getApplications();
         foreach ($applications as $key => $application) {
-            if ($application->packageID == $this->getActiveApplication()->packageID) {
+            if ($application->packageID === $this->getActiveApplication()->packageID) {
                 unset($applications[$key]);
                 break;
             }

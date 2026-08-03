@@ -81,7 +81,7 @@ abstract class AbstractFormElementContainer implements IFormElementContainer
     {
         foreach ($this->children as $element) {
             if ($element instanceof AbstractNamedFormElement) {
-                if ($element->getName() == $key) {
+                if ($element->getName() === $key) {
                     return $element->getValue();
                 }
             }
@@ -112,7 +112,7 @@ abstract class AbstractFormElementContainer implements IFormElementContainer
                 continue;
             }
 
-            if ($element->getName() == $name) {
+            if ($element->getName() === $name) {
                 $element->setError($error);
             }
         }

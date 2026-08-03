@@ -277,7 +277,7 @@ class FileReader
      */
     public function setOptions(array $options)
     {
-        if (isset($options['mimeType']) && $options['mimeType'] == 'image/x-png') {
+        if (isset($options['mimeType']) && $options['mimeType'] === 'image/x-png') {
             $options['mimeType'] = 'image/png';
         }
 

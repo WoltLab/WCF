@@ -86,7 +86,7 @@ class PageImporter extends AbstractImporter
                 'hasEmbeddedObjects' => $contentData['hasEmbeddedObjects'],
             ]);
 
-            if ($page->pageType == 'tpl') {
+            if ($page->pageType === 'tpl') {
                 $page->updateTemplate($languageID ?: null, $contentData['content']);
             }
         }

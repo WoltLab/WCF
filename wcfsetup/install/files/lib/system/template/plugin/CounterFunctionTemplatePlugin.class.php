@@ -51,7 +51,7 @@ class CounterFunctionTemplatePlugin implements IFunctionTemplatePlugin
             $result = $counter['count'];
         }
 
-        if ($counter['direction'] == 'down') {
+        if ($counter['direction'] === 'down') {
             $counter['count'] -= $counter['skip'];
         } else {
             $counter['count'] += $counter['skip'];

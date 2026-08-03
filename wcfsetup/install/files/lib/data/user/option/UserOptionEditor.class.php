@@ -55,7 +55,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
         parent::update($parameters);
 
         // alter the table "wcf1_user_option_value" with this new option
-        if (isset($parameters['optionType']) && $parameters['optionType'] != $this->optionType) {
+        if (isset($parameters['optionType']) && $parameters['optionType'] !== $this->optionType) {
             WCF::getDB()->getEditor()->alterColumn(
                 'wcf1_user_option_value',
                 'userOption' . $this->optionID,

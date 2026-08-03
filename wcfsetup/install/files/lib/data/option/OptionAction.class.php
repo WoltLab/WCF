@@ -201,7 +201,7 @@ class OptionAction extends AbstractDatabaseObjectAction
             foreach ($domainPaths as $value) {
                 $htaccess = "{$dir}.htaccess";
                 $path = FileUtil::addTrailingSlash(\substr($value, \strlen($dir)));
-                if ($path == '/') {
+                if ($path === '/') {
                     $path = '';
                 }
                 $content = <<<SNIPPET

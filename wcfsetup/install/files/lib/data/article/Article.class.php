@@ -74,7 +74,7 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
             return true;
         }
 
-        if (WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles') && $this->userID == WCF::getUser()->userID) {
+        if (WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles') && $this->userID === WCF::getUser()->userID) {
             return true;
         }
 
@@ -96,17 +96,17 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
         if ($this->isDeleted) {
             if (
                 !$user->getPermission('admin.content.article.canManageArticle')
-                && !($user->getPermission('admin.content.article.canManageOwnArticles') && $this->userID == $user->userID)
+                && !($user->getPermission('admin.content.article.canManageOwnArticles') && $this->userID === $user->userID)
             ) {
                 return false;
             }
         }
 
-        if ($this->publicationStatus != self::PUBLISHED) {
+        if ($this->publicationStatus !== self::PUBLISHED) {
             if (
                 !$user->getPermission('admin.content.article.canManageArticle')
-                && !($user->getPermission('admin.content.article.canManageOwnArticles') && $this->userID == $user->userID)
-                && !($user->getPermission('admin.content.article.canContributeArticle') && $this->userID == $user->userID)
+                && !($user->getPermission('admin.content.article.canManageOwnArticles') && $this->userID === $user->userID)
+                && !($user->getPermission('admin.content.article.canContributeArticle') && $this->userID === $user->userID)
             ) {
                 return false;
             }
@@ -138,12 +138,12 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
             return true;
         }
 
-        if (WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles') && $this->userID == WCF::getUser()->userID) {
+        if (WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles') && $this->userID === WCF::getUser()->userID) {
             return true;
         }
 
-        if ($this->publicationStatus != self::PUBLISHED) {
-            if (WCF::getSession()->hasPermission('admin.content.article.canContributeArticle') && $this->userID == WCF::getUser()->userID) {
+        if ($this->publicationStatus !== self::PUBLISHED) {
+            if (WCF::getSession()->hasPermission('admin.content.article.canContributeArticle') && $this->userID === WCF::getUser()->userID) {
                 return true;
             }
         }
@@ -162,7 +162,7 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
             return true;
         }
 
-        if (WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles') && $this->userID == WCF::getUser()->userID) {
+        if (WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles') && $this->userID === WCF::getUser()->userID) {
             return true;
         }
 
@@ -363,7 +363,7 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
         return \MODULE_LIKE
             && \ARTICLE_ENABLE_LIKE
             && WCF::getUser()->userID
-            && $this->userID != WCF::getUser()->userID
+            && $this->userID !== WCF::getUser()->userID
             && WCF::getSession()->hasPermission('user.like.canLike');
     }
 

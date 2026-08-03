@@ -94,7 +94,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
      */
     public function setUserProfile(UserProfile $userProfile)
     {
-        if ($this->affectedObject !== null && ($userProfile->userID == $this->affectedObject->getUserID())) {
+        if ($this->affectedObject !== null && ($userProfile->userID === $this->affectedObject->getUserID())) {
             $this->userProfile = $userProfile;
         }
     }
@@ -227,7 +227,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
         $definition = ObjectTypeCache::getInstance()->getDefinition(ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID)->definitionID);
 
         if (
-            $definition->definitionName == 'com.woltlab.wcf.moderation.activation'
+            $definition->definitionName === 'com.woltlab.wcf.moderation.activation'
             // @phpstan-ignore property.notFound, property.notFound
             && ($this->getAffectedObject()->enableTime || $this->getAffectedObject()->publicationDate)
         ) {

@@ -58,7 +58,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
         $xpath = $xml->xpath();
 
         // handle delete first
-        if ($this->installation->getAction() == 'update') {
+        if ($this->installation->getAction() === 'update') {
             $this->deleteItems($xpath);
         }
 

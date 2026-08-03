@@ -318,7 +318,7 @@ class LabelHandler extends SingletonFactory
                 $groupA = $labelGroups['groups'][$a->groupID];
                 $groupB = $labelGroups['groups'][$b->groupID];
 
-                if ($groupA->showOrder == $groupB->showOrder) {
+                if ($groupA->showOrder === $groupB->showOrder) {
                     return ($groupA->groupID > $groupB->groupID) ? 1 : -1;
                 }
 

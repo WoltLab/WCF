@@ -81,7 +81,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
         $pages = [];
         foreach ($items as $item) {
             $page = Page::getPageByIdentifier($item['attributes']['identifier']);
-            if ($page !== null && $page->pageID && $page->packageID == $this->installation->getPackageID()) {
+            if ($page !== null && $page->pageID && $page->packageID === $this->installation->getPackageID()) {
                 $pages[] = $page;
             }
         }
@@ -133,7 +133,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
         if (!empty($data['elements']['content'])) {
             $content = [];
             foreach ($data['elements']['content'] as $language => $contentData) {
-                if ($pageType != 'system' && !RouteHandler::isValidCustomUrl($contentData['customURL'])) {
+                if ($pageType !== 'system' && !RouteHandler::isValidCustomUrl($contentData['customURL'])) {
                     throw new SystemException("Invalid custom url for page content '" . $language . "', page identifier '" . $data['attributes']['identifier'] . "'");
                 }
 
@@ -259,7 +259,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
             'requireObjectID' => (!empty($data['elements']['requireObjectID'])) ? 1 : 0,
             'options' => $data['elements']['options'] ?? '',
             'permissions' => $data['elements']['permissions'] ?? '',
-            'hasFixedParent' => ($pageType == 'system' && !empty($data['elements']['hasFixedParent'])) ? 1 : 0,
+            'hasFixedParent' => ($pageType === 'system' && !empty($data['elements']['hasFixedParent'])) ? 1 : 0,
             'cssClassName' => $data['elements']['cssClassName'] ?? '',
             'availableDuringOfflineMode' => (!empty($data['elements']['availableDuringOfflineMode'])) ? 1 : 0,
             'allowSpidersToIndex' => (!empty($data['elements']['allowSpidersToIndex'])) ? 1 : 0,
@@ -306,7 +306,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
             // only, prevents user modifications form being overwritten
             if (!empty($data['controller'])) {
                 $allowSpidersToIndex = $row['allowSpidersToIndex'] ?? 0;
-                if ($allowSpidersToIndex == 2) {
+                if ($allowSpidersToIndex === 2) {
                     // The value `2` resolves to be true-ish, eventually resulting in the same behavior
                     // when setting it to `1`. This value is special to the 3.0 -> 3.1 upgrade, because
                     // it force-enables the visibility, while also being some sort of indicator for non-
@@ -359,7 +359,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
             foreach ($this->content as $pageID => $contentData) {
                 foreach ($contentData as $languageCode => $content) {
                     $languageID = null;
-                    if ($languageCode != '') {
+                    if ($languageCode !== '') {
                         $language = LanguageFactory::getInstance()->getLanguageByCode($languageCode);
                         if ($language === null) {
                             continue;
@@ -386,7 +386,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 
                     // generate template if page's type is 'tpl'
                     $page = new Page($pageID);
-                    if ($page->pageType == 'tpl') {
+                    if ($page->pageType === 'tpl') {
                         (new PageEditor($page))->updateTemplate($languageID, $content['content']);
                     }
                 }
@@ -398,7 +398,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 
             // update search index
             foreach ($this->pages as $page) {
-                if ($page->pageType == 'text' || $page->pageType == 'html') {
+                if ($page->pageType === 'text' || $page->pageType === 'html') {
                     foreach ($page->getPageContents() as $languageID => $pageContent) {
                         SearchIndexManager::getInstance()->set(
                             'com.woltlab.wcf.page',

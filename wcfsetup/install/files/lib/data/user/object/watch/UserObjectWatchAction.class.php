@@ -108,7 +108,7 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction
                     'objectTypeID' => $this->objectType->objectTypeID,
                     'userID' => WCF::getUser()->userID,
                 ]);
-            } elseif ($this->userObjectWatch->notification != $this->parameters['enableNotification']) {
+            } elseif ((bool)$this->userObjectWatch->notification !== $this->parameters['enableNotification']) {
                 // update notification type
                 $editor = new UserObjectWatchEditor($this->userObjectWatch);
                 $editor->update([

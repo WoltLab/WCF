@@ -129,7 +129,7 @@ final class ExifUtil
 
             if (!empty($exifData['IFD0']['Model'])) {
                 $camera = $exifData['IFD0']['Model'];
-                if ($maker != '' && \strpos($camera, $maker) === false) {
+                if ($maker !== '' && \strpos($camera, $maker) === false) {
                     $camera = $maker . ' ' . $camera;
                 }
             }
@@ -176,7 +176,7 @@ final class ExifUtil
             $minutes = (isset($exifData['GPS']['GPSLongitude'][1]) ? self::convertCoordinateToDecimal($exifData['GPS']['GPSLongitude'][1]) : 0.0);
             $seconds = (isset($exifData['GPS']['GPSLongitude'][2]) ? self::convertCoordinateToDecimal($exifData['GPS']['GPSLongitude'][2]) : 0.0);
             $longitude = ($degrees * 60.0 + (($minutes * 60.0 + $seconds) / 60.0)) / 60.0;
-            if ($exifData['GPS']['GPSLongitudeRef'] == 'W') {
+            if ($exifData['GPS']['GPSLongitudeRef'] === 'W') {
                 $longitude *= -1;
             }
         }
@@ -202,7 +202,7 @@ final class ExifUtil
             $minutes = isset($exifData['GPS']['GPSLatitude'][1]) ? self::convertCoordinateToDecimal($exifData['GPS']['GPSLatitude'][1]) : 0.0;
             $seconds = isset($exifData['GPS']['GPSLatitude'][2]) ? self::convertCoordinateToDecimal($exifData['GPS']['GPSLatitude'][2]) : 0.0;
             $latitude = ($degrees * 60.0 + (($minutes * 60.0 + $seconds) / 60.0)) / 60.0;
-            if ($exifData['GPS']['GPSLatitudeRef'] == 'S') {
+            if ($exifData['GPS']['GPSLatitudeRef'] === 'S') {
                 $latitude *= -1;
             }
         }
@@ -351,7 +351,7 @@ final class ExifUtil
         $result = 0.0;
         $coordinateData = \explode('/', $coordinate);
         for ($i = 0, $j = \count($coordinateData); $i < $j; $i++) {
-            if ($i == 0) {
+            if ($i === 0) {
                 $result = (float)$coordinateData[0];
             } elseif ($coordinateData[$i]) {
                 $result /= (float)$coordinateData[$i];
@@ -367,7 +367,7 @@ final class ExifUtil
     private static function convertExifRational(string $rational): float
     {
         $data = \explode('/', $rational);
-        if (\count($data) == 1) {
+        if (\count($data) === 1) {
             return \floatval($rational);
         }
 
@@ -383,7 +383,7 @@ final class ExifUtil
     private static function simplifyRational(string $rational): string
     {
         $data = \explode('/', $rational);
-        if (\count($data) == 1) {
+        if (\count($data) === 1) {
             return $rational;
         }
 
@@ -405,7 +405,7 @@ final class ExifUtil
      */
     private static function gcd(int $a, int $b): int
     {
-        while ($b != 0) {
+        while ($b !== 0) {
             $t = $b;
             $b = $a % $b;
             $a = $t;

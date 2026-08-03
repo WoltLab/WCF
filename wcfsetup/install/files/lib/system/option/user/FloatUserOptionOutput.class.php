@@ -18,7 +18,7 @@ class FloatUserOptionOutput implements IUserOptionOutput
     #[\Override]
     public function getOutput(User $user, UserOption $option, string $value)
     {
-        if (empty($value) || $value == '0') {
+        if (empty($value) || (float)$value === 0.0) {
             $value = 0.00;
         }
 

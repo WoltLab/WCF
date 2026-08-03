@@ -34,7 +34,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
 
         if (\VISITOR_USE_TINY_BUILD) {
             foreach ($parameters as $groupID) {
-                if (UserGroup::getGroupByID($groupID)->groupType == UserGroup::GUESTS) {
+                if (UserGroup::getGroupByID($groupID)->groupType === UserGroup::GUESTS) {
                     $sql = "SELECT  optionName, additionalData
                             FROM    wcf1_user_group_option
                             WHERE   optionType = 'boolean'";
@@ -71,7 +71,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
         while ($row = $statement->fetchArray()) {
             if (
                 $row['usersOnly']
-                && UserGroup::getGroupByID($row['groupID'])->groupType == UserGroup::GUESTS
+                && UserGroup::getGroupByID($row['groupID'])->groupType === UserGroup::GUESTS
             ) {
                 continue;
             }
@@ -125,7 +125,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
             if (\in_array($optionName, $excludedInTinyBuild)) {
                 // mimic the behavior of 'Never', regardless of what is actually set
                 $result = -1;
-            } elseif (\count($option['values']) == 1) {
+            } elseif (\count($option['values']) === 1) {
                 $result = $option['values'][0];
             } else {
                 $typeObj = $this->getTypeObject($option['type']);
@@ -153,7 +153,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
             }
 
             // handle special value 'Never' for boolean options
-            if ($option['type'] === 'boolean' && $result == -1) {
+            if ($option['type'] === 'boolean' && (int)$result === -1) {
                 $neverValues[$optionName] = $optionName;
                 $result = 0;
             }

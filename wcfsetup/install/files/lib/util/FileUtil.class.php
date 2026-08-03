@@ -124,7 +124,7 @@ final class FileUtil
         $currentDir = self::removeTrailingSlash(self::unifyDirSeparator($currentDir));
         $targetDir = self::removeTrailingSlash(self::unifyDirSeparator($targetDir));
 
-        if ($currentDir == $targetDir) {
+        if ($currentDir === $targetDir) {
             return './';
         }
 
@@ -134,7 +134,7 @@ final class FileUtil
         $relPath = '';
         for ($i = 0, $max = \max(\count($current), \count($target)); $i < $max; $i++) {
             if (isset($current[$i]) && isset($target[$i])) {
-                if ($current[$i] != $target[$i]) {
+                if ($current[$i] !== $target[$i]) {
                     for ($j = 0; $j < $i; $j++) {
                         unset($target[$j]);
                     }
@@ -167,7 +167,7 @@ final class FileUtil
 
         // check if parent directory exists
         $parent = \dirname($path);
-        if ($parent != $path) {
+        if ($parent !== $path) {
             // parent directory does not exist either
             // we have to create the parent directory first
             $parent = self::addTrailingSlash($parent);
@@ -218,16 +218,16 @@ final class FileUtil
         $folder = self::addTrailingSlash($folder);
         $dirh = @\opendir($folder);
         while ($filename = @\readdir($dirh)) {
-            if ($filename == '.' || $filename == '..') {
+            if ($filename === '.' || $filename === '..') {
                 continue;
             }
-            if ($filename == $searchfile) {
+            if ($filename === $searchfile) {
                 @\closedir($dirh);
 
                 return $folder . $filename;
             }
 
-            if ($recursive == true && @\is_dir($folder . $filename)) {
+            if ($recursive && @\is_dir($folder . $filename)) {
                 if ($found = self::scanFolder($folder . $filename, $searchfile, $recursive)) {
                     @\closedir($dirh);
 
@@ -262,8 +262,8 @@ final class FileUtil
         }
 
         foreach ($pathA as $dir) {
-            if ($dir == '..') {
-                if (\end($result) == '..') {
+            if ($dir === '..') {
+                if (\end($result) === '..') {
                     $result[] = '..';
                 } else {
                     $lastValue = \array_pop($result);
@@ -271,7 +271,7 @@ final class FileUtil
                         $result[] = '..';
                     }
                 }
-            } elseif ($dir !== '' && $dir != '.') {
+            } elseif ($dir !== '' && $dir !== '.') {
                 $result[] = $dir;
             }
         }
@@ -366,7 +366,7 @@ final class FileUtil
         // get bytes
         $block = $file->read($blockSize);
 
-        return \strlen($block) == 0 || \strpos($block, "\0") !== false;
+        return \strlen($block) === 0 || \strpos($block, "\0") !== false;
     }
 
     /**
@@ -434,7 +434,7 @@ final class FileUtil
             if (\defined('INSTALL_SCRIPT') && \file_exists(\INSTALL_SCRIPT)) {
                 // do not use PHP_OS here, as this represents the system it was built on != running on
                 // php_uname() is forbidden on some strange hosts; PHP_EOL is reliable
-                if (\PHP_EOL == "\r\n") {
+                if (\PHP_EOL === "\r\n") {
                     // Windows
                     $mode = '0777';
                 } else {
@@ -471,7 +471,7 @@ final class FileUtil
         }
 
         if (\is_dir($filename)) {
-            if ($mode == '0644') {
+            if ($mode === '0644') {
                 @\chmod($filename, 0755);
             } else {
                 @\chmod($filename, 0777);
@@ -498,7 +498,7 @@ final class FileUtil
             $iniMemoryLimit = \ini_get('memory_limit');
 
             // no limit
-            if ($iniMemoryLimit == "-1") {
+            if ($iniMemoryLimit === "-1") {
                 $memoryLimit = -1;
             } else {
                 $memoryLimit = \ini_parse_quantity($iniMemoryLimit);
@@ -513,7 +513,7 @@ final class FileUtil
      */
     public static function checkMemoryLimit(int|float $neededMemory): bool
     {
-        return self::getMemoryLimit() == -1 || self::getMemoryLimit() > (\memory_get_usage() + $neededMemory);
+        return self::getMemoryLimit() === -1 || self::getMemoryLimit() > (\memory_get_usage() + $neededMemory);
     }
 
     /**

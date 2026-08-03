@@ -273,7 +273,7 @@ final class LinkHandler extends SingletonFactory
 
             // no result, attempt to use the default language instead
             $defaultLanguageID = LanguageFactory::getInstance()->getDefaultLanguageID();
-            if ($data === null && $defaultLanguageID != WCF::getLanguage()->languageID) {
+            if ($data === null && $defaultLanguageID !== WCF::getLanguage()->languageID) {
                 $data = ControllerMap::getInstance()->lookupCmsPage($pageID, $defaultLanguageID);
             }
 

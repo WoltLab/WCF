@@ -76,6 +76,7 @@ class FileSizeOptionType extends TextOptionType
     #[\Override]
     public function compare(mixed $value1, mixed $value2)
     {
+        // @phpstan-ignore equal.notAllowed (option values are untyped and can differ in type)
         if ($value1 == $value2) {
             return 0;
         }

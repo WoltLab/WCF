@@ -103,7 +103,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         StyleHandler::getInstance()->resetStylesheet($this->getDecoratedObject());
 
         // remove custom images
-        if ($this->imagePath && $this->imagePath != 'images/') {
+        if ($this->imagePath && $this->imagePath !== 'images/') {
             $this->removeDirectory($this->imagePath);
         }
 
@@ -544,7 +544,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                 $contentList = $templatesTar->getContentList();
                 $packageToTemplates = [];
                 foreach ($contentList as $val) {
-                    if ($val['type'] == 'file') {
+                    if ($val['type'] === 'file') {
                         $folders = \explode('/', $val['filename']);
                         $packageName = \array_shift($folders);
                         if (!isset($packageToTemplates[$packageName])) {
@@ -628,7 +628,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         if (
             !empty($styleData['variables']['pageLogo'])
             && !empty($styleData['variables']['pageLogoMobile'])
-            && $styleData['variables']['pageLogo'] == $styleData['variables']['pageLogoMobile']
+            && $styleData['variables']['pageLogo'] === $styleData['variables']['pageLogoMobile']
         ) {
             $styleData['variables']['pageLogoMobile'] = 'm-' . \basename($styleData['variables']['pageLogo']);
             $duplicateLogo = true;
@@ -705,7 +705,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                 $imagesTar = new Tar($destination);
                 $contentList = $imagesTar->getContentList();
                 foreach ($contentList as $key => $val) {
-                    if ($val['type'] == 'file') {
+                    if ($val['type'] === 'file') {
                         $path = FileUtil::getRealPath($val['filename']);
                         $fileExtension = \pathinfo($path, \PATHINFO_EXTENSION);
 
@@ -732,7 +732,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                         }
 
                         // duplicate pageLogo for mobile version
-                        if ($duplicateLogo && $val['filename'] == $styleData['variables']['pageLogo']) {
+                        if ($duplicateLogo && $val['filename'] === $styleData['variables']['pageLogo']) {
                             $imagesTar->extract($key, $style->getAssetPath() . 'm-' . \basename($targetFile));
                         }
 
@@ -1084,7 +1084,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                     continue;
                 }
 
-                if ($row['application'] != 'wcf') {
+                if ($row['application'] !== 'wcf') {
                     $application = ApplicationHandler::getInstance()->getApplication($row['application']);
                     $package = PackageCache::getInstance()->getPackage($application->packageID);
                     $packageDir = $package->package;

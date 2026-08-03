@@ -136,7 +136,7 @@ HTML;
     #[\Override]
     public function checkUser(Condition $condition, User $user)
     {
-        if ($condition->multifactorActive !== null && $user->multifactorActive != $condition->multifactorActive) {
+        if ($condition->multifactorActive !== null && $user->multifactorActive !== $condition->multifactorActive) {
             return false;
         }
 

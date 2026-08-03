@@ -28,7 +28,7 @@ final class MultipleSelectionFormatter implements IFormOptionFormatter
 
         foreach ($keys as $key) {
             foreach ($selectOptions as $selectOption) {
-                if ($selectOption['key'] == $key) {
+                if ($selectOption['key'] === $key) {
                     if (isset($selectOption['value'][0])) {
                         $value = $selectOption['value'][0];
                     } else if (isset($selectOption['value'][$languageID])) {

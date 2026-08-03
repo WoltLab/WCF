@@ -265,7 +265,7 @@ class QuickReplyManager extends SingletonFactory
         [$pageNo, $count] = $object->getPageNo($this->container);
 
         // we're still on current page
-        if ($pageNo == $parameters['pageNo']) {
+        if ($pageNo === (int)$parameters['pageNo']) {
             // check for additional messages
             $messageList = $object->getMessageList($this->container, $parameters['lastPostTime']);
 

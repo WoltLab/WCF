@@ -41,6 +41,7 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency
             // do not use `array_diff` because we use weak comparison
             foreach ($this->getValues() as $possibleValue) {
                 foreach ($this->getField()->getValue() as $actualValue) {
+                    // @phpstan-ignore equal.notAllowed
                     if ($possibleValue == $actualValue) {
                         $check = true;
                         break;

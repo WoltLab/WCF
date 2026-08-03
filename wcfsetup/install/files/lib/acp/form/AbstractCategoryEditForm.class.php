@@ -56,7 +56,7 @@ abstract class AbstractCategoryEditForm extends AbstractCategoryAddForm
     #[\Override]
     protected function checkCategoryPermissions()
     {
-        if ($this->category->objectTypeID != $this->objectType->objectTypeID) {
+        if ($this->category->objectTypeID !== $this->objectType->objectTypeID) {
             throw new IllegalLinkException();
         }
 

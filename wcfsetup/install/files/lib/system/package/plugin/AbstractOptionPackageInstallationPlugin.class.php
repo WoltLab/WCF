@@ -90,7 +90,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
         $xml = $this->getXML($this->instruction['value']);
         $xpath = $xml->xpath();
 
-        if ($this->installation->getAction() == 'update') {
+        if ($this->installation->getAction() === 'update') {
             // handle delete first
             $this->deleteItems($xpath);
         }
@@ -199,7 +199,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
             ];
 
             // adjust show order
-            if ($data['showOrder'] !== null || $this->installation->getAction() != 'update' || $this->getExistingCategory($element->getAttribute('name')) === false) {
+            if ($data['showOrder'] !== null || $this->installation->getAction() !== 'update' || $this->getExistingCategory($element->getAttribute('name')) === false) {
                 $data['showOrder'] = $this->getShowOrder(
                     $data['showOrder'],
                     $data['parentCategoryName'],
@@ -328,7 +328,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 
             $statement->execute($data);
         } else {
-            if ($row['packageID'] != $this->installation->getPackageID()) {
+            if ($row['packageID'] !== $this->installation->getPackageID()) {
                 throw new SystemException("Cannot override existing category '" . $category['categoryName'] . "'");
             }
 
@@ -387,7 +387,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
             $data['name'],
         ]);
         $row = $statement->fetchArray();
-        if ($row && $row['packageID'] != $this->installation->getPackageID()) {
+        if ($row && $row['packageID'] !== $this->installation->getPackageID()) {
             $package = new Package($row['packageID']);
             throw new SystemException($this->tableName . " '" . $data['name'] . "' is already provided by '" . $package . "' ('" . $package->package . "').");
         }

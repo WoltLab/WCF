@@ -51,7 +51,7 @@ class SimpleMessageParser extends SingletonFactory
     {
         parent::init();
 
-        if (\MODULE_SMILEY == 1) {
+        if (\MODULE_SMILEY === 1) {
             // get smilies
             $smilies = SmileyCache::getInstance()->getSmilies();
             $categories = SmileyCache::getInstance()->getCategories();

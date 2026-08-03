@@ -322,8 +322,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 
             if (isset($this->parameters['data']['languageID'])) {
                 foreach ($this->getObjects() as $object) {
-                    if ($object->userID == WCF::getUser()->userID) {
-                        if ($this->parameters['data']['languageID'] != WCF::getUser()->languageID) {
+                    if ($object->userID === WCF::getUser()->userID) {
+                        if ($this->parameters['data']['languageID'] !== WCF::getUser()->languageID) {
                             WCF::setLanguage($this->parameters['data']['languageID']);
                         }
 
@@ -381,8 +381,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         }
 
         // handle user rename
-        if (\count($this->objects) == 1 && !empty($this->parameters['data']['username'])) {
-            if ($this->objects[0]->username != $this->parameters['data']['username']) {
+        if (\count($this->objects) === 1 && !empty($this->parameters['data']['username'])) {
+            if ($this->objects[0]->username !== $this->parameters['data']['username']) {
                 $userID = $this->objects[0]->userID;
                 $username = $this->parameters['data']['username'];
 
@@ -561,7 +561,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
                 $groupName = $group->getName();
                 if (!\in_array($groupName, $excludedSearchValues)) {
                     $pos = \mb_strripos($groupName, $searchString);
-                    if ($pos !== false && $pos == 0) {
+                    if ($pos !== false && $pos === 0) {
                         $list[] = [
                             'icon' => FontAwesomeIcon::fromValues('users')->toHtml(),
                             'label' => $groupName,

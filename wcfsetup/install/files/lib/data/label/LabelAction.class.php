@@ -87,7 +87,7 @@ class LabelAction extends AbstractDatabaseObjectAction implements ISortableActio
             && isset($this->parameters['data']['showOrder'])
         ) {
             $labelEditor = $this->getObjects()[0];
-            if ($labelEditor->groupID != $this->parameters['data']['groupID'] || $labelEditor->showOrder != $this->parameters['data']['showOrder']) {
+            if ($labelEditor->groupID !== $this->parameters['data']['groupID'] || $labelEditor->showOrder !== $this->parameters['data']['showOrder']) {
                 $labelEditor->setShowOrder(
                     $this->parameters['data']['groupID'],
                     $this->parameters['data']['showOrder']

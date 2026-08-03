@@ -87,13 +87,13 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 
         // Ensure that the original author is the first in the list.
         \uasort($this->authors, function ($a, $b) {
-            if ($a->userID == $b->userID) {
+            if ($a->userID === $b->userID) {
                 return 0;
             }
-            if ($a->userID == $this->getAuthorID()) {
+            if ($a->userID === $this->getAuthorID()) {
                 return -1;
             }
-            if ($b->userID == $this->getAuthorID()) {
+            if ($b->userID === $this->getAuthorID()) {
                 return 1;
             }
 

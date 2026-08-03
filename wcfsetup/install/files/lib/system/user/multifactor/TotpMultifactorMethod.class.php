@@ -343,7 +343,7 @@ final class TotpMultifactorMethod implements IMultifactorMethod
                 )),
         ]);
 
-        if (\count($devices) == 1) {
+        if (\count($devices) === 1) {
             $form->appendChildren([
                 HiddenFormField::create('device')
                     ->objectProperty('deviceID')

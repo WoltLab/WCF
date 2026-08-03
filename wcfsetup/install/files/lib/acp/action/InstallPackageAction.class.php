@@ -145,7 +145,7 @@ class InstallPackageAction extends AbstractSecureAction
             ]);
         }
 
-        if ($step->getNode() == '') {
+        if ($step->getNode() === '') {
             // show success
             return new JsonResponse([
                 'currentAction' => $this->getCurrentAction(null),

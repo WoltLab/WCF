@@ -61,7 +61,7 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
             if (\count($userTrophy->getUserProfile()->getSpecialTrophies()) < $userTrophy->getUserProfile()->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
                 $hasTrophy = false;
                 foreach (UserTrophyList::getUserTrophies([$userTrophy->getUserProfile()->userID])[$userTrophy->getUserProfile()->userID] as $trophy) {
-                    if ($trophy->trophyID == $userTrophy->trophyID && $trophy->userTrophyID !== $userTrophy->userTrophyID) {
+                    if ($trophy->trophyID === $userTrophy->trophyID && $trophy->userTrophyID !== $userTrophy->userTrophyID) {
                         $hasTrophy = true;
                         break;
                     }
@@ -89,7 +89,7 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
             $userTrophy->userID
         );
 
-        if ($userTrophy->userID != WCF::getUser()->userID) {
+        if ($userTrophy->userID !== WCF::getUser()->userID) {
             UserNotificationHandler::getInstance()->fireEvent(
                 'received',
                 'com.woltlab.wcf.userTrophy.notification',
@@ -197,7 +197,7 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
         if (!$this->userProfile) {
             throw new UserInputException('userID');
         }
-        if (!$this->userProfile->isAccessible('canViewTrophies') && $this->userProfile->userID != WCF::getSession()->userID) {
+        if (!$this->userProfile->isAccessible('canViewTrophies') && $this->userProfile->userID !== WCF::getSession()->userID) {
             throw new PermissionDeniedException();
         }
 

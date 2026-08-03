@@ -456,7 +456,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory
             ->getObjectTypeIDByName('com.woltlab.wcf.message.embeddedObject', $embeddedObjectType);
         if (!empty($this->messageEmbeddedObjects[$this->activeMessageObjectTypeID][$this->activeMessageID][$embeddedObjectTypeID])) {
             foreach ($this->messageEmbeddedObjects[$this->activeMessageObjectTypeID][$this->activeMessageID][$embeddedObjectTypeID] as $embeddedObjectID) {
-                if ($embeddedObjectID == $objectID) {
+                if ($embeddedObjectID === $objectID) {
                     if (isset($this->embeddedObjects[$embeddedObjectTypeID][$embeddedObjectID])) {
                         return $this->embeddedObjects[$embeddedObjectTypeID][$embeddedObjectID];
                     }

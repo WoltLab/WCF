@@ -392,7 +392,7 @@ abstract class Database
             throw new \InvalidArgumentException('The offset must not be negative.');
         }
 
-        if ($limit != 0) {
+        if ($limit !== 0) {
             $query = \preg_replace(
                 '~(\s+FOR\s+UPDATE\s*)?$~',
                 " LIMIT " . $limit . ($offset ? " OFFSET " . $offset : '') . "\\0",

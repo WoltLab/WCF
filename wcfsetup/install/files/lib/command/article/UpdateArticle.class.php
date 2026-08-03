@@ -47,9 +47,9 @@ final class UpdateArticle
 
             $versionData[] = $oldContent;
             if (
-                $oldContent->content != $articleContentBuilder->getContent()
-                || $oldContent->teaser != $articleContentBuilder->getTeaser()
-                || $oldContent->title != $articleContentBuilder->getTitle()
+                $oldContent->content !== $articleContentBuilder->getContent()
+                || $oldContent->teaser !== $articleContentBuilder->getTeaser()
+                || $oldContent->title !== $articleContentBuilder->getTitle()
             ) {
                 $hasChanges = true;
             }
@@ -70,12 +70,12 @@ final class UpdateArticle
         new ResetUserStorageForUnreadArticles()();
 
         $newStatus = $this->builder->properties['publicationStatus'] ?? $oldStatus;
-        if ($newStatus != $oldStatus) {
+        if ($newStatus !== $oldStatus) {
             $this->handlePublicationStatusChange($article, (int)$oldStatus, (int)$newStatus);
         }
 
         $newUserID = $this->builder->properties['userID'] ?? $oldUserID;
-        if ($newUserID != $oldUserID) {
+        if ($newUserID !== $oldUserID) {
             $this->updateActivityEventAuthor($article->articleID, (int)$newUserID);
         }
 
@@ -84,13 +84,13 @@ final class UpdateArticle
 
     private function handlePublicationStatusChange(Article $article, int $oldStatus, int $newStatus): void
     {
-        if ($newStatus == Article::PUBLISHED || $oldStatus == Article::PUBLISHED) {
+        if ($newStatus === Article::PUBLISHED || $oldStatus === Article::PUBLISHED) {
             if ($article->userID !== null) {
-                ArticleBuilder::incrementArticleCounter($article->userID, $newStatus == Article::PUBLISHED ? 1 : -1);
+                ArticleBuilder::incrementArticleCounter($article->userID, $newStatus === Article::PUBLISHED ? 1 : -1);
             }
         }
 
-        if ($newStatus == Article::PUBLISHED) {
+        if ($newStatus === Article::PUBLISHED) {
             UserObjectWatchHandler::getInstance()->updateObject(
                 'com.woltlab.wcf.article.category',
                 $article->getCategory()->categoryID,

@@ -30,7 +30,7 @@ final class AttachmentBBCode extends AbstractBBCode
 
         $outputType = $parser->getOutputType();
 
-        if ($attachment->showAsImage() && $attachment->canViewPreview() && ($outputType == 'text/html' || $outputType == 'text/simplified-html')) {
+        if ($attachment->showAsImage() && $attachment->canViewPreview() && ($outputType === 'text/html' || $outputType === 'text/simplified-html')) {
             $hasParentLink = false;
             if (!empty($closingTag['__parents'])) {
                 /** @var \DOMElement $parent */
@@ -48,9 +48,9 @@ final class AttachmentBBCode extends AbstractBBCode
                 $openingTag['attributes'],
                 $hasParentLink,
             );
-        } elseif (\substr($attachment->fileType, 0, 6) === 'video/' && $outputType == 'text/html') {
+        } elseif (\substr($attachment->fileType, 0, 6) === 'video/' && $outputType === 'text/html') {
             return $this->showVideoPlayer($attachment);
-        } elseif (\substr($attachment->fileType, 0, 6) === 'audio/' && $outputType == 'text/html') {
+        } elseif (\substr($attachment->fileType, 0, 6) === 'audio/' && $outputType === 'text/html') {
             return $this->showAudioPlayer($attachment);
         } elseif (!$attachment->canDownload()) {
             return ContentNotVisibleView::forNoPermission();

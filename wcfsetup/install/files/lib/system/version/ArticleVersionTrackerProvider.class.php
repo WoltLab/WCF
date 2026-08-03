@@ -108,7 +108,7 @@ class ArticleVersionTrackerProvider extends AbstractVersionTrackerProvider
     public function isI18n(IVersionTrackerObject $object)
     {
         \assert($object instanceof Article);
-        return $object->isMultilingual == 1;
+        return $object->isMultilingual === 1;
     }
 
     #[\Override]

@@ -113,7 +113,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
             //
             // Work around this issue by pretending the job succeeded, while actually storing a rejection
             // if the job reached the maximum numbers of failure.
-            if ($this->getFailures() == static::MAX_FAILURES) {
+            if ($this->getFailures() === static::MAX_FAILURES) {
                 $this->save(UnfurlUrl::STATUS_REJECTED);
             } else {
                 throw $e;

@@ -41,7 +41,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
         $notifications = [];
         foreach ($this->parameters['recipients'] as $recipient) {
             $this->parameters['data']['userID'] = $recipient->userID;
-            $this->parameters['data']['mailNotified'] = (($recipient->mailNotificationType == 'none' || $recipient->mailNotificationType == 'instant') ? 1 : 0);
+            $this->parameters['data']['mailNotified'] = (($recipient->mailNotificationType === 'none' || $recipient->mailNotificationType === 'instant') ? 1 : 0);
             $notification = $this->create();
 
             $notifications[$recipient->userID] = [
@@ -93,7 +93,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
 
             if ($notification === null) {
                 $this->parameters['data']['userID'] = $recipient->userID;
-                $this->parameters['data']['mailNotified'] = (($recipient->mailNotificationType == 'none' || $recipient->mailNotificationType == 'instant') ? 1 : 0);
+                $this->parameters['data']['mailNotified'] = (($recipient->mailNotificationType === 'none' || $recipient->mailNotificationType === 'instant') ? 1 : 0);
                 $notification = $this->create();
             }
 
@@ -104,7 +104,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
         }
 
         \uasort($notifications, static function ($a, $b) {
-            if ($a['object']->notificationID == $b['object']->notificationID) {
+            if ($a['object']->notificationID === $b['object']->notificationID) {
                 return 0;
             } elseif ($a['object']->notificationID < $b['object']->notificationID) {
                 return -1;
@@ -229,7 +229,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
     public function validateMarkAsConfirmed()
     {
         $this->notificationEditor = $this->getSingleObject();
-        if ($this->notificationEditor->userID != WCF::getUser()->userID) {
+        if ($this->notificationEditor->userID !== WCF::getUser()->userID) {
             throw new PermissionDeniedException();
         }
     }

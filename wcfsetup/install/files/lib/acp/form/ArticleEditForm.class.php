@@ -78,7 +78,7 @@ class ArticleEditForm extends ArticleAddForm
     {
         foreach ($this->formObject->getArticleContents() as $contentLanguageID => $content) {
             if ($this->isMultilingual) {
-                if ($contentLanguageID == $languageID) {
+                if ($contentLanguageID === ($languageID ?? 0)) {
                     return $content->articleContentID;
                 }
             } else {

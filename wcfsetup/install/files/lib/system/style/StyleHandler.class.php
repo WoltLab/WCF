@@ -135,7 +135,7 @@ class StyleHandler extends SingletonFactory
 
         if ($isACP) {
             // ACP
-            $filename = 'acp/style/style' . (WCF::getLanguage()->get('wcf.global.pageDirection') == 'rtl' ? '-rtl' : '') . '.css';
+            $filename = 'acp/style/style' . (WCF::getLanguage()->get('wcf.global.pageDirection') === 'rtl' ? '-rtl' : '') . '.css';
             $filemtime = @\filemtime(\WCF_DIR . $filename);
             if ($filemtime === false) {
                 StyleCompiler::getInstance()->compileACP();
@@ -143,7 +143,7 @@ class StyleHandler extends SingletonFactory
             }
         } else {
             // frontend
-            $filename = 'style/style-' . $this->getStyle()->styleID . (WCF::getLanguage()->get('wcf.global.pageDirection') == 'rtl' ? '-rtl' : '') . '.css';
+            $filename = 'style/style-' . $this->getStyle()->styleID . (WCF::getLanguage()->get('wcf.global.pageDirection') === 'rtl' ? '-rtl' : '') . '.css';
             $filemtime = @\filemtime(\WCF_DIR . $filename);
             if ($filemtime === false) {
                 StyleCompiler::getInstance()->compile($this->getStyle()->getDecoratedObject());
