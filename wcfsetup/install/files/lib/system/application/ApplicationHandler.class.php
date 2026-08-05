@@ -197,6 +197,12 @@ final class ApplicationHandler extends SingletonFactory
             ]);
         }
 
+        // Per WHATWG URL specs a backslash is interpreted as a forward slash
+        // which can be abused to obfuscate a host, bypassing host checks.
+        if (\str_contains($url, '\\')) {
+            return false;
+        }
+
         $host = Url::parse($url)['host'];
 
         // Relative URLs are internal.
