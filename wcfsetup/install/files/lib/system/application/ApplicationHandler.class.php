@@ -197,9 +197,14 @@ final class ApplicationHandler extends SingletonFactory
             ]);
         }
 
+        // Per WHATWG URL specs leading and trailing C0 controls and spaces are
+        // stripped before parsing, therefore they must be ignored here too.
+        $url = \preg_replace('~^[\x00-\x20]+|[\x00-\x20]+$~', '', $url);
+
         // Per WHATWG URL specs a backslash is interpreted as a forward slash
-        // which can be abused to obfuscate a host, bypassing host checks.
-        if (\str_contains($url, '\\')) {
+        // and tab/CR/LF are removed entirely before parsing; both can be abused
+        // to obfuscate a host, bypassing host checks.
+        if (\preg_match('~[\\\\\t\r\n]~', $url)) {
             return false;
         }
 
