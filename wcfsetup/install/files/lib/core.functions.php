@@ -719,7 +719,7 @@ EXPLANATION;
 													$keys = array_keys($item);
 													if (count($keys) > 5) return "[ " . count($keys) . " items ]";
 													return '[ ' . implode(', ', array_map(function ($item) {
-														return $item . ' => ';
+														return StringUtil::encodeHTML($item) . ' => ';
 													}, $keys)) . ']';
 												case 'object':
 													if ($item instanceof \UnitEnum) {
