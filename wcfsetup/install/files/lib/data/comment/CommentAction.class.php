@@ -74,41 +74,41 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
     /**
      * comment object
-     * @var Comment
+     * @var ?Comment
      * @deprecated 6.1
      */
     protected $comment;
 
     /**
      * comment processor
-     * @var ICommentManager
+     * @var ?ICommentManager
      * @deprecated 6.1
      */
     protected $commentProcessor;
 
     /**
-     * @var HtmlInputProcessor
+     * @var ?HtmlInputProcessor
      * @deprecated 6.1
      */
     protected $htmlInputProcessor;
 
     /**
      * response object
-     * @var CommentResponse
+     * @var ?CommentResponse
      * @deprecated 6.1
      */
     protected $response;
 
     /**
      * comment object created by addComment()
-     * @var Comment
+     * @var ?Comment
      * @deprecated 6.1
      */
     public $createdComment;
 
     /**
      * response object created by addResponse()
-     * @var CommentResponse
+     * @var ?CommentResponse
      * @deprecated 6.1
      */
     public $createdResponse;

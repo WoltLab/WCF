@@ -22,7 +22,7 @@ trait TReactionUserNotificationEvent
 {
     /**
      * Cached reactions
-     * @var array<int, int>
+     * @var array<int, int>|null
      */
     private $cachedReactions;
 

@@ -36,7 +36,7 @@ class PackagePage extends AbstractPage
 
     /**
      * package object
-     * @var Package
+     * @var ?Package
      */
     public $package;
 

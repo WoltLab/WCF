@@ -34,13 +34,13 @@ class CLIWCF extends WCF
 {
     /**
      * instance of ConsoleReader
-     * @var ConsoleReader
+     * @var ?ConsoleReader
      */
     protected static $consoleReader;
 
     /**
      * instance of ArgvParser
-     * @var \Zend\Console\Getopt
+     * @var ?\Zend\Console\Getopt
      */
     protected static $argvParser;
 

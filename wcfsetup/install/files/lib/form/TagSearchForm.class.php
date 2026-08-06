@@ -29,7 +29,7 @@ class TagSearchForm extends AbstractCaptchaForm
     public $availableContentLanguages = [];
 
     /**
-     * @var int
+     * @var ?int
      */
     public $languageID;
 
@@ -44,17 +44,17 @@ class TagSearchForm extends AbstractCaptchaForm
     public $neededPermissions = ['user.tag.canViewTag'];
 
     /**
-     * @var TagCloud
+     * @var ?TagCloud
      */
     public $tagCloud;
 
     /**
-     * @var string[]
+     * @var string[]|null
      */
     public $tagNames;
 
     /**
-     * @var Tag[]
+     * @var Tag[]|null
      */
     public $tags;
 

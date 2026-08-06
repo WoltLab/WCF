@@ -27,7 +27,7 @@ abstract class AbstractLikeObject extends DatabaseObjectDecorator implements ILi
 
     /**
      * object type
-     * @var ObjectType
+     * @var ?ObjectType
      */
     protected $objectType;
 

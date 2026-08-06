@@ -51,7 +51,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
 
     /**
      * user profile object of the comment author
-     * @var UserProfile
+     * @var ?UserProfile
      */
     public $userProfile;
 

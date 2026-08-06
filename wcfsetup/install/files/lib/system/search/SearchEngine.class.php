@@ -31,7 +31,7 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
 
     /**
      * search engine object
-     * @var ISearchEngine
+     * @var ?ISearchEngine
      */
     protected $searchEngine;
 

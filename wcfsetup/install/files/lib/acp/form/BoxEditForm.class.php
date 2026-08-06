@@ -36,7 +36,7 @@ class BoxEditForm extends BoxAddForm
 
     /**
      * box object
-     * @var Box
+     * @var ?Box
      */
     public $box;
 

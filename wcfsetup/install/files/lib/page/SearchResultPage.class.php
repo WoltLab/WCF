@@ -46,7 +46,7 @@ class SearchResultPage extends MultipleLinkPage
 
     /**
      * search object
-     * @var Search
+     * @var ?Search
      */
     public $search;
 
@@ -58,7 +58,7 @@ class SearchResultPage extends MultipleLinkPage
 
     /**
      * search data
-     * @var mixed[]
+     * @var mixed[]|null
      */
     public $searchData;
 

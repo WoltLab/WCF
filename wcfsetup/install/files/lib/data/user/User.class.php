@@ -81,19 +81,19 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 {
     /**
      * list of group ids
-     * @var int[]
+     * @var int[]|null
      */
     protected $groupIDs;
 
     /**
      * true, if user has access to the ACP
-     * @var bool
+     * @var ?bool
      */
     protected $hasAdministrativePermissions;
 
     /**
      * list of language ids
-     * @var int[]
+     * @var int[]|null
      */
     protected $languageIDs;
 
@@ -105,7 +105,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
     /**
      * list of user options
-     * @var UserOption[]
+     * @var UserOption[]|null
      */
     protected static $userOptions;
 

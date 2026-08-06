@@ -47,7 +47,7 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem, \Stringable
 
     /**
      * menu item controller
-     * @var string
+     * @var ?string
      */
     protected $controller;
 

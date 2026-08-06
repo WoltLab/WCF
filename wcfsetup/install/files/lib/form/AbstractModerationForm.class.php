@@ -49,7 +49,7 @@ abstract class AbstractModerationForm extends AbstractForm
 
     /**
      * moderation queue object
-     * @var ViewableModerationQueue
+     * @var ?ViewableModerationQueue
      */
     public $queue;
 

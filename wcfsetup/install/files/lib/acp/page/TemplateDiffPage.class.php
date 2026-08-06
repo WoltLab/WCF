@@ -29,7 +29,7 @@ class TemplateDiffPage extends AbstractPage
 
     /**
      * template object
-     * @var Template
+     * @var ?Template
      */
     public $template;
 
@@ -41,13 +41,13 @@ class TemplateDiffPage extends AbstractPage
 
     /**
      * template to compare with
-     * @var Template
+     * @var ?Template
      */
     public $parent;
 
     /**
      * differences between both templates
-     * @var mixed[]
+     * @var mixed[]|null
      */
     public $diff;
 

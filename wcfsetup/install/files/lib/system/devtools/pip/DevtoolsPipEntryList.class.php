@@ -22,7 +22,7 @@ class DevtoolsPipEntryList implements IDevtoolsPipEntryList
     /**
      * keys of the entries that can be used to display the entry list as a
      * table
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $keys;
 

@@ -37,7 +37,7 @@ class FormDocument implements IFormDocument
 
     /**
      * `action` property of the HTML `form` element
-     * @var string
+     * @var ?string
      */
     protected $action;
 
@@ -62,7 +62,7 @@ class FormDocument implements IFormDocument
 
     /**
      * data handler for this form document
-     * @var IFormDataHandler
+     * @var ?IFormDataHandler
      */
     protected $dataHandler;
 
@@ -116,7 +116,7 @@ class FormDocument implements IFormDocument
     /**
      * global form prefix that is prepended to form elements' names and ids to
      * avoid conflicts with other forms
-     * @var string
+     * @var ?string
      */
     protected $prefix;
 

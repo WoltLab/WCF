@@ -13,7 +13,7 @@ abstract class AbstractWorker implements IWorker
 {
     /**
      * count of total actions (limited by $limit per loop)
-     * @var int
+     * @var ?int
      */
     protected $count;
 

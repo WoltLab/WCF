@@ -55,7 +55,7 @@ final class WysiwygFormField extends AbstractFormField implements
 
     /**
      * input processor containing the wysiwyg text
-     * @var HtmlInputProcessor
+     * @var ?HtmlInputProcessor
      */
     protected $htmlInputProcessor;
 

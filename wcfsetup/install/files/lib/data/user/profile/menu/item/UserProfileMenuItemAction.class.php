@@ -31,7 +31,7 @@ class UserProfileMenuItemAction extends AbstractDatabaseObjectAction implements 
 
     /**
      * menu item
-     * @var UserProfileMenuItem
+     * @var ?UserProfileMenuItem
      */
     protected $menuItem;
 

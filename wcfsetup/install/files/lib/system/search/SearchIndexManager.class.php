@@ -33,7 +33,7 @@ class SearchIndexManager extends SingletonFactory implements IContextAwareSearch
 
     /**
      * search index manager object
-     * @var ISearchIndexManager
+     * @var ?ISearchIndexManager
      */
     protected $searchIndexManager;
 

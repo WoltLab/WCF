@@ -110,7 +110,7 @@ class SmileyAddForm extends AbstractForm
 
     /**
      * node tree with available smiley categories
-     * @var CategoryNodeTree
+     * @var ?CategoryNodeTree
      */
     public $categoryNodeTree;
 

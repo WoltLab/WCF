@@ -32,7 +32,7 @@ class AJAXInvokeAction extends AbstractSecureAction
 
     /**
      * action object
-     * @var SingletonFactory
+     * @var ?SingletonFactory
      */
     public $actionObject;
 

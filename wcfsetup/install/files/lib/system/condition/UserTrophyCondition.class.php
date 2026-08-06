@@ -60,7 +60,7 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements
 
     /**
      * selectable trophies
-     * @var Trophy[]
+     * @var Trophy[]|null
      */
     protected $trophies;
 

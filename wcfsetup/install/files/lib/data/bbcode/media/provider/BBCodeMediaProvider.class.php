@@ -36,13 +36,13 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController
 
     /**
      * cached providers
-     * @var BBCodeMediaProvider[]
+     * @var BBCodeMediaProvider[]|null
      */
     protected static $cache;
 
     /**
      * media provider callback instance
-     * @var IBBCodeMediaProvider
+     * @var ?IBBCodeMediaProvider
      */
     protected $callback;
 

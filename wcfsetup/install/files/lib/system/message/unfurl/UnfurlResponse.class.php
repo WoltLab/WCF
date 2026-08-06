@@ -63,12 +63,12 @@ final class UnfurlResponse
     private $responseCharset = "UTF-8";
 
     /**
-     * @var \DOMDocument
+     * @var ?\DOMDocument
      */
     private $domDocument;
 
     /**
-     * @var \DOMXPath
+     * @var ?\DOMXPath
      */
     private $domXPath;
 

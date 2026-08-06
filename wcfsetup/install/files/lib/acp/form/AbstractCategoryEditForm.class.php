@@ -29,7 +29,7 @@ abstract class AbstractCategoryEditForm extends AbstractCategoryAddForm
 {
     /**
      * edited category
-     * @var Category
+     * @var ?Category
      */
     public $category;
 

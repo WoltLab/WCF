@@ -36,7 +36,7 @@ class ItemListFormField extends AbstractFormField implements
 
     /**
      * type of the returned save value (see `SAVE_VALUE_TYPE_*` constants)
-     * @var string
+     * @var ?string
      */
     protected $saveValueType;
 

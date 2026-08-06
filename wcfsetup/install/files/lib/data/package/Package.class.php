@@ -37,20 +37,20 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
 {
     /**
      * recursive list of packages that were given as required packages during installation
-     * @var     Package[]
+     * @var     Package[]|null
      * @since   5.2
      */
     protected $allRequiredPackages;
 
     /**
      * list of packages that this package requires
-     * @var Package[]
+     * @var Package[]|null
      */
     protected $dependencies;
 
     /**
      * list of packages that require this package
-     * @var Package[]
+     * @var Package[]|null
      */
     protected $dependentPackages;
 
@@ -62,19 +62,19 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
 
     /**
      * list of packages that were given as required packages during installation
-     * @var Package[]
+     * @var Package[]|null
      */
     protected $requiredPackages;
 
     /**
      * list of ids of packages which are required by another package
-     * @var int[]
+     * @var int[]|null
      */
     protected static $requiredPackageIDs;
 
     /**
      * package requirements
-     * @var array<int, int[]>
+     * @var array<int, int[]>|null
      */
     protected static $requirements;
 

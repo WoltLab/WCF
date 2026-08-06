@@ -174,7 +174,7 @@ class BoxAddForm extends AbstractForm
 
     /**
      * nested list of page nodes
-     * @var \RecursiveIteratorIterator<PageNode>
+     * @var \RecursiveIteratorIterator<PageNode>|null
      */
     public $pageNodeList;
 
@@ -219,7 +219,7 @@ class BoxAddForm extends AbstractForm
     public $presetBox;
 
     /**
-     * @var int
+     * @var ?int
      * @since   5.4
      */
     public $invertPermissions;

@@ -25,7 +25,7 @@ class ViewableMedia extends DatabaseObjectDecorator implements \Stringable
 {
     /**
      * force localized content by language id
-     * @var int
+     * @var ?int
      */
     protected $forceLanguageID;
 
@@ -37,7 +37,7 @@ class ViewableMedia extends DatabaseObjectDecorator implements \Stringable
 
     /**
      * user profile of the user who uploaded the media file
-     * @var UserProfile
+     * @var ?UserProfile
      */
     protected $userProfile;
 

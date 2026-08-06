@@ -28,7 +28,7 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction
 
     /**
      * currently tested user notification event
-     * @var UserNotificationEvent
+     * @var ?UserNotificationEvent
      */
     protected $userNotificationEvent;
 

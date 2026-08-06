@@ -36,7 +36,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
 
     /**
      * moderation queue editor object
-     * @var ModerationQueueEditor
+     * @var ?ModerationQueueEditor
      */
     public $moderationQueueEditor;
 

@@ -25,7 +25,7 @@ class UploadFile
 
     /**
      * Full image link.
-     * @var string
+     * @var ?string
      */
     private $imageLink;
 

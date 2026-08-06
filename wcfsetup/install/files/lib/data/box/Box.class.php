@@ -61,7 +61,7 @@ class Box extends DatabaseObject
 
     /**
      * image media object
-     * @var ViewableMedia
+     * @var ?ViewableMedia
      */
     protected $image;
 
@@ -96,36 +96,36 @@ class Box extends DatabaseObject
 
     /**
      * menu object
-     * @var Menu
+     * @var ?Menu
      */
     protected $menu;
 
     /**
      * box to page assignments
-     * @var int[]
+     * @var int[]|null
      */
     protected $pageIDs;
 
     /**
      * box controller
-     * @var IBoxController
+     * @var ?IBoxController
      */
     protected $controller;
 
     /**
      * box content grouped by language id
-     * @var BoxContent[]
+     * @var BoxContent[]|null
      */
     public $boxContents;
 
     /**
-     * @var IMenuPageHandler
+     * @var ?IMenuPageHandler
      */
     protected $linkPageHandler;
 
     /**
      * page object
-     * @var Page
+     * @var ?Page
      */
     protected $linkPage;
 

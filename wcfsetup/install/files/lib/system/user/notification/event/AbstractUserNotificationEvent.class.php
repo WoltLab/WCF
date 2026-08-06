@@ -34,7 +34,7 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 
     /**
      * author object
-     * @var UserProfile
+     * @var ?UserProfile
      */
     protected $author;
 
@@ -52,13 +52,13 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 
     /**
      * user notification
-     * @var UserNotification
+     * @var ?UserNotification
      */
     protected $notification;
 
     /**
      * user notification object
-     * @var IUserNotificationObject
+     * @var ?IUserNotificationObject
      */
     protected $userNotificationObject;
 
@@ -70,7 +70,7 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 
     /**
      * language object
-     * @var Language
+     * @var ?Language
      */
     protected $language;
 

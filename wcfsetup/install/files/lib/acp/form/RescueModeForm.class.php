@@ -37,7 +37,7 @@ use wcf\util\UserUtil;
 final class RescueModeForm extends AbstractForm
 {
     /**
-     * @var Application[]
+     * @var Application[]|null
      */
     public $applications;
 
@@ -53,7 +53,7 @@ final class RescueModeForm extends AbstractForm
     public $password = '';
 
     /**
-     * @var User
+     * @var ?User
      */
     public $user;
 

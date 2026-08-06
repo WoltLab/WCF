@@ -14,7 +14,7 @@ trait TFormChildNode
 {
     /**
      * parent node of this node
-     * @var IFormParentNode
+     * @var ?IFormParentNode
      */
     protected $parent;
 

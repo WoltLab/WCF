@@ -55,7 +55,7 @@ class DataImportForm extends AbstractForm
 
     /**
      * exporter object
-     * @var \wcf\system\exporter\IExporter
+     * @var ?\wcf\system\exporter\IExporter
      */
     public $exporter;
 

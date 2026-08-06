@@ -32,7 +32,7 @@ final class StyleCompiler extends SingletonFactory
 {
     /**
      * Contains all files, which are compiled for a style.
-     * @var string[]
+     * @var string[]|null
      */
     private $files;
 

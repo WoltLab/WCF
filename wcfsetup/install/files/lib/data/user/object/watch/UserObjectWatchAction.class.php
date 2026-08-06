@@ -21,13 +21,13 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction
 {
     /**
      * object type object
-     * @var \wcf\data\object\type\ObjectType
+     * @var ?\wcf\data\object\type\ObjectType
      */
     protected $objectType;
 
     /**
      * user object watch object
-     * @var UserObjectWatch
+     * @var ?UserObjectWatch
      */
     protected $userObjectWatch;
 

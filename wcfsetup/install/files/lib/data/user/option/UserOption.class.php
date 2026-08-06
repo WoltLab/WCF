@@ -113,7 +113,7 @@ class UserOption extends Option implements ITitledObject
 
     /**
      * user object
-     * @var User
+     * @var ?User
      */
     public $user;
 

@@ -52,7 +52,7 @@ final class I18nHandler extends SingletonFactory
 
     /**
      * language variable regex object
-     * @var Regex
+     * @var ?Regex
      */
     protected $regex;
 

@@ -42,7 +42,7 @@ class LanguageImportForm extends AbstractForm
 
     /**
      * language object
-     * @var Language
+     * @var ?Language
      */
     public $language;
 
@@ -54,7 +54,7 @@ class LanguageImportForm extends AbstractForm
 
     /**
      * source language object
-     * @var Language
+     * @var ?Language
      */
     public $sourceLanguage;
 

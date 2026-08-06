@@ -66,7 +66,7 @@ class UserAddForm extends UserOptionListForm
     public $groupIDs = [];
 
     /**
-     * @var HtmlInputProcessor
+     * @var ?HtmlInputProcessor
      */
     public $htmlInputProcessor;
 

@@ -40,7 +40,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm
 
     /**
      * subscription object
-     * @var PaidSubscription
+     * @var ?PaidSubscription
      */
     public $subscription;
 
@@ -52,7 +52,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm
 
     /**
      * user object
-     * @var User
+     * @var ?User
      */
     public $user;
 
@@ -64,7 +64,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm
 
     /**
      * subscription end date
-     * @var \DateTime
+     * @var ?\DateTime
      */
     public $endDateTime;
 

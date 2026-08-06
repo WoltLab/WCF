@@ -33,7 +33,7 @@ class ContactAttachment extends DatabaseObject implements ITitledLinkObject, \St
     protected static $databaseTableIndexIsIdentity = false;
 
     /**
-     * @var Attachment
+     * @var ?Attachment
      */
     protected $attachment;
 

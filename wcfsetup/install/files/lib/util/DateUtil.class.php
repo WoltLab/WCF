@@ -154,19 +154,19 @@ final class DateUtil
      * first day of the week
      * 0=sunday
      * 1=monday
-     * @var int
+     * @var ?int
      */
     private static $firstDayOfTheWeek;
 
     /**
      * order of the week days
-     * @var string[]
+     * @var string[]|null
      */
     private static $weekDays;
 
     /**
      * order of the week days (short textual representation)
-     * @var string[]
+     * @var string[]|null
      */
     private static $shortWeekDays;
 

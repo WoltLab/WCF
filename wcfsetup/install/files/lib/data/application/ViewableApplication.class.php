@@ -25,7 +25,7 @@ class ViewableApplication extends DatabaseObjectDecorator
 
     /**
      * package object
-     * @var Package
+     * @var ?Package
      */
     protected $package;
 

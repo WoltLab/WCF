@@ -62,13 +62,13 @@ class UserGroup extends DatabaseObject implements ITitledObject, \Stringable
 
     /**
      * group cache
-     * @var array{groups: array<int, UserGroup>, types: array<int, int[]>}
+     * @var array{groups: array<int, UserGroup>, types: array<int, int[]>}|null
      */
     protected static $cache;
 
     /**
      * list of accessible groups for active user
-     * @var int[]
+     * @var int[]|null
      */
     protected static $accessibleGroups;
 
@@ -79,7 +79,7 @@ class UserGroup extends DatabaseObject implements ITitledObject, \Stringable
 
     /**
      * group options of this group
-     * @var array<string, mixed>
+     * @var array<string, mixed>|null
      */
     protected $groupOptions;
 

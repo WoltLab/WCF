@@ -25,7 +25,7 @@ class ViewableComment extends DatabaseObjectDecorator
 
     /**
      * user profile of the comment author
-     * @var UserProfile
+     * @var ?UserProfile
      */
     protected $userProfile;
 

@@ -28,7 +28,7 @@ class StyleHandler extends SingletonFactory
 
     /**
      * active style object
-     * @var ActiveStyle
+     * @var ?ActiveStyle
      */
     protected $style;
 

@@ -34,7 +34,7 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm
 
     /**
      * type of the added/edited pip entry
-     * @var string
+     * @var ?string
      */
     public $entryType;
 
@@ -56,13 +56,13 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm
 
     /**
      * devtools project
-     * @var DevtoolsProject
+     * @var ?DevtoolsProject
      */
     public $project;
 
     /**
      * devtools pip object for the requested pip
-     * @var DevtoolsPip
+     * @var ?DevtoolsPip
      */
     public $pipObject;
 

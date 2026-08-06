@@ -20,7 +20,7 @@ class UserCollapsibleContentHandler extends SingletonFactory
 {
     /**
      * object type cache
-     * @var mixed[][]
+     * @var mixed[][]|null
      */
     protected $cache;
 

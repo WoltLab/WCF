@@ -24,7 +24,7 @@ class PackageValidationManager extends SingletonFactory
 
     /**
      * package validation archive object
-     * @var PackageValidationArchive
+     * @var ?PackageValidationArchive
      */
     protected $packageValidationArchive;
 

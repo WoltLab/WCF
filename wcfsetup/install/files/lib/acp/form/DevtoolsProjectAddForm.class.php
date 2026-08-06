@@ -73,7 +73,7 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
 
     /**
      * newly added or edited project
-     * @var DevtoolsProject
+     * @var ?DevtoolsProject
      */
     public $project;
 

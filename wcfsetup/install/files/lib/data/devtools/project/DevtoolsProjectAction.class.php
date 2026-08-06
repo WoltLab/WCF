@@ -40,14 +40,14 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction
 
     /**
      * package installation queue for project to be installed from source
-     * @var     PackageInstallationQueue
+     * @var     ?PackageInstallationQueue
      * @since   5.2
      */
     public $queue;
 
     /**
      * package installation plugin the deleted entry belongs to
-     * @var DevtoolsPip
+     * @var ?DevtoolsPip
      * @since   5.2
      */
     protected $pip;

@@ -59,7 +59,7 @@ abstract class AbstractExporter implements IExporter
 
     /**
      * database connection
-     * @var \wcf\system\database\Database
+     * @var ?\wcf\system\database\Database
      */
     protected $database;
 

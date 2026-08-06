@@ -39,7 +39,7 @@ class WysiwygFormContainer extends FormContainer implements IBuilderNode
 
     /**
      * attachment form field
-     * @var WysiwygAttachmentFormField
+     * @var ?WysiwygAttachmentFormField
      */
     protected $attachmentField;
 
@@ -75,7 +75,7 @@ class WysiwygFormContainer extends FormContainer implements IBuilderNode
 
     /**
      * name of the relevant message object type
-     * @var string
+     * @var ?string
      */
     protected $messageObjectType;
 
@@ -93,13 +93,13 @@ class WysiwygFormContainer extends FormContainer implements IBuilderNode
 
     /**
      * name of the relevant poll object type
-     * @var string
+     * @var ?string
      */
     protected $pollObjectType;
 
     /**
      * poll form container
-     * @var WysiwygPollFormContainer
+     * @var ?WysiwygPollFormContainer
      */
     protected $pollContainer;
 
@@ -111,7 +111,7 @@ class WysiwygFormContainer extends FormContainer implements IBuilderNode
 
     /**
      * settings form container
-     * @var FormContainer
+     * @var ?FormContainer
      */
     protected $settingsContainer;
 
@@ -123,7 +123,7 @@ class WysiwygFormContainer extends FormContainer implements IBuilderNode
 
     /**
      * form container for smiley categories
-     * @var WysiwygSmileyFormContainer
+     * @var ?WysiwygSmileyFormContainer
      */
     protected $smiliesContainer;
 

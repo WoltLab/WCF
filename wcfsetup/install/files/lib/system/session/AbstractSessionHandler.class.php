@@ -15,7 +15,7 @@ abstract class AbstractSessionHandler extends SingletonFactory
 {
     /**
      * SessionHandler object
-     * @var SessionHandler
+     * @var ?SessionHandler
      */
     protected $sessionHandler;
 

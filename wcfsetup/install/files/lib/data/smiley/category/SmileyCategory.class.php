@@ -28,13 +28,13 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
 
     /**
      * list of index to object relation
-     * @var int[]
+     * @var int[]|null
      */
     protected $indexToObject;
 
     /**
      * list of assigned smilies
-     * @var Smiley[]
+     * @var Smiley[]|null
      */
     public $smilies;
 

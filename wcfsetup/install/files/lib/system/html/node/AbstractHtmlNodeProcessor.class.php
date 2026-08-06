@@ -15,13 +15,13 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
 {
     /**
      * active DOM document
-     * @var \DOMDocument
+     * @var ?\DOMDocument
      */
     protected $document;
 
     /**
      * html processor instance
-     * @var IHtmlProcessor
+     * @var ?IHtmlProcessor
      */
     protected $htmlProcessor;
 

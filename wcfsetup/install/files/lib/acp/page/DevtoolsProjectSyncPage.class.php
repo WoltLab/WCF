@@ -33,7 +33,7 @@ class DevtoolsProjectSyncPage extends AbstractPage
 
     /**
      * devtools project
-     * @var DevtoolsProject
+     * @var ?DevtoolsProject
      */
     public $object;
 

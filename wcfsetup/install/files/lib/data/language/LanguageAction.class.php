@@ -44,7 +44,7 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
 
     /**
      * language editor object
-     * @var LanguageEditor
+     * @var ?LanguageEditor
      */
     protected $languageEditor;
 

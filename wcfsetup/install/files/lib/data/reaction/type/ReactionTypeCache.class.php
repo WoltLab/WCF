@@ -17,7 +17,7 @@ class ReactionTypeCache extends SingletonFactory
 {
     /**
      * Contains reaction types.
-     * @var ReactionType[]
+     * @var ReactionType[]|null
      */
     protected $reactionTypes;
 

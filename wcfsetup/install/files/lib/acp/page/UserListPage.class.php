@@ -85,7 +85,7 @@ class UserListPage extends SortablePage
 
     /**
      * IOptionHandler object
-     * @var IOptionHandler
+     * @var ?IOptionHandler
      */
     protected $optionHandler;
 
@@ -121,7 +121,7 @@ class UserListPage extends SortablePage
 
     /**
      * condition builder for user filtering
-     * @var PreparedStatementConditionBuilder
+     * @var ?PreparedStatementConditionBuilder
      */
     public $conditions;
 

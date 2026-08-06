@@ -33,7 +33,7 @@ class PageRebuildDataWorker extends AbstractRebuildDataWorker
     protected $limit = 100;
 
     /**
-     * @var HtmlInputProcessor
+     * @var ?HtmlInputProcessor
      */
     protected $htmlInputProcessor;
 

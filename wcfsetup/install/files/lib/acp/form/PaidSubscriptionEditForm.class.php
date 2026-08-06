@@ -37,7 +37,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
 
     /**
      * edited subscription object
-     * @var PaidSubscription
+     * @var ?PaidSubscription
      */
     public $subscription;
 

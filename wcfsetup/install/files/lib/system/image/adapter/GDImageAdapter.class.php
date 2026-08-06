@@ -36,7 +36,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
 
     /**
      * loaded image
-     * @var \GdImage
+     * @var ?\GdImage
      */
     protected $image;
 

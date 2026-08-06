@@ -48,7 +48,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm
 
     /**
      * tree with the category nodes
-     * @var UncachedCategoryNodeTree
+     * @var ?UncachedCategoryNodeTree
      */
     public $categoryNodeTree;
 
@@ -78,7 +78,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm
 
     /**
      * category object type object
-     * @var ObjectType
+     * @var ?ObjectType
      */
     public $objectType;
 

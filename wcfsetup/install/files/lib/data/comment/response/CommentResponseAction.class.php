@@ -42,34 +42,34 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
 
     /**
      * comment object
-     * @var Comment
+     * @var ?Comment
      * @deprecated 6.1
      */
     public $comment;
 
     /**
      * comment manager object
-     * @var ICommentManager
+     * @var ?ICommentManager
      * @deprecated 6.1
      */
     public $commentManager;
 
     /**
      * comment processor
-     * @var ICommentManager
+     * @var ?ICommentManager
      * @deprecated 6.1
      */
     protected $commentProcessor;
 
     /**
-     * @var HtmlInputProcessor
+     * @var ?HtmlInputProcessor
      * @deprecated 6.1
      */
     protected $htmlInputProcessor;
 
     /**
      * response object
-     * @var CommentResponseEditor
+     * @var ?CommentResponseEditor
      * @deprecated 6.1
      */
     protected $response;

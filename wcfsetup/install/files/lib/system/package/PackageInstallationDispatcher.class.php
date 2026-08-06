@@ -59,7 +59,7 @@ class PackageInstallationDispatcher
 
     /**
      * instance of PackageArchive
-     * @var PackageArchive
+     * @var ?PackageArchive
      */
     protected $archive;
 
@@ -89,7 +89,7 @@ class PackageInstallationDispatcher
 
     /**
      * data of previous package in queue
-     * @var string[]
+     * @var string[]|null
      */
     protected $previousPackageData;
 

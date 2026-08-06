@@ -31,7 +31,7 @@ class NoticeEditForm extends NoticeAddForm
 
     /**
      * edited notice object
-     * @var Notice
+     * @var ?Notice
      */
     public $notice;
 

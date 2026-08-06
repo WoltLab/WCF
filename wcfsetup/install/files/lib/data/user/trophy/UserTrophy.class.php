@@ -36,7 +36,7 @@ class UserTrophy extends DatabaseObject
 
     /**
      * The description text replacements.
-     * @var string[]
+     * @var string[]|null
      */
     private $replacements;
 

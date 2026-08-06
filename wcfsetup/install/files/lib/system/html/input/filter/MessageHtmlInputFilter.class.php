@@ -14,7 +14,7 @@ use wcf\system\event\EventHandler;
 class MessageHtmlInputFilter implements IHtmlInputFilter
 {
     /**
-     * @var \HTMLPurifier
+     * @var ?\HTMLPurifier
      */
     protected static $purifier;
 

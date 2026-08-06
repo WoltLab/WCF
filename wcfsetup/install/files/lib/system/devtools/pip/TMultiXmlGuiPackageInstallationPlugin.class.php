@@ -29,7 +29,7 @@ trait TMultiXmlGuiPackageInstallationPlugin
 
     /**
      * dom elements representing the original data of the edited entry
-     * @var \DOMElement[]
+     * @var \DOMElement[]|null
      */
     protected $editedEntries;
 

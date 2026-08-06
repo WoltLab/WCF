@@ -29,13 +29,13 @@ class LabelHandler extends SingletonFactory
      * @var array{
      *  objectTypes: array<int, ObjectType>,
      *  objectTypeNames: array<string, int>
-     * }
+     * }|null
      */
     protected $cache;
 
     /**
      * list of label groups
-     * @var LabelCache
+     * @var ?LabelCache
      */
     protected $labelGroups;
 

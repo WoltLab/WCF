@@ -50,7 +50,7 @@ class DateFormField extends AbstractFormField implements
 
     /**
      * date time format of the save value
-     * @var string
+     * @var ?string
      */
     protected $saveValueFormat;
 

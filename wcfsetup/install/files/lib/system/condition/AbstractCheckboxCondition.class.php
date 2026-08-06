@@ -18,7 +18,7 @@ abstract class AbstractCheckboxCondition extends AbstractSingleFieldCondition
 {
     /**
      * name of the checkbox
-     * @var string
+     * @var ?string
      */
     protected $fieldName;
 

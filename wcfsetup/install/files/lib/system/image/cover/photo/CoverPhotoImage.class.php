@@ -21,12 +21,12 @@ class CoverPhotoImage
     protected $coverPhotoImage;
 
     /**
-     * @var int[]
+     * @var int[]|null
      */
     protected $dimensions;
 
     /**
-     * @var ICoverPhotoImage
+     * @var ?ICoverPhotoImage
      */
     protected static $defaultCoverPhotoImage;
 

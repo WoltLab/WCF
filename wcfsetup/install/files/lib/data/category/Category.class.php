@@ -35,25 +35,25 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 {
     /**
      * list of child categories of this category
-     * @var Category[]
+     * @var Category[]|null
      */
     protected $childCategories;
 
     /**
      * list of all child categories of this category
-     * @var Category[]
+     * @var Category[]|null
      */
     protected $allChildCategories;
 
     /**
      * list of all parent category generations of this category
-     * @var Category[]
+     * @var Category[]|null
      */
     protected $parentCategories;
 
     /**
      * parent category of this category
-     * @var Category
+     * @var ?Category
      */
     protected $parentCategory;
 

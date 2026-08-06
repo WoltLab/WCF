@@ -33,7 +33,7 @@ class ViewableLike extends DatabaseObjectDecorator
 
     /**
      * description of the object type displayed in the list of likes
-     * @var     string
+     * @var     ?string
      * @deprecated 6.3 No longer in use.
      */
     protected $objectTypeDescription;

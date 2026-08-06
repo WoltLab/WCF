@@ -33,7 +33,7 @@ class XML
 
     /**
      * DOMXPath object
-     * @var \DOMXPath
+     * @var ?\DOMXPath
      */
     protected $xpath;
 

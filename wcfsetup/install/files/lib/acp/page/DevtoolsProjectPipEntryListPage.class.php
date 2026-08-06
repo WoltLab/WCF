@@ -36,19 +36,19 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage
 
     /**
      * entry filter string
-     * @var string
+     * @var ?string
      */
     public $entryFilter;
 
     /**
      * pip entry list
-     * @var IDevtoolsPipEntryList
+     * @var ?IDevtoolsPipEntryList
      */
     public $entryList;
 
     /**
      * type of the listed pip entries
-     * @var string
+     * @var ?string
      */
     public $entryType;
 
@@ -105,13 +105,13 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage
 
     /**
      * requested pip
-     * @var DevtoolsPip
+     * @var ?DevtoolsPip
      */
     protected $pipObject;
 
     /**
      * devtools project
-     * @var DevtoolsProject
+     * @var ?DevtoolsProject
      */
     public $project;
 

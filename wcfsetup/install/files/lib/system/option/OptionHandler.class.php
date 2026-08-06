@@ -36,7 +36,7 @@ class OptionHandler implements IOptionHandler
 {
     /**
      * list of application abbreviations
-     * @var string[]
+     * @var string[]|null
      */
     protected $abbreviations;
 
@@ -48,25 +48,25 @@ class OptionHandler implements IOptionHandler
 
     /**
      * list of all option categories
-     * @var OptionCategory[]
+     * @var OptionCategory[]|null
      */
     public $cachedCategories;
 
     /**
      * list of all options
-     * @var TOption[]
+     * @var TOption[]|null
      */
     public $cachedOptions;
 
     /**
      * category structure
-     * @var mixed[]
+     * @var mixed[]|null
      */
     public $cachedCategoryStructure;
 
     /**
      * option structure
-     * @var mixed[]
+     * @var mixed[]|null
      */
     public $cachedOptionToCategories;
 

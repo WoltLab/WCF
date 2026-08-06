@@ -27,7 +27,7 @@ class UserProfileMenuPage extends AbstractPage
 
     /**
      * user profile menu item list object
-     * @var UserProfileMenuItemList
+     * @var ?UserProfileMenuItemList
      */
     public $userProfileMenuItemList;
 

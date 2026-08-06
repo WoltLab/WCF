@@ -23,7 +23,7 @@ final class LinkHandler extends SingletonFactory
 {
     /**
      * regex object to extract controller data from controller class name
-     * @var     Regex
+     * @var     ?Regex
      * @since   5.2
      */
     protected $controllerRegex;

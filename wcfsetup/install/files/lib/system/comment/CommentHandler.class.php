@@ -38,7 +38,7 @@ class CommentHandler extends SingletonFactory
      * @var array{
      *  objectTypes: array<int, ObjectType>,
      *  objectTypeIDs: array<string, int>,
-     * }
+     * }|null
      */
     protected $cache;
 

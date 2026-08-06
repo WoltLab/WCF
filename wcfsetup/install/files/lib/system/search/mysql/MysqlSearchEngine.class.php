@@ -23,7 +23,7 @@ use wcf\util\StringUtil;
 class MysqlSearchEngine extends AbstractSearchEngine
 {
     /**
-     * @var int
+     * @var ?int
      * @deprecated 5.4 - This property is used for the deprecated getFulltextMinimumWordLength().
      */
     protected $ftMinWordLen;

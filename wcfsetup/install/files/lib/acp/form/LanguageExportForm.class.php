@@ -38,7 +38,7 @@ class LanguageExportForm extends AbstractForm
 
     /**
      * language editor object
-     * @var LanguageEditor
+     * @var ?LanguageEditor
      */
     public $language;
 

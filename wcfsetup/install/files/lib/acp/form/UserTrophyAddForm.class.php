@@ -59,7 +59,7 @@ class UserTrophyAddForm extends AbstractAcpForm
 
     /**
      * custom trophy description
-     * @var string
+     * @var ?string
      */
     public $description;
 
@@ -76,7 +76,7 @@ class UserTrophyAddForm extends AbstractAcpForm
 
     /**
      * Rewarded trophy instance.
-     * @var Trophy
+     * @var ?Trophy
      */
     public $trophy;
 

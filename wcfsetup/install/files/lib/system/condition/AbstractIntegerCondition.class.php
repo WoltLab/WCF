@@ -29,13 +29,13 @@ abstract class AbstractIntegerCondition extends AbstractSingleFieldCondition
 
     /**
      * maximum value the property can have
-     * @var int
+     * @var ?int
      */
     protected $maxValue;
 
     /**
      * minimum value the property can have
-     * @var int
+     * @var ?int
      */
     protected $minValue;
 

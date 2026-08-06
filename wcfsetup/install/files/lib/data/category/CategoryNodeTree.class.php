@@ -48,7 +48,7 @@ class CategoryNodeTree implements \IteratorAggregate
 
     /**
      * parent category node
-     * @var CategoryNode
+     * @var ?CategoryNode
      */
     protected $parentNode;
 

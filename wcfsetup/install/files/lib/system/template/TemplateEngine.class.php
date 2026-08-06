@@ -174,7 +174,7 @@ class TemplateEngine extends SingletonFactory
 
     /**
      * active template compiler
-     * @var TemplateCompiler
+     * @var ?TemplateCompiler
      */
     protected $compilerObj;
 

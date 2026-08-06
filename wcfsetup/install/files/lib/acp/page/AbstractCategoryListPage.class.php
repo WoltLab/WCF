@@ -29,7 +29,7 @@ abstract class AbstractCategoryListPage extends AbstractPage
 
     /**
      * category node tree
-     * @var CategoryNodeTree
+     * @var ?CategoryNodeTree
      */
     public $categoryNodeTree;
 
@@ -47,7 +47,7 @@ abstract class AbstractCategoryListPage extends AbstractPage
 
     /**
      * category object type object
-     * @var ObjectType
+     * @var ?ObjectType
      */
     public $objectType;
 

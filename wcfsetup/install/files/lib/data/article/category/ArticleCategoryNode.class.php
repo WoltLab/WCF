@@ -23,7 +23,7 @@ class ArticleCategoryNode extends CategoryNode
 
     /**
      * number of articles in the category
-     * @var int
+     * @var ?int
      */
     protected $articles;
 

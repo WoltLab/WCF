@@ -16,12 +16,12 @@ use wcf\system\SingletonFactory;
 class MenuCache extends SingletonFactory
 {
     /**
-     * @var Menu[]
+     * @var Menu[]|null
      */
     protected $cachedMenus;
 
     /**
-     * @var MenuItemList[]
+     * @var MenuItemList[]|null
      */
     protected $cachedMenuItems;
 

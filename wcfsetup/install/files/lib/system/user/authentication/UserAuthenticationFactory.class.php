@@ -23,7 +23,7 @@ class UserAuthenticationFactory extends SingletonFactory
 
     /**
      * user authentication instance
-     * @var IUserAuthentication
+     * @var ?IUserAuthentication
      */
     protected $userAuthentication;
 

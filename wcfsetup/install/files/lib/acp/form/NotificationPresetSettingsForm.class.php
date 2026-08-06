@@ -33,7 +33,7 @@ class NotificationPresetSettingsForm extends AbstractForm
 
     /**
      * list of notification events
-     * @var IUserNotificationEvent[][]
+     * @var IUserNotificationEvent[][]|null
      */
     public $events;
 

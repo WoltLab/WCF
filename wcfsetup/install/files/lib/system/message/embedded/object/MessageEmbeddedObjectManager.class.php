@@ -33,25 +33,25 @@ class MessageEmbeddedObjectManager extends SingletonFactory
 
     /**
      * object type of the active message
-     * @var int
+     * @var ?int
      */
     protected $activeMessageObjectTypeID;
 
     /**
      * id of the active message
-     * @var int
+     * @var ?int
      */
     protected $activeMessageID;
 
     /**
      * language id of the active message
-     * @var int
+     * @var ?int
      */
     protected $activeMessageLanguageID;
 
     /**
      * list of embedded object handlers
-     * @var array<int, IMessageEmbeddedObjectHandler>
+     * @var array<int, IMessageEmbeddedObjectHandler>|null
      */
     protected $embeddedObjectHandlers;
 

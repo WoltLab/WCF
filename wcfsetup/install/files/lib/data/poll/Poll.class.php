@@ -44,7 +44,7 @@ class Poll extends DatabaseObject
 
     /**
      * related object
-     * @var IPollObject
+     * @var ?IPollObject
      */
     protected $relatedObject;
 

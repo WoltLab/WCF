@@ -25,7 +25,7 @@ class ModerationQueueActivationAction extends ModerationQueueAction
 
     /**
      * moderation queue editor object
-     * @var ModerationQueueEditor
+     * @var ?ModerationQueueEditor
      */
     public $queue;
 

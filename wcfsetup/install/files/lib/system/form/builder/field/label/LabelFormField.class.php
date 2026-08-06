@@ -32,7 +32,7 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
 
     /**
      * label group whose labels can be selected via this form field
-     * @var ViewableLabelGroup
+     * @var ?ViewableLabelGroup
      */
     protected $labelGroup;
 

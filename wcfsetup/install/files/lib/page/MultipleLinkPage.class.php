@@ -57,7 +57,7 @@ abstract class MultipleLinkPage extends AbstractPage
     public $endIndex = 0;
 
     /**
-     * @var TDatabaseObjectList
+     * @var ?TDatabaseObjectList
      */
     public $objectList;
 

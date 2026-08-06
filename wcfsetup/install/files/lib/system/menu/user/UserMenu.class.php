@@ -22,7 +22,7 @@ class UserMenu extends TreeMenu
 {
     /**
      * user option handler for the `settings` category
-     * @var UserOptionHandler
+     * @var ?UserOptionHandler
      */
     protected $optionHandler;
 

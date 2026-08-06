@@ -42,7 +42,7 @@ class ModerationQueueCommentUserNotificationEvent extends AbstractCommentUserNot
 
     /**
      * moderation queue object the notifications (indirectly) belong to
-     * @var ViewableModerationQueue
+     * @var ?ViewableModerationQueue
      */
     protected $moderationQueue;
 

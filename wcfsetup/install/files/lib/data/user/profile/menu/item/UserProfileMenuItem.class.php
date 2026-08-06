@@ -35,7 +35,7 @@ class UserProfileMenuItem extends DatabaseObject implements \Stringable
 
     /**
      * content manager
-     * @var IUserProfileMenuContent
+     * @var ?IUserProfileMenuContent
      */
     protected $contentManager;
 

@@ -24,19 +24,19 @@ class MediaPage extends AbstractPage
 
     /**
      * etag for the media file
-     * @var string
+     * @var ?string
      */
     public $eTag;
 
     /**
      * file reader object
-     * @var FileReader
+     * @var ?FileReader
      */
     public $fileReader;
 
     /**
      * requested media file
-     * @var Media
+     * @var ?Media
      */
     public $media;
 

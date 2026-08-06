@@ -35,7 +35,7 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 
     /**
      * database object list
-     * @var T
+     * @var ?T
      */
     protected $objectList;
 

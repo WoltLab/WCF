@@ -32,7 +32,7 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController
 {
     /**
      * list of attributes
-     * @var list<BBCodeAttribute>
+     * @var list<BBCodeAttribute>|null
      */
     protected $attributes;
 

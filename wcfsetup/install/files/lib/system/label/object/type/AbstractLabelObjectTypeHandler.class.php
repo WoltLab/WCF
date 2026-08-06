@@ -16,7 +16,7 @@ abstract class AbstractLabelObjectTypeHandler extends SingletonFactory implement
 {
     /**
      * label object type container
-     * @var LabelObjectTypeContainer
+     * @var ?LabelObjectTypeContainer
      * @deprecated 6.2 Use `getContainerForObjectType()` instead.
      */
     public $container;

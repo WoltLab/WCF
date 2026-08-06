@@ -44,7 +44,7 @@ class UserSearchForm extends UserOptionListForm
 
     /**
      * condition builder object
-     * @var PreparedStatementConditionBuilder
+     * @var ?PreparedStatementConditionBuilder
      */
     public $conditions;
 

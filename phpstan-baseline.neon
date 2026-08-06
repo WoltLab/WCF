@@ -1,13 +1,13 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Property wcf\\acp\\form\\AbstractCategoryAddForm\:\:\$categoryNodeTree \(wcf\\data\\category\\UncachedCategoryNodeTree\) does not accept wcf\\data\\category\\CategoryNodeTree\.$#'
+			message: '#^Property wcf\\acp\\form\\AbstractCategoryAddForm\:\:\$categoryNodeTree \(wcf\\data\\category\\UncachedCategoryNodeTree\|null\) does not accept wcf\\data\\category\\CategoryNodeTree\.$#'
 			identifier: assign.propertyType
 			count: 1
 			path: wcfsetup/install/files/lib/acp/form/AbstractCategoryEditForm.class.php
 
 		-
-			message: '#^Property wcf\\acp\\form\\LanguageImportForm\:\:\$language \(wcf\\data\\language\\Language\) does not accept wcf\\data\\language\\LanguageEditor\.$#'
+			message: '#^Property wcf\\acp\\form\\LanguageImportForm\:\:\$language \(wcf\\data\\language\\Language\|null\) does not accept wcf\\data\\language\\LanguageEditor\.$#'
 			identifier: assign.propertyType
 			count: 1
 			path: wcfsetup/install/files/lib/acp/form/LanguageImportForm.class.php
@@ -55,7 +55,7 @@ parameters:
 			path: wcfsetup/install/files/lib/data/clipboard/item/ClipboardItemAction.class.php
 
 		-
-			message: '#^Property wcf\\data\\comment\\CommentAction\:\:\$comment \(wcf\\data\\comment\\Comment\) does not accept wcf\\data\\comment\\CommentEditor\.$#'
+			message: '#^Property wcf\\data\\comment\\CommentAction\:\:\$comment \(wcf\\data\\comment\\Comment\|null\) does not accept wcf\\data\\comment\\CommentEditor\.$#'
 			identifier: assign.propertyType
 			count: 2
 			path: wcfsetup/install/files/lib/data/comment/CommentAction.class.php

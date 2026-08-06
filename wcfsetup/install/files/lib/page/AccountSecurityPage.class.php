@@ -26,17 +26,17 @@ class AccountSecurityPage extends AbstractPage
     public $loginRequired = true;
 
     /**
-     * @var Session[]
+     * @var Session[]|null
      */
     private $activeSessions;
 
     /**
-     * @var ObjectType[]
+     * @var ObjectType[]|null
      */
     private $multifactorMethods;
 
     /**
-     * @var Setup[]
+     * @var Setup[]|null
      */
     private $enabledMultifactorMethods;
 

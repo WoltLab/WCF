@@ -16,13 +16,13 @@ class TrophyCache extends SingletonFactory
 {
     /**
      * Contains all trophies.
-     * @var Trophy[]
+     * @var Trophy[]|null
      */
     protected $trophies;
 
     /**
      * Contains all enabled trophies.
-     * @var Trophy[]
+     * @var Trophy[]|null
      */
     protected $enabledTrophies;
 

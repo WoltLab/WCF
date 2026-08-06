@@ -40,7 +40,7 @@ class Language extends DatabaseObject implements \Stringable
 
     /**
      * instance of LanguageEditor
-     * @var LanguageEditor
+     * @var ?LanguageEditor
      */
     private $editor;
 

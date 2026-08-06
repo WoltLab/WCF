@@ -25,7 +25,7 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor
 
     /**
      * output node processor instance
-     * @var HtmlOutputNodeProcessor
+     * @var ?HtmlOutputNodeProcessor
      */
     protected $htmlOutputNodeProcessor;
 

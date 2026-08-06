@@ -27,7 +27,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
 {
     /**
      * notification editor object
-     * @var UserNotificationEditor
+     * @var ?UserNotificationEditor
      */
     public $notificationEditor;
 

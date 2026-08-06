@@ -32,7 +32,7 @@ abstract class MessageForm extends AbstractCaptchaForm
 {
     /**
      * attachment handler
-     * @var AttachmentHandler
+     * @var ?AttachmentHandler
      */
     public $attachmentHandler;
 
@@ -79,7 +79,7 @@ abstract class MessageForm extends AbstractCaptchaForm
     public $enableMultilingualism = false;
 
     /**
-     * @var HtmlInputProcessor
+     * @var ?HtmlInputProcessor
      */
     public $htmlInputProcessor;
 

@@ -28,13 +28,13 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction
 
     /**
      * queue of the canceled installation
-     * @var PackageInstallationQueueEditor
+     * @var ?PackageInstallationQueueEditor
      */
     protected $queue;
 
     /**
      * package the prepared queue belongs to
-     * @var Package
+     * @var ?Package
      */
     protected $package;
 

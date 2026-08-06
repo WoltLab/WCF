@@ -38,7 +38,7 @@ class LikeHandler extends SingletonFactory
 
     /**
      * cached object types
-     * @var ObjectType[]
+     * @var ObjectType[]|null
      */
     protected $cache;
 

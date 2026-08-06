@@ -22,22 +22,22 @@ use wcf\system\WCF;
 class CmsPage extends AbstractPage
 {
     /**
-     * @var PageContent
+     * @var ?PageContent
      */
     public $content;
 
     /**
-     * @var int
+     * @var ?int
      */
     public $languageID;
 
     /**
-     * @var Page
+     * @var ?Page
      */
     public $page;
 
     /**
-     * @var int
+     * @var ?int
      */
     public $pageID;
 

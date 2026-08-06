@@ -39,17 +39,17 @@ class MultifactorDisableForm extends AbstractFormBuilderForm
     public $loginRequired = true;
 
     /**
-     * @var ObjectType
+     * @var ?ObjectType
      */
     private $method;
 
     /**
-     * @var Setup
+     * @var ?Setup
      */
     private $setup;
 
     /**
-     * @var Setup[]
+     * @var Setup[]|null
      */
     private $setups;
 

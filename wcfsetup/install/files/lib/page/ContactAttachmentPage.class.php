@@ -22,7 +22,7 @@ class ContactAttachmentPage extends AttachmentPage
     public $accessKey = '';
 
     /**
-     * @var ContactAttachment
+     * @var ?ContactAttachment
      */
     public $contactAttachment;
 

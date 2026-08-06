@@ -29,13 +29,13 @@ class PaidSubscriptionTransactionLog extends DatabaseObject
 {
     /**
      * user object
-     * @var User
+     * @var ?User
      */
     protected $user;
 
     /**
      * paid subscription object
-     * @var PaidSubscription
+     * @var ?PaidSubscription
      */
     protected $subscription;
 

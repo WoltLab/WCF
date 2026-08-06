@@ -24,7 +24,7 @@ use wcf\system\WCF;
 abstract class AbstractFormBuilderForm extends AbstractForm
 {
     /**
-     * @var IFormDocument
+     * @var ?IFormDocument
      */
     public $form;
 
@@ -59,7 +59,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm
      * Note: Do not insert `AbstractDatabaseObjectAction` in the class-string,
      * the generics will be extremely annoying in deriving classes.
      *
-     * @var class-string
+     * @var class-string|null
      */
     public $objectActionClass;
 

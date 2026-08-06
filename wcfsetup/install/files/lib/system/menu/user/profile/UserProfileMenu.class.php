@@ -18,13 +18,13 @@ class UserProfileMenu extends SingletonFactory
 {
     /**
      * active menu item
-     * @var UserProfileMenuItem
+     * @var ?UserProfileMenuItem
      */
     public $activeMenuItem;
 
     /**
      * list of all menu items
-     * @var UserProfileMenuItem[]
+     * @var UserProfileMenuItem[]|null
      */
     public $menuItems;
 

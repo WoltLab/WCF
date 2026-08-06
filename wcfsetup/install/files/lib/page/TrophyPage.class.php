@@ -68,13 +68,13 @@ class TrophyPage extends MultipleLinkPage
 
     /**
      * The trophy instance
-     * @var Trophy
+     * @var ?Trophy
      */
     public $trophy;
 
     /**
      * category object
-     * @var TrophyCategory
+     * @var ?TrophyCategory
      */
     public $category;
 

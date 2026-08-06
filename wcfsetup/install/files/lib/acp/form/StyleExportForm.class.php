@@ -53,7 +53,7 @@ class StyleExportForm extends AbstractForm
 
     /**
      * style object
-     * @var Style
+     * @var ?Style
      */
     public $style;
 

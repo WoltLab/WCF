@@ -33,7 +33,7 @@ class ReauthenticationForm extends AbstractFormBuilderForm
     public $formAction = 'authenticate';
 
     /**
-     * @var string
+     * @var ?string
      */
     public $redirectUrl;
 

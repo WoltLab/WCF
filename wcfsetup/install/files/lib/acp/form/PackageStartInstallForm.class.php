@@ -46,13 +46,13 @@ class PackageStartInstallForm extends AbstractForm
 
     /**
      * archive of the installation/update package
-     * @var PackageArchive
+     * @var ?PackageArchive
      */
     public $archive;
 
     /**
      * package installation/update queue
-     * @var PackageInstallationQueue
+     * @var ?PackageInstallationQueue
      */
     public $queue;
 

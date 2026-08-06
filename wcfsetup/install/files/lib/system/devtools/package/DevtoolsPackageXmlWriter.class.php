@@ -30,7 +30,7 @@ class DevtoolsPackageXmlWriter
 
     /**
      * xml writer object
-     * @var XMLWriter
+     * @var ?XMLWriter
      */
     protected $xmlWriter;
 

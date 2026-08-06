@@ -56,7 +56,7 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
 
     /**
      * object type for which the conditions template is fetched
-     * @var ObjectType
+     * @var ?ObjectType
      */
     public $boxController;
 

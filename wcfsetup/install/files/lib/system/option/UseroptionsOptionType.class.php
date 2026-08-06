@@ -17,7 +17,7 @@ class UseroptionsOptionType extends AbstractOptionType
 {
     /**
      * list of available user options
-     * @var string[]
+     * @var string[]|null
      */
     protected static $userOptions;
 

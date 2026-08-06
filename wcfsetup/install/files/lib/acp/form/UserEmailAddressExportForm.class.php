@@ -62,7 +62,7 @@ class UserEmailAddressExportForm extends AbstractForm
 
     /**
      * clipboard item type id
-     * @var int
+     * @var ?int
      */
     protected $objectTypeID;
 

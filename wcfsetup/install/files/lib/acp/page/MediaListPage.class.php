@@ -35,7 +35,7 @@ class MediaListPage extends SortablePage
 
     /**
      * node tree with all available media categories
-     * @var \RecursiveIteratorIterator<CategoryNode>
+     * @var \RecursiveIteratorIterator<CategoryNode>|null
      */
     public $categoryList;
 

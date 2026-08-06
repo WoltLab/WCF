@@ -60,7 +60,7 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 {
     /**
      * i18n media data grouped by language id for all language
-     * @var string[][]
+     * @var string[][]|null
      */
     protected $i18nData;
 

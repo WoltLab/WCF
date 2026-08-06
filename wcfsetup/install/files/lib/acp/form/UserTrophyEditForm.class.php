@@ -39,7 +39,7 @@ class UserTrophyEditForm extends UserTrophyAddForm
 
     /**
      * user trophy object
-     * @var UserTrophy
+     * @var ?UserTrophy
      */
     public $userTrophy;
 

@@ -143,13 +143,13 @@ class WCF
 
     /**
      * database object
-     * @var MySQLDatabase
+     * @var ?MySQLDatabase
      */
     protected static $dbObj;
 
     /**
      * language object
-     * @var \wcf\data\language\Language
+     * @var ?\wcf\data\language\Language
      */
     protected static $languageObj;
 
@@ -161,19 +161,19 @@ class WCF
 
     /**
      * session object
-     * @var SessionHandler
+     * @var ?SessionHandler
      */
     protected static $sessionObj;
 
     /**
      * template object
-     * @var TemplateEngine
+     * @var ?TemplateEngine
      */
     protected static $tplObj;
 
     /**
      * true if Zend Opcache is loaded and enabled
-     * @var bool
+     * @var ?bool
      */
     protected static $zendOpcacheEnabled;
 
@@ -238,7 +238,6 @@ class WCF
     {
         try {
             // database has to be initialized
-            // @phpstan-ignore function.alreadyNarrowedType
             if (!\is_object(self::$dbObj)) {
                 return;
             }

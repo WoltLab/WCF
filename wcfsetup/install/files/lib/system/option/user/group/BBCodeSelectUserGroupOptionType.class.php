@@ -20,7 +20,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 {
     /**
      * available BBCodes
-     * @var string[]
+     * @var string[]|null
      */
     protected $bbCodes;
 

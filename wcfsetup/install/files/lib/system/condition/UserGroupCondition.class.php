@@ -61,7 +61,7 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements
 
     /**
      * selectable user groups
-     * @var UserGroup[]
+     * @var UserGroup[]|null
      */
     protected $userGroups;
 

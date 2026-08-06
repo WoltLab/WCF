@@ -23,7 +23,7 @@ class PageCache extends SingletonFactory
      *  pageTitles: array<int, array<int, string>>,
      *  landingPage: Page,
      *  pageMetaDescriptions: array<int, array<int, string>>,
-     * }
+     * }|null
      */
     protected $cache;
 

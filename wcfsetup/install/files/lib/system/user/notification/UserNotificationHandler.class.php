@@ -58,7 +58,7 @@ class UserNotificationHandler extends SingletonFactory
 
     /**
      * number of outstanding notifications
-     * @var int
+     * @var ?int
      */
     protected $notificationCount;
 

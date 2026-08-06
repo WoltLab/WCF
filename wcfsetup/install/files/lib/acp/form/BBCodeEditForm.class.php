@@ -32,7 +32,7 @@ class BBCodeEditForm extends BBCodeAddForm
 
     /**
      * bbcode object
-     * @var BBCode
+     * @var ?BBCode
      */
     public $bbcode;
 

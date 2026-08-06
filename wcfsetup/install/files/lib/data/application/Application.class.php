@@ -29,7 +29,7 @@ class Application extends DatabaseObject
 {
     /**
      * related package object
-     * @var Package
+     * @var ?Package
      */
     protected $package;
 
@@ -51,7 +51,7 @@ class Application extends DatabaseObject
 
     /**
      * list of all available application directories
-     * @var string[]
+     * @var string[]|null
      */
     protected static $directories;
 

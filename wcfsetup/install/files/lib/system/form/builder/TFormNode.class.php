@@ -43,7 +43,7 @@ trait TFormNode
 
     /**
      * id of the form node
-     * @var string
+     * @var ?string
      */
     protected $id;
 

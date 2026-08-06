@@ -38,7 +38,7 @@ class DeletedContentListPage extends MultipleLinkPage
 
     /**
      * object type object
-     * @var \wcf\data\object\type\ObjectType
+     * @var ?\wcf\data\object\type\ObjectType
      */
     public $objectType;
 

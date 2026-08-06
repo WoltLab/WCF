@@ -46,7 +46,7 @@ class TaggedPage extends MultipleLinkPage
 
     /**
      * tag object
-     * @var Tag
+     * @var ?Tag
      */
     public $tag;
 
@@ -58,7 +58,7 @@ class TaggedPage extends MultipleLinkPage
 
     /**
      * tag cloud
-     * @var TypedTagCloud
+     * @var ?TypedTagCloud
      */
     public $tagCloud;
 

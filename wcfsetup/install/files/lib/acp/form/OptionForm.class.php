@@ -27,7 +27,7 @@ class OptionForm extends AbstractOptionListForm
 {
     /**
      * category option
-     * @var OptionCategory
+     * @var ?OptionCategory
      */
     public $category;
 

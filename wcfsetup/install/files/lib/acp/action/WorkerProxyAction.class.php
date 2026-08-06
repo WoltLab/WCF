@@ -37,7 +37,7 @@ final class WorkerProxyAction extends AJAXInvokeAction
 
     /**
      * worker object
-     * @var IWorker
+     * @var ?IWorker
      */
     protected $worker;
 

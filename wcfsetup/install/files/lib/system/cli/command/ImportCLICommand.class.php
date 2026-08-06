@@ -51,7 +51,7 @@ class ImportCLICommand implements ICLICommand
 
     /**
      * selected exporter
-     * @var \wcf\system\exporter\IExporter
+     * @var ?\wcf\system\exporter\IExporter
      */
     protected $exporter;
 

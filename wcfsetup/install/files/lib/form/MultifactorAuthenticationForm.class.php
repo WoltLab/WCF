@@ -37,27 +37,27 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm
     public $formAction = 'authenticate';
 
     /**
-     * @var User
+     * @var ?User
      */
     private $user;
 
     /**
-     * @var Setup[]
+     * @var Setup[]|null
      */
     private $setups;
 
     /**
-     * @var ObjectType
+     * @var ?ObjectType
      */
     private $method;
 
     /**
-     * @var IMultifactorMethod
+     * @var ?IMultifactorMethod
      */
     private $processor;
 
     /**
-     * @var Setup
+     * @var ?Setup
      */
     private $setup;
 

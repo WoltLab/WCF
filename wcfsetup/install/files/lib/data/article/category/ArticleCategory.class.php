@@ -45,7 +45,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 
     /**
      * subscribed categories
-     * @var int[]
+     * @var int[]|null
      */
     protected static $subscribedCategories;
 

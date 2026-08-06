@@ -29,7 +29,7 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction
     public $allowGuestAccess = ['load'];
 
     /**
-     * @var RecentActivityListBoxController
+     * @var ?RecentActivityListBoxController
      */
     public $boxController;
 

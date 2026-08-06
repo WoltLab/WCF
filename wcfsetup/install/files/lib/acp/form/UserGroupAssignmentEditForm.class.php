@@ -29,7 +29,7 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm
 
     /**
      * edited automatic user group assignment
-     * @var UserGroupAssignment
+     * @var ?UserGroupAssignment
      */
     public $assignment;
 

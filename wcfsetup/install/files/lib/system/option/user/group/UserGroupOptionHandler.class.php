@@ -36,13 +36,13 @@ class UserGroupOptionHandler extends OptionHandler
 
     /**
      * true if current user can edit every user group
-     * @var bool
+     * @var ?bool
      */
     protected $isAdmin;
 
     /**
      * true if the user is part of the owner group
-     * @var bool
+     * @var ?bool
      * @since 5.2
      */
     protected $isOwner;

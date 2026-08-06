@@ -33,7 +33,7 @@ class PaidSubscriptionTransactionLogPage extends AbstractPage
 
     /**
      * log entry object
-     * @var PaidSubscriptionTransactionLog
+     * @var ?PaidSubscriptionTransactionLog
      */
     public $log;
 

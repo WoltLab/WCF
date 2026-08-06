@@ -45,7 +45,7 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
 
     /**
      * object data
-     * @var mixed[]
+     * @var mixed[]|null
      */
     protected $data;
 

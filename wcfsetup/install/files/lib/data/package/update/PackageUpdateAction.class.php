@@ -54,7 +54,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
 
     /**
      * search object
-     * @var Search
+     * @var ?Search
      */
     protected $search;
 

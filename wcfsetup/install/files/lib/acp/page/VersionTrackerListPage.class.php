@@ -40,7 +40,7 @@ class VersionTrackerListPage extends AbstractPage
     public $objectType = '';
 
     /**
-     * @var IVersionTrackerProvider<DatabaseObject>
+     * @var IVersionTrackerProvider<DatabaseObject>|null
      */
     public $objectTypeProcessor;
 
@@ -81,7 +81,7 @@ class VersionTrackerListPage extends AbstractPage
 
     /**
      * requested object
-     * @var IVersionTrackerObject
+     * @var ?IVersionTrackerObject
      */
     public $object;
 

@@ -65,24 +65,24 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject, \St
     public static $availablePageTypes = ['text', 'html', 'tpl', 'system'];
 
     /**
-     * @var \wcf\system\page\handler\IMenuPageHandler
+     * @var ?\wcf\system\page\handler\IMenuPageHandler
      */
     protected $pageHandler;
 
     /**
      * box to page assignments
-     * @var int[]
+     * @var int[]|null
      */
     protected $boxIDs;
 
     /**
      * page content grouped by language id
-     * @var PageContent[]
+     * @var PageContent[]|null
      */
     public $pageContents;
 
     /**
-     * @var PageLanguage[]
+     * @var PageLanguage[]|null
      * @since 5.3
      */
     public $pageLanguages;

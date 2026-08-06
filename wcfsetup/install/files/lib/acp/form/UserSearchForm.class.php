@@ -45,7 +45,7 @@ class UserSearchForm extends UserOptionListForm
 
     /**
      * list with searched users
-     * @var UserList
+     * @var ?UserList
      */
     public $userList;
 

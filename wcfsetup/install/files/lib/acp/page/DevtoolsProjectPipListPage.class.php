@@ -34,7 +34,7 @@ class DevtoolsProjectPipListPage extends AbstractPage
 
     /**
      * devtools project
-     * @var DevtoolsProject
+     * @var ?DevtoolsProject
      */
     public $project;
 

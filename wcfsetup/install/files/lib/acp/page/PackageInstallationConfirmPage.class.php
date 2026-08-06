@@ -25,13 +25,13 @@ class PackageInstallationConfirmPage extends AbstractPage
 
     /**
      * package installation dispatcher object
-     * @var PackageInstallationDispatcher
+     * @var ?PackageInstallationDispatcher
      */
     public $packageInstallationDispatcher;
 
     /**
      * package installation queue object
-     * @var PackageInstallationQueue
+     * @var ?PackageInstallationQueue
      */
     public $queue;
 

@@ -52,7 +52,7 @@ class UserEditForm extends UserAddForm
 
     /**
      * user editor object
-     * @var UserEditor
+     * @var ?UserEditor
      */
     public $user;
 
@@ -106,7 +106,7 @@ class UserEditForm extends UserAddForm
 
     /**
      * user cover photo object
-     * @var IUserCoverPhoto
+     * @var ?IUserCoverPhoto
      */
     public $userCoverPhoto;
 

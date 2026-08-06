@@ -67,7 +67,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
 
     /**
      * The user profile of the actual user.
-     * @var User
+     * @var ?User
      */
     private $actualUser;
 

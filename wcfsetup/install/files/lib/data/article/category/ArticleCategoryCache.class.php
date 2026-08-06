@@ -21,7 +21,7 @@ class ArticleCategoryCache extends SingletonFactory
 {
     /**
      * number of total articles
-     * @var array<int, int>
+     * @var array<int, int>|null
      */
     protected $articles;
 

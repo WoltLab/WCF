@@ -39,7 +39,7 @@ class TrophyEditForm extends TrophyAddForm
 
     /**
      * trophy object
-     * @var Trophy
+     * @var ?Trophy
      */
     public $trophy;
 

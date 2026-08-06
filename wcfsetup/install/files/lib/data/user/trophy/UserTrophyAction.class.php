@@ -39,7 +39,7 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
     protected $allowGuestAccess = ['getGroupedUserTrophyList'];
 
     /**
-     * @var UserProfile
+     * @var ?UserProfile
      */
     public $userProfile;
 

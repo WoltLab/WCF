@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
 class NotificationUnsubscribeForm extends AbstractForm
 {
     /**
-     * @var User
+     * @var ?User
      */
     public $user;
 
@@ -38,7 +38,7 @@ class NotificationUnsubscribeForm extends AbstractForm
 
     /**
      * notification event to unsubscribe
-     * @var UserNotificationEvent
+     * @var ?UserNotificationEvent
      */
     public $event;
 

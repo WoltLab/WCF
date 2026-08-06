@@ -50,13 +50,13 @@ class ArticleAction extends AbstractDatabaseObjectAction
 {
     /**
      * article editor instance
-     * @var ArticleEditor
+     * @var ?ArticleEditor
      */
     public $articleEditor;
 
     /**
      * language object
-     * @var Language
+     * @var ?Language
      */
     public $language;
 

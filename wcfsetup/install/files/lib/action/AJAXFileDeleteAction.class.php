@@ -21,13 +21,13 @@ class AJAXFileDeleteAction extends AbstractSecureAction
 
     /**
      * The internal upload id.
-     * @var string
+     * @var ?string
      */
     public $internalId;
 
     /**
      * The unique file id.
-     * @var string
+     * @var ?string
      */
     public $uniqueFileId;
 

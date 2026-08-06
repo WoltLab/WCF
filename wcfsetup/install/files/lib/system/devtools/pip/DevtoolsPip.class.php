@@ -25,14 +25,14 @@ class DevtoolsPip extends DatabaseObjectDecorator
 {
     /**
      * project the pip object belongs to
-     * @var DevtoolsProject
+     * @var ?DevtoolsProject
      * @since 5.2
      */
     protected $project;
 
     /**
      * package installation plugin object
-     * @var IPackageInstallationPlugin
+     * @var ?IPackageInstallationPlugin
      * @since 5.2
      */
     protected $pip;

@@ -17,7 +17,7 @@ class CommentUserProfileMenuContent extends SingletonFactory implements IUserPro
 {
     /**
      * comment manager object
-     * @var \wcf\system\comment\manager\ICommentManager
+     * @var ?\wcf\system\comment\manager\ICommentManager
      */
     public $commentManager;
 

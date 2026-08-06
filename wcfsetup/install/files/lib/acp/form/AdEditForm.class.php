@@ -29,7 +29,7 @@ class AdEditForm extends AdAddForm
 
     /**
      * edited ad object
-     * @var Ad
+     * @var ?Ad
      */
     public $adObject;
 

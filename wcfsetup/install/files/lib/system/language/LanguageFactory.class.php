@@ -29,7 +29,7 @@ class LanguageFactory extends SingletonFactory
 
     /**
      * active template scripting compiler
-     * @var TemplateScriptingCompiler
+     * @var ?TemplateScriptingCompiler
      */
     protected $scriptingCompiler;
 

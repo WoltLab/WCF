@@ -39,7 +39,7 @@ class RemoteFile extends File
 
     /**
      * true if PHP supports SSL/TLS
-     * @var bool
+     * @var ?bool
      */
     private static $hasSSLSupport;
 

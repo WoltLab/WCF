@@ -26,7 +26,7 @@ class PaidSubscriptionUserEditForm extends PaidSubscriptionUserAddForm
 
     /**
      * subscription user object
-     * @var PaidSubscriptionUser
+     * @var ?PaidSubscriptionUser
      */
     public $subscriptionUser;
 
@@ -38,7 +38,7 @@ class PaidSubscriptionUserEditForm extends PaidSubscriptionUserAddForm
 
     /**
      * subscription end date
-     * @var \DateTime
+     * @var ?\DateTime
      */
     public $endDateTime;
 

@@ -22,20 +22,20 @@ abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator
     /**
      * list of child categories of this category
      *
-     * @var static[]
+     * @var static[]|null
      */
     protected $childCategories;
 
     /**
      * list of all child categories of this category
      *
-     * @var static[]
+     * @var static[]|null
      */
     protected $allChildCategories;
 
     /**
      * list of all parent category generations of this category
-     * @var static[]
+     * @var static[]|null
      */
     protected $parentCategories;
 

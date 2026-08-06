@@ -39,7 +39,7 @@ class SettingsForm extends AbstractForm
 
     /**
      * user option handler
-     * @var UserOptionHandler
+     * @var ?UserOptionHandler
      */
     public $optionHandler;
 

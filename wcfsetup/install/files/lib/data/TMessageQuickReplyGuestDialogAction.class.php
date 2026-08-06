@@ -21,7 +21,7 @@ trait TMessageQuickReplyGuestDialogAction
 {
     /**
      * captcha object type used for guests or `null` if no captcha is used or available
-     * @var ObjectType
+     * @var ?ObjectType
      */
     public $guestDialogCaptchaObjectType;
 

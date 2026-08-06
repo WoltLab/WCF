@@ -22,7 +22,7 @@ class SuffixFormFieldContainer extends FormContainer
 {
     /**
      * form field to which the suffix selection is added
-     * @var IFormField
+     * @var ?IFormField
      */
     protected $field;
 

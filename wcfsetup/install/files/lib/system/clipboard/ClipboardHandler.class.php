@@ -27,7 +27,7 @@ class ClipboardHandler extends SingletonFactory
 {
     /**
      * cached list of actions
-     * @var array<int, ClipboardAction>
+     * @var array<int, ClipboardAction>|null
      */
     protected $actionCache;
 
@@ -36,19 +36,19 @@ class ClipboardHandler extends SingletonFactory
      * @var array{
      *  objectTypes: array<int, ObjectType>,
      *  objectTypeNames: array<string, int>,
-     * }
+     * }|null
      */
     protected $cache;
 
     /**
      * list of marked items
-     * @var array<string, DatabaseObject[]>
+     * @var array<string, DatabaseObject[]>|null
      */
     protected $markedItems;
 
     /**
      * cached list of page actions
-     * @var array<string, int[]>
+     * @var array<string, int[]>|null
      */
     protected $pageCache;
 

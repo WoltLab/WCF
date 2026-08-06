@@ -25,18 +25,18 @@ class ViewablePackageUpdate extends DatabaseObjectDecorator
 
     /**
      * latest accessible package update version object
-     * @var PackageUpdateVersion
+     * @var ?PackageUpdateVersion
      */
     protected $accessibleVersion;
 
     /**
      * latest package update version object
-     * @var PackageUpdateVersion
+     * @var ?PackageUpdateVersion
      */
     protected $latestVersion;
 
     /**
-     * @var PackageUpdateServer
+     * @var ?PackageUpdateServer
      */
     protected $updateServer;
 

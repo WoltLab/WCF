@@ -29,7 +29,7 @@ class AJAXProxyAction extends AJAXInvokeAction
 
     /**
      * object action
-     * @var IDatabaseObjectAction
+     * @var ?IDatabaseObjectAction
      */
     protected $objectAction;
 

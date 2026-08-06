@@ -25,7 +25,7 @@ trait TMultiCategoryObject
 {
     /**
      * list of the object's categories
-     * @var AbstractDecoratedCategory[]
+     * @var AbstractDecoratedCategory[]|null
      */
     protected $categories;
 
@@ -37,7 +37,7 @@ trait TMultiCategoryObject
 
     /**
      * list of the object's leaf categories
-     * @var AbstractDecoratedCategory[]
+     * @var AbstractDecoratedCategory[]|null
      */
     protected $leafCategories;
 

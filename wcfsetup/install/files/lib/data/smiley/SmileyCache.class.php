@@ -35,7 +35,7 @@ final class SmileyCache extends SingletonFactory
 
     /**
      * enabled smiley categories with at least one smiley
-     * @var SmileyCategory[]
+     * @var SmileyCategory[]|null
      */
     private $visibleCategories;
 

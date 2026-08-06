@@ -31,7 +31,7 @@ class AttachmentPage extends AbstractPage
 
     /**
      * attachment object
-     * @var Attachment
+     * @var ?Attachment
      */
     public $attachment;
 
@@ -49,7 +49,7 @@ class AttachmentPage extends AbstractPage
 
     /**
      * file reader object
-     * @var FileReader
+     * @var ?FileReader
      */
     public $fileReader;
 
@@ -69,7 +69,7 @@ class AttachmentPage extends AbstractPage
 
     /**
      * etag for this attachment
-     * @var string
+     * @var ?string
      */
     public $eTag;
 

@@ -46,19 +46,19 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
     /**
      * default limit value for the maximum number of shown database objects
      * if this property is null, setting a limit is disabled
-     * @var int
+     * @var ?int
      */
     public $defaultLimit;
 
     /**
      * default sort field
-     * @var string
+     * @var ?string
      */
     public $defaultSortField;
 
     /**
      * default sort order
-     * @var string
+     * @var ?string
      */
     public $defaultSortOrder;
 
@@ -70,7 +70,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 
     /**
      * maximum limit value, if `null` no maximum is set
-     * @var int
+     * @var ?int
      */
     public $maximumLimit;
 
@@ -82,7 +82,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 
     /**
      * database object list used to read the objects displayed in the box
-     * @var TDatabaseObjectList
+     * @var ?TDatabaseObjectList
      */
     public $objectList;
 
@@ -94,7 +94,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 
     /**
      * prefix used for the titles of the sort fields
-     * @var string
+     * @var ?string
      */
     protected $sortFieldLanguageItemPrefix;
 
@@ -107,7 +107,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
     /**
      * list of valid sort fields
      * if this property is null, sorting is disabled
-     * @var string[]
+     * @var string[]|null
      */
     public $validSortFields;
 

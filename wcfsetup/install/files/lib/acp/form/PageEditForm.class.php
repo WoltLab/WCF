@@ -39,7 +39,7 @@ class PageEditForm extends PageAddForm
 
     /**
      * page object
-     * @var Page
+     * @var ?Page
      */
     public $page;
 

@@ -37,7 +37,7 @@ class BoxContent extends DatabaseObject
 
     /**
      * image media object
-     * @var ViewableMedia
+     * @var ?ViewableMedia
      */
     protected $image;
 

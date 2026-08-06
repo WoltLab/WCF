@@ -34,7 +34,7 @@ final class SearchHandler
     private $objectTypeNames = [];
 
     /**
-     * @var PreparedStatementConditionBuilder
+     * @var ?PreparedStatementConditionBuilder
      */
     private $conditionBuilder;
 
@@ -49,7 +49,7 @@ final class SearchHandler
     private $typeBasedContextFilter = [];
 
     /**
-     * @var int[]
+     * @var int[]|null
      */
     private $userIDs;
 

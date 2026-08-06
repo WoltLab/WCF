@@ -31,7 +31,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
 
     /**
      * categorized object type
-     * @var \wcf\data\object\type\ObjectType
+     * @var ?\wcf\data\object\type\ObjectType
      */
     protected $objectType;
 

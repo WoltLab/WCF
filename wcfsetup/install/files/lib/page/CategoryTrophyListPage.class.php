@@ -27,7 +27,7 @@ class CategoryTrophyListPage extends TrophyListPage
 
     /**
      * The category object filter
-     * @var TrophyCategory
+     * @var ?TrophyCategory
      */
     public $category;
 

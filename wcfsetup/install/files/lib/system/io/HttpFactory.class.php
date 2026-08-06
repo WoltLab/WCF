@@ -24,7 +24,7 @@ use wcf\system\Regex;
 final class HttpFactory
 {
     /**
-     * @var PsrClientInterface&ClientInterface
+     * @var (PsrClientInterface&ClientInterface)|null
      */
     private static $defaultClient;
 

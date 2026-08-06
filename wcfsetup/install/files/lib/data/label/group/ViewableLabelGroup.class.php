@@ -50,7 +50,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 
     /**
      * list of index to object relation
-     * @var int[]
+     * @var int[]|null
      */
     protected $indexToObject;
 

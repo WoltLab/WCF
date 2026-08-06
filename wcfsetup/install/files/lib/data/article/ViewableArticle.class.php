@@ -33,14 +33,14 @@ class ViewableArticle extends DatabaseObjectDecorator
 
     /**
      * number of unread articles in watched categories
-     * @var int
+     * @var ?int
      * @since   5.2
      */
     protected static $unreadWatchedArticles;
 
     /**
      * number of unread articles ordered by categories
-     * @var int[]
+     * @var int[]|null
      * @since   5.2
      */
     protected static $unreadArticlesByCategory;

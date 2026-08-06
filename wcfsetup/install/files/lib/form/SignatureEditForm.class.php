@@ -52,7 +52,7 @@ class SignatureEditForm extends MessageForm
 
     /**
      * parsed signature cache
-     * @var string
+     * @var ?string
      */
     public $signatureCache;
 

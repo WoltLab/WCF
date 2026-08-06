@@ -30,7 +30,7 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
 
     /**
      * user profile object
-     * @var UserProfile
+     * @var ?UserProfile
      */
     public $userProfile;
 

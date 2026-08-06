@@ -34,13 +34,13 @@ class BBCodeHandler extends SingletonFactory
 
     /**
      * list of BBCodes which contain raw code (disabled BBCode parsing)
-     * @var BBCode[]
+     * @var BBCode[]|null
      */
     protected $sourceBBCodes;
 
     /**
      * meta information about highlighters
-     * @var mixed[]
+     * @var mixed[]|null
      */
     protected $highlighterMeta;
 

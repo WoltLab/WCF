@@ -17,7 +17,7 @@ use wcf\system\SingletonFactory;
 class SignatureCache extends SingletonFactory
 {
     /**
-     * @var HtmlOutputProcessor
+     * @var ?HtmlOutputProcessor
      */
     protected $htmlOutputProcessor;
 

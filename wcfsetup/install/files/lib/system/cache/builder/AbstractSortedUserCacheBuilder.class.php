@@ -34,7 +34,7 @@ abstract class AbstractSortedUserCacheBuilder extends AbstractLegacyCacheBuilder
 
     /**
      * database table column used for sorting
-     * @var string
+     * @var ?string
      */
     protected $sortField;
 

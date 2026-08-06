@@ -26,7 +26,7 @@ class PageBoxOrderPage extends AbstractPage
 
     /**
      * list of boxes by position
-     * @var Box[][]
+     * @var Box[][]|null
      */
     public $boxes;
 

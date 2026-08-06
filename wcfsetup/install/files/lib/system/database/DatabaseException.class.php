@@ -29,7 +29,7 @@ class DatabaseException extends SystemException
 
     /**
      * sql version number
-     * @var string
+     * @var ?string
      */
     protected $sqlVersion;
 

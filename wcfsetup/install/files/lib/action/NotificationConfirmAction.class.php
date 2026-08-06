@@ -30,7 +30,7 @@ final class NotificationConfirmAction extends AbstractAction
 
     /**
      * user notification object
-     * @var UserNotification
+     * @var ?UserNotification
      */
     public $notification;
 

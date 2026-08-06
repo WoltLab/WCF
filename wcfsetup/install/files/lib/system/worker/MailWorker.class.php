@@ -27,7 +27,7 @@ class MailWorker extends AbstractWorker
 {
     /**
      * condition builder object
-     * @var PreparedStatementConditionBuilder
+     * @var ?PreparedStatementConditionBuilder
      */
     protected $conditions;
 
@@ -38,7 +38,7 @@ class MailWorker extends AbstractWorker
 
     /**
      * mail data
-     * @var array{action: string, enableHTML: 1|0, from: string, fromName?: string, groupIDs: int[], 'message-id': string, subject: string, text: string, userIDs: int[]}
+     * @var array{action: string, enableHTML: 1|0, from: string, fromName?: string, groupIDs: int[], 'message-id': string, subject: string, text: string, userIDs: int[]}|null
      */
     protected $mailData;
 

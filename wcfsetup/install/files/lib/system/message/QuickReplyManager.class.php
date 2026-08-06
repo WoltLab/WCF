@@ -33,7 +33,7 @@ class QuickReplyManager extends SingletonFactory
 {
     /**
      * container object
-     * @var \wcf\data\DatabaseObject
+     * @var ?\wcf\data\DatabaseObject
      */
     public $container;
 

@@ -43,7 +43,7 @@ abstract class AbstractFormField implements IFormField
 
     /**
      * name of the template used to output this field
-     * @var string
+     * @var ?string
      */
     protected $templateName;
 

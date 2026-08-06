@@ -93,13 +93,13 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm
 
     /**
      * object instance
-     * @var CustomOption
+     * @var ?CustomOption
      */
     public $option;
 
     /**
      * object id
-     * @var int
+     * @var ?int
      */
     public $optionID;
 

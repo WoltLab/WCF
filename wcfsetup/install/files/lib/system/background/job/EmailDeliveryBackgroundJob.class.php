@@ -56,7 +56,7 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
 
     /**
      * instance of the default transport
-     * @var \wcf\system\email\transport\IEmailTransport
+     * @var ?\wcf\system\email\transport\IEmailTransport
      */
     protected static $transport;
 

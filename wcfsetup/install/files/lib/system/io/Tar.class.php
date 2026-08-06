@@ -49,7 +49,7 @@ class Tar implements IArchive
 
     /**
      * file object
-     * @var File
+     * @var ?File
      */
     protected $file;
 

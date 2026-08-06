@@ -31,13 +31,13 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractCommen
 
     /**
      * language item prefix for the notification texts
-     * @var string
+     * @var ?string
      */
     protected $languageItemPrefix;
 
     /**
      * moderation queue object the notifications (indirectly) belong to
-     * @var ViewableModerationQueue
+     * @var ?ViewableModerationQueue
      */
     protected $moderationQueue;
 

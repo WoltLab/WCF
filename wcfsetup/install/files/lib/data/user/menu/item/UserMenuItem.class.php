@@ -53,7 +53,7 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, I
 
     /**
      * menu item controller
-     * @var string
+     * @var ?string
      */
     protected $controller;
 

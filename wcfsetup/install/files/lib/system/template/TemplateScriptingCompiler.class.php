@@ -113,79 +113,79 @@ class TemplateScriptingCompiler
 
     /**
      * pattern to match variable operators like -> or .
-     * @var string
+     * @var ?string
      */
     protected $variableOperatorPattern;
 
     /**
      * pattern to match condition operators like == or <
-     * @var string
+     * @var ?string
      */
     protected $conditionOperatorPattern;
 
     /**
      * negative lookbehind for a backslash
-     * @var string
+     * @var ?string
      */
     protected $escapedPattern;
 
     /**
      * pattern to match valid variable names
-     * @var string
+     * @var ?string
      */
     protected $validVarnamePattern;
 
     /**
      * pattern to match constants like CONSTANT or __CONSTANT
-     * @var string
+     * @var ?string
      */
     protected $constantPattern;
 
     /**
      * pattern to match double quoted strings like "blah" or "quote: \"blah\""
-     * @var string
+     * @var ?string
      */
     protected $doubleQuotePattern;
 
     /**
      * pattern to match single quoted strings like 'blah' or 'don\'t'
-     * @var string
+     * @var ?string
      */
     protected $singleQuotePattern;
 
     /**
      * pattern to match single or double quoted strings
-     * @var string
+     * @var ?string
      */
     protected $quotePattern;
 
     /**
      * pattern to match numbers, true, false and null
-     * @var string
+     * @var ?string
      */
     protected $numericPattern;
 
     /**
      * pattern to match simple variables like $foo
-     * @var string
+     * @var ?string
      */
     protected $simpleVarPattern;
 
     /**
      * pattern to match outputs like @$foo or #CONST
-     * @var string
+     * @var ?string
      */
     protected $outputPattern;
 
     /**
      * identifier of currently compiled template
-     * @var string
+     * @var ?string
      */
     protected $currentIdentifier;
 
     /**
      * current line number during template compilation
-     * @var int
+     * @var ?int
      */
     protected $currentLineNo;
 

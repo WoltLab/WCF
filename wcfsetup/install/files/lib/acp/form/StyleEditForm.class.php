@@ -35,7 +35,7 @@ class StyleEditForm extends StyleAddForm
 
     /**
      * style object
-     * @var Style
+     * @var ?Style
      */
     public $style;
 

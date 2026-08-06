@@ -50,7 +50,7 @@ class UserGroupOptionForm extends AbstractForm
 
     /**
      * user group option type object
-     * @var IUserGroupOptionType
+     * @var ?IUserGroupOptionType
      */
     public $optionType;
 
@@ -68,7 +68,7 @@ class UserGroupOptionForm extends AbstractForm
 
     /**
      * user group option object
-     * @var UserGroupOption
+     * @var ?UserGroupOption
      */
     public $userGroupOption;
 

@@ -48,12 +48,12 @@ class MultifactorManageForm extends AbstractFormBuilderForm
     public $formAction = 'setup';
 
     /**
-     * @var ObjectType
+     * @var ?ObjectType
      */
     private $method;
 
     /**
-     * @var IMultifactorMethod
+     * @var ?IMultifactorMethod
      */
     private $processor;
 
@@ -68,7 +68,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm
     private $returnData;
 
     /**
-     * @var IFormDocument
+     * @var ?IFormDocument
      */
     private $backupForm;
 

@@ -47,17 +47,17 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
     protected $requireACP = ['invoke'];
 
     /**
-     * @var DevtoolsPip
+     * @var ?DevtoolsPip
      */
     public $devtoolsPip;
 
     /**
-     * @var PackageInstallationPlugin
+     * @var ?PackageInstallationPlugin
      */
     public $packageInstallationPlugin;
 
     /**
-     * @var DevtoolsProject
+     * @var ?DevtoolsProject
      */
     public $project;
 

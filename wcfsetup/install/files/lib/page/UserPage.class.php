@@ -39,7 +39,7 @@ class UserPage extends AbstractPage
 
     /**
      * overview editable content object type
-     * @var ObjectType
+     * @var ?ObjectType
      */
     public $objectType;
 
@@ -57,25 +57,25 @@ class UserPage extends AbstractPage
 
     /**
      * user object
-     * @var UserProfile
+     * @var ?UserProfile
      */
     public $user;
 
     /**
      * follower list
-     * @var UserFollowerList
+     * @var ?UserFollowerList
      */
     public $followerList;
 
     /**
      * following list
-     * @var UserFollowingList
+     * @var ?UserFollowingList
      */
     public $followingList;
 
     /**
      * visitor list
-     * @var UserProfileVisitorList
+     * @var ?UserProfileVisitorList
      */
     public $visitorList;
 

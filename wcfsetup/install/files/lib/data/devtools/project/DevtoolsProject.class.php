@@ -35,7 +35,7 @@ class DevtoolsProject extends DatabaseObject
     protected $didFetchPackage = false;
 
     /**
-     * @var bool
+     * @var ?bool
      */
     protected $isCore;
 
@@ -45,7 +45,7 @@ class DevtoolsProject extends DatabaseObject
     protected $package;
 
     /**
-     * @var DevtoolsPackageArchive
+     * @var ?DevtoolsPackageArchive
      */
     protected $packageArchive;
 

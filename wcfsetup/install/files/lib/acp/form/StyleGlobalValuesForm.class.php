@@ -38,7 +38,7 @@ class StyleGlobalValuesForm extends AbstractForm
     public $stylesScrollOffset = 0;
 
     /**
-     * @var string
+     * @var ?string
      */
     public $styleTestFileDir;
 

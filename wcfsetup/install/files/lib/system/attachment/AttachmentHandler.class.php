@@ -54,7 +54,7 @@ class AttachmentHandler implements \Countable
 
     /**
      * list of attachments
-     * @var AttachmentList
+     * @var ?AttachmentList
      */
     protected $attachmentList;
 

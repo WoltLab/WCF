@@ -21,7 +21,7 @@ class RecentActivityListPage extends AbstractPage
 {
     /**
      * viewable user activity event list
-     * @var ViewableUserActivityEventList
+     * @var ?ViewableUserActivityEventList
      */
     public $eventList;
 

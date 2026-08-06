@@ -27,12 +27,12 @@ class TemplateGroup extends DatabaseObject implements ITitledObject
     protected static $databaseTableIndexName = 'templateGroupID';
 
     /**
-     * @var TemplateGroup[][]
+     * @var TemplateGroup[][]|null
      */
     protected static $templateGroupStructure;
 
     /**
-     * @var array<int, string>
+     * @var array<int, string>|null
      */
     protected static $selectList;
 

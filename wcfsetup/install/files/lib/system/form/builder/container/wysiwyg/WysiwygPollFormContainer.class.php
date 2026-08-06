@@ -36,31 +36,31 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
 
     /**
      * form field to set the end date of the poll
-     * @var DateFormField
+     * @var ?DateFormField
      */
     protected $endTimeField;
 
     /**
      * form field to set if votes can be changed
-     * @var BooleanFormField
+     * @var ?BooleanFormField
      */
     protected $isChangeableField;
 
     /**
      * form field to set if the poll results are public
-     * @var BooleanFormField
+     * @var ?BooleanFormField
      */
     protected $isPublicField;
 
     /**
      * form field to set the maximum number of votes per user
-     * @var IntegerFormField
+     * @var ?IntegerFormField
      */
     protected $maxVotesField;
 
     /**
      * form field to set the available poll answers
-     * @var PollOptionsFormField
+     * @var ?PollOptionsFormField
      */
     protected $optionsField;
 
@@ -72,19 +72,19 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
 
     /**
      * form field to set the question of the poll
-     * @var TextFormField
+     * @var ?TextFormField
      */
     protected $questionField;
 
     /**
      * form field to set whether viewing the poll results requires voting
-     * @var BooleanFormField
+     * @var ?BooleanFormField
      */
     protected $resultsRequireVoteField;
 
     /**
      * form field to set whether the poll answers are sorted by votes when viewing the results
-     * @var BooleanFormField
+     * @var ?BooleanFormField
      */
     protected $sortByVotesField;
 

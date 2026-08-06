@@ -43,7 +43,7 @@ abstract class AbstractFeedPage extends AbstractAuthedPage
 
     /**
      * list of feed-entries for the current page object must be an \Iterator with \wcf\data\IFeedEntry-Elements
-     * @var TItems
+     * @var ?TItems
      */
     public $items;
 

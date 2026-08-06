@@ -43,7 +43,7 @@ abstract class AbstractOptionListForm extends AbstractForm
 
     /**
      * option handler object
-     * @var TOptionHandler
+     * @var ?TOptionHandler
      * @phpstan-ignore generics.variance
      */
     public $optionHandler;

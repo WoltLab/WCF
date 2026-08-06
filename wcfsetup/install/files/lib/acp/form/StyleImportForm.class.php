@@ -40,7 +40,7 @@ class StyleImportForm extends AbstractForm
 
     /**
      * style editor object
-     * @var StyleEditor
+     * @var ?StyleEditor
      */
     public $style;
 

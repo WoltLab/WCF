@@ -26,13 +26,13 @@ class Menu extends DatabaseObject implements ITitledObject
 {
     /**
      * menu item node tree
-     * @var MenuItemNodeTree
+     * @var ?MenuItemNodeTree
      */
     protected $menuItemNodeTree;
 
     /**
      * box object
-     * @var Box
+     * @var ?Box
      */
     protected $box;
 

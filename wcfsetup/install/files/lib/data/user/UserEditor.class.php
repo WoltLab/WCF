@@ -33,7 +33,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
     /**
      * list of user options default values
-     * @var array<int, int|float|string>
+     * @var array<int, int|float|string>|null
      */
     protected static $userOptionDefaultValues;
 

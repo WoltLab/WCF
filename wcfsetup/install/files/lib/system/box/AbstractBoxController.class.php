@@ -17,13 +17,13 @@ abstract class AbstractBoxController implements IBoxController
 {
     /**
      * database object of this box
-     * @var Box
+     * @var ?Box
      */
     protected $box;
 
     /**
      * box content
-     * @var string
+     * @var ?string
      */
     public $content;
 

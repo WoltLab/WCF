@@ -35,7 +35,7 @@ class TestableUserNotificationEventHandler extends SingletonFactory
 {
     /**
      * list of user profiles used as authors
-     * @var UserProfile[]
+     * @var UserProfile[]|null
      */
     protected $authors;
 

@@ -38,7 +38,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
 
     /**
      * affected object
-     * @var IUserContent
+     * @var ?IUserContent
      */
     protected $affectedObject;
 
@@ -50,7 +50,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
 
     /**
      * user profile object
-     * @var UserProfile
+     * @var ?UserProfile
      */
     protected $userProfile;
 

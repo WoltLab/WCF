@@ -20,7 +20,7 @@ class UserProfileHandler extends SingletonFactory
 {
     /**
      * user profile object
-     * @var UserProfile
+     * @var ?UserProfile
      */
     protected $userProfile;
 

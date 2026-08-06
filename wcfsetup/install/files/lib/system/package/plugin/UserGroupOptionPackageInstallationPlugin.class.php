@@ -42,7 +42,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 
     /**
      * list of group ids by type
-     * @var int[][]
+     * @var int[][]|null
      */
     protected $groupIDs;
 

@@ -54,7 +54,7 @@ class UserContentRevertChangesForm extends AbstractForm
 
     /**
      * id of the user clipboard item object type
-     * @var int
+     * @var ?int
      */
     protected $objectTypeID;
 

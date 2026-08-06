@@ -37,7 +37,7 @@ class StructuredCommentResponse extends DatabaseObjectDecorator
 
     /**
      * user profile of the comment response author
-     * @var UserProfile
+     * @var ?UserProfile
      */
     public $userProfile;
 

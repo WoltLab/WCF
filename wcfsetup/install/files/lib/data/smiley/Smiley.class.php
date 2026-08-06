@@ -38,7 +38,7 @@ class Smiley extends DatabaseObject implements ITitledObject
     protected $width;
 
     /**
-     * @var string[]
+     * @var string[]|null
      */
     public $smileyCodes;
 

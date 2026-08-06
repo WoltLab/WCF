@@ -57,55 +57,55 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
 
     /**
      * list of ignored user ids
-     * @var int[]
+     * @var int[]|null
      */
     protected $ignoredUserIDs;
 
     /**
      * list of user ids that are ignoring this user
-     * @var int[]
+     * @var int[]|null
      */
     protected $ignoredByUserIDs;
 
     /**
      * list of follower user ids
-     * @var int[]
+     * @var int[]|null
      */
     protected $followerUserIDs;
 
     /**
      * list of following user ids
-     * @var int[]
+     * @var int[]|null
      */
     protected $followingUserIDs;
 
     /**
-     * @var AvatarDecorator
+     * @var ?AvatarDecorator
      */
     protected $avatar;
 
     /**
      * user rank object
-     * @var UserRank
+     * @var ?UserRank
      * @deprecated 6.1 use `->getRank()` instead
      */
     protected $rank;
 
     /**
      * age of this user
-     * @var int
+     * @var ?int
      */
     protected $__age;
 
     /**
      * group data and permissions
-     * @var mixed[][]
+     * @var mixed[][]|null
      */
     protected $groupData;
 
     /**
      * current location of this user.
-     * @var string
+     * @var ?string
      */
     protected $currentLocation;
 

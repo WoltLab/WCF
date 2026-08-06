@@ -53,7 +53,7 @@ class CombinedTaggedPage extends MultipleLinkPage
     public $objectType;
 
     /**
-     * @var ICombinedTaggable<DatabaseObjectList<DatabaseObject>>
+     * @var ICombinedTaggable<DatabaseObjectList<DatabaseObject>>|null
      */
     public $processor;
 
@@ -68,7 +68,7 @@ class CombinedTaggedPage extends MultipleLinkPage
     public $tagIDs = [];
 
     /**
-     * @var TypedTagCloud
+     * @var ?TypedTagCloud
      */
     public $tagCloud;
 

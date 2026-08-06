@@ -21,7 +21,7 @@ use wcf\util\ArrayUtil;
 class MessageOptionType extends TextareaOptionType
 {
     /**
-     * @var HtmlInputProcessor
+     * @var ?HtmlInputProcessor
      */
     protected $htmlInputProcessor;
 

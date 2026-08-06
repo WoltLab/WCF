@@ -36,7 +36,7 @@ class UserProfileAction extends UserAction
     protected $allowGuestAccess = ['getDetailedActivityPointList'];
 
     /**
-     * @var User
+     * @var ?User
      */
     public $user;
 

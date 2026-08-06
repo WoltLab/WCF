@@ -15,7 +15,7 @@ trait TWysiwygFormNode
 {
     /**
      * id of the related `WysiwygFormField` form field
-     * @var string
+     * @var ?string
      */
     protected $wysiwygId;
 

@@ -15,7 +15,7 @@ use wcf\util\Url;
 class TwitchBBCodeMediaProvider implements IBBCodeMediaProvider
 {
     /**
-     * @var string
+     * @var ?string
      */
     private static $parent;
 

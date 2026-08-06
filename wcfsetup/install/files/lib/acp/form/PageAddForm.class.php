@@ -180,7 +180,7 @@ class PageAddForm extends AbstractForm
 
     /**
      * menu item node tree
-     * @var MenuItemNodeTree
+     * @var ?MenuItemNodeTree
      */
     public $menuItems;
 

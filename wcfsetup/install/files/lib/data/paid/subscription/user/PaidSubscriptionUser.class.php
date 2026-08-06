@@ -31,13 +31,13 @@ class PaidSubscriptionUser extends DatabaseObject
 
     /**
      * paid subscription object
-     * @var PaidSubscription
+     * @var ?PaidSubscription
      */
     protected $subscription;
 
     /**
      * user object
-     * @var User
+     * @var ?User
      */
     protected $user;
 

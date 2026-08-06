@@ -27,7 +27,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction
 
     /**
      * current attachment object, used to communicate with event listeners
-     * @var Attachment
+     * @var ?Attachment
      */
     public $eventAttachment;
 

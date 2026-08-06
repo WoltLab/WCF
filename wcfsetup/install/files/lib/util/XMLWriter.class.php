@@ -27,7 +27,7 @@ class XMLWriter
 
     /**
      * XMLWriter object
-     * @var \XMLWriter
+     * @var ?\XMLWriter
      */
     protected $xml;
 

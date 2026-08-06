@@ -27,7 +27,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction
 
     /**
      * editor object for the copied user group
-     * @var UserGroupEditor
+     * @var ?UserGroupEditor
      */
     public $groupEditor;
 

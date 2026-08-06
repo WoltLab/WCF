@@ -15,7 +15,7 @@ trait TUserGroupOptionType
 {
     /**
      * user group object
-     * @var UserGroup
+     * @var ?UserGroup
      */
     protected $userGroup;
 

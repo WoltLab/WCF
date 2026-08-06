@@ -19,7 +19,7 @@ class AboutUserProfileMenuContent extends SingletonFactory implements IUserProfi
 {
     /**
      * user option handler object
-     * @var UserOptionHandler
+     * @var ?UserOptionHandler
      */
     public $optionHandler;
 

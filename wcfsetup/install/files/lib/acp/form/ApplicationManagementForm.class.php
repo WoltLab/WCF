@@ -36,7 +36,7 @@ final class ApplicationManagementForm extends AbstractForm
 
     /**
      * list of applications
-     * @var ViewableApplicationList
+     * @var ?ViewableApplicationList
      */
     public $applicationList;
 
@@ -62,7 +62,7 @@ final class ApplicationManagementForm extends AbstractForm
 
     /**
      * nested list of page nodes
-     * @var \RecursiveIteratorIterator<PageNode>
+     * @var \RecursiveIteratorIterator<PageNode>|null
      */
     public $pageNodeList;
 

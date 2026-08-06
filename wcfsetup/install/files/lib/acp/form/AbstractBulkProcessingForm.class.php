@@ -40,14 +40,14 @@ abstract class AbstractBulkProcessingForm extends AbstractForm
 
     /**
      * list with bulk processed objects
-     * @var \wcf\data\DatabaseObjectList
+     * @var ?\wcf\data\DatabaseObjectList
      * @phpstan-ignore missingType.generics
      */
     public $objectList;
 
     /**
      * bulk processable object type
-     * @var ObjectType
+     * @var ?ObjectType
      */
     public $objectType;
 

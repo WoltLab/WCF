@@ -35,7 +35,7 @@ class CommentResponse extends DatabaseObject implements IMessage
 
     /**
      * comment object
-     * @var Comment
+     * @var ?Comment
      */
     protected $comment;
 

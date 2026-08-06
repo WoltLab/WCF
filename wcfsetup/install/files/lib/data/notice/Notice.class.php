@@ -37,7 +37,7 @@ class Notice extends DatabaseObject implements IRouteController, \Stringable
 
     /**
      * true if the active user has dismissed the notice
-     * @var bool
+     * @var ?bool
      */
     protected $isDismissed;
 

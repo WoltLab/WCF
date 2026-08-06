@@ -37,13 +37,13 @@ use wcf\util\Url;
 class MenuItem extends DatabaseObject implements ITitledObject
 {
     /**
-     * @var IMenuPageHandler
+     * @var ?IMenuPageHandler
      */
     protected $handler;
 
     /**
      * page object
-     * @var Page
+     * @var ?Page
      */
     protected $page;
 

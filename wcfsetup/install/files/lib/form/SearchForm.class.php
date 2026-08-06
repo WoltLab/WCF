@@ -101,7 +101,7 @@ class SearchForm extends AbstractCaptchaForm
     public $searchID = 0;
 
     /**
-     * @var PreparedStatementConditionBuilder
+     * @var ?PreparedStatementConditionBuilder
      */
     public $searchIndexCondition;
 
