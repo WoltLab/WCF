@@ -15,29 +15,17 @@ use wcf\system\user\authentication\password\IPasswordAlgorithm;
  */
 final class Wcf1e implements IPasswordAlgorithm
 {
-    /**
-     * @var string
-     */
-    private $encryptionMethod;
+    private string $encryptionMethod;
 
-    /**
-     * @var bool
-     */
-    private $enableSalting;
+    private bool $enableSalting;
 
-    /**
-     * @var string
-     */
-    private $saltPosition;
+    private string $saltPosition;
 
-    /**
-     * @var bool
-     */
-    private $encryptBeforeSalting;
+    private bool $encryptBeforeSalting;
 
     public function __construct(string $type)
     {
-        if (\preg_match('~^wcf1e([cms])([01])([ab])([01])$~', $type, $matches) === false) {
+        if (\preg_match('~^wcf1e([cms])([01])([ab])([01])$~', $type, $matches) === 0) {
             throw new \BadMethodCallException("The type '" . $type . "' is invalid.");
         }
 

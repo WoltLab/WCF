@@ -25,9 +25,8 @@ final class WysiwygAttachmentFormField extends AbstractFormField
 
     /**
      * attachment handler
-     * @var ?AttachmentHandler
      */
-    protected $attachmentHandler;
+    protected ?AttachmentHandler $attachmentHandler = null;
 
     /**
      * @inheritDoc
@@ -52,10 +51,8 @@ final class WysiwygAttachmentFormField extends AbstractFormField
      * automatically set by either reading them from the session variables if the form handles
      * AJAX requests or by creating a new one. If the temporary hashes are read from session,
      * the session variable will be unregistered afterwards.
-     *
-     * @return WysiwygAttachmentFormField
      */
-    public function attachmentHandler(?AttachmentHandler $attachmentHandler = null)
+    public function attachmentHandler(?AttachmentHandler $attachmentHandler = null): static
     {
         if ($attachmentHandler !== null) {
             if ($this->attachmentHandler === null) {
@@ -92,22 +89,20 @@ final class WysiwygAttachmentFormField extends AbstractFormField
     /**
      * Returns the attachment handler object for the uploaded attachments or `null` if no attachment
      * upload is supported.
-     *
-     * @return ?AttachmentHandler
      */
-    public function getAttachmentHandler()
+    public function getAttachmentHandler(): ?AttachmentHandler
     {
         return $this->attachmentHandler;
     }
 
     #[\Override]
-    public function hasSaveValue()
+    public function hasSaveValue(): bool
     {
         return false;
     }
 
     #[\Override]
-    public function isAvailable()
+    public function isAvailable(): bool
     {
         return parent::isAvailable()
             && $this->getAttachmentHandler() !== null
@@ -115,7 +110,7 @@ final class WysiwygAttachmentFormField extends AbstractFormField
     }
 
     #[\Override]
-    public function populate()
+    public function populate(): static
     {
         parent::populate();
 
@@ -134,7 +129,7 @@ final class WysiwygAttachmentFormField extends AbstractFormField
     }
 
     #[\Override]
-    public function readValue()
+    public function readValue(): static
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId() . '_tmpHash')) {
             $tmpHash = $this->getDocument()->getRequestData($this->getPrefixedId() . '_tmpHash');

@@ -36,24 +36,17 @@ final class ApplicationManagementForm extends AbstractForm
 
     /**
      * list of applications
-     * @var ?ViewableApplicationList
      */
-    public $applicationList;
+    public ?ViewableApplicationList $applicationList = null;
 
-    /**
-     * @var string
-     */
-    public $cookieDomain = '';
+    public string $cookieDomain = '';
 
-    /**
-     * @var string
-     */
-    public $domainName = '';
+    public string $domainName = '';
 
     /**
      * @var int[]
      */
-    public $landingPageID = [];
+    public array $landingPageID = [];
 
     /**
      * @inheritDoc
@@ -64,10 +57,10 @@ final class ApplicationManagementForm extends AbstractForm
      * nested list of page nodes
      * @var \RecursiveIteratorIterator<PageNode>|null
      */
-    public $pageNodeList;
+    public ?\RecursiveIteratorIterator $pageNodeList = null;
 
     #[\Override]
-    public function readParameters()
+    public function readParameters(): void
     {
         parent::readParameters();
 
@@ -75,7 +68,7 @@ final class ApplicationManagementForm extends AbstractForm
     }
 
     #[\Override]
-    public function readFormParameters()
+    public function readFormParameters(): void
     {
         parent::readFormParameters();
 
@@ -94,7 +87,7 @@ final class ApplicationManagementForm extends AbstractForm
     }
 
     #[\Override]
-    public function validate()
+    public function validate(): void
     {
         parent::validate();
 
@@ -140,7 +133,7 @@ final class ApplicationManagementForm extends AbstractForm
     }
 
     #[\Override]
-    public function readData()
+    public function readData(): void
     {
         parent::readData();
 
@@ -153,7 +146,7 @@ final class ApplicationManagementForm extends AbstractForm
     }
 
     #[\Override]
-    public function save()
+    public function save(): void
     {
         parent::save();
 
@@ -198,7 +191,7 @@ final class ApplicationManagementForm extends AbstractForm
     }
 
     #[\Override]
-    public function assignVariables()
+    public function assignVariables(): void
     {
         parent::assignVariables();
 

@@ -20,7 +20,7 @@ use wcf\system\form\builder\IFormParentNode;
 final class DefaultFormDataProcessor extends AbstractFormDataProcessor
 {
     #[\Override]
-    public function processFormData(IFormDocument $document, array $parameters)
+    public function processFormData(IFormDocument $document, array $parameters): array
     {
         $parameters['data'] = [];
 
@@ -34,9 +34,8 @@ final class DefaultFormDataProcessor extends AbstractFormDataProcessor
      *
      * @param IFormNode $node node whose data will be fetched
      * @param mixed[] $data data storage
-     * @return void
      */
-    protected function getData(IFormNode $node, array &$data)
+    protected function getData(IFormNode $node, array &$data): void
     {
         if ($node->isAvailable() && $node->checkDependencies()) {
             if ($node instanceof IFormParentNode) {

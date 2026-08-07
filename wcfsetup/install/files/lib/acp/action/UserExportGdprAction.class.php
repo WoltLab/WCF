@@ -38,7 +38,7 @@ final class UserExportGdprAction extends AbstractAction
      *
      * @var mixed[]
      */
-    public $data = [];
+    public array $data = [];
 
     /**
      * list of column names of the user table, the columns `languageID` and `registrationIpAddress`
@@ -48,7 +48,7 @@ final class UserExportGdprAction extends AbstractAction
      *
      * @var string[]
      */
-    public $exportUserProperties = [
+    public array $exportUserProperties = [
         'username',
         'email',
     ];
@@ -61,7 +61,7 @@ final class UserExportGdprAction extends AbstractAction
      *
      * @var string[]
      */
-    public $exportUserPropertiesIfNotEmpty = [
+    public array $exportUserPropertiesIfNotEmpty = [
         'registrationDate',
         'oldUsername',
         'lastUsernameChange',
@@ -79,7 +79,7 @@ final class UserExportGdprAction extends AbstractAction
      *
      * @var string[]
      */
-    public $exportUserOptionSettings = [];
+    public array $exportUserOptionSettings = [];
 
     /**
      * list of user options that are associated with a settings.* category, but should be included
@@ -89,7 +89,7 @@ final class UserExportGdprAction extends AbstractAction
      *
      * @var string[]
      */
-    public $exportUserOptionSettingsIfNotEmpty = ['timezone'];
+    public array $exportUserOptionSettingsIfNotEmpty = ['timezone'];
 
     /**
      * list of database tables that hold ip addresses, the identifier is used to check if the
@@ -97,7 +97,7 @@ final class UserExportGdprAction extends AbstractAction
      *
      * @var string[][]
      */
-    public $ipAddresses = [];
+    public array $ipAddresses = [];
 
     /**
      * @inheritDoc
@@ -110,24 +110,17 @@ final class UserExportGdprAction extends AbstractAction
      *
      * @var string[]
      */
-    public $skipUserOptions = [
+    public array $skipUserOptions = [
         'birthdayShowYear',
         'showSignature',
         'watchThreadOnReply',
     ];
 
-    /**
-     * @var UserProfile
-     */
-    public $user;
-
-    /**
-     * @var int
-     */
-    public $userID = 0;
+    public ?UserProfile $user = null;
+    public int $userID = 0;
 
     #[\Override]
-    public function readParameters()
+    public function readParameters(): void
     {
         parent::readParameters();
 
@@ -244,7 +237,7 @@ final class UserExportGdprAction extends AbstractAction
      *
      * @return mixed[]
      */
-    public function exportIpAddresses(string $databaseTable, string $ipAddressColumn, string $timeColumn, string $userIDColumn)
+    public function exportIpAddresses(string $databaseTable, string $ipAddressColumn, string $timeColumn, string $userIDColumn): array
     {
         $sql = "SELECT  {$ipAddressColumn}, {$timeColumn}
                 FROM    {$databaseTable}
@@ -259,7 +252,7 @@ final class UserExportGdprAction extends AbstractAction
     /**
      * @return mixed[]
      */
-    protected function dumpTable(string $tableName, string $userIDColumn)
+    protected function dumpTable(string $tableName, string $userIDColumn): array
     {
         $sql = "SELECT  *
                 FROM    {$tableName}
@@ -278,7 +271,7 @@ final class UserExportGdprAction extends AbstractAction
     /**
      * @return array{ipAddress: string, time: mixed}[]
      */
-    protected function fetchIpAddresses(PreparedStatement $statement, string $ipAddressColumn, string $timeColumn)
+    protected function fetchIpAddresses(PreparedStatement $statement, string $ipAddressColumn, string $timeColumn): array
     {
         $ipAddresses = [];
 
@@ -299,7 +292,7 @@ final class UserExportGdprAction extends AbstractAction
     /**
      * @return array{session: mixed[], acpSessionLog: mixed[]}
      */
-    protected function exportSessionIpAddresses()
+    protected function exportSessionIpAddresses(): array
     {
         $data = [
             'session' => [],
@@ -328,7 +321,7 @@ final class UserExportGdprAction extends AbstractAction
     /**
      * @return array<string, mixed>
      */
-    protected function exportUser()
+    protected function exportUser(): array
     {
         $data = ['languageCode' => $this->user->getLanguage()->getFixedLanguageCode()];
         if ($this->user->registrationIpAddress) {
@@ -359,7 +352,7 @@ final class UserExportGdprAction extends AbstractAction
     /**
      * @return mixed[]
      */
-    protected function exportUserOptions()
+    protected function exportUserOptions(): array
     {
         $optionHandler = new UserOptionHandler(false, '', '');
         $optionHandler->init();
@@ -378,7 +371,7 @@ final class UserExportGdprAction extends AbstractAction
      * @param mixed[] $optionTree
      * @return void
      */
-    protected function exportUserOptionCategory(array &$data, array $optionTree)
+    protected function exportUserOptionCategory(array &$data, array $optionTree): void
     {
         if (!empty($optionTree['options'])) {
             foreach ($optionTree['options'] as $optionData) {

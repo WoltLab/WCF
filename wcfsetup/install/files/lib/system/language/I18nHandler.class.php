@@ -24,40 +24,39 @@ final class I18nHandler extends SingletonFactory
      * list of available languages
      * @var Language[]
      */
-    protected $availableLanguages = [];
+    protected array $availableLanguages = [];
 
     /**
      * list of element ids
      * @var string[]
      */
-    protected $elementIDs = [];
+    protected array $elementIDs = [];
 
     /**
      * list of plain values for elements
      * @var string[]
      */
-    protected $plainValues = [];
+    protected array $plainValues = [];
 
     /**
      * i18n values for elements
      * @var string[][]
      */
-    protected $i18nValues = [];
+    protected array $i18nValues = [];
 
     /**
      * element options
      * @var mixed[][]
      */
-    protected $elementOptions = [];
+    protected array $elementOptions = [];
 
     /**
      * language variable regex object
-     * @var ?Regex
      */
-    protected $regex;
+    protected ?Regex $regex = null;
 
     #[\Override]
-    protected function init()
+    protected function init(): void
     {
         $this->availableLanguages = LanguageFactory::getInstance()->getLanguages();
     }
@@ -268,9 +267,8 @@ final class I18nHandler extends SingletonFactory
      * Saves language variable for i18n.
      *
      * @param string|string[] $elementID either the id of the element or externally passed array `languageID => value`
-     * @return void
      */
-    public function save(string|array $elementID, string $languageVariable, string $languageCategory, int $packageID = \PACKAGE_ID)
+    public function save(string|array $elementID, string $languageVariable, string $languageCategory, int $packageID = \PACKAGE_ID): void
     {
         LanguageEditor::validateItemName($languageVariable, $languageCategory);
 

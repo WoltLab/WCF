@@ -15,17 +15,13 @@ final class ValueIntervalFormFieldDependency extends AbstractFormFieldDependency
 {
     /**
      * maximum value of the value interval
-     *
-     * @var float|int|null
      */
-    protected $maximum;
+    protected ?float $maximum = null;
 
     /**
      * minimum value of the value interval
-     *
-     * @var float|int|null
      */
-    protected $minimum;
+    protected ?float $minimum = null;
 
     /**
      * @inheritDoc
@@ -33,7 +29,7 @@ final class ValueIntervalFormFieldDependency extends AbstractFormFieldDependency
     protected $templateName = 'shared_valueIntervalFormFieldDependency';
 
     #[\Override]
-    public function checkDependency()
+    public function checkDependency(): bool
     {
         $value = $this->getField()->getValue();
         if (!\is_numeric($value)) {

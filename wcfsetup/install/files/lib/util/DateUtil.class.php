@@ -50,7 +50,7 @@ final class DateUtil
      * list of available time zones
      * @var string[]
      */
-    protected static $availableTimezones = [
+    protected static array $availableTimezones = [
         // there is not support for UTC-12:00 in php
         // '...', // (UTC-12:00) International Date Line West
         'Pacific/Samoa', // (UTC-11:00) Midway Island, American Samoa
@@ -154,38 +154,32 @@ final class DateUtil
      * first day of the week
      * 0=sunday
      * 1=monday
-     * @var ?int
      */
-    private static $firstDayOfTheWeek;
+    private static ?int $firstDayOfTheWeek = null;
 
     /**
      * order of the week days
      * @var string[]|null
      */
-    private static $weekDays;
+    private static ?array $weekDays = null;
 
     /**
      * order of the week days (short textual representation)
      * @var string[]|null
      */
-    private static $shortWeekDays;
+    private static ?array $shortWeekDays = null;
 
     /**
      * Returns a formatted date.
-     *
-     * @param string $format
-     * @param Language $language
-     * @param User $user
-     * @return  string
      *
      * @deprecated 6.2 use `\IntlDateFormatter` instead
      */
     public static function format(
         null|\DateTime|\DateTimeImmutable $time = null,
-        $format = null,
+        ?string $format = null,
         ?Language $language = null,
         ?User $user = null
-    ) {
+    ): string {
         // get default values
         if ($time === null) {
             $time = new \DateTimeImmutable();
@@ -216,13 +210,12 @@ final class DateUtil
      * @param \DateInterval $interval interval to be formatted
      * @param bool $fullInterval if `true`, the complete interval is returned, otherwise a rounded interval is used
      * @param int $formatType format type for the interval, use the class constant FORMAT_DEFAULT, FORMAT_SENTENCE or FORMAT_PLAIN
-     * @return  string
      */
     public static function formatInterval(
         \DateInterval $interval,
         bool $fullInterval = false,
         int $formatType = self::FORMAT_DEFAULT
-    ) {
+    ): string {
         $years = $interval->format('%y');
         $months = $interval->format('%m');
         $days = (int)$interval->format('%d');
@@ -311,10 +304,8 @@ final class DateUtil
 
     /**
      * Returns a localized date output.
-     *
-     * @return  string
      */
-    public static function localizeDate(string $date, string $format, Language $language)
+    public static function localizeDate(string $date, string $format, Language $language): string
     {
         if ($language->languageCode !== 'en') {
             // full textual representation of the day of the week (l)
@@ -411,10 +402,8 @@ final class DateUtil
 
     /**
      * Creates a DateTime object with the given unix timestamp.
-     *
-     * @return  \DateTime
      */
-    public static function getDateTimeByTimestamp(int $timestamp)
+    public static function getDateTimeByTimestamp(int $timestamp): \DateTime
     {
         return new \DateTime('@' . $timestamp);
     }
@@ -424,7 +413,7 @@ final class DateUtil
      *
      * @return  string[]
      */
-    public static function getAvailableTimezones()
+    public static function getAvailableTimezones(): array
     {
         return self::$availableTimezones;
     }
@@ -433,9 +422,8 @@ final class DateUtil
      * Calculates the age of a given date.
      *
      * @param string $date format YYYY-MM-DD
-     * @return  int
      */
-    public static function getAge(string $date)
+    public static function getAge(string $date): int
     {
         // split date
         $year = $month = $day = 0;
@@ -468,10 +456,9 @@ final class DateUtil
     /**
      * Validates if given date is valid ISO-8601.
      *
-     * @return void
      * @throws  SystemException
      */
-    public static function validateDate(string $date)
+    public static function validateDate(string $date): void
     {
         if (\preg_match('~^(?P<year>[0-9]{4})-(?P<month>[0-9]{2})-(?P<day>[0-9]{2})~', $date, $matches)) {
             if (!\checkdate((int)$matches['month'], (int)$matches['day'], (int)$matches['year'])) {
@@ -484,10 +471,8 @@ final class DateUtil
 
     /**
      * Returns the first day of the week.
-     *
-     * @return  int
      */
-    public static function getFirstDayOfTheWeek()
+    public static function getFirstDayOfTheWeek(): int
     {
         if (self::$firstDayOfTheWeek === null) {
             self::$firstDayOfTheWeek = \intval(WCF::getLanguage()->get('wcf.date.firstDayOfTheWeek'));
@@ -504,7 +489,7 @@ final class DateUtil
      *
      * @return  string[]
      */
-    public static function getWeekDays()
+    public static function getWeekDays(): array
     {
         if (self::$weekDays === null) {
             if (self::getFirstDayOfTheWeek() === 1) {
@@ -538,7 +523,7 @@ final class DateUtil
      *
      * @return  string[]
      */
-    public static function getShortWeekDays()
+    public static function getShortWeekDays(): array
     {
         if (self::$shortWeekDays === null) {
             if (self::getFirstDayOfTheWeek() === 1) {
@@ -569,10 +554,8 @@ final class DateUtil
 
     /**
      * Returns the number of weeks in the given year.
-     *
-     * @return  int
      */
-    public static function getWeeksInYear(int $year)
+    public static function getWeeksInYear(int $year): int
     {
         $date = new \DateTime();
         $date->setISODate($year, 53, self::getFirstDayOfTheWeek());
@@ -589,9 +572,8 @@ final class DateUtil
      * @param string $date localized date
      * @param string $time localized time
      * @param bool $isFutureDate true if timestamp is in the future
-     * @return  string      relative time
      */
-    public static function getRelativeTime(\DateTime $dateTimeObject, int $timestamp, string $date, string $time, bool $isFutureDate)
+    public static function getRelativeTime(\DateTime $dateTimeObject, int $timestamp, string $date, string $time, bool $isFutureDate): string
     {
         if ($isFutureDate) {
             return \str_replace(

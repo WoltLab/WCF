@@ -33,19 +33,19 @@ final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
      * list of options
      * @var ParsedOption[]
      */
-    public $options = [];
+    public array $options = [];
 
     /**
      * @var string[]
      */
-    public $optionNames = [
+    public array $optionNames = [
         'page_title',
         'page_description',
         'timezone',
     ];
 
     #[\Override]
-    public function readParameters()
+    public function readParameters(): void
     {
         parent::readParameters();
 
@@ -55,7 +55,7 @@ final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
     }
 
     #[\Override]
-    protected function initOptionHandler()
+    protected function initOptionHandler(): void
     {
         parent::initOptionHandler();
 
@@ -63,7 +63,7 @@ final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
     }
 
     #[\Override]
-    public function readData()
+    public function readData(): void
     {
         parent::readData();
 
@@ -73,7 +73,7 @@ final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
     }
 
     #[\Override]
-    public function save()
+    public function save(): void
     {
         parent::save();
 
@@ -92,7 +92,7 @@ final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
     }
 
     #[\Override]
-    public function assignVariables()
+    public function assignVariables(): void
     {
         parent::assignVariables();
 

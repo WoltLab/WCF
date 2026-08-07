@@ -14,10 +14,7 @@ use wcf\system\user\authentication\password\IPasswordAlgorithm;
  */
 final class Vb5Bcrypt implements IPasswordAlgorithm
 {
-    /**
-     * @var Bcrypt
-     */
-    private $bcrypt;
+    private Bcrypt $bcrypt;
 
     public function __construct()
     {

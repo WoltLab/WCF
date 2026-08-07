@@ -1148,10 +1148,9 @@ class File
 	 *
 	 * @param	string		$function
 	 * @param	array		$arguments
-	 * @return	mixed
 	 * @throws	SystemException
 	 */
-	public function __call($function, $arguments)
+	public function __call($function, $arguments): mixed
 	{
 		if (function_exists('f' . $function)) {
 			array_unshift($arguments, $this->resource);
@@ -1193,10 +1192,9 @@ final class GZipFile extends File
 	 *
 	 * @param	string		$function
 	 * @param	array		$arguments
-	 * @return	mixed
 	 * @throws	SystemException
 	 */
-	public function __call($function, $arguments)
+	public function __call($function, $arguments): mixed
 	{
 		if (function_exists('gz' . $function)) {
 			array_unshift($arguments, $this->resource);
@@ -1235,10 +1233,8 @@ final class GZipFile extends File
 
 	/**
 	 * Returns the filesize of the unzipped file.
-	 *
-	 * @return	int
 	 */
-	public function getFileSize()
+	public function getFileSize(): int
 	{
 		$byteBlock = 1 << 14;
 		$eof = $byteBlock;

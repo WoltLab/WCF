@@ -41,13 +41,13 @@ final class ContentLanguageFormField extends AbstractFormField implements IImmut
     /**
      * @return Language[]
      */
-    public function getContentLanguages()
+    public function getContentLanguages(): array
     {
         return LanguageFactory::getInstance()->getContentLanguages();
     }
 
     #[\Override]
-    public function isAvailable()
+    public function isAvailable(): bool
     {
         return LanguageFactory::getInstance()->multilingualismEnabled()
             && !empty(LanguageFactory::getInstance()->getContentLanguageIDs())
@@ -55,7 +55,7 @@ final class ContentLanguageFormField extends AbstractFormField implements IImmut
     }
 
     #[\Override]
-    public function readValue()
+    public function readValue(): static
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
             $this->value = \intval($this->getDocument()->getRequestData($this->getPrefixedId()));
@@ -69,7 +69,7 @@ final class ContentLanguageFormField extends AbstractFormField implements IImmut
     }
 
     #[\Override]
-    public function validate()
+    public function validate(): void
     {
         if ($this->isRequired() && LanguageFactory::getInstance()->getLanguage($this->getValue()) === null) {
             $this->addValidationError(new FormFieldValidationError(

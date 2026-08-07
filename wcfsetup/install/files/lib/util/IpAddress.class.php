@@ -12,10 +12,7 @@ namespace wcf\util;
  */
 final class IpAddress implements \Stringable
 {
-    /**
-     * @var string
-     */
-    private $ipAddress;
+    private string $ipAddress;
 
     public function __construct(string $ipAddress)
     {

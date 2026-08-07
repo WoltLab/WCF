@@ -232,11 +232,10 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      * Files are suffixed with `.bin` since 5.2, but they are recognized
      * without the extension for backward compatibility.
      *
-     * @return  string
      * @since   5.2
      * @deprecated 6.1 This will no longer be required once the attachments have been migrated.
      */
-    final protected function getLocationHelper(string $location)
+    final protected function getLocationHelper(string $location): string
     {
         if (\is_readable($location . '.bin')) {
             return $location . '.bin';

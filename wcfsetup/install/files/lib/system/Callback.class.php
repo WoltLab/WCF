@@ -36,10 +36,8 @@ final class Callback
 
     /**
      * Invokes our callback. All parameters are simply passed through.
-     *
-     * @return  mixed
      */
-    public function __invoke()
+    public function __invoke(): mixed
     {
         return \call_user_func_array($this->callback, \func_get_args());
     }

@@ -31,7 +31,7 @@ trait TReactionUserNotificationEvent
      *
      * @return array<int, int>
      */
-    final protected function getReactionsForAuthors()
+    final protected function getReactionsForAuthors(): array
     {
         if ($this->cachedReactions !== null) {
             return $this->cachedReactions;

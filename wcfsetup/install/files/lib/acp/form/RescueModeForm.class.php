@@ -39,34 +39,26 @@ final class RescueModeForm extends AbstractForm
     /**
      * @var Application[]|null
      */
-    public $applications;
+    public ?array $applications = null;
 
     /**
      * @var array<int, string>
      */
-    public $applicationValues = [];
+    public array $applicationValues = [];
 
     /**
      * login password
-     * @var string
      */
-    public $password = '';
+    public string $password = '';
 
-    /**
-     * @var ?User
-     */
-    public $user;
+    public ?User $user = null;
 
     /**
      * login username
-     * @var string
      */
-    public $username = '';
+    public string $username = '';
 
-    /**
-     * @var string
-     */
-    public $domainName = '';
+    public string $domainName = '';
 
     private const ALLOWED_ATTEMPTS_PER_10M = 3;
 
@@ -95,7 +87,7 @@ final class RescueModeForm extends AbstractForm
     }
 
     #[\Override]
-    public function readParameters()
+    public function readParameters(): void
     {
         parent::readParameters();
 
@@ -145,7 +137,7 @@ final class RescueModeForm extends AbstractForm
     }
 
     #[\Override]
-    public function readFormParameters()
+    public function readFormParameters(): void
     {
         parent::readFormParameters();
 
@@ -165,10 +157,8 @@ final class RescueModeForm extends AbstractForm
 
     /**
      * Validates the user access data.
-     *
-     * @return void
      */
-    protected function validateUser()
+    protected function validateUser(): void
     {
         try {
             $this->user = UserAuthenticationFactory::getInstance()->getUserAuthentication()->loginManually(
@@ -222,10 +212,7 @@ final class RescueModeForm extends AbstractForm
         }
     }
 
-    /**
-     * @return void
-     */
-    protected function validateApplications()
+    protected function validateApplications(): void
     {
         $usedPaths = [];
         foreach ($this->applications as $application) {
@@ -248,7 +235,7 @@ final class RescueModeForm extends AbstractForm
     }
 
     #[\Override]
-    public function submit()
+    public function submit(): void
     {
         parent::submit();
 
@@ -280,13 +267,13 @@ final class RescueModeForm extends AbstractForm
     }
 
     #[\Override]
-    protected function validateSecurityToken()
+    protected function validateSecurityToken(): void
     {
         // The XSRF validation is not functional in this very slimmed down template.
     }
 
     #[\Override]
-    public function validate()
+    public function validate(): void
     {
         parent::validate();
 
@@ -305,7 +292,7 @@ final class RescueModeForm extends AbstractForm
     }
 
     #[\Override]
-    public function save()
+    public function save(): void
     {
         parent::save();
 
@@ -334,7 +321,7 @@ final class RescueModeForm extends AbstractForm
     }
 
     #[\Override]
-    public function readData()
+    public function readData(): void
     {
         parent::readData();
 
@@ -348,7 +335,7 @@ final class RescueModeForm extends AbstractForm
     }
 
     #[\Override]
-    public function assignVariables()
+    public function assignVariables(): void
     {
         parent::assignVariables();
 

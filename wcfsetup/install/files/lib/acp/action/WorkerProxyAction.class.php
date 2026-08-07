@@ -25,29 +25,27 @@ final class WorkerProxyAction extends AJAXInvokeAction
 
     /**
      * loop counter
-     * @var int
      */
-    protected $loopCount = -1;
+    protected int $loopCount = -1;
 
     /**
      * parameters for worker action
      * @var array<string, mixed>
      */
-    protected $parameters = [];
+    protected array $parameters = [];
 
     /**
      * worker object
-     * @var ?IWorker
      */
-    protected $worker;
+    protected ?IWorker $worker = null;
 
     /**
      * @var string[]
      */
-    public static $allowInvoke = [];
+    public static array $allowInvoke = [];
 
     #[\Override]
-    public function readParameters()
+    public function readParameters(): void
     {
         AbstractSecureAction::readParameters();
 
@@ -66,10 +64,8 @@ final class WorkerProxyAction extends AJAXInvokeAction
 
     /**
      * Validates class name.
-     *
-     * @return void
      */
-    protected function validate()
+    protected function validate(): void
     {
         if (empty($this->className)) {
             throw new SystemException("class name cannot be empty.");
@@ -81,7 +77,7 @@ final class WorkerProxyAction extends AJAXInvokeAction
     }
 
     #[\Override]
-    public function execute()
+    public function execute(): void
     {
         AbstractSecureAction::execute();
 
@@ -112,10 +108,9 @@ final class WorkerProxyAction extends AJAXInvokeAction
      * Sends a JSON-encoded response.
      *
      * @param ?array<string, mixed> $parameters
-     * @return void
      */
     #[\Override]
-    protected function sendResponse(int $progress = 0, ?array $parameters = null, string $proceedURL = '')
+    protected function sendResponse(int $progress = 0, ?array $parameters = null, string $proceedURL = ''): void
     {
         if ($parameters === null) {
             $parameters = $this->parameters;

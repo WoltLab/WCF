@@ -57,7 +57,7 @@ final class RatingFormField extends AbstractFormField implements
      *
      * @return  int[]
      */
-    public function getRatings()
+    public function getRatings(): array
     {
         if (WCF::getLanguage()->get('wcf.global.pageDirection') === 'rtl') {
             return \range($this->maximum, $this->minimum, -1);
@@ -87,7 +87,7 @@ final class RatingFormField extends AbstractFormField implements
     }
 
     #[\Override]
-    public function readValue()
+    public function readValue(): static
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
             $value = $this->getDocument()->getRequestData($this->getPrefixedId());
@@ -109,7 +109,7 @@ final class RatingFormField extends AbstractFormField implements
     }
 
     #[\Override]
-    public function validate()
+    public function validate(): void
     {
         if ($this->getValue() === null) {
             if ($this->isRequired()) {

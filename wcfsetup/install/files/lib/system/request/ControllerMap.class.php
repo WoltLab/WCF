@@ -53,7 +53,7 @@ final class ControllerMap extends SingletonFactory
     private array $lookupCache = [];
 
     #[\Override]
-    protected function init()
+    protected function init(): void
     {
         $this->applicationOverrides = RoutingCacheBuilder::getInstance()->getData([], 'applicationOverrides');
         $this->ciControllers = RoutingCacheBuilder::getInstance()->getData([], 'ciControllers');
@@ -66,11 +66,14 @@ final class ControllerMap extends SingletonFactory
      *
      * URL -> Controller
      *
+     * Returns an array containing className and controller or a string containing the
+     * controller name for aliased controllers.
+     *
      * @param $skipCustomUrls true if custom url resolution should be suppressed, is always true for ACP requests
-     * @return  mixed       array containing className and controller or a string containing the controller name for aliased controllers
+     * @return  string[]|string
      * @throws  SystemException
      */
-    public function resolve(string $application, string $controller, bool $isAcpRequest, bool $skipCustomUrls = false)
+    public function resolve(string $application, string $controller, bool $isAcpRequest, bool $skipCustomUrls = false): array|string
     {
         // validate controller
         if (!\preg_match('/^[a-z][a-z0-9]+(?:-[a-z][a-z0-9]+)*$/', $controller)) {
@@ -174,11 +177,12 @@ final class ControllerMap extends SingletonFactory
      *
      * Controller -> URL
      *
+     * Returns the url representation of the controller, e.g. 'members-list'.
+     *
      * @param $controller controller class, e.g. 'MembersList'
      * @param bool $forceFrontend force transformation for frontend
-     * @return  string      url representation of controller, e.g. 'members-list'
      */
-    public function lookup(string $application, string $controller, ?bool $forceFrontend = null)
+    public function lookup(string $application, string $controller, ?bool $forceFrontend = null): string
     {
         if ($forceFrontend === null) {
             $forceFrontend = !\class_exists(WCFACP::class, false);
@@ -210,7 +214,7 @@ final class ControllerMap extends SingletonFactory
      *
      * @return  string[]|null
      */
-    public function lookupCmsPage(int $pageID, ?int $languageID)
+    public function lookupCmsPage(int $pageID, ?int $languageID): ?array
     {
         $key = '__WCF_CMS__' . $pageID . '-' . ($languageID ?: 0);
         foreach ($this->customUrls['reverse'] as $application => $reverseURLs) {
@@ -325,7 +329,7 @@ final class ControllerMap extends SingletonFactory
      *
      * @return      string[]|null   className and controller, or null if this is not a legacy controller name
      */
-    private function getLegacyClassData(string $application, string $controller, bool $isAcpRequest)
+    private function getLegacyClassData(string $application, string $controller, bool $isAcpRequest): ?array
     {
         $environment = $isAcpRequest ? 'acp' : 'frontend';
         if (isset($this->ciControllers[$application][$environment][$controller])) {
@@ -349,7 +353,7 @@ final class ControllerMap extends SingletonFactory
      * @param $pageType page type, e.g. 'form' or 'action'
      * @return  string[]|null   className and controller
      */
-    private function getClassData(string $application, string $controller, bool $isAcpRequest, string $pageType)
+    private function getClassData(string $application, string $controller, bool $isAcpRequest, string $pageType): ?array
     {
         $className = $application . '\\' . ($isAcpRequest ? 'acp\\' : '') . $pageType . '\\' . $controller . \ucfirst($pageType);
         if (!\class_exists($className)) {

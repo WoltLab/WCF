@@ -42,35 +42,17 @@ final class UnfurlResponse
      */
     public const MAX_IMAGE_SIZE = (3 * (1 << 20));
 
-    /**
-     * @var ?ClientInterface
-     */
-    private static $httpClient;
+    private static ?ClientInterface $httpClient = null;
 
-    /**
-     * @var ResponseInterface
-     */
-    private $response;
+    private ResponseInterface $response;
 
-    /**
-     * @var ?string
-     */
-    private $body;
+    private ?string $body = null;
 
-    /**
-     * @var string
-     */
-    private $responseCharset = "UTF-8";
+    private string $responseCharset = "UTF-8";
 
-    /**
-     * @var ?\DOMDocument
-     */
-    private $domDocument;
+    private ?\DOMDocument $domDocument = null;
 
-    /**
-     * @var ?\DOMXPath
-     */
-    private $domXPath;
+    private ?\DOMXPath $domXPath = null;
 
     /**
      * Fetches a given Url and returns an UnfurlResponse instance.

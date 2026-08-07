@@ -18,10 +18,7 @@ final class CodeFormField extends TextFormField
 {
     use TDefaultIdFormField;
 
-    /**
-     * @var ?int
-     */
-    protected $minCounter;
+    protected ?int $minCounter = null;
 
     public function __construct()
     {

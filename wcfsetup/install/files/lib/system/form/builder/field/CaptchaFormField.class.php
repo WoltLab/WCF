@@ -36,14 +36,10 @@ final class CaptchaFormField extends AbstractFormField implements IObjectTypeFor
 
     /**
      * exception thrown by the captcha API during validation
-     * @var null|UserInputException
      */
-    protected $validationException;
+    protected ?UserInputException $validationException = null;
 
-    /**
-     * @var ?IFormFieldValidationError
-     */
-    protected $validationError;
+    protected ?IFormFieldValidationError $validationError = null;
 
     #[\Override]
     public function cleanup(): static
@@ -61,7 +57,7 @@ final class CaptchaFormField extends AbstractFormField implements IObjectTypeFor
     }
 
     #[\Override]
-    public function getHtmlVariables()
+    public function getHtmlVariables(): array
     {
         $variables = [
             'ajaxCaptcha' => $this->getDocument()->isAjax(),
@@ -89,25 +85,25 @@ final class CaptchaFormField extends AbstractFormField implements IObjectTypeFor
     }
 
     #[\Override]
-    public function getObjectTypeDefinition()
+    public function getObjectTypeDefinition(): string
     {
         return 'com.woltlab.wcf.captcha';
     }
 
     #[\Override]
-    public function isAvailable()
+    public function isAvailable(): bool
     {
         return $this->objectType !== null && parent::isAvailable();
     }
 
     #[\Override]
-    public function hasSaveValue()
+    public function hasSaveValue(): bool
     {
         return false;
     }
 
     #[\Override]
-    public function objectType(string $objectType)
+    public function objectType(string $objectType): static
     {
         // ignore empty object type which is the case if no captcha has been set
         if ($objectType === '') {
@@ -128,7 +124,7 @@ final class CaptchaFormField extends AbstractFormField implements IObjectTypeFor
     }
 
     #[\Override]
-    public function readValue()
+    public function readValue(): static
     {
         /** @var ICaptchaHandler $captcha */
         $captcha = $this->getObjectType()->getProcessor();
@@ -153,7 +149,7 @@ final class CaptchaFormField extends AbstractFormField implements IObjectTypeFor
     }
 
     #[\Override]
-    public function validate()
+    public function validate(): void
     {
         /** @var ICaptchaHandler $captcha */
         $captcha = $this->getObjectType()->getProcessor();

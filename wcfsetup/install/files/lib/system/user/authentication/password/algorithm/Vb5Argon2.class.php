@@ -14,10 +14,7 @@ use wcf\system\user\authentication\password\IPasswordAlgorithm;
  */
 final class Vb5Argon2 implements IPasswordAlgorithm
 {
-    /**
-     * @var Argon2
-     */
-    private $argon2;
+    private Argon2 $argon2;
 
     public function __construct()
     {

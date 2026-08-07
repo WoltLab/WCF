@@ -26,7 +26,7 @@ final class HttpFactory
     /**
      * @var (PsrClientInterface&ClientInterface)|null
      */
-    private static $defaultClient;
+    private static ?ClientInterface $defaultClient = null;
 
     /**
      * Returns a RFC 7231#5.5.3 compatible user agent.

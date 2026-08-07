@@ -32,7 +32,7 @@ final class FontManager extends SingletonFactory
     private TreeMapper $mapper;
 
     #[\Override]
-    protected function init()
+    protected function init(): void
     {
         $this->http = HttpFactory::makeClient([
             'base_uri' => 'https://fonts.woltlab.com/',
@@ -81,10 +81,9 @@ final class FontManager extends SingletonFactory
      * Downloads the given font family, stores it in font/families/<family> and
      * returns the decoded font manifest.
      *
-     * @param string $family
      * @return  mixed[]
      */
-    public function downloadFamily(string $family)
+    public function downloadFamily(string $family): array
     {
         try {
             $request = new Request('GET', \rawurlencode($family) . '/manifest.json');

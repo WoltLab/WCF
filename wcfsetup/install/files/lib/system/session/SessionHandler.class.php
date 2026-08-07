@@ -57,7 +57,7 @@ final class SessionHandler extends SingletonFactory
      * group data and permissions
      * @var mixed[][]|null
      */
-    private $groupData;
+    private ?array $groupData = null;
 
     /**
      * true if within ACP or WCFSetup
@@ -82,7 +82,7 @@ final class SessionHandler extends SingletonFactory
      * session variables
      * @var array<string, mixed>
      */
-    private $variables = [];
+    private array $variables = [];
 
     /**
      * indicates if session variables changed and must be saved upon shutdown
@@ -121,10 +121,8 @@ final class SessionHandler extends SingletonFactory
 
     /**
      * Provides access to session data.
-     *
-     * @return  mixed
      */
-    public function __get(string $key)
+    public function __get(string $key): mixed
     {
         switch ($key) {
             case 'sessionID':
@@ -165,7 +163,7 @@ final class SessionHandler extends SingletonFactory
     }
 
     #[\Override]
-    protected function init()
+    protected function init(): void
     {
         $this->isACP = (\class_exists(WCFACP::class, false) || !\PACKAGE_ID);
         $this->usersOnlyPermissions = UserGroupOptionCacheBuilder::getInstance()->getData([], 'usersOnlyOptions');

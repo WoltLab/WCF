@@ -58,7 +58,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
     protected static $baseClass = Style::class;
 
     #[\Override]
-    public function update(array $parameters = [])
+    public function update(array $parameters = []): void
     {
         if (isset($parameters['variablesDarkMode'])) {
             throw new \InvalidArgumentException(
@@ -92,7 +92,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
     }
 
     #[\Override]
-    public function delete()
+    public function delete(): void
     {
         $sql = "DELETE FROM wcf1_style
                 WHERE       styleID = ?";
@@ -120,7 +120,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
     }
 
     #[\Override]
-    public static function deleteAll(array $objectIDs = [])
+    public static function deleteAll(array $objectIDs = []): int
     {
         $styleList = new StyleList();
         $styleList->decoratorClassName = static::class;
@@ -163,10 +163,8 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
 
     /**
      * Sets this style as default style.
-     *
-     * @return void
      */
-    public function setAsDefault()
+    public function setAsDefault(): void
     {
         // remove old default
         $sql = "UPDATE  wcf1_style
@@ -186,10 +184,8 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
 
     /**
      * Deletes the style's default cover photo.
-     *
-     * @return void
      */
-    public function deleteCoverPhoto()
+    public function deleteCoverPhoto(): void
     {
         if ($this->coverPhotoExtension) {
             @\unlink(\WCF_DIR . 'images/coverPhotos/' . $this->styleID . '.' . $this->coverPhotoExtension);
@@ -205,7 +201,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
      *
      * @return      string[]
      */
-    public function getImplicitVariables()
+    public function getImplicitVariables(): array
     {
         $sql = "SELECT      variable.variableName
                 FROM        wcf1_style_variable variable
@@ -228,10 +224,9 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
     }
 
     /**
-     * @return null|bool
      * @since 5.4
      */
-    public function createCoverPhotoVariant(?string $sourceLocation = null)
+    public function createCoverPhotoVariant(?string $sourceLocation = null): ?bool
     {
         if ($sourceLocation === null) {
             $sourceLocation = $this->getCoverPhotoLocation(false);
@@ -248,7 +243,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
      * @return mixed[]
      * @throws  SystemException
      */
-    public static function readStyleData(Tar $tar)
+    public static function readStyleData(Tar $tar): array
     {
         // search style.xml
         $index = $tar->getIndexByFilename(self::INFO_FILE);
@@ -396,7 +391,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
      *
      * @return array<string, string>
      */
-    public static function readVariablesData(string $filename, string $content)
+    public static function readVariablesData(string $filename, string $content): array
     {
         // open variables.xml
         $xml = new XML();
@@ -418,7 +413,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
      *
      * @return mixed[]
      */
-    public static function getStyleData(string $filename)
+    public static function getStyleData(string $filename): array
     {
         // open file
         $tar = new Tar($filename);
@@ -443,10 +438,8 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
 
     /**
      * Imports a style.
-     *
-     * @return  StyleEditor
      */
-    public static function import(string $filename, int $packageID = 1, ?self $style = null, bool $skipFontDownload = false)
+    public static function import(string $filename, int $packageID = 1, ?self $style = null, bool $skipFontDownload = false): self
     {
         // open file
         $tar = new Tar($filename);
@@ -836,11 +829,9 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
     /**
      * Saves localized style descriptions.
      *
-     * @param StyleEditor $styleEditor
      * @param string[] $descriptions
-     * @return void
      */
-    protected static function saveLocalizedDescriptions(self $styleEditor, array $descriptions)
+    protected static function saveLocalizedDescriptions(self $styleEditor, array $descriptions): void
     {
         // localize package information
         $sql = "REPLACE INTO    wcf1_language_item
@@ -883,10 +874,8 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
 
     /**
      * Returns available location path.
-     *
-     * @return  string
      */
-    protected static function getFileLocation(string $location)
+    protected static function getFileLocation(string $location): string
     {
         $location = FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash($location));
         $location = \WCF_DIR . $location;
@@ -907,10 +896,8 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
 
     /**
      * Exports this style.
-     *
-     * @return void
      */
-    public function export(bool $templates = false, bool $images = false, string $packageName = '')
+    public function export(bool $templates = false, bool $images = false, string $packageName = ''): void
     {
         // create style tar
         $styleTarName = FileUtil::getTemporaryFilename('style_', '.tgz');
@@ -1277,16 +1264,14 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
 
     /**
      * Writes the style-*.css file.
-     *
-     * @return void
      */
-    public function writeStyleFile()
+    public function writeStyleFile(): void
     {
         StyleCompiler::getInstance()->compile($this->getDecoratedObject());
     }
 
     #[\Override]
-    public static function create(array $parameters = [])
+    public static function create(array $parameters = []): Style
     {
         $variables = [];
         if (isset($parameters['variables'])) {
@@ -1345,7 +1330,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
     }
 
     #[\Override]
-    public static function resetCache()
+    public static function resetCache(): void
     {
         StyleCacheBuilder::getInstance()->reset();
     }

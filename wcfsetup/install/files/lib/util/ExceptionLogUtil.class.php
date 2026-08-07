@@ -20,7 +20,7 @@ final class ExceptionLogUtil
      *
      * @return  string[]
      */
-    public static function splitLog(string $contents)
+    public static function splitLog(string $contents): array
     {
         // unify newlines
         $contents = StringUtil::unifyNewlines($contents);
@@ -47,7 +47,7 @@ final class ExceptionLogUtil
      *
      * @return  mixed[]
      */
-    public static function parseException(string $entry)
+    public static function parseException(string $entry): array
     {
         static $regex = null;
         static $chainRegex = null;

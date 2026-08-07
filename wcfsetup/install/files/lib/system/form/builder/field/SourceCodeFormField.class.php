@@ -27,10 +27,7 @@ final class SourceCodeFormField extends AbstractFormField implements
     use TMaximumLengthFormField;
     use TMinimumLengthFormField;
 
-    /**
-     * @var string|null
-     */
-    protected $language;
+    protected ?string $language = null;
 
     /**
      * @inheritDoc
@@ -194,7 +191,7 @@ final class SourceCodeFormField extends AbstractFormField implements
     }
 
     #[\Override]
-    public function readValue()
+    public function readValue(): static
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
             $this->value = $this->getDocument()->getRequestData($this->getPrefixedId());
@@ -204,7 +201,7 @@ final class SourceCodeFormField extends AbstractFormField implements
     }
 
     #[\Override]
-    public function validate()
+    public function validate(): void
     {
         if ($this->value === null || $this->value === '') {
             if ($this->isRequired()) {

@@ -16,9 +16,8 @@ final class FormFieldValidator implements IFormFieldValidator
 {
     /**
      * id of the validator that has to be unique for each field
-     * @var string
      */
-    protected $id;
+    protected string $id;
 
     /**
      * validation function
@@ -61,13 +60,13 @@ final class FormFieldValidator implements IFormFieldValidator
     }
 
     #[\Override]
-    public function __invoke(IFormField $field)
+    public function __invoke(IFormField $field): void
     {
         \call_user_func($this->validator, $field);
     }
 
     #[\Override]
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -75,11 +74,9 @@ final class FormFieldValidator implements IFormFieldValidator
     /**
      * Checks if the given parameter is a and a valid validator id.
      *
-     * @return void
-     *
      * @throws  \InvalidArgumentException   if the given id is invalid
      */
-    public static function validateId(string $id)
+    public static function validateId(string $id): void
     {
         if (\preg_match('~^[a-z][A-z0-9-]*$~', $id) !== 1) {
             throw new \InvalidArgumentException("Invalid id '{$id}' given.");

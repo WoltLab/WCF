@@ -22,15 +22,13 @@ final class SingleMediaSelectionFormField extends AbstractFormField implements I
 
     /**
      * is `true` if only images can be selected and `false` otherwise
-     * @var bool
      */
-    protected $imageOnly = false;
+    protected bool $imageOnly = false;
 
     /**
      * media object with the current value as id
-     * @var null|ViewableMedia
      */
-    protected $media;
+    protected ?ViewableMedia $media = null;
 
     /**
      * @inheritDoc
@@ -45,12 +43,10 @@ final class SingleMediaSelectionFormField extends AbstractFormField implements I
     /**
      * Returns the media object with the current value as id.
      *
-     * @return  ViewableMedia
-     *
      * @throws  \InvalidArgumentException   if no or an invalid media id is set as value
      * @throws  \UnexpectedValueException   if no or an invalid media id is set as value
      */
-    public function getMedia()
+    public function getMedia(): ViewableMedia
     {
         if ($this->media === null) {
             if (!$this->getValue()) {
@@ -72,10 +68,8 @@ final class SingleMediaSelectionFormField extends AbstractFormField implements I
 
     /**
      * Sets if only images can be selected and returns this field.
-     *
-     * @return  static              this field
      */
-    public function imageOnly(bool $imageOnly = true)
+    public function imageOnly(bool $imageOnly = true): static
     {
         $this->imageOnly = $imageOnly;
 
@@ -86,16 +80,14 @@ final class SingleMediaSelectionFormField extends AbstractFormField implements I
      * Returns `true` if only images can be selected and `false` otherwise.
      *
      * By default, all images can be selected.
-     *
-     * @return  bool
      */
-    public function isImageOnly()
+    public function isImageOnly(): bool
     {
         return $this->imageOnly;
     }
 
     #[\Override]
-    public function readValue()
+    public function readValue(): static
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
             $value = $this->getDocument()->getRequestData($this->getPrefixedId());
@@ -109,7 +101,7 @@ final class SingleMediaSelectionFormField extends AbstractFormField implements I
     }
 
     #[\Override]
-    public function validate()
+    public function validate(): void
     {
         parent::validate();
 

@@ -19,12 +19,12 @@ final class UserStorageHandler extends SingletonFactory
      * data cache
      * @var mixed[][]
      */
-    private $cache = [];
+    private array $cache = [];
 
     /**
      * @var (string|null)[][]
      */
-    private $log = [];
+    private array $log = [];
 
     /**
      * Loads storage for a given set of users.
@@ -81,7 +81,7 @@ final class UserStorageHandler extends SingletonFactory
      * @param int[] $userIDs
      * @return  mixed[]
      */
-    public function getStorage(array $userIDs, string $field)
+    public function getStorage(array $userIDs, string $field): array
     {
         $this->validateUserIDs($userIDs);
 
@@ -104,10 +104,8 @@ final class UserStorageHandler extends SingletonFactory
      *
      * In contrast to getStorage(), this method calls loadStorage() if no stored
      * data for the user has been loaded yet!
-     *
-     * @return  mixed
      */
-    public function getField(string $field, ?int $userID = null)
+    public function getField(string $field, ?int $userID = null): mixed
     {
         if ($userID === null) {
             $userID = WCF::getUser()->userID;
@@ -187,10 +185,8 @@ final class UserStorageHandler extends SingletonFactory
 
     /**
      * Removes and inserts data records on shutdown.
-     *
-     * @return void
      */
-    public function shutdown()
+    public function shutdown(): void
     {
         $i = 0;
         while (true) {

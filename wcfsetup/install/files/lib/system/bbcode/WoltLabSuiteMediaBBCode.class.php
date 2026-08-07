@@ -20,10 +20,9 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
     /**
      * forces media links to be linked to the frontend
      * after it has been set to `true`, it should be set to `false` again as soon as possible
-     * @var bool
      * @deprecated 6.1 media links are always linked to the frontend
      */
-    public static $forceFrontendLinks = false;
+    public static bool $forceFrontendLinks = false;
 
     #[\Override]
     public function getParsedTag(array $openingTag, string $content, array $closingTag, BBCodeParser $parser): string

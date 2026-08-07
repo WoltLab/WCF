@@ -19,27 +19,16 @@ final class DownloadGoogleFontBackgroundJob extends AbstractBackgroundJob
      */
     const MAX_FAILURES = 5;
 
-    /**
-     * @var string
-     */
-    protected $family;
+    public function __construct(private readonly string $family) {}
 
-    public function __construct(string $family)
-    {
-        $this->family = $family;
-    }
-
-    /**
-     * @return  int every 10 minutes
-     */
     #[\Override]
-    public function retryAfter()
+    public function retryAfter(): int
     {
         return 10 * 60;
     }
 
     #[\Override]
-    public function perform()
+    public function perform(): void
     {
         FontManager::getInstance()->downloadFamily($this->family);
     }

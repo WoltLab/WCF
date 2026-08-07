@@ -33,12 +33,12 @@ final class FirstTimeSetupOptionsEmailForm extends AbstractOptionListForm
      * list of options
      * @var ParsedOption[]
      */
-    public $options = [];
+    public array $options = [];
 
     /**
      * @var string[]
      */
-    public $optionNames = [
+    public array $optionNames = [
         'mail_from_name',
         'mail_from_address',
         'mail_admin_address',
@@ -46,7 +46,7 @@ final class FirstTimeSetupOptionsEmailForm extends AbstractOptionListForm
     ];
 
     #[\Override]
-    public function readParameters()
+    public function readParameters(): void
     {
         parent::readParameters();
 
@@ -56,7 +56,7 @@ final class FirstTimeSetupOptionsEmailForm extends AbstractOptionListForm
     }
 
     #[\Override]
-    protected function initOptionHandler()
+    protected function initOptionHandler(): void
     {
         parent::initOptionHandler();
 
@@ -64,7 +64,7 @@ final class FirstTimeSetupOptionsEmailForm extends AbstractOptionListForm
     }
 
     #[\Override]
-    public function readData()
+    public function readData(): void
     {
         parent::readData();
 
@@ -74,7 +74,7 @@ final class FirstTimeSetupOptionsEmailForm extends AbstractOptionListForm
     }
 
     #[\Override]
-    public function save()
+    public function save(): void
     {
         parent::save();
 
@@ -93,7 +93,7 @@ final class FirstTimeSetupOptionsEmailForm extends AbstractOptionListForm
     }
 
     #[\Override]
-    public function assignVariables()
+    public function assignVariables(): void
     {
         parent::assignVariables();
 

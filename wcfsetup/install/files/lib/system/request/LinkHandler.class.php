@@ -23,25 +23,24 @@ final class LinkHandler extends SingletonFactory
 {
     /**
      * regex object to extract controller data from controller class name
-     * @var     ?Regex
      * @since   5.2
      */
-    protected $controllerRegex;
+    protected ?Regex $controllerRegex = null;
 
     /**
      * title search strings
      * @var string[]
      */
-    protected $titleSearch = [];
+    protected array $titleSearch = [];
 
     /**
      * title replacement strings
      * @var string[]
      */
-    protected $titleReplace = [];
+    protected array $titleReplace = [];
 
     #[\Override]
-    protected function init()
+    protected function init(): void
     {
         $this->controllerRegex = new Regex(
             '^(?P<application>[a-z][a-z0-9]*)\\\\(?P<isAcp>acp\\\\)?.+\\\\(?P<controller>[^\\\\]+)(?:Action|Form|Page)$'

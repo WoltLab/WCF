@@ -27,10 +27,7 @@ use wcf\util\Url;
  */
 final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
 {
-    /**
-     * @var int
-     */
-    private $urlID;
+    private int $urlID;
 
     public function __construct(UnfurlUrl $url)
     {
@@ -38,7 +35,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
     }
 
     #[\Override]
-    public function retryAfter()
+    public function retryAfter(): int
     {
         switch ($this->getFailures()) {
             case 1:
@@ -56,7 +53,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
     }
 
     #[\Override]
-    public function perform()
+    public function perform(): void
     {
         $unfurlUrl = new UnfurlUrl($this->urlID);
 
@@ -316,7 +313,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
     }
 
     #[\Override]
-    public function onFinalFailure()
+    public function onFinalFailure(): void
     {
         $this->save(UnfurlUrl::STATUS_REJECTED);
     }

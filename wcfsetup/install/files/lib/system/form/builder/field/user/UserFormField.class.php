@@ -52,20 +52,20 @@ final class UserFormField extends AbstractFormField implements
      * user profiles of the entered users
      * @var UserProfile[]
      */
-    protected $users = [];
+    protected array $users = [];
 
     /**
      * Returns the user profiles of the entered users.
      *
      * @return  UserProfile[]
      */
-    public function getUsers()
+    public function getUsers(): array
     {
         return $this->users;
     }
 
     #[\Override]
-    public function getSaveValue()
+    public function getSaveValue(): mixed
     {
         if ($this->allowsMultiple()) {
             throw new \BadMethodCallException("The return value of getSaveValue() is undefined if multiple values may be entered.");
@@ -83,7 +83,7 @@ final class UserFormField extends AbstractFormField implements
     }
 
     #[\Override]
-    public function populate()
+    public function populate(): static
     {
         parent::populate();
 
@@ -104,7 +104,7 @@ final class UserFormField extends AbstractFormField implements
     }
 
     #[\Override]
-    public function readValue()
+    public function readValue(): static
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
             $this->users = [];
@@ -138,7 +138,7 @@ final class UserFormField extends AbstractFormField implements
     }
 
     #[\Override]
-    public function validate()
+    public function validate(): void
     {
         if ($this->isRequired()) {
             if (
@@ -225,7 +225,7 @@ final class UserFormField extends AbstractFormField implements
     }
 
     #[\Override]
-    public function value(mixed $value)
+    public function value(mixed $value): static
     {
         // ensure array value for form fields that actually support multiple values;
         // allows enabling support for multiple values for existing fields

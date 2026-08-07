@@ -14,10 +14,7 @@ use wcf\system\user\authentication\password\IPasswordAlgorithm;
  */
 final class Xf12 implements IPasswordAlgorithm
 {
-    /**
-     * @var Bcrypt
-     */
-    private $bcrypt;
+    private Bcrypt $bcrypt;
 
     public function __construct()
     {

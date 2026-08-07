@@ -40,7 +40,7 @@ final class Url implements \ArrayAccess
      * maps properties to the array indices
      * @var array<int, string>
      */
-    private static $propertyMap = [
+    private static array $propertyMap = [
         \PHP_URL_SCHEME => 'scheme',
         \PHP_URL_HOST => 'host',
         \PHP_URL_PORT => 'port',
@@ -150,10 +150,9 @@ final class Url implements \ArrayAccess
      * component indices. Will throw an exception if the property is unknown,
      * making it easier to spot typos.
      *
-     * @return      string
      * @throws      \RuntimeException
      */
-    private function getIndex(mixed $property)
+    private function getIndex(mixed $property): string
     {
         if (\is_int($property) && isset(self::$propertyMap[$property])) {
             return self::$propertyMap[$property];

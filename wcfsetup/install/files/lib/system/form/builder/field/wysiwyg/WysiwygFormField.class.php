@@ -49,39 +49,33 @@ final class WysiwygFormField extends AbstractFormField implements
 
     /**
      * identifier used to autosave the field value; if empty, autosave is disabled
-     * @var string
      */
-    protected $autosaveId = '';
+    protected string $autosaveId = '';
 
     /**
      * input processor containing the wysiwyg text
-     * @var ?HtmlInputProcessor
      */
-    protected $htmlInputProcessor;
+    protected ?HtmlInputProcessor $htmlInputProcessor = null;
 
     /**
      * last time the field has been edited; if `0`, the last edit time is unknown
-     * @var int
      */
-    protected $lastEditTime = 0;
+    protected int $lastEditTime = 0;
 
     /**
      * is `true` if this form field supports attachments, otherwise `false`
-     * @var bool
      */
-    protected $supportAttachments = false;
+    protected bool $supportAttachments = false;
 
     /**
      * is `true` if this form field supports mentions, otherwise `false`
-     * @var bool
      */
-    protected $supportMentions = false;
+    protected bool $supportMentions = false;
 
     /**
      * is `true` if this form field supports quotes, otherwise `false`
-     * @var bool
      */
-    protected $supportQuotes = false;
+    protected bool $supportQuotes = false;
 
     /**
      * @inheritDoc
@@ -109,9 +103,8 @@ final class WysiwygFormField extends AbstractFormField implements
      * Sets the identifier used to autosave the field value and returns this field.
      *
      * @param string $autosaveId identifier used to autosave field value
-     * @return  WysiwygFormField        this field
      */
-    public function autosaveId(string $autosaveId)
+    public function autosaveId(string $autosaveId): static
     {
         $this->autosaveId = $autosaveId;
 
@@ -121,16 +114,14 @@ final class WysiwygFormField extends AbstractFormField implements
     /**
      * Returns the identifier used to autosave the field value. If autosave is disabled,
      * an empty string is returned.
-     *
-     * @return  string
      */
-    public function getAutosaveId()
+    public function getAutosaveId(): string
     {
         return $this->autosaveId;
     }
 
     #[\Override]
-    public function getFieldHtml()
+    public function getFieldHtml(): string
     {
         $disallowedBBCodesPermission = $this->getObjectType()->disallowedBBCodesPermission;
         if ($disallowedBBCodesPermission === null) {
@@ -146,7 +137,7 @@ final class WysiwygFormField extends AbstractFormField implements
     }
 
     #[\Override]
-    public function getObjectTypeDefinition()
+    public function getObjectTypeDefinition(): string
     {
         return 'com.woltlab.wcf.message';
     }
@@ -154,10 +145,8 @@ final class WysiwygFormField extends AbstractFormField implements
     /**
      * Returns the last time the field has been edited. If no last edit time has
      * been set, `0` is returned.
-     *
-     * @return  int
      */
-    public function getLastEditTime()
+    public function getLastEditTime(): int
     {
         return $this->lastEditTime;
     }
@@ -165,11 +154,10 @@ final class WysiwygFormField extends AbstractFormField implements
     /**
      * Returns all quote data or specific quote data if an argument is given.
      *
-     * @return  string
      * @throws  \BadMethodCallException     if quotes are not supported for this field
      * @deprecated 6.2
      */
-    public function getQuoteData(?string $index = null)
+    public function getQuoteData(?string $index = null): string
     {
         if (!$this->supportQuotes) {
             throw new \BadMethodCallException("Quotes are not supported for field '{$this->getId()}'.");
@@ -179,7 +167,7 @@ final class WysiwygFormField extends AbstractFormField implements
     }
 
     #[\Override]
-    public function getSaveValue()
+    public function getSaveValue(): string
     {
         return $this->htmlInputProcessor->getHtml();
     }
@@ -188,9 +176,8 @@ final class WysiwygFormField extends AbstractFormField implements
      * Sets the last time this field has been edited and returns this field.
      *
      * @param int $lastEditTime last time field has been edited
-     * @return  WysiwygFormField    this field
      */
-    public function lastEditTime(int $lastEditTime)
+    public function lastEditTime(int $lastEditTime): static
     {
         $this->lastEditTime = $lastEditTime;
 
@@ -198,7 +185,7 @@ final class WysiwygFormField extends AbstractFormField implements
     }
 
     #[\Override]
-    public function populate()
+    public function populate(): static
     {
         parent::populate();
 
@@ -230,17 +217,15 @@ final class WysiwygFormField extends AbstractFormField implements
      * @param string $actionClass action class implementing `wcf\data\IMessageQuoteAction`
      * @param string[] $selectors selectors for the quotable content (required keys: `container`, `messageBody`, and `messageContent`)
      *
-     * @return  static
-     *
      * @deprecated 6.2
      */
-    public function quoteData(string $objectType, string $actionClass, array $selectors = [])
+    public function quoteData(string $objectType, string $actionClass, array $selectors = []): static
     {
         return $this;
     }
 
     #[\Override]
-    public function readValue()
+    public function readValue(): static
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
             $value = $this->getDocument()->getRequestData($this->getPrefixedId());
@@ -259,10 +244,8 @@ final class WysiwygFormField extends AbstractFormField implements
 
     /**
      * Sets if the form field supports attachments and returns this field.
-     *
-     * @return  WysiwygFormField        this field
      */
-    public function supportAttachments(bool $supportAttachments = true)
+    public function supportAttachments(bool $supportAttachments = true): static
     {
         $this->supportAttachments = $supportAttachments;
 
@@ -271,10 +254,8 @@ final class WysiwygFormField extends AbstractFormField implements
 
     /**
      * Sets if the form field supports mentions and returns this field.
-     *
-     * @return  WysiwygFormField        this field
      */
-    public function supportMentions(bool $supportMentions = true)
+    public function supportMentions(bool $supportMentions = true): static
     {
         $this->supportMentions = $supportMentions;
 
@@ -283,10 +264,8 @@ final class WysiwygFormField extends AbstractFormField implements
 
     /**
      * Sets if the form field supports quotes and returns this field.
-     *
-     * @return  WysiwygFormField        this field
      */
-    public function supportQuotes(bool $supportQuotes = true)
+    public function supportQuotes(bool $supportQuotes = true): static
     {
         $this->supportQuotes = $supportQuotes;
 
@@ -302,10 +281,8 @@ final class WysiwygFormField extends AbstractFormField implements
      * so that the relevant editor plugin is loaded.
      *
      * By default, attachments are not supported.
-     *
-     * @return  bool
      */
-    public function supportsAttachments()
+    public function supportsAttachments(): bool
     {
         return $this->supportAttachments;
     }
@@ -314,10 +291,8 @@ final class WysiwygFormField extends AbstractFormField implements
      * Returns `true` if the form field supports mentions and returns `false` otherwise.
      *
      * By default, mentions are not supported.
-     *
-     * @return  bool
      */
-    public function supportsMentions()
+    public function supportsMentions(): bool
     {
         return $this->supportMentions;
     }
@@ -326,16 +301,14 @@ final class WysiwygFormField extends AbstractFormField implements
      * Returns `true` if the form field supports quotes and returns `false` otherwise.
      *
      * By default, quotes are not supported.
-     *
-     * @return  bool
      */
-    public function supportsQuotes()
+    public function supportsQuotes(): bool
     {
         return $this->supportQuotes;
     }
 
     #[\Override]
-    public function validate()
+    public function validate(): void
     {
         $disallowedBBCodesPermission = $this->getObjectType()->disallowedBBCodesPermission;
         if ($disallowedBBCodesPermission === null) {
@@ -394,7 +367,7 @@ final class WysiwygFormField extends AbstractFormField implements
     }
 
     #[\Override]
-    public function getValue()
+    public function getValue(): string
     {
         $upcastProcessor = new HtmlUpcastProcessor();
         $upcastProcessor->process(parent::getValue() ?? '', $this->getObjectType()->objectType);
@@ -417,7 +390,7 @@ final class WysiwygFormField extends AbstractFormField implements
      * @since 6.3
      */
     #[\Override]
-    public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true)
+    public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true): static
     {
         $this->objectID = $object->{$object::getDatabaseTableIndexName()};
 

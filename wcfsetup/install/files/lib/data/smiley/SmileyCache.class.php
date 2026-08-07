@@ -21,23 +21,23 @@ final class SmileyCache extends SingletonFactory
     /**
      * @var array<int, array<int, Smiley>>
      */
-    private $cachedSmilies = [];
+    private array $cachedSmilies = [];
 
     /**
      * @var array<string, Smiley>
      */
-    private $cachedSmileyByCode = [];
+    private array $cachedSmileyByCode = [];
 
     /**
      * @var array<int, SmileyCategory>
      */
-    private $cachedCategories = [];
+    private array $cachedCategories = [];
 
     /**
      * enabled smiley categories with at least one smiley
      * @var SmileyCategory[]|null
      */
-    private $visibleCategories;
+    private ?array $visibleCategories = null;
 
     /**
      * @var array<string, Smiley>

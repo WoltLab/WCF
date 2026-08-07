@@ -27,13 +27,13 @@ final class DevtoolsProjectInstructionsFormField extends AbstractFormField
      * list of available applications
      * @var null|Application[]
      */
-    protected $applications;
+    protected ?array $applications = null;
 
     /**
      * list of available package installation plugins
      * @var null|PackageInstallationPlugin[]
      */
-    protected $packageInstallationPlugins;
+    protected ?array $packageInstallationPlugins = null;
 
     /**
      * @inheritDoc
@@ -50,7 +50,7 @@ final class DevtoolsProjectInstructionsFormField extends AbstractFormField
      * attribute
      * @var string[]
      */
-    protected static $applicationPips = [
+    protected static array $applicationPips = [
         'acpTemplate',
         'file',
         'script',
@@ -63,7 +63,7 @@ final class DevtoolsProjectInstructionsFormField extends AbstractFormField
      *
      * @return  Application[]
      */
-    public function getApplications()
+    public function getApplications(): array
     {
         if ($this->applications === null) {
             $this->applications = [];
@@ -80,7 +80,7 @@ final class DevtoolsProjectInstructionsFormField extends AbstractFormField
     }
 
     #[\Override]
-    public function getHtml()
+    public function getHtml(): string
     {
         if ($this->requiresLabel() && $this->getLabel() === null) {
             throw new \UnexpectedValueException("Form field '{$this->getPrefixedId()}' requires a label.");
@@ -104,7 +104,7 @@ final class DevtoolsProjectInstructionsFormField extends AbstractFormField
      *
      * @return  PackageInstallationPlugin[]
      */
-    public function getPackageInstallationPlugins()
+    public function getPackageInstallationPlugins(): array
     {
         if ($this->packageInstallationPlugins === null) {
             $packageInstallationPluginList = new PackageInstallationPluginList();
@@ -120,7 +120,7 @@ final class DevtoolsProjectInstructionsFormField extends AbstractFormField
     }
 
     #[\Override]
-    public function readValue()
+    public function readValue(): static
     {
         if (
             $this->getDocument()->hasRequestData($this->getPrefixedId())
@@ -135,7 +135,7 @@ final class DevtoolsProjectInstructionsFormField extends AbstractFormField
     }
 
     #[\Override]
-    public function validate()
+    public function validate(): void
     {
         // everything is already validated by JavaScript thus we skip
         // reporting specific errors and simply remove manipulated values

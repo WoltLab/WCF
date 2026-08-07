@@ -169,7 +169,7 @@ final class LicensePage extends AbstractPage
     }
 
     #[\Override]
-    public function assignVariables()
+    public function assignVariables(): void
     {
         parent::assignVariables();
 
@@ -458,7 +458,7 @@ final class LicensePage extends AbstractPage
         ?string $minVersion,
         array &$installedPackages,
         array &$excludedPackagesOfInstalledPackages
-    ) {
+    ): array {
         // get excluded packages
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add(

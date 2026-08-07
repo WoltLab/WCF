@@ -27,10 +27,8 @@ abstract class AbstractBackgroundJob
 
     /**
      * Returns the number of times this job already failed.
-     *
-     * @return int
      */
-    final public function getFailures()
+    final public function getFailures(): int
     {
         return $this->failures;
     }

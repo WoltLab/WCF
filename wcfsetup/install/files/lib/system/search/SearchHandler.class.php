@@ -26,42 +26,36 @@ final class SearchHandler
     /**
      * @var mixed[]
      */
-    private $parameters = [];
+    private array $parameters = [];
 
     /**
      * @var string[]
      */
-    private $objectTypeNames = [];
+    private array $objectTypeNames = [];
 
-    /**
-     * @var ?PreparedStatementConditionBuilder
-     */
-    private $conditionBuilder;
+    private ?PreparedStatementConditionBuilder $conditionBuilder = null;
 
     /**
      * @var PreparedStatementConditionBuilder[]
      */
-    private $typeBasedConditionBuilders = [];
+    private array $typeBasedConditionBuilders = [];
 
     /**
      * @var mixed[]
      */
-    private $typeBasedContextFilter = [];
+    private array $typeBasedContextFilter = [];
 
     /**
      * @var int[]|null
      */
-    private $userIDs;
+    private ?array $userIDs = null;
 
-    /**
-     * @var string
-     */
-    private $searchHash = '';
+    private string $searchHash = '';
 
     /**
      * @var mixed[]
      */
-    private $results = [];
+    private array $results = [];
 
     /**
      * @param mixed[] $parameters

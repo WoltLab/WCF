@@ -55,25 +55,23 @@ final class WCFSetup extends WCF
      * list of available languages
      * @var string[]
      */
-    protected static $availableLanguages = [];
+    protected static array $availableLanguages = [];
 
     /**
      * language code of selected installation language
-     * @var string
      */
-    protected static $selectedLanguageCode = 'en';
+    protected static string $selectedLanguageCode = 'en';
 
     /**
      * list of installed files
      * @var string[]
      */
-    protected static $installedFiles = [];
+    protected static array $installedFiles = [];
 
     /**
      * indicates if developer mode is used to install
-     * @var int
      */
-    protected static $developerMode = 0;
+    protected static int $developerMode = 0;
 
     /**
      * Calls all init functions of the WCFSetup class and starts the setup process.

@@ -34,10 +34,7 @@ final class Totp
      */
     private const SECRET_BYTES = 16;
 
-    /**
-     * @var string
-     */
-    private $secret;
+    private string $secret;
 
     public function __construct(
         #[\SensitiveParameter]

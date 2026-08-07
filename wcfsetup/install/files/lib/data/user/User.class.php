@@ -83,31 +83,29 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      * list of group ids
      * @var int[]|null
      */
-    protected $groupIDs;
+    protected ?array $groupIDs = null;
 
     /**
      * true, if user has access to the ACP
-     * @var ?bool
      */
-    protected $hasAdministrativePermissions;
+    protected ?bool $hasAdministrativePermissions = null;
 
     /**
      * list of language ids
      * @var int[]|null
      */
-    protected $languageIDs;
+    protected ?array $languageIDs = null;
 
     /**
      * date time zone object
-     * @var ?\DateTimeZone
      */
-    protected $timezoneObj;
+    protected ?\DateTimeZone $timezoneObj = null;
 
     /**
      * list of user options
      * @var UserOption[]|null
      */
-    protected static $userOptions;
+    protected static ?array $userOptions = null;
 
     const REGISTER_ACTIVATION_NONE = 0;
 
@@ -142,13 +140,11 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
     /**
      * Returns true if the given password is the correct password for this user.
-     *
-     * @return bool password correct
      */
     public function checkPassword(
         #[\SensitiveParameter]
         string $password
-    ) {
+    ): bool {
         $isValid = false;
 
         $manager = PasswordAlgorithmManager::getInstance();
@@ -189,7 +185,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      * @return false
      * @deprecated 5.4 - This method always returns false, as user sessions are long-lived now.
      */
-    public function checkCookiePassword(string $passwordHash)
+    public function checkCookiePassword(string $passwordHash): bool
     {
         return false;
     }
@@ -199,7 +195,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      *
      * @return int[]
      */
-    public function getGroupIDs(bool $skipCache = false)
+    public function getGroupIDs(bool $skipCache = false): array
     {
         if ($this->groupIDs === null || $skipCache) {
             if (!$this->userID) {
@@ -242,7 +238,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      *
      * @return int[]
      */
-    public function getLanguageIDs()
+    public function getLanguageIDs(): array
     {
         if ($this->languageIDs === null) {
             $this->languageIDs = [];
@@ -282,15 +278,14 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      *
      * @param string $name user option name
      * @param bool $filterDisabled suppress values for disabled options
-     * @return mixed user option value
      */
-    public function getUserOption(string $name, bool $filterDisabled = false)
+    public function getUserOption(string $name, bool $filterDisabled = false): mixed
     {
         $optionID = self::getUserOptionID($name);
         if ($optionID === null) {
-            return;
+            return null;
         } elseif ($filterDisabled && self::$userOptions[$name]->isDisabled) {
-            return;
+            return null;
         }
 
         return $this->data['userOption' . $optionID] ?? null;
@@ -298,20 +293,16 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
     /**
      * Fetches all user options from cache.
-     *
-     * @return void
      */
-    protected static function getUserOptionCache()
+    protected static function getUserOptionCache(): void
     {
         self::$userOptions = UserOptionCacheBuilder::getInstance()->getData([], 'options');
     }
 
     /**
      * Returns the id of a user option.
-     *
-     * @return ?int
      */
-    public static function getUserOptionID(string $name)
+    public static function getUserOptionID(string $name): ?int
     {
         // get user option cache if necessary
         if (self::$userOptions === null) {
@@ -326,17 +317,15 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     }
 
     #[\Override]
-    public function __get(string $name)
+    public function __get(string $name): mixed
     {
         return $this->data[$name] ?? $this->getUserOption($name);
     }
 
     /**
      * Returns the user with the given username.
-     *
-     * @return User
      */
-    public static function getUserByUsername(string $username)
+    public static function getUserByUsername(string $username): self
     {
         $sql = "SELECT      user_option_value.*, user_table.*
                 FROM        wcf1_user user_table
@@ -355,10 +344,8 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
     /**
      * Returns the user with the given email.
-     *
-     * @return User
      */
-    public static function getUserByEmail(string $email)
+    public static function getUserByEmail(string $email): self
     {
         $sql = "SELECT      user_option_value.*, user_table.*
                 FROM        wcf1_user user_table
@@ -377,10 +364,8 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
     /**
      * Returns the user with the given authData.
-     *
-     * @return User
      */
-    public static function getUserByAuthData(string $authData)
+    public static function getUserByAuthData(string $authData): self
     {
         $sql = "SELECT      user_option_value.*, user_table.*
                 FROM        wcf1_user user_table
@@ -400,10 +385,9 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns 3rd party auth provider name.
      *
-     * @return string
      * @since 5.2
      */
-    public function getAuthProvider()
+    public function getAuthProvider(): string
     {
         if (!$this->authData) {
             return '';
@@ -414,10 +398,8 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
     /**
      * Returns true if this user is marked.
-     *
-     * @return int
      */
-    public function isMarked()
+    public function isMarked(): int
     {
         $markedUsers = WCF::getSession()->getVar('markedUsers');
         if ($markedUsers !== null) {
@@ -432,20 +414,17 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns true if the email is confirmed.
      *
-     * @return bool
      * @since 5.3
      */
-    public function isEmailConfirmed()
+    public function isEmailConfirmed(): bool
     {
         return $this->emailConfirmed === null;
     }
 
     /**
      * Returns the time zone of this user.
-     *
-     * @return \DateTimeZone
      */
-    public function getTimeZone()
+    public function getTimeZone(): \DateTimeZone
     {
         if ($this->timezoneObj === null) {
             if ($this->timezone) {
@@ -475,7 +454,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      * @param int[] $userIDs
      * @return User[]
      */
-    public static function getUsers(array $userIDs)
+    public static function getUsers(array $userIDs): array
     {
         $userList = new UserList();
         $userList->setObjectIDs($userIDs);
@@ -494,7 +473,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     }
 
     #[\Override]
-    public static function getDatabaseTableAlias()
+    public static function getDatabaseTableAlias(): string
     {
         return 'user_table';
     }
@@ -507,10 +486,8 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
     /**
      * Returns the language of this user.
-     *
-     * @return  Language
      */
-    public function getLanguage()
+    public function getLanguage(): Language
     {
         $language = null;
 
@@ -527,20 +504,16 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
     /**
      * Returns true if the active user can edit this user.
-     *
-     * @return  bool
      */
-    public function canEdit()
+    public function canEdit(): bool
     {
         return WCF::getSession()->hasPermission('admin.user.canEditUser') && UserGroup::isAccessibleGroup($this->getGroupIDs());
     }
 
     /**
      * Returns true, if this user has access to the ACP.
-     *
-     * @return  bool
      */
-    public function hasAdministrativeAccess()
+    public function hasAdministrativeAccess(): bool
     {
         if ($this->hasAdministrativePermissions === null) {
             $this->hasAdministrativePermissions = false;
@@ -561,10 +534,9 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns true, if this user is a member of the owner group.
      *
-     * @return bool
      * @since 5.2
      */
-    public function hasOwnerAccess()
+    public function hasOwnerAccess(): bool
     {
         foreach (UserGroup::getGroupsByIDs($this->getGroupIDs()) as $group) {
             if ($group->isOwner()) {
@@ -582,15 +554,15 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     }
 
     #[\Override]
-    public function getUsername()
+    public function getUsername(): string
     {
-        return $this->username;
+        return $this->username ?? '';
     }
 
     #[\Override]
-    public function getTime()
+    public function getTime(): int
     {
-        return $this->registrationDate;
+        return $this->registrationDate ?? 0;
     }
 
     #[\Override]
@@ -603,10 +575,8 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
     /**
      * Returns the registration ip address, attempts to convert to IPv4.
-     *
-     * @return      string
      */
-    public function getRegistrationIpAddress()
+    public function getRegistrationIpAddress(): string
     {
         if ($this->registrationIpAddress) {
             return UserUtil::convertIPv6To4($this->registrationIpAddress);
@@ -617,10 +587,8 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
     /**
      * Returns true, if this user can purchase paid subscriptions.
-     *
-     * @return      bool
      */
-    public function canPurchasePaidSubscriptions()
+    public function canPurchasePaidSubscriptions(): bool
     {
         return WCF::getUser()->userID && !$this->pendingActivation();
     }
@@ -632,7 +600,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      * @return string[]
      * @since 5.2
      */
-    public function getBlacklistMatches()
+    public function getBlacklistMatches(): array
     {
         if ($this->pendingActivation() && $this->blacklistMatches) {
             return \json_decode($this->blacklistMatches, true, flags: \JSON_THROW_ON_ERROR);
@@ -649,7 +617,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      * @return string[]
      * @since 5.2
      */
-    public function getBlacklistMatchesTitle()
+    public function getBlacklistMatchesTitle(): array
     {
         return \array_map(static function ($field) {
             if ($field === 'ip') {
@@ -662,10 +630,8 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
     /**
      * Returns true if this user is not activated.
-     *
-     * @return  bool
      */
-    public function pendingActivation()
+    public function pendingActivation(): bool
     {
         return $this->activationCode !== 0;
     }
@@ -673,10 +639,9 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns true if this user requires activation by the user.
      *
-     * @return  bool
      * @since       5.3
      */
-    public function requiresEmailActivation()
+    public function requiresEmailActivation(): bool
     {
         return (int)\REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER && $this->pendingActivation() && !$this->isEmailConfirmed();
     }
@@ -684,10 +649,9 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns true if this user requires the activation by an admin.
      *
-     * @return  bool
      * @since       5.3
      */
-    public function requiresAdminActivation()
+    public function requiresAdminActivation(): bool
     {
         return (int)\REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_ADMIN && $this->pendingActivation();
     }
@@ -695,10 +659,9 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns true if this user can confirm the email themself.
      *
-     * @return  bool
      * @since       5.3
      */
-    public function canEmailConfirm()
+    public function canEmailConfirm(): bool
     {
         return (int)\REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER && !$this->isEmailConfirmed();
     }
@@ -706,10 +669,9 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns true, if the user must confirm his email by themself.
      *
-     * @return      bool
      * @since       5.3
      */
-    public function mustSelfEmailConfirm()
+    public function mustSelfEmailConfirm(): bool
     {
         return !!((int)\REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER);
     }
@@ -732,7 +694,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     }
 
     #[\Override]
-    public function getPopoverLinkClass()
+    public function getPopoverLinkClass(): string
     {
         return 'userLink';
     }

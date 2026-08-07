@@ -34,11 +34,10 @@ final class GZipFile extends File
      * Calls the specified function on the open file.
      *
      * @param mixed[] $arguments
-     * @return  mixed
      * @throws  SystemException
      */
     #[\Override]
-    public function __call(string $function, array $arguments)
+    public function __call(string $function, array $arguments): mixed
     {
         if (\function_exists('gz' . $function)) {
             \array_unshift($arguments, $this->resource);
@@ -79,10 +78,8 @@ final class GZipFile extends File
 
     /**
      * Returns the filesize of the unzipped file.
-     *
-     * @return  int
      */
-    public function getFileSize()
+    public function getFileSize(): int
     {
         $byteBlock = 1 << 14;
         $eof = $byteBlock;

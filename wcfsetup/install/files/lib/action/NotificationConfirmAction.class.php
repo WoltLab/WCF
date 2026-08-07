@@ -30,12 +30,11 @@ final class NotificationConfirmAction extends AbstractAction
 
     /**
      * user notification object
-     * @var ?UserNotification
      */
-    public $notification;
+    public ?UserNotification $notification = null;
 
     #[\Override]
-    public function readParameters()
+    public function readParameters(): void
     {
         parent::readParameters();
 

@@ -34,13 +34,13 @@ final class StyleCompiler extends SingletonFactory
      * Contains all files, which are compiled for a style.
      * @var string[]|null
      */
-    private $files;
+    private ?array $files = null;
 
     /**
      * names of option types which are supported as additional variables
      * @var string[]
      */
-    public static $supportedOptionType = ['boolean', 'float', 'integer', 'radioButton', 'select'];
+    public static array $supportedOptionType = ['boolean', 'float', 'integer', 'radioButton', 'select'];
 
     /**
      * file used to store global SCSS declarations, relative to `WCF_DIR`

@@ -36,20 +36,16 @@ final class ShowOrderFormField extends SingleSelectionFormField
 
     /**
      * is `true` if `(first position)` option was added
-     * @var bool
      */
-    protected $addedFirstPositionOption = false;
+    protected bool $addedFirstPositionOption = false;
 
     public function __construct()
     {
         $this->label('wcf.form.field.showOrder');
     }
 
-    /**
-     * @return ?int
-     */
     #[\Override]
-    public function getSaveValue()
+    public function getSaveValue(): ?int
     {
         if ($this->value !== null) {
             $index = \array_search($this->value, \array_keys($this->getOptions()));
@@ -65,14 +61,12 @@ final class ShowOrderFormField extends SingleSelectionFormField
     }
 
     /**
-     * @return  static
-     *
      * There is an additional element prepended to the options with key `0`
      * and using the language item `wcf.form.field.showOrder.firstPosition`
      * as value to mark adding it at the first position.
      */
     #[\Override]
-    public function options(array|callable|\Traversable|DatabaseObjectList $options, bool $nestedOptions = false, bool $labelLanguageItems = true)
+    public function options(array|callable|\Traversable|DatabaseObjectList $options, bool $nestedOptions = false, bool $labelLanguageItems = true): static
     {
         parent::options($options, $nestedOptions, $labelLanguageItems);
 
@@ -92,7 +86,7 @@ final class ShowOrderFormField extends SingleSelectionFormField
     }
 
     #[\Override]
-    public function value(mixed $value)
+    public function value(mixed $value): static
     {
         $keys = \array_keys($this->getOptions());
 

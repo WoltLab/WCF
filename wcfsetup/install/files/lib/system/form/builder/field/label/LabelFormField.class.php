@@ -32,9 +32,8 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
 
     /**
      * label group whose labels can be selected via this form field
-     * @var ?ViewableLabelGroup
      */
-    protected $labelGroup;
+    protected ?ViewableLabelGroup $labelGroup = null;
 
     /**
      * @inheritDoc
@@ -46,15 +45,14 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
      * over and over again for the same object and different label groups
      * @var Label[][]
      */
-    protected static $loadedLabels = [];
+    protected static array $loadedLabels = [];
 
     /**
      * Returns the label group whose labels can be selected via this form field.
      *
-     * @return  ViewableLabelGroup      label group whose labels can be selected
      * @throws  \BadMethodCallException     if no label has been set
      */
-    public function getLabelGroup()
+    public function getLabelGroup(): ViewableLabelGroup
     {
         if ($this->labelGroup === null) {
             throw new \BadMethodCallException("No label group has been set for field '{$this->getId()}'.");
@@ -64,13 +62,13 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
     }
 
     #[\Override]
-    public function getObjectTypeDefinition()
+    public function getObjectTypeDefinition(): string
     {
         return 'com.woltlab.wcf.label.object';
     }
 
     #[\Override]
-    public function hasSaveValue()
+    public function hasSaveValue(): bool
     {
         return false;
     }
@@ -82,9 +80,8 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
      * If no form field label has been set, the title of the label group will be set as label.
      *
      * @param ViewableLabelGroup $labelGroup label group whose labels can be selected
-     * @return  static                  this form field
      */
-    public function labelGroup(ViewableLabelGroup $labelGroup)
+    public function labelGroup(ViewableLabelGroup $labelGroup): static
     {
         $this->labelGroup = $labelGroup;
 
@@ -96,7 +93,7 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
     }
 
     #[\Override]
-    public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true)
+    public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true): static
     {
         if ($loadValues) {
             $objectTypeID = $this->getObjectType()->objectTypeID;
@@ -126,7 +123,7 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
     }
 
     #[\Override]
-    public function populate()
+    public function populate(): static
     {
         parent::populate();
 
@@ -150,7 +147,7 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
     }
 
     #[\Override]
-    public function readValue()
+    public function readValue(): static
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
             $this->value = \intval($this->getDocument()->getRequestData($this->getPrefixedId()));
@@ -160,7 +157,7 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
     }
 
     #[\Override]
-    public function validate()
+    public function validate(): void
     {
         if ($this->isRequired()) {
             if ($this->value <= 0) {
@@ -184,7 +181,7 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
      * @param string $objectProperty object property of form fields
      * @return  static[]
      */
-    public static function createFields(string $objectType, array $labelGroups, string $objectProperty = 'labelIDs')
+    public static function createFields(string $objectType, array $labelGroups, string $objectProperty = 'labelIDs'): array
     {
         $formFields = [];
         foreach ($labelGroups as $labelGroup) {

@@ -16,13 +16,10 @@ use wcf\system\WCF;
  */
 final class SearchPage extends AbstractPage
 {
-    /**
-     * @var bool
-     */
-    public $extended = false;
+    public bool $extended = false;
 
     #[\Override]
-    public function readParameters()
+    public function readParameters(): void
     {
         parent::readParameters();
 
@@ -32,7 +29,7 @@ final class SearchPage extends AbstractPage
     }
 
     #[\Override]
-    public function assignVariables()
+    public function assignVariables(): void
     {
         parent::assignVariables();
 

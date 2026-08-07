@@ -35,9 +35,8 @@ final class ImageProxyAction extends AbstractAction
 
     /**
      * The image key created by CryptoUtil::createSignedString()
-     * @var string
      */
-    public $key = '';
+    public string $key = '';
 
     /**
      * 10 Mebibyte
@@ -45,7 +44,7 @@ final class ImageProxyAction extends AbstractAction
     const MAX_SIZE = (10 * (1 << 20));
 
     #[\Override]
-    public function readParameters()
+    public function readParameters(): void
     {
         parent::readParameters();
 

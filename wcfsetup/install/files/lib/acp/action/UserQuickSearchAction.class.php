@@ -30,48 +30,43 @@ final class UserQuickSearchAction extends AbstractAction
 
     /**
      * search mode
-     * @var string
      */
-    public $mode = '';
+    public string $mode = '';
 
     /**
      * matches
      * @var int[]
      */
-    public $matches = [];
+    public array $matches = [];
 
     /**
      * results per page
-     * @var int
      */
-    public $itemsPerPage = 50;
+    public int $itemsPerPage = 50;
 
     /**
      * shown columns
      * @var string[]
      */
-    public $columns = ['registrationDate', 'lastActivityTime'];
+    public array $columns = ['registrationDate', 'lastActivityTime'];
 
     /**
      * sort field
-     * @var string
      */
-    public $sortField = 'username';
+    public string $sortField = 'username';
 
     /**
      * sort order
-     * @var string
      */
-    public $sortOrder = 'ASC';
+    public string $sortOrder = 'ASC';
 
     /**
      * number of results
-     * @var int
      */
-    public $maxResults = 2000;
+    public int $maxResults = 2000;
 
     #[\Override]
-    public function readParameters()
+    public function readParameters(): void
     {
         parent::readParameters();
 

@@ -3,17 +3,20 @@
 namespace wcf\system;
 
 use wcf\data\application\Application;
+use wcf\data\language\Language;
 use wcf\data\option\OptionEditor;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\data\package\PackageEditor;
 use wcf\data\page\Page;
+use wcf\data\user\User;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\application\IApplication;
 use wcf\system\benchmark\Benchmark;
 use wcf\system\box\BoxHandler;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\cache\eager\CoreObjectCache;
+use wcf\system\database\Database;
 use wcf\system\database\MySQLDatabase;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\ErrorException;
@@ -257,8 +260,7 @@ class WCF
             }
 
             // update session
-            // @phpstan-ignore function.alreadyNarrowedType
-            if (\is_object(self::getSession())) {
+            if (self::$sessionObj !== null) {
                 self::getSession()->update();
             }
 
@@ -272,50 +274,40 @@ class WCF
 
     /**
      * Returns the database object.
-     *
-     * @return  \wcf\system\database\Database
      */
-    final public static function getDB()
+    final public static function getDB(): Database
     {
         return self::$dbObj;
     }
 
     /**
      * Returns the session object.
-     *
-     * @return  SessionHandler
      */
-    final public static function getSession()
+    final public static function getSession(): SessionHandler
     {
         return self::$sessionObj;
     }
 
     /**
      * Returns the user object.
-     *
-     * @return  \wcf\data\user\User
      */
-    final public static function getUser()
+    final public static function getUser(): User
     {
         return self::getSession()->getUser();
     }
 
     /**
      * Returns the language object.
-     *
-     * @return  \wcf\data\language\Language
      */
-    final public static function getLanguage()
+    final public static function getLanguage(): Language
     {
         return self::$languageObj;
     }
 
     /**
      * Returns the template object.
-     *
-     * @return  TemplateEngine
      */
-    final public static function getTPL()
+    final public static function getTPL(): TemplateEngine
     {
         return self::$tplObj;
     }
@@ -917,7 +909,7 @@ class WCF
      * @param mixed[] $arguments
      * @return ?object
      */
-    final public function __call(string $name, array $arguments)
+    final public function __call(string $name, array $arguments): mixed
     {
         // bug fix to avoid php crash, see http://bugs.php.net/bug.php?id=55020
         if (!\method_exists($this, $name)) {
@@ -934,7 +926,7 @@ class WCF
      * @return ?object
      * @throws SystemException
      */
-    final public static function __callStatic(string $name, array $arguments)
+    final public static function __callStatic(string $name, array $arguments): mixed
     {
         $className = \preg_replace('~^get~', '', $name);
 
@@ -961,7 +953,7 @@ class WCF
      *
      * @return  class-string<SingletonFactory>|null
      */
-    final protected static function getCoreObject(string $className)
+    final protected static function getCoreObject(string $className): ?string
     {
         return self::$coreObjectCache[$className] ?? null;
     }

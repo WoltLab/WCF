@@ -265,13 +265,10 @@ namespace wcf\functions\exception {
 		$exceptionTitle = $exceptionSubtitle = $exceptionExplanation = '';
 		$logFile = sanitizePath($logFile);
 		try {
-			// @phpstan-ignore notIdentical.alwaysTrue
-			if (WCF::getLanguage() !== null) {
-				$exceptionTitle = WCF::getLanguage()->get('wcf.global.exception.title', true);
-				$exceptionSubtitle = str_replace('{$exceptionID}', $exceptionID, WCF::getLanguage()->get('wcf.global.exception.subtitle', true));
-				$exceptionExplanation = str_replace('{$logFile}', $logFile, WCF::getLanguage()->get('wcf.global.exception.explanation', true));
-			}
-		} catch (\Throwable $e) {
+			$exceptionTitle = WCF::getLanguage()->get('wcf.global.exception.title', true);
+			$exceptionSubtitle = str_replace('{$exceptionID}', $exceptionID, WCF::getLanguage()->get('wcf.global.exception.subtitle', true));
+			$exceptionExplanation = str_replace('{$logFile}', $logFile, WCF::getLanguage()->get('wcf.global.exception.explanation', true));
+		} catch (\Throwable) {
 			// ignore
 		}
 

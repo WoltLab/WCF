@@ -14,40 +14,34 @@ use wcf\system\Regex;
  */
 final class DirectoryUtil
 {
-    /**
-     * @var \DirectoryIterator
-     */
-    protected $obj;
+    protected \DirectoryIterator $obj;
 
     /**
      * all files with full path
      * @var string[]
      */
-    protected $files = [];
+    protected array $files = [];
 
     /**
      * all files with filename as key and DirectoryIterator object as value
      * @var \DirectoryIterator[]
      */
-    protected $fileObjects = [];
+    protected array $fileObjects = [];
 
     /**
      * directory size in bytes
-     * @var int
      */
-    protected $size = 0;
+    protected int $size = 0;
 
     /**
      * directory path
-     * @var string
      */
-    protected $directory = '';
+    protected string $directory = '';
 
     /**
      * determines whether scan should be recursive
-     * @var bool
      */
-    protected $recursive = true;
+    protected bool $recursive = true;
 
     /**
      * indicates that files won't be sorted
@@ -59,7 +53,7 @@ final class DirectoryUtil
      * all recursive and non-recursive instances of DirectoryUtil
      * @var array<int, DirectoryUtil[]>
      */
-    protected static $instances = [
+    protected static array $instances = [
         1 => [], // recursive instances
         0 => [], // non-recursive instances
     ];
@@ -86,10 +80,9 @@ final class DirectoryUtil
      * Returns an instance of DirectoryUtil (or child).
      *
      * @param bool $recursive walk through sub-directories too
-     * @return  DirectoryUtil
      * @throws  SystemException
      */
-    public static function getInstance(string $tmpDirectory, bool $recursive = true)
+    public static function getInstance(string $tmpDirectory, bool $recursive = true): self
     {
         $directory = \realpath(FileUtil::unifyDirSeparator($tmpDirectory));
         // realpath returns false if the directory does not exist
@@ -122,7 +115,7 @@ final class DirectoryUtil
      * @return  string[]
      * @throws  SystemException
      */
-    public function getFiles(int $order = \SORT_ASC, ?Regex $pattern = null, bool $negativeMatch = false)
+    public function getFiles(int $order = \SORT_ASC, ?Regex $pattern = null, bool $negativeMatch = false): array
     {
         // scan the folder
         $this->scanFiles();
@@ -157,7 +150,7 @@ final class DirectoryUtil
      * @return  \DirectoryIterator[]
      * @throws  SystemException
      */
-    public function getFileObjects(int $order = \SORT_ASC, ?Regex $pattern = null, bool $negativeMatch = false)
+    public function getFileObjects(int $order = \SORT_ASC, ?Regex $pattern = null, bool $negativeMatch = false): array
     {
         // scan the folder
         $this->scanFileObjects();

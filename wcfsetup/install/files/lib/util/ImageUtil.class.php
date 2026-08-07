@@ -25,10 +25,8 @@ final class ImageUtil
     /**
      * Checks the content of an image for bad sections, e.g. the use of javascript
      * and returns false if any bad stuff was found.
-     *
-     * @return  bool
      */
-    public static function checkImageContent(string $file)
+    public static function checkImageContent(string $file): bool
     {
         // get file content
         $content = \file_get_contents($file);
@@ -53,9 +51,8 @@ final class ImageUtil
      * Checks whether a given file is a valid image.
      *
      * @param bool $handleSvgAsValidImage flag, whether a svg file is handled as image
-     * @return      bool
      */
-    public static function isImage(string $location, ?string $filename = null, bool $handleSvgAsValidImage = false)
+    public static function isImage(string $location, ?string $filename = null, bool $handleSvgAsValidImage = false): bool
     {
         if ($filename === null) {
             $filename = \basename($location);
@@ -82,10 +79,9 @@ final class ImageUtil
     /**
      * Return the file extension for an image with the given mime type.
      *
-     * @return  string
      * @see http://www.php.net/manual/en/function.image-type-to-mime-type.php
      */
-    public static function getExtensionByMimeType(string $mimeType)
+    public static function getExtensionByMimeType(string $mimeType): string
     {
         switch ($mimeType) {
             case 'image/gif':
@@ -111,12 +107,12 @@ final class ImageUtil
     }
 
     /**
-     * Enforces dimensions for given image.
+     * Enforces dimensions for given image. Returns the new filename if the file
+     * was changed, otherwise the old filename.
      *
-     * @return  string          new filename if file was changed, otherwise old filename
      * @since       5.2
      */
-    public static function enforceDimensions(string $filename, int $maxWidth, int $maxHeight, bool $obtainDimensions = true)
+    public static function enforceDimensions(string $filename, int $maxWidth, int $maxHeight, bool $obtainDimensions = true): string
     {
         $imageData = \getimagesize($filename);
         if ($imageData[0] > $maxWidth || $imageData[1] > $maxHeight) {
@@ -135,11 +131,11 @@ final class ImageUtil
 
     /**
      * Rotates the given image based on the orientation stored in the exif data.
+     * Returns the new filename if the file was changed, otherwise the old filename.
      *
-     * @return  string          new filename if file was changed, otherwise old filename
      * @since       5.2
      */
-    public static function fixOrientation(string $filename)
+    public static function fixOrientation(string $filename): string
     {
         try {
             $exifData = ExifUtil::getExifData($filename);

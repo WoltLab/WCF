@@ -23,27 +23,23 @@ final class ClassNameFormField extends TextFormField
 
     /**
      * `true` if the entered class must exist
-     * @var bool
      */
-    protected $classExists = true;
+    protected bool $classExists = true;
 
     /**
      * name of the interface the entered class must implement
-     * @var string
      */
-    protected $implementedInterface = '';
+    protected string $implementedInterface = '';
 
     /**
      * `true` if the entered class must be instantiable
-     * @var bool
      */
-    protected $instantiable = true;
+    protected bool $instantiable = true;
 
     /**
      * name of the class the entered class must extend
-     * @var string
      */
-    protected $parentClass = '';
+    protected string $parentClass = '';
 
     public function __construct()
     {
@@ -56,9 +52,8 @@ final class ClassNameFormField extends TextFormField
      * Sets whether entered class must exist and returns this field.
      *
      * @param bool $classExists determines if entered class must exist
-     * @return  static              this field
      */
-    public function classExists(bool $classExists = true)
+    public function classExists(bool $classExists = true): static
     {
         $this->classExists = $classExists;
 
@@ -68,10 +63,8 @@ final class ClassNameFormField extends TextFormField
     /**
      * Returns `true` if the entered class must exist. By default, `true` is
      * returned.
-     *
-     * @return  bool
      */
-    public function getClassExists()
+    public function getClassExists(): bool
     {
         return $this->classExists;
     }
@@ -80,10 +73,8 @@ final class ClassNameFormField extends TextFormField
      * Returns class the entered class must extend or an empty if the
      * entered class does not have to extend any specific class. By default,
      * an empty is returned.
-     *
-     * @return  string
      */
-    public function getImplementedInterface()
+    public function getImplementedInterface(): string
     {
         return $this->implementedInterface;
     }
@@ -92,10 +83,8 @@ final class ClassNameFormField extends TextFormField
      * Returns name of the interface the entered class must implement or an
      * empty if the entered class does not have to implement any specific
      * interface. By default, an empty is returned.
-     *
-     * @return  string
      */
-    public function getParentClass()
+    public function getParentClass(): string
     {
         return $this->parentClass;
     }
@@ -108,11 +97,10 @@ final class ClassNameFormField extends TextFormField
      * is automatically used for the description.
      *
      * @param string $interface name of the interface the entered class must implement
-     * @return  static              this field
      *
      * @throws  \InvalidArgumentException   if the entered interface does not exists
      */
-    public function implementedInterface(string $interface)
+    public function implementedInterface(string $interface): static
     {
         if (!\interface_exists($interface)) {
             throw new \InvalidArgumentException("Interface '{$interface}' does not exist for field '{$this->getId()}'.");
@@ -134,9 +122,8 @@ final class ClassNameFormField extends TextFormField
      * Sets whether entered class must be instantiable and returns this field.
      *
      * @param bool $instantiable determines if entered class must be instantiable
-     * @return  static              this field
      */
-    public function instantiable(bool $instantiable = true)
+    public function instantiable(bool $instantiable = true): static
     {
         $this->instantiable = $instantiable;
 
@@ -146,10 +133,8 @@ final class ClassNameFormField extends TextFormField
     /**
      * Returns `true` if the entered class must be instantiable. By default,
      * `true` is returned.
-     *
-     * @return  bool
      */
-    public function isInstantiable()
+    public function isInstantiable(): bool
     {
         return $this->instantiable;
     }
@@ -158,11 +143,10 @@ final class ClassNameFormField extends TextFormField
      * Returns the name of the class the entered class must extend.
      *
      * @param string $parentClass name of the class the entered class must extend
-     * @return  static              this field
      *
      * @throws  \InvalidArgumentException   if the entered class does not exists
      */
-    public function parentClass(string $parentClass)
+    public function parentClass(string $parentClass): static
     {
         if (!\class_exists($parentClass)) {
             throw new \InvalidArgumentException("Class '{$parentClass}' does not exist for field '{$this->getId()}'.");
@@ -181,7 +165,7 @@ final class ClassNameFormField extends TextFormField
     }
 
     #[\Override]
-    protected function validateText(string $text, ?Language $language = null)
+    protected function validateText(string $text, ?Language $language = null): void
     {
         parent::validateText($text, $language);
 

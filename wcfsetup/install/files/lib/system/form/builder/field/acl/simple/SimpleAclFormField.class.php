@@ -30,13 +30,10 @@ final class SimpleAclFormField extends AbstractFormField
      */
     protected $templateName = 'shared_simpleAclFormField';
 
-    /**
-     * @var bool
-     */
-    protected $supportInvertedPermissions = false;
+    protected bool $supportInvertedPermissions = false;
 
     #[\Override]
-    public function getHtmlVariables()
+    public function getHtmlVariables(): array
     {
         return [
             '__aclSimplePrefix' => $this->getPrefixedId(),
@@ -48,13 +45,13 @@ final class SimpleAclFormField extends AbstractFormField
     }
 
     #[\Override]
-    public function hasSaveValue()
+    public function hasSaveValue(): bool
     {
         return false;
     }
 
     #[\Override]
-    public function populate()
+    public function populate(): static
     {
         parent::populate();
 
@@ -73,7 +70,7 @@ final class SimpleAclFormField extends AbstractFormField
     }
 
     #[\Override]
-    public function readValue()
+    public function readValue(): static
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
             $value = $this->getDocument()->getRequestData($this->getPrefixedId());
@@ -95,10 +92,9 @@ final class SimpleAclFormField extends AbstractFormField
     /**
      * Enables or disables the support for inverted permissions.
      *
-     * @return  static      this field
      * @since   5.5
      */
-    public function supportInvertedPermissions(bool $supportInvertedPermissions = true)
+    public function supportInvertedPermissions(bool $supportInvertedPermissions = true): static
     {
         $this->supportInvertedPermissions = $supportInvertedPermissions;
 

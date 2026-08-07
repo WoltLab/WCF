@@ -28,10 +28,7 @@ use wcf\system\WCF;
  */
 final class BackupMultifactorMethod implements IMultifactorMethod
 {
-    /**
-     * @var IPasswordAlgorithm
-     */
-    private $algorithm;
+    private IPasswordAlgorithm $algorithm;
 
     // 4 chunks of 5 digits each result in code space of 10^20 which
     // is equivalent to 66.4 bits of security. The unhashed 3 chunks

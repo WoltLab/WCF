@@ -39,12 +39,11 @@ final class ArticleListPage extends AbstractGridViewPage
 
     /**
      * display 'Add Article' dialog on load
-     * @var int
      */
-    public $showArticleAddDialog = 0;
+    public int $showArticleAddDialog = 0;
 
     #[\Override]
-    public function readParameters()
+    public function readParameters(): void
     {
         parent::readParameters();
 
@@ -54,7 +53,7 @@ final class ArticleListPage extends AbstractGridViewPage
     }
 
     #[\Override]
-    public function assignVariables()
+    public function assignVariables(): void
     {
         parent::assignVariables();
 

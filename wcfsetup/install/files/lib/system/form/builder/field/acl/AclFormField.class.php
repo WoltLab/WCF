@@ -24,9 +24,8 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
 
     /**
      * name of/filter for the name(s) of the shown acl option categories
-     * @var null|string
      */
-    protected $categoryName;
+    protected ?string $categoryName = null;
 
     /**
      * @inheritDoc
@@ -36,9 +35,8 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
 
     /**
      * id of the edited object or `null` if no object is edited
-     * @var null|int
      */
-    protected $objectID;
+    protected ?int $objectID = null;
 
     /**
      * @inheritDoc
@@ -48,9 +46,8 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
     /**
      * is `true` if acl-related global JavaScript code has already been included
      * and is `false` otherwise
-     * @var bool
      */
-    protected static $includedAclJavaScript = false;
+    protected static bool $includedAclJavaScript = false;
 
     /**
      * Sets the name of/filter for the name(s) of the shown acl option categories and
@@ -60,11 +57,10 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
      * so that `user.*` matches all acl option categories beginning with `user.`, for example.
      *
      * @param string $categoryName name of/filter for the acl option categories
-     * @return  static      $this       this field
      *
      * @throws  \InvalidArgumentException   if given category name is invalid
      */
-    public function categoryName(string $categoryName)
+    public function categoryName(string $categoryName): static
     {
         if (
             !\is_string($categoryName)
@@ -81,16 +77,14 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
     /**
      * Returns the name of/filter for the name(s) of the shown acl option categories
      * or returns `null` if no category name has been set.
-     *
-     * @return  null|string
      */
-    public function getCategoryName()
+    public function getCategoryName(): ?string
     {
         return $this->categoryName;
     }
 
     #[\Override]
-    public function getHtmlVariables()
+    public function getHtmlVariables(): array
     {
         ACLHandler::getInstance()->assignVariables($this->getObjectType()->objectTypeID);
 
@@ -106,28 +100,26 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
 
     /**
      * Returns the id of the edited object or `null` if no object is edited.
-     *
-     * @return  null|int
      */
-    public function getObjectID()
+    public function getObjectID(): ?int
     {
         return $this->objectID;
     }
 
     #[\Override]
-    public function getObjectTypeDefinition()
+    public function getObjectTypeDefinition(): string
     {
         return 'com.woltlab.wcf.acl';
     }
 
     #[\Override]
-    public function hasSaveValue()
+    public function hasSaveValue(): bool
     {
         return false;
     }
 
     #[\Override]
-    public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true)
+    public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true): static
     {
         $this->objectID = $object->{$object::getDatabaseTableIndexName()};
 
@@ -141,7 +133,7 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
     }
 
     #[\Override]
-    public function populate()
+    public function populate(): static
     {
         parent::populate();
 
@@ -158,7 +150,7 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
     }
 
     #[\Override]
-    public function readValue()
+    public function readValue(): static
     {
         $valueSource = $_POST[$this->getPrefixedId()] ?? [];
         if ($this->getDocument()->isAjax()) {

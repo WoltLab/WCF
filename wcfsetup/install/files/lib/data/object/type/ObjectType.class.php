@@ -57,7 +57,7 @@ class ObjectType extends ProcessibleDatabaseObject
      *
      * @return  string[]
      */
-    final public function __sleep()
+    final public function __sleep(): array
     {
         // 'processor' isn't returned since it can be an instance of
         // wcf\system\SingletonFactory which may not be serialized

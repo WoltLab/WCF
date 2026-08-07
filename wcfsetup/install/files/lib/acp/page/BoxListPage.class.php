@@ -30,12 +30,11 @@ final class BoxListPage extends AbstractGridViewPage
 
     /**
      * display 'Add Box' dialog on load
-     * @var int
      */
-    public $showBoxAddDialog = 0;
+    public int $showBoxAddDialog = 0;
 
     #[\Override]
-    public function readParameters()
+    public function readParameters(): void
     {
         parent::readParameters();
 
@@ -45,7 +44,7 @@ final class BoxListPage extends AbstractGridViewPage
     }
 
     #[\Override]
-    public function assignVariables()
+    public function assignVariables(): void
     {
         parent::assignVariables();
 

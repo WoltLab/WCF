@@ -47,7 +47,7 @@ abstract class SingletonFactory
     /**
      * Object serializing is disallowed.
      */
-    final public function __sleep()
+    final public function __sleep(): array
     {
         throw new SystemException('Serializing of Singletons is not allowed');
     }
@@ -55,10 +55,9 @@ abstract class SingletonFactory
     /**
      * Returns an unique instance of current child class.
      *
-     * @return  static
      * @throws  SystemException
      */
-    final public static function getInstance()
+    final public static function getInstance(): static
     {
         $className = static::class;
         if (!isset(self::$__singletonObjects[$className])) {
@@ -77,10 +76,8 @@ abstract class SingletonFactory
 
     /**
      * Returns whether this singleton is already initialized.
-     *
-     * @return  bool
      */
-    final public static function isInitialized()
+    final public static function isInitialized(): bool
     {
         $className = static::class;
 

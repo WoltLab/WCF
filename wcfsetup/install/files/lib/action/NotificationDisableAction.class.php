@@ -17,23 +17,14 @@ use wcf\util\StringUtil;
  */
 final class NotificationDisableAction extends AbstractAction
 {
-    /**
-     * event id
-     * @var int
-     */
-    public $eventID = 0;
+    public int $eventID = 0;
 
-    /**
-     * user id
-     * @var int
-     */
-    public $userID = 0;
+    public int $userID = 0;
 
     /**
      * security token
-     * @var string
      */
-    public $token = '';
+    public string $token = '';
 
     #[\Override]
     public function readParameters(): RedirectResponse

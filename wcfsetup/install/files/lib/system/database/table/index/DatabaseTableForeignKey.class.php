@@ -230,10 +230,9 @@ final class DatabaseTableForeignKey
      * key.
      *
      * @param ?string $onUpdate action executed in referenced table if row is updated
-     * @return $this this foreign key
      * @throws \InvalidArgumentException if given action is invalid
      */
-    public function onUpdate(?string $onUpdate)
+    public function onUpdate(?string $onUpdate): self
     {
         if ($onUpdate !== null && !\in_array($onUpdate, static::VALID_ACTIONS)) {
             throw new \InvalidArgumentException("Unknown on update action '{$onUpdate}'.");
@@ -248,9 +247,8 @@ final class DatabaseTableForeignKey
      * Sets the relevant columns of the referenced table and returns the foreign key.
      *
      * @param string[] $referencedColumns columns of referenced table
-     * @return $this this foreign key
      */
-    public function referencedColumns(array $referencedColumns)
+    public function referencedColumns(array $referencedColumns): self
     {
         $this->referencedColumns = $referencedColumns;
 
@@ -259,10 +257,8 @@ final class DatabaseTableForeignKey
 
     /**
      * Sets the name of the referenced table and returns the foreign key.
-     *
-     * @return $this this foreign key
      */
-    public function referencedTable(string $referencedTable)
+    public function referencedTable(string $referencedTable): self
     {
         $this->referencedTable = ApplicationHandler::insertRealDatabaseTableNames($referencedTable, true);
 
@@ -273,10 +269,8 @@ final class DatabaseTableForeignKey
      * In MySQL, `ON * RESTRICT`, `ON * NO ACTION` or omitting it entirely, is completely the same. However,
      * MySQL 8 reports `NO ACTION` where MySQL 5.7 would identify the action as `null`. This method normalized
      * the action, by always setting it to null if the value is `RESTRICT` or `NO ACTION`.
-     *
-     * @return ?string
      */
-    protected function normalizeAction(?string $action)
+    protected function normalizeAction(?string $action): ?string
     {
         if ($action === null || $action === 'RESTRICT' || $action === 'NO ACTION') {
             return null;
@@ -287,10 +281,8 @@ final class DatabaseTableForeignKey
 
     /**
      * Returns a `DatabaseTableForeignKey` object with the given name.
-     *
-     * @return static
      */
-    public static function create(string $name = '')
+    public static function create(string $name = ''): self
     {
         return new static($name);
     }
@@ -305,9 +297,8 @@ final class DatabaseTableForeignKey
      *  'ON DELETE'?: string,
      *  'ON UPDATE': string,
      * } $data data returned by `DatabaseEditor::getForeignKeys()`
-     * @return static
      */
-    public static function createFromData(string $name, array $data)
+    public static function createFromData(string $name, array $data): self
     {
         return static::create($name)
             ->columns($data['columns'])

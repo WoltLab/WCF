@@ -14,10 +14,7 @@ use wcf\system\user\authentication\password\IPasswordAlgorithm;
  */
 final class Wcf2 implements IPasswordAlgorithm
 {
-    /**
-     * @var DoubleBcrypt
-     */
-    private $doubleBcrypt;
+    private DoubleBcrypt $doubleBcrypt;
 
     public function __construct()
     {

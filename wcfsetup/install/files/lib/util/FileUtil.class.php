@@ -115,10 +115,8 @@ final class FileUtil
 
     /**
      * Returns the relative path from the given absolute paths.
-     *
-     * @return  string
      */
-    public static function getRelativePath(string $currentDir, string $targetDir)
+    public static function getRelativePath(string $currentDir, string $targetDir): string
     {
         // remove trailing slashes
         $currentDir = self::removeTrailingSlash(self::unifyDirSeparator($currentDir));
