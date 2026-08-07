@@ -1419,7 +1419,7 @@ class TemplateScriptingCompiler
         }
 
         if ($type == 'variable') {
-            return '$this->v[\'' . \substr($variable, 1) . '\']';
+            return '$this->v[\'' . \addcslashes(\substr($variable, 1), '\\\'') . '\']';
         } elseif ($type == 'string') {
             return $variable;
         } elseif (
@@ -1433,7 +1433,10 @@ class TemplateScriptingCompiler
         ) {
             return $variable;
         } else {
-            return "'" . $variable . "'";
+            // The value is emitted verbatim into a single quoted PHP string, therefore any
+            // backslash or single quote must be escaped. Otherwise a trailing backslash could
+            // escape the closing quote and inject arbitrary code into the compiled template.
+            return "'" . \addcslashes($variable, '\\\'') . "'";
         }
     }
 
