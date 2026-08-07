@@ -198,6 +198,24 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
             ));
         }
 
+        // Verify that the spelling of the action name is identical to the
+        // method name in order to prevent bypasses by abusing that method calls
+        // in PHP are case-insensitive.
+        $methodNames = \get_class_methods($this);
+        if (!\in_array($this->getActionName(), $methodNames, true)) {
+            if (\ENABLE_DEBUG_MODE) {
+                throw new \BadMethodCallException(
+                    \sprintf(
+                        "There is a method similar to '%s()' in %s, but it is spelled differently.",
+                        $this->getActionName(),
+                        $this::class,
+                    ),
+                );
+            }
+
+            throw new PermissionDeniedException();
+        }
+
         $actionName = 'validate' . StringUtil::firstCharToUpperCase($this->getActionName());
         if (!\method_exists($this, $actionName)) {
             throw new PermissionDeniedException();
