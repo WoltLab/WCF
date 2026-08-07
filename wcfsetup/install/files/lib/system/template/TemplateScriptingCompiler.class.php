@@ -1418,10 +1418,39 @@ class TemplateScriptingCompiler
             $type = $this->getVariableType($variable);
         }
 
+        // Quotes, numbers and other constants are replaced with `@@…@@` placeholders before a
+        // value is parsed and are reinserted verbatim after the compilation. A placeholder that
+        // is not a value of its own but concatenated with other characters (e.g. `$foo'…'` or
+        // `'…';code`) would smuggle its reinserted contents into a variable name or a string
+        // literal of the compiled template and thereby inject arbitrary code. Such placeholders
+        // never occur in legitimate input because they are always separated by an operator.
+        if ($type == 'string') {
+            // A string value must consist of exactly one placeholder.
+            if (!\preg_match('~^@@[0-9a-f]+@@$~', $variable)) {
+                throw new SystemException(
+                    static::formatSyntaxError(
+                        "unexpected '" . $variable . "'",
+                        $this->currentIdentifier,
+                        $this->currentLineNo
+                    )
+                );
+            }
+
+            return $variable;
+        }
+
+        if (\str_contains($variable, '@@')) {
+            throw new SystemException(
+                static::formatSyntaxError(
+                    "unexpected '" . $variable . "'",
+                    $this->currentIdentifier,
+                    $this->currentLineNo
+                )
+            );
+        }
+
         if ($type == 'variable') {
             return '$this->v[\'' . \addcslashes(\substr($variable, 1), '\\\'') . '\']';
-        } elseif ($type == 'string') {
-            return $variable;
         } elseif (
             $allowConstants
             && ($variable == 'true'
@@ -1530,6 +1559,20 @@ class TemplateScriptingCompiler
                         if (\strpos($values[$i], '$') !== false) {
                             $result .= '{' . $this->compileSimpleVariable($values[$i], $variableType) . '}';
                         } else {
+                            // The property or method name is emitted verbatim into the compiled
+                            // template, therefore it must be a plain identifier. Otherwise
+                            // characters such as `;` or backticks could be used to break out of
+                            // the expression and inject arbitrary code (e.g. `{$foo->x;evil()}`).
+                            if (!\preg_match('~^' . $this->validVarnamePattern . '$~', $values[$i])) {
+                                throw new SystemException(
+                                    static::formatSyntaxError(
+                                        "unexpected '->" . $values[$i] . "' in tag '" . $tag . "'",
+                                        $this->currentIdentifier,
+                                        $this->currentLineNo
+                                    )
+                                );
+                            }
+
                             $result .= $values[$i];
                         }
 
