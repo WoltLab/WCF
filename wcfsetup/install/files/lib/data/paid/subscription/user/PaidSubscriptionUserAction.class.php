@@ -8,6 +8,7 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\exception\UserInputException;
+use wcf\system\WCF;
 use wcf\util\DateUtil;
 
 /**
@@ -34,7 +35,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
     /**
      * @inheritDoc
      */
-    protected $requireACP = ['create', 'delete', 'update'];
+    protected $requireACP = ['create', 'delete', 'update', 'restore', 'revoke'];
 
     /**
      * @inheritDoc
@@ -178,6 +179,8 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
      */
     public function validateRevoke()
     {
+        WCF::getSession()->checkPermissions(['admin.paidSubscription.canManageSubscription']);
+
         if (empty($this->objects)) {
             $this->readObjects();
         }
@@ -216,6 +219,8 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
      */
     public function validateRestore()
     {
+        WCF::getSession()->checkPermissions(['admin.paidSubscription.canManageSubscription']);
+
         if (empty($this->objects)) {
             $this->readObjects();
         }
