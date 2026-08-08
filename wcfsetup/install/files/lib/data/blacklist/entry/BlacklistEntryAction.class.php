@@ -62,6 +62,18 @@ class BlacklistEntryAction extends AbstractDatabaseObjectAction
         }
 
         $data = JSON::decode((string)$response->getBody());
+
+        // The reported type is used as a column name below, therefore it must be
+        // validated against the list of known columns before it is used.
+        $deltaType = $data['meta']['type'] ?? '';
+        if (!\in_array($deltaType, BlacklistStatus::DELTAS, true)) {
+            \wcf\functions\exception\logThrowable(new \UnexpectedValueException(
+                \sprintf("Received an unknown delta type '%s' for '%s'.", $deltaType, $nextDelta)
+            ));
+
+            return;
+        }
+
         $sql = "INSERT INTO             wcf1_blacklist_entry
                                         (type, hash, lastSeen, occurrences)
                 VALUES                  (?, ?, ?, ?)
@@ -89,6 +101,6 @@ class BlacklistEntryAction extends AbstractDatabaseObjectAction
             $blacklistStatus = BlacklistStatusEditor::create(['date' => $data['meta']['date']]);
         }
 
-        (new BlacklistStatusEditor($blacklistStatus))->update([$data['meta']['type'] => 1]);
+        (new BlacklistStatusEditor($blacklistStatus))->update([$deltaType => 1]);
     }
 }
