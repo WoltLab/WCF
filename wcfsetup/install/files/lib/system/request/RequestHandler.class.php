@@ -279,11 +279,32 @@ final class RequestHandler extends SingletonFactory
                     $routeData['application'] = $application;
                     $routeData['controller'] = $classData;
 
-                    // append the remaining query parameters
+                    // List of parameters that are used internally in the link
+                    // generation and that must not be accepted from outside.
+                    $internalParameters = [
+                        'application',
+                        'controller',
+                        'id',
+                        'title',
+                        'isACP',
+                        'isRaw',
+                        'encodeTitle',
+                        'object',
+                        'isEmail',
+                        'forceFrontend',
+                    ];
+
+                    // Append the remaining query parameters.
                     foreach ($_GET as $key => $value) {
-                        if (!empty($value) && $key != 'controller') {
-                            $routeData[$key] = $value;
+                        if (\in_array($key, $internalParameters, true) || !\is_string($value)) {
+                            continue;
                         }
+
+                        if ($value === '0' || $value === '') {
+                            continue;
+                        }
+
+                        $routeData[$key] = $value;
                     }
 
                     return new StaticResponseHandler(new RedirectResponse(
@@ -316,7 +337,11 @@ final class RequestHandler extends SingletonFactory
                 $metaData,
                 !$this->isACPRequest() && ControllerMap::getInstance()->isLandingPage($className, $metaData)
             );
-        } catch (SystemException $e) {
+        } catch (SystemException | \Laminas\Diactoros\Exception\InvalidArgumentException $e) {
+            // Laminas' InvalidArgumentException is thrown when encountering
+            // manipulated headers. The FQN is used to make it clearer what
+            // exactly is being caught here.
+
             if (
                 \defined('ENABLE_DEBUG_MODE')
                 && ENABLE_DEBUG_MODE
