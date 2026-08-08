@@ -113,7 +113,7 @@ class TarWriter extends Tar
                 break;
             }
 
-            if (!$filename || $filename === $this->archiveName) {
+            if ($filename === '' || $filename === $this->archiveName) {
                 continue;
             }
 

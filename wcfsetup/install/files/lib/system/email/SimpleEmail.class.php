@@ -84,7 +84,7 @@ class SimpleEmail
      */
     public function setMessage(string $message)
     {
-        $this->textPlain = $message ? new PlainTextMimePart($message) : null;
+        $this->textPlain = $message !== '' ? new PlainTextMimePart($message) : null;
 
         $this->fixBody();
     }
@@ -98,7 +98,7 @@ class SimpleEmail
      */
     public function setHtmlMessage(string $message)
     {
-        $this->textHtml = $message ? new HtmlTextMimePart($message) : null;
+        $this->textHtml = $message !== '' ? new HtmlTextMimePart($message) : null;
 
         $this->fixBody();
     }

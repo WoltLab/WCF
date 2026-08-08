@@ -87,7 +87,7 @@ class DevtoolsPip extends DatabaseObjectDecorator
      */
     public function isSupported()
     {
-        return $this->classExists() && $this->getDefaultFilename() && $this->isIdempotent();
+        return $this->classExists() && $this->getDefaultFilename() !== '' && $this->isIdempotent();
     }
 
     /**
@@ -173,7 +173,7 @@ class DevtoolsPip extends DatabaseObjectDecorator
             );
         } elseif (!$this->isIdempotent()) {
             return WCF::getLanguage()->get('wcf.acp.devtools.pip.error.notIdempotent');
-        } elseif (!$this->getDefaultFilename()) {
+        } elseif ($this->getDefaultFilename() === '') {
             return WCF::getLanguage()->get('wcf.acp.devtools.pip.error.defaultFilename');
         }
 

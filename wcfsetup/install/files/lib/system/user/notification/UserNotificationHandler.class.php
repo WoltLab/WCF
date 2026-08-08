@@ -749,7 +749,7 @@ class UserNotificationHandler extends SingletonFactory
         }
 
         // generate token if not present
-        if (!$user->notificationMailToken) {
+        if ($user->notificationMailToken === '') {
             $token = Hex::encode(\random_bytes(10));
             $editor = new UserEditor($user);
             $editor->update(['notificationMailToken' => $token]);

@@ -359,7 +359,7 @@ final class SmtpEmailTransport implements IStatusReportingEmailTransport
      */
     private function auth(): void
     {
-        if (!$this->username || !$this->password) {
+        if ($this->username === '' || $this->password === '') {
             return;
         }
 

@@ -55,7 +55,7 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem, \Stringable
     public function getLink(): string
     {
         // external link
-        if (!$this->menuItemController) {
+        if ($this->menuItemController === '') {
             return WCF::getLanguage()->get($this->menuItemLink);
         }
 
@@ -68,7 +68,7 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem, \Stringable
         return LinkHandler::getInstance()->getLink(
             $this->controller,
             $linkParameters,
-            $this->menuItemLink ? WCF::getLanguage()->get($this->menuItemLink) : ''
+            $this->menuItemLink !== '' ? WCF::getLanguage()->get($this->menuItemLink) : ''
         );
     }
 
@@ -95,7 +95,7 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem, \Stringable
             $this->controller = '';
 
             // resolve application and controller
-            if ($this->menuItemController) {
+            if ($this->menuItemController !== '') {
                 $parts = \explode('\\', $this->menuItemController);
                 $this->application = \array_shift($parts);
                 $menuItemController = \array_pop($parts);
@@ -120,7 +120,7 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem, \Stringable
      */
     public function getIcon(): ?FontAwesomeIcon
     {
-        if ($this->icon) {
+        if ($this->icon !== '') {
             if (FontAwesomeIcon::isValidString($this->icon)) {
                 return FontAwesomeIcon::fromString($this->icon);
             } elseif (\str_starts_with($this->icon, 'fa-')) {

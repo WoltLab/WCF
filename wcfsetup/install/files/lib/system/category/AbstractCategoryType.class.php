@@ -77,9 +77,10 @@ abstract class AbstractCategoryType implements ICategoryType
             $statement->execute(\array_merge([$categoryEditor->parentCategoryID], $conditionBuilder->getParameters()));
         }
 
-        if ($this->getObjectTypeName('com.woltlab.wcf.user.objectWatch')) {
+        $objectWatchObjectType = $this->getObjectTypeName('com.woltlab.wcf.user.objectWatch');
+        if ($objectWatchObjectType !== null) {
             UserObjectWatchHandler::getInstance()
-                ->deleteObjects($this->getObjectTypeName('com.woltlab.wcf.user.objectWatch'), [$categoryEditor->categoryID]);
+                ->deleteObjects($objectWatchObjectType, [$categoryEditor->categoryID]);
         }
     }
 
@@ -148,9 +149,9 @@ abstract class AbstractCategoryType implements ICategoryType
     #[\Override]
     public function getLanguageVariable(string $name, bool $optional = false)
     {
-        if ($this->langVarPrefix) {
+        if ($this->langVarPrefix !== '') {
             $value = WCF::getLanguage()->getDynamicVariable($this->langVarPrefix . '.' . $name, [], true);
-            if ($value) {
+            if ($value !== '') {
                 return $value;
             }
         }

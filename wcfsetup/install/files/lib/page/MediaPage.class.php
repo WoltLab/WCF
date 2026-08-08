@@ -71,7 +71,7 @@ class MediaPage extends AbstractPage
         parent::readData();
 
         // get file data
-        if ($this->thumbnail) {
+        if ($this->thumbnail !== '') {
             $mimeType = $this->media->{$this->thumbnail . 'ThumbnailType'};
             $filesize = $this->media->{$this->thumbnail . 'ThumbnailSize'};
             $location = $this->media->getThumbnailLocation($this->thumbnail);
@@ -92,7 +92,7 @@ class MediaPage extends AbstractPage
             'mimeType' => $mimeType,
             'filesize' => $filesize,
             'showInline' => \in_array($mimeType, self::$inlineMimeTypes),
-            'enableRangeSupport' => $this->thumbnail ? true : false,
+            'enableRangeSupport' => $this->thumbnail !== '',
             'lastModificationTime' => $this->media->fileUpdateTime ?? $this->media->uploadTime,
             'expirationDate' => \TIME_NOW + $maxAge,
             'maxAge' => $maxAge,
@@ -120,11 +120,11 @@ class MediaPage extends AbstractPage
             // The 'original' size is required by the editor, but is not a valid thumbnail size.
             $this->thumbnail = '';
         }
-        if ($this->thumbnail && !isset(Media::getThumbnailSizes()[$this->thumbnail])) {
+        if ($this->thumbnail !== '' && !isset(Media::getThumbnailSizes()[$this->thumbnail])) {
             throw new IllegalLinkException();
         }
 
-        if ($this->thumbnail && !$this->media->{$this->thumbnail . 'ThumbnailType'}) {
+        if ($this->thumbnail !== '' && !$this->media->{$this->thumbnail . 'ThumbnailType'}) {
             $this->thumbnail = '';
         }
     }
@@ -142,7 +142,7 @@ class MediaPage extends AbstractPage
             return new EmptyResponse(304);
         }
 
-        if (!$this->thumbnail) {
+        if ($this->thumbnail === '') {
             // update download count
             (new MediaEditor($this->media))->update([
                 'downloads' => $this->media->downloads + 1,

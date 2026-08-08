@@ -57,11 +57,11 @@ class HtmlInputNodeFont extends AbstractHtmlInputNode
 
         /** @var \DOMElement $element */
         foreach ($htmlNodeProcessor->getDocument()->getElementsByTagName('font') as $element) {
-            if (!$allowColor && $element->getAttribute('color')) {
+            if (!$allowColor && $element->getAttribute('color') !== '') {
                 $matches[] = 'color';
-            } elseif (!$allowFont && $element->getAttribute('face')) {
+            } elseif (!$allowFont && $element->getAttribute('face') !== '') {
                 $matches[] = 'font';
-            } elseif (!$allowSize && $element->getAttribute('size')) {
+            } elseif (!$allowSize && $element->getAttribute('size') !== '') {
                 $matches[] = 'size';
             }
         }
@@ -78,13 +78,13 @@ class HtmlInputNodeFont extends AbstractHtmlInputNode
                 continue;
             }
 
-            if ($color = $element->getAttribute('color')) {
+            if (($color = $element->getAttribute('color')) !== '') {
                 $this->convertToSpan($element, 'color', $color);
             }
-            if ($font = $element->getAttribute('face')) {
+            if (($font = $element->getAttribute('face')) !== '') {
                 $this->convertToSpan($element, 'font-family', $font);
             }
-            if ($size = $element->getAttribute('size')) {
+            if (($size = $element->getAttribute('size')) !== '') {
                 if (isset($this->sizeMapping[$size])) {
                     $this->convertToSpan($element, 'font-size', $this->sizeMapping[$size]);
                 }

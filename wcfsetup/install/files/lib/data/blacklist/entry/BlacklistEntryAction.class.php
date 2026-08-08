@@ -84,7 +84,7 @@ class BlacklistEntryAction extends AbstractDatabaseObjectAction
         WCF::getDB()->commitTransaction();
 
         $blacklistStatus = new BlacklistStatus($data['meta']['date']);
-        if (!$blacklistStatus->date) {
+        if ($blacklistStatus->isNil()) {
             $blacklistStatus = BlacklistStatusEditor::create(['date' => $data['meta']['date']]);
         }
 

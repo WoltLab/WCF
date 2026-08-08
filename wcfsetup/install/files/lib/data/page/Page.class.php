@@ -171,7 +171,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject, \St
     #[\Override]
     public function getLink(): string
     {
-        if ($this->controller) {
+        if ($this->controller !== '') {
             $controllerParts = \explode('\\', $this->controller);
             $controllerName = $controllerParts[\count($controllerParts) - 1];
             $controllerName = \preg_replace('/(page|action|form)$/i', '', $controllerName);
@@ -226,7 +226,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject, \St
      */
     public function getHandler()
     {
-        if ($this->pageHandler === null && $this->handler) {
+        if ($this->pageHandler === null && $this->handler !== '') {
             $this->pageHandler = new $this->handler();
         }
 

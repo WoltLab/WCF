@@ -51,7 +51,7 @@ class DateRangeFormField extends AbstractFormField implements
     #[\Override]
     public function getSaveValue()
     {
-        if (!$this->getFromValue() && !$this->getToValue() && $this->isNullable()) {
+        if ($this->getFromValue() === '' && $this->getToValue() === '' && $this->isNullable()) {
             return null;
         }
 
@@ -101,11 +101,11 @@ class DateRangeFormField extends AbstractFormField implements
     #[\Override]
     public function validate()
     {
-        if ($this->isRequired() && (!$this->getFromValue() || !$this->getToValue())) {
+        if ($this->isRequired() && ($this->getFromValue() === '' || $this->getToValue() === '')) {
             $this->addValidationError(new FormFieldValidationError('empty'));
         }
 
-        if ($this->getFromValue()) {
+        if ($this->getFromValue() !== '') {
             $dateTime = \DateTime::createFromFormat(
                 $this->supportsTime() ? self::TIME_FORMAT : self::DATE_FORMAT,
                 $this->getFromValue()
@@ -115,7 +115,7 @@ class DateRangeFormField extends AbstractFormField implements
             }
         }
 
-        if ($this->getToValue()) {
+        if ($this->getToValue() !== '') {
             $dateTime = \DateTime::createFromFormat(
                 $this->supportsTime() ? self::TIME_FORMAT : self::DATE_FORMAT,
                 $this->getToValue()

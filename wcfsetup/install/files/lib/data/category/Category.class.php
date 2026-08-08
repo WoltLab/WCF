@@ -240,7 +240,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
      */
     public function getDescription()
     {
-        if ($this->description) {
+        if ($this->description !== null && $this->description !== '') {
             return WCF::getLanguage()->get($this->description);
         }
 

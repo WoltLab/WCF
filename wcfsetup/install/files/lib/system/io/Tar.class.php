@@ -378,7 +378,7 @@ class Tar implements IArchive
             $header['size'] = \octdec(\trim($data['size']));
             $header['mtime'] = \octdec(\trim($data['mtime']));
             $header['prefix'] = \trim($data['prefix']);
-            if ($header['prefix']) {
+            if ($header['prefix'] !== '') {
                 $header['filename'] = $header['prefix'] . '/' . $header['filename'];
             }
             $header['typeflag'] = $data['typeflag'];

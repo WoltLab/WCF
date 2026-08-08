@@ -300,7 +300,7 @@ class CLIWCF extends WCF
                 continue;
             } catch (ArgvException $e) {
                 // show error message and usage
-                if ($e->getMessage()) {
+                if ($e->getMessage() !== '') {
                     echo $e->getMessage() . \PHP_EOL;
                 }
                 echo $e->getUsageMessage();

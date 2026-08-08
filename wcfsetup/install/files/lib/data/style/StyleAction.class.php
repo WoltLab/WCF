@@ -155,9 +155,13 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                 /** @var ?\wcf\system\file\upload\UploadFile $file */
                 $file = $this->parameters['uploads'][$type];
 
-                if ($style->getVariable($type) && \file_exists($style->getAssetPath() . \basename($style->getVariable($type)))) {
-                    if (!$file || $style->getAssetPath() . \basename($style->getVariable($type)) !== $file->getLocation()) {
-                        \unlink($style->getAssetPath() . \basename($style->getVariable($type)));
+                $variable = $style->getVariable($type);
+                if ($variable !== null && $variable !== '') {
+                    $location = $style->getAssetPath() . \basename($variable);
+                    if (\file_exists($location)) {
+                        if (!$file || $location !== $file->getLocation()) {
+                            \unlink($location);
+                        }
                     }
                 }
 
@@ -265,7 +269,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                 /** @var ?\wcf\system\file\upload\UploadFile $file */
                 $file = $this->parameters['uploads'][$type];
 
-                if ($style->{$type} && \file_exists($style->getAssetPath() . \basename($style->{$type}))) {
+                if ($style->{$type} !== '' && \file_exists($style->getAssetPath() . \basename($style->{$type}))) {
                     if (!$file || $style->getAssetPath() . \basename($style->{$type}) !== $file->getLocation()) {
                         \unlink($style->getAssetPath() . \basename($style->{$type}));
                     }
@@ -410,7 +414,7 @@ BROWSERCONFIG;
             /** @var ?\wcf\system\file\upload\UploadFile $file */
             $file = $this->parameters['uploads']['coverPhoto'];
 
-            if ($style->coverPhotoExtension && \file_exists($style->getCoverPhotoLocation(false))) {
+            if ($style->coverPhotoExtension !== '' && \file_exists($style->getCoverPhotoLocation(false))) {
                 if (!$file || $style->getCoverPhotoLocation(false) !== $file->getLocation()) {
                     \unlink($style->getCoverPhotoLocation(false));
 

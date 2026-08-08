@@ -186,7 +186,7 @@ abstract class AbstractDatabaseObjectBuilderForm extends AbstractForm
 
         WCF::getTPL()->assign('success', true);
 
-        if ($this->formAction === 'create' && $this->objectEditLinkController) {
+        if ($this->formAction === 'create' && $this->objectEditLinkController !== '') {
             WCF::getTPL()->assign(
                 'objectEditLink',
                 LinkHandler::getInstance()->getControllerLink($this->objectEditLinkController, [

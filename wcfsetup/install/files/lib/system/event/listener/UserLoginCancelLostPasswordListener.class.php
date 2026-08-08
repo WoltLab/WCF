@@ -18,7 +18,7 @@ final class UserLoginCancelLostPasswordListener
     public function __invoke(UserLoggedIn $event): void
     {
         $user = $event->getUser();
-        if (!$user->lostPasswordKey) {
+        if ($user->lostPasswordKey === null || $user->lostPasswordKey === '') {
             return;
         }
 

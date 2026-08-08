@@ -91,7 +91,11 @@ final class RegisterActivationForm extends AbstractFormBuilderForm
 
     private function validateActivationCode(TextFormField $formField): void
     {
-        if (!isset($this->user) || !$this->user->emailConfirmed) {
+        if (
+            !isset($this->user)
+            || $this->user->emailConfirmed === null
+            || $this->user->emailConfirmed === ''
+        ) {
             return;
         }
 

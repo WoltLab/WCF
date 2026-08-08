@@ -214,7 +214,7 @@ class ArticlePage extends AbstractPage
             true
         );
 
-        if ($this->articleContent->metaDescription) {
+        if ($this->articleContent->metaDescription !== '') {
             MetaTagHandler::getInstance()->addTag('description', 'description', $this->articleContent->metaDescription);
         }
 

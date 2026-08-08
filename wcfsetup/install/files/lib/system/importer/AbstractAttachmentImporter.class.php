@@ -119,7 +119,7 @@ class AbstractAttachmentImporter extends AbstractImporter
                 $encodedAttributes = $matches['attributes'];
 
                 $base64Decoded = \base64_decode($matches['attributes']);
-                if ($base64Decoded) {
+                if ($base64Decoded !== '') {
                     try {
                         $attributes = \json_decode($base64Decoded, true, flags: \JSON_THROW_ON_ERROR);
                         // @phpstan-ignore equal.notAllowed (the decoded attribute can be an integer or a numeric string)

@@ -206,7 +206,7 @@ class MessageParser extends BBCodeParser
     {
         foreach ($this->cachedCodes as $hash => $tag) {
             // build code and insert
-            if ($this->bbcodes[$tag['name']]->className) {
+            if ($this->bbcodes[$tag['name']]->className !== '') {
                 $replacement = $this->bbcodes[$tag['name']]->getProcessor()->getParsedTag(
                     $tag,
                     $tag['content'],

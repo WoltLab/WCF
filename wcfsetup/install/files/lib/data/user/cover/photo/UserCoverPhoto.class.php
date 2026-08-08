@@ -93,7 +93,7 @@ final class UserCoverPhoto implements IUserCoverPhoto
      */
     public static function getLegacyLocation(User $user, bool $forceWebP): ?string
     {
-        if (!$user->coverPhotoHash || !$user->coverPhotoExtension) {
+        if ($user->coverPhotoHash === null || $user->coverPhotoHash === '' || !$user->coverPhotoExtension) {
             return null;
         }
 

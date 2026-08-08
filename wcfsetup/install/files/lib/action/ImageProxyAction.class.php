@@ -109,7 +109,7 @@ final class ImageProxyAction extends AbstractAction
                 try {
                     // rewrite schemaless URLs to https
                     $scheme = Url::parse($url)['scheme'];
-                    if (!$scheme) {
+                    if ($scheme === '') {
                         if (\str_starts_with($url, '//')) {
                             $url = 'https:' . $url;
                         } else {
@@ -117,7 +117,7 @@ final class ImageProxyAction extends AbstractAction
                         }
                     }
 
-                    if (Url::parse($url)['port']) {
+                    if (Url::parse($url)['port'] !== 0) {
                         throw new \DomainException("Refusing to proxy non-standard ports.");
                     }
 

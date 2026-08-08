@@ -225,7 +225,7 @@ abstract class MessageForm extends AbstractCaptchaForm
             throw new UserInputException('text');
         }
 
-        if ($this->disallowedBBCodesPermission) {
+        if ($this->disallowedBBCodesPermission !== '') {
             BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
                 ',',
                 WCF::getSession()->getPermission($this->disallowedBBCodesPermission)
@@ -288,7 +288,7 @@ abstract class MessageForm extends AbstractCaptchaForm
     public function readData()
     {
         // get attachments
-        if ($this->attachmentObjectType) {
+        if ($this->attachmentObjectType !== '') {
             $this->attachmentHandler = new AttachmentHandler(
                 $this->attachmentObjectType,
                 $this->attachmentObjectID,
@@ -314,7 +314,7 @@ abstract class MessageForm extends AbstractCaptchaForm
             }
         }
 
-        if ($this->disallowedBBCodesPermission) {
+        if ($this->disallowedBBCodesPermission !== '') {
             BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
                 ',',
                 WCF::getSession()->getPermission($this->disallowedBBCodesPermission)

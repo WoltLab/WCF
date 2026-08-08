@@ -83,7 +83,7 @@ class ArticleContent extends CollectionDatabaseObject implements ILinkableObject
      */
     public function getFormattedTeaser(): string
     {
-        if ($this->teaser) {
+        if ($this->teaser !== null && $this->teaser !== '') {
             return \nl2br(StringUtil::encodeHTML($this->teaser), false);
         } else {
             return MessageUtil::truncateFormattedMessage($this->getSimplifiedFormattedContent(), 500);

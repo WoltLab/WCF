@@ -57,6 +57,18 @@ class ModerationQueue extends DatabaseObject
     }
 
     #[\Override]
+    public function __isset(string $name)
+    {
+        $value = parent::__isset($name);
+
+        if (!$value && \is_array($this->data['additionalData']) && isset($this->data['additionalData'][$name])) {
+            return true;
+        }
+
+        return $value;
+    }
+
+    #[\Override]
     protected function handleData(array $data)
     {
         parent::handleData($data);

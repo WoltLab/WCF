@@ -172,7 +172,7 @@ final class ApplicationHandler extends SingletonFactory
         $host = Url::parse($url)['host'];
 
         // Relative URLs are internal.
-        if (!$host) {
+        if ($host === '') {
             return true;
         }
 

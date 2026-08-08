@@ -241,7 +241,7 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
         // Side effect: Renew the lifetime of a temporary attachment in case
         //              the user is still writing their message, preventing it
         //              from vanishing prematurely.
-        if ($attachment->tmpHash) {
+        if ($attachment->tmpHash !== '') {
             (new AttachmentEditor($attachment))->update([
                 'uploadTime' => \TIME_NOW,
             ]);

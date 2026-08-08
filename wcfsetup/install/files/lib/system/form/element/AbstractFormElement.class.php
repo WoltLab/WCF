@@ -94,7 +94,7 @@ abstract class AbstractFormElement implements IFormElement
      */
     protected function getErrorClass()
     {
-        return $this->getError() ? ' class="formError"' : '';
+        return $this->getError() !== '' ? ' class="formError"' : '';
     }
 
     /**
@@ -104,6 +104,6 @@ abstract class AbstractFormElement implements IFormElement
      */
     protected function getErrorField()
     {
-        return $this->getError() ? '<small class="innerError">' . $this->getError() . '</small>' : '';
+        return $this->getError() !== '' ? '<small class="innerError">' . $this->getError() . '</small>' : '';
     }
 }

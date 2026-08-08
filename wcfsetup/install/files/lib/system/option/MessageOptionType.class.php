@@ -85,7 +85,7 @@ class MessageOptionType extends TextareaOptionType
 
     private function initMessageObjectType(Option $option): void
     {
-        if (!$this->messageObjectType) {
+        if ($this->messageObjectType === '') {
             $this->messageObjectType = $option->messageObjectType;
         }
         if (empty($this->messageObjectType)) {

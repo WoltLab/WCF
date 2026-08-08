@@ -69,7 +69,10 @@ final class LanguageItemEditAction implements RequestHandlerInterface
                     $data['languageItemOldValue'] = null;
                 }
 
-                if (!$data['languageUseCustomValue'] && !$languageItem->languageCustomItemValue) {
+                if (
+                    !$data['languageUseCustomValue']
+                    && ($languageItem->languageCustomItemValue === null || $languageItem->languageCustomItemValue === '')
+                ) {
                     $data['languageCustomItemValue'] = null;
                 }
             }
@@ -104,7 +107,7 @@ final class LanguageItemEditAction implements RequestHandlerInterface
 
     private function assertLanguageItemExists(LanguageItem $languageItem): void
     {
-        if (!$languageItem->languageItem) {
+        if ($languageItem->isNil()) {
             throw new IllegalLinkException();
         }
     }

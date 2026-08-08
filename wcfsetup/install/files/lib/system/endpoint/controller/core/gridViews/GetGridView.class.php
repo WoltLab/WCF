@@ -41,10 +41,10 @@ final class GetGridView implements IController
         }
 
         $view->setPageNo($parameters->pageNo);
-        if ($parameters->sortField) {
+        if ($parameters->sortField !== '') {
             $view->setSortField($parameters->sortField);
         }
-        if ($parameters->sortOrder) {
+        if ($parameters->sortOrder !== '') {
             $view->setSortOrder($parameters->sortOrder);
         }
 

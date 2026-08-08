@@ -71,7 +71,7 @@ class DatabaseException extends SystemException
         $this->sqlQuery = $sqlQuery;
 
         // prefer errors from prepared statement
-        if ($this->preparedStatement !== null && $this->preparedStatement->getErrorNumber()) {
+        if ($this->preparedStatement !== null && $this->preparedStatement->getErrorNumber() !== '') {
             $this->errorNumber = $this->preparedStatement->getErrorNumber();
             $this->errorDesc = $this->preparedStatement->getErrorDesc();
         } else {

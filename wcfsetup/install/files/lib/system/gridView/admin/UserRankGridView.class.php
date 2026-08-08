@@ -55,7 +55,7 @@ final class UserRankGridView extends AbstractGridView
                         {
                             \assert($row instanceof UserRank);
 
-                            return '<span class="badge label' . ($row->cssClassName ? ' ' . $row->cssClassName : '') . '">'
+                            return '<span class="badge label' . ($row->cssClassName !== '' ? ' ' . $row->cssClassName : '') . '">'
                                 . StringUtil::encodeHTML($row->getTitle())
                                 . '<span>';
                         }
@@ -71,7 +71,7 @@ final class UserRankGridView extends AbstractGridView
                         {
                             \assert($row instanceof UserRank);
 
-                            return $row->rankImage ? $row->getImage() : '';
+                            return $row->rankImage !== '' ? $row->getImage() : '';
                         }
                     },
                 ]),

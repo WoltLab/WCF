@@ -98,7 +98,7 @@ class TrophyPage extends MultipleLinkPage
         );
         MetaTagHandler::getInstance()->addTag('og:url', 'og:url', $this->trophy->getLink(), true);
 
-        if ($this->trophy->getDescription()) {
+        if ($this->trophy->getDescription() !== '') {
             MetaTagHandler::getInstance()->addTag(
                 'og:description',
                 'og:description',

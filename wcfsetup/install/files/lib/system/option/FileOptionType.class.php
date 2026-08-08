@@ -52,7 +52,7 @@ class FileOptionType extends AbstractOptionType
         $packageDir = PackageCache::getInstance()->getPackage($option->packageID)->getAbsolutePackageDir();
 
         // check if file has been uploaded
-        if (!$file->getFilename()) {
+        if ($file->getFilename() === '') {
             // if checkbox is checked, remove file
             if ($newValue) {
                 @\unlink($packageDir . $option->optionValue);
@@ -62,7 +62,7 @@ class FileOptionType extends AbstractOptionType
 
             // use old value
             return $option->optionValue;
-        } elseif ($option->optionValue) {
+        } elseif ($option->optionValue !== null && $option->optionValue !== '') {
             // delete old file first
             @\unlink($packageDir . $option->optionValue);
         }
@@ -100,7 +100,7 @@ class FileOptionType extends AbstractOptionType
         $file = \reset($files);
 
         // check if file has been uploaded
-        if (!$file->getFilename()) {
+        if ($file->getFilename() === '') {
             return;
         }
 

@@ -120,14 +120,14 @@ class AttachmentRebuildDataWorker extends AbstractLinearRebuildDataWorker
 
     private function removeThumbnails(Attachment $attachment): void
     {
-        if ($attachment->thumbnailType) {
+        if ($attachment->thumbnailType !== '') {
             $filepath = $attachment->getThumbnailLocation();
             if (\file_exists($filepath)) {
                 \unlink($filepath);
             }
         }
 
-        if ($attachment->tinyThumbnailType) {
+        if ($attachment->tinyThumbnailType !== '') {
             $filepath = $attachment->getTinyThumbnailLocation();
             if (\file_exists($filepath)) {
                 \unlink($filepath);

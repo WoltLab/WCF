@@ -63,7 +63,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
                 }
             } else {
                 $src = $element->getAttribute('src');
-                if (!$src) {
+                if ($src === '') {
                     DOMUtil::removeNode($element);
                     continue;
                 }
@@ -128,7 +128,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
                     $element->setAttribute('src', $this->getProxyLink($src));
 
                     $srcset = $element->getAttribute('srcset');
-                    if ($srcset) {
+                    if ($srcset !== '') {
                         // simplified regex to check if it appears to be a valid list of sources
                         if (!\preg_match('~^[^\s]+\s+[0-9\.]+[wx](,\s*[^\s]+\s+[0-9\.]+[wx])*~', $srcset)) {
                             $element->removeAttribute('srcset');
@@ -252,6 +252,6 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
 
         $host = Url::parse($src)['host'];
 
-        return !$host || $matcher($host);
+        return $host === '' || $matcher($host);
     }
 }

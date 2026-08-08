@@ -244,7 +244,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                         return false;
                     }
 
-                    return $className && \in_array($className, self::$allowedClassNames[$nodeName]);
+                    return $className !== '' && \in_array($className, self::$allowedClassNames[$nodeName]);
                 });
 
                 if (!empty($classNames)) {
@@ -571,7 +571,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
             // Do not strip content that contains non empty spans, such as icons.
             /** @var \DOMElement $element */
             foreach ($paragraph->getElementsByTagName('span') as $element) {
-                if ($element->getAttribute('class')) {
+                if ($element->getAttribute('class') !== '') {
                     continue 2;
                 }
             }
@@ -892,7 +892,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                 break;
 
             case 'span':
-                if ($element->getAttribute('class')) {
+                if ($element->getAttribute('class') !== '') {
                     return true;
                 }
 

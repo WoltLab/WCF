@@ -103,7 +103,7 @@ final class CopyStyle
     {
         foreach (['image', 'image2x'] as $imageType) {
             $image = $source->{$imageType};
-            if ($image) {
+            if ($image !== '') {
                 (new StyleEditor($destination))->update([
                     $imageType => \preg_replace('/^style-\d+/', 'style-' . $destination->styleID, $image),
                 ]);

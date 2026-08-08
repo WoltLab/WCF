@@ -86,7 +86,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
             }
         }
 
-        if ($requirePurchasedVersions && \PACKAGE_SERVER_AUTH_CODE) {
+        if ($requirePurchasedVersions && \PACKAGE_SERVER_AUTH_CODE !== '') {
             $this->fetchPurchasedVersions();
         }
 
@@ -113,7 +113,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
                 $errorMessage = \mb_substr(StringUtil::trim(\strip_tags($errorMessage)), 0, 65000);
             }
 
-            if ($errorMessage) {
+            if ($errorMessage !== '') {
                 // save error status
                 $updateServerEditor = new PackageUpdateServerEditor($updateServer);
                 $updateServerEditor->update([
@@ -194,7 +194,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
             // skip etag check for WoltLab servers when an auth code is provided
             if (
                 !\preg_match('~^https?://(?:update|store)\.woltlab\.com\/~', $updateServer->serverURL)
-                || !\PACKAGE_SERVER_AUTH_CODE
+                || \PACKAGE_SERVER_AUTH_CODE === ''
             ) {
                 $metaData = $updateServer->getMetaData();
                 if (isset($metaData['list']['etag'])) {
@@ -413,7 +413,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
             $versionNo = $element->getAttribute('name');
 
             $isAccessible = ($element->getAttribute('accessible') === 'true') ? 1 : 0;
-            if ($key && $element->getAttribute('requireAuth') === 'true') {
+            if ($key !== '' && $element->getAttribute('requireAuth') === 'true') {
                 $packageName = $package->getAttribute('name');
                 if (isset($this->purchasedVersions[$key][$packageName])) {
                     if ($this->purchasedVersions[$key][$packageName] === '*') {

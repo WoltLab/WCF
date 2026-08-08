@@ -173,7 +173,9 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
                 ->addValidator(new FormFieldValidator('className', static function (MultilineTextFormField $formField) {
                     $className = $formField->getDocument()->getFormField('className');
 
-                    if ($formField->getSaveValue() && $className->getSaveValue()) {
+                    $html = $formField->getSaveValue();
+
+                    if ($html !== null && $html !== '' && $className->getSaveValue()) {
                         $formField->addValidationError(
                             new FormFieldValidationError(
                                 'className',

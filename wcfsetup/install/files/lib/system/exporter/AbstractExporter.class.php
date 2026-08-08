@@ -103,7 +103,7 @@ abstract class AbstractExporter implements IExporter
         $this->databasePassword = $databasePassword;
         $this->databaseName = $databaseName;
         $this->databasePrefix = $databasePrefix;
-        $this->fileSystemPath = ($fileSystemPath ? FileUtil::addTrailingSlash($fileSystemPath) : '');
+        $this->fileSystemPath = ($fileSystemPath !== '' ? FileUtil::addTrailingSlash($fileSystemPath) : '');
         $this->additionalData = $additionalData;
     }
 

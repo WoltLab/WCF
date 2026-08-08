@@ -54,7 +54,7 @@ class SystemException extends LoggedException implements IExtraInformationExcept
     #[\Override]
     public function getExtraInformation()
     {
-        if ($this->description) {
+        if ($this->description !== '') {
             return [
                 ['Description', $this->description],
             ];

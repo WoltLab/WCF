@@ -237,7 +237,7 @@ abstract class AbstractPage implements IPage
         $this->checkPermissions();
 
         // check if current request URL matches the canonical URL
-        if ($this->canonicalURL && (empty($_POST) || $this->forceCanonicalURL)) {
+        if ($this->canonicalURL !== '' && (empty($_POST) || $this->forceCanonicalURL)) {
             $canonicalURL = Url::parse($this->canonicalURL);
 
             // use $_SERVER['REQUEST_URI'] because it represents the URL used to access the site and not the internally rewritten one

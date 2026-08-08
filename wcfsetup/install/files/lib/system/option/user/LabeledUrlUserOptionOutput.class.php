@@ -19,7 +19,7 @@ class LabeledUrlUserOptionOutput implements IUserOptionOutput
     #[\Override]
     public function getOutput(User $user, UserOption $option, string $value)
     {
-        if ($value) {
+        if ($value !== '') {
             return StringUtil::getAnchorTag(self::getURL($option, $value), $value, true, true);
         }
 

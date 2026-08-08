@@ -41,7 +41,7 @@ class HtmlOutputNodeTable extends AbstractHtmlOutputNode
 
                         if ($rowspan - 1 === $nextTrCount) {
                             $class = $td->getAttribute('class');
-                            if ($class) {
+                            if ($class !== '') {
                                 $class .= " ";
                             }
                             $class .= "lastRow";
@@ -78,7 +78,7 @@ class HtmlOutputNodeTable extends AbstractHtmlOutputNode
         }
 
         $class = $tableElement->getAttribute('class');
-        if ($class) {
+        if ($class !== '') {
             $class .= " ";
         }
         $class .= "sortableTable";

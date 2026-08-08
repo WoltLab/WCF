@@ -749,7 +749,7 @@ abstract class AbstractGridView
             throw new \InvalidArgumentException("Undefined default sort field.");
         }
 
-        if ($this->getSortField()) {
+        if ($this->getSortField() !== '') {
             if (!\in_array($this->getSortField(), \array_map(fn($column) => $column->getID(), $this->getSortableColumns()))) {
                 if (\ENABLE_DEBUG_MODE) {
                     throw new \InvalidArgumentException("Invalid value '{$this->getSortField()}' as sort field given.");
@@ -869,9 +869,9 @@ abstract class AbstractGridView
 
         $this->objectList->sqlLimit = $this->getRowsPerPage();
         $this->objectList->sqlOffset = ($this->getPageNo() - 1) * $this->getRowsPerPage();
-        if ($this->getSortField()) {
+        if ($this->getSortField() !== '') {
             $column = $this->getColumn($this->getSortField());
-            if ($column && $column->getSortByDatabaseColumn()) {
+            if ($column && $column->getSortByDatabaseColumn() !== '') {
                 $this->objectList->sqlOrderBy = $column->getSortByDatabaseColumn() . ' ' . $this->getSortOrder();
             } else {
                 $this->objectList->sqlOrderBy = $this->objectList->getDatabaseTableAlias() .
@@ -971,7 +971,7 @@ abstract class AbstractGridView
      */
     public function renderMarkAsReadButton(DatabaseObject $object): string
     {
-        if (!$this->markAsReadEndpoint) {
+        if ($this->markAsReadEndpoint === '') {
             throw new \BadMethodCallException("No mark as read endpoint has been specified.");
         }
 

@@ -40,7 +40,7 @@ abstract class AbstractObjectTypeProvider implements IObjectTypeProvider
     public function getObjectByID(int $objectID)
     {
         $object = new $this->className($objectID);
-        if ($this->decoratorClassName) {
+        if ($this->decoratorClassName !== '') {
             $object = new $this->decoratorClassName($object);
         }
 
@@ -55,7 +55,7 @@ abstract class AbstractObjectTypeProvider implements IObjectTypeProvider
 
         /** @var DatabaseObjectList<TDatabaseObject> $objectList */
         $objectList = new $this->listClassName();
-        if ($this->decoratorClassName) {
+        if ($this->decoratorClassName !== '') {
             $objectList->decoratorClassName = $this->decoratorClassName;
         }
         $objectList->getConditionBuilder()->add($tableAlias . "." . $tableIndex . " IN (?)", [$objectIDs]);

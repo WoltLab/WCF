@@ -139,7 +139,7 @@ final class StyleCompiler extends SingletonFactory
         }
 
         // add style image path
-        if ($imagePath) {
+        if ($imagePath !== '') {
             $imagePath = FileUtil::getRelativePath(\WCF_DIR . 'style/', \WCF_DIR . $imagePath);
             $imagePath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($imagePath));
         } else {
@@ -267,7 +267,7 @@ final class StyleCompiler extends SingletonFactory
             $individualScssDarkMode = $variables['individualScssDarkMode'];
             unset($variables['individualScssDarkMode']);
 
-            if ($individualScssDarkMode) {
+            if ($individualScssDarkMode !== '') {
                 $individualScss .= \sprintf(
                     "\nhtml[data-color-scheme=\"dark\"] {\n%s\n}",
                     $individualScssDarkMode,
@@ -279,7 +279,7 @@ final class StyleCompiler extends SingletonFactory
 
         // add style image path
         $imagePath = '../images/';
-        if ($style->imagePath) {
+        if ($style->imagePath !== '') {
             $imagePath = FileUtil::getRelativePath(\WCF_DIR . 'style/', \WCF_DIR . $style->imagePath);
             $imagePath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($imagePath));
         }
@@ -358,7 +358,7 @@ final class StyleCompiler extends SingletonFactory
                 $http .= "; crossorigin";
                 $html .= " crossorigin";
             }
-            if ($request['type']) {
+            if ($request['type'] !== null && $request['type'] !== '') {
                 $http .= \sprintf('; type="%s"', \addslashes($request['type']));
                 $html .= \sprintf(' type="%s"', StringUtil::encodeHTML($request['type']));
             }
@@ -404,7 +404,7 @@ final class StyleCompiler extends SingletonFactory
             yield [
                 'filename' => $filename,
                 'as' => $as,
-                'crossorigin' => !!$crossorigin,
+                'crossorigin' => $crossorigin !== '' && $crossorigin !== '0',
                 'type' => $type ?: null,
             ];
         }

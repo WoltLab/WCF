@@ -44,7 +44,7 @@ final class NewPasswordForm extends AbstractFormBuilderForm
         if (isset($_GET['id']) && isset($_GET['k'])) {
             $this->userID = \intval($_GET['id']);
             $this->lostPasswordKey = StringUtil::trim($_GET['k']);
-            if (!$this->userID || !$this->lostPasswordKey) {
+            if (!$this->userID || $this->lostPasswordKey === '') {
                 throw new IllegalLinkException();
             }
 
@@ -53,7 +53,7 @@ final class NewPasswordForm extends AbstractFormBuilderForm
                 throw new IllegalLinkException();
             }
 
-            if (!$this->user->lostPasswordKey) {
+            if ($this->user->lostPasswordKey === null || $this->user->lostPasswordKey === '') {
                 $this->throwInvalidLinkException();
             }
             if (!\hash_equals($this->user->lostPasswordKey, \hash('sha256', $this->lostPasswordKey))) {

@@ -255,7 +255,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
         foreach ($list as $definition) {
             $this->definitionNames[$definition->definitionID] = $definition->definitionName;
 
-            if ($definition->interfaceName) {
+            if ($definition->interfaceName !== '') {
                 $this->definitionInterfaces[$definition->definitionID] = $definition->interfaceName;
             }
         }
@@ -1182,7 +1182,8 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
             ->addValidator(new FormFieldValidator(
                 'userTableIntegerColumn',
                 static function (TextFormField $formField) use ($databaseTableName) {
-                    if ($formField->getSaveValue()) {
+                    $propertyName = $formField->getSaveValue();
+                    if ($propertyName !== null && $propertyName !== '') {
                         $columns = WCF::getDB()->getEditor()->getColumns($databaseTableName);
 
                         foreach ($columns as $column) {
@@ -1230,7 +1231,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
         );
 
         $className = $document->getFormField('className');
-        if ($objectTypeDefinition->interfaceName) {
+        if ($objectTypeDefinition->interfaceName !== '') {
             $className->description(
                 'wcf.form.field.className.description.interface',
                 ['interface' => $objectTypeDefinition->interfaceName]

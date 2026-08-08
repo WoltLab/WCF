@@ -306,12 +306,13 @@ final class UnfurlResponse
      */
     public function getImage(): ResponseInterface
     {
-        if (!$this->getImageUrl()) {
+        $imageUrl = $this->getImageUrl();
+        if ($imageUrl === null || $imageUrl === '') {
             throw new BadMethodCallException("This url does not have an image.");
         }
 
         try {
-            $request = new Request('GET', $this->getImageUrl(), [
+            $request = new Request('GET', $imageUrl, [
                 'accept' => 'image/*',
             ]);
 

@@ -65,7 +65,7 @@ class AttachmentHandler implements \Countable
      */
     public function __construct(string $objectType, int $objectID, string $tmpHash = '', int $parentObjectID = 0)
     {
-        if (!$objectID && !$tmpHash) {
+        if (!$objectID && $tmpHash === '') {
             throw new SystemException('objectID and tmpHash cannot be empty at the same time');
         }
 

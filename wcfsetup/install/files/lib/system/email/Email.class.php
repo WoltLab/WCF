@@ -334,7 +334,9 @@ class Email implements \Stringable
             return null;
         }
 
-        return ($this->listIdHuman ? $this->listIdHuman . ' ' : '') . '<' . $this->listId . '.list-id.' . self::getHost() . '>';
+        $humanReadable = ($this->listIdHuman !== null && $this->listIdHuman !== '') ? $this->listIdHuman . ' ' : '';
+
+        return $humanReadable . '<' . $this->listId . '.list-id.' . self::getHost() . '>';
     }
 
     /**
@@ -525,7 +527,7 @@ class Email implements \Stringable
         if ($cc) {
             $headers[] = ['cc', \implode(",\r\n   ", $cc)];
         }
-        if ($this->getSubject()) {
+        if ($this->getSubject() !== '') {
             $headers[] = ['subject', EmailGrammar::encodeQuotedPrintableHeader($this->getSubject(), false)];
         } else {
             throw new \LogicException("Cannot generate message headers, you must specify a subject.");
@@ -539,10 +541,10 @@ class Email implements \Stringable
         if ($this->getInReplyTo()) {
             $headers[] = ['in-reply-to', \implode("\r\n   ", $this->getInReplyTo())];
         }
-        if ($this->getListID()) {
+        if ($this->getListID() !== null) {
             $headers[] = ['list-id', $this->getListID()];
         }
-        if ($this->getListUnsubscribeUri()) {
+        if ($this->getListUnsubscribeUri() !== null) {
             $headers[] = ['list-unsubscribe', '<' . $this->getListUnsubscribeUri() . '>'];
             if ($this->listUnsubscribeOneClick) {
                 $headers[] = ['list-unsubscribe-post', 'List-Unsubscribe=One-Click'];
@@ -556,7 +558,7 @@ class Email implements \Stringable
             throw new \LogicException("Cannot generate message headers, you must set a body.");
         }
         $headers[] = ['content-type', $this->body->getContentType()];
-        if ($this->body->getContentTransferEncoding()) {
+        if ($this->body->getContentTransferEncoding() !== '') {
             $headers[] = ['content-transfer-encoding', $this->body->getContentTransferEncoding()];
         }
         $headers = \array_merge($headers, $this->body->getAdditionalHeaders());
@@ -768,7 +770,7 @@ class Email implements \Stringable
                 "content-type: %s\r\n",
                 $part->getContentType()
             );
-            if ($part->getContentTransferEncoding()) {
+            if ($part->getContentTransferEncoding() !== '') {
                 $result .= \sprintf(
                     "content-transfer-encoding: %s\r\n",
                     $part->getContentTransferEncoding()

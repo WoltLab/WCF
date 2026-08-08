@@ -101,7 +101,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         /** @var UploadFile[] $files */
         $files = $this->parameters['__files']->getFiles();
         foreach ($files as $file) {
-            if ($file->getValidationErrorType()) {
+            if ($file->getValidationErrorType() !== '') {
                 $result['errors'][$file->getInternalFileID()] = [
                     'filename' => $file->getFilename(),
                     'filesize' => $file->getFilesize(),
@@ -163,22 +163,22 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             'isImage' => $media->isImage,
             'isMultilingual' => $media->isMultilingual,
             'largeThumbnailHeight' => $media->largeThumbnailHeight,
-            'largeThumbnailLink' => $media->largeThumbnailType ? $media->getThumbnailLink('large') : '',
+            'largeThumbnailLink' => $media->largeThumbnailType !== '' ? $media->getThumbnailLink('large') : '',
             'largeThumbnailType' => $media->largeThumbnailType,
             'largeThumbnailWidth' => $media->largeThumbnailWidth,
             'link' => $media->getLink(),
             'mediaID' => $media->mediaID,
             'mediumThumbnailHeight' => $media->mediumThumbnailHeight,
-            'mediumThumbnailLink' => $media->mediumThumbnailType ? $media->getThumbnailLink('medium') : '',
+            'mediumThumbnailLink' => $media->mediumThumbnailType !== '' ? $media->getThumbnailLink('medium') : '',
             'mediumThumbnailType' => $media->mediumThumbnailType,
             'mediumThumbnailWidth' => $media->mediumThumbnailWidth,
             'smallThumbnailHeight' => $media->smallThumbnailHeight,
-            'smallThumbnailLink' => $media->smallThumbnailType ? $media->getThumbnailLink('small') : '',
-            'smallThumbnailTag' => $media->smallThumbnailType ? $media->getThumbnailTag('small') : '',
+            'smallThumbnailLink' => $media->smallThumbnailType !== '' ? $media->getThumbnailLink('small') : '',
+            'smallThumbnailTag' => $media->smallThumbnailType !== '' ? $media->getThumbnailTag('small') : '',
             'smallThumbnailType' => $media->smallThumbnailType,
             'smallThumbnailWidth' => $media->smallThumbnailWidth,
             'tinyThumbnailHeight' => $media->tinyThumbnailHeight,
-            'tinyThumbnailLink' => $media->tinyThumbnailType ? $media->getThumbnailLink('tiny') : '',
+            'tinyThumbnailLink' => $media->tinyThumbnailType !== '' ? $media->getThumbnailLink('tiny') : '',
             'tinyThumbnailType' => $media->tinyThumbnailType,
             'tinyThumbnailWidth' => $media->tinyThumbnailWidth,
             'title' => $media instanceof ViewableMedia ? $media->title : [],
@@ -815,7 +815,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         /** @var UploadFile[] $files */
         $files = $this->parameters['__files']->getFiles();
         foreach ($files as $file) {
-            if ($file->getValidationErrorType()) {
+            if ($file->getValidationErrorType() !== '') {
                 $result['errors'][$file->getInternalFileID()] = [
                     'filename' => $file->getFilename(),
                     'filesize' => $file->getFilesize(),

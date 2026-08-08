@@ -235,7 +235,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
                 ];
             }
 
-            if ($name) {
+            if ($name !== '') {
                 $pairs[$uuid]['attributes'] = $attributes;
                 $pairs[$uuid]['name'] = $name;
                 $pairs[$uuid]['open'] = $element;

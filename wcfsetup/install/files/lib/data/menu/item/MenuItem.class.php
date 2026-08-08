@@ -107,7 +107,7 @@ class MenuItem extends DatabaseObject implements ITitledObject
 
     private function appendUrlParameters(string $url): string
     {
-        if (!$this->urlParameters) {
+        if ($this->urlParameters === '') {
             return $url;
         }
 
@@ -176,7 +176,7 @@ class MenuItem extends DatabaseObject implements ITitledObject
      */
     public function isExternalLink()
     {
-        return $this->externalURL ? !ApplicationHandler::getInstance()->isInternalURL($this->externalURL) : false;
+        return $this->externalURL !== '' ? !ApplicationHandler::getInstance()->isInternalURL($this->externalURL) : false;
     }
 
     /**
@@ -188,7 +188,7 @@ class MenuItem extends DatabaseObject implements ITitledObject
     protected function getMenuPageHandler()
     {
         $page = $this->getPage();
-        if ($page !== null && $page->handler) {
+        if ($page !== null && $page->handler !== '') {
             if ($this->handler === null) {
                 $className = $this->getPage()->handler;
                 $this->handler = new $className();

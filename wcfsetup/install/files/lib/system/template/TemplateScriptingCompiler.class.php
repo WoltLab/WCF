@@ -1182,9 +1182,9 @@ class TemplateScriptingCompiler
     public static function formatSyntaxError(string $errorMsg, ?string $file = null, ?int $line = null)
     {
         $errorMsg = 'Template compilation failed: ' . $errorMsg;
-        if ($file && $line) {
+        if ($file !== null && $line !== null) {
             $errorMsg .= " in template '{$file}' on line {$line}";
-        } elseif ($file) {
+        } elseif ($file !== null) {
             $errorMsg .= " in template '{$file}'";
         }
 
@@ -1280,7 +1280,7 @@ class TemplateScriptingCompiler
                 $result .= \str_repeat(')', $rightParenthesis - $leftParenthesis);
             }
 
-            if ($operator) {
+            if ($operator !== null) {
                 $result .= ' ' . $operator . ' ';
             }
         }

@@ -56,7 +56,7 @@ final class RenderException implements IController
     private function getException(string $exceptionID): ?array
     {
         $logFile = $this->getLogFile($exceptionID);
-        if (!$logFile) {
+        if ($logFile === null) {
             return null;
         }
 

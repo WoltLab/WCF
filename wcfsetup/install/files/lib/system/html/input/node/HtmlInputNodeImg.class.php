@@ -280,7 +280,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
                 $element->removeAttribute('height');
             }
 
-            if ($smiley->smileyPath2x) {
+            if ($smiley->smileyPath2x !== '') {
                 $element->setAttribute('srcset', $smiley->getURL2x() . ' 2x');
             } else {
                 $element->removeAttribute('srcset');
@@ -296,7 +296,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
     protected function mirrorWidthAttribute(\DOMElement $element): void
     {
         $width = $element->getAttribute("data-width");
-        if ($width && \preg_match('~^\d+px$~', $width)) {
+        if ($width !== '' && \preg_match('~^\d+px$~', $width)) {
             $style = $element->getAttribute("style");
             if ($style !== "") {
                 $style .= "; ";

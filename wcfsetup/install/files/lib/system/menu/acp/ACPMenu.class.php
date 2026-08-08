@@ -105,7 +105,7 @@ class ACPMenu extends TreeMenu
         foreach ($this->menuItems[$parentMenuItem] as $key => $item) {
             $this->removeEmptyItems($item->menuItem);
             if (
-                !$item->getLink()
+                $item->getLink() === ''
                 && (!isset($this->menuItems[$item->menuItem]) || empty($this->menuItems[$item->menuItem]))
             ) {
                 unset($this->menuItems[$parentMenuItem][$key]);

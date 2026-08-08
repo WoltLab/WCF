@@ -191,7 +191,7 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
      */
     public function getIconName(): string
     {
-        if ($iconName = FileUtil::getIconNameByFilename($this->filename)) {
+        if (($iconName = FileUtil::getIconNameByFilename($this->filename)) !== '') {
             return 'file-' . $iconName;
         }
 

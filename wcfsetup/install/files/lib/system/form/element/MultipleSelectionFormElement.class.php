@@ -45,7 +45,7 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement
     #[\Override]
     public function getDescription()
     {
-        if ($this->disabledMessage) {
+        if ($this->disabledMessage !== '') {
             return $this->disabledMessage;
         }
 
@@ -56,7 +56,7 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement
     public function getHTML(string $formName)
     {
         $disabled = '';
-        if ($this->disabledMessage) {
+        if ($this->disabledMessage !== '') {
             $disabled = ' disabled';
         }
 

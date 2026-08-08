@@ -55,7 +55,7 @@ class NumericRangeFormField extends AbstractFormField implements
     #[\Override]
     public function getSaveValue()
     {
-        if (!$this->getFromValue() && !$this->getToValue() && $this->isNullable()) {
+        if ($this->getFromValue() === '' && $this->getToValue() === '' && $this->isNullable()) {
             return null;
         }
 
@@ -78,7 +78,7 @@ class NumericRangeFormField extends AbstractFormField implements
     #[\Override]
     public function validate()
     {
-        if ($this->isRequired() && (!$this->getFromValue() || !$this->getToValue())) {
+        if ($this->isRequired() && ($this->getFromValue() === '' || $this->getToValue() === '')) {
             $this->addValidationError(new FormFieldValidationError('empty'));
         }
     }

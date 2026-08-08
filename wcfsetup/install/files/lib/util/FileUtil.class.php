@@ -209,7 +209,7 @@ final class FileUtil
         if (!@\is_dir($folder)) {
             return false;
         }
-        if (!$searchfile) {
+        if ($searchfile === '') {
             return false;
         }
 

@@ -64,7 +64,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 
     /**
      * limit value for the maximum number of shown database objects
-     * @var int
+     * @var ?int
      */
     public $limit;
 
@@ -88,7 +88,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 
     /**
      * name of the database table column used for sorting
-     * @var string
+     * @var ?string
      */
     public $sortField;
 
@@ -100,7 +100,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 
     /**
      * order used for sorting the database objects
-     * @var string
+     * @var ?string
      */
     public $sortOrder;
 
@@ -116,7 +116,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
      */
     public function __construct()
     {
-        if ($this->conditionDefinition) {
+        if ($this->conditionDefinition !== '') {
             if (ObjectTypeCache::getInstance()->getDefinitionByName($this->conditionDefinition) === null) {
                 throw new \LogicException("Unknown object type definition '" . $this->conditionDefinition . "'");
             }
@@ -303,12 +303,12 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
             $this->objectList->sqlLimit = $this->limit;
         }
 
-        if ($this->sortOrder && $this->sortField) {
+        if ($this->sortOrder !== null && $this->sortField !== null) {
             $alias = $this->objectList->getDatabaseTableAlias();
-            $this->objectList->sqlOrderBy = $this->sortField . ' ' . $this->sortOrder . ", " . ($alias ? $alias . "." : "") . $this->objectList->getDatabaseTableIndexName() . " " . $this->sortOrder;
+            $this->objectList->sqlOrderBy = $this->sortField . ' ' . $this->sortOrder . ", " . ($alias !== '' ? $alias . "." : "") . $this->objectList->getDatabaseTableIndexName() . " " . $this->sortOrder;
         }
 
-        if ($this->conditionDefinition) {
+        if ($this->conditionDefinition !== '') {
             foreach ($this->box->getConditions() as $condition) {
                 /** @var ICondition $processor */
                 $processor = $condition->getObjectType()->getProcessor();
@@ -360,7 +360,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
     {
         parent::saveAdditionalData();
 
-        if ($this->conditionDefinition) {
+        if ($this->conditionDefinition !== '') {
             // do not use Box::getConditions() here to avoid setting box data by internally calling
             // Box::getController()
             ConditionHandler::getInstance()->updateConditions(
@@ -388,12 +388,18 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
                 $this->limit = $this->box->limit;
             }
 
-            if (!empty($this->validSortFields) && $this->box->sortOrder && $this->box->sortField) {
+            if (
+                !empty($this->validSortFields)
+                && $this->box->sortOrder !== null
+                && $this->box->sortOrder !== ''
+                && $this->box->sortField !== null
+                && $this->box->sortField !== ''
+            ) {
                 $this->sortOrder = $this->box->sortOrder;
                 $this->sortField = $this->box->sortField;
             }
 
-            if ($this->conditionDefinition) {
+            if ($this->conditionDefinition !== '') {
                 $conditions = [];
                 foreach ($this->box->getConditions() as $condition) {
                     $conditions[$condition->objectTypeID] = $condition;

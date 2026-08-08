@@ -132,10 +132,10 @@ abstract class MultipleLinkPage extends AbstractPage
         if ($this->items) {
             $this->sqlLimit = $this->itemsPerPage;
             $this->sqlOffset = ($this->pageNo - 1) * $this->itemsPerPage;
-            if ($this->sortField && $this->sortOrder) {
+            if ($this->sortField !== '' && $this->sortOrder !== '') {
                 if ($this->objectList !== null) {
                     $alias = $this->objectList->getDatabaseTableAlias();
-                    $this->sqlOrderBy = $this->sortField . " " . $this->sortOrder . ", " . ($alias ? $alias . "." : "") . $this->objectList->getDatabaseTableIndexName() . " " . $this->sortOrder;
+                    $this->sqlOrderBy = $this->sortField . " " . $this->sortOrder . ", " . ($alias !== '' ? $alias . "." : "") . $this->objectList->getDatabaseTableIndexName() . " " . $this->sortOrder;
                 } else {
                     $this->sqlOrderBy = $this->sortField . " " . $this->sortOrder;
                 }
@@ -173,7 +173,7 @@ abstract class MultipleLinkPage extends AbstractPage
     {
         $this->objectList->sqlLimit = $this->sqlLimit;
         $this->objectList->sqlOffset = $this->sqlOffset;
-        if ($this->sqlOrderBy) {
+        if ($this->sqlOrderBy !== '') {
             $this->objectList->sqlOrderBy = $this->sqlOrderBy;
         }
 

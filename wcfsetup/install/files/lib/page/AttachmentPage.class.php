@@ -86,11 +86,11 @@ class AttachmentPage extends AbstractPage
         $this->attachment = Helper::fetchObjectFromQueryParameter(Attachment::class);
 
         $parameters = ['object' => $this->attachment];
-        if (isset($_REQUEST['tiny']) && $this->attachment->tinyThumbnailType) {
+        if (isset($_REQUEST['tiny']) && $this->attachment->tinyThumbnailType !== '') {
             $this->tiny = \intval($_REQUEST['tiny']);
             $parameters['tiny'] = $this->tiny;
         }
-        if (isset($_REQUEST['thumbnail']) && $this->attachment->thumbnailType) {
+        if (isset($_REQUEST['thumbnail']) && $this->attachment->thumbnailType !== '') {
             $this->thumbnail = \intval($_REQUEST['thumbnail']);
             $parameters['thumbnail'] = $this->thumbnail;
         }
@@ -103,7 +103,7 @@ class AttachmentPage extends AbstractPage
     {
         parent::checkPermissions();
 
-        if ($this->attachment->tmpHash) {
+        if ($this->attachment->tmpHash !== '') {
             if ($this->attachment->userID && $this->attachment->userID !== WCF::getUser()->userID) {
                 throw new IllegalLinkException();
             }
@@ -157,7 +157,7 @@ class AttachmentPage extends AbstractPage
         }
 
         // unsaved attachments may be cached by the browser for up to 5 minutes only
-        $cacheDuration = ($this->attachment->tmpHash) ? 300 : 31536000;
+        $cacheDuration = ($this->attachment->tmpHash !== '') ? 300 : 31536000;
 
         // init file reader
         try {

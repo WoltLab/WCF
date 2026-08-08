@@ -67,8 +67,8 @@ class PackageStartInstallForm extends AbstractForm
     {
         parent::readParameters();
 
-        $this->stylePackageImportLocation = WCF::getSession()->getVar('stylePackageImportLocation');
-        if ($this->stylePackageImportLocation) {
+        $this->stylePackageImportLocation = WCF::getSession()->getVar('stylePackageImportLocation') ?? '';
+        if ($this->stylePackageImportLocation !== '') {
             $_POST['t'] = WCF::getSession()->getSecurityToken();
         }
     }
@@ -78,7 +78,7 @@ class PackageStartInstallForm extends AbstractForm
     {
         parent::readFormParameters();
 
-        if (!$this->stylePackageImportLocation) {
+        if ($this->stylePackageImportLocation === '') {
             if (isset($_FILES['uploadPackage'])) {
                 $this->uploadPackage = $_FILES['uploadPackage'];
             }
@@ -90,7 +90,7 @@ class PackageStartInstallForm extends AbstractForm
     {
         parent::validate();
 
-        if ($this->stylePackageImportLocation) {
+        if ($this->stylePackageImportLocation !== '') {
             if (\ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess()) {
                 throw new IllegalLinkException();
             }
@@ -195,7 +195,7 @@ class PackageStartInstallForm extends AbstractForm
         $packageID = $this->package ? $this->package->packageID : null;
 
         $archive = null;
-        if ($this->stylePackageImportLocation) {
+        if ($this->stylePackageImportLocation !== '') {
             $archive = $this->stylePackageImportLocation;
         } elseif (!empty($this->uploadPackage['tmp_name'])) {
             $archive = $this->uploadPackage['name'];

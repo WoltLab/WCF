@@ -85,7 +85,7 @@ class PackageGridView extends AbstractGridView
                         {
                             \assert($row instanceof Package);
 
-                            if (!$row->authorURL) {
+                            if ($row->authorURL === '') {
                                 return $value;
                             }
 

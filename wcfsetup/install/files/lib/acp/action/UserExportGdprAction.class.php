@@ -324,7 +324,7 @@ final class UserExportGdprAction extends AbstractAction
     protected function exportUser(): array
     {
         $data = ['languageCode' => $this->user->getLanguage()->getFixedLanguageCode()];
-        if ($this->user->registrationIpAddress) {
+        if ($this->user->registrationIpAddress !== '') {
             $data['registrationIpAddress'] = UserUtil::convertIPv6To4($this->user->registrationIpAddress);
         }
 

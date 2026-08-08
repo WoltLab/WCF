@@ -146,7 +146,7 @@ class UploadFile
             $url = new Uri($link);
             $query = $url->getQuery();
             $cacheBuster = 't=' . \TIME_NOW;
-            if ($query) {
+            if ($query !== '') {
                 $url = $url->withQuery("{$query}&{$cacheBuster}");
             } else {
                 $url = $url->withQuery($cacheBuster);
@@ -276,7 +276,7 @@ class UploadFile
      */
     public function getIconName(): string
     {
-        if ($iconName = FileUtil::getIconNameByFilename($this->filename)) {
+        if (($iconName = FileUtil::getIconNameByFilename($this->filename)) !== '') {
             return \sprintf('file-%s', $iconName);
         }
 

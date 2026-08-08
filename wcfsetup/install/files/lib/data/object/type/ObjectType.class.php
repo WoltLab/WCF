@@ -52,6 +52,18 @@ class ObjectType extends ProcessibleDatabaseObject
         return $value;
     }
 
+    #[\Override]
+    public function __isset(string $name)
+    {
+        $value = parent::__isset($name);
+
+        if (!$value && \is_array($this->data['additionalData']) && isset($this->data['additionalData'][$name])) {
+            return true;
+        }
+
+        return $value;
+    }
+
     /**
      * Returns the names of properties that should be serialized.
      *
@@ -79,7 +91,7 @@ class ObjectType extends ProcessibleDatabaseObject
     public function getProcessor()
     {
         if ($this->processor === null) {
-            if ($this->className) {
+            if ($this->className !== '') {
                 if (!\class_exists($this->className)) {
                     throw new ClassNotFoundException($this->className);
                 }
@@ -87,7 +99,7 @@ class ObjectType extends ProcessibleDatabaseObject
                 $definitionInterface = ObjectTypeCache::getInstance()
                     ->getDefinition($this->definitionID)
                     ->interfaceName;
-                if ($definitionInterface) {
+                if ($definitionInterface !== '') {
                     if (!\interface_exists($definitionInterface)) {
                         throw new SystemException("Unable to find interface '" . $definitionInterface . "'");
                     }

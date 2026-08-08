@@ -513,7 +513,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
      */
     protected function readValue(string $variableName, bool $allowEmpty, string $arrayIndex, int $type, int $structure)
     {
-        if ($arrayIndex) {
+        if ($arrayIndex !== '') {
             if (!isset($this->parameters[$arrayIndex])) {
                 if ($allowEmpty) {
                     // Implicitly create the structure to permit implicitly defined values.

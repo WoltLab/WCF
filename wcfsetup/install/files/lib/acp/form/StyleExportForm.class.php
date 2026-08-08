@@ -82,7 +82,7 @@ class StyleExportForm extends AbstractForm
             $this->exportTemplates = true;
         }
 
-        if ($this->style->packageName && isset($_POST['exportAsPackage'])) {
+        if ($this->style->packageName !== '' && isset($_POST['exportAsPackage'])) {
             $this->exportAsPackage = true;
         }
     }

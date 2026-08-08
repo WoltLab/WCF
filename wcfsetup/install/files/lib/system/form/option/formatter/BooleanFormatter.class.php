@@ -15,7 +15,7 @@ final class BooleanFormatter implements IFormOptionFormatter
     #[\Override]
     public function format(string $value, int $languageID, array $configuration): string
     {
-        if (!$value) {
+        if ($value === '' || $value === '0') {
             return '';
         }
 

@@ -262,7 +262,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
             if ($application->landingPageID) {
                 $page = PageCache::getInstance()->getPage($application->landingPageID);
                 if ($page !== null) {
-                    if ($page->controller) {
+                    if ($page->controller !== '') {
                         $controller = $page->controller;
                     } else {
                         $controller = '__WCF_CMS__' . $page->pageID;

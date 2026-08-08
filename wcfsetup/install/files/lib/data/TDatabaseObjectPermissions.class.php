@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @property-read string $permissions
+ * @property-read ?string $permissions
  */
 trait TDatabaseObjectPermissions
 {
@@ -22,7 +22,7 @@ trait TDatabaseObjectPermissions
      */
     public function validatePermissions()
     {
-        if ($this->permissions) {
+        if ($this->permissions !== null && $this->permissions !== '') {
             $permissions = \explode(',', $this->permissions);
             foreach ($permissions as $permission) {
                 if (WCF::getSession()->hasPermission($permission)) {

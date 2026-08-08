@@ -84,7 +84,7 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
         }
 
         $this->packageInstallationPlugin = new PackageInstallationPlugin($this->parameters['pluginName']);
-        if (!$this->packageInstallationPlugin->pluginName) {
+        if ($this->packageInstallationPlugin->isNil()) {
             throw new UserInputException('pluginName');
         }
 

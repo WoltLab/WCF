@@ -44,7 +44,7 @@ class InteractionContextMenuComponent
     public function renderButton(DatabaseObject $object): string
     {
         $options = $this->renderContextMenuOptions($object);
-        if (!$options) {
+        if ($options === '') {
             return '';
         }
 

@@ -162,6 +162,18 @@ class Box extends DatabaseObject
     }
 
     #[\Override]
+    public function __isset(string $name)
+    {
+        $value = parent::__isset($name);
+
+        if (!$value && isset($this->data['additionalData'][$name])) {
+            return true;
+        }
+
+        return $value;
+    }
+
+    #[\Override]
     protected function handleData(array $data)
     {
         parent::handleData($data);
@@ -235,8 +247,11 @@ class Box extends DatabaseObject
     {
         $this->getBoxContents();
         if ($this->isMultilingual || $this->boxType === 'system') {
-            if ($this->boxType === 'system' && $this->getController()->getTitle()) {
-                return $this->getController()->getTitle();
+            if ($this->boxType === 'system') {
+                $controllerTitle = $this->getController()->getTitle();
+                if ($controllerTitle !== null && $controllerTitle !== '') {
+                    return $controllerTitle;
+                }
             }
 
             if (isset($this->boxContents[WCF::getLanguage()->languageID])) {
@@ -457,7 +472,7 @@ class Box extends DatabaseObject
     protected function getLinkPageHandler()
     {
         $page = $this->getLinkPage();
-        if ($page !== null && $page->handler) {
+        if ($page !== null && $page->handler !== '') {
             if ($this->linkPageHandler === null) {
                 $className = $page->handler;
                 $this->linkPageHandler = new $className();
@@ -547,7 +562,7 @@ class Box extends DatabaseObject
         }
 
         $controller = $this->getController();
-        if ($controller instanceof IConditionBoxController && $controller->getConditionDefinition()) {
+        if ($controller instanceof IConditionBoxController && $controller->getConditionDefinition() !== '') {
             return ConditionHandler::getInstance()->getConditions(
                 $controller->getConditionDefinition(),
                 $this->boxID

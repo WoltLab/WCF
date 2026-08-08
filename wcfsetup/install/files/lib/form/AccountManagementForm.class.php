@@ -198,7 +198,7 @@ class AccountManagementForm extends AbstractForm
         parent::validate();
 
         // password
-        if (!WCF::getUser()->authData) {
+        if (WCF::getUser()->authData === '') {
             if (empty($this->password)) {
                 throw new UserInputException('password');
             }
@@ -235,7 +235,7 @@ class AccountManagementForm extends AbstractForm
 
         // password
         if (
-            !WCF::getUser()->authData
+            WCF::getUser()->authData === ''
             && UserAuthenticationConfigurationFactory::getInstance()->getConfigration()->canChangePassword
         ) {
             if (!empty($this->newPassword)) {
@@ -372,7 +372,7 @@ class AccountManagementForm extends AbstractForm
         }
 
         // password
-        if (!WCF::getUser()->authData) {
+        if (WCF::getUser()->authData === '') {
             if (!empty($this->newPassword)) {
                 $updateParameters['password'] = $this->newPassword;
                 $success[] = 'wcf.user.changePassword.success';

@@ -39,7 +39,7 @@ class ActiveStyle extends DatabaseObjectDecorator
             return $image;
         }
 
-        if ($this->imagePath && \file_exists(\WCF_DIR . $this->imagePath . $image)) {
+        if ($this->imagePath !== '' && \file_exists(\WCF_DIR . $this->imagePath . $image)) {
             return WCF::getPath() . $this->imagePath . $image;
         }
 
@@ -53,8 +53,9 @@ class ActiveStyle extends DatabaseObjectDecorator
      */
     public function getPageLogo()
     {
-        if ($this->getDecoratedObject()->getVariable('pageLogo')) {
-            return $this->getImage($this->getDecoratedObject()->getVariable('pageLogo'));
+        $pageLogo = $this->getDecoratedObject()->getVariable('pageLogo');
+        if ($pageLogo !== null && $pageLogo !== '') {
+            return $this->getImage($pageLogo);
         }
 
         return WCF::getPath() . 'images/default-logo.png';
@@ -67,8 +68,9 @@ class ActiveStyle extends DatabaseObjectDecorator
      */
     public function getPageLogoMobile()
     {
-        if ($this->getDecoratedObject()->getVariable('pageLogoMobile')) {
-            return $this->getImage($this->getDecoratedObject()->getVariable('pageLogoMobile'));
+        $pageLogoMobile = $this->getDecoratedObject()->getVariable('pageLogoMobile');
+        if ($pageLogoMobile !== null && $pageLogoMobile !== '') {
+            return $this->getImage($pageLogoMobile);
         }
 
         return WCF::getPath() . 'images/default-logo-small.png';

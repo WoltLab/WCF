@@ -76,10 +76,9 @@ class PaidSubscriptionListPage extends AbstractPage
             }
         }
         foreach ($this->userSubscriptionList as $userSubscription) {
-            if ($userSubscription->getSubscription()->excludedSubscriptionIDs) {
-                foreach (
-                    \explode(',', $userSubscription->getSubscription()->excludedSubscriptionIDs) as $subscriptionID
-                ) {
+            $excludedSubscriptionIDs = $userSubscription->getSubscription()->excludedSubscriptionIDs;
+            if ($excludedSubscriptionIDs !== null && $excludedSubscriptionIDs !== '') {
+                foreach (\explode(',', $excludedSubscriptionIDs) as $subscriptionID) {
                     if (isset($this->subscriptions[$subscriptionID])) {
                         unset($this->subscriptions[$subscriptionID]);
                     }

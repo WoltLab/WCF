@@ -57,7 +57,7 @@ class ViewableUserOption extends DatabaseObjectDecorator
         $optionValue = $user->{$userOption};
 
         // use output class
-        if ($this->outputClass) {
+        if ($this->outputClass !== '') {
             $outputObj = $this->getOutputObject();
             $this->optionValue = $outputObj->getOutput($user, $this->getDecoratedObject(), $optionValue);
         } else {

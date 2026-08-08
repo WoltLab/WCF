@@ -35,7 +35,7 @@ class GridViewRowLink extends AbstractGridViewRowLink
     public function render(mixed $value, DatabaseObject $row, bool $isPrimaryColumn = false): string
     {
         $href = '';
-        if ($this->controllerClass) {
+        if ($this->controllerClass !== '') {
             $href = StringUtil::encodeHTML(LinkHandler::getInstance()->getControllerLink(
                 $this->controllerClass,
                 \array_merge($this->parameters, ['object' => $row])
@@ -46,7 +46,7 @@ class GridViewRowLink extends AbstractGridViewRowLink
 
         $attributes = [];
         $isButton = true;
-        if ($href) {
+        if ($href !== '') {
             $attributes[] = 'href="' . $href . '"';
             $isButton = false;
         }

@@ -19,8 +19,12 @@ use wcf\util\StringUtil;
 class ImplodeCompilerTemplatePlugin implements ICompilerTemplatePlugin
 {
     /**
-     * local tag stack
-     * @var string[]|string[][]
+     * @var array<int, array{
+     *  hash: string,
+     *  glue: string,
+     *  itemVar: string,
+     *  keyVar: ?string
+     * }>
      */
     protected $tagStack = [];
 
@@ -81,7 +85,7 @@ class ImplodeCompilerTemplatePlugin implements ICompilerTemplatePlugin
         // Unset item and key and restore previous values
         $phpCode .= "unset({$tagArgs['itemVar']});";
         $phpCode .= "{$tagArgs['itemVar']} = \$_item" . $tagArgs['hash'] . ";\n";
-        if ($tagArgs['keyVar']) {
+        if ($tagArgs['keyVar'] !== null) {
             $phpCode .= "unset({$tagArgs['keyVar']});";
             $phpCode .= "{$tagArgs['keyVar']} = \$_key" . $tagArgs['hash'] . ";\n";
         }

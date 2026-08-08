@@ -272,7 +272,7 @@ class HtmlBBCodeParser extends BBCodeParser
 
                     // validate tag attributes again
                     if ($this->isValidTag($openingTag)) {
-                        if ($this->bbcodes[$tag['name']]->className) {
+                        if ($this->bbcodes[$tag['name']]->className !== '') {
                             // difference to the original implementation: use the custom HTML element than to process them directly
                             $parsedTag = $this->compileTag($openingTag, ($hideBuffer ? '' : $buffer), $tag);
                         } else {

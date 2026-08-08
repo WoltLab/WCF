@@ -145,7 +145,7 @@ class PackageInstallationDispatcher
 
             if ($step->splitNode()) {
                 $log = 'split node';
-                if ($step->getException() !== null && $step->getException()->getMessage()) {
+                if ($step->getException() !== null && $step->getException()->getMessage() !== '') {
                     $log .= ': ' . $step->getException()->getMessage();
                 }
 
@@ -906,7 +906,7 @@ class PackageInstallationDispatcher
         $directory = null;
         $abbreviation = Package::getAbbreviation($this->getPackage()->package);
 
-        if (!$applicationDirectory) {
+        if ($applicationDirectory === '') {
             $applicationDirectory = $abbreviation;
         }
 
@@ -1046,7 +1046,7 @@ class PackageInstallationDispatcher
     /**
      * Prompts a selection of optional packages.
      *
-     * @param string[][] $packages
+     * @param list<array{archive: string, isInstallable: bool, package: string, packageName: string, packageDescription: string, selected: int}> $packages
      * @return  mixed
      */
     protected function promptOptionalPackages(array $packages)

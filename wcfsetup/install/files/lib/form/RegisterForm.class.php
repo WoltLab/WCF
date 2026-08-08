@@ -226,7 +226,7 @@ class RegisterForm extends UserAddForm
     #[\Override]
     public function readData()
     {
-        if ($this->useCaptcha && $this->captchaObjectTypeName) {
+        if ($this->useCaptcha && $this->captchaObjectTypeName !== '') {
             $this->captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName($this->captchaObjectTypeName);
             if ($this->captchaObjectType === null) {
                 throw new SystemException("Unknown captcha object type with id '" . $this->captchaObjectTypeName . "'");

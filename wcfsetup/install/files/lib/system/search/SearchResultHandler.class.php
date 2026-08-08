@@ -127,7 +127,7 @@ final class SearchResultHandler
         if (\count($this->searchData['objectTypeNames']) === 1) {
             $objectType = SearchEngine::getInstance()->getObjectType($this->searchData['objectTypeNames'][0]);
             if ($objectType instanceof ISearchProvider) {
-                if (($templateName = $objectType->getResultListTemplateName())) {
+                if (($templateName = $objectType->getResultListTemplateName()) !== '') {
                     return [
                         'templateName' => $templateName,
                         'application' => $objectType->getApplication(),

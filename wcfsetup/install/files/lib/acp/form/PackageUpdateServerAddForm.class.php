@@ -65,7 +65,7 @@ class PackageUpdateServerAddForm extends AbstractFormBuilderForm
                                 try {
                                     $url = new Uri($formField->getValue());
 
-                                    if (!$url->getHost()) {
+                                    if ($url->getHost() === '') {
                                         $formField->addValidationError(
                                             new FormFieldValidationError(
                                                 'invalid',
@@ -94,7 +94,7 @@ class PackageUpdateServerAddForm extends AbstractFormBuilderForm
                                             return;
                                         }
                                     }
-                                    if ($url->getUserInfo()) {
+                                    if ($url->getUserInfo() !== '') {
                                         $formField->addValidationError(
                                             new FormFieldValidationError(
                                                 'userinfo',

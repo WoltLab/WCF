@@ -94,7 +94,7 @@ abstract class AbstractCategoryListPage extends AbstractPage
             'objectType' => $this->objectType,
         ]);
 
-        if ($this->pageTitle) {
+        if ($this->pageTitle !== '') {
             WCF::getTPL()->assign('pageTitle', $this->pageTitle);
         }
     }

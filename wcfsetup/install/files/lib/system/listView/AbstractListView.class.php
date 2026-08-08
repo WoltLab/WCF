@@ -274,7 +274,7 @@ abstract class AbstractListView
             throw new \InvalidArgumentException("Undefined default sort field.");
         }
 
-        if ($this->getSortField()) {
+        if ($this->getSortField() !== '') {
             if (!isset($this->availableSortFields[$this->getSortField()])) {
                 if (\ENABLE_DEBUG_MODE) {
                     throw new \LogicException("Invalid value '{$this->getSortField()}' as sort field given.");
@@ -289,9 +289,9 @@ abstract class AbstractListView
     {
         $sqlOrderBy = '';
 
-        if ($this->getSortField()) {
+        if ($this->getSortField() !== '') {
             $sortFieldObject = $this->availableSortFields[$this->getSortField()];
-            if ($sortFieldObject->sortByDatabaseColumn) {
+            if ($sortFieldObject->sortByDatabaseColumn !== '') {
                 $sqlOrderBy = $sortFieldObject->sortByDatabaseColumn . ' ' . $this->getSortOrder();
             } else {
                 $sqlOrderBy = $this->objectList->getDatabaseTableAlias() .
@@ -772,7 +772,7 @@ abstract class AbstractListView
 
     public function renderMarkAsReadButton(DatabaseObject $object): string
     {
-        if (!$this->markAsReadEndpoint) {
+        if ($this->markAsReadEndpoint === '') {
             throw new \BadMethodCallException("No mark as read endpoint has been specified.");
         }
 

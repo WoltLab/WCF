@@ -38,7 +38,7 @@ abstract class AbstractSingleFieldCondition extends AbstractCondition
      */
     protected function getDescriptionElement()
     {
-        if ($this->description) {
+        if ($this->description !== '') {
             return '<small>' . WCF::getLanguage()->getDynamicVariable($this->description) . '</small>';
         }
 
@@ -52,7 +52,7 @@ abstract class AbstractSingleFieldCondition extends AbstractCondition
      */
     public function getErrorClass()
     {
-        if ($this->errorMessage) {
+        if ($this->errorMessage !== '') {
             return ' class="formError"';
         }
 
@@ -66,7 +66,7 @@ abstract class AbstractSingleFieldCondition extends AbstractCondition
      */
     protected function getErrorMessageElement()
     {
-        if ($this->errorMessage) {
+        if ($this->errorMessage !== '') {
             return '<small class="innerError">' . WCF::getLanguage()->getDynamicVariable($this->errorMessage) . '</small>';
         }
 

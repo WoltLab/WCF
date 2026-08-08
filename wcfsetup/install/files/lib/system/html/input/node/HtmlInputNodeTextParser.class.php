@@ -626,7 +626,7 @@ class HtmlInputNodeTextParser
                 $element->setAttribute('alt', $smileyCode);
                 $element->setAttribute('height', (string)$smiley->getHeight());
                 $element->setAttribute('width', (string)$smiley->getWidth());
-                if ($smiley->getURL2x()) {
+                if ($smiley->getURL2x() !== '') {
                     $element->setAttribute('srcset', $smiley->getURL2x() . ' 2x');
                 }
 

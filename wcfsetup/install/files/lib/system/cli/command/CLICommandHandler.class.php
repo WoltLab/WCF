@@ -126,7 +126,7 @@ class CLICommandHandler
                 $tmp .= $char;
             }
         }
-        if ($tmp) {
+        if ($tmp !== '') {
             $return[] = $tmp;
         }
 

@@ -207,7 +207,7 @@ namespace wcf\functions\exception {
 			'Message: ' . $stripNewlines($e->getMessage()) . "\n" .
 			'PHP version: ' . phpversion() . "\n" .
 			'WoltLab Suite version: ' . WCF_VERSION . "\n" .
-			'Request URI: ' . $stripNewlines(($_SERVER['REQUEST_METHOD'] ?? '') . ' ' . ($_SERVER['REQUEST_URI'] ?? '')) . (\wcf\getRequestId() ? ' (' . \wcf\getRequestId() . ')' : '') . "\n" .
+			'Request URI: ' . $stripNewlines(($_SERVER['REQUEST_METHOD'] ?? '') . ' ' . ($_SERVER['REQUEST_URI'] ?? '')) . (\wcf\getRequestId() !== '' ? ' (' . \wcf\getRequestId() . ')' : '') . "\n" .
 			'Referrer: ' . $stripNewlines($_SERVER['HTTP_REFERER'] ?? '') . "\n" .
 			'User Agent: ' . $stripNewlines($_SERVER['HTTP_USER_AGENT'] ?? '') . "\n" .
 			'Peak Memory Usage: ' . memory_get_peak_usage() . '/' . FileUtil::getMemoryLimit() . "\n";
@@ -272,7 +272,7 @@ namespace wcf\functions\exception {
 			// ignore
 		}
 
-		if (!$exceptionTitle || !$exceptionSubtitle || !$exceptionExplanation) {
+		if ($exceptionTitle === '' || $exceptionSubtitle === '' || $exceptionExplanation === '') {
 			// one or more failed, fallback to english
 			$exceptionTitle = 'An error has occurred';
 			$exceptionSubtitle = 'Internal error code: <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">' . $exceptionID . '</span></span>';
@@ -655,7 +655,7 @@ EXPLANATION;
 															} else if (empty($exceptions) && !$first) {
 																echo "Final ";
 															} ?>Error</p>
-							<?php if ($e instanceof SystemException && $e->getDescription()) { ?>
+							<?php if ($e instanceof SystemException && $e->getDescription() !== '') { ?>
 								<p class="exceptionText"><?php echo StringUtil::encodeHTML($e->getDescription()); ?></p>
 							<?php } ?>
 							<ul class="exceptionErrorDetails">

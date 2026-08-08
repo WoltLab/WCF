@@ -43,7 +43,7 @@ class UserLinkColumnRenderer extends ObjectLinkColumnRenderer
             return parent::render($value, $row);
         }
 
-        if ($this->fallbackValue) {
+        if ($this->fallbackValue !== '') {
             return StringUtil::encodeHTML($row->{$this->fallbackValue} ?? '');
         }
 

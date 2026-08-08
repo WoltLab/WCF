@@ -743,7 +743,7 @@ class PageAddForm extends AbstractForm
                 $this->pageType = $this->presetPage->pageType;
                 $this->applicationPackageID = $this->presetPage->overrideApplicationPackageID ?: $this->presetPage->applicationPackageID;
                 $this->cssClassName = $this->presetPage->cssClassName;
-                if ($this->presetPage->controllerCustomURL) {
+                if ($this->presetPage->controllerCustomURL !== '') {
                     $this->customURL[0] = $this->presetPage->controllerCustomURL;
                 }
                 $this->isDisabled = 1;

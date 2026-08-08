@@ -278,7 +278,7 @@ class PageEditForm extends PageAddForm
             $this->applicationPackageID = $this->page->applicationPackageID;
             $this->overrideApplicationPackageID = $this->page->overrideApplicationPackageID;
             $this->cssClassName = $this->page->cssClassName;
-            if ($this->page->controllerCustomURL) {
+            if ($this->page->controllerCustomURL !== '') {
                 $this->customURL[0] = $this->page->controllerCustomURL;
             }
             if ($this->page->isDisabled) {

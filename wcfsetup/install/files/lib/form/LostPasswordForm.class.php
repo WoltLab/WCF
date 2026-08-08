@@ -130,7 +130,7 @@ final class LostPasswordForm extends AbstractFormBuilderForm
         AbstractForm::save();
 
         // check if using 3rd party
-        if ($this->user->authData) {
+        if ($this->user->authData !== '') {
             HeaderUtil::delayedRedirect(
                 LinkHandler::getInstance()->getLink(\ucfirst($this->user->getAuthProvider()) . 'Auth'),
                 WCF::getLanguage()->getDynamicVariable(

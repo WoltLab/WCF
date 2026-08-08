@@ -402,7 +402,7 @@ final class ReactionHandler extends SingletonFactory
      */
     public function getTopReaction(?string $cachedReactionsJson): ?array
     {
-        if ($cachedReactionsJson) {
+        if ($cachedReactionsJson !== null && $cachedReactionsJson !== '') {
             $cachedReactions = \json_decode($cachedReactionsJson, true, flags: \JSON_THROW_ON_ERROR);
 
             if (\is_array($cachedReactions)) {

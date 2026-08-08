@@ -51,7 +51,7 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
             '~^https?~',
             'https?',
             \preg_quote($link)
-        ) . '(\d+)-[^#]*?)' . ($defaultAnchor ? '(?:#' . $defaultAnchor . ')?' : '') . '$');
+        ) . '(\d+)-[^#]*?)' . ($defaultAnchor !== '' ? '(?:#' . $defaultAnchor . ')?' : '') . '$');
     }
 
     /**
@@ -91,7 +91,7 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
     protected function replaceLinks(HtmlInputNodeProcessor $processor, array $objects, string $bbcodeName = '')
     {
         $bbcode = null;
-        if ($bbcodeName) {
+        if ($bbcodeName !== '') {
             $bbcode = BBCodeCache::getInstance()->getBBCodeByTag($bbcodeName);
         }
 

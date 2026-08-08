@@ -103,12 +103,12 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         StyleHandler::getInstance()->resetStylesheet($this->getDecoratedObject());
 
         // remove custom images
-        if ($this->imagePath && $this->imagePath !== 'images/') {
+        if ($this->imagePath !== '' && $this->imagePath !== 'images/') {
             $this->removeDirectory($this->imagePath);
         }
 
         // delete preview image
-        if ($this->image) {
+        if ($this->image !== '') {
             @\unlink(\WCF_DIR . 'images/' . $this->image);
         }
 
@@ -187,7 +187,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
      */
     public function deleteCoverPhoto(): void
     {
-        if ($this->coverPhotoExtension) {
+        if ($this->coverPhotoExtension !== '') {
             @\unlink(\WCF_DIR . 'images/coverPhotos/' . $this->styleID . '.' . $this->coverPhotoExtension);
 
             $this->update([
@@ -904,14 +904,14 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         $styleTar = new TarWriter($styleTarName, true);
 
         // append style preview image
-        if ($this->image && @\file_exists(\WCF_DIR . 'images/' . $this->image)) {
+        if ($this->image !== '' && @\file_exists(\WCF_DIR . 'images/' . $this->image)) {
             $styleTar->add(
                 \WCF_DIR . 'images/' . $this->image,
                 '',
                 FileUtil::addTrailingSlash(\dirname(\WCF_DIR . 'images/' . $this->image))
             );
         }
-        if ($this->image2x && @\file_exists(\WCF_DIR . 'images/' . $this->image2x)) {
+        if ($this->image2x !== '' && @\file_exists(\WCF_DIR . 'images/' . $this->image2x)) {
             $styleTar->add(
                 \WCF_DIR . 'images/' . $this->image2x,
                 '',
@@ -920,8 +920,8 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         }
 
         // append cover photo
-        $coverPhoto = $this->coverPhotoExtension ? $this->getCoverPhotoLocation(false) : '';
-        if ($coverPhoto && @\file_exists($coverPhoto)) {
+        $coverPhoto = $this->coverPhotoExtension !== '' ? $this->getCoverPhotoLocation(false) : '';
+        if ($coverPhoto !== '' && @\file_exists($coverPhoto)) {
             $styleTar->add($coverPhoto, '', FileUtil::addTrailingSlash(\dirname($coverPhoto)));
         }
 
@@ -955,19 +955,19 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
 
         $xml->writeElement('date', $this->styleDate);
         $xml->writeElement('version', $this->styleVersion);
-        if ($this->image) {
+        if ($this->image !== '') {
             $xml->writeElement('image', \basename($this->image));
         }
-        if ($this->image2x) {
+        if ($this->image2x !== '') {
             $xml->writeElement('image2x', \basename($this->image2x));
         }
-        if ($coverPhoto) {
+        if ($coverPhoto !== '') {
             $xml->writeElement('coverPhoto', \basename(FileUtil::unifyDirSeparator($coverPhoto)));
         }
-        if ($this->copyright) {
+        if ($this->copyright !== '') {
             $xml->writeElement('copyright', $this->copyright);
         }
-        if ($this->license) {
+        if ($this->license !== '') {
             $xml->writeElement('license', $this->license);
         }
         if ($this->hasDarkMode) {
@@ -978,7 +978,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         // author block
         $xml->startElement('author');
         $xml->writeElement('authorname', $this->authorName);
-        if ($this->authorURL) {
+        if ($this->authorURL !== '') {
             $xml->writeElement('authorurl', $this->authorURL);
         }
         $xml->endElement();
@@ -1115,19 +1115,19 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
 
                 // Skip preview images and cover photos.
                 if (
-                    $this->image
+                    $this->image !== ''
                     && FileUtil::unifyDirSeparator($file->getPathname()) === FileUtil::unifyDirSeparator(\WCF_DIR . 'images/' . $this->image)
                 ) {
                     continue;
                 }
                 if (
-                    $this->image2x
+                    $this->image2x !== ''
                     && FileUtil::unifyDirSeparator($file->getPathname()) === FileUtil::unifyDirSeparator(\WCF_DIR . 'images/' . $this->image2x)
                 ) {
                     continue;
                 }
                 if (
-                    $coverPhoto
+                    $coverPhoto !== ''
                     && FileUtil::unifyDirSeparator($file->getPathname()) === FileUtil::unifyDirSeparator($coverPhoto)
                 ) {
                     continue;
@@ -1184,7 +1184,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
 
             $xml->startElement('authorinformation');
             $xml->writeElement('author', $this->authorName);
-            if ($this->authorURL) {
+            if ($this->authorURL !== '') {
                 $xml->writeElement('authorurl', $this->authorURL);
             }
             $xml->endElement();

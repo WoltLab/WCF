@@ -87,7 +87,7 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
         $userTrophyAction->executeAction();
 
         foreach ($this->getObjects() as $trophy) {
-            if ($trophy->iconFile) {
+            if ($trophy->iconFile !== null && $trophy->iconFile !== '') {
                 @\unlink(\WCF_DIR . 'images/trophy/' . $trophy->iconFile);
             }
         }
@@ -169,7 +169,7 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 
         $this->parameters['file'] = \reset($files);
 
-        if ($this->parameters['file']->getValidationErrorType()) {
+        if ($this->parameters['file']->getValidationErrorType() !== '') {
             throw new UserInputException('file', $this->parameters['file']->getValidationErrorType());
         }
     }

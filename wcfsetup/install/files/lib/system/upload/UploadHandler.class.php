@@ -126,7 +126,7 @@ class UploadHandler
     public function saveFiles(IUploadFileSaveStrategy $saveStrategy)
     {
         foreach ($this->files as $file) {
-            if (!$file->getValidationErrorType()) {
+            if ($file->getValidationErrorType() === '') {
                 $saveStrategy->save($file);
             }
         }
@@ -164,11 +164,6 @@ class UploadHandler
             return $mimeType;
         }
 
-        $finfoMimeType = FileUtil::getMimeType($file);
-        if ($finfoMimeType) {
-            return $finfoMimeType;
-        }
-
-        return $mimeType;
+        return FileUtil::getMimeType($file);
     }
 }

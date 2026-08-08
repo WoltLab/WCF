@@ -47,7 +47,7 @@ if (\file_exists(WCF_DIR . 'cookiePrefix.txt')) {
     @\unlink(WCF_DIR . 'cookiePrefix.txt');
 }
 
-if ($timezone = @\date_default_timezone_get()) {
+if (($timezone = @\date_default_timezone_get()) !== '') {
     if (\in_array($timezone, DateUtil::getAvailableTimezones())) {
         $statement->execute([
             $timezone,

@@ -70,7 +70,7 @@ final class ModerationQueueGridView extends AbstractGridView
                                 return parent::render($userID, $row);
                             }
 
-                            if ($row->getAffectedObject()->getUsername()) {
+                            if ($row->getAffectedObject()->getUsername() !== '') {
                                 return StringUtil::encodeHTML($row->getAffectedObject()->getUsername());
                             }
 

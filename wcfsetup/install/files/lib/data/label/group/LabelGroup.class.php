@@ -44,7 +44,7 @@ class LabelGroup extends DatabaseObject implements IRouteController, \Stringable
      */
     public function getExtendedTitle(): string
     {
-        if (!$this->groupDescription) {
+        if ($this->groupDescription === '') {
             return $this->getTitle();
         }
 

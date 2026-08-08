@@ -34,7 +34,7 @@ class StandaloneInteractionContextMenuComponent extends InteractionContextMenuCo
     public function render(): string
     {
         $contextMenuOptions = $this->renderContextMenuOptions($this->object);
-        if (!$contextMenuOptions) {
+        if ($contextMenuOptions === '') {
             return '';
         }
 

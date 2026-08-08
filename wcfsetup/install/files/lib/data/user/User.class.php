@@ -75,7 +75,7 @@ use wcf\util\UserUtil;
  * @property-read   string  $blacklistMatches       JSON string of an array with all matches in the blacklist, otherwise an empty string
  * @property-read   0|1     $multifactorActive      is `1` if the use has enabled a second factor, otherwise `0`
  * @property-read   int     $trophyPoints           total number of user's trophies in active categories
- * @property-read   string  $timezone
+ * @property-read   ?string $timezone
  */
 final class User extends DatabaseObject implements IPopoverObject, IRouteController, IUserContent, \Stringable
 {
@@ -389,7 +389,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public function getAuthProvider(): string
     {
-        if (!$this->authData) {
+        if ($this->authData === '') {
             return '';
         }
 
@@ -427,7 +427,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     public function getTimeZone(): \DateTimeZone
     {
         if ($this->timezoneObj === null) {
-            if ($this->timezone) {
+            if ($this->timezone !== null && $this->timezone !== '') {
                 $this->timezoneObj = new \DateTimeZone($this->timezone);
             } else {
                 $this->timezoneObj = new \DateTimeZone(\TIMEZONE);
@@ -578,7 +578,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public function getRegistrationIpAddress(): string
     {
-        if ($this->registrationIpAddress) {
+        if ($this->registrationIpAddress !== '') {
             return UserUtil::convertIPv6To4($this->registrationIpAddress);
         }
 
@@ -602,7 +602,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public function getBlacklistMatches(): array
     {
-        if ($this->pendingActivation() && $this->blacklistMatches) {
+        if ($this->pendingActivation() && $this->blacklistMatches !== '') {
             return \json_decode($this->blacklistMatches, true, flags: \JSON_THROW_ON_ERROR);
         }
 

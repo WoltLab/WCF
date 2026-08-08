@@ -65,7 +65,7 @@ abstract class AbstractAuthedPage extends AbstractPage
                 } else {
                     $user = new User($userID);
                     if (
-                        $user->userID && $user->accessToken && \hash_equals(
+                        $user->userID && $user->accessToken !== '' && \hash_equals(
                             $user->accessToken,
                             $token
                         ) && !$user->banned

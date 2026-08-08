@@ -60,7 +60,7 @@ class HascontentPrefilterTemplatePlugin implements IPrefilterTemplatePlugin
         $newContent = '{capture assign=' . $variable . '}' . $content . '{/capture}' . "\n";
         $newContent .= '{assign var=' . $variable . ' value=$' . $variable . '|trim}' . "\n";
 
-        if ($assignContent) {
+        if ($assignContent !== '') {
             $newContent .= '{capture assign=' . $assignContent . '}' . "\n";
         }
         $newContent .= '{if $' . $variable . '}' . $beforeContent . '{@$' . $variable . '}' . "\n" . $afterContent;
@@ -71,7 +71,7 @@ class HascontentPrefilterTemplatePlugin implements IPrefilterTemplatePlugin
 
         $newContent .= '{/if}' . "\n";
 
-        if ($assignContent) {
+        if ($assignContent !== '') {
             $newContent .= "{/capture}\n{@$" . $assignContent . "}\n";
         }
 

@@ -336,7 +336,7 @@ class UserListPage extends SortablePage
 
                         default:
                             if (isset($this->options[$column])) {
-                                if ($this->options[$column]->outputClass) {
+                                if ($this->options[$column]->outputClass !== '') {
                                     $this->options[$column]->setOptionValue($user->getDecoratedObject());
 
                                     /** @var IUserOptionOutput $outputObj */

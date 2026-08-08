@@ -61,7 +61,7 @@ class ConditionBuilder implements \Stringable
     #[\Override]
     public function __toString(): string
     {
-        return (($this->addWhereKeyword && $this->conditions) ? 'WHERE ' : '') . $this->conditions;
+        return (($this->addWhereKeyword && $this->conditions !== '') ? 'WHERE ' : '') . $this->conditions;
     }
 
     /**

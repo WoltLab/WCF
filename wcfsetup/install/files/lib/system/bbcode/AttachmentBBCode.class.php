@@ -146,7 +146,7 @@ final class AttachmentBBCode extends AbstractBBCode
             $imageClasses = 'embeddedAttachmentLink';
         }
 
-        if ($class && (!$attachment->hasThumbnail() || !$attachment->canDownload())) {
+        if ($class !== '' && (!$attachment->hasThumbnail() || !$attachment->canDownload())) {
             $imageClasses .= ' ' . $class;
         }
 

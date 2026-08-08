@@ -216,13 +216,13 @@ final class DateUtil
         bool $fullInterval = false,
         int $formatType = self::FORMAT_DEFAULT
     ): string {
-        $years = $interval->format('%y');
-        $months = $interval->format('%m');
+        $years = (int)$interval->format('%y');
+        $months = (int)$interval->format('%m');
         $days = (int)$interval->format('%d');
-        $weeks = \floor($days / 7);
-        $hours = $interval->format('%h');
-        $minutes = $interval->format('%i');
-        if (!$years && !$months && !$days && !$hours && !$minutes) {
+        $weeks = \intdiv($days, 7);
+        $hours = (int)$interval->format('%h');
+        $minutes = (int)$interval->format('%i');
+        if ($years === 0 && $months === 0 && $days === 0 && $hours === 0 && $minutes === 0) {
             // Prevents empty output if the interval is less than 60 seconds.
             $minutes = 1;
         }
@@ -257,9 +257,21 @@ final class DateUtil
         if ($fullInterval) {
             return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.full.' . $languageItemSuffix, [
                 'days' => $days - 7 * $weeks,
-                'firstElement' => $years ? 'years' : ($months ? 'months' : ($weeks ? 'weeks' : ($days ? 'days' : ($hours ? 'hours' : 'minutes')))),
+                'firstElement' => $years !== 0
+                    ? 'years'
+                    : ($months !== 0
+                        ? 'months'
+                        : ($weeks !== 0
+                            ? 'weeks'
+                            : ($days !== 0 ? 'days' : ($hours !== 0 ? 'hours' : 'minutes')))),
                 'hours' => $hours,
-                'lastElement' => !$minutes ? (!$hours ? (!$days ? (!$weeks ? (!$months ? 'years' : 'months') : 'weeks') : 'days') : 'hours') : 'minutes',
+                'lastElement' => $minutes !== 0
+                    ? 'minutes'
+                    : ($hours !== 0
+                        ? 'hours'
+                        : ($days !== 0
+                            ? 'days'
+                            : ($weeks !== 0 ? 'weeks' : ($months !== 0 ? 'months' : 'years')))),
                 'minutes' => $minutes,
                 'months' => $months,
                 'weeks' => $weeks,
@@ -267,31 +279,31 @@ final class DateUtil
             ]);
         }
 
-        if ($years) {
+        if ($years !== 0) {
             return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.years.' . $languageItemSuffix, [
                 'years' => $years,
             ]);
         }
 
-        if ($months) {
+        if ($months !== 0) {
             return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.months.' . $languageItemSuffix, [
                 'months' => $months,
             ]);
         }
 
-        if ($weeks) {
+        if ($weeks !== 0) {
             return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.weeks.' . $languageItemSuffix, [
                 'weeks' => $weeks,
             ]);
         }
 
-        if ($days) {
+        if ($days !== 0) {
             return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.days.' . $languageItemSuffix, [
                 'days' => $days,
             ]);
         }
 
-        if ($hours) {
+        if ($hours !== 0) {
             return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.hours.' . $languageItemSuffix, [
                 'hours' => $hours,
             ]);

@@ -68,7 +68,7 @@ class Smiley extends DatabaseObject implements ITitledObject
      */
     public function getURL2x()
     {
-        return ($this->smileyPath2x) ? WCF::getPath() . $this->smileyPath2x : '';
+        return ($this->smileyPath2x !== '') ? WCF::getPath() . $this->smileyPath2x : '';
     }
 
     /**
@@ -78,7 +78,7 @@ class Smiley extends DatabaseObject implements ITitledObject
      */
     public function getAliases()
     {
-        if (!$this->aliases) {
+        if ($this->aliases === '') {
             return [];
         }
 
@@ -141,7 +141,7 @@ class Smiley extends DatabaseObject implements ITitledObject
      */
     public function getHtml(string $class = '')
     {
-        $srcset = ($this->smileyPath2x) ? ' srcset="' . StringUtil::encodeHTML($this->getURL2x()) . ' 2x"' : '';
+        $srcset = ($this->smileyPath2x !== '') ? ' srcset="' . StringUtil::encodeHTML($this->getURL2x()) . ' 2x"' : '';
         $height = ($this->getHeight()) ? ' height="' . $this->getHeight() . '"' : '';
         $width = ($this->getWidth()) ? ' width="' . $this->getWidth() . '"' : '';
 
@@ -150,7 +150,7 @@ class Smiley extends DatabaseObject implements ITitledObject
             StringUtil::encodeHTML($this->getURL()),
             StringUtil::encodeHTML($this->smileyCode),
             StringUtil::encodeHTML(WCF::getLanguage()->get($this->smileyTitle)),
-            'smiley' . ($class ? " {$class}" : ''),
+            'smiley' . ($class !== '' ? " {$class}" : ''),
             $srcset,
             $height,
             $width,

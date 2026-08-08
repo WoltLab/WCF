@@ -68,14 +68,15 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
 
             $title = StringUtil::truncate($unfurlResponse->getTitle(), 255);
             $description = "";
-            if ($unfurlResponse->getDescription()) {
-                $description = StringUtil::truncate($unfurlResponse->getDescription(), 160);
+            $unfurlDescription = $unfurlResponse->getDescription();
+            if ($unfurlDescription !== null && $unfurlDescription !== '') {
+                $description = StringUtil::truncate($unfurlDescription, 160);
             }
 
             $imageData = [];
             $imageID = null;
             $imageUrl = $unfurlResponse->getImageUrl();
-            if (\URL_UNFURLING_SAVE_IMAGES && $imageUrl) {
+            if (\URL_UNFURLING_SAVE_IMAGES && $imageUrl !== null && $imageUrl !== '') {
                 if (
                     \strpos($imageUrl, '\\') === false
                     && \strpos($imageUrl, "'") === false
@@ -226,7 +227,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
             return false;
         }
 
-        if (!$this->getImageExtension($imageData)) {
+        if ($this->getImageExtension($imageData) === null) {
             return false;
         }
 

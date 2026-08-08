@@ -70,11 +70,7 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
             }
         }
         if ($username === null) {
-            if (WCF::getUser()->username) {
-                $username = WCF::getUser()->username;
-            } else {
-                $username = '';
-            }
+            $username = WCF::getUser()->getUsername();
         }
 
         $modificationLogAction = new ModificationLogAction([], 'create', [

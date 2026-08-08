@@ -310,7 +310,7 @@ class DataImportForm extends AbstractForm
         }
 
         if (empty($_POST)) {
-            if (!$this->exporterName) {
+            if ($this->exporterName === '') {
                 $sql = "SELECT  COUNT(*)
                         FROM    wcf1_import_mapping";
                 $statement = WCF::getDB()->prepare($sql);

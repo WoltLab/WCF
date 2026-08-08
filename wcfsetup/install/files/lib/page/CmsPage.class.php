@@ -100,7 +100,7 @@ class CmsPage extends AbstractPage
         );
         MetaTagHandler::getInstance()->addTag('og:url', 'og:url', $this->canonicalURL, true);
         MetaTagHandler::getInstance()->addTag('og:type', 'og:type', 'website', true);
-        if ($this->content->metaDescription) {
+        if ($this->content->metaDescription !== null && $this->content->metaDescription !== '') {
             MetaTagHandler::getInstance()->addTag(
                 'og:description',
                 'og:description',

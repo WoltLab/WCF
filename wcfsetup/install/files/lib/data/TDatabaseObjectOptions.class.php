@@ -8,7 +8,7 @@ namespace wcf\data;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @property-read string $options
+ * @property-read ?string $options
  */
 trait TDatabaseObjectOptions
 {
@@ -19,7 +19,7 @@ trait TDatabaseObjectOptions
      */
     public function validateOptions()
     {
-        if ($this->options) {
+        if ($this->options !== null && $this->options !== '') {
             $options = \explode(',', \strtoupper($this->options));
             foreach ($options as $option) {
                 if (\defined($option) && \constant($option)) {

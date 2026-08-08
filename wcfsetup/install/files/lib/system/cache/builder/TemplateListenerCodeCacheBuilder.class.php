@@ -32,14 +32,19 @@ class TemplateListenerCodeCacheBuilder extends AbstractCacheBuilder
             }
 
             $templateCode = $templateListener->templateCode;
+            $listenerOptions = $templateListener->options;
+            $listenerPermissions = $templateListener->permissions;
             // wrap template listener code in if condition for options
             // and permissions check
-            if ($templateListener->options || $templateListener->permissions) {
+            if (
+                ($listenerOptions !== null && $listenerOptions !== '')
+                || ($listenerPermissions !== null && $listenerPermissions !== '')
+            ) {
                 $templateCode = '{if ';
 
                 $options = [];
-                if ($templateListener->options) {
-                    $options = \explode(',', \strtoupper($templateListener->options));
+                if ($listenerOptions !== null && $listenerOptions !== '') {
+                    $options = \explode(',', \strtoupper($listenerOptions));
 
                     $options = \array_map(static function ($value) {
                         return "('{$value}'|defined && {$value})";
@@ -47,8 +52,8 @@ class TemplateListenerCodeCacheBuilder extends AbstractCacheBuilder
 
                     $templateCode .= '(' . \implode(' || ', $options) . ')';
                 }
-                if ($templateListener->permissions) {
-                    $permissions = \explode(',', $templateListener->permissions);
+                if ($listenerPermissions !== null && $listenerPermissions !== '') {
+                    $permissions = \explode(',', $listenerPermissions);
 
                     $permissions = \array_map(static function ($value) {
                         return "\$__wcf->session->getPermission('" . $value . "')";

@@ -194,7 +194,7 @@ class StyleEditForm extends StyleAddForm
             $this->variables['overrideScssCustom'] = $tmp['custom'];
         }
 
-        if ($this->variables['pageLogo'] && \file_exists($this->style->getAssetPath() . $this->variables['pageLogo'])) {
+        if ($this->variables['pageLogo'] !== '' && \file_exists($this->style->getAssetPath() . $this->variables['pageLogo'])) {
             $file = new UploadFile(
                 $this->style->getAssetPath() . $this->variables['pageLogo'],
                 \basename($this->variables['pageLogo']),
@@ -206,7 +206,7 @@ class StyleEditForm extends StyleAddForm
                 $file,
             ]);
         }
-        if ($this->variables['pageLogoMobile'] && \file_exists($this->style->getAssetPath() . $this->variables['pageLogoMobile'])) {
+        if ($this->variables['pageLogoMobile'] !== '' && \file_exists($this->style->getAssetPath() . $this->variables['pageLogoMobile'])) {
             $file = new UploadFile(
                 $this->style->getAssetPath() . $this->variables['pageLogoMobile'],
                 \basename($this->variables['pageLogoMobile']),
@@ -256,7 +256,7 @@ class StyleEditForm extends StyleAddForm
             $this->styleName = $this->style->styleName;
             $this->styleVersion = $this->style->styleVersion;
             $this->templateGroupID = $this->style->templateGroupID;
-            if ($this->style->image && \file_exists(\WCF_DIR . 'images/' . $this->style->image)) {
+            if ($this->style->image !== '' && \file_exists(\WCF_DIR . 'images/' . $this->style->image)) {
                 $file = new UploadFile(
                     \WCF_DIR . 'images/' . $this->style->image,
                     $this->style->image,
@@ -268,7 +268,7 @@ class StyleEditForm extends StyleAddForm
                     $file,
                 ]);
             }
-            if ($this->style->image2x && \file_exists(\WCF_DIR . 'images/' . $this->style->image2x)) {
+            if ($this->style->image2x !== '' && \file_exists(\WCF_DIR . 'images/' . $this->style->image2x)) {
                 $file = new UploadFile(
                     \WCF_DIR . 'images/' . $this->style->image2x,
                     $this->style->image2x,
@@ -280,7 +280,7 @@ class StyleEditForm extends StyleAddForm
                     $file,
                 ]);
             }
-            if ($this->style->coverPhotoExtension && \file_exists($this->style->getCoverPhotoLocation(false))) {
+            if ($this->style->coverPhotoExtension !== '' && \file_exists($this->style->getCoverPhotoLocation(false))) {
                 $file = new UploadFile(
                     $this->style->getCoverPhotoLocation(false),
                     $this->style->getCoverPhoto(false),
@@ -371,7 +371,7 @@ class StyleEditForm extends StyleAddForm
 
         // save compiled style
         if (
-            $this->styleTestFileDir
+            $this->styleTestFileDir !== null
             && \file_exists($this->styleTestFileDir . '/style.css')
             && \file_exists($this->styleTestFileDir . '/style-rtl.css')
         ) {

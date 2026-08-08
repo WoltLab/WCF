@@ -99,11 +99,23 @@ class ViewableMedia extends DatabaseObjectDecorator implements \Stringable
      */
     public function getTitle()
     {
-        if ($this->title) {
+        if ($this->title !== null && $this->title !== '') {
             return $this->title;
         }
 
         return $this->getDecoratedObject()->getTitle();
+    }
+
+    /**
+     * Returns the `title` attribute of the media file or an empty string if it has no title.
+     */
+    private function getTitleAttribute(): string
+    {
+        if ($this->title === null || $this->title === '') {
+            return '';
+        }
+
+        return 'title="' . StringUtil::encodeHTML($this->title) . '" ';
     }
 
     /**
@@ -113,7 +125,7 @@ class ViewableMedia extends DatabaseObjectDecorator implements \Stringable
     public function __toString(): string
     {
         if ($this->isImage) {
-            return '<img src="' . StringUtil::encodeHTML($this->getLink()) . '" alt="' . StringUtil::encodeHTML($this->altText) . '" ' . ($this->title ? 'title="' . StringUtil::encodeHTML($this->title) . '" ' : '') . '/>';
+            return '<img src="' . StringUtil::encodeHTML($this->getLink()) . '" alt="' . StringUtil::encodeHTML($this->altText) . '" ' . $this->getTitleAttribute() . '/>';
         }
 
         return '<a href="' . StringUtil::encodeHTML($this->getLink()) . '">' . StringUtil::encodeHTML($this->getTitle()) . '</a>';
@@ -132,7 +144,7 @@ class ViewableMedia extends DatabaseObjectDecorator implements \Stringable
             $link = null;
             $marginTop = 0;
 
-            if ($this->tinyThumbnailType) {
+            if ($this->tinyThumbnailType !== '') {
                 $link = $this->getThumbnailLink('tiny');
 
                 if ($size <= $this->tinyThumbnailWidth && $size <= $this->tinyThumbnailHeight) {
@@ -176,7 +188,7 @@ class ViewableMedia extends DatabaseObjectDecorator implements \Stringable
 
             return '<span style="display: inline-block; text-align: center; width: ' . $size . 'px; height: ' . $size . 'px;">
                             <img src="' . StringUtil::encodeHTML($link) . '" alt="' . StringUtil::encodeHTML($this->altText)
-                . '" ' . ($this->title ? 'title="' . StringUtil::encodeHTML($this->title) . '" ' : '')
+                . '" ' . $this->getTitleAttribute()
                 . 'style="margin-top: ' . $marginTop . 'px;" height="' . $height . '" width="' . $width . '" loading="lazy">
                     </span>';
         }
@@ -202,7 +214,7 @@ class ViewableMedia extends DatabaseObjectDecorator implements \Stringable
             StringUtil::encodeHTML($this->altText),
             $this->getThumbnailWidth($size),
             $this->getThumbnailHeight($size),
-            ($this->title ? 'title="' . StringUtil::encodeHTML($this->title) . '" ' : '')
+            $this->getTitleAttribute()
         );
     }
 

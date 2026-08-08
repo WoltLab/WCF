@@ -63,7 +63,7 @@ abstract class AbstractCategoryNodeTreeViewPage extends AbstractNodeTreeViewPage
             'addFormLink' => $this->objectType->getProcessor()->getAddFormLink(),
         ]);
 
-        if ($this->pageTitle) {
+        if ($this->pageTitle !== '') {
             WCF::getTPL()->assign('pageTitle', $this->pageTitle);
         }
     }

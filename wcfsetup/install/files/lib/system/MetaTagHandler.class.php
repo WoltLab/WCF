@@ -36,13 +36,13 @@ final class MetaTagHandler extends SingletonFactory implements \Countable, \Iter
     protected function init(): void
     {
         // set default tags
-        if ($value = WCF::getLanguage()->get(\META_DESCRIPTION)) {
+        if (($value = WCF::getLanguage()->get(\META_DESCRIPTION)) !== '') {
             $this->addTag('description', 'description', $value);
         }
-        if ($value = WCF::getLanguage()->get(\PAGE_TITLE)) {
+        if (($value = WCF::getLanguage()->get(\PAGE_TITLE)) !== '') {
             $this->addTag('og:site_name', 'og:site_name', $value, true);
         }
-        if (\OG_IMAGE) {
+        if (\OG_IMAGE !== '') {
             $this->addTag(
                 'og:image',
                 'og:image',
@@ -50,7 +50,7 @@ final class MetaTagHandler extends SingletonFactory implements \Countable, \Iter
                 true
             );
         }
-        if (\FB_SHARE_APP_ID) {
+        if (\FB_SHARE_APP_ID !== '') {
             $this->addTag('fb:app_id', 'fb:app_id', \FB_SHARE_APP_ID, true);
         }
     }
@@ -71,7 +71,7 @@ final class MetaTagHandler extends SingletonFactory implements \Countable, \Iter
         ];
 
         // replace description if Open Graph Protocol tag was given
-        if ($name === 'og:description' && $value) {
+        if ($name === 'og:description' && $value !== '') {
             $this->addTag('description', 'description', $value);
         }
     }

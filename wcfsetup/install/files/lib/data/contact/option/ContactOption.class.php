@@ -72,6 +72,10 @@ class ContactOption extends DatabaseObject implements ITitledObject
      */
     public function getConfiguration(): array
     {
-        return $this->configuration ? \json_decode($this->configuration, true, flags: \JSON_THROW_ON_ERROR) : [];
+        if ($this->configuration === null || $this->configuration === '') {
+            return [];
+        }
+
+        return \json_decode($this->configuration, true, flags: \JSON_THROW_ON_ERROR);
     }
 }

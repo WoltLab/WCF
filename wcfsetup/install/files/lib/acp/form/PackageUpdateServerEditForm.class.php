@@ -78,7 +78,7 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm
         // The server URL cannot be modified, thus we do not need to validate it.
         $serverUrlField->removeValidator('serverUrlValidator');
 
-        if ($this->formObject->loginUsername) {
+        if ($this->formObject->loginUsername !== '') {
             $passwordField = $this->form->getFormField('loginPassword');
             \assert($passwordField instanceof PasswordFormField);
             $passwordField->placeholder('wcf.acp.updateServer.loginPassword.noChange');

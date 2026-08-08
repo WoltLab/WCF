@@ -390,7 +390,7 @@ class OptionHandler implements IOptionHandler
         $this->optionValues[$option->optionName] = $typeObj->getData($option, $newValue);
 
         // validate with pattern
-        if ($option->validationPattern) {
+        if ($option->validationPattern !== null && $option->validationPattern !== '') {
             if (
                 !\preg_match(
                     '~' . \str_replace('~', '\~', $option->validationPattern) . '~',

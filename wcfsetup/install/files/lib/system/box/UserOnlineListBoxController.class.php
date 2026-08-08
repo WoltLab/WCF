@@ -78,10 +78,10 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
     {
         EventHandler::getInstance()->fireAction($this, 'readObjects');
 
-        if ($this->sortOrder && $this->sortField === 'lastActivityTime') {
+        if ($this->sortOrder !== '' && $this->sortField === 'lastActivityTime') {
             $alias = $this->objectList->getDatabaseTableAlias();
             $this->objectList->sqlOrderBy = "session.{$this->sortField} {$this->sortOrder}, "
-                . ($alias ? $alias . "." : "") . "{$this->objectList->getDatabaseTableIndexName()} {$this->sortOrder}";
+                . ($alias !== '' ? $alias . "." : "") . "{$this->objectList->getDatabaseTableIndexName()} {$this->sortOrder}";
         }
 
         $this->objectList->readStats();

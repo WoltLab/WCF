@@ -67,7 +67,7 @@ final class StyleUtil
         $contents = \preg_replace_callback(
             '~box-shadow:\s*(?P<inset>inset)?\s*(?P<negate>-)?(?P<number>\d+)~',
             static function ($matches) {
-                return 'box-shadow: ' . $matches['inset'] . ' ' . ($matches['negate'] ? '' : '-') . $matches['number'];
+                return 'box-shadow: ' . $matches['inset'] . ' ' . ($matches['negate'] !== '' ? '' : '-') . $matches['number'];
             },
             $contents
         );
@@ -121,7 +121,7 @@ final class StyleUtil
         return \preg_replace_callback(
             '/transform:\s*translateX\((?P<negate>-)?(?P<number>\d+)(?P<unit>[^\s\)]+)\)/',
             static function ($matches) {
-                return 'transform: translateX(' . ($matches['negate'] ? '' : '-') . $matches['number'] . $matches['unit'] . ')';
+                return 'transform: translateX(' . ($matches['negate'] !== '' ? '' : '-') . $matches['number'] . $matches['unit'] . ')';
             },
             $contents
         );

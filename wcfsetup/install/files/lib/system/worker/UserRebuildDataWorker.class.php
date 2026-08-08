@@ -177,7 +177,7 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
                     )
                 ));
 
-                if ($user->signature) {
+                if ($user->signature !== null && $user->signature !== '') {
                     if (!$user->signatureEnableHtml) {
                         $htmlInputProcessor->process(
                             $user->signature,
@@ -377,10 +377,10 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
                 $oldCoverPhotoLocation = UserCoverPhoto::getLegacyLocation($user, false);
                 $oldCoverPhotoWebPLocation = UserCoverPhoto::getLegacyLocation($user, true);
 
-                if ($oldCoverPhotoLocation && \file_exists($oldCoverPhotoLocation)) {
+                if ($oldCoverPhotoLocation !== null && \file_exists($oldCoverPhotoLocation)) {
                     @\unlink($oldCoverPhotoLocation);
                 }
-                if ($oldCoverPhotoWebPLocation && \file_exists($oldCoverPhotoWebPLocation)) {
+                if ($oldCoverPhotoWebPLocation !== null && \file_exists($oldCoverPhotoWebPLocation)) {
                     @\unlink($oldCoverPhotoWebPLocation);
                 }
             }

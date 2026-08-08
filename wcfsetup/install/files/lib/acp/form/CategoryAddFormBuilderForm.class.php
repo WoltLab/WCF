@@ -378,7 +378,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
     protected function getPermissionFormFields(): array
     {
         $aclObjectTypeName = $this->getObjectTypeProcessor()->getObjectTypeName('com.woltlab.wcf.acl');
-        if (!$aclObjectTypeName) {
+        if ($aclObjectTypeName === null) {
             return [];
         }
 

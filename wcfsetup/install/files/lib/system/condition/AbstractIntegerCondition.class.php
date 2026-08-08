@@ -67,7 +67,7 @@ abstract class AbstractIntegerCondition extends AbstractSingleFieldCondition
     #[\Override]
     protected function getErrorMessageElement()
     {
-        if ($this->errorMessage) {
+        if ($this->errorMessage !== '') {
             switch ($this->errorMessage) {
                 case 'wcf.condition.greaterThan.error.maxValue':
                     $errorMessage = WCF::getLanguage()->getDynamicVariable($this->errorMessage, [

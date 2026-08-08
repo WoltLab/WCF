@@ -183,7 +183,7 @@ class DevtoolsSetup extends SingletonFactory
      */
     public function getPackageServerLogin(): array
     {
-        if (isset($this->configuration['packageServerLogin']['username']) && $this->configuration['packageServerLogin']['password']) {
+        if (isset($this->configuration['packageServerLogin']['username']) && $this->configuration['packageServerLogin']['password'] !== '') {
             return $this->configuration['packageServerLogin'];
         }
 

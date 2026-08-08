@@ -322,7 +322,7 @@ final class SessionHandler extends SingletonFactory
         $sessionID = $this->getSessionIdFromCookie($cookieData);
 
         $hasSession = false;
-        if ($sessionID) {
+        if ($sessionID !== null && $sessionID !== '') {
             $hasSession = $this->getExistingSession($sessionID);
         }
 
@@ -680,7 +680,7 @@ final class SessionHandler extends SingletonFactory
             // Try to find an existing spider session. Order by lastActivityTime to maintain a
             // stable selection in case duplicates exist for some reason.
             $spiderIdentifier = SpiderHandler::getInstance()->getIdentifier(UserUtil::getUserAgent());
-            if ($spiderIdentifier) {
+            if ($spiderIdentifier !== null) {
                 $sql = "SELECT      *
                         FROM        wcf1_session
                         WHERE       spiderIdentifier = ?
@@ -1057,7 +1057,7 @@ final class SessionHandler extends SingletonFactory
         }
 
         // Reauthentication for third party authentication is not supported.
-        if ($this->getUser()->authData) {
+        if ($this->getUser()->authData !== '') {
             return false;
         }
 

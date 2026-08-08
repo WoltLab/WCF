@@ -228,13 +228,14 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
 
         // Fetch the dimensions of the small logo, avoding calls to `getimagesize` with every request.
         $filename = \WCF_DIR . 'images/default-logo-small.png';
-        if ($this->getVariable('pageLogoMobile')) {
+        $pageLogoMobile = $this->getVariable('pageLogoMobile');
+        if ($pageLogoMobile !== null && $pageLogoMobile !== '') {
             $filename = \WCF_DIR;
-            if ($this->imagePath) {
+            if ($this->imagePath !== '') {
                 $filename .= $this->imagePath;
             }
 
-            $filename .= $this->getVariable('pageLogoMobile');
+            $filename .= $pageLogoMobile;
         }
 
         if (\file_exists($filename)) {
@@ -262,7 +263,7 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
      */
     public function getPreviewImage()
     {
-        if ($this->image && \file_exists(\WCF_DIR . 'images/' . $this->image)) {
+        if ($this->image !== '' && \file_exists(\WCF_DIR . 'images/' . $this->image)) {
             return WCF::getPath() . 'images/' . $this->image;
         }
 
@@ -276,7 +277,7 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
      */
     public function getPreviewImage2x()
     {
-        if ($this->image2x && \file_exists(\WCF_DIR . 'images/' . $this->image2x)) {
+        if ($this->image2x !== '' && \file_exists(\WCF_DIR . 'images/' . $this->image2x)) {
             return WCF::getPath() . 'images/' . $this->image2x;
         }
 
@@ -344,7 +345,7 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
     {
         $useWebP = $this->useWebP($forceWebP);
 
-        if ($this->coverPhotoExtension) {
+        if ($this->coverPhotoExtension !== '') {
             return 'coverPhoto.' . ($useWebP ? 'webp' : $this->coverPhotoExtension);
         }
 
@@ -358,7 +359,7 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
     {
         $useWebP = $this->useWebP($forceWebP);
 
-        if ($this->coverPhotoExtension) {
+        if ($this->coverPhotoExtension !== '') {
             return $this->getAssetPath() . 'coverPhoto.' . ($useWebP ? 'webp' : $this->coverPhotoExtension);
         }
 
@@ -372,7 +373,7 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
     {
         $useWebP = $this->useWebP($forceWebP);
 
-        if ($this->coverPhotoExtension) {
+        if ($this->coverPhotoExtension !== '') {
             return WCF::getPath() . FileUtil::getRelativePath(
                 \WCF_DIR,
                 $this->getAssetPath()

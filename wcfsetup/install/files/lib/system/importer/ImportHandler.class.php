@@ -101,7 +101,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction
             $this->idMappingCache[$objectTypeID][$oldID] = null;
             $importer = $this->getImporter($type);
             $tableName = $indexName = '';
-            if ($importer->getClassName()) {
+            if ($importer->getClassName() !== '') {
                 $tableName = \call_user_func([$importer->getClassName(), 'getDatabaseTableName']);
                 $indexName = \call_user_func([$importer->getClassName(), 'getDatabaseTableIndexName']);
             }

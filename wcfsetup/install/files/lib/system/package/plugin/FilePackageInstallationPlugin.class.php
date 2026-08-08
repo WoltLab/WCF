@@ -120,7 +120,7 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin im
     #[\Override]
     public static function isValid(PackageArchive $packageArchive, string $instruction)
     {
-        if (!$instruction) {
+        if ($instruction === '') {
             $instruction = static::getDefaultFilename();
         }
 

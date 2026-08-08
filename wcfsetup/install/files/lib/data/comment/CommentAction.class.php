@@ -324,7 +324,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     public function addComment()
     {
         $guestDialog = $this->getGuestDialog();
-        if ($guestDialog) {
+        if ($guestDialog !== null) {
             return [
                 'guestDialog' => $guestDialog,
             ];
@@ -500,7 +500,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     public function addResponse()
     {
         $guestDialog = $this->getGuestDialog();
-        if ($guestDialog) {
+        if ($guestDialog !== null) {
             return [
                 'guestDialog' => $guestDialog,
             ];
@@ -997,7 +997,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
         $captchaObjectType = null;
 
-        if (\CAPTCHA_TYPE) {
+        if (\CAPTCHA_TYPE !== '') {
             $captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName(\CAPTCHA_TYPE);
             if ($captchaObjectType === null) {
                 throw new SystemException("Unknown captcha object type with name '" . \CAPTCHA_TYPE . "'");
@@ -1300,7 +1300,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             return;
         }
 
-        if (\CAPTCHA_TYPE) {
+        if (\CAPTCHA_TYPE !== '') {
             $this->captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName(\CAPTCHA_TYPE);
             if ($this->captchaObjectType === null) {
                 throw new SystemException("Unknown captcha object type with name '" . \CAPTCHA_TYPE . "'");

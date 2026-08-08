@@ -55,7 +55,7 @@ abstract class AbstractCaptchaForm extends AbstractForm
     #[\Override]
     public function readData()
     {
-        if ((WCF::getUser()->isGuest() || $this->forceCaptcha) && $this->useCaptcha && $this->captchaObjectTypeName) {
+        if ((WCF::getUser()->isGuest() || $this->forceCaptcha) && $this->useCaptcha && $this->captchaObjectTypeName !== '') {
             $this->captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName($this->captchaObjectTypeName);
             if ($this->captchaObjectType === null) {
                 throw new SystemException("Unknown captcha object type with name '" . $this->captchaObjectTypeName . "'");

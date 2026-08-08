@@ -572,7 +572,7 @@ final class CronjobUtil
             $testArr = \explode(',', $value);
             foreach ($testArr as $testField) {
                 if (
-                    $pattern
+                    $pattern !== ''
                     && \preg_match('/^(((' . $pattern . ')-(' . $pattern . '))(\/' . $step . ')?)+$/', $testField)
                 ) {
                     $compare = \explode('-', $testField);

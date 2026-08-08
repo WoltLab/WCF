@@ -30,7 +30,7 @@ class LinkColumnRenderer extends DefaultColumnRenderer implements ILinkColumnRen
     #[\Override]
     public function render(mixed $value, DatabaseObject $row): string
     {
-        if ($this->idPropertyName) {
+        if ($this->idPropertyName !== '') {
             $href = LinkHandler::getInstance()->getControllerLink(
                 $this->controllerClass,
                 \array_merge($this->parameters, ['id' => $row->__get($this->idPropertyName)])
@@ -43,7 +43,7 @@ class LinkColumnRenderer extends DefaultColumnRenderer implements ILinkColumnRen
         }
 
         return '<a href="' . StringUtil::encodeHTML($href) . '"'
-            . ($this->titleLanguageItem ? ' title="' . WCF::getLanguage()->get($this->titleLanguageItem) . '"' : '') . '>'
+            . ($this->titleLanguageItem !== '' ? ' title="' . WCF::getLanguage()->get($this->titleLanguageItem) . '"' : '') . '>'
             . $value
             . '</a>';
     }

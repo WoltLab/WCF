@@ -746,7 +746,7 @@ class BoxAddForm extends AbstractForm
             if ($this->linkPageID) {
                 $this->linkType = 'internal';
             }
-            if ($this->externalURL) {
+            if ($this->externalURL !== '') {
                 $this->linkType = 'external';
             }
 

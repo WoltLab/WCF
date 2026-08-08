@@ -134,7 +134,7 @@ final class LicenseEditForm extends AbstractFormBuilderForm
         ]);
         $this->form->successMessage('wcf.global.success.edit');
 
-        if ($licenseNo) {
+        if ($licenseNo !== '') {
             $this->form->appendChildren([
                 FormContainer::create('noCredentials')
                     ->label('wcf.acp.license.noCredentials')

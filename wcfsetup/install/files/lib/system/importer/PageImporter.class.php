@@ -67,7 +67,7 @@ class PageImporter extends AbstractImporter
 
         // save page
         $page = new PageEditor(PageEditor::create($data));
-        if (!$page->identifier) {
+        if ($page->identifier === '') {
             // set generic page identifier
             $page->update([
                 'identifier' => 'com.woltlab.wcf.generic' . $page->pageID,

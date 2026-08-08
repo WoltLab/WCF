@@ -96,7 +96,7 @@ class CategoryArticleListPage extends ArticleListPage
             $this->category->getLink(),
             true
         );
-        if ($this->category->getDescription()) {
+        if ($this->category->getDescription() !== '') {
             $description = $this->category->getDescription();
             if ($this->category->descriptionUseHtml) {
                 $description = StringUtil::decodeHTML(StringUtil::stripHTML($description));

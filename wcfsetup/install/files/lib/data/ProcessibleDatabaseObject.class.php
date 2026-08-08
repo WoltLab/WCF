@@ -39,7 +39,7 @@ class ProcessibleDatabaseObject extends DatabaseObject
     public function getProcessor()
     {
         if ($this->processor === null) {
-            if ($this->className) {
+            if ($this->className !== null && $this->className !== '') {
                 if (!\class_exists($this->className)) {
                     throw new ClassNotFoundException($this->className);
                 }

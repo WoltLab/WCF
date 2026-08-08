@@ -353,7 +353,7 @@ final class ExifUtil
         for ($i = 0, $j = \count($coordinateData); $i < $j; $i++) {
             if ($i === 0) {
                 $result = (float)$coordinateData[0];
-            } elseif ($coordinateData[$i]) {
+            } elseif ((float)$coordinateData[$i] !== 0.0) {
                 $result /= (float)$coordinateData[$i];
             }
         }

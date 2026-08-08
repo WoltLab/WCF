@@ -273,7 +273,7 @@ final class Regex
             }
 
             throw new SystemException(
-                'Could not execute ' . ($method ? $method . ' on ' : '') . $this->regex . ': ' . $error
+                'Could not execute ' . ($method !== '' ? $method . ' on ' : '') . $this->regex . ': ' . $error
             );
         }
 

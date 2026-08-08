@@ -21,7 +21,7 @@ class CategoryArticleListView extends ArticleListView
         parent::__construct();
 
         $category = ArticleCategory::getCategory($this->categoryID);
-        if ($category?->sortField) {
+        if ($category !== null && $category->sortField !== null && $category->sortField !== '') {
             // Legacy categories may still store the previously offered `publicationDate` value,
             // which never matched a registered sort field. Map it to `time`, which is the
             // semantically equivalent column actually exposed by the list view.

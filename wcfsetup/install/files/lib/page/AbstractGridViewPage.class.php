@@ -92,10 +92,10 @@ abstract class AbstractGridViewPage extends AbstractPage
             throw new PermissionDeniedException();
         }
 
-        if ($this->sortField) {
+        if ($this->sortField !== '') {
             $this->gridView->setSortField($this->sortField);
         }
-        if ($this->sortOrder) {
+        if ($this->sortOrder !== '') {
             $this->gridView->setSortOrder($this->sortOrder);
         }
         if ($this->filters !== []) {

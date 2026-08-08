@@ -433,7 +433,7 @@ final class UserAgent implements \Stringable
      */
     public function isMobileBrowser(): bool
     {
-        if (!$this->userAgent) {
+        if ($this->userAgent === '') {
             return false;
         }
 

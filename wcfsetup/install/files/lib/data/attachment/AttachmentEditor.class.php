@@ -72,10 +72,10 @@ class AttachmentEditor extends DatabaseObjectEditor
         }
 
         @\unlink($this->getLocation());
-        if ($this->tinyThumbnailType) {
+        if ($this->tinyThumbnailType !== '') {
             @\unlink($this->getTinyThumbnailLocation());
         }
-        if ($this->thumbnailType) {
+        if ($this->thumbnailType !== '') {
             @\unlink($this->getThumbnailLocation());
         }
     }

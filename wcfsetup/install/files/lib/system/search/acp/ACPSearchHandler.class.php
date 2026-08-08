@@ -72,7 +72,7 @@ class ACPSearchHandler extends SingletonFactory
     public function search(string $query, int $limit = 10, string $providerName = '')
     {
         $data = [];
-        if ($providerName) {
+        if ($providerName !== '') {
             $maxResultsPerProvider = $limit;
         } else {
             $maxResultsPerProvider = \ceil($limit / 2);
@@ -80,7 +80,7 @@ class ACPSearchHandler extends SingletonFactory
         $totalResultCount = 0;
 
         foreach ($this->providers as $name => $provider) {
-            if ($providerName && $name !== $providerName) {
+            if ($providerName !== '' && $name !== $providerName) {
                 continue;
             }
 

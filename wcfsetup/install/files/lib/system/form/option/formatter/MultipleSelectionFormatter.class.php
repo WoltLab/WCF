@@ -18,7 +18,7 @@ final class MultipleSelectionFormatter implements IFormOptionFormatter
     #[\Override]
     public function format(string $value, int $languageID, array $configuration): string
     {
-        if (!$value) {
+        if ($value === '') {
             return '';
         };
 

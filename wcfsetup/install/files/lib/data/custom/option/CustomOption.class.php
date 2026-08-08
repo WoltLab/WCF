@@ -132,7 +132,8 @@ abstract class CustomOption extends Option implements ITitledObject
     {
         switch ($this->optionType) {
             case 'boolean':
-                return WCF::getLanguage()->get('wcf.acp.customOption.optionType.boolean.' . ($this->optionValue ? 'yes' : 'no'));
+                return WCF::getLanguage()->get('wcf.acp.customOption.optionType.boolean.'
+                    . (($this->optionValue !== '' && $this->optionValue !== '0') ? 'yes' : 'no'));
 
             case 'date':
                 $year = $month = $day = 0;

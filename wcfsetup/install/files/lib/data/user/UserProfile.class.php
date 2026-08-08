@@ -807,7 +807,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
             return 0;
         } else {
             if ($this->__age === null) {
-                if ($this->birthday && $showYear) {
+                if ($this->birthday !== '' && $showYear) {
                     $this->__age = DateUtil::getAge($this->birthday);
                 } else {
                     $this->__age = 0;
@@ -908,7 +908,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function getUserTitle()
     {
-        if ($this->userTitle) {
+        if ($this->userTitle !== '') {
             return $this->userTitle;
         }
         if ($this->getRank() && $this->getRank()->showTitle()) {
@@ -948,7 +948,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function getOldUsername()
     {
-        if ($this->oldUsername) {
+        if ($this->oldUsername !== '') {
             if ($this->lastUsernameChange + \PROFILE_SHOW_OLD_USERNAME * 86400 > \TIME_NOW) {
                 return $this->oldUsername;
             }
@@ -1046,7 +1046,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
         if (!\MODULE_USER_SIGNATURE) {
             return false;
         }
-        if (!$this->signature) {
+        if ($this->signature === null || $this->signature === '') {
             return false;
         }
         if ($this->disableSignature) {
@@ -1155,7 +1155,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
 
         if ($this->userOnlineGroupID) {
             $group = UserGroup::getGroupByID($this->userOnlineGroupID);
-            if ($group !== null && $group->userOnlineMarking && $group->userOnlineMarking !== '%s') {
+            if ($group !== null && $group->userOnlineMarking !== '' && $group->userOnlineMarking !== '%s') {
                 return \str_replace('%s', $username, $group->userOnlineMarking);
             }
         }

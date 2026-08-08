@@ -81,7 +81,7 @@ class Ad extends DatabaseObject implements IRouteController
             );
         }
 
-        if ($objectType->className && \is_subclass_of($objectType->className, IAdLocation::class)) {
+        if ($objectType->className !== '' && \is_subclass_of($objectType->className, IAdLocation::class)) {
             /** @var IAdLocation $adLocation */
             $adLocation = $objectType->getProcessor();
 

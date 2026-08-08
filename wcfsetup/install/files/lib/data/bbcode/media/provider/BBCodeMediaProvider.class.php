@@ -137,7 +137,7 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController
      */
     public function getCallback()
     {
-        if (!$this->className) {
+        if ($this->className === '') {
             return null;
         }
 

@@ -142,7 +142,7 @@ class StyleGlobalValuesForm extends AbstractForm
         $defaultStyle = StyleHandler::getInstance()->getDefaultStyle();
         if (
             $defaultStyle !== null
-            && $this->styleTestFileDir
+            && $this->styleTestFileDir !== null
             && \file_exists($this->styleTestFileDir . '/style.css')
             && \file_exists($this->styleTestFileDir . '/style-rtl.css')
         ) {

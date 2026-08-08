@@ -133,12 +133,12 @@ class BoxEditForm extends BoxAddForm
 
             if (
                 $oldController instanceof IConditionBoxController
-                && $oldController->getConditionDefinition()
+                && $oldController->getConditionDefinition() !== ''
                 && (
                     !$this->boxController
                     || (
                         !($this->boxController->getProcessor() instanceof IConditionBoxController))
-                    || !$this->boxController->getProcessor()->getConditionDefinition()
+                    || $this->boxController->getProcessor()->getConditionDefinition() === ''
                 )
             ) {
                 ConditionHandler::getInstance()->deleteConditions(
@@ -231,7 +231,7 @@ class BoxEditForm extends BoxAddForm
             if ($this->linkPageID) {
                 $this->linkType = 'internal';
             }
-            if ($this->externalURL) {
+            if ($this->externalURL !== '') {
                 $this->linkType = 'external';
             }
 

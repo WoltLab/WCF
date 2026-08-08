@@ -29,7 +29,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin
         parent::install();
 
         // extract sql file from archive
-        if ($queries = $this->getSQL($this->instruction['value'])) {
+        if (($queries = $this->getSQL($this->instruction['value'])) !== '') {
             // replace app1_ with app{WCF_N}_ in the table names for all applications
             $queries = ApplicationHandler::insertRealDatabaseTableNames($queries, true);
 
@@ -148,7 +148,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin
     #[\Override]
     public static function isValid(PackageArchive $packageArchive, string $instruction)
     {
-        if (!$instruction) {
+        if ($instruction === '') {
             $instruction = static::getDefaultFilename();
         }
 

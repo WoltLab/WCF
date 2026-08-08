@@ -62,7 +62,7 @@ class GroupedUserList implements \Countable, \Iterator, \Stringable
      */
     public function getNoUsersMessage(): string
     {
-        return $this->noUsersMessage ? WCF::getLanguage()->get($this->noUsersMessage) : '';
+        return $this->noUsersMessage !== '' ? WCF::getLanguage()->get($this->noUsersMessage) : '';
     }
 
     #[\Override]

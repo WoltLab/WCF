@@ -35,7 +35,7 @@ class UserRank extends DatabaseObject implements ITitledObject
      */
     public function getImage()
     {
-        if ($this->rankImage) {
+        if ($this->rankImage !== '') {
             $image = '<img src="' . WCF::getPath() . self::RANK_IMAGE_DIR . StringUtil::encodeHTML($this->rankImage) . '" alt="">';
             if ($this->repeatImage > 1) {
                 $image = \str_repeat($image, $this->repeatImage);
@@ -63,7 +63,7 @@ class UserRank extends DatabaseObject implements ITitledObject
      */
     public function showTitle()
     {
-        return !$this->rankImage || !$this->hideTitle;
+        return $this->rankImage === '' || !$this->hideTitle;
     }
 
     /**
@@ -72,7 +72,7 @@ class UserRank extends DatabaseObject implements ITitledObject
      */
     public function getRankImageFileUploadFileLocations(): array
     {
-        if (!$this->rankImage) {
+        if ($this->rankImage === '') {
             return [];
         }
 

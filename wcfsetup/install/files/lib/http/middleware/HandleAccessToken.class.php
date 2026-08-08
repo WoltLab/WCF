@@ -38,7 +38,7 @@ final class HandleAccessToken implements MiddlewareInterface
 
     private function handleAccessToken(string $accessToken): bool
     {
-        if (!$accessToken) {
+        if ($accessToken === '') {
             return true;
         }
 
@@ -89,7 +89,7 @@ final class HandleAccessToken implements MiddlewareInterface
         } else {
             $user = new User($userID);
             if (
-                $user->userID && $user->accessToken && \hash_equals(
+                $user->userID && $user->accessToken !== '' && \hash_equals(
                     $user->accessToken,
                     $token
                 )

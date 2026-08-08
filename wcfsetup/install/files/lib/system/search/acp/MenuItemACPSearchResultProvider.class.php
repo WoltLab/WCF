@@ -27,7 +27,7 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
             if (\mb_stripos($menuItem->__toString(), $query) === false) {
                 continue;
             }
-            if (!$menuItem->getLink()) {
+            if ($menuItem->getLink() === '') {
                 continue;
             }
 

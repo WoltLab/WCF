@@ -32,6 +32,18 @@ class Condition extends DatabaseObject
         return $value;
     }
 
+    #[\Override]
+    public function __isset(string $name)
+    {
+        $value = parent::__isset($name);
+
+        if (!$value && \is_array($this->data['conditionData']) && isset($this->data['conditionData'][$name])) {
+            return true;
+        }
+
+        return $value;
+    }
+
     /**
      * Returns the condition object type of the condition.
      *

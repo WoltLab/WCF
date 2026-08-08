@@ -32,14 +32,14 @@ class BlacklistEntry extends DatabaseObject
         }
 
         $conditions = new PreparedStatementConditionBuilder(true, 'OR');
-        if (\BLACKLIST_SFS_USERNAME && $username !== '') {
+        if (\BLACKLIST_SFS_USERNAME !== '' && $username !== '') {
             $conditions->add('(type = ? AND hash = ?)', ['username', self::getHash($username)]);
         }
-        if (\BLACKLIST_SFS_EMAIL_ADDRESS) {
+        if (\BLACKLIST_SFS_EMAIL_ADDRESS !== '') {
             $conditions->add('(type = ? AND hash = ?)', ['email', self::getHash($email)]);
         }
-        if (\BLACKLIST_SFS_IP_ADDRESS) {
-            if ($ipAddress) {
+        if (\BLACKLIST_SFS_IP_ADDRESS !== '') {
+            if ($ipAddress !== '') {
                 $ipAddress = new IpAddress($ipAddress);
                 if (($ipv4 = $ipAddress->asV4()) !== null) {
                     $conditions->add('(type = ? AND hash = ?)', ['ipv4', self::getHash($ipv4->getIpAddress())]);

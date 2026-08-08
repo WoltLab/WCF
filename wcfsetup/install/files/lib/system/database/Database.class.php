@@ -319,7 +319,7 @@ abstract class Database
                     && isset($_SERVER['REQUEST_URI'])
                 ) {
                     $requestInformation = $_SERVER['REQUEST_URI'];
-                    if ($requestId = \wcf\getRequestId()) {
+                    if (($requestId = \wcf\getRequestId()) !== '') {
                         $requestInformation = \substr($requestInformation, 0, 70);
                         $requestInformation .= ' (' . $requestId . ')';
                     }

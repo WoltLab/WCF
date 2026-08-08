@@ -168,7 +168,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm
         parent::save();
 
         $action = $this->formAction;
-        if ($this->objectActionName) {
+        if ($this->objectActionName !== null) {
             $action = $this->objectActionName;
         } elseif ($this->formAction === 'edit') {
             $action = 'update';
@@ -191,7 +191,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm
 
         WCF::getTPL()->assign('success', true);
 
-        if ($this->formAction === 'create' && $this->objectEditLinkController) {
+        if ($this->formAction === 'create' && $this->objectEditLinkController !== '') {
             WCF::getTPL()->assign(
                 'objectEditLink',
                 LinkHandler::getInstance()->getControllerLink($this->objectEditLinkController, [

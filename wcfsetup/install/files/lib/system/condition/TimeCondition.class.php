@@ -48,14 +48,14 @@ class TimeCondition extends AbstractMultipleFieldsCondition implements IContentC
     {
         $data = [];
 
-        if ($this->startTime) {
+        if ($this->startTime !== '') {
             $data['startTime'] = $this->startTime;
         }
-        if ($this->endTime) {
+        if ($this->endTime !== '') {
             $data['endTime'] = $this->endTime;
         }
 
-        if (!empty($data) && $this->timezone) {
+        if (!empty($data) && $this->timezone !== '') {
             $data['timezone'] = $this->timezone;
         }
 
@@ -100,7 +100,7 @@ HTML;
      */
     protected function getTimezoneFieldElement()
     {
-        $fieldElement = '<select name="timezone" id="timezone"><option value="0"' . ($this->timezone ? ' selected' : '') . '>' . WCF::getLanguage()->get('wcf.date.timezone.user') . '</option>';
+        $fieldElement = '<select name="timezone" id="timezone"><option value="0"' . ($this->timezone !== '' ? ' selected' : '') . '>' . WCF::getLanguage()->get('wcf.date.timezone.user') . '</option>';
         foreach (DateUtil::getAvailableTimezones() as $timezone) {
             $fieldElement .= '<option value="' . $timezone . '"' . ($this->timezone === $timezone ? ' selected' : '') . '>' . WCF::getLanguage()->get('wcf.date.timezone.' . \str_replace(
                 '/',
@@ -122,7 +122,7 @@ HTML;
         if (isset($_POST['startTime'])) {
             $this->startTime = StringUtil::trim($_POST['startTime']);
         }
-        if (isset($_POST['timezone'])) {
+        if (isset($_POST['timezone']) && $_POST['timezone'] !== '0') {
             $this->timezone = StringUtil::trim($_POST['timezone']);
         }
     }
@@ -164,7 +164,7 @@ HTML;
         }
 
         $startDateTime = $endDateTime = null;
-        if ($this->startTime) {
+        if ($this->startTime !== '') {
             $startDateTime = \DateTimeImmutable::createFromFormat('H:i', $this->startTime);
             if ($startDateTime === false) {
                 $this->errorMessages['time'] = 'wcf.date.startTime.error.invalid';
@@ -172,7 +172,7 @@ HTML;
                 throw new UserInputException('startTime', 'invalid');
             }
         }
-        if ($this->endTime) {
+        if ($this->endTime !== '') {
             $endDateTime = \DateTimeImmutable::createFromFormat('H:i', $this->endTime);
             if ($endDateTime === false) {
                 $this->errorMessages['time'] = 'wcf.date.endTime.error.invalid';
@@ -189,7 +189,7 @@ HTML;
             }
         }
 
-        if ($this->timezone && !\in_array($this->timezone, DateUtil::getAvailableTimezones())) {
+        if ($this->timezone !== '' && !\in_array($this->timezone, DateUtil::getAvailableTimezones())) {
             $this->errorMessages['timezone'] = 'wcf.global.form.error.noValidSelection';
 
             throw new UserInputException('timezone', 'noValidSelection');

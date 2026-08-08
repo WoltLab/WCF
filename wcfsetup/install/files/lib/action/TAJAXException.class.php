@@ -77,7 +77,7 @@ trait TAJAXException
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
             ];
-            if ($e instanceof SystemException && $e->getDescription()) {
+            if ($e instanceof SystemException && $e->getDescription() !== '') {
                 $returnValues['description'] = $e->getDescription();
             }
 

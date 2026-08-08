@@ -90,7 +90,7 @@ final class CronjobLogGridView extends AbstractGridView
                             if ($row->success) {
                                 return '<span class="badge green">' . WCF::getLanguage()->get('wcf.acp.cronjob.log.success') . '</span>';
                             }
-                            if ($row->error) {
+                            if ($row->error !== null && $row->error !== '') {
                                 return '<span class="badge red">' . WCF::getLanguage()->get('wcf.acp.cronjob.log.error') . '</span>';
                             }
 
@@ -139,7 +139,7 @@ final class CronjobLogGridView extends AbstractGridView
     {
         return new class(
             'showDetails',
-            static fn(CronjobLog $object) => !!$object->error
+            static fn(CronjobLog $object) => $object->error !== null && $object->error !== ''
         ) extends AbstractInteraction {
             #[\Override]
             public function render(DatabaseObject $object): string

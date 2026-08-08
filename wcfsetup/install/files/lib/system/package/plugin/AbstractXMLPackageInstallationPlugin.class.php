@@ -465,9 +465,10 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
     #[\Override]
     public static function isValid(PackageArchive $packageArchive, string $instruction)
     {
-        if (!$instruction) {
+        if ($instruction === '') {
             $defaultFilename = static::getDefaultFilename();
-            if ($defaultFilename) {
+            // @phpstan-ignore notIdentical.alwaysTrue
+            if ($defaultFilename !== null && $defaultFilename !== '') {
                 $instruction = $defaultFilename;
             }
         }

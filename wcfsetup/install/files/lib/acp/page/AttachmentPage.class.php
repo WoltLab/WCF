@@ -27,7 +27,7 @@ class AttachmentPage extends \wcf\page\AttachmentPage
     {
         AbstractPage::checkPermissions();
 
-        if ($this->attachment->tmpHash) {
+        if ($this->attachment->tmpHash !== '') {
             if ($this->attachment->userID && $this->attachment->userID !== WCF::getUser()->userID) {
                 throw new IllegalLinkException();
             }

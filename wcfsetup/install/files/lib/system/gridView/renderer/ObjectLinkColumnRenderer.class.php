@@ -54,7 +54,7 @@ abstract class ObjectLinkColumnRenderer extends DefaultColumnRenderer implements
             throw new BadMethodCallException(\get_class($object) . " does not implement ITitledObject");
         }
 
-        if ($this->controllerClass) {
+        if ($this->controllerClass !== '') {
             if (!($object instanceof IRouteController)) {
                 throw new BadMethodCallException(\get_class($object) . " does not implement IRouteController");
             }
@@ -72,7 +72,7 @@ abstract class ObjectLinkColumnRenderer extends DefaultColumnRenderer implements
         }
 
         return '<a href="' . StringUtil::encodeHTML($href) . '"'
-            . ($this->titleLanguageItem ? ' title="' . WCF::getLanguage()->get($this->titleLanguageItem) . '"' : '') . '>'
+            . ($this->titleLanguageItem !== '' ? ' title="' . WCF::getLanguage()->get($this->titleLanguageItem) . '"' : '') . '>'
             . StringUtil::encodeHTML($object->getTitle())
             . '</a>';
     }

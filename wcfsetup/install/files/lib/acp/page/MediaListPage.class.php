@@ -119,10 +119,10 @@ class MediaListPage extends SortablePage
                 $this->objectList->getConditionBuilder()->add('media.categoryID = ?', [$this->categoryID]);
             }
         }
-        if ($this->query) {
+        if ($this->query !== '') {
             $this->objectList->addSearchConditions($this->query);
         }
-        if ($this->username) {
+        if ($this->username !== '') {
             $this->objectList->getConditionBuilder()->add(
                 'media.username LIKE ?',
                 ['%' . \addcslashes($this->username, '_%') . '%']
@@ -155,16 +155,16 @@ class MediaListPage extends SortablePage
         }
 
         $parameters = [];
-        if ($this->sortField) {
+        if ($this->sortField !== '') {
             $parameters['sortField'] = $this->sortField;
         }
-        if ($this->sortOrder) {
+        if ($this->sortOrder !== '') {
             $parameters['sortOrder'] = $this->sortOrder;
         }
-        if ($this->query) {
+        if ($this->query !== '') {
             $parameters['q'] = $this->query;
         }
-        if ($this->username) {
+        if ($this->username !== '') {
             $parameters['username'] = $this->username;
         }
         if ($this->categoryID) {
@@ -177,7 +177,7 @@ class MediaListPage extends SortablePage
     #[\Override]
     protected function readObjects()
     {
-        if ($this->sqlOrderBy && $this->sortField === 'mediaID') {
+        if ($this->sqlOrderBy !== '' && $this->sortField === 'mediaID') {
             $this->sqlOrderBy = 'media.' . $this->sortField . ' ' . $this->sortOrder;
         }
 

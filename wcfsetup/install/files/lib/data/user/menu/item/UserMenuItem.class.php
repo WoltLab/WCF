@@ -71,7 +71,7 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, I
     public function getLink(): string
     {
         // external link
-        if (!$this->menuItemController) {
+        if ($this->menuItemController === '') {
             return $this->menuItemLink;
         }
 
@@ -128,7 +128,7 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, I
             $this->controller = '';
 
             // resolve application and controller
-            if ($this->menuItemController) {
+            if ($this->menuItemController !== '') {
                 $parts = \explode('\\', $this->menuItemController);
                 $this->application = \array_shift($parts);
                 $menuItemController = \array_pop($parts);
@@ -153,7 +153,7 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, I
      */
     public function getIcon(): IFontAwesomeIcon
     {
-        if ($this->iconClassName && !\str_starts_with($this->iconClassName, 'fa-')) {
+        if ($this->iconClassName !== '' && !\str_starts_with($this->iconClassName, 'fa-')) {
             $icon = FontAwesomeIcon::fromString($this->iconClassName);
         } else {
             $icon = FontAwesomeIcon::fromValues('bars');

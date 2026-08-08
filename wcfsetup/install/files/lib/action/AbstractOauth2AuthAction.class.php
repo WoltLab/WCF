@@ -53,7 +53,7 @@ abstract class AbstractOauth2AuthAction implements RequestHandlerInterface
         if (!$this->isEnabled()) {
             throw new IllegalLinkException();
         }
-        if (WCF::getSession()->spiderIdentifier) {
+        if (WCF::getSession()->spiderIdentifier !== null) {
             throw new PermissionDeniedException();
         }
 

@@ -255,7 +255,7 @@ class DynamicRequestRoute implements IRequestRoute
                     return false;
                 }
 
-                if ($pattern && !\preg_match($pattern, (string)$components[$component])) {
+                if ($pattern !== '' && !\preg_match($pattern, (string)$components[$component])) {
                     return false;
                 }
             }

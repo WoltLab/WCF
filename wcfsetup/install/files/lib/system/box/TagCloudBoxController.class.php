@@ -37,7 +37,7 @@ abstract class TagCloudBoxController extends AbstractBoxController
     protected function loadContent()
     {
         if (\MODULE_TAGGING && WCF::getSession()->hasPermission('user.tag.canViewTag')) {
-            if ($this->neededPermission) {
+            if ($this->neededPermission !== '' && $this->neededPermission !== []) {
                 if (\is_string($this->neededPermission)) {
                     if (!WCF::getSession()->hasPermission($this->neededPermission)) {
                         return;
@@ -65,7 +65,7 @@ abstract class TagCloudBoxController extends AbstractBoxController
                 $languageIDs = WCF::getUser()->getLanguageIDs();
             }
 
-            if ($this->objectType) {
+            if ($this->objectType !== '') {
                 $tagCloud = new TypedTagCloud($this->objectType, $languageIDs);
             } else {
                 $tagCloud = new TagCloud($languageIDs);

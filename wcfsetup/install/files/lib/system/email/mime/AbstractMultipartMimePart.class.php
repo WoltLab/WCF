@@ -66,7 +66,7 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
         foreach ($parts as $part) {
             $content .= "--" . $this->boundary . "\r\n";
             $content .= "content-type: " . $part->getContentType() . "\r\n";
-            if ($part->getContentTransferEncoding()) {
+            if ($part->getContentTransferEncoding() !== '') {
                 $content .= "content-transfer-encoding: " . $part->getContentTransferEncoding() . "\r\n";
             }
 

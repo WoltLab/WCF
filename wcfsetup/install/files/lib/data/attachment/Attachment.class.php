@@ -129,7 +129,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
         if (!isset($this->permissions[$permission])) {
             $this->permissions[$permission] = true;
 
-            if ($this->tmpHash) {
+            if ($this->tmpHash !== '') {
                 if ($this->userID && $this->userID !== WCF::getUser()->userID) {
                     $this->permissions[$permission] = false;
                 }
@@ -337,7 +337,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      */
     public function hasThumbnail()
     {
-        return $this->thumbnailType ? true : false;
+        return $this->thumbnailType !== '';
     }
 
     /**
@@ -357,7 +357,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      */
     public function getIconName()
     {
-        if ($iconName = FileUtil::getIconNameByFilename($this->filename)) {
+        if (($iconName = FileUtil::getIconNameByFilename($this->filename)) !== '') {
             return 'file-' . $iconName;
         }
 

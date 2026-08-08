@@ -46,7 +46,7 @@ final class LinkHandler extends SingletonFactory
             '^(?P<application>[a-z][a-z0-9]*)\\\\(?P<isAcp>acp\\\\)?.+\\\\(?P<controller>[^\\\\]+)(?:Action|Form|Page)$'
         );
 
-        if (\defined('URL_TITLE_COMPONENT_REPLACEMENT') && \URL_TITLE_COMPONENT_REPLACEMENT) {
+        if (\defined('URL_TITLE_COMPONENT_REPLACEMENT') && \URL_TITLE_COMPONENT_REPLACEMENT !== '') {
             $replacements = \explode(
                 "\n",
                 StringUtil::unifyNewlines(StringUtil::trim(\URL_TITLE_COMPONENT_REPLACEMENT))

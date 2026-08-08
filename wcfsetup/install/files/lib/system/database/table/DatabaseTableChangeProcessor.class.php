@@ -293,7 +293,7 @@ final class DatabaseTableChangeProcessor
 
             $renamedColumnsWithLog = [];
             foreach ($columnsToAlter as $column) {
-                if ($column->getNewName() && $this->getColumnLog($tableName, $column) !== null) {
+                if ($column->getNewName() !== null && $this->getColumnLog($tableName, $column) !== null) {
                     $this->prepareColumnLog($tableName, $column, true);
                     $renamedColumnsWithLog[] = $column;
                 }
@@ -484,7 +484,7 @@ final class DatabaseTableChangeProcessor
                     } elseif (!isset($existingColumns[$column->getName()])) {
                         // It was already checked in `validate()` that for renames, the column either
                         // exists with the old or new name.
-                        if (!$column->getNewName()) {
+                        if ($column->getNewName() === null) {
                             if (!isset($this->columnsToAdd[$tableName])) {
                                 $this->columnsToAdd[$tableName] = [];
                             }
@@ -856,7 +856,7 @@ final class DatabaseTableChangeProcessor
             }
         }
 
-        if ($newColumn->getNewName()) {
+        if ($newColumn->getNewName() !== null) {
             return true;
         }
 
@@ -1274,7 +1274,7 @@ final class DatabaseTableChangeProcessor
                                         'type' => 'foreignColumnChange',
                                     ];
                                 }
-                            } elseif ($column->getNewName() && !isset($existingColumns[$column->getNewName()])) {
+                            } elseif ($column->getNewName() !== null && !isset($existingColumns[$column->getNewName()])) {
                                 // Only show error message for a column rename if no column with the
                                 // old or new name exists.
                                 $errors[] = [
@@ -1420,7 +1420,7 @@ final class DatabaseTableChangeProcessor
         foreach ($updateTable->getColumns() as $column) {
             if (
                 ($column->getNewName() === $columnName)
-                || ($column->getName() === $columnName && !$column->getNewName())
+                || ($column->getName() === $columnName && $column->getNewName() === null)
             ) {
                 return $column;
             }

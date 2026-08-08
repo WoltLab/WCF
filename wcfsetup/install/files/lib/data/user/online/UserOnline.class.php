@@ -54,7 +54,7 @@ class UserOnline extends UserProfile
     {
         $username = StringUtil::encodeHTML($this->username);
 
-        if ($this->userOnlineMarking && $this->userOnlineMarking !== '%s') {
+        if ($this->userOnlineMarking !== null && $this->userOnlineMarking !== '' && $this->userOnlineMarking !== '%s') {
             $username = \str_replace('%s', $username, $this->userOnlineMarking);
         }
 
@@ -124,7 +124,7 @@ class UserOnline extends UserProfile
      */
     public function getFormattedIPAddress()
     {
-        if ($address = UserUtil::convertIPv6To4($this->ipAddress)) {
+        if (($address = UserUtil::convertIPv6To4($this->ipAddress)) !== '') {
             return $address;
         }
 
@@ -151,7 +151,7 @@ class UserOnline extends UserProfile
 
         $browserVersion = $userAgent->getBrowserVersion();
 
-        return $userAgent->getBrowser() . ($browserVersion ? ' ' . $browserVersion : '');
+        return $userAgent->getBrowser() . (($browserVersion !== null && $browserVersion !== '') ? ' ' . $browserVersion : '');
     }
 
     /**
@@ -159,7 +159,7 @@ class UserOnline extends UserProfile
      */
     public function getSpider(): ?Spider
     {
-        if (!$this->spiderIdentifier) {
+        if ($this->spiderIdentifier === null) {
             return null;
         }
 

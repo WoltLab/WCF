@@ -165,7 +165,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm
             'showOrder' => $this->showOrder,
         ]);
 
-        if ($this->pageTitle) {
+        if ($this->pageTitle !== '') {
             WCF::getTPL()->assign('pageTitle', $this->pageTitle);
         }
     }

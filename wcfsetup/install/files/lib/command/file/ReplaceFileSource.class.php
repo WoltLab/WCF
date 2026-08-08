@@ -76,7 +76,9 @@ final class ReplaceFileSource
             [$width, $height] = \getimagesize($this->pathname);
         }
 
-        $filename = $this->filename ? $this->filename : \basename($this->pathname);
+        $filename = ($this->filename !== null && $this->filename !== '')
+            ? $this->filename
+            : \basename($this->pathname);
         $fileSize = \filesize($this->pathname);
         $fileHash = \hash_file('sha256', $this->pathname);
         $fileExtension = File::getSafeFileExtension($mimeType, $filename);

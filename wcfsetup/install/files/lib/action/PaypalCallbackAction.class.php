@@ -112,7 +112,7 @@ final class PaypalCallbackAction extends AbstractAction
                 $status = 'canceled_reversal';
             }
 
-            if ($status) {
+            if ($status !== '') {
                 $processor->processTransaction(
                     ObjectTypeCache::getInstance()->getObjectTypeIDByName(
                         'com.woltlab.wcf.payment.method',

@@ -112,7 +112,7 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
     {
         if (\MODULE_MEMBERS_LIST) {
             $parameters = '';
-            if ($this->sortField) {
+            if ($this->sortField !== null && $this->sortField !== '') {
                 $parameters = 'sortField=' . $this->sortField . '&sortOrder=' . $this->sortOrder;
             }
 
@@ -126,7 +126,7 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
     protected function getObjectList(): UserProfileList
     {
         // use specialized cache builders
-        if ($this->sortOrder && $this->sortField) {
+        if ($this->sortOrder !== '' && $this->sortField !== '') {
             $conditions = \array_filter($this->box->getConditions(), static function (Condition $condition) {
                 return $condition->getObjectType()->getProcessor() instanceof IObjectListCondition;
             });

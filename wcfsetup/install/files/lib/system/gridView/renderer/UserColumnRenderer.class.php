@@ -24,7 +24,7 @@ class UserColumnRenderer extends DefaultColumnRenderer
     public function render(mixed $value, DatabaseObject $row): string
     {
         if (!$value) {
-            if ($this->fallbackValue) {
+            if ($this->fallbackValue !== '') {
                 return StringUtil::encodeHTML($row->{$this->fallbackValue} ?? '');
             }
 

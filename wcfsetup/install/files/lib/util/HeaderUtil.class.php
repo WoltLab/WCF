@@ -82,7 +82,7 @@ final class HeaderUtil
         @\header('Content-Type: text/html; charset=UTF-8');
 
         // send no cache headers
-        if (!WCF::getSession()->spiderIdentifier) {
+        if (WCF::getSession()->spiderIdentifier === null) {
             self::sendNoCacheHeaders();
         }
 

@@ -330,7 +330,7 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
             ->addValidator(new FormFieldValidator('futureTime', function (DateFormField $formField) {
                 $endTime = $formField->getSaveValue();
 
-                if ($endTime && $endTime <= \TIME_NOW) {
+                if ($endTime !== null && $endTime !== '' && $endTime !== '0' && $endTime <= \TIME_NOW) {
                     if ($this->poll === null || $this->poll->endTime >= \TIME_NOW) {
                         $formField->addValidationError(new FormFieldValidationError(
                             'invalid',

@@ -431,7 +431,7 @@ class StyleAddForm extends AbstractForm
                 } catch (FontDownloadFailed $e) {
                     throw new UserInputException(
                         'wcfFontFamilyGoogle',
-                        'downloadFailed' . ($e->getReason() ? '.' . $e->getReason() : '')
+                        'downloadFailed' . ($e->getReason() !== '' ? '.' . $e->getReason() : '')
                     );
                 }
             }
@@ -877,7 +877,7 @@ class StyleAddForm extends AbstractForm
         ]);
 
         // Do not save the compiled style, because the image path was unknown during the style generation.
-        if ($this->styleTestFileDir) {
+        if ($this->styleTestFileDir !== null) {
             if (\file_exists($this->styleTestFileDir . '/style.css')) {
                 \unlink($this->styleTestFileDir . '/style.css');
             }

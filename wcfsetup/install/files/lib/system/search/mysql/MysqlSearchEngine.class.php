@@ -155,10 +155,10 @@ class MysqlSearchEngine extends AbstractSearchEngine
         }
 
         $sql = "SELECT  objectID
-                        " . ($relevanceCalc ? ',' . $relevanceCalc : ", '0' AS relevance") . "
+                        " . ($relevanceCalc !== '' ? ',' . $relevanceCalc : ", '0' AS relevance") . "
                 FROM    " . SearchIndexManager::getTableName($objectTypeName) . "
                 WHERE   " . ($fulltextCondition !== null ? $fulltextCondition : '') . "
-                " . (($searchIndexCondition !== null && $searchIndexCondition->__toString()) ? ($fulltextCondition !== null ? "AND " : '') . $searchIndexCondition : '') . "
+                " . (($searchIndexCondition !== null && $searchIndexCondition->__toString() !== '') ? ($fulltextCondition !== null ? "AND " : '') . $searchIndexCondition : '') . "
                 " . (!empty($orderBy) && $fulltextCondition === null ? 'ORDER BY ' . $orderBy : '') . "
                 LIMIT   " . ($limit === 1000 ? SearchEngine::INNER_SEARCH_LIMIT : $limit);
 
@@ -192,7 +192,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
                 continue;
             }
 
-            if (!$prefix) {
+            if ($prefix === null) {
                 // Add a '+' prefix if no prefix is given, and
                 // the word is not a stopword, and
                 // - the word is longer than the min token size, or
@@ -207,7 +207,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
                     $prefix = '+';
                 }
             }
-            if (!$suffix) {
+            if ($suffix === null) {
                 // Add a '*' suffix if no suffix is given,
                 // - the word is not quoted, and
                 // - the prefix is not '-'.
@@ -334,7 +334,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
      * Word: |bar|
      * Word: |)|
      *
-     * @return iterable<array{0: string, 1: string, 2: string}>
+     * @return iterable<array{0: ?non-empty-string, 1: string, 2: ?non-empty-string}>
      * @see https://dev.mysql.com/doc/refman/8.0/en/fulltext-boolean.html
      * @see https://github.com/mysql/mysql-server/blob/ee4455a33b10f1b1886044322e4893f587b319ed/storage/innobase/fts/fts0pars.y
      * @see https://github.com/mysql/mysql-server/blob/ee4455a33b10f1b1886044322e4893f587b319ed/storage/innobase/fts/fts0blex.l
@@ -504,7 +504,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
                 }
             } elseif ($state === 'finish') {
                 // Yield only if the word is non-empty.
-                if ($word) {
+                if ($word !== '') {
                     yield [$prefix, $word, $suffix];
                 }
 
@@ -530,7 +530,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
         }
 
         // Yield only if the word is non-empty.
-        if ($word && $word !== '"') {
+        if ($word !== '' && $word !== '"') {
             // Add missing quote.
             if ($isQuoted && \substr($word, -1) !== '"') {
                 $word .= '"';
@@ -541,7 +541,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
 
         // Yield the remaining closing parentheses.
         while ($parentheses-- > 0) {
-            yield ['', ')', ''];
+            yield [null, ')', null];
         }
     }
 

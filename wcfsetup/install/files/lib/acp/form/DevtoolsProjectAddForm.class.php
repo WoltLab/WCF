@@ -979,7 +979,7 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
         }
 
         $action = $this->formAction;
-        if ($this->objectActionName) {
+        if ($this->objectActionName !== null) {
             $action = $this->objectActionName;
         } elseif ($this->formAction === 'edit') {
             $action = 'update';

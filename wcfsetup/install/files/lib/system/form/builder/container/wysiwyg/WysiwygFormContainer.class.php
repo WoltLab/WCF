@@ -568,7 +568,7 @@ class WysiwygFormContainer extends FormContainer implements IBuilderNode
             ->appendChildren($this->settingsNodes);
         $this->pollContainer = WysiwygPollFormContainer::create($this->wysiwygId . 'PollContainer')
             ->wysiwygId($this->getWysiwygId());
-        if ($this->pollObjectType) {
+        if ($this->pollObjectType !== null) {
             $this->pollContainer->objectType($this->pollObjectType);
         }
 

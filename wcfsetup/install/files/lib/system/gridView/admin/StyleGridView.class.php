@@ -59,7 +59,7 @@ final class StyleGridView extends AbstractGridView
                                 );
                             }
 
-                            $styleDescription = $row->styleDescription ? WCF::getLanguage()->get($row->styleDescription) : '';
+                            $styleDescription = $row->styleDescription !== '' ? WCF::getLanguage()->get($row->styleDescription) : '';
                             if ($styleDescription === '') {
                                 return $value;
                             }
@@ -89,7 +89,7 @@ final class StyleGridView extends AbstractGridView
                         {
                             \assert($row instanceof Style);
 
-                            if (!$row->authorURL) {
+                            if ($row->authorURL === '') {
                                 return $value;
                             }
 

@@ -135,7 +135,7 @@ class Language extends DatabaseObject implements \Stringable
     public function getDynamicVariable(string $item, array $variables = [], bool $optional = false): string
     {
         $staticItem = $this->get($item, $optional);
-        if (!$staticItem) {
+        if ($staticItem === '') {
             return '';
         }
 

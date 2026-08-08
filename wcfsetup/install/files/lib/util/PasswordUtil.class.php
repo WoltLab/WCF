@@ -455,12 +455,12 @@ final class PasswordUtil
         }
 
         $hash = '';
-        if ($enableSalting) {
+        if ($enableSalting === '1') {
             if ($saltPosition === 'b') {
                 $hash .= $salt;
             }
 
-            if ($encryptBeforeSalting) {
+            if ($encryptBeforeSalting === '1') {
                 $hash .= $encryptionMethod($password);
             } else {
                 $hash .= $password;

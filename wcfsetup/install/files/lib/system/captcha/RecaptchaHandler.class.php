@@ -52,11 +52,11 @@ class RecaptchaHandler implements ICaptchaHandler
     #[\Override]
     public function isAvailable()
     {
-        if (\RECAPTCHA_PUBLICKEY_V3 && \RECAPTCHA_PRIVATEKEY_V3) {
+        if (\RECAPTCHA_PUBLICKEY_V3 !== '' && \RECAPTCHA_PRIVATEKEY_V3 !== '') {
             return true;
         }
 
-        if (!\RECAPTCHA_PUBLICKEY || !\RECAPTCHA_PRIVATEKEY) {
+        if (\RECAPTCHA_PUBLICKEY === '' || \RECAPTCHA_PRIVATEKEY === '') {
             // OEM keys are no longer supported, disable reCAPTCHA
             if (self::$forceIsAvailable) {
                 // work-around for the ACP option selection

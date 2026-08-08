@@ -67,14 +67,14 @@ abstract class AbstractListViewBoxController extends AbstractDatabaseObjectListB
             $this->getListView()->setFixedNumberOfItems($this->limit);
         }
 
-        if ($this->sortOrder && $this->sortField) {
+        if ($this->sortOrder !== '' && $this->sortField !== '') {
             $this->getListView()->setSortField($this->sortField);
             $this->getListView()->setSortOrder($this->sortOrder);
         }
 
         $this->objectList = $this->getObjectList();
 
-        if ($this->conditionDefinition) {
+        if ($this->conditionDefinition !== '') {
             foreach ($this->box->getControllerConditions() as $condition) {
                 $processor = $condition->getObjectType()->getProcessor();
                 if ($processor instanceof IObjectListCondition) {

@@ -53,7 +53,7 @@ class MenuItemAction extends AbstractDatabaseObjectAction
         /** @var MenuItem $menuItem */
         $menuItem = parent::create();
 
-        if (!$menuItem->identifier) {
+        if ($menuItem->identifier === '') {
             $editor = new MenuItemEditor($menuItem);
             $editor->update([
                 'identifier' => 'com.woltlab.wcf.generic' . $menuItem->itemID,

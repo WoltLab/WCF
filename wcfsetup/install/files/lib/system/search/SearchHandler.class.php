@@ -224,7 +224,7 @@ final class SearchHandler
 
                     if (
                         \count($this->objectTypeNames) === 1
-                        && ($newSortField = $objectType->getCustomSortField($this->parameters['sortField']))
+                        && ($newSortField = $objectType->getCustomSortField($this->parameters['sortField'])) !== ''
                     ) {
                         $this->parameters['sortField'] = $newSortField;
                     }
@@ -263,10 +263,10 @@ final class SearchHandler
         if (\count($form->selectedObjectTypes) === 1) {
             $this->objectTypeNames = $form->selectedObjectTypes;
         }
-        if ($form->sortField) {
+        if ($form->sortField !== '') {
             $this->parameters['sortField'] = $form->sortField;
         }
-        if ($form->sortOrder) {
+        if ($form->sortOrder !== '') {
             $this->parameters['sortOrder'] = $form->sortOrder;
         }
 

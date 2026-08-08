@@ -136,7 +136,7 @@ final class ControllerMap extends SingletonFactory
      *
      * URL -> Controller
      *
-     * @return array{}|array{className: string, controller: string}|array{className: string, controller: string, cmsPageID: string, cmsPageLanguageID: string}
+     * @return array{}|array{className: string, controller: string}|array{className: string, controller: string, cmsPageID: decimal-int-string, cmsPageLanguageID: decimal-int-string}
      */
     public function resolveCustomController(string $application, string $controller): array
     {
@@ -276,7 +276,7 @@ final class ControllerMap extends SingletonFactory
         if ($customController !== []) {
             if ($customController['className'] === CmsPage::class) {
                 // i18n CMS pages must preserve the controller within the URL.
-                if ($customController['cmsPageLanguageID']) {
+                if ($customController['cmsPageLanguageID'] !== '0') {
                     return false;
                 }
 
@@ -400,7 +400,7 @@ final class ControllerMap extends SingletonFactory
                 $sanitizedParts[] = $tmp . $part;
                 $tmp = '';
             }
-            if ($tmp) {
+            if ($tmp !== '') {
                 $sanitizedParts[] = $tmp;
             }
             $parts = $sanitizedParts;
