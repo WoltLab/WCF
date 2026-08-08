@@ -64,7 +64,10 @@ final class CheckForMultifactorRequirement implements MiddlewareInterface
             return true;
         }
 
-        if (Helper::isAjaxRequest($request)) {
+        // A navigation request that claims to be an AJAX request is a forgery,
+        // because scripts are unable to set the `x-requested-with` header on a
+        // navigation.
+        if (Helper::isAjaxRequest($request) && !Helper::isNavigationRequest($request)) {
             return true;
         }
 
