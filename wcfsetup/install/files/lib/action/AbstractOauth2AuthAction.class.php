@@ -348,8 +348,33 @@ abstract class AbstractOauth2AuthAction implements RequestHandlerInterface
     protected function handleError(OAuth2Failure $oauth2Failure): ResponseInterface
     {
         throw new NamedUserException(HtmlString::fromSafeHtml(
-            WCF::getLanguage()->getDynamicVariable('wcf.user.3rdparty.login.error.' . $oauth2Failure->error)
+            self::getErrorMessage($oauth2Failure->error)
         ));
+    }
+
+    /**
+     * Returns the message describing the given error code.
+     *
+     * The error code originates from the request of the remote service and
+     * therefore is not trustworthy. Unknown phrases are returned verbatim by
+     * the phrase API, thus an unvalidated error code must not be used to build
+     * the name of the phrase. Such a code is reported through a template
+     * variable instead, causing it to be properly escaped.
+     *
+     * @since 6.2
+     */
+    private static function getErrorMessage(string $error): string
+    {
+        if (!\preg_match('/^[a-zA-Z0-9_-]+$/', $error)) {
+            return WCF::getLanguage()->getDynamicVariable(
+                'wcf.user.3rdparty.login.error.unknownError',
+                [
+                    'errorCode' => \mb_substr($error, 0, 100),
+                ]
+            );
+        }
+
+        return WCF::getLanguage()->getDynamicVariable('wcf.user.3rdparty.login.error.' . $error);
     }
 
     /**
