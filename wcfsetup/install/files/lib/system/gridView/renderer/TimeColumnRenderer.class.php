@@ -19,7 +19,7 @@ class TimeColumnRenderer extends AbstractColumnRenderer
     public function render(mixed $value, DatabaseObject $row): string
     {
         $timestamp = \intval($value);
-        if (!$timestamp) {
+        if ($timestamp === 0) {
             return '';
         }
 

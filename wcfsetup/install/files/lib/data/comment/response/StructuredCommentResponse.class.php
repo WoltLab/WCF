@@ -60,7 +60,7 @@ class StructuredCommentResponse extends DatabaseObjectDecorator
     public function getUserProfile()
     {
         if ($this->userProfile === null) {
-            if ($this->userID) {
+            if ($this->userID !== null) {
                 $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
             } else {
                 $this->userProfile = UserProfile::getGuestUserProfile($this->username);
@@ -86,7 +86,7 @@ class StructuredCommentResponse extends DatabaseObjectDecorator
         $response = new self($response);
 
         // cache user profile
-        if ($response->userID) {
+        if ($response->userID !== null) {
             UserProfileRuntimeCache::getInstance()->cacheObjectID($response->userID);
         }
 

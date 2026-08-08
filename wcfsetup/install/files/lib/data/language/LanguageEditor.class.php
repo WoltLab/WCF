@@ -424,7 +424,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                     $itemData[] = $itemName;
                     $itemData[] = $itemValue;
                     $itemData[] = $categoryID;
-                    if ($packageID) {
+                    if ($packageID !== 0) {
                         if ($packageID === -1) {
                             throw new \BadMethodCallException('Specifying `-1` as the packageID is no longer supported.');
                         }
@@ -510,19 +510,19 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
             }
 
             // insert/update a maximum of 50 items per run (prevents issues with max_allowed_packet)
-            $step = $packageID ? 5 : 4;
+            $step = $packageID !== 0 ? 5 : 4;
             WCF::getDB()->beginTransaction();
             for ($i = 0, $length = \count($itemData); $i < $length; $i += 50 * $step) {
                 $parameters = \array_slice($itemData, $i, 50 * $step);
                 $repeat = \count($parameters) / $step;
 
                 $placeholders = \substr(
-                    \str_repeat('(?, ?, ?, ?' . ($packageID ? ', ?' : '') . '),', $repeat),
+                    \str_repeat('(?, ?, ?, ?' . ($packageID !== 0 ? ', ?' : '') . '),', $repeat),
                     0,
                     -1
                 );
                 $sql = "INSERT" . (!$updateExistingItems ? " IGNORE" : "") . " INTO wcf1_language_item
-                                    (languageID, languageItem, languageItemValue, languageCategoryID" . ($packageID ? ", packageID" : "") . ")
+                                    (languageID, languageItem, languageItemValue, languageCategoryID" . ($packageID !== 0 ? ", packageID" : "") . ")
                         VALUES      {$placeholders}";
 
                 if ($updateExistingItems) {

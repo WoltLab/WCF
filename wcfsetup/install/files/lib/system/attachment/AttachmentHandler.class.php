@@ -65,7 +65,7 @@ class AttachmentHandler implements \Countable
      */
     public function __construct(string $objectType, int $objectID, string $tmpHash = '', int $parentObjectID = 0)
     {
-        if (!$objectID && $tmpHash === '') {
+        if ($objectID === 0 && $tmpHash === '') {
             throw new SystemException('objectID and tmpHash cannot be empty at the same time');
         }
 
@@ -95,7 +95,7 @@ class AttachmentHandler implements \Countable
             $this->attachmentList = new AttachmentList();
             $this->attachmentList->sqlOrderBy = 'attachment.showOrder';
             $this->attachmentList->getConditionBuilder()->add('objectTypeID = ?', [$this->objectType->objectTypeID]);
-            if ($this->objectID) {
+            if ($this->objectID !== 0) {
                 $this->attachmentList->getConditionBuilder()->add('objectID = ?', [$this->objectID]);
             } else {
                 $this->attachmentList->getConditionBuilder()->add('tmpHash IN (?)', [$this->tmpHash]);
@@ -207,7 +207,7 @@ class AttachmentHandler implements \Countable
 
         // Check if auto scaling is enabled and is set to convert images which
         // would yield WebP.
-        if (!\ATTACHMENT_IMAGE_AUTOSCALE || \ATTACHMENT_IMAGE_AUTOSCALE_FILE_TYPE === 'keep') {
+        if (\ATTACHMENT_IMAGE_AUTOSCALE === 0 || \ATTACHMENT_IMAGE_AUTOSCALE_FILE_TYPE === 'keep') {
             return $extensions;
         }
 

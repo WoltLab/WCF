@@ -34,6 +34,9 @@ class UserFollowUserNotificationObject extends DatabaseObjectDecorator implement
         return '';
     }
 
+    /**
+     * @return int
+     */
     #[\Override]
     public function getAuthorID()
     {

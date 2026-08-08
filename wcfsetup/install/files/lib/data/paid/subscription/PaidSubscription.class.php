@@ -48,7 +48,7 @@ class PaidSubscription extends DatabaseObject implements ITitledObject
         $buttons = [];
         foreach (PaymentMethodHandler::getInstance()->getPaymentMethods() as $paymentMethod) {
             // check if payment method supports recurring payments
-            if ($this->isRecurring && !$paymentMethod->supportsRecurringPayments()) {
+            if ($this->isRecurring !== 0 && !$paymentMethod->supportsRecurringPayments()) {
                 continue;
             }
 
@@ -132,7 +132,7 @@ class PaidSubscription extends DatabaseObject implements ITitledObject
         $list = new PaidSubscriptionUserList();
         $list->getConditionBuilder()->add('subscriptionID = ?', [$this->subscriptionID]);
 
-        return $list->countObjects() ? true : false;
+        return $list->countObjects() !== 0 ? true : false;
     }
 
     /**

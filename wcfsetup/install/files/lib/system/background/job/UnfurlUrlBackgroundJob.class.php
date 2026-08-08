@@ -76,7 +76,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
             $imageData = [];
             $imageID = null;
             $imageUrl = $unfurlResponse->getImageUrl();
-            if (\URL_UNFURLING_SAVE_IMAGES && $imageUrl !== null && $imageUrl !== '') {
+            if (\URL_UNFURLING_SAVE_IMAGES !== 0 && $imageUrl !== null && $imageUrl !== '') {
                 if (
                     \strpos($imageUrl, '\\') === false
                     && \strpos($imageUrl, "'") === false
@@ -98,7 +98,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
                 $imageData
             );
         } catch (UrlInaccessible | ParsingFailed $e) {
-            if (\ENABLE_DEBUG_MODE) {
+            if (\ENABLE_DEBUG_MODE !== 0) {
                 \wcf\functions\exception\logThrowable($e);
             }
 

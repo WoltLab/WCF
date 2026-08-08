@@ -65,7 +65,7 @@ class UserBirthdayListView extends AbstractSimpleUserListView
     #[\Override]
     public function isAccessible(): bool
     {
-        if (!\MODULE_MEMBERS_LIST || !WCF::getSession()->hasPermission('user.profile.canViewMembersList')) {
+        if (\MODULE_MEMBERS_LIST === 0 || !WCF::getSession()->hasPermission('user.profile.canViewMembersList')) {
             return false;
         }
 

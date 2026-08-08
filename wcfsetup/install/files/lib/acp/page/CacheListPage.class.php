@@ -114,7 +114,7 @@ class CacheListPage extends AbstractPage
         // get additional file information
         $data = [];
         foreach ($files as $file) {
-            if ($ignore !== null && $ignore->match($file->getPath())) {
+            if ($ignore !== null && $ignore->match($file->getPath()) !== 0) {
                 continue;
             }
 

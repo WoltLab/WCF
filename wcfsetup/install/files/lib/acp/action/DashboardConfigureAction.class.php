@@ -102,7 +102,7 @@ final class DashboardConfigureAction implements RequestHandlerInterface
         $selectedBoxNames = [];
 
         foreach ($this->userConfiguration as $box) {
-            if (!$box['enabled']) {
+            if ($box['enabled'] === 0) {
                 continue;
             }
 
@@ -148,13 +148,13 @@ final class DashboardConfigureAction implements RequestHandlerInterface
 
             if (isset($this->userConfiguration[$boxNameA])) {
                 $enabledA = $this->userConfiguration[$boxNameA]['enabled'];
-                if ($enabledA) {
+                if ($enabledA !== 0) {
                     $showOrderA = $this->userConfiguration[$boxNameA]['showOrder'];
                 }
             }
             if (isset($this->userConfiguration[$boxNameB])) {
                 $enabledB = $this->userConfiguration[$boxNameB]['enabled'];
-                if ($enabledB) {
+                if ($enabledB !== 0) {
                     $showOrderB = $this->userConfiguration[$boxNameB]['showOrder'];
                 }
             }

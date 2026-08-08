@@ -29,17 +29,17 @@ class AbstractPollOptionVoteImporter extends AbstractImporter
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         $data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
-        if (!$data['userID']) {
+        if ($data['userID'] === null) {
             return 0;
         }
 
         $data['pollID'] = ImportHandler::getInstance()->getNewID($this->pollObjectTypeName, $data['pollID']);
-        if (!$data['pollID']) {
+        if ($data['pollID'] === null) {
             return 0;
         }
 
         $data['optionID'] = ImportHandler::getInstance()->getNewID($this->objectTypeName, $data['optionID']);
-        if (!$data['optionID']) {
+        if ($data['optionID'] === null) {
             return 0;
         }
 

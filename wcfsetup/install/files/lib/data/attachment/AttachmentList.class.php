@@ -42,7 +42,7 @@ class AttachmentList extends DatabaseObjectList
     {
         $fileIDs = [];
         foreach ($this->objects as $attachment) {
-            if ($attachment->fileID) {
+            if ($attachment->fileID !== null) {
                 $fileIDs[] = $attachment->fileID;
             }
         }

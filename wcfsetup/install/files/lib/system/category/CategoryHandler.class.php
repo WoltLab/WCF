@@ -83,11 +83,11 @@ final class CategoryHandler extends SingletonFactory
      */
     public function getChildCategories(int $categoryID, ?int $objectTypeID = null): array
     {
-        if (!$categoryID && $objectTypeID === null) {
+        if ($categoryID === 0 && $objectTypeID === null) {
             throw new SystemException("Missing object type id");
         }
 
-        if ($categoryID) {
+        if ($categoryID !== 0) {
             $objectTypeID = $this->getCategory($categoryID)->objectTypeID;
         }
 

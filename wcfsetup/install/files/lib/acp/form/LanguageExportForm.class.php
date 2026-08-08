@@ -108,7 +108,7 @@ class LanguageExportForm extends AbstractForm
     {
         parent::readData();
 
-        if (empty($_POST) && $this->languageID) {
+        if (empty($_POST) && $this->languageID !== 0) {
             $language = LanguageFactory::getInstance()->getLanguage($this->languageID);
             if ($language === null) {
                 throw new IllegalLinkException();

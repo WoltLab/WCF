@@ -89,7 +89,7 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
         }
 
         foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
-            if (!$application->isTainted) {
+            if ($application->isTainted === 0) {
                 continue;
             }
 
@@ -119,7 +119,7 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
             Environment::SYSTEM_ID_REGISTRY_KEY
         );
         if ($storedSystemId !== Environment::getSystemId()) {
-            if (WCF::getSession()->hasPermission('admin.configuration.package.canInstallPackage') && (!\ENABLE_ENTERPRISE_MODE || WCF::getUser()->hasOwnerAccess())) {
+            if (WCF::getSession()->hasPermission('admin.configuration.package.canInstallPackage') && (\ENABLE_ENTERPRISE_MODE === 0 || WCF::getUser()->hasOwnerAccess())) {
                 $messages[] = new StatusMessage(
                     StatusMessageType::Info,
                     WCF::getLanguage()->getDynamicVariable('wcf.acp.index.systemIdMismatch')
@@ -127,7 +127,7 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
             }
         }
 
-        if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
+        if (\ENABLE_DEBUG_MODE !== 0 && \ENABLE_DEVELOPER_TOOLS !== 0) {
             $logList = new DevtoolsMissingLanguageItemList();
             $logList->sqlOrderBy = 'lastTime DESC';
             $logList->sqlLimit = 1;
@@ -161,7 +161,7 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
     {
         $evaluationExpired = $evaluationPending = [];
         foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
-            if ($application->isTainted) {
+            if ($application->isTainted !== 0) {
                 continue;
             }
 
@@ -171,7 +171,7 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
 
             $app = WCF::getApplicationObject($application);
             $endDate = $app->getEvaluationEndDate();
-            if ($endDate) {
+            if ($endDate !== 0) {
                 if ($endDate < \TIME_NOW) {
                     $pluginStoreFileID = $app->getEvaluationPluginStoreID();
                     $isWoltLab = false;

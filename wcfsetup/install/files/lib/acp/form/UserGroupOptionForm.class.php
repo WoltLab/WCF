@@ -106,7 +106,7 @@ class UserGroupOptionForm extends AbstractForm
 
         // read accessible groups
         $this->groups = UserGroup::getSortedAccessibleGroups();
-        if ($this->userGroupOption->usersOnly) {
+        if ($this->userGroupOption->usersOnly !== 0) {
             $guestGroup = UserGroup::getGroupByType(UserGroup::GUESTS);
             if (isset($this->groups[$guestGroup->groupID])) {
                 unset($this->groups[$guestGroup->groupID]);
@@ -160,7 +160,7 @@ class UserGroupOptionForm extends AbstractForm
             }
 
             if (
-                WCF::getUser()->hasAdministrativeAccess() && (!\ENABLE_ENTERPRISE_MODE || !\in_array(
+                WCF::getUser()->hasAdministrativeAccess() && (\ENABLE_ENTERPRISE_MODE === 0 || !\in_array(
                     $this->userGroupOption->optionName,
                     UserGroupOption::ENTERPRISE_BLACKLIST
                 ))
@@ -268,7 +268,7 @@ class UserGroupOptionForm extends AbstractForm
         }
 
         $ownerGroupPermissions = [];
-        if ($ownerGroupID) {
+        if ($ownerGroupID !== 0) {
             $ownerGroupPermissions = UserGroup::getOwnerPermissions();
             $ownerGroupPermissions[] = 'admin.user.accessibleGroups';
         }

@@ -597,7 +597,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
 
         $this->readBoolean('ignoreCache', true);
 
-        if (\ENABLE_BENCHMARK) {
+        if (\ENABLE_BENCHMARK !== 0) {
             throw new NamedUserException(HtmlString::fromSafeHtml(
                 WCF::getLanguage()->getDynamicVariable('wcf.acp.package.searchForUpdates.benchmark')
             ));
@@ -729,7 +729,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
 
         $this->readBoolean('ignoreCache', true);
 
-        if (\ENABLE_BENCHMARK) {
+        if (\ENABLE_BENCHMARK !== 0) {
             throw new NamedUserException(HtmlString::fromSafeHtml(
                 WCF::getLanguage()->getDynamicVariable('wcf.acp.package.searchForUpdates.benchmark')
             ));

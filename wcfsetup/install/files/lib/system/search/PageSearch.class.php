@@ -136,6 +136,6 @@ class PageSearch extends AbstractSearchProvider
     #[\Override]
     public function isAccessible(): bool
     {
-        return !!\SEARCH_ENABLE_PAGES;
+        return \SEARCH_ENABLE_PAGES !== 0;
     }
 }

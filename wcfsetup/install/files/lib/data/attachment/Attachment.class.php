@@ -130,7 +130,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
             $this->permissions[$permission] = true;
 
             if ($this->tmpHash !== '') {
-                if ($this->userID && $this->userID !== WCF::getUser()->userID) {
+                if ($this->userID !== null && $this->userID !== WCF::getUser()->userID) {
                     $this->permissions[$permission] = false;
                 }
             } else {
@@ -300,7 +300,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      */
     public function showAsImage()
     {
-        if ($this->isImage) {
+        if ($this->isImage !== 0) {
             if (!$this->hasThumbnail() && ($this->width > \ATTACHMENT_THUMBNAIL_WIDTH || $this->height > \ATTACHMENT_THUMBNAIL_HEIGHT)) {
                 // Some images have no thumbnail because this is not really an
                 // image or it is unrecognized. However, there are images that
@@ -366,7 +366,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 
     public function getFile(): ?File
     {
-        if (!$this->fileID) {
+        if ($this->fileID === null) {
             return null;
         }
 

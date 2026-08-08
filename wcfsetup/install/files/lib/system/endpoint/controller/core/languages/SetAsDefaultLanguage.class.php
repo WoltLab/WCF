@@ -41,7 +41,7 @@ final class SetAsDefaultLanguage implements IController
     {
         WCF::getSession()->checkPermissions(['admin.language.canManageLanguage']);
 
-        if ($language->isDefault) {
+        if ($language->isDefault !== 0) {
             throw new PermissionDeniedException();
         }
     }

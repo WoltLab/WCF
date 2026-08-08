@@ -133,7 +133,7 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
     public function toggle()
     {
         foreach ($this->getObjects() as $editor) {
-            if ($editor->isDisabled) {
+            if ($editor->isDisabled !== 0) {
                 new EnableTrophy($editor->getDecoratedObject())();
             } else {
                 new DisableTrophy($editor->getDecoratedObject())();
@@ -152,7 +152,7 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
         if ($this->parameters['trophyID']) {
             $this->parameters['trophy'] = new Trophy($this->parameters['trophyID']);
 
-            if (!$this->parameters['trophy']->trophyID) {
+            if ($this->parameters['trophy']->trophyID === 0) {
                 throw new IllegalLinkException();
             }
         }

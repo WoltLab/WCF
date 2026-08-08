@@ -67,7 +67,7 @@ class TemplateDiffPage extends AbstractPage
             $this->parentID = \intval($_REQUEST['parentID']);
         }
         $this->parent = new Template($this->parentID);
-        if ($this->parent->templateID) {
+        if ($this->parent->templateID !== 0) {
             if ($this->parent->templateName !== $this->template->templateName || $this->parent->application !== $this->template->application) {
                 throw new IllegalLinkException();
             }
@@ -117,7 +117,7 @@ class TemplateDiffPage extends AbstractPage
         }
 
         // a valid parent template was given, calculate diff
-        if ($this->parent->templateID) {
+        if ($this->parent->templateID !== 0) {
             $a = \explode("\n", StringUtil::unifyNewlines($this->parent->getSource()));
             $b = \explode("\n", StringUtil::unifyNewlines($this->template->getSource()));
             $differ = Diff::getDefaultDiffer();

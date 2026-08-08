@@ -74,7 +74,7 @@ class Poll extends DatabaseObject
     {
         $this->loadOptions();
 
-        if ($isResultDisplay && $this->sortByVotes) {
+        if ($isResultDisplay && $this->sortByVotes !== 0) {
             \uasort($this->options, static function ($a, $b) {
                 if ($a->votes === $b->votes) {
                     return 0;
@@ -133,7 +133,7 @@ class Poll extends DatabaseObject
      */
     public function isFinished()
     {
-        return $this->endTime && $this->endTime <= \TIME_NOW;
+        return $this->endTime !== 0 && $this->endTime <= \TIME_NOW;
     }
 
     /**
@@ -148,11 +148,11 @@ class Poll extends DatabaseObject
             return false;
         } elseif ($this->isFinished()) {
             return false;
-        } elseif ($this->isParticipant() && !$this->isChangeable) {
+        } elseif ($this->isParticipant() && $this->isChangeable === 0) {
             return false;
         }
 
-        if ($this->objectID) {
+        if ($this->objectID !== 0) {
             // related object required but not given, deny vote ability
             if ($this->relatedObject === null) {
                 return false;
@@ -174,7 +174,7 @@ class Poll extends DatabaseObject
      */
     public function canSeeResult()
     {
-        if ($this->isFinished() || $this->isParticipant() || !$this->resultsRequireVote) {
+        if ($this->isFinished() || $this->isParticipant() || $this->resultsRequireVote === 0) {
             return true;
         }
 
@@ -188,7 +188,7 @@ class Poll extends DatabaseObject
      */
     public function canViewParticipants()
     {
-        if ($this->canSeeResult() && $this->isPublic) {
+        if ($this->canSeeResult() && $this->isPublic !== 0) {
             return true;
         }
 

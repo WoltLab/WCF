@@ -41,7 +41,7 @@ final class LikeRebuildDataWorker extends AbstractLinearRebuildDataWorker
     {
         parent::execute();
 
-        if (!$this->loopCount) {
+        if ($this->loopCount === 0) {
             // reset activity points
             UserActivityPointHandler::getInstance()->reset('com.woltlab.wcf.like.activityPointEvent.receivedLikes');
 
@@ -61,7 +61,7 @@ final class LikeRebuildDataWorker extends AbstractLinearRebuildDataWorker
         $itemsToUser = [];
         $likeObjectData = [];
         foreach ($this->objectList as $like) {
-            if ($like->objectUserID) {
+            if ($like->objectUserID !== null) {
                 if (!isset($itemsToUser[$like->objectUserID])) {
                     $itemsToUser[$like->objectUserID] = 0;
                 }

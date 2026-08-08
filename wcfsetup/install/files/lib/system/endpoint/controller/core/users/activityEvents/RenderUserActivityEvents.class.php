@@ -75,7 +75,7 @@ final class RenderUserActivityEvents implements IController
         } else {
             $eventList = new ViewableUserActivityEventList();
 
-            if ($userID) {
+            if ($userID !== 0) {
                 $eventList->getConditionBuilder()->add(
                     "user_activity_event.userID = ?",
                     [$userID]
@@ -91,7 +91,7 @@ final class RenderUserActivityEvents implements IController
             }
         }
 
-        if ($lastEventID) {
+        if ($lastEventID !== 0) {
             $eventList->getConditionBuilder()->add(
                 "user_activity_event.time <= ?",
                 [$lastEventTime]
@@ -110,7 +110,7 @@ final class RenderUserActivityEvents implements IController
         $eventList->readObjects();
         $lastEventTime = $eventList->getLastEventTime();
 
-        if (!$lastEventTime) {
+        if ($lastEventTime === 0) {
             return [];
         }
 

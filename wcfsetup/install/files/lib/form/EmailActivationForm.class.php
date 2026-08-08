@@ -81,7 +81,7 @@ final class EmailActivationForm extends AbstractFormBuilderForm
         }
 
         // Check whether the new email isn't unique anymore.
-        if (User::getUserByEmail($this->user->newEmail)->userID) {
+        if (User::getUserByEmail($this->user->newEmail)->userID !== 0) {
             throw new NamedUserException(HtmlString::fromSafeHtml(
                 WCF::getLanguage()->get('wcf.user.email.error.notUnique')
             ));
@@ -90,7 +90,7 @@ final class EmailActivationForm extends AbstractFormBuilderForm
 
     private function validateActivationCode(IntegerFormField $formField): void
     {
-        if (!isset($this->user) || !$this->user->reactivationCode) {
+        if (!isset($this->user) || $this->user->reactivationCode === 0) {
             return;
         }
 

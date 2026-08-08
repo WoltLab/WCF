@@ -104,7 +104,7 @@ class ImportWorker extends AbstractWorker
     {
         $this->countObjects();
 
-        if (!$this->count) {
+        if ($this->count === null || $this->count === 0) {
             return 100;
         }
 
@@ -119,7 +119,7 @@ class ImportWorker extends AbstractWorker
     #[\Override]
     public function execute()
     {
-        if (!$this->count) {
+        if ($this->count === null || $this->count === 0) {
             return;
         }
 

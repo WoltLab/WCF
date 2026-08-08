@@ -74,7 +74,7 @@ final class ArticleInteractions extends AbstractInteractionProvider
                 'wcf.acp.article.button.toggleI18n',
                 static function (Article $article): bool {
                     return WCF::getSession()->hasPermission('admin.content.article.canManageArticle')
-                        && (\count(LanguageFactory::getInstance()->getLanguages()) > 1 || $article->isMultilingual);
+                        && (\count(LanguageFactory::getInstance()->getLanguages()) > 1 || $article->isMultilingual !== 0);
                 },
                 InteractionEffect::ReloadPage
             )

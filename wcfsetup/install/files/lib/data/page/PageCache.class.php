@@ -93,7 +93,7 @@ class PageCache extends SingletonFactory
     {
         if (isset($this->cache['pageTitles'][$pageID])) {
             $page = $this->getPage($pageID);
-            if ($page->isMultilingual || $page->pageType === 'system') {
+            if ($page->isMultilingual !== 0 || $page->pageType === 'system') {
                 if ($languageID !== null && isset($this->cache['pageTitles'][$pageID][$languageID])) {
                     return $this->cache['pageTitles'][$pageID][$languageID];
                 } elseif (isset($this->cache['pageTitles'][$pageID][WCF::getLanguage()->languageID])) {
@@ -117,7 +117,7 @@ class PageCache extends SingletonFactory
     {
         if (isset($this->cache['pageMetaDescriptions'][$pageID])) {
             $page = $this->getPage($pageID);
-            if ($page->isMultilingual || $page->pageType === 'system') {
+            if ($page->isMultilingual !== 0 || $page->pageType === 'system') {
                 if ($languageID !== null && isset($this->cache['pageMetaDescriptions'][$pageID][$languageID])) {
                     return $this->cache['pageMetaDescriptions'][$pageID][$languageID];
                 } elseif (isset($this->cache['pageMetaDescriptions'][$pageID][WCF::getLanguage()->languageID])) {

@@ -74,7 +74,7 @@ abstract class AbstractCommentManager implements ICommentManager
     #[\Override]
     public function canAdd(int $objectID)
     {
-        if (\VISITOR_USE_TINY_BUILD && WCF::getUser()->isGuest()) {
+        if (\VISITOR_USE_TINY_BUILD !== 0 && WCF::getUser()->isGuest()) {
             return false;
         }
 
@@ -88,12 +88,12 @@ abstract class AbstractCommentManager implements ICommentManager
     #[\Override]
     public function canAddWithoutApproval(int $objectID)
     {
-        if (\VISITOR_USE_TINY_BUILD && WCF::getUser()->isGuest()) {
+        if (\VISITOR_USE_TINY_BUILD !== 0 && WCF::getUser()->isGuest()) {
             return false;
         }
 
         if (empty($this->permissionAddWithoutModeration)) {
-            if (\ENABLE_DEBUG_MODE) {
+            if (\ENABLE_DEBUG_MODE !== 0) {
                 throw new \RuntimeException("Missing permission name to create comments without approval.");
             }
 

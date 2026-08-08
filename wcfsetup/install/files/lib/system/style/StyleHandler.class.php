@@ -49,7 +49,7 @@ class StyleHandler extends SingletonFactory
         $styles = [];
 
         foreach ($this->cache['styles'] as $styleID => $style) {
-            if (!$style->isDisabled || WCF::getSession()->hasPermission('admin.style.canUseDisabledStyle')) {
+            if ($style->isDisabled === 0 || WCF::getSession()->hasPermission('admin.style.canUseDisabledStyle')) {
                 $styles[$styleID] = $style;
             }
         }
@@ -95,7 +95,7 @@ class StyleHandler extends SingletonFactory
         if (!$ignorePermissions) {
             if (isset($this->cache['styles'][$styleID])) {
                 if (
-                    $this->cache['styles'][$styleID]->isDisabled
+                    $this->cache['styles'][$styleID]->isDisabled !== 0
                     && !WCF::getSession()->hasPermission('admin.style.canUseDisabledStyle')
                 ) {
                     $styleID = 0;
@@ -242,7 +242,7 @@ class StyleHandler extends SingletonFactory
     {
         foreach ($this->cache['styles'] as $style) {
             if ($style->packageName === $packageName) {
-                if (!$skipTainted || !$style->isTainted) {
+                if (!$skipTainted || $style->isTainted === 0) {
                     return new StyleEditor($style);
                 }
             }
@@ -258,7 +258,7 @@ class StyleHandler extends SingletonFactory
      */
     public function showStyleChanger(): bool
     {
-        return \SHOW_STYLE_CHANGER && $this->countStyles() > 1;
+        return \SHOW_STYLE_CHANGER !== 0 && $this->countStyles() > 1;
     }
 
     /**
@@ -266,7 +266,7 @@ class StyleHandler extends SingletonFactory
      */
     public function showColorSchemeSelector(): bool
     {
-        return !!$this->getStyle()->hasDarkMode;
+        return $this->getStyle()->hasDarkMode !== 0;
     }
 
     /**
@@ -296,7 +296,7 @@ class StyleHandler extends SingletonFactory
         }
 
         $styleID = $this->cache['default'];
-        if ($styleID) {
+        if ($styleID !== 0) {
             return $this->cache['styles'][$styleID];
         }
 
@@ -312,7 +312,7 @@ class StyleHandler extends SingletonFactory
      */
     public function getColorScheme(): string
     {
-        if (!RequestHandler::getInstance()->isACPRequest() && !$this->style->hasDarkMode) {
+        if (!RequestHandler::getInstance()->isACPRequest() && $this->style->hasDarkMode === 0) {
             return 'light';
         }
 

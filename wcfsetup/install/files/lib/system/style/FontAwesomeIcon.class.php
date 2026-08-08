@@ -170,7 +170,7 @@ final class FontAwesomeIcon implements IFontAwesomeIcon, \Stringable
         // Do not throw an exception when the debug mode and developer tools
         // are disabled. This allows unknown icons to be passed to the template
         // which will throw a proper error without bricking the entire page.
-        if (!\ENABLE_DEBUG_MODE || !\ENABLE_DEVELOPER_TOOLS) {
+        if (\ENABLE_DEBUG_MODE === 0 || \ENABLE_DEVELOPER_TOOLS === 0) {
             return;
         }
 

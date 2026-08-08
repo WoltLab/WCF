@@ -99,7 +99,7 @@ final class ReactionTypeGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return \MODULE_LIKE
+        return \MODULE_LIKE !== 0
             && WCF::getSession()->hasPermission("admin.content.reaction.canManageReactionType");
     }
 

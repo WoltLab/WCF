@@ -334,7 +334,7 @@ class UserGroup extends DatabaseObject implements ITitledObject, \Stringable
     public function isAdminGroup()
     {
         // WCFSetup
-        if (!\PACKAGE_ID && $this->groupID === 4) {
+        if (\PACKAGE_ID === 0 && $this->groupID === 4) {
             return true;
         }
 
@@ -357,7 +357,7 @@ class UserGroup extends DatabaseObject implements ITitledObject, \Stringable
     public function isModGroup()
     {
         // workaround for WCF-Setup
-        if (!\PACKAGE_ID && ($this->groupID === 5 || $this->groupID === 4)) {
+        if (\PACKAGE_ID === 0 && ($this->groupID === 5 || $this->groupID === 4)) {
             return true;
         }
 
@@ -542,7 +542,7 @@ class UserGroup extends DatabaseObject implements ITitledObject, \Stringable
             return false;
         }
 
-        return !!$this->allowMention;
+        return $this->allowMention !== 0;
     }
 
     /**

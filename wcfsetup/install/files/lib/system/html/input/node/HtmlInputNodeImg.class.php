@@ -95,7 +95,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
     protected function handleAttachment(\DOMElement $element, string $class)
     {
         $attachmentID = \intval($element->getAttribute('data-attachment-id'));
-        if (!$attachmentID) {
+        if ($attachmentID === 0) {
             return;
         }
 
@@ -151,7 +151,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
     private function handleMedium(\DOMElement $element): void
     {
         $mediumID = \intval($element->getAttribute('data-media-id'));
-        if (!$mediumID) {
+        if ($mediumID === 0) {
             return;
         }
 
@@ -274,7 +274,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
             // enforce database values for src, srcset and style
             $element->setAttribute('src', $smiley->getURL());
 
-            if ($smiley->getHeight()) {
+            if ($smiley->getHeight() !== 0) {
                 $element->setAttribute('height', (string)$smiley->getHeight());
             } else {
                 $element->removeAttribute('height');

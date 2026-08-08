@@ -58,7 +58,7 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
             }
         }
 
-        if (empty($optionNames) && empty($categoryNames) && !(\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS)) {
+        if (empty($optionNames) && empty($categoryNames) && !(\ENABLE_DEBUG_MODE !== 0 && \ENABLE_DEVELOPER_TOOLS !== 0)) {
             return [];
         }
 
@@ -69,7 +69,7 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
         if (!empty($optionNames)) {
             $conditions->add('optionName IN (?)', [$optionNames]);
         }
-        if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
+        if (\ENABLE_DEBUG_MODE !== 0 && \ENABLE_DEVELOPER_TOOLS !== 0) {
             $conditions->add('optionName LIKE ?', ['%' . WCF::getDB()->escapeLikeValue($query) . '%']);
         }
 
@@ -88,7 +88,7 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
             }
 
             // option is not accessible
-            if (!$this->validate($option) || $option->hidden) {
+            if (!$this->validate($option) || $option->hidden !== 0) {
                 continue;
             }
 

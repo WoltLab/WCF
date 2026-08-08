@@ -28,7 +28,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
     public function getParsedTag(array $openingTag, string $content, array $closingTag, BBCodeParser $parser): string
     {
         $mediaID = (!empty($openingTag['attributes'][0])) ? \intval($openingTag['attributes'][0]) : 0;
-        if (!$mediaID) {
+        if ($mediaID === 0) {
             return '';
         }
 
@@ -49,7 +49,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
         }
 
         if ($media->isAccessible()) {
-            if ($removeLinks && !$media->isImage) {
+            if ($removeLinks && $media->isImage === 0) {
                 if ($parser->getOutputType() === 'text/html' || $parser->getOutputType() === 'text/simplified-html') {
                     return StringUtil::encodeHTML($media->getTitle());
                 }
@@ -59,11 +59,11 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
 
             if ($parser->getOutputType() === 'text/html') {
                 $float = (!empty($openingTag['attributes'][2])) ? $openingTag['attributes'][2] : 'none';
-                $localizedMedia = MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID()
+                $localizedMedia = MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID() !== 0
                     ? $media->getLocalizedVersion(MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID())
                     : $media;
 
-                if ($media->isImage) {
+                if ($media->isImage !== 0) {
                     $thumbnailSize = (!empty($openingTag['attributes'][1])) ? $openingTag['attributes'][1] : 'original';
                     $width = (!empty($openingTag['attributes'][3])) ? $openingTag['attributes'][3] : 'auto';
 

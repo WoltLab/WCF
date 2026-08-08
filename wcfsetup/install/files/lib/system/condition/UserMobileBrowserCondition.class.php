@@ -36,7 +36,7 @@ class UserMobileBrowserCondition extends AbstractSingleFieldCondition implements
     #[\Override]
     public function getData()
     {
-        if ($this->usesMobileBrowser || $this->usesNoMobileBrowser) {
+        if ($this->usesMobileBrowser !== 0 || $this->usesNoMobileBrowser !== 0) {
             return [
                 // if notUseMobileBrowser is selected usesMobileBrowser is 0
                 // otherwise notUseMobileBrowser is 1
@@ -53,12 +53,12 @@ class UserMobileBrowserCondition extends AbstractSingleFieldCondition implements
         $usesMobileBrowserLabel = WCF::getLanguage()->get('wcf.user.condition.mobileBrowser.usesMobileBrowser');
         $usesNoMobileBrowserLabel = WCF::getLanguage()->get('wcf.user.condition.mobileBrowser.usesNoMobileBrowser');
         $usesMobileBrowserChecked = '';
-        if ($this->usesMobileBrowser) {
+        if ($this->usesMobileBrowser !== 0) {
             $usesMobileBrowserChecked = ' checked';
         }
 
         $usesNoMobileBrowserChecked = '';
-        if ($this->usesNoMobileBrowser) {
+        if ($this->usesNoMobileBrowser !== 0) {
             $usesNoMobileBrowserChecked = ' checked';
         }
 
@@ -96,7 +96,7 @@ HTML;
     #[\Override]
     public function validate()
     {
-        if ($this->usesMobileBrowser && $this->usesNoMobileBrowser) {
+        if ($this->usesMobileBrowser !== 0 && $this->usesNoMobileBrowser !== 0) {
             $this->errorMessage = 'wcf.user.condition.mobileBrowser.usesMobileBrowser.error.conflict';
 
             throw new UserInputException('mobileBrowser', 'conflict');

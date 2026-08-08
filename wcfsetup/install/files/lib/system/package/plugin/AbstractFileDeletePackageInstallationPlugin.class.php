@@ -63,7 +63,7 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
             $application = 'wcf';
             if (!empty($item['attributes']['application'])) {
                 $application = $item['attributes']['application'];
-            } elseif ($this->installation->getPackage()->isApplication) {
+            } elseif ($this->installation->getPackage()->isApplication !== 0) {
                 $application = Package::getAbbreviation($this->installation->getPackage()->package);
             }
 

@@ -107,7 +107,7 @@ final class SingleMediaSelectionFormField extends AbstractFormField implements I
 
         try {
             $media = $this->getMedia();
-            if (!$media->isAccessible() || ($this->isImageOnly() && !$media->isImage)) {
+            if (!$media->isAccessible() || ($this->isImageOnly() && $media->isImage === 0)) {
                 $this->value = null;
             }
         } catch (\BadMethodCallException $e) {

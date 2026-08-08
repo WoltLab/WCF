@@ -51,12 +51,12 @@ class ArticleCategorySitemapObject extends AbstractSitemapObjectObjectType
     #[\Override]
     public function isAvailableType()
     {
-        if (!\MODULE_ARTICLE) {
+        if (\MODULE_ARTICLE === 0) {
             return false;
         }
 
-        return !!PageCache::getInstance()
+        return PageCache::getInstance()
             ->getPageByIdentifier('com.woltlab.wcf.CategoryArticleList')
-            ->allowSpidersToIndex;
+            ->allowSpidersToIndex !== 0;
     }
 }

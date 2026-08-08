@@ -30,7 +30,7 @@ final class EnableTrophy implements IController
 
         $this->assertTrophyCanBeEnabled();
 
-        if ($trophy->isDisabled) {
+        if ($trophy->isDisabled !== 0) {
             new \wcf\command\trophy\EnableTrophy($trophy)();
         }
 
@@ -39,7 +39,7 @@ final class EnableTrophy implements IController
 
     private function assertTrophyCanBeEnabled( ): void
     {
-        if (!\MODULE_TROPHY) {
+        if (\MODULE_TROPHY === 0) {
             throw new IllegalLinkException();
         }
 

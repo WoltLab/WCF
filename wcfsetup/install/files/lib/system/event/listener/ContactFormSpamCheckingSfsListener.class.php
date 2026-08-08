@@ -17,7 +17,7 @@ final class ContactFormSpamCheckingSfsListener
 {
     public function __invoke(ContactFormSpamChecking $event): void
     {
-        if (!\BLACKLIST_SFS_ENABLE) {
+        if (\BLACKLIST_SFS_ENABLE === 0) {
             return;
         }
 

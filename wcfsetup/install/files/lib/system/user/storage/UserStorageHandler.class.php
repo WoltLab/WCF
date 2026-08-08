@@ -111,7 +111,7 @@ final class UserStorageHandler extends SingletonFactory
             $userID = WCF::getUser()->userID;
         }
 
-        if (!$userID) {
+        if ($userID === 0) {
             return null;
         }
 
@@ -282,7 +282,7 @@ final class UserStorageHandler extends SingletonFactory
     private function validateUserIDs(array $userIDs): void
     {
         foreach ($userIDs as $userID) {
-            if (!$userID) {
+            if ($userID === 0) {
                 throw new \InvalidArgumentException('The user id can neither be null nor zero.');
             }
         }

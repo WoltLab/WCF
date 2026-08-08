@@ -38,7 +38,7 @@ final class DeleteTrophy implements IController
 
     private function assertTrophyCanBeDeleted(): void
     {
-        if (!\MODULE_TROPHY) {
+        if (\MODULE_TROPHY === 0) {
             throw new IllegalLinkException();
         }
 

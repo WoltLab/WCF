@@ -39,13 +39,13 @@ final class DeleteRecipient implements IController
 
     private function assertRecipientCanBeDeleted(ContactRecipient $recipient): void
     {
-        if (!\MODULE_CONTACT_FORM) {
+        if (\MODULE_CONTACT_FORM === 0) {
             throw new IllegalLinkException();
         }
 
         WCF::getSession()->checkPermissions(["admin.contact.canManageContactForm"]);
 
-        if ($recipient->originIsSystem) {
+        if ($recipient->originIsSystem !== 0) {
             throw new PermissionDeniedException();
         }
     }

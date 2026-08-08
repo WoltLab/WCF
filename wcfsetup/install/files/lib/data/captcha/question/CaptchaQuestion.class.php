@@ -46,7 +46,7 @@ class CaptchaQuestion extends DatabaseObject implements ITitledObject
         $answers = \explode("\n", StringUtil::unifyNewlines(WCF::getLanguage()->get($this->answers)));
         foreach ($answers as $__answer) {
             if (\mb_substr($__answer, 0, 1) === '~' && \mb_substr($__answer, -1, 1) === '~') {
-                if (Regex::compile(\mb_substr($__answer, 1, \mb_strlen($__answer) - 2), Regex::CASE_INSENSITIVE)->match($answer)) {
+                if (Regex::compile(\mb_substr($__answer, 1, \mb_strlen($__answer) - 2), Regex::CASE_INSENSITIVE)->match($answer) !== 0) {
                     return true;
                 }
 

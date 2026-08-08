@@ -110,7 +110,7 @@ final class ArticleGridView extends AbstractGridView
                                 $labels .= '</ul>';
                             }
                             $badges = '';
-                            if ($row->isDeleted) {
+                            if ($row->isDeleted !== 0) {
                                 $badges .= \sprintf(
                                     '<span class="badge label red">%s</span>',
                                     WCF::getLanguage()->get('wcf.message.status.deleted')
@@ -220,7 +220,7 @@ final class ArticleGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return \MODULE_ARTICLE
+        return \MODULE_ARTICLE !== 0
             && (
                 WCF::getSession()->hasPermission('admin.content.article.canManageArticle')
                 || WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles')

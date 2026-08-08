@@ -112,7 +112,7 @@ class ArticleSearch extends AbstractSearchProvider
     {
         $categoryIDs = [];
 
-        if ($categoryID) {
+        if ($categoryID !== 0) {
             if (($category = ArticleCategory::getCategory($categoryID)) !== null) {
                 $categoryIDs[] = $categoryID;
                 foreach ($category->getAllChildCategories() as $childCategory) {
@@ -150,7 +150,7 @@ class ArticleSearch extends AbstractSearchProvider
     #[\Override]
     public function isAccessible(): bool
     {
-        return \MODULE_ARTICLE && \SEARCH_ENABLE_ARTICLES;
+        return \MODULE_ARTICLE !== 0 && \SEARCH_ENABLE_ARTICLES !== 0;
     }
 
     #[\Override]

@@ -40,7 +40,7 @@ final class ModerationQueueAssignUserAction extends AbstractModerationAction
         // "other user" selection if they are assigned.
         $assignedUserID = 0;
         $moderationQueue = \count($moderationQueues) === 1 ? \reset($moderationQueues) : null;
-        if ($moderationQueue?->assignedUserID && $moderationQueue->assignedUserID !== WCF::getUser()->userID) {
+        if ($moderationQueue?->assignedUserID !== null && $moderationQueue->assignedUserID !== WCF::getUser()->userID) {
             $assignedUserID = $moderationQueue->assignedUserID;
         }
 

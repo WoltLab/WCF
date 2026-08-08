@@ -18,7 +18,7 @@ final class ContactFormFileProcessor extends AbstractFileProcessor
     #[\Override]
     public function acceptUpload(string $filename, int $fileSize, array $context): FileProcessorPreflightResult
     {
-        if (!\CONTACT_FORM_ENABLE_ATTACHMENTS) {
+        if (\CONTACT_FORM_ENABLE_ATTACHMENTS === 0) {
             return FileProcessorPreflightResult::InsufficientPermissions;
         }
 

@@ -59,7 +59,7 @@ final class CreateComment
             $comment = new Comment($comment->getObjectID());
         }
 
-        if (!$comment->isDisabled) {
+        if ($comment->isDisabled === 0) {
             new PublishComment($comment)();
         } else {
             ModerationQueueActivationManager::getInstance()->addModeratedContent(

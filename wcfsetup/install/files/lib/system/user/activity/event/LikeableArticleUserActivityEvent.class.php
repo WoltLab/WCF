@@ -19,7 +19,7 @@ class LikeableArticleUserActivityEvent extends SingletonFactory implements IUser
     #[\Override]
     public function prepare(array $events)
     {
-        if (!\MODULE_ARTICLE) {
+        if (\MODULE_ARTICLE === 0) {
             return;
         }
 

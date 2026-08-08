@@ -98,7 +98,7 @@ class CategoryArticleListPage extends ArticleListPage
         );
         if ($this->category->getDescription() !== '') {
             $description = $this->category->getDescription();
-            if ($this->category->descriptionUseHtml) {
+            if ($this->category->descriptionUseHtml !== 0) {
                 $description = StringUtil::decodeHTML(StringUtil::stripHTML($description));
             }
             MetaTagHandler::getInstance()->addTag(

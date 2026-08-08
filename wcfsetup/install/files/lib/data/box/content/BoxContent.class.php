@@ -79,7 +79,7 @@ class BoxContent extends DatabaseObject
     public function getImage()
     {
         if ($this->image === null) {
-            if ($this->imageID) {
+            if ($this->imageID !== null) {
                 $this->image = ViewableMedia::getMedia($this->imageID);
             }
         }

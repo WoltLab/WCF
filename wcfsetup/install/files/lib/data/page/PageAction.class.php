@@ -225,7 +225,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
                     if (!empty($content['htmlInputProcessor'])) {
                         $content['htmlInputProcessor']->setObjectID($pageContent->pageContentID);
                         if ((bool)$pageContent->hasEmbeddedObjects !== MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
-                            $pageContentEditor->update(['hasEmbeddedObjects' => $pageContent->hasEmbeddedObjects ? 0 : 1]);
+                            $pageContentEditor->update(['hasEmbeddedObjects' => $pageContent->hasEmbeddedObjects !== 0 ? 0 : 1]);
                         }
                     } elseif ($page->pageType === 'html' || $page->pageType === 'tpl') {
                         HtmlSimpleParser::getInstance()->parse(
@@ -517,7 +517,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
     public function toggle()
     {
         foreach ($this->objects as $editor) {
-            if ($editor->isDisabled) {
+            if ($editor->isDisabled !== 0) {
                 new EnablePage($editor->getDecoratedObject())();
             } else {
                 new DisablePage($editor->getDecoratedObject())();

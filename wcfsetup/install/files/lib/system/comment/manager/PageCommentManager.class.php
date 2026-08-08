@@ -124,7 +124,7 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
 
             foreach ($responses as $response) {
                 $commentIDs[] = $response->commentID;
-                if ($response->userID) {
+                if ($response->userID !== null) {
                     $userIDs[] = $response->userID;
                 }
             }
@@ -138,7 +138,7 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
         $pageIDs = [];
         foreach ($comments as $comment) {
             $pageIDs[] = $comment->objectID;
-            if ($comment->userID) {
+            if ($comment->userID !== null) {
                 $userIDs[] = $comment->userID;
             }
         }
@@ -168,7 +168,7 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
                         $like->setTitle(WCF::getLanguage()->getDynamicVariable(
                             'wcf.like.title.com.woltlab.wcf.pageComment',
                             [
-                                'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
+                                'commentAuthor' => $comment->userID !== null ? $users[$comment->userID] : null,
                                 'comment' => $comment,
                                 'page' => $pages[$comment->objectID],
                                 'reaction' => $like,
@@ -191,8 +191,8 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
                         $like->setTitle(WCF::getLanguage()->getDynamicVariable(
                             'wcf.like.title.com.woltlab.wcf.pageComment.response',
                             [
-                                'responseAuthor' => $response->userID ? $users[$response->userID] : null,
-                                'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
+                                'responseAuthor' => $response->userID !== null ? $users[$response->userID] : null,
+                                'commentAuthor' => $comment->userID !== null ? $users[$comment->userID] : null,
                                 'page' => $pages[$comment->objectID],
                                 'reaction' => $like,
                                 'author' => $like->getUserProfile(),

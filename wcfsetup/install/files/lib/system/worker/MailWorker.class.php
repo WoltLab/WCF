@@ -132,9 +132,9 @@ class MailWorker extends AbstractWorker
         $email->setReplyTo($from);
         $variables = [
             'text' => $this->mailData['text'],
-            'enableHTML' => $this->mailData['enableHTML'] ? true : false,
+            'enableHTML' => $this->mailData['enableHTML'] !== 0 ? true : false,
         ];
-        if ($this->mailData['enableHTML']) {
+        if ($this->mailData['enableHTML'] !== 0) {
             $email->setBody(new RecipientAwareTextMimePart('text/html', 'email_mailWorker', 'wcf', $variables));
         } else {
             $email->setBody(new MimePartFacade([

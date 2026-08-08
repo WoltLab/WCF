@@ -91,7 +91,7 @@ class UserSearchForm extends UserOptionListForm
         $this->readOptionTree();
 
         // add breadcrumbs
-        if (\MODULE_MEMBERS_LIST) {
+        if (\MODULE_MEMBERS_LIST !== 0) {
             PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.MembersList');
         }
     }

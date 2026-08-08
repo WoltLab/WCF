@@ -127,7 +127,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
     {
         $data = [];
 
-        if (!\PACKAGE_ID) {
+        if (\PACKAGE_ID === 0) {
             return $data;
         }
 
@@ -187,7 +187,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
             'reverse' => [],
         ];
 
-        if (!\PACKAGE_ID) {
+        if (\PACKAGE_ID === 0) {
             return $data;
         }
 
@@ -248,18 +248,18 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
     {
         $data = [];
 
-        if (!\PACKAGE_ID) {
+        if (\PACKAGE_ID === 0) {
             return $data;
         }
 
         foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
-            if ($application->isTainted) {
+            if ($application->isTainted !== 0) {
                 continue;
             }
 
             $controller = null;
 
-            if ($application->landingPageID) {
+            if ($application->landingPageID !== null) {
                 $page = PageCache::getInstance()->getPage($application->landingPageID);
                 if ($page !== null) {
                     if ($page->controller !== '') {

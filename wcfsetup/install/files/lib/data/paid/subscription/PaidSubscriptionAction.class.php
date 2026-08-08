@@ -80,7 +80,7 @@ class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements ITo
     public function toggle()
     {
         foreach ($this->objects as $editor) {
-            if ($editor->isDisabled) {
+            if ($editor->isDisabled !== 0) {
                 new EnablePaidSubscription($editor->getDecoratedObject())();
             } else {
                 new DisablePaidSubscription($editor->getDecoratedObject())();

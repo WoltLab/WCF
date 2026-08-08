@@ -47,7 +47,7 @@ final class GetShowOrder implements IController
 
     private function assertSmileyCanBeSorted(): void
     {
-        if (!\MODULE_SMILEY) {
+        if (\MODULE_SMILEY === 0) {
             throw new IllegalLinkException();
         }
 

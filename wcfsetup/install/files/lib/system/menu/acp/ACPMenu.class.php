@@ -33,7 +33,7 @@ class ACPMenu extends TreeMenu
     protected function checkMenuItem(ITreeMenuItem $item)
     {
         if (
-            \ENABLE_ENTERPRISE_MODE
+            \ENABLE_ENTERPRISE_MODE !== 0
             && !WCF::getUser()->hasOwnerAccess()
             && \in_array($item->menuItem, $this->enterpriseBlacklist)
         ) {

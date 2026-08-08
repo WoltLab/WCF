@@ -66,7 +66,7 @@ final class ModerationQueueGridView extends AbstractGridView
                             \assert($row instanceof ViewableModerationQueue);
                             $userID = $row->getAffectedObject()->getUserID();
 
-                            if ($userID) {
+                            if ($userID !== null) {
                                 return parent::render($userID, $row);
                             }
 

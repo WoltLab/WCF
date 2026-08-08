@@ -42,7 +42,7 @@ class EventListenerCacheBuilder extends AbstractCacheBuilder
             $environments = $eventListener->environment === 'all' ? ['admin', 'user'] : [$eventListener->environment];
 
             foreach ($environments as $environment) {
-                if (!$eventListener->inherit) {
+                if ($eventListener->inherit === 0) {
                     if (!isset($actions[$environment])) {
                         $actions[$environment] = [];
                     }

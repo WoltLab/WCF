@@ -60,7 +60,7 @@ final class LanguageItemEditAction implements RequestHandlerInterface
             }
 
             $data = $form->getData()['data'];
-            if ($languageItem->languageItemOriginIsSystem) {
+            if ($languageItem->languageItemOriginIsSystem !== 0) {
                 unset($data['languageItemValue']);
 
                 $data['languageCustomItemDisableTime'] = null;
@@ -97,9 +97,6 @@ final class LanguageItemEditAction implements RequestHandlerInterface
 
     private function assertUserCanEditLanguageItem(): void
     {
-        if (!WCF::getSession()->getUser()->userID) {
-            throw new PermissionDeniedException();
-        }
         if (!WCF::getSession()->hasPermission('admin.language.canManageLanguage')) {
             throw new PermissionDeniedException();
         }
@@ -128,7 +125,7 @@ final class LanguageItemEditAction implements RequestHandlerInterface
                 ]),
             FormContainer::create('oldValueContainer')
                 ->label('wcf.acp.language.item.oldValue')
-                ->available($languageItem->languageItemOriginIsSystem && !empty($languageItem->languageItemOldValue))
+                ->available($languageItem->languageItemOriginIsSystem !== 0 && !empty($languageItem->languageItemOldValue))
                 ->description('wcf.acp.language.item.oldValue.description', [
                     'item' => $languageItem
                 ])

@@ -51,7 +51,7 @@ final class ChangeShowOrder implements IController
 
     private function assertReactionTypeCanBeSorted(): void
     {
-        if (!\MODULE_LIKE) {
+        if (\MODULE_LIKE === 0) {
             throw new IllegalLinkException();
         }
 

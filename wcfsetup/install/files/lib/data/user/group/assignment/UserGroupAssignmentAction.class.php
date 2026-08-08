@@ -61,7 +61,7 @@ class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements 
     public function toggle()
     {
         foreach ($this->objects as $editor) {
-            if ($editor->isDisabled) {
+            if ($editor->isDisabled !== 0) {
                 new EnableUserGroupAssignment($editor->getDecoratedObject())();
             } else {
                 new DisableUserGroupAssignment($editor->getDecoratedObject())();

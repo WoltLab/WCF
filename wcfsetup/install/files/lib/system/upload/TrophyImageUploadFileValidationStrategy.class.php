@@ -22,7 +22,7 @@ class TrophyImageUploadFileValidationStrategy implements IUploadFileValidationSt
     #[\Override]
     public function validate(UploadFile $uploadFile)
     {
-        if ($uploadFile->getErrorCode()) {
+        if ($uploadFile->getErrorCode() !== 0) {
             $uploadFile->setValidationErrorType('uploadFailed');
 
             return false;

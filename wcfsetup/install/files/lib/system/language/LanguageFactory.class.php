@@ -52,7 +52,7 @@ class LanguageFactory extends SingletonFactory
      */
     public function getUserLanguage(?int $languageID = null): Language
     {
-        if ($languageID) {
+        if ($languageID !== null) {
             $language = $this->cache->getLanguage($languageID);
             if ($language !== null) {
                 return $language;

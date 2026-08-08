@@ -94,7 +94,7 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
             )
         ];
 
-        if (!empty($this->validSortFields) && \MODULE_LIKE) {
+        if (!empty($this->validSortFields) && \MODULE_LIKE !== 0) {
             $this->validSortFields[] = 'likesReceived';
 
             $this->cacheHandlers['likesReceived'] = static fn(
@@ -110,7 +110,7 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
     #[\Override]
     public function getLink(): string
     {
-        if (\MODULE_MEMBERS_LIST) {
+        if (\MODULE_MEMBERS_LIST !== 0) {
             $parameters = '';
             if ($this->sortField !== null && $this->sortField !== '') {
                 $parameters = 'sortField=' . $this->sortField . '&sortOrder=' . $this->sortOrder;

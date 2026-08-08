@@ -99,7 +99,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory
         $messageObjectTypeID = $context['objectTypeID'];
         $messageID = $context['objectID'];
 
-        if (!$messageID) {
+        if ($messageID === 0) {
             throw new \BadMethodCallException("No 'messageID' was set.");
         }
 
@@ -196,7 +196,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory
      */
     public function registerSimpleObjects(string $messageObjectType, int $messageID, array $embeddedContent)
     {
-        if (!$messageID) {
+        if ($messageID === 0) {
             throw new \BadMethodCallException("No 'messageID' was given.");
         }
 
@@ -323,7 +323,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory
      */
     public function setActiveMessage(string $messageObjectType, int $messageID, ?int $languageID = null)
     {
-        if ($this->activeMessageObjectTypeID) {
+        if ($this->activeMessageObjectTypeID !== null) {
             $this->activeMessageHistory[] = [
                 'activeMessageID' => $this->activeMessageID,
                 'activeMessageLanguageID' => $this->activeMessageLanguageID,
@@ -373,7 +373,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory
      */
     public function getActiveMessageObjectType(): ?string
     {
-        if (!$this->activeMessageObjectTypeID) {
+        if ($this->activeMessageObjectTypeID === null) {
             return null;
         }
 

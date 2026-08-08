@@ -43,7 +43,7 @@ final class RenderResponses implements IController
 
         // get response list
         $responseList = new StructuredCommentResponseList($commentManager, $comment);
-        if ($parameters->lastResponseID) {
+        if ($parameters->lastResponseID !== 0) {
             $responseList->getConditionBuilder()->add(
                 "(comment_response.time > ? OR (comment_response.time = ? && comment_response.responseID > ?))",
                 [
@@ -65,10 +65,10 @@ final class RenderResponses implements IController
 
         $lastResponseTime = $lastResponseID = 0;
         foreach ($responseList as $response) {
-            if (!$lastResponseTime) {
+            if ($lastResponseTime === 0) {
                 $lastResponseTime = $response->time;
             }
-            if (!$lastResponseID) {
+            if ($lastResponseID === 0) {
                 $lastResponseID = $response->responseID;
             }
 
@@ -86,7 +86,7 @@ final class RenderResponses implements IController
             'lastResponseID' => $lastResponseID,
             'template' => WCF::getTPL()->render('wcf', 'commentResponseList', [
                 'commentCanModerate' => $commentCanModerate,
-                'likeData' => \MODULE_LIKE ? $responseList->getLikeData() : [],
+                'likeData' => \MODULE_LIKE !== 0 ? $responseList->getLikeData() : [],
                 'responseList' => $responseList,
                 'commentManager' => $commentManager,
             ]),

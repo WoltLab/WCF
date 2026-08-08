@@ -164,7 +164,7 @@ class OptionHandler implements IOptionHandler
 
         if ($this->supportI18n) {
             foreach ($this->options as $option) {
-                if ($option->supportI18n) {
+                if ($option->supportI18n !== 0) {
                     I18nHandler::getInstance()->register($option->optionName);
                     I18nHandler::getInstance()->setOptions(
                         $option->optionName,
@@ -292,7 +292,7 @@ class OptionHandler implements IOptionHandler
     public function readData()
     {
         foreach ($this->options as $option) {
-            if ($this->supportI18n && $option->supportI18n) {
+            if ($this->supportI18n && $option->supportI18n !== 0) {
                 I18nHandler::getInstance()->register($option->optionName);
                 I18nHandler::getInstance()->setOptions(
                     $option->optionName,
@@ -317,7 +317,7 @@ class OptionHandler implements IOptionHandler
 
         foreach ($this->options as $option) {
             // handle i18n support
-            if ($this->supportI18n && $option->supportI18n) {
+            if ($this->supportI18n && $option->supportI18n !== 0) {
                 if (I18nHandler::getInstance()->isPlainValue($option->optionName)) {
                     I18nHandler::getInstance()->remove($optionPrefix . $option->optionID);
                     $saveOptions[$option->optionID] = I18nHandler::getInstance()->getValue($option->optionName);
@@ -561,7 +561,7 @@ class OptionHandler implements IOptionHandler
             return false;
         }
 
-        if (\ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess() && \get_class($category) === OptionCategory::class) {
+        if (\ENABLE_ENTERPRISE_MODE !== 0 && !WCF::getUser()->hasOwnerAccess() && \get_class($category) === OptionCategory::class) {
             return !\in_array($category->categoryName, $this->enterpriseBlacklist['categories']);
         }
 
@@ -591,7 +591,7 @@ class OptionHandler implements IOptionHandler
             return false;
         }
 
-        if (\ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess() && \get_class($option) === Option::class) {
+        if (\ENABLE_ENTERPRISE_MODE !== 0 && !WCF::getUser()->hasOwnerAccess() && \get_class($option) === Option::class) {
             return !\in_array($option->optionName, $this->enterpriseBlacklist['options']);
         }
 

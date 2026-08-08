@@ -95,7 +95,7 @@ class PageCommentResponseUserNotificationEvent extends AbstractCommentResponseUs
     {
         $comment = CommentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->commentID);
 
-        if ($comment->userID) {
+        if ($comment->userID !== null) {
             return UserProfileRuntimeCache::getInstance()->getObject($comment->userID);
         } else {
             return UserProfile::getGuestUserProfile($comment->username);

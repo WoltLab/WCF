@@ -47,7 +47,7 @@ final class UsernameValidationAction implements RequestHandlerInterface
                 ];
             }
 
-            if (User::getUserByUsername($bodyParameters['username'])->userID) {
+            if (!User::getUserByUsername($bodyParameters['username'])->isNil()) {
                 $result = [
                     'ok' => false,
                     'error' => 'notUnique',

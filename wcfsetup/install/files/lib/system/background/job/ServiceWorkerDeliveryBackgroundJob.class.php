@@ -87,7 +87,7 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
         $user = WCF::getUser();
         try {
             $targetUser = new User($notification->userID);
-            if ($targetUser->banned) {
+            if ($targetUser->banned !== 0) {
                 return;
             }
 

@@ -43,7 +43,7 @@ class LikeableArticleProvider extends AbstractObjectTypeProvider implements
     {
         \assert($object instanceof LikeableArticle);
 
-        return $object->articleID && $object->canRead();
+        return $object->articleID !== 0 && $object->canRead();
     }
 
     #[\Override]

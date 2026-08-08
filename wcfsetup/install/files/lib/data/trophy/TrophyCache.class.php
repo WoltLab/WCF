@@ -103,7 +103,7 @@ class TrophyCache extends SingletonFactory
 
         $returnValues = [];
         foreach ($trophies as $trophy) {
-            if (!$trophy->isDisabled) {
+            if ($trophy->isDisabled === 0) {
                 $returnValues[$trophy->getObjectID()] = $trophy;
             }
         }

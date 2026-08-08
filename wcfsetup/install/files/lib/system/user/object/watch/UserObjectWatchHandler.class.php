@@ -125,7 +125,7 @@ class UserObjectWatchHandler extends SingletonFactory
             $recipientIDs = \array_filter(
                 $userIDs,
                 static function ($notification, $userID) use ($notificationObject) {
-                    return $notification && $userID !== $notificationObject->getAuthorID();
+                    return $notification !== 0 && $userID !== $notificationObject->getAuthorID();
                 },
                 \ARRAY_FILTER_USE_BOTH
             );

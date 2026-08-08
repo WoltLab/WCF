@@ -33,11 +33,11 @@ class ViewableCommentList extends CommentList
         if (!empty($this->objects)) {
             $embeddedObjectIDs = $userIDs = [];
             foreach ($this->objects as $comment) {
-                if ($comment->userID) {
+                if ($comment->userID !== null) {
                     $userIDs[] = $comment->userID;
                 }
 
-                if ($comment->hasEmbeddedObjects) {
+                if ($comment->hasEmbeddedObjects !== 0) {
                     $embeddedObjectIDs[] = $comment->getObjectID();
                 }
             }

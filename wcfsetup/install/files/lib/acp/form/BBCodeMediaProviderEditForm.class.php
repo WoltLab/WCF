@@ -56,7 +56,7 @@ class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm
 
         $this->formObject = new BBCodeMediaProvider($queryParameters['id']);
 
-        if (!$this->formObject->getObjectID()) {
+        if ($this->formObject->getObjectID() === 0) {
             throw new IllegalLinkException();
         }
     }

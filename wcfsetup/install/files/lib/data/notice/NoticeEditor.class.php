@@ -43,7 +43,7 @@ class NoticeEditor extends DatabaseObjectEditor implements IEditableCachedObject
             $maxShowOrder = 0;
         }
 
-        if (!$showOrder || $showOrder > $maxShowOrder) {
+        if ($showOrder === 0 || $showOrder > $maxShowOrder) {
             $newShowOrder = $maxShowOrder + 1;
         } else {
             // shift other notices

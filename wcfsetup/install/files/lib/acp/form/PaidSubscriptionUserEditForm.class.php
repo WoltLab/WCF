@@ -51,7 +51,7 @@ class PaidSubscriptionUserEditForm extends PaidSubscriptionUserAddForm
             $this->subscriptionUserID = \intval($_REQUEST['id']);
         }
         $this->subscriptionUser = new PaidSubscriptionUser($this->subscriptionUserID);
-        if ($this->subscriptionUser->isNil() || !$this->subscriptionUser->endDate || !$this->subscriptionUser->isActive) {
+        if ($this->subscriptionUser->isNil() || $this->subscriptionUser->endDate === 0 || $this->subscriptionUser->isActive === 0) {
             throw new IllegalLinkException();
         }
         $this->subscription = $this->subscriptionUser->getSubscription();

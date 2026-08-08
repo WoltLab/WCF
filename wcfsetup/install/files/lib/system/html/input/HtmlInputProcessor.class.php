@@ -146,7 +146,7 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
      */
     public function processEmbeddedContent(string $html, string $objectType, int $objectID)
     {
-        if (!$objectID) {
+        if ($objectID === 0) {
             throw new \UnexpectedValueException("Object id parameter must be non-zero.");
         }
 

@@ -31,7 +31,7 @@ class ArticleCommentImporter extends AbstractCommentImporter
     {
         $articleID = ImportHandler::getInstance()
             ->getNewID('com.woltlab.wcf.article', $data['objectID'] ?? $additionalData['articleID']);
-        if (!$articleID) {
+        if ($articleID === null) {
             return 0;
         }
         $article = new Article($articleID);

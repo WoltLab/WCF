@@ -51,7 +51,7 @@ final class DeleteObjectReactions
         // reduce count of received users
         $users = [];
         foreach ($likeObjects as $likeObject) {
-            if ($likeObject->likes && $likeObject->objectUserID) {
+            if ($likeObject->likes !== 0 && $likeObject->objectUserID !== null) {
                 if (!isset($users[$likeObject->objectUserID])) {
                     $users[$likeObject->objectUserID] = 0;
                 }
@@ -78,7 +78,7 @@ final class DeleteObjectReactions
             foreach ($likeList as $like) {
                 $likeData[$like->likeID] = $like->userID;
 
-                if ($like->objectUserID) {
+                if ($like->objectUserID !== null) {
                     if (!isset($activityPoints[$like->objectUserID])) {
                         $activityPoints[$like->objectUserID] = 0;
                     }
@@ -92,7 +92,7 @@ final class DeleteObjectReactions
                     UserNotificationHandler::getInstance()
                         ->removeNotifications($notificationObjectType, $likeList->getObjectIDs());
                 }
-            } elseif (UserNotificationHandler::getInstance()->getObjectTypeID($this->objectType . '.notification')) {
+            } elseif (UserNotificationHandler::getInstance()->getObjectTypeID($this->objectType . '.notification') !== 0) {
                 UserNotificationHandler::getInstance()
                     ->removeNotifications($this->objectType . '.notification', $likeList->getObjectIDs());
             }
@@ -111,7 +111,7 @@ final class DeleteObjectReactions
         }
 
         // delete activity events
-        if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.recentActivityEvent')) {
+        if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.recentActivityEvent') !== null) {
             UserActivityEventHandler::getInstance()
                 ->removeEvents($objectTypeObj->objectType . '.recentActivityEvent', $this->objectIDs);
         }

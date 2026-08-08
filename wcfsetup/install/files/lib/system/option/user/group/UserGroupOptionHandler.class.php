@@ -75,7 +75,7 @@ class UserGroupOptionHandler extends OptionHandler
     {
         if (parent::checkOption($option)) {
             // check if permission is available for guests if group is guests
-            if ($this->group && $this->group->groupType === UserGroup::GUESTS && $option->usersOnly) {
+            if ($this->group && $this->group->groupType === UserGroup::GUESTS && $option->usersOnly !== 0) {
                 return false;
             }
 
@@ -158,7 +158,7 @@ class UserGroupOptionHandler extends OptionHandler
 
         if (
             $this->isAdmin()
-            && (!\ENABLE_ENTERPRISE_MODE || !\in_array($option->optionName, UserGroupOption::ENTERPRISE_BLACKLIST))
+            && (\ENABLE_ENTERPRISE_MODE === 0 || !\in_array($option->optionName, UserGroupOption::ENTERPRISE_BLACKLIST))
         ) {
             return;
         }

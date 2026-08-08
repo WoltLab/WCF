@@ -31,7 +31,7 @@ final class EnableType implements IController
 
         $this->assertReactionTypeCanBeEnabled();
 
-        if (!$reactionType->isAssignable) {
+        if ($reactionType->isAssignable === 0) {
             new EnableReactionType($reactionType)();
         }
 
@@ -40,7 +40,7 @@ final class EnableType implements IController
 
     private function assertReactionTypeCanBeEnabled(): void
     {
-        if (!\MODULE_LIKE) {
+        if (\MODULE_LIKE === 0) {
             throw new IllegalLinkException();
         }
 

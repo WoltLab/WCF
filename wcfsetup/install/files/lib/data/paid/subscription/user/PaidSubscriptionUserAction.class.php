@@ -151,7 +151,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
         }
 
         foreach ($this->getObjects() as $subscriptionUser) {
-            if (!$subscriptionUser->isActive) {
+            if ($subscriptionUser->isActive === 0) {
                 throw new UserInputException('objectIDs');
             }
         }
@@ -189,7 +189,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
         }
 
         foreach ($this->getObjects() as $subscriptionUser) {
-            if ($subscriptionUser->isActive) {
+            if ($subscriptionUser->isActive !== 0) {
                 throw new UserInputException('objectIDs');
             }
         }

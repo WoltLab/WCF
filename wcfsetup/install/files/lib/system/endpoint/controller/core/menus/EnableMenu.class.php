@@ -31,7 +31,7 @@ final class EnableMenu implements IController
         $this->assertMenuCanBeEnabled($menu);
 
         $box = $menu->getBox();
-        if ($box->isDisabled) {
+        if ($box->isDisabled !== 0) {
             new \wcf\command\box\EnableBox($box)();
         }
 

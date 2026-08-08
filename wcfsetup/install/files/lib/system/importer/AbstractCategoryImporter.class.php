@@ -57,7 +57,7 @@ class AbstractCategoryImporter extends AbstractImporter
             if (!empty($values)) {
                 /** @var ?Package $package */
                 $package = null;
-                if ($this->objectTypeID) {
+                if ($this->objectTypeID !== 0) {
                     $objectType = ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID);
                     $package = PackageCache::getInstance()->getPackage($objectType->packageID);
                 }

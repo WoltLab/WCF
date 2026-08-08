@@ -55,6 +55,6 @@ final class CheckUserBan implements MiddlewareInterface
             return false;
         }
 
-        return !!$user->banned;
+        return $user->banned !== 0;
     }
 }

@@ -34,11 +34,11 @@ class TimeFilter extends AbstractFilter
         $columnName = $this->getDatabaseColumnName($list);
         $timestamps = $this->getTimestamps($value);
 
-        if (!$timestamps['from'] && !$timestamps['to']) {
+        if ($timestamps['from'] === 0 && $timestamps['to'] === 0) {
             throw new InvalidFilterValue("Invalid value '{$value}' for filter '{$this->id}' given.");
         }
 
-        if (!$timestamps['to']) {
+        if ($timestamps['to'] === 0) {
             $list->getConditionBuilder()->add("{$columnName} >= ?", [$timestamps['from']]);
         } else {
             $list->getConditionBuilder()->add("{$columnName} BETWEEN ? AND ?", [$timestamps['from'], $timestamps['to']]);

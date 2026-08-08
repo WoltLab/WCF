@@ -539,7 +539,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
                 } else {
                     if ($structure === self::STRUCT_FLAT) {
                         $target[$variableName] = \intval($target[$variableName]);
-                        if (!$allowEmpty && !$target[$variableName]) {
+                        if (!$allowEmpty && $target[$variableName] === 0) {
                             throw new UserInputException($variableName);
                         }
                     } else {

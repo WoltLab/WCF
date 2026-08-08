@@ -86,7 +86,7 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController
         $lines = \explode("\n", StringUtil::unifyNewlines($this->regex));
 
         foreach ($lines as $line) {
-            if (Regex::compile($line)->match($url)) {
+            if (Regex::compile($line)->match($url) !== 0) {
                 return true;
             }
         }
@@ -105,7 +105,7 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController
 
         foreach ($lines as $line) {
             $regex = new Regex($line);
-            if (!$regex->match($url)) {
+            if ($regex->match($url) === 0) {
                 continue;
             }
 
@@ -155,11 +155,11 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController
      */
     protected function getOutputForUserConsent(string $url, string $html)
     {
-        if (!\MESSAGE_ENABLE_USER_CONSENT) {
+        if (\MESSAGE_ENABLE_USER_CONSENT === 0) {
             return $html;
         }
 
-        if (WCF::getUser()->userID && WCF::getUser()->getUserOption('enableEmbeddedMedia')) {
+        if (!WCF::getUser()->isGuest() && WCF::getUser()->getUserOption('enableEmbeddedMedia')) {
             return $html;
         }
 

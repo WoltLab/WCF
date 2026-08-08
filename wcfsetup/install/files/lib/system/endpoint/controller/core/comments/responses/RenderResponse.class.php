@@ -63,7 +63,7 @@ final class RenderResponse implements IController
         if (!$commentManager->isAccessible($comment->objectID)) {
             throw new PermissionDeniedException();
         }
-        if ($response->isDisabled && !$commentManager->canModerate($comment->objectTypeID, $comment->objectID)) {
+        if ($response->isDisabled !== 0 && !$commentManager->canModerate($comment->objectTypeID, $comment->objectID)) {
             throw new PermissionDeniedException();
         }
     }
@@ -79,7 +79,7 @@ final class RenderResponse implements IController
 
     private function renderResponse(CommentResponse $response, bool $messageOnly = false): string
     {
-        if ($response->hasEmbeddedObjects) {
+        if ($response->hasEmbeddedObjects !== 0) {
             MessageEmbeddedObjectManager::getInstance()->loadObjects(
                 'com.woltlab.wcf.comment.response',
                 [$response->getObjectID()]

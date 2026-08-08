@@ -22,7 +22,7 @@ class MySQLDatabase extends Database
     #[\Override]
     public function connect()
     {
-        if (!$this->port) {
+        if ($this->port === 0) {
             $this->port = 3306; // mysql default port
         }
 

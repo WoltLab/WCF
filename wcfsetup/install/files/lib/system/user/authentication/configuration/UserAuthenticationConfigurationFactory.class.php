@@ -38,7 +38,7 @@ final class UserAuthenticationConfigurationFactory extends SingletonFactory
     private function getDefaultConfiguration(): UserAuthenticationConfiguration
     {
         return new UserAuthenticationConfiguration(
-            !\REGISTER_DISABLED,
+            \REGISTER_DISABLED === 0,
         );
     }
 }

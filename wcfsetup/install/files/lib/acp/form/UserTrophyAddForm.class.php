@@ -152,7 +152,7 @@ class UserTrophyAddForm extends AbstractAcpForm
     {
         parent::validate();
 
-        if ($this->useCustomDescription) {
+        if ($this->useCustomDescription !== 0) {
             if (!I18nHandler::getInstance()->validateValue('description')) {
                 throw new UserInputException('description');
             }
@@ -168,7 +168,7 @@ class UserTrophyAddForm extends AbstractAcpForm
             throw new UserInputException('trophyID');
         }
 
-        if ($this->trophy->awardAutomatically) {
+        if ($this->trophy->awardAutomatically !== 0) {
             throw new UserInputException('trophyID', 'awardAutomatically');
         }
     }
@@ -183,7 +183,7 @@ class UserTrophyAddForm extends AbstractAcpForm
                 'data' => \array_merge($this->additionalFields, [
                     'trophyID' => $this->trophy->trophyID,
                     'userID' => $user,
-                    'description' => $this->useCustomDescription ? $this->description : '',
+                    'description' => $this->useCustomDescription !== 0 ? $this->description : '',
                     'time' => \TIME_NOW,
                     'useCustomDescription' => $this->useCustomDescription,
                     'trophyUseHtml' => $this->trophyUseHtml,
@@ -230,7 +230,7 @@ class UserTrophyAddForm extends AbstractAcpForm
     private function hasSuitableTrophy()
     {
         foreach (TrophyCache::getInstance()->getTrophies() as $trophy) {
-            if (!$trophy->awardAutomatically) {
+            if ($trophy->awardAutomatically === 0) {
                 return true;
             }
         }

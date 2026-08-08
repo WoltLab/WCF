@@ -72,7 +72,7 @@ class ACPSearchResultList implements \Countable, \Iterator, \Stringable
     {
         $count = \count($this->results);
 
-        if ($size && ($count > $size)) {
+        if ($size !== 0 && ($count > $size)) {
             $reduceBy = $count - $size;
             $this->reduceResults($reduceBy);
         }

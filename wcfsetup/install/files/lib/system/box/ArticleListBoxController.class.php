@@ -55,7 +55,7 @@ class ArticleListBoxController extends AbstractListViewBoxController
 
     public function __construct()
     {
-        if (!empty($this->validSortFields) && \MODULE_LIKE) {
+        if (!empty($this->validSortFields) && \MODULE_LIKE !== 0) {
             $this->validSortFields[] = 'cumulativeLikes';
         }
 

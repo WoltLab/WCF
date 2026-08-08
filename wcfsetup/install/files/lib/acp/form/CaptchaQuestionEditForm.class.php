@@ -51,7 +51,7 @@ class CaptchaQuestionEditForm extends CaptchaQuestionAddForm
 
         $this->formObject = new CaptchaQuestion($queryParameters['id']);
 
-        if (!$this->formObject->getObjectID()) {
+        if ($this->formObject->getObjectID() === 0) {
             throw new IllegalLinkException();
         }
     }

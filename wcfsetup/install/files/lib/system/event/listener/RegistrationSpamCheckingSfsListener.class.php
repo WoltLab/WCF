@@ -17,7 +17,7 @@ final class RegistrationSpamCheckingSfsListener
 {
     public function __invoke(RegistrationSpamChecking $event): void
     {
-        if (!\BLACKLIST_SFS_ENABLE) {
+        if (\BLACKLIST_SFS_ENABLE === 0) {
             return;
         }
 

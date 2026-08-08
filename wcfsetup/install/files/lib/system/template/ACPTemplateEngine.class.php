@@ -45,7 +45,7 @@ class ACPTemplateEngine extends TemplateEngine
     public function getCompiledFilename(string $templateName, string $application)
     {
         $abbreviation = 'wcf';
-        if (\PACKAGE_ID) {
+        if (\PACKAGE_ID !== 0) {
             $abbreviation = ApplicationHandler::getInstance()->getActiveApplication()->getAbbreviation();
         }
 
@@ -67,7 +67,7 @@ class ACPTemplateEngine extends TemplateEngine
     public function getTemplateListenerCode(string $templateName, string $eventName)
     {
         // skip template listeners within WCFSetup
-        if (!\PACKAGE_ID) {
+        if (\PACKAGE_ID === 0) {
             return '';
         }
 

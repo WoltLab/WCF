@@ -208,7 +208,7 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
 
             $this->variables[$variableName] = $variableValue;
 
-            if ($this->hasDarkMode) {
+            if ($this->hasDarkMode !== 0) {
                 $this->variables[self::DARK_MODE_PREFIX . $variableName] = $row['variableValueDarkMode'] ?? $row['defaultValueDarkMode'];
 
                 // Some variables are identical for both modes and therefore are represented as
@@ -222,7 +222,7 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
 
         // The theme color implicitly matches the header background color.
         $this->variables['wcfPageThemeColor'] = $this->variables['wcfHeaderBackground'];
-        if ($this->hasDarkMode) {
+        if ($this->hasDarkMode !== 0) {
             $this->variables[self::DARK_MODE_PREFIX . 'wcfPageThemeColor'] = $this->variables[self::DARK_MODE_PREFIX . 'wcfHeaderBackground'];
         }
 
@@ -440,7 +440,7 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
      */
     protected function getFaviconPath(string $filename, bool $absolutePath = true)
     {
-        if ($this->hasFavicon) {
+        if ($this->hasFavicon !== 0) {
             $path = FileUtil::getRelativePath(\WCF_DIR, $this->getAssetPath()) . $filename;
         } else {
             $path = 'images/favicon/default.' . $filename;

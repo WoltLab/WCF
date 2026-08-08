@@ -75,7 +75,7 @@ class AccountSecurityPage extends AbstractPage
             'activeSessions' => $this->activeSessions,
             'multifactorMethods' => $this->multifactorMethods,
             'enabledMultifactorMethods' => $this->enabledMultifactorMethods,
-            'requiresMultifactor' => WCF::getUser()->requiresMultifactor() && !WCF::getUser()->multifactorActive,
+            'requiresMultifactor' => WCF::getUser()->requiresMultifactor() && WCF::getUser()->multifactorActive === 0,
         ]);
     }
 

@@ -123,7 +123,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm
      */
     protected function validateEndDate()
     {
-        if ($this->subscription->subscriptionLength) {
+        if ($this->subscription->subscriptionLength !== 0) {
             $this->endDateTime = \DateTime::createFromFormat('Y-m-d', $this->endDate, new \DateTimeZone('UTC'));
             if ($this->endDateTime === false || $this->endDateTime->getTimestamp() < \TIME_NOW) {
                 throw new UserInputException('endDate');
@@ -141,7 +141,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm
             $this->user->userID
         );
         $data = [];
-        if ($this->subscription->subscriptionLength) {
+        if ($this->subscription->subscriptionLength !== 0) {
             $data['endDate'] = $this->endDateTime->getTimestamp();
         }
         if ($userSubscription === null) {
@@ -185,7 +185,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm
      */
     protected function setDefaultEndDate()
     {
-        if ($this->subscription->subscriptionLength) {
+        if ($this->subscription->subscriptionLength !== 0) {
             $d = DateUtil::getDateTimeByTimestamp(\TIME_NOW);
             $d->add($this->subscription->getDateInterval());
             $this->endDate = $d->format('Y-m-d');

@@ -107,7 +107,7 @@ class TrophyImporter extends AbstractImporter
      */
     private function getImportCategoryID()
     {
-        if (!$this->importCategoryID) {
+        if ($this->importCategoryID === 0) {
             $objectTypeID = ObjectTypeCache::getInstance()
                 ->getObjectTypeIDByName('com.woltlab.wcf.category', 'com.woltlab.wcf.trophy.category');
 

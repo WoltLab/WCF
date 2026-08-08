@@ -78,7 +78,7 @@ class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements 
     public function toggle()
     {
         foreach ($this->objects as $editor) {
-            if ($editor->isDisabled) {
+            if ($editor->isDisabled !== 0) {
                 new EnablePackageUpdateServer($editor->getDecoratedObject())();
             } else {
                 new DisablePackageUpdateServer($editor->getDecoratedObject())();

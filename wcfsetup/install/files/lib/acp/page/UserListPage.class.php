@@ -146,7 +146,7 @@ class UserListPage extends SortablePage
 
         if (!empty($_REQUEST['id'])) {
             $this->searchID = \intval($_REQUEST['id']);
-            if ($this->searchID) {
+            if ($this->searchID !== 0) {
                 $this->readSearchResult();
             }
             if (empty($this->userIDs)) {
@@ -179,7 +179,7 @@ class UserListPage extends SortablePage
         parent::readData();
 
         // add email column for authorized users
-        if (!$this->searchID && WCF::getSession()->hasPermission('admin.user.canEditMailAddress')) {
+        if ($this->searchID === 0 && WCF::getSession()->hasPermission('admin.user.canEditMailAddress')) {
             \array_unshift($this->columns, 'email');
         }
 
@@ -222,7 +222,7 @@ class UserListPage extends SortablePage
     #[\Override]
     public function show()
     {
-        $this->activeMenuItem = 'wcf.acp.menu.link.user.' . ($this->searchID ? 'search' : 'list');
+        $this->activeMenuItem = 'wcf.acp.menu.link.user.' . ($this->searchID !== 0 ? 'search' : 'list');
 
         parent::show();
     }

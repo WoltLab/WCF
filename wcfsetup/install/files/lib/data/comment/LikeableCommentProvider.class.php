@@ -44,7 +44,7 @@ class LikeableCommentProvider extends AbstractObjectTypeProvider implements
     {
         \assert($object instanceof LikeableComment);
 
-        if (!$object->commentID) {
+        if ($object->commentID === 0) {
             return false;
         }
 

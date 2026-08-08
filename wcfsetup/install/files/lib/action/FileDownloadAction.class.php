@@ -172,7 +172,7 @@ final class FileDownloadAction implements RequestHandlerInterface
 
         if ($request->hasHeader('range')) {
             $regex = new Regex('^bytes=(?:(\d+)-(\d+)?|-(\d+))$');
-            if ($regex->match($request->getHeaderLine('range'))) {
+            if ($regex->match($request->getHeaderLine('range')) !== 0) {
                 $matches = $regex->getMatches();
                 $start = (isset($matches[1]) && $matches[1] !== '' ? \intval($matches[1]) : null);
                 $end = (isset($matches[2]) && $matches[2] !== '' ? \intval($matches[2]) : null);

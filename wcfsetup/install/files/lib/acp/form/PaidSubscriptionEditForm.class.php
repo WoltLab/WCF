@@ -66,7 +66,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
             $this->subscriptionLength = $this->subscription->subscriptionLength;
             $this->subscriptionLengthUnit = $this->subscription->subscriptionLengthUnit;
             $this->isRecurring = $this->subscription->isRecurring;
-            if (!$this->subscriptionLength) {
+            if ($this->subscriptionLength === 0) {
                 $this->subscriptionLengthPermanent = 1;
             }
         }

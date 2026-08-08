@@ -362,7 +362,7 @@ class SmileyAddForm extends AbstractForm
             }
         }
 
-        if ($this->categoryID) {
+        if ($this->categoryID !== 0) {
             $category = new Category($this->categoryID);
             if ($category->isNil()) {
                 throw new UserInputException('categoryID', 'invalid');

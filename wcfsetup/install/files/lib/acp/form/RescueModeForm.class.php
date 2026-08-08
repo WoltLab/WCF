@@ -92,9 +92,9 @@ final class RescueModeForm extends AbstractForm
         parent::readParameters();
 
         // check authentication failures
-        if (\ENABLE_USER_AUTHENTICATION_FAILURE) {
+        if (\ENABLE_USER_AUTHENTICATION_FAILURE !== 0) {
             $failures = UserAuthenticationFailure::countIPFailures(UserUtil::getIpAddress());
-            if (\USER_AUTHENTICATION_FAILURE_IP_BLOCK && $failures >= \USER_AUTHENTICATION_FAILURE_IP_BLOCK) {
+            if (\USER_AUTHENTICATION_FAILURE_IP_BLOCK !== 0 && $failures >= \USER_AUTHENTICATION_FAILURE_IP_BLOCK) {
                 throw new NamedUserException(HtmlString::fromSafeHtml(
                     WCF::getLanguage()->getDynamicVariable('wcf.user.login.blocked')
                 ));
@@ -191,7 +191,7 @@ final class RescueModeForm extends AbstractForm
             throw new UserInputException('username', 'notAuthorized');
         }
 
-        if (\ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess()) {
+        if (\ENABLE_ENTERPRISE_MODE !== 0 && !WCF::getUser()->hasOwnerAccess()) {
             throw new UserInputException('username', 'notAuthorized');
         }
     }
@@ -207,7 +207,7 @@ final class RescueModeForm extends AbstractForm
 
         // domain may not contain path components
         $regex = new Regex('[/#\?&]');
-        if ($regex->match($this->domainName)) {
+        if ($regex->match($this->domainName) !== 0) {
             throw new UserInputException('domainName', 'containsPath');
         }
     }
@@ -249,7 +249,7 @@ final class RescueModeForm extends AbstractForm
                 'global'
             );
 
-            if (\ENABLE_USER_AUTHENTICATION_FAILURE) {
+            if (\ENABLE_USER_AUTHENTICATION_FAILURE !== 0) {
                 $action = new UserAuthenticationFailureAction([], 'create', [
                     'data' => [
                         'environment' => 'admin',

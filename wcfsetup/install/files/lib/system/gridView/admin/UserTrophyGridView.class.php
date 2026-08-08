@@ -100,7 +100,7 @@ final class UserTrophyGridView extends AbstractGridView
             new Divider(),
             new EditInteraction(
                 UserTrophyEditForm::class,
-                static fn(UserTrophy $userTrophy) => !$userTrophy->getTrophy()->awardAutomatically
+                static fn(UserTrophy $userTrophy) => $userTrophy->getTrophy()->awardAutomatically === 0
             )
         ]);
         $this->setInteractionProvider($provider);
@@ -109,7 +109,7 @@ final class UserTrophyGridView extends AbstractGridView
         $this->addRowLink(
             new GridViewRowLink(
                 UserTrophyEditForm::class,
-                isAvailableCallback: static fn(UserTrophy $userTrophy) => !$userTrophy->getTrophy()->awardAutomatically
+                isAvailableCallback: static fn(UserTrophy $userTrophy) => $userTrophy->getTrophy()->awardAutomatically === 0
             )
         );
 
@@ -158,7 +158,7 @@ final class UserTrophyGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return \MODULE_TROPHY
+        return \MODULE_TROPHY !== 0
             && WCF::getSession()->hasPermission('admin.trophy.canAwardTrophy');
     }
 

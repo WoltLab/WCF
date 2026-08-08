@@ -28,7 +28,7 @@ final class SetTagSynonym
         $tagEditor = new TagEditor($this->mainTag);
 
         // the "main" tag may not be a synonym itself
-        if ($tagEditor->synonymFor) {
+        if ($tagEditor->synonymFor !== null) {
             $tagEditor->update([
                 'synonymFor' => null,
             ]);

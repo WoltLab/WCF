@@ -53,7 +53,7 @@ class ContactRecipientAction extends AbstractDatabaseObjectAction implements ITo
         parent::validateDelete();
 
         foreach ($this->getObjects() as $object) {
-            if ($object->originIsSystem) {
+            if ($object->originIsSystem !== 0) {
                 throw new PermissionDeniedException();
             }
         }
@@ -137,7 +137,7 @@ class ContactRecipientAction extends AbstractDatabaseObjectAction implements ITo
     public function toggle()
     {
         foreach ($this->objects as $editor) {
-            if ($editor->isDisabled) {
+            if ($editor->isDisabled !== 0) {
                 new EnableContactRecipient($editor->getDecoratedObject())();
             } else {
                 new DisableContactRecipient($editor->getDecoratedObject())();

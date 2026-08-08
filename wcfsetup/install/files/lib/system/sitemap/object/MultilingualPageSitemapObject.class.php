@@ -53,7 +53,7 @@ class MultilingualPageSitemapObject extends AbstractSitemapObjectObjectType
     {
         $page = new Page($object->pageID);
 
-        if ($page->requireObjectID) {
+        if ($page->requireObjectID !== 0) {
             return false;
         }
 

@@ -24,7 +24,7 @@ class UserBirthdayCondition extends AbstractCondition implements IContentConditi
     #[\Override]
     public function getData()
     {
-        if ($this->birthdayToday) {
+        if ($this->birthdayToday !== 0) {
             return ['birthdayToday' => 1];
         }
 
@@ -36,7 +36,7 @@ class UserBirthdayCondition extends AbstractCondition implements IContentConditi
     {
         $label = WCF::getLanguage()->get('wcf.user.birthdayToday');
         $checked = '';
-        if ($this->birthdayToday) {
+        if ($this->birthdayToday !== 0) {
             $checked = ' checked';
         }
 

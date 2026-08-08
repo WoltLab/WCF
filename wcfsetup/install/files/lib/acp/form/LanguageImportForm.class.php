@@ -110,7 +110,7 @@ class LanguageImportForm extends AbstractForm
 
         // get language
         $this->sourceLanguage = LanguageFactory::getInstance()->getLanguage($this->sourceLanguageID);
-        if (!$this->sourceLanguage->languageID) {
+        if ($this->sourceLanguage === null) {
             throw new UserInputException('sourceLanguageID');
         }
 
@@ -167,7 +167,7 @@ class LanguageImportForm extends AbstractForm
         $collator = new \Collator(WCF::getLanguage()->getLocale());
         \usort(
             $packages,
-            static fn (Package $a, Package $b) => $collator->compare($a->getName(), $b->getName())
+            static fn(Package $a, Package $b) => $collator->compare($a->getName(), $b->getName())
         );
 
         WCF::getTPL()->assign([

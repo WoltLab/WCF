@@ -27,7 +27,7 @@ final class CheckForEnterpriseNonOwnerAccess implements MiddlewareInterface
 
         if (
             $requestHandler->isACPRequest()
-            && \ENABLE_ENTERPRISE_MODE
+            && \ENABLE_ENTERPRISE_MODE !== 0
             && \defined($requestHandler->getActiveRequest()->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
             && \constant($requestHandler->getActiveRequest()->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
             && !WCF::getUser()->hasOwnerAccess()

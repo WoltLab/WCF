@@ -27,12 +27,12 @@ final class StyleInteractions extends AbstractInteractionProvider
     public function __construct()
     {
         $this->addInteractions([
-            new DeleteInteraction('core/styles/%s', static fn(Style $object) => !$object->isDefault),
+            new DeleteInteraction('core/styles/%s', static fn(Style $object) => $object->isDefault === 0),
             new RpcInteraction(
                 'set-as-default',
                 'core/styles/%s/set-as-default',
                 'wcf.acp.style.button.setAsDefault',
-                isAvailableCallback: static fn(Style $object) => !$object->isDefault,
+                isAvailableCallback: static fn(Style $object) => $object->isDefault === 0,
                 interactionEffect: InteractionEffect::ReloadList
             ),
             new RpcInteraction(
@@ -53,7 +53,7 @@ final class StyleInteractions extends AbstractInteractionProvider
                 'wcf.acp.style.addDarkMode',
                 InteractionConfirmationType::Custom,
                 'wcf.acp.style.addDarkMode.question',
-                static fn(Style $style) => !$style->hasDarkMode && $style->isTainted
+                static fn(Style $style) => $style->hasDarkMode === 0 && $style->isTainted !== 0
             )
         ]);
 

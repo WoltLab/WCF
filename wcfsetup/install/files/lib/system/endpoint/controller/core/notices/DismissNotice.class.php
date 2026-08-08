@@ -36,7 +36,7 @@ final class DismissNotice implements IController
 
     private function assertNoticeCanBeDismissed(Notice $notice): void
     {
-        if (!$notice->isDismissible) {
+        if ($notice->isDismissible === 0) {
             throw new PermissionDeniedException();
         }
     }

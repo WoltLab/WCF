@@ -212,7 +212,7 @@ class PaidSubscriptionAddForm extends AbstractForm
         if (!empty($_POST['subscriptionLengthPermanent'])) {
             $this->subscriptionLengthPermanent = 1;
         }
-        if (!$this->subscriptionLengthPermanent) {
+        if ($this->subscriptionLengthPermanent === 0) {
             if (isset($_POST['subscriptionLength'])) {
                 $this->subscriptionLength = \intval($_POST['subscriptionLength']);
             }
@@ -259,7 +259,7 @@ class PaidSubscriptionAddForm extends AbstractForm
             throw new UserInputException('cost');
         }
 
-        if (!$this->subscriptionLengthPermanent) {
+        if ($this->subscriptionLengthPermanent === 0) {
             if ($this->subscriptionLength < 1) {
                 throw new UserInputException('subscriptionLength');
             }

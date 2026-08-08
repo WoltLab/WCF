@@ -66,7 +66,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractCommen
     public function getEmailMessage(string $notificationType = 'instant'): array
     {
         $comment = CommentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->commentID);
-        if ($comment->userID) {
+        if ($comment->userID !== null) {
             $commentAuthor = UserProfileRuntimeCache::getInstance()->getObject($comment->userID);
         } else {
             $commentAuthor = UserProfile::getGuestUserProfile($comment->username);
@@ -125,7 +125,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractCommen
         }
 
         $comment = CommentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->commentID);
-        if ($comment->userID) {
+        if ($comment->userID !== null) {
             $commentAuthor = UserProfileRuntimeCache::getInstance()->getObject($comment->userID);
         } else {
             $commentAuthor = UserProfile::getGuestUserProfile($comment->username);

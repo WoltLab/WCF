@@ -175,8 +175,8 @@ class UserGroupAddForm extends AbstractOptionListForm
                 'priority' => $this->priority,
                 'userOnlineMarking' => $this->userOnlineMarking,
                 'showOnTeamPage' => $this->showOnTeamPage,
-                'allowMention' => $this->allowMention ? 1 : 0,
-                'requireMultifactor' => $this->requireMultifactor ? 1 : 0,
+                'allowMention' => $this->allowMention !== 0 ? 1 : 0,
+                'requireMultifactor' => $this->requireMultifactor !== 0 ? 1 : 0,
             ]),
             'options' => $optionValues,
         ];

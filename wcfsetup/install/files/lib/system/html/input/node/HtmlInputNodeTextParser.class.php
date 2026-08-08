@@ -87,7 +87,7 @@ class HtmlInputNodeTextParser
         $this->htmlInputNodeProcessor = $htmlInputNodeProcessor;
         $this->sourceBBCodes = BBCodeParser::getInstance()->getSourceBBCodes();
 
-        if (\MODULE_SMILEY) {
+        if (\MODULE_SMILEY !== 0) {
             $this->smileyCount = $smileyCount;
 
             if (self::$smilies === null) {
@@ -100,7 +100,7 @@ class HtmlInputNodeTextParser
                 foreach ($smilies as $categoryID => $categorySmilies) {
                     if (
                         !\array_key_exists($categoryID ?: 0, $categories)
-                        || $categories[$categoryID ?: 0]->isDisabled
+                        || $categories[$categoryID ?: 0]->isDisabled !== 0
                     ) {
                         continue;
                     }
@@ -203,7 +203,7 @@ class HtmlInputNodeTextParser
                 $value = $this->parseEmail($node, $value);
             }
 
-            if (\MODULE_SMILEY && $this->smileyCount !== 50) {
+            if (\MODULE_SMILEY !== 0 && $this->smileyCount !== 50) {
                 $value = $this->parseSmiley($node, $value);
             }
 

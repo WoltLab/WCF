@@ -24,7 +24,7 @@ final class UserBBCode extends AbstractBBCode
         }
 
         $userID = (!empty($openingTag['attributes'][1])) ? \intval($openingTag['attributes'][1]) : 0;
-        if (!$userID) {
+        if ($userID === 0) {
             return $content;
         }
 

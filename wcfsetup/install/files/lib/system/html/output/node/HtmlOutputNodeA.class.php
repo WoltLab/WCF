@@ -212,7 +212,7 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
         $element->setAttribute('class', 'externalURL');
 
         $rel = 'nofollow';
-        if (\EXTERNAL_LINK_TARGET_BLANK) {
+        if (\EXTERNAL_LINK_TARGET_BLANK !== 0) {
             $rel .= ' noopener';
 
             $element->setAttribute('target', '_blank');

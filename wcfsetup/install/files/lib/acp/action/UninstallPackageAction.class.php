@@ -115,7 +115,7 @@ final class UninstallPackageAction extends AbstractSecureAction
         $this->installation = new PackageUninstallationDispatcher($queue);
 
         // mark package as tainted if it is an app
-        if ($package->isApplication) {
+        if ($package->isApplication !== 0) {
             $application = ApplicationHandler::getInstance()->getApplicationByID($package->packageID);
             \assert($application !== null);
 

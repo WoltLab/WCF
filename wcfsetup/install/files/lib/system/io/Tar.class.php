@@ -272,7 +272,7 @@ class Tar implements IArchive
         $targetFile = new File($destination);
 
         // read and write data
-        if ($header['size']) {
+        if ($header['size'] !== 0) {
             $buffer = $this->file->read($header['size']);
             $targetFile->write($buffer);
         }
@@ -280,7 +280,7 @@ class Tar implements IArchive
 
         FileUtil::makeWritable($destination);
 
-        if ($header['mtime']) {
+        if ($header['mtime'] !== 0) {
             @$targetFile->touch($header['mtime']);
         }
 

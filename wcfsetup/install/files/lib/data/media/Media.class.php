@@ -318,7 +318,7 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
     #[\Override]
     public function getImageData(?int $minWidth = null, ?int $minHeight = null): ?ImageData
     {
-        if (!$this->isImage) {
+        if ($this->isImage === 0) {
             return null;
         }
 

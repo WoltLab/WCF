@@ -56,7 +56,7 @@ class TagEditForm extends TagAddForm
 
         $this->formObject = new Tag($queryParameters['id']);
 
-        if (!$this->formObject->getObjectID()) {
+        if ($this->formObject->getObjectID() === 0) {
             throw new IllegalLinkException();
         }
     }

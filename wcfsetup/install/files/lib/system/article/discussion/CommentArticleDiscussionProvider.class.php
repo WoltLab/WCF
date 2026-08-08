@@ -81,6 +81,6 @@ class CommentArticleDiscussionProvider extends AbstractArticleDiscussionProvider
     #[\Override]
     public static function isResponsible(Article $article)
     {
-        return !!$article->enableComments;
+        return $article->enableComments !== 0;
     }
 }

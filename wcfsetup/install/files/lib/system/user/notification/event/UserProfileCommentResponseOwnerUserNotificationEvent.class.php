@@ -37,7 +37,7 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractComme
     public function getMessage()
     {
         $comment = CommentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->commentID);
-        if ($comment->userID) {
+        if ($comment->userID !== null) {
             $commentAuthor = UserProfileRuntimeCache::getInstance()->getObject($comment->userID);
         } else {
             $commentAuthor = UserProfile::getGuestUserProfile($comment->username);
@@ -76,7 +76,7 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractComme
     {
         $comment = CommentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->commentID);
         $owner = UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID']);
-        if ($comment->userID) {
+        if ($comment->userID !== null) {
             $commentAuthor = UserProfileRuntimeCache::getInstance()->getObject($comment->userID);
         } else {
             $commentAuthor = UserProfile::getGuestUserProfile($comment->username);

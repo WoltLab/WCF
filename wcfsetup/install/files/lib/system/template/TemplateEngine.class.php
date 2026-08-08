@@ -868,7 +868,7 @@ class TemplateEngine extends SingletonFactory
      */
     public function setTemplateGroupID(int $templateGroupID)
     {
-        if ($templateGroupID && !isset($this->templateGroupCache[$templateGroupID])) {
+        if ($templateGroupID !== 0 && !isset($this->templateGroupCache[$templateGroupID])) {
             $templateGroupID = 0;
         }
 

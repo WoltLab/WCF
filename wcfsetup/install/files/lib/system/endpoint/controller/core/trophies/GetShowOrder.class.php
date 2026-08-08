@@ -43,7 +43,7 @@ final class GetShowOrder implements IController
 
     private function assertTrophyCanBeSorted(): void
     {
-        if (!\MODULE_TROPHY) {
+        if (\MODULE_TROPHY === 0) {
             throw new IllegalLinkException();
         }
 

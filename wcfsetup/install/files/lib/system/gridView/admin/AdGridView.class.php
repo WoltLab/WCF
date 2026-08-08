@@ -76,7 +76,7 @@ final class AdGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return \MODULE_WCF_AD
+        return \MODULE_WCF_AD !== 0
             && WCF::getSession()->hasPermission('admin.ad.canManageAd');
     }
 

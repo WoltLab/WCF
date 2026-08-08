@@ -24,6 +24,9 @@ class PaidSubscriptionUserUserNotificationObject extends DatabaseObjectDecorator
      */
     protected static $baseClass = PaidSubscriptionUser::class;
 
+    /**
+     * @return int
+     */
     #[\Override]
     public function getAuthorID()
     {

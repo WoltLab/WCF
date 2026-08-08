@@ -193,8 +193,8 @@ class NotificationPresetSettingsForm extends AbstractForm
                         'presetMailNotificationType' => $presetMailNotificationType,
                     ]);
 
-                    if ($this->applyChangesToExistingUsers) {
-                        if (!$preset) {
+                    if ($this->applyChangesToExistingUsers !== 0) {
+                        if ($preset === 0) {
                             $sql = "DELETE FROM wcf1_user_notification_event_to_user
                                     WHERE       eventID = ?";
                             $statement = WCF::getDB()->prepare($sql);

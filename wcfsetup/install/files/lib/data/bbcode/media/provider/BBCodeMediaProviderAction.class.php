@@ -54,7 +54,7 @@ class BBCodeMediaProviderAction extends AbstractDatabaseObjectAction implements 
     public function toggle()
     {
         foreach ($this->objects as $editor) {
-            if ($editor->isDisabled) {
+            if ($editor->isDisabled !== 0) {
                 new EnableBBCodeMediaProvider($editor->getDecoratedObject())();
             } else {
                 new DisableBBCodeMediaProvider($editor->getDecoratedObject())();

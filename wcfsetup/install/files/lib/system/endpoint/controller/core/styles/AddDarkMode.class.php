@@ -39,7 +39,7 @@ final class AddDarkMode implements IController
     {
         WCF::getSession()->checkPermissions(['admin.style.canManageStyle']);
 
-        if ($style->hasDarkMode || !$style->isTainted) {
+        if ($style->hasDarkMode !== 0 || $style->isTainted === 0) {
             throw new IllegalLinkException();
         }
     }

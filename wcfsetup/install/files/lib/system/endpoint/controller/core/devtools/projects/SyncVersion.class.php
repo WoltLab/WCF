@@ -61,7 +61,7 @@ final class SyncVersion implements IController
 
     private function assertProjectCanBeManaged(): void
     {
-        if (!\ENABLE_DEVELOPER_TOOLS || !WCF::getSession()->hasPermission('admin.configuration.package.canInstallPackage')) {
+        if (\ENABLE_DEVELOPER_TOOLS === 0 || !WCF::getSession()->hasPermission('admin.configuration.package.canInstallPackage')) {
             throw new PermissionDeniedException();
         }
     }

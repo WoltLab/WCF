@@ -42,7 +42,7 @@ class TeamPage extends AbstractPage
 
         $this->loadTeams();
 
-        if (\MODULE_MEMBERS_LIST) {
+        if (\MODULE_MEMBERS_LIST !== 0) {
             PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.MembersList');
         }
     }

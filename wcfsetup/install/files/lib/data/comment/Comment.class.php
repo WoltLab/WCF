@@ -118,7 +118,7 @@ class Comment extends DatabaseObject implements IMessage
      */
     public function getMailText(string $mimeType = 'text/plain')
     {
-        if ($this->hasEmbeddedObjects) {
+        if ($this->hasEmbeddedObjects !== 0) {
             MessageEmbeddedObjectManager::getInstance()->loadObjects(
                 'com.woltlab.wcf.comment',
                 [$this->commentID]

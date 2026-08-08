@@ -76,7 +76,7 @@ class UserOptionSetDefaultsForm extends AbstractForm
         $saveOptions = $this->optionHandler->save();
 
         // apply changes
-        if ($this->applyChangesToExistingUsers) {
+        if ($this->applyChangesToExistingUsers !== 0) {
             $optionIDs = \array_keys($saveOptions);
 
             // get changed options

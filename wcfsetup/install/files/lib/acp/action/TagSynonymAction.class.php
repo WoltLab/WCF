@@ -31,7 +31,7 @@ final class TagSynonymAction implements RequestHandlerInterface
     #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        if (!\MODULE_TAGGING) {
+        if (\MODULE_TAGGING === 0) {
             throw new IllegalLinkException();
         }
         if (!WCF::getSession()->hasPermission('admin.content.tag.canManageTag')) {

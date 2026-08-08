@@ -37,7 +37,7 @@ final class ChangeStyle implements IController
 
     private function assertStyleCanBeChanged(Style $style): void
     {
-        if ($style->isDisabled && !WCF::getSession()->hasPermission('admin.style.canUseDisabledStyle')) {
+        if ($style->isDisabled !== 0 && !WCF::getSession()->hasPermission('admin.style.canUseDisabledStyle')) {
             throw new PermissionDeniedException();
         }
     }

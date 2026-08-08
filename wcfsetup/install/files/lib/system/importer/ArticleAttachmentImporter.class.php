@@ -28,7 +28,7 @@ final class ArticleAttachmentImporter extends AbstractAttachmentImporter
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         $articleID = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.article', $data['objectID']);
-        if (!$articleID) {
+        if ($articleID === null) {
             return 0;
         }
 

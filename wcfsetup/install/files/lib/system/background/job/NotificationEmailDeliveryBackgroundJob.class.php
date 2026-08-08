@@ -111,7 +111,7 @@ class NotificationEmailDeliveryBackgroundJob extends AbstractBackgroundJob
                 return;
             }
 
-            if (WCF::getUser()->banned) {
+            if (WCF::getUser()->banned !== 0) {
                 $this->job->updateStatus(
                     EmailLogEntry::STATUS_DISCARDED,
                     'user is banned'

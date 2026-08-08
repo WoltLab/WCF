@@ -25,7 +25,7 @@ final class UserProfileStatItemCollecting implements IPsr14Event
 
     public function __construct(public readonly UserProfile $user)
     {
-        if (\MODULE_LIKE && $this->user->likesReceived) {
+        if (\MODULE_LIKE !== 0 && $this->user->likesReceived !== 0) {
             $this->register(UserProfileStatItem::forLink(
                 WCF::getLanguage()->get('wcf.user.reactionsReceived'),
                 StringUtil::formatNumeric($this->user->likesReceived),
@@ -33,7 +33,7 @@ final class UserProfileStatItemCollecting implements IPsr14Event
             ));
         }
 
-        if ($this->user->activityPoints) {
+        if ($this->user->activityPoints !== 0) {
             $this->register(UserProfileStatItem::forButton(
                 WCF::getLanguage()->get('wcf.user.activityPoint'),
                 StringUtil::formatNumeric($this->user->activityPoints),

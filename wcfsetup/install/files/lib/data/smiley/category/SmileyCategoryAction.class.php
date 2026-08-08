@@ -45,7 +45,7 @@ class SmileyCategoryAction extends AbstractDatabaseObjectAction
     {
         $this->smileyCategory = new SmileyCategory($this->getSingleObject()->getDecoratedObject());
 
-        if ($this->smileyCategory->isDisabled) {
+        if ($this->smileyCategory->isDisabled !== 0) {
             throw new IllegalLinkException();
         }
     }

@@ -101,7 +101,7 @@ final class LicensePage extends AbstractPage
                 ),
             );
         } catch (ParsingFailed $e) {
-            if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
+            if (\ENABLE_DEBUG_MODE !== 0 && \ENABLE_DEVELOPER_TOOLS !== 0) {
                 throw $e;
             }
 

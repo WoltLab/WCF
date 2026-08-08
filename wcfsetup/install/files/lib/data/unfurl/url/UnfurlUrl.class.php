@@ -107,18 +107,18 @@ class UnfurlUrl extends DatabaseObject
      */
     public function getImageUrl(): ?string
     {
-        if (\URL_UNFURLING_SAVE_IMAGES && $this->isStored && $this->fileID !== null) {
+        if (\URL_UNFURLING_SAVE_IMAGES !== 0 && $this->isStored !== 0 && $this->fileID !== null) {
             $file = FileRuntimeCache::getInstance()->getObject($this->fileID);
 
             return 'data:image/webp;base64, ' . \file_get_contents($file->getPathname());
         } elseif (!empty($this->imageUrl)) {
-            if (\MODULE_IMAGE_PROXY) {
+            if (\MODULE_IMAGE_PROXY !== 0) {
                 $key = CryptoUtil::createSignedString($this->imageUrl);
 
                 return LinkHandler::getInstance()->getControllerLink(ImageProxyAction::class, [
                     'key' => $key,
                 ]);
-            } elseif (\IMAGE_ALLOW_EXTERNAL_SOURCE) {
+            } elseif (\IMAGE_ALLOW_EXTERNAL_SOURCE !== 0) {
                 return $this->imageUrl;
             }
         }
@@ -128,9 +128,9 @@ class UnfurlUrl extends DatabaseObject
 
     public function hasImageUrl(): bool
     {
-        if (\URL_UNFURLING_SAVE_IMAGES && $this->isStored && $this->fileID !== null) {
+        if (\URL_UNFURLING_SAVE_IMAGES !== 0 && $this->isStored !== 0 && $this->fileID !== null) {
             return true;
-        } elseif (!empty($this->imageUrl) && (\MODULE_IMAGE_PROXY || \IMAGE_ALLOW_EXTERNAL_SOURCE)) {
+        } elseif (!empty($this->imageUrl) && (\MODULE_IMAGE_PROXY !== 0 || \IMAGE_ALLOW_EXTERNAL_SOURCE !== 0)) {
             return true;
         }
 
@@ -154,7 +154,7 @@ class UnfurlUrl extends DatabaseObject
 
     private function getImageType(): string
     {
-        if (!$this->imageID) {
+        if ($this->imageID === null) {
             return self::IMAGE_NO_IMAGE;
         }
 

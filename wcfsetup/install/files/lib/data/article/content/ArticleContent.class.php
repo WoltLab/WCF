@@ -143,7 +143,7 @@ class ArticleContent extends CollectionDatabaseObject implements ILinkableObject
      */
     public function getLanguage(): ?Language
     {
-        if ($this->languageID) {
+        if ($this->languageID !== null) {
             return LanguageFactory::getInstance()->getLanguage($this->languageID);
         }
 

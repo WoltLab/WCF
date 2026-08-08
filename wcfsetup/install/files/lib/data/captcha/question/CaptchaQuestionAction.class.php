@@ -104,7 +104,7 @@ class CaptchaQuestionAction extends AbstractDatabaseObjectAction implements ITog
     public function toggle()
     {
         foreach ($this->objects as $editor) {
-            if ($editor->isDisabled) {
+            if ($editor->isDisabled !== 0) {
                 new EnableCaptchaQuestion($editor->getDecoratedObject())();
             } else {
                 new DisableCaptchaQuestion($editor->getDecoratedObject())();

@@ -94,7 +94,7 @@ final class PaidSubscriptionUserGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return \MODULE_PAID_SUBSCRIPTION
+        return \MODULE_PAID_SUBSCRIPTION !== 0
             && WCF::getSession()->hasPermission('admin.paidSubscription.canManageSubscription');
     }
 

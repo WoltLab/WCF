@@ -37,13 +37,13 @@ class BlacklistStatus extends DatabaseObject
     public function hasDelta(int $utcHour)
     {
         if ($utcHour < 6) {
-            return !!$this->delta1;
+            return $this->delta1 !== 0;
         } elseif ($utcHour < 12) {
-            return !!$this->delta2;
+            return $this->delta2 !== 0;
         } elseif ($utcHour < 18) {
-            return !!$this->delta3;
+            return $this->delta3 !== 0;
         } else {
-            return !!$this->delta4;
+            return $this->delta4 !== 0;
         }
     }
 
@@ -54,7 +54,7 @@ class BlacklistStatus extends DatabaseObject
      */
     public function isComplete()
     {
-        return $this->delta1 && $this->delta2 && $this->delta3 && $this->delta4;
+        return $this->delta1 !== 0 && $this->delta2 !== 0 && $this->delta3 !== 0 && $this->delta4 !== 0;
     }
 
     /**
@@ -124,7 +124,7 @@ class BlacklistStatus extends DatabaseObject
                 }
 
                 foreach ($deltas as $delta) {
-                    if ($entry['files'][$delta] && !$dateStatus->{$delta}) {
+                    if ($entry['files'][$delta] && $dateStatus->{$delta} === 0) {
                         return "{$date}/{$delta}.json";
                     }
                 }

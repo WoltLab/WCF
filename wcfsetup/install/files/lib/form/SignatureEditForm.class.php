@@ -79,7 +79,7 @@ class SignatureEditForm extends MessageForm
     #[\Override]
     public function validate()
     {
-        if (WCF::getUser()->disableSignature) {
+        if (WCF::getUser()->disableSignature !== 0) {
             throw new PermissionDeniedException();
         }
 

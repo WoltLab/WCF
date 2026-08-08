@@ -53,7 +53,7 @@ class AdHandler extends SingletonFactory
             $ads[] = $ad;
         }
 
-        if (\ENABLE_AD_ROTATION) {
+        if (\ENABLE_AD_ROTATION !== 0) {
             \shuffle($ads);
         }
 
@@ -67,7 +67,7 @@ class AdHandler extends SingletonFactory
             }
 
             $output .= '<div>' . $ad->getHtmlCode() . '</div>';
-            if (\ENABLE_AD_ROTATION) {
+            if (\ENABLE_AD_ROTATION !== 0) {
                 break;
             }
         }

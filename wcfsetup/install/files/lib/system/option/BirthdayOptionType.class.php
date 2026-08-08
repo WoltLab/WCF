@@ -155,9 +155,9 @@ class BirthdayOptionType extends DateOptionType
 
         $userAge = DateUtil::getAge($user->birthday);
 
-        if ($ageFrom && $ageTo) {
+        if ($ageFrom !== 0 && $ageTo !== 0) {
             return $userAge >= $ageFrom && $userAge <= $ageTo;
-        } elseif ($ageFrom) {
+        } elseif ($ageFrom !== 0) {
             return $userAge >= $ageFrom;
         } else {
             return $userAge <= $ageTo;

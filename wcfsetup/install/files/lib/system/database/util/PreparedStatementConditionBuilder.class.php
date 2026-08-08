@@ -41,7 +41,7 @@ class PreparedStatementConditionBuilder extends ConditionBuilder
                     //
                     // This is done to preserve backwards-compatibility with earlier releases that
                     // allowed this kind of issue, effectively relying on the database to bail out.
-                    if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
+                    if (\ENABLE_DEBUG_MODE !== 0 && \ENABLE_DEVELOPER_TOOLS !== 0) {
                         throw new \RuntimeException("An empty array was passed for token number " . ($count + 1) . " in condition '" . $condition . "'");
                     }
                 }

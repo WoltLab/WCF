@@ -82,7 +82,7 @@ class ArticleCategoryCache extends SingletonFactory
             }
         }
 
-        if ($categoryID) {
+        if ($categoryID !== 0) {
             $this->articles[$categoryID] = $count;
         }
 

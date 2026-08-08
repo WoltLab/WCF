@@ -58,7 +58,7 @@ class StyleEditForm extends StyleAddForm
             throw new IllegalLinkException();
         }
 
-        if ($this->style->hasDarkMode) {
+        if ($this->style->hasDarkMode !== 0) {
             $this->isDarkMode = ($_REQUEST['isDarkMode'] ?? '') === '1';
         }
 
@@ -70,7 +70,7 @@ class StyleEditForm extends StyleAddForm
     {
         parent::validate();
 
-        if (!$this->style->isTainted) {
+        if ($this->style->isTainted === 0) {
             $this->parseOverrides('overrideScssCustom');
         }
     }
@@ -83,7 +83,7 @@ class StyleEditForm extends StyleAddForm
         // inject the complementary values, otherwise the compiled style is
         // incomplete and causes issue when the file is being promoted to be
         // the actual stylesheet when saving.
-        if ($this->style->hasDarkMode) {
+        if ($this->style->hasDarkMode !== 0) {
             $variables = $this->style->getVariables();
             $supportsDarkMode = Style::getVariablesWithDarkModeSupport();
             if ($this->isDarkMode) {
@@ -103,12 +103,12 @@ class StyleEditForm extends StyleAddForm
             $variables = $this->variables;
         }
 
-        if (!$this->style->isTainted) {
+        if ($this->style->isTainted === 0) {
             $variables['individualScss'] = Style::joinLessVariables(
                 $variables['individualScss'],
                 $variables['individualScssCustom']
             );
-            if ($this->style->hasDarkMode) {
+            if ($this->style->hasDarkMode !== 0) {
                 $variables['individualScssDarkMode'] = Style::joinLessVariables(
                     $variables['individualScssDarkMode'],
                     $variables['individualScssDarkModeCustom']
@@ -151,7 +151,7 @@ class StyleEditForm extends StyleAddForm
     #[\Override]
     protected function enforcePackageNameRestriction()
     {
-        if ($this->style->isTainted) {
+        if ($this->style->isTainted !== 0) {
             parent::enforcePackageNameRestriction();
         }
     }
@@ -180,7 +180,7 @@ class StyleEditForm extends StyleAddForm
         }
         unset($variableValue);
 
-        if (!$this->style->isTainted) {
+        if ($this->style->isTainted === 0) {
             $tmp = Style::splitLessVariables($this->variables['individualScss']);
             $this->variables['individualScss'] = $tmp['preset'];
             $this->variables['individualScssCustom'] = $tmp['custom'];
@@ -225,7 +225,7 @@ class StyleEditForm extends StyleAddForm
     {
         parent::setVariables();
 
-        if (!$this->style->isTainted) {
+        if ($this->style->isTainted === 0) {
             $this->specialVariables[] = 'individualScssCustom';
             $this->specialVariables[] = 'individualScssDarkModeCustom';
             $this->specialVariables[] = 'overrideScssCustom';
@@ -292,7 +292,7 @@ class StyleEditForm extends StyleAddForm
                     $file,
                 ]);
             }
-            if ($this->style->hasFavicon) {
+            if ($this->style->hasFavicon !== 0) {
                 foreach (['png', 'jpg', 'gif'] as $extension) {
                     $filename = "favicon-template." . $extension;
                     if (\file_exists($this->style->getAssetPath() . $filename)) {
@@ -322,12 +322,12 @@ class StyleEditForm extends StyleAddForm
     {
         AbstractForm::save();
 
-        if (!$this->style->isTainted) {
+        if ($this->style->isTainted === 0) {
             $this->variables['individualScss'] = Style::joinLessVariables(
                 $this->variables['individualScss'],
                 $this->variables['individualScssCustom']
             );
-            if ($this->style->hasDarkMode) {
+            if ($this->style->hasDarkMode !== 0) {
                 $this->variables['individualScssDarkMode'] = Style::joinLessVariables(
                     $this->variables['individualScssDarkMode'],
                     $this->variables['individualScssDarkModeCustom']
@@ -345,7 +345,7 @@ class StyleEditForm extends StyleAddForm
 
         // Remove control characters that break the SCSS parser, see https://stackoverflow.com/a/23066553
         $this->variables['individualScss'] = \preg_replace('/[^\PC\s]/u', '', $this->variables['individualScss']);
-        if ($this->style->hasDarkMode) {
+        if ($this->style->hasDarkMode !== 0) {
             $this->variables['individualScssDarkMode'] = \preg_replace('/[^\PC\s]/u', '', $this->variables['individualScssDarkMode']);
         }
 
@@ -403,12 +403,12 @@ class StyleEditForm extends StyleAddForm
         // reload style object to update preview image
         $this->style = new Style($this->style->styleID);
 
-        if (!$this->style->isTainted) {
+        if ($this->style->isTainted === 0) {
             $tmp = Style::splitLessVariables($this->variables['individualScss']);
             $this->variables['individualScss'] = $tmp['preset'];
             $this->variables['individualScssCustom'] = $tmp['custom'];
 
-            if ($this->style->hasDarkMode) {
+            if ($this->style->hasDarkMode !== 0) {
                 $tmp = Style::splitLessVariables($this->variables['individualScssDarkMode']);
                 $this->variables['individualScssDarkMode'] = $tmp['preset'];
                 $this->variables['individualScssDarkModeCustom'] = $tmp['custom'];

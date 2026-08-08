@@ -111,7 +111,7 @@ class ListMetacodeConverter extends AbstractMetacodeConverter
                 /** @var \DOMElement $node */
                 foreach ($childNode->childNodes as $node) {
                     if ($node->nodeName === 'p') {
-                        if ($node->childNodes->length && $node->parentNode->lastChild !== $node) {
+                        if ($node->childNodes->length !== 0 && $node->parentNode->lastChild !== $node) {
                             DOMUtil::insertAfter($node->ownerDocument->createElement('br'), $node);
                         }
 

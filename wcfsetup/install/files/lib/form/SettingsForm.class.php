@@ -134,7 +134,7 @@ class SettingsForm extends AbstractForm
             $this->availableTrophies = TrophyCache::getInstance()->getTrophiesByID($trophyIDs);
 
             Trophy::sort($this->availableTrophies, 'showOrder');
-        } elseif (!$this->optionHandler->countCategoryOptions('settings.' . $this->category)) {
+        } elseif ($this->optionHandler->countCategoryOptions('settings.' . $this->category) === 0) {
             throw new IllegalLinkException();
         }
     }

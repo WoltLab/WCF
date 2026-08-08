@@ -55,7 +55,7 @@ class PageEditForm extends PageAddForm
         parent::readParameters();
 
         $this->page = Helper::fetchObjectFromQueryParameter(Page::class);
-        if ($this->page->isMultilingual) {
+        if ($this->page->isMultilingual !== 0) {
             $this->isMultilingual = 1;
         }
     }
@@ -76,10 +76,10 @@ class PageEditForm extends PageAddForm
         }
 
         $this->pageType = $this->page->pageType;
-        if ($this->page->originIsSystem) {
+        if ($this->page->originIsSystem !== 0) {
             $this->applicationPackageID = $this->page->applicationPackageID;
 
-            if ($this->page->hasFixedParent) {
+            if ($this->page->hasFixedParent !== 0) {
                 $this->parentPageID = $this->page->parentPageID;
             }
         } else {
@@ -100,7 +100,7 @@ class PageEditForm extends PageAddForm
      */
     protected function validateOverrideApplicationPackageID()
     {
-        if ($this->overrideApplicationPackageID) {
+        if ($this->overrideApplicationPackageID !== null) {
             if ($this->overrideApplicationPackageID === $this->applicationPackageID) {
                 // Picking the same app would have the same result, but also creates some overhead in the internal routing.
                 $this->overrideApplicationPackageID = null;
@@ -127,14 +127,14 @@ class PageEditForm extends PageAddForm
     #[\Override]
     protected function validateParentPageID()
     {
-        if ($this->page->hasFixedParent) {
+        if ($this->page->hasFixedParent !== 0) {
             if ($this->parentPageID !== $this->page->parentPageID) {
                 throw new UserInputException('parentPageID', 'invalid');
             }
         } else {
             parent::validateParentPageID();
 
-            if ($this->parentPageID) {
+            if ($this->parentPageID !== 0) {
                 if ($this->parentPageID === $this->page->pageID) {
                     throw new UserInputException('parentPageID', 'invalid');
                 }
@@ -176,7 +176,7 @@ class PageEditForm extends PageAddForm
         $data = [
             'name' => $this->name,
             'cssClassName' => $this->cssClassName,
-            'isDisabled' => $this->isDisabled ? 1 : 0,
+            'isDisabled' => $this->isDisabled !== 0 ? 1 : 0,
             'lastUpdateTime' => \TIME_NOW,
             'parentPageID' => $this->parentPageID ?: null,
             'applicationPackageID' => $this->applicationPackageID,
@@ -213,7 +213,7 @@ class PageEditForm extends PageAddForm
             $this->objectAction->executeAction();
         } else {
             $content = [];
-            if ($this->page->isMultilingual) {
+            if ($this->page->isMultilingual !== 0) {
                 foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                     $content[$language->languageID] = [
                         'customURL' => !empty($this->customURL[$language->languageID]) ? $this->customURL[$language->languageID] : '',
@@ -251,7 +251,7 @@ class PageEditForm extends PageAddForm
 
         // Ensure that the CKEditor has the correct content after save.
         if ($this->pageType === 'text') {
-            if ($this->isMultilingual) {
+            if ($this->isMultilingual !== 0) {
                 foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                     $this->content[$language->languageID] = isset($this->htmlInputProcessors[$language->languageID]) ?
                         $this->htmlInputProcessors[$language->languageID]->getHtml() : '';
@@ -281,13 +281,13 @@ class PageEditForm extends PageAddForm
             if ($this->page->controllerCustomURL !== '') {
                 $this->customURL[0] = $this->page->controllerCustomURL;
             }
-            if ($this->page->isDisabled) {
+            if ($this->page->isDisabled !== 0) {
                 $this->isDisabled = 1;
             }
-            if ($this->page->availableDuringOfflineMode) {
+            if ($this->page->availableDuringOfflineMode !== 0) {
                 $this->availableDuringOfflineMode = 1;
             }
-            if ($this->page->allowSpidersToIndex) {
+            if ($this->page->allowSpidersToIndex !== 0) {
                 $this->allowSpidersToIndex = 1;
             } else {
                 $this->allowSpidersToIndex = 0;
@@ -303,7 +303,7 @@ class PageEditForm extends PageAddForm
 
             $this->boxIDs = [];
             foreach ($this->availableBoxes as $box) {
-                if ($box->visibleEverywhere) {
+                if ($box->visibleEverywhere !== 0) {
                     if (!\in_array($box->boxID, $this->page->getBoxIDs())) {
                         $this->boxIDs[] = $box->boxID;
                     }
@@ -342,7 +342,7 @@ class PageEditForm extends PageAddForm
     #[\Override]
     protected function validateTitle()
     {
-        if ($this->page->pageType === 'system' && $this->page->requireObjectID) {
+        if ($this->page->pageType === 'system' && $this->page->requireObjectID !== 0) {
             // Allow an empty title for pages that dynamically generate their title based on a given ID (e.g. `ArticlePage`).
             return;
         }

@@ -112,7 +112,7 @@ class UserNotificationHandler extends SingletonFactory
 
         // get author's profile
         $userProfile = null;
-        if ($notificationObject->getAuthorID()) {
+        if ($notificationObject->getAuthorID() !== null && $notificationObject->getAuthorID() !== 0) {
             if ($notificationObject->getAuthorID() === WCF::getUser()->userID) {
                 $userProfile = new UserProfile(WCF::getUser());
             } else {
@@ -160,7 +160,7 @@ class UserNotificationHandler extends SingletonFactory
         if (!empty($notifications) && $event->isStackable()) {
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("notificationID IN (?)", [\array_values($notifications)]);
-            if ($notificationObject->getAuthorID()) {
+            if ($notificationObject->getAuthorID() !== null && $notificationObject->getAuthorID() !== 0) {
                 $conditions->add("authorID = ?", [$notificationObject->getAuthorID()]);
             } else {
                 $conditions->add("authorID IS NULL");
@@ -193,7 +193,7 @@ class UserNotificationHandler extends SingletonFactory
                 foreach ($notificationIDs as $notificationID) {
                     $statement->execute([
                         1,
-                        $notificationObject->getAuthorID() ? 0 : 1,
+                        $notificationObject->getAuthorID() !== null && $notificationObject->getAuthorID() !== 0 ? 0 : 1,
                         $notificationID,
                     ]);
                 }
@@ -212,7 +212,7 @@ class UserNotificationHandler extends SingletonFactory
         }
 
         // remove recipients that are blocking the current user
-        if ($userProfile->getUserID()) {
+        if ($userProfile->getUserID() !== 0) {
             // we use a live query here to avoid offloading this to the UserProfile
             // class, as we're potentially dealing with a lot of users and loading
             // their user storage data can get really expensive
@@ -240,7 +240,7 @@ class UserNotificationHandler extends SingletonFactory
         }
 
         // Remove recipients who do not have the content language enabled.
-        if ($contentLanguageID) {
+        if ($contentLanguageID !== 0) {
             $recipientIDs = $this->filterUsersByContentLanguage($recipientIDs, $contentLanguageID);
             if (empty($recipientIDs)) {
                 return;
@@ -737,7 +737,7 @@ class UserNotificationHandler extends SingletonFactory
         if (!$user->isEmailConfirmed()) {
             return;
         }
-        if ($user->banned) {
+        if ($user->banned !== 0) {
             return;
         }
 
@@ -949,7 +949,7 @@ class UserNotificationHandler extends SingletonFactory
         EventHandler::getInstance()->fireAction($this, 'markAsConfirmed', $parameters);
 
         // Check whether anything was changed. If not, we don't need to do anything else.
-        if ($confirmedCount) {
+        if ($confirmedCount !== 0) {
             if (!empty($recipientIDs)) {
                 UserStorageHandler::getInstance()->reset($recipientIDs, 'userNotificationCount');
             } else {
@@ -999,7 +999,7 @@ class UserNotificationHandler extends SingletonFactory
         EventHandler::getInstance()->fireAction($this, 'markAsConfirmedByIDs', $parameters);
 
         // Check whether anything was changed. If not, we don't need to do anything else.
-        if ($confirmedCount) {
+        if ($confirmedCount !== 0) {
             UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'userNotificationCount');
         }
     }

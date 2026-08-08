@@ -75,7 +75,7 @@ final class PaidSubscriptionGridView extends AbstractGridView
                         public function render(mixed $value, DatabaseObject $row): string
                         {
                             \assert($row instanceof PaidSubscription);
-                            if (!$row->subscriptionLength) {
+                            if ($row->subscriptionLength === 0) {
                                 return '&infin;';
                             }
 
@@ -140,7 +140,7 @@ final class PaidSubscriptionGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return \MODULE_PAID_SUBSCRIPTION
+        return \MODULE_PAID_SUBSCRIPTION !== 0
             && WCF::getSession()->hasPermission('admin.paidSubscription.canManageSubscription');
     }
 

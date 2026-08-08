@@ -124,7 +124,7 @@ class LanguageMultilingualismForm extends AbstractForm
             // default values
             $contentLanguages = 0;
             foreach ($this->languages as $languageID => $language) {
-                if ($language->hasContent) {
+                if ($language->hasContent !== 0) {
                     $contentLanguages++;
                     $this->languageIDs[] = $languageID;
                 }

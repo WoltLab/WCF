@@ -63,7 +63,7 @@ abstract class AbstractListViewBoxController extends AbstractDatabaseObjectListB
     {
         EventHandler::getInstance()->fireAction($this, 'beforeLoadContent');
 
-        if ($this->limit) {
+        if ($this->limit !== null) {
             $this->getListView()->setFixedNumberOfItems($this->limit);
         }
 

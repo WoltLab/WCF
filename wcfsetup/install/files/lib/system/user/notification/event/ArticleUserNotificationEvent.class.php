@@ -39,7 +39,7 @@ class ArticleUserNotificationEvent extends AbstractUserNotificationEvent impleme
     #[\Override]
     public function getEmailMessage(string $notificationType = 'instant'): array
     {
-        if ($this->getUserNotificationObject()->isMultilingual) {
+        if ($this->getUserNotificationObject()->isMultilingual !== 0) {
             $articleContent = $this->getUserNotificationObject()
                 ->getArticleContents()[$this->getLanguage()->languageID];
         } else {

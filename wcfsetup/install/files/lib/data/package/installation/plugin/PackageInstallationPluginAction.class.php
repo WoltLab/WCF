@@ -70,7 +70,7 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
      */
     public function validateInvoke()
     {
-        if (!\ENABLE_DEVELOPER_TOOLS || !WCF::getSession()->hasPermission('admin.configuration.package.canInstallPackage')) {
+        if (\ENABLE_DEVELOPER_TOOLS === 0 || !WCF::getSession()->hasPermission('admin.configuration.package.canInstallPackage')) {
             throw new PermissionDeniedException();
         }
 

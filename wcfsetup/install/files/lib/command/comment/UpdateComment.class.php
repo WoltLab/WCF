@@ -33,7 +33,7 @@ final class UpdateComment
         $this->htmlInputProcessor->setObjectID($this->comment->getObjectID());
         $hasEmbeddedObjects = MessageEmbeddedObjectManager::getInstance()->registerObjects($this->htmlInputProcessor);
         if ((bool)$this->comment->hasEmbeddedObjects !== $hasEmbeddedObjects) {
-            $data['hasEmbeddedObjects'] = $this->comment->hasEmbeddedObjects ? 0 : 1;
+            $data['hasEmbeddedObjects'] = $this->comment->hasEmbeddedObjects !== 0 ? 0 : 1;
         }
 
         $action = new CommentAction([$this->comment], 'update', [

@@ -103,8 +103,8 @@ class DailyCleanUpCronjob extends AbstractCronjob
         ]);
 
         // clean up expired edit history entries
-        if (\MODULE_EDIT_HISTORY) {
-            if (\EDIT_HISTORY_EXPIRATION) {
+        if (\MODULE_EDIT_HISTORY !== 0) {
+            if (\EDIT_HISTORY_EXPIRATION !== 0) {
                 $sql = "DELETE FROM wcf1_edit_history_entry
                         WHERE       obsoletedAt < ?";
                 $statement = WCF::getDB()->prepare($sql);
@@ -120,7 +120,7 @@ class DailyCleanUpCronjob extends AbstractCronjob
         }
 
         // clean up user authentication failure log
-        if (\ENABLE_USER_AUTHENTICATION_FAILURE) {
+        if (\ENABLE_USER_AUTHENTICATION_FAILURE !== 0) {
             $sql = "DELETE FROM wcf1_user_authentication_failure
                     WHERE       time < ?";
             $statement = WCF::getDB()->prepare($sql);
@@ -174,7 +174,7 @@ class DailyCleanUpCronjob extends AbstractCronjob
         }
 
         // clean up proxy images
-        if (\MODULE_IMAGE_PROXY && \IMAGE_PROXY_ENABLE_PRUNE) {
+        if (\MODULE_IMAGE_PROXY !== 0 && \IMAGE_PROXY_ENABLE_PRUNE !== 0) {
             $it = new \RecursiveIteratorIterator(
                 new \RecursiveDirectoryIterator(\WCF_DIR . 'images/proxy/', \FilesystemIterator::SKIP_DOTS),
                 \RecursiveIteratorIterator::CHILD_FIRST
@@ -190,7 +190,7 @@ class DailyCleanUpCronjob extends AbstractCronjob
             }
         }
 
-        if (\BLACKLIST_SFS_ENABLE) {
+        if (\BLACKLIST_SFS_ENABLE !== 0) {
             $timeLimit = \TIME_NOW - 31 * 86400;
 
             $sql = "DELETE FROM wcf1_blacklist_entry

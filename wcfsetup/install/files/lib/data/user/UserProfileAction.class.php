@@ -181,7 +181,7 @@ class UserProfileAction extends UserAction
             $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($userID);
         }
 
-        if ($this->userProfile === null || !$this->userProfile->userID) {
+        if ($this->userProfile === null || $this->userProfile->userID === 0) {
             throw new UserInputException('objectIDs');
         }
 
@@ -291,7 +291,7 @@ class UserProfileAction extends UserAction
             $user = new User($this->userProfile->userID);
 
             // update user rank
-            if (\MODULE_USER_RANK) {
+            if (\MODULE_USER_RANK !== 0) {
                 $action = new self([new UserEditor($user)], 'updateUserRank');
                 $action->executeAction();
             }
@@ -354,7 +354,7 @@ class UserProfileAction extends UserAction
             $statement->execute($conditionBuilder->getParameters());
             $row = $statement->fetchArray();
             if ($row === false) {
-                if ($user->rankID) {
+                if ($user->rankID !== null) {
                     $userToRank[$user->userID] = null;
                 }
             } else {

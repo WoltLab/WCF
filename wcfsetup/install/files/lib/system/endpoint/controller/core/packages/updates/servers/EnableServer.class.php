@@ -31,7 +31,7 @@ final class EnableServer implements IController
 
         $this->assertServerCanBeEnabled($server);
 
-        if ($server->isDisabled) {
+        if ($server->isDisabled !== 0) {
             new EnablePackageUpdateServer($server)();
         }
 

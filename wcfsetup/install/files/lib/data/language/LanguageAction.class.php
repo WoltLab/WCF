@@ -93,7 +93,7 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
     {
         $this->languageEditor->setAsDefault();
 
-        if ($this->languageEditor->getDecoratedObject()->isDisabled) {
+        if ($this->languageEditor->getDecoratedObject()->isDisabled !== 0) {
             $this->languageEditor->update(['isDisabled' => 0]);
         }
     }
@@ -107,7 +107,7 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
         parent::validateUpdate();
 
         foreach ($this->getObjects() as $language) {
-            if ($language->isDefault) {
+            if ($language->isDefault !== 0) {
                 throw new UserInputException('objectIDs');
             }
         }
@@ -120,7 +120,7 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
     public function toggle()
     {
         foreach ($this->objects as $editor) {
-            if ($editor->isDisabled) {
+            if ($editor->isDisabled !== 0) {
                 new EnableLanguage($editor->getDecoratedObject())();
             } else {
                 new DisableLanguage($editor->getDecoratedObject())();

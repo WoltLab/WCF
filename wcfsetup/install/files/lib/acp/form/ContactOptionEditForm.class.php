@@ -51,7 +51,7 @@ class ContactOptionEditForm extends ContactOptionAddForm
 
         $this->formObject = new ContactOption($queryParameters['id']);
 
-        if (!$this->formObject->getObjectID()) {
+        if ($this->formObject->getObjectID() === 0) {
             throw new IllegalLinkException();
         }
     }

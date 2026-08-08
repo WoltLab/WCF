@@ -26,7 +26,7 @@ class ExceptionMailerCronjob extends AbstractCronjob
     {
         parent::execute($cronjob);
 
-        if (\ENABLE_ENTERPRISE_MODE) {
+        if (\ENABLE_ENTERPRISE_MODE !== 0) {
             return;
         }
 

@@ -71,7 +71,7 @@ final class SetCategoryPositions implements IController
         }
 
         foreach ($positions as $parentCategoryID => $children) {
-            if ($parentCategoryID && !isset($categories[$parentCategoryID])) {
+            if ($parentCategoryID !== 0 && !isset($categories[$parentCategoryID])) {
                 throw new IllegalLinkException();
             }
         }

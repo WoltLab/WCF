@@ -122,7 +122,7 @@ class CombinedTaggedPage extends MultipleLinkPage
             $this->objectType = $this->availableObjectTypes[$objectType];
         } else {
             foreach ($this->availableObjectTypes as $key => $objectType) {
-                if ($this->itemsPerType[$key]) {
+                if ($this->itemsPerType[$key] !== 0) {
                     $this->objectType = $objectType;
                     break;
                 }

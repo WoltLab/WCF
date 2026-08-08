@@ -77,7 +77,7 @@ final class ApplicationHandler extends SingletonFactory
     public function getActiveApplication(): Application
     {
         // work-around during WCFSetup
-        if (!\PACKAGE_ID) {
+        if (\PACKAGE_ID === 0) {
             $host = \str_replace(RouteHandler::getProtocol(), '', RouteHandler::getHost());
             $documentRoot = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(\realpath($_SERVER['DOCUMENT_ROOT'])));
 

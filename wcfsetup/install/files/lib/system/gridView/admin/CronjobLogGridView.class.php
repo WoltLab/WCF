@@ -87,7 +87,7 @@ final class CronjobLogGridView extends AbstractGridView
                         {
                             \assert($row instanceof CronjobLog);
 
-                            if ($row->success) {
+                            if ($row->success !== 0) {
                                 return '<span class="badge green">' . WCF::getLanguage()->get('wcf.acp.cronjob.log.success') . '</span>';
                             }
                             if ($row->error !== null && $row->error !== '') {

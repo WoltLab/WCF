@@ -80,7 +80,7 @@ final class MessageQuoteManager extends SingletonFactory
             $htmlInputProcessor = new HtmlInputProcessor();
             $htmlInputProcessor->processIntermediate($fullQuote);
 
-            if (\MESSAGE_MAX_QUOTE_DEPTH) {
+            if (\MESSAGE_MAX_QUOTE_DEPTH !== 0) {
                 $htmlInputProcessor->enforceQuoteDepth(\MESSAGE_MAX_QUOTE_DEPTH - 1, true);
             }
 
@@ -148,7 +148,7 @@ final class MessageQuoteManager extends SingletonFactory
         \assert($message !== false);
 
         $avatar = '';
-        if ($message->getUserID()) {
+        if ($message->getUserID() !== 0) {
             $userProfile = UserProfileRuntimeCache::getInstance()->getObject($message->getUserID());
             if ($userProfile !== null) {
                 $avatar = $userProfile->getAvatar()->getURL();

@@ -230,9 +230,9 @@ class PageAddForm extends AbstractForm
         if (isset($_GET['presetPageID'])) {
             $this->presetPageID = \intval($_GET['presetPageID']);
         }
-        if ($this->presetPageID) {
+        if ($this->presetPageID !== 0) {
             $this->presetPage = new Page($this->presetPageID);
-            if (!$this->presetPage->pageID || $this->presetPage->pageType === 'system') {
+            if ($this->presetPage->pageID === 0 || $this->presetPage->pageType === 'system') {
                 throw new IllegalLinkException();
             }
         }
@@ -369,7 +369,7 @@ class PageAddForm extends AbstractForm
         $this->validateBoxIDs();
 
         if ($this->pageType === 'text') {
-            if ($this->isMultilingual) {
+            if ($this->isMultilingual !== 0) {
                 foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                     $this->htmlInputProcessors[$language->languageID] = new HtmlInputProcessor();
                     $this->htmlInputProcessors[$language->languageID]->process(
@@ -427,13 +427,13 @@ class PageAddForm extends AbstractForm
      */
     protected function validateParentPageID()
     {
-        if ($this->parentPageID) {
+        if ($this->parentPageID !== 0) {
             $page = new Page($this->parentPageID);
             if ($page->isNil()) {
                 throw new UserInputException('parentPageID', 'invalid');
             }
 
-            if ($page->requireObjectID) {
+            if ($page->requireObjectID !== 0) {
                 throw new UserInputException('parentPageID', 'invalid');
             }
         }
@@ -461,7 +461,7 @@ class PageAddForm extends AbstractForm
     protected function validateCustomUrls()
     {
         if (empty($this->customURL) && $this->pageType !== 'system') {
-            if ($this->isMultilingual) {
+            if ($this->isMultilingual !== 0) {
                 $language1 = \reset($this->availableLanguages);
                 throw new UserInputException('customURL_' . $language1->languageID);
             } else {
@@ -469,7 +469,7 @@ class PageAddForm extends AbstractForm
             }
         }
 
-        if ($this->isMultilingual) {
+        if ($this->isMultilingual !== 0) {
             foreach ($this->availableLanguages as $language) {
                 $this->validateCustomUrl($language->languageID, $this->customURL[$language->languageID] ?? '');
             }
@@ -529,7 +529,7 @@ class PageAddForm extends AbstractForm
      */
     protected function validateTitle()
     {
-        if ($this->isMultilingual || $this->pageType === 'system') {
+        if ($this->isMultilingual !== 0 || $this->pageType === 'system') {
             foreach ($this->availableLanguages as $language) {
                 if (empty($this->title[$language->languageID])) {
                     throw new UserInputException('title_' . $language->languageID);
@@ -550,9 +550,9 @@ class PageAddForm extends AbstractForm
      */
     protected function validateParentMenuItemID()
     {
-        if ($this->addPageToMainMenu && $this->parentMenuItemID) {
+        if ($this->addPageToMainMenu !== 0 && $this->parentMenuItemID !== null) {
             $parentMenuItem = new MenuItem($this->parentMenuItemID);
-            if (!$parentMenuItem->itemID || $parentMenuItem->menuID !== MenuCache::getInstance()->getMainMenuID()) {
+            if ($parentMenuItem->itemID === 0 || $parentMenuItem->menuID !== MenuCache::getInstance()->getMainMenuID()) {
                 throw new UserInputException('parentMenuItemID', 'invalid');
             }
         }
@@ -582,7 +582,7 @@ class PageAddForm extends AbstractForm
     {
         $boxToPage = [];
         foreach ($this->availableBoxes as $box) {
-            if ($box->visibleEverywhere) {
+            if ($box->visibleEverywhere !== 0) {
                 if (!\in_array($box->boxID, $this->boxIDs)) {
                     $boxToPage[] = [
                         'boxID' => $box->boxID,
@@ -609,7 +609,7 @@ class PageAddForm extends AbstractForm
 
         // prepare page content
         $content = [];
-        if ($this->isMultilingual) {
+        if ($this->isMultilingual !== 0) {
             foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                 $content[$language->languageID] = [
                     'customURL' => !empty($this->customURL[$language->languageID]) ? $this->customURL[$language->languageID] : '',
@@ -635,7 +635,7 @@ class PageAddForm extends AbstractForm
                 'pageType' => $this->pageType,
                 'name' => $this->name,
                 'cssClassName' => $this->cssClassName,
-                'isDisabled' => $this->isDisabled ? 1 : 0,
+                'isDisabled' => $this->isDisabled !== 0 ? 1 : 0,
                 'availableDuringOfflineMode' => $this->availableDuringOfflineMode,
                 'allowSpidersToIndex' => $this->allowSpidersToIndex,
                 'enableShareButtons' => $this->enableShareButtons,
@@ -663,10 +663,10 @@ class PageAddForm extends AbstractForm
         SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.page', $page->pageID, $this->aclValues);
 
         // add page to main menu
-        if ($this->addPageToMainMenu) {
+        if ($this->addPageToMainMenu !== 0) {
             // select maximum showOrder value so that new menu item will be appened
             $conditionBuilder = new PreparedStatementConditionBuilder();
-            if ($this->parentMenuItemID) {
+            if ($this->parentMenuItemID !== null) {
                 $conditionBuilder->add('parentItemID = ?', [$this->parentMenuItemID]);
             } else {
                 $conditionBuilder->add('parentItemID IS NULL');
@@ -681,8 +681,8 @@ class PageAddForm extends AbstractForm
 
             $menuItemAction = new MenuItemAction([], 'create', [
                 'data' => [
-                    'isDisabled' => $this->isDisabled ? 1 : 0,
-                    'title' => (!$this->isMultilingual ? $this->title[0] : ''),
+                    'isDisabled' => $this->isDisabled !== 0 ? 1 : 0,
+                    'title' => ($this->isMultilingual === 0 ? $this->title[0] : ''),
                     'pageID' => $page->pageID,
                     'menuID' => MenuCache::getInstance()->getMainMenuID(),
                     'parentItemID' => $this->parentMenuItemID,
@@ -693,7 +693,7 @@ class PageAddForm extends AbstractForm
             ]);
             $menuItemAction->executeAction();
 
-            if ($this->isMultilingual) {
+            if ($this->isMultilingual !== 0) {
                 $returnValues = $menuItemAction->getReturnValues();
                 $menuItem = $returnValues['returnValues'];
 
@@ -747,10 +747,10 @@ class PageAddForm extends AbstractForm
                     $this->customURL[0] = $this->presetPage->controllerCustomURL;
                 }
                 $this->isDisabled = 1;
-                if ($this->presetPage->availableDuringOfflineMode) {
+                if ($this->presetPage->availableDuringOfflineMode !== 0) {
                     $this->availableDuringOfflineMode = 1;
                 }
-                if ($this->presetPage->allowSpidersToIndex) {
+                if ($this->presetPage->allowSpidersToIndex !== 0) {
                     $this->allowSpidersToIndex = 1;
                 } else {
                     $this->allowSpidersToIndex = 0;
@@ -766,7 +766,7 @@ class PageAddForm extends AbstractForm
 
                 $this->boxIDs = [];
                 foreach ($this->availableBoxes as $box) {
-                    if ($box->visibleEverywhere) {
+                    if ($box->visibleEverywhere !== 0) {
                         if (!\in_array($box->boxID, $this->presetPage->getBoxIDs())) {
                             $this->boxIDs[] = $box->boxID;
                         }
@@ -797,7 +797,7 @@ class PageAddForm extends AbstractForm
     {
         $boxIDs = [];
         foreach ($this->availableBoxes as $box) {
-            if ($box->visibleEverywhere) {
+            if ($box->visibleEverywhere !== 0) {
                 $boxIDs[] = $box->boxID;
             }
         }
@@ -813,7 +813,7 @@ class PageAddForm extends AbstractForm
         SmileyCache::getInstance()->assignVariables();
 
         if ($this->pageType === 'text') {
-            if ($this->isMultilingual) {
+            if ($this->isMultilingual !== 0) {
                 foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                     $upcastProcessor = new HtmlUpcastProcessor();
                     $upcastProcessor->process(

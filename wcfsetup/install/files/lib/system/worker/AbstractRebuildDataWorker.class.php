@@ -173,7 +173,7 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
         $userID = \intval($userID);
 
         // resolve non-existing users against the guest permission
-        if ($userID && !isset($userPermissions[$userID])) {
+        if ($userID !== 0 && !isset($userPermissions[$userID])) {
             return $this->getBulkUserPermissionValue($userPermissions, 0, $permission);
         }
 

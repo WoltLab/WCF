@@ -20,7 +20,7 @@ class ArticleCommentUserActivityEvent extends SingletonFactory implements IUserA
     #[\Override]
     public function prepare(array $events)
     {
-        if (!\MODULE_ARTICLE) {
+        if (\MODULE_ARTICLE === 0) {
             return;
         }
 

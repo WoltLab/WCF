@@ -69,7 +69,7 @@ final class DeleteComments
 
     private function deleteActivityEvents(): void
     {
-        if (UserActivityEventHandler::getInstance()->getObjectTypeID($this->objectType->objectType . '.recentActivityEvent')) {
+        if (UserActivityEventHandler::getInstance()->getObjectTypeID($this->objectType->objectType . '.recentActivityEvent') !== null) {
             UserActivityEventHandler::getInstance()->removeEvents(
                 $this->objectType->objectType . '.recentActivityEvent',
                 $this->commentIDs
@@ -79,7 +79,7 @@ final class DeleteComments
 
     private function deleteNotifications(): void
     {
-        if (UserNotificationHandler::getInstance()->getObjectTypeID($this->objectType->objectType . '.notification')) {
+        if (UserNotificationHandler::getInstance()->getObjectTypeID($this->objectType->objectType . '.notification') !== 0) {
             UserNotificationHandler::getInstance()->removeNotifications(
                 $this->objectType->objectType . '.notification',
                 $this->commentIDs
@@ -92,7 +92,7 @@ final class DeleteComments
         new DeleteObjectReactions(
             'com.woltlab.wcf.comment',
             $this->commentIDs,
-            UserNotificationHandler::getInstance()->getObjectTypeID($this->objectType->objectType . '.like.notification')
+            UserNotificationHandler::getInstance()->getObjectTypeID($this->objectType->objectType . '.like.notification') !== 0
                 ? [$this->objectType->objectType . '.like.notification']
                 : []
         )();
@@ -133,7 +133,7 @@ final class DeleteComments
         }
 
         foreach ($this->comments as $comment) {
-            if (!$comment->isDisabled) {
+            if ($comment->isDisabled === 0) {
                 $this->commentManager->updateCounter($comment->objectID, -1);
             }
         }

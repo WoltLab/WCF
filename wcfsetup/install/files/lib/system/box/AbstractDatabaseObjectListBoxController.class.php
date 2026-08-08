@@ -299,7 +299,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 
         $this->objectList = $this->getObjectList();
 
-        if ($this->limit) {
+        if ($this->limit !== null) {
             $this->objectList->sqlLimit = $this->limit;
         }
 
@@ -384,7 +384,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
         parent::setBox($box);
 
         if ($setConditionData) {
-            if ($this->defaultLimit !== null && $this->box->limit) {
+            if ($this->defaultLimit !== null && $this->box->limit !== null) {
                 $this->limit = $this->box->limit;
             }
 

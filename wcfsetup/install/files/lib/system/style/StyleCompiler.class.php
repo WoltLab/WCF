@@ -73,7 +73,7 @@ final class StyleCompiler extends SingletonFactory
         $compiler->setSilenceDeprecations([Deprecation::mixedDecls]);
         $compiler->setImportPaths([\WCF_DIR]);
 
-        if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
+        if (\ENABLE_DEBUG_MODE !== 0 && \ENABLE_DEVELOPER_TOOLS !== 0) {
             $compiler->setOutputStyle(OutputStyle::EXPANDED);
         } else {
             $compiler->setOutputStyle(OutputStyle::COMPRESSED);
@@ -421,7 +421,7 @@ final class StyleCompiler extends SingletonFactory
         $files[] = \WCF_DIR . 'acp/style/layout.scss';
 
         // include stylesheets from other apps in arbitrary order
-        if (\PACKAGE_ID) {
+        if (\PACKAGE_ID !== 0) {
             foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
                 $files = \array_merge($files, $this->getAcpStylesheets($application));
             }
@@ -656,7 +656,7 @@ final class StyleCompiler extends SingletonFactory
         }
 
         // add options as SCSS variables
-        if (\PACKAGE_ID) {
+        if (\PACKAGE_ID !== 0) {
             foreach (Option::getOptions() as $constantName => $option) {
                 if (\in_array($option->optionType, static::$supportedOptionType)) {
                     $variables['wcf_option_' . \mb_strtolower($constantName)] = \is_numeric($option->optionValue) ? $option->optionValue : '"' . $option->optionValue . '"';
@@ -774,7 +774,7 @@ final class StyleCompiler extends SingletonFactory
      */
     private function getGoogleFontScss(string $font): string
     {
-        if (!\PACKAGE_ID) {
+        if (\PACKAGE_ID === 0) {
             return '';
         }
 

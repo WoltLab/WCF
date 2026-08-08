@@ -41,7 +41,7 @@ final class DeleteStyle implements IController
     {
         WCF::getSession()->checkPermissions(['admin.style.canManageStyle']);
 
-        if ($style->isDefault) {
+        if ($style->isDefault !== 0) {
             throw new IllegalLinkException();
         }
     }

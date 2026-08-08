@@ -424,13 +424,13 @@ final class I18nHandler extends SingletonFactory
             } else {
                 $isI18n = Regex::compile('^' . $this->elementOptions[$elementID]['pattern'] . '$')
                     ->match($this->elementOptions[$elementID]['value']);
-                if (!$isI18n) {
+                if ($isI18n === 0) {
                     // check if it's a regular language variable
                     $isI18n = Regex::compile('^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$')
                         ->match($this->elementOptions[$elementID]['value']);
                 }
 
-                if ($isI18n) {
+                if ($isI18n !== 0) {
                     // use i18n values from language items
                     $sql = "SELECT  languageID, languageItemValue
                             FROM    wcf1_language_item
@@ -486,6 +486,6 @@ final class I18nHandler extends SingletonFactory
             $this->regex = new Regex('^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$');
         }
 
-        return !!$this->regex->match($string);
+        return $this->regex->match($string) !== 0;
     }
 }

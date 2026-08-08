@@ -89,7 +89,7 @@ class SearchResultPage extends MultipleLinkPage
         if ($this->search->isNil() || $this->search->searchType !== 'messages') {
             $this->redirectOrReject();
         }
-        if ($this->search->userID && $this->search->userID !== WCF::getUser()->userID) {
+        if ($this->search->userID !== null && $this->search->userID !== WCF::getUser()->userID) {
             $this->redirectOrReject();
         }
 

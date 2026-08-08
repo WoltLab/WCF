@@ -67,11 +67,11 @@ class UserTrophy extends DatabaseObject
      */
     public function getDescription()
     {
-        if (!$this->useCustomDescription) {
+        if ($this->useCustomDescription === 0) {
             return $this->getTrophy()->getDescription();
         }
 
-        if (!$this->trophyUseHtml) {
+        if ($this->trophyUseHtml === 0) {
             return \nl2br(
                 StringUtil::encodeHTML(\strtr(
                     WCF::getLanguage()->get($this->description),

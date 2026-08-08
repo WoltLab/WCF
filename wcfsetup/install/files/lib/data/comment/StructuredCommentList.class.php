@@ -102,7 +102,7 @@ class StructuredCommentList extends CommentList
         $embeddedObjectIDs = $responseIDs = $userIDs = [];
         /** @var StructuredComment $comment */
         foreach ($this->objects as $comment) {
-            if (!$this->minCommentTime || $comment->time < $this->minCommentTime) {
+            if ($this->minCommentTime === 0 || $comment->time < $this->minCommentTime) {
                 $this->minCommentTime = $comment->time;
             }
 
@@ -114,11 +114,11 @@ class StructuredCommentList extends CommentList
                 }
             }
 
-            if ($comment->userID) {
+            if ($comment->userID !== null) {
                 $userIDs[] = $comment->userID;
             }
 
-            if ($comment->hasEmbeddedObjects) {
+            if ($comment->hasEmbeddedObjects !== 0) {
                 $embeddedObjectIDs[] = $comment->getObjectID();
             }
 
@@ -148,11 +148,11 @@ class StructuredCommentList extends CommentList
                 $commentID = $responseIDs[$response->responseID];
                 $this->objects[$commentID]->addResponse($response);
 
-                if ($response->userID) {
+                if ($response->userID !== null) {
                     $userIDs[] = $response->userID;
                 }
 
-                if ($response->hasEmbeddedObjects) {
+                if ($response->hasEmbeddedObjects !== 0) {
                     $embeddedResponseIDs[] = $response->getObjectID();
                 }
 

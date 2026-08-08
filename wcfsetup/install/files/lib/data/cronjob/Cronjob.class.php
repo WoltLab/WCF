@@ -66,7 +66,7 @@ class Cronjob extends DatabaseObject
     public function getNextExec(?int $timeBase = null): int
     {
         if ($timeBase === null) {
-            if ($this->lastExec) {
+            if ($this->lastExec !== 0) {
                 $timeBase = $this->lastExec + 120;
                 if ($timeBase < \TIME_NOW) {
                     $timeBase = \TIME_NOW + 120;
@@ -106,7 +106,7 @@ class Cronjob extends DatabaseObject
      */
     public function isEditable()
     {
-        return !!$this->canBeEdited;
+        return $this->canBeEdited !== 0;
     }
 
     /**
@@ -116,7 +116,7 @@ class Cronjob extends DatabaseObject
      */
     public function isDeletable()
     {
-        return $this->canBeEdited && $this->canBeDisabled;
+        return $this->canBeEdited !== 0 && $this->canBeDisabled !== 0;
     }
 
     /**
@@ -126,7 +126,7 @@ class Cronjob extends DatabaseObject
      */
     public function canBeDisabled()
     {
-        return !!$this->canBeDisabled;
+        return $this->canBeDisabled !== 0;
     }
 
     /**

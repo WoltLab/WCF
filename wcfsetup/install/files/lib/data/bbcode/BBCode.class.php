@@ -148,7 +148,7 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController
      */
     public function canDelete()
     {
-        if ($this->originIsSystem) {
+        if ($this->originIsSystem !== 0) {
             return false;
         }
 

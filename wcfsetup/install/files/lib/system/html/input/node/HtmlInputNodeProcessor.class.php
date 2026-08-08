@@ -208,7 +208,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
         // handle static converters
         $this->invokeHtmlNode(new HtmlInputNodeWoltlabMetacode());
 
-        if (\MESSAGE_MAX_QUOTE_DEPTH) {
+        if (\MESSAGE_MAX_QUOTE_DEPTH !== 0) {
             $this->enforceQuoteDepth(\MESSAGE_MAX_QUOTE_DEPTH);
         }
 
@@ -611,7 +611,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                 continue;
             }
 
-            if ($this->getDocument()->getElementsByTagName($tagName)->length) {
+            if ($this->getDocument()->getElementsByTagName($tagName)->length !== 0) {
                 $result[] = $bbcode;
             }
         }
@@ -864,7 +864,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
         EventHandler::getInstance()->fireAction($this, 'convertPlainLinks');
 
         $isWorkerAction = \class_exists(AbstractWorker::class, false);
-        if (\MODULE_URL_UNFURLING && !$isWorkerAction) {
+        if (\MODULE_URL_UNFURLING !== 0 && !$isWorkerAction) {
             foreach ($this->plainLinks as $plainLink) {
                 if ($plainLink->isPristine()) {
                     HtmlNodeUnfurlLink::setUnfurl($plainLink);

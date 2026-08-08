@@ -118,7 +118,7 @@ final class RegisterActivationForm extends AbstractFormBuilderForm
 
         if (empty($_POST) && !empty($_GET['u']) && !empty($_GET['a'])) {
             $user = new User(\intval($_GET['u']));
-            $_POST['username'] = $user->userID ? $user->username : '';
+            $_POST['username'] = $user->userID !== 0 ? $user->username : '';
             $_POST['activationCode'] = $_GET['a'];
             $_REQUEST['t'] = WCF::getSession()->getSecurityToken();
         }

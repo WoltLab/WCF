@@ -22,6 +22,7 @@ use wcf\system\label\object\type\ILabelObjectTypeHandler;
 use wcf\system\label\object\type\LabelObjectTypeContainer;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 
 /**
  * Shows the label group add form.
@@ -173,7 +174,8 @@ class LabelGroupAddForm extends AbstractFormBuilderForm
         parent::readFormParameters();
 
         if (isset($_POST['objectTypes']) && \is_array($_POST['objectTypes'])) {
-            $this->objectTypes = $_POST['objectTypes'];
+            // @phpstan-ignore assign.propertyType
+            $this->objectTypes = ArrayUtil::toIntegerArray($_POST['objectTypes']);
         }
     }
 
@@ -274,7 +276,7 @@ class LabelGroupAddForm extends AbstractFormBuilderForm
             foreach ($this->objectTypes as $objectTypeID => $data) {
                 foreach ($data as $objectID) {
                     // use "0" (stored as NULL) for simple true/false states
-                    if (!$objectID) {
+                    if ($objectID === 0) {
                         $objectID = null;
                     }
 

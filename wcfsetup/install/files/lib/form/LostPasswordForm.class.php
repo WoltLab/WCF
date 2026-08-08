@@ -69,7 +69,7 @@ final class LostPasswordForm extends AbstractFormBuilderForm
                             $this->validateUsername(...)
                         )),
                     CaptchaFormField::create()
-                        ->available(!!\LOST_PASSWORD_USE_CAPTCHA)
+                        ->available(\LOST_PASSWORD_USE_CAPTCHA !== 0)
                         ->objectType(\CAPTCHA_TYPE)
                 ])
         );
@@ -148,7 +148,7 @@ final class LostPasswordForm extends AbstractFormBuilderForm
         }
 
         // check whether a lost password request was sent in the last 24 hours
-        if ($this->user->lastLostPasswordRequestTime && \TIME_NOW - 86400 < $this->user->lastLostPasswordRequestTime) {
+        if ($this->user->lastLostPasswordRequestTime !== 0 && \TIME_NOW - 86400 < $this->user->lastLostPasswordRequestTime) {
             throw new NamedUserException(HtmlString::fromSafeHtml(WCF::getLanguage()->getDynamicVariable(
                 'wcf.user.lostPassword.error.tooManyRequests',
                 ['hours' => \ceil(($this->user->lastLostPasswordRequestTime - (\TIME_NOW - 86400)) / 3600)]

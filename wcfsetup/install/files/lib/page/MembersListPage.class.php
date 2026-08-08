@@ -54,7 +54,7 @@ class MembersListPage extends AbstractListViewPage
     #[\Override]
     protected function createListView(): MembersListView
     {
-        if ($this->searchID) {
+        if ($this->searchID !== null) {
             return new UserSearchResultsListView($this->searchID);
         }
 
@@ -74,7 +74,7 @@ class MembersListPage extends AbstractListViewPage
     #[\Override]
     protected function getBaseUrlParameters(): array
     {
-        if ($this->searchID) {
+        if ($this->searchID !== null) {
             return [
                 'id' => $this->searchID,
             ];

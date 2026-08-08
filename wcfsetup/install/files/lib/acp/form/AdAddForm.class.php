@@ -246,7 +246,7 @@ class AdAddForm extends AbstractForm
             throw new UserInputException('ad');
         }
 
-        if (!$this->objectTypeID) {
+        if ($this->objectTypeID === 0) {
             throw new UserInputException('objectTypeID');
         } elseif (!isset($this->locationObjectTypes[$this->objectTypeID])) {
             throw new UserInputException('objectTypeID', 'noValidSelection');

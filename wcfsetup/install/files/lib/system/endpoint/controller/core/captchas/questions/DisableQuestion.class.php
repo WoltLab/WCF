@@ -29,7 +29,7 @@ final class DisableQuestion implements IController
 
         $this->assertQuestionCanBeDisabled();
 
-        if (!$question->isDisabled) {
+        if ($question->isDisabled === 0) {
             new \wcf\command\captcha\question\DisableCaptchaQuestion($question)();
         }
 

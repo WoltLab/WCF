@@ -133,7 +133,7 @@ class ReactionAction extends AbstractDatabaseObjectAction
      */
     protected function validateObjectParameters()
     {
-        if (!\MODULE_LIKE) {
+        if (\MODULE_LIKE === 0) {
             throw new IllegalLinkException();
         }
 
@@ -223,7 +223,7 @@ class ReactionAction extends AbstractDatabaseObjectAction
             }
         }
 
-        if (!$this->reactionType->isAssignable) {
+        if ($this->reactionType->isAssignable === 0) {
             // check, if the reaction is reverted
             $like = Like::getLike(
                 $this->likeableObject->getObjectType()->objectTypeID,
@@ -245,7 +245,7 @@ class ReactionAction extends AbstractDatabaseObjectAction
      */
     public function validateLoad()
     {
-        if (!\MODULE_LIKE) {
+        if (\MODULE_LIKE === 0) {
             throw new IllegalLinkException();
         }
 
@@ -364,7 +364,7 @@ class ReactionAction extends AbstractDatabaseObjectAction
         // step 3) update owner
         //
 
-        if ($newLikeObject->objectUserID) {
+        if ($newLikeObject->objectUserID !== null) {
             $sql = "SELECT  COUNT(*) as count
                     FROM    wcf1_like
                     WHERE   objectTypeID = ?

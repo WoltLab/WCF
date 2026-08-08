@@ -75,7 +75,7 @@ final class LinkHandler extends SingletonFactory
      */
     public function getControllerLink(string $controllerClass, array $parameters = [], string $url = ''): string
     {
-        if (!$this->controllerRegex->match($controllerClass)) {
+        if ($this->controllerRegex->match($controllerClass) === 0) {
             throw new \InvalidArgumentException("Invalid controller '{$controllerClass}' passed.");
         }
 
@@ -233,7 +233,7 @@ final class LinkHandler extends SingletonFactory
         $url = $routeURL . $url;
 
         // handle applications
-        if (!\PACKAGE_ID) {
+        if (\PACKAGE_ID === 0) {
             $url = RouteHandler::getHost() . RouteHandler::getPath(['acp']) . ($isACP ? 'acp/' : '') . $url;
         } else {
             $application = ApplicationHandler::getInstance()->getApplication($abbreviation);

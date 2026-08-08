@@ -34,7 +34,7 @@ trait TDatabaseObjectToggle
         foreach ($this->getObjects() as $object) {
             $object->update([
                 // @phpstan-ignore property.notFound
-                'isDisabled' => $object->isDisabled ? 0 : 1,
+                'isDisabled' => $object->isDisabled !== 0 ? 0 : 1,
             ]);
         }
     }

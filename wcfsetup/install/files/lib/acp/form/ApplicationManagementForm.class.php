@@ -72,7 +72,7 @@ final class ApplicationManagementForm extends AbstractForm
     {
         parent::readFormParameters();
 
-        if (!\ENABLE_ENTERPRISE_MODE || WCF::getUser()->hasOwnerAccess()) {
+        if (\ENABLE_ENTERPRISE_MODE === 0 || WCF::getUser()->hasOwnerAccess()) {
             if (isset($_POST['cookieDomain'])) {
                 $this->cookieDomain = StringUtil::trim($_POST['cookieDomain']);
             }
@@ -91,7 +91,7 @@ final class ApplicationManagementForm extends AbstractForm
     {
         parent::validate();
 
-        if (!\ENABLE_ENTERPRISE_MODE || WCF::getUser()->hasOwnerAccess()) {
+        if (\ENABLE_ENTERPRISE_MODE === 0 || WCF::getUser()->hasOwnerAccess()) {
             if (empty($this->domainName)) {
                 throw new UserInputException('domainName');
             }
@@ -102,9 +102,9 @@ final class ApplicationManagementForm extends AbstractForm
 
             // domain may not contain path components
             $regex = new Regex('[/#\?&]');
-            if ($regex->match($this->domainName)) {
+            if ($regex->match($this->domainName) !== 0) {
                 throw new UserInputException('domainName', 'containsPath');
-            } elseif ($regex->match($this->cookieDomain)) {
+            } elseif ($regex->match($this->cookieDomain) !== 0) {
                 throw new UserInputException('cookieDomain', 'containsPath');
             }
 
@@ -119,14 +119,14 @@ final class ApplicationManagementForm extends AbstractForm
         }
 
         foreach ($this->landingPageID as $landingPageID) {
-            if (!$landingPageID) {
+            if ($landingPageID === 0) {
                 continue;
             }
 
             $page = new Page($landingPageID);
             if ($page->isNil()) {
                 throw new UserInputException('landingPageID');
-            } elseif ($page->requireObjectID || $page->excludeFromLandingPage || $page->isDisabled) {
+            } elseif ($page->requireObjectID !== 0 || $page->excludeFromLandingPage !== 0 || $page->isDisabled !== 0) {
                 throw new UserInputException('landingPageID', 'invalid');
             }
         }
@@ -150,7 +150,7 @@ final class ApplicationManagementForm extends AbstractForm
     {
         parent::save();
 
-        if (!\ENABLE_ENTERPRISE_MODE || WCF::getUser()->hasOwnerAccess()) {
+        if (\ENABLE_ENTERPRISE_MODE === 0 || WCF::getUser()->hasOwnerAccess()) {
             $sql = "UPDATE  wcf1_application
                     SET     domainName = ?,
                             cookieDomain = ?";

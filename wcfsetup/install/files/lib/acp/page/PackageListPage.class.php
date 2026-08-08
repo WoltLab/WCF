@@ -46,7 +46,7 @@ final class PackageListPage extends AbstractGridViewPage
 
         $taintedApplications = [];
         foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
-            if (!$application->isTainted) {
+            if ($application->isTainted === 0) {
                 continue;
             }
 

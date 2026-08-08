@@ -31,7 +31,7 @@ final class EnableRecipient implements IController
 
         $recipient = Helper::fetchObjectFromRequestParameter($variables['id'], ContactRecipient::class);
 
-        if ($recipient->isDisabled) {
+        if ($recipient->isDisabled !== 0) {
             new EnableContactRecipient($recipient)();
         }
 
@@ -40,7 +40,7 @@ final class EnableRecipient implements IController
 
     private function assertRecipientCanBeEnabled(): void
     {
-        if (!\MODULE_CONTACT_FORM) {
+        if (\MODULE_CONTACT_FORM === 0) {
             throw new IllegalLinkException();
         }
 

@@ -66,7 +66,7 @@ class PackageUpdateServer extends DatabaseObject implements ITitledObject
 
         parent::handleData($data);
 
-        $prefix = \ENABLE_ENTERPRISE_MODE ? 'cloud/' : '';
+        $prefix = \ENABLE_ENTERPRISE_MODE !== 0 ? 'cloud/' : '';
         $officialPath = \wcf\getMinorVersion();
         if (self::isUpgradeOverrideEnabled()) {
             $officialPath = WCF::AVAILABLE_UPGRADE_VERSION;
@@ -106,7 +106,7 @@ class PackageUpdateServer extends DatabaseObject implements ITitledObject
                 $woltlabUpdateServer = $packageServer;
             } elseif ($packageServer->isWoltLabStoreServer()) {
                 $woltlabStoreServer = $packageServer;
-            } elseif ($packageServer->isDisabled) {
+            } elseif ($packageServer->isDisabled !== 0) {
                 continue;
             } elseif (self::$secureMode) {
                 // Skip any unofficial servers when the secure mode
@@ -135,7 +135,7 @@ class PackageUpdateServer extends DatabaseObject implements ITitledObject
             $results[$packageServer->packageUpdateServerID] = $packageServer;
         }
 
-        if (\ENABLE_ENTERPRISE_MODE) {
+        if (\ENABLE_ENTERPRISE_MODE !== 0) {
             return \array_filter($results, static function (self $server) {
                 return $server->isWoltLabStoreServer() || $server->isTrustedServer();
             });
@@ -188,7 +188,7 @@ class PackageUpdateServer extends DatabaseObject implements ITitledObject
      */
     public function getAuthData()
     {
-        if (\ENABLE_ENTERPRISE_MODE && \defined('ENTERPRISE_MODE_AUTH_DATA')) {
+        if (\ENABLE_ENTERPRISE_MODE !== 0 && \defined('ENTERPRISE_MODE_AUTH_DATA')) {
             $host = Url::parse($this->serverURL)['host'];
             if (!empty(\ENTERPRISE_MODE_AUTH_DATA[$host])) {
                 return \ENTERPRISE_MODE_AUTH_DATA[$host];
@@ -254,7 +254,7 @@ class PackageUpdateServer extends DatabaseObject implements ITitledObject
      */
     final public function requiresLicense(): bool
     {
-        return !!Regex::compile('^https?://update.woltlab.com/')->match($this->serverURL);
+        return Regex::compile('^https?://update.woltlab.com/')->match($this->serverURL) !== 0;
     }
 
     /**

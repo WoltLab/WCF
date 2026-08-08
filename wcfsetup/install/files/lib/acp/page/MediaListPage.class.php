@@ -112,7 +112,7 @@ class MediaListPage extends SortablePage
             $this->objectList->getConditionBuilder()->add('media.userID = ?', [WCF::getUser()->userID]);
         }
 
-        if ($this->categoryID) {
+        if ($this->categoryID !== 0) {
             if ($this->categoryID === -1) {
                 $this->objectList->getConditionBuilder()->add('media.categoryID IS NULL');
             } else {
@@ -167,7 +167,7 @@ class MediaListPage extends SortablePage
         if ($this->username !== '') {
             $parameters['username'] = $this->username;
         }
-        if ($this->categoryID) {
+        if ($this->categoryID !== 0) {
             $parameters['categoryID'] = $this->categoryID;
         }
 

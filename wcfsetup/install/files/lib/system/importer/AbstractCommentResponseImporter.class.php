@@ -32,7 +32,7 @@ class AbstractCommentResponseImporter extends AbstractImporter
         $data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 
         $data['commentID'] = ImportHandler::getInstance()->getNewID($this->objectTypeName, $data['commentID']);
-        if (!$data['commentID']) {
+        if ($data['commentID'] === null) {
             return 0;
         }
 

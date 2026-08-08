@@ -58,8 +58,8 @@ class RelatedArticleListView extends ArticleListView
     public function isAccessible(): bool
     {
         return parent::isAccessible()
-            && \MODULE_TAGGING
-            && \ARTICLE_RELATED_ARTICLES
+            && \MODULE_TAGGING !== 0
+            && \ARTICLE_RELATED_ARTICLES !== 0
             && WCF::getSession()->hasPermission('user.tag.canViewTag');
     }
 

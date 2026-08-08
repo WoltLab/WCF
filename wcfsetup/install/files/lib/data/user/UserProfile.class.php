@@ -145,7 +145,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
         if ($this->followingUserIDs === null) {
             $this->followingUserIDs = [];
 
-            if ($this->userID) {
+            if ($this->userID !== 0) {
                 // get ids
                 $data = UserStorageHandler::getInstance()->getField('followingUserIDs', $this->userID);
 
@@ -183,7 +183,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
         if ($this->followerUserIDs === null) {
             $this->followerUserIDs = [];
 
-            if ($this->userID) {
+            if ($this->userID !== 0) {
                 // get ids
                 $data = UserStorageHandler::getInstance()->getField('followerUserIDs', $this->userID);
 
@@ -222,7 +222,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
         if ($this->ignoredUserIDs === null) {
             $this->ignoredUserIDs = [];
 
-            if ($this->userID) {
+            if ($this->userID !== 0) {
                 // get ids
                 $data = UserStorageHandler::getInstance()->getField('ignoredUserIDs', $this->userID);
 
@@ -270,7 +270,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
         if ($this->ignoredByUserIDs === null) {
             $this->ignoredByUserIDs = [];
 
-            if ($this->userID) {
+            if ($this->userID !== 0) {
                 // get ids
                 $data = UserStorageHandler::getInstance()->getField('ignoredByUserIDs', $this->userID);
 
@@ -354,7 +354,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
     {
         if ($this->avatar === null) {
             $avatar = null;
-            if (!$this->disableAvatar) {
+            if ($this->disableAvatar === 0) {
                 if ($this->canSeeAvatar()) {
                     if ($this->avatarPathname !== null) {
                         $avatar = new StaticAvatar($this->avatarPathname);
@@ -416,8 +416,8 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
     public function getCoverPhoto(bool $isACP = false)
     {
         if ($this->coverPhoto === null) {
-            if ($this->coverPhotoFileID) {
-                if ($isACP || !$this->disableCoverPhoto) {
+            if ($this->coverPhotoFileID !== null) {
+                if ($isACP || $this->disableCoverPhoto === 0) {
                     if ($this->canSeeCoverPhoto()) {
                         $file = FileRuntimeCache::getInstance()->getObject($this->coverPhotoFileID);
                         if ($file?->isImage()) {
@@ -749,12 +749,12 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
                 break;
 
             case self::ACCESS_REGISTERED:
-                $data['result'] = ($userID ? true : false);
+                $data['result'] = ($userID !== 0 ? true : false);
                 break;
 
             case self::ACCESS_FOLLOWING:
                 $result = false;
-                if ($userID) {
+                if ($userID !== 0) {
                     if ($userID === $this->userID) {
                         $result = true;
                     } elseif ($this->isFollowing($userID)) {
@@ -799,7 +799,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
                 $birthdayYear = 0;
                 $value = \explode('-', $this->birthday);
                 $birthdayYear = \intval($value[0]);
-                if ($birthdayYear) {
+                if ($birthdayYear !== 0) {
                     return $year - $birthdayYear;
                 }
             }
@@ -836,14 +836,14 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
             $day = \intval($value[2]);
         }
 
-        if (!$month || !$day) {
+        if ($month === 0 || $day === 0) {
             return '';
         }
 
         $showYear = $this->birthdayShowYear || WCF::getSession()->hasPermission('admin.general.canViewPrivateUserOptions');
 
         $d = new \DateTimeImmutable($this->birthday, WCF::getUser()->getTimeZone());
-        $dateFormat = (($showYear && $birthdayYear) ? WCF::getLanguage()->get(DateUtil::DATE_FORMAT) : \str_replace(
+        $dateFormat = (($showYear && $birthdayYear !== 0) ? WCF::getLanguage()->get(DateUtil::DATE_FORMAT) : \str_replace(
             'Y',
             '',
             WCF::getLanguage()->get(DateUtil::DATE_FORMAT)
@@ -920,11 +920,11 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
 
     public function getRank(): ?UserRank
     {
-        if (!\MODULE_USER_RANK) {
+        if (\MODULE_USER_RANK === 0) {
             return null;
         }
 
-        if (!$this->rankID) {
+        if ($this->rankID === null) {
             return null;
         }
 
@@ -1043,19 +1043,19 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function showSignature()
     {
-        if (!\MODULE_USER_SIGNATURE) {
+        if (\MODULE_USER_SIGNATURE === 0) {
             return false;
         }
         if ($this->signature === null || $this->signature === '') {
             return false;
         }
-        if ($this->disableSignature) {
+        if ($this->disableSignature !== 0) {
             return false;
         }
-        if ($this->banned) {
+        if ($this->banned !== 0) {
             return false;
         }
-        if (WCF::getUser()->userID && !WCF::getUser()->showSignature) {
+        if (WCF::getUser()->userID !== 0 && !WCF::getUser()->showSignature) {
             return false;
         }
 
@@ -1153,7 +1153,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
     {
         $username = StringUtil::encodeHTML($this->username);
 
-        if ($this->userOnlineGroupID) {
+        if ($this->userOnlineGroupID !== null) {
             $group = UserGroup::getGroupByID($this->userOnlineGroupID);
             if ($group !== null && $group->userOnlineMarking !== '' && $group->userOnlineMarking !== '%s') {
                 return \str_replace('%s', $username, $group->userOnlineMarking);
@@ -1213,9 +1213,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function showTrophyPoints(): bool
     {
-        return \MODULE_TROPHY
+        return \MODULE_TROPHY !== 0
             && WCF::getSession()->hasPermission('user.profile.trophy.canSeeTrophies')
-            && $this->trophyPoints
+            && $this->trophyPoints !== 0
             && ($this->isAccessible('canViewTrophies') || $this->userID === WCF::getSession()->userID);
     }
 
@@ -1235,7 +1235,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
             return false;
         }
 
-        if ($this->disableAvatar) {
+        if ($this->disableAvatar !== 0) {
             return false;
         }
 
@@ -1255,7 +1255,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
             return false;
         }
 
-        if ($this->disableCoverPhoto) {
+        if ($this->disableCoverPhoto !== 0) {
             return false;
         }
 

@@ -109,7 +109,7 @@ class UserPage extends AbstractPage
         parent::readData();
 
         // add breadcrumbs
-        if (\MODULE_MEMBERS_LIST) {
+        if (\MODULE_MEMBERS_LIST !== 0) {
             PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.MembersList');
         }
 
@@ -140,7 +140,7 @@ class UserPage extends AbstractPage
         $this->followingList->readObjects();
 
         // get visitors
-        if (\PROFILE_ENABLE_VISITORS) {
+        if (\PROFILE_ENABLE_VISITORS !== 0) {
             $this->visitorList = new UserProfileVisitorList();
             $this->visitorList->getConditionBuilder()->add('user_profile_visitor.ownerID = ?', [$this->userID]);
             $this->visitorList->sqlLimit = 7;
@@ -186,7 +186,7 @@ class UserPage extends AbstractPage
             'visitorCount' => $this->visitorList !== null ? $this->visitorList->countObjects() : 0,
             'isAccessible' => UserGroup::isAccessibleGroup($this->user->getGroupIDs()),
             'coverPhotoDimensions' => UserCoverPhoto::getCoverPhotoDimensions(),
-            'specialTrophyCount' => (\MODULE_TROPHY ? \count($this->user->getSpecialTrophies()) : 0),
+            'specialTrophyCount' => (\MODULE_TROPHY !== 0 ? \count($this->user->getSpecialTrophies()) : 0),
             'userProfileHeaderView' => new UserProfileHeaderView($this->user),
         ]);
     }
@@ -200,7 +200,7 @@ class UserPage extends AbstractPage
             && WCF::getSession()->spiderIdentifier === null
             && !$this->user->isProtected()
         ) {
-            if (\PROFILE_ENABLE_VISITORS && WCF::getUser()->userID && !WCF::getUser()->canViewOnlineStatus) {
+            if (\PROFILE_ENABLE_VISITORS !== 0 && WCF::getUser()->userID !== 0 && !WCF::getUser()->canViewOnlineStatus) {
                 new TrackUserProfileVisitor(WCF::getUser(), $this->user->getDecoratedObject(), \TIME_NOW)();
             }
         }

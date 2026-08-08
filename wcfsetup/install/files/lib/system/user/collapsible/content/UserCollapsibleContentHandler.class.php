@@ -129,7 +129,7 @@ class UserCollapsibleContentHandler extends SingletonFactory
             $userID = WCF::getUser()->userID;
         }
 
-        if ($userID) {
+        if ($userID !== 0) {
             $sql = "SELECT  *
                     FROM    wcf1_user_collapsible_content
                     WHERE   objectTypeID = ?
@@ -181,7 +181,7 @@ class UserCollapsibleContentHandler extends SingletonFactory
             $userID = WCF::getUser()->userID;
         }
 
-        if ($userID) {
+        if ($userID !== 0) {
             $sql = "DELETE FROM wcf1_user_collapsible_content
                     WHERE       objectTypeID = ?
                             AND objectID = ?
@@ -257,13 +257,13 @@ class UserCollapsibleContentHandler extends SingletonFactory
     public function resetAll(string $objectType, ?int $objectID = null)
     {
         $objectTypeID = $this->getObjectTypeID($objectType);
-        if (!$objectTypeID) {
+        if ($objectTypeID === null) {
             throw new InvalidObjectTypeException($objectType, 'com.woltlab.wcf.collapsibleContent');
         }
 
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add('objectTypeID = ?', [$objectTypeID]);
-        if ($objectID) {
+        if ($objectID !== null) {
             $conditionBuilder->add('objectID = ?', [$objectID]);
         }
 

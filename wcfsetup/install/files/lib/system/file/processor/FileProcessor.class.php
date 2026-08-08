@@ -212,7 +212,7 @@ final class FileProcessor extends SingletonFactory
                 }
 
                 // Ignore any errors trying to save the file unless in debug mode.
-                if (\ENABLE_DEBUG_MODE) {
+                if (\ENABLE_DEBUG_MODE !== 0) {
                     throw $e;
                 }
 
@@ -465,7 +465,7 @@ final class FileProcessor extends SingletonFactory
     #[\NoDiscard("as the file itself could change")]
     public function stripExif(File $file): File
     {
-        if (!\IMAGE_STRIP_EXIF) {
+        if (\IMAGE_STRIP_EXIF === 0) {
             return $file;
         }
 

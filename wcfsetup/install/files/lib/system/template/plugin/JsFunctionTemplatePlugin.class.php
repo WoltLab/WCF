@@ -72,11 +72,11 @@ class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin
         }
 
         $src = WCF::getPath($tagArgs['application']) . (isset($tagArgs['acp']) && $tagArgs['acp'] === 'true' ? 'acp/' : '') . 'js/';
-        if (!empty($tagArgs['bundle']) && !\ENABLE_DEBUG_MODE) {
+        if (!empty($tagArgs['bundle']) && \ENABLE_DEBUG_MODE === 0) {
             $src .= $tagArgs['bundle'];
         } elseif (!empty($tagArgs['lib'])) {
             if ($isJquery) {
-                $src .= \ENABLE_DEBUG_MODE ? '3rdParty/' . $tagArgs['lib'] : 'WCF.Combined';
+                $src .= \ENABLE_DEBUG_MODE !== 0 ? '3rdParty/' . $tagArgs['lib'] : 'WCF.Combined';
             } else {
                 $src .= '3rdParty/' . $tagArgs['lib'];
                 if (!empty($tagArgs['file'])) {
@@ -92,10 +92,10 @@ class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin
         }
 
         $this->includedFiles[$src] = true;
-        if (!\ENABLE_DEBUG_MODE) {
+        if (\ENABLE_DEBUG_MODE === 0) {
             if (
                 \defined('VISITOR_USE_TINY_BUILD')
-                && \VISITOR_USE_TINY_BUILD
+                && \VISITOR_USE_TINY_BUILD !== 0
                 && WCF::getUser()->isGuest()
                 && !empty($tagArgs['hasTiny'])
             ) {

@@ -58,7 +58,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar, ISafeFormatAvata
     {
         if (
             $forceWebP === true
-            || ($forceWebP === null && $this->hasWebP && ImageUtil::browserSupportsWebp())
+            || ($forceWebP === null && $this->hasWebP !== 0 && ImageUtil::browserSupportsWebp())
         ) {
             $fileExtension = "webp";
         } else {

@@ -39,7 +39,7 @@ final class CommentsView
     {
         $objectTypeID = CommentHandler::getInstance()
             ->getObjectTypeID($this->objectTypeName);
-        if (!$objectTypeID) {
+        if ($objectTypeID === null) {
             throw new SystemException("Unable to find object type '{$this->objectTypeName}'");
         }
 
@@ -77,7 +77,7 @@ final class CommentsView
      */
     public function getLikeData(): array
     {
-        if (!\MODULE_LIKE) {
+        if (\MODULE_LIKE === 0) {
             return [];
         }
 

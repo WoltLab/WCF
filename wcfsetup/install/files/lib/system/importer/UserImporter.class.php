@@ -88,7 +88,7 @@ class UserImporter extends AbstractImporter
                 $targetUser = $conflictingUser;
 
                 // check whether user exists
-                if ($targetUser->userID) {
+                if ($targetUser->userID !== 0) {
                     $performMerge = true;
                     break;
                 }
@@ -97,7 +97,7 @@ class UserImporter extends AbstractImporter
                 // fetch merge target
                 $targetUser = User::getUserByEmail($data['email']);
                 // if it exists: perform a merge
-                if ($targetUser->userID) {
+                if ($targetUser->userID !== 0) {
                     $performMerge = true;
                 }
                 break;
@@ -111,7 +111,7 @@ class UserImporter extends AbstractImporter
         }
 
         // a conflict arose, but no merge was performed, resolve
-        if ($conflictingUser->userID) {
+        if ($conflictingUser->userID !== 0) {
             // rename user
             $data['username'] = self::resolveDuplicate($data['username']);
         }
@@ -134,7 +134,7 @@ class UserImporter extends AbstractImporter
                     $optionID = User::getUserOptionID($optionName);
                 }
 
-                if ($optionID) {
+                if ($optionID !== null) {
                     $userOptions[$optionID] = $optionValue;
                 }
             }
@@ -210,7 +210,7 @@ class UserImporter extends AbstractImporter
         if (isset($additionalData['groupIDs'])) {
             foreach ($additionalData['groupIDs'] as $oldGroupID) {
                 $newGroupID = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user.group', $oldGroupID);
-                if ($newGroupID) {
+                if ($newGroupID !== null) {
                     $groupIDs[] = $newGroupID;
                 }
             }

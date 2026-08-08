@@ -54,7 +54,7 @@ class UserOptionEditForm extends UserOptionAddForm
 
         $this->formObject = new UserOption($queryParameters['id']);
 
-        if (!$this->formObject->getObjectID()) {
+        if ($this->formObject->getObjectID() === 0) {
             throw new IllegalLinkException();
         }
     }

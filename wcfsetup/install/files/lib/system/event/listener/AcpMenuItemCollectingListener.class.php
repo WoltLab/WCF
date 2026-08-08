@@ -210,7 +210,7 @@ final class AcpMenuItemCollectingListener
 
     private function addDevtoolsItems(ItemCollecting $event): void
     {
-        if (!\ENABLE_DEVELOPER_TOOLS) {
+        if (\ENABLE_DEVELOPER_TOOLS === 0) {
             return;
         }
 
@@ -248,7 +248,7 @@ final class AcpMenuItemCollectingListener
 
     private function addContactFormItems(ItemCollecting $event): void
     {
-        if (!\MODULE_CONTACT_FORM) {
+        if (\MODULE_CONTACT_FORM === 0) {
             return;
         }
 
@@ -400,7 +400,7 @@ final class AcpMenuItemCollectingListener
 
     private function addUserRankItems(ItemCollecting $event): void
     {
-        if (!\MODULE_USER_RANK) {
+        if (\MODULE_USER_RANK === 0) {
             return;
         }
 
@@ -491,7 +491,7 @@ final class AcpMenuItemCollectingListener
 
     private function addPaidSubscriptionItems(ItemCollecting $event): void
     {
-        if (!\MODULE_PAID_SUBSCRIPTION) {
+        if (\MODULE_PAID_SUBSCRIPTION === 0) {
             return;
         }
 
@@ -528,7 +528,7 @@ final class AcpMenuItemCollectingListener
 
     private function addTrophyItems(ItemCollecting $event): void
     {
-        if (!\MODULE_TROPHY) {
+        if (\MODULE_TROPHY === 0) {
             return;
         }
 
@@ -660,7 +660,7 @@ final class AcpMenuItemCollectingListener
 
     private function addArticleItems(ItemCollecting $event): void
     {
-        if (!\MODULE_ARTICLE) {
+        if (\MODULE_ARTICLE === 0) {
             return;
         }
 
@@ -776,7 +776,7 @@ final class AcpMenuItemCollectingListener
 
     private function addTagItems(ItemCollecting $event): void
     {
-        if (!\MODULE_TAGGING) {
+        if (\MODULE_TAGGING === 0) {
             return;
         }
 
@@ -927,7 +927,7 @@ final class AcpMenuItemCollectingListener
 
     private function addSmileyItems(ItemCollecting $event): void
     {
-        if (!\MODULE_SMILEY) {
+        if (\MODULE_SMILEY === 0) {
             return;
         }
 
@@ -967,7 +967,7 @@ final class AcpMenuItemCollectingListener
 
     private function addAdItems(ItemCollecting $event): void
     {
-        if (!\MODULE_WCF_AD) {
+        if (\MODULE_WCF_AD === 0) {
             return;
         }
 
@@ -994,7 +994,7 @@ final class AcpMenuItemCollectingListener
 
     private function addReactionItems(ItemCollecting $event): void
     {
-        if (!\MODULE_LIKE) {
+        if (\MODULE_LIKE === 0) {
             return;
         }
 
@@ -1126,7 +1126,7 @@ final class AcpMenuItemCollectingListener
                 parentMenuItem: 'wcf.acp.menu.link.log',
                 link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\ExceptionLogViewPage::class),
             ));
-            if (\ENABLE_USER_AUTHENTICATION_FAILURE) {
+            if (\ENABLE_USER_AUTHENTICATION_FAILURE !== 0) {
                 $event->register(new AcpMenuItem(
                     'wcf.acp.menu.link.log.authentication.failure',
                     parentMenuItem: 'wcf.acp.menu.link.log',

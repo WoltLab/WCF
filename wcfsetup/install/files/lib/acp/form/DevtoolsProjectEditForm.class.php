@@ -77,7 +77,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm
 
         if (isset($_REQUEST['id'])) {
             $this->formObject = new DevtoolsProject($_REQUEST['id']);
-            if (!$this->formObject->projectID) {
+            if ($this->formObject->projectID === 0) {
                 throw new IllegalLinkException();
             }
 

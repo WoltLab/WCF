@@ -399,7 +399,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         $sql = "SELECT      optionID, optionValue
                 FROM        wcf1_poll_option
                 WHERE       pollID = ?
-                ORDER BY    " . ($this->poll->sortByVotes ? "votes DESC" : "showOrder ASC");
+                ORDER BY    " . ($this->poll->sortByVotes !== 0 ? "votes DESC" : "showOrder ASC");
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->poll->pollID]);
         $options = [];

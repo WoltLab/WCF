@@ -49,7 +49,7 @@ final class HtmlUpcastNodeWoltlabMetacode extends AbstractHtmlUpcastNode
                 $element->removeAttribute('data-attributes');
             }
             $bbcode = BBCodeCache::getInstance()->getBBCodeByTag($name);
-            if ($bbcode === null || !$bbcode->originIsSystem) {
+            if ($bbcode === null || $bbcode->originIsSystem === 0) {
                 $nodes[] = [$element, $name, $emptyMetacodeUpcast, $attributes];
                 continue;
             }
@@ -92,14 +92,14 @@ final class HtmlUpcastNodeWoltlabMetacode extends AbstractHtmlUpcastNode
                 }
                 $bbcode = BBCodeCache::getInstance()->getBBCodeByTag($name);
 
-                if ($bbcode === null || $bbcode->isBlockElement) {
+                if ($bbcode === null || $bbcode->isBlockElement !== 0) {
                     $startParagraph = $element->ownerDocument->createElement('p');
                     $startParagraph->append("[{$name}{$attributes}]");
 
                     $endParagraph = $element->ownerDocument->createElement('p');
                     $endParagraph->append("[/{$name}]");
 
-                    if ($bbcode?->isSourceCode) {
+                    if ($bbcode?->isSourceCode === 1) {
                         $content = $element->ownerDocument->createElement('p');
                         $content->append($element->textContent);
                         DomUtil::replaceElement($element, $startParagraph, false);
@@ -119,7 +119,7 @@ final class HtmlUpcastNodeWoltlabMetacode extends AbstractHtmlUpcastNode
                         $element->ownerDocument->createTextNode("[/{$name}]"),
                         $element->nextSibling
                     );
-                    if ($bbcode->isSourceCode) {
+                    if ($bbcode->isSourceCode !== 0) {
                         $endNode->parentNode->insertBefore(
                             $element->ownerDocument->createTextNode($element->textContent),
                             $endNode

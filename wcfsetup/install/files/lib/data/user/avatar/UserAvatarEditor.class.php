@@ -64,7 +64,7 @@ class UserAvatarEditor extends DatabaseObjectEditor
         // delete original size
         @\unlink($this->getLocation(null, false));
 
-        if ($this->hasWebP) {
+        if ($this->hasWebP !== 0) {
             @\unlink($this->getLocation(null, true));
         }
     }
@@ -80,7 +80,7 @@ class UserAvatarEditor extends DatabaseObjectEditor
      */
     public function createAvatarVariant(): bool
     {
-        if ($this->hasWebP) {
+        if ($this->hasWebP !== 0) {
             return false;
         }
 

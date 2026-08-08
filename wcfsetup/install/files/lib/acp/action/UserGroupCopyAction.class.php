@@ -49,7 +49,7 @@ final class UserGroupCopyAction implements RequestHandlerInterface
         }
 
         $userGroup = new UserGroup($parameters['id']);
-        if (!$userGroup->groupID) {
+        if ($userGroup->isNil()) {
             throw new IllegalLinkException();
         }
 

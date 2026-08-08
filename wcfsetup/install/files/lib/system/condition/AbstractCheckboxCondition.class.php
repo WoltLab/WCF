@@ -43,7 +43,7 @@ abstract class AbstractCheckboxCondition extends AbstractSingleFieldCondition
     #[\Override]
     public function getData()
     {
-        if ($this->fieldValue) {
+        if ($this->fieldValue !== 0) {
             return [$this->fieldName => $this->fieldValue];
         }
 
@@ -53,7 +53,7 @@ abstract class AbstractCheckboxCondition extends AbstractSingleFieldCondition
     #[\Override]
     public function getFieldElement()
     {
-        return '<label><input type="checkbox" name="' . $this->fieldName . '" id="' . $this->fieldName . '"' . ($this->fieldValue ? ' checked' : '') . '> ' . WCF::getLanguage()->get($this->label) . '</label>';
+        return '<label><input type="checkbox" name="' . $this->fieldName . '" id="' . $this->fieldName . '"' . ($this->fieldValue !== 0 ? ' checked' : '') . '> ' . WCF::getLanguage()->get($this->label) . '</label>';
     }
 
     #[\Override]

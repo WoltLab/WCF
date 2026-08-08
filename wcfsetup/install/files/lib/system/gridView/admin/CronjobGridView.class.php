@@ -97,7 +97,7 @@ final class CronjobGridView extends AbstractGridView
                         {
                             \assert($row instanceof Cronjob);
 
-                            if ($row->isDisabled || $row->nextExec === 1) {
+                            if ($row->isDisabled !== 0 || $row->nextExec === 1) {
                                 return '';
                             }
 

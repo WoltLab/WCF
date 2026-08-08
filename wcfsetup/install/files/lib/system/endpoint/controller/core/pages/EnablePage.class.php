@@ -30,7 +30,7 @@ final class EnablePage implements IController
 
         $this->assertPageCanBeEnabled($page);
 
-        if ($page->isDisabled) {
+        if ($page->isDisabled !== 0) {
             new \wcf\command\page\EnablePage($page)();
         }
 

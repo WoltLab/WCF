@@ -98,7 +98,7 @@ final class PaidSubscriptionTransactionLogGridView extends AbstractGridView
                         {
                             \assert($row instanceof PaidSubscriptionTransactionLog);
 
-                            if (!$row->subscriptionID) {
+                            if ($row->subscriptionID === null) {
                                 return '';
                             }
 
@@ -181,7 +181,7 @@ final class PaidSubscriptionTransactionLogGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return \MODULE_PAID_SUBSCRIPTION
+        return \MODULE_PAID_SUBSCRIPTION !== 0
             && WCF::getSession()->hasPermission('admin.paidSubscription.canManageSubscription');
     }
 

@@ -19,7 +19,7 @@ class GetUpdateInfoCronjob extends AbstractCronjob
     {
         parent::execute($cronjob);
 
-        if (\ENABLE_BENCHMARK || \ENABLE_ENTERPRISE_MODE) {
+        if (\ENABLE_BENCHMARK !== 0 || \ENABLE_ENTERPRISE_MODE !== 0) {
             return;
         }
 

@@ -18,7 +18,7 @@ class UpdateBlacklistCronjob extends AbstractCronjob
     #[\Override]
     public function execute(Cronjob $cronjob)
     {
-        if (!\BLACKLIST_SFS_ENABLE) {
+        if (\BLACKLIST_SFS_ENABLE === 0) {
             return;
         }
 

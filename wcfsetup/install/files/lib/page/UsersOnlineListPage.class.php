@@ -85,11 +85,11 @@ class UsersOnlineListPage extends SortablePage
         $this->objectList->readStats();
         $this->objectList->checkRecord();
 
-        if (!\USERS_ONLINE_SHOW_ROBOTS) {
+        if (\USERS_ONLINE_SHOW_ROBOTS === 0) {
             $this->objectList->getConditionBuilder()->add('session.spiderIdentifier IS NULL');
         }
-        if (!\USERS_ONLINE_SHOW_GUESTS) {
-            if (\USERS_ONLINE_SHOW_ROBOTS) {
+        if (\USERS_ONLINE_SHOW_GUESTS === 0) {
+            if (\USERS_ONLINE_SHOW_ROBOTS !== 0) {
                 $this->objectList->getConditionBuilder()->add('(session.userID IS NOT NULL OR session.spiderIdentifier IS NOT NULL)');
             } else {
                 $this->objectList->getConditionBuilder()->add('session.userID IS NOT NULL');
@@ -106,7 +106,7 @@ class UsersOnlineListPage extends SortablePage
         parent::readData();
 
         // add breadcrumbs
-        if (\MODULE_MEMBERS_LIST) {
+        if (\MODULE_MEMBERS_LIST !== 0) {
             PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.MembersList');
         }
 

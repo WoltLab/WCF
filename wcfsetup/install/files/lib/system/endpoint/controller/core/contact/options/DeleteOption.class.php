@@ -39,7 +39,7 @@ final class DeleteOption implements IController
 
     private function assertOptionCanBeDeleted(ContactOption $option): void
     {
-        if (!\MODULE_CONTACT_FORM) {
+        if (\MODULE_CONTACT_FORM === 0) {
             throw new IllegalLinkException();
         }
 

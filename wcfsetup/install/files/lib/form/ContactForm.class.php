@@ -62,7 +62,7 @@ class ContactForm extends AbstractFormBuilderForm
             ...$this->getOptionFormFields()
         ]);
 
-        if (\CONTACT_FORM_ENABLE_ATTACHMENTS) {
+        if (\CONTACT_FORM_ENABLE_ATTACHMENTS !== 0) {
             $this->form->appendChild($this->getFileUploadFormField());
         }
 

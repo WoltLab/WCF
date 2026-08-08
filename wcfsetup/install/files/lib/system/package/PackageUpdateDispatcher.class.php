@@ -252,7 +252,8 @@ final class PackageUpdateDispatcher extends SingletonFactory
         // parse given package update xml
         $allNewPackages = false;
         if ($apiVersion === '2.0' || $response->getStatusCode() !== 304) {
-            if (!$response->getBody()->getSize()) {
+            $size = $response->getBody()->getSize();
+            if ($size === null || $size === 0) {
                 throw new SystemException(WCF::getLanguage()->get('wcf.acp.package.update.error.listNotFound'));
             }
 
@@ -321,7 +322,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
 
             $name = $package->getAttribute('name');
             if (\strpos($name, 'com.woltlab.') === 0 && !$isTrustedServer) {
-                if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
+                if (\ENABLE_DEBUG_MODE !== 0 && \ENABLE_DEVELOPER_TOOLS !== 0) {
                     throw new SystemException("The server '" . $updateServer->serverURL . "' attempted to provide an official WoltLab package, but is not authorized.");
                 }
 
@@ -511,7 +512,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
                             if ($compatibleVersion->nodeName === 'api' && $compatibleVersion->hasAttribute('version')) {
                                 $versionNumber = $compatibleVersion->getAttribute('version');
                                 if (!\preg_match('~^(?:201[7-9]|20[2-9][0-9])$~', $versionNumber)) {
-                                    if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
+                                    if (\ENABLE_DEBUG_MODE !== 0 && \ENABLE_DEVELOPER_TOOLS !== 0) {
                                         throw new PackageValidationException(
                                             PackageValidationException::INVALID_API_VERSION,
                                             ['version' => $versionNumber]
@@ -577,7 +578,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
                     $versionData['file'] ?? '',
                     $versionData['license']['license'] ?? '',
                     $versionData['license']['licenseURL'] ?? '',
-                    $versionData['isAccessible'] ? 1 : 0,
+                    $versionData['isAccessible'] !== 0 ? 1 : 0,
                     $versionData['packageDate'],
                     $packageUpdateIDs[$package],
                     $packageVersion,
@@ -763,7 +764,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
         $statement->execute($conditions->getParameters());
         while ($row = $statement->fetchArray()) {
             if (!isset($existingPackages[$row['package']])) {
-                if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
+                if (\ENABLE_DEBUG_MODE !== 0 && \ENABLE_DEVELOPER_TOOLS !== 0) {
                     throw new SystemException("Invalid package update data, identifier '" . $row['package'] . "' does not match any installed package (case-mismatch).");
                 }
 

@@ -31,7 +31,7 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
 
         foreach ($processor->plainLinks as $link) {
             $objectID = $link->detectObjectID($regex);
-            if ($objectID) {
+            if ($objectID !== 0) {
                 $objectIDs[] = $objectID;
             }
         }

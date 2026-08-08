@@ -383,7 +383,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
         $style = new Style($style->styleID);
         new CreateManifest($style)();
 
-        if ($style->hasFavicon) {
+        if ($style->hasFavicon !== 0) {
             $style->loadVariables();
             $tileColor = $style->getVariable('wcfHeaderBackground', true);
 
@@ -521,7 +521,7 @@ BROWSERCONFIG;
     public function validateChangeStyle()
     {
         $this->style = $this->getSingleObject()->getDecoratedObject();
-        if ($this->style->isDisabled && !WCF::getSession()->hasPermission('admin.style.canUseDisabledStyle')) {
+        if ($this->style->isDisabled !== 0 && !WCF::getSession()->hasPermission('admin.style.canUseDisabledStyle')) {
             throw new PermissionDeniedException();
         }
     }
@@ -641,7 +641,7 @@ BROWSERCONFIG;
     public function toggle()
     {
         foreach ($this->objects as $editor) {
-            if ($editor->isDisabled) {
+            if ($editor->isDisabled !== 0) {
                 new EnableStyle($editor->getDecoratedObject())();
             } else {
                 new DisableStyle($editor->getDecoratedObject())();

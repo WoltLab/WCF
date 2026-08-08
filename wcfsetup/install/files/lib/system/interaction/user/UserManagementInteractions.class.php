@@ -37,7 +37,7 @@ final class UserManagementInteractions extends AbstractInteractionProvider
                     public function render(DatabaseObject $object): string
                     {
                         \assert($object instanceof UserProfile);
-                        $title = WCF::getLanguage()->get($object->banned ? 'wcf.user.unban' : 'wcf.user.ban');
+                        $title = WCF::getLanguage()->get($object->banned !== 0 ? 'wcf.user.unban' : 'wcf.user.ban');
 
                         return <<<HTML
                             <button
@@ -59,7 +59,7 @@ final class UserManagementInteractions extends AbstractInteractionProvider
                     public function render(DatabaseObject $object): string
                     {
                         \assert($object instanceof UserProfile);
-                        $title = WCF::getLanguage()->get($object->disableAvatar ? 'wcf.user.enableAvatar' : 'wcf.user.disableAvatar');
+                        $title = WCF::getLanguage()->get($object->disableAvatar !== 0 ? 'wcf.user.enableAvatar' : 'wcf.user.disableAvatar');
 
                         return <<<HTML
                             <button
@@ -81,7 +81,7 @@ final class UserManagementInteractions extends AbstractInteractionProvider
                     public function render(DatabaseObject $object): string
                     {
                         \assert($object instanceof UserProfile);
-                        $title = WCF::getLanguage()->get($object->disableSignature ? 'wcf.user.enableSignature' : 'wcf.user.disableSignature');
+                        $title = WCF::getLanguage()->get($object->disableSignature !== 0 ? 'wcf.user.enableSignature' : 'wcf.user.disableSignature');
 
                         return <<<HTML
                             <button
@@ -103,7 +103,7 @@ final class UserManagementInteractions extends AbstractInteractionProvider
                     public function render(DatabaseObject $object): string
                     {
                         \assert($object instanceof UserProfile);
-                        $title = WCF::getLanguage()->get($object->disableCoverPhoto ? 'wcf.user.enableCoverPhoto' : 'wcf.user.disableCoverPhoto');
+                        $title = WCF::getLanguage()->get($object->disableCoverPhoto !== 0 ? 'wcf.user.enableCoverPhoto' : 'wcf.user.disableCoverPhoto');
 
                         return <<<HTML
                             <button

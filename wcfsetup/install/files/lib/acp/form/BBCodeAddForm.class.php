@@ -174,7 +174,7 @@ class BBCodeAddForm extends AbstractForm
         }
 
         // tag may only contain alphanumeric chars
-        if (!Regex::compile('^[a-z0-9]+$', Regex::CASE_INSENSITIVE)->match($this->bbcodeTag)) {
+        if (Regex::compile('^[a-z0-9]+$', Regex::CASE_INSENSITIVE)->match($this->bbcodeTag) === 0) {
             throw new UserInputException('bbcodeTag', 'invalid');
         }
 

@@ -23,7 +23,7 @@ final class UserTrophyInteractions extends AbstractInteractionProvider
         $this->addInteractions([
             new DeleteInteraction(
                 'core/users/trophies/%s',
-                static fn(UserTrophy $userTrophy) => !$userTrophy->getTrophy()->awardAutomatically
+                static fn(UserTrophy $userTrophy) => $userTrophy->getTrophy()->awardAutomatically === 0
             )
         ]);
 

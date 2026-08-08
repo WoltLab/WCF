@@ -62,7 +62,7 @@ final class CreateResponse implements IController
 
         $event = new MessageSpamChecking(
             $htmlInputProcessor,
-            WCF::getUser()->userID ? WCF::getUser() : null,
+            WCF::getUser()->userID !== 0 ? WCF::getUser() : null,
             UserUtil::getIpAddress(),
         );
         EventHandler::getInstance()->fire($event);
@@ -73,7 +73,7 @@ final class CreateResponse implements IController
         $response = new \wcf\command\comment\response\CreateResponse(
             $comment,
             $htmlInputProcessor,
-            WCF::getUser()->userID ? WCF::getUser() : null,
+            WCF::getUser()->userID !== 0 ? WCF::getUser() : null,
             $username,
             $isDisabled,
         )();
@@ -92,7 +92,7 @@ final class CreateResponse implements IController
             throw new PermissionDeniedException();
         }
 
-        if ($comment->isDisabled && !$commentManager->canModerate($comment->objectTypeID, $comment->objectID)) {
+        if ($comment->isDisabled !== 0 && !$commentManager->canModerate($comment->objectTypeID, $comment->objectID)) {
             throw new PermissionDeniedException();
         }
     }

@@ -67,11 +67,11 @@ class CurrencyFormOption extends AbstractNumericFormOption
     {
         $values = $this->parseFilterValue($value);
 
-        if (!$values['from'] && !$values['to']) {
+        if ($values['from'] === 0 && $values['to'] === 0) {
             return;
         }
 
-        if (!$values['to']) {
+        if ($values['to'] === 0) {
             $list->getConditionBuilder()->add("{$columnName} >= ?", [$values['from'] * 100]);
         } else {
             $list->getConditionBuilder()->add("{$columnName} BETWEEN ? AND ?", [$values['from'] * 100, $values['to'] * 100]);

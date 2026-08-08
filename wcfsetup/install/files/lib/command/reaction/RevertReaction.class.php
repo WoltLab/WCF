@@ -70,7 +70,7 @@ final class RevertReaction
      */
     private function updateUserCounter(ILikeObject $likeable): void
     {
-        if (!$likeable->getUserID()) {
+        if ($likeable->getUserID() === null) {
             return;
         }
 
@@ -87,7 +87,7 @@ final class RevertReaction
         ILikeObject $likeable,
         User $user,
     ): void {
-        if (UserActivityEventHandler::getInstance()->getObjectTypeID($likeable->getObjectType()->objectType . '.recentActivityEvent')) {
+        if (UserActivityEventHandler::getInstance()->getObjectTypeID($likeable->getObjectType()->objectType . '.recentActivityEvent') !== null) {
             UserActivityEventHandler::getInstance()->removeEvent(
                 $likeable->getObjectType()->objectType . '.recentActivityEvent',
                 $likeable->getObjectID(),

@@ -30,7 +30,7 @@ final class DisableLanguage implements IController
 
         $this->assertLanguageCanBeDisabled($language);
 
-        if (!$language->isDisabled) {
+        if ($language->isDisabled === 0) {
             new \wcf\command\language\DisableLanguage($language)();
         }
 
@@ -41,7 +41,7 @@ final class DisableLanguage implements IController
     {
         WCF::getSession()->checkPermissions(['admin.language.canManageLanguage']);
 
-        if ($language->isDefault) {
+        if ($language->isDefault !== 0) {
             throw new PermissionDeniedException();
         }
     }

@@ -34,6 +34,9 @@ class LikeUserNotificationObject extends DatabaseObjectDecorator implements IUse
         return '';
     }
 
+    /**
+     * @return int
+     */
     #[\Override]
     public function getAuthorID()
     {

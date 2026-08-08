@@ -71,7 +71,7 @@ class BBCodeParser extends SingletonFactory
         // handle source codes
         $sourceCodeTags = [];
         foreach ($this->bbcodes as $bbcode) {
-            if ($bbcode->isSourceCode) {
+            if ($bbcode->isSourceCode !== 0) {
                 $sourceCodeTags[] = $bbcode->bbcodeTag;
             }
         }
@@ -256,7 +256,7 @@ class BBCodeParser extends SingletonFactory
             return ($a->attributeNo < $b->attributeNo) ? 1 : -1;
         });
         foreach ($bbcodeAttributes as $attribute) {
-            if ($attribute->required) {
+            if ($attribute->required !== 0) {
                 break;
             }
 
@@ -298,7 +298,7 @@ class BBCodeParser extends SingletonFactory
             }
         }
 
-        if ($definedTagAttribute->required && !$definedTagAttribute->useText && !isset($tagAttributes[$definedTagAttribute->attributeNo])) {
+        if ($definedTagAttribute->required !== 0 && $definedTagAttribute->useText === 0 && !isset($tagAttributes[$definedTagAttribute->attributeNo])) {
             return false;
         }
 
@@ -320,7 +320,7 @@ class BBCodeParser extends SingletonFactory
 
         // search 'useText' attributes
         foreach ($this->bbcodes[$tag['name']]->getAttributes() as $attribute) {
-            if ($attribute->useText && !isset($tag['attributes'][$attribute->attributeNo])) {
+            if ($attribute->useText !== 0 && !isset($tag['attributes'][$attribute->attributeNo])) {
                 return true;
             }
         }
@@ -418,7 +418,7 @@ class BBCodeParser extends SingletonFactory
                     $hideBuffer = false;
                     // insert buffered content as attribute value
                     foreach ($this->bbcodes[$tag['name']]->getAttributes() as $attribute) {
-                        if ($attribute->useText && !isset($openingTag['attributes'][$attribute->attributeNo])) {
+                        if ($attribute->useText !== 0 && !isset($openingTag['attributes'][$attribute->attributeNo])) {
                             $openingTag['attributes'][$attribute->attributeNo] = $buffer;
                             $hideBuffer = true;
                             break;
@@ -494,7 +494,7 @@ class BBCodeParser extends SingletonFactory
             $validTags = \implode('|', \array_keys($this->bbcodes));
         } else {
             foreach ($this->bbcodes as $tag => $bbcode) {
-                if (!$bbcode->isSourceCode) {
+                if ($bbcode->isSourceCode === 0) {
                     // remove source codes
                     if (!empty($validTags)) {
                         $validTags .= '|';
@@ -606,7 +606,7 @@ class BBCodeParser extends SingletonFactory
             $bbcodes = [];
 
             foreach ($this->bbcodes as $name => $bbcode) {
-                if ($bbcode->isBlockElement) {
+                if ($bbcode->isBlockElement !== 0) {
                     $bbcodes[] = $name;
                 }
             }
@@ -628,7 +628,7 @@ class BBCodeParser extends SingletonFactory
             $bbcodes = [];
 
             foreach ($this->bbcodes as $name => $bbcode) {
-                if ($bbcode->isSourceCode) {
+                if ($bbcode->isSourceCode !== 0) {
                     $bbcodes[] = $name;
                 }
             }

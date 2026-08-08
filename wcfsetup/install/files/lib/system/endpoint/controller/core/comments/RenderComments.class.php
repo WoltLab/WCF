@@ -54,7 +54,7 @@ final class RenderComments implements IController
             'lastCommentTime' => $commentList->getMinCommentTime(),
             'template' => WCF::getTPL()->render('wcf', 'commentList', [
                 'commentList' => $commentList,
-                'likeData' => \MODULE_LIKE ? $commentList->getLikeData() : [],
+                'likeData' => \MODULE_LIKE !== 0 ? $commentList->getLikeData() : [],
             ]),
         ]);
     }
@@ -67,7 +67,7 @@ final class RenderComments implements IController
             $objectID,
             false
         );
-        if ($lastCommentTime) {
+        if ($lastCommentTime !== 0) {
             $commentList->getConditionBuilder()->add("comment.time < ?", [$lastCommentTime]);
         }
         $commentList->readObjects();

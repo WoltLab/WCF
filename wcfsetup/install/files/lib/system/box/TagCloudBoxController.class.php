@@ -36,7 +36,7 @@ abstract class TagCloudBoxController extends AbstractBoxController
     #[\Override]
     protected function loadContent()
     {
-        if (\MODULE_TAGGING && WCF::getSession()->hasPermission('user.tag.canViewTag')) {
+        if (\MODULE_TAGGING !== 0 && WCF::getSession()->hasPermission('user.tag.canViewTag')) {
             if ($this->neededPermission !== '' && $this->neededPermission !== []) {
                 if (\is_string($this->neededPermission)) {
                     if (!WCF::getSession()->hasPermission($this->neededPermission)) {

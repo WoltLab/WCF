@@ -31,7 +31,7 @@ class MediaEditor extends DatabaseObjectEditor
         @\unlink($this->getLocation());
 
         // delete thumbnails
-        if ($this->isImage) {
+        if ($this->isImage !== 0) {
             foreach (Media::getThumbnailSizes() as $size => $data) {
                 @\unlink($this->getThumbnailLocation($size));
             }

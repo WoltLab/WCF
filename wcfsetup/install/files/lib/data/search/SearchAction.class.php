@@ -155,7 +155,7 @@ class SearchAction extends AbstractDatabaseObjectAction
         if ($search->isNil() || $search->searchType !== 'messages') {
             throw new IllegalLinkException();
         }
-        if ($search->userID && $search->userID !== WCF::getUser()->userID) {
+        if ($search->userID !== null && $search->userID !== WCF::getUser()->userID) {
             throw new IllegalLinkException();
         }
     }

@@ -30,7 +30,7 @@ class EnableAd implements IController
 
         $this->assertAdCanBeEnabled();
 
-        if ($ad->isDisabled) {
+        if ($ad->isDisabled !== 0) {
             new \wcf\command\ad\EnableAd($ad)();
         }
 
@@ -39,7 +39,7 @@ class EnableAd implements IController
 
     private function assertAdCanBeEnabled(): void
     {
-        if (!\MODULE_WCF_AD) {
+        if (\MODULE_WCF_AD === 0) {
             throw new IllegalLinkException();
         }
 

@@ -128,7 +128,7 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
                         $pipList = new PackageInstallationPluginList();
                         $pipList->getConditionBuilder()->add('pluginName = ?', [$formField->getValue()]);
 
-                        if ($pipList->countObjects()) {
+                        if ($pipList->countObjects() !== 0) {
                             $formField->addValidationError(
                                 new FormFieldValidationError(
                                     'format',

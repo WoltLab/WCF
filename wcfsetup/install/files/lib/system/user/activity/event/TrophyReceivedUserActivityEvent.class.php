@@ -18,7 +18,7 @@ class TrophyReceivedUserActivityEvent extends SingletonFactory implements IUserA
     #[\Override]
     public function prepare(array $events)
     {
-        if (!\MODULE_TROPHY || !WCF::getSession()->hasPermission('user.profile.trophy.canSeeTrophies')) {
+        if (\MODULE_TROPHY === 0 || !WCF::getSession()->hasPermission('user.profile.trophy.canSeeTrophies')) {
             return;
         }
 

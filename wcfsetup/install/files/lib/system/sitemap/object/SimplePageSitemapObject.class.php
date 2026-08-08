@@ -39,7 +39,7 @@ class SimplePageSitemapObject extends AbstractSitemapObjectObjectType
     #[\Override]
     public function canView(DatabaseObject $object)
     {
-        if ($object->requireObjectID) {
+        if ($object->requireObjectID !== 0) {
             return false;
         }
 

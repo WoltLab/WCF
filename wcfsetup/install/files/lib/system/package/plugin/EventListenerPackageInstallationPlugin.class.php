@@ -346,7 +346,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
     {
         $eventName = EventHandler::DEFAULT_EVENT_NAME;
         $eventNameElements = $element->getElementsByTagName('eventname');
-        if ($eventNameElements->length) {
+        if ($eventNameElements->length !== 0) {
             $eventName = StringUtil::normalizeCsv($eventNameElements->item(0)->nodeValue);
         }
 

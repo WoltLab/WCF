@@ -34,7 +34,7 @@ final class CreateBoxCondition
     public function __invoke(): void
     {
         $objectTypeID = $this->getObjectTypeID();
-        if (!$objectTypeID) {
+        if ($objectTypeID === null) {
             throw new \InvalidArgumentException(
                 "Unknown box condition '{$this->conditionObjectType}' of condition definition '{$this->conditionDefinition}'"
             );
@@ -66,6 +66,11 @@ final class CreateBoxCondition
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->conditionObjectType, $this->conditionDefinition]);
 
-        return $statement->fetchSingleColumn();
+        $value = $statement->fetchSingleColumn();
+        if ($value === false) {
+            return null;
+        }
+
+        return $value;
     }
 }

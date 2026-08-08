@@ -138,11 +138,11 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
      */
     public function isDisabled()
     {
-        if ($this->isDisabled) {
+        if ($this->isDisabled !== 0) {
             return true;
         }
 
-        if ($this->getCategory()->isDisabled) {
+        if ($this->getCategory()->isDisabled !== 0) {
             return true;
         }
 
@@ -156,7 +156,7 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
      */
     public function getDescription()
     {
-        if (!$this->trophyUseHtml) {
+        if ($this->trophyUseHtml === 0) {
             return \nl2br(StringUtil::encodeHTML(WCF::getLanguage()->get($this->description)), false);
         }
 

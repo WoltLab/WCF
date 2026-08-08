@@ -324,7 +324,7 @@ final class DirectoryUtil
         }
 
         // read cached value first
-        if ($this->size) {
+        if ($this->size !== 0) {
             return $this->size;
         }
 

@@ -23,7 +23,7 @@ class LabelImporter extends AbstractImporter
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         $data['groupID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.label.group', $data['groupID']);
-        if (!$data['groupID']) {
+        if ($data['groupID'] === null) {
             return 0;
         }
 

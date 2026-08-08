@@ -47,7 +47,7 @@ final class EmailValidationAction implements RequestHandlerInterface
                 ];
             }
 
-            if (User::getUserByEmail($bodyParameters['email'])->userID) {
+            if (!User::getUserByEmail($bodyParameters['email'])->isNil()) {
                 $result = [
                     'ok' => false,
                     'error' => 'notUnique',

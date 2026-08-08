@@ -46,7 +46,7 @@ abstract class CustomOption extends Option implements ITitledObject
         // Some options support empty values, such as "select", but the code checks for the
         // property `allowEmptyValue`, which is the inverse value of `required`.
         if ($name === 'allowEmptyValue') {
-            return !$this->required;
+            return $this->required === 0;
         }
 
         return parent::__get($name);
@@ -80,7 +80,7 @@ abstract class CustomOption extends Option implements ITitledObject
     #[\Override]
     public function isVisible()
     {
-        return !$this->isDisabled;
+        return $this->isDisabled === 0;
     }
 
     #[\Override]
@@ -222,7 +222,7 @@ abstract class CustomOption extends Option implements ITitledObject
      */
     public function canDelete()
     {
-        return !$this->originIsSystem;
+        return $this->originIsSystem === 0;
     }
 
     /**

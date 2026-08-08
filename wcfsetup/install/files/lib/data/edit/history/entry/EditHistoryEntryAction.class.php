@@ -29,7 +29,7 @@ class EditHistoryEntryAction extends AbstractDatabaseObjectAction
      */
     public function validateRevert()
     {
-        if (!\MODULE_EDIT_HISTORY) {
+        if (\MODULE_EDIT_HISTORY === 0) {
             throw new IllegalLinkException();
         }
 

@@ -118,7 +118,7 @@ class FileReader
         if ($this->options['enableRangeSupport']) {
             if (!empty($_SERVER['HTTP_RANGE'])) {
                 $regex = new Regex('^bytes=(?:(\d+)-(\d+)?|-(\d+))$');
-                if ($regex->match($_SERVER['HTTP_RANGE'])) {
+                if ($regex->match($_SERVER['HTTP_RANGE']) !== 0) {
                     $matches = $regex->getMatches();
                     $start = (isset($matches[1]) && $matches[1] !== '' ? \intval($matches[1]) : null);
                     $end = (isset($matches[2]) && $matches[2] !== '' ? \intval($matches[2]) : null);

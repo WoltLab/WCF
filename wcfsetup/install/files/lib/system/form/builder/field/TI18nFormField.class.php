@@ -364,7 +364,7 @@ trait TI18nFormField
      */
     protected function setStringValue(string $value)
     {
-        if (Regex::compile('^' . $this->getLanguageItemPattern() . '$')->match($value)) {
+        if (Regex::compile('^' . $this->getLanguageItemPattern() . '$')->match($value) !== 0) {
             $languageItemList = new LanguageItemList();
             $languageItemList->getConditionBuilder()->add('languageItem = ?', [$value]);
             $languageItemList->readObjects();

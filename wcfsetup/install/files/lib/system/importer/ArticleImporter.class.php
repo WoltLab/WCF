@@ -89,14 +89,14 @@ class ArticleImporter extends AbstractImporter
             $categoryID = ImportHandler::getInstance()
                 ->getNewID('com.woltlab.wcf.article.category', $data['categoryID']);
         }
-        if (!$categoryID) {
+        if ($categoryID === null || $categoryID === 0) {
             $categoryID = $this->getImportCategoryID();
         }
         $data['categoryID'] = $categoryID;
 
         // comments
         if (!isset($data['enableComments'])) {
-            $data['enableComments'] = \ARTICLE_ENABLE_COMMENTS_DEFAULT_VALUE ? 1 : 0;
+            $data['enableComments'] = \ARTICLE_ENABLE_COMMENTS_DEFAULT_VALUE !== 0 ? 1 : 0;
         }
 
         // save article
@@ -139,7 +139,7 @@ class ArticleImporter extends AbstractImporter
      */
     private function getImportCategoryID()
     {
-        if (!$this->importCategoryID) {
+        if ($this->importCategoryID === 0) {
             $objectTypeID = ObjectTypeCache::getInstance()
                 ->getObjectTypeIDByName('com.woltlab.wcf.category', 'com.woltlab.wcf.article.category');
 

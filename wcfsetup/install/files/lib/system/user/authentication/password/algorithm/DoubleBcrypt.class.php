@@ -57,7 +57,7 @@ final class DoubleBcrypt implements IPasswordAlgorithm
      */
     public static function isLegacyDoubleBcrypt(string $hash): bool
     {
-        return Regex::compile('^\$2[afxy]\$')->match($hash) ? true : false;
+        return Regex::compile('^\$2[afxy]\$')->match($hash) !== 0 ? true : false;
     }
 
     /**

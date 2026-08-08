@@ -30,14 +30,14 @@ abstract class AbstractAuthedPage extends AbstractPage
     {
         parent::readParameters();
 
-        if (\OFFLINE) {
+        if (\OFFLINE !== 0) {
             throw new IllegalLinkException();
         }
 
         // check security token
         $this->checkAccessToken();
 
-        if (\FORCE_LOGIN && WCF::getUser()->isGuest()) {
+        if (\FORCE_LOGIN !== 0 && WCF::getUser()->isGuest()) {
             throw new PermissionDeniedException();
         }
     }
@@ -65,10 +65,10 @@ abstract class AbstractAuthedPage extends AbstractPage
                 } else {
                     $user = new User($userID);
                     if (
-                        $user->userID && $user->accessToken !== '' && \hash_equals(
+                        $user->userID !== 0 && $user->accessToken !== '' && \hash_equals(
                             $user->accessToken,
                             $token
-                        ) && !$user->banned
+                        ) && $user->banned === 0
                     ) {
                         // token is valid and user is not banned -> change user
                         SessionHandler::getInstance()->changeUser($user, true);

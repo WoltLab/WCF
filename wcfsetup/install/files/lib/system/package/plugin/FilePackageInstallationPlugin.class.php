@@ -36,7 +36,7 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin im
         $abbreviation = 'wcf';
         if (isset($this->instruction['attributes']['application'])) {
             $abbreviation = $this->instruction['attributes']['application'];
-        } elseif ($this->installation->getPackage()->isApplication) {
+        } elseif ($this->installation->getPackage()->isApplication !== 0) {
             $abbreviation = Package::getAbbreviation($this->installation->getPackage()->package);
         }
 

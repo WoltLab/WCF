@@ -375,7 +375,7 @@ class WorkerCLICommand implements ICLICommand
                 echo "\n";
             }
         } finally {
-            if ($cursorOffset) {
+            if ($cursorOffset !== 0) {
                 // Move out of the progress bar area.
                 echo \str_repeat("\n", -$cursorOffset);
             }
@@ -463,7 +463,7 @@ class WorkerCLICommand implements ICLICommand
             $docComment = \explode("\n", StringUtil::unifyNewlines($reflection->getDocComment()));
             $comment = '';
             foreach ($docComment as $commentLine) {
-                if (Regex::compile('[a-z]', Regex::CASE_INSENSITIVE)->match($commentLine)) {
+                if (Regex::compile('[a-z]', Regex::CASE_INSENSITIVE)->match($commentLine) !== 0) {
                     $comment = Regex::compile('^[^a-z]+', Regex::CASE_INSENSITIVE)->replace($commentLine, '');
                     break;
                 }

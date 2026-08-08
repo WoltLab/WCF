@@ -29,7 +29,7 @@ class PruneIpAddressesCronjob extends AbstractCronjob
     #[\Override]
     public function execute(Cronjob $cronjob)
     {
-        if (!\PRUNE_IP_ADDRESS) {
+        if (\PRUNE_IP_ADDRESS === 0) {
             return;
         }
 

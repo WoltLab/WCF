@@ -41,7 +41,7 @@ final class PublishResponse
 
     public function __invoke(): void
     {
-        if ($this->response->isDisabled) {
+        if ($this->response->isDisabled !== 0) {
             (new CommentResponseEditor($this->response))->update([
                 'isDisabled' => 0,
             ]);
@@ -64,10 +64,10 @@ final class PublishResponse
     private function fireActivityEvent(): void
     {
         if (
-            $this->response->userID
+            $this->response->userID !== null
             && UserActivityEventHandler::getInstance()->getObjectTypeID(
                 $this->objectType->objectType . '.response.recentActivityEvent'
-            )
+            ) !== null
         ) {
             UserActivityEventHandler::getInstance()->fireEvent(
                 $this->objectType->objectType . '.response.recentActivityEvent',
@@ -82,7 +82,7 @@ final class PublishResponse
     private function fireNotificationEvent(): void
     {
         if (
-            !UserNotificationHandler::getInstance()->getObjectTypeID($this->objectType->objectType . '.notification')
+            UserNotificationHandler::getInstance()->getObjectTypeID($this->objectType->objectType . '.notification') === 0
             || (
                 !UserNotificationHandler::getInstance()->getEvent($this->objectType->objectType . '.response.notification', 'commentResponse')
                 && !UserNotificationHandler::getInstance()->getEvent($this->objectType->objectType . '.response.notification', 'commentResponseOwner')
@@ -126,7 +126,7 @@ final class PublishResponse
 
         // notify the container owner
         if (UserNotificationHandler::getInstance()->getEvent($this->objectType->objectType . '.response.notification', 'commentResponseOwner')) {
-            if ($userID && $userID !== $this->comment->userID && $userID !== $this->response->getUserID()) {
+            if ($userID !== 0 && $userID !== $this->comment->userID && $userID !== $this->response->getUserID()) {
                 UserNotificationHandler::getInstance()->fireEvent(
                     'commentResponseOwner',
                     $this->objectType->objectType . '.response.notification',

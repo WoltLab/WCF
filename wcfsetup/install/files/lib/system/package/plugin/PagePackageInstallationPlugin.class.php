@@ -81,7 +81,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
         $pages = [];
         foreach ($items as $item) {
             $page = Page::getPageByIdentifier($item['attributes']['identifier']);
-            if ($page !== null && $page->pageID && $page->packageID === $this->installation->getPackageID()) {
+            if ($page !== null && $page->pageID !== 0 && $page->packageID === $this->installation->getPackageID()) {
                 $pages[] = $page;
             }
         }
@@ -232,12 +232,12 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 
         // get application package id
         $applicationPackageID = 1;
-        if ($this->installation->getPackage()->isApplication) {
+        if ($this->installation->getPackage()->isApplication !== 0) {
             $applicationPackageID = $this->installation->getPackageID();
         }
         if (!empty($data['elements']['application'])) {
             $application = PackageCache::getInstance()->getPackageByIdentifier($data['elements']['application']);
-            if ($application === null || !$application->isApplication) {
+            if ($application === null || $application->isApplication === 0) {
                 throw new SystemException("Unknown application '" . $data['elements']['application'] . "' for page '{$identifier}");
             }
             $applicationPackageID = $application->packageID;

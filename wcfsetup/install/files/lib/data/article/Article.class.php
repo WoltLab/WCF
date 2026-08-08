@@ -93,7 +93,7 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
             $user = new UserProfile(WCF::getUser());
         }
 
-        if ($this->isDeleted) {
+        if ($this->isDeleted !== 0) {
             if (
                 !$user->getPermission('admin.content.article.canManageArticle')
                 && !($user->getPermission('admin.content.article.canManageOwnArticles') && $this->userID === $user->userID)
@@ -360,9 +360,9 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
      */
     public function canReact(): bool
     {
-        return \MODULE_LIKE
-            && \ARTICLE_ENABLE_LIKE
-            && WCF::getUser()->userID
+        return \MODULE_LIKE !== 0
+            && \ARTICLE_ENABLE_LIKE !== 0
+            && WCF::getUser()->userID !== 0
             && $this->userID !== WCF::getUser()->userID
             && WCF::getSession()->hasPermission('user.like.canLike');
     }

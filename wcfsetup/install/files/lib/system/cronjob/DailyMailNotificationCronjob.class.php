@@ -160,7 +160,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob
             if (!$user->isEmailConfirmed()) {
                 continue;
             }
-            if ($user->banned) {
+            if ($user->banned !== 0) {
                 continue;
             }
 

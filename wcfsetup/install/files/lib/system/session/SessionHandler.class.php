@@ -34,7 +34,7 @@ use wcf\util\UserUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @property-read   string $sessionID      unique textual identifier of the session
- * @property-read   int|null $userID         id of the user the session belongs to or `null` if the session belongs to a guest
+ * @property-read   int $userID         id of the user the session belongs to or `0` if the session belongs to a guest
  * @property-read   int|null $pageID         id of the latest page visited
  * @property-read   int|null $pageObjectID       id of the object the latest page visited belongs to
  * @property-read   int|null $parentPageID       id of the parent page of latest page visited
@@ -130,7 +130,7 @@ final class SessionHandler extends SingletonFactory
             case 'userID':
                 return $this->user->userID;
             case 'spiderIdentifier':
-                if ($this->userID) {
+                if ($this->userID !== 0) {
                     return null;
                 }
 
@@ -165,7 +165,7 @@ final class SessionHandler extends SingletonFactory
     #[\Override]
     protected function init(): void
     {
-        $this->isACP = (\class_exists(WCFACP::class, false) || !\PACKAGE_ID);
+        $this->isACP = (\class_exists(WCFACP::class, false) || \PACKAGE_ID === 0);
         $this->usersOnlyPermissions = UserGroupOptionCacheBuilder::getInstance()->getData([], 'usersOnlyOptions');
     }
 
@@ -222,7 +222,7 @@ final class SessionHandler extends SingletonFactory
         $cookieName = \COOKIE_PREFIX . "user_session";
 
         if (!empty($_COOKIE[$cookieName])) {
-            if (!\PACKAGE_ID) {
+            if (\PACKAGE_ID === 0) {
                 return [
                     'sessionId' => $_COOKIE[$cookieName],
                 ];
@@ -278,7 +278,7 @@ final class SessionHandler extends SingletonFactory
      */
     private function getCookieValue(): string
     {
-        if (!\PACKAGE_ID) {
+        if (\PACKAGE_ID === 0) {
             return $this->sessionID;
         }
 
@@ -412,7 +412,7 @@ final class SessionHandler extends SingletonFactory
             // is not able to create a valid `XSRF-TOKEN`, e.g. by setting the `XSRF-TOKEN` cookie to the static
             // value `1234`, possibly allowing later exploitation.
             if (
-                !\PACKAGE_ID
+                \PACKAGE_ID === 0
                 || CryptoUtil::getValueFromSignedString($_COOKIE['XSRF-TOKEN']) !== null
             ) {
                 $xsrfToken = $_COOKIE['XSRF-TOKEN'];
@@ -420,7 +420,7 @@ final class SessionHandler extends SingletonFactory
         }
 
         if (!$xsrfToken) {
-            if (\PACKAGE_ID) {
+            if (\PACKAGE_ID !== 0) {
                 $xsrfToken = CryptoUtil::createSignedString(\random_bytes(16));
             } else {
                 $xsrfToken = Hex::encode(\random_bytes(16));
@@ -795,7 +795,7 @@ final class SessionHandler extends SingletonFactory
         }
 
         // work-around for setup process (package wcf does not exist yet)
-        if (!\PACKAGE_ID) {
+        if (\PACKAGE_ID === 0) {
             $sql = "SELECT  groupID
                     FROM    wcf1_user_to_group
                     WHERE   userID = ?";
@@ -837,7 +837,7 @@ final class SessionHandler extends SingletonFactory
      */
     public function changeUserAfterMultifactorAuthentication(User $user): bool
     {
-        if ($user->multifactorActive) {
+        if ($user->multifactorActive !== 0) {
             $this->register(self::CHANGE_USER_AFTER_MULTIFACTOR_KEY, [
                 'userId' => $user->userID,
                 'expires' => \TIME_NOW + self::PENDING_USER_LIFETIME,
@@ -1052,7 +1052,7 @@ final class SessionHandler extends SingletonFactory
      */
     public function needsReauthentication(): bool
     {
-        if (!$this->getUser()->userID) {
+        if ($this->getUser()->userID === 0) {
             throw new \BadMethodCallException('The current user is a guest.');
         }
 
@@ -1087,7 +1087,7 @@ final class SessionHandler extends SingletonFactory
             // This allows for a continous access to the ACP and specifically the
             // developer tools within a single workday without needing to re-login
             // just because one spent 15 minutes within the IDE.
-            if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
+            if (\ENABLE_DEBUG_MODE !== 0 && \ENABLE_DEVELOPER_TOOLS !== 0) {
                 $softLimit = self::REAUTHENTICATION_HARD_LIMIT;
             }
         }
@@ -1145,7 +1145,7 @@ final class SessionHandler extends SingletonFactory
      */
     public function registerReauthentication(): void
     {
-        if (!$this->getUser()->userID) {
+        if ($this->getUser()->userID === 0) {
             throw new \BadMethodCallException('The current user is a guest.');
         }
 
@@ -1168,7 +1168,7 @@ final class SessionHandler extends SingletonFactory
      */
     public function clearReauthentication(): void
     {
-        if (!$this->getUser()->userID) {
+        if ($this->getUser()->userID === 0) {
             throw new \BadMethodCallException('The current user is a guest.');
         }
 
@@ -1289,7 +1289,7 @@ final class SessionHandler extends SingletonFactory
      */
     public function deleteIfNew(): void
     {
-        if ($this->isFirstVisit() && !$this->getUser()->userID) {
+        if ($this->isFirstVisit() && $this->getUser()->userID === 0) {
             $this->delete();
         }
     }

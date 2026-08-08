@@ -95,7 +95,7 @@ final class UserFollowAction implements RequestHandlerInterface
 
     private function assertTargetCanBeFollowed(User $target): void
     {
-        if (!$target->userID) {
+        if ($target->isNil()) {
             throw new IllegalLinkException();
         }
 

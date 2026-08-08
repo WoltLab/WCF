@@ -303,7 +303,7 @@ final class WCFSetup extends WCF
      */
     protected function selectSetupLanguage(): ResponseInterface
     {
-        if (self::$developerMode) {
+        if (self::$developerMode !== 0) {
             return $this->gotoNextStep('showLicense');
         }
 
@@ -324,7 +324,7 @@ final class WCFSetup extends WCF
      */
     protected function showLicense(): ResponseInterface
     {
-        if (self::$developerMode) {
+        if (self::$developerMode !== 0) {
             return $this->gotoNextStep('showSystemRequirements');
         }
 
@@ -450,14 +450,14 @@ final class WCFSetup extends WCF
     {
         $attemptConnection = isset($_POST['send']);
 
-        if (self::$developerMode && isset($_ENV['WCFSETUP_DBHOST'])) {
+        if (self::$developerMode !== 0 && isset($_ENV['WCFSETUP_DBHOST'])) {
             $dbHost = $_ENV['WCFSETUP_DBHOST'];
             $dbUser = $_ENV['WCFSETUP_DBUSER'];
             $dbPassword = $_ENV['WCFSETUP_DBPASSWORD'];
             $dbName = $_ENV['WCFSETUP_DBNAME'];
 
             $attemptConnection = true;
-        } elseif (self::$developerMode && ($config = DevtoolsSetup::getInstance()->getDatabaseConfig()) !== null) {
+        } elseif (self::$developerMode !== 0 && ($config = DevtoolsSetup::getInstance()->getDatabaseConfig()) !== null) {
             $dbHost = $config['host'];
             $dbUser = $config['username'];
             $dbPassword = $config['password'];
@@ -506,7 +506,7 @@ final class WCFSetup extends WCF
                         $dbName,
                         $dbPort,
                         true,
-                        !!(self::$developerMode)
+                        self::$developerMode !== 0
                     );
                 } catch (DatabaseException $e) {
                     switch ($e->getPrevious()->getCode()) {
@@ -854,7 +854,7 @@ final class WCFSetup extends WCF
         $email = $confirmEmail = '';
         $password = $confirmPassword = '';
 
-        if (isset($_POST['send']) || self::$developerMode) {
+        if (isset($_POST['send']) || self::$developerMode !== 0) {
             if (isset($_POST['send'])) {
                 if (isset($_POST['username'])) {
                     $username = StringUtil::trim($_POST['username']);
@@ -1070,7 +1070,7 @@ final class WCFSetup extends WCF
 
         // determine the (randomized) cookie prefix
         $useRandomCookiePrefix = true;
-        if (self::$developerMode && DevtoolsSetup::getInstance()->forceStaticCookiePrefix()) {
+        if (self::$developerMode !== 0 && DevtoolsSetup::getInstance()->forceStaticCookiePrefix()) {
             $useRandomCookiePrefix = false;
         }
 

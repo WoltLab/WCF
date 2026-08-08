@@ -159,7 +159,7 @@ class BoxHandler extends SingletonFactory
         if ($forDisplay) {
             $boxList->getConditionBuilder()->add("box.isDisabled = ?", [0]);
         }
-        if ($pageID) {
+        if ($pageID !== 0) {
             $boxList->getConditionBuilder()->add(
                 '
                 (
@@ -190,7 +190,7 @@ class BoxHandler extends SingletonFactory
         $boxList->readObjects();
 
         $showOrders = [];
-        if ($pageID) {
+        if ($pageID !== 0) {
             $sql = "SELECT  boxID, showOrder
                     FROM    wcf1_page_box_order
                     WHERE   pageID = ?";

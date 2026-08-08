@@ -63,7 +63,7 @@ class EmailLogEntry extends DatabaseObject
      */
     public function getRecipient(): ?User
     {
-        if (!$this->recipientID) {
+        if ($this->recipientID === null) {
             return null;
         }
 

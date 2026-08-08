@@ -24,7 +24,7 @@ class YouTubeBBCodeMediaProvider implements IBBCodeMediaProvider
         $start = $this->timeToSeconds($startParameter);
         $end = $this->timeToSeconds($endParameter);
 
-        return '<div class="messageVideoContainer"><iframe src="https://www.youtube-nocookie.com/embed/' . $matches['ID'] . '?wmode=transparent' . ($start ? '&amp;start=' . $start : '') . ($end ? '&amp;end=' . $end : '') . '&amp;rel=0" width="560" height="315" allowfullscreen referrerpolicy="strict-origin"></iframe></div>';
+        return '<div class="messageVideoContainer"><iframe src="https://www.youtube-nocookie.com/embed/' . $matches['ID'] . '?wmode=transparent' . ($start !== 0 ? '&amp;start=' . $start : '') . ($end !== 0 ? '&amp;end=' . $end : '') . '&amp;rel=0" width="560" height="315" allowfullscreen referrerpolicy="strict-origin"></iframe></div>';
     }
 
     /**

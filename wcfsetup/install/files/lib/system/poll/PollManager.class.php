@@ -120,7 +120,7 @@ class PollManager extends SingletonFactory
         $this->pollID = $pollID;
 
         // load poll
-        if ($this->pollID) {
+        if ($this->pollID !== null && $this->pollID !== 0) {
             $this->poll = new Poll($this->pollID);
             if ($this->poll->isNil()) {
                 $this->poll = null;
@@ -463,7 +463,7 @@ class PollManager extends SingletonFactory
      */
     public function getRelatedObject(Poll $poll)
     {
-        if ($poll->objectID) {
+        if ($poll->objectID !== 0) {
             return $this->getHandler($poll->objectTypeID)->getRelatedObject($poll);
         }
 

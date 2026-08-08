@@ -125,19 +125,19 @@ class UserStateCondition extends AbstractSingleFieldCondition implements
     {
         $data = [];
 
-        if ($this->userIsBanned) {
+        if ($this->userIsBanned !== 0) {
             $data['userIsBanned'] = 1;
-        } elseif ($this->userIsNotBanned) {
+        } elseif ($this->userIsNotBanned !== 0) {
             $data['userIsBanned'] = 0;
         }
-        if ($this->userIsEnabled) {
+        if ($this->userIsEnabled !== 0) {
             $data['userIsEnabled'] = 1;
-        } elseif ($this->userIsDisabled) {
+        } elseif ($this->userIsDisabled !== 0) {
             $data['userIsEnabled'] = 0;
         }
-        if ($this->userIsEmailConfirmed) {
+        if ($this->userIsEmailConfirmed !== 0) {
             $data['userIsEmailConfirmed'] = 1;
-        } elseif ($this->userIsNotEmailConfirmed) {
+        } elseif ($this->userIsNotEmailConfirmed !== 0) {
             $data['userIsEmailConfirmed'] = 0;
         }
 
@@ -221,42 +221,42 @@ HTML;
     {
         /** @var ?int $userIsBanned */
         $userIsBanned = $condition->userIsBanned;
-        if ($condition->userIsBanned !== null) {
+        if ($userIsBanned !== null) {
             $this->userIsBanned = $userIsBanned;
-            $this->userIsNotBanned = $userIsBanned ? 0 : 1;
+            $this->userIsNotBanned = $userIsBanned !== 0 ? 0 : 1;
         }
 
         /** @var ?int $userIsEnabled */
         $userIsEnabled = $condition->userIsEnabled;
-        if ($condition->userIsEnabled !== null) {
+        if ($userIsEnabled !== null) {
             $this->userIsEnabled = $userIsEnabled;
-            $this->userIsDisabled = $userIsEnabled ? 0 : 1;
+            $this->userIsDisabled = $userIsEnabled !== 0 ? 0 : 1;
         }
 
         /** @var ?int $userIsEmailConfirmed */
         $userIsEmailConfirmed = $condition->userIsEmailConfirmed;
-        if ($condition->userIsEmailConfirmed !== null) {
+        if ($userIsEmailConfirmed !== null) {
             $this->userIsEmailConfirmed = $userIsEmailConfirmed;
-            $this->userIsNotEmailConfirmed = $userIsEmailConfirmed ? 0 : 1;
+            $this->userIsNotEmailConfirmed = $userIsEmailConfirmed !== 0 ? 0 : 1;
         }
     }
 
     #[\Override]
     public function validate()
     {
-        if ($this->userIsBanned && $this->userIsNotBanned) {
+        if ($this->userIsBanned !== 0 && $this->userIsNotBanned !== 0) {
             $this->errorMessage = 'wcf.user.condition.state.isBanned.error.conflict';
 
             throw new UserInputException('userIsBanned', 'conflict');
         }
 
-        if ($this->userIsDisabled && $this->userIsEnabled) {
+        if ($this->userIsDisabled !== 0 && $this->userIsEnabled !== 0) {
             $this->errorMessage = 'wcf.user.condition.state.isEnabled.error.conflict';
 
             throw new UserInputException('userIsEnabled', 'conflict');
         }
 
-        if ($this->userIsEmailConfirmed && $this->userIsNotEmailConfirmed) {
+        if ($this->userIsEmailConfirmed !== 0 && $this->userIsNotEmailConfirmed !== 0) {
             $this->errorMessage = 'wcf.user.condition.state.isEmailConfirmed.error.conflict';
 
             throw new UserInputException('userIsEmailConfirmed', 'conflict');

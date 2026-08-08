@@ -292,7 +292,7 @@ class Diff implements \Stringable
                             $plus++;
                             break;
                         case self::SAME:
-                            if ($inContext) {
+                            if ($inContext !== 0) {
                                 // decrement remaining context
                                 $inContext--;
                             } else {

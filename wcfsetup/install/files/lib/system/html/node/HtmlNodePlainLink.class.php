@@ -115,7 +115,7 @@ class HtmlNodePlainLink
      */
     public function detectObjectID(Regex $regex)
     {
-        if ($regex->match($this->href, true)) {
+        if ($regex->match($this->href, true) !== 0) {
             $this->objectID = $regex->getMatches()[2][0];
         }
 
@@ -165,7 +165,7 @@ class HtmlNodePlainLink
             \base64_encode(\json_encode([($overrideObjectID !== null ? $overrideObjectID : $this->objectID)], \JSON_THROW_ON_ERROR))
         );
 
-        if ($bbcode->isBlockElement) {
+        if ($bbcode->isBlockElement !== 0) {
             if (!$this->isStandalone()) {
                 throw new \LogicException('Cannot inject a block bbcode in an inline context.');
             }

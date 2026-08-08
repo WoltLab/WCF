@@ -96,7 +96,7 @@ class ViewableUserActivityEventList extends UserActivityEventList
     {
         $lastEventTime = 0;
         foreach ($this->objects as $event) {
-            if (!$lastEventTime) {
+            if ($lastEventTime === 0) {
                 $lastEventTime = $event->time;
             }
 

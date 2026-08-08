@@ -24,7 +24,7 @@ class UserRankImporter extends AbstractImporter
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         $data['groupID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user.group', $data['groupID']);
-        if (!$data['groupID']) {
+        if ($data['groupID'] === null) {
             $data['groupID'] = UserGroup::getGroupByType(UserGroup::USERS)->groupID;
         }
 

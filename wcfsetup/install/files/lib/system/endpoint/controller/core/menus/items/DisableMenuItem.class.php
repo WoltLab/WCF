@@ -30,7 +30,7 @@ final class DisableMenuItem implements IController
 
         $this->assertMenuItemCanBeDisabled($menuItem);
 
-        if (!$menuItem->isDisabled) {
+        if ($menuItem->isDisabled === 0) {
             new \wcf\command\menu\item\DisableMenuItem($menuItem)();
         }
 

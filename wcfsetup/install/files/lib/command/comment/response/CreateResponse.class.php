@@ -58,7 +58,7 @@ final class CreateResponse
             $response = new CommentResponse($response->getObjectID());
         }
 
-        if (!$response->isDisabled) {
+        if ($response->isDisabled === 0) {
             new PublishResponse($response)();
         } else {
             ModerationQueueActivationManager::getInstance()->addModeratedContent(

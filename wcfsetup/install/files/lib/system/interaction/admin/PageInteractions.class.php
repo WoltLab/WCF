@@ -27,7 +27,7 @@ final class PageInteractions extends AbstractInteractionProvider
             new LinkableObjectInteraction(
                 'view',
                 'wcf.acp.page.button.viewPage',
-                static fn(Page $page) => !$page->requireObjectID
+                static fn(Page $page) => $page->requireObjectID === 0
             ),
             new LinkInteraction("order-boxes", PageBoxOrderPage::class, "wcf.acp.page.button.boxOrder"),
             new DeleteInteraction('core/pages/%s', static fn(Page $page) => $page->canDelete()),

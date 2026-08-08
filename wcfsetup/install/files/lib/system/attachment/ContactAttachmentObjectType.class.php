@@ -44,7 +44,7 @@ class ContactAttachmentObjectType extends AbstractAttachmentObjectType
     #[\Override]
     public function canDownload(int $objectID)
     {
-        if (!\CONTACT_FORM_ENABLE_ATTACHMENTS) {
+        if (\CONTACT_FORM_ENABLE_ATTACHMENTS === 0) {
             return false;
         }
 
@@ -65,7 +65,7 @@ class ContactAttachmentObjectType extends AbstractAttachmentObjectType
     #[\Override]
     public function canUpload(int $objectID, int $parentObjectID = 0)
     {
-        if (!\CONTACT_FORM_ENABLE_ATTACHMENTS) {
+        if (\CONTACT_FORM_ENABLE_ATTACHMENTS === 0) {
             return false;
         }
 

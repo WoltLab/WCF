@@ -64,7 +64,7 @@ final class AttachmentGridView extends AbstractGridView
 
                             $isImage = $row->isImage;
                             $link = StringUtil::encodeHTML($row->getLink());
-                            $fancyBox = $isImage ? ' data-type="image" data-fancybox="attachments" data-caption="' . StringUtil::encodeHTML($row->filename) . '"' : '';
+                            $fancyBox = $isImage !== 0 ? ' data-type="image" data-fancybox="attachments" data-caption="' . StringUtil::encodeHTML($row->filename) . '"' : '';
                             if ($row->tinyThumbnailType !== '') {
                                 $thumbnailLink = \sprintf(
                                     '<img src="%s" class="attachmentTinyThumbnail" alt="">',
@@ -126,7 +126,7 @@ final class AttachmentGridView extends AbstractGridView
                         {
                             \assert($row instanceof AdministrativeAttachment);
 
-                            if (!$row->userID) {
+                            if ($row->userID === null) {
                                 return WCF::getLanguage()->get('wcf.user.guest');
                             }
 

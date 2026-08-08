@@ -84,7 +84,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
     {
         $lastResponseTime = 0;
         foreach ($this->responses as $response) {
-            if (!$lastResponseTime) {
+            if ($lastResponseTime === 0) {
                 $lastResponseTime = $response->time;
             }
 
@@ -127,7 +127,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
     public function getUserProfile()
     {
         if ($this->userProfile === null) {
-            if ($this->userID) {
+            if ($this->userID !== null) {
                 $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
             } else {
                 $this->userProfile = UserProfile::getGuestUserProfile($this->username);

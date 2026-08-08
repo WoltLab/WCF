@@ -44,7 +44,7 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm
             );
             $this->formObject = new UserOptionCategory($queryParameters['id']);
 
-            if (!$this->formObject->getObjectID()) {
+            if ($this->formObject->getObjectID() === 0) {
                 throw new IllegalLinkException();
             }
         } catch (MappingError) {

@@ -73,7 +73,7 @@ class UnfurlUrlEditor extends DatabaseObjectEditor
         } catch (\Throwable $e) {
             logThrowable($e);
             // Ignore any errors trying to save the file unless in debug mode.
-            if (\ENABLE_DEBUG_MODE) {
+            if (\ENABLE_DEBUG_MODE !== 0) {
                 throw $e;
             }
 

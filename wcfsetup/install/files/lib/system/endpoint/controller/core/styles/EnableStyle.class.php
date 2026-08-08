@@ -29,7 +29,7 @@ final class EnableStyle implements IController
 
         $this->assertStyleCanBeEnabled();
 
-        if ($style->isDisabled) {
+        if ($style->isDisabled !== 0) {
             new \wcf\command\style\EnableStyle($style)();
         }
 

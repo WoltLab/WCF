@@ -23,19 +23,19 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType
     #[\Override]
     public function canDownload(int $objectID)
     {
-        if (!\MODULE_USER_SIGNATURE) {
+        if (\MODULE_USER_SIGNATURE === 0) {
             return false;
         }
-        if ($objectID) {
+        if ($objectID !== 0) {
             $userProfile = UserProfileRuntimeCache::getInstance()->getObject($objectID);
 
             if ($this->canEditUser($userProfile)) {
                 return true;
             }
-            if ($userProfile->disableSignature) {
+            if ($userProfile->disableSignature !== 0) {
                 return false;
             }
-            if ($userProfile->banned) {
+            if ($userProfile->banned !== 0) {
                 return false;
             }
 
@@ -54,11 +54,11 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType
     #[\Override]
     public function canUpload(int $objectID, int $parentObjectID = 0)
     {
-        if (!\MODULE_USER_SIGNATURE) {
+        if (\MODULE_USER_SIGNATURE === 0) {
             return false;
         }
 
-        if (!$objectID) {
+        if ($objectID === 0) {
             return $this->canAddUser();
         }
         $userProfile = UserProfileRuntimeCache::getInstance()->getObject($objectID);
@@ -70,7 +70,7 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType
             return false;
         }
 
-        if ($userProfile->disableSignature) {
+        if ($userProfile->disableSignature !== 0) {
             return false;
         }
         if (!$userProfile->getPermission('user.signature.attachment.canUpload')) {

@@ -30,7 +30,7 @@ final class EnableSubscription implements IController
 
         $this->assertSubscriptionCanBeEnabled();
 
-        if ($subscription->isDisabled) {
+        if ($subscription->isDisabled !== 0) {
             new EnablePaidSubscription($subscription)();
         }
 

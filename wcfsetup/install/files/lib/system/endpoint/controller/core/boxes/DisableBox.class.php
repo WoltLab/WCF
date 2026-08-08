@@ -29,7 +29,7 @@ final class DisableBox implements IController
 
         $this->assertBoxCanBeDisabled();
 
-        if (!$box->isDisabled) {
+        if ($box->isDisabled === 0) {
             new \wcf\command\box\DisableBox($box)();
         }
 

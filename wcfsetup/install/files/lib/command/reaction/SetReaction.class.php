@@ -50,7 +50,7 @@ final class SetReaction
                 $this->user->userID
             );
 
-            if (!$originalLike->likeID) {
+            if ($originalLike->likeID === 0) {
                 // new reaction
                 $like = LikeEditor::create([
                     'objectID' => $this->likeable->getObjectID(),
@@ -111,7 +111,7 @@ final class SetReaction
      */
     private function updateUserCounter(ILikeObject $likeable, Like $like): void
     {
-        if (!$likeable->getUserID()) {
+        if ($likeable->getUserID() === null) {
             return;
         }
 
@@ -131,14 +131,14 @@ final class SetReaction
         ReactionType $reactionType,
         Like $originalLike,
     ): void {
-        if (UserActivityEventHandler::getInstance()->getObjectTypeID($likeable->getObjectType()->objectType . '.recentActivityEvent')) {
+        if (UserActivityEventHandler::getInstance()->getObjectTypeID($likeable->getObjectType()->objectType . '.recentActivityEvent') !== null) {
             $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
                 'com.woltlab.wcf.user.recentActivityEvent',
                 $likeable->getObjectType()->objectType . '.recentActivityEvent'
             );
 
             if ($objectType->supportsReactions) {
-                if ($originalLike->likeID) {
+                if (!$originalLike->isNil()) {
                     UserActivityEventHandler::getInstance()->removeEvent(
                         $likeable->getObjectType()->objectType . '.recentActivityEvent',
                         $likeable->getObjectID(),

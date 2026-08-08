@@ -313,7 +313,7 @@ class PackageInstallationSQLParser extends SQLParser
     protected function executeAlterColumnStatement(string $tableName, string $oldColumnName, string $newColumnName, array $newColumnData)
     {
         if ($this->test) {
-            if ($ownerPackageID = $this->getColumnOwnerID($tableName, $oldColumnName)) {
+            if (($ownerPackageID = $this->getColumnOwnerID($tableName, $oldColumnName)) !== null) {
                 if ($ownerPackageID !== $this->package->packageID) {
                     throw new SystemException("Cannot alter column '" . $oldColumnName . "'. A package can only change own columns.");
                 }
@@ -378,7 +378,7 @@ class PackageInstallationSQLParser extends SQLParser
     protected function executeDropColumnStatement(string $tableName, string $columnName)
     {
         if ($this->test) {
-            if ($ownerPackageID = $this->getColumnOwnerID($tableName, $columnName)) {
+            if (($ownerPackageID = $this->getColumnOwnerID($tableName, $columnName)) !== null) {
                 if ($ownerPackageID !== $this->package->packageID) {
                     throw new SystemException("Cannot drop column '" . $columnName . "'. A package can only drop own columns.");
                 }
@@ -401,7 +401,7 @@ class PackageInstallationSQLParser extends SQLParser
     protected function executeDropIndexStatement(string $tableName, string $indexName)
     {
         if ($this->test) {
-            if ($ownerPackageID = $this->getIndexOwnerID($tableName, $indexName)) {
+            if (($ownerPackageID = $this->getIndexOwnerID($tableName, $indexName)) !== 0) {
                 if ($ownerPackageID !== $this->package->packageID) {
                     throw new SystemException("Cannot drop index '" . $indexName . "'. A package can only drop own indices.");
                 }
@@ -424,7 +424,7 @@ class PackageInstallationSQLParser extends SQLParser
     protected function executeDropPrimaryKeyStatement(string $tableName)
     {
         if ($this->test) {
-            if ($ownerPackageID = $this->getIndexOwnerID($tableName, '')) {
+            if (($ownerPackageID = $this->getIndexOwnerID($tableName, '')) !== 0) {
                 if ($ownerPackageID !== $this->package->packageID) {
                     throw new SystemException("Cannot drop primary key from '" . $tableName . "'. A package can only drop own indices.");
                 }
@@ -442,7 +442,7 @@ class PackageInstallationSQLParser extends SQLParser
     protected function executeDropForeignKeyStatement(string $tableName, string $indexName)
     {
         if ($this->test) {
-            if ($ownerPackageID = $this->getIndexOwnerID($tableName, $indexName)) {
+            if (($ownerPackageID = $this->getIndexOwnerID($tableName, $indexName)) !== 0) {
                 if ($ownerPackageID !== $this->package->packageID) {
                     throw new SystemException("Cannot drop index '" . $indexName . "'. A package can only drop own indices.");
                 }

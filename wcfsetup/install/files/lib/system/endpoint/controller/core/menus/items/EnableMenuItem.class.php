@@ -30,7 +30,7 @@ final class EnableMenuItem implements IController
 
         $this->assertMenuItemCanBeEnabled($menuItem);
 
-        if ($menuItem->isDisabled) {
+        if ($menuItem->isDisabled !== 0) {
             new \wcf\command\menu\item\EnableMenuItem($menuItem)();
         }
 

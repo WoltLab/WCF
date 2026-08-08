@@ -112,9 +112,9 @@ class Language extends DatabaseObject implements \Stringable
 
         if (
             \defined('ENABLE_DEVELOPER_TOOLS')
-            && \ENABLE_DEVELOPER_TOOLS
+            && \ENABLE_DEVELOPER_TOOLS !== 0
             && \defined('LOG_MISSING_LANGUAGE_ITEMS')
-            && \LOG_MISSING_LANGUAGE_ITEMS
+            && \LOG_MISSING_LANGUAGE_ITEMS !== 0
             && \preg_match('~^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$~', $item)
         ) {
             (new DevtoolsMissingLanguageItemAction([], 'logLanguageItem', [
@@ -148,9 +148,9 @@ class Language extends DatabaseObject implements \Stringable
 
         if (
             \defined('ENABLE_DEVELOPER_TOOLS')
-            && \ENABLE_DEVELOPER_TOOLS
+            && \ENABLE_DEVELOPER_TOOLS !== 0
             && \defined('LOG_MISSING_LANGUAGE_ITEMS')
-            && \LOG_MISSING_LANGUAGE_ITEMS
+            && \LOG_MISSING_LANGUAGE_ITEMS !== 0
             && $staticItem === $item
             && \preg_match('~^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$~', $item)
         ) {
@@ -270,7 +270,7 @@ class Language extends DatabaseObject implements \Stringable
      */
     public function isDeletable(): bool
     {
-        return !$this->isDefault && $this->languageCode !== 'de' && $this->languageCode !== 'en';
+        return $this->isDefault === 0 && $this->languageCode !== 'de' && $this->languageCode !== 'en';
     }
 
     /**

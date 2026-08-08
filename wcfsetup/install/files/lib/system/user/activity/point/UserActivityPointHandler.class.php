@@ -61,7 +61,7 @@ class UserActivityPointHandler extends SingletonFactory
         if ($userID === null) {
             $userID = WCF::getUser()->userID;
         }
-        if (!$userID) {
+        if ($userID === 0) {
             throw new SystemException("Cannot fire user activity point events for guests");
         }
 

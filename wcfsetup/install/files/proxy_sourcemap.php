@@ -20,7 +20,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 \set_error_handler(static function ($severity, $message, $file, $line) {
-    if (!(\error_reporting() & $severity)) {
+    if ((\error_reporting() & $severity) === 0) {
         return true;
     }
 

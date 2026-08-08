@@ -194,7 +194,7 @@ class UserAddForm extends UserOptionListForm
             if (!empty($_POST['disableSignature'])) {
                 $this->disableSignature = 1;
             }
-            if ($this->disableSignature && !isset($_POST['disableSignatureNeverExpires'])) {
+            if ($this->disableSignature !== 0 && !isset($_POST['disableSignatureNeverExpires'])) {
                 if (isset($_POST['disableSignatureExpires'])) {
                     $this->disableSignatureExpires = @\intval(@\strtotime(StringUtil::trim($_POST['disableSignatureExpires'])));
                 }
@@ -253,11 +253,11 @@ class UserAddForm extends UserOptionListForm
         // validate visible languages
         foreach ($this->visibleLanguages as $key => $visibleLanguage) {
             $language = LanguageFactory::getInstance()->getLanguage($visibleLanguage);
-            if ($language === null || !$language->hasContent) {
+            if ($language === null || $language->hasContent === 0) {
                 unset($this->visibleLanguages[$key]);
             }
         }
-        if (empty($this->visibleLanguages) && ($language = LanguageFactory::getInstance()->getLanguage($this->languageID)) && $language->hasContent) {
+        if (empty($this->visibleLanguages) && ($language = LanguageFactory::getInstance()->getLanguage($this->languageID)) && $language->hasContent !== 0) {
             $this->visibleLanguages[] = $this->languageID;
         }
 
@@ -371,7 +371,7 @@ class UserAddForm extends UserOptionListForm
         }
 
         // Check if username exists already.
-        if (User::getUserByUsername($username)->userID) {
+        if (User::getUserByUsername($username)->userID !== 0) {
             throw new UserInputException('username', 'notUnique');
         }
     }
@@ -392,7 +392,7 @@ class UserAddForm extends UserOptionListForm
         }
 
         // Check if email exists already.
-        if (User::getUserByEmail($email)->userID) {
+        if (User::getUserByEmail($email)->userID !== 0) {
             throw new UserInputException('email', 'notUnique');
         }
     }
@@ -422,7 +422,7 @@ class UserAddForm extends UserOptionListForm
 
         parent::readData();
         // get default smilies
-        if (\MODULE_SMILEY) {
+        if (\MODULE_SMILEY !== 0) {
             $this->smileyCategories = SmileyCache::getInstance()->getVisibleCategories();
 
             $firstCategory = \reset($this->smileyCategories);

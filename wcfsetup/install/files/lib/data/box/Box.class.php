@@ -197,7 +197,7 @@ class Box extends DatabaseObject
      */
     public function canDelete()
     {
-        if (WCF::getSession()->hasPermission('admin.content.cms.canManageBox') && !$this->originIsSystem) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canManageBox') && $this->originIsSystem === 0) {
             return true;
         }
 
@@ -246,7 +246,7 @@ class Box extends DatabaseObject
     public function getBoxContentTitle()
     {
         $this->getBoxContents();
-        if ($this->isMultilingual || $this->boxType === 'system') {
+        if ($this->isMultilingual !== 0 || $this->boxType === 'system') {
             if ($this->boxType === 'system') {
                 $controllerTitle = $this->getController()->getTitle();
                 if ($controllerTitle !== null && $controllerTitle !== '') {
@@ -291,7 +291,7 @@ class Box extends DatabaseObject
 
         $this->getBoxContents();
         $boxContent = null;
-        if ($this->isMultilingual) {
+        if ($this->isMultilingual !== 0) {
             if (isset($this->boxContents[WCF::getLanguage()->languageID])) {
                 $boxContent = $this->boxContents[WCF::getLanguage()->languageID];
             }
@@ -345,7 +345,7 @@ class Box extends DatabaseObject
 
         $this->getBoxContents();
         $content = '';
-        if ($this->isMultilingual) {
+        if ($this->isMultilingual !== 0) {
             if (isset($this->boxContents[WCF::getLanguage()->languageID])) {
                 $content = $this->boxContents[WCF::getLanguage()->languageID]->content;
             }
@@ -365,7 +365,7 @@ class Box extends DatabaseObject
      */
     public function getController()
     {
-        if ($this->controller === null && $this->objectTypeID) {
+        if ($this->controller === null && $this->objectTypeID !== null) {
             $className = ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID)->className;
 
             $this->controller = new $className();
@@ -405,11 +405,11 @@ class Box extends DatabaseObject
                 $this->image = $this->getController()->getImage();
             } else {
                 $this->getBoxContents();
-                if ($this->isMultilingual) {
-                    if (isset($this->boxContents[WCF::getLanguage()->languageID]) && $this->boxContents[WCF::getLanguage()->languageID]->imageID) {
+                if ($this->isMultilingual !== 0) {
+                    if (isset($this->boxContents[WCF::getLanguage()->languageID]) && $this->boxContents[WCF::getLanguage()->languageID]->imageID !== null) {
                         $this->image = $this->boxContents[WCF::getLanguage()->languageID]->getImage();
                     }
-                } elseif (isset($this->boxContents[0]) && $this->boxContents[0]->imageID) {
+                } elseif (isset($this->boxContents[0]) && $this->boxContents[0]->imageID !== null) {
                     $this->image = $this->boxContents[0]->getImage();
                 }
             }
@@ -433,14 +433,14 @@ class Box extends DatabaseObject
             return '';
         }
 
-        if ($this->linkPageObjectID) {
+        if ($this->linkPageObjectID !== 0) {
             $handler = $this->getLinkPageHandler();
             if ($handler && $handler instanceof ILookupPageHandler) {
                 return $handler->getLink($this->linkPageObjectID);
             }
         }
 
-        if ($this->linkPageID) {
+        if ($this->linkPageID !== null) {
             return $this->getLinkPage()->getLink();
         } else {
             return $this->externalURL;
@@ -460,7 +460,7 @@ class Box extends DatabaseObject
             return false;
         }
 
-        return $this->linkPageID || !empty($this->externalURL);
+        return $this->linkPageID !== null || !empty($this->externalURL);
     }
 
     /**
@@ -492,7 +492,7 @@ class Box extends DatabaseObject
      */
     public function getLinkPage()
     {
-        if ($this->linkPage === null && $this->linkPageID) {
+        if ($this->linkPage === null && $this->linkPageID !== null) {
             $this->linkPage = PageCache::getInstance()->getPage($this->linkPageID);
         }
 
@@ -507,7 +507,7 @@ class Box extends DatabaseObject
     public function getTplName(?int $languageID = null)
     {
         if ($this->boxType === 'tpl') {
-            if ($this->isMultilingual) {
+            if ($this->isMultilingual !== 0) {
                 return '__cms_box_' . $this->boxID . '_' . $languageID;
             }
 
@@ -607,7 +607,7 @@ class Box extends DatabaseObject
     {
         $canAccess = SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.box', $this->boxID);
 
-        if ($this->invertPermissions) {
+        if ($this->invertPermissions !== 0) {
             $canAccess = !$canAccess;
         }
 

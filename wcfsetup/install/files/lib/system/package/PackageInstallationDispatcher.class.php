@@ -180,7 +180,7 @@ class PackageInstallationDispatcher
                 // save localized package infos
                 $this->saveLocalizedPackageInfos();
 
-                if (!\PACKAGE_ID) {
+                if (\PACKAGE_ID === 0) {
                     $this->finalizeWcfSetup();
                 }
 
@@ -539,7 +539,7 @@ class PackageInstallationDispatcher
         unset($nodeData['applicationDirectory']);
 
         // update package
-        if ($this->queue->packageID) {
+        if ($this->queue->packageID !== null) {
             $packageEditor = new PackageEditor(new Package($this->queue->packageID));
             unset($nodeData['installDate']);
             $packageEditor->update($nodeData);
@@ -567,7 +567,7 @@ class PackageInstallationDispatcher
             $this->queue = new PackageInstallationQueue($this->queue->queueID);
             $this->package = null;
 
-            if ($package->isApplication) {
+            if ($package->isApplication !== 0) {
                 $host = \str_replace(RouteHandler::getProtocol(), '', RouteHandler::getHost());
                 $path = RouteHandler::getPath(['acp']);
 
@@ -621,7 +621,7 @@ class PackageInstallationDispatcher
         }
 
         if (
-            $this->getPackage()->isApplication
+            $this->getPackage()->isApplication !== 0
             && $this->getPackage()->package !== 'com.woltlab.wcf'
             && $this->getAction() === 'install'
             && empty($this->getPackage()->packageDir)
@@ -646,7 +646,7 @@ class PackageInstallationDispatcher
      */
     protected function createPackage(array $packageData)
     {
-        if (!\PACKAGE_ID && $packageData['package'] === 'com.woltlab.wcf') {
+        if (\PACKAGE_ID === 0 && $packageData['package'] === 'com.woltlab.wcf') {
             $packageEditor = new PackageEditor(new Package(1));
             $packageEditor->update($packageData);
 
@@ -676,7 +676,7 @@ class PackageInstallationDispatcher
         $languageList->readObjects();
 
         // workaround for WCFSetup
-        if (!\PACKAGE_ID) {
+        if (\PACKAGE_ID === 0) {
             $sql = "SELECT  *
                     FROM    wcf1_language_category
                     WHERE   languageCategory = ?";
@@ -919,7 +919,7 @@ class PackageInstallationDispatcher
         ) {
             $directory = \WCF_DIR . $applicationDirectory . '/';
         } elseif (
-            \ENABLE_ENTERPRISE_MODE
+            \ENABLE_ENTERPRISE_MODE !== 0
             && \defined('ENTERPRISE_MODE_APP_DIRECTORIES')
             && \is_array(\ENTERPRISE_MODE_APP_DIRECTORIES)
         ) {
@@ -1001,7 +1001,7 @@ class PackageInstallationDispatcher
 
             // determine domain path, in some environments (e.g. ISPConfig) the $_SERVER paths are
             // faked and differ from the real filesystem path
-            if (\PACKAGE_ID) {
+            if (\PACKAGE_ID !== 0) {
                 $wcfDomainPath = ApplicationHandler::getInstance()->getWCF()->domainPath;
             } else {
                 $sql = "SELECT  domainPath

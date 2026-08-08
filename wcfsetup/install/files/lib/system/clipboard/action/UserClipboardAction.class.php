@@ -140,7 +140,7 @@ class UserClipboardAction extends AbstractClipboardAction
 
         $userIDs = [];
         foreach ($this->objects as $user) {
-            if (!$user->banned) {
+            if ($user->banned === 0) {
                 $userIDs[] = $user->userID;
             }
         }

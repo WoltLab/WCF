@@ -78,7 +78,7 @@ final class LanguageItemGridView extends AbstractGridView
                         {
                             \assert($row instanceof LanguageItem);
 
-                            if ($row->languageUseCustomValue) {
+                            if ($row->languageUseCustomValue !== 0) {
                                 return parent::render($value, $row);
                             }
 

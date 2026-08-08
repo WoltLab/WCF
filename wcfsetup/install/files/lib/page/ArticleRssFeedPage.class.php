@@ -49,7 +49,7 @@ class ArticleRssFeedPage extends AbstractRssFeedPage
     {
         parent::readData();
 
-        if ($this->categoryID) {
+        if ($this->categoryID !== 0) {
             $this->articles = new CategoryArticleList($this->categoryID);
         } else {
             $this->articles = new AccessibleArticleList();

@@ -356,7 +356,7 @@ class WCF
     final public static function handleError(int $severity, string $message, string $file, int $line): bool
     {
         // this is necessary for the shut-up operator
-        if (!(\error_reporting() & $severity)) {
+        if ((\error_reporting() & $severity) === 0) {
             return true;
         }
 
@@ -420,7 +420,7 @@ class WCF
                 require($filename);
             }
 
-            if (\ENABLE_DEBUG_MODE) {
+            if (\ENABLE_DEBUG_MODE !== 0) {
                 self::$dbObj->enableDebugMode();
 
                 // zend.assertions can't be enabled at runtime if the value is set to -1, because
@@ -552,7 +552,7 @@ class WCF
      */
     protected function initLanguage(): void
     {
-        if (isset($_GET['l']) && !self::getUser()->userID) {
+        if (isset($_GET['l']) && self::getUser()->userID === 0) {
             self::getSession()->setLanguageID(\intval($_GET['l']));
         }
 
@@ -577,7 +577,7 @@ class WCF
      */
     protected function initStyle(): void
     {
-        if (self::getSession()->getUser()->userID) {
+        if (self::getSession()->getUser()->userID !== 0) {
             $styleID = self::getSession()->getUser()->styleID ?: 0;
         } else {
             $styleID = self::getSession()->getVar('styleID') ?: 0;
@@ -618,7 +618,7 @@ class WCF
             if ($application->packageID === 1) {
                 // ignore WCF
                 continue;
-            } elseif ($application->isTainted) {
+            } elseif ($application->isTainted !== 0) {
                 // ignore apps flagged for uninstallation
                 continue;
             }
@@ -783,7 +783,7 @@ class WCF
     {
         $wcf = $this;
 
-        if (\ENABLE_ENTERPRISE_MODE) {
+        if (\ENABLE_ENTERPRISE_MODE !== 0) {
             $wcf = new TemplateScriptingCore($wcf);
         }
 
@@ -839,7 +839,7 @@ class WCF
      */
     final public static function setLanguage(int $languageID): void
     {
-        if (!$languageID || LanguageFactory::getInstance()->getLanguage($languageID) === null) {
+        if ($languageID === 0 || LanguageFactory::getInstance()->getLanguage($languageID) === null) {
             $languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
         }
 
@@ -966,7 +966,7 @@ class WCF
         // ACP override
         if (!$ignoreACP && self::$overrideDebugMode) {
             return true;
-        } elseif (\defined('ENABLE_DEBUG_MODE') && \ENABLE_DEBUG_MODE) {
+        } elseif (\defined('ENABLE_DEBUG_MODE') && \ENABLE_DEBUG_MODE !== 0) {
             return true;
         }
 
@@ -979,7 +979,7 @@ class WCF
     public static function benchmarkIsEnabled(): bool
     {
         // benchmarking is enabled by default
-        if (!\defined('ENABLE_BENCHMARK') || \ENABLE_BENCHMARK) {
+        if (!\defined('ENABLE_BENCHMARK') || \ENABLE_BENCHMARK !== 0) {
             return true;
         }
 
@@ -992,7 +992,7 @@ class WCF
     public static function getPath(string $abbreviation = 'wcf'): string
     {
         // workaround during WCFSetup
-        if (!\PACKAGE_ID) {
+        if (\PACKAGE_ID === 0) {
             return '../';
         }
 
@@ -1008,7 +1008,7 @@ class WCF
      */
     public static function getActivePath(): string
     {
-        if (!\PACKAGE_ID) {
+        if (\PACKAGE_ID === 0) {
             return self::getPath();
         }
 
@@ -1143,7 +1143,7 @@ class WCF
             $key = \random_bytes(16);
         }
 
-        if (\PACKAGE_ID) {
+        if (\PACKAGE_ID !== 0) {
             $prefix = \WCF_UUID . ':' . self::class . ':';
         } else {
             $prefix = '';

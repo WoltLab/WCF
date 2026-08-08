@@ -35,7 +35,7 @@ class TrophyCategory extends AbstractDecoratedCategory implements ITitledLinkObj
             return false;
         }
 
-        if ($this->getDecoratedObject()->isDisabled) {
+        if ($this->getDecoratedObject()->isDisabled !== 0) {
             return false;
         }
 

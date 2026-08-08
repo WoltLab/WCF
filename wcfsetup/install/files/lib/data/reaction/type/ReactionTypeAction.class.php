@@ -210,7 +210,7 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggle
     public function toggle()
     {
         foreach ($this->getObjects() as $editor) {
-            if ($editor->isAssignable) {
+            if ($editor->isAssignable !== 0) {
                 new DisableReactionType($editor->getDecoratedObject())();
             } else {
                 new EnableReactionType($editor->getDecoratedObject())();

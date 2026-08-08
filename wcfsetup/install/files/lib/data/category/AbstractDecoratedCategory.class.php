@@ -113,7 +113,7 @@ abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator
      */
     public function getParentCategory(): ?static
     {
-        if ($this->parentCategoryID && $this->parentCategory === null) {
+        if ($this->parentCategoryID !== 0 && $this->parentCategory === null) {
             // @phpstan-ignore assign.propertyType
             $this->parentCategory = new static($this->getDecoratedObject()->getParentCategory());
         }

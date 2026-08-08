@@ -32,7 +32,7 @@ final class CheckForExpiredAppEvaluation implements MiddlewareInterface
             $applicationObject = WCF::getApplicationObject($application);
             $endDate = $applicationObject->getEvaluationEndDate();
 
-            if ($endDate && $endDate < \TIME_NOW) {
+            if ($endDate !== 0 && $endDate < \TIME_NOW) {
                 $package = $application->getPackage();
 
                 $pluginStoreFileID = $applicationObject->getEvaluationPluginStoreID();

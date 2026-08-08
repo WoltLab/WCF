@@ -165,7 +165,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                 $languageEditor->updateFromXML(
                     $xml,
                     $this->installation->getPackageID(),
-                    !$this->installation->getPackage()->isApplication,
+                    $this->installation->getPackage()->isApplication === 0,
                     $updateExistingItems
                 );
             }

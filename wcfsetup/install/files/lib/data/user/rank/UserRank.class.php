@@ -63,7 +63,7 @@ class UserRank extends DatabaseObject implements ITitledObject
      */
     public function showTitle()
     {
-        return $this->rankImage === '' || !$this->hideTitle;
+        return $this->rankImage === '' || $this->hideTitle === 0;
     }
 
     /**

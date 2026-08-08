@@ -139,10 +139,10 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
 
         $lastResponseTime = $lastResponseID = 0;
         foreach ($responseList as $response) {
-            if (!$lastResponseTime) {
+            if ($lastResponseTime === 0) {
                 $lastResponseTime = $response->time;
             }
-            if (!$lastResponseID) {
+            if ($lastResponseID === 0) {
                 $lastResponseID = $response->responseID;
             }
 
@@ -162,7 +162,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
             'lastResponseID' => $lastResponseID,
             'template' => WCF::getTPL()->render('wcf', 'commentResponseList', [
                 'commentCanModerate' => $commentCanModerate,
-                'likeData' => \MODULE_LIKE ? $responseList->getLikeData() : [],
+                'likeData' => \MODULE_LIKE !== 0 ? $responseList->getLikeData() : [],
                 'responseList' => $responseList,
                 'commentManager' => $this->commentManager,
             ]),
@@ -232,7 +232,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
         $htmlInputProcessor->setObjectID($this->response->getObjectID());
         $hasEmbeddedObjects = MessageEmbeddedObjectManager::getInstance()->registerObjects($htmlInputProcessor);
         if ((bool)$this->response->hasEmbeddedObjects !== $hasEmbeddedObjects) {
-            $data['hasEmbeddedObjects'] = $this->response->hasEmbeddedObjects ? 0 : 1;
+            $data['hasEmbeddedObjects'] = $this->response->hasEmbeddedObjects !== 0 ? 0 : 1;
         }
 
         (new self([$this->response], 'update', [
@@ -241,7 +241,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
 
         $response = new CommentResponse($this->response->getObjectID());
 
-        if ($response->hasEmbeddedObjects) {
+        if ($response->hasEmbeddedObjects !== 0) {
             MessageEmbeddedObjectManager::getInstance()->loadObjects(
                 'com.woltlab.wcf.comment.response',
                 [$response->getObjectID()]
@@ -366,7 +366,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
         }
 
         foreach ($this->getObjects() as $response) {
-            if (!$response->isDisabled) {
+            if ($response->isDisabled === 0) {
                 throw new UserInputException('objectIDs');
             }
 

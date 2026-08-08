@@ -183,7 +183,7 @@ class UserContentRemoveWorker extends AbstractWorker
                 $contentList = $processor->getContentListForUser($user);
                 $count = $contentList->countObjects();
 
-                if ($count) {
+                if ($count !== 0) {
                     $this->data['provider'][] = [
                         'userID' => $user->userID,
                         'objectTypeID' => $contentProvider->objectTypeID,

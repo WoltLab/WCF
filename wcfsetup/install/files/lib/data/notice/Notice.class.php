@@ -51,11 +51,11 @@ class Notice extends DatabaseObject implements IRouteController, \Stringable
         // replace `{$username}` with the active user's name and `{$email}`
         // with the active user's email address
         $text = \strtr(WCF::getLanguage()->get($this->notice), [
-            '{$username}' => $this->noticeUseHtml ? StringUtil::encodeHTML(WCF::getUser()->username) : WCF::getUser()->username,
-            '{$email}' => $this->noticeUseHtml ? StringUtil::encodeHTML(WCF::getUser()->email) : WCF::getUser()->email,
+            '{$username}' => $this->noticeUseHtml !== 0 ? StringUtil::encodeHTML(WCF::getUser()->username) : WCF::getUser()->username,
+            '{$email}' => $this->noticeUseHtml !== 0 ? StringUtil::encodeHTML(WCF::getUser()->email) : WCF::getUser()->email,
         ]);
 
-        if (!$this->noticeUseHtml) {
+        if ($this->noticeUseHtml === 0) {
             $text = \nl2br(StringUtil::encodeHTML($text), false);
         }
 
@@ -85,7 +85,7 @@ class Notice extends DatabaseObject implements IRouteController, \Stringable
      */
     public function isDismissed()
     {
-        if (!$this->isDismissible) {
+        if ($this->isDismissible === 0) {
             return false;
         }
 

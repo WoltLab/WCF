@@ -38,7 +38,7 @@ final class DeleteAd implements IController
 
     private function assertAdCanBeDeleted(): void
     {
-        if (!\MODULE_WCF_AD) {
+        if (\MODULE_WCF_AD === 0) {
             throw new IllegalLinkException();
         }
 

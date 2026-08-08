@@ -54,13 +54,13 @@ class AbstractACLImporter extends AbstractImporter
         $data['optionID'] = $this->options[$additionalData['optionName']];
 
         $data['objectID'] = ImportHandler::getInstance()->getNewID($this->objectTypeName, $data['objectID']);
-        if (!$data['objectID']) {
+        if ($data['objectID'] === null) {
             return 0;
         }
 
         if (!empty($data['groupID'])) {
             $data['groupID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user.group', $data['groupID']);
-            if (!$data['groupID']) {
+            if ($data['groupID'] === null) {
                 return 0;
             }
 
@@ -73,7 +73,7 @@ class AbstractACLImporter extends AbstractImporter
             return 1;
         } elseif (!empty($data['userID'])) {
             $data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
-            if (!$data['userID']) {
+            if ($data['userID'] === null) {
                 return 0;
             }
 

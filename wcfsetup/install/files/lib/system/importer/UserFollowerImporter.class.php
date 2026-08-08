@@ -24,7 +24,7 @@ class UserFollowerImporter extends AbstractImporter
     {
         $data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
         $data['followUserID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['followUserID']);
-        if (!$data['userID'] || !$data['followUserID']) {
+        if ($data['userID'] === null || $data['followUserID'] === null) {
             return 0;
         }
 

@@ -91,7 +91,7 @@ class ViewableModerationQueueList extends ModerationQueueList
             $userIDs = [];
             foreach ($this->objects as $object) {
                 $userIDs[] = $object->getAffectedObject()->getUserID();
-                if ($object->assignedUserID) {
+                if ($object->assignedUserID !== null) {
                     $userIDs[] = $object->assignedUserID;
                 }
             }

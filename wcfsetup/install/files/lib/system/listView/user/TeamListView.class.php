@@ -42,11 +42,11 @@ class TeamListView extends MembersListView
             return false;
         }
 
-        if (!\MODULE_TEAM_PAGE) {
+        if (\MODULE_TEAM_PAGE === 0) {
             return false;
         }
 
-        if (UserGroup::getGroupByID($this->groupID) === null || !UserGroup::getGroupByID($this->groupID)->showOnTeamPage) {
+        if (UserGroup::getGroupByID($this->groupID) === null || UserGroup::getGroupByID($this->groupID)->showOnTeamPage === 0) {
             return false;
         }
 

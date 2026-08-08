@@ -46,7 +46,7 @@ final class GetShowOrder implements IController
 
     private function assertOptionCanBeSorted(): void
     {
-        if (!\MODULE_CONTACT_FORM) {
+        if (\MODULE_CONTACT_FORM === 0) {
             throw new IllegalLinkException();
         }
 

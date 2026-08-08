@@ -469,7 +469,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         // handle templates
         if (!empty($data['templates'])) {
             $templateGroupFolderName = '';
-            if ($style !== null && $style->templateGroupID) {
+            if ($style !== null && $style->templateGroupID !== 0) {
                 $templateGroupFolderName = (new TemplateGroup($style->templateGroupID))->templateGroupFolderName;
                 $styleData['templateGroupID'] = $style->templateGroupID;
             }
@@ -551,7 +551,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                 }
 
                 $knownTemplates = [];
-                if ($style !== null && $style->templateGroupID) {
+                if ($style !== null && $style->templateGroupID !== 0) {
                     $sql = "SELECT  *
                             FROM    wcf1_template
                             WHERE   templateGroupID = ?";
@@ -674,7 +674,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             );
 
             // Import variables for the dark mode if the style previously had none.
-            if (!$style->hasDarkMode && $styleData['hasDarkMode']) {
+            if ($style->hasDarkMode === 0 && $styleData['hasDarkMode'] !== 0) {
                 foreach ($styleData['variablesDarkMode'] as $k => $v) {
                     $variables[Style::DARK_MODE_PREFIX . $k] = $v;
                 }
@@ -844,7 +844,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         $languageList->readObjects();
 
         // workaround for WCFSetup
-        if (!\PACKAGE_ID) {
+        if (\PACKAGE_ID === 0) {
             $sql = "SELECT  *
                     FROM    wcf1_language_category
                     WHERE   languageCategory = ?";
@@ -970,7 +970,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         if ($this->license !== '') {
             $xml->writeElement('license', $this->license);
         }
-        if ($this->hasDarkMode) {
+        if ($this->hasDarkMode !== 0) {
             $xml->writeElement('hasDarkMode', '1');
         }
         $xml->endElement();
@@ -986,7 +986,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         // files block
         $xml->startElement('files');
         $xml->writeElement('variables', 'variables.xml');
-        if ($this->hasDarkMode) {
+        if ($this->hasDarkMode !== 0) {
             $xml->writeElement('variablesDarkMode', 'variables_dark.xml');
         }
         if ($templates) {
@@ -1020,7 +1020,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
 
         $styleTar->addString('variables.xml', $xml->endDocument());
 
-        if ($this->hasDarkMode) {
+        if ($this->hasDarkMode !== 0) {
             $xml->beginDocument(
                 'variables',
                 'http://www.woltlab.com',
@@ -1046,7 +1046,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             $styleTar->addString('variables_dark.xml', $xml->endDocument());
         }
 
-        if ($templates && $this->templateGroupID) {
+        if ($templates && $this->templateGroupID !== 0) {
             $templateGroup = new TemplateGroup($this->templateGroupID);
 
             // create templates tar
@@ -1109,7 +1109,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                 if (!$file->isFile()) {
                     continue;
                 }
-                if (!$regEx->match($file->getBasename())) {
+                if ($regEx->match($file->getBasename()) === 0) {
                     continue;
                 }
 

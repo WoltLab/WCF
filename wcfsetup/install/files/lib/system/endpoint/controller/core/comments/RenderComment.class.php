@@ -74,7 +74,7 @@ final class RenderComment implements IController
         if (!$commentManager->isAccessible($comment->objectID)) {
             throw new PermissionDeniedException();
         }
-        if ($comment->isDisabled && !$commentManager->canModerate($comment->objectTypeID, $comment->objectID)) {
+        if ($comment->isDisabled !== 0 && !$commentManager->canModerate($comment->objectTypeID, $comment->objectID)) {
             throw new PermissionDeniedException();
         }
     }
@@ -86,7 +86,7 @@ final class RenderComment implements IController
         if ($response->commentID !== $comment->commentID) {
             throw new PermissionDeniedException();
         }
-        if ($response->isDisabled && !$commentManager->canModerate($comment->objectTypeID, $comment->objectID)) {
+        if ($response->isDisabled !== 0 && !$commentManager->canModerate($comment->objectTypeID, $comment->objectID)) {
             throw new PermissionDeniedException();
         }
     }
@@ -115,7 +115,7 @@ final class RenderComment implements IController
      */
     private function renderComment(Comment $comment, ?CommentResponse $response = null, bool $messageOnly = false): array
     {
-        if ($comment->hasEmbeddedObjects) {
+        if ($comment->hasEmbeddedObjects !== 0) {
             MessageEmbeddedObjectManager::getInstance()->loadObjects(
                 'com.woltlab.wcf.comment',
                 [$comment->getObjectID()]
@@ -144,7 +144,7 @@ final class RenderComment implements IController
         // This functions renders a single comment without rendering its responses.
         // We need to prevent the setting of the data attribute for the last response time
         // so that the loading of the responses by the user works correctly.
-        if ($comment->responses) {
+        if ($comment->responses !== 0) {
             $tplVariables['ignoreLastResponseTime'] = true;
         }
 
@@ -161,7 +161,7 @@ final class RenderComment implements IController
         ]);
 
         // load like data
-        if (\MODULE_LIKE) {
+        if (\MODULE_LIKE !== 0) {
             $likeData = [];
             $commentObjectType = ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.comment');
             ReactionHandler::getInstance()->loadLikeObjects($commentObjectType, [$comment->commentID]);
@@ -188,7 +188,7 @@ final class RenderComment implements IController
 
     private function renderResponse(CommentResponse $response, bool $messageOnly = false): string
     {
-        if ($response->hasEmbeddedObjects) {
+        if ($response->hasEmbeddedObjects !== 0) {
             MessageEmbeddedObjectManager::getInstance()->loadObjects(
                 'com.woltlab.wcf.comment.response',
                 [$response->getObjectID()]

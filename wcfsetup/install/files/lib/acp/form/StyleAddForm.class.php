@@ -326,7 +326,7 @@ class StyleAddForm extends AbstractForm
         // ignore everything except well-formed rgba()
         $regEx = new Regex('rgba\(\d{1,3}, \d{1,3}, \d{1,3}, (1|1\.00?|0|0?\.[0-9]{1,2})\)');
         foreach ($colors as $variableName) {
-            if (isset($_POST[$variableName]) && $regEx->match($_POST[$variableName])) {
+            if (isset($_POST[$variableName]) && $regEx->match($_POST[$variableName]) !== 0) {
                 $this->variables[$variableName] = $_POST[$variableName];
             }
         }
@@ -479,7 +479,7 @@ class StyleAddForm extends AbstractForm
         }
 
         // validate template group id
-        if ($this->templateGroupID) {
+        if ($this->templateGroupID !== 0) {
             if (!isset($this->availableTemplateGroups[$this->templateGroupID])) {
                 throw new UserInputException('templateGroupID');
             }
@@ -654,7 +654,7 @@ class StyleAddForm extends AbstractForm
                 continue;
             }
 
-            if ($regEx->match($line)) {
+            if ($regEx->match($line) !== 0) {
                 $matches = $regEx->getMatches();
 
                 // cannot override variables covered by style editor

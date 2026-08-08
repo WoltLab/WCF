@@ -69,7 +69,7 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
             $languageItems[$itemName] = $languageItem;
         }
 
-        if (empty($languageItems) && !(\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS)) {
+        if (empty($languageItems) && !(\ENABLE_DEBUG_MODE !== 0 && \ENABLE_DEVELOPER_TOOLS !== 0)) {
             return [];
         }
 
@@ -77,7 +77,7 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
         if (!empty($languageItems)) {
             $conditions->add("optionName IN (?)", [\array_keys($languageItems)]);
         }
-        if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
+        if (\ENABLE_DEBUG_MODE !== 0 && \ENABLE_DEVELOPER_TOOLS !== 0) {
             $conditions->add('optionName LIKE ?', ['%' . WCF::getDB()->escapeLikeValue($query) . '%']);
         }
 
@@ -140,7 +140,7 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
      */
     private function isUnavailableOption(UserGroupOption $userGroupOption): bool
     {
-        if (!\defined('ENABLE_ENTERPRISE_MODE') || !\ENABLE_ENTERPRISE_MODE) {
+        if (!\defined('ENABLE_ENTERPRISE_MODE') || \ENABLE_ENTERPRISE_MODE === 0) {
             return false;
         }
 

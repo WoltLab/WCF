@@ -60,7 +60,7 @@ final class ContentLanguageFormField extends AbstractFormField implements IImmut
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
             $this->value = \intval($this->getDocument()->getRequestData($this->getPrefixedId()));
 
-            if (!$this->isRequired() && !$this->value) {
+            if (!$this->isRequired() && $this->value === 0) {
                 $this->value = null;
             }
         }

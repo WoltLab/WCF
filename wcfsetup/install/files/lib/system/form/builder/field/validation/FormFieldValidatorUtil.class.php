@@ -66,7 +66,7 @@ abstract class FormFieldValidatorUtil
                     } else {
                         $invalidSegments = [];
                         foreach ($segments as $key => $segment) {
-                            if (!$regex->match($segment)) {
+                            if ($regex->match($segment) === 0) {
                                 $invalidSegments[$key] = $segment;
                             }
                         }
@@ -115,7 +115,7 @@ abstract class FormFieldValidatorUtil
                     return;
                 }
 
-                if (!$regex->match($value)) {
+                if ($regex->match($value) === 0) {
                     $formField->addValidationError(
                         new FormFieldValidationError(
                             'format',

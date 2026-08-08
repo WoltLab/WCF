@@ -59,7 +59,7 @@ abstract class AbstractWorker implements IWorker
     {
         $this->countObjects();
 
-        if (!$this->count) {
+        if ($this->count === null || $this->count === 0) {
             return 100;
         }
 

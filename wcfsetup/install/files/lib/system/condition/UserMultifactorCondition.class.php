@@ -46,7 +46,7 @@ class UserMultifactorCondition extends AbstractSingleFieldCondition implements
     #[\Override]
     public function getData()
     {
-        if ($this->multifactorActive || $this->multifactorNotActive) {
+        if ($this->multifactorActive !== 0 || $this->multifactorNotActive !== 0) {
             return [
                 // if multifactorNotActive is selected multifactorActive is 0
                 // otherwise multifactorNotActive is 1
@@ -63,12 +63,12 @@ class UserMultifactorCondition extends AbstractSingleFieldCondition implements
         $multifactorActiveLabel = WCF::getLanguage()->get('wcf.user.condition.multifactor.multifactorActive');
         $multifactorNotActiveLabel = WCF::getLanguage()->get('wcf.user.condition.multifactor.multifactorNotActive');
         $multifactorActiveChecked = '';
-        if ($this->multifactorActive) {
+        if ($this->multifactorActive !== 0) {
             $multifactorActiveChecked = ' checked';
         }
 
         $multifactorNotActiveChecked = '';
-        if ($this->multifactorNotActive) {
+        if ($this->multifactorNotActive !== 0) {
             $multifactorNotActiveChecked = ' checked';
         }
 
@@ -105,7 +105,7 @@ HTML;
     #[\Override]
     public function validate()
     {
-        if ($this->multifactorActive && $this->multifactorNotActive) {
+        if ($this->multifactorActive !== 0 && $this->multifactorNotActive !== 0) {
             $this->errorMessage = 'wcf.user.condition.multifactor.multifactorActive.error.conflict';
 
             throw new UserInputException('multifactorActive', 'conflict');

@@ -100,7 +100,7 @@ final class SmileyCache extends SingletonFactory
             $this->visibleCategories = [];
 
             foreach ($this->cachedCategories as $key => $category) {
-                if (!$category->isDisabled) {
+                if ($category->isDisabled === 0) {
                     $category->loadSmilies();
 
                     if (\count($category)) {
@@ -128,7 +128,7 @@ final class SmileyCache extends SingletonFactory
      */
     public function assignVariables(): void
     {
-        if (!\MODULE_SMILEY) {
+        if (\MODULE_SMILEY === 0) {
             return;
         }
 
@@ -153,7 +153,7 @@ final class SmileyCache extends SingletonFactory
      */
     public function getEmojis(): array
     {
-        if (!\MODULE_SMILEY) {
+        if (\MODULE_SMILEY === 0) {
             return [];
         }
 

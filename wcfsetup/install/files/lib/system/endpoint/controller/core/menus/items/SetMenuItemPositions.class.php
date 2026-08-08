@@ -65,7 +65,7 @@ final class SetMenuItemPositions implements IController
         }
 
         foreach ($positions as $parentItemID => $children) {
-            if ($parentItemID && !isset($menuItems[$parentItemID])) {
+            if ($parentItemID !== 0 && !isset($menuItems[$parentItemID])) {
                 throw new IllegalLinkException();
             }
         }

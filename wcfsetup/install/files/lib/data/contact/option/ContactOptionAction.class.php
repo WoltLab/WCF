@@ -154,7 +154,7 @@ class ContactOptionAction extends AbstractDatabaseObjectAction implements ISorta
     public function toggle()
     {
         foreach ($this->objects as $editor) {
-            if ($editor->isDisabled) {
+            if ($editor->isDisabled !== 0) {
                 new EnableContactOption($editor->getDecoratedObject())();
             } else {
                 new DisableContactOption($editor->getDecoratedObject())();

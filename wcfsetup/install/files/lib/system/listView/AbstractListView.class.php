@@ -262,7 +262,7 @@ abstract class AbstractListView
         }
 
         $this->objectList->sqlLimit = $this->getFixedNumberOfItems() ?: $this->getItemsPerPage();
-        if (!$this->getFixedNumberOfItems()) {
+        if ($this->getFixedNumberOfItems() === 0) {
             $this->objectList->sqlOffset = ($this->getPageNo() - 1) * $this->getItemsPerPage();
         }
         $this->objectList->sqlOrderBy = $this->getSqlOrderBy();
@@ -276,7 +276,7 @@ abstract class AbstractListView
 
         if ($this->getSortField() !== '') {
             if (!isset($this->availableSortFields[$this->getSortField()])) {
-                if (\ENABLE_DEBUG_MODE) {
+                if (\ENABLE_DEBUG_MODE !== 0) {
                     throw new \LogicException("Invalid value '{$this->getSortField()}' as sort field given.");
                 } else {
                     $this->setSortField('');
@@ -314,7 +314,7 @@ abstract class AbstractListView
     {
         $this->activeFilters = \array_filter($this->activeFilters, function ($value, $key) {
             if (!isset($this->availableFilters[$key])) {
-                if (\ENABLE_DEBUG_MODE) {
+                if (\ENABLE_DEBUG_MODE !== 0) {
                     throw new \LogicException("Filter applied for unknown column '{$key}'.");
                 } else {
                     return false;
@@ -324,7 +324,7 @@ abstract class AbstractListView
             try {
                 $this->availableFilters[$key]->applyFilter($this->getObjectList(), $value);
             } catch (InvalidFilterValue $e) {
-                if (\ENABLE_DEBUG_MODE) {
+                if (\ENABLE_DEBUG_MODE !== 0) {
                     throw $e;
                 } else {
                     return false;
@@ -357,7 +357,7 @@ abstract class AbstractListView
     {
         if (!isset($this->objectCount)) {
             $this->objectCount = $this->getObjectList()->countObjects();
-            if ($this->getFixedNumberOfItems() && $this->getFixedNumberOfItems() < $this->objectCount) {
+            if ($this->getFixedNumberOfItems() !== 0 && $this->getFixedNumberOfItems() < $this->objectCount) {
                 $this->objectCount = $this->getFixedNumberOfItems();
             }
         }

@@ -227,7 +227,7 @@ class AccountManagementForm extends AbstractForm
 
                 // checks if user name exists already.
                 $user2 = User::getUserByUsername($this->username);
-                if ($user2->userID && $user2->userID !== WCF::getUser()->userID) {
+                if ($user2->userID !== 0 && $user2->userID !== WCF::getUser()->userID) {
                     throw new UserInputException('username', 'notUnique');
                 }
             }
@@ -264,7 +264,7 @@ class AccountManagementForm extends AbstractForm
                 }
 
                 // checks if email already exists.
-                if (User::getUserByEmail($this->email)->userID) {
+                if (User::getUserByEmail($this->email)->userID !== 0) {
                     throw new UserInputException('email', 'notUnique');
                 }
             }
@@ -327,12 +327,12 @@ class AccountManagementForm extends AbstractForm
         $updateParameters = [];
 
         // quit
-        if (WCF::getUser()->quitStarted || WCF::getSession()->hasPermission('user.profile.canQuit')) {
-            if (!WCF::getUser()->quitStarted && $this->quit === 1) {
+        if (WCF::getUser()->quitStarted !== 0 || WCF::getSession()->hasPermission('user.profile.canQuit')) {
+            if (WCF::getUser()->quitStarted === 0 && $this->quit === 1) {
                 $updateParameters['quitStarted'] = \TIME_NOW;
                 $this->quitStarted = \TIME_NOW;
                 $success[] = 'wcf.user.quit.success';
-            } elseif (WCF::getUser()->quitStarted && $this->cancelQuit === 1) {
+            } elseif (WCF::getUser()->quitStarted !== 0 && $this->cancelQuit === 1) {
                 $updateParameters['quitStarted'] = 0;
                 $this->quitStarted = 0;
                 $success[] = 'wcf.user.quit.cancel.success';
@@ -382,7 +382,7 @@ class AccountManagementForm extends AbstractForm
         // 3rdParty
         if (\GITHUB_PUBLIC_KEY !== '' && \GITHUB_PRIVATE_KEY !== '') {
             if (
-                $this->githubConnect
+                $this->githubConnect !== 0
                 && WCF::getSession()->getVar('__3rdPartyProvider') === 'github'
                 && ($oauthUser = WCF::getSession()->getVar('__oauthUser'))
             ) {
@@ -394,13 +394,13 @@ class AccountManagementForm extends AbstractForm
                 WCF::getSession()->unregister('__oauthUser');
             }
         }
-        if ($this->githubDisconnect && \str_starts_with(WCF::getUser()->authData, 'github:')) {
+        if ($this->githubDisconnect !== 0 && \str_starts_with(WCF::getUser()->authData, 'github:')) {
             $updateParameters['authData'] = '';
             $success[] = 'wcf.user.3rdparty.github.disconnect.success';
         }
         if (\TWITTER_PUBLIC_KEY !== '' && \TWITTER_PRIVATE_KEY !== '') {
             if (
-                $this->twitterConnect
+                $this->twitterConnect !== 0
                 && WCF::getSession()->getVar('__3rdPartyProvider') === 'twitter'
                 && ($oauthUser = WCF::getSession()->getVar('__oauthUser'))
             ) {
@@ -412,13 +412,13 @@ class AccountManagementForm extends AbstractForm
                 WCF::getSession()->unregister('__oauthUser');
             }
         }
-        if ($this->twitterDisconnect && \str_starts_with(WCF::getUser()->authData, 'twitter:')) {
+        if ($this->twitterDisconnect !== 0 && \str_starts_with(WCF::getUser()->authData, 'twitter:')) {
             $updateParameters['authData'] = '';
             $success[] = 'wcf.user.3rdparty.twitter.disconnect.success';
         }
         if (\FACEBOOK_PUBLIC_KEY !== '' && \FACEBOOK_PRIVATE_KEY !== '') {
             if (
-                $this->facebookConnect
+                $this->facebookConnect !== 0
                 && WCF::getSession()->getVar('__3rdPartyProvider') === 'facebook'
                 && ($oauthUser = WCF::getSession()->getVar('__oauthUser'))
             ) {
@@ -430,13 +430,13 @@ class AccountManagementForm extends AbstractForm
                 WCF::getSession()->unregister('__oauthUser');
             }
         }
-        if ($this->facebookDisconnect && \str_starts_with(WCF::getUser()->authData, 'facebook:')) {
+        if ($this->facebookDisconnect !== 0 && \str_starts_with(WCF::getUser()->authData, 'facebook:')) {
             $updateParameters['authData'] = '';
             $success[] = 'wcf.user.3rdparty.facebook.disconnect.success';
         }
         if (\GOOGLE_PUBLIC_KEY !== '' && \GOOGLE_PRIVATE_KEY !== '') {
             if (
-                $this->googleConnect
+                $this->googleConnect !== 0
                 && WCF::getSession()->getVar('__3rdPartyProvider') === 'google'
                 && ($oauthUser = WCF::getSession()->getVar('__oauthUser'))
             ) {
@@ -448,7 +448,7 @@ class AccountManagementForm extends AbstractForm
                 WCF::getSession()->unregister('__oauthUser');
             }
         }
-        if ($this->googleDisconnect && \str_starts_with(WCF::getUser()->authData, 'google:')) {
+        if ($this->googleDisconnect !== 0 && \str_starts_with(WCF::getUser()->authData, 'google:')) {
             $updateParameters['authData'] = '';
             $success[] = 'wcf.user.3rdparty.google.disconnect.success';
         }

@@ -94,7 +94,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject, \St
      */
     public function canDelete()
     {
-        if (WCF::getSession()->hasPermission('admin.content.cms.canManagePage') && !$this->originIsSystem) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canManagePage') && $this->originIsSystem === 0) {
             return true;
         }
 
@@ -108,7 +108,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject, \St
      */
     public function canDisable()
     {
-        if (WCF::getSession()->hasPermission('admin.content.cms.canManagePage') && (!$this->originIsSystem || $this->pageType !== 'system')) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canManagePage') && ($this->originIsSystem === 0 || $this->pageType !== 'system')) {
             return true;
         }
 
@@ -149,7 +149,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject, \St
     {
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("pageID = ?", [$this->pageID]);
-        if ($this->isMultilingual) {
+        if ($this->isMultilingual !== 0) {
             $conditions->add("languageID = ?", [$languageID]);
         } else {
             $conditions->add("languageID IS NULL");
@@ -177,7 +177,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject, \St
             $controllerName = \preg_replace('/(page|action|form)$/i', '', $controllerName);
 
             $application = $controllerParts[0];
-            if ($this->overrideApplicationPackageID) {
+            if ($this->overrideApplicationPackageID !== null) {
                 $application = ApplicationHandler::getInstance()->getApplicationByID($this->overrideApplicationPackageID)->getAbbreviation();
             }
 
@@ -241,7 +241,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject, \St
      */
     public function isVisible()
     {
-        if ($this->isDisabled) {
+        if ($this->isDisabled !== 0) {
             return false;
         }
         if (!$this->validateOptions()) {
@@ -263,7 +263,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject, \St
     {
         $canAccess = SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.page', $this->pageID, $user);
 
-        if ($this->invertPermissions) {
+        if ($this->invertPermissions !== 0) {
             $canAccess = !$canAccess;
         }
 
@@ -276,7 +276,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject, \St
      */
     public function setAsLandingPage()
     {
-        if ($this->requireObjectID) {
+        if ($this->requireObjectID !== 0) {
             throw new SystemException('Pages requiring an object id cannot be set as landing page.');
         }
 
@@ -343,7 +343,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject, \St
     public function getTplName(?int $languageID = null)
     {
         if ($this->pageType === 'tpl') {
-            if ($this->isMultilingual) {
+            if ($this->isMultilingual !== 0) {
                 return '__cms_page_' . $this->pageID . '_' . $languageID;
             }
 
@@ -362,7 +362,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject, \St
     {
         if ($this->pageLanguages === null) {
             $this->pageLanguages = [];
-            if ($this->isMultilingual) {
+            if ($this->isMultilingual !== 0) {
                 $sql = "SELECT  languageID
                         FROM    wcf1_page_content
                         WHERE   pageID = ?";
@@ -387,7 +387,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject, \St
      */
     public function showShareButtons()
     {
-        return $this->enableShareButtons && $this->pageType !== 'system';
+        return $this->enableShareButtons !== 0 && $this->pageType !== 'system';
     }
 
     /**

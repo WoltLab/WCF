@@ -21,11 +21,11 @@ abstract class NumericFilter extends AbstractFilter
         $columnName = $this->getDatabaseColumnName($list);
         $values = $this->parseValue($value);
 
-        if (!$values['from'] && !$values['to']) {
+        if ($values['from'] === 0 && $values['to'] === 0) {
             throw new InvalidFilterValue("Invalid value '{$value}' for filter '{$this->id}' given.");
         }
 
-        if (!$values['to']) {
+        if ($values['to'] === 0) {
             $list->getConditionBuilder()->add("{$columnName} >= ?", [$values['from']]);
         } else {
             $list->getConditionBuilder()->add("{$columnName} BETWEEN ? AND ?", [$values['from'], $values['to']]);
@@ -37,11 +37,11 @@ abstract class NumericFilter extends AbstractFilter
     {
         $values = $this->parseValue($value);
 
-        if ($values['from'] && $values['to']) {
+        if ($values['from'] !== 0 && $values['to'] !== 0) {
             return $values['from'] . ' ‐ ' . $values['to'];
-        } else if ($values['from']) {
+        } else if ($values['from'] !== 0) {
             return '>= ' . $values['from'];
-        } else if ($values['to']) {
+        } else if ($values['to'] !== 0) {
             return '<= ' . $values['to'];
         }
 
@@ -56,10 +56,10 @@ abstract class NumericFilter extends AbstractFilter
         $from = 0;
         $to = 0;
 
-        $values = explode(';', $value);
+        $values = \explode(';', $value);
         if (\count($values) === 2) {
-            $from = $values[0];
-            $to = $values[1];
+            $from = (int)$values[0];
+            $to = (int)$values[1];
         }
 
         return [

@@ -39,7 +39,7 @@ class ArticleListView extends AbstractListView
             new ListViewSortField('title', 'wcf.global.title', 'title'),
             new ListViewSortField('views', 'wcf.article.sortField.views', defaultSortOrder: 'DESC'),
         ]);
-        if (\MODULE_LIKE) {
+        if (\MODULE_LIKE !== 0) {
             $this->addAvailableSortFields([
                 new ListViewSortField('cumulativeLikes', 'wcf.like.cumulativeLikes', defaultSortOrder: 'DESC'),
             ]);
@@ -90,7 +90,7 @@ class ArticleListView extends AbstractListView
     #[\Override]
     public function isAccessible(): bool
     {
-        return !!\MODULE_ARTICLE;
+        return \MODULE_ARTICLE !== 0;
     }
 
     #[\Override]

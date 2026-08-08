@@ -26,7 +26,7 @@ final class DeleteArticle implements IController
     #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
-        if (!\MODULE_ARTICLE) {
+        if (\MODULE_ARTICLE === 0) {
             throw new IllegalLinkException();
         }
 
@@ -34,7 +34,7 @@ final class DeleteArticle implements IController
         if (!$article->canDelete()) {
             throw new PermissionDeniedException();
         }
-        if (!$article->isDeleted) {
+        if ($article->isDeleted === 0) {
             throw new IllegalLinkException();
         }
 

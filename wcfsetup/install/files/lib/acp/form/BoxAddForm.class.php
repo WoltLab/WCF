@@ -238,9 +238,9 @@ class BoxAddForm extends AbstractForm
         if (isset($_GET['presetBoxID'])) {
             $this->presetBoxID = \intval($_GET['presetBoxID']);
         }
-        if ($this->presetBoxID) {
+        if ($this->presetBoxID !== 0) {
             $this->presetBox = new Box($this->presetBoxID);
-            if (!$this->presetBox->boxID) {
+            if ($this->presetBox->boxID === 0) {
                 throw new IllegalLinkException();
             }
         }
@@ -428,7 +428,7 @@ class BoxAddForm extends AbstractForm
 
         foreach ($imageIDs as $languageID => $imageID) {
             $image = $mediaList->search($imageID);
-            if ($image !== null && $image->isImage) {
+            if ($image !== null && $image->isImage !== 0) {
                 $this->images[$languageID] = $image;
             }
         }
@@ -462,7 +462,7 @@ class BoxAddForm extends AbstractForm
         if ($this->boxType !== 'system' && $this->linkType === 'internal') {
             $this->externalURL = '';
 
-            if (!$this->linkPageID) {
+            if ($this->linkPageID === 0) {
                 throw new UserInputException('linkPageID');
             }
             $page = new Page($this->linkPageID);
@@ -472,7 +472,7 @@ class BoxAddForm extends AbstractForm
 
             // validate page object id
             if (isset($this->pageHandlers[$page->pageID])) {
-                if (!$this->linkPageObjectID) {
+                if ($this->linkPageObjectID === 0) {
                     throw new UserInputException('linkPageObjectID');
                 }
 
@@ -507,8 +507,8 @@ class BoxAddForm extends AbstractForm
         }
 
         // box title
-        if ($this->showHeader) {
-            if ($this->boxType === 'system' || $this->isMultilingual) {
+        if ($this->showHeader !== 0) {
+            if ($this->boxType === 'system' || $this->isMultilingual !== 0) {
                 foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                     if (empty($this->title[$language->languageID])) {
                         throw new UserInputException('title' . $language->languageID);
@@ -522,7 +522,7 @@ class BoxAddForm extends AbstractForm
         }
 
         if ($this->boxType === 'text') {
-            if ($this->isMultilingual) {
+            if ($this->isMultilingual !== 0) {
                 foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                     $this->htmlInputProcessors[$language->languageID] = new HtmlInputProcessor();
                     $this->htmlInputProcessors[$language->languageID]->process(
@@ -595,7 +595,7 @@ class BoxAddForm extends AbstractForm
         parent::save();
 
         $content = [];
-        if ($this->boxType === 'system' || $this->isMultilingual) {
+        if ($this->boxType === 'system' || $this->isMultilingual !== 0) {
             foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                 $content[$language->languageID] = [
                     'title' => !empty($this->title[$language->languageID]) ? $this->title[$language->languageID] : '',
@@ -624,14 +624,14 @@ class BoxAddForm extends AbstractForm
             'lastUpdateTime' => \TIME_NOW,
             'cssClassName' => $this->cssClassName,
             'showHeader' => $this->showHeader,
-            'isDisabled' => $this->isDisabled ? 1 : 0,
+            'isDisabled' => $this->isDisabled !== 0 ? 1 : 0,
             'linkPageID' => $this->linkPageID ?: null,
             'linkPageObjectID' => $this->linkPageObjectID ?: 0,
             'externalURL' => $this->externalURL,
             'identifier' => '',
             'invertPermissions' => $this->invertPermissions,
         ];
-        if ($this->boxControllerID) {
+        if ($this->boxControllerID !== 0) {
             $data['objectTypeID'] = $this->boxControllerID;
         }
 
@@ -728,13 +728,13 @@ class BoxAddForm extends AbstractForm
             $this->showOrder = $this->presetBox->showOrder;
             $this->cssClassName = $this->presetBox->cssClassName;
             $this->boxControllerID = $this->presetBox->objectTypeID;
-            if ($this->presetBox->showHeader) {
+            if ($this->presetBox->showHeader !== 0) {
                 $this->showHeader = 1;
             } else {
                 $this->showHeader = 0;
             }
             $this->isDisabled = 1;
-            if ($this->presetBox->visibleEverywhere) {
+            if ($this->presetBox->visibleEverywhere !== 0) {
                 $this->visibleEverywhere = 1;
             } else {
                 $this->visibleEverywhere = 0;
@@ -743,7 +743,7 @@ class BoxAddForm extends AbstractForm
             $this->linkPageID = $this->presetBox->linkPageID;
             $this->linkPageObjectID = $this->presetBox->linkPageObjectID;
             $this->externalURL = $this->presetBox->externalURL;
-            if ($this->linkPageID) {
+            if ($this->linkPageID !== null) {
                 $this->linkType = 'internal';
             }
             if ($this->externalURL !== '') {
@@ -756,7 +756,7 @@ class BoxAddForm extends AbstractForm
                 $this->imageID[$languageID] = $content->imageID;
             }
 
-            if ($this->boxControllerID) {
+            if ($this->boxControllerID !== null) {
                 $this->boxController = ObjectTypeCache::getInstance()->getObjectType($this->boxControllerID);
                 if ($this->boxController->getProcessor() instanceof IConditionBoxController) {
                     $this->boxController->getProcessor()->setBox($this->presetBox);
@@ -817,7 +817,7 @@ class BoxAddForm extends AbstractForm
         SmileyCache::getInstance()->assignVariables();
 
         if ($this->boxType === 'text') {
-            if ($this->isMultilingual) {
+            if ($this->isMultilingual !== 0) {
                 foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                     $upcastProcessor = new HtmlUpcastProcessor();
                     $upcastProcessor->process(

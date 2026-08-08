@@ -48,7 +48,7 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker
     {
         EventHandler::getInstance()->fireAction($this, 'execute');
 
-        if (!$this->loopCount) {
+        if ($this->loopCount === 0) {
             // delete existing stat
             $sql = "DELETE FROM wcf1_stat_daily";
             $statement = WCF::getDB()->prepare($sql);
@@ -65,7 +65,7 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker
         $d = DateUtil::getDateTimeByTimestamp($this->startDate);
         $d->setTimezone(new \DateTimeZone(\TIMEZONE));
         $d->setTime(0, 0);
-        if ($this->loopCount) {
+        if ($this->loopCount !== 0) {
             $d->add(new \DateInterval('P' . ($this->loopCount * $this->limit) . 'D'));
         }
         for ($i = 0; $i < $this->limit; $i++) {
@@ -90,7 +90,7 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker
      */
     protected function getStartDate()
     {
-        if ($this->startDate) {
+        if ($this->startDate !== 0) {
             return;
         }
 

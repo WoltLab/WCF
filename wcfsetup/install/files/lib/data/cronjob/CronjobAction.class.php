@@ -180,7 +180,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 
                     // if cronjob has been disabled because of too many
                     // failed executions, enable it again
-                    if ($cronjob->failCount === Cronjob::MAX_FAIL_COUNT && $cronjob->isDisabled) {
+                    if ($cronjob->failCount === Cronjob::MAX_FAIL_COUNT && $cronjob->isDisabled !== 0) {
                         $data['isDisabled'] = 0;
                     }
                 }
@@ -188,7 +188,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
                 $cronjob->update($data);
 
                 // build the return value
-                if ($exception === null && !$cronjob->isDisabled) {
+                if ($exception === null && $cronjob->isDisabled === 0) {
                     $dateTime = DateUtil::getDateTimeByTimestamp($nextExec);
                     $return[$cronjob->cronjobID] = [
                         'time' => $nextExec,
@@ -246,7 +246,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
     public function toggle()
     {
         foreach ($this->objects as $editor) {
-            if ($editor->isDisabled) {
+            if ($editor->isDisabled !== 0) {
                 new EnableCronjob($editor->getDecoratedObject())();
             } else {
                 new DisableCronjob($editor->getDecoratedObject())();

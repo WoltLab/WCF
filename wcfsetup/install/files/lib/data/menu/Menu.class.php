@@ -43,7 +43,7 @@ class Menu extends DatabaseObject implements ITitledObject
      */
     public function canDelete()
     {
-        if (WCF::getSession()->hasPermission('admin.content.cms.canManageMenu') && !$this->originIsSystem) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canManageMenu') && $this->originIsSystem === 0) {
             return true;
         }
 

@@ -52,12 +52,12 @@ class CmsPage extends AbstractPage
             $this->languageID = $metaData['cms']['languageID'];
 
             // check if the language has been disabled
-            if ($this->languageID && LanguageFactory::getInstance()->getLanguage($this->languageID) === null) {
+            if ($this->languageID !== 0 && LanguageFactory::getInstance()->getLanguage($this->languageID) === null) {
                 throw new IllegalLinkException();
             }
         }
 
-        if ($this->pageID) {
+        if ($this->pageID !== null) {
             $this->page = new Page($this->pageID);
         }
 
@@ -65,7 +65,7 @@ class CmsPage extends AbstractPage
             throw new IllegalLinkException();
         }
 
-        if ($this->page->isDisabled && !WCF::getSession()->hasPermission('admin.content.cms.canManagePage')) {
+        if ($this->page->isDisabled !== 0 && !WCF::getSession()->hasPermission('admin.content.cms.canManagePage')) {
             throw new IllegalLinkException();
         }
 
@@ -81,7 +81,7 @@ class CmsPage extends AbstractPage
         $this->canonicalURL = LinkHandler::getInstance()->getCmsLink($this->pageID, $this->languageID);
 
         // update interface language
-        if (WCF::getUser()->isGuest() && $this->page->isMultilingual && $this->languageID !== WCF::getLanguage()->languageID) {
+        if (WCF::getUser()->isGuest() && $this->page->isMultilingual !== 0 && $this->languageID !== WCF::getLanguage()->languageID) {
             WCF::setLanguage($this->languageID);
         }
     }
@@ -121,7 +121,7 @@ class CmsPage extends AbstractPage
             'contentLanguageID' => $this->languageID,
             'page' => $this->page,
             'pageID' => $this->pageID,
-            'activePageLanguage' => $this->languageID ? LanguageFactory::getInstance()->getLanguage($this->languageID) : null,
+            'activePageLanguage' => $this->languageID !== null ? LanguageFactory::getInstance()->getLanguage($this->languageID) : null,
         ]);
     }
 }

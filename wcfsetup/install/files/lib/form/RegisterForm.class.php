@@ -76,7 +76,7 @@ class RegisterForm extends UserAddForm
      * true if captcha is used
      * @var bool
      */
-    public $useCaptcha = !!\REGISTER_USE_CAPTCHA;
+    public $useCaptcha = \REGISTER_USE_CAPTCHA !== 0;
 
     /**
      * field names
@@ -218,7 +218,7 @@ class RegisterForm extends UserAddForm
             ));
         }
 
-        if (\REGISTER_ENABLE_DISCLAIMER && !$this->termsConfirmed) {
+        if (\REGISTER_ENABLE_DISCLAIMER !== 0 && !$this->termsConfirmed) {
             $this->errorType['termsConfirmed'] = 'empty';
         }
     }
@@ -386,7 +386,7 @@ class RegisterForm extends UserAddForm
         $registerVia3rdParty = $eventParameters['registerVia3rdParty'];
 
         $this->additionalFields['languageID'] = $this->languageID;
-        if (\LOG_IP_ADDRESS) {
+        if (\LOG_IP_ADDRESS !== 0) {
             $this->additionalFields['registrationIpAddress'] = UserUtil::getIpAddress();
         }
 

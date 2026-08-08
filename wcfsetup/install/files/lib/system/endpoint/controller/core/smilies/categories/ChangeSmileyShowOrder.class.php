@@ -56,13 +56,13 @@ final class ChangeSmileyShowOrder implements IController
 
     private function assertSmileyCanBeSorted(Category $smileyCategory): void
     {
-        if (!\MODULE_SMILEY) {
+        if (\MODULE_SMILEY === 0) {
             throw new IllegalLinkException();
         }
 
         WCF::getSession()->checkPermissions(["admin.content.smiley.canManageSmiley"]);
 
-        if (!$smileyCategory->categoryID) {
+        if ($smileyCategory->categoryID === 0) {
             throw new IllegalLinkException();
         }
     }

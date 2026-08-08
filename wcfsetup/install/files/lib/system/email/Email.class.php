@@ -717,7 +717,7 @@ class Email implements \Stringable
         $jobs = $this->getJobs();
 
         // force synchronous execution, see https://github.com/WoltLab/WCF/issues/2501
-        if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
+        if (\ENABLE_DEBUG_MODE !== 0 && \ENABLE_DEVELOPER_TOOLS !== 0) {
             foreach ($jobs as $job) {
                 BackgroundQueueHandler::getInstance()->performJob($job, true);
             }

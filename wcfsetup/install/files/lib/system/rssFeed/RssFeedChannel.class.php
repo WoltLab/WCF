@@ -160,7 +160,7 @@ final class RssFeedChannel
         }
 
         $element->addChild('ttl', (string)$this->ttl);
-        $element->addChild('generator', 'WoltLab Suite' . (\SHOW_VERSION_NUMBER ? ' ' . \WCF_VERSION : ''));
+        $element->addChild('generator', 'WoltLab Suite' . (\SHOW_VERSION_NUMBER !== 0 ? ' ' . \WCF_VERSION : ''));
 
         foreach ($this->categories as $category) {
             $categoryElement = $element->addChild('category', $category->name);

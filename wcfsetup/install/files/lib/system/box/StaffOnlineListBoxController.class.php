@@ -50,7 +50,7 @@ class StaffOnlineListBoxController extends AbstractDatabaseObjectListBoxControll
     #[\Override]
     public function hasContent()
     {
-        if (!\MODULE_USERS_ONLINE || !WCF::getSession()->hasPermission('user.profile.canViewUsersOnlineList')) {
+        if (\MODULE_USERS_ONLINE === 0 || !WCF::getSession()->hasPermission('user.profile.canViewUsersOnlineList')) {
             return false;
         }
 

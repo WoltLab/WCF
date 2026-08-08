@@ -209,7 +209,7 @@ class UserEditForm extends UserAddForm
         if (isset($_POST['banReason'])) {
             $this->banReason = StringUtil::trim($_POST['banReason']);
         }
-        if ($this->banned && !isset($_POST['banNeverExpires'])) {
+        if ($this->banned !== 0 && !isset($_POST['banNeverExpires'])) {
             if (isset($_POST['banExpires'])) {
                 $banExpires = \DateTimeImmutable::createFromFormat('!Y-m-d', $_POST['banExpires'], new \DateTimeZone(\TIMEZONE));
                 if ($banExpires === false) {
@@ -234,7 +234,7 @@ class UserEditForm extends UserAddForm
             if (isset($_POST['disableAvatarReason'])) {
                 $this->disableAvatarReason = StringUtil::trim($_POST['disableAvatarReason']);
             }
-            if ($this->disableAvatar && !isset($_POST['disableAvatarNeverExpires'])) {
+            if ($this->disableAvatar !== 0 && !isset($_POST['disableAvatarNeverExpires'])) {
                 if (isset($_POST['disableAvatarExpires'])) {
                     $this->disableAvatarExpires = @\intval(@\strtotime(StringUtil::trim($_POST['disableAvatarExpires'])));
                 }
@@ -251,7 +251,7 @@ class UserEditForm extends UserAddForm
             if (isset($_POST['disableCoverPhotoReason'])) {
                 $this->disableCoverPhotoReason = StringUtil::trim($_POST['disableCoverPhotoReason']);
             }
-            if ($this->disableCoverPhoto && !isset($_POST['disableCoverPhotoNeverExpires'])) {
+            if ($this->disableCoverPhoto !== 0 && !isset($_POST['disableCoverPhotoNeverExpires'])) {
                 if (isset($_POST['disableCoverPhotoExpires'])) {
                     $this->disableCoverPhotoExpires = @\intval(@\strtotime(StringUtil::trim($_POST['disableCoverPhotoExpires'])));
                 }
@@ -279,7 +279,7 @@ class UserEditForm extends UserAddForm
 
         $userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
         foreach (StyleHandler::getInstance()->getStyles() as $style) {
-            if (!$style->isDisabled || $userProfile->getPermission('admin.style.canUseDisabledStyle')) {
+            if ($style->isDisabled === 0 || $userProfile->getPermission('admin.style.canUseDisabledStyle')) {
                 $this->availableStyles[$style->styleID] = $style;
             }
         }
@@ -287,12 +287,12 @@ class UserEditForm extends UserAddForm
         parent::readData();
 
         // get the avatar object
-        if ($this->user->avatarFileID) {
+        if ($this->user->avatarFileID !== null) {
             $this->userAvatar = FileRuntimeCache::getInstance()->getObject($this->user->avatarFileID);
         }
 
         // get the user cover photo object
-        if ($this->user->coverPhotoFileID) {
+        if ($this->user->coverPhotoFileID !== null) {
             // If the editing user lacks the permissions to view the cover photo, the system
             // will try to load the default cover photo. However, the default cover photo depends
             // on the style, eventually triggering a change to the template group which will
@@ -390,7 +390,7 @@ class UserEditForm extends UserAddForm
         $this->htmlInputProcessor->setObjectID($this->userID);
         MessageEmbeddedObjectManager::getInstance()->registerObjects($this->htmlInputProcessor);
 
-        if ($this->disconnect3rdParty) {
+        if ($this->disconnect3rdParty !== 0) {
             $this->additionalFields['authData'] = '';
         }
 
@@ -461,7 +461,7 @@ class UserEditForm extends UserAddForm
         $this->objectAction->executeAction();
 
         // disable multifactor authentication
-        if (WCF::getSession()->hasPermission('admin.user.canEditPassword') && $this->multifactorDisable) {
+        if (WCF::getSession()->hasPermission('admin.user.canEditPassword') && $this->multifactorDisable !== 0) {
             WCF::getDB()->beginTransaction();
             $setups = Setup::getAllForUser($this->user->getDecoratedObject());
             foreach ($setups as $setup) {
@@ -482,11 +482,11 @@ class UserEditForm extends UserAddForm
         $this->user = new UserEditor(new User($this->userID));
 
         // update user rank
-        if (\MODULE_USER_RANK) {
+        if (\MODULE_USER_RANK !== 0) {
             $action = new UserProfileAction([$this->user], 'updateUserRank');
             $action->executeAction();
         }
-        if (\MODULE_USERS_ONLINE) {
+        if (\MODULE_USERS_ONLINE !== 0) {
             $action = new UserProfileAction([$this->user], 'updateUserOnlineMarking');
             $action->executeAction();
         }
@@ -553,7 +553,7 @@ class UserEditForm extends UserAddForm
     {
         if ($this->user->userID === WCF::getUser()->userID && WCF::getUser()->hasOwnerAccess()) {
             $ownerGroupID = UserGroup::getOwnerGroupID();
-            if ($ownerGroupID && !\in_array($ownerGroupID, $this->groupIDs)) {
+            if ($ownerGroupID !== null && !\in_array($ownerGroupID, $this->groupIDs)) {
                 // Members of the owner group cannot remove themselves.
                 throw new PermissionDeniedException();
             }

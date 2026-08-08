@@ -194,7 +194,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
     public function adjustFontSize(string $text, int $margin, string $font, int $size)
     {
         // adjust font size
-        while ($size && !$this->textFitsImage($text, $margin, $font, $size)) {
+        while ($size !== 0 && !$this->textFitsImage($text, $margin, $font, $size)) {
             $size--;
         }
 

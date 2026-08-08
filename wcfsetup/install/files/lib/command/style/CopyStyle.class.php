@@ -151,7 +151,7 @@ final class CopyStyle
         $numbers = [];
         $regEx = new Regex('\((\d+)\)$');
         while ($styleName = $statement->fetchColumn()) {
-            if ($regEx->match($styleName)) {
+            if ($regEx->match($styleName) !== 0) {
                 $matches = $regEx->getMatches();
 
                 // check if name matches the pattern 'styleName (x)'

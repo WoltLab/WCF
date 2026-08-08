@@ -32,7 +32,7 @@ final class CreateManifest
             $icons[] = [
                 "src" => \sprintf(
                     "%sandroid-chrome-%dx%d.png",
-                    $this->style->hasFavicon ? "" : "../favicon/default.",
+                    $this->style->hasFavicon !== 0 ? "" : "../favicon/default.",
                     $iconSize,
                     $iconSize
                 ),

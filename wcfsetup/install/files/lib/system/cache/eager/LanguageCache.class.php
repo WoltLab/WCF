@@ -33,11 +33,11 @@ final class LanguageCache extends AbstractEagerCache
         $countryCodes = [];
 
         foreach ($languageList->getObjects() as $language) {
-            if ($language->isDefault) {
+            if ($language->isDefault !== 0) {
                 $default = $language->languageID;
             }
 
-            if ($language->hasContent) {
+            if ($language->hasContent !== 0) {
                 $multilingualismEnabled = true;
             }
 

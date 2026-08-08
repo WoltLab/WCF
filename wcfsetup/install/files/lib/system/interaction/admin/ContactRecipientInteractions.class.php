@@ -21,7 +21,7 @@ final class ContactRecipientInteractions extends AbstractInteractionProvider
     public function __construct()
     {
         $this->addInteractions([
-            new DeleteInteraction('core/contact/recipients/%s', static fn (ContactRecipient $recipient) => !$recipient->originIsSystem),
+            new DeleteInteraction('core/contact/recipients/%s', static fn (ContactRecipient $recipient) => $recipient->originIsSystem === 0),
         ]);
 
         EventHandler::getInstance()->fire(

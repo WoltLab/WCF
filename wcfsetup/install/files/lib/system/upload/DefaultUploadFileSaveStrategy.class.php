@@ -146,7 +146,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
         }
 
         // move uploaded file
-        if (\ENABLE_DEBUG_MODE) {
+        if (\ENABLE_DEBUG_MODE !== 0) {
             $successfulUpload = \move_uploaded_file($uploadFile->getLocation(), $object->getLocation());
         } else {
             $successfulUpload = @\move_uploaded_file($uploadFile->getLocation(), $object->getLocation());
@@ -248,7 +248,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
 
                 $this->objects[$uploadFile->getInternalFileID()] = $object;
             } catch (SystemException $e) {
-                if (\ENABLE_DEBUG_MODE) {
+                if (\ENABLE_DEBUG_MODE !== 0) {
                     throw $e;
                 }
 
@@ -266,7 +266,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
             try {
                 $this->generateThumbnails($object);
             } catch (SystemException $e) {
-                if (\ENABLE_DEBUG_MODE) {
+                if (\ENABLE_DEBUG_MODE !== 0) {
                     throw $e;
                 }
 

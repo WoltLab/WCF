@@ -70,7 +70,7 @@ class Application extends DatabaseObject
     #[\Override]
     public function __get(string $name)
     {
-        if (\ENABLE_ENTERPRISE_MODE && \defined('ENTERPRISE_MODE_DOMAIN_OVERRIDE') && \PHP_SAPI !== 'cli') {
+        if (\ENABLE_ENTERPRISE_MODE !== 0 && \defined('ENTERPRISE_MODE_DOMAIN_OVERRIDE') && \PHP_SAPI !== 'cli') {
             if (\ENTERPRISE_MODE_DOMAIN_OVERRIDE === $_SERVER['HTTP_HOST']) {
                 if ($name === 'cookieDomain' || $name === 'domainName') {
                     return \ENTERPRISE_MODE_DOMAIN_OVERRIDE;
@@ -121,7 +121,7 @@ class Application extends DatabaseObject
 
     public function __wakeup()
     {
-        if (\ENABLE_ENTERPRISE_MODE && \defined('ENTERPRISE_MODE_DOMAIN_OVERRIDE') && \ENTERPRISE_MODE_DOMAIN_OVERRIDE === $_SERVER['HTTP_HOST']) {
+        if (\ENABLE_ENTERPRISE_MODE !== 0 && \defined('ENTERPRISE_MODE_DOMAIN_OVERRIDE') && \ENTERPRISE_MODE_DOMAIN_OVERRIDE === $_SERVER['HTTP_HOST']) {
             $this->pageURL = '';
         }
     }

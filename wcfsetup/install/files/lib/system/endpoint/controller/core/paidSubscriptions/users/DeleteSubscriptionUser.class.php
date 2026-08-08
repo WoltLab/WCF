@@ -38,7 +38,7 @@ final class DeleteSubscriptionUser implements IController
 
     private function assertSubscriptionUserCanDeleted(): void
     {
-        if (!\MODULE_PAID_SUBSCRIPTION) {
+        if (\MODULE_PAID_SUBSCRIPTION === 0) {
             throw new IllegalLinkException();
         }
 

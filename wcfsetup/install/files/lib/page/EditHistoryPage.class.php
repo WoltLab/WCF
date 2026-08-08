@@ -89,14 +89,14 @@ class EditHistoryPage extends AbstractPage
         if (isset($_REQUEST['oldID'])) {
             $this->oldID = \intval($_REQUEST['oldID']);
             $this->old = new EditHistoryEntry($this->oldID);
-            if (!$this->old->entryID) {
+            if ($this->old->entryID === 0) {
                 throw new IllegalLinkException();
             }
 
             if (isset($_REQUEST['newID']) && $_REQUEST['newID'] !== 'current') {
                 $this->newID = \intval($_REQUEST['newID']);
                 $this->new = new EditHistoryEntry($this->newID);
-                if (!$this->new->entryID) {
+                if ($this->new->entryID === 0) {
                     throw new IllegalLinkException();
                 }
             }
@@ -135,7 +135,7 @@ class EditHistoryPage extends AbstractPage
         /** @var (DatabaseObject&IHistorySavingObject) $object */
         $object = $processor->getObjectByID($this->objectID);
         $this->object = $object;
-        if (!$this->object->getObjectID()) {
+        if ($this->object->getObjectID() === 0) {
             throw new IllegalLinkException();
         }
         $processor->checkPermissions($this->object);

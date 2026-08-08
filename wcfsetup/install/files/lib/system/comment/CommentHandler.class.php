@@ -160,7 +160,7 @@ class CommentHandler extends SingletonFactory
 
         // delete likes
         $notificationObjectTypes = [];
-        if (UserNotificationHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.like.notification')) {
+        if (UserNotificationHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.like.notification') !== 0) {
             $notificationObjectTypes[] = $objectTypeObj->objectType . '.like.notification';
         }
 
@@ -171,12 +171,12 @@ class CommentHandler extends SingletonFactory
         )();
 
         // delete activity events
-        if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.recentActivityEvent')) {
+        if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.recentActivityEvent') !== null) {
             UserActivityEventHandler::getInstance()
                 ->removeEvents($objectTypeObj->objectType . '.recentActivityEvent', $commentIDs);
         }
         // delete notifications
-        if (UserNotificationHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.notification')) {
+        if (UserNotificationHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.notification') !== 0) {
             UserNotificationHandler::getInstance()
                 ->removeNotifications($objectTypeObj->objectType . '.notification', $commentIDs);
         }
@@ -184,7 +184,7 @@ class CommentHandler extends SingletonFactory
         if (!empty($responseIDs)) {
             // delete likes (for responses)
             $notificationObjectTypes = [];
-            if (UserNotificationHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.response.like.notification')) {
+            if (UserNotificationHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.response.like.notification') !== 0) {
                 $notificationObjectTypes[] = $objectTypeObj->objectType . '.response.like.notification';
             }
 
@@ -195,12 +195,12 @@ class CommentHandler extends SingletonFactory
             )();
 
             // delete activity events (for responses)
-            if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.response.recentActivityEvent')) {
+            if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.response.recentActivityEvent') !== null) {
                 UserActivityEventHandler::getInstance()
                     ->removeEvents($objectTypeObj->objectType . '.response.recentActivityEvent', $responseIDs);
             }
             // delete notifications (for responses)
-            if (UserNotificationHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.response.notification')) {
+            if (UserNotificationHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.response.notification') !== 0) {
                 UserNotificationHandler::getInstance()
                     ->removeNotifications($objectTypeObj->objectType . '.response.notification', $responseIDs);
             }
@@ -262,7 +262,7 @@ class CommentHandler extends SingletonFactory
 
         // mark comment notifications as confirmed
         $commentEvents = [];
-        if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType . '.notification')) {
+        if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType . '.notification') !== 0) {
             foreach (UserNotificationHandler::getInstance()->getEvents($objectType . '.notification') as $event) {
                 $commentEvents[$event->eventID] = [
                     'eventName' => $event->eventName,
@@ -360,7 +360,7 @@ class CommentHandler extends SingletonFactory
 
         // mark response notifications as confirmed
         $responseEvents = [];
-        if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType . '.response.notification')) {
+        if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType . '.response.notification') !== 0) {
             foreach (UserNotificationHandler::getInstance()->getEvents($objectType . '.response.notification') as $event) {
                 $responseEvents[$event->eventID] = [
                     'eventName' => $event->eventName,
@@ -498,7 +498,7 @@ class CommentHandler extends SingletonFactory
 
         // mark comment notifications as confirmed
         $commentEvents = [];
-        if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType . '.notification')) {
+        if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType . '.notification') !== 0) {
             foreach (UserNotificationHandler::getInstance()->getEvents($objectType . '.notification') as $event) {
                 $commentEvents[$event->eventID] = [
                     'eventName' => $event->eventName,
@@ -577,7 +577,7 @@ class CommentHandler extends SingletonFactory
         if (!empty($responseIDs)) {
             // mark response notifications as confirmed
             $responseEvents = [];
-            if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType . '.response.notification')) {
+            if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType . '.response.notification') !== 0) {
                 foreach (UserNotificationHandler::getInstance()->getEvents($objectType . '.response.notification') as $event) {
                     $responseEvents[$event->eventID] = [
                         'eventName' => $event->eventName,
@@ -677,7 +677,7 @@ class CommentHandler extends SingletonFactory
         }
 
         $responseEvents = [];
-        if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType . '.response.notification')) {
+        if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType . '.response.notification') !== 0) {
             foreach (UserNotificationHandler::getInstance()->getEvents($objectType . '.response.notification') as $event) {
                 $responseEvents[$event->eventID] = [
                     'eventName' => $event->eventName,

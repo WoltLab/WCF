@@ -162,7 +162,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
      */
     public function getParentCategory()
     {
-        if ($this->parentCategoryID && $this->parentCategory === null) {
+        if ($this->parentCategoryID !== 0 && $this->parentCategory === null) {
             $this->parentCategory = CategoryHandler::getInstance()->getCategory($this->parentCategoryID);
         }
 

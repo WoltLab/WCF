@@ -43,7 +43,7 @@ class AttachmentCleanUpCronjob extends AbstractCronjob
         ]);
         $attachmentIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
-        if (\MODULE_CONTACT_FORM && \CONTACT_FORM_PRUNE_ATTACHMENTS > 0) {
+        if (\MODULE_CONTACT_FORM !== 0 && \CONTACT_FORM_PRUNE_ATTACHMENTS > 0) {
             $attachmentIDs = \array_merge($attachmentIDs, $this->getOldContactAttachmentIDs());
         }
 

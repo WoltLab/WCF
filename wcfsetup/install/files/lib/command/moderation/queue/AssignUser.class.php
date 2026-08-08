@@ -26,7 +26,7 @@ final class AssignUser
     public function __invoke(): void
     {
         $moderationQueueEditor = new ModerationQueueEditor($this->moderationQueue);
-        $oldAssignee = $moderationQueueEditor->assignedUserID ? new User($moderationQueueEditor->assignedUserID) : null;
+        $oldAssignee = $moderationQueueEditor->assignedUserID !== null ? new User($moderationQueueEditor->assignedUserID) : null;
 
         // If the old assignee matches the new assignee, we do not need to
         // do anything.

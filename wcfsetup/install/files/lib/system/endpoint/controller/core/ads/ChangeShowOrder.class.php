@@ -48,7 +48,7 @@ final class ChangeShowOrder implements IController
 
     private function assertAdCanBeSorted(): void
     {
-        if (!\MODULE_WCF_AD) {
+        if (\MODULE_WCF_AD === 0) {
             throw new IllegalLinkException();
         }
 

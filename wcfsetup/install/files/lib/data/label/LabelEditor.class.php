@@ -39,7 +39,7 @@ class LabelEditor extends DatabaseObjectEditor implements IEditableCachedObject
     public function setShowOrder(int $groupID, int $showOrder = 0)
     {
         // shift back labels in old label group with higher showOrder
-        if ($this->showOrder) {
+        if ($this->showOrder !== 0) {
             $sql = "UPDATE  wcf1_label
                     SET     showOrder = showOrder - 1
                     WHERE   groupID = ?
@@ -49,7 +49,7 @@ class LabelEditor extends DatabaseObjectEditor implements IEditableCachedObject
         }
 
         // shift labels in new label group with higher showOrder
-        if ($showOrder) {
+        if ($showOrder !== 0) {
             $sql = "UPDATE  wcf1_label
                     SET     showOrder = showOrder + 1
                     WHERE   groupID = ?
@@ -66,7 +66,7 @@ class LabelEditor extends DatabaseObjectEditor implements IEditableCachedObject
         $statement->execute([$groupID]);
         $maxShowOrder = $statement->fetchSingleColumn() ?: 0;
 
-        if (!$showOrder || $showOrder > $maxShowOrder) {
+        if ($showOrder === 0 || $showOrder > $maxShowOrder) {
             $showOrder = $maxShowOrder + 1;
         }
 

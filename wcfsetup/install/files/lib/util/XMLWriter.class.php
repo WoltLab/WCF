@@ -117,7 +117,7 @@ class XMLWriter
      */
     public function endElement()
     {
-        if ($this->openElements) {
+        if ($this->openElements !== 0) {
             $this->xml->endElement();
             $this->openElements--;
         }

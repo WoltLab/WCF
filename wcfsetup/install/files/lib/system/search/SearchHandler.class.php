@@ -181,11 +181,11 @@ final class SearchHandler
             }
         }
 
-        if ($startDate && $endDate) {
+        if ($startDate !== 0 && $endDate !== 0) {
             $this->conditionBuilder->add('time BETWEEN ? AND ?', [$startDate, $endDate]);
-        } elseif ($startDate) {
+        } elseif ($startDate !== 0) {
             $this->conditionBuilder->add('time > ?', [$startDate]);
-        } elseif ($endDate) {
+        } elseif ($endDate !== 0) {
             $this->conditionBuilder->add('time < ?', [$endDate]);
         }
     }

@@ -81,7 +81,7 @@ final class TemplateGroupNodeTree implements \IteratorAggregate
      */
     private function getNode(int $templateGroupID): TemplateGroupNode
     {
-        if (!$templateGroupID) {
+        if ($templateGroupID === 0) {
             $templateGroup = new TemplateGroup(null, [
                 'templateGroupID' => 0,
             ]);

@@ -28,11 +28,11 @@ abstract class AbstractNumericFormOption extends AbstractFormOption
     {
         $values = $this->parseFilterValue($value);
 
-        if (!$values['from'] && !$values['to']) {
+        if ($values['from'] === 0 && $values['to'] === 0) {
             return;
         }
 
-        if (!$values['to']) {
+        if ($values['to'] === 0) {
             $list->getConditionBuilder()->add("{$columnName} >= ?", [$values['from']]);
         } else {
             $list->getConditionBuilder()->add("{$columnName} BETWEEN ? AND ?", [$values['from'], $values['to']]);
@@ -48,11 +48,11 @@ abstract class AbstractNumericFormOption extends AbstractFormOption
             $suffix = ' ' . $suffix;
         }
 
-        if ($values['from'] && $values['to']) {
+        if ($values['from'] !== 0 && $values['to'] !== 0) {
             return $values['from'] . ' ‐ ' . $values['to'] . $suffix;
-        } else if ($values['from']) {
+        } else if ($values['from'] !== 0) {
             return '>= ' . $values['from'] . $suffix;
-        } else if ($values['to']) {
+        } else if ($values['to'] !== 0) {
             return '<= ' . $values['to'] . $suffix;
         }
 
@@ -67,10 +67,10 @@ abstract class AbstractNumericFormOption extends AbstractFormOption
         $from = 0;
         $to = 0;
 
-        $values = explode(';', $value);
+        $values = \explode(';', $value);
         if (\count($values) === 2) {
-            $from = $values[0];
-            $to = $values[1];
+            $from = (int)$values[0];
+            $to = (int)$values[1];
         }
 
         return [

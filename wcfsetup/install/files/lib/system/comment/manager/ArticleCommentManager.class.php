@@ -138,7 +138,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
 
             foreach ($responses as $response) {
                 $commentIDs[] = $response->commentID;
-                if ($response->userID) {
+                if ($response->userID !== null) {
                     $userIDs[] = $response->userID;
                 }
             }
@@ -152,7 +152,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
         $articleContentIDs = [];
         foreach ($comments as $comment) {
             $articleContentIDs[] = $comment->objectID;
-            if ($comment->userID) {
+            if ($comment->userID !== null) {
                 $userIDs[] = $comment->userID;
             }
         }
@@ -185,7 +185,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
                         $like->setTitle(WCF::getLanguage()->getDynamicVariable(
                             'wcf.like.title.com.woltlab.wcf.articleComment',
                             [
-                                'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
+                                'commentAuthor' => $comment->userID !== null ? $users[$comment->userID] : null,
                                 'comment' => $comment,
                                 'articleContent' => $articleContents[$comment->objectID],
                                 'reaction' => $like,
@@ -211,8 +211,8 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
                         $like->setTitle(WCF::getLanguage()->getDynamicVariable(
                             'wcf.like.title.com.woltlab.wcf.articleComment.response',
                             [
-                                'responseAuthor' => $response->userID ? $users[$response->userID] : null,
-                                'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
+                                'responseAuthor' => $response->userID !== null ? $users[$response->userID] : null,
+                                'commentAuthor' => $comment->userID !== null ? $users[$comment->userID] : null,
                                 'articleContent' => $articleContents[$comment->objectID],
                                 'reaction' => $like,
                                 'author' => $like->getUserProfile(),
@@ -232,6 +232,6 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
         $articleContent = ArticleContentRuntimeCache::getInstance()
             ->getObject($this->getObjectID($commentOrResponse));
 
-        return $commentOrResponse->userID && $articleContent->getArticle()->userID === $commentOrResponse->userID;
+        return $commentOrResponse->userID !== null && $articleContent->getArticle()->userID === $commentOrResponse->userID;
     }
 }

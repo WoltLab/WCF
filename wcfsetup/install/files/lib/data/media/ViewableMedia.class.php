@@ -124,7 +124,7 @@ class ViewableMedia extends DatabaseObjectDecorator implements \Stringable
     #[\Override]
     public function __toString(): string
     {
-        if ($this->isImage) {
+        if ($this->isImage !== 0) {
             return '<img src="' . StringUtil::encodeHTML($this->getLink()) . '" alt="' . StringUtil::encodeHTML($this->altText) . '" ' . $this->getTitleAttribute() . '/>';
         }
 
@@ -138,7 +138,7 @@ class ViewableMedia extends DatabaseObjectDecorator implements \Stringable
      */
     public function getElementTag(int $size)
     {
-        if ($this->isImage) {
+        if ($this->isImage !== 0) {
             $width = $size;
             $height = $size;
             $link = null;
@@ -226,7 +226,7 @@ class ViewableMedia extends DatabaseObjectDecorator implements \Stringable
     public function getUserProfile()
     {
         if ($this->userProfile === null) {
-            if ($this->userID) {
+            if ($this->userID !== null) {
                 $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
             } else {
                 $this->userProfile = UserProfile::getGuestUserProfile($this->username);

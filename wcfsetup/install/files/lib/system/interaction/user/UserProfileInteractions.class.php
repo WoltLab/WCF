@@ -29,7 +29,7 @@ class UserProfileInteractions extends AbstractInteractionProvider
         $this->addInteractions([
             new class(
                 'ignore',
-                static fn(UserProfile $user) => WCF::getUser()->userID && WCF::getUser()->userID !== $user->userID
+                static fn(UserProfile $user) => WCF::getUser()->userID !== 0 && WCF::getUser()->userID !== $user->userID
             ) extends AbstractInteraction {
                 #[\Override]
                 public function render(DatabaseObject $object): string
@@ -78,7 +78,7 @@ class UserProfileInteractions extends AbstractInteractionProvider
 
                     $attributes = '';
                     $rel = 'nofollow ugc';
-                    if (\EXTERNAL_LINK_TARGET_BLANK) {
+                    if (\EXTERNAL_LINK_TARGET_BLANK !== 0) {
                         $rel .= ' noopener';
                         $attributes .= ' target="_blank"';
                     }

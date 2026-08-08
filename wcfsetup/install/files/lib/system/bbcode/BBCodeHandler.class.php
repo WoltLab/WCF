@@ -48,7 +48,7 @@ class BBCodeHandler extends SingletonFactory
     protected function init()
     {
         foreach (BBCodeCache::getInstance()->getBBCodes() as $bbcode) {
-            if ($bbcode->showButton) {
+            if ($bbcode->showButton !== 0) {
                 $this->buttonBBCodes[] = $bbcode;
             }
         }
@@ -60,15 +60,15 @@ class BBCodeHandler extends SingletonFactory
     public function isAvailableBBCode(string $bbCodeTag, bool $overrideFormattingRemoval = false): bool
     {
         if ($overrideFormattingRemoval === false) {
-            if ($bbCodeTag === "color" && \FORMATTING_REMOVE_COLOR) {
+            if ($bbCodeTag === "color" && \FORMATTING_REMOVE_COLOR !== 0) {
                 return false;
             }
 
-            if ($bbCodeTag === "font" && \FORMATTING_REMOVE_FONT) {
+            if ($bbCodeTag === "font" && \FORMATTING_REMOVE_FONT !== 0) {
                 return false;
             }
 
-            if ($bbCodeTag === "size" && \FORMATTING_REMOVE_SIZE) {
+            if ($bbCodeTag === "size" && \FORMATTING_REMOVE_SIZE !== 0) {
                 return false;
             }
         }
@@ -225,7 +225,7 @@ class BBCodeHandler extends SingletonFactory
     {
         $hosts = [];
         // Hide these hosts unless external sources are actually denied.
-        if (!\IMAGE_ALLOW_EXTERNAL_SOURCE) {
+        if (\IMAGE_ALLOW_EXTERNAL_SOURCE === 0) {
             $hosts = ArrayUtil::trim(\explode(
                 "\n",
                 \sprintf(

@@ -151,7 +151,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
             $this->aclObjectTypeID = ACLHandler::getInstance()->getObjectTypeID($aclObjectTypeName);
         }
 
-        if (!$this->packageID) {
+        if ($this->packageID === 0) {
             $this->packageID = $this->objectType->packageID;
         }
     }
@@ -450,7 +450,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
     {
         $this->formObject = new Category(\intval($_REQUEST['id'] ?? 0));
 
-        if ($this->formObject === null || !$this->formObject->categoryID) {
+        if ($this->formObject === null || $this->formObject->categoryID === 0) {
             throw new IllegalLinkException();
         }
     }

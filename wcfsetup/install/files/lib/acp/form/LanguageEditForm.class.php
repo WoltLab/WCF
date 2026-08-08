@@ -42,7 +42,7 @@ class LanguageEditForm extends LanguageAddForm
             );
             $this->formObject = new Language($queryParameters['id']);
 
-            if (!$this->formObject->getObjectID()) {
+            if ($this->formObject->getObjectID() === 0) {
                 throw new IllegalLinkException();
             }
         } catch (MappingError) {
@@ -55,7 +55,7 @@ class LanguageEditForm extends LanguageAddForm
     {
         parent::createForm();
 
-        $this->form->getFormField('isDisabled')->available(!$this->formObject->isDefault);
+        $this->form->getFormField('isDisabled')->available($this->formObject->isDefault === 0);
     }
 
     #[\Override]

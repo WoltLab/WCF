@@ -162,7 +162,7 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
     #[\Override]
     public function getResizeConfiguration(): ResizeConfiguration
     {
-        if (!\ATTACHMENT_IMAGE_AUTOSCALE) {
+        if (\ATTACHMENT_IMAGE_AUTOSCALE === 0) {
             return ResizeConfiguration::unbounded();
         }
 
@@ -182,7 +182,7 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
                 '',
                 \ATTACHMENT_THUMBNAIL_HEIGHT,
                 \ATTACHMENT_THUMBNAIL_WIDTH,
-                !!\ATTACHMENT_RETAIN_DIMENSIONS,
+                \ATTACHMENT_RETAIN_DIMENSIONS !== 0,
             ),
             new ThumbnailFormat(
                 'tiny',

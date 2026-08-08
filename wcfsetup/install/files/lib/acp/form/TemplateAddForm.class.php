@@ -248,7 +248,7 @@ class TemplateAddForm extends AbstractFormBuilderForm
         if (!empty($_REQUEST['copy'])) {
             $this->copy = \intval($_REQUEST['copy']);
             $this->copiedTemplate = new Template($this->copy);
-            if (!$this->copiedTemplate->templateID) {
+            if ($this->copiedTemplate->isNil()) {
                 throw new IllegalLinkException();
             }
         }

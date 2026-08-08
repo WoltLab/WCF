@@ -38,7 +38,7 @@ class ArticleEditForm extends ArticleAddForm
 
         $this->formObject = Helper::fetchObjectFromQueryParameter(Article::class);
 
-        if ($this->formObject->isMultilingual) {
+        if ($this->formObject->isMultilingual !== 0) {
             $this->isMultilingual = 1;
         }
 
@@ -77,7 +77,7 @@ class ArticleEditForm extends ArticleAddForm
     protected function getAttachmentObjectID(?int $languageID = null): ?int
     {
         foreach ($this->formObject->getArticleContents() as $contentLanguageID => $content) {
-            if ($this->isMultilingual) {
+            if ($this->isMultilingual !== 0) {
                 if ($contentLanguageID === ($languageID ?? 0)) {
                     return $content->articleContentID;
                 }

@@ -114,7 +114,7 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
                 $statement->execute([
                     $box->boxID,
                     $pageID,
-                    $box->visibleEverywhere ? 0 : 1,
+                    $box->visibleEverywhere !== 0 ? 0 : 1,
                 ]);
             }
         }
@@ -188,7 +188,7 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
                     if (!empty($content['htmlInputProcessor'])) {
                         $content['htmlInputProcessor']->setObjectID($boxContent->boxContentID);
                         if ((bool)$boxContent->hasEmbeddedObjects !== MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
-                            $boxContentEditor->update(['hasEmbeddedObjects' => $boxContent->hasEmbeddedObjects ? 0 : 1]);
+                            $boxContentEditor->update(['hasEmbeddedObjects' => $boxContent->hasEmbeddedObjects !== 0 ? 0 : 1]);
                         }
                     } elseif ($box->boxType === 'html' || $box->boxType === 'tpl') {
                         if (
@@ -198,7 +198,7 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
                                 $boxContent->content
                             )
                         ) {
-                            $boxContentEditor->update(['hasEmbeddedObjects' => $boxContent->hasEmbeddedObjects ? 0 : 1]);
+                            $boxContentEditor->update(['hasEmbeddedObjects' => $boxContent->hasEmbeddedObjects !== 0 ? 0 : 1]);
                         }
                     }
                 }
@@ -322,7 +322,7 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
     public function toggle()
     {
         foreach ($this->objects as $editor) {
-            if ($editor->isDisabled) {
+            if ($editor->isDisabled !== 0) {
                 new EnableBox($editor->getDecoratedObject())();
             } else {
                 new DisableBox($editor->getDecoratedObject())();

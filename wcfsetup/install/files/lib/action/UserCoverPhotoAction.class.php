@@ -49,7 +49,7 @@ final class UserCoverPhotoAction implements RequestHandlerInterface
             $user = UserProfileHandler::getInstance()->getUserProfile();
         }
 
-        if ($user->disableCoverPhoto && $user->userID === WCF::getUser()->userID) {
+        if ($user->disableCoverPhoto !== 0 && $user->userID === WCF::getUser()->userID) {
             throw new NamedUserException(HtmlString::fromSafeHtml(WCF::getLanguage()->getDynamicVariable(
                 'wcf.user.coverPhoto.error.disabled'
             )));

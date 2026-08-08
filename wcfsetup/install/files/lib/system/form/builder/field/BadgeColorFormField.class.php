@@ -74,7 +74,7 @@ final class BadgeColorFormField extends RadioButtonFormField implements IPattern
     public function validate()
     {
         if ($this->supportsCustomClassName() && $this->getValue() === BadgeColorFormField::CUSTOM_CSS_CLASSNAME) {
-            if (!Regex::compile($this->getPattern())->match($this->customClassName)) {
+            if (Regex::compile($this->getPattern())->match($this->customClassName) === 0) {
                 $this->addValidationError(
                     new FormFieldValidationError(
                         'invalid',

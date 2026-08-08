@@ -139,7 +139,7 @@ final class SaveChunk implements IController
                 $thumbnailFormats = $processor->getThumbnailFormats();
                 if ($thumbnailFormats !== []) {
                     $generateThumbnails = true;
-                } else if (\IMAGE_CONVERT_FORMAT !== 'keep' || \IMAGE_STRIP_EXIF) {
+                } else if (\IMAGE_CONVERT_FORMAT !== 'keep' || \IMAGE_STRIP_EXIF !== 0) {
                     // The action to generate thumbnails implicitly handles the
                     // format conversion and EXIF removal.
                     $generateThumbnails = true;

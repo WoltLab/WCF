@@ -44,7 +44,7 @@ class MenuItemEditForm extends MenuItemAddForm
             );
             $this->formObject = new MenuItem($queryParameters['id']);
 
-            if (!$this->formObject->getObjectID()) {
+            if ($this->formObject->getObjectID() === 0) {
                 throw new IllegalLinkException();
             }
         } catch (MappingError) {

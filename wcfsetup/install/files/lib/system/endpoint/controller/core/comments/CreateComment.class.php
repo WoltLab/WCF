@@ -65,7 +65,7 @@ final class CreateComment implements IController
 
         $event = new MessageSpamChecking(
             $htmlInputProcessor,
-            WCF::getUser()->userID ? WCF::getUser() : null,
+            WCF::getUser()->userID !== 0 ? WCF::getUser() : null,
             UserUtil::getIpAddress(),
         );
         EventHandler::getInstance()->fire($event);
@@ -77,7 +77,7 @@ final class CreateComment implements IController
             $objectType,
             $parameters->objectID,
             $htmlInputProcessor,
-            WCF::getUser()->userID ? WCF::getUser() : null,
+            WCF::getUser()->userID !== 0 ? WCF::getUser() : null,
             $username,
             $isDisabled,
         )();

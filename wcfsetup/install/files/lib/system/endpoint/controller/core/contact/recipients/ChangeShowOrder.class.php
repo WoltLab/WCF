@@ -51,7 +51,7 @@ final class ChangeShowOrder implements IController
 
     private function assertRecipientCanBeSorted(): void
     {
-        if (!\MODULE_CONTACT_FORM) {
+        if (\MODULE_CONTACT_FORM === 0) {
             throw new IllegalLinkException();
         }
 

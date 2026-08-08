@@ -203,7 +203,7 @@ class TrophyAddForm extends AbstractAcpForm
         if (isset($_POST['awardAutomatically'])) {
             $this->awardAutomatically = 1;
         }
-        if (isset($_POST['revokeAutomatically']) && $this->awardAutomatically) {
+        if (isset($_POST['revokeAutomatically']) && $this->awardAutomatically !== 0) {
             $this->revokeAutomatically = 1;
         }
         if (isset($_POST['trophyUseHtml'])) {
@@ -239,7 +239,7 @@ class TrophyAddForm extends AbstractAcpForm
             throw new UserInputException('type');
         }
 
-        if (!$this->categoryID) {
+        if ($this->categoryID === 0) {
             throw new UserInputException('categoryID');
         }
 
@@ -249,7 +249,7 @@ class TrophyAddForm extends AbstractAcpForm
 
         $this->validateType();
 
-        if ($this->awardAutomatically) {
+        if ($this->awardAutomatically !== 0) {
             $hasData = false;
             foreach ($this->conditions as $conditions) {
                 foreach ($conditions as $condition) {

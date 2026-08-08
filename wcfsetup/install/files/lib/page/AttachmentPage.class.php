@@ -104,12 +104,12 @@ class AttachmentPage extends AbstractPage
         parent::checkPermissions();
 
         if ($this->attachment->tmpHash !== '') {
-            if ($this->attachment->userID && $this->attachment->userID !== WCF::getUser()->userID) {
+            if ($this->attachment->userID !== null && $this->attachment->userID !== WCF::getUser()->userID) {
                 throw new IllegalLinkException();
             }
         } else {
             // check permissions
-            if ($this->tiny || $this->thumbnail) {
+            if ($this->tiny !== 0 || $this->thumbnail !== 0) {
                 if (!$this->attachment->canViewPreview()) {
                     throw new PermissionDeniedException();
                 }
@@ -127,9 +127,9 @@ class AttachmentPage extends AbstractPage
         // The redirect is placed here instead of inside the `readParameters()`
         // method in order to take advantage of the previous access validation.
         if ($this->attachment->getFile() !== null) {
-            if ($this->tiny) {
+            if ($this->tiny !== 0) {
                 $url = $this->attachment->getThumbnailLink('tiny');
-            } elseif ($this->thumbnail) {
+            } elseif ($this->thumbnail !== 0) {
                 $url = $this->attachment->getThumbnailLink();
             } else {
                 $url = $this->attachment->getLink();
@@ -139,12 +139,12 @@ class AttachmentPage extends AbstractPage
         }
 
         // get file data
-        if ($this->tiny) {
+        if ($this->tiny !== 0) {
             $mimeType = $this->attachment->tinyThumbnailType;
             $filesize = $this->attachment->tinyThumbnailSize;
             $location = $this->attachment->getTinyThumbnailLocation();
             $this->eTag = 'TINY_' . $this->attachment->attachmentID;
-        } elseif ($this->thumbnail) {
+        } elseif ($this->thumbnail !== 0) {
             $mimeType = $this->attachment->thumbnailType;
             $filesize = $this->attachment->thumbnailSize;
             $location = $this->attachment->getThumbnailLocation();
@@ -166,7 +166,7 @@ class AttachmentPage extends AbstractPage
                 'mimeType' => $mimeType,
                 'filesize' => $filesize,
                 'showInline' => \in_array($mimeType, self::$inlineMimeTypes),
-                'enableRangeSupport' => !$this->tiny && !$this->thumbnail,
+                'enableRangeSupport' => $this->tiny === 0 && $this->thumbnail === 0,
                 'lastModificationTime' => $this->attachment->uploadTime,
                 'expirationDate' => \TIME_NOW + $cacheDuration,
                 'maxAge' => $cacheDuration,
@@ -208,7 +208,7 @@ class AttachmentPage extends AbstractPage
             return new EmptyResponse(304);
         }
 
-        if (!$this->tiny && !$this->thumbnail) {
+        if ($this->tiny === 0 && $this->thumbnail === 0) {
             // update download count
             $editor = new AttachmentEditor($this->attachment);
             $editor->update([

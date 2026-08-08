@@ -31,7 +31,7 @@ final class DeleteArticle
         foreach ($this->article->getArticleContents() as $articleContent) {
             $articleContentIDs[] = $articleContent->articleContentID;
 
-            if ($articleContent->attachments) {
+            if ($articleContent->attachments !== 0) {
                 $attachmentArticleContentIDs[] = $articleContent->articleContentID;
             }
         }

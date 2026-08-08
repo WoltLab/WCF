@@ -32,7 +32,7 @@ final class GetLabelShowOrder implements IController
         WCF::getSession()->checkPermissions(['admin.content.label.canManageLabel']);
 
         $labelGroup = Helper::fetchObjectFromRequestParameter($variables['id'], LabelGroup::class);
-        if ($labelGroup->sortAlphabetically) {
+        if ($labelGroup->sortAlphabetically !== 0) {
             throw new IllegalLinkException();
         }
 

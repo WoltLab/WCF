@@ -64,7 +64,7 @@ final class ToggleArticleI18nAction implements RequestHandlerInterface
             }
 
             $data = $form->getData()['data'];
-            if ($article->isMultilingual) {
+            if ($article->isMultilingual !== 0) {
                 new DisableI18n($article, LanguageFactory::getInstance()->getLanguage($data['languageID']))();
             } else {
                 new EnableI18n($article)();
@@ -80,14 +80,14 @@ final class ToggleArticleI18nAction implements RequestHandlerInterface
     {
         WCF::getSession()->checkPermissions(['admin.content.article.canManageArticle']);
 
-        if (\count(LanguageFactory::getInstance()->getLanguages()) < 2 && !$article->isMultilingual) {
+        if (\count(LanguageFactory::getInstance()->getLanguages()) < 2 && $article->isMultilingual === 0) {
             throw new IllegalLinkException();
         }
     }
 
     private function getForm(Article $article): Psr15DialogForm
     {
-        $phraseType = $article->isMultilingual ? "convertFromI18n" : "convertToI18n";
+        $phraseType = $article->isMultilingual !== 0 ? "convertFromI18n" : "convertToI18n";
 
         $form = new Psr15DialogForm(
             LanguageItemEditAction::class,
@@ -97,7 +97,7 @@ final class ToggleArticleI18nAction implements RequestHandlerInterface
             LanguageItemFormNode::create('explanation')
                 ->languageItem("wcf.article.{$phraseType}.description")
         );
-        if ($article->isMultilingual) {
+        if ($article->isMultilingual !== 0) {
             $form->appendChild(
                 RadioButtonFormField::create('languageID')
                     ->label('wcf.acp.article.i18n.source')

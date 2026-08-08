@@ -142,7 +142,7 @@ final class CronjobScheduler extends SingletonFactory
                         // The cronjob exceeded the maximum fail count.
                         // Cronjobs that can be disabled, should be disabled.
                         if ($data['failCount'] >= Cronjob::MAX_FAIL_COUNT) {
-                            if ($cronjob->canBeDisabled) {
+                            if ($cronjob->canBeDisabled !== 0) {
                                 $data['isDisabled'] = 1;
                                 $data['failCount'] = 0;
                             } else {

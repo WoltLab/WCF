@@ -56,7 +56,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
             return false;
         }
 
-        if ($this->isDisabled) {
+        if ($this->isDisabled !== 0) {
             return false;
         }
 
@@ -123,7 +123,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
         foreach (CategoryHandler::getInstance()->getCategories(self::OBJECT_TYPE_NAME) as $category) {
             $category = new self($category);
 
-            if (!$category->isDisabled) {
+            if ($category->isDisabled === 0) {
                 $result = true;
                 foreach ($permissions as $permission) {
                     $result = $result && $category->getPermission($permission);

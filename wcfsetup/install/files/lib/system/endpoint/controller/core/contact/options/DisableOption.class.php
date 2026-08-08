@@ -31,7 +31,7 @@ final class DisableOption implements IController
 
         $option = Helper::fetchObjectFromRequestParameter($variables['id'], ContactOption::class);
 
-        if (!$option->isDisabled) {
+        if ($option->isDisabled === 0) {
             new DisableContactOption($option)();
         }
 
@@ -40,7 +40,7 @@ final class DisableOption implements IController
 
     private function assertOptionCanBeDisabled(): void
     {
-        if (!\MODULE_CONTACT_FORM) {
+        if (\MODULE_CONTACT_FORM === 0) {
             throw new IllegalLinkException();
         }
 

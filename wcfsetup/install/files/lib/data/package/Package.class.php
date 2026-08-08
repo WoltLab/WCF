@@ -111,7 +111,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
      */
     public function isPlugin()
     {
-        if ($this->isApplication) {
+        if ($this->isApplication !== 0) {
             return false;
         }
 
@@ -453,7 +453,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
      */
     public function isTainted(): bool
     {
-        if (!$this->isApplication) {
+        if ($this->isApplication === 0) {
             return false;
         }
 
@@ -462,6 +462,6 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
             return false;
         }
 
-        return !!$package->isTainted;
+        return $package->isTainted !== 0;
     }
 }

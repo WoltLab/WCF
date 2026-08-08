@@ -25,7 +25,7 @@ interface IUserNotificationObject extends IDatabaseObjectProcessor, IIDObject, I
     /**
      * Returns the user id of the author of this object.
      *
-     * @return  int
+     * @return  ?int
      */
     public function getAuthorID();
 }

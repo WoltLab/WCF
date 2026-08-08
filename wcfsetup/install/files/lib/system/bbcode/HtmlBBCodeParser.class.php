@@ -261,7 +261,7 @@ class HtmlBBCodeParser extends BBCodeParser
                     // insert buffered content as attribute value
                     if (!empty($buffer)) {
                         foreach ($this->bbcodes[$tag['name']]->getAttributes() as $attribute) {
-                            if ($attribute->useText && !isset($openingTag['attributes'][$attribute->attributeNo])) {
+                            if ($attribute->useText !== 0 && !isset($openingTag['attributes'][$attribute->attributeNo])) {
                                 $openingTag['attributes'][$attribute->attributeNo] = $buffer;
                                 $openingTag['useText'] = $attribute->attributeNo;
                                 $hideBuffer = true;
@@ -331,7 +331,7 @@ class HtmlBBCodeParser extends BBCodeParser
     {
         if (isset($this->bbcodes[$name])) {
             $bbcode = $this->bbcodes[$name];
-            if ($bbcode->isSourceCode) {
+            if ($bbcode->isSourceCode !== 0) {
                 \array_unshift($attributes, $element->textContent);
             }
 

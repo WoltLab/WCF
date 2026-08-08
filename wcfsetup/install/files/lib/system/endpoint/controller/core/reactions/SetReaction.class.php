@@ -68,7 +68,7 @@ final class SetReaction implements IController
             throw new PermissionDeniedException();
         }
 
-        if (!$reactionType->isAssignable) {
+        if ($reactionType->isAssignable === 0) {
             throw new UserInputException('reactionTypeID');
         }
 
@@ -98,7 +98,7 @@ final class SetReaction implements IController
 
     private function assertModuleEnabled(): void
     {
-        if (!\MODULE_LIKE) {
+        if (\MODULE_LIKE === 0) {
             throw new IllegalLinkException();
         }
     }

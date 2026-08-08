@@ -469,7 +469,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
                 $insertStatement->execute([
                     $boxes[$boxIdentifier]->boxID,
                     $pageID,
-                    $boxes[$boxIdentifier]->visibleEverywhere ? 0 : 1,
+                    $boxes[$boxIdentifier]->visibleEverywhere !== 0 ? 0 : 1,
                 ]);
             }
         }

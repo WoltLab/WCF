@@ -407,7 +407,7 @@ class LabelHandler extends SingletonFactory
 
         $labelGroup = $this->labelGroups['groups'][$groupID];
 
-        if ($labelGroup->sortAlphabetically) {
+        if ($labelGroup->sortAlphabetically !== 0) {
             $labelGroup->sortLabelsAlphabetically();
         }
 

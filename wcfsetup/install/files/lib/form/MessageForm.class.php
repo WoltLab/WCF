@@ -265,7 +265,7 @@ abstract class MessageForm extends AbstractCaptchaForm
      */
     protected function validateContentLanguage()
     {
-        if (!$this->languageID || !$this->enableMultilingualism || empty($this->availableContentLanguages)) {
+        if ($this->languageID === null || $this->languageID === 0 || !$this->enableMultilingualism || empty($this->availableContentLanguages)) {
             $this->languageID = null;
 
             return;
@@ -304,7 +304,7 @@ abstract class MessageForm extends AbstractCaptchaForm
         parent::readData();
 
         // get default smilies
-        if (\MODULE_SMILEY) {
+        if (\MODULE_SMILEY !== 0) {
             $this->smileyCategories = SmileyCache::getInstance()->getVisibleCategories();
 
             $firstCategory = \reset($this->smileyCategories);
@@ -355,7 +355,7 @@ abstract class MessageForm extends AbstractCaptchaForm
     {
         $event = new MessageSpamChecking(
             $this->htmlInputProcessor,
-            WCF::getUser()->userID ? WCF::getUser() : null,
+            WCF::getUser()->userID !== 0 ? WCF::getUser() : null,
             UserUtil::getIpAddress(),
             $this->subject,
         );

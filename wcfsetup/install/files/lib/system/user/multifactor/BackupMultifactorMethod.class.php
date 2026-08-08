@@ -245,7 +245,7 @@ final class BackupMultifactorMethod implements IMultifactorMethod
             $algorithm = $manager->getAlgorithmFromName($algorithmName);
 
             // The use of `&` is intentional to disable the shortcutting logic.
-            if ($algorithm->verify($userCode, $hash) & $code['useTime'] === null) {
+            if (($algorithm->verify($userCode, $hash) & $code['useTime'] === null) !== 0) {
                 $result = $code;
             }
         }

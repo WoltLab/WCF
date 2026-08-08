@@ -65,7 +65,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 
     public function __construct()
     {
-        if (WCF::getUser()->userID && \count(UserProfileHandler::getInstance()->getFollowingUsers())) {
+        if (WCF::getUser()->userID !== 0 && \count(UserProfileHandler::getInstance()->getFollowingUsers())) {
             $this->canFilterByFollowedUsers = true;
         }
 
@@ -168,7 +168,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
     {
         $this->objectList = $this->getObjectList();
 
-        if ($this->limit) {
+        if ($this->limit !== null) {
             $this->objectList->sqlLimit = $this->box->limit;
         }
 

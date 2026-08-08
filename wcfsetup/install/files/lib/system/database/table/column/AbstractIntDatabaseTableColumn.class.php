@@ -37,7 +37,8 @@ abstract class AbstractIntDatabaseTableColumn extends AbstractDatabaseTableColum
 
         $column = parent::createFromData($name, $data);
 
-        if ($length) {
+        // @phpstan-ignore notIdentical.alwaysTrue
+        if ($length !== null && $length !== 0 && $length !== '') {
             try {
                 $column->length($length);
             } catch (\InvalidArgumentException $e) {

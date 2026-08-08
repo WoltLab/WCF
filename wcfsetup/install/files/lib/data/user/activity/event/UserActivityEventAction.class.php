@@ -112,7 +112,7 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction
         $eventList->readObjects();
         $lastEventTime = $eventList->getLastEventTime();
 
-        if (!$lastEventTime) {
+        if ($lastEventTime === 0) {
             return [];
         }
 

@@ -34,7 +34,7 @@ class PollOption extends DatabaseObject
      */
     public function getRelativeVotes(Poll $poll)
     {
-        if ($poll->votes) {
+        if ($poll->votes !== 0) {
             return (int)\round(($this->votes / $poll->votes) * 100);
         }
 

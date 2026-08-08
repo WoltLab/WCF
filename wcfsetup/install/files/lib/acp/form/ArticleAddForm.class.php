@@ -124,7 +124,7 @@ class ArticleAddForm extends AbstractDatabaseObjectBuilderForm
         $availableLanguages = LanguageFactory::getInstance()->getLanguages();
         if (\count($availableLanguages) > 1 && empty($_POST) && !isset($_REQUEST['isMultilingual'])) {
             $parameters = ['showArticleAddDialog' => 1];
-            if ($this->categoryID) {
+            if ($this->categoryID !== 0) {
                 $parameters['categoryID'] = $this->categoryID;
             }
             HeaderUtil::redirect(LinkHandler::getInstance()->getLink('ArticleList', $parameters));
@@ -266,7 +266,7 @@ class ArticleAddForm extends AbstractDatabaseObjectBuilderForm
                 ]),
         ]);
 
-        if ($this->isMultilingual) {
+        if ($this->isMultilingual !== 0) {
             $this->createMultilingualForm();
         } else {
             $this->createMonolingualForm();

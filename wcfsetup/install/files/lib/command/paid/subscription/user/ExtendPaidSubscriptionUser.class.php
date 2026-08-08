@@ -31,7 +31,7 @@ final class ExtendPaidSubscriptionUser
 
         $this->extendSubscription($this->subscriptionUser, $endDate);
 
-        if (!$this->subscriptionUser->isActive) {
+        if ($this->subscriptionUser->isActive === 0) {
             new AddGroupMembership(
                 $this->subscriptionUser->getSubscription(),
                 $this->subscriptionUser->getUser()
@@ -48,7 +48,7 @@ final class ExtendPaidSubscriptionUser
             return $endDate;
         }
 
-        if (!$subscription->subscriptionLength) {
+        if ($subscription->subscriptionLength === 0) {
             return 0;
         }
 

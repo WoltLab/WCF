@@ -80,7 +80,7 @@ final class ContactRecipientGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return \MODULE_CONTACT_FORM
+        return \MODULE_CONTACT_FORM !== 0
             && WCF::getSession()->hasPermission("admin.contact.canManageContactForm");
     }
 

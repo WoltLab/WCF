@@ -30,7 +30,7 @@ final class DisableAssignment implements IController
 
         $this->assertAssignmentCanBeDisabled();
 
-        if (!$assignment->isDisabled) {
+        if ($assignment->isDisabled === 0) {
             new DisableUserGroupAssignment($assignment)();
         }
 

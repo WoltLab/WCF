@@ -38,7 +38,7 @@ final class DeleteTag implements IController
 
     private function assertTagCanBeDeleted(): void
     {
-        if (!\MODULE_TAGGING) {
+        if (\MODULE_TAGGING === 0) {
             throw new IllegalLinkException();
         }
 

@@ -76,7 +76,7 @@ class StyleImportForm extends AbstractForm
                 throw new UserInputException('source', 'isPackageNoPermission');
             }
 
-            if (\ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess()) {
+            if (\ENABLE_ENTERPRISE_MODE !== 0 && !WCF::getUser()->hasOwnerAccess()) {
                 throw new UserInputException('source', 'isPackageNoPermission');
             }
 

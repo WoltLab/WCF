@@ -29,7 +29,7 @@ final class EnableBox implements IController
 
         $this->assertBoxCanBeEnabled();
 
-        if ($box->isDisabled) {
+        if ($box->isDisabled !== 0) {
             new \wcf\command\box\EnableBox($box)();
         }
 

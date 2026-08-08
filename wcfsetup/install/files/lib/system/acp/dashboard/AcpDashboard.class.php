@@ -56,7 +56,7 @@ final class AcpDashboard
         $availableBoxes = \array_filter(
             $availableBoxes,
             static function (IAcpDashboardBox $box) use ($userConfiguration) {
-                return !isset($userConfiguration[$box->getName()]) || $userConfiguration[$box->getName()]['enabled'];
+                return !isset($userConfiguration[$box->getName()]) || $userConfiguration[$box->getName()]['enabled'] !== 0;
             }
         );
 

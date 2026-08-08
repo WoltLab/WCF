@@ -114,7 +114,7 @@ final class RequestHandler extends SingletonFactory
                     )
                 );
             } catch (DiactorosException $e) {
-                if (\ENABLE_DEBUG_MODE) {
+                if (\ENABLE_DEBUG_MODE !== 0) {
                     throw $e;
                 }
 
@@ -127,7 +127,7 @@ final class RequestHandler extends SingletonFactory
             if ($routeMatches) {
                 $builtRequest = $this->buildRequest($psrRequest, $application);
             } else {
-                if (\ENABLE_DEBUG_MODE) {
+                if (\ENABLE_DEBUG_MODE !== 0) {
                     throw new SystemException("Cannot handle request, no valid route provided.");
                 }
 
@@ -297,8 +297,8 @@ final class RequestHandler extends SingletonFactory
             $metaData = [];
             if (isset($routeData['cmsPageID'])) {
                 $metaData['cms'] = [
-                    'pageID' => $routeData['cmsPageID'],
-                    'languageID' => $routeData['cmsPageLanguageID'],
+                    'pageID' => (int)$routeData['cmsPageID'],
+                    'languageID' => (int)$routeData['cmsPageLanguageID'],
                 ];
 
                 if (
@@ -317,9 +317,9 @@ final class RequestHandler extends SingletonFactory
         } catch (SystemException $e) {
             if (
                 \defined('ENABLE_DEBUG_MODE')
-                && \ENABLE_DEBUG_MODE
+                && \ENABLE_DEBUG_MODE !== 0
                 && \defined('ENABLE_DEVELOPER_TOOLS')
-                && \ENABLE_DEVELOPER_TOOLS
+                && \ENABLE_DEVELOPER_TOOLS !== 0
             ) {
                 throw $e;
             }

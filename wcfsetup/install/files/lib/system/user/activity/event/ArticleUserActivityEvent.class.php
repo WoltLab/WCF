@@ -18,7 +18,7 @@ class ArticleUserActivityEvent extends SingletonFactory implements IUserActivity
     #[\Override]
     public function prepare(array $events)
     {
-        if (!\MODULE_ARTICLE) {
+        if (\MODULE_ARTICLE === 0) {
             return;
         }
 

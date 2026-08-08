@@ -33,11 +33,11 @@ class ViewableCommentResponseList extends CommentResponseList
         if (!empty($this->objects)) {
             $embeddedObjectIDs = $userIDs = [];
             foreach ($this->objects as $response) {
-                if ($response->userID) {
+                if ($response->userID !== null) {
                     $userIDs[] = $response->userID;
                 }
 
-                if ($response->hasEmbeddedObjects) {
+                if ($response->hasEmbeddedObjects !== 0) {
                     $embeddedObjectIDs[] = $response->getObjectID();
                 }
             }

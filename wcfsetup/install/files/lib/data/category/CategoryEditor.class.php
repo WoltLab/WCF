@@ -173,7 +173,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
             $maxShowOrder = \intval($row['showOrder']);
         }
 
-        if ($maxShowOrder && $showOrder <= $maxShowOrder) {
+        if ($maxShowOrder !== 0 && $showOrder <= $maxShowOrder) {
             $sql = "UPDATE  " . static::getDatabaseTableName() . "
                     SET     showOrder = showOrder + 1
                     WHERE   objectTypeID = ?

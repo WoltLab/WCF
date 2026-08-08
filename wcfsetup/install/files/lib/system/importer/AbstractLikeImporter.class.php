@@ -43,7 +43,7 @@ class AbstractLikeImporter extends AbstractImporter
                 ->getNewID('com.woltlab.wcf.user', $data['objectUserID']);
         }
         $data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
-        if (!$data['userID']) {
+        if ($data['userID'] === null) {
             return 0;
         }
         if (empty($data['time'])) {

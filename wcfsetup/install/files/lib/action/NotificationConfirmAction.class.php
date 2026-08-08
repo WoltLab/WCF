@@ -50,7 +50,7 @@ final class NotificationConfirmAction extends AbstractAction
     {
         parent::execute();
 
-        if (!$this->notification->confirmTime) {
+        if ($this->notification->confirmTime === 0) {
             UserNotificationHandler::getInstance()->markAsConfirmedByIDs([$this->notification->notificationID]);
         }
 
@@ -59,7 +59,7 @@ final class NotificationConfirmAction extends AbstractAction
         $objects = $objectType->getProcessor()->getObjectsByIDs([$this->notification->objectID]);
 
         $userProfile = null;
-        if ($this->notification->authorID) {
+        if ($this->notification->authorID !== null) {
             $userProfile = new UserProfile(new User($this->notification->authorID));
         } else {
             $userProfile = new UserProfile(new User(

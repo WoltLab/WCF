@@ -74,7 +74,7 @@ class UserOnline extends UserProfile
     public function setLocation(?string $location = null)
     {
         if ($location === null) {
-            if ($this->pageID) {
+            if ($this->pageID !== null) {
                 $page = PageCache::getInstance()->getPage($this->pageID);
                 if ($page !== null) {
                     $handler = $page->getHandler();

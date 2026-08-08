@@ -62,7 +62,7 @@ final class CommentResponseRebuildDataWorker extends AbstractLinearRebuildDataWo
             $data = [];
 
             // update message
-            if (!$response->enableHtml) {
+            if ($response->enableHtml === 0) {
                 $this->getHtmlInputProcessor()->process(
                     $response->message,
                     'com.woltlab.wcf.comment.response',

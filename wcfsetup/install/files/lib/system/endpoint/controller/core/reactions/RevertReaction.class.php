@@ -84,7 +84,7 @@ final class RevertReaction implements IController
 
     private function assertModuleEnabled(): void
     {
-        if (!\MODULE_LIKE) {
+        if (\MODULE_LIKE === 0) {
             throw new IllegalLinkException();
         }
     }

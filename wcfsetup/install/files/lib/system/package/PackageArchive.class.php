@@ -523,7 +523,7 @@ class PackageArchive
 
             $fromVersion = $element->getAttribute('fromversion');
             if ($fromVersion === '*') {
-                if (\ENABLE_DEBUG_MODE) {
+                if (\ENABLE_DEBUG_MODE !== 0) {
                     throw new PackageValidationException(PackageValidationException::FROMVERSION_CONTAINS_ONLY_WILDCARD);
                 }
 
@@ -590,7 +590,7 @@ class PackageArchive
      */
     public function hasUniqueAbbreviation(): bool
     {
-        if (!$this->packageInfo['isApplication']) {
+        if ($this->packageInfo['isApplication'] === 0) {
             return true;
         }
 

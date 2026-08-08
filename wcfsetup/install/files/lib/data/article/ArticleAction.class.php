@@ -290,7 +290,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
                     if (!empty($content['htmlInputProcessor'])) {
                         $content['htmlInputProcessor']->setObjectID($articleContent->articleContentID);
                         if ((bool)$articleContent->hasEmbeddedObjects !== MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
-                            $articleContentEditor->update(['hasEmbeddedObjects' => $articleContent->hasEmbeddedObjects ? 0 : 1]);
+                            $articleContentEditor->update(['hasEmbeddedObjects' => $articleContent->hasEmbeddedObjects !== 0 ? 0 : 1]);
                         }
                     }
                 }
@@ -404,7 +404,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
                 throw new PermissionDeniedException();
             }
 
-            if (!$article->isDeleted) {
+            if ($article->isDeleted === 0) {
                 throw new UserInputException('objectIDs');
             }
         }
@@ -423,7 +423,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
             foreach ($article->getArticleContents() as $articleContent) {
                 $articleContentIDs[] = $articleContent->articleContentID;
 
-                if ($articleContent->attachments) {
+                if ($articleContent->attachments !== 0) {
                     $attachmentArticleContentIDs[] = $articleContent->articleContentID;
                 }
             }
@@ -505,7 +505,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
                 throw new PermissionDeniedException();
             }
 
-            if ($article->isDeleted) {
+            if ($article->isDeleted !== 0) {
                 throw new UserInputException('objectIDs');
             }
         }
@@ -569,7 +569,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
         WCF::getSession()->checkPermissions(['admin.content.article.canManageArticle']);
 
         $this->articleEditor = $this->getSingleObject();
-        if ($this->articleEditor->getDecoratedObject()->isMultilingual) {
+        if ($this->articleEditor->getDecoratedObject()->isMultilingual !== 0) {
             $this->readInteger('languageID');
             $this->language = LanguageFactory::getInstance()->getLanguage($this->parameters['languageID']);
             if ($this->language === null) {
@@ -593,7 +593,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
      */
     public function toggleI18n()
     {
-        if ($this->articleEditor->isMultilingual) {
+        if ($this->articleEditor->isMultilingual !== 0) {
             new DisableI18n($this->articleEditor->getDecoratedObject(), $this->language)();
         } else {
             new EnableI18n($this->articleEditor->getDecoratedObject())();

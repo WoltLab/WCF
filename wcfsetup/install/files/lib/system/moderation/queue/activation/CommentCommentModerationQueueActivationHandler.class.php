@@ -25,7 +25,7 @@ class CommentCommentModerationQueueActivationHandler extends AbstractCommentComm
     #[\Override]
     public function enableContent(ModerationQueue $queue)
     {
-        if ($this->isValid($queue->objectID) && $this->getComment($queue->objectID)->isDisabled) {
+        if ($this->isValid($queue->objectID) && $this->getComment($queue->objectID)->isDisabled !== 0) {
             $commentAction = new CommentAction([$this->getComment($queue->objectID)], 'enable');
             $commentAction->executeAction();
         }

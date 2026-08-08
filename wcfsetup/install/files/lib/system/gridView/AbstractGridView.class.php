@@ -751,7 +751,7 @@ abstract class AbstractGridView
 
         if ($this->getSortField() !== '') {
             if (!\in_array($this->getSortField(), \array_map(fn($column) => $column->getID(), $this->getSortableColumns()))) {
-                if (\ENABLE_DEBUG_MODE) {
+                if (\ENABLE_DEBUG_MODE !== 0) {
                     throw new \InvalidArgumentException("Invalid value '{$this->getSortField()}' as sort field given.");
                 } {
                     $this->setSortField('');
@@ -890,7 +890,7 @@ abstract class AbstractGridView
     {
         $this->activeFilters = \array_filter($this->activeFilters, function ($value, $key) {
             if (!isset($this->availableFilters[$key])) {
-                if (\ENABLE_DEBUG_MODE) {
+                if (\ENABLE_DEBUG_MODE !== 0) {
                     throw new \LogicException("Filter applied for unknown column '{$key}'.");
                 } else {
                     return false;
@@ -900,7 +900,7 @@ abstract class AbstractGridView
             try {
                 $this->availableFilters[$key]->applyFilter($this->getObjectList(), $value);
             } catch (InvalidFilterValue $e) {
-                if (\ENABLE_DEBUG_MODE) {
+                if (\ENABLE_DEBUG_MODE !== 0) {
                     throw $e;
                 } else {
                     return false;

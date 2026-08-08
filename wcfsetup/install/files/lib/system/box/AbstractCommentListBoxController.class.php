@@ -66,7 +66,7 @@ abstract class AbstractCommentListBoxController extends AbstractDatabaseObjectLi
             throw new InvalidObjectTypeException($this->objectTypeName, 'com.woltlab.wcf.comment.commentableContent');
         }
 
-        if (!empty($this->validSortFields) && \MODULE_LIKE) {
+        if (!empty($this->validSortFields) && \MODULE_LIKE !== 0) {
             $this->validSortFields[] = 'cumulativeLikes';
         }
 

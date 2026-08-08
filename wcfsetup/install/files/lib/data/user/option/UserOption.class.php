@@ -137,7 +137,7 @@ class UserOption extends Option implements ITitledObject
     #[\Override]
     public function isVisible()
     {
-        if ($this->isDisabled) {
+        if ($this->isDisabled !== 0) {
             return false;
         }
 
@@ -147,7 +147,7 @@ class UserOption extends Option implements ITitledObject
         }
 
         // proceed if option is visible for registered users and current user is logged in
-        if (($this->visible & self::VISIBILITY_REGISTERED) && WCF::getUser()->userID) {
+        if (($this->visible & self::VISIBILITY_REGISTERED) && WCF::getUser()->userID !== 0) {
             return true;
         }
 
@@ -176,7 +176,7 @@ class UserOption extends Option implements ITitledObject
      */
     public function isEditable(bool $inRegistration = false)
     {
-        if ($this->isDisabled) {
+        if ($this->isDisabled !== 0) {
             return false;
         }
 
@@ -208,7 +208,7 @@ class UserOption extends Option implements ITitledObject
      */
     public function canDelete()
     {
-        if ($this->originIsSystem) {
+        if ($this->originIsSystem !== 0) {
             return false;
         }
 

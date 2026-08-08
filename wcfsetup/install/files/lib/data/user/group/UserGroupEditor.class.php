@@ -148,7 +148,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 
         $userGroupList = new UserGroupList();
         $userGroupList->getConditionBuilder()->add('user_group.groupID <> ?', [$groupID]);
-        if ($ownerGroupID) {
+        if ($ownerGroupID !== null) {
             $userGroupList->getConditionBuilder()->add('user_group.groupID <> ?', [$ownerGroupID]);
         }
         $userGroupList->readObjects();

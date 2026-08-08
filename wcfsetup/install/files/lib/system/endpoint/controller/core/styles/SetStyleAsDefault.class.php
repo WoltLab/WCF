@@ -30,7 +30,7 @@ final class SetStyleAsDefault implements IController
 
         $this->assertStyleCanBeSetAsDefault();
 
-        if (!$style->isDefault) {
+        if ($style->isDefault === 0) {
             $editor = new StyleEditor($style);
             $editor->setAsDefault();
         }

@@ -301,7 +301,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 
                 // save page ids
                 foreach ($pageIDs as $pageID) {
-                    $insertStatement->execute([$box->boxID, $pageID, $box->visibleEverywhere ? 0 : 1]);
+                    $insertStatement->execute([$box->boxID, $pageID, $box->visibleEverywhere !== 0 ? 0 : 1]);
                 }
             }
         }

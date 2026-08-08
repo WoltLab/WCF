@@ -69,7 +69,7 @@ final class DeleteResponses
 
     private function deleteActivityEvents(): void
     {
-        if (UserActivityEventHandler::getInstance()->getObjectTypeID($this->objectType->objectType . '.response.recentActivityEvent')) {
+        if (UserActivityEventHandler::getInstance()->getObjectTypeID($this->objectType->objectType . '.response.recentActivityEvent') !== null) {
             UserActivityEventHandler::getInstance()->removeEvents(
                 $this->objectType->objectType . '.response.recentActivityEvent',
                 $this->responseIDs
@@ -79,7 +79,7 @@ final class DeleteResponses
 
     private function deleteNotifications(): void
     {
-        if (UserNotificationHandler::getInstance()->getObjectTypeID($this->objectType->objectType . '.response.notification')) {
+        if (UserNotificationHandler::getInstance()->getObjectTypeID($this->objectType->objectType . '.response.notification') !== 0) {
             UserNotificationHandler::getInstance()->removeNotifications(
                 $this->objectType->objectType . '.response.notification',
                 $this->responseIDs
@@ -92,7 +92,7 @@ final class DeleteResponses
         new DeleteObjectReactions(
             'com.woltlab.wcf.comment.response',
             $this->responseIDs,
-            UserNotificationHandler::getInstance()->getObjectTypeID($this->objectType->objectType . '.response.like.notification')
+            UserNotificationHandler::getInstance()->getObjectTypeID($this->objectType->objectType . '.response.like.notification') !== 0
                 ? [$this->objectType->objectType . '.response.like.notification']
                 : []
         )();
@@ -140,7 +140,7 @@ final class DeleteResponses
         }
 
         foreach ($this->responses as $response) {
-            if (!$response->isDisabled) {
+            if ($response->isDisabled === 0) {
                 $this->commentManager->updateCounter($comments[$response->commentID]->objectID, -1);
             }
         }

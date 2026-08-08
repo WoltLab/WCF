@@ -268,7 +268,7 @@ final class AttachmentBBCode extends AbstractBBCode
 
     private function getAttachment(int $attachmentID): ?Attachment
     {
-        if (!$attachmentID) {
+        if ($attachmentID === 0) {
             return null;
         }
 

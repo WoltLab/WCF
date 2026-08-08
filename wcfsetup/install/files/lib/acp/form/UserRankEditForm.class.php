@@ -51,7 +51,7 @@ class UserRankEditForm extends UserRankAddForm
 
         $this->formObject = new UserRank($queryParameters['id']);
 
-        if (!$this->formObject->getObjectID()) {
+        if ($this->formObject->getObjectID() === 0) {
             throw new IllegalLinkException();
         }
     }

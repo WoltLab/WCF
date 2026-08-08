@@ -109,7 +109,7 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
         parent::validateDelete();
 
         foreach ($this->objects as $object) {
-            if ($object->getTrophy()->awardAutomatically) {
+            if ($object->getTrophy()->awardAutomatically !== 0) {
                 throw new PermissionDeniedException();
             }
         }
@@ -184,7 +184,7 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
      */
     public function validateGetGroupedUserTrophyList()
     {
-        if (!\MODULE_TROPHY) {
+        if (\MODULE_TROPHY === 0) {
             throw new IllegalLinkException();
         }
 

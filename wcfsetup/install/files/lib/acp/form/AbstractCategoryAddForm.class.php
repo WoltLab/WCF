@@ -146,7 +146,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm
         parent::assignVariables();
 
         I18nHandler::getInstance()->assignVariables();
-        if ($this->aclObjectTypeID) {
+        if ($this->aclObjectTypeID !== 0) {
             ACLHandler::getInstance()->assignVariables($this->aclObjectTypeID);
         }
 
@@ -210,7 +210,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm
         }
 
         // autoset package id
-        if (!$this->packageID) {
+        if ($this->packageID === 0) {
             $this->packageID = $this->objectType->packageID;
         }
 
@@ -300,7 +300,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm
         }
 
         // save acl
-        if ($this->aclObjectTypeID) {
+        if ($this->aclObjectTypeID !== 0) {
             ACLHandler::getInstance()->save($returnValues['returnValues']->categoryID, $this->aclObjectTypeID);
             ACLHandler::getInstance()->disableAssignVariables();
             CategoryPermissionHandler::getInstance()->resetCache();
@@ -359,7 +359,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm
      */
     protected function validateParentCategory()
     {
-        if ($this->parentCategoryID) {
+        if ($this->parentCategoryID !== 0) {
             if (!$this->objectType->getProcessor()->getMaximumNestingLevel()) {
                 $this->parentCategoryID = 0;
 

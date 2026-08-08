@@ -24,7 +24,7 @@ class UserTrophyBulkInteractions extends AbstractBulkInteractionProvider
         $this->addInteractions([
             new BulkDeleteInteraction(
                 'core/users/trophies/%s',
-                static fn(UserTrophy $userTrophy) => !$userTrophy->getTrophy()->awardAutomatically
+                static fn(UserTrophy $userTrophy) => $userTrophy->getTrophy()->awardAutomatically === 0
             ),
         ]);
 

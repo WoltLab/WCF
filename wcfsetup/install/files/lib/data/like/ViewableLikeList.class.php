@@ -92,7 +92,7 @@ class ViewableLikeList extends LikeList
     {
         $lastLikeTime = 0;
         foreach ($this->objects as $like) {
-            if (!$lastLikeTime) {
+            if ($lastLikeTime === 0) {
                 $lastLikeTime = $like->time;
             }
 

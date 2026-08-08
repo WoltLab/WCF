@@ -75,7 +75,7 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
     {
         $editor = $this->getSingleObject();
 
-        if ($editor->isDismissible) {
+        if ($editor->isDismissible !== 0) {
             new DismissNotice($editor->getDecoratedObject())();
         }
 
@@ -125,7 +125,7 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
     public function toggle()
     {
         foreach ($this->objects as $editor) {
-            if ($editor->isDisabled) {
+            if ($editor->isDisabled !== 0) {
                 new EnableNotice($editor->getDecoratedObject())();
             } else {
                 new DisableNotice($editor->getDecoratedObject())();

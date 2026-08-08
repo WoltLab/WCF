@@ -157,7 +157,7 @@ final class SmileyGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return \MODULE_SMILEY
+        return \MODULE_SMILEY !== 0
             && WCF::getSession()->hasPermission('admin.content.smiley.canManageSmiley');
     }
 

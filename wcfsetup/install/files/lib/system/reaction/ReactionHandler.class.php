@@ -288,7 +288,7 @@ final class ReactionHandler extends SingletonFactory
         $likeObject = LikeObject::getLikeObject($likeable->getObjectType()->objectTypeID, $likeable->getObjectID());
 
         // if vote is identically just revert the vote
-        if ($like->likeID && ($like->reactionTypeID === $reactionTypeID)) {
+        if ($like->likeID !== 0 && ($like->reactionTypeID === $reactionTypeID)) {
             return $this->revertReact($like, $likeable, $likeObject, $user);
         }
 

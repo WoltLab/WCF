@@ -94,7 +94,7 @@ final class GZipFile extends File
 
         while ($byteBlock > 1) {
             $byteBlock >>= 1;
-            $eof += $byteBlock * ($this->seek($eof) ? -1 : 1);
+            $eof += $byteBlock * ($this->seek($eof) !== 0 ? -1 : 1);
         }
 
         if ($this->seek($eof) === -1) {

@@ -63,7 +63,7 @@ class MenuItem extends DatabaseObject implements ITitledObject
      */
     public function canDelete()
     {
-        if (WCF::getSession()->hasPermission('admin.content.cms.canManageMenu') && !$this->originIsSystem) {
+        if (WCF::getSession()->hasPermission('admin.content.cms.canManageMenu') && $this->originIsSystem === 0) {
             return true;
         }
 
@@ -91,14 +91,14 @@ class MenuItem extends DatabaseObject implements ITitledObject
      */
     public function getURL()
     {
-        if ($this->pageObjectID) {
+        if ($this->pageObjectID !== 0) {
             $handler = $this->getMenuPageHandler();
             if ($handler && $handler instanceof ILookupPageHandler) {
                 return $this->appendUrlParameters($handler->getLink($this->pageObjectID));
             }
         }
 
-        if ($this->pageID) {
+        if ($this->pageID !== null) {
             return $this->appendUrlParameters($this->getPage()->getLink());
         } else {
             return WCF::getLanguage()->get($this->externalURL);
@@ -121,7 +121,7 @@ class MenuItem extends DatabaseObject implements ITitledObject
      */
     public function getPage()
     {
-        if ($this->page === null && $this->pageID) {
+        if ($this->page === null && $this->pageID !== null) {
             $this->page = PageCache::getInstance()->getPage($this->pageID);
         }
 
@@ -135,7 +135,7 @@ class MenuItem extends DatabaseObject implements ITitledObject
      */
     public function isVisible()
     {
-        if ($this->isDisabled) {
+        if ($this->isDisabled !== 0) {
             return false;
         }
 
@@ -205,7 +205,7 @@ class MenuItem extends DatabaseObject implements ITitledObject
 
     public function cachePageObject(): void
     {
-        if ($this->pageObjectID && $this->getMenuPageHandler() !== null) {
+        if ($this->pageObjectID !== 0 && $this->getMenuPageHandler() !== null) {
             $this->getMenuPageHandler()->cacheObject($this->pageObjectID);
         }
     }

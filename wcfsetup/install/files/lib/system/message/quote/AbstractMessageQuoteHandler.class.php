@@ -46,7 +46,7 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
         $userIDs = $userProfiles = [];
         foreach ($messages as $message) {
             $userID = $message->getUserID();
-            if ($userID) {
+            if ($userID !== 0) {
                 $userIDs[] = $userID;
             }
         }

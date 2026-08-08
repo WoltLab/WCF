@@ -58,7 +58,7 @@ class ArticlePage extends AbstractPage
         $this->articleContent = Helper::fetchObjectFromQueryParameter(ArticleContent::class);
 
         // check if the language has been disabled
-        if ($this->articleContent->languageID && LanguageFactory::getInstance()->getLanguage($this->articleContent->languageID) === null) {
+        if ($this->articleContent->languageID !== null && LanguageFactory::getInstance()->getLanguage($this->articleContent->languageID) === null) {
             throw new IllegalLinkException();
         }
 
@@ -77,7 +77,7 @@ class ArticlePage extends AbstractPage
         // update interface language to match the article's language
         if (
             WCF::getUser()->isGuest()
-            && $this->article->isMultilingual
+            && $this->article->isMultilingual !== 0
             && $this->articleContent->languageID !== null
             && $this->articleContent->languageID !== WCF::getLanguage()->languageID
         ) {

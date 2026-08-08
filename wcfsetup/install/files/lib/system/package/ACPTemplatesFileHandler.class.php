@@ -64,7 +64,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler
                 // check if acp templates from the package beeing
                 // installed are in conflict with already installed
                 // files
-                if (!$this->packageInstallation->getPackage()->isApplication && !empty($lockedFiles)) {
+                if ($this->packageInstallation->getPackage()->isApplication === 0 && !empty($lockedFiles)) {
                     foreach ($files as $file) {
                         if (isset($lockedFiles[$file])) {
                             $owningPackage = new Package($lockedFiles[$file]);

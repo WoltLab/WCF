@@ -449,7 +449,7 @@ final class DateUtil
         }
 
         // calc
-        if ($year) {
+        if ($year !== 0) {
             $now = new \DateTimeImmutable("now", WCF::getUser()->getTimeZone());
 
             $age = $now->format('Y') - $year;

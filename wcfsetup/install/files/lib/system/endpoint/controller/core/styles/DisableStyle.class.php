@@ -30,7 +30,7 @@ final class DisableStyle implements IController
 
         $this->assertStyleCanBeDisabled($style);
 
-        if (!$style->isDisabled) {
+        if ($style->isDisabled === 0) {
             new \wcf\command\style\DisableStyle($style)();
         }
 
@@ -41,7 +41,7 @@ final class DisableStyle implements IController
     {
         WCF::getSession()->checkPermissions(['admin.style.canManageStyle']);
 
-        if ($style->isDefault) {
+        if ($style->isDefault !== 0) {
             throw new IllegalLinkException();
         }
     }

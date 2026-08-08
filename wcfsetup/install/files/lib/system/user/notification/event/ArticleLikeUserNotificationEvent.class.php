@@ -132,7 +132,7 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
     #[\Override]
     public function isVisible()
     {
-        if (!\MODULE_ARTICLE || !\MODULE_LIKE) {
+        if (\MODULE_ARTICLE === 0 || \MODULE_LIKE === 0) {
             return false;
         }
 

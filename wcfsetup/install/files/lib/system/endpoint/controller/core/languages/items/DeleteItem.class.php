@@ -45,7 +45,7 @@ final class DeleteItem implements IController
     {
         WCF::getSession()->checkPermissions(['admin.language.canManageLanguage']);
 
-        if (!$option->isCustomLanguageItem) {
+        if ($option->isCustomLanguageItem === 0) {
             throw new PermissionDeniedException();
         }
     }

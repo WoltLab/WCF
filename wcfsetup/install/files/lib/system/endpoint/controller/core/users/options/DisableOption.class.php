@@ -29,7 +29,7 @@ final class DisableOption implements IController
 
         $this->assertOptionCanBeDisabled();
 
-        if (!$option->isDisabled) {
+        if ($option->isDisabled === 0) {
             new \wcf\command\user\option\DisableOption($option)();
         }
 

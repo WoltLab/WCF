@@ -66,7 +66,7 @@ final class TagGridView extends AbstractGridView
                         {
                             \assert($row instanceof Tag);
 
-                            if (!$row->languageID) {
+                            if ($row->languageID === 0) {
                                 return '';
                             }
 
@@ -148,7 +148,7 @@ final class TagGridView extends AbstractGridView
     #[\Override]
     public function isAccessible(): bool
     {
-        return \MODULE_TAGGING
+        return \MODULE_TAGGING !== 0
             && WCF::getSession()->hasPermission('admin.content.tag.canManageTag');
     }
 

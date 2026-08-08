@@ -291,7 +291,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         }
         $userEditor->addToLanguages($this->parameters['languageIDs'], false);
 
-        if (\PACKAGE_ID) {
+        if (\PACKAGE_ID !== 0) {
             // set default notifications
             $sql = "INSERT INTO wcf1_user_notification_event_to_user
                                 (userID, eventID, mailNotificationType)
@@ -302,7 +302,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
             $statement->execute([$user->userID, 1]);
 
             // update user rank
-            if (\MODULE_USER_RANK) {
+            if (\MODULE_USER_RANK !== 0) {
                 $action = new UserProfileAction([$userEditor], 'updateUserRank');
                 $action->executeAction();
             }
@@ -453,11 +453,11 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         UserEditor::resetCache();
         $this->readObjects();
 
-        if (\MODULE_USER_RANK) {
+        if (\MODULE_USER_RANK !== 0) {
             $action = new UserProfileAction($this->objects, 'updateUserRank');
             $action->executeAction();
         }
-        if (\MODULE_USERS_ONLINE) {
+        if (\MODULE_USERS_ONLINE !== 0) {
             $action = new UserProfileAction($this->objects, 'updateUserOnlineMarking');
             $action->executeAction();
         }
@@ -498,11 +498,11 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         UserEditor::resetCache();
         $this->readObjects();
 
-        if (\MODULE_USER_RANK) {
+        if (\MODULE_USER_RANK !== 0) {
             $action = new UserProfileAction($this->objects, 'updateUserRank');
             $action->executeAction();
         }
-        if (\MODULE_USERS_ONLINE) {
+        if (\MODULE_USERS_ONLINE !== 0) {
             $action = new UserProfileAction($this->objects, 'updateUserOnlineMarking');
             $action->executeAction();
         }
@@ -1251,7 +1251,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      */
     public function validateDevtoolsSetLanguage()
     {
-        if (!\ENABLE_DEBUG_MODE || !\ENABLE_DEVELOPER_TOOLS) {
+        if (\ENABLE_DEBUG_MODE === 0 || \ENABLE_DEVELOPER_TOOLS === 0) {
             throw new PermissionDeniedException();
         }
 

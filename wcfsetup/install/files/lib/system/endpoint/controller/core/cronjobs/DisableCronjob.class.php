@@ -30,7 +30,7 @@ final class DisableCronjob implements IController
 
         $this->assertCronjobCanBeDisabled($cronjob);
 
-        if (!$cronjob->isDisabled) {
+        if ($cronjob->isDisabled === 0) {
             new \wcf\command\cronjob\DisableCronjob($cronjob)();
         }
 

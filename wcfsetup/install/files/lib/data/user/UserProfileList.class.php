@@ -51,7 +51,7 @@ class UserProfileList extends UserList
 
         $coverPhotoFileIDs = [];
         foreach ($this->objects as $object) {
-            if ($object->coverPhotoFileID) {
+            if ($object->coverPhotoFileID !== null) {
                 $coverPhotoFileIDs[] = $object->coverPhotoFileID;
             }
         }

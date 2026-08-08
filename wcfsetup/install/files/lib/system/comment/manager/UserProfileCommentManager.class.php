@@ -205,7 +205,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements
 
             foreach ($responses as $response) {
                 $commentIDs[] = $response->commentID;
-                if ($response->userID) {
+                if ($response->userID !== null) {
                     $userIDs[] = $response->userID;
                 }
             }
@@ -218,7 +218,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements
         $users = [];
         foreach ($comments as $comment) {
             $userIDs[] = $comment->objectID;
-            if ($comment->userID) {
+            if ($comment->userID !== null) {
                 $userIDs[] = $comment->userID;
             }
         }
@@ -239,7 +239,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements
                         $like->setTitle(WCF::getLanguage()->getDynamicVariable(
                             'wcf.like.title.com.woltlab.wcf.user.profileComment',
                             [
-                                'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
+                                'commentAuthor' => $comment->userID !== null ? $users[$comment->userID] : null,
                                 'comment' => $comment,
                                 'user' => $users[$comment->objectID],
                                 'reaction' => $like,
@@ -262,8 +262,8 @@ class UserProfileCommentManager extends AbstractCommentManager implements
                         $like->setTitle(WCF::getLanguage()->getDynamicVariable(
                             'wcf.like.title.com.woltlab.wcf.user.profileComment.response',
                             [
-                                'responseAuthor' => $response->userID ? $users[$response->userID] : null,
-                                'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
+                                'responseAuthor' => $response->userID !== null ? $users[$response->userID] : null,
+                                'commentAuthor' => $comment->userID !== null ? $users[$comment->userID] : null,
                                 'user' => $users[$comment->objectID],
                                 'reaction' => $like,
                                 'author' => $like->getUserProfile(),

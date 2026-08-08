@@ -34,7 +34,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin
         $styleEditor = StyleHandler::getInstance()->getStyleByName($this->installation->getPackageName(), false);
 
         // import style
-        $style = StyleEditor::import($filename, $this->installation->getPackageID(), $styleEditor, !\PACKAGE_ID);
+        $style = StyleEditor::import($filename, $this->installation->getPackageID(), $styleEditor, \PACKAGE_ID === 0);
 
         // set style as default
         if (isset($this->instruction['attributes']['default'])) {
@@ -63,7 +63,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin
             $styleEditor = new StyleEditor($style);
             $styleEditor->delete();
 
-            $isDefault = $isDefault || $style->isDefault;
+            $isDefault = $isDefault || $style->isDefault !== 0;
         }
 
         // default style deleted

@@ -70,12 +70,12 @@ class StructuredCommentResponseList extends CommentResponseList
         // get user ids
         $embeddedObjectIDs = $userIDs = [];
         foreach ($this->objects as $response) {
-            if (!$this->minResponseTime || $response->time < $this->minResponseTime) {
+            if ($this->minResponseTime === 0 || $response->time < $this->minResponseTime) {
                 $this->minResponseTime = $response->time;
             }
             $userIDs[] = $response->userID;
 
-            if ($response->hasEmbeddedObjects) {
+            if ($response->hasEmbeddedObjects !== 0) {
                 $embeddedObjectIDs[] = $response->getObjectID();
             }
 

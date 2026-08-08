@@ -54,7 +54,7 @@ class MessageParser extends BBCodeParser
             $smilies = SmileyCache::getInstance()->getSmilies();
             $categories = SmileyCache::getInstance()->getCategories();
             foreach ($smilies as $categoryID => $categorySmilies) {
-                if ($categories[$categoryID ?: null]->isDisabled) {
+                if ($categories[$categoryID ?: null]->isDisabled !== 0) {
                     continue;
                 }
 

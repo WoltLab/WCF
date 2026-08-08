@@ -129,7 +129,7 @@ abstract class MultipleLinkPage extends AbstractPage
         $this->calculateNumberOfPages();
 
         // read objects
-        if ($this->items) {
+        if ($this->items !== 0) {
             $this->sqlLimit = $this->itemsPerPage;
             $this->sqlOffset = ($this->pageNo - 1) * $this->itemsPerPage;
             if ($this->sortField !== '' && $this->sortOrder !== '') {

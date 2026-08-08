@@ -51,7 +51,7 @@ abstract class AbstractUserBulkProcessingAction extends AbstractBulkProcessingAc
         foreach ($userList as $user) {
             if (empty($groupIDs[$user->userID])) {
                 $users[$user->userID] = $user;
-            } elseif ($ownerGroupID && \in_array($ownerGroupID, $groupIDs[$user->userID])) {
+            } elseif ($ownerGroupID !== null && \in_array($ownerGroupID, $groupIDs[$user->userID])) {
                 // Bulk actions can never affect members of the owner group.
                 continue;
             } elseif (UserGroup::isAccessibleGroup($groupIDs[$user->userID])) {

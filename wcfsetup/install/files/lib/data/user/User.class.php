@@ -198,7 +198,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     public function getGroupIDs(bool $skipCache = false): array
     {
         if ($this->groupIDs === null || $skipCache) {
-            if (!$this->userID) {
+            if ($this->userID === 0) {
                 // user is a guest, use default guest group
                 $this->groupIDs = UserGroup::getGroupIDsByType([UserGroup::GUESTS, UserGroup::EVERYONE]);
             } else {
@@ -243,7 +243,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
         if ($this->languageIDs === null) {
             $this->languageIDs = [];
 
-            if ($this->userID) {
+            if ($this->userID !== 0) {
                 // get language ids
                 $data = UserStorageHandler::getInstance()->getField('languageIDs', $this->userID);
 
@@ -284,7 +284,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
         $optionID = self::getUserOptionID($name);
         if ($optionID === null) {
             return null;
-        } elseif ($filterDisabled && self::$userOptions[$name]->isDisabled) {
+        } elseif ($filterDisabled && self::$userOptions[$name]->isDisabled !== 0) {
             return null;
         }
 
@@ -491,7 +491,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     {
         $language = null;
 
-        if ($this->languageID) {
+        if ($this->languageID !== 0) {
             $language = LanguageFactory::getInstance()->getLanguage($this->languageID);
         }
 
@@ -518,7 +518,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
         if ($this->hasAdministrativePermissions === null) {
             $this->hasAdministrativePermissions = false;
 
-            if ($this->userID) {
+            if ($this->userID !== 0) {
                 foreach (UserGroup::getGroupsByIDs($this->getGroupIDs()) as $group) {
                     if ($group->isAdminGroup()) {
                         $this->hasAdministrativePermissions = true;
@@ -590,7 +590,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public function canPurchasePaidSubscriptions(): bool
     {
-        return WCF::getUser()->userID && !$this->pendingActivation();
+        return WCF::getUser()->userID !== 0 && !$this->pendingActivation();
     }
 
     /**
@@ -685,7 +685,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     public function requiresMultifactor(): bool
     {
         foreach (UserGroup::getGroupsByIDs($this->getGroupIDs()) as $group) {
-            if ($group->requireMultifactor) {
+            if ($group->requireMultifactor !== 0) {
                 return true;
             }
         }

@@ -565,7 +565,7 @@ class PackageInstallationNodeBuilder
             $index = $this->installation->getArchive()->getTar()->getIndexByFilename($package['file']);
             if ($index === false) {
                 // workaround for WCFSetup
-                if (!\PACKAGE_ID && $packageName === 'com.woltlab.wcf') {
+                if (\PACKAGE_ID === 0 && $packageName === 'com.woltlab.wcf') {
                     continue;
                 }
 

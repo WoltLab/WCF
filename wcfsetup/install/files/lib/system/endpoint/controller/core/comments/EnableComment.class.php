@@ -30,7 +30,7 @@ final class EnableComment implements IController
 
         $this->assertCommentCanBeEnabled($comment);
 
-        if ($comment->isDisabled) {
+        if ($comment->isDisabled !== 0) {
             new \wcf\command\comment\PublishComment($comment)();
         }
 

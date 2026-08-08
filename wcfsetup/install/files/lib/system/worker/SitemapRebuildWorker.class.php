@@ -494,7 +494,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
         if (\is_array($files)) {
             $regex = new Regex(\preg_quote($objectTypeName) . '(_[0-9]*|).xml');
             foreach ($files as $filename) {
-                if ($regex->match(\basename($filename))) {
+                if ($regex->match(\basename($filename)) !== 0) {
                     \unlink($filename);
                 }
             }

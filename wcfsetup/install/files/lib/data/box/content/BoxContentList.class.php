@@ -41,11 +41,11 @@ class BoxContentList extends DatabaseObjectList
 
         $imageIDs = $embeddedObjectBoxContentIDs = [];
         foreach ($this->getObjects() as $boxContent) {
-            if ($boxContent->imageID) {
+            if ($boxContent->imageID !== null) {
                 $imageIDs[] = $boxContent->imageID;
             }
 
-            if ($boxContent->hasEmbeddedObjects) {
+            if ($boxContent->hasEmbeddedObjects !== 0) {
                 $embeddedObjectBoxContentIDs[] = $boxContent->boxContentID;
             }
         }
@@ -58,7 +58,7 @@ class BoxContentList extends DatabaseObjectList
                 $images = $mediaList->getObjects();
 
                 foreach ($this->getObjects() as $boxContent) {
-                    if ($boxContent->imageID && isset($images[$boxContent->imageID])) {
+                    if ($boxContent->imageID !== null && isset($images[$boxContent->imageID])) {
                         $boxContent->setImage($images[$boxContent->imageID]);
                     }
                 }

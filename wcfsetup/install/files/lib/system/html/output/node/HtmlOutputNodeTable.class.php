@@ -29,7 +29,7 @@ class HtmlOutputNodeTable extends AbstractHtmlOutputNode
                 /** @var \DOMElement $td */
                 foreach ($element->getElementsByTagName('td') as $td) {
                     $rowspan = (int)$td->getAttribute('rowspan');
-                    if ($rowspan) {
+                    if ($rowspan !== 0) {
                         $nextTrCount = 0;
                         $nextSibling = $td->parentNode->nextSibling;
                         while ($nextSibling) {

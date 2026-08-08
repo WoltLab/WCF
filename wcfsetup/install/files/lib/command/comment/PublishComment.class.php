@@ -37,7 +37,7 @@ final class PublishComment
 
     public function __invoke(): void
     {
-        if ($this->comment->isDisabled) {
+        if ($this->comment->isDisabled !== 0) {
             (new CommentEditor($this->comment))->update([
                 'isDisabled' => 0
             ]);
@@ -54,10 +54,10 @@ final class PublishComment
     private function fireActivityEvent(): void
     {
         if (
-            $this->comment->userID
+            $this->comment->userID !== null
             && UserActivityEventHandler::getInstance()->getObjectTypeID(
                 $this->objectType->objectType . '.recentActivityEvent'
-            )
+            ) !== null
         ) {
             UserActivityEventHandler::getInstance()->fireEvent(
                 $this->objectType->objectType . '.recentActivityEvent',

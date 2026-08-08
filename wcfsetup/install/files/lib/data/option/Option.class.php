@@ -200,7 +200,7 @@ class Option extends DatabaseObject
      */
     public function isVisible()
     {
-        return !$this->hidden;
+        return $this->hidden === 0;
     }
 
     #[\Override]

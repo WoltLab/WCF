@@ -143,7 +143,7 @@ class WysiwygFormContainer extends FormContainer implements IBuilderNode
      * is `true` if smilies are supported for this container, otherwise `false`
      * @var bool
      */
-    protected $supportSmilies = !!\MODULE_SMILEY;
+    protected $supportSmilies = \MODULE_SMILEY !== 0;
 
     /**
      * actual wysiwyg form field

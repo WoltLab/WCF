@@ -52,7 +52,7 @@ class WCFACP extends WCF
         $this->initCoreObjects();
 
         // prevent application loading during setup
-        if (\PACKAGE_ID) {
+        if (\PACKAGE_ID !== 0) {
             $this->initApplications();
         }
 
@@ -71,7 +71,7 @@ class WCFACP extends WCF
         if (!isset(self::$inRescueMode)) {
             self::$inRescueMode = false;
 
-            if (\PACKAGE_ID && isset($_SERVER['HTTP_HOST'])) {
+            if (\PACKAGE_ID !== 0 && isset($_SERVER['HTTP_HOST'])) {
                 self::$inRescueMode = true;
 
                 $activeApplication = ApplicationHandler::getInstance()->getApplicationByID(\PACKAGE_ID);

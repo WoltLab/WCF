@@ -46,7 +46,7 @@ class LikeableCommentResponseProvider extends AbstractObjectTypeProvider impleme
     {
         \assert($object instanceof LikeableCommentResponse);
 
-        if (!$object->responseID) {
+        if ($object->responseID === 0) {
             return false;
         }
         $comment = new Comment($object->commentID);

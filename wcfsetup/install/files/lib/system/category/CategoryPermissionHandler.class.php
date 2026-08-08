@@ -44,7 +44,7 @@ class CategoryPermissionHandler extends SingletonFactory
                 if (isset($this->categoryPermissions[$category->categoryID]['group'][$groupID])) {
                     foreach ($this->categoryPermissions[$category->categoryID]['group'][$groupID] as $optionName => $optionValue) {
                         if (isset($permissions[$optionName])) {
-                            $permissions[$optionName] = $permissions[$optionName] || $optionValue;
+                            $permissions[$optionName] = $permissions[$optionName] || $optionValue !== 0;
                         } else {
                             $permissions[$optionName] = $optionValue;
                         }

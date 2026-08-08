@@ -56,7 +56,7 @@ class BoxEditForm extends BoxAddForm
             // it's not allowed to edit menu boxes directly
             throw new IllegalLinkException();
         }
-        if ($this->box->isMultilingual) {
+        if ($this->box->isMultilingual !== 0) {
             $this->isMultilingual = 1;
         }
     }
@@ -81,7 +81,7 @@ class BoxEditForm extends BoxAddForm
         AbstractForm::save();
 
         $content = [];
-        if ($this->boxType === 'system' || $this->isMultilingual) {
+        if ($this->boxType === 'system' || $this->isMultilingual !== 0) {
             foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                 $content[$language->languageID] = [
                     'title' => !empty($this->title[$language->languageID]) ? $this->title[$language->languageID] : '',
@@ -109,13 +109,13 @@ class BoxEditForm extends BoxAddForm
             'lastUpdateTime' => \TIME_NOW,
             'cssClassName' => $this->cssClassName,
             'showHeader' => $this->showHeader,
-            'isDisabled' => $this->isDisabled ? 1 : 0,
+            'isDisabled' => $this->isDisabled !== 0 ? 1 : 0,
             'linkPageID' => $this->linkPageID ?: null,
             'linkPageObjectID' => $this->linkPageObjectID ?: 0,
             'externalURL' => $this->externalURL,
             'invertPermissions' => $this->invertPermissions,
         ];
-        if ($this->boxControllerID) {
+        if ($this->boxControllerID !== 0) {
             $data['objectTypeID'] = $this->boxControllerID;
         }
 
@@ -127,7 +127,7 @@ class BoxEditForm extends BoxAddForm
         $this->objectAction->executeAction();
 
         // delete old conditions
-        if ($this->box->objectTypeID) {
+        if ($this->box->objectTypeID !== null) {
             $className = ObjectTypeCache::getInstance()->getObjectType($this->box->objectTypeID)->className;
             $oldController = new $className();
 
@@ -174,7 +174,7 @@ class BoxEditForm extends BoxAddForm
 
         // Ensure that the CKEditor has the correct content after save.
         if ($this->boxType === 'text') {
-            if ($this->isMultilingual) {
+            if ($this->isMultilingual !== 0) {
                 foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                     $this->content[$language->languageID] = isset($this->htmlInputProcessors[$language->languageID]) ?
                         $this->htmlInputProcessors[$language->languageID]->getHtml() : '';
@@ -209,17 +209,17 @@ class BoxEditForm extends BoxAddForm
             $this->showOrder = $this->box->showOrder;
             $this->cssClassName = $this->box->cssClassName;
             $this->boxControllerID = $this->box->objectTypeID;
-            if ($this->box->showHeader) {
+            if ($this->box->showHeader !== 0) {
                 $this->showHeader = 1;
             } else {
                 $this->showHeader = 0;
             }
-            if ($this->box->isDisabled) {
+            if ($this->box->isDisabled !== 0) {
                 $this->isDisabled = 1;
             } else {
                 $this->isDisabled = 0;
             }
-            if ($this->box->visibleEverywhere) {
+            if ($this->box->visibleEverywhere !== 0) {
                 $this->visibleEverywhere = 1;
             } else {
                 $this->visibleEverywhere = 0;
@@ -228,7 +228,7 @@ class BoxEditForm extends BoxAddForm
             $this->linkPageID = $this->box->linkPageID;
             $this->linkPageObjectID = $this->box->linkPageObjectID;
             $this->externalURL = $this->box->externalURL;
-            if ($this->linkPageID) {
+            if ($this->linkPageID !== null) {
                 $this->linkType = 'internal';
             }
             if ($this->externalURL !== '') {
@@ -241,7 +241,7 @@ class BoxEditForm extends BoxAddForm
                 $this->imageID[$languageID] = $content->imageID;
             }
 
-            if ($this->boxControllerID) {
+            if ($this->boxControllerID !== null) {
                 $this->boxController = ObjectTypeCache::getInstance()->getObjectType($this->boxControllerID);
                 if ($this->boxController->getProcessor() instanceof IConditionBoxController) {
                     $this->boxController->getProcessor()->setBox($this->box);

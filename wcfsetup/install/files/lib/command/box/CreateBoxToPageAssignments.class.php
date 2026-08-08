@@ -46,7 +46,7 @@ final class CreateBoxToPageAssignments
             $pages[] = $page;
         }
 
-        if (($this->visible && $box->visibleEverywhere) || (!$this->visible && !$box->visibleEverywhere)) {
+        if (($this->visible && $box->visibleEverywhere !== 0) || (!$this->visible && $box->visibleEverywhere === 0)) {
             $sql = "DELETE FROM     wcf1_box_to_page
                     WHERE           boxID = ?
                             AND pageID = ?";

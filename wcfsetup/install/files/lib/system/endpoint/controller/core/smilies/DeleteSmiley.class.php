@@ -38,7 +38,7 @@ final class DeleteSmiley implements IController
 
     private function assertSmileyCanBeDeleted(): void
     {
-        if (!\MODULE_SMILEY) {
+        if (\MODULE_SMILEY === 0) {
             throw new IllegalLinkException();
         }
 

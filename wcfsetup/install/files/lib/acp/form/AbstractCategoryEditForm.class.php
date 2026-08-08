@@ -167,7 +167,7 @@ abstract class AbstractCategoryEditForm extends AbstractCategoryAddForm
         $this->objectAction->executeAction();
 
         // update acl
-        if ($this->aclObjectTypeID) {
+        if ($this->aclObjectTypeID !== 0) {
             ACLHandler::getInstance()->save($this->category->categoryID, $this->aclObjectTypeID);
             CategoryPermissionHandler::getInstance()->resetCache();
         }

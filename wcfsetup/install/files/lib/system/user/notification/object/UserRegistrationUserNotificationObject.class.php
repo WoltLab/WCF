@@ -35,6 +35,9 @@ class UserRegistrationUserNotificationObject extends DatabaseObjectDecorator imp
         return $this->getDecoratedObject()->getLink();
     }
 
+    /**
+     * @return int
+     */
     #[\Override]
     public function getAuthorID()
     {

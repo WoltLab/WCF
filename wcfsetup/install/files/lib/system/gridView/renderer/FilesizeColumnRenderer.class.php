@@ -19,7 +19,7 @@ class FilesizeColumnRenderer extends AbstractColumnRenderer
     public function render(mixed $value, DatabaseObject $row): string
     {
         $filesize = \intval($value);
-        if (!$filesize) {
+        if ($filesize === 0) {
             return '';
         }
 

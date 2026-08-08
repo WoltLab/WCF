@@ -51,7 +51,7 @@ class PageRebuildDataWorker extends AbstractRebuildDataWorker
     {
         parent::execute();
 
-        if (!$this->loopCount) {
+        if ($this->loopCount === 0) {
             // reset search index
             SearchIndexManager::getInstance()->reset('com.woltlab.wcf.page');
         }

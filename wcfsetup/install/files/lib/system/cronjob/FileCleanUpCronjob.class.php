@@ -29,7 +29,7 @@ class FileCleanUpCronjob extends AbstractCronjob
         $statement->execute();
         $fileIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
-        if (\MODULE_CONTACT_FORM && \CONTACT_FORM_PRUNE_ATTACHMENTS > 0) {
+        if (\MODULE_CONTACT_FORM !== 0 && \CONTACT_FORM_PRUNE_ATTACHMENTS > 0) {
             $fileIDs = \array_merge($fileIDs, $this->getOldContactFileIDs());
         }
 

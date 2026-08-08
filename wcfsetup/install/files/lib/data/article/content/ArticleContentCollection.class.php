@@ -75,10 +75,10 @@ class ArticleContentCollection extends DatabaseObjectCollection
         $imageIDs = [];
 
         foreach ($this->getObjects() as $object) {
-            if ($object->imageID) {
+            if ($object->imageID !== null) {
                 $imageIDs[] = $object->imageID;
             }
-            if ($object->teaserImageID) {
+            if ($object->teaserImageID !== null) {
                 $imageIDs[] = $object->teaserImageID;
             }
         }

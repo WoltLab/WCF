@@ -164,7 +164,7 @@ class CategoryNodeTree implements \IteratorAggregate
      */
     protected function getNode(int $categoryID)
     {
-        if (!$categoryID) {
+        if ($categoryID === 0) {
             $category = new Category(null, [
                 'categoryID' => 0,
                 'objectTypeID' => CategoryHandler::getInstance()->getObjectTypeByName($this->objectType)->objectTypeID,
@@ -188,7 +188,7 @@ class CategoryNodeTree implements \IteratorAggregate
      */
     protected function isIncluded(CategoryNode $categoryNode): bool
     {
-        return (!$categoryNode->isDisabled || $this->includeDisabledCategories) && !\in_array(
+        return ($categoryNode->isDisabled === 0 || $this->includeDisabledCategories) && !\in_array(
             $categoryNode->categoryID,
             $this->excludedCategoryIDs
         );

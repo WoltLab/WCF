@@ -27,7 +27,7 @@ final class RenderUserReactions implements IController
     #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
-        if (!\MODULE_LIKE) {
+        if (\MODULE_LIKE === 0) {
             throw new IllegalLinkException();
         }
 
@@ -39,7 +39,7 @@ final class RenderUserReactions implements IController
         $parameters = Helper::mapApiParameters($request, RenderUserReactionsParameters::class);
 
         $likeList = new ViewableLikeList();
-        if ($parameters->lastLikeTime) {
+        if ($parameters->lastLikeTime !== 0) {
             $likeList->getConditionBuilder()->add("like_table.time < ?", [$parameters->lastLikeTime]);
         }
         if ($parameters->targetType === 'received') {
@@ -47,7 +47,7 @@ final class RenderUserReactions implements IController
         } else {
             $likeList->getConditionBuilder()->add("like_table.userID = ?", [$user->userID]);
         }
-        if ($parameters->reactionTypeID) {
+        if ($parameters->reactionTypeID !== 0) {
             $likeList->getConditionBuilder()->add(
                 "like_table.reactionTypeID = ?",
                 [$parameters->reactionTypeID]

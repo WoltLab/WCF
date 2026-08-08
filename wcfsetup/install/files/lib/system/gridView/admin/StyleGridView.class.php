@@ -52,7 +52,7 @@ final class StyleGridView extends AbstractGridView
                         {
                             \assert($row instanceof Style);
 
-                            if ($row->isDefault) {
+                            if ($row->isDefault !== 0) {
                                 $value .= \sprintf(
                                     ' <span class="badge">%s</span>',
                                     WCF::getLanguage()->get('wcf.global.defaultValue')
@@ -96,7 +96,7 @@ final class StyleGridView extends AbstractGridView
                             return \sprintf(
                                 '<a href="%s" class="externalURL"%s>%s</a>',
                                 StringUtil::encodeHTML($row->authorURL),
-                                \EXTERNAL_LINK_TARGET_BLANK ? ' target="_blank"' : '',
+                                \EXTERNAL_LINK_TARGET_BLANK !== 0 ? ' target="_blank"' : '',
                                 $value
                             );
                         }
@@ -120,7 +120,7 @@ final class StyleGridView extends AbstractGridView
                 'enable',
                 'core/styles/%s/enable',
                 'core/styles/%s/disable',
-                isAvailableCallback: static fn(Style $object) => !$object->isDefault
+                isAvailableCallback: static fn(Style $object) => $object->isDefault === 0
             )
         );
         $this->addRowLink(new GridViewRowLink(StyleEditForm::class));

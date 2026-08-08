@@ -166,7 +166,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             'lastCommentTime' => $commentList->getMinCommentTime(),
             'template' => WCF::getTPL()->render('wcf', 'commentList', [
                 'commentList' => $commentList,
-                'likeData' => \MODULE_LIKE ? $commentList->getLikeData() : [],
+                'likeData' => \MODULE_LIKE !== 0 ? $commentList->getLikeData() : [],
             ]),
         ];
     }
@@ -192,7 +192,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         if (!$this->commentProcessor->isAccessible($this->comment->objectID)) {
             throw new PermissionDeniedException();
         }
-        if ($this->comment->isDisabled && !$this->commentProcessor->canModerate($this->comment->objectTypeID, $this->comment->objectID)) {
+        if ($this->comment->isDisabled !== 0 && !$this->commentProcessor->canModerate($this->comment->objectTypeID, $this->comment->objectID)) {
             throw new PermissionDeniedException();
         }
 
@@ -204,7 +204,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             if ($this->response->commentID !== $this->comment->commentID) {
                 throw new PermissionDeniedException();
             }
-            if ($this->response->isDisabled && !$this->commentProcessor->canModerate($this->comment->objectTypeID, $this->comment->objectID)) {
+            if ($this->response->isDisabled !== 0 && !$this->commentProcessor->canModerate($this->comment->objectTypeID, $this->comment->objectID)) {
                 throw new PermissionDeniedException();
             }
         }
@@ -306,7 +306,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
         $event = new MessageSpamChecking(
             $this->parameters['htmlInputProcessor'],
-            WCF::getUser()->userID ? WCF::getUser() : null,
+            WCF::getUser()->userID !== 0 ? WCF::getUser() : null,
             UserUtil::getIpAddress(),
         );
         EventHandler::getInstance()->fire($event);
@@ -339,7 +339,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             'objectID' => $this->parameters['data']['objectID'],
             'time' => \TIME_NOW,
             'userID' => WCF::getUser()->userID ?: null,
-            'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->parameters['data']['username'],
+            'username' => WCF::getUser()->userID !== 0 ? WCF::getUser()->username : $this->parameters['data']['username'],
             'message' => $htmlInputProcessor->getHtml(),
             'responses' => 0,
             'responseIDs' => \serialize([]),
@@ -347,7 +347,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             'isDisabled' => $this->commentProcessor->canAddWithoutApproval($this->parameters['data']['objectID']) ? 0 : 1,
         ]);
 
-        if (!$this->createdComment->isDisabled) {
+        if ($this->createdComment->isDisabled === 0) {
             $action = new self([$this->createdComment], 'triggerPublication', [
                 'commentProcessor' => $this->commentProcessor,
             ]);
@@ -370,7 +370,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
         FloodControl::getInstance()->registerContent('com.woltlab.wcf.comment');
 
-        if (!$this->createdComment->userID) {
+        if ($this->createdComment->userID === null) {
             // save user name is session
             WCF::getSession()->register('username', $this->createdComment->username);
 
@@ -413,7 +413,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             $this->commentProcessor->updateCounter($comment->objectID, 1);
 
             // fire activity event
-            if ($comment->userID && UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType . '.recentActivityEvent')) {
+            if ($comment->userID !== null && UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType . '.recentActivityEvent') !== null) {
                 UserActivityEventHandler::getInstance()->fireEvent(
                     $objectType->objectType . '.recentActivityEvent',
                     $comment->commentID,
@@ -473,7 +473,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             throw new PermissionDeniedException();
         }
 
-        if ($comment->isDisabled && !$this->commentProcessor->canModerate($comment->objectTypeID, $comment->objectID)) {
+        if ($comment->isDisabled !== 0 && !$this->commentProcessor->canModerate($comment->objectTypeID, $comment->objectID)) {
             throw new PermissionDeniedException();
         }
 
@@ -482,7 +482,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
         $event = new MessageSpamChecking(
             $this->parameters['htmlInputProcessor'],
-            WCF::getUser()->userID ? WCF::getUser() : null,
+            WCF::getUser()->userID !== 0 ? WCF::getUser() : null,
             UserUtil::getIpAddress(),
         );
         EventHandler::getInstance()->fire($event);
@@ -516,7 +516,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             'commentID' => $comment->commentID,
             'time' => \TIME_NOW,
             'userID' => WCF::getUser()->userID ?: null,
-            'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->parameters['data']['username'],
+            'username' => WCF::getUser()->userID !== 0 ? WCF::getUser()->username : $this->parameters['data']['username'],
             'message' => $htmlInputProcessor->getHtml(),
             'enableHtml' => 1,
             'isDisabled' => $this->commentProcessor->canAddWithoutApproval($comment->objectID) ? 0 : 1,
@@ -544,7 +544,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             'unfilteredResponses' => $unfilteredResponses,
         ]);
 
-        if (!$this->createdResponse->isDisabled) {
+        if ($this->createdResponse->isDisabled === 0) {
             $action = new self([], 'triggerPublicationResponse', [
                 'commentProcessor' => $this->commentProcessor,
                 'responses' => [$this->createdResponse],
@@ -560,7 +560,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
         FloodControl::getInstance()->registerContent('com.woltlab.wcf.comment');
 
-        if (!$this->createdResponse->userID) {
+        if ($this->createdResponse->userID === null) {
             // save user name is session
             WCF::getSession()->register('username', $this->createdResponse->username);
 
@@ -629,7 +629,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             $this->commentProcessor->updateCounter($comment->objectID, 1);
 
             // fire activity event
-            if ($response->userID && UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType . '.response.recentActivityEvent')) {
+            if ($response->userID !== null && UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType . '.response.recentActivityEvent') !== null) {
                 UserActivityEventHandler::getInstance()->fireEvent(
                     $objectType->objectType . '.response.recentActivityEvent',
                     $response->responseID,
@@ -641,7 +641,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
             // fire notification event
             if (
-                UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.notification')
+                UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.notification') !== 0
                 && (
                     UserNotificationHandler::getInstance()->getEvent($objectType->objectType . '.response.notification', 'commentResponse')
                     || UserNotificationHandler::getInstance()->getEvent($objectType->objectType . '.response.notification', 'commentResponseOwner')
@@ -682,7 +682,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
                 // notify the container owner
                 if (UserNotificationHandler::getInstance()->getEvent($objectType->objectType . '.response.notification', 'commentResponseOwner')) {
-                    if ($userID && $userID !== $comment->userID && $userID !== $response->getUserID()) {
+                    if ($userID !== 0 && $userID !== $comment->userID && $userID !== $response->getUserID()) {
                         UserNotificationHandler::getInstance()->fireEvent(
                             'commentResponseOwner',
                             $objectType->objectType . '.response.notification',
@@ -733,7 +733,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             $this->comment = $comment;
         }
 
-        if ($this->comment->isDisabled) {
+        if ($this->comment->isDisabled !== 0) {
             $action = new self([$this->comment], 'triggerPublication', [
                 'commentProcessor' => $this->commentProcessor,
                 'objectTypeID' => $this->comment->objectTypeID,
@@ -874,7 +874,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         $htmlInputProcessor->setObjectID($this->comment->getObjectID());
         $hasEmbeddedObjects = MessageEmbeddedObjectManager::getInstance()->registerObjects($htmlInputProcessor);
         if ((bool)$this->comment->hasEmbeddedObjects !== $hasEmbeddedObjects) {
-            $data['hasEmbeddedObjects'] = $this->comment->hasEmbeddedObjects ? 0 : 1;
+            $data['hasEmbeddedObjects'] = $this->comment->hasEmbeddedObjects !== 0 ? 0 : 1;
         }
 
         $action = new self([$this->comment], 'update', [
@@ -884,7 +884,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
         $comment = new Comment($this->comment->getObjectID());
 
-        if ($comment->hasEmbeddedObjects) {
+        if ($comment->hasEmbeddedObjects !== 0) {
             MessageEmbeddedObjectManager::getInstance()->loadObjects(
                 'com.woltlab.wcf.comment',
                 [$comment->getObjectID()]
@@ -1028,13 +1028,13 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         $comment->setIsDeletable($this->commentProcessor->canDeleteComment($comment->getDecoratedObject()));
         $comment->setIsEditable($this->commentProcessor->canEditComment($comment->getDecoratedObject()));
 
-        if ($comment->hasEmbeddedObjects) {
+        if ($comment->hasEmbeddedObjects !== 0) {
             MessageEmbeddedObjectManager::getInstance()->loadObjects(
                 'com.woltlab.wcf.comment',
                 [$comment->getObjectID()]
             );
         }
-        if ($response && $response->hasEmbeddedObjects) {
+        if ($response && $response->hasEmbeddedObjects !== 0) {
             MessageEmbeddedObjectManager::getInstance()->loadObjects(
                 'com.woltlab.wcf.comment.response',
                 [$response->getObjectID()]
@@ -1055,7 +1055,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         // This functions renders a single comment without rendering its responses.
         // We need to prevent the setting of the data attribute for the last response time
         // so that the loading of the responses by the user works correctly.
-        if ($comment->getDecoratedObject()->responses) {
+        if ($comment->getDecoratedObject()->responses !== 0) {
             $tplVariables['ignoreLastResponseTime'] = true;
         }
 
@@ -1072,7 +1072,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         ]);
 
         // load like data
-        if (\MODULE_LIKE) {
+        if (\MODULE_LIKE !== 0) {
             $likeData = [];
             $commentObjectType = ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.comment');
             ReactionHandler::getInstance()->loadLikeObjects($commentObjectType, [$comment->commentID]);
@@ -1120,7 +1120,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         $response->setIsDeletable($this->commentProcessor->canDeleteResponse($response->getDecoratedObject()));
         $response->setIsEditable($this->commentProcessor->canEditResponse($response->getDecoratedObject()));
 
-        if ($response->hasEmbeddedObjects) {
+        if ($response->hasEmbeddedObjects !== 0) {
             MessageEmbeddedObjectManager::getInstance()->loadObjects(
                 'com.woltlab.wcf.comment.response',
                 [$response->getObjectID()]
@@ -1279,7 +1279,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             if (!UserRegistrationUtil::isValidUsername($this->parameters['data']['username'])) {
                 throw new UserInputException('username', 'invalid');
             }
-            if (User::getUserByUsername($this->parameters['data']['username'])->userID) {
+            if (User::getUserByUsername($this->parameters['data']['username'])->userID !== 0) {
                 throw new UserInputException('username', 'notUnique');
             }
         } catch (UserInputException $e) {

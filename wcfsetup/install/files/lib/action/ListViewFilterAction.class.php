@@ -49,7 +49,7 @@ final class ListViewFilterAction implements RequestHandlerInterface
             /** @var AbstractListView<DatabaseObject, DatabaseObjectList<DatabaseObject>> $view */
             $view = new $parameters['listView'](...$parameters['listViewParameters']);
         } catch (\ArgumentCountError | \TypeError $e) {
-            if (\ENABLE_DEBUG_MODE) {
+            if (\ENABLE_DEBUG_MODE !== 0) {
                 throw $e;
             } else {
                 throw new IllegalLinkException();

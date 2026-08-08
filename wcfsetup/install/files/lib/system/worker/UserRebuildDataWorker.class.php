@@ -94,7 +94,7 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
             $statement->execute($conditionBuilder->getParameters());
 
             // update like counter
-            if (\MODULE_LIKE) {
+            if (\MODULE_LIKE !== 0) {
                 $sql = "UPDATE  wcf1_user user_table
                         SET";
 
@@ -117,7 +117,7 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
             }
 
             // update trophy points
-            if (\MODULE_TROPHY) {
+            if (\MODULE_TROPHY !== 0) {
                 $sql = "UPDATE  wcf1_user user_table
                         SET     trophyPoints = (
                                     SELECT      COUNT(*)
@@ -178,7 +178,7 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
                 ));
 
                 if ($user->signature !== null && $user->signature !== '') {
-                    if (!$user->signatureEnableHtml) {
+                    if ($user->signatureEnableHtml === 0) {
                         $htmlInputProcessor->process(
                             $user->signature,
                             'com.woltlab.wcf.user.signature',
@@ -206,7 +206,7 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
                         )
                     ));
 
-                    if (!$user->signatureEnableHtml) {
+                    if ($user->signatureEnableHtml === 0) {
                         $htmlInputProcessor->process(
                             $user->aboutMe,
                             'com.woltlab.wcf.user.aboutMe',

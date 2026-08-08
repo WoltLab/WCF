@@ -52,7 +52,7 @@ class ContactRecipientAddForm extends AbstractFormBuilderForm
     {
         parent::createForm();
 
-        $isAdministratorRecipient = $this->formAction === 'edit' && $this->formObject->isAdministrator;
+        $isAdministratorRecipient = $this->formAction === 'edit' && $this->formObject->isAdministrator !== 0;
 
         $emailFormField = EmailFormField::create('email')
             ->label('wcf.user.email')

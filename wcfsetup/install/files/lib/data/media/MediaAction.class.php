@@ -127,7 +127,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         $saveStrategy = new DefaultUploadFileSaveStrategy(self::class);
 
         foreach ($this->getObjects() as $mediaEditor) {
-            if ($mediaEditor->getDecoratedObject()->isImage) {
+            if ($mediaEditor->getDecoratedObject()->isImage !== 0) {
                 $saveStrategy->generateThumbnails($mediaEditor->getDecoratedObject());
             }
         }
@@ -154,7 +154,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             'fileType' => $media->fileType,
             'height' => $media->height,
             'languageID' => $media->languageID,
-            'imageDimensions' => $media->isImage ? WCF::getLanguage()->getDynamicVariable(
+            'imageDimensions' => $media->isImage !== 0 ? WCF::getLanguage()->getDynamicVariable(
                 'wcf.media.imageDimensions.value',
                 [
                     'media' => $media,
@@ -184,7 +184,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             'title' => $media instanceof ViewableMedia ? $media->title : [],
             'uploadTime' => $media->uploadTime,
             'userID' => $media->userID,
-            'userLink' => $media->userID ? LinkHandler::getInstance()->getLink('User', [
+            'userLink' => $media->userID !== null ? LinkHandler::getInstance()->getLink('User', [
                 'id' => $media->userID,
                 'title' => $media->username,
             ]) : '',

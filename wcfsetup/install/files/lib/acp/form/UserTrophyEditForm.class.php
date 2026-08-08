@@ -55,7 +55,7 @@ class UserTrophyEditForm extends UserTrophyAddForm
             throw new IllegalLinkException();
         }
 
-        if ($this->userTrophy->getTrophy()->awardAutomatically) {
+        if ($this->userTrophy->getTrophy()->awardAutomatically !== 0) {
             throw new IllegalLinkException();
         }
 

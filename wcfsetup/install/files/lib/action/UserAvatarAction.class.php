@@ -48,7 +48,7 @@ final class UserAvatarAction implements RequestHandlerInterface
             $user = UserProfileHandler::getInstance()->getUserProfile();
         }
 
-        if ($user->disableAvatar && $user->userID === WCF::getUser()->userID) {
+        if ($user->disableAvatar !== 0 && $user->userID === WCF::getUser()->userID) {
             throw new NamedUserException(HtmlString::fromSafeHtml(WCF::getLanguage()->getDynamicVariable(
                 'wcf.user.avatar.error.disabled'
             )));

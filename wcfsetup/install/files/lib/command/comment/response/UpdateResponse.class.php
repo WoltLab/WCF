@@ -33,7 +33,7 @@ final class UpdateResponse
         $this->htmlInputProcessor->setObjectID($this->response->getObjectID());
         $hasEmbeddedObjects = MessageEmbeddedObjectManager::getInstance()->registerObjects($this->htmlInputProcessor);
         if ((bool)$this->response->hasEmbeddedObjects !== $hasEmbeddedObjects) {
-            $data['hasEmbeddedObjects'] = $this->response->hasEmbeddedObjects ? 0 : 1;
+            $data['hasEmbeddedObjects'] = $this->response->hasEmbeddedObjects !== 0 ? 0 : 1;
         }
 
         $action = new CommentResponseAction([$this->response], 'update', [

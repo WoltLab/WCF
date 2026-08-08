@@ -21,7 +21,7 @@ class ArticleCommentResponseUserActivityEvent extends SingletonFactory implement
     #[\Override]
     public function prepare(array $events)
     {
-        if (!\MODULE_ARTICLE) {
+        if (\MODULE_ARTICLE === 0) {
             return;
         }
 

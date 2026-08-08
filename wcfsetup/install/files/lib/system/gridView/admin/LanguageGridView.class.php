@@ -56,7 +56,7 @@ final class LanguageGridView extends AbstractGridView
                         {
                             \assert($row instanceof Language);
 
-                            if ($row->isDefault) {
+                            if ($row->isDefault !== 0) {
                                 $value .= \sprintf(
                                     ' <span class="badge">%s</span>',
                                     WCF::getLanguage()->get('wcf.global.defaultValue')
@@ -134,7 +134,7 @@ final class LanguageGridView extends AbstractGridView
                 'core/languages/%s/enable',
                 'core/languages/%s/disable',
                 isAvailableCallback: static function (Language $language) {
-                    return !$language->isDefault;
+                    return $language->isDefault === 0;
                 }
             )
         );

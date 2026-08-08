@@ -84,7 +84,7 @@ class PackageUpdateServerAddForm extends AbstractFormBuilderForm
                                             );
                                             return;
                                         }
-                                        if ($url->getPort()) {
+                                        if ($url->getPort() !== null) {
                                             $formField->addValidationError(
                                                 new FormFieldValidationError(
                                                     'nonStandardPort',

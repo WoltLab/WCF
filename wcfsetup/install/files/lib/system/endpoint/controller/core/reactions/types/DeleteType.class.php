@@ -38,7 +38,7 @@ final class DeleteType implements IController
 
     private function assertReactionTypeCanBeDeleted(): void
     {
-        if (!\MODULE_LIKE) {
+        if (\MODULE_LIKE === 0) {
             throw new IllegalLinkException();
         }
 

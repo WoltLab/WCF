@@ -29,7 +29,7 @@ final class EnableCategory implements IController
 
         $this->assertCategoryCanBeEnabled($category);
 
-        if ($category->isDisabled) {
+        if ($category->isDisabled !== 0) {
             new \wcf\command\category\EnableCategory($category)();
         }
 

@@ -315,7 +315,7 @@ abstract class Database
                 $requestInformation = '';
                 if (
                     \defined('ENABLE_PRODUCTION_DEBUG_MODE')
-                    && \ENABLE_PRODUCTION_DEBUG_MODE
+                    && \ENABLE_PRODUCTION_DEBUG_MODE !== 0
                     && isset($_SERVER['REQUEST_URI'])
                 ) {
                     $requestInformation = $_SERVER['REQUEST_URI'];

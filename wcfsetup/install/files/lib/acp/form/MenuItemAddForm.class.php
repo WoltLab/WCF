@@ -178,7 +178,7 @@ class MenuItemAddForm extends AbstractFormBuilderForm
                                     return;
                                 }
 
-                                if ($page->requireObjectID) {
+                                if ($page->requireObjectID !== 0) {
                                     $pageHandler = $page->getHandler();
 
                                     if ($pageHandler instanceof ILookupPageHandler) {

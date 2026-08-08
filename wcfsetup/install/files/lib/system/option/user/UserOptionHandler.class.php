@@ -75,7 +75,7 @@ class UserOptionHandler extends OptionHandler
     {
         parent::init();
 
-        if ($this->inRegistration && \REGISTER_MIN_USER_AGE) {
+        if ($this->inRegistration && \REGISTER_MIN_USER_AGE !== 0) {
             foreach ($this->options as $option) {
                 if ($option->optionName === 'birthday') {
                     $option->setRequired(true);
@@ -257,7 +257,7 @@ class UserOptionHandler extends OptionHandler
 
         parent::validateOption($option);
 
-        if ($option->required && $option->optionType !== 'boolean' && empty($this->optionValues[$option->optionName])) {
+        if ($option->required !== 0 && $option->optionType !== 'boolean' && empty($this->optionValues[$option->optionName])) {
             // Do not throw an error if the current user is an administrator and is not editing themselves.
             if (
                 !WCF::getUser()->hasAdministrativeAccess()
@@ -267,7 +267,7 @@ class UserOptionHandler extends OptionHandler
             }
         }
 
-        if (\REGISTER_MIN_USER_AGE) {
+        if (\REGISTER_MIN_USER_AGE !== 0) {
             if ($this->inRegistration && $option->optionName === 'birthday') {
                 if (empty($this->optionValues[$option->optionName])) {
                     throw new UserInputException($option->optionName);
@@ -295,23 +295,23 @@ class UserOptionHandler extends OptionHandler
     {
         /** @var UserOption $option */
 
-        if ($option->isDisabled) {
+        if ($option->isDisabled !== 0) {
             return false;
         }
 
         // in registration
         if (
             $this->inRegistration
-            && !$option->askDuringRegistration
-            && !$option->required
+            && $option->askDuringRegistration === 0
+            && $option->required === 0
             && !($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION)
-            && ($option->optionName !== 'birthday' || !\REGISTER_MIN_USER_AGE)
+            && ($option->optionName !== 'birthday' || \REGISTER_MIN_USER_AGE === 0)
         ) {
             return false;
         }
 
         // search mode
-        if ($this->searchMode && !$option->searchable) {
+        if ($this->searchMode && $option->searchable === 0) {
             return false;
         }
 
@@ -345,10 +345,10 @@ class UserOptionHandler extends OptionHandler
             foreach ($this->options as $option) {
                 if (
                     \array_key_exists($option->optionID, $options)
-                    && !$option->askDuringRegistration
+                    && $option->askDuringRegistration === 0
                     && !($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION)
-                    && !$option->required
-                    && ($option->optionName !== 'birthday' || !\REGISTER_MIN_USER_AGE)
+                    && $option->required === 0
+                    && ($option->optionName !== 'birthday' || \REGISTER_MIN_USER_AGE === 0)
                 ) {
                     unset($options[$option->optionID]);
                 }

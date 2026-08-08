@@ -38,7 +38,7 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction
         /** @var UserNotificationEvent $event */
         $event = parent::create();
 
-        if ($event->preset) {
+        if ($event->preset !== 0) {
             $sql = "INSERT INTO wcf1_user_notification_event_to_user
                                 (userID, eventID, mailNotificationType)
                     SELECT      userID, ?, ?
@@ -62,7 +62,7 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction
      */
     public function validateTestEvent()
     {
-        if (!\ENABLE_DEVELOPER_TOOLS) {
+        if (\ENABLE_DEVELOPER_TOOLS === 0) {
             throw new PermissionDeniedException();
         }
 
@@ -70,7 +70,7 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction
 
         $this->userNotificationEvent = new UserNotificationEvent($this->parameters['eventID']);
         if (
-            !$this->userNotificationEvent->eventID || !\is_subclass_of(
+            $this->userNotificationEvent->eventID === 0 || !\is_subclass_of(
                 $this->userNotificationEvent->className,
                 ITestableUserNotificationEvent::class
             )

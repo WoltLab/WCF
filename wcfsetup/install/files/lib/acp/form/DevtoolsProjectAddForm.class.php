@@ -854,7 +854,7 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                                 $application = 'wcf';
                                 if (!empty($instruction['application'])) {
                                     $application = $instruction['application'];
-                                } elseif ($isApplication) {
+                                } elseif ($isApplication !== 0) {
                                     $application = Package::getAbbreviation($packageIdentifier);
                                 }
 
@@ -882,7 +882,7 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                                             $fileApplication = 'wcf';
                                             if (!empty($fileSearchInstruction['application'])) {
                                                 $fileApplication = $fileSearchInstruction['application'];
-                                            } elseif ($isApplication) {
+                                            } elseif ($isApplication !== 0) {
                                                 $fileApplication = Package::getAbbreviation($packageIdentifier);
                                             }
 

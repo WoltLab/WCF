@@ -50,7 +50,7 @@ class ContactOption extends DatabaseObject implements ITitledObject
 
     public function canDelete(): bool
     {
-        return !$this->originIsSystem;
+        return $this->originIsSystem === 0;
     }
 
     /**
