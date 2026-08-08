@@ -208,10 +208,32 @@ final class ApplicationHandler extends SingletonFactory
             return false;
         }
 
-        $host = Url::parse($url)['host'];
+        // `parse_url()` implements RFC 3986 and therefore recognizes an
+        // authority only after exactly `://`. Browsers implement the WHATWG URL
+        // specs instead, where any number of slashes - including none at all -
+        // is accepted after the scheme. `http:evil.com`, `http:/evil.com` and
+        // `http:////evil.com` all resolve to `http://evil.com/`, but appear to
+        // be relative to `parse_url()`.
+        if (
+            \preg_match('~^[a-z][a-z0-9+.\-]*:~i', $url)
+            && !\preg_match('~^[a-z][a-z0-9+.\-]*://~i', $url)
+        ) {
+            return false;
+        }
+
+        $components = \parse_url($url);
+
+        // Urls that cannot be parsed at all are not necessarily rejected by
+        // browsers, e.g. `///evil.com` and `http:///evil.com` both resolve to
+        // `http://evil.com/`. They must never be treated as being relative.
+        if ($components === false) {
+            return false;
+        }
+
+        $host = $components['host'] ?? '';
 
         // Relative URLs are internal.
-        if (!$host) {
+        if ($host === '') {
             return true;
         }
 
