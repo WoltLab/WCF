@@ -105,7 +105,13 @@ final class ApiAction implements RequestHandlerInterface
         } catch (\Throwable $e) {
             logThrowable($e);
 
-            return $this->toErrorResponse(RequestFailure::InternalError, 'unknown_exception', $e->getMessage());
+            // The message of an unexpected exception can contain sensitive data,
+            // such as the query of a failed database statement.
+            return $this->toErrorResponse(
+                RequestFailure::InternalError,
+                'unknown_exception',
+                \ENABLE_DEBUG_MODE ? $e->getMessage() : ''
+            );
         }
     }
 
