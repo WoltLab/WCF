@@ -203,6 +203,10 @@ class RegisterForm extends UserAddForm
         // validate captcha first
         $this->validateCaptcha();
 
+        if (REGISTER_ENABLE_DISCLAIMER && !$this->termsConfirmed) {
+            $this->errorType['termsConfirmed'] = 'empty';
+        }
+
         parent::validate();
 
         // validate registration time
@@ -222,10 +226,6 @@ class RegisterForm extends UserAddForm
             throw new NamedUserException(
                 WCF::getLanguage()->getDynamicVariable('wcf.user.register.error.blacklistMatches')
             );
-        }
-
-        if (REGISTER_ENABLE_DISCLAIMER && !$this->termsConfirmed) {
-            $this->errorType['termsConfirmed'] = 'empty';
         }
     }
 
