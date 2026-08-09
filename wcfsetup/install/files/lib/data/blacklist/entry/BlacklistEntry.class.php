@@ -54,7 +54,14 @@ class BlacklistEntry extends DatabaseObject
 
                     $conditions->add(
                         '(type = ? AND hash IN (?))',
-                        ['ipv6', [$ipv6TwoParts, $ipv6ThreeParts, $ipv6FourParts]]
+                        [
+                            'ipv6',
+                            [
+                                self::getHash($ipv6TwoParts),
+                                self::getHash($ipv6ThreeParts),
+                                self::getHash($ipv6FourParts),
+                            ],
+                        ]
                     );
                 }
             }
