@@ -135,6 +135,10 @@ class AccountManagementForm extends AbstractForm
         parent::readParameters();
 
         $this->quitStarted = WCF::getUser()->quitStarted;
+
+        // `readFormParameters()` skips these values if the configuration forbids a change.
+        $this->username = WCF::getUser()->username;
+        $this->email = WCF::getUser()->email;
     }
 
     /**
@@ -144,23 +148,27 @@ class AccountManagementForm extends AbstractForm
     {
         parent::readFormParameters();
 
+        $configuration = UserAuthenticationConfigurationFactory::getInstance()->getConfigration();
+
         if (isset($_POST['password'])) {
             $this->password = $_POST['password'];
         }
-        if (isset($_POST['email'])) {
+        if ($configuration->canChangeEmail && isset($_POST['email'])) {
             $this->email = $_POST['email'];
         }
-        if (isset($_POST['newPassword'])) {
-            $this->newPassword = $_POST['newPassword'];
-        }
-        if (isset($_POST['newPassword_passwordStrengthVerdict'])) {
-            try {
-                $this->newPasswordStrengthVerdict = JSON::decode($_POST['newPassword_passwordStrengthVerdict']);
-            } catch (SystemException $e) {
-                // ignore
+        if ($configuration->canChangePassword) {
+            if (isset($_POST['newPassword'])) {
+                $this->newPassword = $_POST['newPassword'];
+            }
+            if (isset($_POST['newPassword_passwordStrengthVerdict'])) {
+                try {
+                    $this->newPasswordStrengthVerdict = JSON::decode($_POST['newPassword_passwordStrengthVerdict']);
+                } catch (SystemException $e) {
+                    // ignore
+                }
             }
         }
-        if (isset($_POST['username'])) {
+        if ($configuration->canChangeUsername && isset($_POST['username'])) {
             $this->username = StringUtil::trim($_POST['username']);
         }
         if (isset($_POST['quit'])) {
