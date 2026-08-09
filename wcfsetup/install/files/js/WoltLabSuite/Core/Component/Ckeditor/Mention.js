@@ -7,7 +7,7 @@
  * @since 6.0
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util", "./Event"], function (require, exports, Backend_1, Util_1, Event_1) {
+define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util", "./Event", "WoltLabSuite/Core/StringUtil"], function (require, exports, Backend_1, Util_1, Event_1, StringUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -52,7 +52,7 @@ define(["require", "exports", "../../Ajax/Backend", "../../Dom/Util", "./Event"]
                     feed: (query) => getPossibleMentions(query),
                     itemRenderer: (item) => {
                         return (0, Util_1.createFragmentFromHtml)(`
-            <span class="ckeditor5__mention">${item.icon} ${item.text}</span>
+            <span class="ckeditor5__mention">${item.icon} ${(0, StringUtil_1.escapeHTML)(item.text)}</span>
           `).firstElementChild;
                     },
                     marker: "@",

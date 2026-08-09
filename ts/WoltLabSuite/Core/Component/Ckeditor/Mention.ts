@@ -12,6 +12,7 @@ import type { CKEditor5 } from "@woltlab/editor";
 import { prepareRequest } from "../../Ajax/Backend";
 import { createFragmentFromHtml } from "../../Dom/Util";
 import { listenToCkeditor } from "./Event";
+import { escapeHTML } from "WoltLabSuite/Core/StringUtil";
 
 type SearchResultItem =
   | {
@@ -77,7 +78,7 @@ function getMentionConfiguration(): CKEditor5.Mention.MentionConfig {
         feed: (query) => getPossibleMentions(query),
         itemRenderer: (item: Awaited<ReturnType<typeof getPossibleMentions>>[0]) => {
           return createFragmentFromHtml(`
-            <span class="ckeditor5__mention">${item.icon} ${item.text}</span>
+            <span class="ckeditor5__mention">${item.icon} ${escapeHTML(item.text)}</span>
           `).firstElementChild as HTMLElement;
         },
         marker: "@",
