@@ -9,6 +9,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\interaction\bulk\AbstractBulkInteractionProvider;
 use wcf\system\interaction\bulk\BulkDeleteInteraction;
 use wcf\system\interaction\bulk\BulkFormBuilderDialogInteraction;
+use wcf\system\WCF;
 
 /**
  * Bulk interaction provider for tags.
@@ -22,6 +23,13 @@ final class TagBulkInteractions extends AbstractBulkInteractionProvider
 {
     public function __construct()
     {
+        if (
+            \MODULE_TAGGING === 0
+            || !WCF::getSession()->getPermission('admin.content.tag.canManageTag')
+        ) {
+            return;
+        }
+
         $this->addInteractions([
             new BulkDeleteInteraction('core/tags/%s'),
             new class(

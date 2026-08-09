@@ -9,6 +9,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
 use wcf\system\interaction\LinkInteraction;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for paid subscriptions.
@@ -22,6 +23,13 @@ final class PaidSubscriptionInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (
+            \MODULE_PAID_SUBSCRIPTION === 0
+            || !WCF::getSession()->getPermission('admin.paidSubscription.canManageSubscription')
+        ) {
+            return;
+        }
+
         $this->addInteractions([
             new LinkInteraction(
                 'add-user',

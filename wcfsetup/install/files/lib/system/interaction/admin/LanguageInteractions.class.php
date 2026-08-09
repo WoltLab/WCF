@@ -11,6 +11,7 @@ use wcf\system\interaction\DeleteInteraction;
 use wcf\system\interaction\InteractionEffect;
 use wcf\system\interaction\LinkInteraction;
 use wcf\system\interaction\RpcInteraction;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for languages.
@@ -24,6 +25,10 @@ final class LanguageInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->getPermission('admin.language.canManageLanguage')) {
+            return;
+        }
+
         $this->addInteractions([
             new LinkInteraction("export", LanguageExportForm::class, "wcf.acp.language.export"),
             new RpcInteraction(

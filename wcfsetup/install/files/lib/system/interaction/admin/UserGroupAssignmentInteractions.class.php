@@ -7,6 +7,7 @@ use wcf\event\interaction\admin\UserGroupAssignmentInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for user group assignments.
@@ -20,6 +21,10 @@ final class UserGroupAssignmentInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->getPermission('admin.user.canManageGroupAssignment')) {
+            return;
+        }
+
         $this->addInteractions([
             new DeleteInteraction("core/users/groups/assignments/%s")
         ]);
@@ -28,7 +33,6 @@ final class UserGroupAssignmentInteractions extends AbstractInteractionProvider
             new UserGroupAssignmentInteractionCollecting($this)
         );
     }
-
 
     #[\Override]
     public function getObjectClassName(): string

@@ -7,6 +7,7 @@ use wcf\event\interaction\bulk\admin\CaptchaQuestionBulkInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\bulk\AbstractBulkInteractionProvider;
 use wcf\system\interaction\bulk\BulkDeleteInteraction;
+use wcf\system\WCF;
 
 /**
  * Bulk interaction provider for captcha questions.
@@ -20,6 +21,10 @@ final class CaptchaQuestionBulkInteractions extends AbstractBulkInteractionProvi
 {
     public function __construct()
     {
+        if (!WCF::getSession()->getPermission('admin.captcha.canManageCaptchaQuestion')) {
+            return;
+        }
+
         $this->addInteractions([
             new BulkDeleteInteraction('core/captchas/questions/%s'),
         ]);

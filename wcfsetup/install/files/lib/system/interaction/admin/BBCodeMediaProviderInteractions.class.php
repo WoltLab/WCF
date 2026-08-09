@@ -7,6 +7,7 @@ use wcf\event\interaction\admin\BBCodeMediaProviderInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for bb code media providers.
@@ -20,6 +21,10 @@ final class BBCodeMediaProviderInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->getPermission('admin.content.bbcode.canManageBBCode')) {
+            return;
+        }
+
         $this->addInteractions([
             new DeleteInteraction('core/bbcodes/media/providers/%s'),
         ]);

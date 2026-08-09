@@ -10,6 +10,7 @@ use wcf\system\interaction\bulk\AbstractBulkInteractionProvider;
 use wcf\system\interaction\bulk\BulkDeleteInteraction;
 use wcf\system\interaction\bulk\BulkRpcInteraction;
 use wcf\system\interaction\InteractionConfirmationType;
+use wcf\system\WCF;
 
 /**
  * Bulk interaction provider for reaction types.
@@ -23,6 +24,13 @@ final class ReactionTypeBulkInteractions extends AbstractBulkInteractionProvider
 {
     public function __construct()
     {
+        if (
+            \MODULE_LIKE === 0
+            || !WCF::getSession()->getPermission('admin.content.reaction.canManageReactionType')
+        ) {
+            return;
+        }
+
         $this->addInteractions([
             new BulkDeleteInteraction('core/reactions/types/%s'),
             new BulkRpcInteraction(

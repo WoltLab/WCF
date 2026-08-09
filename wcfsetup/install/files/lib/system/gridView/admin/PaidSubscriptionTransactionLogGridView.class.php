@@ -207,6 +207,13 @@ final class PaidSubscriptionTransactionLogGridView extends AbstractGridView
         return new class extends AbstractInteractionProvider {
             public function __construct()
             {
+                if (
+                    \MODULE_PAID_SUBSCRIPTION === 0
+                    || !WCF::getSession()->getPermission('admin.paidSubscription.canManageSubscription')
+                ) {
+                    return;
+                }
+
                 $this->addInteractions([
                     new LinkInteraction(
                         'showDetails',

@@ -11,6 +11,7 @@ use wcf\system\interaction\DeleteInteraction;
 use wcf\system\interaction\FormBuilderDialogInteraction;
 use wcf\system\interaction\InteractionEffect;
 use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for user groups.
@@ -24,6 +25,13 @@ final class UserGroupInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (
+            !WCF::getSession()->getPermission('admin.user.canEditGroup')
+            && !WCF::getSession()->getPermission('admin.user.canDeleteGroup')
+        ) {
+            return;
+        }
+
         $this->addInteractions([
             new DeleteInteraction("core/users/groups/%s", static fn(UserGroup $group) => $group->isDeletable()),
             new FormBuilderDialogInteraction(

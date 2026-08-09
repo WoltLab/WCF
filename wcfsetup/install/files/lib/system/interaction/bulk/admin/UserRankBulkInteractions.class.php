@@ -7,6 +7,7 @@ use wcf\event\interaction\bulk\admin\UserRankBulkInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\bulk\AbstractBulkInteractionProvider;
 use wcf\system\interaction\bulk\BulkDeleteInteraction;
+use wcf\system\WCF;
 
 /**
  * Bulk interaction provider for user ranks.
@@ -20,6 +21,13 @@ final class UserRankBulkInteractions extends AbstractBulkInteractionProvider
 {
     public function __construct()
     {
+        if (
+            \MODULE_USER_RANK === 0
+            || !WCF::getSession()->getPermission('admin.user.rank.canManageRank')
+        ) {
+            return;
+        }
+
         $this->addInteractions([
             new BulkDeleteInteraction('core/users/ranks/%s'),
         ]);

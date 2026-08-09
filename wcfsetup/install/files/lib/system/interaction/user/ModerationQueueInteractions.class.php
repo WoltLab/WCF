@@ -28,6 +28,10 @@ final class ModerationQueueInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->getPermission('mod.general.canUseModeration')) {
+            return;
+        }
+
         $this->addInteractions([
             new RpcInteraction(
                 "mark-as-read",

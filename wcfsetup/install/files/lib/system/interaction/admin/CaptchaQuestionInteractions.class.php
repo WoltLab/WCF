@@ -21,11 +21,13 @@ final class CaptchaQuestionInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
-        if (WCF::getSession()->getPermission("admin.captcha.canManageCaptchaQuestion")) {
-            $this->addInteractions([
-                new DeleteInteraction('core/captchas/questions/%s')
-            ]);
+        if (!WCF::getSession()->getPermission('admin.captcha.canManageCaptchaQuestion')) {
+            return;
         }
+
+        $this->addInteractions([
+            new DeleteInteraction('core/captchas/questions/%s')
+        ]);
 
         EventHandler::getInstance()->fire(
             new CaptchaQuestionInteractionCollecting($this)

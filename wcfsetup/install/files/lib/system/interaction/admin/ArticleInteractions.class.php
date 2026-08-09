@@ -31,15 +31,38 @@ final class ArticleInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (
+            \MODULE_ARTICLE === 0
+            || (
+                !WCF::getSession()->getPermission('admin.content.article.canManageArticle')
+                && !WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles')
+                && !WCF::getSession()->getPermission('admin.content.article.canContributeArticle')
+            )
+        ) {
+            return;
+        }
+
         $this->addInteractions([
             new LinkableObjectInteraction('view', 'wcf.acp.article.button.viewArticle'),
             new SoftDeleteInteraction('core/articles/%s/soft-delete', function (ViewableArticle|Article $article): bool {
+                if (!$article->canDelete()) {
+                    return false;
+                }
+
                 return $article->isDeleted !== 1;
             }),
             new RestoreInteraction('core/articles/%s/restore', function (ViewableArticle|Article $article): bool {
+                if (!$article->canDelete()) {
+                    return false;
+                }
+
                 return $article->isDeleted === 1;
             }),
             new DeleteInteraction('core/articles/%s', function (ViewableArticle|Article $article): bool {
+                if (!$article->canDelete()) {
+                    return false;
+                }
+
                 return $article->isDeleted === 1;
             }),
             new RpcInteraction(

@@ -7,6 +7,7 @@ use wcf\event\interaction\bulk\admin\NoticeBulkInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\bulk\AbstractBulkInteractionProvider;
 use wcf\system\interaction\bulk\BulkDeleteInteraction;
+use wcf\system\WCF;
 
 /**
  * Bulk interaction provider for notices.
@@ -20,6 +21,10 @@ final class NoticeBulkInteractions extends AbstractBulkInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->getPermission('admin.notice.canManageNotice')) {
+            return;
+        }
+
         $this->addInteractions([
             new BulkDeleteInteraction('core/notices/%s')
         ]);

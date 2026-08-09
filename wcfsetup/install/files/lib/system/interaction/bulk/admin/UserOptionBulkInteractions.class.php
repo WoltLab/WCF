@@ -8,6 +8,7 @@ use wcf\event\interaction\bulk\admin\UserOptionBulkInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\bulk\AbstractBulkInteractionProvider;
 use wcf\system\interaction\bulk\BulkDeleteInteraction;
+use wcf\system\WCF;
 
 /**
  * Bulk interaction provider for user options.
@@ -21,6 +22,10 @@ final class UserOptionBulkInteractions extends AbstractBulkInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->getPermission('admin.user.canManageUserOption')) {
+            return;
+        }
+
         $this->addInteractions([
             new BulkDeleteInteraction('core/users/options/%s', static fn(UserOption $object) => $object->canDelete()),
         ]);

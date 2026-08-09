@@ -15,6 +15,7 @@ use wcf\system\interaction\bulk\BulkFormBuilderDialogInteraction;
 use wcf\system\interaction\bulk\BulkRpcInteraction;
 use wcf\system\interaction\InteractionConfirmationType;
 use wcf\system\moderation\queue\IModerationQueueHandler;
+use wcf\system\WCF;
 
 /**
  * Bulk interaction provider for moderation queue.
@@ -28,6 +29,10 @@ final class ModerationQueueBulkInteractions extends AbstractBulkInteractionProvi
 {
     public function __construct()
     {
+        if (!WCF::getSession()->getPermission('mod.general.canUseModeration')) {
+            return;
+        }
+
         $this->addInteractions([
             new BulkRpcInteraction(
                 "mark-as-read",

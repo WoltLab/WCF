@@ -7,6 +7,7 @@ use wcf\event\interaction\admin\NoticeInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for notices.
@@ -20,6 +21,10 @@ final class NoticeInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->getPermission('admin.notice.canManageNotice')) {
+            return;
+        }
+
         $this->addInteractions([
             new DeleteInteraction("core/notices/%s"),
         ]);

@@ -23,6 +23,13 @@ final class PackageInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (
+            !WCF::getSession()->getPermission('admin.configuration.package.canUpdatePackage')
+            && !WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage')
+        ) {
+            return;
+        }
+
         $this->addInteractions([
             new class(
                 'uninstallation',

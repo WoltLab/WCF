@@ -7,6 +7,7 @@ use wcf\event\interaction\bulk\admin\SmileyBulkInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\bulk\AbstractBulkInteractionProvider;
 use wcf\system\interaction\bulk\BulkDeleteInteraction;
+use wcf\system\WCF;
 
 /**
  * Bulk interaction provider for smileys.
@@ -20,6 +21,13 @@ final class SmileyBulkInteractions extends AbstractBulkInteractionProvider
 {
     public function __construct()
     {
+        if (
+            \MODULE_SMILEY === 0
+            || !WCF::getSession()->getPermission('admin.content.smiley.canManageSmiley')
+        ) {
+            return;
+        }
+
         $this->addInteractions([
             new BulkDeleteInteraction('core/smilies/%s'),
         ]);

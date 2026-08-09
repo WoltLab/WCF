@@ -12,6 +12,7 @@ use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
 use wcf\system\interaction\LinkInteraction;
 use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for templates.
@@ -25,6 +26,10 @@ final class TemplateInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->getPermission('admin.template.canManageTemplate')) {
+            return;
+        }
+
         $this->addInteractions([
             new class("copy", TemplateAddForm::class, "wcf.acp.template.copy") extends LinkInteraction {
                 #[\Override]

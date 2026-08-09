@@ -26,6 +26,10 @@ final class StyleInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->getPermission('admin.style.canManageStyle')) {
+            return;
+        }
+
         $this->addInteractions([
             new DeleteInteraction('core/styles/%s', static fn(Style $object) => !$object->isDefault),
             new RpcInteraction(

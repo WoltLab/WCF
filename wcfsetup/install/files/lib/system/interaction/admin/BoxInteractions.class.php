@@ -7,6 +7,7 @@ use wcf\event\interaction\admin\BoxInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for boxes.
@@ -20,8 +21,16 @@ final class BoxInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->getPermission('admin.content.cms.canManageBox')) {
+            return;
+        }
+
         $this->addInteractions([
-            new DeleteInteraction('core/boxes/%s', static fn(Box $object) => $object->canDelete())
+            new DeleteInteraction(
+                'core/boxes/%s',
+                // `BoxGridView` hides menu boxes, they are managed through the menu system.
+                static fn(Box $object) => $object->boxType !== 'menu' && $object->canDelete()
+            )
         ]);
 
         EventHandler::getInstance()->fire(

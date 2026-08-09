@@ -7,6 +7,7 @@ use wcf\event\interaction\admin\AdInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for ads.
@@ -20,6 +21,13 @@ final class AdInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (
+            \MODULE_WCF_AD === 0
+            || !WCF::getSession()->getPermission('admin.ad.canManageAd')
+        ) {
+            return;
+        }
+
         $this->addInteractions([
             new DeleteInteraction("core/ads/%s")
         ]);

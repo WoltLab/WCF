@@ -7,6 +7,7 @@ use wcf\event\interaction\admin\UserTrophyInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for user trophies.
@@ -20,6 +21,13 @@ final class UserTrophyInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (
+            \MODULE_TROPHY === 0
+            || !WCF::getSession()->getPermission('admin.trophy.canAwardTrophy')
+        ) {
+            return;
+        }
+
         $this->addInteractions([
             new DeleteInteraction(
                 'core/users/trophies/%s',

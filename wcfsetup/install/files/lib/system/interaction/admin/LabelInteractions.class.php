@@ -7,6 +7,7 @@ use wcf\event\interaction\admin\LabelInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for labels.
@@ -20,6 +21,10 @@ final class LabelInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->getPermission('admin.content.label.canManageLabel')) {
+            return;
+        }
+
         $this->addInteractions([
             new DeleteInteraction("core/labels/%s")
         ]);

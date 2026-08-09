@@ -7,6 +7,7 @@ use wcf\event\interaction\admin\ContactOptionInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for contact options.
@@ -20,6 +21,13 @@ final class ContactOptionInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (
+            \MODULE_CONTACT_FORM === 0
+            || !WCF::getSession()->getPermission('admin.contact.canManageContactForm')
+        ) {
+            return;
+        }
+
         $this->addInteractions([
             new DeleteInteraction('core/contact/options/%s', static fn (ContactOption $object) => $object->canDelete()),
         ]);

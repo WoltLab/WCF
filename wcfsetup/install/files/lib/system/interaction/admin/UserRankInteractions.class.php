@@ -7,6 +7,7 @@ use wcf\event\interaction\admin\UserRankInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for user ranks.
@@ -20,6 +21,13 @@ final class UserRankInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (
+            \MODULE_USER_RANK === 0
+            || !WCF::getSession()->getPermission('admin.user.rank.canManageRank')
+        ) {
+            return;
+        }
+
         $this->addInteractions([
             new DeleteInteraction('core/users/ranks/%s'),
         ]);

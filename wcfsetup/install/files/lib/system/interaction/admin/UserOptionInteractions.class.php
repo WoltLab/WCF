@@ -7,6 +7,7 @@ use wcf\event\interaction\admin\UserOptionInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for user options.
@@ -20,6 +21,10 @@ final class UserOptionInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->getPermission('admin.user.canManageUserOption')) {
+            return;
+        }
+
         $this->addInteractions([
             new DeleteInteraction('core/users/options/%s', static fn(UserOption $object) => $object->canDelete())
         ]);

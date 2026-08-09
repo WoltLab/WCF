@@ -7,6 +7,7 @@ use wcf\event\interaction\admin\ReactionTypeInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for reaction types.
@@ -20,6 +21,13 @@ final class ReactionTypeInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (
+            \MODULE_LIKE === 0
+            || !WCF::getSession()->getPermission('admin.content.reaction.canManageReactionType')
+        ) {
+            return;
+        }
+
         $this->addInteractions([
             new DeleteInteraction('core/reactions/types/%s'),
         ]);

@@ -27,6 +27,10 @@ final class ArticleBulkInteractions extends AbstractBulkInteractionProvider
 {
     public function __construct()
     {
+        if (\MODULE_ARTICLE === 0) {
+            return;
+        }
+
         if (
             WCF::getSession()->getPermission('admin.content.article.canManageArticle')
             || WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles')

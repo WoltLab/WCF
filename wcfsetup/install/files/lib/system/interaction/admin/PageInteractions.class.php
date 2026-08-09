@@ -10,6 +10,7 @@ use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
 use wcf\system\interaction\LinkableObjectInteraction;
 use wcf\system\interaction\LinkInteraction;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for pages.
@@ -23,6 +24,10 @@ final class PageInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->getPermission('admin.content.cms.canManagePage')) {
+            return;
+        }
+
         $this->addInteractions([
             new LinkableObjectInteraction(
                 'view',

@@ -8,6 +8,7 @@ use wcf\event\interaction\bulk\admin\UserTrophyBulkInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\bulk\AbstractBulkInteractionProvider;
 use wcf\system\interaction\bulk\BulkDeleteInteraction;
+use wcf\system\WCF;
 
 /**
  * Bulk interaction provider for user trophies.
@@ -21,6 +22,13 @@ class UserTrophyBulkInteractions extends AbstractBulkInteractionProvider
 {
     public function __construct()
     {
+        if (
+            \MODULE_TROPHY === 0
+            || !WCF::getSession()->getPermission('admin.trophy.canAwardTrophy')
+        ) {
+            return;
+        }
+
         $this->addInteractions([
             new BulkDeleteInteraction(
                 'core/users/trophies/%s',

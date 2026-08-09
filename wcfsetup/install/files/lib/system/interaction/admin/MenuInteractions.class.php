@@ -28,6 +28,10 @@ final class MenuInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->getPermission('admin.content.cms.canManageMenu')) {
+            return;
+        }
+
         $this->addInteractions([
             new DeleteInteraction(
                 "core/menus/%s",

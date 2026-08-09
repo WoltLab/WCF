@@ -27,6 +27,10 @@ final class ArticleInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (\MODULE_ARTICLE === 0) {
+            return;
+        }
+
         $this->addInteractions([
             new SoftDeleteInteraction('core/articles/%s/soft-delete', function (ViewableArticle|Article $article): bool {
                 if (!$article->canDelete()) {

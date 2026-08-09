@@ -7,6 +7,7 @@ use wcf\event\interaction\bulk\admin\AdBulkInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\bulk\AbstractBulkInteractionProvider;
 use wcf\system\interaction\bulk\BulkDeleteInteraction;
+use wcf\system\WCF;
 
 /**
  * Bulk interaction provider for ads.
@@ -20,6 +21,13 @@ final class AdBulkInteractions extends AbstractBulkInteractionProvider
 {
     public function __construct()
     {
+        if (
+            \MODULE_WCF_AD === 0
+            || !WCF::getSession()->getPermission('admin.ad.canManageAd')
+        ) {
+            return;
+        }
+
         $this->addInteractions([
             new BulkDeleteInteraction("core/ads/%s")
         ]);

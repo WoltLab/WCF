@@ -15,6 +15,7 @@ use wcf\system\interaction\bulk\BulkRestoreInteraction;
 use wcf\system\interaction\bulk\BulkRpcInteraction;
 use wcf\system\interaction\bulk\BulkSoftDeleteInteraction;
 use wcf\system\interaction\InteractionConfirmationType;
+use wcf\system\WCF;
 
 /**
  * Bulk interaction provider for articles.
@@ -28,6 +29,17 @@ final class ArticleBulkInteractions extends AbstractBulkInteractionProvider
 {
     public function __construct()
     {
+        if (
+            \MODULE_ARTICLE === 0
+            || (
+                !WCF::getSession()->getPermission('admin.content.article.canManageArticle')
+                && !WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles')
+                && !WCF::getSession()->getPermission('admin.content.article.canContributeArticle')
+            )
+        ) {
+            return;
+        }
+
         $this->addInteractions([
             new BulkSoftDeleteInteraction('core/articles/%s/soft-delete', function (ViewableArticle $article): bool {
                 if (!$article->canDelete()) {

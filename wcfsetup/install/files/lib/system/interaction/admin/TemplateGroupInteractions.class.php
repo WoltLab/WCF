@@ -26,6 +26,10 @@ final class TemplateGroupInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->getPermission('admin.template.canManageTemplate')) {
+            return;
+        }
+
         $this->addInteractions([
             new class("showTemplates") extends AbstractInteraction {
                 #[\Override]

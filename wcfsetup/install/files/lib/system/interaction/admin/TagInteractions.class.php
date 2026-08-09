@@ -7,6 +7,7 @@ use wcf\event\interaction\admin\TagInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for tags.
@@ -20,6 +21,13 @@ final class TagInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (
+            \MODULE_TAGGING === 0
+            || !WCF::getSession()->getPermission('admin.content.tag.canManageTag')
+        ) {
+            return;
+        }
+
         $this->addInteractions([
             new DeleteInteraction("core/tags/%s")
         ]);

@@ -7,6 +7,7 @@ use wcf\event\interaction\admin\LanguageItemInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for language items.
@@ -20,6 +21,10 @@ final class LanguageItemInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->getPermission('admin.language.canManageLanguage')) {
+            return;
+        }
+
         $this->addInteractions([
             new DeleteInteraction(
                 'core/languages/items/%s',

@@ -7,6 +7,7 @@ use wcf\event\interaction\admin\PackageUpdateServerInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for package update servers.
@@ -20,6 +21,10 @@ class PackageUpdateServerInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->getPermission('admin.configuration.package.canEditServer')) {
+            return;
+        }
+
         $this->addInteractions([
             new DeleteInteraction(
                 'core/packages/updates/servers/%s',

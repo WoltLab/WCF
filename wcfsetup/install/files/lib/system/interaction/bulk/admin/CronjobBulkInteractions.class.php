@@ -9,6 +9,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\interaction\bulk\AbstractBulkInteractionProvider;
 use wcf\system\interaction\bulk\BulkDeleteInteraction;
 use wcf\system\interaction\bulk\BulkRpcInteraction;
+use wcf\system\WCF;
 
 /**
  * Bulk interaction provider for cronjobs.
@@ -22,6 +23,10 @@ final class CronjobBulkInteractions extends AbstractBulkInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->getPermission('admin.management.canManageCronjob')) {
+            return;
+        }
+
         $this->addInteractions([
             new BulkDeleteInteraction('core/cronjobs/%s', static fn(Cronjob $cronjob) => $cronjob->isDeletable()),
             new BulkRpcInteraction('execute', 'core/cronjobs/%s/execute', 'wcf.acp.cronjob.execute')

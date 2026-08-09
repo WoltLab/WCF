@@ -27,6 +27,10 @@ final class CronjobInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->getPermission('admin.management.canManageCronjob')) {
+            return;
+        }
+
         $this->addInteractions([
             new DeleteInteraction('core/cronjobs/%s', static fn(Cronjob $cronjob) => $cronjob->isDeletable()),
             new RpcInteraction('execute', 'core/cronjobs/%s/execute', 'wcf.acp.cronjob.execute'),
