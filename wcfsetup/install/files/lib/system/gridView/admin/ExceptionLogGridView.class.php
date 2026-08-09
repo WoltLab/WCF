@@ -115,6 +115,12 @@ final class ExceptionLogGridView extends AbstractGridView
 
         $logFile = $this->getActiveFilters()['logFile'] ?? '';
         if ($logFile !== '') {
+            // `applyFilters()` is a no-op in this grid view, therefore the value of
+            // this filter has not been validated by `SelectFilter::applyFilter()`.
+            if (!isset($this->getAvailableLogFiles()[$logFile])) {
+                return [];
+            }
+
             $contents = \file_get_contents(WCF_DIR . $logFile);
             $exceptions = ExceptionLogUtil::splitLog($contents);
             $parsedExceptions = [];
@@ -126,7 +132,7 @@ final class ExceptionLogGridView extends AbstractGridView
                     'exceptionID' => $key,
                     'message' => $parsed['message'],
                     'date' => $parsed['date'],
-                    'logFile' => $this->getActiveFilters()['logFile'],
+                    'logFile' => $logFile,
                 ]);
             }
 
