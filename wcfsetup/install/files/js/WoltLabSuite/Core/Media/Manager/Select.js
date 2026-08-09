@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traverse", "../../FileUtil", "../../Language", "../../Ui/Dialog"], function (require, exports, tslib_1, Base_1, Core, DomTraverse, FileUtil, Language, UiDialog) {
+define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traverse", "../../FileUtil", "../../Language", "../../Ui/Dialog", "WoltLabSuite/Core/StringUtil"], function (require, exports, tslib_1, Base_1, Core, DomTraverse, FileUtil, Language, UiDialog, StringUtil_1) {
     "use strict";
     Base_1 = tslib_1.__importDefault(Base_1);
     Core = tslib_1.__importStar(Core);
@@ -84,8 +84,8 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
                 const displayElement = document.getElementById(display);
                 if (displayElement) {
                     if (media.isImage) {
-                        const thumbnailLink = media.smallThumbnailLink ? media.smallThumbnailLink : media.link;
-                        const altText = media.altText && media.altText[window.LANGUAGE_ID] ? media.altText[window.LANGUAGE_ID] : "";
+                        const thumbnailLink = (0, StringUtil_1.escapeHTML)(media.smallThumbnailLink ? media.smallThumbnailLink : media.link);
+                        const altText = (0, StringUtil_1.escapeHTML)(media.altText && media.altText[window.LANGUAGE_ID] ? media.altText[window.LANGUAGE_ID] : "");
                         displayElement.innerHTML = `<img src="${thumbnailLink}" alt="${altText}" />`;
                     }
                     else {
@@ -100,7 +100,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
             <div class="box48" style="margin-bottom: 10px;">
               <fa-icon size="48" name="${fileIcon}"></fa-icon>
               <div class="containerHeadline">
-                <h3>${media.filename}</h3>
+                <h3>${(0, StringUtil_1.escapeHTML)(media.filename)}</h3>
                 <p>${media.formattedFilesize}</p>
               </div>
             </div>`;
