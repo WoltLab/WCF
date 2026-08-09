@@ -41,6 +41,10 @@ final class RenderResponses implements IController
             $comment->objectID
         );
 
+        if ($comment->isDisabled && !$commentCanModerate) {
+            throw new PermissionDeniedException();
+        }
+
         // get response list
         $responseList = new StructuredCommentResponseList($commentManager, $comment);
         if ($parameters->lastResponseID) {
