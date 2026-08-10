@@ -24,6 +24,7 @@ class RowFormFieldContainer extends FormContainer
      */
     protected $templateName = 'shared_rowFormFieldContainer';
 
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct()
     {
         // does nothing

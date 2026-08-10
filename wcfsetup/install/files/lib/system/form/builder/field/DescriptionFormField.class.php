@@ -14,6 +14,7 @@ class DescriptionFormField extends MultilineTextFormField
 {
     use TDefaultIdFormField;
 
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct()
     {
         $this->label('wcf.global.description');

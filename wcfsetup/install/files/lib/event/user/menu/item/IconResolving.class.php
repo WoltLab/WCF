@@ -17,6 +17,7 @@ use wcf\system\style\IFontAwesomeIcon;
  */
 final class IconResolving extends UserMenuItemIconResolving implements IPsr14Event
 {
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct(
         public readonly UserMenuItem $userMenuItem,
         public IFontAwesomeIcon $icon

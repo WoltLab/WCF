@@ -34,6 +34,7 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction
      *
      * @param object[] $objects
      * @param mixed[] $parameters
+     * @phpstan-ignore constructor.missingParentCall
      */
     public function __construct(array $objects, string $action, array $parameters = [])
     {

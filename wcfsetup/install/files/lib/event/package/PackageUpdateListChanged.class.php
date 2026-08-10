@@ -16,6 +16,7 @@ use wcf\event\IPsr14Event;
  */
 final class PackageUpdateListChanged extends \wcf\system\package\event\PackageUpdateListChanged implements IPsr14Event
 {
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct(
         public readonly PackageUpdateServer $updateServer,
     ) {

@@ -23,6 +23,7 @@ class TabMenuFormContainer extends FormContainer implements ITabMenuFormContaine
      */
     protected $useAnchors = true;
 
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct()
     {
         $this->addClass('section')

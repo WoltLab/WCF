@@ -72,11 +72,9 @@ class UnfurlUrl extends DatabaseObject
             if ($row === false) {
                 $row = [];
             }
-        } elseif ($object !== null) {
-            $row = $object->data;
         }
 
-        $this->handleData($row ?? []);
+        parent::__construct(null, $row, $id !== null ? null : $object);
     }
 
     /**

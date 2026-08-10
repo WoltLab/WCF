@@ -15,6 +15,7 @@ use wcf\event\IPsr14Event;
  */
 final class PhraseChanged extends \wcf\system\language\event\PhraseChanged implements IPsr14Event
 {
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct(
         public readonly Language $language,
         public readonly string $name

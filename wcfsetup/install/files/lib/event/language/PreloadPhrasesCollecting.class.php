@@ -22,6 +22,7 @@ final class PreloadPhrasesCollecting extends \wcf\system\language\preload\event\
      */
     private array $phrases = [];
 
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct(Language $language)
     {
         $this->language = $language;

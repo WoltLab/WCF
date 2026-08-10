@@ -28,6 +28,7 @@ class ValidateActionException extends \Exception implements \Stringable
 
     /**
      * @param array<string, mixed> $variables
+     * @phpstan-ignore constructor.missingParentCall
      */
     public function __construct(string $fieldName, string $errorMessage = 'empty', array $variables = [])
     {

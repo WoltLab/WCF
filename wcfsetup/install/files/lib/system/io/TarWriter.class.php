@@ -28,6 +28,7 @@ class TarWriter extends Tar
 
     /**
      * @param bool $compress enables gzip compression
+     * @phpstan-ignore constructor.missingParentCall
      */
     public function __construct(string $archiveName, bool $compress = false)
     {

@@ -20,6 +20,7 @@ class RowFormContainer extends FormContainer
      */
     protected $templateName = 'shared_rowFormContainer';
 
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct()
     {
         $this->addClasses(['row', 'rowColGap', 'formGrid']);

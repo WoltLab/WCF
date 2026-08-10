@@ -20,6 +20,7 @@ class MediaReplaceUploadFileValidationStrategy extends MediaUploadFileValidation
      */
     protected $media;
 
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct(Media $media)
     {
         $this->media = $media;

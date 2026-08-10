@@ -131,11 +131,9 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
             if ($row === false) {
                 $row = [];
             }
-        } elseif ($object !== null) {
-            $row = $object->data;
         }
 
-        $this->handleData($row ?? []);
+        parent::__construct(null, $row, $id !== null ? null : $object);
     }
 
     /**

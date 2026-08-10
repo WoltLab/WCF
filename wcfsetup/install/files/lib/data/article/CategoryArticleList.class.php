@@ -16,7 +16,8 @@ class CategoryArticleList extends AccessibleArticleList
 {
     /**
      * @param int|int[] $categoryID
-     * @throws      \InvalidArgumentException
+     * @throws \InvalidArgumentException
+     * @phpstan-ignore constructor.missingParentCall
      */
     public function __construct(int|array $categoryID, bool $includeChildCategories = false)
     {

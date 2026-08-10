@@ -16,6 +16,7 @@ class UserFollowingList extends UserFollowerList
      */
     public $useQualifiedShorthand = false;
 
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct()
     {
         UserFollowList::__construct();

@@ -16,6 +16,7 @@ class WysiwygQuoteFormContainer extends WysiwygTabFormContainer
 {
     protected $templateName = 'shared_wysiwygQuoteFormContainer';
 
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct()
     {
         $this->icon(FontAwesomeIcon::fromValues('quote-left'))

@@ -46,6 +46,7 @@ class CLIWCF extends WCF
 
     /**
      * Calls all init functions of the WCF class.
+     * @phpstan-ignore constructor.missingParentCall
      */
     public function __construct()
     {

@@ -23,6 +23,7 @@ final class CodeFormField extends TextFormField
 
     protected int $chunkLength;
 
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct()
     {
         $this->chunks(BackupMultifactorMethod::CHUNKS);

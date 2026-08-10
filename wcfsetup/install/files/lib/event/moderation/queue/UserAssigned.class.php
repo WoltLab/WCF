@@ -22,6 +22,7 @@ final class UserAssigned extends \wcf\system\moderation\queue\event\UserAssigned
 
     private ?int $oldAssigneeId;
 
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct(
         ModerationQueue $moderationQueue,
         ?User $newAssignee,

@@ -19,6 +19,7 @@ final class CodeFormField extends TextFormField
 {
     use TDefaultIdFormField;
 
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct()
     {
         $this->minimumLength(EmailMultifactorMethod::LENGTH);

@@ -22,6 +22,7 @@ final class RebuildWorkerCollecting extends \wcf\system\worker\event\RebuildWork
      */
     private readonly \SplPriorityQueue $queue;
 
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct()
     {
         $this->queue = new \SplPriorityQueue();

@@ -23,6 +23,7 @@ class DevtoolsPackageInstallationDispatcher extends PackageInstallationDispatche
      */
     protected $project;
 
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct(DevtoolsProject $project, ?PackageInstallationQueue $queue = null)
     {
         $this->queue = $queue;

@@ -18,6 +18,7 @@ final class PackageUpdateUnauthorizedException extends UserException
     /**
      * @param string[][] $responseHeaders
      * @param mixed[] $packageUpdateVersion
+     * @phpstan-ignore constructor.missingParentCall
      */
     public function __construct(
         private readonly int $responseStatusCode,

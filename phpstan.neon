@@ -48,7 +48,7 @@ parameters:
         booleansInConditions: true
         booleansInLoopConditions: false
         uselessCast: true
-        requireParentConstructorCall: false
+        requireParentConstructorCall: true
         disallowedBacktick: false
         disallowedEmpty: false
         disallowedImplicitArrayCreation: false

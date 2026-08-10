@@ -20,6 +20,7 @@ class WysiwygTabMenuFormContainer extends TabMenuFormContainer
      */
     protected $templateName = 'shared_wysiwygTabMenuFormContainer';
 
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct()
     {
         $this->removeClass('section')

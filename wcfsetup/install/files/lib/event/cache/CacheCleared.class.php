@@ -14,6 +14,7 @@ use wcf\event\IPsr14Event;
  */
 final class CacheCleared extends \wcf\system\cache\event\CacheCleared implements IPsr14Event
 {
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct()
     {
     }

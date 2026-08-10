@@ -57,6 +57,7 @@ class AJAXException extends LoggedException
      *
      * @param mixed[] $returnValues
      * @param array<string, mixed> $extraInformation
+     * @phpstan-ignore constructor.missingParentCall
      */
     public function __construct(
         string $message,

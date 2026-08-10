@@ -20,6 +20,7 @@ final class GZipFile extends File
      * Opens a gzip file.
      *
      * @throws  SystemException
+     * @phpstan-ignore constructor.missingParentCall
      */
     public function __construct(string $filename, string $mode = 'wb')
     {

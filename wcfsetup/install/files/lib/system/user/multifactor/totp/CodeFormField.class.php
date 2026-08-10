@@ -20,6 +20,7 @@ final class CodeFormField extends TextFormField
 
     protected ?int $minCounter = null;
 
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct()
     {
         $this->minimumLength(Totp::CODE_LENGTH);

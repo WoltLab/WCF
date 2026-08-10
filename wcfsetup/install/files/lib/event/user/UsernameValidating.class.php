@@ -20,6 +20,7 @@ final class UsernameValidating extends \wcf\system\user\event\UsernameValidating
 {
     use TInterruptableEvent;
 
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct(
         public readonly string $username
     ) {

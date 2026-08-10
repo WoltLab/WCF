@@ -75,6 +75,7 @@ final class WCFSetup extends WCF
 
     /**
      * Calls all init functions of the WCFSetup class and starts the setup process.
+     * @phpstan-ignore constructor.missingParentCall
      */
     public function __construct()
     {

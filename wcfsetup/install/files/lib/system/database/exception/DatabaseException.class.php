@@ -12,6 +12,7 @@ namespace wcf\system\database\exception;
  */
 class DatabaseException extends \wcf\system\database\DatabaseException
 {
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct(string $message, ?\PDOException $previous = null)
     {
         \Exception::__construct($message, 0, $previous);

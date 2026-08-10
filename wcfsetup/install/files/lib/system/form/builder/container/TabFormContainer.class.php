@@ -17,6 +17,7 @@ class TabFormContainer extends FormContainer implements ITabFormContainer
      */
     protected $templateName = 'shared_tabFormContainer';
 
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct()
     {
         $this->addClass('tabMenuContent');

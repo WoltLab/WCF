@@ -29,6 +29,7 @@ class WysiwygSmileyFormContainer extends TabTabMenuFormContainer implements IWys
      */
     protected $templateName = 'shared_wysiwygSmileyFormContainer';
 
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct()
     {
         $this->attribute('data-preselect', 'true')

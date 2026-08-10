@@ -14,6 +14,7 @@ use wcf\event\IPsr14Event;
  */
 final class PackageInstallationPluginSynced extends \wcf\system\package\event\PackageInstallationPluginSynced implements IPsr14Event
 {
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct(
         public readonly string $pluginName,
         public readonly bool $isInvokedAgain,

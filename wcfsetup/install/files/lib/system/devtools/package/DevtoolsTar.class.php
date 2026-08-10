@@ -21,6 +21,7 @@ class DevtoolsTar extends Tar
 
     /**
      * @param array<string, string> $files
+     * @phpstan-ignore constructor.missingParentCall
      */
     public function __construct(array $files)
     {

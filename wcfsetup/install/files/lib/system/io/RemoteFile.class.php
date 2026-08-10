@@ -48,6 +48,7 @@ class RemoteFile extends File
      *
      * @param array<string, mixed> $options
      * @throws  SystemException
+     * @phpstan-ignore constructor.missingParentCall
      */
     public function __construct(string $host, int $port, int $timeout = 30, array $options = [])
     {

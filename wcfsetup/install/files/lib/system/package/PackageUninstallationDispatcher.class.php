@@ -32,6 +32,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
      */
     protected $didExecuteUninstallScript = false;
 
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct(PackageInstallationQueue $queue)
     {
         $this->queue = $queue;

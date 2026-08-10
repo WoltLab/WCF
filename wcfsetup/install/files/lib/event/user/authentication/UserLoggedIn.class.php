@@ -23,6 +23,7 @@ final class UserLoggedIn extends \wcf\system\user\authentication\event\UserLogge
 {
     private int $userID;
 
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct(User $user)
     {
         $this->userID = $user->userID;

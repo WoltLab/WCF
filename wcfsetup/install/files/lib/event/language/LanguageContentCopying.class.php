@@ -15,6 +15,7 @@ use wcf\event\IPsr14Event;
  */
 final class LanguageContentCopying extends \wcf\system\language\event\LanguageContentCopying implements IPsr14Event
 {
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct(
         public readonly Language $sourceLanguage,
         public readonly Language $targetLanguage,

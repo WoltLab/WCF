@@ -39,11 +39,13 @@ class ACPSessionLog extends DatabaseObject
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$id]);
             $row = $statement->fetchArray();
-        } elseif ($object !== null) {
-            $row = $object->data;
+
+            if ($row === false) {
+                $row = [];
+            }
         }
 
-        $this->handleData($row ?? []);
+        parent::__construct(null, $row, $id !== null ? null : $object);
     }
 
     /**

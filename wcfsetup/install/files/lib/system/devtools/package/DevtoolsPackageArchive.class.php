@@ -25,6 +25,7 @@ class DevtoolsPackageArchive extends PackageArchive
      */
     protected $packageXmlPath = '';
 
+    // @phpstan-ignore constructor.missingParentCall
     public function __construct(string $packageXmlPath)
     {
         $this->packageXmlPath = $packageXmlPath;

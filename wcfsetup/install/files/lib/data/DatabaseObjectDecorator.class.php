@@ -30,6 +30,7 @@ abstract class DatabaseObjectDecorator extends DatabaseObject
     /**
      * @param TDatabaseObject $object
      * @throws SystemException
+     * @phpstan-ignore constructor.missingParentCall
      */
     public function __construct(DatabaseObject $object)
     {

@@ -34,6 +34,7 @@ class WCFACP extends WCF
 
     /**
      * Calls all init functions of the WCF and the WCFACP class.
+     * @phpstan-ignore constructor.missingParentCall
      */
     public function __construct()
     {
