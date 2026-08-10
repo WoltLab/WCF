@@ -11,6 +11,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
+use wcf\util\StringUtil;
 
 /**
  * Condition implementation for the languages of a user.
@@ -88,7 +89,7 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements
             $returnValue .= "<label><input type=\"checkbox\" name=\"languageIDs[]\" value=\"" . $language->languageID . "\"" . (\in_array(
                 $language->languageID,
                 $this->languageIDs
-            ) ? ' checked' : "") . "> " . $language->languageName . "</label>";
+            ) ? ' checked' : "") . "> " . StringUtil::encodeHTML($language->languageName) . "</label>";
         }
 
         return $returnValue;
