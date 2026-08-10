@@ -6,6 +6,7 @@ use wcf\data\user\option\UserOption;
 use wcf\data\user\User;
 use wcf\system\WCF;
 use wcf\util\OptionUtil;
+use wcf\util\StringUtil;
 
 /**
  * User option output implementation for the output of select options.
@@ -33,12 +34,12 @@ class SelectOptionsUserOptionOutput implements IUserOptionOutput
                 if (!empty($output)) {
                     $output .= "<br>\n";
                 }
-                $output .= WCF::getLanguage()->get($resultValue);
+                $output .= StringUtil::encodeHTML(WCF::getLanguage()->get($resultValue));
             }
 
             return $output;
         } else {
-            return WCF::getLanguage()->get($result);
+            return StringUtil::encodeHTML(WCF::getLanguage()->get($result));
         }
     }
 
