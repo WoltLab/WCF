@@ -28,7 +28,10 @@ final class Phpass implements IPasswordAlgorithm
     ): string {
         $salt = Hex::encode(\random_bytes(4));
 
-        return $this->hashPhpass($password, $this->getSettings() . $salt) . ':';
+        $hash = $this->hashPhpass($password, $this->getSettings() . $salt);
+        \assert($hash !== null);
+
+        return $hash . ':';
     }
 
     /**

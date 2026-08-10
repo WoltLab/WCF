@@ -55,12 +55,27 @@ final class Phpbb3 implements IPasswordAlgorithm
             switch ($algorithm) {
                 case 'H':
                 case 'P':
-                    $password = \str_replace($settings, '', $this->hashPhpass($password, $settings));
+                    $phpass = $this->hashPhpass($password, $settings);
+                    if ($phpass === null) {
+                        return false;
+                    }
+
+                    $password = \str_replace($settings, '', $phpass);
                     break;
                 case '2a':
                 case '2y':
-                    $password = \str_replace($settings, '', \crypt($password, $settings));
+                    $crypt = \crypt($password, $settings);
+                    // crypt() returns the '*0'/'*1' failure marker for invalid settings.
+                    if (\str_starts_with($crypt, '*')) {
+                        return false;
+                    }
+
+                    $password = \str_replace($settings, '', $crypt);
                     break;
+                default:
+                    // Leaving $password untouched would compare the remainder of the
+                    // stored hash against the plaintext password.
+                    return false;
             }
         }
 

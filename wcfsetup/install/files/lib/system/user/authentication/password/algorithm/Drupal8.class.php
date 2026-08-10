@@ -20,14 +20,18 @@ final class Drupal8 implements IPasswordAlgorithm
     private const COSTS = 15;
 
     /**
-     * Returns the hashed password, with the given settings.
+     * Returns the hashed password, with the given settings or `null` if the
+     * settings are malformed.
      */
     private function hashDrupal(
         #[\SensitiveParameter]
         string $password,
         string $settings
-    ): string {
+    ): ?string {
         $output = $this->hashPhpass($password, $settings);
+        if ($output === null) {
+            return null;
+        }
 
         return \mb_substr($output, 0, 55, '8bit');
     }
@@ -44,7 +48,12 @@ final class Drupal8 implements IPasswordAlgorithm
         // but sometimes also without the salt. We don't need the salt, because the salt is saved with the hash.
         [$hash] = \explode(':', $hash, 2);
 
-        return \hash_equals($hash, $this->hashDrupal($password, $hash));
+        $ourHash = $this->hashDrupal($password, $hash);
+        if ($ourHash === null) {
+            return false;
+        }
+
+        return \hash_equals($hash, $ourHash);
     }
 
     /**
@@ -56,7 +65,10 @@ final class Drupal8 implements IPasswordAlgorithm
     ): string {
         $salt = Hex::encode(\random_bytes(4));
 
-        return $this->hashDrupal($password, $this->getSettings() . $salt) . ':';
+        $hash = $this->hashDrupal($password, $this->getSettings() . $salt);
+        \assert($hash !== null);
+
+        return $hash . ':';
     }
 
     /**
