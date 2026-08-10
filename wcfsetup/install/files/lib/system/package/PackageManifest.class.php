@@ -71,7 +71,7 @@ final class PackageManifest
     private function getManifestV1(): string
     {
         $requirements = \array_map(static function (array $requirement): string {
-            $file = (string)$requirement['file'];
+            $file = $requirement['file'];
 
             if ($file === '') {
                 throw new \UnexpectedValueException('Expected to see a non-empty file="" attribute for an requirement.');
@@ -88,7 +88,7 @@ final class PackageManifest
                 throw new \UnexpectedValueException('Expected to see a file="" attribute for an optional.');
             }
 
-            $file = (string)$optional['file'];
+            $file = $optional['file'];
 
             if ($file === '') {
                 throw new \UnexpectedValueException('Expected to see a non-empty file="" attribute for an optional.');

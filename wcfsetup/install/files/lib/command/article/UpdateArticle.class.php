@@ -71,7 +71,7 @@ final class UpdateArticle
 
         $newStatus = $this->builder->properties['publicationStatus'] ?? $oldStatus;
         if ($newStatus !== $oldStatus) {
-            $this->handlePublicationStatusChange($article, (int)$oldStatus, (int)$newStatus);
+            $this->handlePublicationStatusChange($article, $oldStatus, $newStatus);
         }
 
         $newUserID = $this->builder->properties['userID'] ?? $oldUserID;

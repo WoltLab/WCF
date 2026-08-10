@@ -26,7 +26,7 @@ class UserLoggedIn implements IEvent
 
     public function __construct(User $user)
     {
-        $this->userID = (int)$user->userID;
+        $this->userID = $user->userID;
     }
 
     public function getUser(): User

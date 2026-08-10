@@ -197,7 +197,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
         $image = \imagecreatetruecolor($width, $height);
         \imagealphablending($image, false);
 
-        \imagecopy($image, $this->image, 0, 0, (int)$originX, (int)$originY, (int)$width, (int)$height);
+        \imagecopy($image, $this->image, 0, 0, $originX, $originY, $width, $height);
         \imagesavealpha($image, true);
 
         // reload image to update image resource, width and height
@@ -215,12 +215,12 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
             $this->image,
             0,
             0,
-            (int)$originX,
-            (int)$originY,
-            (int)$targetWidth,
-            (int)$targetHeight,
-            (int)$originWidth,
-            (int)$originHeight
+            $originX,
+            $originY,
+            $targetWidth,
+            $targetHeight,
+            $originWidth,
+            $originHeight
         );
         \imagesavealpha($image, true);
 

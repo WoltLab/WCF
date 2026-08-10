@@ -61,7 +61,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
         parent::readFormParameters();
 
         if ($this->subscription->hasActiveSubscriptions()) {
-            $this->cost = $this->subscription->cost;
+            $this->cost = (float)$this->subscription->cost;
             $this->currency = $this->subscription->currency;
             $this->subscriptionLength = $this->subscription->subscriptionLength;
             $this->subscriptionLengthUnit = $this->subscription->subscriptionLengthUnit;
@@ -106,7 +106,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
 
             $this->isDisabled = $this->subscription->isDisabled;
             $this->showOrder = $this->subscription->showOrder;
-            $this->cost = $this->subscription->cost;
+            $this->cost = (float)$this->subscription->cost;
             $this->currency = $this->subscription->currency;
             $this->subscriptionLength = $this->subscription->subscriptionLength;
             $this->subscriptionLengthUnit = $this->subscription->subscriptionLengthUnit;

@@ -25,7 +25,7 @@ final class UserLoggedIn extends \wcf\system\user\authentication\event\UserLogge
 
     public function __construct(User $user)
     {
-        $this->userID = (int)$user->userID;
+        $this->userID = $user->userID;
     }
 
     #[\Override]

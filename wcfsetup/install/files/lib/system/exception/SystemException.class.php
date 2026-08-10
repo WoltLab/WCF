@@ -37,7 +37,7 @@ class SystemException extends LoggedException implements IExtraInformationExcept
      */
     public function __construct(string $message = '', int $code = 0, string $description = '', ?\Exception $previous = null)
     {
-        parent::__construct((string)$message, (int)$code, $previous);
+        parent::__construct($message, $code, $previous);
         $this->description = $description;
     }
 

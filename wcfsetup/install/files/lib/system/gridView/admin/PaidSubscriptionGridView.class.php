@@ -62,7 +62,7 @@ final class PaidSubscriptionGridView extends AbstractGridView
                             $locale = WCF::getLanguage()->getLocale();
 
                             return \NumberFormatter::create($locale, \NumberFormatter::CURRENCY)
-                                ->formatCurrency($row->cost, $row->currency);
+                                ->formatCurrency((float)$row->cost, $row->currency);
                         }
                     }
                 ),

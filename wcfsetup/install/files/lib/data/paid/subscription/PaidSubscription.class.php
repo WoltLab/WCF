@@ -24,7 +24,7 @@ use wcf\system\WCF;
  * @property-read   ?string $description                description of the paid subscription or name of language item which contains the description
  * @property-read   0|1     $isDisabled                 is `1` if the paid subscription is disabled and thus cannot be bought, otherwise `0`
  * @property-read   int     $showOrder                  position of the paid subscription in relation to the other paid subscriptions
- * @property-read   double  $cost                       cost of the paid subscription
+ * @property-read   string  $cost                       cost of the paid subscription as a decimal string
  * @property-read   string  $currency                   identifier for the currency of the paid subscription cost
  * @property-read   int     $subscriptionLength         magnitude part of the duration of the subscription or `0` if the subscription is permanent
  * @property-read   string  $subscriptionLengthUnit     unit part of the duration of the subscription (`D` for days, `M` for months, `Y` for years) or empty if the subscription is permanent
@@ -58,7 +58,7 @@ class PaidSubscription extends DatabaseObject implements ITitledObject
             }
 
             $buttons[] = $paymentMethod->getPurchaseButton(
-                $this->cost,
+                (float)$this->cost,
                 $this->currency,
                 WCF::getLanguage()->get($this->title),
                 $objectTypeID . ':' . WCF::getUser()->userID . ':' . $this->subscriptionID,

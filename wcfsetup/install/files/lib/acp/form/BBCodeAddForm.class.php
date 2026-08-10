@@ -111,8 +111,15 @@ class BBCodeAddForm extends AbstractForm
     {
         parent::readFormParameters();
 
-        if (isset($_POST['attributes'])) {
-            $this->attributes = $_POST['attributes'];
+        if (isset($_POST['attributes']) && \is_array($_POST['attributes'])) {
+            $attributeNo = 0;
+            $this->attributes = \array_map(static function (array $attribute) use (&$attributeNo): object {
+                $attribute['attributeNo'] = $attributeNo++;
+                $attribute['required'] = (int)isset($attribute['required']);
+                $attribute['useText'] = (int)isset($attribute['useText']);
+
+                return (object)$attribute;
+            }, $_POST['attributes']);
         }
         if (isset($_POST['bbcodeTag'])) {
             $this->bbcodeTag = \mb_strtolower(StringUtil::trim($_POST['bbcodeTag']));
@@ -137,14 +144,6 @@ class BBCodeAddForm extends AbstractForm
         }
         if (isset($_POST['wysiwygIcon'])) {
             $this->wysiwygIcon = StringUtil::trim($_POST['wysiwygIcon']);
-        }
-
-        $attributeNo = 0;
-        foreach ($this->attributes as $key => $val) {
-            $val['attributeNo'] = $attributeNo++;
-            $val['required'] = (int)isset($val['required']);
-            $val['useText'] = (int)isset($val['useText']);
-            $this->attributes[$key] = (object)$val;
         }
 
         I18nHandler::getInstance()->readValues();
