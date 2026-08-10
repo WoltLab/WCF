@@ -11,6 +11,7 @@ use wcf\acp\form\UserGroupEditForm;
 use wcf\data\user\group\UserGroup;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\Psr15DialogForm;
@@ -51,6 +52,9 @@ final class UserGroupCopyAction implements RequestHandlerInterface
         $userGroup = new UserGroup($parameters['id']);
         if (!$userGroup->groupID) {
             throw new IllegalLinkException();
+        }
+        if (!$userGroup->canCopy()) {
+            throw new PermissionDeniedException();
         }
 
         $form = $this->getForm();
