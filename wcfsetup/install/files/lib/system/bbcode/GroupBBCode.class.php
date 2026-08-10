@@ -4,6 +4,7 @@ namespace wcf\system\bbcode;
 
 use wcf\data\user\group\UserGroup;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Parses the [group] bbcode tag.
@@ -28,7 +29,7 @@ final class GroupBBCode extends AbstractBBCode
         $groupID = (!empty($openingTag['attributes'][1])) ? \intval($openingTag['attributes'][1]) : 0;
         $group = UserGroup::getGroupByID($groupID);
         if ($group === null || !$group->canBeMentioned()) {
-            return $content;
+            return StringUtil::encodeHTML($content);
         }
 
         return WCF::getTPL()->fetch('groupBBCodeTag', 'wcf', [
