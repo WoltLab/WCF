@@ -35,7 +35,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
             $html .= '<label><input type="checkbox" name="values[' . StringUtil::encodeHTML($option->optionName) . '][]" value="' . $group->groupID . '"' . (\in_array(
                 $group->groupID,
                 $selectedGroups
-            ) ? ' checked' : '') . '> ' . $group->getName() . '</label>';
+            ) ? ' checked' : '') . '> ' . StringUtil::encodeHTML($group->getName()) . '</label>';
         }
 
         return $html;
