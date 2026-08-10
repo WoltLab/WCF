@@ -98,7 +98,7 @@ class LanguageExportForm extends AbstractForm
         }
         $this->language = new LanguageEditor($language);
 
-        if (!PackageCache::getInstance()->getPackage($this->packageID)) {
+        if (PackageCache::getInstance()->getPackage($this->packageID) === null) {
             throw new UserInputException('packageID');
         }
     }

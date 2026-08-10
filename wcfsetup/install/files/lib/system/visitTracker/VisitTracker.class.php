@@ -99,7 +99,7 @@ class VisitTracker extends SingletonFactory
                 $this->userVisits = @\unserialize($data);
             }
 
-            if (!$this->userVisits) {
+            if (empty($this->userVisits)) {
                 $this->userVisits = [];
             }
         }
@@ -131,7 +131,7 @@ class VisitTracker extends SingletonFactory
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->getObjectTypeID($objectType), $objectID, WCF::getUser()->userID]);
         $row = $statement->fetchArray();
-        if ($row) {
+        if ($row !== false) {
             return $row['visitTime'];
         }
 

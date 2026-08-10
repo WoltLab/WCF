@@ -169,7 +169,7 @@ final class BackgroundQueueHandler extends SingletonFactory
                 \TIME_NOW,
             ]);
             $row = $statement->fetchSingleRow();
-            if (!$row) {
+            if ($row === false) {
                 // nothing to do here
                 return false;
             }
@@ -205,7 +205,7 @@ final class BackgroundQueueHandler extends SingletonFactory
         try {
             // no shut up operator, exception will be caught
             $job = \unserialize($row['job']);
-            if ($job) {
+            if ($job !== false) {
                 $this->performJob($job);
             }
         } catch (\Throwable $e) {

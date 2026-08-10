@@ -42,7 +42,7 @@ final class UserPopoverAction implements RequestHandlerInterface
         );
 
         $user = UserProfileRuntimeCache::getInstance()->getObject($parameters['id']);
-        if (!$user) {
+        if ($user === null) {
             return new EmptyResponse();
         }
 

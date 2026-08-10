@@ -30,7 +30,7 @@ class UserTrophyImporter extends AbstractImporter
             $data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
         }
 
-        if (!$data['userID'] || !$data['trophyID']) {
+        if (empty($data['userID']) || empty($data['trophyID'])) {
             return 0;
         }
 

@@ -25,7 +25,7 @@ final class UserAuthenticationConfigurationFactory extends SingletonFactory
 
         $event = new ConfigurationLoading();
         EventHandler::getInstance()->fire($event);
-        if ($event->getConfigration()) {
+        if ($event->getConfigration() !== null) {
             $this->configuration = $event->getConfigration();
         }
     }

@@ -567,15 +567,15 @@ class TemplateScriptingCompiler
 
                 default:
                     // 1) compiler functions first
-                    if ($phpCode = $this->compileCompilerPlugin($tagCommand, $tagArgs)) {
+                    if (($phpCode = $this->compileCompilerPlugin($tagCommand, $tagArgs)) !== false) {
                         return $phpCode;
                     }
                     // 2) block functions
-                    if ($phpCode = $this->compileBlockPlugin($tagCommand, $tagArgs)) {
+                    if (($phpCode = $this->compileBlockPlugin($tagCommand, $tagArgs)) !== false) {
                         return $phpCode;
                     }
                     // 3) functions
-                    if ($phpCode = $this->compileFunctionPlugin($tagCommand, $tagArgs)) {
+                    if (($phpCode = $this->compileFunctionPlugin($tagCommand, $tagArgs)) !== false) {
                         return $phpCode;
                     }
             }

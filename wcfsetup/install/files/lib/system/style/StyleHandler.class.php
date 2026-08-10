@@ -117,10 +117,7 @@ class StyleHandler extends SingletonFactory
         $this->style = new ActiveStyle($this->cache['styles'][$styleID]);
 
         // set template group id
-        // @phpstan-ignore if.alwaysTrue
-        if (WCF::getTPL()) {
-            WCF::getTPL()->setTemplateGroupID($this->style->templateGroupID);
-        }
+        WCF::getTPL()->setTemplateGroupID($this->style->templateGroupID);
     }
 
     /**

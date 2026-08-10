@@ -136,8 +136,7 @@ class LoginForm extends AbstractFormBuilderForm
                     if (!$user->isGuest()) {
                         $failures = UserAuthenticationFailure::countUserFailures($user->userID);
                         if (
-                            // @phpstan-ignore booleanAnd.leftAlwaysTrue
-                            \USER_AUTHENTICATION_FAILURE_USER_CAPTCHA
+                            \USER_AUTHENTICATION_FAILURE_USER_CAPTCHA > 0
                             && $failures >= \USER_AUTHENTICATION_FAILURE_USER_CAPTCHA
                         ) {
                             $this->useCaptcha = true;
@@ -205,7 +204,7 @@ class LoginForm extends AbstractFormBuilderForm
 
         if (RequestHandler::getInstance()->isACPRequest() && $this->user !== null) {
             $userProfile = new UserProfile($this->user);
-            if (!$userProfile->getPermission('admin.general.canUseAcp')) {
+            if (!$userProfile->hasPermission('admin.general.canUseAcp')) {
                 $usernameFormField->addValidationError(
                     new FormFieldValidationError(
                         'acpNotAuthorized',

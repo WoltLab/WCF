@@ -45,12 +45,12 @@ class AnchorAttributesFunctionTemplatePlugin implements IFunctionTemplatePlugin
         }
 
         $attributes = '';
-        if ($appendHref) {
+        if (!empty($appendHref)) {
             $attributes .= ' href="' . StringUtil::encodeHTML($url) . '"';
         }
 
         if ($external) {
-            if ($appendClassname) {
+            if (!empty($appendClassname)) {
                 $attributes .= ' class="externalURL"';
             }
 
@@ -59,7 +59,7 @@ class AnchorAttributesFunctionTemplatePlugin implements IFunctionTemplatePlugin
                 $rel .= ' noopener';
                 $attributes .= ' target="_blank"';
             }
-            if ($isUgc) {
+            if (!empty($isUgc)) {
                 $rel .= ' ugc';
             }
 

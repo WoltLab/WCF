@@ -276,7 +276,7 @@ final class UserExportGdprAction extends AbstractAction
         $ipAddresses = [];
 
         while ($row = $statement->fetchArray()) {
-            if (!$row[$ipAddressColumn]) {
+            if ($row[$ipAddressColumn] === '') {
                 continue;
             }
 
@@ -402,7 +402,7 @@ final class UserExportGdprAction extends AbstractAction
                 } else {
                     if ($option->optionType === 'select' || $option->optionType === 'timezone') {
                         $formattedValue = $this->user->getFormattedUserOption($option->optionName);
-                        if ($formattedValue) {
+                        if ($formattedValue !== '') {
                             $optionValue = $formattedValue;
                         }
                     }

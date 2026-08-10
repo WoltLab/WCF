@@ -99,11 +99,11 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction
     public function saveSubscription()
     {
         // subscribe
-        if ($this->parameters['subscribe']) {
+        if ($this->parameters['subscribe'] === true) {
             // newly subscribed
             if ($this->userObjectWatch === null) {
                 UserObjectWatchEditor::createOrIgnore([
-                    'notification' => $this->parameters['enableNotification'] ? 1 : 0,
+                    'notification' => $this->parameters['enableNotification'] === true ? 1 : 0,
                     'objectID' => $this->parameters['objectID'],
                     'objectTypeID' => $this->objectType->objectTypeID,
                     'userID' => WCF::getUser()->userID,
@@ -112,7 +112,7 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction
                 // update notification type
                 $editor = new UserObjectWatchEditor($this->userObjectWatch);
                 $editor->update([
-                    'notification' => $this->parameters['enableNotification'] ? 1 : 0,
+                    'notification' => $this->parameters['enableNotification'] === true ? 1 : 0,
                 ]);
             }
 

@@ -32,7 +32,7 @@ final class LoginRedirect
     public static function getUrl(): string
     {
         $url = WCF::getSession()->getVar(self::SESSION_VAR_KEY);
-        if (!$url) {
+        if ($url === null) {
             if (RequestHandler::getInstance()->isACPRequest()) {
                 $application = ApplicationHandler::getInstance()->getActiveApplication();
 

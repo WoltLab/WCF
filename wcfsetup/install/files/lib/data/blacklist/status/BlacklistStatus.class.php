@@ -86,7 +86,7 @@ class BlacklistStatus extends DatabaseObject
      */
     public static function getNextDelta(array $status, ?ClientInterface $client = null)
     {
-        if (!$client) {
+        if ($client === null) {
             $client = HttpFactory::makeClientWithTimeout(5);
         }
 
@@ -124,13 +124,13 @@ class BlacklistStatus extends DatabaseObject
                 }
 
                 foreach ($deltas as $delta) {
-                    if ($entry['files'][$delta] && $dateStatus->{$delta} === 0) {
+                    if ($entry['files'][$delta] === true && $dateStatus->{$delta} === 0) {
                         return "{$date}/{$delta}.json";
                     }
                 }
             } else {
                 foreach ($deltas as $delta) {
-                    if ($entry['files'][$delta]) {
+                    if ($entry['files'][$delta] === true) {
                         return "{$date}/{$delta}.json";
                     }
                 }

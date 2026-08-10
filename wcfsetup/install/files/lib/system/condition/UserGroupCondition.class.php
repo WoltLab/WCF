@@ -103,14 +103,14 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements
         $groupIDs = $user->getGroupIDs();
         if (
             !empty($condition->conditionData['groupIDs'])
-            && \count(\array_diff($condition->conditionData['groupIDs'], $groupIDs))
+            && \count(\array_diff($condition->conditionData['groupIDs'], $groupIDs)) > 0
         ) {
             return false;
         }
 
         if (
             !empty($condition->conditionData['notGroupIDs'])
-            && \count(\array_intersect($condition->conditionData['notGroupIDs'], $groupIDs))
+            && \count(\array_intersect($condition->conditionData['notGroupIDs'], $groupIDs)) > 0
         ) {
             return false;
         }
@@ -266,7 +266,7 @@ HTML;
             }
         }
 
-        if (\count(\array_intersect($this->notGroupIDs, $this->groupIDs))) {
+        if (\count(\array_intersect($this->notGroupIDs, $this->groupIDs)) > 0) {
             $this->errorMessages['notGroupIDs'] = 'wcf.user.condition.notGroupIDs.error.groupIDsIntersection';
 
             throw new UserInputException('notGroupIDs', 'groupIDsIntersection');

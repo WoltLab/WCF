@@ -84,12 +84,12 @@ class BirthdayOptionType extends DateOptionType
 
         $conditions->add('option_value.userOption' . User::getUserOptionID('birthdayShowYear') . ' = ?', [1]);
 
-        if ($ageFrom && $ageTo) {
+        if ($ageFrom !== 0 && $ageTo !== 0) {
             $conditions->add(
                 'option_value.userOption' . $option->optionID . ' BETWEEN DATE(?) AND DATE(?)',
                 [$dateFrom->format('Y-m-d'), $dateTo->format('Y-m-d')]
             );
-        } elseif ($ageFrom) {
+        } elseif ($ageFrom !== 0) {
             $conditions->add(
                 'option_value.userOption' . $option->optionID . ' BETWEEN DATE(?) AND DATE(?)',
                 ['1893-01-01', $dateTo->format('Y-m-d')]
@@ -122,12 +122,12 @@ class BirthdayOptionType extends DateOptionType
             [1]
         );
 
-        if ($ageFrom && $ageTo) {
+        if ($ageFrom !== 0 && $ageTo !== 0) {
             $userList->getConditionBuilder()->add(
                 'user_option_value.userOption' . $option->optionID . ' BETWEEN DATE(?) AND DATE(?)',
                 [$dateFrom->format('Y-m-d'), $dateTo->format('Y-m-d')]
             );
-        } elseif ($ageFrom) {
+        } elseif ($ageFrom !== 0) {
             $userList->getConditionBuilder()->add(
                 'user_option_value.userOption' . $option->optionID . ' BETWEEN DATE(?) AND DATE(?)',
                 ['1893-01-01', $dateTo->format('Y-m-d')]
@@ -146,7 +146,7 @@ class BirthdayOptionType extends DateOptionType
     #[\Override]
     public function checkUser(User $user, Option $option, mixed $value)
     {
-        if (!$user->birthdayShowYear || !$user->birthday) {
+        if (!(bool)$user->birthdayShowYear || \strval($user->birthday) === '') {
             return false;
         }
 
@@ -167,7 +167,7 @@ class BirthdayOptionType extends DateOptionType
     #[\Override]
     public function getConditionData(Option $option, mixed $newValue)
     {
-        if (!$newValue['ageFrom'] && !$newValue['ageTo']) {
+        if ((int)$newValue['ageFrom'] === 0 && (int)$newValue['ageTo'] === 0) {
             return;
         }
 

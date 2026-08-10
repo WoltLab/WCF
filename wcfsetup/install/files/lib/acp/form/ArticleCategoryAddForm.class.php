@@ -83,7 +83,7 @@ class ArticleCategoryAddForm extends CategoryAddFormBuilderForm
                     $sortField = $this->form->getNodeById('sortField');
                     \assert($sortField instanceof SelectFormField);
 
-                    if ($object->sortField && \in_array($object->sortField, \array_keys($sortField->getOptions()))) {
+                    if ($object->sortField !== null && \in_array($object->sortField, \array_keys($sortField->getOptions()))) {
                         $data['sortField'] = $object->sortField;
                     } else if ($object->sortField === 'publicationDate') {
                         // Legacy value: `publicationDate` was previously offered as an option
@@ -93,7 +93,7 @@ class ArticleCategoryAddForm extends CategoryAddFormBuilderForm
                         $data['sortField'] = 'time';
                     }
 
-                    if ($object->sortOrder) {
+                    if ($object->sortOrder !== null) {
                         $data['sortOrder'] = $object->sortOrder;
                     }
 

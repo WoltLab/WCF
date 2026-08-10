@@ -155,7 +155,7 @@ class MailWorker extends AbstractWorker
         while ($row = $statement->fetchArray()) {
             $user = new User(null, $row);
             $adminCanMail = $user->adminCanMail;
-            if ($adminCanMail === null || $adminCanMail) {
+            if ($adminCanMail === null || $adminCanMail !== 0) {
                 $this->sendMail($email, $user);
             }
         }

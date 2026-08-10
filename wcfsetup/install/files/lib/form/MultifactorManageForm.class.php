@@ -83,7 +83,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm
 
         $objectType = ObjectTypeCache::getInstance()->getObjectType(\intval($_GET['id']));
 
-        if (!$objectType) {
+        if ($objectType === null) {
             throw new IllegalLinkException();
         }
         if ($objectType->getDefinition()->definitionName !== 'com.woltlab.wcf.multifactor') {
@@ -105,7 +105,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm
         ]));
 
         // Backup codes may not be managed if they are not yet set up.
-        if ($this->method->objectType === 'com.woltlab.wcf.multifactor.backup' && !$this->setup) {
+        if ($this->method->objectType === 'com.woltlab.wcf.multifactor.backup' && $this->setup === null) {
             throw new PermissionDeniedException();
         }
     }
@@ -127,7 +127,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm
 
         /** @var ?Setup $setup */
         $setup = null;
-        if ($this->setup) {
+        if ($this->setup !== null) {
             $setup = $this->setup->lock();
         } else {
             try {

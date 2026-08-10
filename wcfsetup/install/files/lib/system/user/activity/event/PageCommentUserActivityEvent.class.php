@@ -34,7 +34,7 @@ class PageCommentUserActivityEvent extends SingletonFactory implements IUserActi
             if (isset($comments[$event->objectID])) {
                 // short output
                 $comment = $comments[$event->objectID];
-                if (PageCache::getInstance()->getPage($comment->objectID)) {
+                if (PageCache::getInstance()->getPage($comment->objectID) !== null) {
                     $page = PageCache::getInstance()->getPage($comment->objectID);
 
                     // check permissions

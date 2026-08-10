@@ -143,7 +143,7 @@ class UserCollapsibleContentHandler extends SingletonFactory
             ]);
             $row = $statement->fetchArray();
 
-            if (!$row) {
+            if ($row === false) {
                 $sql = "INSERT INTO wcf1_user_collapsible_content
                                     (objectTypeID, objectID, userID)
                         VALUES      (?, ?, ?)";

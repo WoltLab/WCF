@@ -194,7 +194,7 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
         $this->readInteger('userID');
 
         $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
-        if (!$this->userProfile) {
+        if ($this->userProfile === null) {
             throw new UserInputException('userID');
         }
         if (!$this->userProfile->isAccessible('canViewTrophies') && $this->userProfile->userID !== WCF::getSession()->userID) {

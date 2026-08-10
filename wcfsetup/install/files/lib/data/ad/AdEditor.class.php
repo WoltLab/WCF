@@ -42,7 +42,7 @@ class AdEditor extends DatabaseObjectEditor implements IEditableCachedObject
             $this->objectTypeID,
         ]);
         $maxShowOrder = $statement->fetchSingleColumn();
-        if (!$maxShowOrder) {
+        if ($maxShowOrder === null) {
             $maxShowOrder = 0;
         }
 

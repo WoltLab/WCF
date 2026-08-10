@@ -103,7 +103,7 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
 
         $data = PackageUpdateCacheBuilder::getInstance()->getData();
         if (
-            $data['updates']
+            $data['updates'] > 0
             && WCF::getSession()->hasPermission('admin.configuration.package.canUpdatePackage')
         ) {
             $messages[] = new StatusMessage(

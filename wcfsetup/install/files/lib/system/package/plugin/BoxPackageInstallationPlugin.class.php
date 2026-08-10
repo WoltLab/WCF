@@ -208,7 +208,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
                 $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([$data['elements']['objectType'], 'com.woltlab.wcf.boxController']);
                 $objectTypeID = $statement->fetchSingleColumn();
-                if (!$objectTypeID) {
+                if ($objectTypeID === false) {
                     throw new SystemException("Unknown object type '{$data['elements']['objectType']}' for 'system'-type box '{$identifier}'");
                 }
 
@@ -318,7 +318,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 
         $row = $statement->fetchSingleRow();
 
-        return (!$row['showOrder']) ? 1 : $row['showOrder'] + 1;
+        return ($row['showOrder'] === null) ? 1 : $row['showOrder'] + 1;
     }
 
     #[\Override]
@@ -403,7 +403,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 
                     if ($languageID === null) {
                         $statement->execute([$boxID]);
-                        if ($statement->fetchSingleColumn()) {
+                        if ($statement->fetchSingleColumn() > 0) {
                             continue;
                         }
                     }

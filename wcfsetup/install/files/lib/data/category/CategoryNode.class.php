@@ -33,16 +33,16 @@ class CategoryNode extends DatabaseObjectDecorator implements IObjectTreeNode
      */
     public function isVisibleInNestedList(?AbstractDecoratedCategory $activeCategory = null, bool $showChildCategories = false): bool
     {
-        if (!$this->getParentCategory()) {
+        if ($this->getParentCategory() === null) {
             // level 1 is always visible
             return true;
         }
 
-        if ($showChildCategories && !$this->getParentCategory()->getParentCategory()) {
+        if ($showChildCategories && $this->getParentCategory()->getParentCategory() === null) {
             return true;
         }
 
-        if ($activeCategory) {
+        if ($activeCategory !== null) {
             $decoratedObject = $this->getDecoratedObject();
             if (
                 $activeCategory->categoryID === $this->categoryID

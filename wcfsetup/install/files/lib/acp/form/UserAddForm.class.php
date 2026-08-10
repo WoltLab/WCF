@@ -257,7 +257,11 @@ class UserAddForm extends UserOptionListForm
                 unset($this->visibleLanguages[$key]);
             }
         }
-        if (empty($this->visibleLanguages) && ($language = LanguageFactory::getInstance()->getLanguage($this->languageID)) && $language->hasContent !== 0) {
+        if (
+            empty($this->visibleLanguages)
+            && ($language = LanguageFactory::getInstance()->getLanguage($this->languageID)) !== null
+            && $language->hasContent !== 0
+        ) {
             $this->visibleLanguages[] = $this->languageID;
         }
 

@@ -44,7 +44,7 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
         $this->readInteger('userID');
 
         $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
-        if (!$this->userProfile) {
+        if ($this->userProfile === null) {
             throw new UserInputException('userID');
         }
         if ($this->userProfile->isProtected()) {

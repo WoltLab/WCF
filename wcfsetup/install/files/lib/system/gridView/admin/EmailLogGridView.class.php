@@ -97,7 +97,7 @@ final class EmailLogGridView extends AbstractGridView
                         {
                             \assert($row instanceof EmailLogEntry);
 
-                            if (!$row->getRecipient()) {
+                            if ($row->getRecipient() === null) {
                                 return WCF::getLanguage()->get('wcf.user.guest');
                             }
 

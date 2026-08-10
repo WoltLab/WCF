@@ -94,7 +94,7 @@ class UserRankAction extends AbstractDatabaseObjectAction
             $object = \reset($this->objects);
             $rankImageFile = \reset($this->parameters['rankImageFile']);
 
-            if (!$rankImageFile) {
+            if ($rankImageFile === false) {
                 $this->parameters['data']['rankImage'] = "";
             } else {
                 if (!($rankImageFile instanceof UploadFile)) {

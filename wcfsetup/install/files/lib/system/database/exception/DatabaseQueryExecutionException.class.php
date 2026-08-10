@@ -43,7 +43,7 @@ class DatabaseQueryExecutionException extends DatabaseQueryException implements 
         parent::__construct($message, $previous);
 
         $this->parameters = $parameters;
-        if ($previous) {
+        if ($previous !== null) {
             $errorInfo = $previous->errorInfo;
             $this->sqlState = $errorInfo[0] ?? null;
             $this->driverCode = $errorInfo[1] ?? null;

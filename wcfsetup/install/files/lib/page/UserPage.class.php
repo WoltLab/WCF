@@ -200,7 +200,11 @@ class UserPage extends AbstractPage
             && WCF::getSession()->spiderIdentifier === null
             && !$this->user->isProtected()
         ) {
-            if (\PROFILE_ENABLE_VISITORS !== 0 && WCF::getUser()->userID !== 0 && !WCF::getUser()->canViewOnlineStatus) {
+            if (
+                \PROFILE_ENABLE_VISITORS === 1
+                && !WCF::getUser()->isGuest()
+                && (int)WCF::getUser()->canViewOnlineStatus === 0
+            ) {
                 new TrackUserProfileVisitor(WCF::getUser(), $this->user->getDecoratedObject(), \TIME_NOW)();
             }
         }

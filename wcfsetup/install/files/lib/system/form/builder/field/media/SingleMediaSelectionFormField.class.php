@@ -49,7 +49,7 @@ final class SingleMediaSelectionFormField extends AbstractFormField implements I
     public function getMedia(): ViewableMedia
     {
         if ($this->media === null) {
-            if (!$this->getValue()) {
+            if (empty($this->getValue())) {
                 throw new \BadMethodCallException(
                     "Cannot be media object if no valid media id is set as value for field '{$this->getId()}'."
                 );
@@ -92,7 +92,7 @@ final class SingleMediaSelectionFormField extends AbstractFormField implements I
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
             $value = $this->getDocument()->getRequestData($this->getPrefixedId());
 
-            if ($value) {
+            if (!empty($value)) {
                 $this->value = $value;
             }
         }
@@ -116,7 +116,7 @@ final class SingleMediaSelectionFormField extends AbstractFormField implements I
             $this->value = null;
         }
 
-        if (!$this->getValue() && $this->isRequired()) {
+        if (empty($this->getValue()) && $this->isRequired()) {
             $this->addValidationError(new FormFieldValidationError('empty'));
         }
     }

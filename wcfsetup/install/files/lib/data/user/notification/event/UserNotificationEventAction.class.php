@@ -170,7 +170,7 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction
             $events[] = $eventData;
         }
 
-        if ($errors && \ob_get_level()) {
+        if ($errors > 0 && \ob_get_level() > 0) {
             // discard any output generated before the exception occurred
             while (\ob_get_level()) {
                 \ob_end_clean();

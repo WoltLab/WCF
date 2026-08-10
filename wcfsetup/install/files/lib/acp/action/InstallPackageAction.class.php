@@ -184,7 +184,7 @@ class InstallPackageAction extends AbstractSecureAction
         $application = $statement->fetchObject(Application::class);
 
         $controller = 'package-list';
-        if (WCF::getSession()->getVar('__wcfSetup_completed')) {
+        if ((bool)WCF::getSession()->getVar('__wcfSetup_completed')) {
             $controller = 'first-time-setup';
 
             WCF::getSession()->unregister('__wcfSetup_completed');

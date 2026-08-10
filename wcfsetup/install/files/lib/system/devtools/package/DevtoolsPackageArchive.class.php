@@ -33,7 +33,7 @@ class DevtoolsPackageArchive extends PackageArchive
     #[\Override]
     public function openArchive()
     {
-        if ($this->tar) {
+        if ($this->tar !== null) {
             return;
         }
 

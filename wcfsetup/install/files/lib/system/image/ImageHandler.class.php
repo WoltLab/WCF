@@ -41,10 +41,10 @@ class ImageHandler extends SingletonFactory
         }
 
         $imageAdapter = $this->imageAdapters[\IMAGE_ADAPTER_TYPE];
-        $isSupported = \call_user_func([$imageAdapter, 'isSupported']);
+        $isSupported = \call_user_func([$imageAdapter, 'isSupported']) === true;
         if ($isSupported) {
             if (\is_subclass_of($imageAdapter, IWebpImageAdapter::class)) {
-                $isSupported = \call_user_func([$imageAdapter, 'supportsWebp']);
+                $isSupported = \call_user_func([$imageAdapter, 'supportsWebp']) === true;
             } else {
                 $isSupported = false;
             }

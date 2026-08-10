@@ -246,11 +246,11 @@ class TestableUserNotificationEventHandler extends SingletonFactory
         foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
             for ($authorCount = $minAuthorCount; $authorCount <= $maxAuthorCount; $authorCount++) {
                 $localMaxGuestCount = $maxGuestCount;
-                if (!$event->isStackable() && $authorCount) {
+                if (!$event->isStackable() && $authorCount !== 0) {
                     $localMaxGuestCount = 0;
                 }
 
-                for ($guestCount = $authorCount ? 0 : 1; $guestCount <= $localMaxGuestCount; $guestCount++) {
+                for ($guestCount = $authorCount !== 0 ? 0 : 1; $guestCount <= $localMaxGuestCount; $guestCount++) {
                     $objects = $className::getTestObjects($this->getRecipient(), $firstAuthor);
 
                     foreach ($objects as $object) {
@@ -277,11 +277,11 @@ class TestableUserNotificationEventHandler extends SingletonFactory
                                 $additionalData
                             ),
                             $object,
-                            $authorCount ? $firstAuthor : $unknownAuthor,
+                            $authorCount !== 0 ? $firstAuthor : $unknownAuthor,
                             $additionalData
                         );
 
-                        if ($authorCount) {
+                        if ($authorCount !== 0) {
                             $event->setAuthors(\array_slice($authors, 0, $authorCount, true));
                         } else {
                             $event->setAuthors([$unknownAuthor]);

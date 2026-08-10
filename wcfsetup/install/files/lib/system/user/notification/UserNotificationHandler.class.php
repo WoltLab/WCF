@@ -286,7 +286,10 @@ class UserNotificationHandler extends SingletonFactory
             if ($event->supportsEmailNotification()) {
                 foreach ($recipients as $recipient) {
                     if ($recipient->mailNotificationType === 'instant') {
-                        if (isset($notifications[$recipient->userID]) && $notifications[$recipient->userID]['isNew']) {
+                        if (
+                            isset($notifications[$recipient->userID])
+                            && $notifications[$recipient->userID]['isNew'] === true
+                        ) {
                             $event->setObject(
                                 $notifications[$recipient->userID]['object'],
                                 $notificationObject,
@@ -422,7 +425,7 @@ class UserNotificationHandler extends SingletonFactory
         $count = \count($notifications);
         $limit = 10 - $count;
 
-        if ($limit) {
+        if ($limit !== 0) {
             $notifications = \array_merge($notifications, $this->fetchNotifications($limit, 0, 1));
         }
 
@@ -510,7 +513,7 @@ class UserNotificationHandler extends SingletonFactory
         $statement->execute($conditions->getParameters());
         $authorIDs = $authorToNotification = [];
         while ($row = $statement->fetchArray()) {
-            if ($row['authorID']) {
+            if ($row['authorID'] !== null) {
                 $authorIDs[] = $row['authorID'];
             }
 
@@ -564,7 +567,7 @@ class UserNotificationHandler extends SingletonFactory
             if (isset($authorToNotification[$notification->notificationID])) {
                 $eventAuthors = [];
                 foreach ($authorToNotification[$notification->notificationID] as $userID) {
-                    if (!$userID) {
+                    if ($userID === null) {
                         $eventAuthors[0] = $unknownAuthor;
                     } elseif (isset($authors[$userID])) {
                         $eventAuthors[$userID] = $authors[$userID];

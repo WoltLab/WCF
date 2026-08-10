@@ -70,7 +70,7 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
                 $content .= "content-transfer-encoding: " . $part->getContentTransferEncoding() . "\r\n";
             }
 
-            if ($part->getAdditionalHeaders()) {
+            if ($part->getAdditionalHeaders() !== []) {
                 $content .= \implode("\r\n", \array_map(static function ($item) {
                     return \implode(': ', $item);
                 }, $part->getAdditionalHeaders())) . "\r\n";

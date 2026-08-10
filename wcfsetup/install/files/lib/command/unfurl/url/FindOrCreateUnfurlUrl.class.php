@@ -27,7 +27,7 @@ final class FindOrCreateUnfurlUrl
     {
         $object = UnfurlUrl::getByUrl($this->url);
 
-        if (!$object) {
+        if ($object === null) {
             $returnValues = (new UnfurlUrlAction([], 'create', [
                 'data' => [
                     'url' => $this->url,

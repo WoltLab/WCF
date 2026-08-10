@@ -38,7 +38,7 @@ class AbstractLikeImporter extends AbstractImporter
     #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
-        if ($data['objectUserID']) {
+        if (!empty($data['objectUserID'])) {
             $data['objectUserID'] = ImportHandler::getInstance()
                 ->getNewID('com.woltlab.wcf.user', $data['objectUserID']);
         }

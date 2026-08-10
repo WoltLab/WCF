@@ -106,7 +106,7 @@ class ArticleCollection extends DatabaseObjectCollection
 
         foreach ($this->getObjects() as $object) {
             foreach (Article::getAllDiscussionProviders() as $discussionProvider) {
-                if (\call_user_func([$discussionProvider, 'isResponsible'], $object)) {
+                if (\call_user_func([$discussionProvider, 'isResponsible'], $object) === true) {
                     $this->discussionProviders[$object->getObjectID()] = new $discussionProvider($object);
                     break;
                 }

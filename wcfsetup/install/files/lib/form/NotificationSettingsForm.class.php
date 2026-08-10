@@ -209,7 +209,7 @@ class NotificationSettingsForm extends AbstractForm
                 WCF::getUser()->userID,
             ]);
 
-            if ($setting['enabled']) {
+            if (!empty($setting['enabled'])) {
                 $newSettings[] = [
                     'eventID' => $eventID,
                     'mailNotificationType' => $setting['mailNotificationType'],

@@ -35,7 +35,7 @@ class AttachmentPage extends \wcf\page\AttachmentPage
 
         // check private status of attachment's object type
         $objectType = ObjectTypeCache::getInstance()->getObjectType($this->attachment->objectTypeID);
-        if ($objectType->private) {
+        if ($objectType->private === '1') {
             throw new PermissionDeniedException();
         }
     }

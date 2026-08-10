@@ -165,7 +165,7 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction
             $projectCount++;
         });
 
-        if (!$projectCount) {
+        if ($projectCount === 0) {
             return [
                 'errorMessage' => WCF::getLanguage()->get('wcf.acp.devtools.project.quickSetup.path.error.noPackages'),
                 'errorType' => 'noPackages',
@@ -216,7 +216,7 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction
             'packageID' => null,
             'archive' => '',
             'action' => 'install',
-            'isApplication' => $packageArchive->getPackageInfo('isApplication') ? 1 : 0,
+            'isApplication' => $packageArchive->getPackageInfo('isApplication') === 1 ? 1 : 0,
         ]);
 
         return [

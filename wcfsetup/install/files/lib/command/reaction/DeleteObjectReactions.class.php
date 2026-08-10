@@ -73,7 +73,7 @@ final class DeleteObjectReactions
         $likeList->getConditionBuilder()->add('like_table.objectID IN (?)', [$this->objectIDs]);
         $likeList->readObjects();
 
-        if (\count($likeList)) {
+        if (\count($likeList) > 0) {
             $activityPoints = $likeData = [];
             foreach ($likeList as $like) {
                 $likeData[$like->likeID] = $like->userID;

@@ -51,7 +51,7 @@ final class UserCoverPhoto implements IUserCoverPhoto
     {
         $thumbnail = $this->file->getThumbnail($size);
 
-        return $thumbnail ? $thumbnail->getLink() : $this->getURL();
+        return $thumbnail !== null ? $thumbnail->getLink() : $this->getURL();
     }
 
     #[\Override]
@@ -93,7 +93,7 @@ final class UserCoverPhoto implements IUserCoverPhoto
      */
     public static function getLegacyLocation(User $user, bool $forceWebP): ?string
     {
-        if ($user->coverPhotoHash === null || $user->coverPhotoHash === '' || !$user->coverPhotoExtension) {
+        if ($user->coverPhotoHash === null || $user->coverPhotoHash === '' || $user->coverPhotoExtension === '') {
             return null;
         }
 

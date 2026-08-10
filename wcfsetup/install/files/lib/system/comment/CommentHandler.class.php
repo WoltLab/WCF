@@ -219,7 +219,7 @@ class CommentHandler extends SingletonFactory
     public static function enforceFloodControl()
     {
         $floodControlTime = WCF::getSession()->getPermission('user.comment.floodControlTime');
-        if (!$floodControlTime) {
+        if (empty($floodControlTime)) {
             return;
         }
 
@@ -751,7 +751,7 @@ class CommentHandler extends SingletonFactory
     public static function enforceCensorship(string $text)
     {
         $censoredWords = Censorship::getInstance()->test($text);
-        if ($censoredWords) {
+        if ($censoredWords !== false) {
             throw new UserInputException(
                 'text',
                 WCF::getLanguage()->getDynamicVariable(

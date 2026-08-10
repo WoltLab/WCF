@@ -248,7 +248,7 @@ class WCF
             $debug = self::debugModeIsEnabled(true);
             if (!$debug) {
                 // flush output
-                if (\ob_get_level()) {
+                if (\ob_get_level() > 0) {
                     \ob_end_flush();
                 }
                 \flush();
@@ -795,7 +795,7 @@ class WCF
         $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest');
         // Execute background queue in this request, if it was requested and AJAX isn't used.
         if (!$isAjax) {
-            if (self::getSession()->getVar('forceBackgroundQueuePerform')) {
+            if (self::getSession()->getVar('forceBackgroundQueuePerform') === true) {
                 self::getTPL()->assign([
                     'forceBackgroundQueuePerform' => true,
                 ]);

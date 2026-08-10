@@ -213,7 +213,7 @@ class TrophyEditForm extends TrophyAddForm
             while ($row = $statement->fetchArray()) {
                 $userAction = new UserAction([$row['userID']], 'update', [
                     'counters' => [
-                        'trophyPoints' => $row['count'] * ($this->isDisabled) ? -1 : 1,
+                        'trophyPoints' => $row['count'] * ($this->isDisabled !== 0 ? -1 : 1),
                     ],
                 ]);
                 $userAction->executeAction();

@@ -102,7 +102,7 @@ class EditHistoryPage extends AbstractPage
             }
 
             // if new version isn't 'current' check whether they are comparable
-            if ($this->new) {
+            if ($this->new !== null) {
                 // different objectTypes cannot be compared
                 if ($this->old->objectTypeID !== $this->new->objectTypeID) {
                     throw new IllegalLinkException();
@@ -125,7 +125,7 @@ class EditHistoryPage extends AbstractPage
             throw new IllegalLinkException();
         }
 
-        if (!$this->objectType) {
+        if ($this->objectType === null) {
             throw new IllegalLinkException();
         }
 
@@ -141,7 +141,7 @@ class EditHistoryPage extends AbstractPage
         $processor->checkPermissions($this->object);
         $this->object->setLocation();
 
-        if (isset($_REQUEST['newID']) && !$this->new) {
+        if (isset($_REQUEST['newID']) && $this->new === null) {
             $this->new = $this->object;
             $this->newID = 'current';
         }
@@ -190,7 +190,7 @@ class EditHistoryPage extends AbstractPage
         }
 
         // valid IDs were given, calculate diff
-        if ($this->old && $this->new) {
+        if ($this->old !== null && $this->new !== null) {
             $differ = Diff::getDefaultDiffer();
 
             $a = \explode("\n", $this->prepareMessage($this->old->getMessage()));

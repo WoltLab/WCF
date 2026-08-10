@@ -79,7 +79,7 @@ abstract class TreeMenu extends SingletonFactory
             $hasEnabledOption = false;
             $options = \explode(',', \strtoupper($item->options));
             foreach ($options as $option) {
-                if (\defined($option) && \constant($option)) {
+                if (\defined($option) && \constant($option) !== 0) {
                     $hasEnabledOption = true;
                     break;
                 }

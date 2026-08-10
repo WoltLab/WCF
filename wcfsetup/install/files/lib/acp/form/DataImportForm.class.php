@@ -316,7 +316,7 @@ class DataImportForm extends AbstractForm
                 $statement = WCF::getDB()->prepare($sql);
                 $statement->execute();
 
-                if ($statement->fetchSingleColumn()) {
+                if ($statement->fetchSingleColumn() !== 0) {
                     $this->showMappingNotice = true;
                 }
             }

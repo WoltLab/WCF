@@ -45,7 +45,7 @@ final class RegisterServiceWorkerAction implements RequestHandlerInterface
         );
         $serviceWorkerList = new ServiceWorkerList();
         $serviceWorkerList->getConditionBuilder()->add('userID = ?', [WCF::getUser()->userID]);
-        if ($parameters["remove"]) {
+        if ($parameters["remove"] === true) {
             $serviceWorkerList->getConditionBuilder()->add('endpoint = ?', [$parameters['endpoint']]);
             $serviceWorkerList->getConditionBuilder()->add('publicKey = ?', [$parameters['publicKey']]);
             $serviceWorkerList->getConditionBuilder()->add('authToken = ?', [$parameters['authToken']]);

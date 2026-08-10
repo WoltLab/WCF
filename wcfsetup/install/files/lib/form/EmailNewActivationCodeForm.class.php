@@ -171,7 +171,7 @@ final class EmailNewActivationCodeForm extends AbstractFormBuilderForm
     #[\Override]
     public function show()
     {
-        if (!((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
+        if (((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) === 0) {
             throw new IllegalLinkException();
         }
 

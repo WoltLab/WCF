@@ -120,7 +120,7 @@ class AdAddForm extends AbstractForm
     {
         $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.condition.ad');
         foreach ($objectTypes as $objectType) {
-            if (!$objectType->conditionobject) {
+            if ($objectType->conditionobject === null) {
                 continue;
             }
 
@@ -128,7 +128,7 @@ class AdAddForm extends AbstractForm
                 $this->groupedConditionObjectTypes[$objectType->conditionobject] = [];
             }
 
-            if ($objectType->conditiongroup) {
+            if ($objectType->conditiongroup !== null) {
                 if (!isset($this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup])) {
                     $this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup] = [];
                 }

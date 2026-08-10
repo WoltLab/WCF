@@ -355,7 +355,7 @@ class AccountManagementForm extends AbstractForm
             && $this->email !== WCF::getUser()->email
             && $this->email !== WCF::getUser()->newEmail
         ) {
-            if (!((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
+            if (((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) === 0) {
                 // update email
                 $updateParameters['email'] = $this->email;
                 $success[] = 'wcf.user.changeEmail.success';
@@ -384,7 +384,7 @@ class AccountManagementForm extends AbstractForm
             if (
                 $this->githubConnect !== 0
                 && WCF::getSession()->getVar('__3rdPartyProvider') === 'github'
-                && ($oauthUser = WCF::getSession()->getVar('__oauthUser'))
+                && ($oauthUser = WCF::getSession()->getVar('__oauthUser')) !== null
             ) {
                 $updateParameters['authData'] = 'github:' . $oauthUser->getId();
                 $updateParameters['password'] = null;
@@ -402,7 +402,7 @@ class AccountManagementForm extends AbstractForm
             if (
                 $this->twitterConnect !== 0
                 && WCF::getSession()->getVar('__3rdPartyProvider') === 'twitter'
-                && ($oauthUser = WCF::getSession()->getVar('__oauthUser'))
+                && ($oauthUser = WCF::getSession()->getVar('__oauthUser')) !== null
             ) {
                 $updateParameters['authData'] = 'twitter:' . $oauthUser->getId();
                 $updateParameters['password'] = null;
@@ -420,7 +420,7 @@ class AccountManagementForm extends AbstractForm
             if (
                 $this->facebookConnect !== 0
                 && WCF::getSession()->getVar('__3rdPartyProvider') === 'facebook'
-                && ($oauthUser = WCF::getSession()->getVar('__oauthUser'))
+                && ($oauthUser = WCF::getSession()->getVar('__oauthUser')) !== null
             ) {
                 $updateParameters['authData'] = 'facebook:' . $oauthUser->getId();
                 $updateParameters['password'] = null;
@@ -438,7 +438,7 @@ class AccountManagementForm extends AbstractForm
             if (
                 $this->googleConnect !== 0
                 && WCF::getSession()->getVar('__3rdPartyProvider') === 'google'
-                && ($oauthUser = WCF::getSession()->getVar('__oauthUser'))
+                && ($oauthUser = WCF::getSession()->getVar('__oauthUser')) !== null
             ) {
                 $updateParameters['authData'] = 'google:' . $oauthUser->getId();
                 $updateParameters['password'] = null;

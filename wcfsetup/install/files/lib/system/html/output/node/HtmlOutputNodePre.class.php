@@ -106,7 +106,7 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
                 break;
         }
 
-        if (!$highlighter) {
+        if (empty($highlighter)) {
             $highlighter = $this->guessHighlighter($content);
         }
         $eventData = [
@@ -268,7 +268,7 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
         $i = -1;
         // find an unused codeID
         do {
-            $codeID = $prefix . \mb_substr(\sha1($code), 0, 6) . (++$i ? '_' . $i : '');
+            $codeID = $prefix . \mb_substr(\sha1($code), 0, 6) . (++$i !== 0 ? '_' . $i : '');
         } while (isset(self::$codeIDs[$codeID]));
 
         // mark codeID as used

@@ -134,7 +134,7 @@ class RegisterForm extends UserAddForm
             ));
         }
 
-        if (WCF::getSession()->getVar('__3rdPartyProvider')) {
+        if (WCF::getSession()->getVar('__3rdPartyProvider') !== null) {
             $this->isExternalAuthentication = true;
         }
     }
@@ -179,7 +179,7 @@ class RegisterForm extends UserAddForm
 
         $this->groupIDs = [];
 
-        if ($this->captchaObjectType) {
+        if ($this->captchaObjectType !== null) {
             $this->captchaObjectType->getProcessor()->readFormParameters();
         }
     }
@@ -203,7 +203,7 @@ class RegisterForm extends UserAddForm
         if (
             !$this->isExternalAuthentication
             && (
-                !WCF::getSession()->getVar('registrationStartTime')
+                WCF::getSession()->getVar('registrationStartTime') === null
                 || (\TIME_NOW - WCF::getSession()->getVar('registrationStartTime')) < self::$minRegistrationTime
             )
         ) {
@@ -236,7 +236,7 @@ class RegisterForm extends UserAddForm
                 $this->captchaObjectType = null;
             }
 
-            if (WCF::getSession()->getVar('noRegistrationCaptcha')) {
+            if (WCF::getSession()->getVar('noRegistrationCaptcha') === true) {
                 $this->captchaObjectType = null;
             }
         }
@@ -246,10 +246,10 @@ class RegisterForm extends UserAddForm
         if (empty($_POST)) {
             $this->languageID = WCF::getLanguage()->languageID;
 
-            if (WCF::getSession()->getVar('__username')) {
+            if (WCF::getSession()->getVar('__username') !== null) {
                 $this->username = WCF::getSession()->getVar('__username');
             }
-            if (WCF::getSession()->getVar('__email')) {
+            if (WCF::getSession()->getVar('__email') !== null) {
                 $this->email = WCF::getSession()->getVar('__email');
             }
 
@@ -302,7 +302,7 @@ class RegisterForm extends UserAddForm
      */
     protected function validateCaptcha()
     {
-        if ($this->captchaObjectType) {
+        if ($this->captchaObjectType !== null) {
             try {
                 $this->captchaObjectType->getProcessor()->validate();
             } catch (UserInputException $e) {
@@ -363,7 +363,7 @@ class RegisterForm extends UserAddForm
                 case 'facebook':
                 case 'google':
                 case 'twitter':
-                    if (($oauthUser = WCF::getSession()->getVar('__oauthUser'))) {
+                    if (($oauthUser = WCF::getSession()->getVar('__oauthUser')) !== null) {
                         $this->additionalFields['authData'] = $provider . ':' . $oauthUser->getId();
                     }
                     break;
@@ -372,7 +372,7 @@ class RegisterForm extends UserAddForm
             // Accounts connected to a 3rdParty login do not have passwords.
             $this->password = null;
 
-            if (WCF::getSession()->getVar('__email') && WCF::getSession()->getVar('__email') === $this->email) {
+            if (WCF::getSession()->getVar('__email') !== null && WCF::getSession()->getVar('__email') === $this->email) {
                 $registerVia3rdParty = true;
             }
         }
@@ -394,12 +394,15 @@ class RegisterForm extends UserAddForm
         $addDefaultGroups = true;
         if (
             $this->spamCheckEvent->hasMatches()
-            || ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER && !$registerVia3rdParty)
-            || ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN)
+            || (
+                ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) !== 0
+                && $registerVia3rdParty !== true
+            )
+            || ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) !== 0
         ) {
             $activationCode = UserRegistrationUtil::getActivationCode();
             $this->additionalFields['activationCode'] = $activationCode;
-            if (!$registerVia3rdParty) {
+            if ($registerVia3rdParty !== true) {
                 $emailConfirmCode = Hex::encode(\random_bytes(20));
                 $this->additionalFields['emailConfirmed'] = $emailConfirmCode;
             }
@@ -434,10 +437,13 @@ class RegisterForm extends UserAddForm
             $this->message = 'wcf.user.register.success';
 
             UserGroupAssignmentHandler::getInstance()->checkUsers([$user->userID]);
-        } elseif ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER && !$this->spamCheckEvent->hasMatches()) {
+        } elseif (
+            ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) !== 0
+            && !$this->spamCheckEvent->hasMatches()
+        ) {
             // registering via 3rdParty leads to instant activation
-            if ($registerVia3rdParty) {
-                if ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) {
+            if ($registerVia3rdParty === true) {
+                if (((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) !== 0) {
                     $this->message = 'wcf.user.register.success.awaitActivation';
                 } else {
                     $this->message = 'wcf.user.register.success';
@@ -455,17 +461,20 @@ class RegisterForm extends UserAddForm
                 $email->send();
                 $this->message = 'wcf.user.register.success.needActivation';
             }
-        } elseif ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN || $this->spamCheckEvent->hasMatches()) {
+        } elseif (
+            ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) !== 0
+            || $this->spamCheckEvent->hasMatches()
+        ) {
             $this->message = 'wcf.user.register.success.awaitActivation';
         }
 
         new CreateRegistrationNotification($user)();
 
-        if ($this->captchaObjectType) {
+        if ($this->captchaObjectType !== null) {
             $this->captchaObjectType->getProcessor()->reset();
         }
 
-        if (WCF::getSession()->getVar('noRegistrationCaptcha')) {
+        if (WCF::getSession()->getVar('noRegistrationCaptcha') === true) {
             WCF::getSession()->unregister('noRegistrationCaptcha');
         }
 

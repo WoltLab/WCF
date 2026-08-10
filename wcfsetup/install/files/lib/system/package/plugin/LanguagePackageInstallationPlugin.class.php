@@ -512,7 +512,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
             'packageID' => $this->installation->getPackage()->packageID,
         ];
 
-        if ($element->parentNode) {
+        if ($element->parentNode !== null) {
             \assert($element->parentNode instanceof \DOMElement);
             $languageCategory = $element->parentNode->getAttribute('name');
 
@@ -703,7 +703,7 @@ XML;
             ]);
 
             $existingRow = $statement->fetchArray();
-            if (!$existingRow) {
+            if ($existingRow === false) {
                 $existingRow = [];
             }
         }

@@ -37,7 +37,7 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController imp
         $categoryTree = $this->getNodeTree();
         $categoryList = $categoryTree->getIterator();
 
-        if (\iterator_count($categoryList)) {
+        if (\iterator_count($categoryList) > 0) {
             $this->content = WCF::getTPL()->render(
                 'wcf',
                 'boxCategories',

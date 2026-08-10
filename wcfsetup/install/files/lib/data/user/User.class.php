@@ -335,7 +335,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$username]);
         $row = $statement->fetchArray();
-        if (!$row) {
+        if ($row === false) {
             $row = [];
         }
 
@@ -355,7 +355,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$email]);
         $row = $statement->fetchArray();
-        if (!$row) {
+        if ($row === false) {
             $row = [];
         }
 
@@ -375,7 +375,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$authData]);
         $row = $statement->fetchArray();
-        if (!$row) {
+        if ($row === false) {
             $row = [];
         }
 
@@ -643,7 +643,9 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public function requiresEmailActivation(): bool
     {
-        return (int)\REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER && $this->pendingActivation() && !$this->isEmailConfirmed();
+        return ((int)\REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER) !== 0
+            && $this->pendingActivation()
+            && !$this->isEmailConfirmed();
     }
 
     /**
@@ -653,7 +655,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public function requiresAdminActivation(): bool
     {
-        return (int)\REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_ADMIN && $this->pendingActivation();
+        return ((int)\REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_ADMIN) !== 0 && $this->pendingActivation();
     }
 
     /**
@@ -663,7 +665,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public function canEmailConfirm(): bool
     {
-        return (int)\REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER && !$this->isEmailConfirmed();
+        return ((int)\REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER) !== 0 && !$this->isEmailConfirmed();
     }
 
     /**
@@ -673,7 +675,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public function mustSelfEmailConfirm(): bool
     {
-        return !!((int)\REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER);
+        return ((int)\REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER) !== 0;
     }
 
     /**

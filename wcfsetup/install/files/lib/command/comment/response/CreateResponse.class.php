@@ -38,8 +38,8 @@ final class CreateResponse
             'data' => [
                 'commentID' => $this->comment->commentID,
                 'time' => \TIME_NOW,
-                'userID' => $this->user ? $this->user->userID : null,
-                'username' => $this->user ? $this->user->username : $this->username,
+                'userID' => $this->user !== null ? $this->user->userID : null,
+                'username' => $this->user !== null ? $this->user->username : $this->username,
                 'message' => $this->htmlInputProcessor->getHtml(),
                 'enableHtml' => 1,
                 'isDisabled' => $this->isDisabled ? 1 : 0,

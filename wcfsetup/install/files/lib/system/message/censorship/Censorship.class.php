@@ -123,10 +123,10 @@ class Censorship extends SingletonFactory
                         if ($position + \mb_strlen($word) < \mb_strlen($censoredWord)) {
                             // look ahead
                             if (
-                                $newIndex = $this->lookAhead(
+                                ($newIndex = $this->lookAhead(
                                     $i + 1,
                                     \mb_substr($censoredWord, $position + \mb_strlen($word))
-                                )
+                                )) !== false
                             ) {
                                 $i = $newIndex;
                             } else {

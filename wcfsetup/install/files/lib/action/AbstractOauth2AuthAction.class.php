@@ -137,7 +137,7 @@ abstract class AbstractOauth2AuthAction implements RequestHandlerInterface
         ];
 
         if ($this->usePkce()) {
-            if (!($verifier = WCF::getSession()->getVar(self::PKCE))) {
+            if (($verifier = WCF::getSession()->getVar(self::PKCE)) === null) {
                 throw new StateValidationException('Missing PKCE verifier in session');
             }
 
@@ -235,7 +235,7 @@ abstract class AbstractOauth2AuthAction implements RequestHandlerInterface
     protected function validateState(OAuth2Success $auth2Success): void
     {
         try {
-            if (!($sessionState = WCF::getSession()->getVar(self::STATE))) {
+            if (($sessionState = WCF::getSession()->getVar(self::STATE)) === null) {
                 throw new StateValidationException('Missing state in session');
             }
             if (!\hash_equals($sessionState, $auth2Success->state)) {

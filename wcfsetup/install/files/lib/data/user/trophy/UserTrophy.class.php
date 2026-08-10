@@ -102,7 +102,7 @@ class UserTrophy extends DatabaseObject
             $userProfile = UserProfileRuntimeCache::getInstance()->getObject($user->userID);
         }
 
-        if (!$userProfile->getPermission('user.profile.trophy.canSeeTrophies')) {
+        if (!$userProfile->hasPermission('user.profile.trophy.canSeeTrophies')) {
             return false;
         }
 

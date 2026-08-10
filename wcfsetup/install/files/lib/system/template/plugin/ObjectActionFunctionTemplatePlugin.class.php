@@ -119,7 +119,7 @@ class ObjectActionFunctionTemplatePlugin implements IFunctionTemplatePlugin
 
                 $icon = 'square-check';
                 $title = $language->getDynamicVariable('wcf.global.button.disable');
-                if ($tagArgs['isDisabled']) {
+                if (!empty($tagArgs['isDisabled'])) {
                     $icon = 'square';
                     $title = $language->getDynamicVariable('wcf.global.button.enable');
                 }
@@ -128,14 +128,14 @@ class ObjectActionFunctionTemplatePlugin implements IFunctionTemplatePlugin
                 if (isset($tagArgs['disableTitle'])) {
                     $disableTitle = StringUtil::encodeHTML($language->getDynamicVariable($tagArgs['disableTitle']));
                     $additionalAttributes .= 'data-disable-title="' . $disableTitle . '"';
-                    if (!$tagArgs['isDisabled']) {
+                    if (empty($tagArgs['isDisabled'])) {
                         $title = $disableTitle;
                     }
                 }
                 if (isset($tagArgs['enableTitle'])) {
                     $enableTitle = StringUtil::encodeHTML($language->getDynamicVariable($tagArgs['enableTitle']));
                     $additionalAttributes .= 'data-enable-title="' . $enableTitle . '"';
-                    if ($tagArgs['isDisabled']) {
+                    if (!empty($tagArgs['isDisabled'])) {
                         $title = $enableTitle;
                     }
                 }

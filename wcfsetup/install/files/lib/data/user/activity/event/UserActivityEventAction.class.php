@@ -47,7 +47,7 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction
         $this->readInteger('lastEventID', true);
         $this->readInteger('userID', true);
 
-        if ($this->parameters['boxID']) {
+        if ($this->parameters['boxID'] !== 0) {
             $box = new Box($this->parameters['boxID']);
             if (!$box->isNil()) {
                 $boxController = $box->getController();
@@ -81,10 +81,13 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction
             $eventList = new ViewableUserActivityEventList();
 
             // profile view
-            if ($this->parameters['userID']) {
+            if ($this->parameters['userID'] !== 0) {
                 $eventList->getConditionBuilder()->add("user_activity_event.userID = ?", [$this->parameters['userID']]);
             } else {
-                if ($this->parameters['filteredByFollowedUsers'] && \count(UserProfileHandler::getInstance()->getFollowingUsers())) {
+                if (
+                    $this->parameters['filteredByFollowedUsers'] === true
+                    && \count(UserProfileHandler::getInstance()->getFollowingUsers()) > 0
+                ) {
                     $eventList->getConditionBuilder()->add(
                         'user_activity_event.userID IN (?)',
                         [UserProfileHandler::getInstance()->getFollowingUsers()]
@@ -93,7 +96,7 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction
             }
         }
 
-        if ($this->parameters['lastEventID']) {
+        if ($this->parameters['lastEventID'] !== 0) {
             $eventList->getConditionBuilder()->add(
                 "user_activity_event.time <= ?",
                 [$this->parameters['lastEventTime']]
@@ -123,7 +126,7 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction
             $eventList->truncate($this->boxController->getBox()->limit);
         }
 
-        if (!\count($eventList)) {
+        if (\count($eventList) === 0) {
             return [];
         }
 
@@ -153,7 +156,7 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction
     {
         $userAction = new UserAction([WCF::getUser()], 'update', [
             'options' => [
-                User::getUserOptionID('recentActivitiesFilterByFollowing') => WCF::getUser()->recentActivitiesFilterByFollowing ? 0 : 1,
+                User::getUserOptionID('recentActivitiesFilterByFollowing') => WCF::getUser()->recentActivitiesFilterByFollowing !== 0 ? 0 : 1,
             ],
         ]);
         $userAction->executeAction();

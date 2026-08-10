@@ -211,7 +211,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
     public function ban()
     {
         $banExpires = $this->parameters['banExpires'];
-        if ($banExpires) {
+        if ($banExpires !== '') {
             $banExpires = \DateTimeImmutable::createFromFormat('!Y-m-d', $banExpires, new \DateTimeZone(\TIMEZONE))->getTimestamp();
             if ($banExpires > 2147483647) {
                 $banExpires = 2147483647;
@@ -520,7 +520,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
             throw new UserInputException('excludedSearchValues');
         }
 
-        if ($this->parameters['data']['scope']) {
+        if ($this->parameters['data']['scope'] !== '') {
             if (!\in_array($this->parameters['data']['scope'], ['mention'])) {
                 throw new UserInputException('scope');
             }
@@ -537,7 +537,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         }
         $list = [];
 
-        if ($this->parameters['data']['includeUserGroups']) {
+        if ($this->parameters['data']['includeUserGroups'] === true) {
             if ($this->parameters['data']['scope'] === 'mention') {
                 $accessibleGroups = UserGroup::getMentionableGroups();
             } else {
@@ -706,7 +706,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
             ],
         ]))->executeAction();
 
-        if (!((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN)) {
+        if (((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) === 0) {
             $this->enable();
         }
 
@@ -752,7 +752,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
             'blacklistMatches' => '',
         ];
 
-        if (!((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
+        if (((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) === 0) {
             $data['emailConfirmed'] = null;
         }
 
@@ -815,7 +815,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         $data = [
             'activationCode' => UserRegistrationUtil::getActivationCode(),
         ];
-        if (!((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN)) {
+        if (((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) === 0) {
             $data['emailConfirmed'] = Hex::encode(\random_bytes(20));
         }
         $action = new self($this->objects, 'update', [
@@ -882,7 +882,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         }
 
         $disableSignatureExpires = $this->parameters['disableSignatureExpires'];
-        if ($disableSignatureExpires) {
+        if ($disableSignatureExpires !== '') {
             $disableSignatureExpires = \strtotime($disableSignatureExpires);
         } else {
             $disableSignatureExpires = 0;
@@ -960,7 +960,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         }
 
         $disableAvatarExpires = $this->parameters['disableAvatarExpires'];
-        if ($disableAvatarExpires) {
+        if ($disableAvatarExpires !== '') {
             $disableAvatarExpires = \strtotime($disableAvatarExpires);
         } else {
             $disableAvatarExpires = 0;
@@ -1002,7 +1002,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         }
 
         $disableCoverPhotoExpires = $this->parameters['disableCoverPhotoExpires'];
-        if ($disableCoverPhotoExpires) {
+        if ($disableCoverPhotoExpires !== '') {
             $disableCoverPhotoExpires = \strtotime($disableCoverPhotoExpires);
         } else {
             $disableCoverPhotoExpires = 0;
@@ -1108,7 +1108,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         }, \array_filter(
             ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider'),
             static function ($contentProvider) {
-                return !$contentProvider->hidden;
+                return $contentProvider->hidden !== '1';
             }
         ));
 
@@ -1198,7 +1198,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
             throw new PermissionDeniedException();
         }
 
-        if (!((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
+        if (((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) === 0) {
             throw new IllegalLinkException();
         }
 

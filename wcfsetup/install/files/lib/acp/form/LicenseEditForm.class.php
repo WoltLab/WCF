@@ -65,7 +65,7 @@ final class LicenseEditForm extends AbstractFormBuilderForm
         parent::readParameters();
 
         $url = $_GET['url'] ?? '';
-        if ($url && ApplicationHandler::getInstance()->isInternalURL($url)) {
+        if ($url !== '' && ApplicationHandler::getInstance()->isInternalURL($url)) {
             $this->url = $url;
         }
 

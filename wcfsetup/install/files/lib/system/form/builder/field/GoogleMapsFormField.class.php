@@ -91,7 +91,7 @@ final class GoogleMapsFormField extends AbstractFormField implements
         $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor(
             'coordinates',
             function (IFormDocument $document, array $parameters) {
-                if ($this->getValue()) {
+                if (!empty($this->getValue())) {
                     $parameters[$this->getObjectProperty() . '_latitude'] = $this->getLatitude();
                     $parameters[$this->getObjectProperty() . '_longitude'] = $this->getLongitude();
                 }

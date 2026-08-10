@@ -16,7 +16,7 @@ class URLOptionType extends TextOptionType
     #[\Override]
     protected function getContent(Option $option, mixed $newValue)
     {
-        if ($newValue && !\preg_match('~^https?://~i', $newValue)) {
+        if (!empty($newValue) && !\preg_match('~^https?://~i', $newValue)) {
             $newValue = 'https://' . $newValue;
         }
 

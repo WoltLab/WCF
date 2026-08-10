@@ -462,7 +462,7 @@ class ClipboardHandler extends SingletonFactory
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
 
-        return $statement->fetchSingleColumn() ? 1 : 0;
+        return $statement->fetchSingleColumn() > 0 ? 1 : 0;
     }
 
     /**

@@ -55,7 +55,7 @@ class UploadHandler
             // multiple uploads
             for ($i = 0, $l = \count($rawFileData['name']); $i < $l; $i++) {
                 $mimeType = '';
-                if ($rawFileData['tmp_name'][$i]) {
+                if (!empty($rawFileData['tmp_name'][$i])) {
                     $mimeType = self::getMimeType($rawFileData['tmp_name'][$i], $rawFileData['type'][$i]);
                 }
 
@@ -73,7 +73,7 @@ class UploadHandler
                 $rawFileData['tmp_name'],
                 $rawFileData['size'],
                 $rawFileData['error'],
-                ($rawFileData['tmp_name'] ? self::getMimeType($rawFileData['tmp_name'], $rawFileData['type']) : '')
+                (!empty($rawFileData['tmp_name']) ? self::getMimeType($rawFileData['tmp_name'], $rawFileData['type']) : '')
             );
         }
     }

@@ -612,7 +612,7 @@ class UserGroup extends DatabaseObject implements ITitledObject, \Stringable
             self::$ownerGroup = self::getGroupByType(self::OWNER);
         }
 
-        return self::$ownerGroup ? self::$ownerGroup->groupID : null;
+        return self::$ownerGroup !== null ? self::$ownerGroup->groupID : null;
     }
 
     /**

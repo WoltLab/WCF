@@ -167,7 +167,7 @@ class WorkerCLICommand implements ICLICommand
                 // update progress
                 $progress = $worker->getProgress();
                 $progressbar->update($progress);
-                if ($output) {
+                if ($output !== null) {
                     $output->write(\json_encode([
                         'iteration' => $i,
                         'progress' => $progress,
@@ -175,14 +175,14 @@ class WorkerCLICommand implements ICLICommand
                 }
             }
         } catch (\Exception $e) {
-            if ($output) {
+            if ($output !== null) {
                 $output->write(\json_encode([
                     'error' => (string)$e,
                 ], \JSON_THROW_ON_ERROR));
             }
             throw $e;
         }
-        if ($output) {
+        if ($output !== null) {
             $output->write(\json_encode([
                 'finished' => true,
                 'progress' => $progress,
@@ -352,7 +352,7 @@ class WorkerCLICommand implements ICLICommand
 
                     // Check the exit code after processing the status line, to allow for dumping the error message.
                     if (!$status['running'] && $status['exitcode'] !== -1) {
-                        if ($status['exitcode']) {
+                        if ($status['exitcode'] !== 0) {
                             throw new \Exception(
                                 'Unclean exit of thread ' . $processData['threadId'] . ' detected. Exiting.'
                             );

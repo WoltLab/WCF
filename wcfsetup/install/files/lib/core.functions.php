@@ -667,7 +667,7 @@ EXPLANATION;
 									<p class="exceptionFieldTitle">Error Type<span class="exceptionColon">:</span></p>
 									<p class="exceptionFieldValue">
 										<?php echo StringUtil::encodeHTML(get_class($e)); ?>
-										<?php if ($e->getCode()) { ?>
+										<?php if (!empty($e->getCode())) { ?>
 											(<?php echo StringUtil::encodeHTML($e->getCode()); ?>)
 										<?php } ?>
 									</p>
@@ -682,7 +682,7 @@ EXPLANATION;
 
 									$reflection = new \ReflectionClass($e);
 									$property = $reflection->getProperty('information');
-									if ($property->getValue($e)) {
+									if (!empty($property->getValue($e))) {
 										throw new \Exception("Using the 'information' property of SystemException is not supported any more.");
 									}
 								}
@@ -816,7 +816,7 @@ EXPLANATION;
 			if (!isset($item['args'])) $item['args'] = [];
 
 			try {
-				$cannotBeReflected = !$item['class'] && \in_array($item['function'], [
+				$cannotBeReflected = $item['class'] === '' && \in_array($item['function'], [
 					'include',
 					'include_once',
 					'require',
@@ -824,7 +824,7 @@ EXPLANATION;
 				]);
 
 				if (!empty($item['args']) && !$cannotBeReflected) {
-					if ($item['class']) {
+					if ($item['class'] !== '') {
 						$function = new \ReflectionMethod($item['class'], $item['function']);
 					} else {
 						$function = new \ReflectionFunction($item['function']);

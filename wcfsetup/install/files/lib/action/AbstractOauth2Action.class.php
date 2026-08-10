@@ -127,7 +127,7 @@ abstract class AbstractOauth2Action extends AbstractAction
             if (!isset($_GET['state'])) {
                 throw new StateValidationException('Missing state parameter');
             }
-            if (!($sessionState = WCF::getSession()->getVar(self::STATE))) {
+            if (($sessionState = WCF::getSession()->getVar(self::STATE)) === null) {
                 throw new StateValidationException('Missing state in session');
             }
             if (!\hash_equals($sessionState, (string)$_GET['state'])) {
@@ -154,7 +154,7 @@ abstract class AbstractOauth2Action extends AbstractAction
         ];
 
         if ($this->usePkce()) {
-            if (!($verifier = WCF::getSession()->getVar(self::PKCE))) {
+            if (($verifier = WCF::getSession()->getVar(self::PKCE)) === null) {
                 throw new StateValidationException('Missing PKCE verifier in session');
             }
 

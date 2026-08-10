@@ -129,25 +129,25 @@ final class Regex
         $this->regex = self::REGEX_DELIMITER . $regex . self::REGEX_DELIMITER;
 
         // add modifiers
-        if ($modifier & self::CASE_INSENSITIVE) {
+        if (($modifier & self::CASE_INSENSITIVE) !== 0) {
             $this->regex .= 'i';
         }
-        if ($modifier & self::UNGREEDY) {
+        if (($modifier & self::UNGREEDY) !== 0) {
             $this->regex .= 'U';
         }
-        if (!($modifier & self::NO_ANALYSE)) {
+        if (($modifier & self::NO_ANALYSE) === 0) {
             $this->regex .= 'S';
         }
-        if ($modifier & self::IGNORE_WHITESPACE) {
+        if (($modifier & self::IGNORE_WHITESPACE) !== 0) {
             $this->regex .= 'x';
         }
-        if ($modifier & self::DOT_ALL) {
+        if (($modifier & self::DOT_ALL) !== 0) {
             $this->regex .= 's';
         }
-        if ($modifier & self::MULTILINE) {
+        if (($modifier & self::MULTILINE) !== 0) {
             $this->regex .= 'm';
         }
-        if ($modifier & self::UTF_8) {
+        if (($modifier & self::UTF_8) !== 0) {
             $this->regex .= 'u';
         }
     }
@@ -188,18 +188,18 @@ final class Regex
     public function match(string $string, bool $all = false, int $flags = self::FLAGS_DEFAULT): int
     {
         $matchFlags = 0;
-        if ($flags & self::CAPTURE_OFFSET) {
+        if (($flags & self::CAPTURE_OFFSET) !== 0) {
             $matchFlags |= \PREG_OFFSET_CAPTURE;
         }
 
         if ($all) {
-            if ($flags & self::FLAGS_DEFAULT) {
+            if (($flags & self::FLAGS_DEFAULT) !== 0) {
                 $matchFlags |= \PREG_PATTERN_ORDER;
             }
-            if (($flags & self::ORDER_MATCH_BY_PATTERN) && !($flags & self::ORDER_MATCH_BY_SET)) {
+            if (($flags & self::ORDER_MATCH_BY_PATTERN) !== 0 && ($flags & self::ORDER_MATCH_BY_SET) === 0) {
                 $matchFlags |= \PREG_PATTERN_ORDER;
             }
-            if (($flags & self::ORDER_MATCH_BY_SET) && !($flags & self::ORDER_MATCH_BY_PATTERN)) {
+            if (($flags & self::ORDER_MATCH_BY_SET) !== 0 && ($flags & self::ORDER_MATCH_BY_PATTERN) === 0) {
                 $matchFlags |= \PREG_SET_ORDER;
             }
 
@@ -231,13 +231,13 @@ final class Regex
     public function split(string $string, int $flags = self::FLAGS_DEFAULT): array
     {
         $splitFlags = 0;
-        if ($flags & self::CAPTURE_OFFSET) {
+        if (($flags & self::CAPTURE_OFFSET) !== 0) {
             $splitFlags |= \PREG_SPLIT_OFFSET_CAPTURE;
         }
-        if ($flags & self::SPLIT_NON_EMPTY_ONLY) {
+        if (($flags & self::SPLIT_NON_EMPTY_ONLY) !== 0) {
             $splitFlags |= \PREG_SPLIT_NO_EMPTY;
         }
-        if ($flags & self::CAPTURE_SPLIT_DELIMITER) {
+        if (($flags & self::CAPTURE_SPLIT_DELIMITER) !== 0) {
             $splitFlags |= \PREG_SPLIT_DELIM_CAPTURE;
         }
 

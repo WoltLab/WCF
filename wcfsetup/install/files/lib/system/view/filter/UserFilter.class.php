@@ -44,6 +44,6 @@ class UserFilter extends AbstractFilter
     {
         $user = UserRuntimeCache::getInstance()->getObject((int)$value);
 
-        return $user ? $user->username : '';
+        return $user !== null ? $user->username : '';
     }
 }

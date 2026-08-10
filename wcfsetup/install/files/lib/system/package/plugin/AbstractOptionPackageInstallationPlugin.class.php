@@ -216,7 +216,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                 $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([$data['parentCategoryName']]);
 
-                if (!$statement->fetchSingleColumn()) {
+                if ($statement->fetchSingleColumn() === 0) {
                     throw new SystemException("Unable to find parent 'option category' with name '" . $data['parentCategoryName'] . "' for category with name '" . $data['categoryName'] . "'.");
                 }
             }
@@ -387,7 +387,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
             $data['name'],
         ]);
         $row = $statement->fetchArray();
-        if ($row && $row['packageID'] !== $this->installation->getPackageID()) {
+        if ($row !== false && $row['packageID'] !== $this->installation->getPackageID()) {
             $package = new Package($row['packageID']);
             throw new SystemException($this->tableName . " '" . $data['name'] . "' is already provided by '" . $package . "' ('" . $package->package . "').");
         }

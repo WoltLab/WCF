@@ -42,7 +42,7 @@ class CategoryTrophyListPage extends TrophyListPage
 
         $this->category = TrophyCategoryCache::getInstance()->getCategoryByID($this->categoryID);
 
-        if (!$this->category) {
+        if ($this->category === null) {
             throw new IllegalLinkException();
         }
 

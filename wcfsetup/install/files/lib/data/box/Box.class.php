@@ -435,7 +435,7 @@ class Box extends DatabaseObject
 
         if ($this->linkPageObjectID !== 0) {
             $handler = $this->getLinkPageHandler();
-            if ($handler && $handler instanceof ILookupPageHandler) {
+            if ($handler instanceof ILookupPageHandler) {
                 return $handler->getLink($this->linkPageObjectID);
             }
         }

@@ -34,8 +34,8 @@ final class MessageSpamCheckingSfsListener
         }
 
         if (BlacklistEntry::getMatches(
-            $event->user ? $event->user->username : '',
-            $event->user ? $event->user->email : '',
+            $event->user !== null ? $event->user->username : '',
+            $event->user !== null ? $event->user->email : '',
             $event->ipAddress,
         ) !== []) {
             $event->preventDefault();
@@ -46,8 +46,8 @@ final class MessageSpamCheckingSfsListener
     {
         $userProfile = UserProfileRuntimeCache::getInstance()->getObject($userID);
         if (
-            $userProfile->getPermission('admin.general.canUseAcp')
-            || $userProfile->getPermission('mod.general.canUseModeration')
+            $userProfile->hasPermission('admin.general.canUseAcp')
+            || $userProfile->hasPermission('mod.general.canUseModeration')
         ) {
             return true;
         }

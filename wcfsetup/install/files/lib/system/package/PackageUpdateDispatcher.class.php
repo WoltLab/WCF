@@ -812,7 +812,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
         if ($removeRequirements) {
             foreach ($existingPackages as $instances) {
                 foreach ($instances as $instance) {
-                    if ($instance['isApplication'] && isset($updates[$instance['packageID']])) {
+                    if ($instance['isApplication'] !== 0 && isset($updates[$instance['packageID']])) {
                         $updates = $this->removeUpdateRequirements(
                             $updates,
                             $updates[$instance['packageID']]['version']['servers'][0]['packageUpdateVersionID']

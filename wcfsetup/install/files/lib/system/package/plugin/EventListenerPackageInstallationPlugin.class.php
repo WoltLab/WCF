@@ -305,10 +305,10 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
         $result = $this->traitSetEntryData($identifier, $document);
 
         if ($result) {
-            if (!$options->getValue()) {
+            if (empty($options->getValue())) {
                 $options->available(false);
             }
-            if (!$permissions->getValue()) {
+            if (empty($permissions->getValue())) {
                 $permissions->available(false);
             }
         }
@@ -327,10 +327,10 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 
         $result = $this->traitEditEntry($form, $identifier);
 
-        if (!$options->getValue()) {
+        if (empty($options->getValue())) {
             $options->available(false);
         }
-        if (!$permissions->getValue()) {
+        if (empty($permissions->getValue())) {
             $permissions->available(false);
         }
 

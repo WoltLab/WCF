@@ -511,7 +511,11 @@ class SearchForm extends AbstractCaptchaForm
         }
 
         // language
-        if (!empty($this->query) && LanguageFactory::getInstance()->multilingualismEnabled() && \count(WCF::getUser()->getLanguageIDs())) {
+        if (
+            !empty($this->query)
+            && LanguageFactory::getInstance()->multilingualismEnabled()
+            && \count(WCF::getUser()->getLanguageIDs()) > 0
+        ) {
             $this->searchIndexCondition->add(
                 '(languageID IN (?) OR languageID = 0)',
                 [WCF::getUser()->getLanguageIDs()]

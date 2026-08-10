@@ -65,11 +65,11 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 
     public function __construct()
     {
-        if (WCF::getUser()->userID !== 0 && \count(UserProfileHandler::getInstance()->getFollowingUsers())) {
+        if (WCF::getUser()->userID !== 0 && \count(UserProfileHandler::getInstance()->getFollowingUsers()) > 0) {
             $this->canFilterByFollowedUsers = true;
         }
 
-        if ($this->canFilterByFollowedUsers && WCF::getUser()->recentActivitiesFilterByFollowing) {
+        if ($this->canFilterByFollowedUsers && WCF::getUser()->recentActivitiesFilterByFollowing !== 0) {
             $this->filteredByFollowedUsers = true;
         }
 

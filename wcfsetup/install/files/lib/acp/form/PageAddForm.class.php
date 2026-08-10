@@ -248,7 +248,7 @@ class PageAddForm extends AbstractForm
      */
     protected function readPageType()
     {
-        if ($this->presetPage) {
+        if ($this->presetPage !== null) {
             $this->isMultilingual = $this->presetPage->isMultilingual;
             $this->pageType = $this->presetPage->pageType;
 
@@ -397,7 +397,7 @@ class PageAddForm extends AbstractForm
         if (empty($this->name)) {
             throw new UserInputException('name');
         }
-        if (Page::getPageByName($this->name)) {
+        if (Page::getPageByName($this->name) !== null) {
             throw new UserInputException('name', 'notUnique');
         }
     }
@@ -737,7 +737,7 @@ class PageAddForm extends AbstractForm
         if (empty($_POST)) {
             $this->boxIDs = $this->getDefaultBoxIDs();
 
-            if ($this->presetPage) {
+            if ($this->presetPage !== null) {
                 $this->name = $this->presetPage->name;
                 $this->parentPageID = $this->presetPage->parentPageID;
                 $this->pageType = $this->presetPage->pageType;

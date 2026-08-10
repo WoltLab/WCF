@@ -55,7 +55,7 @@ class MessagePreviewAction extends BBCodeAction
     {
         // set disallowed bbcodes first to ensure proper parsing
         $disallowedBBCodesPermission = $this->parameters['disallowedBBCodesPermission'] ?? 'user.message.disallowedBBCodes';
-        if ($disallowedBBCodesPermission) {
+        if ($disallowedBBCodesPermission !== '') {
             BBCodeHandler::getInstance()->setDisallowedBBCodes(ArrayUtil::trim(\explode(
                 ',',
                 WCF::getSession()->getPermission($disallowedBBCodesPermission)
@@ -70,7 +70,7 @@ class MessagePreviewAction extends BBCodeAction
         );
 
         // check if disallowed bbcode are used
-        if ($disallowedBBCodesPermission) {
+        if ($disallowedBBCodesPermission !== '') {
             $disallowedBBCodes = $htmlInputProcessor->validate();
             if (!empty($disallowedBBCodes)) {
                 throw new UserInputException(

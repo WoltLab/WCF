@@ -118,7 +118,7 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
                     4
                 ))
                 ->addValidator(new FormFieldValidator('uniqueness', function (TextFormField $formField) {
-                    if ($formField->getValue()) {
+                    if (!empty($formField->getValue())) {
                         $objectTypeDefinition = ObjectTypeCache::getInstance()->getDefinitionByName($formField->getValue());
 
                         // the definition name is not unique if such an object type definition
@@ -146,7 +146,7 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
                 ->label('wcf.acp.pip.objectTypeDefinition.interfaceName')
                 ->description('wcf.acp.pip.objectTypeDefinition.interfaceName.description')
                 ->addValidator(new FormFieldValidator('interfaceExists', static function (TextFormField $formField) {
-                    if ($formField->getValue() && !\interface_exists($formField->getValue())) {
+                    if (!empty($formField->getValue()) && !\interface_exists($formField->getValue())) {
                         $formField->addValidationError(
                             new FormFieldValidationError(
                                 'nonExistent',
@@ -171,7 +171,7 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
         ];
 
         $interfaceName = $element->getElementsByTagName('interfacename')->item(0);
-        if ($interfaceName) {
+        if ($interfaceName !== null) {
             $data['interfaceName'] = $interfaceName->nodeValue;
         } elseif ($saveData) {
             $data['interfaceName'] = '';

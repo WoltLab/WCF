@@ -28,7 +28,7 @@ class PageImporter extends AbstractImporter
         $contents = [];
         foreach ($additionalData['contents'] as $languageCode => $contentData) {
             $languageID = 0;
-            if ($languageCode) {
+            if (!empty($languageCode)) {
                 if (($language = LanguageFactory::getInstance()->getLanguageByCode($languageCode)) !== null) {
                     $languageID = $language->languageID;
                 } else {

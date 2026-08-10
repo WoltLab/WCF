@@ -47,7 +47,7 @@ class CounterFunctionTemplatePlugin implements IFunctionTemplatePlugin
         }
 
         $result = '';
-        if ($counter['print']) {
+        if (!empty($counter['print'])) {
             $result = $counter['count'];
         }
 

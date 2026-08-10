@@ -404,7 +404,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
         return
             WCF::getUser()->userID === $this->userID
             || WCF::getSession()->hasPermission('user.profile.avatar.canSeeAvatars')
-            || (($pending = WCF::getSession()->getPendingUserChange()) && $pending->userID === $this->userID);
+            || (($pending = WCF::getSession()->getPendingUserChange()) !== null && $pending->userID === $this->userID);
     }
 
     /**
@@ -889,6 +889,25 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
     }
 
     /**
+     * Returns true if the user has the given permission.
+     * Only works for boolean permisions.
+     *
+     * @throws \BadMethodCallException
+     * @since 6.3
+     */
+    public function hasPermission(string $permission): bool
+    {
+        $result = $this->getPermission($permission);
+        if ($result === true || $result === 1 || $result === '1') {
+            return true;
+        } else if ($result === false || $result === 0 || $result === '0') {
+            return false;
+        }
+
+        throw new \BadMethodCallException("'{$permission}' is not a boolean permission");
+    }
+
+    /**
      * Returns true if a permission was set to 'Never'. This is required to preserve
      * compatibility, while preventing ACLs from overruling a 'Never' setting.
      *
@@ -911,7 +930,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
         if ($this->userTitle !== '') {
             return $this->userTitle;
         }
-        if ($this->getRank() && $this->getRank()->showTitle()) {
+        if ($this->getRank() !== null && $this->getRank()->showTitle()) {
             return WCF::getLanguage()->get($this->getRank()->rankTitle);
         }
 
@@ -964,7 +983,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function canEditOwnProfile()
     {
-        if ($this->pendingActivation() || !$this->getPermission('user.profile.canEditUserProfile')) {
+        if ($this->pendingActivation() || !$this->hasPermission('user.profile.canEditUserProfile')) {
             return false;
         }
 
@@ -1055,7 +1074,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
         if ($this->banned !== 0) {
             return false;
         }
-        if (WCF::getUser()->userID !== 0 && !WCF::getUser()->showSignature) {
+        if (WCF::getUser()->userID !== 0 && WCF::getUser()->showSignature === 0) {
             return false;
         }
 
@@ -1081,7 +1100,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
     {
         // get value
         $value = $this->getUserOption($name);
-        if (!$value) {
+        if (empty($value)) {
             return '';
         }
 

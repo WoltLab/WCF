@@ -122,13 +122,13 @@ class PackageUpdateServer extends DatabaseObject implements ITitledObject
             $officialPath = WCF::AVAILABLE_UPGRADE_VERSION;
         }
 
-        if (!$woltlabUpdateServer) {
+        if ($woltlabUpdateServer === null) {
             $packageServer = PackageUpdateServerEditor::create([
                 'serverURL' => "https://update.woltlab.com/{$officialPath}/",
             ]);
             $results[$packageServer->packageUpdateServerID] = $packageServer;
         }
-        if (!$woltlabStoreServer) {
+        if ($woltlabStoreServer === null) {
             $packageServer = PackageUpdateServerEditor::create([
                 'serverURL' => "https://store.woltlab.com/{$officialPath}/",
             ]);

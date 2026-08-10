@@ -102,7 +102,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements
         /** @see UserProfile::isProtected() */
         if (
             !(
-                $user->getPermission('admin.general.canViewPrivateUserOptions')
+                $user->hasPermission('admin.general.canViewPrivateUserOptions')
                 || $userProfile->isAccessible('canViewProfile', $user->userID)
                 || $userProfile->userID === $user->userID
             )
@@ -110,14 +110,14 @@ class UserProfileCommentManager extends AbstractCommentManager implements
             return false;
         }
 
-        return (bool)$user->getPermission($this->permissionCanModerate);
+        return $user->hasPermission($this->permissionCanModerate);
     }
 
     #[\Override]
     public function getLink(int $objectTypeID, int $objectID)
     {
         $user = UserRuntimeCache::getInstance()->getObject($objectID);
-        if ($user) {
+        if ($user !== null) {
             return $user->getLink();
         }
 

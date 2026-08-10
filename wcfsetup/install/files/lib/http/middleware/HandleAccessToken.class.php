@@ -43,7 +43,7 @@ final class HandleAccessToken implements MiddlewareInterface
         }
 
         $activeRequest = RequestHandler::getInstance()->getActiveRequest();
-        if (!$activeRequest) {
+        if ($activeRequest === null) {
             return true;
         }
 

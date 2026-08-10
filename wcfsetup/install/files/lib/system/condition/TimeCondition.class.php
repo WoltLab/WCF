@@ -139,17 +139,17 @@ HTML;
     public function setData(Condition $condition)
     {
         $endTime = $condition->endTime;
-        if ($endTime) {
+        if ($endTime !== null) {
             $this->endTime = $endTime;
         }
 
         $startTime = $condition->startTime;
-        if ($startTime) {
+        if ($startTime !== null) {
             $this->startTime = $startTime;
         }
 
         $timezone = $condition->timezone;
-        if ($timezone) {
+        if ($timezone !== null) {
             $this->timezone = $timezone;
         }
     }
@@ -201,12 +201,12 @@ HTML;
     {
         $timezone = WCF::getUser()->getTimeZone();
         $conditionTimezone = $condition->timezone;
-        if ($conditionTimezone) {
+        if ($conditionTimezone !== null) {
             $timezone = new \DateTimeZone($conditionTimezone);
         }
 
         $startTime = $condition->startTime;
-        if ($startTime) {
+        if ($startTime !== null) {
             $dateTime = \DateTimeImmutable::createFromFormat('H:i', $startTime, $timezone);
             if ($dateTime->getTimestamp() > \TIME_NOW) {
                 return false;
@@ -214,7 +214,7 @@ HTML;
         }
 
         $endTime = $condition->endTime;
-        if ($endTime) {
+        if ($endTime !== null) {
             $dateTime = \DateTimeImmutable::createFromFormat('H:i', $endTime, $timezone);
             if ($dateTime->getTimestamp() < \TIME_NOW) {
                 return false;

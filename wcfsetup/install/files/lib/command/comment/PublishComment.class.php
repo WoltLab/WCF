@@ -71,7 +71,7 @@ final class PublishComment
 
     private function fireNotificationEvent(): void
     {
-        if (!UserNotificationHandler::getInstance()->getEvent($this->objectType->objectType . '.notification', 'comment')) {
+        if (UserNotificationHandler::getInstance()->getEvent($this->objectType->objectType . '.notification', 'comment') === null) {
             return;
         }
 

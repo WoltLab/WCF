@@ -49,7 +49,7 @@ final class EmailMultifactorMethod implements IMultifactorMethod
         $form->addDefaultButton(false);
         $form->successMessage('wcf.user.security.multifactor.email.success');
 
-        if ($setup) {
+        if ($setup !== null) {
             $statusContainer = FormContainer::create('enabledContainer')
                 ->label('wcf.user.security.multifactor.email.enabled')
                 ->appendChildren([

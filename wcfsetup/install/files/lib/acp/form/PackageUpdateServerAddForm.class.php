@@ -122,7 +122,7 @@ class PackageUpdateServerAddForm extends AbstractFormBuilderForm
                                     return;
                                 }
 
-                                if (($duplicate = $this->findDuplicateServer((string)$url))) {
+                                if (($duplicate = $this->findDuplicateServer((string)$url)) !== null) {
                                     $formField->addValidationError(
                                         new FormFieldValidationError(
                                             'duplicate',

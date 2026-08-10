@@ -196,7 +196,7 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
                     }
                 }
 
-                if ($user->aboutMe) {
+                if (!empty($user->aboutMe)) {
                     BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
                         ',',
                         $this->getBulkUserPermissionValue(
@@ -401,7 +401,7 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
                 continue;
             }
             $userProfile = new UserProfile($user->getDecoratedObject());
-            if ($userProfile->getPermission('user.profile.canHideOnlineStatus')) {
+            if ($userProfile->hasPermission('user.profile.canHideOnlineStatus')) {
                 continue;
             }
 

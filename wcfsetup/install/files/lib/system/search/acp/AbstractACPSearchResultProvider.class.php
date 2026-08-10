@@ -30,7 +30,7 @@ abstract class AbstractACPSearchResultProvider
             $hasEnabledOption = false;
             $options = \explode(',', \strtoupper($object->{$optionsColumnName}));
             foreach ($options as $option) {
-                if (\defined($option) && \constant($option)) {
+                if (\defined($option) && \constant($option) !== 0) {
                     $hasEnabledOption = true;
                     break;
                 }

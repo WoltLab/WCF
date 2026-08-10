@@ -128,7 +128,7 @@ class CombinedTaggedPage extends MultipleLinkPage
                 }
             }
 
-            if (!$this->objectType) {
+            if ($this->objectType === null) {
                 throw new IllegalLinkException();
             }
         }

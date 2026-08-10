@@ -37,7 +37,7 @@ class UserBirthdayAction extends UserProfileAction implements IGroupedUserListAc
             throw new UserInputException();
         }
 
-        if ($this->parameters['sortField'] && $this->parameters['sortOrder']) {
+        if ($this->parameters['sortField'] !== '' && $this->parameters['sortOrder'] !== '') {
             if (!\in_array($this->parameters['sortField'], ['username', 'activityPoints', 'registrationDate'])) {
                 throw new UserInputException('sortField');
             }
@@ -80,7 +80,7 @@ class UserBirthdayAction extends UserProfileAction implements IGroupedUserListAc
             }
         }
 
-        if ($this->parameters['sortField'] && $this->parameters['sortOrder']) {
+        if ($this->parameters['sortField'] !== '' && $this->parameters['sortOrder'] !== '') {
             DatabaseObject::sort($users, $this->parameters['sortField'], $this->parameters['sortOrder']);
         }
 

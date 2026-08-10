@@ -113,7 +113,7 @@ class MultiPageCondition extends AbstractMultiSelectCondition implements IConten
         if ($pageID !== null) {
             $pageIDs = $condition->{$this->fieldName};
 
-            if ($condition->pageIDs && \is_array($pageIDs)) {
+            if (!empty($condition->pageIDs) && \is_array($pageIDs)) {
                 $matchingPageID = \in_array($pageID, $pageIDs);
 
                 if ($condition->{$this->fieldName . '_reverseLogic'}) {

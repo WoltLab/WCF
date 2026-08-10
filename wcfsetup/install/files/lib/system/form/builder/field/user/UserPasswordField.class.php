@@ -88,9 +88,9 @@ final class UserPasswordField extends AbstractFormField implements
     #[\Override]
     public function validate()
     {
-        if ($this->isRequired() && !$this->getValue()) {
+        if ($this->isRequired() && empty($this->getValue())) {
             $this->addValidationError(new FormFieldValidationError('empty'));
-        } elseif ($this->getValue() && !WCF::getUser()->checkPassword($this->getValue())) {
+        } elseif (!empty($this->getValue()) && !WCF::getUser()->checkPassword($this->getValue())) {
             $this->addValidationError(
                 new FormFieldValidationError(
                     'false',

@@ -207,7 +207,7 @@ class PackageInstallationNodeBuilder
         ]);
         $row = $statement->fetchArray();
 
-        if (!$row) {
+        if ($row === false) {
             return '';
         }
 
@@ -226,7 +226,7 @@ class PackageInstallationNodeBuilder
         $statement->execute([$queueID]);
         $row = $statement->fetchArray();
 
-        if (!$row) {
+        if ($row === false) {
             return '';
         }
 
@@ -331,16 +331,16 @@ class PackageInstallationNodeBuilder
             $this->installation->queue->processNo,
         ]);
         while ($row = $statement->fetchArray()) {
-            if ($row['done']) {
+            if ($row['done'] !== 0) {
                 $progress['done']++;
             } else {
                 $progress['outstanding']++;
             }
         }
 
-        if (!$progress['done']) {
+        if ($progress['done'] === 0) {
             return 0;
-        } elseif (!$progress['outstanding']) {
+        } elseif ($progress['outstanding'] === 0) {
             return 100;
         } else {
             $total = $progress['done'] + $progress['outstanding'];
@@ -636,7 +636,7 @@ class PackageInstallationNodeBuilder
                 'packageID' => $packageID,
                 'packageName' => $archive->getLocalizedPackageInfo('packageName'),
                 'archive' => $fileName,
-                'action' => $packageID ? 'update' : 'install',
+                'action' => $packageID !== null ? 'update' : 'install',
             ]);
 
             // spawn nodes

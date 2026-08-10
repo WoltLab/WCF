@@ -142,24 +142,24 @@ class UserOption extends Option implements ITitledObject
         }
 
         // proceed if option is visible for all
-        if ($this->visible & self::VISIBILITY_GUEST) {
+        if (($this->visible & self::VISIBILITY_GUEST) !== 0) {
             return true;
         }
 
         // proceed if option is visible for registered users and current user is logged in
-        if (($this->visible & self::VISIBILITY_REGISTERED) && WCF::getUser()->userID !== 0) {
+        if (($this->visible & self::VISIBILITY_REGISTERED) !== 0 && WCF::getUser()->userID !== 0) {
             return true;
         }
 
         // check admin permissions
-        if ($this->visible & self::VISIBILITY_ADMINISTRATOR) {
+        if (($this->visible & self::VISIBILITY_ADMINISTRATOR) !== 0) {
             if (WCF::getSession()->hasPermission('admin.general.canViewPrivateUserOptions')) {
                 return true;
             }
         }
 
         // check owner state
-        if ($this->visible & self::VISIBILITY_OWNER) {
+        if (($this->visible & self::VISIBILITY_OWNER) !== 0) {
             if ($this->user !== null && $this->user->userID === WCF::getUser()->userID) {
                 return true;
             }
@@ -181,20 +181,20 @@ class UserOption extends Option implements ITitledObject
         }
 
         // check admin permissions
-        if ($this->editable & self::EDITABILITY_ADMINISTRATOR) {
+        if (($this->editable & self::EDITABILITY_ADMINISTRATOR) !== 0) {
             if (WCF::getSession()->hasPermission('admin.general.canViewPrivateUserOptions')) {
                 return true;
             }
         }
 
         // check owner state
-        if ($this->editable & self::EDITABILITY_OWNER) {
+        if (($this->editable & self::EDITABILITY_OWNER) !== 0) {
             if ($this->user === null || $this->user->userID === WCF::getUser()->userID) {
                 return true;
             }
         }
 
-        if ($inRegistration && $this->editable & self::EDITABILITY_OWNER_DURING_REGISTRATION) {
+        if ($inRegistration && ($this->editable & self::EDITABILITY_OWNER_DURING_REGISTRATION) !== 0) {
             return true;
         }
 

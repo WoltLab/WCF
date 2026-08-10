@@ -128,7 +128,7 @@ class MultifactorDisableForm extends AbstractFormBuilderForm
                     'setup' => $this->setup,
                 ])
                 ->addValidator(new FormFieldValidator('confirm', static function (BooleanFormField $formField) {
-                    if (!$formField->getValue()) {
+                    if ($formField->getValue() !== true) {
                         $formField->addValidationError(
                             new FormFieldValidationError(
                                 'required',

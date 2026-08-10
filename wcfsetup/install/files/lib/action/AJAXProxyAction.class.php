@@ -106,7 +106,10 @@ class AJAXProxyAction extends AJAXInvokeAction
             }
         }
 
-        if (!RequestHandler::getInstance()->isACPRequest() && WCF::getSession()->getVar('forceBackgroundQueuePerform')) {
+        if (
+            !RequestHandler::getInstance()->isACPRequest()
+            && (bool)WCF::getSession()->getVar('forceBackgroundQueuePerform')
+        ) {
             @\header(
                 \sprintf(
                     '%s: %s',

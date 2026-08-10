@@ -565,7 +565,7 @@ final class LicensePage extends AbstractPage
                 ];
             }
 
-            if ($row['packageUpdateServerID'] === $woltlabUpdateServerID || $row['isAccessible']) {
+            if ($row['packageUpdateServerID'] === $woltlabUpdateServerID || $row['isAccessible'] !== 0) {
                 $packageVersions[$package][$packageUpdateID]['accessible'][$row['packageUpdateVersionID']] = $packageVersion;
             }
             $packageVersions[$package][$packageUpdateID]['existing'][$row['packageUpdateVersionID']] = $packageVersion;

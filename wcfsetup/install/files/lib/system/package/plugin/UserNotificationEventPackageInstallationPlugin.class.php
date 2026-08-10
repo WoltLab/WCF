@@ -99,7 +99,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
         /** @var UserNotificationEvent|UserNotificationEventEditor $event */
         $event = parent::import($row, $data);
 
-        if (empty($row) && $data['preset']) {
+        if (empty($row) && $data['preset'] === 1) {
             $this->presetEventIDs[$event->eventID] = $data['presetMailNotificationType'];
         }
 
@@ -320,14 +320,14 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
         }
 
         $options = $element->getElementsByTagName('options')->item(0);
-        if ($options) {
+        if ($options !== null) {
             $data['options'] = StringUtil::normalizeCsv($options->nodeValue);
         } elseif ($saveData) {
             $data['options'] = '';
         }
 
         $permissions = $element->getElementsByTagName('permissions')->item(0);
-        if ($permissions) {
+        if ($permissions !== null) {
             $data['permissions'] = StringUtil::normalizeCsv($permissions->nodeValue);
         } elseif ($saveData) {
             $data['permissions'] = '';
@@ -341,7 +341,10 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
         }
 
         $presetMailNotificationType = $element->getElementsByTagName('presetmailnotificationtype')->item(0);
-        if ($presetMailNotificationType && \in_array($presetMailNotificationType->nodeValue, ['instant', 'daily'])) {
+        if (
+            $presetMailNotificationType !== null
+            && \in_array($presetMailNotificationType->nodeValue, ['instant', 'daily'])
+        ) {
             $data['presetMailNotificationType'] = $presetMailNotificationType->nodeValue;
         } elseif ($saveData) {
             $data['presetMailNotificationType'] = 'none';

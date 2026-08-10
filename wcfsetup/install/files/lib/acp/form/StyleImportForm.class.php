@@ -81,7 +81,7 @@ class StyleImportForm extends AbstractForm
             }
 
             // check if the package is an application
-            if ($archive->getPackageInfo('isApplication')) {
+            if ($archive->getPackageInfo('isApplication') === 1) {
                 throw new SystemException("Package is application");
             }
 

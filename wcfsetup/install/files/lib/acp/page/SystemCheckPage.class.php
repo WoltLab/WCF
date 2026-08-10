@@ -219,9 +219,9 @@ class SystemCheckPage extends AbstractPage
         $this->validateWebHttps();
 
         if (
-            $this->results['status']['mysql']
-            && $this->results['status']['php']
-            && $this->results['status']['directories']
+            $this->results['status']['mysql'] === true
+            && $this->results['status']['php'] === true
+            && $this->results['status']['directories'] === true
         ) {
             RegistryHandler::getInstance()->set(
                 'com.woltlab.wcf',
@@ -333,11 +333,11 @@ class SystemCheckPage extends AbstractPage
         }
 
         if (
-            $this->results['mysql']['result']
-            && $this->results['mysql']['mysqlnd']
-            && $this->results['mysql']['innodb']
-            && $this->results['mysql']['foreignKeys']
-            && $this->results['mysql']['bufferPool']['result']
+            $this->results['mysql']['result'] === true
+            && $this->results['mysql']['mysqlnd'] === true
+            && $this->results['mysql']['innodb'] === true
+            && $this->results['mysql']['foreignKeys'] === true
+            && $this->results['mysql']['bufferPool']['result'] !== false
         ) {
             $this->results['status']['mysql'] = true;
         }
@@ -366,8 +366,8 @@ class SystemCheckPage extends AbstractPage
                 $this->results['php']['opcache']['management'] = \function_exists('opcache_reset') && \function_exists('opcache_invalidate');
                 $this->results['php']['opcache']['saveComments'] = \ini_get('opcache.save_comments') === '1';
 
-                $this->results['php']['opcache']['result'] = $this->results['php']['opcache']['management']
-                    && $this->results['php']['opcache']['saveComments'];
+                $this->results['php']['opcache']['result'] = $this->results['php']['opcache']['management'] === true
+                    && $this->results['php']['opcache']['saveComments'] === true;
             }
         } catch (\Exception $e) {
             $this->results['php']['opcache']['result'] = false;
@@ -395,7 +395,8 @@ class SystemCheckPage extends AbstractPage
             $this->results['php']['memoryLimit']['result'] = ($memoryLimit >= $this->phpMemoryLimit);
         }
 
-        $this->results['status']['php'] = $this->results['status']['php'] && $this->results['php']['memoryLimit']['result'];
+        $this->results['status']['php'] = $this->results['status']['php'] === true
+            && $this->results['php']['memoryLimit']['result'] === true;
     }
 
     /**
@@ -405,7 +406,7 @@ class SystemCheckPage extends AbstractPage
     {
         $this->results['php']['x64'] = \PHP_INT_SIZE === 8;
 
-        $this->results['status']['php'] = $this->results['status']['php'] && $this->results['php']['x64'];
+        $this->results['status']['php'] = $this->results['status']['php'] === true && $this->results['php']['x64'] === true;
     }
 
     /**
@@ -431,7 +432,8 @@ class SystemCheckPage extends AbstractPage
             $this->results['php']['version']['result'] = 'unsupported';
         }
 
-        $this->results['status']['php'] = $this->results['status']['php'] && ($this->results['php']['version']['result'] !== 'unsupported');
+        $this->results['status']['php'] = $this->results['status']['php'] === true
+            && $this->results['php']['version']['result'] !== 'unsupported';
     }
 
     /**
@@ -450,11 +452,12 @@ class SystemCheckPage extends AbstractPage
         $this->results['php']['gd']['png'] = !empty($gdInfo['PNG Support']);
         $this->results['php']['gd']['webp'] = !empty($gdInfo['WebP Support']);
 
-        $this->results['php']['gd']['result'] = $this->results['php']['gd']['jpeg']
-            && $this->results['php']['gd']['png']
-            && $this->results['php']['gd']['webp'];
+        $this->results['php']['gd']['result'] = $this->results['php']['gd']['jpeg'] === true
+            && $this->results['php']['gd']['png'] === true
+            && $this->results['php']['gd']['webp'] === true;
 
-        $this->results['status']['php'] = $this->results['status']['php'] && $this->results['php']['gd']['result'];
+        $this->results['status']['php'] = $this->results['status']['php'] === true
+            && $this->results['php']['gd']['result'] === true;
     }
 
     /**

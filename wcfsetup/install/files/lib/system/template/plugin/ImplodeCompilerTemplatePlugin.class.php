@@ -65,8 +65,8 @@ class ImplodeCompilerTemplatePlugin implements ICompilerTemplatePlugin
         $phpCode .= "\$_length" . $hash . " = count(" . $tagArgs['from'] . ");\n";
         $phpCode .= "\$_i" . $hash . " = 0;\n";
         $phpCode .= "\$_item" . $hash . " = {$itemVar} ?? null;\n";
-        $phpCode .= "\$_key" . $hash . " = " . ($keyVar ? "{$keyVar} ?? " : "") . " null;\n";
-        $phpCode .= "foreach (" . $tagArgs['from'] . " as " . ($keyVar ? $keyVar . " => " : '') . $itemVar . ") { ?>";
+        $phpCode .= "\$_key" . $hash . " = " . ($keyVar !== null ? "{$keyVar} ?? " : "") . " null;\n";
+        $phpCode .= "foreach (" . $tagArgs['from'] . " as " . ($keyVar !== null ? $keyVar . " => " : '') . $itemVar . ") { ?>";
 
         return $phpCode;
     }

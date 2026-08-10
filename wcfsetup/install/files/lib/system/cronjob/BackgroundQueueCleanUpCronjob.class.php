@@ -46,7 +46,7 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob
                 try {
                     // no shut up operator, exception will be caught
                     $job = \unserialize($row['job']);
-                    if ($job) {
+                    if ($job !== false) {
                         $job->fail();
 
                         if ($job->getFailures() <= $job::MAX_FAILURES) {

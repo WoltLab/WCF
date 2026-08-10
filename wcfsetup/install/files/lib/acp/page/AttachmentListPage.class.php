@@ -52,7 +52,7 @@ final class AttachmentListPage extends AbstractGridViewPage
     {
         $objectTypeIDs = [];
         foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.attachment.objectType') as $objectType) {
-            if (!$objectType->private) {
+            if ($objectType->private !== '1') {
                 $objectTypeIDs[] = $objectType->objectTypeID;
             }
         }

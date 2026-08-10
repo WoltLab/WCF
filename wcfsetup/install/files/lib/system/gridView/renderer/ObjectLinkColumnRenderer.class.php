@@ -41,7 +41,7 @@ abstract class ObjectLinkColumnRenderer extends DefaultColumnRenderer implements
     #[\Override]
     public function render(mixed $value, DatabaseObject $row): string
     {
-        if (!$value) {
+        if (empty($value)) {
             return '';
         }
 
@@ -80,7 +80,7 @@ abstract class ObjectLinkColumnRenderer extends DefaultColumnRenderer implements
     #[\Override]
     public function prepare(mixed $value, DatabaseObject $row): void
     {
-        if (!$value) {
+        if (empty($value)) {
             return;
         }
 

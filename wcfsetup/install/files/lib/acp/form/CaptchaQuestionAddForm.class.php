@@ -98,7 +98,7 @@ class CaptchaQuestionAddForm extends AbstractFormBuilderForm
         }
 
         $regexLength = \mb_strlen($answer) - 2;
-        if (!$regexLength || !Regex::compile(\mb_substr($answer, 1, $regexLength))->isValid()) {
+        if ($regexLength === 0 || !Regex::compile(\mb_substr($answer, 1, $regexLength))->isValid()) {
             $formField->addValidationError(
                 new FormFieldValidationError(
                     'invalidRegex',

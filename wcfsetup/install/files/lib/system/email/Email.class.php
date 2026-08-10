@@ -518,13 +518,13 @@ class Email implements \Stringable
             $headers[] = ['reply-to', (string)$this->getReplyTo()];
         }
 
-        if ($to) {
+        if ($to !== []) {
             $headers[] = ['to', \implode(",\r\n   ", $to)];
         } else {
             throw new \LogicException("Cannot generate message headers, you must specify a recipient.");
         }
 
-        if ($cc) {
+        if ($cc !== []) {
             $headers[] = ['cc', \implode(",\r\n   ", $cc)];
         }
         if ($this->getSubject() !== '') {
@@ -535,10 +535,10 @@ class Email implements \Stringable
 
         $headers[] = ['date', $this->getDate()->format(\DateTime::RFC2822)];
         $headers[] = ['message-id', $this->getMessageID()];
-        if ($this->getReferences()) {
+        if ($this->getReferences() !== []) {
             $headers[] = ['references', \implode("\r\n   ", $this->getReferences())];
         }
-        if ($this->getInReplyTo()) {
+        if ($this->getInReplyTo() !== []) {
             $headers[] = ['in-reply-to', \implode("\r\n   ", $this->getInReplyTo())];
         }
         if ($this->getListID() !== null) {
@@ -554,7 +554,7 @@ class Email implements \Stringable
 
         $headers[] = ['x-auto-response-suppress', 'OOF'];
 
-        if (!$this->body) {
+        if ($this->body === null) {
             throw new \LogicException("Cannot generate message headers, you must set a body.");
         }
         $headers[] = ['content-type', $this->body->getContentType()];
@@ -694,7 +694,7 @@ class Email implements \Stringable
             EventHandler::getInstance()->fireAction($this, 'getJobs', $data);
 
             // an event decided that this email should be skipped
-            if ($data['skip']) {
+            if ($data['skip'] === true) {
                 continue;
             }
 
@@ -753,7 +753,7 @@ class Email implements \Stringable
      */
     public function debugDump()
     {
-        if (\ob_get_level()) {
+        if (\ob_get_level() > 0) {
             // discard any output generated before the email was dumped, prevents email
             // being hidden inside HTML elements and therefore not visible in browser output
             \ob_end_clean();

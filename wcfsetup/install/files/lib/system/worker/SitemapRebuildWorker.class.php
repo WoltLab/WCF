@@ -103,7 +103,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
 
                     if (
                         $processor->isAvailableType()
-                        && !$this->sitemapData[$sitemapObject->objectType]['isDisabled']
+                        && $this->sitemapData[$sitemapObject->objectType]['isDisabled'] === 0
                     ) {
                         $this->sitemapObjects[] = $sitemapObject;
 
@@ -157,7 +157,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
             }
 
             // check whether we should rebuild it
-            if ((!isset($this->parameters['forceRebuild']) || !$this->parameters['forceRebuild']) && !$this->workerData['finished']) {
+            if (empty($this->parameters['forceRebuild']) && $this->workerData['finished'] !== true) {
                 // This condition is only true when rebuilding the sitemap through the
                 // button on the sitemap list. This causes the result to be inconsistent
                 // when using the rebuild data workflow, which does not set this parameter
@@ -169,7 +169,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
                 //$this->checkCache();
             }
 
-            if ($this->workerData['finished']) {
+            if ($this->workerData['finished'] === true) {
                 return;
             }
 
@@ -324,7 +324,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
             $this->closeFile();
         }
 
-        if ($this->workerData['tmpFile'] && \file_exists($this->workerData['tmpFile'])) {
+        if ($this->workerData['tmpFile'] !== '' && \file_exists($this->workerData['tmpFile'])) {
             \unlink($this->workerData['tmpFile']);
         }
 

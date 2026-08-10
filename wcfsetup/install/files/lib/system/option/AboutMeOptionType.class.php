@@ -34,7 +34,7 @@ class AboutMeOptionType extends MessageOptionType
         }
 
         $censoredWords = Censorship::getInstance()->test($textContent);
-        if ($censoredWords) {
+        if ($censoredWords !== false) {
             WCF::getTPL()->assign('censoredWords', $censoredWords);
             throw new UserInputException($option->optionName, 'censoredWordsFound');
         }

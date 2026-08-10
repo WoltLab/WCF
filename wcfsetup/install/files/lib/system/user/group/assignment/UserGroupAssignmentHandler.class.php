@@ -128,7 +128,7 @@ class UserGroupAssignmentHandler extends SingletonFactory
     {
         $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.condition.userGroupAssignment');
         foreach ($objectTypes as $objectType) {
-            if (!$objectType->conditiongroup) {
+            if ($objectType->conditiongroup === null) {
                 continue;
             }
 

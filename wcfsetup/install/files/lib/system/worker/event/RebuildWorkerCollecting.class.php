@@ -30,7 +30,7 @@ class RebuildWorkerCollecting implements IEvent
         $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.rebuildData');
 
         foreach ($objectTypes as $objectType) {
-            $priority = $objectType->nicevalue ? ($objectType->nicevalue * -1) : 0;
+            $priority = !empty($objectType->nicevalue) ? ($objectType->nicevalue * -1) : 0;
             $this->queue->insert(
                 new RegisteredWorker($objectType->className, $objectType),
                 $priority

@@ -192,7 +192,7 @@ class UnfurlUrl extends DatabaseObject
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([\sha1($url)]);
         $row = $statement->fetchArray();
-        if (!$row) {
+        if ($row === false) {
             return null;
         }
 

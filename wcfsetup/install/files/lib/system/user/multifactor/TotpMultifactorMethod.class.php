@@ -107,7 +107,7 @@ final class TotpMultifactorMethod implements IMultifactorMethod
         // Note: The order of the two parts of the form is important. Pressing submit within an input
         // will implicitly press the first submit button. If this container comes first the submit
         // button will be a delete button.
-        if ($setup) {
+        if ($setup !== null) {
             $sql = "SELECT      deviceID,
                                 deviceName,
                                 createTime,
@@ -198,7 +198,7 @@ final class TotpMultifactorMethod implements IMultifactorMethod
                 $setup->getId(),
             ]);
 
-            if (!$statement->fetchSingleColumn()) {
+            if ($statement->fetchSingleColumn() === 0) {
                 throw new \LogicException('Unreachable');
             }
 
@@ -208,7 +208,7 @@ final class TotpMultifactorMethod implements IMultifactorMethod
             ];
         } else {
             $deviceName = $formData['data']['deviceName'];
-            if (!$deviceName) {
+            if ($deviceName === '') {
                 $defaultName = WCF::getLanguage()
                     ->getDynamicVariable('wcf.user.security.multifactor.totp.deviceName.placeholder');
 

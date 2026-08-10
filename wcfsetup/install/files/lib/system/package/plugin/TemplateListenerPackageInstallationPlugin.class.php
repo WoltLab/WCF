@@ -445,10 +445,10 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
             $options = $document->getFormField('options');
             $permissions = $document->getFormField('permissions');
 
-            if (!$options->getValue()) {
+            if (empty($options->getValue())) {
                 $options->available(false);
             }
-            if (!$permissions->getValue()) {
+            if (empty($permissions->getValue())) {
                 $permissions->available(false);
             }
 
@@ -489,10 +489,10 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 
         $result = $this->traitEditEntry($form, $identifier);
 
-        if (!$options->getValue()) {
+        if (empty($options->getValue())) {
             $options->available(false);
         }
-        if (!$permissions->getValue()) {
+        if (empty($permissions->getValue())) {
             $permissions->available(false);
         }
 

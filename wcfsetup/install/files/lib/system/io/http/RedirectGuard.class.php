@@ -27,7 +27,7 @@ final class RedirectGuard
      */
     public function __construct(?callable $next = null)
     {
-        $this->next = $next ? \Closure::fromCallable($next) : null;
+        $this->next = $next !== null ? \Closure::fromCallable($next) : null;
     }
 
     public function __invoke(RequestInterface $request, ResponseInterface $response, UriInterface $uri): ?callable
@@ -40,7 +40,7 @@ final class RedirectGuard
             );
         }
 
-        if (($next = $this->next)) {
+        if (($next = $this->next) !== null) {
             return $next($request, $response, $uri);
         }
 

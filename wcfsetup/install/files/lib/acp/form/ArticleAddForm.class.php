@@ -223,7 +223,7 @@ class ArticleAddForm extends AbstractDatabaseObjectBuilderForm
                             $builder->setPublicationDate(
                                 $status === Article::DELAYED_PUBLICATION
                                     && $dateField !== null
-                                    && $dateField->getSaveValue()
+                                    && $dateField->getSaveValue() !== null
                                     ? (int)$dateField->getSaveValue()
                                     : 0
                             );
@@ -379,7 +379,7 @@ class ArticleAddForm extends AbstractDatabaseObjectBuilderForm
                 ->imageOnly()
                 ->saveValueCallback(function (ArticleBuilder $builder, IFormField $field) use ($languageID) {
                     $value = $field->getSaveValue();
-                    $builder->getArticleContentBuilder($languageID)->setImageID($value ? (int)$value : null);
+                    $builder->getArticleContentBuilder($languageID)->setImageID($value !== null ? (int)$value : null);
                 })
                 ->loadValueCallback(function (Article $object, IFormField $field) use ($languageID) {
                     $field->value($this->getArticleContent($object, $languageID)?->imageID);
@@ -389,7 +389,7 @@ class ArticleAddForm extends AbstractDatabaseObjectBuilderForm
                 ->imageOnly()
                 ->saveValueCallback(function (ArticleBuilder $builder, IFormField $field) use ($languageID) {
                     $value = $field->getSaveValue();
-                    $builder->getArticleContentBuilder($languageID)->setTeaserImageID($value ? (int)$value : null);
+                    $builder->getArticleContentBuilder($languageID)->setTeaserImageID($value !== null ? (int)$value : null);
                 })
                 ->loadValueCallback(function (Article $object, IFormField $field) use ($languageID) {
                     $field->value($this->getArticleContent($object, $languageID)?->teaserImageID);

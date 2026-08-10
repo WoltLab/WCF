@@ -23,7 +23,7 @@ final class UsersAwaitingApprovalAcpDashboardBox extends AbstractAcpDashboardBox
     public function isAccessible(): bool
     {
         return WCF::getSession()->hasPermission('admin.user.canSearchUser')
-            && ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN);
+            && ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) !== 0;
     }
 
     #[\Override]
@@ -65,7 +65,7 @@ final class UsersAwaitingApprovalAcpDashboardBox extends AbstractAcpDashboardBox
             $this->userList->sqlLimit = 10;
             $this->userList->getConditionBuilder()->add('banned = ?', [0]);
             $this->userList->getConditionBuilder()->add('activationCode <> ?', [0]);
-            if ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) {
+            if (((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) !== 0) {
                 $this->userList->getConditionBuilder()->add('emailConfirmed IS NULL');
             }
             $this->userList->sqlOrderBy = 'registrationDate DESC';

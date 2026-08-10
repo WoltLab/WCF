@@ -63,7 +63,7 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
 
         $html = $icon->toHtml($size);
 
-        if ($encodeJson) {
+        if (!empty($encodeJson)) {
             return \json_encode($html, \JSON_THROW_ON_ERROR);
         }
 

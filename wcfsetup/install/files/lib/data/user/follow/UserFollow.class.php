@@ -37,7 +37,7 @@ class UserFollow extends DatabaseObject
         ]);
 
         $row = $statement->fetchArray();
-        if (!$row) {
+        if ($row === false) {
             $row = [];
         }
 

@@ -137,7 +137,7 @@ final class Setup implements IIDObject
         ]);
         $row = $statement->fetchSingleRow();
 
-        if ($row) {
+        if ($row !== false) {
             return new self($row);
         }
 

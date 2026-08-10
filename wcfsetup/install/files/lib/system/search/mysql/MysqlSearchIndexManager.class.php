@@ -86,7 +86,7 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$tableName]);
 
-        if ($statement->fetchSingleColumn()) {
+        if ($statement->fetchSingleColumn() > 0) {
             // table already exists
             return false;
         }

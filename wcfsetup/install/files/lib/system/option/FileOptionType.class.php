@@ -54,7 +54,7 @@ class FileOptionType extends AbstractOptionType
         // check if file has been uploaded
         if ($file->getFilename() === '') {
             // if checkbox is checked, remove file
-            if ($newValue) {
+            if (!empty($newValue)) {
                 @\unlink($packageDir . $option->optionValue);
 
                 return '';
@@ -105,7 +105,7 @@ class FileOptionType extends AbstractOptionType
         }
 
         // validate file
-        if ($option->filevalidation) {
+        if (!empty($option->filevalidation)) {
             $fileValidation = new $option->filevalidation();
             if (!($fileValidation instanceof IUploadFileValidationStrategy)) {
                 throw new SystemException(

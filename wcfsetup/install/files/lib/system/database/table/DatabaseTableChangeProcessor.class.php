@@ -1426,7 +1426,7 @@ final class DatabaseTableChangeProcessor
             }
         }
 
-        if ($existingTable) {
+        if ($existingTable !== null) {
             foreach ($existingTable->getColumns() as $column) {
                 if ($column->getName() === $columnName) {
                     return $column;

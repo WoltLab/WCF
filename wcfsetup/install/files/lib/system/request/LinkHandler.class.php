@@ -84,7 +84,7 @@ final class LinkHandler extends SingletonFactory
         // Overwrite legacy parameters, as these always result from the given controller class.
         $parameters['application'] = $matches['application'];
         $parameters['isACP'] = $matches['isAcp'];
-        $parameters['forceFrontend'] = !$matches['isAcp'];
+        $parameters['forceFrontend'] = $matches['isAcp'] === '';
 
         return $this->getLink($matches['controller'], $parameters, $url);
     }
@@ -125,7 +125,7 @@ final class LinkHandler extends SingletonFactory
             unset($parameters['isACP']);
         }
         if (isset($parameters['forceFrontend'])) {
-            if ($parameters['forceFrontend'] && $isACP) {
+            if (!empty($parameters['forceFrontend']) && $isACP) {
                 $isACP = false;
             }
             unset($parameters['forceFrontend']);
@@ -211,7 +211,7 @@ final class LinkHandler extends SingletonFactory
             $parameters['title'] = \mb_strtolower($parameters['title']);
 
             // encode title
-            if ($encodeTitle) {
+            if (!empty($encodeTitle)) {
                 $parameters['title'] = \rawurlencode($parameters['title']);
             }
         }
@@ -221,7 +221,7 @@ final class LinkHandler extends SingletonFactory
             $abbreviation = ControllerMap::getInstance()->getApplicationOverride($abbreviation, $controller);
         }
         $routeURL = RouteHandler::getInstance()->buildRoute($abbreviation, $parameters, $isACP);
-        if (!$isRaw && $url !== '') {
+        if (empty($isRaw) && $url !== '') {
             $routeURL .= \str_contains($routeURL, '?') ? '&' : '?';
         }
 

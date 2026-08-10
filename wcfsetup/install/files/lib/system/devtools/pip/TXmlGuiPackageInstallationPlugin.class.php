@@ -117,7 +117,7 @@ trait TXmlGuiPackageInstallationPlugin
                     $defaultValue = $value;
                 } else {
                     $isOptional = \array_key_exists('defaultValue', $value);
-                    $cdata = $value['cdata'] ?? false;
+                    $cdata = ($value['cdata'] ?? false) === true;
                     $defaultValue = $value['defaultValue'] ?? null;
                 }
             } else {

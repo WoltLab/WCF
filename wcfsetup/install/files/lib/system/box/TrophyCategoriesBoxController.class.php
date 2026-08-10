@@ -35,7 +35,7 @@ class TrophyCategoriesBoxController extends AbstractBoxController
     {
         $categories = TrophyCategoryCache::getInstance()->getEnabledCategories();
 
-        if (\count($categories)) {
+        if (\count($categories) > 0) {
             // get active category
             $activeCategory = null;
             $requestObject = RequestHandler::getInstance()->getActiveRequest()?->getRequestObject();

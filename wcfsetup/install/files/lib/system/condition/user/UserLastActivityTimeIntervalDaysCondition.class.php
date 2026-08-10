@@ -49,7 +49,7 @@ class UserLastActivityTimeIntervalDaysCondition extends AbstractSingleFieldCondi
     #[\Override]
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
     {
-        if ($this->object->ignoreZeroTime) {
+        if ($this->object->ignoreZeroTime === '1') {
             $objectList->getConditionBuilder()->add('user_table.lastActivityTime <> ?', [0]);
         }
         if (isset($conditionData['startDays'])) {
@@ -102,10 +102,10 @@ class UserLastActivityTimeIntervalDaysCondition extends AbstractSingleFieldCondi
     {
         $data = [];
 
-        if (\strlen($this->startDays)) {
+        if (\strlen($this->startDays) > 0) {
             $data['startDays'] = $this->startDays;
         }
-        if (\strlen($this->endDays)) {
+        if (\strlen($this->endDays) > 0) {
             $data['endDays'] = $this->endDays;
         }
 
@@ -157,12 +157,12 @@ HTML;
     public function setData(Condition $condition)
     {
         $endDays = $condition->endDays;
-        if ($endDays) {
+        if ($endDays !== null) {
             $this->endDays = $endDays;
         }
 
         $startDays = $condition->startDays;
-        if ($startDays) {
+        if ($startDays !== null) {
             $this->startDays = $startDays;
         }
     }
@@ -171,7 +171,7 @@ HTML;
     public function validate()
     {
         $endDays = $startDays = null;
-        if (\strlen($this->startDays)) {
+        if (\strlen($this->startDays) > 0) {
             $startDays = \intval($this->startDays);
             if ($startDays <= 0) {
                 $this->errorMessage = 'wcf.user.condition.lastActivityTimeIntervalDays.error.invalidStart';
@@ -179,7 +179,7 @@ HTML;
                 throw new UserInputException('userLastActivityTimeIntervalDays', 'invalidStart');
             }
         }
-        if (\strlen($this->endDays)) {
+        if (\strlen($this->endDays) > 0) {
             $endDays = \intval($this->endDays);
             if ($endDays <= 0) {
                 $this->errorMessage = 'wcf.user.condition.lastActivityTimeIntervalDays.error.invalidEnd';

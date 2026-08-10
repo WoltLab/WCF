@@ -138,7 +138,7 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements
     #[\Override]
     public function getHTML()
     {
-        if (!\count($this->getTrophies())) {
+        if (\count($this->getTrophies()) === 0) {
             return '';
         }
 
@@ -252,7 +252,7 @@ HTML;
             }
         }
 
-        if (\count(\array_intersect($this->notUserTrophyIDs, $this->userTrophyIDs))) {
+        if (\count(\array_intersect($this->notUserTrophyIDs, $this->userTrophyIDs)) > 0) {
             $this->errorMessages['notUserTrophyIDs'] = 'wcf.user.condition.notUserTrophyIDs.error.userTrophyIntersection';
 
             throw new UserInputException('notUserTrophyIDs', 'userTrophyIntersection');

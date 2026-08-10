@@ -22,7 +22,7 @@ class CaptchaSelectOptionType extends AbstractOptionType
     {
         RecaptchaHandler::$forceIsAvailable = true;
         $selectOptions = CaptchaHandler::getInstance()->getCaptchaSelection();
-        if ($option->allowemptyvalue) {
+        if (!empty($option->allowemptyvalue)) {
             $selectOptions = \array_merge(
                 ['' => WCF::getLanguage()->get('wcf.captcha.useNoCaptcha')],
                 $selectOptions
@@ -82,7 +82,7 @@ class CaptchaSelectOptionType extends AbstractOptionType
     #[\Override]
     public function validate(Option $option, mixed $newValue)
     {
-        if (!$newValue) {
+        if (empty($newValue)) {
             return;
         }
 

@@ -40,7 +40,7 @@ class TextareaOptionType extends TextOptionType
         $newValue = StringUtil::unifyNewlines(parent::getData($option, $newValue));
 
         // check for wildcard
-        if ($option->wildcard) {
+        if (!empty($option->wildcard)) {
             $values = \explode("\n", $newValue);
             if (\in_array($option->wildcard, $values)) {
                 $newValue = $option->wildcard;

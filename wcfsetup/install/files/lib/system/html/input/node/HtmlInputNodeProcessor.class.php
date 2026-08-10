@@ -285,7 +285,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
 
         $checkQuotes = [];
         foreach ($quotes as $quote) {
-            if (!$quote->parentNode) {
+            if ($quote->parentNode === null) {
                 continue;
             }
 
@@ -483,7 +483,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                 }
             }
 
-            if ($paragraph->firstChild && $paragraph->firstChild->nodeType === \XML_TEXT_NODE) {
+            if ($paragraph->firstChild !== null && $paragraph->firstChild->nodeType === \XML_TEXT_NODE) {
                 $oldNode = $paragraph->firstChild;
                 $newNode = $paragraph->ownerDocument->createTextNode(
                     \preg_replace('/^[\p{Zs}\s]+/u', '', $oldNode->textContent)
@@ -492,7 +492,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                 $paragraph->removeChild($oldNode);
             }
 
-            if ($paragraph->lastChild && $paragraph->lastChild->nodeType === \XML_TEXT_NODE) {
+            if ($paragraph->lastChild !== null && $paragraph->lastChild->nodeType === \XML_TEXT_NODE) {
                 $oldNode = $paragraph->lastChild;
                 $newNode = $paragraph->ownerDocument->createTextNode(
                     \preg_replace('/[\p{Zs}\s]+$/u', '', $oldNode->textContent)
@@ -594,7 +594,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
             [],
             function (IHtmlNode $nodeHandler) use (&$result) {
                 $disallowed = $nodeHandler->isAllowed($this);
-                if ($disallowed) {
+                if ($disallowed !== []) {
                     $result = \array_merge($result, $disallowed);
                 }
             }

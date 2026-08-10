@@ -52,7 +52,7 @@ final class Xsrf implements MiddlewareInterface
 
         if (
             !$this->isSafeHttpMethod($request->getMethod())
-            && $this->requestHandler->getActiveRequest()
+            && $this->requestHandler->getActiveRequest() !== null
             && !$hasValidXsrfToken
         ) {
             $activeRequest = $this->requestHandler->getActiveRequest();

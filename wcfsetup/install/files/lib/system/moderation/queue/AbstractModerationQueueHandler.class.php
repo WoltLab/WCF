@@ -112,7 +112,7 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
     {
         $userProfile = UserProfileRuntimeCache::getInstance()->getObject($userID);
 
-        return $userProfile->getPermission($this->requiredPermission);
+        return $userProfile->hasPermission($this->requiredPermission);
     }
 
     #[\Override]

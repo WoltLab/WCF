@@ -130,7 +130,7 @@ final class StyleCompiler extends SingletonFactory
             unset($variables['individualScssDarkMode']);
             unset($variables[Style::DARK_MODE_PREFIX . 'individualScssDarkMode']);
 
-            if ($individualScssDarkMode) {
+            if ($individualScssDarkMode !== '') {
                 $individualScss .= \sprintf(
                     "\nhtml[data-color-scheme=\"dark\"] {\n%s\n}",
                     $individualScssDarkMode,
@@ -216,7 +216,7 @@ final class StyleCompiler extends SingletonFactory
      */
     private function getFiles(): array
     {
-        if (!$this->files) {
+        if ($this->files === null) {
             $files = $this->getCoreFiles();
 
             // read stylesheets in dependency order
@@ -763,7 +763,7 @@ final class StyleCompiler extends SingletonFactory
         \file_put_contents($filePrefix . '-rtl.css', $this->convertToRtl($css));
         FileUtil::makeWritable($filePrefix . '-rtl.css');
 
-        if ($preloadManifest) {
+        if ($preloadManifest !== null) {
             \file_put_contents($filePrefix . '-preload.json', \json_encode($preloadManifest, \JSON_THROW_ON_ERROR));
             FileUtil::makeWritable($filePrefix . '-preload.json');
         }

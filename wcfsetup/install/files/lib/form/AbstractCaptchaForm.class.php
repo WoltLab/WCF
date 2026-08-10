@@ -74,7 +74,7 @@ abstract class AbstractCaptchaForm extends AbstractForm
     {
         parent::readFormParameters();
 
-        if ($this->captchaObjectType) {
+        if ($this->captchaObjectType !== null) {
             $this->captchaObjectType->getProcessor()->readFormParameters();
         }
     }
@@ -84,7 +84,7 @@ abstract class AbstractCaptchaForm extends AbstractForm
     {
         parent::save();
 
-        if ($this->captchaObjectType) {
+        if ($this->captchaObjectType !== null) {
             $this->captchaObjectType->getProcessor()->reset();
         }
     }
@@ -104,7 +104,7 @@ abstract class AbstractCaptchaForm extends AbstractForm
      */
     protected function validateCaptcha()
     {
-        if ($this->captchaObjectType) {
+        if ($this->captchaObjectType !== null) {
             $this->captchaObjectType->getProcessor()->validate();
         }
     }

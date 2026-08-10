@@ -105,7 +105,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
     public function checkPermissions(array $permissions)
     {
         foreach ($permissions as $permission) {
-            if (!$this->getPermission($permission)) {
+            if (!(bool)$this->getPermission($permission)) {
                 throw new PermissionDeniedException();
             }
         }
@@ -216,12 +216,12 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
             return $this->userPermissions[$user->userID][$permission];
         }
 
-        if ($this->getParentCategory()) {
+        if ($this->getParentCategory() !== null) {
             return $this->getParentCategory()->getPermission($permission, $user);
         }
 
         if ($this->getObjectType()->defaultpermission !== null) {
-            return $this->getObjectType()->defaultpermission ? true : false;
+            return (bool)$this->getObjectType()->defaultpermission;
         }
 
         return $this->defaultPermission;

@@ -43,7 +43,7 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction
     #[\Override]
     public function executeAction(DatabaseObjectList $objectList)
     {
-        if (\count($objectList)) {
+        if (\count($objectList) > 0) {
             // save config in session
             $userMailData = WCF::getSession()->getVar('userMailData');
             if ($userMailData === null) {

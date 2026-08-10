@@ -122,7 +122,7 @@ class UserMailForm extends AbstractFormBuilderForm
             ->required()
             ->multiple();
 
-        if (!count($_POST)) {
+        if (\count($_POST) === 0) {
             if (!empty($_GET['id'])) {
                 $formField->value([\intval($_GET['id'])]);
             } else {

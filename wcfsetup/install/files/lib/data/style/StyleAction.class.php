@@ -159,7 +159,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                 if ($variable !== null && $variable !== '') {
                     $location = $style->getAssetPath() . \basename($variable);
                     if (\file_exists($location)) {
-                        if (!$file || $location !== $file->getLocation()) {
+                        if ($file === null || $location !== $file->getLocation()) {
                             \unlink($location);
                         }
                     }
@@ -270,7 +270,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                 $file = $this->parameters['uploads'][$type];
 
                 if ($style->{$type} !== '' && \file_exists($style->getAssetPath() . \basename($style->{$type}))) {
-                    if (!$file || $style->getAssetPath() . \basename($style->{$type}) !== $file->getLocation()) {
+                    if ($file === null || $style->getAssetPath() . \basename($style->{$type}) !== $file->getLocation()) {
                         \unlink($style->getAssetPath() . \basename($style->{$type}));
                     }
                 }
@@ -415,7 +415,7 @@ BROWSERCONFIG;
             $file = $this->parameters['uploads']['coverPhoto'];
 
             if ($style->coverPhotoExtension !== '' && \file_exists($style->getCoverPhotoLocation(false))) {
-                if (!$file || $style->getCoverPhotoLocation(false) !== $file->getLocation()) {
+                if ($file === null || $style->getCoverPhotoLocation(false) !== $file->getLocation()) {
                     \unlink($style->getCoverPhotoLocation(false));
 
                     // Remove the WebP variant.

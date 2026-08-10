@@ -75,7 +75,11 @@ class UserGroupOptionHandler extends OptionHandler
     {
         if (parent::checkOption($option)) {
             // check if permission is available for guests if group is guests
-            if ($this->group && $this->group->groupType === UserGroup::GUESTS && $option->usersOnly !== 0) {
+            if (
+                $this->group !== null
+                && $this->group->groupType === UserGroup::GUESTS
+                && $option->usersOnly !== 0
+            ) {
                 return false;
             }
 

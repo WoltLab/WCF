@@ -42,7 +42,7 @@ class TableWordwrapModifierTemplatePlugin implements IModifierTemplatePlugin
                 $j = \ceil($length / $width);
 
                 for ($i = 0; $i < $j; $i++) {
-                    if ($i) {
+                    if ($i !== 0) {
                         $result .= $break;
                     }
                     if ($width * ($i + 1) > $length) {

@@ -180,7 +180,7 @@ class AttachmentHandler implements \Countable
         $attachmentList->getConditionBuilder()->add("objectID IN (?)", [$objectIDs]);
         $attachmentList->readObjects();
 
-        if (\count($attachmentList)) {
+        if (\count($attachmentList) > 0) {
             $attachmentAction = new AttachmentAction($attachmentList->getObjects(), 'delete');
             $attachmentAction->executeAction();
         }

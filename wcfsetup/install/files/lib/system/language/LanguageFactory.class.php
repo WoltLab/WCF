@@ -137,7 +137,7 @@ class LanguageFactory extends SingletonFactory
      */
     public static function getPreferredLanguage(array $availableLanguageCodes, string $defaultLanguageCode): string
     {
-        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && $_SERVER['HTTP_ACCEPT_LANGUAGE']) {
+        if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $negotiator = new LanguageNegotiator();
 
             $preferredLanguage = $negotiator->getBest(

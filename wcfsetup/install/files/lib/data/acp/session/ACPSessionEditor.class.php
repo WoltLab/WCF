@@ -28,7 +28,7 @@ class ACPSessionEditor extends DatabaseObjectEditor
     #[\Override]
     public static function create(array $parameters = [])
     {
-        if (isset($parameters['userID']) && !$parameters['userID']) {
+        if (isset($parameters['userID']) && $parameters['userID'] === 0) {
             $parameters['userID'] = null;
         }
 
@@ -38,7 +38,7 @@ class ACPSessionEditor extends DatabaseObjectEditor
     #[\Override]
     public function update(array $parameters = [])
     {
-        if (isset($parameters['userID']) && !$parameters['userID']) {
+        if (isset($parameters['userID']) && $parameters['userID'] === 0) {
             $parameters['userID'] = null;
         }
 

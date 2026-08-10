@@ -101,7 +101,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm
         }
 
         foreach ($conditionObjectTypes as $objectType) {
-            if ($objectType->conditiongroup) {
+            if ($objectType->conditiongroup !== null) {
                 if (!isset($this->conditions[$objectType->conditiongroup])) {
                     $this->conditions[$objectType->conditiongroup] = [];
                 }
@@ -210,7 +210,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm
             $this->objectList->readObjects();
 
             // execute action
-            if (\count($this->objectList)) {
+            if (\count($this->objectList) !== 0) {
                 $this->actions[$this->action]->getProcessor()->executeAction($this->objectList);
             }
 

@@ -128,7 +128,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
             'originIsSystem' => 1,
         ];
 
-        if ($data['wysiwygIcon'] && $data['buttonLabel']) {
+        if ($data['wysiwygIcon'] !== '' && $data['buttonLabel'] !== '') {
             $data['showButton'] = 1;
         }
 
@@ -149,7 +149,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         $statement = WCF::getDB()->prepare($sqlData['sql']);
         $statement->execute($sqlData['parameters']);
         $row = $statement->fetchArray();
-        if ($row && $row['packageID'] !== $this->installation->getPackageID()) {
+        if ($row !== false && $row['packageID'] !== $this->installation->getPackageID()) {
             $package = PackageCache::getInstance()->getPackage($row['packageID']);
             throw new SystemException("BBCode '" . $data['bbcodeTag'] . "' is already provided by '" . $package . "' ('" . $package->package . "').");
         }

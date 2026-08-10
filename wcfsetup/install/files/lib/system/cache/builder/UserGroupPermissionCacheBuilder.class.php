@@ -41,7 +41,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
                     $statement = WCF::getDB()->prepare($sql);
                     $statement->execute();
                     while ($option = $statement->fetchObject(UserGroupOption::class)) {
-                        if ($option->excludedInTinyBuild) {
+                        if (!empty($option->excludedInTinyBuild)) {
                             $excludedInTinyBuild[] = $option->optionName;
                         }
                     }
@@ -70,7 +70,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
         $statement->execute($conditions->getParameters());
         while ($row = $statement->fetchArray()) {
             if (
-                $row['usersOnly']
+                $row['usersOnly'] !== 0
                 && UserGroup::getGroupByID($row['groupID'])->groupType === UserGroup::GUESTS
             ) {
                 continue;
@@ -83,7 +83,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
             $optionBlacklist = [];
 
             foreach ($options as $option) {
-                if ($option['enableOptions']) {
+                if ($option['enableOptions'] !== null && $option['enableOptions'] !== '') {
                     $typeObj = $this->getTypeObject($option['optionType']);
                     $disabledOptions = $typeObj->getDisabledOptionNames(
                         $option['optionValue'],
@@ -110,7 +110,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
 
         $includesOwnerGroup = false;
         $ownerGroup = UserGroup::getGroupByType(UserGroup::OWNER);
-        if ($ownerGroup && \in_array($ownerGroup->groupID, $parameters)) {
+        if ($ownerGroup !== null && \in_array($ownerGroup->groupID, $parameters)) {
             $includesOwnerGroup = true;
         }
 
@@ -138,7 +138,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
                 }
             }
 
-            if ($ownerGroup && $optionName === 'admin.user.accessibleGroups') {
+            if ($ownerGroup !== null && $optionName === 'admin.user.accessibleGroups') {
                 $accessibleGroupIDs = \explode(',', $result);
                 if ($includesOwnerGroup) {
                     // Regardless of the actual permissions, the owner group has access to all groups.

@@ -72,7 +72,7 @@ final class CaptchaFormField extends AbstractFormField implements IObjectTypeFor
         // The error message is shown by the captcha handler itself but up until now, the form
         // builder API needs at least one validation error present to detect validation errors.
         // Now, however, we can remove the validation error again.
-        if ($this->validationError) {
+        if ($this->validationError !== null) {
             $this->validationErrors = \array_filter(
                 $this->validationErrors,
                 function (IFormFieldValidationError $validationError) {

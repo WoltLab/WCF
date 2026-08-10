@@ -363,9 +363,9 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
         WCF::getDB()->beginTransaction();
         foreach ($this->getObjects() as $moderationQueueEditor) {
             $data = [
-                'assignedUserID' => $this->user ? $this->user->userID : null,
+                'assignedUserID' => $this->user !== null ? $this->user->userID : null,
             ];
-            if ($this->user) {
+            if ($this->user !== null) {
                 if ($moderationQueueEditor->status === ModerationQueue::STATUS_OUTSTANDING) {
                     $data['status'] = ModerationQueue::STATUS_PROCESSING;
                 }

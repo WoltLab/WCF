@@ -161,7 +161,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
                 }
 
                 $this->objects[$categoryID]->update([
-                    'parentCategoryID' => $parentCategoryID ? $this->objects[$parentCategoryID]->categoryID : 0,
+                    'parentCategoryID' => $parentCategoryID !== 0 ? $this->objects[$parentCategoryID]->categoryID : 0,
                     'showOrder' => $showOrder++,
                 ]);
             }
@@ -235,7 +235,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
 
         // validate given category ids
         foreach ($this->parameters['data']['structure'] as $parentCategoryID => $categoryIDs) {
-            if ($parentCategoryID) {
+            if ($parentCategoryID !== 0) {
                 // validate category
                 $category = CategoryHandler::getInstance()->getCategory($parentCategoryID);
                 if ($category === null) {

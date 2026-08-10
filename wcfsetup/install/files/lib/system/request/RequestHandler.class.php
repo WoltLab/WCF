@@ -302,7 +302,7 @@ final class RequestHandler extends SingletonFactory
                 ];
 
                 if (
-                    $routeData['cmsPageLanguageID']
+                    !empty($routeData['cmsPageLanguageID'])
                     && $routeData['cmsPageLanguageID'] !== WCF::getLanguage()->languageID
                 ) {
                     WCF::setLanguage($routeData['cmsPageLanguageID']);

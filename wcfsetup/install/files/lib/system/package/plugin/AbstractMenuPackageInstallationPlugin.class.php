@@ -88,7 +88,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$data['parentMenuItem']]);
 
-        if (!$statement->fetchSingleColumn()) {
+        if ($statement->fetchSingleColumn() === 0) {
             throw new SystemException("Unable to find parent 'menu item' with name '" . $data['parentMenuItem'] . "' for 'menu item' with name '" . $data['menuItem'] . "'.");
         }
     }
@@ -282,7 +282,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
                     if ($formField->getSaveValue() !== '') {
                         $menuItemController = $formField->getDocument()->getFormField('menuItemController');
 
-                        if (!$menuItemController->getSaveValue() && !Url::is($formField->getSaveValue())) {
+                        if ($menuItemController->getSaveValue() === '' && !Url::is($formField->getSaveValue())) {
                             $formField->addValidationError(
                                 new FormFieldValidationError(
                                     'noLink',

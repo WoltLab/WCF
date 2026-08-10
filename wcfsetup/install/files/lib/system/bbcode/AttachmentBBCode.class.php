@@ -223,7 +223,7 @@ final class AttachmentBBCode extends AbstractBBCode
         }
 
         // Force the use of the thumbnail if the user cannot access the full version.
-        if (!$thumbnail && !$attachment->canDownload()) {
+        if (empty($thumbnail) && !$attachment->canDownload()) {
             $isThumbnail = true;
             if ($width !== "auto" && $width > $attachment->thumbnailWidth) {
                 $width = "auto";

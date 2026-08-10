@@ -61,7 +61,7 @@ class CycleFunctionTemplatePlugin implements IFunctionTemplatePlugin
         }
 
         // set index
-        if (!isset($this->cycles[$name]['index']) || $reset) {
+        if (!isset($this->cycles[$name]['index']) || !empty($reset)) {
             $this->cycles[$name]['index'] = 0;
         }
 
@@ -75,7 +75,7 @@ class CycleFunctionTemplatePlugin implements IFunctionTemplatePlugin
         }
 
         // update index
-        if ($advance) {
+        if (!empty($advance)) {
             if ($this->cycles[$name]['index'] >= \count($cycleArray) - 1) {
                 $this->cycles[$name]['index'] = 0;
             } else {
@@ -84,7 +84,7 @@ class CycleFunctionTemplatePlugin implements IFunctionTemplatePlugin
         }
 
         // print var
-        if ($print) {
+        if (!empty($print)) {
             return $result;
         }
 

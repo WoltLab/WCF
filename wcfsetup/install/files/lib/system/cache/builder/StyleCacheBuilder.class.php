@@ -29,7 +29,7 @@ class StyleCacheBuilder extends AbstractCacheBuilder
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {
-            if ($row['isDefault']) {
+            if ($row['isDefault'] !== 0) {
                 $data['default'] = $row['styleID'];
             }
             $style = new Style(null, $row);

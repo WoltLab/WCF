@@ -274,7 +274,7 @@ class ReactionAction extends AbstractDatabaseObjectAction
     public function load()
     {
         $likeList = new ViewableLikeList();
-        if ($this->parameters['lastLikeTime']) {
+        if ($this->parameters['lastLikeTime'] !== 0) {
             $likeList->getConditionBuilder()->add("like_table.time < ?", [$this->parameters['lastLikeTime']]);
         }
         if ($this->parameters['targetType'] === 'received') {
@@ -282,7 +282,7 @@ class ReactionAction extends AbstractDatabaseObjectAction
         } else {
             $likeList->getConditionBuilder()->add("like_table.userID = ?", [$this->parameters['userID']]);
         }
-        if ($this->parameters['reactionTypeID']) {
+        if ($this->parameters['reactionTypeID'] !== 0) {
             $likeList->getConditionBuilder()->add(
                 "like_table.reactionTypeID = ?",
                 [$this->parameters['reactionTypeID']]

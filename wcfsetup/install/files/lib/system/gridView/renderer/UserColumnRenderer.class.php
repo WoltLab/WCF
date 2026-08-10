@@ -23,7 +23,7 @@ class UserColumnRenderer extends DefaultColumnRenderer
     #[\Override]
     public function render(mixed $value, DatabaseObject $row): string
     {
-        if (!$value) {
+        if (empty($value)) {
             if ($this->fallbackValue !== '') {
                 return StringUtil::encodeHTML($row->{$this->fallbackValue} ?? '');
             }
@@ -42,7 +42,7 @@ class UserColumnRenderer extends DefaultColumnRenderer
     #[\Override]
     public function prepare(mixed $value, DatabaseObject $row): void
     {
-        if (!$value) {
+        if (empty($value)) {
             return;
         }
 

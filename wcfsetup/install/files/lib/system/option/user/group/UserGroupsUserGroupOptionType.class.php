@@ -83,8 +83,8 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
     #[\Override]
     public function compare(mixed $value1, mixed $value2)
     {
-        $value1 = $value1 ? \explode(',', $value1) : [];
-        $value2 = $value2 ? \explode(',', $value2) : [];
+        $value1 = !empty($value1) ? \explode(',', $value1) : [];
+        $value2 = !empty($value2) ? \explode(',', $value2) : [];
 
         // check if value1 contains more elements than value2
         $diff = \array_diff($value1, $value2);

@@ -137,7 +137,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
             ]);
             $triggerStatement->execute([
                 1,
-                $this->parameters['authorID'] ? 0 : 1,
+                $this->parameters['authorID'] !== 0 ? 0 : 1,
                 $notificationData['object']->notificationID,
             ]);
         }

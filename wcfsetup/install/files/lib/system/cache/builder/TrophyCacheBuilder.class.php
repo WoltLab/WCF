@@ -18,7 +18,7 @@ class TrophyCacheBuilder extends AbstractCacheBuilder
     {
         $trophyList = new TrophyList();
 
-        if (isset($parameters['onlyEnabled']) && $parameters['onlyEnabled']) {
+        if (!empty($parameters['onlyEnabled'])) {
             $trophyList->getConditionBuilder()->add('isDisabled = ?', [0]);
         }
 

@@ -137,7 +137,7 @@ final class SetReaction
                 $likeable->getObjectType()->objectType . '.recentActivityEvent'
             );
 
-            if ($objectType->supportsReactions) {
+            if ($objectType->supportsReactions === '1') {
                 if (!$originalLike->isNil()) {
                     UserActivityEventHandler::getInstance()->removeEvent(
                         $likeable->getObjectType()->objectType . '.recentActivityEvent',

@@ -163,8 +163,8 @@ parameters:
 			path: wcfsetup/install/files/lib/system/cli/command/WorkerCLICommand.class.php
 
 		-
-			message: '#^If condition is always true\.$#'
-			identifier: if.alwaysTrue
+			message: '#^Strict comparison using \!\=\= between wcf\\system\\io\\File and null will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
 			count: 1
 			path: wcfsetup/install/files/lib/system/cli/command/WorkerCLICommand.class.php
 
@@ -353,18 +353,6 @@ parameters:
 			identifier: method.notFound
 			count: 2
 			path: wcfsetup/install/files/lib/system/form/builder/container/wysiwyg/WysiwygFormContainer.class.php
-
-		-
-			message: '#^Call to function is_callable\(\) with callable\(\)\: mixed will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/SingleSelectionFormField.class.php
-
-		-
-			message: '#^Result of && is always false\.$#'
-			identifier: booleanAnd.alwaysFalse
-			count: 2
-			path: wcfsetup/install/files/lib/system/form/builder/field/SingleSelectionFormField.class.php
 
 		-
 			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'

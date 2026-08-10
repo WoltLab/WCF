@@ -135,7 +135,7 @@ class BoxEditForm extends BoxAddForm
                 $oldController instanceof IConditionBoxController
                 && $oldController->getConditionDefinition() !== ''
                 && (
-                    !$this->boxController
+                    $this->boxController === null
                     || (
                         !($this->boxController->getProcessor() instanceof IConditionBoxController))
                     || $this->boxController->getProcessor()->getConditionDefinition() === ''
@@ -148,7 +148,7 @@ class BoxEditForm extends BoxAddForm
             }
         }
 
-        if ($this->boxController) {
+        if ($this->boxController !== null) {
             // pass updated box to box controller as in `BoxAddForm::save()`
             $box = new Box($this->box->boxID);
             if ($this->boxController->getProcessor() instanceof IConditionBoxController) {

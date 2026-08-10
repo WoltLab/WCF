@@ -87,7 +87,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         $newOptions = $updateOptions = [];
         foreach ($this->parameters['options'] as $showOrder => $option) {
             // check if editing an existing option
-            if ($option['optionID']) {
+            if ($option['optionID'] !== 0) {
                 // check if an update is required
                 if ($options[$option['optionID']]->showOrder !== $showOrder || $options[$option['optionID']]->optionValue !== $option['optionValue']) {
                     $updateOptions[$option['optionID']] = [

@@ -131,7 +131,7 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
         ];
 
         $showOrder = $element->getElementsByTagName('showorder')->item(0);
-        if ($showOrder) {
+        if ($showOrder !== null) {
             $data['showOrder'] = $showOrder->nodeValue;
         } elseif ($saveData) {
             $data['showOrder'] = $this->getShowOrder(null);

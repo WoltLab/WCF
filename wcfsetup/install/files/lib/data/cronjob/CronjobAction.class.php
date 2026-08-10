@@ -152,8 +152,8 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
                 CronjobLogEditor::create([
                     'cronjobID' => $cronjob->cronjobID,
                     'execTime' => \TIME_NOW,
-                    'success' => $exception ? 0 : 1,
-                    'error' => $exception ? \mb_substr($exception->getMessage(), 0, 65000) : '',
+                    'success' => $exception !== null ? 0 : 1,
+                    'error' => $exception !== null ? \mb_substr($exception->getMessage(), 0, 65000) : '',
                 ]);
 
                 // calculate next exec-time
@@ -165,7 +165,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
                 ];
 
                 // cronjob failed
-                if ($exception) {
+                if ($exception !== null) {
                     if ($cronjob->failCount < Cronjob::MAX_FAIL_COUNT) {
                         $data['failCount'] = $cronjob->failCount + 1;
                     }
@@ -205,7 +205,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
                 $cronjob->update(['state' => Cronjob::READY]);
 
                 // throw exception again to show error message
-                if ($exception) {
+                if ($exception !== null) {
                     throw $exception;
                 }
             }

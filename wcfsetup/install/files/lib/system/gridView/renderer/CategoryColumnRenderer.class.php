@@ -19,7 +19,7 @@ class CategoryColumnRenderer extends DefaultColumnRenderer
     #[\Override]
     public function render(mixed $value, DatabaseObject $row): string
     {
-        if (!$value) {
+        if (empty($value)) {
             return '';
         }
 

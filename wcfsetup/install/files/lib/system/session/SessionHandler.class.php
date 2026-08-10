@@ -419,7 +419,7 @@ final class SessionHandler extends SingletonFactory
             }
         }
 
-        if (!$xsrfToken) {
+        if ($xsrfToken === '') {
             if (\PACKAGE_ID !== 0) {
                 $xsrfToken = CryptoUtil::createSignedString(\random_bytes(16));
             } else {
@@ -529,12 +529,12 @@ final class SessionHandler extends SingletonFactory
         ]);
         $row = $statement->fetchSingleRow();
 
-        if (!$row) {
+        if ($row === false) {
             return false;
         }
 
         // Check whether the session technically already expired.
-        $lifetime = ($row['userID'] ? self::USER_SESSION_LIFETIME : self::GUEST_SESSION_LIFETIME);
+        $lifetime = ($row['userID'] !== null ? self::USER_SESSION_LIFETIME : self::GUEST_SESSION_LIFETIME);
         if ($row['lastActivityTime'] < (\TIME_NOW - $lifetime)) {
             return false;
         }
@@ -578,7 +578,7 @@ final class SessionHandler extends SingletonFactory
             // Fetch legacy session.
             $condition = new PreparedStatementConditionBuilder();
 
-            if ($row['userID']) {
+            if ($row['userID'] !== null) {
                 // The `userID IS NOT NULL` condition technically is redundant, but is added for
                 // clarity and consistency with the guest case below.
                 $condition->add('userID IS NOT NULL');
@@ -773,13 +773,13 @@ final class SessionHandler extends SingletonFactory
      * Checks if the active user has the given permissions and throws a
      * PermissionDeniedException if that isn't the case.
      *
-     * @param string[] $permissions list of permissions where each one must pass
-     * @throws  PermissionDeniedException
+     * @param non-empty-list<string> $permissions list of permissions where each one must pass
+     * @throws PermissionDeniedException
      */
     public function checkPermissions(array $permissions): void
     {
         foreach ($permissions as $permission) {
-            if (!$this->getPermission($permission)) {
+            if (!$this->hasPermission($permission)) {
                 throw new PermissionDeniedException();
             }
         }
@@ -869,7 +869,7 @@ final class SessionHandler extends SingletonFactory
         $user = $this->getPendingUserChange();
         $this->clearPendingUserChange();
 
-        if (!$user) {
+        if ($user === null) {
             throw new \BadMethodCallException('No pending user change.');
         }
 
@@ -889,7 +889,7 @@ final class SessionHandler extends SingletonFactory
     public function getPendingUserChange(): ?User
     {
         $data = $this->getVar(self::CHANGE_USER_AFTER_MULTIFACTOR_KEY);
-        if (!$data) {
+        if ($data === null) {
             return null;
         }
 
@@ -936,7 +936,7 @@ final class SessionHandler extends SingletonFactory
         $hideSession = $eventParameters['hideSession'];
 
         // skip changeUserVirtual, if session will not be persistent anyway
-        if (!$hideSession) {
+        if ($hideSession !== true) {
             $this->changeUserVirtual($user);
         }
 
@@ -966,7 +966,7 @@ final class SessionHandler extends SingletonFactory
 
         $saveVars = [];
         foreach ($event->keys as $key) {
-            if (!$this->getVar($key)) {
+            if ($this->getVar($key) === null) {
                 continue;
             }
 
@@ -1064,7 +1064,7 @@ final class SessionHandler extends SingletonFactory
         $data = $this->getVar(self::REAUTHENTICATION_KEY);
 
         // Request a new authentication if no stored information is available.
-        if (!$data) {
+        if ($data === null) {
             return true;
         }
 

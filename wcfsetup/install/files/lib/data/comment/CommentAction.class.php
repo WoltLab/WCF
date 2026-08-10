@@ -378,7 +378,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             WCF::getSession()->register('lastCommentTime', $this->createdComment->time);
 
             // reset captcha for future requests
-            if ($this->captchaObjectType) {
+            if ($this->captchaObjectType !== null) {
                 $this->captchaObjectType->getProcessor()->reset();
             }
         }
@@ -424,7 +424,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             }
 
             // fire notification event
-            if (UserNotificationHandler::getInstance()->getEvent($objectType->objectType . '.notification', 'comment')) {
+            if (UserNotificationHandler::getInstance()->getEvent($objectType->objectType . '.notification', 'comment') !== null) {
                 $notificationObject = new CommentUserNotificationObject($comment->getDecoratedObject());
                 $notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType . '.notification');
 
@@ -568,7 +568,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             WCF::getSession()->register('lastCommentTime', $this->createdResponse->time);
 
             // reset captcha for future requests
-            if ($this->captchaObjectType) {
+            if ($this->captchaObjectType !== null) {
                 $this->captchaObjectType->getProcessor()->reset();
             }
         }
@@ -643,8 +643,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             if (
                 UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.notification') !== 0
                 && (
-                    UserNotificationHandler::getInstance()->getEvent($objectType->objectType . '.response.notification', 'commentResponse')
-                    || UserNotificationHandler::getInstance()->getEvent($objectType->objectType . '.response.notification', 'commentResponseOwner')
+                    UserNotificationHandler::getInstance()->getEvent($objectType->objectType . '.response.notification', 'commentResponse') !== null
+                    || UserNotificationHandler::getInstance()->getEvent($objectType->objectType . '.response.notification', 'commentResponseOwner') !== null
                 )
             ) {
                 $notificationObject = new CommentResponseUserNotificationObject($response);
@@ -666,7 +666,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                 // make sure that the response's author gets no notification
                 $recipientIDs = \array_diff($recipientIDs, [$response->getUserID()]);
 
-                if (UserNotificationHandler::getInstance()->getEvent($objectType->objectType . '.response.notification', 'commentResponse')) {
+                if (UserNotificationHandler::getInstance()->getEvent($objectType->objectType . '.response.notification', 'commentResponse') !== null) {
                     UserNotificationHandler::getInstance()->fireEvent(
                         'commentResponse',
                         $objectType->objectType . '.response.notification',
@@ -681,7 +681,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                 }
 
                 // notify the container owner
-                if (UserNotificationHandler::getInstance()->getEvent($objectType->objectType . '.response.notification', 'commentResponseOwner')) {
+                if (UserNotificationHandler::getInstance()->getEvent($objectType->objectType . '.response.notification', 'commentResponseOwner') !== null) {
                     if ($userID !== 0 && $userID !== $comment->userID && $userID !== $response->getUserID()) {
                         UserNotificationHandler::getInstance()->fireEvent(
                             'commentResponseOwner',
@@ -1034,7 +1034,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                 [$comment->getObjectID()]
             );
         }
-        if ($response && $response->hasEmbeddedObjects !== 0) {
+        if ($response !== null && $response->hasEmbeddedObjects !== 0) {
             MessageEmbeddedObjectManager::getInstance()->loadObjects(
                 'com.woltlab.wcf.comment.response',
                 [$response->getObjectID()]

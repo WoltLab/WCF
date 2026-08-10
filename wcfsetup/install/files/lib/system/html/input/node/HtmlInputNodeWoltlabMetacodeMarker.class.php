@@ -412,7 +412,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
 
         // block elements can sometimes contain a line break after the end tag
         // which needs to be removed to avoid it being split into a separate p
-        if ($node = $end->nextSibling) {
+        if (($node = $end->nextSibling) !== null) {
             if ($node->nodeType === \XML_TEXT_NODE && ($node->textContent === "\n" || $node->textContent === "\r\n")) {
                 DOMUtil::removeNode($node);
             }
@@ -467,7 +467,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
             // formed HTML therefore we can naively split all parent inline elements.
             $element = $start;
             $parent = $element->parentNode;
-            while ($parent && $parent !== $commonAncestor) {
+            while ($parent !== null && $parent !== $commonAncestor) {
                 if ($this->isBlockElement($parent)) {
                     break;
                 }
@@ -484,7 +484,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
 
             $element = $end;
             $parent = $element->parentNode;
-            while ($parent && $parent !== $commonAncestor) {
+            while ($parent !== null && $parent !== $commonAncestor) {
                 if ($this->isBlockElement($parent)) {
                     break;
                 }
@@ -556,7 +556,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
             );
         }
 
-        if ($startNode) {
+        if ($startNode !== null) {
             $element = $startNode->ownerDocument->createElement('woltlab-metacode');
         } else {
             $element = $endNode->ownerDocument->createElement('woltlab-metacode');
@@ -565,7 +565,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
         $element->setAttribute('data-name', $name);
         $element->setAttribute('data-attributes', $attributes);
 
-        if ($startNode) {
+        if ($startNode !== null) {
             DOMUtil::insertBefore($element, $startNode);
 
             while ($sibling = $element->nextSibling) {

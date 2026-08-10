@@ -45,9 +45,9 @@ class ArticleUserActivityEvent extends SingletonFactory implements IUserActivity
                     ));
                     $event->setDescription(\strip_tags($article->getFormattedTeaser()), true);
                     $event->setLink($article->getLink());
-                    if ($article->getTeaserImage()) {
+                    if ($article->getTeaserImage() !== null) {
                         $imageData = $article->getTeaserImage()->getImageData(200, 150);
-                        if ($imageData) {
+                        if ($imageData !== null) {
                             $event->setImage($imageData);
                         }
                     }

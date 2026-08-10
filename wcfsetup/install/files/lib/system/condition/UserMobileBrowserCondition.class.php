@@ -90,7 +90,7 @@ HTML;
     public function setData(Condition $condition)
     {
         $this->usesMobileBrowser = $condition->usesMobileBrowser;
-        $this->usesNoMobileBrowser = $condition->usesMobileBrowser ? 0 : 1;
+        $this->usesNoMobileBrowser = $condition->usesMobileBrowser !== 0 ? 0 : 1;
     }
 
     #[\Override]
@@ -106,6 +106,7 @@ HTML;
     #[\Override]
     public function showContent(Condition $condition)
     {
-        return ($condition->usesMobileBrowser && UserUtil::usesMobileBrowser()) || (!$condition->usesMobileBrowser && !UserUtil::usesMobileBrowser());
+        return ($condition->usesMobileBrowser !== 0 && UserUtil::usesMobileBrowser())
+            || ($condition->usesMobileBrowser === 0 && !UserUtil::usesMobileBrowser());
     }
 }

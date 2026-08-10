@@ -53,7 +53,7 @@ class IconFormField extends AbstractFormField implements IImmutableFormField
     #[\Override]
     public function getSaveValue()
     {
-        if ($this->getValue()) {
+        if (!empty($this->getValue())) {
             return (string)$this->getIcon();
         }
 
@@ -75,7 +75,7 @@ class IconFormField extends AbstractFormField implements IImmutableFormField
     {
         parent::validate();
 
-        if (!$this->getValue()) {
+        if (empty($this->getValue())) {
             if ($this->isRequired()) {
                 $this->addValidationError(new FormFieldValidationError('empty'));
             }
@@ -102,7 +102,7 @@ class IconFormField extends AbstractFormField implements IImmutableFormField
      */
     public function getIcon(): ?FontAwesomeIcon
     {
-        if ($this->value && FontAwesomeIcon::isValidString($this->value)) {
+        if (!empty($this->value) && FontAwesomeIcon::isValidString($this->value)) {
             return FontAwesomeIcon::fromString($this->value);
         }
 

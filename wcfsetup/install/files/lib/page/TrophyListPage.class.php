@@ -62,7 +62,7 @@ class TrophyListPage extends MultipleLinkPage
             ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : '')
         );
 
-        if (!\count(TrophyCategoryCache::getInstance()->getEnabledCategories())) {
+        if (\count(TrophyCategoryCache::getInstance()->getEnabledCategories()) === 0) {
             throw new IllegalLinkException();
         }
     }

@@ -47,7 +47,7 @@ class HtmlCheckboxesFunctionTemplatePlugin implements IFunctionTemplatePlugin
             throw new SystemException("missing 'name' argument in htmlCheckboxes tag");
         }
 
-        if (isset($tagArgs['disableEncoding']) && $tagArgs['disableEncoding']) {
+        if (!empty($tagArgs['disableEncoding'])) {
             $this->disableEncoding = true;
         } else {
             $this->disableEncoding = false;

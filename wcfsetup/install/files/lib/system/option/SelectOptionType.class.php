@@ -30,7 +30,7 @@ class SelectOptionType extends RadioButtonOptionType
             'option' => $option,
             'selectOptions' => $this->getSelectOptions($option),
             'value' => $value,
-            'allowEmptyValue' => $this->allowEmptyValue || $option->allowEmptyValue,
+            'allowEmptyValue' => $this->allowEmptyValue || !empty($option->allowEmptyValue),
         ]);
     }
 

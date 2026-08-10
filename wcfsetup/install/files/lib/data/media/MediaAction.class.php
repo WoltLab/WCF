@@ -49,7 +49,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 
         $this->parameters['__files']->validateFiles(new MediaUploadFileValidationStrategy($this->parameters['imagesOnly']));
 
-        if ($this->parameters['categoryID']) {
+        if ($this->parameters['categoryID'] !== 0) {
             $category = CategoryHandler::getInstance()->getCategory($this->parameters['categoryID']);
             if ($category === null || $category->getObjectType()->objectType !== 'com.woltlab.wcf.media.category') {
                 throw new UserInputException('categoryID');
@@ -61,7 +61,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
     public function upload()
     {
         $additionalData = ['username' => WCF::getUser()->username];
-        if ($this->parameters['categoryID']) {
+        if ($this->parameters['categoryID'] !== 0) {
             $additionalData['categoryID'] = $this->parameters['categoryID'];
         }
 
@@ -227,7 +227,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         if (WCF::getSession()->hasPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
             $mediaList->getConditionBuilder()->add('media.userID = ?', [WCF::getUser()->userID]);
         }
-        if ($this->parameters['imagesOnly']) {
+        if ($this->parameters['imagesOnly'] === true) {
             $mediaList->getConditionBuilder()->add('media.isImage = ?', [1]);
         }
         $mediaList->sqlOrderBy = 'media.uploadTime DESC, media.mediaID DESC';
@@ -256,7 +256,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
      */
     protected function getI18nMediaData(MediaList $mediaList)
     {
-        if (!\count($mediaList)) {
+        if (\count($mediaList) === 0) {
             return [];
         }
 
@@ -378,7 +378,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 
         if (\count(LanguageFactory::getInstance()->getLanguages()) > 1) {
             // languageID: convert zero to null
-            if (!$this->parameters['data']['languageID']) {
+            if ($this->parameters['data']['languageID'] === 0) {
                 $this->parameters['data']['languageID'] = null;
             }
 
@@ -390,17 +390,20 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         }
 
         // if data is not multilingual, a language id has to be given
-        if (!$this->parameters['data']['isMultilingual'] && !$this->parameters['data']['languageID']) {
+        if ($this->parameters['data']['isMultilingual'] === 0 && $this->parameters['data']['languageID'] === null) {
             throw new UserInputException('languageID');
         }
 
         // check language id
-        if ($this->parameters['data']['languageID'] && !LanguageFactory::getInstance()->getLanguage($this->parameters['data']['languageID'])) {
+        if (
+            $this->parameters['data']['languageID'] !== null
+            && LanguageFactory::getInstance()->getLanguage($this->parameters['data']['languageID']) === null
+        ) {
             throw new UserInputException('languageID');
         }
 
         // check category id
-        if ($this->parameters['data']['categoryID']) {
+        if ($this->parameters['data']['categoryID'] !== 0) {
             $category = CategoryHandler::getInstance()->getCategory($this->parameters['data']['categoryID']);
             if ($category === null || $category->getObjectType()->objectType !== 'com.woltlab.wcf.media.category') {
                 throw new UserInputException('categoryID');
@@ -439,7 +442,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
                     VALUES      (?, ?, ?, ?, ?)";
             $statement = WCF::getDB()->prepare($sql);
 
-            if (!$isMultilingual) {
+            if ($isMultilingual === 0) {
                 $languageID = $media->languageID;
                 if (isset($this->parameters['data']['languageID'])) {
                     $languageID = $this->parameters['data']['languageID'];
@@ -513,7 +516,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         }
 
         $this->readInteger('pageNo', true);
-        if (!$this->parameters['pageNo']) {
+        if ($this->parameters['pageNo'] === 0) {
             $this->parameters['pageNo'] = 1;
         }
         if ($this->parameters['pageNo'] < 1) {
@@ -529,10 +532,10 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         if (WCF::getSession()->hasPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
             $mediaList->getConditionBuilder()->add('media.userID = ?', [WCF::getUser()->userID]);
         }
-        if ($this->parameters['imagesOnly']) {
+        if ($this->parameters['imagesOnly'] === true) {
             $mediaList->getConditionBuilder()->add('media.isImage = ?', [1]);
         }
-        if ($this->parameters['categoryID']) {
+        if ($this->parameters['categoryID'] !== 0) {
             if ($this->parameters['categoryID'] === -1) {
                 $mediaList->getConditionBuilder()->add('media.categoryID IS NULL');
             } else {
@@ -547,7 +550,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         if (empty($mediaList->getObjectIDs())) {
             // check if page is requested that might have existed but does not exist anymore due to deleted
             // media files
-            if ($this->parameters['pageNo'] > 1 && $this->parameters['searchString'] === '' && !$this->parameters['categoryID']) {
+            if ($this->parameters['pageNo'] > 1 && $this->parameters['searchString'] === '' && $this->parameters['categoryID'] === 0) {
                 // request media dialog page with highest page number
                 $parameters = $this->parameters;
                 $parameters['pageNo'] = \ceil($mediaList->countObjects() / static::ITEMS_PER_MANAGER_DIALOG_PAGE);

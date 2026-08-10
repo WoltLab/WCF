@@ -871,7 +871,7 @@ abstract class AbstractGridView
         $this->objectList->sqlOffset = ($this->getPageNo() - 1) * $this->getRowsPerPage();
         if ($this->getSortField() !== '') {
             $column = $this->getColumn($this->getSortField());
-            if ($column && $column->getSortByDatabaseColumn() !== '') {
+            if ($column !== null && $column->getSortByDatabaseColumn() !== '') {
                 $this->objectList->sqlOrderBy = $column->getSortByDatabaseColumn() . ' ' . $this->getSortOrder();
             } else {
                 $this->objectList->sqlOrderBy = $this->objectList->getDatabaseTableAlias() .

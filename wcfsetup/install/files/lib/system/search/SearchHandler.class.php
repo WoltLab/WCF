@@ -195,7 +195,7 @@ final class SearchHandler
         if (
             !empty($this->parameters['q'])
             && LanguageFactory::getInstance()->multilingualismEnabled()
-            && \count(WCF::getUser()->getLanguageIDs())
+            && \count(WCF::getUser()->getLanguageIDs()) > 0
         ) {
             $this->conditionBuilder->add(
                 '(languageID IN (?) OR languageID = 0)',
@@ -340,7 +340,7 @@ final class SearchHandler
                     " . $conditionBuilder;
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditionBuilder->getParameters());
-            if ($searchID = $statement->fetchSingleColumn()) {
+            if (($searchID = $statement->fetchSingleColumn()) !== false) {
                 return new Search($searchID);
             }
         }

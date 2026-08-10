@@ -114,7 +114,7 @@ class LanguageImportForm extends AbstractForm
             throw new UserInputException('sourceLanguageID');
         }
 
-        if (!PackageCache::getInstance()->getPackage($this->packageID)) {
+        if (PackageCache::getInstance()->getPackage($this->packageID) === null) {
             throw new UserInputException('packageID');
         }
 

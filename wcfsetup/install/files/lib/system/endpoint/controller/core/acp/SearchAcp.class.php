@@ -60,7 +60,7 @@ final class SearchAcp implements IController
             foreach ($items as $key => &$item) {
                 $double = false;
                 foreach ($items as $key2 => $item2) {
-                    if ($key !== $key2 && !\strcasecmp($item['title'], $item2['title'])) {
+                    if ($key !== $key2 && \strcasecmp($item['title'], $item2['title']) === 0) {
                         $double = true;
                         break;
                     }

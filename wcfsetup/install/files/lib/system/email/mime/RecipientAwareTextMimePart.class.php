@@ -67,7 +67,7 @@ class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAware
         $language = WCF::getLanguage();
 
         try {
-            if ($this->mailbox) {
+            if ($this->mailbox !== null) {
                 WCF::setLanguage($this->mailbox->getLanguage()->languageID);
             }
 

@@ -31,7 +31,7 @@ final class RenderException implements IController
         $this->assertExceptionLogIsAccessible();
 
         $exception = $this->getException($variables['id']);
-        if (!$exception) {
+        if ($exception === null) {
             throw new IllegalLinkException();
         }
 

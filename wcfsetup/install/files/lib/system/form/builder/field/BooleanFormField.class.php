@@ -40,7 +40,7 @@ class BooleanFormField extends AbstractFormField implements
     #[\Override]
     public function getSaveValue()
     {
-        return $this->value ? 1 : 0;
+        return $this->value === true ? 1 : 0;
     }
 
     #[\Override]
@@ -62,7 +62,7 @@ class BooleanFormField extends AbstractFormField implements
     #[\Override]
     public function validate()
     {
-        if ($this->isRequired() && !$this->getValue()) {
+        if ($this->isRequired() && $this->getValue() !== true) {
             $this->addValidationError(new FormFieldValidationError('empty'));
         }
 

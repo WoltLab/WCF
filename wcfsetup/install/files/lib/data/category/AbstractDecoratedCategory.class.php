@@ -57,7 +57,7 @@ abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator
     public function checkPermissions(array $permissions)
     {
         foreach ($permissions as $permission) {
-            if (!$this->getPermission($permission)) {
+            if (!(bool)$this->getPermission($permission)) {
                 throw new PermissionDeniedException();
             }
         }
@@ -138,7 +138,7 @@ abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator
     public static function getCategory(int $categoryID): ?static
     {
         $category = CategoryHandler::getInstance()->getCategory($categoryID);
-        if ($category) {
+        if ($category !== null) {
             // @phpstan-ignore return.type
             return new static($category);
         }

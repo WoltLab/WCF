@@ -85,7 +85,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                 $items[$languageCategoryID] = [];
             }
 
-            $items[$languageCategoryID][$row['languageItem']] = $row['languageUseCustomValue'] ? $row['languageCustomItemValue'] : $row['languageItemValue'];
+            $items[$languageCategoryID][$row['languageItem']] = $row['languageUseCustomValue'] !== 0 ? $row['languageCustomItemValue'] : $row['languageItemValue'];
         }
 
         foreach ($items as $languageCategoryID => $languageItems) {
@@ -192,10 +192,10 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
             echo "\t<category name=\"shadow.invalid.page\">\n";
 
             foreach ($pages as $page) {
-                if ($page['title']) {
+                if ($page['title'] !== null && $page['title'] !== '') {
                     echo "\t\t<item name=\"shadow.invalid.page." . $page['identifier'] . ".title\"><![CDATA[" . StringUtil::escapeCDATA($page['title']) . "]]></item>\n";
                 }
-                if ($page['content']) {
+                if ($page['content'] !== null && $page['content'] !== '') {
                     echo "\t\t<item name=\"shadow.invalid.page." . $page['identifier'] . ".content\"><![CDATA[" . StringUtil::escapeCDATA($page['content']) . "]]></item>\n";
                 }
             }
@@ -225,10 +225,10 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
             echo "\t<category name=\"shadow.invalid.box\">\n";
 
             foreach ($boxes as $box) {
-                if ($box['title']) {
+                if ($box['title'] !== null && $box['title'] !== '') {
                     echo "\t\t<item name=\"shadow.invalid.box." . $box['identifier'] . ".title\"><![CDATA[" . StringUtil::escapeCDATA($box['title']) . "]]></item>\n";
                 }
-                if ($box['content']) {
+                if ($box['content'] !== null && $box['content'] !== '') {
                     echo "\t\t<item name=\"shadow.invalid.box." . $box['identifier'] . ".content\"><![CDATA[" . StringUtil::escapeCDATA($box['content']) . "]]></item>\n";
                 }
             }
@@ -354,7 +354,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 
         // create new categories
         foreach ($usedCategories as $categoryName => $categoryID) {
-            if ($categoryID) {
+            if ($categoryID !== 0) {
                 continue;
             }
             if (\strpos($categoryName, 'shadow.invalid') === 0) {
@@ -458,12 +458,12 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                 $statement->execute($conditions->getParameters());
                 $updateValues = $customLanguageItemIDs = [];
                 while ($row = $statement->fetchArray()) {
-                    if ($row['isCustomLanguageItem']) {
+                    if ($row['isCustomLanguageItem'] !== 0) {
                         $customLanguageItemIDs[] = $row['languageItemID'];
                     }
 
                     // also save old values of custom language items
-                    if ($row['isCustomLanguageItem'] || $row['languageItemValue'] !== $languageItemValues[$row['languageItem']]) {
+                    if ($row['isCustomLanguageItem'] !== 0 || $row['languageItemValue'] !== $languageItemValues[$row['languageItem']]) {
                         $updateValues[] = $row['languageItemID'];
                     }
                 }
@@ -812,7 +812,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                 'languageName' => $languageName,
             ]);
 
-            if ($source) {
+            if ($source !== null) {
                 $sourceEditor = new self($source);
                 $sourceEditor->copy($language);
             }

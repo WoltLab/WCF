@@ -93,7 +93,7 @@ class MenuItem extends DatabaseObject implements ITitledObject
     {
         if ($this->pageObjectID !== 0) {
             $handler = $this->getMenuPageHandler();
-            if ($handler && $handler instanceof ILookupPageHandler) {
+            if ($handler instanceof ILookupPageHandler) {
                 return $this->appendUrlParameters($handler->getLink($this->pageObjectID));
             }
         }

@@ -140,7 +140,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
         $statement->execute(['admin.user.accessibleGroups']);
         $optionID = $statement->fetchSingleColumn();
 
-        if (!$optionID) {
+        if ($optionID === false) {
             throw new SystemException("Unable to find 'admin.user.accessibleGroups' user option");
         }
 

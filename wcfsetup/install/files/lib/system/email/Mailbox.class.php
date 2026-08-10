@@ -86,7 +86,7 @@ class Mailbox implements \Stringable
 
         // We don't support SMTPUTF8
         for ($i = 0, $max = \strlen($localpart); $i < $max; $i++) {
-            if (\ord($localpart[$i]) & 0b10000000) {
+            if ((\ord($localpart[$i]) & 0b10000000) !== 0) {
                 throw new \DomainException(
                     "The localpart of the given email address '" . $address . "' contains 8-bit characters."
                 );

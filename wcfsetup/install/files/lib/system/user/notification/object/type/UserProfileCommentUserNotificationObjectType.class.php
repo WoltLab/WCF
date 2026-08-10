@@ -42,6 +42,6 @@ class UserProfileCommentUserNotificationObjectType extends AbstractUserNotificat
         $statement->execute([$objectID]);
         $row = $statement->fetchArray();
 
-        return $row ? $row['objectID'] : 0;
+        return $row !== false ? $row['objectID'] : 0;
     }
 }

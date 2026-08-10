@@ -168,7 +168,7 @@ abstract class AbstractExporter implements IExporter
     {
         $this->selectedData = $selectedData;
 
-        if (!\count($this->selectedData)) {
+        if (\count($this->selectedData) === 0) {
             return false;
         }
 

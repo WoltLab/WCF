@@ -49,7 +49,7 @@ class UseroptionsOptionType extends AbstractOptionType
     public function getFormElement(Option $option, mixed $value)
     {
         $userOptions = self::getUserOptions();
-        if ($option->issortable && $value) {
+        if (!empty($option->issortable) && !empty($value)) {
             $sortedOptions = \explode(',', $value);
 
             // remove old options

@@ -424,7 +424,7 @@ class StyleAddForm extends AbstractForm
     {
         $fontManager = FontManager::getInstance();
         $family = $this->variables['wcfFontFamilyGoogle'];
-        if ($family) {
+        if ($family !== '') {
             if (!$fontManager->isFamilyDownloaded($family)) {
                 try {
                     $fontManager->downloadFamily($family);
@@ -577,7 +577,7 @@ class StyleAddForm extends AbstractForm
                 $minWidth = $options['size']['minWidth'] ?? 0;
                 $minHeight = $options['size']['minHeight'] ?? 0;
 
-                if ($options['size']['resize'] ?? true) {
+                if (($options['size']['resize'] ?? true) === true) {
                     if ($imageData[0] > $maxWidth || $imageData[1] > $maxHeight) {
                         $adapter = ImageHandler::getInstance()->getAdapter();
                         $adapter->loadFile($fileLocation);

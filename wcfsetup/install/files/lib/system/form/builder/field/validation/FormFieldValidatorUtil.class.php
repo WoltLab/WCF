@@ -45,7 +45,7 @@ abstract class FormFieldValidatorUtil
                 $maximumSegmentCount,
                 $regex
             ) {
-                if ($formField->getValue()) {
+                if (!empty($formField->getValue())) {
                     $segments = \explode('.', $formField->getValue());
                     if ($minimumSegmentCount !== -1 && \count($segments) < $minimumSegmentCount) {
                         $formField->addValidationError(

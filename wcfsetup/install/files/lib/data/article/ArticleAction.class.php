@@ -665,7 +665,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
         $this->readBoolean('useMarkedArticles', true);
 
         // if no object ids are given, use clipboard handler
-        if (empty($this->objectIDs) && $this->parameters['useMarkedArticles']) {
+        if (empty($this->objectIDs) && $this->parameters['useMarkedArticles'] === true) {
             $this->objectIDs = \array_keys(ClipboardHandler::getInstance()->getMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.article')));
         }
 

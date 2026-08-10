@@ -265,7 +265,7 @@ class PackageInstallationDispatcher
             )
         );
 
-        if (WCF::getSession()->getVar('__wcfSetup_developerMode')) {
+        if (WCF::getSession()->getVar('__wcfSetup_developerMode') === true) {
             $this->setupDeveloperMode();
             WCF::getSession()->unregister('__wcfSetup_developerMode');
         }
@@ -505,7 +505,7 @@ class PackageInstallationDispatcher
         // check requirements
         foreach ($nodeData['requirements'] as $package => $requirementData) {
             // get existing package
-            if ($requirementData['packageID']) {
+            if ($requirementData['packageID'] !== 0) {
                 $sql = "SELECT  packageName, packageVersion
                         FROM    wcf1_package
                         WHERE   packageID = ?";
@@ -527,7 +527,7 @@ class PackageInstallationDispatcher
             }
 
             // check version requirements
-            if ($requirementData['minVersion']) {
+            if ($requirementData['minVersion'] !== '') {
                 if (Package::compareVersion($row['packageVersion'], $requirementData['minVersion']) < 0) {
                     throw new SystemException("Package '" . $nodeData['packageName'] . "' requires package '" . $row['packageName'] . "' in version '" . $requirementData['minVersion'] . "', but only version '" . $row['packageVersion'] . "' is installed");
                 }
@@ -770,7 +770,7 @@ class PackageInstallationDispatcher
         $row = $statement->fetchArray();
 
         // PIP is unknown
-        if (!$row || $nodeData['pip'] !== $row['pluginName']) {
+        if ($row === false || $nodeData['pip'] !== $row['pluginName']) {
             throw new SystemException("unable to find package installation plugin '" . $nodeData['pip'] . "'");
         }
 
@@ -783,7 +783,7 @@ class PackageInstallationDispatcher
         // set default value
         if (empty($nodeData['value'])) {
             $defaultValue = \call_user_func([$className, 'getDefaultFilename']);
-            if ($defaultValue) {
+            if ($defaultValue !== null) {
                 $nodeData['value'] = $defaultValue;
             }
         }
@@ -834,7 +834,7 @@ class PackageInstallationDispatcher
             foreach ($nodeData as $package) {
                 if (\in_array($package['package'], $document)) {
                     // ignore uninstallable packages
-                    if (!$package['isInstallable']) {
+                    if ($package['isInstallable'] !== true) {
                         continue;
                     }
 
@@ -911,7 +911,7 @@ class PackageInstallationDispatcher
         }
 
         if (
-            WCF::getSession()->getVar('__wcfSetup_developerMode')
+            WCF::getSession()->getVar('__wcfSetup_developerMode') === true
             && (
                 isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR'])
                 || DevtoolsSetup::getInstance()->useDefaultInstallPath()

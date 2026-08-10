@@ -569,7 +569,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
             $menu->appendChild($title);
         }
 
-        if ($formData['data']['createBox']) {
+        if ($formData['data']['createBox'] === 1) {
             $box = $document->createElement('box');
 
             $box->appendChild($document->createElement('position', $formData['data']['boxPosition']));

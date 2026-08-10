@@ -60,7 +60,7 @@ class LabelCacheBuilder extends AbstractCacheBuilder
             }
         }
 
-        if (\count($groupList)) {
+        if (\count($groupList) > 0) {
             // get labels
             $labelList = new LabelList();
             $labelList->readObjects();

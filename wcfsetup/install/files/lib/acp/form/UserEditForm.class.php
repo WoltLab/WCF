@@ -279,7 +279,7 @@ class UserEditForm extends UserAddForm
 
         $userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
         foreach (StyleHandler::getInstance()->getStyles() as $style) {
-            if ($style->isDisabled === 0 || $userProfile->getPermission('admin.style.canUseDisabledStyle')) {
+            if ($style->isDisabled === 0 || $userProfile->hasPermission('admin.style.canUseDisabledStyle')) {
                 $this->availableStyles[$style->styleID] = $style;
             }
         }

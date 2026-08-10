@@ -161,7 +161,7 @@ final class CopyStyle
             }
         }
 
-        $number = \count($numbers) ? \max($numbers) + 1 : 2;
+        $number = \count($numbers) > 0 ? \max($numbers) + 1 : 2;
 
         return $style->styleName . ' (' . $number . ')';
     }

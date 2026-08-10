@@ -86,7 +86,7 @@ final class CommentsView
 
     public function isVisible(): bool
     {
-        return $this->canAddComments || \count($this->getCommentList());
+        return $this->canAddComments || \count($this->getCommentList()) > 0;
     }
 
     /**

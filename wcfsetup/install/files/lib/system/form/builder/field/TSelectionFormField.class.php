@@ -99,23 +99,10 @@ trait TSelectionFormField
      * @param bool $labelLanguageItems is `true` if the labels should be treated as language items if possible
      * @return static this field
      *
-     * @throws \InvalidArgumentException if given options are no array or callable or otherwise invalid
      * @throws \UnexpectedValueException if callable does not return an array
      */
     public function options(array|callable|\Traversable|DatabaseObjectList $options, bool $nestedOptions = false, bool $labelLanguageItems = true)
     {
-        if ($nestedOptions) {
-            if (!\is_array($options) && !($options instanceof \Traversable) && !\is_callable($options)) {
-                throw new \InvalidArgumentException(
-                    "The given nested options are neither iterable nor a callable, " . \gettype($options) . " given for field '{$this->getId()}'."
-                );
-            }
-        } elseif (!\is_array($options) && !($options instanceof \Traversable) && !\is_callable($options)) {
-            throw new \InvalidArgumentException(
-                "The given options are neither iterable nor a callable, " . \gettype($options) . " given for field '{$this->getId()}'."
-            );
-        }
-
         if (\is_callable($options)) {
             $options = $options();
 

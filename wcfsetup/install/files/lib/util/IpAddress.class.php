@@ -123,7 +123,7 @@ final class IpAddress implements \Stringable
             throw new \InvalidArgumentException('Given $mask6 is not a multiple of 4.');
         }
 
-        if ($masked->asV4()) {
+        if ($masked->asV4() !== null) {
             $maskedBlocks = (32 - $mask4) / 8;
             $replacement = \str_repeat(".\u{2022}\u{2022}\u{2022}", $maskedBlocks);
 

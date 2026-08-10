@@ -68,7 +68,7 @@ class SearchResultTextParser extends SingletonFactory
         $text = Regex::compile("\\s+", Regex::UTF_8)->replace($text, ' ');
 
         if (\mb_strlen($text) > static::MAX_LENGTH) {
-            if ($this->searchQuery) {
+            if (!empty($this->searchQuery)) {
                 // phrase search
                 if (!\is_array($this->searchQuery)) {
                     $start = \mb_strripos($text, $this->searchQuery);

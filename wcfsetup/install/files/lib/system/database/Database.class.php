@@ -395,7 +395,7 @@ abstract class Database
         if ($limit !== 0) {
             $query = \preg_replace(
                 '~(\s+FOR\s+UPDATE\s*)?$~',
-                " LIMIT " . $limit . ($offset ? " OFFSET " . $offset : '') . "\\0",
+                " LIMIT " . $limit . ($offset !== 0 ? " OFFSET " . $offset : '') . "\\0",
                 $query,
                 1
             );

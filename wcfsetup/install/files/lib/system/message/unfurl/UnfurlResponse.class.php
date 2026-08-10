@@ -353,7 +353,7 @@ final class UnfurlResponse
      */
     private static function getHttpClient(): ClientInterface
     {
-        if (!self::$httpClient) {
+        if (self::$httpClient === null) {
             self::$httpClient = HttpFactory::makeClient([
                 RequestOptions::TIMEOUT => 10,
                 RequestOptions::STREAM => true,

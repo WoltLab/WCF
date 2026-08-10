@@ -99,7 +99,7 @@ HTML;
     public function setData(Condition $condition)
     {
         $this->multifactorActive = $condition->multifactorActive;
-        $this->multifactorNotActive = $condition->multifactorActive ? 0 : 1;
+        $this->multifactorNotActive = $condition->multifactorActive !== 0 ? 0 : 1;
     }
 
     #[\Override]

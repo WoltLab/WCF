@@ -50,7 +50,7 @@ class PageBlockTemplatePlugin implements IBlockTemplatePlugin
             $pageID = \intval($tagArgs['pageID']);
         } elseif (!empty($blockContent)) {
             $page = Page::getPageByIdentifier($blockContent);
-            $pageID = $page ? $page->pageID : 0;
+            $pageID = $page !== null ? $page->pageID : 0;
         }
 
         if ($pageID === null) {

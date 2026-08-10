@@ -84,8 +84,8 @@ final class PublishResponse
         if (
             UserNotificationHandler::getInstance()->getObjectTypeID($this->objectType->objectType . '.notification') === 0
             || (
-                !UserNotificationHandler::getInstance()->getEvent($this->objectType->objectType . '.response.notification', 'commentResponse')
-                && !UserNotificationHandler::getInstance()->getEvent($this->objectType->objectType . '.response.notification', 'commentResponseOwner')
+                UserNotificationHandler::getInstance()->getEvent($this->objectType->objectType . '.response.notification', 'commentResponse') === null
+                && UserNotificationHandler::getInstance()->getEvent($this->objectType->objectType . '.response.notification', 'commentResponseOwner') === null
             )
         ) {
             return;
@@ -110,7 +110,7 @@ final class PublishResponse
         // make sure that the response's author gets no notification
         $recipientIDs = \array_diff($recipientIDs, [$this->response->getUserID()]);
 
-        if (UserNotificationHandler::getInstance()->getEvent($this->objectType->objectType . '.response.notification', 'commentResponse')) {
+        if (UserNotificationHandler::getInstance()->getEvent($this->objectType->objectType . '.response.notification', 'commentResponse') !== null) {
             UserNotificationHandler::getInstance()->fireEvent(
                 'commentResponse',
                 $this->objectType->objectType . '.response.notification',
@@ -125,7 +125,7 @@ final class PublishResponse
         }
 
         // notify the container owner
-        if (UserNotificationHandler::getInstance()->getEvent($this->objectType->objectType . '.response.notification', 'commentResponseOwner')) {
+        if (UserNotificationHandler::getInstance()->getEvent($this->objectType->objectType . '.response.notification', 'commentResponseOwner') !== null) {
             if ($userID !== 0 && $userID !== $this->comment->userID && $userID !== $this->response->getUserID()) {
                 UserNotificationHandler::getInstance()->fireEvent(
                     'commentResponseOwner',

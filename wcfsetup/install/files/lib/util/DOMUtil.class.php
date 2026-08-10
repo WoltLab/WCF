@@ -257,7 +257,7 @@ final class DOMUtil
      */
     public static function insertAfter(\DOMNode $node, \DOMNode $refNode): void
     {
-        if ($refNode->nextSibling) {
+        if ($refNode->nextSibling !== null) {
             self::insertBefore($node, $refNode->nextSibling);
         } else {
             self::getParentNode($refNode)->appendChild($node);

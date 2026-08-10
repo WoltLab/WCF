@@ -182,13 +182,13 @@ HTML;
     {
         if (
             isset($_POST['lessThan_' . $this->getIdentifier()])
-            && \strlen($_POST['lessThan_' . $this->getIdentifier()])
+            && \strlen($_POST['lessThan_' . $this->getIdentifier()]) > 0
         ) {
             $this->lessThan = \intval($_POST['lessThan_' . $this->getIdentifier()]);
         }
         if (
             isset($_POST['greaterThan_' . $this->getIdentifier()])
-            && \strlen($_POST['greaterThan_' . $this->getIdentifier()])
+            && \strlen($_POST['greaterThan_' . $this->getIdentifier()]) > 0
         ) {
             $this->greaterThan = \intval($_POST['greaterThan_' . $this->getIdentifier()]);
         }

@@ -113,7 +113,7 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
 
                 EventHandler::getInstance()->fireAction($this, 'renderTrophy', $parameters);
 
-                if ($parameters['renderedTemplate']) {
+                if ($parameters['renderedTemplate'] !== null) {
                     return $parameters['renderedTemplate'];
                 }
 

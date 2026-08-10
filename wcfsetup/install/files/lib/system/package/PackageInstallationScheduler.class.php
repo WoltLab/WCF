@@ -273,7 +273,7 @@ final class PackageInstallationScheduler
             }
             $client = HttpFactory::makeClient($options);
 
-            if ($packageUpdateVersion['filename']) {
+            if ($packageUpdateVersion['filename'] !== '') {
                 $request = new Request(
                     'POST',
                     $packageUpdateVersion['filename'],

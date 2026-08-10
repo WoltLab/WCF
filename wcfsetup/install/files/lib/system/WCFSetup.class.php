@@ -926,7 +926,7 @@ final class WCFSetup extends WCF
                     $languageID = $row['languageID'];
                 }
 
-                if (!$languageID) {
+                if ($languageID === 0) {
                     $languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
                 }
 

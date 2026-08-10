@@ -106,7 +106,7 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$tag]);
         $row = $statement->fetchArray();
-        if (!$row) {
+        if ($row === false) {
             $row = [];
         }
 

@@ -112,10 +112,10 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
     {
         $data = [];
 
-        if (\strlen($this->registrationDateStart)) {
+        if (\strlen($this->registrationDateStart) > 0) {
             $data['registrationDateStart'] = $this->registrationDateStart;
         }
-        if (\strlen($this->registrationDateEnd)) {
+        if (\strlen($this->registrationDateEnd) > 0) {
             $data['registrationDateEnd'] = $this->registrationDateEnd;
         }
 
@@ -160,12 +160,12 @@ HTML;
     public function setData(Condition $condition)
     {
         $registrationDateEnd = $condition->registrationDateEnd;
-        if ($registrationDateEnd) {
+        if ($registrationDateEnd !== null) {
             $this->registrationDateEnd = $registrationDateEnd;
         }
 
         $registrationDateStart = $condition->registrationDateStart;
-        if ($registrationDateStart) {
+        if ($registrationDateStart !== null) {
             $this->registrationDateStart = $registrationDateStart;
         }
     }
@@ -174,7 +174,7 @@ HTML;
     public function validate()
     {
         $registrationDateEnd = $registrationDateStart = null;
-        if (\strlen($this->registrationDateStart)) {
+        if (\strlen($this->registrationDateStart) > 0) {
             $registrationDateStart = \DateTime::createFromFormat(
                 'Y-m-d',
                 $this->registrationDateStart,
@@ -186,7 +186,7 @@ HTML;
                 throw new UserInputException('registrationDate', 'invalidStart');
             }
         }
-        if (\strlen($this->registrationDateEnd)) {
+        if (\strlen($this->registrationDateEnd) > 0) {
             $registrationDateEnd = \DateTime::createFromFormat(
                 'Y-m-d',
                 $this->registrationDateEnd,

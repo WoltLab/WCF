@@ -55,7 +55,7 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
             throw new InvalidObjectArgument($objectList, $className, 'Object list');
         }
 
-        if ($this->object->ignoreZeroTime) {
+        if ($this->object->ignoreZeroTime === '1') {
             $objectList->getConditionBuilder()->add(
                 $objectList->getDatabaseTableAlias() . '.' . $this->getPropertyName() . ' <> ?',
                 [0]
@@ -114,10 +114,10 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
     {
         $data = [];
 
-        if (\strlen($this->startTime)) {
+        if (\strlen($this->startTime) > 0) {
             $data['startTime'] = $this->startTime;
         }
-        if (\strlen($this->endTime)) {
+        if (\strlen($this->endTime) > 0) {
             $data['endTime'] = $this->endTime;
         }
 
@@ -195,12 +195,12 @@ HTML;
     public function setData(Condition $condition)
     {
         $endTime = $condition->endTime;
-        if ($endTime) {
+        if ($endTime !== null) {
             $this->endTime = $endTime;
         }
 
         $startTime = $condition->startTime;
-        if ($startTime) {
+        if ($startTime !== null) {
             $this->startTime = $startTime;
         }
     }
@@ -209,7 +209,7 @@ HTML;
     public function validate()
     {
         $endTime = $startTime = null;
-        if (\strlen($this->startTime)) {
+        if (\strlen($this->startTime) > 0) {
             $startTime = @\strtotime($this->startTime);
             if ($startTime === false) {
                 $this->errorMessage = 'wcf.condition.timestamp.error.invalidStart';
@@ -217,7 +217,7 @@ HTML;
                 throw new UserInputException($this->getPropertyName(), 'invalidStart');
             }
         }
-        if (\strlen($this->endTime)) {
+        if (\strlen($this->endTime) > 0) {
             $endTime = @\strtotime($this->endTime);
             if ($endTime === false) {
                 $this->errorMessage = 'wcf.condition.timestamp.error.invalidEnd';

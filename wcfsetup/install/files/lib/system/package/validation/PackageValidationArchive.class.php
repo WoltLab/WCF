@@ -179,7 +179,7 @@ final class PackageValidationArchive implements \RecursiveIterator
      */
     private function validateApplication(): void
     {
-        if ($this->archive->getPackageInfo('isApplication')) {
+        if ($this->archive->getPackageInfo('isApplication') === 1) {
             $identifier = $this->archive->getPackageInfo('name');
             $abbreviation = Package::getAbbreviation($identifier);
 

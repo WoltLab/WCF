@@ -80,7 +80,7 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
             return false;
         }
 
-        return (bool)$user->getPermission($this->permissionCanModerate);
+        return $user->hasPermission($this->permissionCanModerate);
     }
 
     #[\Override]

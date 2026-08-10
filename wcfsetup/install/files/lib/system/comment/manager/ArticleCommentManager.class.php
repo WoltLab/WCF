@@ -83,14 +83,14 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
             return false;
         }
 
-        return (bool)$user->getPermission($this->permissionCanModerate);
+        return $user->hasPermission($this->permissionCanModerate);
     }
 
     #[\Override]
     public function getLink(int $objectTypeID, int $objectID)
     {
         $articleContent = ArticleContentRuntimeCache::getInstance()->getObject($objectID);
-        if ($articleContent) {
+        if ($articleContent !== null) {
             return $articleContent->getLink();
         }
 

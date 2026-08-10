@@ -88,7 +88,7 @@ final class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin
         // assign html output to template var
         if (isset($tagArgs['assign'])) {
             $tplObj->assign($tagArgs['assign'], $html);
-            if (!isset($tagArgs['print']) || !$tagArgs['print']) {
+            if (empty($tagArgs['print'])) {
                 return '';
             }
         }

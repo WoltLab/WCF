@@ -73,7 +73,7 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType
         if ($userProfile->disableSignature !== 0) {
             return false;
         }
-        if (!$userProfile->getPermission('user.signature.attachment.canUpload')) {
+        if (!$userProfile->hasPermission('user.signature.attachment.canUpload')) {
             return false;
         }
 

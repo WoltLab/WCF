@@ -458,7 +458,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             'authorName' => $data['authorName'],
             'authorURL' => $data['authorURL'],
             'packageName' => $data['packageName'],
-            'hasDarkMode' => $data['hasDarkMode'] ? 1 : 0,
+            'hasDarkMode' => $data['hasDarkMode'] === true ? 1 : 0,
         ];
 
         // check if there is an untainted style with the same package name
@@ -491,7 +491,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                             WHERE   templateGroupName = ?";
                     $statement = WCF::getDB()->prepare($sql);
                     $statement->execute([$templateGroupName]);
-                    if (!$statement->fetchSingleColumn()) {
+                    if ($statement->fetchSingleColumn() === 0) {
                         break;
                     }
                     $templateGroupName = $originalTemplateGroupName . '_' . $i;
@@ -508,7 +508,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                     $statement->execute([
                         FileUtil::addTrailingSlash($templateGroupFolderName),
                     ]);
-                    if (!$statement->fetchSingleColumn()) {
+                    if ($statement->fetchSingleColumn() === 0) {
                         break;
                     }
                     $templateGroupFolderName = $originalTemplateGroupFolderName . '_' . $i;
@@ -638,7 +638,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                 LanguageFactory::getInstance()->deleteLanguageCache();
             }
 
-            if ($data['default']) {
+            if ($data['default'] === true) {
                 $style->setAsDefault();
             }
         } else {

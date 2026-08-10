@@ -137,7 +137,7 @@ abstract class PackageInstallationFormManager
         ]);
         $row = $statement->fetchArray();
 
-        if ($row) {
+        if ($row !== false) {
             return \unserialize(\base64_decode($row['document']));
         }
 

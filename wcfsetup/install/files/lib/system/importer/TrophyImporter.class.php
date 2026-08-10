@@ -36,7 +36,7 @@ class TrophyImporter extends AbstractImporter
                 ->getNewID('com.woltlab.wcf.trophy.category', $data['categoryID']);
         }
 
-        if (!$data['categoryID']) {
+        if (empty($data['categoryID'])) {
             $data['categoryID'] = $this->getImportCategoryID();
         }
 
@@ -120,7 +120,7 @@ class TrophyImporter extends AbstractImporter
             $statement = WCF::getDB()->prepare($sql, 1);
             $statement->execute([$objectTypeID, 0, 'Import']);
             $categoryID = $statement->fetchSingleColumn();
-            if ($categoryID) {
+            if ($categoryID !== false) {
                 $this->importCategoryID = $categoryID;
             } else {
                 $sql = "INSERT INTO wcf1_category

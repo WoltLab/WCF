@@ -338,7 +338,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
                                 return;
                             }
 
-                            if (!$processor->getMaximumNestingLevel()) {
+                            if ($processor->getMaximumNestingLevel() === 0) {
                                 $formField->addValidationError(
                                     new FormFieldValidationError(
                                         'invalid',

@@ -106,7 +106,7 @@ class LanguageAddForm extends AbstractFormBuilderForm
                                 return;
                             }
 
-                            if (LanguageFactory::getInstance()->getLanguageByCode($formField->getValue())) {
+                            if (LanguageFactory::getInstance()->getLanguageByCode($formField->getValue()) !== null) {
                                 $formField->addValidationError(new FormFieldValidationError(
                                     'notUnique',
                                     'wcf.acp.language.add.languageCode.error.notUnique'

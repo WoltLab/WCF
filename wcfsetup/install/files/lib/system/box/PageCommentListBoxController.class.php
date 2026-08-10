@@ -53,6 +53,7 @@ class PageCommentListBoxController extends AbstractDatabaseObjectListBoxControll
     #[\Override]
     public function hasContent()
     {
-        return RequestHandler::getInstance()->getActiveRequest() && (WCF::getSession()->hasPermission('user.page.canAddComment') || parent::hasContent());
+        return RequestHandler::getInstance()->getActiveRequest() !== null
+            && (WCF::getSession()->hasPermission('user.page.canAddComment') || parent::hasContent());
     }
 }

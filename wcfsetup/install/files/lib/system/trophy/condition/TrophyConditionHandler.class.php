@@ -37,7 +37,7 @@ class TrophyConditionHandler extends SingletonFactory
         $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes(self::CONDITION_DEFINITION_NAME);
 
         foreach ($objectTypes as $objectType) {
-            if (!$objectType->conditiongroup) {
+            if ($objectType->conditiongroup === null) {
                 continue;
             }
 

@@ -81,7 +81,7 @@ final class SimpleAclFormField extends AbstractFormField
                 if ($this->supportInvertedPermissions) {
                     $requestData = $this->getDocument()->getRequestData();
                     $field = $this->getPrefixedId() . 'invertPermissions';
-                    $this->value['invertPermissions'] = isset($requestData[$field]) && $requestData[$field];
+                    $this->value['invertPermissions'] = !empty($requestData[$field]);
                 }
             }
         }
@@ -111,6 +111,6 @@ final class SimpleAclFormField extends AbstractFormField
 
     private function isInverted(): bool
     {
-        return $this->supportInvertedPermissions && isset($this->value['invertPermissions']) && $this->value['invertPermissions'];
+        return $this->supportInvertedPermissions && !empty($this->value['invertPermissions']);
     }
 }

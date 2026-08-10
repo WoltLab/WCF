@@ -218,7 +218,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
         ];
 
         $className = $element->getElementsByTagName('classname')->item(0);
-        if ($className) {
+        if ($className !== null) {
             $data['className'] = $className->nodeValue;
         }
 
@@ -283,7 +283,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                     $definitionIDField = $formField->getDocument()->getFormField('definitionID');
 
                     $definitionID = $definitionIDField->getSaveValue();
-                    if ($definitionID) {
+                    if (!empty($definitionID)) {
                         $definition = ObjectTypeCache::getInstance()->getDefinition($definitionID);
 
                         $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
@@ -321,7 +321,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                         $definitionIDField = $formField->getDocument()->getFormField('definitionID');
 
                         $definitionID = $definitionIDField->getSaveValue();
-                        if ($definitionID) {
+                        if (!empty($definitionID)) {
                             $definition = ObjectTypeCache::getInstance()->getDefinition($definitionID);
 
                             if (!\is_subclass_of($formField->getValue(), $definition->interfaceName)) {
@@ -632,9 +632,9 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                     ->description('wcf.acp.pip.objectType.com.woltlab.wcf.searchableObjectType.searchIndex.description')
                     ->required()
                     ->addValidator(new FormFieldValidator('tableName', static function (TextFormField $formField) {
-                        if ($formField->getValue()) {
+                        if (!empty($formField->getValue())) {
                             if (\preg_match('~^(?P<app>[A-z]+)1_[A-z_]+$~', $formField->getValue(), $match)) {
-                                if (!ApplicationHandler::getInstance()->getApplication($match['app'])) {
+                                if (ApplicationHandler::getInstance()->getApplication($match['app']) === null) {
                                     $formField->addValidationError(
                                         new FormFieldValidationError(
                                             'unknownApp',
@@ -774,7 +774,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                     ->description('wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.tableName.description')
                     ->required()
                     ->addValidator(new FormFieldValidator('tableExists', static function (TextFormField $formField) {
-                        if ($formField->getValue()) {
+                        if (!empty($formField->getValue())) {
                             $value = ApplicationHandler::insertRealDatabaseTableNames($formField->getValue());
 
                             if (!\in_array($value, WCF::getDB()->getEditor()->getTableNames())) {
@@ -793,7 +793,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                     ->description('wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.tablePrimaryKey.description')
                     ->required()
                     ->addValidator(new FormFieldValidator('columnExists', static function (TextFormField $formField) {
-                        if ($formField->getValue()) {
+                        if (!empty($formField->getValue())) {
                             $tableName = $formField->getDocument()->getFormField('versionTrackerObjectTypeTableName');
 
                             if (empty($tableName->getValidationErrors())) {
@@ -1034,7 +1034,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                     ->label('wcf.acp.pip.objectType.condition.conditionGroup')
                     ->description('wcf.acp.pip.objectType.condition.conditionGroup.description')
                     ->addValidator(new FormFieldValidator('format', static function (TextFormField $formField) {
-                        if ($formField->getValue() && !\preg_match('~^[a-z][A-z]+$~', $formField->getValue())) {
+                        if (!empty($formField->getValue()) && !\preg_match('~^[a-z][A-z]+$~', $formField->getValue())) {
                             $formField->addValidationError(
                                 new FormFieldValidationError(
                                     'format',

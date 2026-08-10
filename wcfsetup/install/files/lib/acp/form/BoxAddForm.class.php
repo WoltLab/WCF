@@ -294,7 +294,7 @@ class BoxAddForm extends AbstractForm
      */
     protected function readBoxType()
     {
-        if ($this->presetBox) {
+        if ($this->presetBox !== null) {
             $this->isMultilingual = $this->presetBox->isMultilingual;
             $this->boxType = $this->presetBox->boxType;
 
@@ -493,7 +493,7 @@ class BoxAddForm extends AbstractForm
             $this->externalURL = '';
         }
 
-        if ($this->boxController && $this->boxController->getProcessor() instanceof IConditionBoxController) {
+        if ($this->boxController !== null && $this->boxController->getProcessor() instanceof IConditionBoxController) {
             $this->boxController->getProcessor()->validateConditions();
         }
 
@@ -566,7 +566,7 @@ class BoxAddForm extends AbstractForm
         if (empty($this->name)) {
             throw new UserInputException('name');
         }
-        if (Box::getBoxByName($this->name)) {
+        if (Box::getBoxByName($this->name) !== null) {
             throw new UserInputException('name', 'notUnique');
         }
     }
@@ -648,7 +648,7 @@ class BoxAddForm extends AbstractForm
             'identifier' => 'com.woltlab.wcf.genericBox' . $boxEditor->boxID,
         ]);
 
-        if ($this->boxController) {
+        if ($this->boxController !== null) {
             if ($this->boxController->getProcessor() instanceof IConditionBoxController) {
                 // @phpstan-ignore arguments.count
                 $this->boxController->getProcessor()->setBox($box, false);
@@ -700,7 +700,7 @@ class BoxAddForm extends AbstractForm
     {
         $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes(Box::VISIBILITY_CONDITIONS_OBJECT_TYPE_NAME);
         foreach ($objectTypes as $objectType) {
-            if (!$objectType->conditionobject) {
+            if ($objectType->conditionobject === null) {
                 continue;
             }
 
@@ -708,7 +708,7 @@ class BoxAddForm extends AbstractForm
                 $this->groupedConditionObjectTypes[$objectType->conditionobject] = [];
             }
 
-            if ($objectType->conditiongroup) {
+            if ($objectType->conditiongroup !== null) {
                 if (!isset($this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup])) {
                     $this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup] = [];
                 }
@@ -721,7 +721,7 @@ class BoxAddForm extends AbstractForm
 
         parent::readData();
 
-        if (empty($_POST) && $this->presetBox) {
+        if (empty($_POST) && $this->presetBox !== null) {
             $this->name = $this->presetBox->name;
             $this->boxType = $this->presetBox->boxType;
             $this->position = $this->presetBox->position;

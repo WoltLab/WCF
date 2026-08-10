@@ -50,7 +50,7 @@ class ImportWorker extends AbstractWorker
      */
     protected function bootstrap(): void
     {
-        if ($this->exporter) {
+        if ($this->exporter !== null) {
             throw new \BadMethodCallException('The exporter is already bootstrapped.');
         }
 
@@ -85,7 +85,7 @@ class ImportWorker extends AbstractWorker
      */
     protected function getExporter(): IExporter
     {
-        if (!$this->exporter) {
+        if ($this->exporter === null) {
             $this->bootstrap();
             \assert($this->exporter !== null);
         }

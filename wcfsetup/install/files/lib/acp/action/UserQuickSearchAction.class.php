@@ -131,7 +131,7 @@ final class UserQuickSearchAction extends AbstractAction
                 $conditionBuilder = new PreparedStatementConditionBuilder();
                 $conditionBuilder->add('banned = ?', [0]);
                 $conditionBuilder->add('activationCode <> ?', [0]);
-                if ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) {
+                if (((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) !== 0) {
                     $conditionBuilder->add('emailConfirmed IS NULL');
                 }
 

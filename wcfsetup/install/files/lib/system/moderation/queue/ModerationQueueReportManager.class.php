@@ -226,7 +226,7 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
             $queue->queueID,
         ]);
         $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-        if (!$userIDs) {
+        if ($userIDs === []) {
             return;
         }
         UserProfileRuntimeCache::getInstance()->cacheObjectIDs($userIDs);

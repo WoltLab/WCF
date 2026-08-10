@@ -29,7 +29,7 @@ abstract class AbstractTextCondition extends AbstractSingleFieldCondition
     #[\Override]
     public function getData()
     {
-        if (\mb_strlen($this->fieldValue)) {
+        if (\mb_strlen($this->fieldValue) > 0) {
             return [$this->fieldName => $this->fieldValue];
         }
 

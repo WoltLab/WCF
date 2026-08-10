@@ -109,10 +109,10 @@ class SimpleEmail
     private function fixBody(): void
     {
         $parts = [];
-        if ($this->textHtml) {
+        if ($this->textHtml !== null) {
             $parts[] = $this->textHtml;
         }
-        if ($this->textPlain) {
+        if ($this->textPlain !== null) {
             $parts[] = $this->textPlain;
         }
 

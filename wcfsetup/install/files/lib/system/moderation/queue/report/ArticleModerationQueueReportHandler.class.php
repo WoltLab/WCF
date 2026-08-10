@@ -168,10 +168,10 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
             return false;
         }
         /** @see Article::canDelete() */
-        if ($userProfile->getPermission('admin.content.article.canManageArticle')) {
+        if ($userProfile->hasPermission('admin.content.article.canManageArticle')) {
             return true;
         }
-        return $userProfile->getPermission('admin.content.article.canManageOwnArticles')
+        return $userProfile->hasPermission('admin.content.article.canManageOwnArticles')
             && $article->userID === $userProfile->userID;
     }
 }

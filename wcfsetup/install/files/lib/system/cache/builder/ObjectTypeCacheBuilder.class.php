@@ -33,7 +33,7 @@ class ObjectTypeCacheBuilder extends AbstractCacheBuilder
         while ($row = $statement->fetchArray()) {
             $data['definitions'][$row['definitionID']] = new ObjectTypeDefinition(null, $row);
 
-            if ($row['categoryName']) {
+            if ($row['categoryName'] !== '') {
                 if (!isset($data['categories'][$row['categoryName']])) {
                     $data['categories'][$row['categoryName']] = [];
                 }

@@ -175,7 +175,7 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 
                     $html = $formField->getSaveValue();
 
-                    if ($html !== null && $html !== '' && $className->getSaveValue()) {
+                    if ($html !== null && $html !== '' && $className->getSaveValue() !== '') {
                         $formField->addValidationError(
                             new FormFieldValidationError(
                                 'className',

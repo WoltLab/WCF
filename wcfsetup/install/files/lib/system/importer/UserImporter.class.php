@@ -143,7 +143,7 @@ class UserImporter extends AbstractImporter
             foreach ($userOptions as $optionID => &$optionValue) {
                 switch ($this->userOptions[$optionID]->optionType) {
                     case 'boolean':
-                        if ($optionValue) {
+                        if (!empty($optionValue)) {
                             $optionValue = 1;
                         } else {
                             $optionValue = 0;

@@ -203,21 +203,21 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
         ];
 
         $options = $element->getElementsByTagName('options')->item(0);
-        if ($options) {
+        if ($options !== null) {
             $data['options'] = StringUtil::normalizeCsv($options->nodeValue);
         } elseif ($saveData) {
             $data['options'] = '';
         }
 
         $permissions = $element->getElementsByTagName('permissions')->item(0);
-        if ($permissions) {
+        if ($permissions !== null) {
             $data['permissions'] = StringUtil::normalizeCsv($permissions->nodeValue);
         } elseif ($saveData) {
             $data['permissions'] = '';
         }
 
         $showOrder = $element->getElementsByTagName('showorder')->item(0);
-        if ($showOrder) {
+        if ($showOrder !== null) {
             $data['showOrder'] = \intval($showOrder->nodeValue);
         }
         if ($saveData && $this->editedEntry === null) {

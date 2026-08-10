@@ -84,7 +84,7 @@ final class BackupMultifactorMethod implements IMultifactorMethod
         $form->addDefaultButton(false);
         $form->successMessage('wcf.user.security.multifactor.backup.success');
 
-        if ($setup) {
+        if ($setup !== null) {
             $sql = "SELECT  *
                     FROM    wcf1_user_multifactor_backup
                     WHERE   setupID = ?";

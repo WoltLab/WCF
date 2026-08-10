@@ -386,7 +386,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
                 ];
             }
 
-            if ($row['isAccessible']) {
+            if ($row['isAccessible'] !== 0) {
                 $packageVersions[$package][$packageUpdateID]['accessible'][$row['packageUpdateVersionID']] = $packageVersion;
             }
             $packageVersions[$package][$packageUpdateID]['existing'][$row['packageUpdateVersionID']] = $packageVersion;
@@ -699,7 +699,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
             }
 
             $this->readInteger('packageUpdateServerID', true, 'authData');
-            if (!$this->parameters['authData']['packageUpdateServerID']) {
+            if ($this->parameters['authData']['packageUpdateServerID'] === 0) {
                 $this->parameters['authData']['packageUpdateServerID'] = PackageUpdateServer::getPluginStoreServer()->packageUpdateServerID;
             }
 
@@ -758,7 +758,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
                 $this->parameters['authData']['saveCredentials']
             );
 
-            if ($this->parameters['authData']['isStoreCode']) {
+            if ($this->parameters['authData']['isStoreCode'] === true) {
                 PackageUpdateServer::enableSecureMode();
             }
         }

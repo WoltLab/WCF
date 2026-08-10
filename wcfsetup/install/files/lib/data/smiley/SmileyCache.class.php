@@ -103,7 +103,7 @@ final class SmileyCache extends SingletonFactory
                 if ($category->isDisabled === 0) {
                     $category->loadSmilies();
 
-                    if (\count($category)) {
+                    if (\count($category) > 0) {
                         $this->visibleCategories[$key] = $category;
                     }
                 }

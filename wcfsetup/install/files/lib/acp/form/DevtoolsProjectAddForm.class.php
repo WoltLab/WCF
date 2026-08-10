@@ -111,7 +111,7 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                 return $options;
             })
             ->immutable($this->formObject !== null)
-            ->value($this->formObject ? 'edit' : 'import');
+            ->value($this->formObject !== null ? 'edit' : 'import');
 
         $dataContainer = FormContainer::create('data')
             ->label('wcf.global.form.data')
@@ -368,7 +368,7 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
 
                             $missingFiles = [];
                             foreach ($formField->getSaveValue() as $requirement) {
-                                if ($requirement['file'] && !\is_file($path . "requirements/{$requirement['packageIdentifier']}.tar")) {
+                                if ($requirement['file'] !== 0 && !\is_file($path . "requirements/{$requirement['packageIdentifier']}.tar")) {
                                     $missingFiles[] = "requirements/{$requirement['packageIdentifier']}.tar";
                                 }
                             }

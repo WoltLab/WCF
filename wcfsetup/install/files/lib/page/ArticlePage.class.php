@@ -261,7 +261,11 @@ class ArticlePage extends AbstractPage
 
     protected function setOpenGraphImageTags(): void
     {
-        if ($this->articleContent->getTeaserImage() && $this->articleContent->getTeaserImage()->width >= 200 && $this->articleContent->getTeaserImage()->height >= 200) {
+        if (
+            $this->articleContent->getTeaserImage() !== null
+            && $this->articleContent->getTeaserImage()->width >= 200
+            && $this->articleContent->getTeaserImage()->height >= 200
+        ) {
             MetaTagHandler::getInstance()->addTag(
                 'og:image',
                 'og:image',
@@ -280,7 +284,7 @@ class ArticlePage extends AbstractPage
                 (string)$this->articleContent->getTeaserImage()->getThumbnailHeight('large'),
                 true
             );
-        } elseif ($this->articleContent->getImage()) {
+        } elseif ($this->articleContent->getImage() !== null) {
             MetaTagHandler::getInstance()->addTag(
                 'og:image',
                 'og:image',

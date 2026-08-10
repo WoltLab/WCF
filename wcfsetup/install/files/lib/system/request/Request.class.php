@@ -104,7 +104,7 @@ final class Request implements RequestHandlerInterface
     {
         if (
             \defined($this->className . '::AVAILABLE_DURING_OFFLINE_MODE')
-            && \constant($this->className . '::AVAILABLE_DURING_OFFLINE_MODE')
+            && (bool)\constant($this->className . '::AVAILABLE_DURING_OFFLINE_MODE')
         ) {
             return true;
         }

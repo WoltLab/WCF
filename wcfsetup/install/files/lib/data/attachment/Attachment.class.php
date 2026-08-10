@@ -488,7 +488,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
     #[\Override]
     public function getImageData(?int $minWidth = null, ?int $minHeight = null): ?ImageData
     {
-        if (!$this->getFile()) {
+        if ($this->getFile() === null) {
             return null;
         }
 

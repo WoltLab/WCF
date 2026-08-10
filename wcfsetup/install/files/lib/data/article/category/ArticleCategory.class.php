@@ -84,7 +84,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
             return $this->userPermissions[$user->userID][$permission];
         }
 
-        if ($this->getParentCategory()) {
+        if ($this->getParentCategory() !== null) {
             return $this->getParentCategory()->getPermission($permission, $user);
         }
 
@@ -126,7 +126,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
             if ($category->isDisabled === 0) {
                 $result = true;
                 foreach ($permissions as $permission) {
-                    $result = $result && $category->getPermission($permission);
+                    $result = $result && (bool)$category->getPermission($permission);
                 }
 
                 if ($result) {

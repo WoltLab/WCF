@@ -22,7 +22,7 @@ trait TDatabaseObjectOptions
         if ($this->options !== null && $this->options !== '') {
             $options = \explode(',', \strtoupper($this->options));
             foreach ($options as $option) {
-                if (\defined($option) && \constant($option)) {
+                if (\defined($option) && \constant($option) !== 0) {
                     return true;
                 }
             }

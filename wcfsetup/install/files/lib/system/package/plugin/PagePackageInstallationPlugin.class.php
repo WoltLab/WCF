@@ -696,7 +696,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
                     $data[$contentElementName] = [];
                 }
 
-                if ($contentElement) {
+                if ($contentElement !== null) {
                     $data[$contentElementName][$languageID] = $contentElement->nodeValue;
                 } elseif ($saveData) {
                     $data[$contentElementName][$languageID] = '';

@@ -37,7 +37,7 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
         if (isset($tagArgs['object']) && ($tagArgs['object'] instanceof DatabaseObjectList)) {
             $tagArgs['options'] = $tagArgs['object'];
         } elseif (isset($tagArgs['output']) && \is_array($tagArgs['output'])) {
-            if (\count($tagArgs['output'])) {
+            if (\count($tagArgs['output']) > 0) {
                 if (isset($tagArgs['values']) && \is_array($tagArgs['values'])) {
                     if (\count($tagArgs['output']) === \count($tagArgs['values'])) {
                         $tagArgs['options'] = \array_combine($tagArgs['values'], $tagArgs['output']);
@@ -59,7 +59,7 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
             throw new SystemException("missing 'options' or 'object' argument in htmlOptions tag");
         }
 
-        if (isset($tagArgs['disableEncoding']) && $tagArgs['disableEncoding']) {
+        if (!empty($tagArgs['disableEncoding'])) {
             $this->disableEncoding = true;
         } else {
             $this->disableEncoding = false;

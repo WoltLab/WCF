@@ -266,7 +266,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 
         $row = $statement->fetchSingleRow();
 
-        return (!$row['showOrder']) ? 1 : $row['showOrder'] + 1;
+        return ($row['showOrder'] === null) ? 1 : $row['showOrder'] + 1;
     }
 
     #[\Override]

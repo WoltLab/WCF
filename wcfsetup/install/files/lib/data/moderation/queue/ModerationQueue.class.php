@@ -101,7 +101,7 @@ class ModerationQueue extends DatabaseObject
         ]);
         $row = $statement->fetchArray();
 
-        return $row !== false && $row['isAffected'];
+        return $row !== false && $row['isAffected'] !== 0;
     }
 
     /**

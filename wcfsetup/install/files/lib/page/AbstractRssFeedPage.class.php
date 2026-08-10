@@ -53,7 +53,7 @@ abstract class AbstractRssFeedPage extends AbstractPage
     public function show()
     {
         parent::show();
-        if ($this->getPsr7Response()) {
+        if ($this->getPsr7Response() !== null) {
             return;
         }
 

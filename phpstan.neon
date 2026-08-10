@@ -45,7 +45,7 @@ parameters:
     checkStrictPrintfPlaceholderTypes: true
     strictRules:
         disallowedLooseComparison: true
-        booleansInConditions: false
+        booleansInConditions: true
         booleansInLoopConditions: false
         uselessCast: false
         requireParentConstructorCall: false

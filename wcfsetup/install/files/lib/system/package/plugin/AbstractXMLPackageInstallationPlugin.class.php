@@ -429,7 +429,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
             $statement->execute($conditions->getParameters());
             $maxShowOrder = $statement->fetchArray();
 
-            return (!$maxShowOrder) ? 1 : ($maxShowOrder['showOrder'] + 1);
+            return ($maxShowOrder === false) ? 1 : ($maxShowOrder['showOrder'] + 1);
         } else {
             // increase all showOrder values which are >= $showOrder
             $sql = "UPDATE  " . $this->application . "1_" . $this->tableName . $tableNameExtension . "

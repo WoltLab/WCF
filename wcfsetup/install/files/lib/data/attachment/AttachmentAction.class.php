@@ -51,7 +51,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction
         }
 
         foreach ($this->getObjects() as $attachment) {
-            if (ObjectTypeCache::getInstance()->getObjectType($attachment->objectTypeID)->private) {
+            if (ObjectTypeCache::getInstance()->getObjectType($attachment->objectTypeID)->private === '1') {
                 throw new PermissionDeniedException();
             }
         }

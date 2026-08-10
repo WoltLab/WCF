@@ -171,7 +171,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
                 $this->installation->getPackageID(),
             ]);
             $row = $statement->fetchArray();
-            if (!$row) {
+            if ($row === false) {
                 // insert new category
                 $sql = "INSERT INTO wcf1_" . $this->tableName . "_category
                                     (packageID, objectTypeID, categoryName)
@@ -244,7 +244,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
                     $objectTypeID,
                 ]);
 
-                if (!$statement->fetchSingleColumn()) {
+                if ($statement->fetchSingleColumn() === 0) {
                     throw new SystemException("unknown category '" . $data['categoryname'] . "' for acl object type '" . $data['objecttype'] . "' given");
                 }
             }
@@ -275,7 +275,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
             $this->installation->getPackageID(),
         ]);
         $row = $statement->fetchArray();
-        if (!$row) {
+        if ($row === false) {
             $sql = "INSERT INTO wcf1_" . $this->tableName . "
                                 (packageID, objectTypeID, optionName, categoryName)
                     VALUES      (?, ?, ?, ?)";

@@ -131,7 +131,7 @@ class LanguageItemAddForm extends AbstractFormBuilderForm
 
                                 case 'selection':
                                     $languageCategoryID = $formField->getDocument()->getFormField('languageCategoryID');
-                                    if ($languageCategory = LanguageFactory::getInstance()->getCategoryByID($languageCategoryID->getSaveValue())) {
+                                    if (($languageCategory = LanguageFactory::getInstance()->getCategoryByID($languageCategoryID->getSaveValue())) !== null) {
                                         if (
                                             \strpos(
                                                 $formField->getSaveValue(),

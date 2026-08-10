@@ -40,7 +40,7 @@ class RecaptchaHandler implements ICaptchaHandler
     #[\Override]
     public function getFormElement()
     {
-        if (WCF::getSession()->getVar('recaptchaDone')) {
+        if (WCF::getSession()->getVar('recaptchaDone') === true) {
             return '';
         }
 
@@ -93,7 +93,7 @@ class RecaptchaHandler implements ICaptchaHandler
     #[\Override]
     public function validate()
     {
-        if (WCF::getSession()->getVar('recaptchaDone')) {
+        if (WCF::getSession()->getVar('recaptchaDone') === true) {
             return;
         }
 
@@ -127,7 +127,7 @@ class RecaptchaHandler implements ICaptchaHandler
             $response = $this->getHttpClient()->send($request);
             $data = \json_decode((string)$response->getBody(), true, flags: \JSON_THROW_ON_ERROR);
 
-            if ($data['success']) {
+            if ($data['success'] === true) {
                 // reCaptcha v3 score ranges from 1.0(very likely a good interaction) and 0.0(very likely a bot),
                 // with 0.5 as the threshold for passing
                 if ($type === 'v3' && $data['score'] < 0.5) {

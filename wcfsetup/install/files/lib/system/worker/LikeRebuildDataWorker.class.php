@@ -147,7 +147,9 @@ final class LikeRebuildDataWorker extends AbstractLinearRebuildDataWorker
                         $existingRow['likes'] + $data['likes'],
                         $existingRow['cumulativeLikes'] + $data['cumulativeLikes'],
                         \json_encode($this->mergeCachedReactions(
-                            $existingRow['cachedReactions'] ? \json_decode($existingRow['cachedReactions'], true, flags: \JSON_THROW_ON_ERROR) : null,
+                            !empty($existingRow['cachedReactions'])
+                                ? \json_decode($existingRow['cachedReactions'], true, flags: \JSON_THROW_ON_ERROR)
+                                : null,
                             $data['cachedReactions']
                         ), \JSON_THROW_ON_ERROR),
                         $objectTypeID,

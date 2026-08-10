@@ -53,7 +53,7 @@ class PackageACPSearchResultProvider implements IACPSearchResultProvider
                 FROM    wcf1_package
                 WHERE   packageName LIKE ?
                      OR package LIKE ?
-                    " . (\count($conditions->getParameters()) ? "OR " . $conditions : "");
+                    " . (\count($conditions->getParameters()) > 0 ? "OR " . $conditions : "");
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute(\array_merge([
             '%' . WCF::getDB()->escapeLikeValue($query) . '%',

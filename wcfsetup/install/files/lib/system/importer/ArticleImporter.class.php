@@ -38,7 +38,7 @@ class ArticleImporter extends AbstractImporter
         $contents = [];
         foreach ($additionalData['contents'] as $languageCode => $contentData) {
             $languageID = 0;
-            if ($languageCode) {
+            if (!empty($languageCode)) {
                 if (($language = LanguageFactory::getInstance()->getLanguageByCode($languageCode)) !== null) {
                     $languageID = $language->languageID;
                 } else {
@@ -152,7 +152,7 @@ class ArticleImporter extends AbstractImporter
             $statement = WCF::getDB()->prepare($sql, 1);
             $statement->execute([$objectTypeID, 0, 'Import']);
             $categoryID = $statement->fetchSingleColumn();
-            if ($categoryID) {
+            if ($categoryID !== false) {
                 $this->importCategoryID = $categoryID;
             } else {
                 $sql = "INSERT INTO wcf1_category

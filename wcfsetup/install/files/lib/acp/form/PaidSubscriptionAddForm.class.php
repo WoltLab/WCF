@@ -150,7 +150,7 @@ class PaidSubscriptionAddForm extends AbstractForm
             [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]
         );
 
-        if (!\count(PaymentMethodHandler::getInstance()->getPaymentMethods())) {
+        if (\count(PaymentMethodHandler::getInstance()->getPaymentMethods()) === 0) {
             throw new NamedUserException(HtmlString::fromSafeHtml(
                 WCF::getLanguage()->get('wcf.acp.paidSubscription.error.noPaymentMethods')
             ));

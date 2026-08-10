@@ -125,7 +125,7 @@ class Zip extends File implements IArchive
 
         FileUtil::makeWritable($destination);
 
-        if ($file['header']['mtime']) {
+        if (!empty($file['header']['mtime'])) {
             \touch($destination, $file['header']['mtime']);
         }
 
@@ -326,7 +326,7 @@ class Zip extends File implements IArchive
         }
 
         // fetch sizes and crc from central directory
-        if ($header['generalPurposeBit'] & (1 << 3)) {
+        if (($header['generalPurposeBit'] & (1 << 3)) !== 0) {
             $header['compressedSize'] = $this->centralDirectory['files'][$header['filename']]['compressedSize'];
             $header['size'] = $this->centralDirectory['files'][$header['filename']]['size'];
             $header['crc32'] = $this->centralDirectory['files'][$header['filename']]['crc32'];
@@ -368,7 +368,7 @@ class Zip extends File implements IArchive
         }
 
         // gobble data descriptor
-        if ($header['generalPurposeBit'] & (1 << 3)) {
+        if (($header['generalPurposeBit'] & (1 << 3)) !== 0) {
             if ($this->read(4) === self::DATA_DESCRIPTOR_SIGNATURE) {
                 $this->read(12);
             } else {

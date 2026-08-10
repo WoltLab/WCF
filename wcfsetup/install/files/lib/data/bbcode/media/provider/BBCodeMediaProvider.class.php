@@ -159,7 +159,7 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController
             return $html;
         }
 
-        if (!WCF::getUser()->isGuest() && WCF::getUser()->getUserOption('enableEmbeddedMedia')) {
+        if (!WCF::getUser()->isGuest() && WCF::getUser()->getUserOption('enableEmbeddedMedia') !== 0) {
             return $html;
         }
 

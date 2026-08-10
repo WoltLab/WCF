@@ -89,7 +89,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
                 $data['reverse'][$application][$controller] = $overrideApplication;
 
                 $controllerCustomURL = $row['controllerCustomURL'];
-                if ($controllerCustomURL) {
+                if ($controllerCustomURL !== '') {
                     $data['lookup'][$overrideApplication][$controllerCustomURL] = $application;
 
                     // Copy the custom url to the new application.

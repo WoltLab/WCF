@@ -90,7 +90,7 @@ class HtmlOutputNodeWoltlabQuote extends AbstractHtmlOutputNode
         }
 
         $quoteAuthorObject = null;
-        if ($data['author'] && !$externalQuoteLink) {
+        if (!empty($data['author']) && !$externalQuoteLink) {
             $quoteAuthorLC = \mb_strtolower(StringUtil::decodeHTML($data['author']));
             foreach (MessageEmbeddedObjectManager::getInstance()->getObjects('com.woltlab.wcf.quote') as $user) {
                 \assert($user instanceof UserProfile);

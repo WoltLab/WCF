@@ -51,14 +51,14 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
         }
 
         // check permissions
-        if ($userProfile->getPermission('user.profile.cannotBeIgnored')) {
+        if ($userProfile->hasPermission('user.profile.cannotBeIgnored')) {
             throw new PermissionDeniedException();
         }
 
         $this->readInteger('type', true, 'data');
 
         if (
-            $this->parameters['data']['type']
+            $this->parameters['data']['type'] !== 0
             && !\in_array($this->parameters['data']['type'], [
                 UserIgnore::TYPE_BLOCK_DIRECT_CONTACT,
                 UserIgnore::TYPE_HIDE_MESSAGES,
@@ -133,7 +133,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
         $ignore = UserIgnore::getIgnore($this->parameters['userID']);
 
         // Check if the user is not yet ignored and cannot be ignored.
-        if ($ignore->isNil() && $userProfile->getPermission('user.profile.cannotBeIgnored')) {
+        if ($ignore->isNil() && $userProfile->hasPermission('user.profile.cannotBeIgnored')) {
             throw new PermissionDeniedException();
         }
     }
@@ -220,7 +220,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
                     ->required()
                     ->addValidator(new FormFieldValidator('type', function (RadioButtonFormField $formField) {
                         $userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
-                        if ($userProfile->getPermission('user.profile.cannotBeIgnored')) {
+                        if ($userProfile->hasPermission('user.profile.cannotBeIgnored')) {
                             if ($formField->getValue() !== UserIgnore::TYPE_NO_IGNORE) {
                                 $formField->addValidationError(
                                     new FormFieldValidationError(

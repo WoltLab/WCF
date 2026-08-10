@@ -148,7 +148,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
         $row = $statement->fetchArray();
 
         // result was 'false' thus create a new item
-        if (!$row) {
+        if ($row === false) {
             // set the value of 'app_install_date' to the current timestamp
             if ($hidden !== 0 && $optionType === 'integer' && $this->installation->getPackage()->isApplication !== 0) {
                 $abbreviation = Package::getAbbreviation($this->installation->getPackage()->package);

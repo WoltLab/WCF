@@ -232,7 +232,7 @@ class PollManager extends SingletonFactory
         $count = \count($this->pollOptions);
 
         // if no question and no options are given, ignore poll completely
-        if (empty($this->pollData['question']) && !$count) {
+        if (empty($this->pollData['question']) && $count === 0) {
             return;
         }
 
@@ -241,7 +241,7 @@ class PollManager extends SingletonFactory
             throw new UserInputException('pollQuestion');
         }
 
-        if ($this->pollData['endTime'] && $this->pollData['endTime'] <= \TIME_NOW) {
+        if (!empty($this->pollData['endTime']) && $this->pollData['endTime'] <= \TIME_NOW) {
             if ($this->poll === null || $this->poll->endTime >= \TIME_NOW) {
                 // end time is in the past
                 throw new UserInputException('pollEndTime', 'invalid');
@@ -249,7 +249,7 @@ class PollManager extends SingletonFactory
         }
 
         // no options given
-        if (!$count) {
+        if ($count === 0) {
             throw new UserInputException('pollOptions');
         }
 
@@ -375,7 +375,7 @@ class PollManager extends SingletonFactory
         ];
         foreach ($this->pollData as $key => $value) {
             if ($key === 'endTime') {
-                if (!$value) {
+                if (empty($value)) {
                     $value = '';
                 }
             }

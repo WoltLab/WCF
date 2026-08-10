@@ -43,7 +43,7 @@ final class DeleteAttachment implements IController
             throw new PermissionDeniedException();
         }
 
-        if (ObjectTypeCache::getInstance()->getObjectType($attachment->objectTypeID)->private) {
+        if (ObjectTypeCache::getInstance()->getObjectType($attachment->objectTypeID)->private === '1') {
             throw new PermissionDeniedException();
         }
     }

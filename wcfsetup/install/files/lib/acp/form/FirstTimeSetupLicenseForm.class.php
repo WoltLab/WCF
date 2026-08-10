@@ -123,7 +123,7 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
 
         $data = $this->form->getData();
 
-        if (!$data['data']['noCredentialsConfirm']) {
+        if ($data['data']['noCredentialsConfirm'] === 0) {
             $packageServerList = new PackageUpdateServerList();
             $packageServerList->readObjects();
 

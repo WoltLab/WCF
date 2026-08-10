@@ -325,7 +325,7 @@ class ACLHandler extends SingletonFactory
             $data['options'] = [];
             $data['categories'] = [];
 
-            if (\count($optionList)) {
+            if (\count($optionList) > 0) {
                 $categoryNames = [];
                 foreach ($optionList as $option) {
                     $data['options'][$option->optionID] = [

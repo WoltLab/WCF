@@ -51,7 +51,7 @@ class BooleanUserGroupOptionType extends BooleanOptionType implements IUserGroup
 
         // don't save if values are equal or $defaultValue is better
         // @phpstan-ignore equal.notAllowed (option values are untyped and can differ in type)
-        if ($defaultValue == $groupValue || ($defaultValue && !$groupValue)) {
+        if ($defaultValue == $groupValue || (!empty($defaultValue) && empty($groupValue))) {
             return;
         }
 
@@ -70,6 +70,6 @@ class BooleanUserGroupOptionType extends BooleanOptionType implements IUserGroup
             return -1;
         }
 
-        return $value1 ? 1 : -1;
+        return !empty($value1) ? 1 : -1;
     }
 }

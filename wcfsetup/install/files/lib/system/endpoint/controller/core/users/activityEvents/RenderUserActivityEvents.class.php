@@ -81,8 +81,8 @@ final class RenderUserActivityEvents implements IController
                     [$userID]
                 );
             } elseif (
-                $filteredByFollowedUsers
-                && \count(UserProfileHandler::getInstance()->getFollowingUsers())
+                $filteredByFollowedUsers === true
+                && \count(UserProfileHandler::getInstance()->getFollowingUsers()) > 0
             ) {
                 $eventList->getConditionBuilder()->add(
                     'user_activity_event.userID IN (?)',
@@ -120,7 +120,7 @@ final class RenderUserActivityEvents implements IController
             $eventList->truncate($boxController->getBox()->limit);
         }
 
-        if (!\count($eventList)) {
+        if (\count($eventList) === 0) {
             return [];
         }
 

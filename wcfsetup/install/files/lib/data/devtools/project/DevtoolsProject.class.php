@@ -136,7 +136,7 @@ class DevtoolsProject extends DatabaseObject
         // Make sure that the package archive is read and any validation exception while opening the
         // archive is caught.
         $this->getPackageArchive();
-        if ($this->packageValidationException) {
+        if ($this->packageValidationException !== null) {
             return $this->packageValidationException->getErrorMessage();
         }
 
@@ -173,7 +173,7 @@ class DevtoolsProject extends DatabaseObject
             );
             $packageList->readObjects();
 
-            if (\count($packageList)) {
+            if (\count($packageList) > 0) {
                 $this->package = $packageList->current();
             }
 

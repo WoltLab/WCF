@@ -21,7 +21,9 @@ class CommentArticleDiscussionProvider extends AbstractArticleDiscussionProvider
     #[\Override]
     public function getDiscussionCount()
     {
-        return $this->articleContent ? $this->articleContent->comments : $this->article->getArticleContent()->comments;
+        return $this->articleContent !== null
+            ? $this->articleContent->comments
+            : $this->article->getArticleContent()->comments;
     }
 
     #[\Override]

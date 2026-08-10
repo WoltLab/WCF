@@ -112,7 +112,7 @@ final class SmileyGridView extends AbstractGridView
                         #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
-                            if (!$value) {
+                            if (empty($value)) {
                                 return WCF::getLanguage()->get("wcf.acp.smiley.categoryID.default");
                             }
 

@@ -74,7 +74,7 @@ class HtmlInputNodeFont extends AbstractHtmlInputNode
     {
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
-            if (DOMUtil::isRemoved($element) || !$element->parentNode) {
+            if (DOMUtil::isRemoved($element) || $element->parentNode === null) {
                 continue;
             }
 

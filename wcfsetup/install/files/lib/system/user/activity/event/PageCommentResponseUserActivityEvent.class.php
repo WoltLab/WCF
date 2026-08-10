@@ -30,7 +30,7 @@ class PageCommentResponseUserActivityEvent extends SingletonFactory implements I
                 $response = $this->responses[$event->objectID];
                 $comment = $this->comments[$response->commentID];
                 if (
-                    PageCache::getInstance()->getPage($comment->objectID)
+                    PageCache::getInstance()->getPage($comment->objectID) !== null
                     && isset($this->commentAuthors[$comment->userID])
                 ) {
                     $page = PageCache::getInstance()->getPage($comment->objectID);

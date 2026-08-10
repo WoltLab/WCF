@@ -277,7 +277,7 @@ final class HTTPRequest
      */
     public function getReply(): array
     {
-        if (!$this->response) {
+        if ($this->response === null) {
             return [
                 'statusCode' => 0,
                 'headers' => [],

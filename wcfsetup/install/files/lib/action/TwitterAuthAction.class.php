@@ -148,7 +148,7 @@ final class TwitterAuthAction extends AbstractOauth2AuthAction
     {
         $initData = WCF::getSession()->getVar('__twitterInit');
         WCF::getSession()->unregister('__twitterInit');
-        if (!$initData) {
+        if ($initData === null) {
             throw new StateValidationException('Missing state in session');
         }
 

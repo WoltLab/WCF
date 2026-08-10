@@ -323,14 +323,14 @@ final class ExifUtil
 
         $hasExif = $webp->getExif();
         $hasXmp = $webp->getXmp();
-        if (!$hasExif && !$hasXmp) {
+        if ($hasExif === null && $hasXmp === null) {
             return null;
         }
 
-        if ($hasExif) {
+        if ($hasExif !== null) {
             $webp = $webp->withExif(null);
         }
-        if ($hasXmp) {
+        if ($hasXmp !== null) {
             $webp = $webp->withXmp(null);
         }
 
@@ -373,7 +373,7 @@ final class ExifUtil
 
         // prevent division by zero if 2nd value is invalid
         $data[1] = \floatval($data[1]);
-        if (!$data[1]) {
+        if ($data[1] === 0.0) {
             return 0.0;
         }
 

@@ -89,7 +89,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction
      */
     public function getNewID(string $type, mixed $oldID)
     {
-        if (!$oldID) {
+        if (empty($oldID)) {
             return null;
         }
         $objectTypeID = $this->objectTypes[$type]->objectTypeID;
@@ -108,14 +108,14 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction
 
             $sql = "SELECT  import_mapping.newID
                     FROM    wcf1_import_mapping import_mapping
-                    " . ($tableName ? "
+                    " . ($tableName !== '' ? "
                         LEFT JOIN   " . $tableName . " object_table
                         ON          object_table." . $indexName . " = import_mapping.newID
                         " : '') . "
                     WHERE   import_mapping.importHash = ?
                         AND import_mapping.objectTypeID = ?
                         AND import_mapping.oldID = ?
-                            " . ($tableName ? "AND object_table." . $indexName . " IS NOT NULL" : '');
+                            " . ($tableName !== '' ? "AND object_table." . $indexName . " IS NOT NULL" : '');
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->importHash, $objectTypeID, $oldID]);
             $row = $statement->fetchArray();

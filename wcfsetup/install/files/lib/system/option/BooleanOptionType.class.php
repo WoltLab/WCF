@@ -87,7 +87,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
     #[\Override]
     public function checkUser(User $user, Option $option, mixed $value)
     {
-        if (!$value) {
+        if (empty($value)) {
             return false;
         }
 
@@ -108,7 +108,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
             return 0;
         }
 
-        return $value1 ? 1 : -1;
+        return !empty($value1) ? 1 : -1;
     }
 
     #[\Override]
@@ -119,11 +119,11 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
 
         foreach ($options as $item) {
             if ($item[0] === '!') {
-                if ($value) {
+                if (!empty($value)) {
                     $result[] = $item;
                 }
             } else {
-                if (!$value) {
+                if (empty($value)) {
                     $result[] = $item;
                 }
             }

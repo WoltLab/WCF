@@ -39,7 +39,7 @@ class NoticeEditor extends DatabaseObjectEditor implements IEditableCachedObject
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         $maxShowOrder = $statement->fetchSingleColumn();
-        if (!$maxShowOrder) {
+        if ($maxShowOrder === null) {
             $maxShowOrder = 0;
         }
 

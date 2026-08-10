@@ -87,7 +87,7 @@ class MenuItemEditor extends DatabaseObjectEditor implements IEditableCachedObje
             $menuItemList->setObjectIDs($objectIDs);
             $menuItemList->readObjects();
 
-            if (\count($menuItemList)) {
+            if (\count($menuItemList) > 0) {
                 $sql = "DELETE FROM wcf1_language_item
                         WHERE       languageItem = ?";
                 $statement = WCF::getDB()->prepare($sql);

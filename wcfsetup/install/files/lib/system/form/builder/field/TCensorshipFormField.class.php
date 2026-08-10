@@ -43,7 +43,7 @@ trait TCensorshipFormField
         }
 
         $censoredWords = Censorship::getInstance()->test($text);
-        if ($censoredWords) {
+        if ($censoredWords !== false) {
             $this->addValidationError(new FormFieldValidationError(
                 'censoredWords',
                 'wcf.message.error.censoredWordsFound',

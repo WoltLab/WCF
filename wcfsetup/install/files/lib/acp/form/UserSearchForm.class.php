@@ -164,7 +164,7 @@ class UserSearchForm extends UserOptionListForm
     {
         $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.condition.userSearch');
         foreach ($objectTypes as $objectType) {
-            if (!$objectType->conditiongroup) {
+            if ($objectType->conditiongroup === null) {
                 continue;
             }
 

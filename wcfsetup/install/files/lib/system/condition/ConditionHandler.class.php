@@ -84,7 +84,7 @@ class ConditionHandler extends SingletonFactory
         $conditionList->getConditionBuilder()->add('objectID IN (?)', [$objectIDs]);
         $conditionList->readObjects();
 
-        if (\count($conditionList)) {
+        if (\count($conditionList) > 0) {
             $conditionAction = new ConditionAction($conditionList->getObjects(), 'delete');
             $conditionAction->executeAction();
         }

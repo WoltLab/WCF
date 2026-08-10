@@ -104,7 +104,7 @@ class TemplateGroupAddForm extends AbstractFormBuilderForm
                 $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([$formField->getValue()]);
 
-                if ($statement->fetchSingleColumn()) {
+                if ($statement->fetchSingleColumn() > 0) {
                     $formField->addValidationError(
                         new FormFieldValidationError(
                             'notUnique',
@@ -131,7 +131,7 @@ class TemplateGroupAddForm extends AbstractFormBuilderForm
                 $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([$formField->getValue()]);
 
-                if ($statement->fetchSingleColumn()) {
+                if ($statement->fetchSingleColumn() > 0) {
                     $formField->addValidationError(
                         new FormFieldValidationError(
                             'notUnique',

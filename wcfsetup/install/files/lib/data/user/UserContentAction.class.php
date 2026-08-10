@@ -32,7 +32,7 @@ class UserContentAction extends UserAction
     public function bulkRevert()
     {
         $this->readInteger('timeframe', true);
-        if (!$this->parameters['timeframe']) {
+        if ($this->parameters['timeframe'] === 0) {
             $this->parameters['timeframe'] = 86400 * 7;
         }
 

@@ -95,8 +95,8 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
 
         if ($this->isDeleted !== 0) {
             if (
-                !$user->getPermission('admin.content.article.canManageArticle')
-                && !($user->getPermission('admin.content.article.canManageOwnArticles') && $this->userID === $user->userID)
+                !$user->hasPermission('admin.content.article.canManageArticle')
+                && !($user->hasPermission('admin.content.article.canManageOwnArticles') && $this->userID === $user->userID)
             ) {
                 return false;
             }
@@ -104,15 +104,15 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
 
         if ($this->publicationStatus !== self::PUBLISHED) {
             if (
-                !$user->getPermission('admin.content.article.canManageArticle')
-                && !($user->getPermission('admin.content.article.canManageOwnArticles') && $this->userID === $user->userID)
-                && !($user->getPermission('admin.content.article.canContributeArticle') && $this->userID === $user->userID)
+                !$user->hasPermission('admin.content.article.canManageArticle')
+                && !($user->hasPermission('admin.content.article.canManageOwnArticles') && $this->userID === $user->userID)
+                && !($user->hasPermission('admin.content.article.canContributeArticle') && $this->userID === $user->userID)
             ) {
                 return false;
             }
         }
 
-        if ($this->getCategory()) {
+        if ($this->getCategory() !== null) {
             if (!$this->getCategory()->isAccessible($user->getDecoratedObject())) {
                 return false;
             }
@@ -120,7 +120,7 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
             return (bool)$this->getCategory()->getPermission('canReadArticle', $user->getDecoratedObject());
         }
 
-        return $user->getPermission('user.article.canAddComment');
+        return $user->hasPermission('user.article.canAddComment');
     }
 
     /**

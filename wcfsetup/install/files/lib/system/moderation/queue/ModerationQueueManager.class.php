@@ -317,7 +317,7 @@ class ModerationQueueManager extends SingletonFactory
         $queueList->getConditionBuilder()->add("moderation_queue_to_user.queueID IS NULL");
         $queueList->readObjects();
 
-        if (\count($queueList)) {
+        if (\count($queueList) > 0) {
             $queues = [];
             foreach ($queueList as $queue) {
                 if (!isset($queues[$queue->objectTypeID])) {

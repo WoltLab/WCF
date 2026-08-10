@@ -68,7 +68,7 @@ final class ModificationLogGridView extends AbstractGridView
                             $log = $row->getDecoratedObject();
                             \assert($log instanceof ModificationLog);
                             $objectType = ObjectTypeCache::getInstance()->getObjectType($log->objectTypeID);
-                            if (!$objectType) {
+                            if ($objectType === null) {
                                 return '';
                             }
 
@@ -105,7 +105,7 @@ final class ModificationLogGridView extends AbstractGridView
                                     'com.woltlab.wcf.modifiableContent',
                                     $matches['objectType']
                                 );
-                                if (!$objectType) {
+                                if ($objectType === null) {
                                     return;
                                 }
 
@@ -215,7 +215,7 @@ final class ModificationLogGridView extends AbstractGridView
             if (!empty($itemsPerType)) {
                 foreach ($itemsPerType as $objectTypeID => $items) {
                     $objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
-                    if (!$objectType) {
+                    if ($objectType === null) {
                         continue;
                     }
                     $processor = $objectType->getProcessor();

@@ -58,7 +58,7 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
     {
         $object = parent::create();
 
-        if (isset($this->parameters['sourceLanguageID']) && $this->parameters['sourceLanguageID']) {
+        if (isset($this->parameters['sourceLanguageID']) && $this->parameters['sourceLanguageID'] !== 0) {
             $sourceLanguage = LanguageFactory::getInstance()->getLanguage($this->parameters['sourceLanguageID']);
 
             LanguageEditor::copyLanguageContent($sourceLanguage->getObjectID(), $object->getObjectID());

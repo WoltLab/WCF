@@ -65,12 +65,12 @@ final class LanguageItemEditAction implements RequestHandlerInterface
 
                 $data['languageCustomItemDisableTime'] = null;
 
-                if ($data['languageUseCustomValue']) {
+                if ($data['languageUseCustomValue'] === 1) {
                     $data['languageItemOldValue'] = null;
                 }
 
                 if (
-                    !$data['languageUseCustomValue']
+                    $data['languageUseCustomValue'] === 0
                     && ($languageItem->languageCustomItemValue === null || $languageItem->languageCustomItemValue === '')
                 ) {
                     $data['languageCustomItemValue'] = null;

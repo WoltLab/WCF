@@ -145,7 +145,7 @@ class VersionTrackerListPage extends AbstractPage
             }
         }
 
-        if (isset($_REQUEST['newID']) && !$this->new) {
+        if (isset($_REQUEST['newID']) && $this->new === null) {
             $this->new = $this->objectTypeProcessor->getCurrentVersion($this->object);
             $this->newID = 'current';
         }
@@ -170,7 +170,7 @@ class VersionTrackerListPage extends AbstractPage
         $differ = Diff::getDefaultDiffer();
 
         // valid IDs were given, calculate diff
-        if ($this->old && $this->new) {
+        if ($this->old !== null && $this->new !== null) {
             $languageIDs = $this->new->getLanguageIDs();
 
             if (\count($languageIDs) > 1 || $languageIDs[0] !== 0) {

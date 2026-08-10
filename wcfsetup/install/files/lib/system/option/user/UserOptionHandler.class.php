@@ -261,7 +261,7 @@ class UserOptionHandler extends OptionHandler
             // Do not throw an error if the current user is an administrator and is not editing themselves.
             if (
                 !WCF::getUser()->hasAdministrativeAccess()
-                || ($this->user && $this->user->userID === WCF::getUser()->userID)
+                || ($this->user !== null && $this->user->userID === WCF::getUser()->userID)
             ) {
                 throw new UserInputException($option->optionName);
             }
@@ -304,7 +304,7 @@ class UserOptionHandler extends OptionHandler
             $this->inRegistration
             && $option->askDuringRegistration === 0
             && $option->required === 0
-            && !($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION)
+            && ($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION) === 0
             && ($option->optionName !== 'birthday' || \REGISTER_MIN_USER_AGE === 0)
         ) {
             return false;
@@ -346,7 +346,7 @@ class UserOptionHandler extends OptionHandler
                 if (
                     \array_key_exists($option->optionID, $options)
                     && $option->askDuringRegistration === 0
-                    && !($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION)
+                    && ($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION) === 0
                     && $option->required === 0
                     && ($option->optionName !== 'birthday' || \REGISTER_MIN_USER_AGE === 0)
                 ) {

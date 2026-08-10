@@ -128,7 +128,7 @@ class BoxHandler extends SingletonFactory
     public function sidebarLeftHasMenu()
     {
         foreach ($this->getBoxes('sidebarLeft') as $box) {
-            if ($box->getMenu() && $box->getMenu()->hasContent()) {
+            if ($box->getMenu() !== null && $box->getMenu()->hasContent()) {
                 return true;
             }
         }

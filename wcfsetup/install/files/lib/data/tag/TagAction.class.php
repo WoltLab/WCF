@@ -130,7 +130,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction
             $conditionBuilder->add("name NOT IN (?)", [$excludedSearchValues]);
         }
 
-        if ($this->parameters['languageID']) {
+        if ($this->parameters['languageID'] !== 0) {
             $conditionBuilder->add("languageID = ?", [$this->parameters['languageID']]);
         }
 

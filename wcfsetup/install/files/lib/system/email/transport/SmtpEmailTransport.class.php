@@ -428,7 +428,7 @@ final class SmtpEmailTransport implements IStatusReportingEmailTransport
      */
     private function disconnect(): void
     {
-        if ($this->connection) {
+        if ($this->connection !== null) {
             try {
                 $this->write("QUIT");
                 $this->connection->close();
@@ -458,7 +458,7 @@ final class SmtpEmailTransport implements IStatusReportingEmailTransport
         // generating the email contents ultimately does not succeed.
         $payload = $email->getEmail();
 
-        if (!$this->connection || $this->connection->eof()) {
+        if ($this->connection === null || $this->connection->eof()) {
             try {
                 $this->connect();
                 $this->auth();

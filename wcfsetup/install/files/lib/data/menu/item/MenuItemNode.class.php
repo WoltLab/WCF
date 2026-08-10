@@ -66,7 +66,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements IObjectTreeNode
         $this->isActive = true;
 
         // propagate active state to immediate parent
-        if ($this->parentNode) {
+        if ($this->parentNode !== null) {
             $this->parentNode->setIsActive();
         }
     }

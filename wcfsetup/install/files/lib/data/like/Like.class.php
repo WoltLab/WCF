@@ -81,7 +81,7 @@ class Like extends DatabaseObject implements \Stringable
 
         $row = $statement->fetchArray();
 
-        if (!$row) {
+        if ($row === false) {
             $row = [];
         }
 

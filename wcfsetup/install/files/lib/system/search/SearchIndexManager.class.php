@@ -212,7 +212,7 @@ class SearchIndexManager extends SingletonFactory implements IContextAwareSearch
         }
 
         $tableName = $objectType->searchindex;
-        if ($tableName) {
+        if (!empty($tableName)) {
             return ApplicationHandler::insertRealDatabaseTableNames($tableName, true);
         }
 

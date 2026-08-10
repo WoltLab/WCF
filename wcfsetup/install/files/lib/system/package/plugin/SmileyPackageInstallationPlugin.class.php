@@ -184,7 +184,7 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
                         }
 
                         $aliases = null;
-                        if ($this->editedEntry) {
+                        if ($this->editedEntry !== null) {
                             $aliases = $this->editedEntry->getElementsByTagName('aliases')->item(0);
                         }
 

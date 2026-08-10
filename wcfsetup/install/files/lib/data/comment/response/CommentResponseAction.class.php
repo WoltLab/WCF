@@ -117,7 +117,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
 
         // get response list
         $responseList = new StructuredCommentResponseList($this->commentManager, $this->comment);
-        if ($this->parameters['data']['lastResponseID']) {
+        if ($this->parameters['data']['lastResponseID'] !== 0) {
             $responseList->getConditionBuilder()->add(
                 "(comment_response.time > ? OR (comment_response.time = ? && comment_response.responseID > ?))",
                 [

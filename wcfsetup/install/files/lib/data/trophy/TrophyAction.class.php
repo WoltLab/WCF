@@ -149,7 +149,7 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
         $this->readString('tmpHash');
         $this->readInteger('trophyID', true);
 
-        if ($this->parameters['trophyID']) {
+        if ($this->parameters['trophyID'] !== 0) {
             $this->parameters['trophy'] = new Trophy($this->parameters['trophyID']);
 
             if ($this->parameters['trophy']->trophyID === 0) {
@@ -203,7 +203,7 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
             $this->parameters['file']->getFileExtension()
         );
 
-        if ($this->parameters['trophyID']) {
+        if ($this->parameters['trophyID'] !== 0) {
             $this->updateTrophyImage($this->parameters['trophy']);
 
             return [

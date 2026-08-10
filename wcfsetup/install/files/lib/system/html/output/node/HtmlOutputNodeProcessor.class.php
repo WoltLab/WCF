@@ -218,7 +218,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
         if (!$this->keywordHighlighting) {
             return;
         }
-        if (!\count(KeywordHighlighter::getInstance()->getKeywords())) {
+        if (\count(KeywordHighlighter::getInstance()->getKeywords()) === 0) {
             return;
         }
         $keywordPattern = '(' . \implode('|', KeywordHighlighter::getInstance()->getKeywords()) . ')';

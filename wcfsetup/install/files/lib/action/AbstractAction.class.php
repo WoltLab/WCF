@@ -67,7 +67,7 @@ abstract class AbstractAction implements IAction
 
         // check modules
         foreach ($this->neededModules as $module) {
-            if (!\defined($module) || !\constant($module)) {
+            if (!\defined($module) || \constant($module) === 0) {
                 throw new IllegalLinkException();
             }
         }

@@ -112,7 +112,7 @@ final class HtmlOutputNodeNormalizer
     private function unwrapBr(\DOMElement $br): void
     {
         for (;;) {
-            if ($br->previousSibling || $br->nextSibling) {
+            if ($br->previousSibling !== null || $br->nextSibling !== null) {
                 return;
             }
 

@@ -121,7 +121,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob
         $statement->execute($conditions->getParameters());
         $authorIDs = $authorToNotification = [];
         while ($row = $statement->fetchArray()) {
-            if ($row['authorID']) {
+            if ($row['authorID'] !== null) {
                 $authorIDs[] = $row['authorID'];
             }
 
@@ -190,7 +190,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob
                 if (isset($authorToNotification[$notification->notificationID])) {
                     $eventAuthors = [];
                     foreach ($authorToNotification[$notification->notificationID] as $userID) {
-                        if (!$userID) {
+                        if ($userID === null) {
                             $eventAuthors[0] = $unknownAuthor;
                         } elseif (isset($authors[$userID])) {
                             $eventAuthors[$userID] = $authors[$userID];

@@ -75,7 +75,7 @@ class UserStateCondition extends AbstractSingleFieldCondition implements
         }
 
         if (isset($conditionData['userIsEnabled'])) {
-            if ($conditionData['userIsEnabled']) {
+            if ($conditionData['userIsEnabled'] !== 0) {
                 $objectList->getConditionBuilder()->add('user_table.activationCode = ?', [0]);
             } else {
                 $objectList->getConditionBuilder()->add('user_table.activationCode <> ?', [0]);
@@ -83,7 +83,7 @@ class UserStateCondition extends AbstractSingleFieldCondition implements
         }
 
         if (isset($conditionData['userIsEmailConfirmed'])) {
-            if ($conditionData['userIsEmailConfirmed']) {
+            if ($conditionData['userIsEmailConfirmed'] !== 0) {
                 $objectList->getConditionBuilder()->add('user_table.emailConfirmed IS NULL');
             } else {
                 $objectList->getConditionBuilder()->add('user_table.emailConfirmed IS NOT NULL');
@@ -101,18 +101,18 @@ class UserStateCondition extends AbstractSingleFieldCondition implements
 
         $userIsEnabled = $condition->userIsEnabled;
         if ($userIsEnabled !== null) {
-            if ($userIsEnabled && $user->pendingActivation()) {
+            if ($userIsEnabled !== 0 && $user->pendingActivation()) {
                 return false;
-            } elseif (!$userIsEnabled && !$user->pendingActivation()) {
+            } elseif ($userIsEnabled === 0 && !$user->pendingActivation()) {
                 return false;
             }
         }
 
         $userIsEmailConfirmed = $condition->userIsEmailConfirmed;
         if ($userIsEmailConfirmed !== null) {
-            if ($userIsEmailConfirmed && !$user->isEmailConfirmed()) {
+            if ($userIsEmailConfirmed !== 0 && !$user->isEmailConfirmed()) {
                 return false;
-            } elseif (!$userIsEmailConfirmed && $user->isEmailConfirmed()) {
+            } elseif ($userIsEmailConfirmed === 0 && $user->isEmailConfirmed()) {
                 return false;
             }
         }
