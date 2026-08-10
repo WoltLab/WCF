@@ -80,6 +80,12 @@ class NotificationUnsubscribeForm extends AbstractForm
             }
         }
 
+        // The token is generated lazily when the first notification email is sent,
+        // an empty value must never authenticate a request.
+        if ($this->user->notificationMailToken === '') {
+            throw new IllegalLinkException();
+        }
+
         if (!\hash_equals($this->user->notificationMailToken, $this->token)) {
             throw new IllegalLinkException();
         }
