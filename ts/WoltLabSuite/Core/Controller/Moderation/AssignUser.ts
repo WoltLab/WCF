@@ -43,7 +43,7 @@ function updateAssignee(assignee: Assignee | null): void {
     link.href = assignee.link;
     link.dataset.objectId = assignee.userID.toString();
     link.classList.add("userLink");
-    link.innerHTML = assignee.username;
+    link.textContent = assignee.username;
 
     span.innerHTML = "";
     span.append(link);
