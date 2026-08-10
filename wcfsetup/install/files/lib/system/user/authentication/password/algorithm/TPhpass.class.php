@@ -18,43 +18,46 @@ trait TPhpass
 
     /**
      * Returns the hashed password, with the given settings.
+     *
+     * Returns `null` if the settings are malformed. Callers must not treat this
+     * as a hash value, otherwise a malformed stored hash could match itself.
      */
     private function hashPhpass(
         #[\SensitiveParameter]
         string $password,
         string $settings
-    ): string {
-        $output = '*';
+    ): ?string {
+        // The settings consist of the type prefix, the cost factor and the 8 byte salt.
+        if (\mb_strlen($settings, '8bit') < 12) {
+            return null;
+        }
 
         // Check for correct hash
         if ($settings[0] !== '$' || $settings[2] !== '$') {
-            return $output;
+            return null;
         }
 
         $variant = $settings[1];
-        switch ($variant) {
-            case 'H':
-            case 'P':
-                $algo = 'md5';
-                break;
-            case 'S':
-                $algo = 'sha512';
-                break;
-            default:
-                return $output;
+        $algo = match ($variant) {
+            'H', 'P' => 'md5',
+            'S' => 'sha512',
+            default => null,
+        };
+        if ($algo === null) {
+            return null;
         }
 
         $count_log2 = \mb_strpos($this->itoa64, $settings[3], 0, '8bit');
 
-        if ($count_log2 < 7 || $count_log2 > 30) {
-            return $output;
+        if ($count_log2 === false || $count_log2 < 7 || $count_log2 > 30) {
+            return null;
         }
 
         $count = 1 << $count_log2;
         $salt = \mb_substr($settings, 4, 8, '8bit');
 
-        if (\mb_strlen($salt, '8bit') != 8) {
-            return $output;
+        if (\mb_strlen($salt, '8bit') !== 8) {
+            return null;
         }
 
         $hash = \hash($algo, $salt . $password, true);
@@ -122,7 +125,12 @@ trait TPhpass
             return \hash_equals($hash, \md5($password));
         }
 
-        return \hash_equals($hash, $this->hashPhpass($password, $hash));
+        $ourHash = $this->hashPhpass($password, $hash);
+        if ($ourHash === null) {
+            return false;
+        }
+
+        return \hash_equals($hash, $ourHash);
     }
 
     /**
@@ -135,7 +143,10 @@ trait TPhpass
         $settings = '$H$8';
         $settings .= Hex::encode(\random_bytes(4));
 
-        return $this->hashPhpass($password, $settings) . ':';
+        $hash = $this->hashPhpass($password, $settings);
+        \assert($hash !== null);
+
+        return $hash . ':';
     }
 
     /**
