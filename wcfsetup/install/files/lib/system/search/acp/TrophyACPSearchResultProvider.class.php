@@ -44,14 +44,14 @@ class TrophyACPSearchResultProvider implements IACPSearchResultProvider
         }
 
         $conditions = new PreparedStatementConditionBuilder(false);
-        if (!empty($trophyIDs)) {
+        if ($trophyIDs !== []) {
             $conditions->add("trophyID IN (?)", [$trophyIDs]);
         }
 
         $sql = "SELECT  *
                 FROM    wcf1_trophy
                 WHERE   title LIKE ?
-                    " . (!empty($conditions->getParameters()) ? "OR " . $conditions : "");
+                    " . ($conditions->getParameters() !== [] ? "OR " . $conditions : "");
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute(\array_merge([
             '%' . WCF::getDB()->escapeLikeValue($query) . '%',

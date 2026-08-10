@@ -149,7 +149,7 @@ class UserListPage extends SortablePage
             if ($this->searchID !== 0) {
                 $this->readSearchResult();
             }
-            if (empty($this->userIDs)) {
+            if ($this->userIDs === []) {
                 throw new IllegalLinkException();
             }
             $this->conditions->add("user_table.userID IN (?)", [$this->userIDs]);
@@ -267,7 +267,7 @@ class UserListPage extends SortablePage
         $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
         // get user data
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             // get group ids
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("user_table.userID IN (?)", [$userIDs]);
@@ -293,7 +293,7 @@ class UserListPage extends SortablePage
                 $groupIDs = ($userToGroups[$row['userID']] ?? []);
 
                 $row['groupIDs'] = \implode(',', $groupIDs);
-                $accessible = (!empty($groupIDs) ? UserGroup::isAccessibleGroup($groupIDs) : true);
+                $accessible = ($groupIDs !== [] ? UserGroup::isAccessibleGroup($groupIDs) : true);
                 $row['accessible'] = $accessible;
                 $row['deletable'] = ($accessible && WCF::getSession()->hasPermission('admin.user.canDeleteUser') && $row['userID'] !== WCF::getUser()->userID) ? 1 : 0;
                 $row['editable'] = ($accessible && WCF::getSession()->hasPermission('admin.user.canEditUser')) ? 1 : 0;

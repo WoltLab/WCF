@@ -26,6 +26,6 @@ class ArticleListPageHandler extends AbstractMenuPageHandler
     #[\Override]
     public function isVisible(?int $objectID = null)
     {
-        return !empty(ArticleCategory::getAccessibleCategoryIDs());
+        return ArticleCategory::getAccessibleCategoryIDs() !== [];
     }
 }

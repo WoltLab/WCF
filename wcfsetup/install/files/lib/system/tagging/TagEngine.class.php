@@ -181,7 +181,7 @@ class TagEngine extends SingletonFactory
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("tag_to_object.objectTypeID = ?", [$objectTypeID]);
         $conditions->add("tag_to_object.objectID IN (?)", [$objectIDs]);
-        if (!empty($languageIDs)) {
+        if ($languageIDs !== []) {
             foreach ($languageIDs as $index => $languageID) {
                 if ($languageID === 0) {
                     unset($languageIDs[$index]);
@@ -190,7 +190,7 @@ class TagEngine extends SingletonFactory
 
             // The `languageID` is part of the index, skipping it will cause MySQL to skip the
             // `objectID` column, causing a partial table scan.
-            if (empty($languageIDs)) {
+            if ($languageIDs === []) {
                 // The `languageID` column is never null, tags are always assigned to a language
                 // thus we cannot use the content language ids here.
                 foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
@@ -252,7 +252,7 @@ class TagEngine extends SingletonFactory
     public function getImplicitLanguageID(string $objectType, int $objectID)
     {
         $existingTags = $this->getObjectTags($objectType, $objectID);
-        if (empty($existingTags)) {
+        if ($existingTags === []) {
             return null;
         }
 

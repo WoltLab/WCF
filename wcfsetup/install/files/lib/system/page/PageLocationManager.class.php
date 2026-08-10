@@ -140,7 +140,7 @@ class PageLocationManager extends SingletonFactory
      */
     protected function addParents()
     {
-        if (!empty($this->stack)) {
+        if ($this->stack !== []) {
             $location = \end($this->stack);
 
             if ($location['pageID'] !== 0) {

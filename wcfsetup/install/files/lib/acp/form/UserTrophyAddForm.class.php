@@ -160,7 +160,7 @@ class UserTrophyAddForm extends AbstractAcpForm
 
         $this->validateUser();
 
-        if (empty($this->userIDs)) {
+        if ($this->userIDs === []) {
             throw new UserInputException('user');
         }
 

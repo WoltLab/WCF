@@ -114,7 +114,7 @@ class UserActivityPointHandler extends SingletonFactory
             throw new InvalidObjectTypeException($objectType, 'com.woltlab.wcf.user.activityPointEvent');
         }
 
-        if (empty($itemsToUser)) {
+        if ($itemsToUser === []) {
             return;
         }
 
@@ -164,7 +164,7 @@ class UserActivityPointHandler extends SingletonFactory
      */
     public function removeEvents(string $objectType, array $userToItems)
     {
-        if (empty($userToItems)) {
+        if ($userToItems === []) {
             return;
         }
 

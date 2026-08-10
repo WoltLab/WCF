@@ -1,16 +1,232 @@
 parameters:
 	ignoreErrors:
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/acp/action/UserExportGdprAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/acp/action/WorkerProxyAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/acp/form/AbstractBulkProcessingForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/acp/form/AbstractCategoryAddForm.class.php
+
+		-
 			message: '#^Property wcf\\acp\\form\\AbstractCategoryAddForm\:\:\$categoryNodeTree \(wcf\\data\\category\\UncachedCategoryNodeTree\|null\) does not accept wcf\\data\\category\\CategoryNodeTree\.$#'
 			identifier: assign.propertyType
 			count: 1
 			path: wcfsetup/install/files/lib/acp/form/AbstractCategoryEditForm.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/acp/form/AbstractCustomOptionForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/acp/form/AdAddForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/acp/form/ApplicationManagementForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/acp/form/ArticleAddForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/acp/form/BBCodeAddForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 16
+			path: wcfsetup/install/files/lib/acp/form/BoxAddForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 6
+			path: wcfsetup/install/files/lib/acp/form/BoxEditForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/acp/form/DataImportForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/acp/form/LanguageImportForm.class.php
+
+		-
 			message: '#^Property wcf\\acp\\form\\LanguageImportForm\:\:\$language \(wcf\\data\\language\\Language\|null\) does not accept wcf\\data\\language\\LanguageEditor\.$#'
 			identifier: assign.propertyType
 			count: 1
 			path: wcfsetup/install/files/lib/acp/form/LanguageImportForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/acp/form/NoticeAddForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/acp/form/NotificationPresetSettingsForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/acp/form/PackageStartInstallForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 17
+			path: wcfsetup/install/files/lib/acp/form/PageAddForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 11
+			path: wcfsetup/install/files/lib/acp/form/PageEditForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/acp/form/PaidSubscriptionAddForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/acp/form/PaidSubscriptionUserAddForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/acp/form/RescueModeForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 5
+			path: wcfsetup/install/files/lib/acp/form/SmileyAddForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 8
+			path: wcfsetup/install/files/lib/acp/form/StyleAddForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/acp/form/StyleGlobalValuesForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/acp/form/StyleImportForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/acp/form/TrophyAddForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/acp/form/TrophyEditForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 5
+			path: wcfsetup/install/files/lib/acp/form/UserAddForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 5
+			path: wcfsetup/install/files/lib/acp/form/UserEditForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/acp/form/UserGroupAddForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/acp/form/UserGroupAssignmentAddForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/acp/form/UserTrophyEditForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/acp/page/AbstractCategoryListPage.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/acp/page/ArticleListPage.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/acp/page/BoxListPage.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/acp/page/DevtoolsNotificationTestPage.class.php
 
 		-
 			message: '#^Property wcf\\acp\\page\\DevtoolsNotificationTestPage\:\:\$events \(array\<array\<wcf\\system\\user\\notification\\event\\ITestableUserNotificationEvent\>\>\) does not accept array\<array\<wcf\\system\\user\\notification\\event\\IUserNotificationEvent\>\>\.$#'
@@ -25,16 +241,154 @@ parameters:
 			path: wcfsetup/install/files/lib/acp/page/DevtoolsNotificationTestPage.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/acp/page/PageBoxOrderPage.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/acp/page/PageListPage.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 5
+			path: wcfsetup/install/files/lib/acp/page/SystemCheckPage.class.php
+
+		-
 			message: '#^Right side of && is always false\.$#'
 			identifier: booleanAnd.rightAlwaysFalse
 			count: 1
 			path: wcfsetup/install/files/lib/acp/page/TemplateDiffPage.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/acp/page/UserListPage.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/action/AJAXInvokeAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/action/AJAXProxyAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/action/AbstractDialogAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/action/AbstractOauth2Action.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/action/FacebookAuthAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/action/PaypalCallbackAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/action/TwitterAuthAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/core.functions.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/data/AbstractDatabaseObjectAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/DatabaseObjectDecorator.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/data/DatabaseObjectEditor.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 8
+			path: wcfsetup/install/files/lib/data/DatabaseObjectList.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/I18nDatabaseObjectList.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/application/Application.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 11
+			path: wcfsetup/install/files/lib/data/article/ArticleAction.class.php
+
+		-
 			message: '#^Method wcf\\data\\article\\ArticleAction\:\:delete\(\) should return int but returns array\<string, array\<int\>\|string\>\.$#'
 			identifier: return.type
 			count: 1
 			path: wcfsetup/install/files/lib/data/article/ArticleAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/bbcode/BBCodeAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/data/box/Box.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 9
+			path: wcfsetup/install/files/lib/data/box/BoxAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/data/category/CategoryEditor.class.php
 
 		-
 			message: '#^Instanceof between wcf\\data\\category\\Category and wcf\\data\\category\\AbstractDecoratedCategory will always evaluate to false\.$#'
@@ -49,16 +403,394 @@ parameters:
 			path: wcfsetup/install/files/lib/data/category/CategoryNode.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/clipboard/item/ClipboardItemAction.class.php
+
+		-
 			message: '#^Constructor of class wcf\\data\\clipboard\\item\\ClipboardItemAction has an unused parameter \$objects\.$#'
 			identifier: constructor.unusedParameter
 			count: 1
 			path: wcfsetup/install/files/lib/data/clipboard/item/ClipboardItemAction.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 8
+			path: wcfsetup/install/files/lib/data/comment/CommentAction.class.php
+
+		-
 			message: '#^Property wcf\\data\\comment\\CommentAction\:\:\$comment \(wcf\\data\\comment\\Comment\|null\) does not accept wcf\\data\\comment\\CommentEditor\.$#'
 			identifier: assign.propertyType
 			count: 2
 			path: wcfsetup/install/files/lib/data/comment/CommentAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/comment/response/CommentResponseAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/data/contact/recipient/ContactRecipient.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/custom/option/CustomOption.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/data/label/group/ViewableLabelGroup.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/data/language/Language.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/data/language/LanguageEditor.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/language/item/LanguageItemAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/like/object/LikeObject.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/media/MediaAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/moderation/queue/ModerationQueueAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/data/option/Option.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 5
+			path: wcfsetup/install/files/lib/data/option/OptionAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/data/package/update/server/PackageUpdateServer.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/package/update/server/PackageUpdateServerList.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 10
+			path: wcfsetup/install/files/lib/data/page/PageAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/data/poll/PollAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/search/SearchAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/session/SessionAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/data/smiley/SmileyAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 5
+			path: wcfsetup/install/files/lib/data/stat/daily/StatDailyAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/style/Style.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/data/style/StyleAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 14
+			path: wcfsetup/install/files/lib/data/style/StyleEditor.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/data/tag/TagAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/trophy/TrophyAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/data/unfurl/url/UnfurlUrl.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/data/unfurl/url/UnfurlUrlAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/unfurl/url/UnfurlUrlList.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/data/user/TeamList.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 10
+			path: wcfsetup/install/files/lib/data/user/UserAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/data/user/UserEditor.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/user/UserList.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/user/UserProfile.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/user/UserProfileAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/user/UserProfileList.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/user/avatar/DefaultAvatar.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/data/user/group/option/UserGroupOptionAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/user/ignore/ViewableUserIgnoreList.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/user/object/watch/UserObjectWatchAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/data/user/online/UserOnline.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/user/profile/menu/item/UserProfileMenuItemEditor.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/data/user/rank/UserRankAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/data/user/trophy/UserTrophyAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/data/user/trophy/UserTrophyList.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/form/AccountManagementForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/form/MessageForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/form/NotificationSettingsForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/form/NotificationUnsubscribeForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/form/RegisterForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 11
+			path: wcfsetup/install/files/lib/form/SearchForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/form/SettingsForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/form/SignatureEditForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/form/TagSearchForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/form/UserSearchForm.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 7
+			path: wcfsetup/install/files/lib/page/AbstractPage.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/page/ArticleListPage.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/page/ContactAttachmentPage.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/page/MembersListPage.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/page/MultipleLinkPage.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/page/SearchPage.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/page/SearchResultPage.class.php
 
 		-
 			message: '#^Instanceof between wcf\\data\\search\\ISearchResultObject and wcf\\data\\search\\ISearchResultObject will always evaluate to true\.$#'
@@ -109,10 +841,22 @@ parameters:
 			path: wcfsetup/install/files/lib/system/CLIWCF.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/CLIWCF.class.php
+
+		-
 			message: '#^Call to function is_callable\(\) with callable\(\)\: mixed will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 1
 			path: wcfsetup/install/files/lib/system/Callback.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/WCF.class.php
 
 		-
 			message: '#^Constant INSTALL_SCRIPT not found\.$#'
@@ -139,10 +883,202 @@ parameters:
 			path: wcfsetup/install/files/lib/system/WCFSetup.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 6
+			path: wcfsetup/install/files/lib/system/WCFSetup.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/acl/ACLHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 10
+			path: wcfsetup/install/files/lib/system/acl/simple/SimpleAclHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/ad/AdHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/application/AbstractApplication.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/application/ApplicationHandler.class.php
+
+		-
 			message: '#^Instanceof between wcf\\system\\background\\job\\AbstractBackgroundJob and wcf\\system\\background\\job\\AbstractBackgroundJob will always evaluate to true\.$#'
 			identifier: instanceof.alwaysTrue
 			count: 1
 			path: wcfsetup/install/files/lib/system/background/BackgroundQueueHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/background/job/UnfurlUrlBackgroundJob.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/bbcode/AttachmentBBCode.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 10
+			path: wcfsetup/install/files/lib/system/bbcode/BBCodeParser.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/bbcode/GroupBBCode.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/bbcode/HtmlBBCodeParser.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/system/bbcode/KeywordHighlighter.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/bbcode/MessageParser.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/bbcode/UserBBCode.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/system/bbcode/WoltLabSuiteMediaBBCode.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/bbcode/WoltLabSuitePageBBCode.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/system/bbcode/media/provider/TwitchBBCodeMediaProvider.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/system/bbcode/media/provider/YouTubeBBCodeMediaProvider.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/box/AbstractBoxController.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/box/PaidSubscriptionsBoxController.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/box/UserTrophyListBoxController.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/bulk/processing/AbstractBulkProcessableObjectType.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/bulk/processing/user/AbstractUserBulkProcessingAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/bulk/processing/user/SendMailUserBulkProcessingAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/cache/builder/AbstractCacheBuilder.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/cache/builder/MenuCacheBuilder.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/cache/builder/OptionCacheBuilder.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/cache/builder/TrophyCacheBuilder.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/cache/builder/UserGroupPermissionCacheBuilder.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/captcha/RecaptchaHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/category/TrophyCategoryType.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/cli/command/ImportCLICommand.class.php
 
 		-
 			message: '#^Access to an undefined property Zend\\Console\\Getopt\:\:\$list\.$#'
@@ -163,6 +1099,12 @@ parameters:
 			path: wcfsetup/install/files/lib/system/cli/command/WorkerCLICommand.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/cli/command/WorkerCLICommand.class.php
+
+		-
 			message: '#^Strict comparison using \!\=\= between wcf\\system\\io\\File and null will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
 			count: 1
@@ -173,6 +1115,42 @@ parameters:
 			identifier: while.alwaysTrue
 			count: 1
 			path: wcfsetup/install/files/lib/system/cli/command/WorkerCLICommand.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/clipboard/ClipboardHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/clipboard/action/AbstractClipboardAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/clipboard/action/UserClipboardAction.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/comment/CommentHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/comment/manager/AbstractCommentManager.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/condition/AbstractCheckboxCondition.class.php
 
 		-
 			message: '#^Method wcf\\system\\condition\\AbstractCheckboxCondition\:\:getData\(\) should return array\<mixed\> but returns null\.$#'
@@ -229,10 +1207,22 @@ parameters:
 			path: wcfsetup/install/files/lib/system/condition/UserBirthdayCondition.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/condition/UserGroupCondition.class.php
+
+		-
 			message: '#^Method wcf\\system\\condition\\UserGroupCondition\:\:getData\(\) should return array\<mixed\> but returns null\.$#'
 			identifier: return.type
 			count: 1
 			path: wcfsetup/install/files/lib/system/condition/UserGroupCondition.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/condition/UserLanguageCondition.class.php
 
 		-
 			message: '#^Method wcf\\system\\condition\\UserLanguageCondition\:\:getData\(\) should return array\<mixed\> but returns null\.$#'
@@ -271,16 +1261,34 @@ parameters:
 			path: wcfsetup/install/files/lib/system/condition/UserStateCondition.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/condition/UserTrophyCondition.class.php
+
+		-
 			message: '#^Method wcf\\system\\condition\\UserTrophyCondition\:\:getData\(\) should return array\<mixed\> but returns null\.$#'
 			identifier: return.type
 			count: 1
 			path: wcfsetup/install/files/lib/system/condition/UserTrophyCondition.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/condition/UserUserIDCondition.class.php
+
+		-
 			message: '#^Method wcf\\system\\condition\\UserUserIDCondition\:\:getData\(\) should return array\<mixed\> but returns null\.$#'
 			identifier: return.type
 			count: 1
 			path: wcfsetup/install/files/lib/system/condition/UserUserIDCondition.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/condition/page/MultiPageCondition.class.php
 
 		-
 			message: '#^Method wcf\\system\\condition\\page\\MultiPageCondition\:\:getData\(\) should return array\<mixed\> but returns null\.$#'
@@ -293,6 +1301,12 @@ parameters:
 			identifier: return.type
 			count: 1
 			path: wcfsetup/install/files/lib/system/condition/user/UserLastActivityTimeIntervalDaysCondition.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 14
+			path: wcfsetup/install/files/lib/system/database/editor/MySQLDatabaseEditor.class.php
 
 		-
 			message: '#^Instanceof between wcf\\system\\database\\table\\column\\IDatabaseTableColumn and wcf\\system\\database\\table\\column\\IDatabaseTableColumn will always evaluate to true\.$#'
@@ -319,10 +1333,58 @@ parameters:
 			path: wcfsetup/install/files/lib/system/database/table/DatabaseTableChangeProcessor.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/database/table/column/AbstractDatabaseTableColumn.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/database/util/ConditionBuilder.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/database/util/PreparedStatementConditionBuilder.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 10
+			path: wcfsetup/install/files/lib/system/database/util/SQLParser.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/system/devtools/DevtoolsSetup.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 11
+			path: wcfsetup/install/files/lib/system/devtools/package/DevtoolsPackageXmlWriter.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/devtools/package/DevtoolsTar.class.php
+
+		-
 			message: '#^Call to function is_array\(\) with string will always evaluate to false\.$#'
 			identifier: function.impossibleType
 			count: 1
 			path: wcfsetup/install/files/lib/system/email/mime/RecipientAwareTextMimePart.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/event/listener/AbstractUserMergeListener.class.php
 
 		-
 			message: '#^Constructor of class wcf\\system\\exception\\ErrorException has an unused parameter \$filename\.$#'
@@ -337,6 +1399,12 @@ parameters:
 			path: wcfsetup/install/files/lib/system/exception/ErrorException.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/exception/LoggedException.class.php
+
+		-
 			message: '#^Instanceof between wcf\\system\\file\\upload\\UploadFile and wcf\\system\\file\\upload\\UploadFile will always evaluate to true\.$#'
 			identifier: instanceof.alwaysTrue
 			count: 1
@@ -349,10 +1417,58 @@ parameters:
 			path: wcfsetup/install/files/lib/system/form/builder/FormDocument.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/form/builder/FormDocument.class.php
+
+		-
 			message: '#^Call to an undefined method wcf\\system\\form\\builder\\container\\wysiwyg\\WysiwygFormContainer\:\:addValidationError\(\)\.$#'
 			identifier: method.notFound
 			count: 2
 			path: wcfsetup/install/files/lib/system/form/builder/container/wysiwyg/WysiwygFormContainer.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/form/builder/container/wysiwyg/WysiwygPollFormContainer.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/form/builder/field/CheckboxFormField.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/form/builder/field/EmailFormField.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/form/builder/field/IconFormField.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/form/builder/field/MultipleSelectionFormField.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/form/builder/field/SingleSelectionFormField.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/form/builder/field/TextFormField.class.php
 
 		-
 			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
@@ -379,6 +1495,30 @@ parameters:
 			path: wcfsetup/install/files/lib/system/form/builder/field/acl/AclFormField.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/form/builder/field/acl/simple/SimpleAclFormField.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/form/builder/field/bbcode/BBCodeAttributesFormField.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/form/builder/field/dependency/EmptyFormFieldDependency.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/form/builder/field/dependency/NonEmptyFormFieldDependency.class.php
+
+		-
 			message: '#^Instanceof between wcf\\data\\DatabaseObjectList\<wcf\\data\\DatabaseObject\> and wcf\\data\\DatabaseObjectList will always evaluate to true\.$#'
 			identifier: instanceof.alwaysTrue
 			count: 1
@@ -391,10 +1531,40 @@ parameters:
 			path: wcfsetup/install/files/lib/system/form/builder/field/dependency/ValueFormFieldDependency.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/form/builder/field/devtools/project/DevtoolsProjectInstructionsFormField.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/form/builder/field/media/SingleMediaSelectionFormField.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/form/builder/field/tag/TagFormField.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/form/builder/field/user/UserPasswordField.class.php
+
+		-
 			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 1
 			path: wcfsetup/install/files/lib/system/form/builder/field/validation/FormFieldValidationError.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/form/builder/field/validation/FormFieldValidatorUtil.class.php
 
 		-
 			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
@@ -415,9 +1585,33 @@ parameters:
 			path: wcfsetup/install/files/lib/system/form/element/MultipleSelectionFormElement.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/html/input/HtmlInputProcessor.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 5
+			path: wcfsetup/install/files/lib/system/html/input/node/HtmlInputNodeTextParser.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/html/input/node/HtmlInputNodeWoltlabMetacode.class.php
+
+		-
 			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 1
+			path: wcfsetup/install/files/lib/system/html/input/node/HtmlInputNodeWoltlabMetacodeMarker.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
 			path: wcfsetup/install/files/lib/system/html/input/node/HtmlInputNodeWoltlabMetacodeMarker.class.php
 
 		-
@@ -425,6 +1619,174 @@ parameters:
 			identifier: notIdentical.alwaysTrue
 			count: 1
 			path: wcfsetup/install/files/lib/system/html/input/node/HtmlInputNodeWoltlabMetacodeMarker.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/html/metacode/converter/ListMetacodeConverter.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/html/metacode/converter/SpoilerMetacodeConverter.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/html/metacode/converter/UrlMetacodeConverter.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/html/node/AbstractHtmlNodeProcessor.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/html/output/HtmlOutputProcessor.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/html/output/node/HtmlOutputNodeImg.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/html/output/node/HtmlOutputNodePre.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/html/output/node/HtmlOutputNodeProcessor.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/html/output/node/HtmlOutputNodeWoltlabQuote.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/html/output/node/HtmlOutputUnfurlUrlNode.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/html/toc/HtmlToc.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/image/adapter/GDImageAdapter.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/importer/AbstractACLImporter.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/importer/AbstractAttachmentImporter.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/importer/AbstractCategoryImporter.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/importer/AbstractLikeImporter.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 11
+			path: wcfsetup/install/files/lib/system/importer/ArticleImporter.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/importer/ImportHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/importer/LabelGroupImporter.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 7
+			path: wcfsetup/install/files/lib/system/importer/MediaImporter.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 8
+			path: wcfsetup/install/files/lib/system/importer/PageImporter.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/importer/SmileyImporter.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/importer/TrophyImporter.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/importer/UserGroupImporter.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/importer/UserImporter.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/importer/UserTrophyImporter.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/io/TarWriter.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/io/Zip.class.php
 
 		-
 			message: '#^Strict comparison using \!\=\= between "PK\\005\\006" and "PK\\001\\002" will always evaluate to true\.$#'
@@ -451,16 +1813,244 @@ parameters:
 			path: wcfsetup/install/files/lib/system/io/Zip.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/io/ZipWriter.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/label/object/AbstractLabelObjectHandler.class.php
+
+		-
 			message: '#^Parameter \#2 \$callback of function uasort expects callable\(wcf\\data\\label\\group\\ViewableLabelGroup, wcf\\data\\label\\group\\ViewableLabelGroup\)\: int, array\{''wcf\\\\data\\\\label\\\\group\\\\LabelGroup'', ''sortLabelGroups''\} given\.$#'
 			identifier: argument.type
 			count: 1
 			path: wcfsetup/install/files/lib/system/label/object/AbstractLabelObjectHandler.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/language/I18nHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/language/LanguageFactory.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 5
+			path: wcfsetup/install/files/lib/system/menu/TreeMenu.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/menu/acp/ACPMenu.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/menu/user/profile/UserProfileMenu.class.php
+
+		-
 			message: '#^Call to an undefined method wcf\\data\\DatabaseObjectList\<wcf\\data\\DatabaseObject\>\:\:getAttachmentList\(\)\.$#'
 			identifier: method.notFound
 			count: 1
 			path: wcfsetup/install/files/lib/system/message/QuickReplyManager.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/message/QuickReplyManager.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/message/embedded/object/ArticleMessageEmbeddedObjectHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/message/embedded/object/AttachmentMessageEmbeddedObjectHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/message/embedded/object/MediaMessageEmbeddedObjectHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/message/embedded/object/MessageEmbeddedObjectManager.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/message/embedded/object/PageMessageEmbeddedObjectHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/message/embedded/object/QuoteMessageEmbeddedObjectHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/message/embedded/object/UnfurlUrlEmbeddedObjectHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/message/embedded/object/UserMessageEmbeddedObjectHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/message/quote/MessageQuoteManager.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/message/unfurl/UnfurlResponse.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/moderation/queue/AbstractModerationQueueHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/moderation/queue/ModerationQueueManager.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 5
+			path: wcfsetup/install/files/lib/system/option/BirthdayOptionType.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/system/option/BooleanOptionType.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 5
+			path: wcfsetup/install/files/lib/system/option/CaptchaSelectOptionType.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/option/CustomOptionHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/option/DateOptionType.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/option/FileOptionType.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/option/MessageOptionType.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/option/RadioButtonOptionType.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/system/option/SelectOptionType.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/option/TextOptionType.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/system/option/TextareaIpAddressOptionType.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/option/TextareaOptionType.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/option/URLOptionType.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/option/UseroptionsOptionType.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/option/user/DateUserOptionOutput.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/option/user/FacebookUserOptionOutput.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/option/user/FloatUserOptionOutput.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/option/user/ImageUserOptionOutput.class.php
 
 		-
 			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
@@ -475,6 +2065,102 @@ parameters:
 			path: wcfsetup/install/files/lib/system/option/user/NewlineToBreakUserOptionOutput.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/option/user/SelectOptionsUserOptionOutput.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/option/user/TwitterUserOptionOutput.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/option/user/URLUserOptionOutput.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/option/user/UserOptionHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 5
+			path: wcfsetup/install/files/lib/system/option/user/group/BBCodeSelectUserGroupOptionType.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/option/user/group/BooleanUserGroupOptionType.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/option/user/group/LineBreakSeparatedTextUserGroupOptionType.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/option/user/group/TextUserGroupOptionType.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/option/user/group/TextareaUserGroupOptionType.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/system/option/user/group/UserGroupsUserGroupOptionType.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/PackageArchive.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/package/PackageInstallationDispatcher.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/PackageInstallationFormManager.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 5
+			path: wcfsetup/install/files/lib/system/package/PackageInstallationNodeBuilder.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/package/PackageInstallationSQLParser.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 6
+			path: wcfsetup/install/files/lib/system/package/PackageInstallationScheduler.class.php
+
+		-
 			message: '#^Dead catch \- wcf\\system\\package\\exception\\IncoherentUpdatePath is never thrown in the try block\.$#'
 			identifier: catch.neverThrown
 			count: 2
@@ -487,6 +2173,24 @@ parameters:
 			path: wcfsetup/install/files/lib/system/package/PackageInstallationScheduler.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/package/PackageUninstallationNodeBuilder.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/package/PackageUpdateDispatcher.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/package/PackageUpdateUnauthorizedException.class.php
+
+		-
 			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 2
@@ -499,9 +2203,27 @@ parameters:
 			path: wcfsetup/install/files/lib/system/package/plugin/ACPMenuPackageInstallationPlugin.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/package/plugin/AbstractFileDeletePackageInstallationPlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/AbstractMenuPackageInstallationPlugin.class.php
+
+		-
 			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/AbstractOptionPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
 			path: wcfsetup/install/files/lib/system/package/plugin/AbstractOptionPackageInstallationPlugin.class.php
 
 		-
@@ -511,15 +2233,105 @@ parameters:
 			path: wcfsetup/install/files/lib/system/package/plugin/AbstractOptionPackageInstallationPlugin.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 5
+			path: wcfsetup/install/files/lib/system/package/plugin/AbstractXMLPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 17
+			path: wcfsetup/install/files/lib/system/package/plugin/BBCodePackageInstallationPlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 13
+			path: wcfsetup/install/files/lib/system/package/plugin/BoxPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 5
+			path: wcfsetup/install/files/lib/system/package/plugin/EventListenerPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/package/plugin/LanguagePackageInstallationPlugin.class.php
+
+		-
 			message: '#^Method wcf\\system\\package\\plugin\\LanguagePackageInstallationPlugin\:\:getEmptyXml\(\) invoked with 0 parameters, 1 required\.$#'
 			identifier: arguments.count
 			count: 1
 			path: wcfsetup/install/files/lib/system/package/plugin/LanguagePackageInstallationPlugin.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 11
+			path: wcfsetup/install/files/lib/system/package/plugin/MenuItemPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 11
+			path: wcfsetup/install/files/lib/system/package/plugin/MenuPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/package/plugin/ObjectTypeDefinitionPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 9
+			path: wcfsetup/install/files/lib/system/package/plugin/ObjectTypePackageInstallationPlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 21
+			path: wcfsetup/install/files/lib/system/package/plugin/PagePackageInstallationPlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 8
+			path: wcfsetup/install/files/lib/system/package/plugin/SQLPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/SmileyPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/system/package/plugin/TemplateListenerPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 7
+			path: wcfsetup/install/files/lib/system/package/plugin/UserGroupOptionPackageInstallationPlugin.class.php
+
+		-
 			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 2
+			path: wcfsetup/install/files/lib/system/package/plugin/UserMenuPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
 			path: wcfsetup/install/files/lib/system/package/plugin/UserMenuPackageInstallationPlugin.class.php
 
 		-
@@ -529,7 +2341,409 @@ parameters:
 			path: wcfsetup/install/files/lib/system/package/plugin/UserMenuPackageInstallationPlugin.class.php
 
 		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/package/plugin/UserNotificationEventPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/plugin/UserOptionPackageInstallationPlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/package/validation/PackageValidationArchive.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/validation/PackageValidationException.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/page/PageLocationManager.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/page/handler/TrophyPageHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 7
+			path: wcfsetup/install/files/lib/system/poll/PollManager.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/reaction/ReactionHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/registry/RegistryHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/request/LinkHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/request/RequestHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 7
+			path: wcfsetup/install/files/lib/system/request/RouteHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/request/route/DynamicRequestRoute.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/request/route/LookupRequestRoute.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/search/ArticleSearch.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 11
+			path: wcfsetup/install/files/lib/system/search/SearchHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/search/SearchIndexManager.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/system/search/SearchResultTextParser.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/search/acp/ACPSearchHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/search/acp/AbstractCategorizedACPSearchResultProvider.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 6
+			path: wcfsetup/install/files/lib/system/search/mysql/MysqlSearchEngine.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 7
+			path: wcfsetup/install/files/lib/system/session/SessionHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/setup/Installer.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/setup/Uninstaller.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/sitemap/object/MultilingualPageSitemapObject.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/sitemap/object/SimplePageSitemapObject.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 5
+			path: wcfsetup/install/files/lib/system/style/StyleCompiler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/tagging/TagEngine.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/template/ACPTemplateEngine.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 8
+			path: wcfsetup/install/files/lib/system/template/TemplateEngine.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/system/template/TemplateScriptingCompiler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/system/template/plugin/AnchorAttributesFunctionTemplatePlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/template/plugin/CounterFunctionTemplatePlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/template/plugin/CycleFunctionTemplatePlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/template/plugin/DateIntervalFunctionTemplatePlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/template/plugin/DateModifierTemplatePlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/template/plugin/HascontentPrefilterTemplatePlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/template/plugin/HtmlCheckboxesFunctionTemplatePlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/template/plugin/HtmlOptionsFunctionTemplatePlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 8
+			path: wcfsetup/install/files/lib/system/template/plugin/JsFunctionTemplatePlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/template/plugin/LinkBlockTemplatePlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/template/plugin/ObjectActionFunctionTemplatePlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 5
+			path: wcfsetup/install/files/lib/system/template/plugin/PageBlockTemplatePlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/template/plugin/PagesFunctionTemplatePlugin.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/system/upload/DefaultUploadFileSaveStrategy.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/upload/UploadHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/user/activity/point/UserActivityPointHandler.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/system/user/authentication/oauth/User.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/user/multifactor/EmailMultifactorMethod.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 5
+			path: wcfsetup/install/files/lib/system/user/multifactor/TotpMultifactorMethod.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/visitTracker/VisitTracker.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/worker/AbstractRebuildDataWorker.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/worker/LikeRebuildDataWorker.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/worker/MailWorker.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/worker/SitemapRebuildWorker.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/worker/UserContentRemoveWorker.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/system/worker/UserRebuildDataWorker.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/util/ArrayUtil.class.php
+
+		-
 			message: '#^Parameter \#1 \$iterator of class RecursiveIteratorIterator constructor expects T of IteratorAggregate\|RecursiveIterator, DirectoryIterator given\.$#'
 			identifier: argument.type
 			count: 2
 			path: wcfsetup/install/files/lib/util/DirectoryUtil.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: wcfsetup/install/files/lib/util/ExifUtil.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 5
+			path: wcfsetup/install/files/lib/util/FileReader.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/util/HTTPRequest.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/util/MessageUtil.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/util/OptionUtil.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: wcfsetup/install/files/lib/util/StringUtil.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: wcfsetup/install/files/lib/util/Url.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 9
+			path: wcfsetup/install/files/lib/util/UserUtil.class.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/util/XMLWriter.class.php

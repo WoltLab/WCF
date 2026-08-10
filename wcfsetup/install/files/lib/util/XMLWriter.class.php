@@ -105,7 +105,7 @@ class XMLWriter
         $this->xml->startElement($element);
         $this->openElements++;
 
-        if (!empty($attributes)) {
+        if ($attributes !== []) {
             $this->writeAttributes($attributes);
         }
     }
@@ -135,7 +135,7 @@ class XMLWriter
         $this->startElement($element);
 
         // write attributes
-        if (!empty($attributes)) {
+        if ($attributes !== []) {
             $this->writeAttributes($attributes);
         }
 

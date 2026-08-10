@@ -245,7 +245,7 @@ abstract class MessageForm extends AbstractCaptchaForm
         }
 
         $disallowedBBCodes = $this->htmlInputProcessor->validate();
-        if (!empty($disallowedBBCodes)) {
+        if ($disallowedBBCodes !== []) {
             WCF::getTPL()->assign('disallowedBBCodes', $disallowedBBCodes);
             throw new UserInputException('text', 'disallowedBBCodes');
         }
@@ -265,7 +265,7 @@ abstract class MessageForm extends AbstractCaptchaForm
      */
     protected function validateContentLanguage()
     {
-        if ($this->languageID === null || $this->languageID === 0 || !$this->enableMultilingualism || empty($this->availableContentLanguages)) {
+        if ($this->languageID === null || $this->languageID === 0 || !$this->enableMultilingualism || $this->availableContentLanguages === []) {
             $this->languageID = null;
 
             return;
@@ -297,7 +297,7 @@ abstract class MessageForm extends AbstractCaptchaForm
             );
         }
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $this->languageID = WCF::getLanguage()->languageID;
         }
 

@@ -51,7 +51,7 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
             }
         }
 
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             $userIDs = \array_unique($userIDs);
             $userProfiles = UserProfileRuntimeCache::getInstance()->getObjects($userIDs);
         }

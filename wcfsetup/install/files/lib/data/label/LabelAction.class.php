@@ -127,7 +127,7 @@ class LabelAction extends AbstractDatabaseObjectAction implements ISortableActio
 
         $labelIDs = $this->parameters['data']['structure'][$labelGroupID];
 
-        if (!empty(\array_diff($labelIDs, $labelGroup->getLabelIDs()))) {
+        if (\array_diff($labelIDs, $labelGroup->getLabelIDs()) !== []) {
             throw new UserInputException('structure');
         }
 

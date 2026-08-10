@@ -85,7 +85,7 @@ class PaidSubscriptionUserEditForm extends PaidSubscriptionUserAddForm
     {
         AbstractForm::readData();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $d = DateUtil::getDateTimeByTimestamp($this->subscriptionUser->endDate);
             $this->endDate = $d->format('Y-m-d');
         }

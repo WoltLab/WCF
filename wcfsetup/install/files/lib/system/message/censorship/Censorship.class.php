@@ -66,7 +66,7 @@ class Censorship extends SingletonFactory
      */
     public function test(string $text)
     {
-        if (empty($this->censoredWords)) {
+        if ($this->censoredWords === []) {
             return false;
         }
 

@@ -214,7 +214,7 @@ final class PackageValidationArchive implements \RecursiveIterator
         // package is not installed yet
         if ($package === null) {
             $instructions = $this->archive->getInstallInstructions();
-            if (empty($instructions)) {
+            if ($instructions === []) {
                 throw new PackageValidationException(
                     PackageValidationException::NO_INSTALL_PATH,
                     ['packageName' => $this->archive->getPackageInfo('name')]

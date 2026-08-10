@@ -112,7 +112,7 @@ class UserGroupOptionForm extends AbstractForm
                 unset($this->groups[$guestGroup->groupID]);
             }
         }
-        if (empty($this->groups)) {
+        if ($this->groups === []) {
             throw new PermissionDeniedException();
         }
 
@@ -193,7 +193,7 @@ class UserGroupOptionForm extends AbstractForm
             }
         }
 
-        if (!empty($this->errorType)) {
+        if ($this->errorType !== []) {
             throw new UserInputException('optionValues', $this->errorType);
         }
     }
@@ -203,7 +203,7 @@ class UserGroupOptionForm extends AbstractForm
     {
         parent::readData();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             // read values of accessible user groups
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("groupID IN (?)", [\array_keys($this->groups)]);

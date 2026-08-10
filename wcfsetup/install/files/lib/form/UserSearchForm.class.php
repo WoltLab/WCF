@@ -149,7 +149,7 @@ class UserSearchForm extends UserOptionListForm
         // do search
         $this->search();
 
-        if (empty($this->matches)) {
+        if ($this->matches === []) {
             throw new UserInputException('search', 'noMatches');
         }
     }

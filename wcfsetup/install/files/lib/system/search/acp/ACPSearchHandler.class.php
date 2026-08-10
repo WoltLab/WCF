@@ -86,7 +86,7 @@ class ACPSearchHandler extends SingletonFactory
 
             $results = $provider->search($query);
 
-            if (!empty($results)) {
+            if ($results !== []) {
                 $resultList = new ACPSearchResultList($name);
                 foreach ($results as $result) {
                     $resultList->addResult($result);
@@ -156,7 +156,7 @@ class ACPSearchHandler extends SingletonFactory
      */
     public function getAbbreviations(string $suffix = '')
     {
-        if (empty($this->abbreviations)) {
+        if ($this->abbreviations === []) {
             // append the 'WCF' pseudo application
             $this->abbreviations[] = 'wcf';
 

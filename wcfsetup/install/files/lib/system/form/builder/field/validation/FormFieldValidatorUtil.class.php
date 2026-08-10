@@ -71,7 +71,7 @@ abstract class FormFieldValidatorUtil
                             }
                         }
 
-                        if (!empty($invalidSegments)) {
+                        if ($invalidSegments !== []) {
                             $formField->addValidationError(
                                 new FormFieldValidationError(
                                     'invalidSegments',

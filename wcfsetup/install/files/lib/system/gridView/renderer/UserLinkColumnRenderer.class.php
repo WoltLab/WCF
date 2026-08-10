@@ -39,7 +39,7 @@ class UserLinkColumnRenderer extends ObjectLinkColumnRenderer
     #[\Override]
     public function render(mixed $value, DatabaseObject $row): string
     {
-        if (!empty($value)) {
+        if ((int)$value !== 0) {
             return parent::render($value, $row);
         }
 

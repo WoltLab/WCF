@@ -121,7 +121,7 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
             $data['endTime'] = $this->endTime;
         }
 
-        if (!empty($data)) {
+        if ($data !== []) {
             return $data;
         }
 

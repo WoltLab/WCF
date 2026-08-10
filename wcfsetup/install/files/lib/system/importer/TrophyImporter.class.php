@@ -69,7 +69,7 @@ class TrophyImporter extends AbstractImporter
                 }
             }
 
-            if (!empty($values)) {
+            if ($values !== []) {
                 $updateData = [];
                 if (isset($values['title'])) {
                     $updateData['title'] = 'wcf.user.trophy.title' . $trophy->trophyID;

@@ -60,7 +60,7 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements
     #[\Override]
     public function getData()
     {
-        if (!empty($this->languageIDs)) {
+        if ($this->languageIDs !== []) {
             return [
                 'languageIDs' => $this->languageIDs,
             ];

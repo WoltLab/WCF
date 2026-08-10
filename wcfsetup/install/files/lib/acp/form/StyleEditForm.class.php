@@ -244,7 +244,7 @@ class StyleEditForm extends StyleAddForm
             'wcf.style.styleDescription\d+'
         );
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $this->authorName = $this->style->authorName;
             $this->authorURL = $this->style->authorURL;
             $this->copyright = $this->style->copyright;
@@ -427,7 +427,7 @@ class StyleEditForm extends StyleAddForm
     {
         parent::assignVariables();
 
-        I18nHandler::getInstance()->assignVariables(!empty($_POST));
+        I18nHandler::getInstance()->assignVariables($_POST !== []);
 
         WCF::getTPL()->assign([
             'action' => 'edit',

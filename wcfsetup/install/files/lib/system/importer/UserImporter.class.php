@@ -191,7 +191,7 @@ class UserImporter extends AbstractImporter
                 }
             }
         }
-        if (empty($languageIDs)) {
+        if ($languageIDs === []) {
             $languageIDs[] = LanguageFactory::getInstance()->getDefaultLanguageID();
         }
 
@@ -244,7 +244,7 @@ class UserImporter extends AbstractImporter
             ]);
         }
 
-        if (!empty($this->eventIDs)) {
+        if ($this->eventIDs !== []) {
             // save default user events
             $placeholders = '(?,?)' . \str_repeat(',(?,?)', \count($this->eventIDs) - 1);
             $sql = "INSERT IGNORE INTO  wcf1_user_notification_event_to_user

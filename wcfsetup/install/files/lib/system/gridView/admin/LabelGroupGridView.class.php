@@ -63,7 +63,7 @@ final class LabelGroupGridView extends AbstractGridView
                     #[\Override]
                     public function render(mixed $value, DatabaseObject $row): string
                     {
-                        if (empty($value)) {
+                        if ((int)$value === 0) {
                             return parent::render($value, $row);
                         }
 
@@ -107,7 +107,7 @@ final class LabelGroupGridView extends AbstractGridView
     protected function createObjectList(): I18nLabelGroupList
     {
         $list = new I18nLabelGroupList();
-        if (!empty($list->sqlSelects)) {
+        if ($list->sqlSelects !== '') {
             $list->sqlSelects .= ', ';
         }
 

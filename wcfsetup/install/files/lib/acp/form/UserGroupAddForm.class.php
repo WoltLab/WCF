@@ -234,7 +234,7 @@ class UserGroupAddForm extends AbstractOptionListForm
         parent::readData();
 
         $this->optionTree = $this->optionHandler->getOptionTree();
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $this->activeTabMenuItem = $this->optionTree[0]['object']->categoryName;
         }
     }
@@ -255,7 +255,7 @@ class UserGroupAddForm extends AbstractOptionListForm
             'userOnlineMarking' => $this->userOnlineMarking,
             'showOnTeamPage' => $this->showOnTeamPage,
             'groupIsGuest' => false,
-            'isBlankForm' => empty($_POST),
+            'isBlankForm' => $_POST === [],
             'allowMention' => $this->allowMention,
             'requireMultifactor' => $this->requireMultifactor,
         ]);

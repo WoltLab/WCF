@@ -80,7 +80,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         $availableUpdateServers = PackageUpdateServer::getActiveUpdateServers();
 
         // there are no available package update servers
-        if (empty($availableUpdateServers)) {
+        if ($availableUpdateServers === []) {
             return [
                 'count' => 0,
                 'pageCount' => 0,
@@ -117,7 +117,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         }
 
         // no matches found
-        if (empty($packageUpdateIDs)) {
+        if ($packageUpdateIDs === []) {
             return [
                 'count' => 0,
                 'pageCount' => 0,
@@ -172,7 +172,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         }
 
         // no matches found
-        if (empty($packageUpdates)) {
+        if ($packageUpdates === []) {
             return [
                 'count' => 0,
                 'pageCount' => 0,
@@ -393,7 +393,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         }
 
         // all found versions are excluded
-        if (empty($packageVersions)) {
+        if ($packageVersions === []) {
             return [];
         }
 
@@ -404,7 +404,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
 
             foreach ($versionData as $packageUpdateID => $versionTypes) {
                 // ignore inaccessible packages
-                if (empty($versionTypes['accessible'])) {
+                if ($versionTypes['accessible'] === []) {
                     continue;
                 }
 
@@ -426,7 +426,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
             }
 
             // ignore packages without accessible versions
-            if (empty($accessible)) {
+            if ($accessible === []) {
                 continue;
             }
 
@@ -463,7 +463,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
                 }
             }
 
-            if (empty($requirements)) {
+            if ($requirements === []) {
                 continue;
             }
 
@@ -488,13 +488,13 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
                     $installedPackages,
                     $excludedPackagesOfInstalledPackages
                 );
-                if (!empty($result)) {
+                if ($result !== []) {
                     $index = \array_search($row['package'], $openRequirements);
                     unset($openRequirements[$index]);
                 }
             }
 
-            if (!empty($openRequirements)) {
+            if ($openRequirements !== []) {
                 return [];
             }
         }
@@ -615,7 +615,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
 
         $updates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
         $url = '';
-        if (!empty($updates)) {
+        if ($updates !== []) {
             $url = LinkHandler::getInstance()->getControllerLink(PackageUpdatePage::class);
         }
 
@@ -777,7 +777,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         // validate exclusions
         $excludedPackages = $scheduler->getExcludedPackages();
 
-        if (!empty($excludedPackages)) {
+        if ($excludedPackages !== []) {
             return [
                 'template' => WCF::getTPL()->render(
                     'wcf',
@@ -813,7 +813,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         }
 
         $queueID = null;
-        if (!empty($stack)) {
+        if ($stack !== []) {
             $parentQueueID = 0;
             $processNo = PackageInstallationQueue::getNewProcessNo();
             foreach ($stack as $package) {

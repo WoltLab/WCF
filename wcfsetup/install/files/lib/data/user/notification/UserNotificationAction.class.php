@@ -285,7 +285,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
         ]);
         $notificationIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
-        if (!empty($notificationIDs)) {
+        if ($notificationIDs !== []) {
             // Step 2) Mark the notifications as read.
             $condition = new PreparedStatementConditionBuilder();
             $condition->add('notificationID IN (?)', [$notificationIDs]);

@@ -121,7 +121,7 @@ class FormDocument
             }
         }
 
-        if (!empty($variables)) {
+        if ($variables !== []) {
             foreach ($this->containers as $container) {
                 $container->handleRequest($variables);
             }

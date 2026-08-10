@@ -78,7 +78,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
             }
         }
 
-        if (empty($cronjobs) && empty($legacyCronjobs)) {
+        if ($cronjobs === [] && $legacyCronjobs === []) {
             return;
         }
 
@@ -89,16 +89,16 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
         );
 
         $conditionBuilder = new PreparedStatementConditionBuilder(false, 'OR');
-        if (!empty($cronjobs)) {
+        if ($cronjobs !== []) {
             $conditionBuilder->add('cronjobName IN (?)', [$cronjobs]);
         }
-        if (!empty($legacyCronjobs)) {
+        if ($legacyCronjobs !== []) {
             $conditionBuilder->add('className IN (?)', [$legacyCronjobs]);
         }
         $cronjobList->getConditionBuilder()->add($conditionBuilder, $conditionBuilder->getParameters());
         $cronjobList->readObjectIDs();
 
-        if (!empty($cronjobList->getObjectIDs())) {
+        if ($cronjobList->getObjectIDs() !== []) {
             CronjobEditor::deleteAll($cronjobList->getObjectIDs());
         }
     }

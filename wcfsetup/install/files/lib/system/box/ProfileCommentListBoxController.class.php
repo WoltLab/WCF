@@ -36,7 +36,7 @@ class ProfileCommentListBoxController extends AbstractCommentListBoxController
 
             if (!WCF::getUser()->isGuest()) {
                 $followers = UserProfileHandler::getInstance()->getFollowers();
-                if (empty($followers)) {
+                if ($followers === []) {
                     $commentList->getConditionBuilder()->add("(
                         user_option_value.userOption{$optionID} IN (?)
                         OR user_option_value.userID = ?

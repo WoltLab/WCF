@@ -49,7 +49,7 @@ class TagCloud
     public function __construct(array $languageIDs = [])
     {
         $this->languageIDs = $languageIDs;
-        if (empty($this->languageIDs)) {
+        if ($this->languageIDs === []) {
             $this->languageIDs = \array_keys(LanguageFactory::getInstance()->getLanguages());
         }
 

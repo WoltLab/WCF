@@ -22,8 +22,9 @@ final class CurrencyFormatter implements IFormOptionFormatter
         $value = (float)$value / 100;
         $language = LanguageFactory::getInstance()->getLanguage($languageID);
         $suffix = '';
-        if (!empty($configuration['currency'])) {
-            $suffix = ' ' . StringUtil::encodeHTML($configuration['currency']);
+        $currency = (string)($configuration['currency'] ?? '');
+        if ($currency !== '') {
+            $suffix = ' ' . StringUtil::encodeHTML($currency);
         }
 
         return \number_format(

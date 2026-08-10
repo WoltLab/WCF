@@ -263,7 +263,7 @@ class PageAddForm extends AbstractForm
         }
 
         // work-around to force adding pages via dialog overlay
-        if (empty($_POST) && $this->pageType === '') {
+        if ($_POST === [] && $this->pageType === '') {
             HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(PageListPage::class, ['showPageAddDialog' => 1]));
 
             exit;
@@ -460,7 +460,7 @@ class PageAddForm extends AbstractForm
      */
     protected function validateCustomUrls()
     {
-        if (empty($this->customURL) && $this->pageType !== 'system') {
+        if ($this->customURL === [] && $this->pageType !== 'system') {
             if ($this->isMultilingual !== 0) {
                 $language1 = \reset($this->availableLanguages);
                 throw new UserInputException('customURL_' . $language1->languageID);
@@ -734,7 +734,7 @@ class PageAddForm extends AbstractForm
         parent::readData();
 
         // set default values
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $this->boxIDs = $this->getDefaultBoxIDs();
 
             if ($this->presetPage !== null) {

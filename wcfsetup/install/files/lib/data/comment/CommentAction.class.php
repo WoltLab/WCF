@@ -396,7 +396,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     {
         if (!empty($this->parameters['commentProcessor'])) {
             $objectType = null;
-            if (!empty($this->objects)) {
+            if ($this->objects !== []) {
                 $comment = \reset($this->objects);
                 $objectType = $this->validateObjectType($comment->objectTypeID);
             }
@@ -984,11 +984,11 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             return null;
         }
 
-        if (isset($this->parameters['data']['username']) && empty($this->validationErrors)) {
+        if (isset($this->parameters['data']['username']) && $this->validationErrors === []) {
             return null;
         }
 
-        if (!empty($this->validationErrors)) {
+        if ($this->validationErrors !== []) {
             if (!empty($this->parameters['data']['username'])) {
                 WCF::getSession()->register('username', $this->parameters['data']['username']);
             }
@@ -1087,7 +1087,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                 $responseIDs[] = $response->responseID;
             }
 
-            if (!empty($responseIDs)) {
+            if ($responseIDs !== []) {
                 $responseObjectType = ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.comment.response');
                 ReactionHandler::getInstance()->loadLikeObjects($responseObjectType, $responseIDs);
                 $likeData['response'] = ReactionHandler::getInstance()->getLikeObjects($responseObjectType);
@@ -1174,7 +1174,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
         // search for disallowed bbcodes
         $disallowedBBCodes = $htmlInputProcessor->validate();
-        if (!empty($disallowedBBCodes)) {
+        if ($disallowedBBCodes !== []) {
             throw new UserInputException(
                 'text',
                 WCF::getLanguage()->getDynamicVariable(

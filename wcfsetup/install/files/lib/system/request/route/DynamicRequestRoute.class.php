@@ -249,7 +249,7 @@ class DynamicRequestRoute implements IRequestRoute
     #[\Override]
     public function canHandle(array $components)
     {
-        if (!empty($this->requireComponents)) {
+        if ($this->requireComponents !== []) {
             foreach ($this->requireComponents as $component => $pattern) {
                 if (empty($components[$component])) {
                     return false;

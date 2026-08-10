@@ -72,7 +72,7 @@ class MessagePreviewAction extends BBCodeAction
         // check if disallowed bbcode are used
         if ($disallowedBBCodesPermission !== '') {
             $disallowedBBCodes = $htmlInputProcessor->validate();
-            if (!empty($disallowedBBCodes)) {
+            if ($disallowedBBCodes !== []) {
                 throw new UserInputException(
                     'message',
                     WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', [

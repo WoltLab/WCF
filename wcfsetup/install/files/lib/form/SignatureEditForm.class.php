@@ -99,7 +99,7 @@ class SignatureEditForm extends MessageForm
         parent::readData();
 
         // default values
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $this->text = WCF::getUser()->signature ?? '';
         }
 

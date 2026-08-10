@@ -61,7 +61,7 @@ class File
     public function __construct(string $filename, string $mode = 'wb', array $options = [])
     {
         $this->filename = $filename;
-        if (!empty($options)) {
+        if ($options !== []) {
             $context = \stream_context_create($options);
             $this->resource = \fopen($filename, $mode, false, $context);
         } else {

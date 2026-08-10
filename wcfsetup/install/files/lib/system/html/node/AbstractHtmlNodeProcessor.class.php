@@ -346,7 +346,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
             $elements[] = $element;
         }
 
-        if (!empty($elements)) {
+        if ($elements !== []) {
             $htmlNode->process($elements, $this);
         }
     }

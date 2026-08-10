@@ -196,7 +196,7 @@ final class PackageInstallationScheduler
             $requirementsCache[] = $row;
         }
 
-        if (!empty($requiredPackages)) {
+        if ($requiredPackages !== []) {
             // find installed packages
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("package IN (?)", [$requiredPackages]);
@@ -265,7 +265,7 @@ final class PackageInstallationScheduler
             // get auth data
             $authData = $this->getAuthData($packageUpdateVersion);
             $options = [];
-            if (!empty($authData)) {
+            if ($authData !== []) {
                 $options[RequestOptions::AUTH] = [
                     $authData['username'],
                     $authData['password'],
@@ -340,7 +340,7 @@ final class PackageInstallationScheduler
             // check install instructions
             if ($validateInstallInstructions) {
                 $installInstructions = $archive->getInstallInstructions();
-                if (empty($installInstructions)) {
+                if ($installInstructions === []) {
                     throw new SystemException("Package '" . $archive->getLocalizedPackageInfo('packageName') . "' (" . $archive->getPackageInfo('name') . ") does not contain valid installation instructions.");
                 }
             }
@@ -381,7 +381,7 @@ final class PackageInstallationScheduler
     {
         $excludedPackages = [];
 
-        if (!empty($this->packageInstallationStack)) {
+        if ($this->packageInstallationStack !== []) {
             $packageInstallations = [];
             $packageIdentifier = [];
             foreach ($this->packageInstallationStack as $packageInstallation) {
@@ -718,7 +718,7 @@ final class PackageInstallationScheduler
                 }
             }
 
-            if (!empty($innerUpdateThreadList)) {
+            if ($innerUpdateThreadList !== []) {
                 // sort by length
                 \usort($innerUpdateThreadList, $this->compareUpdateThreadLists(...));
 
@@ -727,7 +727,7 @@ final class PackageInstallationScheduler
             }
         }
 
-        if (empty($updateThreadList)) {
+        if ($updateThreadList === []) {
             throw new IncoherentUpdatePath($package, $currentVersion, $newVersion);
         }
 

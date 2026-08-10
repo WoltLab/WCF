@@ -44,7 +44,7 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
         $cronjob = parent::create($parameters);
 
         // save cronjob description
-        if (!empty($descriptions)) {
+        if ($descriptions !== []) {
             $cronjobEditor = new self($cronjob);
             $cronjobEditor->saveDescriptions($descriptions);
         }
@@ -133,7 +133,7 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
         parent::update($parameters);
 
         // save cronjob description
-        if (!empty($descriptions)) {
+        if ($descriptions !== []) {
             $this->saveDescriptions($descriptions);
         }
     }
@@ -142,7 +142,7 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
     public static function deleteAll(array $objectIDs = [])
     {
         // delete language items
-        if (!empty($objectIDs)) {
+        if ($objectIDs !== []) {
             $sql = "DELETE FROM wcf1_language_item
                     WHERE       languageItem = ?";
             $statement = WCF::getDB()->prepare($sql);

@@ -150,7 +150,7 @@ class VersionTrackerListPage extends AbstractPage
             $this->newID = 'current';
         }
 
-        if (!empty($_POST)) {
+        if ($_POST !== []) {
             HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(VersionTrackerListPage::class, [
                 'objectID' => $this->objectID,
                 'objectType' => $this->objectType,

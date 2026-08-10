@@ -99,7 +99,7 @@ class TarWriter extends Tar
         if (!\is_array($files)) {
             $files = [$files];
         }
-        if (empty($files)) {
+        if ($files === []) {
             return false;
         }
 

@@ -267,7 +267,7 @@ class LabelGroupAddForm extends AbstractFormBuilderForm
         $statement->execute([$groupID]);
 
         // insert new relations
-        if (!empty($this->objectTypes)) {
+        if ($this->objectTypes !== []) {
             $sql = "INSERT INTO wcf1_label_group_to_object
                                 (groupID, objectTypeID, objectID)
                     VALUES      (?, ?, ?)";
@@ -299,7 +299,7 @@ class LabelGroupAddForm extends AbstractFormBuilderForm
      */
     protected function setObjectTypeRelations(?array $data = null): void
     {
-        if (!empty($_POST)) {
+        if ($_POST !== []) {
             // use POST data
             $data = &$this->objectTypes;
         }

@@ -44,7 +44,7 @@ class PageImporter extends AbstractImporter
                 'hasEmbeddedObjects' => (!empty($contentData['hasEmbeddedObjects']) ? $contentData['hasEmbeddedObjects'] : 0),
             ];
         }
-        if (empty($contents)) {
+        if ($contents === []) {
             return 0;
         }
         if (\count($contents) > 1) {

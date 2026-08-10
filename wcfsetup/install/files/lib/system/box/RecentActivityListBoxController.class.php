@@ -140,7 +140,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
                 'user_activity_event.userID IN (?)',
                 [UserProfileHandler::getInstance()->getFollowingUsers()]
             );
-        } elseif (!empty(UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES))) {
+        } elseif (UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES) !== []) {
             $this->objectList->getConditionBuilder()->add(
                 "user_activity_event.userID NOT IN (?)",
                 [UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES)]
@@ -191,7 +191,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
                 'user_activity_event.userID IN (?)',
                 [UserProfileHandler::getInstance()->getFollowingUsers()]
             );
-        } elseif (!empty(UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES))) {
+        } elseif (UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES) !== []) {
             $this->objectList->getConditionBuilder()->add(
                 "user_activity_event.userID NOT IN (?)",
                 [UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES)]

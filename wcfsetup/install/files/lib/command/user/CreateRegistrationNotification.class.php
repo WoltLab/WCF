@@ -28,7 +28,7 @@ final class CreateRegistrationNotification
         }
 
         $recipientIDs = $this->getRecipientsForNotificationEvent();
-        if (!empty($recipientIDs)) {
+        if ($recipientIDs !== []) {
             UserNotificationHandler::getInstance()->fireEvent(
                 $this->user->requiresAdminActivation() ? 'needActivation' : 'success',
                 'com.woltlab.wcf.user.registration.notification',

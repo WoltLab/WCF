@@ -165,7 +165,7 @@ class UserClipboardAction extends AbstractClipboardAction
         }
 
         // no valid users found
-        if (empty($userIDs)) {
+        if ($userIDs === []) {
             return [];
         }
 

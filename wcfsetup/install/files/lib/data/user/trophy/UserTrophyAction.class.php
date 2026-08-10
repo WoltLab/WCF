@@ -118,7 +118,7 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
     #[\Override]
     public function delete()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -130,7 +130,7 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
 
         $returnValues = parent::delete();
 
-        if (!empty($this->objects)) {
+        if ($this->objects !== []) {
             // update user special trophies trophies
             $userTrophies = UserTrophyList::getUserTrophies($userIDs);
 
@@ -141,7 +141,7 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
                 }
 
                 $conditionBuilder = new PreparedStatementConditionBuilder();
-                if (!empty($userTrophyIDs)) {
+                if ($userTrophyIDs !== []) {
                     $conditionBuilder->add('trophyID NOT IN (?)', [\array_unique($userTrophyIDs)]);
                 }
                 $conditionBuilder->add('userID = ?', [$userID]);

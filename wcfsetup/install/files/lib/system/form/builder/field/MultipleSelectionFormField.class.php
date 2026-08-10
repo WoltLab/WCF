@@ -102,7 +102,7 @@ class MultipleSelectionFormField extends AbstractFormField implements
 
         if (($value === null || empty($value)) && $this->isRequired()) {
             $this->addValidationError(new FormFieldValidationError('empty'));
-        } elseif ($value !== null && !empty(\array_diff($this->getValue(), \array_keys($this->getOptions())))) {
+        } elseif ($value !== null && \array_diff($this->getValue(), \array_keys($this->getOptions())) !== []) {
             $this->addValidationError(new FormFieldValidationError(
                 'invalidValue',
                 'wcf.global.form.error.noValidSelection'

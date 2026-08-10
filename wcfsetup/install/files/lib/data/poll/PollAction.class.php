@@ -106,11 +106,11 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
             }
         }
 
-        if (!empty($newOptions) || !empty($updateOptions) || !empty($options)) {
+        if ($newOptions !== [] || $updateOptions !== [] || $options !== []) {
             WCF::getDB()->beginTransaction();
 
             // check if new options should be created
-            if (!empty($newOptions)) {
+            if ($newOptions !== []) {
                 $sql = "INSERT INTO wcf1_poll_option
                                     (pollID, optionValue, showOrder)
                         VALUES      (?, ?, ?)";
@@ -125,7 +125,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
             }
 
             // check if existing options should be updated
-            if (!empty($updateOptions)) {
+            if ($updateOptions !== []) {
                 $sql = "UPDATE  wcf1_poll_option
                         SET     optionValue = ?,
                                 showOrder = ?
@@ -141,7 +141,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
             }
 
             // check if options should be removed
-            if (!empty($options)) {
+            if ($options !== []) {
                 $sql = "DELETE FROM wcf1_poll_option
                         WHERE       optionID = ?";
                 $statement = WCF::getDB()->prepare($sql);
@@ -217,7 +217,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
             WCF::getUser()->userID,
         ]);
         $optionIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-        $alreadyVoted = !empty($optionIDs);
+        $alreadyVoted = $optionIDs !== [];
 
         // calculate the difference
         foreach ($this->parameters['optionIDs'] as $index => $optionID) {
@@ -254,7 +254,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         }
 
         // remove previous options
-        if (!empty($optionIDs)) {
+        if ($optionIDs !== []) {
             $sql = "DELETE FROM wcf1_poll_option_vote
                     WHERE       optionID = ?
                             AND userID = ?";

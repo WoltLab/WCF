@@ -181,7 +181,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
                     if ($object->isImage) {
                         if ($adapter->checkMemoryLimit($object->width, $object->height, $object->fileType)) {
                             $exifData = ExifUtil::getExifData($object->getLocation());
-                            if (!empty($exifData)) {
+                            if ($exifData !== []) {
                                 $orientation = ExifUtil::getOrientation($exifData);
                                 if ($orientation !== ExifUtil::ORIENTATION_ORIGINAL) {
                                     $adapter->loadFile($object->getLocation());
@@ -240,7 +240,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
                     }
                 }
 
-                if (!empty($updateData)) {
+                if ($updateData !== []) {
                     /** @var DatabaseObjectEditor<DatabaseObject> $editor */
                     $editor = new $this->editorClassName($object);
                     $editor->update($updateData);
@@ -366,7 +366,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
             $updateData = $parameters['updateData'];
         }
 
-        if (!empty($updateData)) {
+        if ($updateData !== []) {
             (new $this->editorClassName($file))->update($updateData);
         }
     }

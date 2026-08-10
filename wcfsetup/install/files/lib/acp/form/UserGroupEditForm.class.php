@@ -96,7 +96,7 @@ class UserGroupEditForm extends UserGroupAddForm
     #[\Override]
     public function readData()
     {
-        if (empty($_POST)) {
+        if ($_POST === []) {
             I18nHandler::getInstance()->setOptions('groupName', 1, $this->group->groupName, 'wcf.acp.group.group\d+');
             I18nHandler::getInstance()->setOptions(
                 'groupDescription',
@@ -121,7 +121,7 @@ class UserGroupEditForm extends UserGroupAddForm
     {
         parent::assignVariables();
 
-        I18nHandler::getInstance()->assignVariables(!empty($_POST));
+        I18nHandler::getInstance()->assignVariables($_POST !== []);
 
         $ownerGroupPermissions = [];
         if ($this->group->isOwner()) {

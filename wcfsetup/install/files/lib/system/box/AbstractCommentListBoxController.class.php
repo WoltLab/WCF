@@ -66,7 +66,7 @@ abstract class AbstractCommentListBoxController extends AbstractDatabaseObjectLi
             throw new InvalidObjectTypeException($this->objectTypeName, 'com.woltlab.wcf.comment.commentableContent');
         }
 
-        if (!empty($this->validSortFields) && \MODULE_LIKE !== 0) {
+        if ($this->validSortFields !== [] && \MODULE_LIKE !== 0) {
             $this->validSortFields[] = 'cumulativeLikes';
         }
 
@@ -89,7 +89,7 @@ abstract class AbstractCommentListBoxController extends AbstractDatabaseObjectLi
 
         $this->applyObjectTypeFilters($commentList);
 
-        if (!empty(UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES))) {
+        if (UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES) !== []) {
             $commentList->getConditionBuilder()->add(
                 "(comment.userID IS NULL OR comment.userID NOT IN (?))",
                 [UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES)]

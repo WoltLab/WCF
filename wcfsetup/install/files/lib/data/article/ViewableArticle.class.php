@@ -200,7 +200,7 @@ class ViewableArticle extends DatabaseObjectDecorator
                 // cache does not exist or is outdated
                 if ($unreadArticles === null) {
                     $categoryIDs = ArticleCategory::getSubscribedCategoryIDs();
-                    if (!empty($categoryIDs)) {
+                    if ($categoryIDs !== []) {
                         $conditionBuilder = new PreparedStatementConditionBuilder();
                         $conditionBuilder->add('article.categoryID IN (?)', [$categoryIDs]);
                         $conditionBuilder->add(

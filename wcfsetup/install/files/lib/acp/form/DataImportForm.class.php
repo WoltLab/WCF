@@ -254,7 +254,7 @@ class DataImportForm extends AbstractForm
         // validate selected data
         if (!$this->exporter->validateSelectedData($this->selectedData)) {
             throw new UserInputException('selectedData');
-        } elseif (empty($this->exporter->getQueue())) {
+        } elseif ($this->exporter->getQueue() === []) {
             throw new UserInputException('selectedData');
         }
 
@@ -309,7 +309,7 @@ class DataImportForm extends AbstractForm
             $this->fileSystemPath = (!empty($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : \WCF_DIR);
         }
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             if ($this->exporterName === '') {
                 $sql = "SELECT  COUNT(*)
                         FROM    wcf1_import_mapping";

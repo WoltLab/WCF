@@ -183,7 +183,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
     public function readObjects()
     {
         if ($this->objectIDs !== null) {
-            if (empty($this->objectIDs)) {
+            if ($this->objectIDs === []) {
                 return;
             }
 
@@ -423,7 +423,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
             throw new \BadMethodCallException("Cannot get a single object when the list contains " . \count($this->objects) . " objects.");
         }
 
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             return null;
         }
 

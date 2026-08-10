@@ -401,7 +401,7 @@ trait TI18nFormField
             if (\is_string($value) || \is_numeric($value)) {
                 $this->setStringValue((string)$value);
             } elseif (\is_array($value)) {
-                if (!empty($value)) {
+                if ($value !== []) {
                     I18nHandler::getInstance()->setValues($this->getPrefixedId(), $value);
                 }
             } else {

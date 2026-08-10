@@ -280,7 +280,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
 
         // search for disallowed bbcodes
         $disallowedBBCodes = $htmlInputProcessor->validate();
-        if (!empty($disallowedBBCodes)) {
+        if ($disallowedBBCodes !== []) {
             throw new UserInputException(
                 'text',
                 WCF::getLanguage()->getDynamicVariable(
@@ -385,11 +385,11 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
      */
     public function enable(): void
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             return;
         }
 

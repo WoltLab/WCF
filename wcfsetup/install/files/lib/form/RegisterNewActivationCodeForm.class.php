@@ -101,7 +101,7 @@ final class RegisterNewActivationCodeForm extends AbstractFormBuilderForm
             return;
         }
 
-        if (!empty($this->user->getBlacklistMatches())) {
+        if ($this->user->getBlacklistMatches() !== []) {
             throw new PermissionDeniedException();
         }
     }
@@ -160,7 +160,7 @@ final class RegisterNewActivationCodeForm extends AbstractFormBuilderForm
     {
         $formData = $this->form->getData()['data'];
         $parameters = ['emailConfirmed' => \bin2hex(\random_bytes(20))];
-        if (!empty($formData['email'])) {
+        if ((string)($formData['email'] ?? '') !== '') {
             $parameters['email'] = $formData['email'];
         }
         $this->objectAction = new UserAction([$this->user], 'update', [
@@ -207,7 +207,7 @@ final class RegisterNewActivationCodeForm extends AbstractFormBuilderForm
             throw new IllegalLinkException();
         }
 
-        if (!empty(WCF::getUser()->getBlacklistMatches())) {
+        if (WCF::getUser()->getBlacklistMatches() !== []) {
             throw new PermissionDeniedException();
         }
 

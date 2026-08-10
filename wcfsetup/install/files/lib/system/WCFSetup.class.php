@@ -577,7 +577,7 @@ final class WCFSetup extends WCF
                 // check for table conflicts
                 $conflictedTables = $this->getConflictedTables($db);
 
-                if (empty($conflictedTables)) {
+                if ($conflictedTables === []) {
                     // connection successfully established
                     // write configuration to config.inc.php
                     \file_put_contents(

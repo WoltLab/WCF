@@ -84,7 +84,7 @@ final class RegisterActivationForm extends AbstractFormBuilderForm
             ));
         }
 
-        if (!empty($this->user->getBlacklistMatches())) {
+        if ($this->user->getBlacklistMatches() !== []) {
             throw new PermissionDeniedException();
         }
     }
@@ -116,14 +116,18 @@ final class RegisterActivationForm extends AbstractFormBuilderForm
             throw new IllegalLinkException();
         }
 
-        if (empty($_POST) && !empty($_GET['u']) && !empty($_GET['a'])) {
+        if (
+            $_POST === []
+            && \is_string($_GET['u'] ?? null) && $_GET['u'] !== ''
+            && \is_string($_GET['a'] ?? null) && $_GET['a'] !== ''
+        ) {
             $user = new User(\intval($_GET['u']));
             $_POST['username'] = $user->userID !== 0 ? $user->username : '';
             $_POST['activationCode'] = $_GET['a'];
             $_REQUEST['t'] = WCF::getSession()->getSecurityToken();
         }
 
-        if (!empty(WCF::getUser()->getBlacklistMatches())) {
+        if (WCF::getUser()->getBlacklistMatches() !== []) {
             throw new PermissionDeniedException();
         }
 

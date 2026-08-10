@@ -38,7 +38,7 @@ abstract class AbstractFormOptionAddForm extends AbstractFormBuilderForm
                     $configuration = [];
 
                     foreach ($this->getConfigurationFormFieldIds() as $parameter) {
-                        if (!empty($parameters['data'][$parameter])) {
+                        if ($this->isConfigurationValueSet($parameters['data'][$parameter] ?? null)) {
                             $configuration[$parameter] = $parameters['data'][$parameter];
                         }
                         if (\array_key_exists($parameter, $parameters['data'])) {
@@ -62,6 +62,22 @@ abstract class AbstractFormOptionAddForm extends AbstractFormBuilderForm
                 }
             )
         );
+    }
+
+    /**
+     * Returns whether the given value of a configuration form field is considered
+     * to be set and therefore has to be stored. Values that represent the default
+     * state of a form field, for example an empty text or a disabled checkbox, are
+     * not stored.
+     */
+    private function isConfigurationValueSet(mixed $value): bool
+    {
+        return $value !== null
+            && $value !== ''
+            && $value !== 0
+            && $value !== 0.0
+            && $value !== false
+            && $value !== [];
     }
 
     /**

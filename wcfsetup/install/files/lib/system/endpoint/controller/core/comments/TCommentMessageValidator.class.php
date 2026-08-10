@@ -50,7 +50,7 @@ trait TCommentMessageValidator
 
         // search for disallowed bbcodes
         $disallowedBBCodes = $htmlInputProcessor->validate();
-        if (!empty($disallowedBBCodes)) {
+        if ($disallowedBBCodes !== []) {
             throw new UserInputException(
                 'text',
                 WCF::getLanguage()->getDynamicVariable(

@@ -75,7 +75,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      */
     public function markAsDone()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -169,7 +169,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
         $queueIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
         $queues = [];
-        if (!empty($queueIDs)) {
+        if ($queueIDs !== []) {
             $queueList = new ViewableModerationQueueList();
             $queueList->getConditionBuilder()->add("moderation_queue.queueID IN (?)", [$queueIDs]);
             $queueList->sqlOrderBy = "moderation_queue.lastChangeTime DESC";
@@ -189,7 +189,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
                 "moderation_queue.status IN (?)",
                 [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]
             );
-            if (!empty($queueIDs)) {
+            if ($queueIDs !== []) {
                 $queueList->getConditionBuilder()->add("moderation_queue.queueID NOT IN (?)", [$queueIDs]);
             }
             $queueList->sqlOrderBy = "moderation_queue.lastChangeTime DESC";
@@ -230,7 +230,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
             $this->parameters['visitTime'] = \TIME_NOW;
         }
 
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -255,7 +255,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      */
     public function validateMarkAsRead()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -303,10 +303,10 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      */
     public function validateAssignUserByClipboard(): void
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }

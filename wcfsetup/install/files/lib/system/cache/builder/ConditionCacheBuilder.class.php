@@ -28,7 +28,7 @@ class ConditionCacheBuilder extends AbstractCacheBuilder
         }
 
         $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes($definition->definitionName);
-        if (empty($objectTypes)) {
+        if ($objectTypes === []) {
             return [];
         }
 

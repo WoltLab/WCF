@@ -184,7 +184,7 @@ final class DirectoryUtil
     protected function scanFiles(): void
     {
         // value is cached
-        if (!empty($this->files)) {
+        if ($this->files !== []) {
             return;
         }
 
@@ -221,7 +221,7 @@ final class DirectoryUtil
     protected function scanFileObjects(): void
     {
         // value is cached
-        if (!empty($this->fileObjects)) {
+        if ($this->fileObjects !== []) {
             return;
         }
 

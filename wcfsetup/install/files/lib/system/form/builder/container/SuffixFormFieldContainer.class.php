@@ -85,7 +85,7 @@ class SuffixFormFieldContainer extends FormContainer
                 "There is no suffix field for which a label could be determined for container '{$this->getId()}'."
             );
         }
-        if (empty($this->getSuffixField()->getOptions())) {
+        if ($this->getSuffixField()->getOptions() === []) {
             throw new \BadMethodCallException(
                 "The suffix field has no options for container '{$this->getId()}'."
             );
@@ -138,7 +138,7 @@ class SuffixFormFieldContainer extends FormContainer
             );
         }
 
-        if (empty($this->getSuffixField()->getOptions())) {
+        if ($this->getSuffixField()->getOptions() === []) {
             return '';
         }
 

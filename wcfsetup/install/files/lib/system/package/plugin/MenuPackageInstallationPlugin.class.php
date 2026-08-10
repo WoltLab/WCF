@@ -218,7 +218,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
     {
         // updating menus is not supported because the only modifiable data is the
         // title and overwriting it could conflict with user changes
-        if (!empty($row)) {
+        if ($row !== []) {
             return new Menu(null, $row);
         }
 
@@ -228,7 +228,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
     #[\Override]
     protected function postImport()
     {
-        if (empty($this->boxData)) {
+        if ($this->boxData === []) {
             return;
         }
 
@@ -483,7 +483,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
         }
 
         if ($saveData) {
-            if (!empty($boxData)) {
+            if ($boxData !== []) {
                 $this->boxData[$data['identifier']] = [
                     'identifier' => $data['identifier'],
                     'name' => $this->getI18nValues($data['title'], true),

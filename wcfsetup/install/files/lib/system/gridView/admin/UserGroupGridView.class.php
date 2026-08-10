@@ -131,7 +131,7 @@ final class UserGroupGridView extends AbstractGridView
     {
         $list = new I18nUserGroupList();
 
-        if (!empty($list->sqlSelects)) {
+        if ($list->sqlSelects !== '') {
             $list->sqlSelects .= ", ";
         }
         $list->sqlSelects .= $this->subSelectMembers() . " AS members";

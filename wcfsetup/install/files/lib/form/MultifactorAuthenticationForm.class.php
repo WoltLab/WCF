@@ -79,7 +79,7 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm
 
         $this->setups = Setup::getAllForUser($this->user);
 
-        if (empty($this->setups)) {
+        if ($this->setups === []) {
             throw new NamedUserException(HtmlString::fromSafeHtml(WCF::getLanguage()->getDynamicVariable(
                 'wcf.user.security.multifactor.authentication.noSetup',
                 [

@@ -373,7 +373,7 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                                 }
                             }
 
-                            if (!empty($missingFiles)) {
+                            if ($missingFiles !== []) {
                                 $formField->addValidationError(
                                     new FormFieldValidationError(
                                         'missingFiles',
@@ -457,13 +457,14 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                             }
 
                             // ensure that the optionals and requirements do not conflict
+                            $erroneousPackages = [];
                             foreach ($formField->getSaveValue() as $optional) {
                                 if (isset($requiredPackages[$optional['packageIdentifier']])) {
                                     $erroneousPackages[] = $optional['packageIdentifier'];
                                 }
                             }
 
-                            if (!empty($erroneousPackages)) {
+                            if ($erroneousPackages !== []) {
                                 $formField->addValidationError(
                                     new FormFieldValidationError(
                                         'requirementOptional',
@@ -485,13 +486,14 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                             }
 
                             // ensure that the exclusions and requirements do not conflict
+                            $erroneousPackages = [];
                             foreach ($formField->getSaveValue() as $optional) {
                                 if (isset($excludedPackages[$optional['packageIdentifier']])) {
                                     $erroneousPackages[] = $optional['packageIdentifier'];
                                 }
                             }
 
-                            if (!empty($erroneousPackages)) {
+                            if ($erroneousPackages !== []) {
                                 $formField->addValidationError(
                                     new FormFieldValidationError(
                                         'requirementOptional',
@@ -516,7 +518,7 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                                 }
                             }
 
-                            if (!empty($missingFiles)) {
+                            if ($missingFiles !== []) {
                                 $formField->addValidationError(
                                     new FormFieldValidationError(
                                         'missingFiles',
@@ -590,7 +592,7 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                                 }
                             }
 
-                            if (!empty($affectedPackages)) {
+                            if ($affectedPackages !== []) {
                                 $formField->addValidationError(
                                     new FormFieldValidationError(
                                         'requirementExclusion',
@@ -711,7 +713,7 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
             }
 
             foreach ($formField->getValue() as $instructionsKey => $instructions) {
-                if (empty($instructions['instructions'])) {
+                if (($instructions['instructions'] ?? []) === []) {
                     $formField->addValidationError(
                         new FormFieldValidationError(
                             'missingInstructions',
@@ -808,7 +810,7 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                                 }
 
                                 $directoryUtil = DirectoryUtil::getInstance($directory);
-                                if (empty($directoryUtil->getFiles(\SORT_ASC, Regex::compile('.+\.xml')))) {
+                                if ($directoryUtil->getFiles(\SORT_ASC, Regex::compile('.+\.xml')) === []) {
                                     $formField->addValidationError(
                                         new FormFieldValidationError(
                                             'missingFiles',
@@ -852,7 +854,7 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                                 );
                             } else {
                                 $application = 'wcf';
-                                if (!empty($instruction['application'])) {
+                                if (($instruction['application'] ?? '') !== '') {
                                     $application = $instruction['application'];
                                 } elseif ($isApplication !== 0) {
                                     $application = Package::getAbbreviation($packageIdentifier);
@@ -880,7 +882,7 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                                             }
 
                                             $fileApplication = 'wcf';
-                                            if (!empty($fileSearchInstruction['application'])) {
+                                            if (($fileSearchInstruction['application'] ?? '') !== '') {
                                                 $fileApplication = $fileSearchInstruction['application'];
                                             } elseif ($isApplication !== 0) {
                                                 $fileApplication = Package::getAbbreviation($packageIdentifier);

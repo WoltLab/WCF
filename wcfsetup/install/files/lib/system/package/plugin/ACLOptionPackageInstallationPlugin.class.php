@@ -68,7 +68,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
             ];
         }
 
-        if (!empty($options)) {
+        if ($options !== []) {
             $sql = "DELETE FROM " . $this->application . "1_" . $this->tableName . "
                     WHERE       optionName = ?
                             AND objectTypeID = ?
@@ -96,7 +96,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
             ];
         }
 
-        if (!empty($categories)) {
+        if ($categories !== []) {
             // delete options for given categories
             $sql = "DELETE FROM " . $this->application . "1_" . $this->tableName . "
                     WHERE       categoryName = ?

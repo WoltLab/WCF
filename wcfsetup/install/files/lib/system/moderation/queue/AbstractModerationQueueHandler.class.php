@@ -95,7 +95,7 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
         $statement->execute($conditions->getParameters());
         $queueIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
-        if (!empty($queueIDs)) {
+        if ($queueIDs !== []) {
             $queueAction = new ModerationQueueAction($queueIDs, 'delete');
             $queueAction->executeAction();
         }

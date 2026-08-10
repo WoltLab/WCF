@@ -42,10 +42,10 @@ class AttachmentAction extends AbstractDatabaseObjectAction
     {
         WCF::getSession()->checkPermissions(['admin.attachment.canManageAttachment']);
 
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }

@@ -20,7 +20,7 @@ class AccessibleArticleList extends ArticleList
 
         // get accessible categories
         $accessibleCategoryIDs = ArticleCategory::getAccessibleCategoryIDs();
-        if (empty($accessibleCategoryIDs)) {
+        if ($accessibleCategoryIDs === []) {
             $this->getConditionBuilder()->add('1=0');
         } else {
             $this->getConditionBuilder()->add('article.categoryID IN (?)', [$accessibleCategoryIDs]);

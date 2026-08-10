@@ -29,7 +29,7 @@ class CLICommandHandler
      */
     public static function getCommands()
     {
-        if (empty(self::$commands)) {
+        if (self::$commands === []) {
             $directory = DirectoryUtil::getInstance(\WCF_DIR . 'lib/system/cli/command/');
             $commands = $directory->getFiles(\SORT_ASC, new Regex('Command\.class\.php$'));
             foreach ($commands as $command) {

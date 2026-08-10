@@ -73,7 +73,7 @@ class UserMergeForm extends AbstractForm
         // get user
         // @phpstan-ignore assign.propertyType
         $this->users = ClipboardHandler::getInstance()->getMarkedItems($this->objectTypeID);
-        if (empty($this->users) || \count($this->users) < 2) {
+        if ($this->users === [] || \count($this->users) < 2) {
             throw new IllegalLinkException();
         }
         foreach ($this->users as $user) {

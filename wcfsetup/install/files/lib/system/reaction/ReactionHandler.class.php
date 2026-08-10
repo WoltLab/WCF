@@ -220,7 +220,7 @@ final class ReactionHandler extends SingletonFactory
      */
     public function loadLikeObjects(ObjectType $objectType, array $objectIDs, bool $loadLikeableObjects = true): int
     {
-        if (empty($objectIDs)) {
+        if ($objectIDs === []) {
             return 0;
         }
 
@@ -408,7 +408,7 @@ final class ReactionHandler extends SingletonFactory
             if (\is_array($cachedReactions)) {
                 $cachedReactions = self::cleanUpCachedReactions($cachedReactions);
 
-                if (!empty($cachedReactions)) {
+                if ($cachedReactions !== []) {
                     $allReactions = \array_sum($cachedReactions);
 
                     \arsort($cachedReactions, \SORT_NUMERIC);

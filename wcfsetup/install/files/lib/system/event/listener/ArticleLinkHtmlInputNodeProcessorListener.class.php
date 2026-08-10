@@ -26,7 +26,7 @@ class ArticleLinkHtmlInputNodeProcessorListener extends AbstractHtmlInputNodePro
         $regex = $this->getRegexFromLink(LinkHandler::getInstance()->getControllerLink(ArticlePage::class));
         $articleContentIDs = $this->getObjectIDs($eventObj, $regex);
 
-        if (!empty($articleContentIDs)) {
+        if ($articleContentIDs !== []) {
             // read linked article contents
             $articleContentList = new ArticleContentList();
             $articleContentList->getConditionBuilder()->add(
@@ -41,7 +41,7 @@ class ArticleLinkHtmlInputNodeProcessorListener extends AbstractHtmlInputNodePro
                 $articleIDs[] = $articleContent->articleID;
             }
 
-            if (!empty($articleIDs)) {
+            if ($articleIDs !== []) {
                 // read the accessible articles of the ones that are linked
                 $articleList = new AccessibleArticleList();
                 $articleList->getConditionBuilder()->add('article.articleID IN (?)', [\array_unique($articleIDs)]);

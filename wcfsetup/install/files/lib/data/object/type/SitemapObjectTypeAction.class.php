@@ -63,7 +63,7 @@ class SitemapObjectTypeAction extends ObjectTypeAction implements IToggleAction
     #[\Override]
     public function validateToggle()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 

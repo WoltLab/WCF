@@ -125,12 +125,12 @@ class LabelHandler extends SingletonFactory
      */
     public function getPermissions(string $optionName, array $labelIDs, ?User $user = null)
     {
-        if (empty($labelIDs)) {
+        if ($labelIDs === []) {
             // nothing to validate anyway
             return [];
         }
 
-        if (empty($this->labelGroups['groups'])) {
+        if ($this->labelGroups['groups'] === []) {
             // pretend given label ids aren't valid
             $data = [];
             foreach ($labelIDs as $labelID) {
@@ -195,7 +195,7 @@ class LabelHandler extends SingletonFactory
         }
 
         // insert new labels
-        if (!empty($labelIDs)) {
+        if ($labelIDs !== []) {
             $sql = "INSERT INTO wcf1_label_object
                                 (labelID, objectTypeID, objectID)
                     VALUES      (?, ?, ?)";
@@ -248,7 +248,7 @@ class LabelHandler extends SingletonFactory
         $statement->execute($conditionBuilder->getParameters());
 
         // assign new labels
-        if (!empty($labelIDs)) {
+        if ($labelIDs !== []) {
             $sql = "INSERT INTO wcf1_label_object
                                 (labelID, objectTypeID, objectID)
                     VALUES      (?, ?, ?)";
@@ -349,7 +349,7 @@ class LabelHandler extends SingletonFactory
             }
         }
 
-        if (empty($groupIDs)) {
+        if ($groupIDs === []) {
             $groupIDs = \array_keys($this->labelGroups['groups']);
         }
         foreach ($groupIDs as $groupID) {

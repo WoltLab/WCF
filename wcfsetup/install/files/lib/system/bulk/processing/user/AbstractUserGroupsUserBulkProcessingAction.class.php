@@ -54,7 +54,7 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
     {
         $users = $this->getAccessibleUsers($objectList);
 
-        if (!empty($users)) {
+        if ($users !== []) {
             WCF::getDB()->beginTransaction();
             foreach ($users as $user) {
                 $user = new UserEditor($user);
@@ -86,7 +86,7 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
     #[\Override]
     public function isAvailable()
     {
-        return !empty($this->availableUserGroups);
+        return $this->availableUserGroups !== [];
     }
 
     #[\Override]
@@ -106,7 +106,7 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
     #[\Override]
     public function validate()
     {
-        if (empty($this->userGroupIDs)) {
+        if ($this->userGroupIDs === []) {
             throw new UserInputException($this->inputName);
         }
 

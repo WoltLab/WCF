@@ -271,7 +271,7 @@ class PageEditForm extends PageAddForm
     {
         parent::readData();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $this->name = $this->page->name;
             $this->parentPageID = $this->page->parentPageID;
             $this->pageType = $this->page->pageType;

@@ -248,7 +248,7 @@ final class MessageQuoteManager extends SingletonFactory
             }
         }
 
-        if (!empty($quoteIDs)) {
+        if ($quoteIDs !== []) {
             $this->removeQuoteIDs = \array_merge($this->removeQuoteIDs, $quoteIDs);
             $this->updateSession();
         }

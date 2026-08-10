@@ -117,7 +117,7 @@ final class UsernameFormField extends AbstractFormField implements
             $this->validateMinimumLength($this->getValue());
             $this->validateMaximumLength($this->getValue());
 
-            if (empty($this->getValidationErrors())) {
+            if ($this->getValidationErrors() === []) {
                 if (!UserUtil::isValidUsername($this->getValue())) {
                     $this->addValidationError(new FormFieldValidationError(
                         'invalid',

@@ -46,7 +46,7 @@ class NoticeEditForm extends NoticeAddForm
     {
         parent::assignVariables();
 
-        I18nHandler::getInstance()->assignVariables(!empty($_POST));
+        I18nHandler::getInstance()->assignVariables($_POST !== []);
 
         WCF::getTPL()->assign([
             'action' => 'edit',
@@ -65,7 +65,7 @@ class NoticeEditForm extends NoticeAddForm
     {
         parent::readData();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             I18nHandler::getInstance()->setOptions('notice', 1, $this->notice->notice, 'wcf.notice.notice.notice\d+');
 
             $this->cssClassName = $this->notice->cssClassName;

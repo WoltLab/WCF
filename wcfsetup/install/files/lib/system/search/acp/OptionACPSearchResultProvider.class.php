@@ -58,15 +58,15 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
             }
         }
 
-        if (empty($optionNames) && empty($categoryNames) && !(\ENABLE_DEBUG_MODE !== 0 && \ENABLE_DEVELOPER_TOOLS !== 0)) {
+        if ($optionNames === [] && $categoryNames === [] && !(\ENABLE_DEBUG_MODE !== 0 && \ENABLE_DEVELOPER_TOOLS !== 0)) {
             return [];
         }
 
         $conditions = new PreparedStatementConditionBuilder(true, 'OR');
-        if (!empty($categoryNames)) {
+        if ($categoryNames !== []) {
             $conditions->add('categoryName IN (?)', [$categoryNames]);
         }
-        if (!empty($optionNames)) {
+        if ($optionNames !== []) {
             $conditions->add('optionName IN (?)', [$optionNames]);
         }
         if (\ENABLE_DEBUG_MODE !== 0 && \ENABLE_DEVELOPER_TOOLS !== 0) {

@@ -28,7 +28,7 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
     #[\Override]
     public function update(array $parameters = [])
     {
-        if (empty($parameters)) {
+        if ($parameters === []) {
             return;
         }
 
@@ -53,7 +53,7 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
     #[\Override]
     public function updateCounters(array $counters = [])
     {
-        if (empty($counters)) {
+        if ($counters === []) {
             return;
         }
 

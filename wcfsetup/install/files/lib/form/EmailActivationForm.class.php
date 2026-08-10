@@ -111,7 +111,11 @@ final class EmailActivationForm extends AbstractFormBuilderForm
             throw new IllegalLinkException();
         }
 
-        if (empty($_POST) && !empty($_GET['u']) && !empty($_GET['a'])) {
+        if (
+            $_POST === []
+            && \is_string($_GET['u'] ?? null) && $_GET['u'] !== ''
+            && \is_string($_GET['a'] ?? null) && $_GET['a'] !== ''
+        ) {
             $_POST['userID'] = $_GET['u'];
             $_POST['activationCode'] = $_GET['a'];
             $_REQUEST['t'] = WCF::getSession()->getSecurityToken();
@@ -138,7 +142,7 @@ final class EmailActivationForm extends AbstractFormBuilderForm
         $this->objectAction->executeAction();
 
         // confirm email
-        if (!$this->user->isEmailConfirmed() && empty($this->user->blacklistMatches)) {
+        if (!$this->user->isEmailConfirmed() && $this->user->blacklistMatches === '') {
             $this->objectAction = new UserAction([$this->user], 'confirmEmail');
             $this->objectAction->executeAction();
         }

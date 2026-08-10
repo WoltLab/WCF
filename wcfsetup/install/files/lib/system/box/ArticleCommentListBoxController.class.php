@@ -26,7 +26,7 @@ class ArticleCommentListBoxController extends AbstractCommentListBoxController
     protected function applyObjectTypeFilters(ViewableCommentList $commentList)
     {
         $accessibleCategoryIDs = ArticleCategory::getAccessibleCategoryIDs();
-        if (!empty($accessibleCategoryIDs)) {
+        if ($accessibleCategoryIDs !== []) {
             $commentList->sqlJoins .= '
                 INNER JOIN  wcf1_article_content article_content
                 ON          article_content.articleContentID = comment.objectID
@@ -38,7 +38,7 @@ class ArticleCommentListBoxController extends AbstractCommentListBoxController
             $commentList->getConditionBuilder()->add('article.publicationStatus = ?', [Article::PUBLISHED]);
 
             // apply language filter
-            if (LanguageFactory::getInstance()->multilingualismEnabled() && !empty(WCF::getUser()->getLanguageIDs())) {
+            if (LanguageFactory::getInstance()->multilingualismEnabled() && WCF::getUser()->getLanguageIDs() !== []) {
                 $commentList->getConditionBuilder()->add(
                     '(article_content.languageID IN (?) OR article_content.languageID IS NULL)',
                     [WCF::getUser()->getLanguageIDs()]

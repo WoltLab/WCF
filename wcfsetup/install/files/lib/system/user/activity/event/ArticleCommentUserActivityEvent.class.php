@@ -39,7 +39,7 @@ class ArticleCommentUserActivityEvent extends SingletonFactory implements IUserA
         }
 
         $articles = $articleContentToArticle = [];
-        if (!empty($articleContentIDs)) {
+        if ($articleContentIDs !== []) {
             $articleList = new ArticleList();
             $articleList->getConditionBuilder()->add(
                 "article.articleID IN (

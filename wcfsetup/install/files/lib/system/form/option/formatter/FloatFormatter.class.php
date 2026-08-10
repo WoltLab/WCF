@@ -18,8 +18,9 @@ final class FloatFormatter implements IFormOptionFormatter
     public function format(string $value, int $languageID, array $configuration): string
     {
         $suffix = '';
-        if (!empty($configuration['unit'])) {
-            $suffix = ' ' . StringUtil::encodeHTML($configuration['unit']);
+        $unit = (string)($configuration['unit'] ?? '');
+        if ($unit !== '') {
+            $suffix = ' ' . StringUtil::encodeHTML($unit);
         }
 
         return StringUtil::formatNumeric(\floatval($value)) . $suffix;

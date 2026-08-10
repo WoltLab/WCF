@@ -196,7 +196,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
         }
 
         // insert new groups
-        if (!empty($groupIDs)) {
+        if ($groupIDs !== []) {
             $sql = "INSERT IGNORE INTO  wcf1_user_to_group
                                         (userID, groupID)
                     VALUES              (?, ?)";
@@ -271,7 +271,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
                 VALUES              (?, ?)";
         $statement = WCF::getDB()->prepare($sql);
 
-        if (!empty($languageIDs)) {
+        if ($languageIDs !== []) {
             WCF::getDB()->beginTransaction();
             foreach ($languageIDs as $languageID) {
                 $statement->execute([

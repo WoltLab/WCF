@@ -62,7 +62,7 @@ class UserContentRemoveWorker extends AbstractWorker
         if (
             isset($this->parameters['userIDs'])
             && \is_array($this->parameters['userIDs'])
-            && !empty($this->parameters['userIDs'])
+            && $this->parameters['userIDs'] !== []
         ) {
             $userList = new UserList();
             $userList->setObjectIDs($this->parameters['userIDs']);
@@ -88,7 +88,7 @@ class UserContentRemoveWorker extends AbstractWorker
             }
         }
 
-        if (empty($this->users)) {
+        if ($this->users === []) {
             throw new \InvalidArgumentException('The parameter `userIDs` is empty.');
         }
 
@@ -104,7 +104,7 @@ class UserContentRemoveWorker extends AbstractWorker
                     'objectType'
                 )
             );
-            if (!empty($unknownContentProvider)) {
+            if ($unknownContentProvider !== []) {
                 throw new \InvalidArgumentException('The parameter `contentProvider` contains unknown objectTypes (' . \implode(
                     ', ',
                     $unknownContentProvider
@@ -220,7 +220,7 @@ class UserContentRemoveWorker extends AbstractWorker
         $objectList = $processor->getContentListForUser($user);
         $objectList->sqlLimit = $this->limit;
         $objectList->readObjectIDs();
-        if (!empty($objectList->objectIDs)) {
+        if ($objectList->objectIDs !== []) {
             $processor->deleteContent($objectList->objectIDs);
         }
 

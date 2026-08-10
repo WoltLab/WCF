@@ -84,11 +84,11 @@ class StructuredCommentResponseList extends CommentResponseList
         }
 
         // cache user ids
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             UserProfileRuntimeCache::getInstance()->cacheObjectIDs(\array_unique($userIDs));
         }
 
-        if (!empty($embeddedObjectIDs)) {
+        if ($embeddedObjectIDs !== []) {
             MessageEmbeddedObjectManager::getInstance()->loadObjects(
                 'com.woltlab.wcf.comment.response',
                 $embeddedObjectIDs
@@ -103,7 +103,7 @@ class StructuredCommentResponseList extends CommentResponseList
      */
     public function getLikeData()
     {
-        if (empty($this->objectIDs)) {
+        if ($this->objectIDs === null || $this->objectIDs === []) {
             return [];
         }
 

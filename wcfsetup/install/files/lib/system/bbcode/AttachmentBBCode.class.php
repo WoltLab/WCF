@@ -32,7 +32,7 @@ final class AttachmentBBCode extends AbstractBBCode
 
         if ($attachment->showAsImage() && $attachment->canViewPreview() && ($outputType === 'text/html' || $outputType === 'text/simplified-html')) {
             $hasParentLink = false;
-            if (!empty($closingTag['__parents'])) {
+            if (($closingTag['__parents'] ?? []) !== []) {
                 /** @var \DOMElement $parent */
                 foreach ($closingTag['__parents'] as $parent) {
                     if ($parent->nodeName === 'a') {

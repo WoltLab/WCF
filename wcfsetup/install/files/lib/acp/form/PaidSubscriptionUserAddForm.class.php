@@ -173,7 +173,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm
     {
         parent::readData();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $this->setDefaultEndDate();
         }
     }

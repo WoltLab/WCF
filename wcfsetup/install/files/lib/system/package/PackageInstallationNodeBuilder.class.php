@@ -792,12 +792,12 @@ class PackageInstallationNodeBuilder
 
             // check for exclusions
             $excludedPackages = $archive->getConflictedExcludedPackages();
-            if (!empty($excludedPackages)) {
+            if ($excludedPackages !== []) {
                 $isInstallable = false;
             }
 
             $excludingPackages = $archive->getConflictedExcludingPackages();
-            if (!empty($excludingPackages)) {
+            if ($excludingPackages !== []) {
                 $isInstallable = false;
             }
 
@@ -813,7 +813,7 @@ class PackageInstallationNodeBuilder
             self::$pendingPackages[$archive->getPackageInfo('name')] = $archive->getPackageInfo('version');
         }
 
-        if (!empty($packages)) {
+        if ($packages !== []) {
             $this->parentNode = $this->node;
             $this->node = $this->getToken();
             $this->sequenceNo = 0;

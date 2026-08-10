@@ -67,8 +67,9 @@ class FloatFormOption extends AbstractNumericFormOption
     #[\Override]
     protected function getSuffix(array $configuration): string
     {
-        if (!empty($configuration['unit'])) {
-            return StringUtil::encodeHTML($configuration['unit']);
+        $unit = (string)($configuration['unit'] ?? '');
+        if ($unit !== '') {
+            return StringUtil::encodeHTML($unit);
         }
 
         return '';

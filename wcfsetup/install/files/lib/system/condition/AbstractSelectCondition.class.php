@@ -65,7 +65,7 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition
     #[\Override]
     public function getHTML()
     {
-        if (empty($this->getOptions())) {
+        if ($this->getOptions() === []) {
             return '';
         }
 

@@ -45,7 +45,7 @@ class PackageACPSearchResultProvider implements IACPSearchResultProvider
         }
 
         $conditions = new PreparedStatementConditionBuilder(false);
-        if (!empty($packageIDs)) {
+        if ($packageIDs !== []) {
             $conditions->add("packageID IN (?)", [$packageIDs]);
         }
 

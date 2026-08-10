@@ -296,7 +296,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
                 throw new \InvalidArgumentException("Invalid status '{$status}' given.");
         }
 
-        if ($imageID !== null && !empty($imageData)) {
+        if ($imageID !== null && $imageData !== []) {
             throw new \BadMethodCallException("You cannot pass an imageID and imageData at the same time.");
         }
 

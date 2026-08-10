@@ -31,7 +31,7 @@ class UserQuitCronjob extends AbstractCronjob
         ]);
         $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             $action = new UserAction($userIDs, 'delete');
             $action->executeAction();
         }

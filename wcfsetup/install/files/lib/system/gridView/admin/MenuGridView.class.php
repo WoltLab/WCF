@@ -59,7 +59,7 @@ final class MenuGridView extends AbstractGridView
                     #[\Override]
                     public function render(mixed $value, DatabaseObject $row): string
                     {
-                        if (empty($value)) {
+                        if ((int)$value === 0) {
                             return parent::render($value, $row);
                         }
 
@@ -140,7 +140,7 @@ final class MenuGridView extends AbstractGridView
     protected function createObjectList(): I18nMenuList
     {
         $list = new I18nMenuList();
-        if (!empty($list->sqlSelects)) {
+        if ($list->sqlSelects !== '') {
             $list->sqlSelects .= ', ';
         }
 

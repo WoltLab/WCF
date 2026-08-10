@@ -37,7 +37,7 @@ class ListMetacodeConverter extends AbstractMetacodeConverter
         }
 
         // handle empty lists
-        if (empty($nodes)) {
+        if ($nodes === []) {
             $element->appendChild($element->ownerDocument->createElement('li'));
         } else {
             $targetNodes = [];

@@ -246,7 +246,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm
      */
     protected function setFormObjectData()
     {
-        $this->form->updatedObject($this->formObject, empty($_POST));
+        $this->form->updatedObject($this->formObject, $_POST === []);
     }
 
     #[\Override]

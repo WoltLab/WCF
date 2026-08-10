@@ -170,7 +170,7 @@ class SearchForm extends AbstractCaptchaForm
                 }
             }
         }
-        $this->submit = (!empty($_POST) || !empty($this->query) || !empty($this->username) || $this->userID !== 0);
+        $this->submit = ($_POST !== [] || !empty($this->query) || !empty($this->username) || $this->userID !== 0);
 
         if (isset($_REQUEST['modify'])) {
             $this->modifySearchID = \intval($_REQUEST['modify']);
@@ -195,7 +195,7 @@ class SearchForm extends AbstractCaptchaForm
             $this->userID = $this->searchData['userID'];
             $this->selectedObjectTypes = $this->searchData['selectedObjectTypes'];
 
-            if (!empty($_POST)) {
+            if ($_POST !== []) {
                 $this->submit = true;
             }
         }
@@ -324,7 +324,7 @@ class SearchForm extends AbstractCaptchaForm
         );
 
         // result is empty
-        if (empty($this->results)) {
+        if ($this->results === []) {
             $this->throwNoMatchesException();
         }
     }
@@ -485,7 +485,7 @@ class SearchForm extends AbstractCaptchaForm
      */
     protected function getConditions()
     {
-        if (empty($this->selectedObjectTypes)) {
+        if ($this->selectedObjectTypes === []) {
             $this->selectedObjectTypes = \array_keys(SearchEngine::getInstance()->getAvailableObjectTypes());
         }
 
@@ -495,7 +495,7 @@ class SearchForm extends AbstractCaptchaForm
         $this->searchIndexCondition = new $conditionBuilderClassName(false);
 
         // user ids
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             $this->searchIndexCondition->add('userID IN (?)', [$userIDs]);
         }
 
@@ -543,7 +543,7 @@ class SearchForm extends AbstractCaptchaForm
             }
         }
 
-        if (empty($this->selectedObjectTypes)) {
+        if ($this->selectedObjectTypes === []) {
             $this->throwNoMatchesException();
         }
     }

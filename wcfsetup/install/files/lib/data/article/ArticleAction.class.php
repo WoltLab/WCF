@@ -343,7 +343,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
                 }
             }
 
-            if (!empty($resetArticleIDs)) {
+            if ($resetArticleIDs !== []) {
                 // delete user notifications
                 UserNotificationHandler::getInstance()->removeNotifications(
                     'com.woltlab.wcf.article.notification',
@@ -356,7 +356,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
                 );
             }
 
-            if (!empty($usersToArticles)) {
+            if ($usersToArticles !== []) {
                 ArticleEditor::updateArticleCounter($usersToArticles);
             }
         }
@@ -391,10 +391,10 @@ class ArticleAction extends AbstractDatabaseObjectAction
     #[\Override]
     public function validateDelete()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }
@@ -413,7 +413,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
     #[\Override]
     public function delete()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -439,7 +439,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
         // delete articles
         parent::delete();
 
-        if (!empty($articleIDs)) {
+        if ($articleIDs !== []) {
             // delete like data
             new DeleteObjectReactions('com.woltlab.wcf.likeableArticle', $articleIDs)();
             // delete comments
@@ -492,10 +492,10 @@ class ArticleAction extends AbstractDatabaseObjectAction
      */
     public function validateTrash()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }
@@ -617,7 +617,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
             $this->parameters['visitTime'] = \TIME_NOW;
         }
 
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -665,14 +665,14 @@ class ArticleAction extends AbstractDatabaseObjectAction
         $this->readBoolean('useMarkedArticles', true);
 
         // if no object ids are given, use clipboard handler
-        if (empty($this->objectIDs) && $this->parameters['useMarkedArticles'] === true) {
+        if ($this->objectIDs === [] && $this->parameters['useMarkedArticles'] === true) {
             $this->objectIDs = \array_keys(ClipboardHandler::getInstance()->getMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.article')));
         }
 
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }
@@ -714,10 +714,10 @@ class ArticleAction extends AbstractDatabaseObjectAction
      */
     public function validatePublish()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }
@@ -758,10 +758,10 @@ class ArticleAction extends AbstractDatabaseObjectAction
      */
     public function validateUnpublish()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }

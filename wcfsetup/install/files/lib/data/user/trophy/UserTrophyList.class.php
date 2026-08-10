@@ -23,7 +23,7 @@ class UserTrophyList extends DatabaseObjectList
      */
     public static function getUserTrophies(array $userIDs, bool $includeDisabled = false)
     {
-        if (empty($userIDs)) {
+        if ($userIDs === []) {
             throw new \InvalidArgumentException('UserIDs cannot be empty.');
         }
 

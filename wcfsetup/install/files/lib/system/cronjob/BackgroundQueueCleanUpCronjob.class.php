@@ -65,7 +65,7 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob
                 }
             }
 
-            if (empty($jobIDs)) {
+            if ($jobIDs === []) {
                 WCF::getDB()->commitTransaction();
                 $committed = true;
 

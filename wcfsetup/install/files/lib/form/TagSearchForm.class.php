@@ -90,31 +90,29 @@ class TagSearchForm extends AbstractCaptchaForm
             }
         }
 
-        if (!empty($this->tagNames)) {
-            $this->tags = TagEngine::getInstance()->getTagsByName($this->tagNames, $this->languageID);
-            if (\count($this->tagNames) !== \count($this->tags)) {
-                WCF::getTPL()->assign(
-                    'unknownTags',
-                    \array_diff($this->tagNames, \array_map(
-                        static function (Tag $tag) {
-                            return $tag->getTitle();
-                        },
-                        $this->tags
-                    ))
-                );
-                throw new UserInputException('tags', 'unknownTags');
-            } elseif (empty($this->tags)) {
-                throw new UserInputException('tags');
-            }
-        } else {
+        if ($this->tagNames === null || $this->tagNames === []) {
             throw new UserInputException('tags');
+        }
+
+        $this->tags = TagEngine::getInstance()->getTagsByName($this->tagNames, $this->languageID);
+        if (\count($this->tagNames) !== \count($this->tags)) {
+            WCF::getTPL()->assign(
+                'unknownTags',
+                \array_diff($this->tagNames, \array_map(
+                    static function (Tag $tag) {
+                        return $tag->getTitle();
+                    },
+                    $this->tags
+                ))
+            );
+            throw new UserInputException('tags', 'unknownTags');
         }
     }
 
     #[\Override]
     public function readData()
     {
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $this->languageID = WCF::getLanguage()->languageID;
         }
 

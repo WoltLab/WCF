@@ -73,7 +73,7 @@ trait TSelectionFormField
     public function isAvailable()
     {
         // selections without any possible values are not available
-        return !empty($this->options) && parent::isAvailable();
+        return $this->options !== null && $this->options !== [] && parent::isAvailable();
     }
 
     /**

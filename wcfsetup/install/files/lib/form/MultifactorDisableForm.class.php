@@ -64,7 +64,7 @@ class MultifactorDisableForm extends AbstractFormBuilderForm
 
         $this->setups = Setup::getAllForUser(WCF::getUser());
 
-        if (empty($this->setups)) {
+        if ($this->setups === []) {
             throw new IllegalLinkException();
         }
 
@@ -101,7 +101,7 @@ class MultifactorDisableForm extends AbstractFormBuilderForm
             $this->setupsWithoutBackupCodes($this->setups)
         );
 
-        if (WCF::getUser()->requiresMultifactor() && empty($remaining)) {
+        if (WCF::getUser()->requiresMultifactor() && $remaining === []) {
             $this->form->addDefaultButton(false);
             $this->form->appendChildren([
                 LanguageItemFormNode::create('requireMultifactor')
@@ -155,7 +155,7 @@ class MultifactorDisableForm extends AbstractFormBuilderForm
         $setups = Setup::getAllForUser(WCF::getUser());
         $remaining = $this->setupsWithoutBackupCodes($setups);
 
-        if (empty($remaining)) {
+        if ($remaining === []) {
             if (WCF::getUser()->requiresMultifactor()) {
                 throw new \LogicException('The user requires multi-factor authentication.');
             }

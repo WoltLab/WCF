@@ -109,7 +109,7 @@ class UserLastActivityTimeIntervalDaysCondition extends AbstractSingleFieldCondi
             $data['endDays'] = $this->endDays;
         }
 
-        if (!empty($data)) {
+        if ($data !== []) {
             return $data;
         }
 

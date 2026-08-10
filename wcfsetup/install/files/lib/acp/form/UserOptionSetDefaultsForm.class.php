@@ -94,7 +94,7 @@ class UserOptionSetDefaultsForm extends AbstractForm
                 }
             }
 
-            if (!empty($optionIDs)) {
+            if ($optionIDs !== []) {
                 $sql = "UPDATE  wcf1_user_option_value
                         SET     userOption" . \implode(' = ?, userOption', $optionIDs) . " = ?";
                 $statement = WCF::getDB()->prepare($sql);
@@ -123,7 +123,7 @@ class UserOptionSetDefaultsForm extends AbstractForm
     {
         parent::readData();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $this->optionHandler->readData();
         }
     }

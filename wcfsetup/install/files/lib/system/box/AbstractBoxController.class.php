@@ -119,7 +119,7 @@ abstract class AbstractBoxController implements IBoxController
     #[\Override]
     public static function getSupportedPositions()
     {
-        if (!empty(static::$supportedPositions)) {
+        if (static::$supportedPositions !== []) {
             return static::$supportedPositions;
         }
 

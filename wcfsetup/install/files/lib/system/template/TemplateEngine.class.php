@@ -675,7 +675,7 @@ class TemplateEngine extends SingletonFactory
      */
     public function disableSandbox()
     {
-        if (empty($this->sandboxVars)) {
+        if ($this->sandboxVars === []) {
             throw new SystemException('TemplateEngine is currently not running in a sandbox.');
         }
 
@@ -700,7 +700,7 @@ class TemplateEngine extends SingletonFactory
         }
 
         // add new template variables
-        if (!empty($variables)) {
+        if ($variables !== []) {
             $this->v = \array_merge($this->v, $variables);
         }
 
@@ -764,7 +764,7 @@ class TemplateEngine extends SingletonFactory
         }
 
         // add new template variables
-        if (!empty($variables)) {
+        if ($variables !== []) {
             $this->v = \array_merge($this->v, $variables);
         }
 
@@ -808,7 +808,7 @@ class TemplateEngine extends SingletonFactory
         }
 
         // add new template variables
-        if (!empty($variables)) {
+        if ($variables !== []) {
             $this->v = \array_merge($this->v, $variables);
         }
 
@@ -939,7 +939,7 @@ class TemplateEngine extends SingletonFactory
         }
 
         // add new template variables
-        if (!empty($variables)) {
+        if ($variables !== []) {
             $this->v = \array_merge($this->v, $variables);
         }
 

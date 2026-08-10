@@ -309,7 +309,7 @@ class BoxAddForm extends AbstractForm
         }
 
         // work-around to force adding boxes via dialog overlay
-        if (empty($_POST) && $this->boxType === '') {
+        if ($_POST === [] && $this->boxType === '') {
             HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(BoxListPage::class, ['showBoxAddDialog' => 1]));
 
             exit;
@@ -540,7 +540,7 @@ class BoxAddForm extends AbstractForm
         }
 
         // validate page ids
-        if (!empty($this->pageIDs)) {
+        if ($this->pageIDs !== []) {
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('pageID IN (?)', [$this->pageIDs]);
             $sql = "SELECT  pageID
@@ -721,7 +721,7 @@ class BoxAddForm extends AbstractForm
 
         parent::readData();
 
-        if (empty($_POST) && $this->presetBox !== null) {
+        if ($_POST === [] && $this->presetBox !== null) {
             $this->name = $this->presetBox->name;
             $this->boxType = $this->presetBox->boxType;
             $this->position = $this->presetBox->position;

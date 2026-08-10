@@ -60,7 +60,7 @@ class ConditionHandler extends SingletonFactory
      */
     public function deleteConditions(string $definitionName, array $objectIDs)
     {
-        if (empty($objectIDs)) {
+        if ($objectIDs === []) {
             return;
         }
 
@@ -75,7 +75,7 @@ class ConditionHandler extends SingletonFactory
             $objectTypeIDs[] = $objectType->objectTypeID;
         }
 
-        if (empty($objectTypeIDs)) {
+        if ($objectTypeIDs === []) {
             return;
         }
 

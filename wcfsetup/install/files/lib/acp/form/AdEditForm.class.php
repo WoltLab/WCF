@@ -54,7 +54,7 @@ class AdEditForm extends AdAddForm
     {
         parent::readData();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $this->ad = $this->adObject->ad;
             $this->adName = $this->adObject->adName;
             $this->isDisabled = $this->adObject->isDisabled;

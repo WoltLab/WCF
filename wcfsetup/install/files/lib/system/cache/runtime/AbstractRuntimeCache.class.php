@@ -126,7 +126,7 @@ abstract class AbstractRuntimeCache extends SingletonFactory implements IRuntime
             }
         }
 
-        if (!empty($objectIDs)) {
+        if ($objectIDs !== []) {
             $this->cacheObjectIDs($objectIDs);
 
             $this->fetchObjects();

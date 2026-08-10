@@ -154,7 +154,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
                 $groupIDs = \array_merge($groupIDs, $__groupIDs);
             }
         }
-        if (empty($groupIDs)) {
+        if ($groupIDs === []) {
             return [];
         }
 

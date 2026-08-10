@@ -65,7 +65,7 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
             $data['smileyPath2x'] = 'images/smilies/' . $smileyFilename2x;
         }
 
-        if (!empty($data)) {
+        if ($data !== []) {
             $smileyEditor = new SmileyEditor($smiley);
             $smileyEditor->update($data);
 
@@ -78,7 +78,7 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
     #[\Override]
     public function update()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 

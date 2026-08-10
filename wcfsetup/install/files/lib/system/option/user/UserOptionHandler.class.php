@@ -341,7 +341,7 @@ class UserOptionHandler extends OptionHandler
         $options = parent::save($categoryName, $optionPrefix);
 
         // remove options which are not asked during registration
-        if ($this->inRegistration && !empty($options)) {
+        if ($this->inRegistration && $options !== []) {
             foreach ($this->options as $option) {
                 if (
                     \array_key_exists($option->optionID, $options)

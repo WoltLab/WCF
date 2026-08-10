@@ -174,7 +174,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
     {
         $authData = $updateServer->getAuthData();
         $options = [];
-        if (!empty($authData)) {
+        if ($authData !== []) {
             $options[RequestOptions::AUTH] = [
                 $authData['username'],
                 $authData['password'],
@@ -286,7 +286,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
             $statement->execute([$updateServer->packageUpdateServerID]);
 
             // save packages
-            if (!empty($allNewPackages)) {
+            if ($allNewPackages !== []) {
                 $this->savePackageUpdates($allNewPackages, $updateServer->packageUpdateServerID);
             }
             unset($allNewPackages);
@@ -726,7 +726,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
         // get update server data
         $updateServers = PackageUpdateServer::getActiveUpdateServers();
         $packageUpdateServerIDs = \array_keys($updateServers);
-        if (empty($packageUpdateServerIDs)) {
+        if ($packageUpdateServerIDs === []) {
             return $updates;
         }
 
@@ -741,7 +741,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
             $existingPackages[$row['package']][] = $row;
         }
 
-        if (empty($existingPackages)) {
+        if ($existingPackages === []) {
             return $updates;
         }
 
@@ -926,7 +926,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
         $statement->execute($conditions->getParameters());
         $versions = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
-        if (empty($versions)) {
+        if ($versions === []) {
             throw new SystemException("Cannot find the package '" . $package . "' in version '" . $version . "'");
         }
 

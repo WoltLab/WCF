@@ -49,7 +49,7 @@ class LabelGroupAction extends AbstractDatabaseObjectAction
     public function delete()
     {
         // remove labels and their potential language variables
-        if (!empty($this->objectIDs)) {
+        if ($this->objectIDs !== []) {
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add('groupID IN (?)', [$this->objectIDs]);
 
@@ -60,7 +60,7 @@ class LabelGroupAction extends AbstractDatabaseObjectAction
             $statement->execute($conditions->getParameters());
             $labelIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
-            if (!empty($labelIDs)) {
+            if ($labelIDs !== []) {
                 $objectAction = new LabelAction($labelIDs, 'delete');
                 $objectAction->executeAction();
             }
@@ -68,7 +68,7 @@ class LabelGroupAction extends AbstractDatabaseObjectAction
 
         $count = parent::delete();
 
-        if (!empty($this->objects)) {
+        if ($this->objects !== []) {
             // identify i18n labels
             $languageVariables = [];
             foreach ($this->objects as $labelGroup) {
@@ -78,7 +78,7 @@ class LabelGroupAction extends AbstractDatabaseObjectAction
             }
 
             // remove language variables
-            if (!empty($languageVariables)) {
+            if ($languageVariables !== []) {
                 $conditions = new PreparedStatementConditionBuilder();
                 $conditions->add('languageItem IN (?)', [$languageVariables]);
 

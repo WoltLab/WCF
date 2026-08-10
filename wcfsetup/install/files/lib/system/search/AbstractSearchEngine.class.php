@@ -36,7 +36,7 @@ abstract class AbstractSearchEngine extends SingletonFactory implements ISearchE
     #[\Override]
     public function removeSpecialCharacters(string $string)
     {
-        if (!empty($this->specialCharacters)) {
+        if ($this->specialCharacters !== []) {
             return \str_replace($this->specialCharacters, '', $string);
         }
 

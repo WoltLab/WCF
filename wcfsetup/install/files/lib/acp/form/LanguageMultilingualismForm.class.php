@@ -120,7 +120,7 @@ class LanguageMultilingualismForm extends AbstractForm
     {
         parent::readData();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             // default values
             $contentLanguages = 0;
             foreach ($this->languages as $languageID => $language) {

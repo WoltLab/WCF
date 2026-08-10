@@ -102,7 +102,7 @@ final class HTTPRequest
         }
 
         if ($this->options['method'] !== 'GET') {
-            if (empty($this->files)) {
+            if ($this->files === []) {
                 if (\is_array($postParameters)) {
                     $this->body = \http_build_query($this->postParameters, '', '&');
                 } elseif (\is_string($postParameters) && !empty($postParameters)) { // @phpstan-ignore function.alreadyNarrowedType
@@ -115,7 +115,7 @@ final class HTTPRequest
                 $this->addHeader('content-type', 'multipart/form-data; boundary=' . $boundary);
 
                 // source of the iterators: http://stackoverflow.com/a/7623716/782822
-                if (!empty($this->postParameters)) {
+                if ($this->postParameters !== []) {
                     $iterator = new \RecursiveIteratorIterator(
                         new \RecursiveArrayIterator($this->postParameters),
                         \RecursiveIteratorIterator::SELF_FIRST
@@ -343,7 +343,7 @@ final class HTTPRequest
         }
 
         if (!isset($options['method'])) {
-            $options['method'] = (!empty($this->postParameters) || !empty($this->files) ? 'POST' : 'GET');
+            $options['method'] = ($this->postParameters !== [] || $this->files !== [] ? 'POST' : 'GET');
         }
 
         if (!isset($options['maxDepth'])) {

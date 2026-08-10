@@ -54,7 +54,7 @@ class AbstractCategoryImporter extends AbstractImporter
                 }
             }
 
-            if (!empty($values)) {
+            if ($values !== []) {
                 /** @var ?Package $package */
                 $package = null;
                 if ($this->objectTypeID !== 0) {

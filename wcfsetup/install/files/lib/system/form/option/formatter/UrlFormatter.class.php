@@ -19,9 +19,11 @@ final class UrlFormatter implements IFormOptionFormatter
     #[\Override]
     public function format(string $value, int $languageID, array $configuration): string
     {
+        $linkText = (string)($configuration['urlLinkText'] ?? '');
+
         return StringUtil::getAnchorTag(
             $value,
-            !empty($configuration['urlLinkText']) ? $configuration['urlLinkText'] : $this->getTruncatedTitle($value),
+            $linkText !== '' ? $linkText : $this->getTruncatedTitle($value),
             true,
             true
         );

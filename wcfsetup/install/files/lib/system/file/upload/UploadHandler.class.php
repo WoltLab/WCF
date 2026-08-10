@@ -76,7 +76,7 @@ class UploadHandler extends SingletonFactory
 
         // read internal identifier
         if (
-            !empty($requestData)
+            $requestData !== []
             && isset($requestData[$field->getFieldId()])
             && $this->isValidInternalId($requestData[$field->getFieldId()])
         ) {

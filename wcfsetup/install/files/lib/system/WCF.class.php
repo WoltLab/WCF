@@ -1244,7 +1244,7 @@ class WCF
                 });
         }
 
-        if (!empty($nonWritablePaths)) {
+        if ($nonWritablePaths !== []) {
             $maxPaths = 10;
             throw new \RuntimeException('The following paths are not writable: ' . \implode(
                 ',',

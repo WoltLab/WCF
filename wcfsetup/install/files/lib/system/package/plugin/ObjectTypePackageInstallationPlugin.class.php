@@ -396,7 +396,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                                 }
                             }
 
-                            if (!empty($invalidClasses)) {
+                            if ($invalidClasses !== []) {
                                 $formField->addValidationError(
                                     new FormFieldValidationError(
                                         'invalid',
@@ -796,7 +796,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                         if (!empty($formField->getValue())) {
                             $tableName = $formField->getDocument()->getFormField('versionTrackerObjectTypeTableName');
 
-                            if (empty($tableName->getValidationErrors())) {
+                            if ($tableName->getValidationErrors() === []) {
                                 // table name has already been validated and table exists
                                 $columns = WCF::getDB()->getEditor()->getColumns(
                                     ApplicationHandler::insertRealDatabaseTableNames($tableName->getValue())
@@ -1062,7 +1062,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                     $filename = \array_pop($pathPieces);
 
                     $className = $application->getAbbreviation() . '\system\condition\\';
-                    if (!empty($pathPieces)) {
+                    if ($pathPieces !== []) {
                         $className .= \implode('\\', $pathPieces) . '\\';
                     }
                     $className .= \basename($filename, '.class.php');

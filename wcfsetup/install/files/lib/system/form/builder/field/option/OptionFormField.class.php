@@ -38,20 +38,20 @@ final class OptionFormField extends ItemListFormField implements IPackagesFormFi
     {
         parent::validate();
 
-        if (empty($this->getValidationErrors()) && \is_array($this->getValue()) && !empty($this->getValue())) {
+        if ($this->getValidationErrors() === [] && \is_array($this->getValue()) && $this->getValue() !== []) {
             // ignore `module_attachment`, see https://github.com/WoltLab/WCF/issues/2531
             $options = $this->getValue();
             if (($index = \array_search('module_attachment', $options)) !== false) {
                 unset($options[$index]);
             }
 
-            if (empty($options)) {
+            if ($options === []) {
                 return;
             }
 
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('optionName IN (?)', [$options]);
-            if (!empty($this->getPackageIDs())) {
+            if ($this->getPackageIDs() !== []) {
                 $conditionBuilder->add('packageID IN (?)', [$this->getPackageIDs()]);
             }
 
@@ -64,7 +64,7 @@ final class OptionFormField extends ItemListFormField implements IPackagesFormFi
 
             $unknownOptions = \array_diff($options, $availableOptions);
 
-            if (!empty($unknownOptions)) {
+            if ($unknownOptions !== []) {
                 $this->addValidationError(
                     new FormFieldValidationError(
                         'nonExistent',

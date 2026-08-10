@@ -53,7 +53,7 @@ class ACPSessionEditor extends DatabaseObjectEditor
     public static function deleteUserSessions(array $userIDs = [])
     {
         $conditionBuilder = new PreparedStatementConditionBuilder();
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             $conditionBuilder->add('userID IN (?)', [$userIDs]);
         }
 

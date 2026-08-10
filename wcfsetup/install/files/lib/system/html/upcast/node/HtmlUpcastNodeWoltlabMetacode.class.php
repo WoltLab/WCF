@@ -80,7 +80,7 @@ final class HtmlUpcastNodeWoltlabMetacode extends AbstractHtmlUpcastNode
                 /** @see HtmlBBCodeParser::buildBBCodeTag() */
                 $attributes = \array_filter($attributes, static fn($value) => $value !== null);
 
-                if (!empty($attributes)) {
+                if ($attributes !== []) {
                     foreach ($attributes as &$attribute) {
                         $attribute = "'" . \addcslashes($attribute, "'") . "'";
                     }

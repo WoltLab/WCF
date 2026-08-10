@@ -86,7 +86,7 @@ class CombinedTaggedPage extends MultipleLinkPage
         if (isset($_GET['tagIDs']) && \is_array($_GET['tagIDs'])) {
             $this->tagIDs = ArrayUtil::toIntegerArray($_GET['tagIDs']);
         }
-        if (empty($this->tagIDs)) {
+        if ($this->tagIDs === []) {
             throw new IllegalLinkException();
         } elseif (\count($this->tagIDs) > \SEARCH_MAX_COMBINED_TAGS) {
             throw new PermissionDeniedException();
@@ -97,7 +97,7 @@ class CombinedTaggedPage extends MultipleLinkPage
         $tagList->readObjects();
 
         $this->tags = $tagList->getObjects();
-        if (empty($this->tags)) {
+        if ($this->tags === []) {
             throw new IllegalLinkException();
         }
 
@@ -108,7 +108,7 @@ class CombinedTaggedPage extends MultipleLinkPage
             }
         }
 
-        if (empty($this->availableObjectTypes)) {
+        if ($this->availableObjectTypes === []) {
             throw new IllegalLinkException();
         }
 

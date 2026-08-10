@@ -19,11 +19,12 @@ class CategoryColumnRenderer extends DefaultColumnRenderer
     #[\Override]
     public function render(mixed $value, DatabaseObject $row): string
     {
-        if (empty($value)) {
+        $categoryID = (int)$value;
+        if ($categoryID === 0) {
             return '';
         }
 
-        $category = CategoryHandler::getInstance()->getCategory($value);
+        $category = CategoryHandler::getInstance()->getCategory($categoryID);
         if ($category === null) {
             return '';
         }

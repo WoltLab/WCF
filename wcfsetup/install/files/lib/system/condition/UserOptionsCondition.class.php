@@ -105,7 +105,7 @@ class UserOptionsCondition extends AbstractMultipleFieldsCondition implements
             }
         }
 
-        if (!empty($data)) {
+        if ($data !== []) {
             return [
                 'optionValues' => $data,
             ];

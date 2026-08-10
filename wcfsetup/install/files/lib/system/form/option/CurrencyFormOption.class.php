@@ -87,8 +87,9 @@ class CurrencyFormOption extends AbstractNumericFormOption
     #[\Override]
     protected function getSuffix(array $configuration): string
     {
-        if (!empty($configuration['currency'])) {
-            return StringUtil::encodeHTML($configuration['currency']);
+        $currency = (string)($configuration['currency'] ?? '');
+        if ($currency !== '') {
+            return StringUtil::encodeHTML($currency);
         }
 
         return '';

@@ -275,7 +275,7 @@ class ClipboardHandler extends SingletonFactory
                 unset($objectData['objectIDs'][$index]);
             }
 
-            if (!empty($objectData['objectIDs'])) {
+            if ($objectData['objectIDs'] !== []) {
                 $conditions = new PreparedStatementConditionBuilder();
                 $conditions->add("objectTypeID = ?", [$this->getObjectTypeByName($objectType)]);
                 $conditions->add("userID = ?", [WCF::getUser()->userID]);
@@ -343,7 +343,7 @@ class ClipboardHandler extends SingletonFactory
 
         // get objects
         $this->loadMarkedItems();
-        if (empty($this->markedItems)) {
+        if ($this->markedItems === []) {
             return null;
         }
 

@@ -277,7 +277,7 @@ class AccountManagementForm extends AbstractForm
         parent::readData();
 
         // default values
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $this->username = WCF::getUser()->username;
             $this->email = WCF::getUser()->email;
         }
@@ -454,7 +454,7 @@ class AccountManagementForm extends AbstractForm
         }
 
         $data = [];
-        if (!empty($updateParameters) || !empty($this->additionalFields)) {
+        if ($updateParameters !== [] || $this->additionalFields !== []) {
             $data['data'] = \array_merge($this->additionalFields, $updateParameters);
         }
 

@@ -1319,7 +1319,7 @@ final class SessionHandler extends SingletonFactory
      */
     public static function resetSessions(array $userIDs = []): void
     {
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             UserStorageHandler::getInstance()->reset($userIDs, 'groupIDs');
             UserStorageHandler::getInstance()->reset($userIDs, 'languageIDs');
         } else {

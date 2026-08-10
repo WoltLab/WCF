@@ -121,7 +121,7 @@ trait TObjectTreeNode
      */
     public function hasChildren(): bool
     {
-        return !empty($this->children);
+        return $this->children !== [];
     }
 
     /**

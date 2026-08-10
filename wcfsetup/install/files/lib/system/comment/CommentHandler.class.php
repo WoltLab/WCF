@@ -148,7 +148,7 @@ class CommentHandler extends SingletonFactory
         $commentIDs = $commentList->getObjectIDs();
 
         // no comments -> skip
-        if (empty($commentIDs)) {
+        if ($commentIDs === []) {
             return;
         }
 
@@ -181,7 +181,7 @@ class CommentHandler extends SingletonFactory
                 ->removeNotifications($objectTypeObj->objectType . '.notification', $commentIDs);
         }
 
-        if (!empty($responseIDs)) {
+        if ($responseIDs !== []) {
             // delete likes (for responses)
             $notificationObjectTypes = [];
             if (UserNotificationHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.response.like.notification') !== 0) {
@@ -254,7 +254,7 @@ class CommentHandler extends SingletonFactory
             throw new \InvalidArgumentException("Unknown comment object type '{$objectType}'.");
         }
 
-        if (empty($objectIDs)) {
+        if ($objectIDs === []) {
             return;
         }
 
@@ -271,7 +271,7 @@ class CommentHandler extends SingletonFactory
             }
         }
 
-        if (!empty($commentEvents)) {
+        if ($commentEvents !== []) {
             $notificationList = new UserNotificationList();
             $notificationList->getConditionBuilder()->add(
                 'user_notification.eventID IN (?)',
@@ -295,7 +295,7 @@ class CommentHandler extends SingletonFactory
                 $notificationObjectIDs[$notification->eventID][] = $notification->objectID;
             }
 
-            if (!empty($notificationObjectIDs)) {
+            if ($notificationObjectIDs !== []) {
                 foreach ($notificationObjectIDs as $eventID => $commentIDs) {
                     UserNotificationHandler::getInstance()->markAsConfirmed(
                         $commentEvents[$eventID]['eventName'],
@@ -318,7 +318,7 @@ class CommentHandler extends SingletonFactory
             }
         }
 
-        if (!empty($reactionCommentEvents)) {
+        if ($reactionCommentEvents !== []) {
             // the value of the `objectID` property of the notifications is the like object
             // id which is currently unknown, thus it needs to be read from database
             $notificationList = new UserNotificationList();
@@ -344,7 +344,7 @@ class CommentHandler extends SingletonFactory
                 $notificationObjectIDs[$notification->eventID][] = $notification->objectID;
             }
 
-            if (!empty($notificationObjectIDs)) {
+            if ($notificationObjectIDs !== []) {
                 foreach ($notificationObjectIDs as $eventID => $reactionIDs) {
                     UserNotificationHandler::getInstance()->markAsConfirmed(
                         $reactionCommentEvents[$eventID]['eventName'],
@@ -369,7 +369,7 @@ class CommentHandler extends SingletonFactory
             }
         }
 
-        if (!empty($responseEvents)) {
+        if ($responseEvents !== []) {
             $notificationList = new UserNotificationList();
             $notificationList->getConditionBuilder()->add(
                 'user_notification.eventID IN (?)',
@@ -398,7 +398,7 @@ class CommentHandler extends SingletonFactory
                 $notificationObjectIDs[$notification->eventID][] = $notification->objectID;
             }
 
-            if (!empty($notificationObjectIDs)) {
+            if ($notificationObjectIDs !== []) {
                 foreach ($notificationObjectIDs as $eventID => $responseIDs) {
                     UserNotificationHandler::getInstance()->markAsConfirmed(
                         $responseEvents[$eventID]['eventName'],
@@ -421,7 +421,7 @@ class CommentHandler extends SingletonFactory
             }
         }
 
-        if (!empty($reactionResponseEvents)) {
+        if ($reactionResponseEvents !== []) {
             // the value of the `objectID` property of the notifications is the like object
             // id which is currently unknown, thus it needs to be read from database
             $notificationList = new UserNotificationList();
@@ -452,7 +452,7 @@ class CommentHandler extends SingletonFactory
                 $notificationObjectIDs[$notification->eventID][] = $notification->objectID;
             }
 
-            if (!empty($notificationObjectIDs)) {
+            if ($notificationObjectIDs !== []) {
                 foreach ($notificationObjectIDs as $eventID => $reactionIDs) {
                     UserNotificationHandler::getInstance()->markAsConfirmed(
                         $reactionResponseEvents[$eventID]['eventName'],
@@ -507,7 +507,7 @@ class CommentHandler extends SingletonFactory
             }
         }
 
-        if (!empty($commentEvents)) {
+        if ($commentEvents !== []) {
             foreach ($commentEvents as $eventData) {
                 UserNotificationHandler::getInstance()->markAsConfirmed(
                     $eventData['eventName'],
@@ -529,7 +529,7 @@ class CommentHandler extends SingletonFactory
             }
         }
 
-        if (!empty($reactionCommentEvents)) {
+        if ($reactionCommentEvents !== []) {
             // the value of the `objectID` property of the notifications is the like object
             // id which is currently unknown, thus it needs to be read from database
             $notificationList = new UserNotificationList();
@@ -550,7 +550,7 @@ class CommentHandler extends SingletonFactory
                 $objectIDs[$notification->eventID][] = $notification->objectID;
             }
 
-            if (!empty($objectIDs)) {
+            if ($objectIDs !== []) {
                 foreach ($objectIDs as $eventID => $reactionIDs) {
                     UserNotificationHandler::getInstance()->markAsConfirmed(
                         $reactionCommentEvents[$eventID]['eventName'],
@@ -574,7 +574,7 @@ class CommentHandler extends SingletonFactory
             }
         }
 
-        if (!empty($responseIDs)) {
+        if ($responseIDs !== []) {
             // mark response notifications as confirmed
             $responseEvents = [];
             if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType . '.response.notification') !== 0) {
@@ -586,7 +586,7 @@ class CommentHandler extends SingletonFactory
                 }
             }
 
-            if (!empty($responseEvents)) {
+            if ($responseEvents !== []) {
                 foreach ($responseEvents as $eventData) {
                     UserNotificationHandler::getInstance()->markAsConfirmed(
                         $eventData['eventName'],
@@ -608,7 +608,7 @@ class CommentHandler extends SingletonFactory
                 }
             }
 
-            if (!empty($reactionResponseEvents)) {
+            if ($reactionResponseEvents !== []) {
                 // the value of the `objectID` property of the notifications is the like object
                 // id which is currently unknown, thus it needs to be read from database
                 $notificationList = new UserNotificationList();
@@ -632,7 +632,7 @@ class CommentHandler extends SingletonFactory
                     $objectIDs[$notification->eventID][] = $notification->objectID;
                 }
 
-                if (!empty($objectIDs)) {
+                if ($objectIDs !== []) {
                     foreach ($objectIDs as $eventID => $reactionIDs) {
                         UserNotificationHandler::getInstance()->markAsConfirmed(
                             $reactionResponseEvents[$eventID]['eventName'],
@@ -686,7 +686,7 @@ class CommentHandler extends SingletonFactory
             }
         }
 
-        if (!empty($responseEvents)) {
+        if ($responseEvents !== []) {
             foreach ($responseEvents as $eventData) {
                 UserNotificationHandler::getInstance()->markAsConfirmed(
                     $eventData['eventName'],
@@ -708,7 +708,7 @@ class CommentHandler extends SingletonFactory
             }
         }
 
-        if (!empty($reactionResponseEvents)) {
+        if ($reactionResponseEvents !== []) {
             // the value of the `objectID` property of the notifications is the like object
             // id which is currently unknown, thus it needs to be read from database
             $notificationList = new UserNotificationList();
@@ -729,7 +729,7 @@ class CommentHandler extends SingletonFactory
                 $objectIDs[$notification->eventID][] = $notification->objectID;
             }
 
-            if (!empty($objectIDs)) {
+            if ($objectIDs !== []) {
                 foreach ($objectIDs as $eventID => $reactionIDs) {
                     UserNotificationHandler::getInstance()->markAsConfirmed(
                         $reactionResponseEvents[$eventID]['eventName'],

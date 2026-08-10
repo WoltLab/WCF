@@ -69,7 +69,8 @@ class UserProfileInteractions extends AbstractInteractionProvider
             },
             new class(
                 'homepage',
-                static fn(UserProfile $user) => !empty($user->homepage)
+                static fn(UserProfile $user) => $user->homepage !== null
+                    && $user->homepage !== ''
                     && $user->homepage !== 'http://'
                     && !$user->isProtected()
             ) extends AbstractInteraction {

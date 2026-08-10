@@ -163,7 +163,7 @@ class PollManager extends SingletonFactory
      */
     public function readFormParameters(array $postData = [])
     {
-        if (empty($postData)) {
+        if ($postData === []) {
             $postData = &$_POST;
         }
 
@@ -413,7 +413,7 @@ class PollManager extends SingletonFactory
         $polls = $pollList->getObjects();
 
         // invalid poll ids
-        if (empty($polls)) {
+        if ($polls === []) {
             return [];
         }
 

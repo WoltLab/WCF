@@ -123,8 +123,9 @@ class UserMailForm extends AbstractFormBuilderForm
             ->multiple();
 
         if (\count($_POST) === 0) {
-            if (!empty($_GET['id'])) {
-                $formField->value([\intval($_GET['id'])]);
+            $userID = (int)($_GET['id'] ?? 0);
+            if ($userID !== 0) {
+                $formField->value([$userID]);
             } else {
                 $objectTypeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
                 $users = ClipboardHandler::getInstance()->getMarkedItems($objectTypeID);

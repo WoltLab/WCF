@@ -354,8 +354,8 @@ final class FileProcessor extends SingletonFactory
      */
     public function hasReachedUploadLimit(IFileProcessor $fileProcessor, array $context): bool
     {
-        $isReplacement = $context['__replace'] ?? false;
-        if (!empty($isReplacement) || $fileProcessor->isSingleFile()) {
+        $isReplacement = (bool)($context['__replace'] ?? false);
+        if ($isReplacement || $fileProcessor->isSingleFile()) {
             return false;
         }
 

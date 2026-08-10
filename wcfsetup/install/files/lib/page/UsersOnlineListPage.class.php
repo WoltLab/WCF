@@ -67,7 +67,7 @@ class UsersOnlineListPage extends SortablePage
             $this->validSortFields[] = 'userAgent';
         }
 
-        if (!empty($_POST)) {
+        if ($_POST !== []) {
             HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(
                 UsersOnlineListPage::class,
                 [],

@@ -188,7 +188,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
             $pages[] = $row;
         }
 
-        if (!empty($pages)) {
+        if ($pages !== []) {
             echo "\t<category name=\"shadow.invalid.page\">\n";
 
             foreach ($pages as $page) {
@@ -221,7 +221,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
             $boxes[] = $row;
         }
 
-        if (!empty($pages)) {
+        if ($pages !== []) {
             echo "\t<category name=\"shadow.invalid.box\">\n";
 
             foreach ($boxes as $box) {
@@ -272,7 +272,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
             $languageItems[] = $itemName;
         }
 
-        if (empty($languageItems)) {
+        if ($languageItems === []) {
             return;
         }
 
@@ -335,7 +335,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
             $usedCategories[$category->getAttribute('name')] = 0;
         }
 
-        if (empty($usedCategories)) {
+        if ($usedCategories === []) {
             return;
         }
 
@@ -440,7 +440,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         }
 
         // save items
-        if (!empty($itemData)) {
+        if ($itemData !== []) {
             // select phrases that have custom versions that might get disabled during the update
             if ($updateExistingItems) {
                 $conditions = new PreparedStatementConditionBuilder();
@@ -468,7 +468,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                     }
                 }
 
-                if (!empty($updateValues)) {
+                if ($updateValues !== []) {
                     $sql = "UPDATE  wcf1_language_item
                             SET     languageItemOldValue = languageItemValue,
                                     languageCustomItemDisableTime = ?,
@@ -488,7 +488,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                 }
 
                 // make custom language items normal ones
-                if (!empty($customLanguageItemIDs)) {
+                if ($customLanguageItemIDs !== []) {
                     $sql = "UPDATE  wcf1_language_item
                             SET     isCustomLanguageItem = ?,
                                     languageItemOriginIsSystem = ?,
@@ -546,7 +546,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         }
 
         // save page content
-        if (!empty($pageContents)) {
+        if ($pageContents !== []) {
             // get page ids
             $pageIDs = [];
             $conditions = new PreparedStatementConditionBuilder();
@@ -603,7 +603,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         }
 
         // save box content
-        if (!empty($boxContents)) {
+        if ($boxContents !== []) {
             // get box ids
             $boxIDs = [];
             $conditions = new PreparedStatementConditionBuilder();
@@ -860,7 +860,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         int $packageID = \PACKAGE_ID,
         array $useCustom = []
     ) {
-        if (empty($items)) {
+        if ($items === []) {
             return;
         }
 
@@ -882,7 +882,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         }
 
         // create remaining items
-        if (!empty($items)) {
+        if ($items !== []) {
             // bypass LanguageItemEditor::create() for performance reasons
             $sql = "INSERT INTO wcf1_language_item
                                 (languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
@@ -950,7 +950,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([0]);
 
-        if (!empty($languageIDs)) {
+        if ($languageIDs !== []) {
             $sql = '';
             $statementParameters = [];
             foreach ($languageIDs as $languageID) {

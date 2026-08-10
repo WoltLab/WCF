@@ -123,7 +123,7 @@ class NotificationPresetSettingsForm extends AbstractForm
         parent::readData();
 
         // default values
-        if (empty($_POST)) {
+        if ($_POST === []) {
             foreach ($this->events as $events) {
                 foreach ($events as $event) {
                     $this->settings[$event->eventID] = [

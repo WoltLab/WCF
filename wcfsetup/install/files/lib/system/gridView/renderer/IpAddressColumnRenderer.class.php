@@ -18,10 +18,11 @@ class IpAddressColumnRenderer extends DefaultColumnRenderer
     #[\Override]
     public function render(mixed $value, DatabaseObject $row): string
     {
-        if (empty($value)) {
+        $ipAddress = (string)$value;
+        if ($ipAddress === '') {
             return '';
         }
 
-        return UserUtil::convertIPv6To4($value);
+        return UserUtil::convertIPv6To4($ipAddress);
     }
 }

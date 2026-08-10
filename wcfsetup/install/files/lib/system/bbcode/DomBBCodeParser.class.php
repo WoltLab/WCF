@@ -216,7 +216,7 @@ final class DomBBCodeParser extends SingletonFactory
             $name = \mb_strtolower($match[1]);
 
             // build attributes
-            if (!empty($match[2])) {
+            if ($match[2] !== '') {
                 $attributes = BBCodeParser::getInstance()->buildTagAttributes($match[2]);
             }
             $isClosingTag = false;

@@ -83,7 +83,7 @@ class SmileyEditForm extends SmileyAddForm
     {
         parent::readData();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             I18nHandler::getInstance()->setOptions('smileyTitle', 1, $this->smiley->smileyTitle, 'wcf.smiley.title\d+');
             $this->smileyTitle = $this->smiley->smileyTitle;
 
@@ -102,7 +102,7 @@ class SmileyEditForm extends SmileyAddForm
     {
         parent::assignVariables();
 
-        I18nHandler::getInstance()->assignVariables(!empty($_POST));
+        I18nHandler::getInstance()->assignVariables($_POST !== []);
 
         WCF::getTPL()->assign([
             'smiley' => $this->smiley,

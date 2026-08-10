@@ -150,9 +150,8 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
             (\TIME_NOW - 15 * 60),
         ]);
         $row = $statement->fetchArray();
-        if (!empty($row['sessionLogID'])) {
-            $sessionLogID = $row['sessionLogID'];
-
+        $sessionLogID = (int)($row['sessionLogID'] ?? 0);
+        if ($sessionLogID !== 0) {
             $sessionLogEditor = new ACPSessionLogEditor(new ACPSessionLog(null, ['sessionLogID' => $sessionLogID]));
             $sessionLogEditor->update([
                 'lastActivityTime' => \TIME_NOW,

@@ -125,7 +125,11 @@ final class LanguageItemEditAction implements RequestHandlerInterface
                 ]),
             FormContainer::create('oldValueContainer')
                 ->label('wcf.acp.language.item.oldValue')
-                ->available($languageItem->languageItemOriginIsSystem !== 0 && !empty($languageItem->languageItemOldValue))
+                ->available(
+                    $languageItem->languageItemOriginIsSystem !== 0
+                    && $languageItem->languageItemOldValue !== null
+                    && $languageItem->languageItemOldValue !== ''
+                )
                 ->description('wcf.acp.language.item.oldValue.description', [
                     'item' => $languageItem
                 ])

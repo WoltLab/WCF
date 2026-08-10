@@ -179,7 +179,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         $attributes = $data['attributes'];
         unset($data['attributes']);
 
-        if (!empty($row)) {
+        if ($row !== []) {
             // allow updating of all values except for those controlling the editor button
             unset($data['wysiwygIcon']);
             unset($data['buttonLabel']);
@@ -207,7 +207,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute($condition->getParameters());
 
-        if (!empty($this->attributes)) {
+        if ($this->attributes !== []) {
             foreach ($this->attributes as $bbcodeID => $bbcodeAttributes) {
                 // @phpstan-ignore notEqual.notAllowed
                 if ($bbcodeID != \intval($bbcodeID)) {

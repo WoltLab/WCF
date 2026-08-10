@@ -254,10 +254,10 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
     public function validateDelete()
     {
         // read objects
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }

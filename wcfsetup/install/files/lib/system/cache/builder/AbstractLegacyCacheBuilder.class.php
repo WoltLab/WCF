@@ -34,7 +34,7 @@ abstract class AbstractLegacyCacheBuilder extends SingletonFactory implements IC
             $this->cache[$index] = $cache;
         }
 
-        if (!empty($arrayIndex)) {
+        if ($arrayIndex !== '') {
             if (!\array_key_exists($arrayIndex, $cache)) {
                 throw new SystemException("array index '" . $arrayIndex . "' does not exist in cache resource");
             }

@@ -77,7 +77,7 @@ class MessageOptionType extends TextareaOptionType
         parent::validate($option, $newValue);
 
         $disallowedBBCodes = $this->htmlInputProcessor->validate();
-        if (!empty($disallowedBBCodes)) {
+        if ($disallowedBBCodes !== []) {
             WCF::getTPL()->assign('disallowedBBCodes', $disallowedBBCodes);
             throw new UserInputException($option->optionName, 'disallowedBBCodes');
         }

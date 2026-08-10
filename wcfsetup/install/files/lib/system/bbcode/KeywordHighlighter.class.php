@@ -83,7 +83,7 @@ class KeywordHighlighter extends SingletonFactory
             }
         }
 
-        if (!empty($this->keywords)) {
+        if ($this->keywords !== []) {
             $this->keywords = \array_unique($this->keywords);
             $this->keywords = \array_map('preg_quote', $this->keywords);
         }
@@ -139,7 +139,7 @@ class KeywordHighlighter extends SingletonFactory
      */
     public function doHighlight(string $text)
     {
-        if (empty($this->keywords)) {
+        if ($this->keywords === []) {
             return $text;
         }
 

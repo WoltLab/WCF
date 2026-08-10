@@ -93,7 +93,10 @@ class BBCodeMediaProviderAddForm extends AbstractFormBuilderForm
                             new FormFieldValidator('emptyValidator', function (MultilineTextFormField $formField) {
                                 $classNameFormField = $formField->getDocument()->getFormField('className');
 
-                                if (empty($formField->getValue()) && empty($classNameFormField->getValue())) {
+                                if (
+                                    (string)$formField->getValue() === ''
+                                    && (string)$classNameFormField->getValue() === ''
+                                ) {
                                     $formField->addValidationError(
                                         new FormFieldValidationError('empty')
                                     );

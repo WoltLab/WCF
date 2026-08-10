@@ -116,7 +116,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
             $options[] = $element->getAttribute('name');
         }
 
-        if (!empty($options)) {
+        if ($options !== []) {
             $sql = "DELETE FROM " . $this->application . "1_" . $this->tableName . "
                     WHERE       optionName = ?
                             AND packageID = ?";
@@ -139,7 +139,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
             $categories[] = $element->getAttribute('name');
         }
 
-        if (!empty($categories)) {
+        if ($categories !== []) {
             // delete options for given categories
             $sql = "DELETE FROM " . $this->application . "1_" . $this->tableName . "
                     WHERE       categoryName = ?

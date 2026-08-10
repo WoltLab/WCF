@@ -81,7 +81,7 @@ class MenuItemEditor extends DatabaseObjectEditor implements IEditableCachedObje
     #[\Override]
     public static function deleteAll(array $objectIDs = [])
     {
-        if (!empty($objectIDs)) {
+        if ($objectIDs !== []) {
             // delete language items
             $menuItemList = new MenuItemList();
             $menuItemList->setObjectIDs($objectIDs);

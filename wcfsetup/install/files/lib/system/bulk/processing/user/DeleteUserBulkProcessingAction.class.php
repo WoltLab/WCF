@@ -20,7 +20,7 @@ class DeleteUserBulkProcessingAction extends AbstractUserBulkProcessingAction
     {
         $users = $this->getAccessibleUsers($objectList);
 
-        if (!empty($users)) {
+        if ($users !== []) {
             $userAction = new UserAction($users, 'delete');
             $userAction->executeAction();
         }

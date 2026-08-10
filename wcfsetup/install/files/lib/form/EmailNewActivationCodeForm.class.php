@@ -175,7 +175,7 @@ final class EmailNewActivationCodeForm extends AbstractFormBuilderForm
             throw new IllegalLinkException();
         }
 
-        if (!empty(WCF::getUser()->getBlacklistMatches())) {
+        if (WCF::getUser()->getBlacklistMatches() !== []) {
             throw new PermissionDeniedException();
         }
 

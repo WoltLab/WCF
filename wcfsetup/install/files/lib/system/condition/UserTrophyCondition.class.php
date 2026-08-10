@@ -101,14 +101,14 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements
 
         if (
             !empty($condition->conditionData['userTrophyIDs'])
-            && !empty(\array_diff($condition->conditionData['userTrophyIDs'], $trophyIDs))
+            && \array_diff($condition->conditionData['userTrophyIDs'], $trophyIDs) !== []
         ) {
             return false;
         }
 
         if (
             !empty($condition->conditionData['notUserTrophyIDs'])
-            && !empty(\array_intersect($condition->conditionData['notUserTrophyIDs'], $trophyIDs))
+            && \array_intersect($condition->conditionData['notUserTrophyIDs'], $trophyIDs) !== []
         ) {
             return false;
         }
@@ -121,14 +121,14 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements
     {
         $data = [];
 
-        if (!empty($this->userTrophyIDs)) {
+        if ($this->userTrophyIDs !== []) {
             $data['userTrophyIDs'] = $this->userTrophyIDs;
         }
-        if (!empty($this->notUserTrophyIDs)) {
+        if ($this->notUserTrophyIDs !== []) {
             $data['notUserTrophyIDs'] = $this->notUserTrophyIDs;
         }
 
-        if (!empty($data)) {
+        if ($data !== []) {
             return $data;
         }
 

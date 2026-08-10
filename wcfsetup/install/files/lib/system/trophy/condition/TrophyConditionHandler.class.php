@@ -174,7 +174,7 @@ class TrophyConditionHandler extends SingletonFactory
         // Check if there are conditions for the award of the trophy for the given trophy.
         // If there are no conditions, we simply return an empty list and do not remove any trophy.
         // A trophy without conditions that is awarded automatically cannot be created by default.
-        if (empty($conditions)) {
+        if ($conditions === []) {
             return [];
         }
 

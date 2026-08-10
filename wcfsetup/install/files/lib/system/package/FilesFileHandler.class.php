@@ -21,7 +21,7 @@ class FilesFileHandler extends PackageInstallationFileHandler
     public function checkFiles(array $files)
     {
         if ($this->packageInstallation->getPackage()->package !== 'com.woltlab.wcf') {
-            if (!empty($files)) {
+            if ($files !== []) {
                 // get registered files of other packages for the
                 // same application
                 $conditions = new PreparedStatementConditionBuilder();
@@ -37,7 +37,7 @@ class FilesFileHandler extends PackageInstallationFileHandler
                 $lockedFiles = $statement->fetchMap('filename', 'packageID');
 
                 // check delivered files
-                if (!empty($lockedFiles)) {
+                if ($lockedFiles !== []) {
                     foreach ($files as $file) {
                         if (isset($lockedFiles[$file])) {
                             $owningPackage = new Package($lockedFiles[$file]);
@@ -53,7 +53,7 @@ class FilesFileHandler extends PackageInstallationFileHandler
     #[\Override]
     public function logFiles(array $files)
     {
-        if (empty($files)) {
+        if ($files === []) {
             return;
         }
 

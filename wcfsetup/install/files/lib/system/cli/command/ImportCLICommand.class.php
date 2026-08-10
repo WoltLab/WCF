@@ -117,7 +117,7 @@ class ImportCLICommand implements ICLICommand
         $this->exporters = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.exporter');
         $this->importers = \array_keys(ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.importer'));
 
-        if (empty($this->exporters)) {
+        if ($this->exporters === []) {
             CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.selectExporter.noExporters'));
 
             return;
@@ -416,7 +416,7 @@ class ImportCLICommand implements ICLICommand
             // if no primary import data type is selected, finish data selection
             if ($selectedObjectTypeIndex === '') {
                 // if no data is selected, quit import
-                if (empty($selectedData)) {
+                if ($selectedData === []) {
                     CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.cli.configure.data.error.noSelection'));
                     $this->quitImport = true;
 

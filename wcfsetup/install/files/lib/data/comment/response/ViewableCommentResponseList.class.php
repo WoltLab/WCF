@@ -30,7 +30,7 @@ class ViewableCommentResponseList extends CommentResponseList
     {
         parent::readObjects();
 
-        if (!empty($this->objects)) {
+        if ($this->objects !== []) {
             $embeddedObjectIDs = $userIDs = [];
             foreach ($this->objects as $response) {
                 if ($response->userID !== null) {
@@ -42,11 +42,11 @@ class ViewableCommentResponseList extends CommentResponseList
                 }
             }
 
-            if (!empty($userIDs)) {
+            if ($userIDs !== []) {
                 UserProfileRuntimeCache::getInstance()->cacheObjectIDs($userIDs);
             }
 
-            if (!empty($embeddedObjectIDs)) {
+            if ($embeddedObjectIDs !== []) {
                 MessageEmbeddedObjectManager::getInstance()->loadObjects(
                     'com.woltlab.wcf.comment.response',
                     $embeddedObjectIDs

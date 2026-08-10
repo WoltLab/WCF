@@ -117,7 +117,7 @@ class NotificationSettingsForm extends AbstractForm
         parent::readData();
 
         // default values
-        if (empty($_POST)) {
+        if ($_POST === []) {
             // get user settings
             foreach ($this->events as $events) {
                 foreach ($events as $event) {
@@ -217,7 +217,7 @@ class NotificationSettingsForm extends AbstractForm
             }
         }
 
-        if (!empty($newSettings)) {
+        if ($newSettings !== []) {
             $sql = "INSERT INTO wcf1_user_notification_event_to_user
                                 (eventID, userID, mailNotificationType)
                     VALUES      (?, ?, ?)";

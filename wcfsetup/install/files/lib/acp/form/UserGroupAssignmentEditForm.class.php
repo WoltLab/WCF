@@ -54,7 +54,7 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm
     {
         parent::readData();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $this->groupID = $this->assignment->groupID;
             $this->title = $this->assignment->title;
 

@@ -99,7 +99,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
         /** @var UserNotificationEvent|UserNotificationEventEditor $event */
         $event = parent::import($row, $data);
 
-        if (empty($row) && $data['preset'] === 1) {
+        if ($row === [] && $data['preset'] === 1) {
             $this->presetEventIDs[$event->eventID] = $data['presetMailNotificationType'];
         }
 
@@ -109,7 +109,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
     #[\Override]
     protected function cleanup()
     {
-        if (empty($this->presetEventIDs)) {
+        if ($this->presetEventIDs === []) {
             return;
         }
 

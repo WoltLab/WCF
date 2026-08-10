@@ -155,7 +155,11 @@ class ContactForm extends AbstractFormBuilderForm
     {
         $messages = [];
         foreach ($this->getAvailableOptions() as $option) {
-            if (empty($optionValues[$option->optionID])) {
+            $value = $optionValues[$option->optionID] ?? null;
+            // Options without a value are not relevant for the spam check. `'0'` is
+            // the serialized representation of an unset value for options like
+            // ratings or checkboxes.
+            if ($value === null || $value === '' || $value === '0') {
                 continue;
             }
 
@@ -166,7 +170,7 @@ class ContactForm extends AbstractFormBuilderForm
                 continue;
             }
 
-            $messages[] = $optionValues[$option->optionID];
+            $messages[] = $value;
         }
 
         $spamCheckEvent = new ContactFormSpamChecking(
@@ -233,7 +237,7 @@ class ContactForm extends AbstractFormBuilderForm
             $formField->label($option->optionTitle);
             $formField->description($option->optionDescription);
 
-            if (!empty($option->getConfiguration()['required'])) {
+            if ((bool)($option->getConfiguration()['required'] ?? false)) {
                 $formField->required();
             }
 

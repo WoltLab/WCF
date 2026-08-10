@@ -42,7 +42,7 @@ class UserGroupAssignmentCronjob extends AbstractCronjob
         }
 
         foreach ($usersToGroup as $groupID => $users) {
-            if (!empty($users)) {
+            if ($users !== []) {
                 $userAction = new UserAction(\array_unique($users), 'addToGroups', [
                     'addDefaultGroups' => false,
                     'deleteOldGroups' => false,

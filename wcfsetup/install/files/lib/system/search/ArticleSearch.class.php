@@ -86,14 +86,14 @@ class ArticleSearch extends AbstractSearchProvider
 
         $articleCategoryIDs = $this->getArticleCategoryIDs($this->articleCategoryID);
         $accessibleCategoryIDs = ArticleCategory::getAccessibleCategoryIDs();
-        if (!empty($articleCategoryIDs)) {
+        if ($articleCategoryIDs !== []) {
             $articleCategoryIDs = \array_intersect($articleCategoryIDs, $accessibleCategoryIDs);
         } else {
             $articleCategoryIDs = $accessibleCategoryIDs;
         }
 
         $conditionBuilder = new PreparedStatementConditionBuilder();
-        if (empty($articleCategoryIDs)) {
+        if ($articleCategoryIDs === []) {
             $conditionBuilder->add('1=0');
         } else {
             $conditionBuilder->add(

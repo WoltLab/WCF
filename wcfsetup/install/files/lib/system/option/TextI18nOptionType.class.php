@@ -24,7 +24,7 @@ class TextI18nOptionType extends TextOptionType implements II18nOptionType
     #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
-        I18nHandler::getInstance()->assignVariables(!empty($_POST));
+        I18nHandler::getInstance()->assignVariables($_POST !== []);
 
         return WCF::getTPL()->render('wcf', 'textI18nOptionType', [
             'option' => $option,

@@ -209,7 +209,7 @@ final class UserExportGdprAction extends AbstractAction
                 );
             }
 
-            if (!empty($ipAddresses)) {
+            if ($ipAddresses !== []) {
                 if (!isset($this->data[$package])) {
                     $this->data[$package] = [];
                 }

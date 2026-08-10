@@ -171,7 +171,7 @@ final class UserQuickSearchAction extends AbstractAction
                 break;
         }
 
-        if (empty($this->matches)) {
+        if ($this->matches === []) {
             throw new NamedUserException(
                 HtmlString::fromSafeHtml(WCF::getLanguage()->get('wcf.acp.user.search.error.noMatches'))
             );

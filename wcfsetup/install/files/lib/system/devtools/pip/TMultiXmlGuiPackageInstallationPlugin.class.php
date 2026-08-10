@@ -155,7 +155,7 @@ trait TMultiXmlGuiPackageInstallationPlugin
             }
         }
 
-        if (empty($editedEntries)) {
+        if ($editedEntries === []) {
             throw new \InvalidArgumentException("Unknown entry with identifier '{$identifier}'.");
         }
 

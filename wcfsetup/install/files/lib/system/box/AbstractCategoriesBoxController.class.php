@@ -66,7 +66,7 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController imp
     #[\Override]
     public function readConditions(): void
     {
-        if (!empty($_POST['showChildCategories'])) {
+        if ((bool)($_POST['showChildCategories'] ?? false)) {
             $this->showChildCategories = true;
         }
     }

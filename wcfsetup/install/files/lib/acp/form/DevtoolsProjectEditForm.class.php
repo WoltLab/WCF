@@ -110,7 +110,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm
     {
         parent::setFormObjectData();
 
-        if ($this->hasBrokenPath || !empty($_POST)) {
+        if ($this->hasBrokenPath || $_POST !== []) {
             return;
         }
 
@@ -173,7 +173,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm
             $this->missingElements[] = 'packageDescription';
         }
 
-        if (!empty($packageArchive->getPackageInfo('isApplication'))) {
+        if ((bool)$packageArchive->getPackageInfo('isApplication')) {
             /** @var BooleanFormField $isApplication */
             $isApplication = $this->form->getNodeById('isApplication');
             $isApplication->value(1);
@@ -244,7 +244,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm
         }
 
         $requirements = $packageArchive->getRequirements();
-        if (!empty($requirements)) {
+        if ($requirements !== []) {
             $requirementData = [];
             foreach ($requirements as $requirement) {
                 $requirementData[] = [
@@ -260,7 +260,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm
         }
 
         $exclusions = $packageArchive->getExcludedPackages();
-        if (!empty($exclusions)) {
+        if ($exclusions !== []) {
             $exclusionData = [];
             foreach ($exclusions as $exclusion) {
                 $exclusionData[] = [
@@ -275,7 +275,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm
         }
 
         $optionals = $packageArchive->getOptionals();
-        if (!empty($optionals)) {
+        if ($optionals !== []) {
             $exclusionData = [];
             foreach ($optionals as $requirement) {
                 $exclusionData[] = [

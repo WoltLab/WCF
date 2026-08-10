@@ -90,7 +90,7 @@ class WhoWasOnlineBoxController extends AbstractDatabaseObjectListBoxController
 
         $userIDs = (new WhoWasOnlineCache())->getCache();
 
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             $this->users = \array_filter(
                 UserProfileRuntimeCache::getInstance()->getObjects($userIDs),
                 static function ($user) {
@@ -105,7 +105,7 @@ class WhoWasOnlineBoxController extends AbstractDatabaseObjectListBoxController
             }
 
             // sort users
-            if (!empty($this->users)) {
+            if ($this->users !== []) {
                 DatabaseObject::sort($this->users, $this->sortField, $this->sortOrder);
             }
         }

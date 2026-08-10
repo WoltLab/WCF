@@ -67,7 +67,7 @@ class UserObjectWatchHandler extends SingletonFactory
         $statement->execute($conditionsBuilder->getParameters());
         $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             // reset user storage
             $objectTypeObj->getProcessor()->resetUserStorage($userIDs);
         }
@@ -90,7 +90,7 @@ class UserObjectWatchHandler extends SingletonFactory
         $conditionsBuilder = new PreparedStatementConditionBuilder();
         $conditionsBuilder->add('objectTypeID = ?', [$objectTypeObj->objectTypeID]);
         $conditionsBuilder->add('objectID IN (?)', [$objectIDs]);
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             $conditionsBuilder->add('userID IN (?)', [$userIDs]);
         }
 
@@ -118,7 +118,7 @@ class UserObjectWatchHandler extends SingletonFactory
             ->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $objectType);
         $userIDs = $this->getSubscribers($objectType, $objectID);
 
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             // reset user storage
             $objectTypeObj->getProcessor()->resetUserStorage(\array_keys($userIDs));
 
@@ -130,7 +130,7 @@ class UserObjectWatchHandler extends SingletonFactory
                 \ARRAY_FILTER_USE_BOTH
             );
 
-            if (!empty($recipientIDs)) {
+            if ($recipientIDs !== []) {
                 // create notifications
                 UserNotificationHandler::getInstance()->fireEvent(
                     $notificationEventName,
@@ -194,7 +194,7 @@ class UserObjectWatchHandler extends SingletonFactory
         $objectTypeObj = ObjectTypeCache::getInstance()
             ->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $objectType);
         $userIDs = $this->getSubscribers($objectType, $objectID);
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             $objectTypeObj->getProcessor()->resetUserStorage(\array_keys($userIDs));
             $recipientIDs = \array_keys(
                 \array_filter(
@@ -208,7 +208,7 @@ class UserObjectWatchHandler extends SingletonFactory
         $parentObjectTypeObj = ObjectTypeCache::getInstance()
             ->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $parentObjectType);
         $parentUserIDs = $this->getSubscribers($parentObjectType, $parentObjectID);
-        if (!empty($parentUserIDs)) {
+        if ($parentUserIDs !== []) {
             $parentObjectTypeObj->getProcessor()->resetUserStorage(\array_keys($parentUserIDs));
             $parentRecipientIDs = \array_keys(
                 \array_filter(
@@ -220,7 +220,7 @@ class UserObjectWatchHandler extends SingletonFactory
             $recipientIDs = \array_unique(\array_merge($recipientIDs, $parentRecipientIDs));
         }
 
-        if (!empty($recipientIDs)) {
+        if ($recipientIDs !== []) {
             UserNotificationHandler::getInstance()->fireEvent(
                 $notificationEventName,
                 $notificationObjectType,

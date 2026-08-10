@@ -102,7 +102,7 @@ abstract class AbstractModerationForm extends AbstractForm
             return;
         }
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $this->assignedUserID = $this->queue->assignedUserID;
         }
 

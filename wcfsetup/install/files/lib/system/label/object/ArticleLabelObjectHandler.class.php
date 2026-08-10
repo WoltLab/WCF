@@ -37,7 +37,7 @@ class ArticleLabelObjectHandler extends AbstractLabelObjectHandler
         }
 
         $this->labelGroups = [];
-        if (!empty($groupIDs)) {
+        if ($groupIDs !== []) {
             $this->labelGroups = LabelHandler::getInstance()->getLabelGroups(\array_unique($groupIDs));
         }
     }

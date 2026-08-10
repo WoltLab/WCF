@@ -206,7 +206,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory
         // delete existing assignments
         $this->removeObjects($messageObjectType, [$messageID]);
 
-        if (empty($embeddedContent)) {
+        if ($embeddedContent === []) {
             return false;
         }
 
@@ -486,7 +486,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory
         foreach ($this->getEmbeddedObjectHandlers() as $handler) {
             $objectIDs = $handler->parse($htmlInputProcessor, $embeddedData);
 
-            if (!empty($objectIDs)) {
+            if ($objectIDs !== []) {
                 // save assignments
                 $this->messageEmbeddedObjects[$this->activeMessageObjectTypeID][$this->activeMessageID][$handler->objectTypeID] = $objectIDs;
 

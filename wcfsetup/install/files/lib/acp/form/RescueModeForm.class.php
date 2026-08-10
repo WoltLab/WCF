@@ -325,7 +325,7 @@ final class RescueModeForm extends AbstractForm
     {
         parent::readData();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $this->domainName = $_SERVER['HTTP_HOST'] ?? '';
 
             foreach ($this->applications as $application) {

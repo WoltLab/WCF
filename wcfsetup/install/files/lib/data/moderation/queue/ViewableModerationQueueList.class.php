@@ -58,7 +58,7 @@ class ViewableModerationQueueList extends ModerationQueueList
     {
         parent::readObjects();
 
-        if (!empty($this->objects)) {
+        if ($this->objects !== []) {
             $objects = [];
             foreach ($this->objects as $object) {
                 if (!isset($objects[$object->objectTypeID])) {
@@ -82,7 +82,7 @@ class ViewableModerationQueueList extends ModerationQueueList
             }
 
             // remove orphaned queues
-            if (!empty($queueIDs)) {
+            if ($queueIDs !== []) {
                 $this->indexToObject = \array_keys($this->objects);
 
                 ModerationQueueManager::getInstance()->removeOrphans($queueIDs);

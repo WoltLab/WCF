@@ -94,7 +94,7 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
             )
         ];
 
-        if (!empty($this->validSortFields) && \MODULE_LIKE !== 0) {
+        if ($this->validSortFields !== [] && \MODULE_LIKE !== 0) {
             $this->validSortFields[] = 'likesReceived';
 
             $this->cacheHandlers['likesReceived'] = static fn(
@@ -185,7 +185,7 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController
         $hasContent = parent::hasContent();
 
         if ($this->userIDs !== null) {
-            return !empty($this->userIDs);
+            return $this->userIDs !== [];
         }
 
         return $hasContent;

@@ -584,7 +584,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
             }
         }
 
-        if (!empty($rebuildUserIDs)) {
+        if ($rebuildUserIDs !== []) {
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('userID IN (?)', [$rebuildUserIDs]);
 
@@ -604,7 +604,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
             }
         }
 
-        if (!empty($deleteSpecialTrophyIDs)) {
+        if ($deleteSpecialTrophyIDs !== []) {
             $conditionBuilder = new PreparedStatementConditionBuilder(true, 'OR');
             foreach ($deleteSpecialTrophyIDs as $userID => $trophyIDs) {
                 $conditionBuilder->add('(userID = ? AND trophyID IN (?))', [$userID, $trophyIDs]);
@@ -705,7 +705,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
             }
         }
 
-        if (!empty($usernames)) {
+        if ($usernames !== []) {
             $userList = new UserProfileList();
             $userList->getConditionBuilder()->add("user_table.username IN (?)", [$usernames]);
             $userList->readObjects();

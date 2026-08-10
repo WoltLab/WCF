@@ -83,7 +83,7 @@ class TaggedPage extends MultipleLinkPage
             }
         }
 
-        if (empty($this->availableObjectTypes)) {
+        if ($this->availableObjectTypes === []) {
             throw new IllegalLinkException();
         }
 

@@ -89,7 +89,7 @@ final class SetCategoryPositions implements IController
         foreach (\array_keys($parentOf) as $startID) {
             $current = $startID;
             $seen = [$startID => true];
-            while (!empty($parentOf[$current])) {
+            while (($parentOf[$current] ?? 0) !== 0) {
                 $current = $parentOf[$current];
                 if (isset($seen[$current])) {
                     throw new IllegalLinkException();

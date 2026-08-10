@@ -123,14 +123,14 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements
     {
         $data = [];
 
-        if (!empty($this->groupIDs)) {
+        if ($this->groupIDs !== []) {
             $data['groupIDs'] = $this->groupIDs;
         }
-        if (!empty($this->notGroupIDs)) {
+        if ($this->notGroupIDs !== []) {
             $data['notGroupIDs'] = $this->notGroupIDs;
         }
 
-        if (!empty($data)) {
+        if ($data !== []) {
             return $data;
         }
 
@@ -140,7 +140,7 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements
     #[\Override]
     public function getHTML()
     {
-        if (!empty($this->getUserGroups())) {
+        if ($this->getUserGroups() !== []) {
             return <<<HTML
 <dl{$this->getErrorClass('groupIDs')}>
 	<dt>{$this->getLabel('groupIDs')}</dt>

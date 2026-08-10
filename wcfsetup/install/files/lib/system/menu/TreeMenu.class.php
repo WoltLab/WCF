@@ -192,7 +192,7 @@ abstract class TreeMenu extends SingletonFactory
             }
         }
 
-        if (!empty($newActiveMenuItems)) {
+        if ($newActiveMenuItems !== []) {
             $this->activeMenuItems = $newActiveMenuItems;
         }
     }

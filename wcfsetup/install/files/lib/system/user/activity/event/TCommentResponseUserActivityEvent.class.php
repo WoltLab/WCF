@@ -67,7 +67,7 @@ trait TCommentResponseUserActivityEvent
             $commentIDs[] = $response->commentID;
         }
 
-        if (!empty($commentIDs)) {
+        if ($commentIDs !== []) {
             $this->comments = \array_filter(ViewableCommentRuntimeCache::getInstance()->getObjects($commentIDs));
         }
 
@@ -76,7 +76,7 @@ trait TCommentResponseUserActivityEvent
             $userIDs[] = $comment->userID;
             $this->commentObjectIDs[] = $comment->objectID;
         }
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             $this->commentAuthors = \array_filter(UserProfileRuntimeCache::getInstance()->getObjects($userIDs));
         }
     }

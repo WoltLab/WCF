@@ -94,7 +94,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
         $groups = $this->groupPairsByName($pairs);
 
         $groups = $this->filterGroups($groups, $htmlNodeProcessor);
-        if (empty($groups)) {
+        if ($groups === []) {
             return;
         }
 

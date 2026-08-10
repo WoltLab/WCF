@@ -95,7 +95,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
      */
     public function extend()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -128,7 +128,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
      */
     public function revoke()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -146,7 +146,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
      */
     public function validateRevoke()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -166,7 +166,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
      */
     public function restore()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -184,7 +184,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
      */
     public function validateRestore()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -204,7 +204,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
      */
     public function addGroupMemberships()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -225,7 +225,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
      */
     public function removeGroupMemberships()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 

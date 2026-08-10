@@ -41,7 +41,7 @@ class ProfileCommentUserActivityEvent extends SingletonFactory implements IUserA
 
             $userIDs[] = $comment->objectID;
         }
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             $users = UserProfileRuntimeCache::getInstance()->getObjects($userIDs);
         }
 

@@ -49,7 +49,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob
             0,
         ]);
         $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-        if (empty($userIDs)) {
+        if ($userIDs === []) {
             return;
         }
 
@@ -196,7 +196,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob
                             $eventAuthors[$userID] = $authors[$userID];
                         }
                     }
-                    if (!empty($eventAuthors)) {
+                    if ($eventAuthors !== []) {
                         $class->setAuthors($eventAuthors);
                     }
                 }

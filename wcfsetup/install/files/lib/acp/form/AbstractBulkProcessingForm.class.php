@@ -96,7 +96,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm
             throw new \LogicException("Unknown condition object type definition '" . $this->objectType->getProcessor()->getConditionObjectTypeDefinition() . "'");
         }
         $conditionObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes($this->objectType->getProcessor()->getConditionObjectTypeDefinition());
-        if (empty($conditionObjectTypes)) {
+        if ($conditionObjectTypes === []) {
             throw new IllegalLinkException();
         }
 
@@ -127,13 +127,13 @@ abstract class AbstractBulkProcessingForm extends AbstractForm
                 $this->actions[$objectType->action] = $objectType;
             }
         }
-        if (empty($this->actions)) {
+        if ($this->actions === []) {
             throw new IllegalLinkException();
         }
 
         parent::readData();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             if (isset($_REQUEST['success']) && isset($_REQUEST['count'])) {
                 $this->affectedObjectCount = \intval($_REQUEST['count']);
                 WCF::getTPL()->assign('success', true);

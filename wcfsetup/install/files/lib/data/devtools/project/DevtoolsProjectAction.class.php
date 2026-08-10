@@ -267,7 +267,7 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction
             } catch (\InvalidArgumentException $e) {
                 throw new IllegalLinkException();
             }
-        } elseif (!empty($pip->getEntryTypes())) {
+        } elseif ($pip->getEntryTypes() !== []) {
             throw new IllegalLinkException();
         }
 

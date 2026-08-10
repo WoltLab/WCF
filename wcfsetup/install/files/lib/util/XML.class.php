@@ -70,7 +70,7 @@ class XML
 
         // check for errors occurred in libxml
         $errors = $this->pollErrors();
-        if (!empty($errors)) {
+        if ($errors !== []) {
             $this->throwException("XML document '" . $this->path . "' is not valid XML.", $errors);
         }
     }
@@ -93,7 +93,7 @@ class XML
 
         // check for errors occurred in libxml
         $errors = $this->pollErrors();
-        if (!empty($errors)) {
+        if ($errors !== []) {
             $this->throwException("XML document '" . $this->path . "' is not valid XML.", $errors);
         }
     }
@@ -114,7 +114,7 @@ class XML
 
         // check for errors occurred in libxml
         $errors = $this->pollErrors();
-        if (!empty($errors)) {
+        if ($errors !== []) {
             $this->throwException("XML document '" . $this->path . "' violates XML schema definition.", $errors);
         }
     }
@@ -215,7 +215,7 @@ class XML
      */
     protected function throwException(string $message, array $errors = [])
     {
-        if (!empty($errors)) {
+        if ($errors !== []) {
             $description = '<b>LibXML output:</b><pre>';
             foreach ($errors as $error) {
                 $description .= "#" . $error['line'] . "\t" . $error['message'];

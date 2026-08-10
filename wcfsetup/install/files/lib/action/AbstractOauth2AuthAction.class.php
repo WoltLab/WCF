@@ -102,7 +102,7 @@ abstract class AbstractOauth2AuthAction implements RequestHandlerInterface
      */
     protected function isEnabled(): bool
     {
-        return !empty($this->getClientId()) && !empty($this->getClientSecret());
+        return $this->getClientId() !== '' && $this->getClientSecret() !== '';
     }
 
     protected function mapParameters(ServerRequestInterface $request): OAuth2Success | OAuth2Failure | null
@@ -164,7 +164,7 @@ abstract class AbstractOauth2AuthAction implements RequestHandlerInterface
 
         $parsed = \json_decode((string)$response->getBody(), true, flags: \JSON_THROW_ON_ERROR);
 
-        if (!empty($parsed['error'])) {
+        if ((string)($parsed['error'] ?? '') !== '') {
             throw new \Exception(
                 \sprintf(
                     "Access token response indicates an error: '%s'",
@@ -173,7 +173,7 @@ abstract class AbstractOauth2AuthAction implements RequestHandlerInterface
             );
         }
 
-        if (empty($parsed['access_token'])) {
+        if ((string)($parsed['access_token'] ?? '') === '') {
             throw new \Exception("Access token response does not have the 'access_token' key.");
         }
 

@@ -117,7 +117,7 @@ class UserGroup extends DatabaseObject implements ITitledObject, \Stringable
         $groups = [];
         foreach (self::$cache['groups'] as $group) {
             if (
-                (empty($types) || \in_array($group->groupType, $types)) && !\in_array(
+                ($types === [] || \in_array($group->groupType, $types)) && !\in_array(
                     $group->groupType,
                     $invalidGroupTypes
                 )
@@ -482,7 +482,7 @@ class UserGroup extends DatabaseObject implements ITitledObject, \Stringable
             $statement->execute();
             $groupOptionIDs = $statement->fetchMap('optionName', 'optionID');
 
-            if (!empty($groupOptionIDs)) {
+            if ($groupOptionIDs !== []) {
                 $conditions = new PreparedStatementConditionBuilder();
                 $conditions->add("option_value.groupID = ?", [$this->groupID]);
                 $conditions->add("option_value.optionID IN (?)", [$groupOptionIDs]);

@@ -72,14 +72,14 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
         }
 
         // update user ranks
-        if (!empty($users)) {
+        if ($users !== []) {
             $action = new UserProfileAction($users, 'updateUserOnlineMarking');
             $action->executeAction();
         }
 
         $this->updateUserOnlineStatus($users);
 
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             // update article counter
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('user_table.userID IN (?)', [$userIDs]);
@@ -99,7 +99,7 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
                         SET";
 
                 $reactionTypeIDs = \array_keys(ReactionTypeCache::getInstance()->getReactionTypes());
-                if (!empty($reactionTypeIDs)) {
+                if ($reactionTypeIDs !== []) {
                     $sql .= "
                         likesReceived = (
                             SELECT  COUNT(*)
@@ -355,7 +355,7 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
             }
 
             // Reset the avatar cache for all avatars that had been processed.
-            if (!empty($resetAvatarCache)) {
+            if ($resetAvatarCache !== []) {
                 UserStorageHandler::getInstance()->reset($resetAvatarCache, 'avatar');
             }
 

@@ -269,7 +269,7 @@ class UserEditForm extends UserAddForm
     #[\Override]
     public function readData()
     {
-        if (empty($_POST)) {
+        if ($_POST === []) {
             // get visible languages
             $this->readVisibleLanguages();
 

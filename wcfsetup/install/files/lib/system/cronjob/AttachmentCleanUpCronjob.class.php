@@ -47,7 +47,7 @@ class AttachmentCleanUpCronjob extends AbstractCronjob
             $attachmentIDs = \array_merge($attachmentIDs, $this->getOldContactAttachmentIDs());
         }
 
-        if (!empty($attachmentIDs)) {
+        if ($attachmentIDs !== []) {
             AttachmentEditor::deleteAll($attachmentIDs);
         }
     }

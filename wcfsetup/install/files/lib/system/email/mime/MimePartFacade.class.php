@@ -38,7 +38,7 @@ class MimePartFacade extends AbstractMimePart implements IRecipientAwareMimePart
             $this->mimePart = $texts[0];
         }
 
-        if (!empty($attachments)) {
+        if ($attachments !== []) {
             $mixed = new MultipartMixedMimePart();
             $mixed->addMimePart($this->mimePart);
             foreach ($attachments as $attachment) {

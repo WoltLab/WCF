@@ -83,7 +83,7 @@ class MultiSelectOptionType extends SelectOptionType
             return false;
         }
 
-        if (!\is_array($value) || empty($value)) {
+        if (!\is_array($value) || $value === []) {
             return false;
         }
         $value = ArrayUtil::trim($value, false);
@@ -112,7 +112,7 @@ class MultiSelectOptionType extends SelectOptionType
     #[\Override]
     public function addCondition(UserList $userList, Option $option, mixed $value)
     {
-        if (!\is_array($value) || empty($value)) {
+        if (!\is_array($value) || $value === []) {
             return;
         }
         $value = ArrayUtil::trim($value, false);
@@ -139,7 +139,7 @@ class MultiSelectOptionType extends SelectOptionType
     #[\Override]
     public function checkUser(User $user, Option $option, mixed $value)
     {
-        if (!\is_array($value) || empty($value)) {
+        if (!\is_array($value) || $value === []) {
             return false;
         }
 

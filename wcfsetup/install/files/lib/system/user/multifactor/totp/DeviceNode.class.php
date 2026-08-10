@@ -74,7 +74,7 @@ class DeviceNode implements IFormChildNode, IFormParentNode
     #[\Override]
     public function checkDependencies(): bool
     {
-        if (!empty($this->dependencies)) {
+        if ($this->dependencies !== []) {
             foreach ($this->dependencies as $dependency) {
                 // check dependencies directly and check if a dependent
                 // field itself is unavailable because of its dependencies

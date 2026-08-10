@@ -56,7 +56,7 @@ class TrophyEditForm extends TrophyAddForm
     {
         parent::readData();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $this->readDataI18n($this->trophy);
 
             $this->categoryID = $this->trophy->categoryID;
@@ -231,7 +231,7 @@ class TrophyEditForm extends TrophyAddForm
     {
         parent::assignVariables();
 
-        I18nHandler::getInstance()->assignVariables(!empty($_POST));
+        I18nHandler::getInstance()->assignVariables($_POST !== []);
 
         WCF::getTPL()->assign([
             'trophy' => $this->trophy,

@@ -272,7 +272,7 @@ class PaidSubscriptionAddForm extends AbstractForm
         }
 
         // validate group ids
-        if (empty($this->groupIDs)) {
+        if ($this->groupIDs === []) {
             throw new UserInputException('groupIDs');
         }
         foreach ($this->groupIDs as $groupID) {

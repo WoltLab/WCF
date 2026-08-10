@@ -1036,7 +1036,7 @@ class TemplateScriptingCompiler
             }
 
             // pass remaining tag args as variables
-            if (!empty($args)) {
+            if ($args !== []) {
                 foreach ($args as $variable => $value) {
                     if (\substr($value, 0, 1) === "'") {
                         // string values

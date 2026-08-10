@@ -88,7 +88,7 @@ abstract class AbstractFormField implements IFormField
     #[\Override]
     public function addValidationError(IFormFieldValidationError $error)
     {
-        if (empty($this->validationErrors)) {
+        if ($this->validationErrors === []) {
             $this->addClass('formError');
         }
 

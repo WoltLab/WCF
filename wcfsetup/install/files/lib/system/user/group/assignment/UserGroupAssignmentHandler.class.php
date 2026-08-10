@@ -38,7 +38,7 @@ class UserGroupAssignmentHandler extends SingletonFactory
      */
     public function checkUsers(array $userIDs)
     {
-        if (empty($userIDs)) {
+        if ($userIDs === []) {
             return;
         }
 
@@ -71,7 +71,7 @@ class UserGroupAssignmentHandler extends SingletonFactory
                 }
             }
 
-            if (!empty($newGroupIDs)) {
+            if ($newGroupIDs !== []) {
                 $userAction = new UserAction([$user], 'addToGroups', [
                     'addDefaultGroups' => false,
                     'deleteOldGroups' => false,

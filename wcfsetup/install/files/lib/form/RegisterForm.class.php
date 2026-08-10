@@ -243,7 +243,7 @@ class RegisterForm extends UserAddForm
 
         parent::readData();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $this->languageID = WCF::getLanguage()->languageID;
 
             if (WCF::getSession()->getVar('__username') !== null) {

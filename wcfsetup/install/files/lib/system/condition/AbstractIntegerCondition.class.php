@@ -57,7 +57,7 @@ abstract class AbstractIntegerCondition extends AbstractSingleFieldCondition
             $data['greaterThan'] = $this->greaterThan;
         }
 
-        if (!empty($data)) {
+        if ($data !== []) {
             return $data;
         }
 

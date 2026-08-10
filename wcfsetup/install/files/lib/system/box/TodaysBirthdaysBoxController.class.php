@@ -90,7 +90,7 @@ class TodaysBirthdaysBoxController extends AbstractDatabaseObjectListBoxControll
         $userIDs = UserBirthdayCache::getInstance()->getBirthdays((int)$date[1], (int)$date[2]);
         $this->filterUserIDs($userIDs);
 
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             $userOptions = UserOptionCacheBuilder::getInstance()->getData([], 'options');
             if (isset($userOptions['birthday'])) {
                 /** @var UserOption $birthdayUserOption */
@@ -132,7 +132,7 @@ class TodaysBirthdaysBoxController extends AbstractDatabaseObjectListBoxControll
                     }
                 }
 
-                if (!empty($visibleUserProfiles)) {
+                if ($visibleUserProfiles !== []) {
                     // sort users
                     DatabaseObject::sort($visibleUserProfiles, $this->sortField, $this->sortOrder);
 

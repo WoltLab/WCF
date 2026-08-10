@@ -169,7 +169,7 @@ final class ClassNameFormField extends TextFormField
     {
         parent::validateText($text, $language);
 
-        if (empty($this->getValidationErrors())) {
+        if ($this->getValidationErrors() === []) {
             if ($text === '' && !$this->isRequired()) {
                 return;
             } elseif (\substr($text, 0, 1) === '\\') {

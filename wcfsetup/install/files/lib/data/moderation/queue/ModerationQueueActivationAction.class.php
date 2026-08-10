@@ -37,10 +37,10 @@ class ModerationQueueActivationAction extends ModerationQueueAction
      */
     public function validateEnableContent()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }
@@ -115,10 +115,10 @@ class ModerationQueueActivationAction extends ModerationQueueAction
      */
     public function validateRemoveActivationContent(): void
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }

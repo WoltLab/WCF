@@ -71,7 +71,7 @@ final class UserFormField extends AbstractFormField implements
             throw new \BadMethodCallException("The return value of getSaveValue() is undefined if multiple values may be entered.");
         }
 
-        if (empty($this->getUsers())) {
+        if ($this->getUsers() === []) {
             if ($this->isNullable()) {
                 return null;
             }
@@ -144,7 +144,7 @@ final class UserFormField extends AbstractFormField implements
             if (
                 $this->getValue() === null
                 || $this->getValue() === ''
-                || (\is_array($this->getValue()) && empty($this->getValue()))
+                || (\is_array($this->getValue()) && $this->getValue() === [])
             ) {
                 $this->addValidationError(new FormFieldValidationError('empty'));
             }
@@ -174,7 +174,7 @@ final class UserFormField extends AbstractFormField implements
                 }
             }
 
-            if (!empty($nonExistentUsernames)) {
+            if ($nonExistentUsernames !== []) {
                 if ($this->allowsMultiple()) {
                     $this->addValidationError(new FormFieldValidationError(
                         'nonExistent',

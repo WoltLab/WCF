@@ -60,7 +60,7 @@ class StyleGlobalValuesForm extends AbstractForm
     {
         parent::readData();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $this->styles = (string)RegistryHandler::getInstance()->get(
                 'com.woltlab.wcf',
                 StyleCompiler::REGISTRY_GLOBAL_VALUES

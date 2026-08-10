@@ -307,10 +307,10 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
         }
 
         // read objects
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }
@@ -331,10 +331,10 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
         }
 
         // read objects
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }
@@ -353,7 +353,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
     #[\Override]
     public function delete()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -374,7 +374,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
      */
     public function update()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -398,7 +398,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
      */
     protected function readObjects()
     {
-        if (empty($this->objectIDs)) {
+        if ($this->objectIDs === []) {
             return;
         }
 
@@ -429,7 +429,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
      */
     protected function getSingleObject()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 

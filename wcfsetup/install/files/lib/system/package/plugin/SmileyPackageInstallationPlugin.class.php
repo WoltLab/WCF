@@ -200,7 +200,7 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
                                 }
                             }
 
-                            if (!empty($notUniqueCodes)) {
+                            if ($notUniqueCodes !== []) {
                                 $formField->addValidationError(
                                     new FormFieldValidationError(
                                         'notUnique',

@@ -122,7 +122,7 @@ class ArticleAddForm extends AbstractDatabaseObjectBuilderForm
 
         // work-around to force adding article via dialog overlay
         $availableLanguages = LanguageFactory::getInstance()->getLanguages();
-        if (\count($availableLanguages) > 1 && empty($_POST) && !isset($_REQUEST['isMultilingual'])) {
+        if (\count($availableLanguages) > 1 && $_POST === [] && !isset($_REQUEST['isMultilingual'])) {
             $parameters = ['showArticleAddDialog' => 1];
             if ($this->categoryID !== 0) {
                 $parameters['categoryID'] = $this->categoryID;

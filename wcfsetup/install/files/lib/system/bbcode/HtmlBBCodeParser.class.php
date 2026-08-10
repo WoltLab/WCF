@@ -363,7 +363,7 @@ class HtmlBBCodeParser extends BBCodeParser
     {
         $attributes = \array_filter($attributes, fn($value) => $value !== null);
 
-        if (!empty($attributes)) {
+        if ($attributes !== []) {
             foreach ($attributes as &$attribute) {
                 $attribute = "'" . \addcslashes($attribute, "'") . "'";
             }
@@ -442,7 +442,7 @@ class HtmlBBCodeParser extends BBCodeParser
     protected function buildClosingTag(array $tag)
     {
         $name = \strtolower($tag['name']);
-        if (!$this->isValidBBCodeName($name) || empty($this->openTagIdentifiers)) {
+        if (!$this->isValidBBCodeName($name) || $this->openTagIdentifiers === []) {
             return $tag['source'];
         }
 

@@ -190,7 +190,7 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
      */
     public function loadVariables()
     {
-        if (!empty($this->variables)) {
+        if ($this->variables !== []) {
             return;
         }
 

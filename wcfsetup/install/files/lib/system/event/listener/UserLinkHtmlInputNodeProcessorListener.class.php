@@ -29,7 +29,7 @@ class UserLinkHtmlInputNodeProcessorListener extends AbstractHtmlInputNodeProces
         );
         $userIDs = $this->getObjectIDs($eventObj, $regex);
 
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             $this->replaceLinks($eventObj, UserRuntimeCache::getInstance()->getObjects($userIDs));
         }
     }

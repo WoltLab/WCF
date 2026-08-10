@@ -80,7 +80,7 @@ abstract class AbstractAction implements IAction
         EventHandler::getInstance()->fireAction($this, 'checkPermissions');
 
         // check permission
-        if (!empty($this->neededPermissions)) {
+        if ($this->neededPermissions !== []) {
             WCF::getSession()->checkPermissions($this->neededPermissions);
         }
     }

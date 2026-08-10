@@ -80,7 +80,7 @@ class UserEmailAddressExportForm extends AbstractForm
         // get user ids
         $users = ClipboardHandler::getInstance()->getMarkedItems($this->objectTypeID);
         /** @var User[] $users */
-        if (empty($users)) {
+        if ($users === []) {
             throw new IllegalLinkException();
         }
 

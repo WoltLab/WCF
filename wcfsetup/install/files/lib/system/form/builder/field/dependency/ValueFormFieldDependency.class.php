@@ -139,7 +139,7 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency
             $values = $dboValues;
         }
 
-        if (empty($values)) {
+        if ($values === []) {
             throw new \InvalidArgumentException("Given values are empty.");
         }
         foreach ($values as $value) {

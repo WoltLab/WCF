@@ -45,7 +45,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
         string $orderBy = 'time DESC',
         int $limit = 1000
     ) {
-        if (empty($objectTypes)) {
+        if ($objectTypes === []) {
             throw new \InvalidArgumentException('The $objectTypes parameter must not be empty.');
         }
 

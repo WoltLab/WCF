@@ -68,7 +68,7 @@ abstract class AbstractLinearRebuildDataWorker extends AbstractRebuildDataWorker
     #[\Override]
     protected function initObjectList()
     {
-        if (empty($this->objectListClassName)) {
+        if ($this->objectListClassName === '') {
             throw new SystemException('DatabaseObjectList class name not specified.');
         }
 

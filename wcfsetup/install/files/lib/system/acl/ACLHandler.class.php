@@ -313,7 +313,7 @@ class ACLHandler extends SingletonFactory
             'user' => [],
         ];
 
-        if (!empty($objectIDs)) {
+        if ($objectIDs !== []) {
             $this->getValues($optionList, 'group', $objectIDs, $data, $settingsView);
             $this->getValues($optionList, 'user', $objectIDs, $data, $settingsView);
         }
@@ -371,7 +371,7 @@ class ACLHandler extends SingletonFactory
         }
 
         // category matched no options
-        if (empty($optionsIDs)) {
+        if ($optionsIDs === []) {
             return;
         }
 
@@ -410,7 +410,7 @@ class ACLHandler extends SingletonFactory
             ];
 
             // load labels
-            if (!empty($data[$type]['option'])) {
+            if ($data[$type]['option'] !== []) {
                 $conditions = new PreparedStatementConditionBuilder();
 
                 if ($type === 'group') {

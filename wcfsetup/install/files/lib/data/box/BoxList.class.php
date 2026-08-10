@@ -35,7 +35,7 @@ class BoxList extends DatabaseObjectList
 
         // get box content
         if ($this->contentLoading) {
-            if (!empty($this->objectIDs)) {
+            if ($this->objectIDs !== []) {
                 $contentList = new BoxContentList();
                 $contentList->enableImageLoading();
                 $contentList->enableEmbeddedObjectLoading();

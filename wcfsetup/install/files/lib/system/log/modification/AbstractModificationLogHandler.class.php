@@ -99,14 +99,14 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
      */
     public function deleteLogs(array $objectIDs, array $ignoredActions = [])
     {
-        if (empty($objectIDs)) {
+        if ($objectIDs === []) {
             return;
         }
 
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add('objectTypeID = ?', [$this->objectType->objectTypeID]);
         $conditionBuilder->add('objectID IN (?)', [$objectIDs]);
-        if (!empty($ignoredActions)) {
+        if ($ignoredActions !== []) {
             $conditionBuilder->add('action NOT IN (?)', [$ignoredActions]);
         }
 
@@ -124,7 +124,7 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
      */
     public function deleteLogsByParentIDs(array $parentObjectIDs)
     {
-        if (empty($parentObjectIDs)) {
+        if ($parentObjectIDs === []) {
             return;
         }
 
@@ -163,7 +163,7 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
      */
     public function updateParentObjectID(array $objectIDs, int $newParentObjectID)
     {
-        if (empty($objectIDs)) {
+        if ($objectIDs === []) {
             return;
         }
 

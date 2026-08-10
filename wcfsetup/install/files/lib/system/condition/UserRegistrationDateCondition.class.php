@@ -119,7 +119,7 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
             $data['registrationDateEnd'] = $this->registrationDateEnd;
         }
 
-        if (!empty($data)) {
+        if ($data !== []) {
             return $data;
         }
 

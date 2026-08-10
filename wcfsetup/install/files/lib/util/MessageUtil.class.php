@@ -87,10 +87,10 @@ class MessageUtil
         }
 
         $userIDs = \array_unique($userIDs);
-        if (!empty($groups)) {
+        if ($groups !== []) {
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add('groupID IN (?)', [\array_keys($groups)]);
-            if (!empty($userIDs)) {
+            if ($userIDs !== []) {
                 $conditions->add('userID NOT IN (?)', [$userIDs]);
             }
 
@@ -153,10 +153,10 @@ class MessageUtil
             }
         }
 
-        if (!empty($groups)) {
+        if ($groups !== []) {
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add('user_to_group.groupID IN (?)', [\array_keys($groups)]);
-            if (!empty($usernames)) {
+            if ($usernames !== []) {
                 $conditions->add('user_table.username NOT IN (?)', [$usernames]);
             }
 

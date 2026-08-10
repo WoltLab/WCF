@@ -91,7 +91,7 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggle
             }
         }
 
-        if (!empty($updateData)) {
+        if ($updateData !== []) {
             $reactionTypeEditor->update($updateData);
         }
 
@@ -165,7 +165,7 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggle
                 ]);
             }
 
-            if (!empty($updateData)) {
+            if ($updateData !== []) {
                 $object->update($updateData);
             }
         }

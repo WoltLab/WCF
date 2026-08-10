@@ -212,7 +212,7 @@ final class ModificationLogGridView extends AbstractGridView
                 $itemsPerType[$modificationLog->objectTypeID][] = $modificationLog;
             }
 
-            if (!empty($itemsPerType)) {
+            if ($itemsPerType !== []) {
                 foreach ($itemsPerType as $objectTypeID => $items) {
                     $objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
                     if ($objectType === null) {

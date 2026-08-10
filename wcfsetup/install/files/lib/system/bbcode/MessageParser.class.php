@@ -117,7 +117,7 @@ class MessageParser extends BBCodeParser
             $this->message = $this->parseSmilies($this->message, $enableHtml);
         }
 
-        if ($enableBBCodes && !empty($this->cachedCodes)) {
+        if ($enableBBCodes && $this->cachedCodes !== []) {
             // insert cached codes
             $this->message = $this->insertCachedCodes($this->message);
         }

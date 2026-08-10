@@ -40,7 +40,7 @@ class RecentActivityListPage extends AbstractPage
 
         $this->eventList = new ViewableUserActivityEventList();
 
-        if (!empty(UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES))) {
+        if (UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES) !== []) {
             $this->eventList->getConditionBuilder()->add(
                 "user_activity_event.userID NOT IN (?)",
                 [UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES)]

@@ -133,7 +133,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
 
         // fetch response
         $userIDs = $responses = [];
-        if (!empty($responseIDs)) {
+        if ($responseIDs !== []) {
             $responses = ViewableCommentResponseRuntimeCache::getInstance()->getObjects($responseIDs);
 
             foreach ($responses as $response) {
@@ -156,13 +156,13 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
                 $userIDs[] = $comment->userID;
             }
         }
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             $users = UserProfileRuntimeCache::getInstance()->getObjects(\array_unique($userIDs));
         }
 
         // fetch articles
         $articleContents = [];
-        if (!empty($articleContentIDs)) {
+        if ($articleContentIDs !== []) {
             $articleContentList = new ArticleContentList();
             $articleContentList->setObjectIDs($articleContentIDs);
             $articleContentList->readObjects();

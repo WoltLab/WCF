@@ -114,7 +114,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
         }
 
         // delete items
-        if (!empty($items)) {
+        if ($items !== []) {
             $this->handleDelete($items);
         }
     }
@@ -159,7 +159,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
             }
 
             // include node value if item does not contain any child elements (eg. pip)
-            if (empty($data['elements'])) {
+            if ($data['elements'] === []) {
                 $data['nodeValue'] = $element->nodeValue;
             }
 
@@ -232,7 +232,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
      */
     protected function getI18nValues(array $values, bool $singleValueOnly = false)
     {
-        if (empty($values)) {
+        if ($values === []) {
             return $singleValueOnly ? '' : [];
         }
 
@@ -253,7 +253,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
         }
 
         // no matching value found
-        if (empty($matchingValues)) {
+        if ($matchingValues === []) {
             if (isset($values['en'])) {
                 // safest route: pick English
                 $matchingValues['en'] = $values['en'];
@@ -286,7 +286,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
      */
     protected function import(array $row, array $data)
     {
-        if (empty($row)) {
+        if ($row === []) {
             // create new item
             $this->prepareCreate($data);
 

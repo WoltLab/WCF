@@ -320,7 +320,7 @@ final class RouteHandler extends SingletonFactory
             self::$path = ($dir === '\\') ? '/' : FileUtil::addTrailingSlash($dir);
         }
 
-        if (!empty($removeComponents)) {
+        if ($removeComponents !== []) {
             $path = \explode('/', self::$path);
             foreach ($path as $index => $component) {
                 if (empty($path[$index])) {

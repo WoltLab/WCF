@@ -81,7 +81,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             'media' => [],
         ];
 
-        if (!empty($mediaFiles)) {
+        if ($mediaFiles !== []) {
             $mediaIDs = $mediaToFileID = [];
             foreach ($mediaFiles as $internalFileID => $media) {
                 $mediaIDs[] = $media->mediaID;
@@ -120,7 +120,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
      */
     public function generateThumbnails()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -355,10 +355,10 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
     {
         WCF::getSession()->checkPermissions(['admin.content.cms.canManageMedia']);
 
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }
@@ -418,7 +418,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             $this->parameters['data']['categoryID'] = null;
         }
 
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -547,7 +547,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         $mediaList->sqlOffset = ($this->parameters['pageNo'] - 1) * static::ITEMS_PER_MANAGER_DIALOG_PAGE;
         $mediaList->readObjectIDs();
 
-        if (empty($mediaList->getObjectIDs())) {
+        if ($mediaList->getObjectIDs() === []) {
             // check if page is requested that might have existed but does not exist anymore due to deleted
             // media files
             if ($this->parameters['pageNo'] > 1 && $this->parameters['searchString'] === '' && $this->parameters['categoryID'] === 0) {
@@ -583,10 +583,10 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
     {
         WCF::getSession()->checkPermissions(['admin.content.cms.canManageMedia']);
 
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }
@@ -603,7 +603,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
     #[\Override]
     public function delete()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -627,13 +627,13 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
      */
     protected function unmarkItems(array $mediaIDs = [])
     {
-        if (empty($mediaIDs)) {
+        if ($mediaIDs === []) {
             foreach ($this->getObjects() as $media) {
                 $mediaIDs[] = $media->mediaID;
             }
         }
 
-        if (!empty($mediaIDs)) {
+        if ($mediaIDs !== []) {
             ClipboardHandler::getInstance()->unmark(
                 $mediaIDs,
                 ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.media')
@@ -654,7 +654,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             throw new PermissionDeniedException();
         }
 
-        if (empty(CategoryHandler::getInstance()->getCategories('com.woltlab.wcf.media.category'))) {
+        if (CategoryHandler::getInstance()->getCategories('com.woltlab.wcf.media.category') === []) {
             throw new IllegalLinkException();
         }
     }
@@ -687,10 +687,10 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
     {
         $this->validateGetSetCategoryDialog();
 
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }
@@ -798,7 +798,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             'media' => [],
         ];
 
-        if (!empty($mediaFiles)) {
+        if ($mediaFiles !== []) {
             $mediaIDs = $mediaToFileID = [];
             foreach ($mediaFiles as $internalFileID => $media) {
                 $mediaIDs[] = $media->mediaID;
@@ -832,7 +832,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 
         // Delete *old* files using the non-updated local media editor object if the new file is
         // stored in a different location.
-        if (empty($result['errors']) && $updatedMediaFile->getLocation() !== $outdatedMediaFile->getLocation()) {
+        if ($result['errors'] === [] && $updatedMediaFile->getLocation() !== $outdatedMediaFile->getLocation()) {
             $outdatedMediaFile->deleteFiles();
         }
 

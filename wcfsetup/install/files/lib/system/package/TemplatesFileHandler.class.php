@@ -65,7 +65,7 @@ class TemplatesFileHandler extends ACPTemplatesFileHandler
             ]);
         }
 
-        if (!empty($updateTemplateIDs)) {
+        if ($updateTemplateIDs !== []) {
             // update old templates
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('templateID IN (?)', [$updateTemplateIDs]);

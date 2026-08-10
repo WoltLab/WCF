@@ -90,7 +90,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
     {
         parent::readData();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             I18nHandler::getInstance()->setOptions(
                 'description',
                 1,
@@ -167,7 +167,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
     {
         parent::assignVariables();
 
-        $useRequestData = empty($_POST) ? false : true;
+        $useRequestData = $_POST !== [];
         I18nHandler::getInstance()->assignVariables($useRequestData);
 
         WCF::getTPL()->assign([

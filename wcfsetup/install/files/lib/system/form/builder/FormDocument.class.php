@@ -235,7 +235,7 @@ class FormDocument implements IFormDocument
             }
         }
 
-        if (!empty($doubleNodeIds)) {
+        if ($doubleNodeIds !== []) {
             throw new \LogicException("Non-unique node id" . (\count($doubleNodeIds) > 1 ? 's' : '') . " '" . \implode(
                 "', '",
                 $doubleNodeIds
@@ -273,7 +273,7 @@ class FormDocument implements IFormDocument
     public function errorMessage(?string $languageItem = null, array $variables = [])
     {
         if ($languageItem === null) {
-            if (!empty($variables)) {
+            if ($variables !== []) {
                 throw new \InvalidArgumentException(
                     "Cannot use variables when unsetting error message of form '{$this->getId()}'"
                 );
@@ -673,7 +673,7 @@ class FormDocument implements IFormDocument
     public function successMessage(?string $languageItem = null, array $variables = [])
     {
         if ($languageItem === null) {
-            if (!empty($variables)) {
+            if ($variables !== []) {
                 throw new \InvalidArgumentException(
                     "Cannot use variables when unsetting success message of form '{$this->getId()}'"
                 );

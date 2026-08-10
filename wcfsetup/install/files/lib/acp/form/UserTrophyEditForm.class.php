@@ -71,7 +71,7 @@ class UserTrophyEditForm extends UserTrophyAddForm
         $this->userIDs = [$this->userTrophy->userID];
         $this->user = $this->userTrophy->getUserProfile()->getUsername();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $this->readDataI18n($this->userTrophy);
 
             $this->useCustomDescription = $this->userTrophy->useCustomDescription;
@@ -108,7 +108,7 @@ class UserTrophyEditForm extends UserTrophyAddForm
     {
         parent::assignVariables();
 
-        I18nHandler::getInstance()->assignVariables(!empty($_POST));
+        I18nHandler::getInstance()->assignVariables($_POST !== []);
 
         WCF::getTPL()->assign([
             'userTrophy' => $this->userTrophy,

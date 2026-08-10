@@ -32,7 +32,7 @@ class QuoteMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHan
             }
         }
 
-        if (!empty($usernames)) {
+        if ($usernames !== []) {
             $userList = new UserList();
             $userList->getConditionBuilder()->add("user_table.username IN (?)", [$usernames]);
             $userList->readObjectIDs();

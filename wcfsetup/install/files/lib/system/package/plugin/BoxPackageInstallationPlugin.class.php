@@ -360,7 +360,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
     #[\Override]
     protected function postImport()
     {
-        if (!empty($this->content)) {
+        if ($this->content !== []) {
             $sql = "SELECT  COUNT(*) AS count
                     FROM    wcf1_box_content
                     WHERE   boxID = ?
@@ -424,7 +424,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
             WCF::getDB()->commitTransaction();
         }
 
-        if (empty($this->visibilityExceptions)) {
+        if ($this->visibilityExceptions === []) {
             return;
         }
 
@@ -709,7 +709,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
                 $exceptions[] = $page->nodeValue;
             }
 
-            if (!empty($exceptions)) {
+            if ($exceptions !== []) {
                 $data['visibilityExceptions'] = $exceptions;
             }
         }

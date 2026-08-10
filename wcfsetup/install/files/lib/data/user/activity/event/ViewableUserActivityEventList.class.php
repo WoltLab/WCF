@@ -76,7 +76,7 @@ class ViewableUserActivityEventList extends UserActivityEventList
         }
 
         // set user profiles
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             UserProfileRuntimeCache::getInstance()->cacheObjectIDs(\array_unique($userIDs));
         }
 

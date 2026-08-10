@@ -28,7 +28,7 @@ class PreparedStatementConditionBuilder extends ConditionBuilder
     #[\Override]
     public function add(mixed $condition, array $parameters = [])
     {
-        if (!empty($parameters)) {
+        if ($parameters !== []) {
             $count = 0;
             $callback = static function () use (&$count, $parameters, $condition) {
                 if (!\array_key_exists($count, $parameters)) {
@@ -66,7 +66,7 @@ class PreparedStatementConditionBuilder extends ConditionBuilder
         $this->conditions .= $condition;
 
         // parameter handling
-        if (!empty($parameters)) {
+        if ($parameters !== []) {
             foreach ($parameters as $parameter) {
                 if (\is_array($parameter)) {
                     foreach ($parameter as $value) {

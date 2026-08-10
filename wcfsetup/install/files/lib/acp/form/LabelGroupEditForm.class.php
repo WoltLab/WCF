@@ -73,7 +73,7 @@ class LabelGroupEditForm extends LabelGroupAddForm
     #[\Override]
     protected function setObjectTypeRelations(?array $data = null): void
     {
-        if (empty($_POST)) {
+        if ($_POST === []) {
             // read database values
             $sql = "SELECT  objectTypeID, objectID
                     FROM    wcf1_label_group_to_object

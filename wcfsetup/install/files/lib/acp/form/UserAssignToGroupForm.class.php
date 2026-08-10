@@ -79,7 +79,7 @@ class UserAssignToGroupForm extends AbstractForm
         // get user
         // @phpstan-ignore assign.propertyType
         $this->users = ClipboardHandler::getInstance()->getMarkedItems($this->objectTypeID);
-        if (empty($this->users)) {
+        if ($this->users === []) {
             throw new IllegalLinkException();
         }
 
@@ -101,7 +101,7 @@ class UserAssignToGroupForm extends AbstractForm
     {
         parent::validate();
 
-        if (empty($this->userIDs)) {
+        if ($this->userIDs === []) {
             throw new IllegalLinkException();
         }
 

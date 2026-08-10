@@ -89,7 +89,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
                         $option['optionValue'],
                         $option['enableOptions']
                     );
-                    if (!empty($disabledOptions)) {
+                    if ($disabledOptions !== []) {
                         $optionBlacklist = \array_merge($optionBlacklist, $disabledOptions);
                     }
                 }

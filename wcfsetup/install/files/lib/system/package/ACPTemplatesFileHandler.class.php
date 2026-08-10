@@ -33,7 +33,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler
     {
         if ($this->packageInstallation->getPackage()->package !== 'com.woltlab.wcf') {
             // check if files are existing already
-            if (!empty($files)) {
+            if ($files !== []) {
                 $files = \array_map(static function (string $file) {
                     if (\basename($file) !== $file) {
                         throw new \Exception('The template archive must not contain any directories.');
@@ -64,7 +64,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler
                 // check if acp templates from the package beeing
                 // installed are in conflict with already installed
                 // files
-                if ($this->packageInstallation->getPackage()->isApplication === 0 && !empty($lockedFiles)) {
+                if ($this->packageInstallation->getPackage()->isApplication === 0 && $lockedFiles !== []) {
                     foreach ($files as $file) {
                         if (isset($lockedFiles[$file])) {
                             $owningPackage = new Package($lockedFiles[$file]);
@@ -116,7 +116,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler
             }
         }
 
-        if (!empty($files)) {
+        if ($files !== []) {
             $sql = "INSERT INTO wcf1_" . $this->tableName . "
                                 (packageID, templateName, application)
                     VALUES      (?, ?, ?)";

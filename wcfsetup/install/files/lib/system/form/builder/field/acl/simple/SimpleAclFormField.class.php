@@ -58,7 +58,7 @@ final class SimpleAclFormField extends AbstractFormField
         $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor(
             'i18n',
             function (IFormDocument $document, array $parameters) {
-                if ($this->checkDependencies() && \is_array($this->getValue()) && !empty($this->getValue())) {
+                if ($this->checkDependencies() && \is_array($this->getValue()) && $this->getValue() !== []) {
                     $parameters[$this->getObjectProperty()] = $this->getValue();
                 }
 

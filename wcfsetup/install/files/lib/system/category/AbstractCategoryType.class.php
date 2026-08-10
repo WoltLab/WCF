@@ -66,7 +66,7 @@ abstract class AbstractCategoryType implements ICategoryType
     {
         $categoryIDs = \array_keys(CategoryHandler::getInstance()->getChildCategories($categoryEditor->categoryID));
 
-        if (!empty($categoryIDs)) {
+        if ($categoryIDs !== []) {
             // move child categories to parent category
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add("categoryID IN (?)", [$categoryIDs]);

@@ -28,7 +28,7 @@ class WatchedArticleListPageHandler extends AbstractMenuPageHandler
     #[\Override]
     public function isVisible(?int $objectID = null)
     {
-        return !empty(ArticleCategory::getSubscribedCategoryIDs());
+        return ArticleCategory::getSubscribedCategoryIDs() !== [];
     }
 
     private static function getWatchedUnreadArticles(): int

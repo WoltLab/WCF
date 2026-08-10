@@ -243,7 +243,7 @@ final class ArticleGridView extends AbstractGridView
         $list->sqlJoins .= $join;
         $list->sqlConditionJoins .= $join;
 
-        if (!empty($list->sqlSelects)) {
+        if ($list->sqlSelects !== '') {
             $list->sqlSelects .= ', ';
         }
 

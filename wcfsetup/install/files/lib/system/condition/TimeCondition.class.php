@@ -55,11 +55,11 @@ class TimeCondition extends AbstractMultipleFieldsCondition implements IContentC
             $data['endTime'] = $this->endTime;
         }
 
-        if (!empty($data) && $this->timezone !== '') {
+        if ($data !== [] && $this->timezone !== '') {
             $data['timezone'] = $this->timezone;
         }
 
-        if (!empty($data)) {
+        if ($data !== []) {
             return $data;
         }
 

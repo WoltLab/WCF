@@ -157,7 +157,7 @@ class UserNotificationHandler extends SingletonFactory
         $notifications = $statement->fetchMap('userID', 'notificationID');
 
         // check if event supports stacking and author should be added
-        if (!empty($notifications) && $event->isStackable()) {
+        if ($notifications !== [] && $event->isStackable()) {
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("notificationID IN (?)", [\array_values($notifications)]);
             if ($notificationObject->getAuthorID() !== null && $notificationObject->getAuthorID() !== 0) {
@@ -181,7 +181,7 @@ class UserNotificationHandler extends SingletonFactory
                 }
             }
 
-            if (!empty($notificationIDs)) {
+            if ($notificationIDs !== []) {
                 // update trigger count
                 $sql = "UPDATE  wcf1_user_notification
                         SET     timesTriggered = timesTriggered + ?,
@@ -207,7 +207,7 @@ class UserNotificationHandler extends SingletonFactory
         }
 
         $recipientIDs = \array_diff($recipientIDs, \array_keys($notifications));
-        if (empty($recipientIDs)) {
+        if ($recipientIDs === []) {
             return;
         }
 
@@ -230,11 +230,11 @@ class UserNotificationHandler extends SingletonFactory
                 $userIDs[] = $userID;
             }
 
-            if (!empty($userIDs)) {
+            if ($userIDs !== []) {
                 $recipientIDs = \array_diff($recipientIDs, $userIDs);
             }
 
-            if (empty($recipientIDs)) {
+            if ($recipientIDs === []) {
                 return;
             }
         }
@@ -242,7 +242,7 @@ class UserNotificationHandler extends SingletonFactory
         // Remove recipients who do not have the content language enabled.
         if ($contentLanguageID !== 0) {
             $recipientIDs = $this->filterUsersByContentLanguage($recipientIDs, $contentLanguageID);
-            if (empty($recipientIDs)) {
+            if ($recipientIDs === []) {
                 return;
             }
         }
@@ -253,7 +253,7 @@ class UserNotificationHandler extends SingletonFactory
         $recipientList->getConditionBuilder()->add('event_to_user.userID IN (?)', [$recipientIDs]);
         $recipientList->readObjects();
         $recipients = $recipientList->getObjects();
-        if (!empty($recipients)) {
+        if ($recipients !== []) {
             $data = [
                 'authorID' => $event->getAuthorID() ?: null,
                 'data' => [
@@ -479,7 +479,7 @@ class UserNotificationHandler extends SingletonFactory
     public function processNotifications(array $notificationObjects)
     {
         // return an empty set if no notifications exist
-        if (empty($notificationObjects)) {
+        if ($notificationObjects === []) {
             return [
                 'count' => 0,
                 'notifications' => [],
@@ -573,7 +573,7 @@ class UserNotificationHandler extends SingletonFactory
                         $eventAuthors[$userID] = $authors[$userID];
                     }
                 }
-                if (!empty($eventAuthors)) {
+                if ($eventAuthors !== []) {
                     $class->setAuthors($eventAuthors);
                 }
             }
@@ -603,7 +603,7 @@ class UserNotificationHandler extends SingletonFactory
             }
         }
 
-        if (!empty($deleteNotifications)) {
+        if ($deleteNotifications !== []) {
             $notificationAction = new UserNotificationAction($deleteNotifications, 'delete');
             $notificationAction->executeAction();
 
@@ -871,7 +871,7 @@ class UserNotificationHandler extends SingletonFactory
         ]);
         $eventIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
-        if (!empty($eventIDs)) {
+        if ($eventIDs !== []) {
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("eventID IN (?)", [$eventIDs]);
             $conditions->add("objectID IN (?)", [$objectIDs]);
@@ -884,7 +884,7 @@ class UserNotificationHandler extends SingletonFactory
             $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
             // reset number of notifications
-            if (!empty($userIDs)) {
+            if ($userIDs !== []) {
                 UserStorageHandler::getInstance()->reset(\array_unique($userIDs), 'userNotificationCount');
             }
 
@@ -926,10 +926,10 @@ class UserNotificationHandler extends SingletonFactory
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("confirmTime = ?", [0]);
         $conditions->add("eventID = ?", [$event->eventID]);
-        if (!empty($recipientIDs)) {
+        if ($recipientIDs !== []) {
             $conditions->add("userID IN (?)", [$recipientIDs]);
         }
-        if (!empty($objectIDs)) {
+        if ($objectIDs !== []) {
             $conditions->add("objectID IN (?)", [$objectIDs]);
         }
 
@@ -953,7 +953,7 @@ class UserNotificationHandler extends SingletonFactory
 
         // Check whether anything was changed. If not, we don't need to do anything else.
         if ($confirmedCount !== 0) {
-            if (!empty($recipientIDs)) {
+            if ($recipientIDs !== []) {
                 UserStorageHandler::getInstance()->reset($recipientIDs, 'userNotificationCount');
             } else {
                 UserStorageHandler::getInstance()->resetAll('userNotificationCount');
@@ -980,7 +980,7 @@ class UserNotificationHandler extends SingletonFactory
      */
     public function markAsConfirmedByIDs(array $notificationIDs)
     {
-        if (empty($notificationIDs)) {
+        if ($notificationIDs === []) {
             return;
         }
 
@@ -1042,7 +1042,7 @@ class UserNotificationHandler extends SingletonFactory
     public function getLatestNotification(int $lastRequestTimestamp)
     {
         $notifications = $this->fetchNotifications(1, 0, 0);
-        if (!empty($notifications) && \reset($notifications)->time > $lastRequestTimestamp) {
+        if ($notifications !== [] && \reset($notifications)->time > $lastRequestTimestamp) {
             $notifications = $this->processNotifications($notifications);
 
             if (isset($notifications['notifications'][0])) {

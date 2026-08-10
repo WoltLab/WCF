@@ -48,7 +48,7 @@ class FollowingsOnlineBoxController extends AbstractDatabaseObjectListBoxControl
     #[\Override]
     public function hasContent()
     {
-        if (\MODULE_USERS_ONLINE === 0 || !WCF::getSession()->hasPermission('user.profile.canViewUsersOnlineList') || empty(UserProfileHandler::getInstance()->getFollowingUsers())) {
+        if (\MODULE_USERS_ONLINE === 0 || !WCF::getSession()->hasPermission('user.profile.canViewUsersOnlineList') || UserProfileHandler::getInstance()->getFollowingUsers() === []) {
             return false;
         }
 

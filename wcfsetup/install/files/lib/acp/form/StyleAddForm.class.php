@@ -216,7 +216,7 @@ class StyleAddForm extends AbstractForm
 
         $this->rebuildUploadFields();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $this->readStyleVariables();
         }
 
@@ -400,12 +400,12 @@ class StyleAddForm extends AbstractForm
         $this->uploads = [];
         foreach (\array_keys($this->getUploadFields()) as $field) {
             $removedFiles = UploadHandler::getInstance()->getRemovedFilesByFieldId($field);
-            if (!empty($removedFiles)) {
+            if ($removedFiles !== []) {
                 $this->uploads[$field] = null;
             }
 
             $files = UploadHandler::getInstance()->getFilesByFieldId($field);
-            if (!empty($files)) {
+            if ($files !== []) {
                 $this->uploads[$field] = $files[0];
             }
         }
@@ -552,7 +552,7 @@ class StyleAddForm extends AbstractForm
             if (\count($files) > 1) {
                 throw new UserInputException($field, 'invalid');
             }
-            if (empty($files)) {
+            if ($files === []) {
                 continue;
             }
 
@@ -688,7 +688,7 @@ class StyleAddForm extends AbstractForm
 
         $this->variables[$variableName] = \implode("\n", $lines);
 
-        if (!empty($errors)) {
+        if ($errors !== []) {
             throw new UserInputException($variableName, $errors);
         }
     }
@@ -712,7 +712,7 @@ class StyleAddForm extends AbstractForm
             }
         }
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $this->setDefaultValues();
         }
     }

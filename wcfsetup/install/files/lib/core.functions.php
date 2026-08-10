@@ -192,14 +192,14 @@ namespace wcf\functions\exception {
 			}
 
 			$templateContextLines = getTemplateContextLines($e);
-			if (!empty($templateContextLines)) {
+			if ($templateContextLines !== []) {
 				$extraInformation[] = [
 					'Template Context',
 					\implode("", $templateContextLines),
 				];
 			}
 
-			return !empty($extraInformation) ? base64_encode(serialize($extraInformation)) : "-";
+			return $extraInformation !== [] ? base64_encode(serialize($extraInformation)) : "-";
 		};
 
 		// don't forget to update ExceptionLogUtil / ExceptionLogViewPage, when changing the log file format
@@ -650,9 +650,9 @@ EXPLANATION;
 					do {
 					?>
 						<div class="exceptionBoundary">
-							<p class="exceptionSubtitle"><?php if (!empty($exceptions) && $first) {
+							<p class="exceptionSubtitle"><?php if ($exceptions !== [] && $first) {
 																echo "Original ";
-															} else if (empty($exceptions) && !$first) {
+															} else if ($exceptions === [] && !$first) {
 																echo "Final ";
 															} ?>Error</p>
 							<?php if ($e instanceof SystemException && $e->getDescription() !== '') { ?>
@@ -698,7 +698,7 @@ EXPLANATION;
 								}
 
 								$templateContextLines = getTemplateContextLines($e);
-								if (!empty($templateContextLines)) {
+								if ($templateContextLines !== []) {
 									?>
 									<li>
 										<p class="exceptionFieldTitle">Template Context<span class="exceptionColon">:</span></p>
@@ -835,8 +835,8 @@ EXPLANATION;
 					foreach ($parameters as $parameter) {
 						$isSensitive = false;
 						if (
-							!empty($parameter->getAttributes(\wcf\SensitiveArgument::class))
-							|| !empty($parameter->getAttributes(\SensitiveParameter::class))
+							$parameter->getAttributes(\wcf\SensitiveArgument::class) !== []
+							|| $parameter->getAttributes(\SensitiveParameter::class) !== []
 						) {
 							$isSensitive = true;
 						}

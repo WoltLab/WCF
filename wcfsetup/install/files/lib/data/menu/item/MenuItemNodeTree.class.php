@@ -114,7 +114,7 @@ class MenuItemNodeTree
         $this->node->setChildren($this->generateNodeTree(null, $this->node));
 
         // mark nodes as active
-        if (!empty($activeMenuItems)) {
+        if ($activeMenuItems !== []) {
             $nodeList = $this->getNodeList();
             foreach ($activeMenuItems as $itemIDs) {
                 for ($i = 0, $length = \count($itemIDs); $i < $length; $i++) {

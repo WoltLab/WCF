@@ -173,7 +173,7 @@ class SettingsForm extends AbstractForm
 
         // dynamic options
         $optionErrors = $this->optionHandler->validate();
-        if (!empty($optionErrors)) {
+        if ($optionErrors !== []) {
             $this->errorType = $optionErrors;
             throw new UserInputException('options', $this->errorType);
         }
@@ -192,7 +192,7 @@ class SettingsForm extends AbstractForm
                 }
             }
 
-            if (empty($this->contentLanguageIDs) && isset($this->availableContentLanguages[$this->languageID])) {
+            if ($this->contentLanguageIDs === [] && isset($this->availableContentLanguages[$this->languageID])) {
                 $this->contentLanguageIDs[] = $this->languageID;
             }
 
@@ -228,7 +228,7 @@ class SettingsForm extends AbstractForm
         parent::readData();
 
         // default values
-        if (empty($_POST)) {
+        if ($_POST === []) {
             // static options
             if ($this->category === 'general') {
                 $this->contentLanguageIDs = WCF::getUser()->getLanguageIDs();

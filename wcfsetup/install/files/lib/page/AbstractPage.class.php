@@ -206,7 +206,7 @@ abstract class AbstractPage implements IPage
         EventHandler::getInstance()->fireAction($this, 'checkPermissions');
 
         // check permission, it is sufficient to have at least one permission
-        if (!empty($this->neededPermissions)) {
+        if ($this->neededPermissions !== []) {
             $hasPermissions = false;
             foreach ($this->neededPermissions as $permission) {
                 if (WCF::getSession()->hasPermission($permission)) {
@@ -237,7 +237,7 @@ abstract class AbstractPage implements IPage
         $this->checkPermissions();
 
         // check if current request URL matches the canonical URL
-        if ($this->canonicalURL !== '' && (empty($_POST) || $this->forceCanonicalURL)) {
+        if ($this->canonicalURL !== '' && ($_POST === [] || $this->forceCanonicalURL)) {
             $canonicalURL = Url::parse($this->canonicalURL);
 
             // use $_SERVER['REQUEST_URI'] because it represents the URL used to access the site and not the internally rewritten one
@@ -299,7 +299,7 @@ abstract class AbstractPage implements IPage
                         }
                     }
 
-                    if (!empty($rQueryString)) {
+                    if ($rQueryString !== []) {
                         $redirectURL .= !\str_contains($redirectURL, '?') ? '?' : '&';
                         $redirectURL .= \http_build_query($rQueryString, '', '&');
                     }

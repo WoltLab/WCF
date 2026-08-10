@@ -196,7 +196,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
             $categoryIDs[$row['languageCategoryID']] = true;
         }
 
-        if (!empty($itemIDs)) {
+        if ($itemIDs !== []) {
             $sql = "DELETE FROM wcf1_" . $this->tableName . "
                     WHERE       languageItemID = ?
                             AND packageID = ?";
@@ -267,7 +267,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         }
 
         // Delete categories from DB.
-        if (!empty($categoriesToDelete)) {
+        if ($categoriesToDelete !== []) {
             $sql = "DELETE FROM wcf1_language_category
                     WHERE       languageCategory = ?";
             $statement = WCF::getDB()->prepare($sql);

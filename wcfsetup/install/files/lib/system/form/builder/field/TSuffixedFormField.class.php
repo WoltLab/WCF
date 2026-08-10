@@ -43,7 +43,7 @@ trait TSuffixedFormField
     public function suffix(?string $languageItem = null, array $variables = [])
     {
         if ($languageItem === null) {
-            if (!empty($variables)) {
+            if ($variables !== []) {
                 throw new \InvalidArgumentException(
                     "Cannot use variables when unsetting suffix of field '{$this->getId()}'"
                 );

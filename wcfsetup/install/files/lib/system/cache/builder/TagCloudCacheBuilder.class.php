@@ -82,7 +82,7 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder
     {
         $this->tags = [];
 
-        if (!empty($this->objectTypeIDs)) {
+        if ($this->objectTypeIDs !== []) {
             // get tag ids
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('object.objectTypeID IN (?)', [$this->objectTypeIDs]);
@@ -99,7 +99,7 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder
             $tagIDs = $statement->fetchMap('tagID', 'counter');
 
             // get tags
-            if (!empty($tagIDs)) {
+            if ($tagIDs !== []) {
                 $conditionBuilder = new PreparedStatementConditionBuilder();
                 $conditionBuilder->add('tagID IN (?)', [\array_keys($tagIDs)]);
                 $sql = "SELECT  *

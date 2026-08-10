@@ -116,7 +116,7 @@ class EditHistoryManager extends SingletonFactory
      */
     public function bulkRevert(array $userIDs, int $timeframe = 86400)
     {
-        if (empty($userIDs)) {
+        if ($userIDs === []) {
             return;
         }
 
@@ -159,7 +159,7 @@ class EditHistoryManager extends SingletonFactory
         ));
 
         $entryIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-        if (empty($entryIDs)) {
+        if ($entryIDs === []) {
             return;
         }
 

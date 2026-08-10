@@ -50,7 +50,7 @@ final class ContentLanguageFormField extends AbstractFormField implements IImmut
     public function isAvailable(): bool
     {
         return LanguageFactory::getInstance()->multilingualismEnabled()
-            && !empty(LanguageFactory::getInstance()->getContentLanguageIDs())
+            && LanguageFactory::getInstance()->getContentLanguageIDs() !== []
             && parent::isAvailable();
     }
 

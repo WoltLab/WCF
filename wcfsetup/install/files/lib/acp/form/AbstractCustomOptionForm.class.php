@@ -216,7 +216,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm
     #[\Override]
     public function readData()
     {
-        if ($this->action === 'edit' && empty($_POST)) {
+        if ($this->action === 'edit' && $_POST === []) {
             $this->readDataI18n($this->option);
 
             $this->optionType = $this->option->optionType;

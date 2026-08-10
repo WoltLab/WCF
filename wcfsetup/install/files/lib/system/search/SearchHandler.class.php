@@ -71,7 +71,7 @@ final class SearchHandler
         $this->buildConditions();
 
         // Check if at least one author exists when searching for author.
-        if (!empty($this->parameters['usernames']) && empty($this->getUserIDs())) {
+        if (!empty($this->parameters['usernames']) && $this->getUserIDs() === []) {
             return null;
         }
 
@@ -138,7 +138,7 @@ final class SearchHandler
     private function buildUserCondition(): void
     {
         $userIDs = $this->getUserIDs();
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             $this->conditionBuilder->add('userID IN (?)', [$userIDs]);
         }
     }
@@ -360,7 +360,7 @@ final class SearchHandler
             $this->parameters['sortField'] . ' ' . $this->parameters['sortOrder']
         );
 
-        return !empty($this->results);
+        return $this->results !== [];
     }
 
     private function saveSearch(): Search

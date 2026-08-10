@@ -292,7 +292,7 @@ class WorkerCLICommand implements ICLICommand
                 $except = null;
 
                 // 3.2) Exit if all status FDs have been closed.
-                if (empty($read)) {
+                if ($read === []) {
                     break;
                 }
 

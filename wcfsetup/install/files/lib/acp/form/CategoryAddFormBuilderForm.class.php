@@ -127,13 +127,13 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
         $classNameParts = \explode('\\', static::class);
         $className = \array_pop($classNameParts);
 
-        if (empty($this->addController)) {
+        if ($this->addController === '') {
             $this->addController = \str_replace(['AddForm', 'EditForm'], 'Add', $className);
         }
-        if (empty($this->editController)) {
+        if ($this->editController === '') {
             $this->editController = \str_replace(['AddForm', 'EditForm'], 'Edit', $className);
         }
-        if (empty($this->listController)) {
+        if ($this->listController === '') {
             $this->listController = \str_replace(['AddForm', 'EditForm'], 'List', $className);
         }
     }
@@ -287,7 +287,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
                     new FormFieldValidator(
                         'recursion',
                         function (SelectFormField $formField) use ($processor) {
-                            if (empty($formField->getValue())) {
+                            if ((int)$formField->getValue() === 0) {
                                 return;
                             }
 
@@ -330,7 +330,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
                     new FormFieldValidator(
                         'nestingLevel',
                         static function (SelectFormField $formField) use ($processor) {
-                            if (empty($formField->getValue())) {
+                            if ((int)$formField->getValue() === 0) {
                                 return;
                             }
 
@@ -425,7 +425,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
                 function (IFormDocument $document, array $parameters) {
                     $parameters['data']['objectTypeID'] = $this->objectType->getObjectID();
 
-                    if (empty($parameters['data']['parentCategoryID'])) {
+                    if ((int)($parameters['data']['parentCategoryID'] ?? 0) === 0) {
                         $parameters['data']['parentCategoryID'] = 0;
                     }
 
@@ -511,7 +511,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
             CategoryPermissionHandler::getInstance()->resetCache();
         }
 
-        if (!empty($updateData)) {
+        if ($updateData !== []) {
             (new CategoryEditor($category))->update($updateData);
         }
 

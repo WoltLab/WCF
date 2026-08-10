@@ -103,11 +103,7 @@ final class LicenseApi
     public static function hasLicenseCredentials(): bool
     {
         $authData = PackageUpdateServer::getWoltLabUpdateServer()->getAuthData();
-        if (empty($authData['username']) || empty($authData['password'])) {
-            return false;
-        }
-
-        return true;
+        return ($authData['username'] ?? '') !== '' && ($authData['password'] ?? '') !== '';
     }
 
     public function getUpToDateLicenseData(): ?LicenseData

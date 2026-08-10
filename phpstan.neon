@@ -50,7 +50,7 @@ parameters:
         uselessCast: true
         requireParentConstructorCall: true
         disallowedBacktick: true
-        disallowedEmpty: false
+        disallowedEmpty: true
         disallowedImplicitArrayCreation: false
         disallowedShortTernary: false
         overwriteVariablesWithLoop: false

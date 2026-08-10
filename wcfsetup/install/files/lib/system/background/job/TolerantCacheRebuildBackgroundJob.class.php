@@ -28,7 +28,7 @@ final class TolerantCacheRebuildBackgroundJob extends AbstractUniqueBackgroundJo
     public function identifier(): string
     {
         $identifier = $this->cacheClass;
-        if (!empty($this->parameters)) {
+        if ($this->parameters !== []) {
             $identifier .= '-' . CacheHandler::getInstance()->getCacheIndex($this->parameters);
         }
 

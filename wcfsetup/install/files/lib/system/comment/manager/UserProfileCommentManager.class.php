@@ -200,7 +200,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements
 
         // fetch response
         $userIDs = $responses = [];
-        if (!empty($responseIDs)) {
+        if ($responseIDs !== []) {
             $responses = ViewableCommentResponseRuntimeCache::getInstance()->getObjects($responseIDs);
 
             foreach ($responses as $response) {
@@ -222,7 +222,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements
                 $userIDs[] = $comment->userID;
             }
         }
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             $users = UserProfileRuntimeCache::getInstance()->getObjects(\array_unique($userIDs));
         }
 

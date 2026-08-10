@@ -153,7 +153,7 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
                         }
                     }
 
-                    if (!empty($invalidRegex)) {
+                    if ($invalidRegex !== []) {
                         $formField->addValidationError(
                             new FormFieldValidationError(
                                 'format',

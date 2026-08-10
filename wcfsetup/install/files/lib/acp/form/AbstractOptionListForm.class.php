@@ -98,7 +98,7 @@ abstract class AbstractOptionListForm extends AbstractForm
 
         parent::validate();
 
-        if (!empty($this->errorType)) {
+        if ($this->errorType !== []) {
             throw new UserInputException('options', $this->errorType);
         }
     }
@@ -108,7 +108,7 @@ abstract class AbstractOptionListForm extends AbstractForm
     {
         parent::readData();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             $this->optionHandler->readData();
         }
     }

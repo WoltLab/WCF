@@ -68,7 +68,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction
     #[\Override]
     public function update()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 

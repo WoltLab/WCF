@@ -45,7 +45,7 @@ class PollRebuildDataWorker extends AbstractRebuildDataWorker
             $pollIDs[] = $poll->pollID;
         }
 
-        if (!empty($pollIDs)) {
+        if ($pollIDs !== []) {
             // update poll options
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('poll_option.pollID IN (?)', [$pollIDs]);

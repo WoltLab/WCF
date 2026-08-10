@@ -33,7 +33,7 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
         $size = \intval($tagArgs['size'] ?? 16);
         $name = $tagArgs['name'] ?? '';
         $type = $tagArgs['type'] ?? '';
-        $encodeJson = $tagArgs['encodeJson'] ?? '';
+        $encodeJson = (bool)($tagArgs['encodeJson'] ?? false);
 
         if (!\in_array($size, self::SIZES)) {
             throw new \InvalidArgumentException("An unsupported size '{$size}' was requested.");
@@ -63,7 +63,7 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
 
         $html = $icon->toHtml($size);
 
-        if (!empty($encodeJson)) {
+        if ($encodeJson) {
             return \json_encode($html, \JSON_THROW_ON_ERROR);
         }
 

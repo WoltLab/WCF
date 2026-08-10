@@ -121,7 +121,7 @@ class MediaClipboardAction extends AbstractClipboardAction
         }
 
         // category can only be set if any category exists
-        if (empty(CategoryHandler::getInstance()->getCategories('com.woltlab.wcf.media.category'))) {
+        if (CategoryHandler::getInstance()->getCategories('com.woltlab.wcf.media.category') === []) {
             return [];
         }
 

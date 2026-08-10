@@ -35,7 +35,7 @@ class AttachmentMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObje
             }
         }
 
-        if (!empty($attachmentIDs)) {
+        if ($attachmentIDs !== []) {
             $attachmentList = new AttachmentList();
             $attachmentList->getConditionBuilder()->add("attachment.attachmentID IN (?)", [$attachmentIDs]);
             $attachmentList->readObjectIDs();

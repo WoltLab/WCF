@@ -536,7 +536,7 @@ class PackageArchive
             if ($void->length > 1) {
                 throw new PackageValidationException(PackageValidationException::VOID_NOT_ALONE);
             } elseif ($void->length === 1) {
-                if (!empty($instructionData)) {
+                if ($instructionData !== []) {
                     throw new PackageValidationException(PackageValidationException::VOID_NOT_ALONE);
                 }
                 if ($type === 'install') {
@@ -854,7 +854,7 @@ class PackageArchive
     public function getConflictedExcludedPackages()
     {
         $conflictedPackages = [];
-        if (!empty($this->excludedPackages)) {
+        if ($this->excludedPackages !== []) {
             $excludedPackages = [];
             foreach ($this->excludedPackages as $excludedPackageData) {
                 $excludedPackages[$excludedPackageData['name']] = $excludedPackageData['version'];

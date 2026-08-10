@@ -38,10 +38,10 @@ final class UserGroupOptionFormField extends ItemListFormField implements IPacka
     {
         parent::validate();
 
-        if (empty($this->getValidationErrors()) && \is_array($this->getValue()) && !empty($this->getValue())) {
+        if ($this->getValidationErrors() === [] && \is_array($this->getValue()) && $this->getValue() !== []) {
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('optionName IN (?)', [$this->getValue()]);
-            if (!empty($this->getPackageIDs())) {
+            if ($this->getPackageIDs() !== []) {
                 $conditionBuilder->add('packageID IN (?)', [$this->getPackageIDs()]);
             }
 
@@ -54,7 +54,7 @@ final class UserGroupOptionFormField extends ItemListFormField implements IPacka
 
             $unknownOptions = \array_diff($this->getValue(), $availableOptions);
 
-            if (!empty($unknownOptions)) {
+            if ($unknownOptions !== []) {
                 $this->addValidationError(
                     new FormFieldValidationError(
                         'nonExistent',

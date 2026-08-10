@@ -119,7 +119,7 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
 
         // fetch response
         $userIDs = $responses = [];
-        if (!empty($responseIDs)) {
+        if ($responseIDs !== []) {
             $responses = ViewableCommentResponseRuntimeCache::getInstance()->getObjects($responseIDs);
 
             foreach ($responses as $response) {
@@ -142,13 +142,13 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
                 $userIDs[] = $comment->userID;
             }
         }
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             $users = UserProfileRuntimeCache::getInstance()->getObjects(\array_unique($userIDs));
         }
 
         // fetch pages
         $pages = [];
-        if (!empty($pageIDs)) {
+        if ($pageIDs !== []) {
             $pageList = new PageList();
             $pageList->setObjectIDs($pageIDs);
             $pageList->readObjects();

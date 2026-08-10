@@ -61,7 +61,7 @@ class DevtoolsPipEntryList implements IDevtoolsPipEntryList
             case 'array':
                 $unknownFilters = \array_diff(\array_keys($filter), \array_keys($this->keys));
 
-                if (!empty($unknownFilters)) {
+                if ($unknownFilters !== []) {
                     throw new \InvalidArgumentException("Unknown filter" . (\count($unknownFilters) > 1 ? 's' : '') . " '" . \implode(
                         ', ',
                         $unknownFilters

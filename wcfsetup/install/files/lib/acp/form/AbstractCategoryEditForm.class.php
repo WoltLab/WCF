@@ -43,7 +43,7 @@ abstract class AbstractCategoryEditForm extends AbstractCategoryAddForm
     {
         parent::assignVariables();
 
-        I18nHandler::getInstance()->assignVariables(!empty($_POST));
+        I18nHandler::getInstance()->assignVariables($_POST !== []);
 
         $availableCategories = new CategoryNodeTree($this->objectType->objectType, 0, true);
         WCF::getTPL()->assign([
@@ -89,7 +89,7 @@ abstract class AbstractCategoryEditForm extends AbstractCategoryAddForm
     {
         parent::readData();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             if ($this->objectType->getProcessor()->hasDescription()) {
                 I18nHandler::getInstance()->setOptions(
                     'description',

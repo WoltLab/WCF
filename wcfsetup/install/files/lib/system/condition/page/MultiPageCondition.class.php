@@ -41,7 +41,7 @@ class MultiPageCondition extends AbstractMultiSelectCondition implements IConten
     #[\Override]
     public function getData()
     {
-        if (!empty($this->fieldValue)) {
+        if ($this->fieldValue !== []) {
             return [
                 $this->fieldName => $this->fieldValue,
                 $this->fieldName . '_reverseLogic' => $this->reverseLogic,

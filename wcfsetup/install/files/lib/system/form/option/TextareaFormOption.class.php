@@ -30,8 +30,9 @@ class TextareaFormOption extends AbstractFormOption
     public function getFormField(string $id, array $configuration = []): AbstractFormField
     {
         $formField = MultilineTextFormField::create($id);
-        if (!empty($configuration['maxLength'])) {
-            $formField->maximumLength($configuration['maxLength']);
+        $maxLength = \intval($configuration['maxLength'] ?? 0);
+        if ($maxLength !== 0) {
+            $formField->maximumLength($maxLength);
         }
 
         return $formField;

@@ -212,7 +212,7 @@ final class I18nHandler extends SingletonFactory
      */
     public function setValues(string $elementID, array $i18nValues): void
     {
-        if (empty($i18nValues)) {
+        if ($i18nValues === []) {
             throw new SystemException(
                 'Invalid argument for parameter $i18nValues',
                 0,
@@ -312,7 +312,7 @@ final class I18nHandler extends SingletonFactory
         }
 
         // insert language items
-        if (!empty($insertLanguageIDs)) {
+        if ($insertLanguageIDs !== []) {
             $sql = "INSERT INTO wcf1_language_item
                                 (languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
                     VALUES      (?, ?, ?, ?, ?, ?)";
@@ -339,7 +339,7 @@ final class I18nHandler extends SingletonFactory
         }
 
         // update language items
-        if (!empty($updateLanguageIDs)) {
+        if ($updateLanguageIDs !== []) {
             $sql = "UPDATE  wcf1_language_item
                     SET     languageItemValue = ?,
                             languageItemOriginIsSystem = ?
@@ -449,7 +449,7 @@ final class I18nHandler extends SingletonFactory
                     }
 
                     // item appeared to be a language item but either is not or does not exist
-                    if (empty($i18nValues) && empty($value)) {
+                    if ($i18nValues === [] && empty($value)) {
                         $value = $this->elementOptions[$elementID]['value'];
                     }
                 } else {

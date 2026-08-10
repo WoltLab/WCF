@@ -572,7 +572,7 @@ final class LicensePage extends AbstractPage
         }
 
         // all found versions are excluded
-        if (empty($packageVersions)) {
+        if ($packageVersions === []) {
             return [];
         }
 
@@ -583,7 +583,7 @@ final class LicensePage extends AbstractPage
 
             foreach ($versionData as $packageUpdateID => $versionTypes) {
                 // ignore inaccessible packages
-                if (empty($versionTypes['accessible'])) {
+                if ($versionTypes['accessible'] === []) {
                     continue;
                 }
 
@@ -605,7 +605,7 @@ final class LicensePage extends AbstractPage
             }
 
             // ignore packages without accessible versions
-            if (empty($accessible)) {
+            if ($accessible === []) {
                 continue;
             }
 
@@ -642,7 +642,7 @@ final class LicensePage extends AbstractPage
                 }
             }
 
-            if (empty($requirements)) {
+            if ($requirements === []) {
                 continue;
             }
 
@@ -667,13 +667,13 @@ final class LicensePage extends AbstractPage
                     $installedPackages,
                     $excludedPackagesOfInstalledPackages
                 );
-                if (!empty($result)) {
+                if ($result !== []) {
                     $index = \array_search($row['package'], $openRequirements);
                     unset($openRequirements[$index]);
                 }
             }
 
-            if (!empty($openRequirements)) {
+            if ($openRequirements !== []) {
                 return [];
             }
         }

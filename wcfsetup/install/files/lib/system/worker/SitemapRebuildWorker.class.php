@@ -152,7 +152,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
             }
 
             // write sitemap index file if we have no active sitemap objects to prevent an outdated index file
-            if (empty($this->sitemapObjects) && $this->loopCount === 0) {
+            if ($this->sitemapObjects === [] && $this->loopCount === 0) {
                 $this->writeIndexFile();
             }
 

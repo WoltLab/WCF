@@ -104,7 +104,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         }
 
         // list might be empty because only our own user id was given
-        if (empty($this->objectIDs)) {
+        if ($this->objectIDs === []) {
             throw new UserInputException('objectIDs');
         }
 
@@ -139,7 +139,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
     #[\Override]
     public function delete()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -150,12 +150,12 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
                 $avatarFileIDs[] = $user->avatarFileID;
             }
         }
-        if (!empty($avatarFileIDs)) {
+        if ($avatarFileIDs !== []) {
             (new FileAction($avatarFileIDs, 'delete'))->executeAction();
         }
 
         // delete profile comments and signature attachments
-        if (!empty($this->objectIDs)) {
+        if ($this->objectIDs !== []) {
             CommentHandler::getInstance()->deleteObjects('com.woltlab.wcf.user.profileComment', $this->objectIDs);
             AttachmentHandler::removeAttachments('com.woltlab.wcf.user.signature', $this->objectIDs);
         }
@@ -345,7 +345,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
                 }
             }
         } else {
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 $this->readObjects();
             }
         }
@@ -438,7 +438,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      */
     public function removeFromGroups()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -470,7 +470,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      */
     public function addToGroups()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -632,11 +632,11 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      */
     protected function unmarkItems(array $userIDs = [])
     {
-        if (empty($userIDs)) {
+        if ($userIDs === []) {
             $userIDs = $this->objectIDs;
         }
 
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             ClipboardHandler::getInstance()->unmark(
                 $userIDs,
                 ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user')
@@ -696,7 +696,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      */
     public function confirmEmail()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -721,7 +721,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      */
     public function unconfirmEmail()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -743,7 +743,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      */
     public function enable()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -804,7 +804,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      */
     public function disable()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -836,7 +836,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
     #[\Override]
     protected function readObjects()
     {
-        if (empty($this->objectIDs)) {
+        if ($this->objectIDs === []) {
             return;
         }
 
@@ -877,7 +877,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      */
     public function disableSignature()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -908,10 +908,10 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 
         $this->__validateAccessibleGroups();
 
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }
@@ -924,7 +924,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      */
     public function enableSignature()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -955,7 +955,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      */
     public function disableAvatar()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -997,7 +997,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      */
     public function disableCoverPhoto()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -1028,10 +1028,10 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 
         $this->__validateAccessibleGroups();
 
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }
@@ -1044,7 +1044,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      */
     public function enableAvatar()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -1067,10 +1067,10 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 
         $this->__validateAccessibleGroups();
 
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }
@@ -1084,7 +1084,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      */
     public function enableCoverPhoto()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -1278,7 +1278,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      */
     public function cancelLostPasswordRequest(): void
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 

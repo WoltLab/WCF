@@ -41,11 +41,12 @@ abstract class ObjectLinkColumnRenderer extends DefaultColumnRenderer implements
     #[\Override]
     public function render(mixed $value, DatabaseObject $row): string
     {
-        if (empty($value)) {
+        $objectID = (int)$value;
+        if ($objectID === 0) {
             return '';
         }
 
-        $object = $this->getRuntimeCache()->getObject($value);
+        $object = $this->getRuntimeCache()->getObject($objectID);
         if ($object === null) {
             return '';
         }
@@ -80,10 +81,9 @@ abstract class ObjectLinkColumnRenderer extends DefaultColumnRenderer implements
     #[\Override]
     public function prepare(mixed $value, DatabaseObject $row): void
     {
-        if (empty($value)) {
-            return;
+        $objectID = (int)$value;
+        if ($objectID !== 0) {
+            $this->getRuntimeCache()->cacheObjectID($objectID);
         }
-
-        $this->getRuntimeCache()->cacheObjectID($value);
     }
 }

@@ -66,7 +66,7 @@ abstract class AbstractAcpForm extends AbstractForm
     {
         parent::readFormParameters();
 
-        if (!empty($this->i18nValues)) {
+        if ($this->i18nValues !== []) {
             I18nHandler::getInstance()->readValues();
 
             foreach ($this->i18nValues as $fieldName => $value) {
@@ -105,7 +105,7 @@ abstract class AbstractAcpForm extends AbstractForm
      */
     public function readDataI18n(DatabaseObject $databaseObject)
     {
-        if (empty($_POST) && !empty($this->i18nValues)) {
+        if ($_POST === [] && $this->i18nValues !== []) {
             foreach ($this->i18nValues as $fieldName => $value) {
                 I18nHandler::getInstance()->setOptions(
                     $fieldName,
@@ -177,7 +177,7 @@ abstract class AbstractAcpForm extends AbstractForm
             }
         }
 
-        if (!empty($data)) {
+        if ($data !== []) {
             /** @var DatabaseObjectEditor<TDatabaseObject> $editor */
             $editor = new $editorClass($databaseObject);
             $editor->update($data);
@@ -193,7 +193,7 @@ abstract class AbstractAcpForm extends AbstractForm
     {
         $this->saved();
 
-        if (!empty($this->i18nValues)) {
+        if ($this->i18nValues !== []) {
             foreach ($this->i18nValues as $fieldName => $value) {
                 $this->{$fieldName} = '';
             }
@@ -210,8 +210,8 @@ abstract class AbstractAcpForm extends AbstractForm
     {
         parent::assignVariables();
 
-        if (!empty($this->i18nValues)) {
-            $useRequestData = ($this->action === 'add') ? true : !empty($_POST);
+        if ($this->i18nValues !== []) {
+            $useRequestData = ($this->action === 'add') ? true : $_POST !== [];
 
             I18nHandler::getInstance()->assignVariables($useRequestData);
         }

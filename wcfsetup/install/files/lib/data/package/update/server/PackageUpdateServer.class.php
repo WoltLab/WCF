@@ -91,7 +91,7 @@ class PackageUpdateServer extends DatabaseObject implements ITitledObject
      */
     final public static function getActiveUpdateServers(array $packageUpdateServerIDs = []): array
     {
-        if (!empty($packageUpdateServerIDs)) {
+        if ($packageUpdateServerIDs !== []) {
             throw new \InvalidArgumentException("Filtering package update servers by ID is no longer supported.");
         }
 

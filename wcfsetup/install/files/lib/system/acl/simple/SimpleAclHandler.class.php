@@ -89,14 +89,14 @@ class SimpleAclHandler extends SingletonFactory
         ]);
         $groupIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
-        if (!empty($userIDs) || !empty($groupIDs)) {
+        if ($userIDs !== [] || $groupIDs !== []) {
             $data['allowAll'] = false;
 
-            if (!empty($userIDs)) {
+            if ($userIDs !== []) {
                 $data['user'] = UserRuntimeCache::getInstance()->getObjects($userIDs);
             }
 
-            if (!empty($groupIDs)) {
+            if ($groupIDs !== []) {
                 $data['group'] = UserGroup::getGroupsByIDs($groupIDs);
             }
         }

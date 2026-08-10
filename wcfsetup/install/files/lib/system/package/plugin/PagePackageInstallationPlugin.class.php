@@ -86,7 +86,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
             }
         }
 
-        if (!empty($pages)) {
+        if ($pages !== []) {
             $pageAction = new PageAction($pages, 'delete');
             $pageAction->executeAction();
         }
@@ -301,7 +301,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
         $content = $data['content'];
         unset($data['content']);
 
-        if (!empty($row)) {
+        if ($row !== []) {
             // allow update of `controller`, `handler` and `excludeFromLandingPage`
             // only, prevents user modifications form being overwritten
             if (!empty($data['controller'])) {
@@ -343,7 +343,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
     #[\Override]
     protected function postImport()
     {
-        if (!empty($this->content)) {
+        if ($this->content !== []) {
             $sql = "SELECT  COUNT(*) AS count
                     FROM    wcf1_page_content
                     WHERE   pageID = ?

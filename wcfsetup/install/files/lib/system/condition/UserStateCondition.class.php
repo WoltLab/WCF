@@ -141,7 +141,7 @@ class UserStateCondition extends AbstractSingleFieldCondition implements
             $data['userIsEmailConfirmed'] = 0;
         }
 
-        if (!empty($data)) {
+        if ($data !== []) {
             return $data;
         }
 

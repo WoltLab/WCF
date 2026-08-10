@@ -217,7 +217,7 @@ class UploadFormField extends AbstractFormField
     {
         parent::validate();
 
-        if (empty($this->getValue())) {
+        if ($this->getValue() === []) {
             if ($this->isRequired()) {
                 $this->addValidationError(new FormFieldValidationError('empty'));
             }
@@ -608,7 +608,7 @@ class UploadFormField extends AbstractFormField
             $this->getDocument()->getRequestData()
         );
 
-        if (!empty($this->values)) {
+        if ($this->values !== []) {
             UploadHandler::getInstance()->registerFilesByField($this->getPrefixedId(), $this->values);
         }
 

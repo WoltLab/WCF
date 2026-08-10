@@ -84,7 +84,7 @@ final class LicenseEditForm extends AbstractFormBuilderForm
         $licenseNo = '';
         $serialNo = '';
         $authData = PackageUpdateServer::getWoltLabUpdateServer()->getAuthData();
-        if (!empty($authData['username']) && !empty($authData['password'])) {
+        if (($authData['username'] ?? '') !== '' && ($authData['password'] ?? '') !== '') {
             $licenseNo = $authData['username'];
             $serialNo = $authData['password'];
         }
@@ -185,7 +185,7 @@ final class LicenseEditForm extends AbstractFormBuilderForm
 
         $loginUsername = '';
         $loginPassword = '';
-        if (empty($data['data']['noCredentialsConfirm'])) {
+        if (!(bool)($data['data']['noCredentialsConfirm'] ?? false)) {
             $loginUsername = $data['data']['licenseNo'];
             $loginPassword = $data['data']['serialNo'];
         }

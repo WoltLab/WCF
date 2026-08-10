@@ -62,7 +62,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
         }
 
         // delete language items
-        if (!empty($this->objects)) {
+        if ($this->objects !== []) {
             // identify i18n labels
             $languageVariables = [];
             foreach ($this->getObjects() as $category) {
@@ -75,7 +75,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
             }
 
             // remove language variables
-            if (!empty($languageVariables)) {
+            if ($languageVariables !== []) {
                 $conditions = new PreparedStatementConditionBuilder();
                 $conditions->add('languageItem IN (?)', [$languageVariables]);
 
@@ -132,7 +132,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
                 }
             }
 
-            if (!empty($parentUpdates)) {
+            if ($parentUpdates !== []) {
                 $objectType->getProcessor()->changedParentCategories($parentUpdates);
             }
         }
@@ -168,7 +168,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
         }
         WCF::getDB()->commitTransaction();
 
-        if (!empty($parentUpdates)) {
+        if ($parentUpdates !== []) {
             $objectType->getProcessor()->changedParentCategories($parentUpdates);
         }
     }
@@ -191,10 +191,10 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
     public function validateDelete()
     {
         // read objects
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }
@@ -210,10 +210,10 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
     public function validateUpdate()
     {
         // read objects
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }

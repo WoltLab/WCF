@@ -67,7 +67,7 @@ class UserActivityPointOptionForm extends AbstractForm
     public function readData()
     {
         $this->objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.user.activityPointEvent');
-        if (empty($_POST)) {
+        if ($_POST === []) {
             foreach ($this->objectTypes as $objectType) {
                 $this->points[$objectType->objectTypeID] = $objectType->points;
             }

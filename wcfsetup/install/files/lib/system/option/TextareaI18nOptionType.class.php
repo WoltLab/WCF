@@ -24,7 +24,7 @@ class TextareaI18nOptionType extends TextareaOptionType implements II18nOptionTy
     #[\Override]
     public function getFormElement(Option $option, mixed $value)
     {
-        I18nHandler::getInstance()->assignVariables(!empty($_POST));
+        I18nHandler::getInstance()->assignVariables($_POST !== []);
 
         return WCF::getTPL()->render('wcf', 'textareaI18nOptionType', [
             'option' => $option,

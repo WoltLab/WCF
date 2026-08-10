@@ -59,7 +59,7 @@ class TemplateListenerCodeCacheBuilder extends AbstractCacheBuilder
                         return "\$__wcf->session->getPermission('" . $value . "')";
                     }, $permissions);
 
-                    if (!empty($options)) {
+                    if ($options !== []) {
                         $templateCode .= " && ";
                     }
 

@@ -247,7 +247,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                     return $className !== '' && \in_array($className, self::$allowedClassNames[$nodeName]);
                 });
 
-                if (!empty($classNames)) {
+                if ($classNames !== []) {
                     $element->setAttribute('class', \implode(' ', $classNames));
                     continue;
                 }
@@ -627,7 +627,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
             }
         }
 
-        if (!empty($inlineStyles)) {
+        if ($inlineStyles !== []) {
             /** @var \DOMElement $element */
             foreach ($this->getXPath()->query('//*[@style]') as $element) {
                 $tmp = \array_filter(\explode(';', $element->getAttribute('style')));

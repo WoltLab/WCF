@@ -68,7 +68,7 @@ class UserContentRevertChangesForm extends AbstractForm
         // get user
         // @phpstan-ignore assign.propertyType
         $this->users = ClipboardHandler::getInstance()->getMarkedItems($this->objectTypeID);
-        if (empty($this->users)) {
+        if ($this->users === []) {
             throw new IllegalLinkException();
         }
         $this->userIDs = \array_keys($this->users);

@@ -398,7 +398,7 @@ class SmileyAddForm extends AbstractForm
                 throw new UserInputException('smileyCode', 'notUnique');
             } else {
                 $conflicts = \array_intersect($aliases, $known);
-                if (!empty($conflicts)) {
+                if ($conflicts !== []) {
                     throw new UserInputException('aliases', 'notUnique');
                 }
             }

@@ -43,13 +43,13 @@ class DevtoolsProjectPipEntryEditForm extends DevtoolsProjectPipEntryAddForm
         $pip = $this->pipObject->getPip();
         \assert($pip instanceof IGuiPackageInstallationPlugin);
 
-        if (!empty($_POST)) {
+        if ($_POST !== []) {
             $pip->setEditedEntryIdentifier($this->identifier);
         }
 
         parent::readData();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             if (!$pip->setEntryData($this->identifier, $this->form)) {
                 throw new IllegalLinkException();
             }

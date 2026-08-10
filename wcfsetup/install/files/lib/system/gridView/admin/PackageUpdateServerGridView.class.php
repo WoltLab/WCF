@@ -133,7 +133,7 @@ final class PackageUpdateServerGridView extends AbstractGridView
             {
                 \assert($object instanceof PackageUpdateServer);
 
-                return !empty($object->errorMessage);
+                return $object->errorMessage !== null && $object->errorMessage !== '';
             }
 
             #[\Override]

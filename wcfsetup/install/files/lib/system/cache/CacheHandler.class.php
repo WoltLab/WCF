@@ -30,7 +30,7 @@ final class CacheHandler extends SingletonFactory
      */
     public function flush(ICacheBuilder $cacheBuilder, array $parameters): void
     {
-        $this->getCacheSource()->flush($this->getCacheName($cacheBuilder, $parameters), empty($parameters));
+        $this->getCacheSource()->flush($this->getCacheName($cacheBuilder, $parameters), $parameters === []);
     }
 
     /**
@@ -91,7 +91,7 @@ final class CacheHandler extends SingletonFactory
             ['_', ''],
             \get_class($cacheBuilder)
         );
-        if (!empty($parameters)) {
+        if ($parameters !== []) {
             $cacheName .= '-' . $this->getCacheIndex($parameters);
         }
 
@@ -114,7 +114,7 @@ final class CacheHandler extends SingletonFactory
      */
     protected function orderParameters(array $parameters): array
     {
-        if (!empty($parameters)) {
+        if ($parameters !== []) {
             \array_multisort($parameters);
         }
 

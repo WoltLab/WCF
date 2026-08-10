@@ -99,7 +99,7 @@ final class TagGridView extends AbstractGridView
                         {
                             \assert($row instanceof Tag);
 
-                            if (empty($value)) {
+                            if ((int)$value === 0) {
                                 return parent::render($value, $row);
                             }
 

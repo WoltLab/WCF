@@ -79,10 +79,10 @@ class ModerationQueueReportAction extends ModerationQueueAction
      */
     public function validateRemoveReport()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }
@@ -279,10 +279,10 @@ class ModerationQueueReportAction extends ModerationQueueAction
      */
     public function validateRemoveReportContent(): void
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
 
-            if (empty($this->objects)) {
+            if ($this->objects === []) {
                 throw new UserInputException('objectIDs');
             }
         }

@@ -23,14 +23,15 @@ class TruncatedTextColumnRenderer extends DefaultColumnRenderer
     #[\Override]
     public function render(mixed $value, DatabaseObject $row): string
     {
-        if (empty($value)) {
+        $text = (string)$value;
+        if ($text === '') {
             return '';
         }
 
-        $renderedValue = StringUtil::encodeHTML(StringUtil::truncate($value, $this->length, $this->etc));
+        $renderedValue = StringUtil::encodeHTML(StringUtil::truncate($text, $this->length, $this->etc));
 
-        if (\mb_strlen($value) > $this->length) {
-            $renderedValue = '<span title="' . StringUtil::encodeHTML($value) . '">' . $renderedValue . '</span>';
+        if (\mb_strlen($text) > $this->length) {
+            $renderedValue = '<span title="' . StringUtil::encodeHTML($text) . '">' . $renderedValue . '</span>';
         }
 
         return $renderedValue;

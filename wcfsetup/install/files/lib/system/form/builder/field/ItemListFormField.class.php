@@ -301,7 +301,7 @@ class ItemListFormField extends AbstractFormField implements
                 }
             }
 
-            if (!empty($invalidItems)) {
+            if ($invalidItems !== []) {
                 $separator = '';
                 switch ($this->getSaveValue()) {
                     case self::SAVE_VALUE_TYPE_CSV:

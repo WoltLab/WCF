@@ -54,7 +54,7 @@ class BBCodeAction extends AbstractDatabaseObjectAction
         $statement->execute(['BBCodeSelect']);
         $optionIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
-        if (!empty($optionIDs)) {
+        if ($optionIDs !== []) {
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add("optionID IN (?)", [$optionIDs]);
             $conditionBuilder->add("groupID IN (?)", [UserGroup::getGroupIDsByType([UserGroup::EVERYONE])]);

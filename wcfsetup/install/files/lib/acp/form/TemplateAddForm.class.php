@@ -245,8 +245,9 @@ class TemplateAddForm extends AbstractFormBuilderForm
     public function readParameters()
     {
         parent::readParameters();
-        if (!empty($_REQUEST['copy'])) {
-            $this->copy = \intval($_REQUEST['copy']);
+        $copy = (int)($_REQUEST['copy'] ?? 0);
+        if ($copy !== 0) {
+            $this->copy = $copy;
             $this->copiedTemplate = new Template($this->copy);
             if ($this->copiedTemplate->isNil()) {
                 throw new IllegalLinkException();

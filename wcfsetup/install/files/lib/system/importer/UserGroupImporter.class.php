@@ -50,7 +50,7 @@ class UserGroupImporter extends AbstractImporter
                     }
                 }
 
-                if (!empty($values)) {
+                if ($values !== []) {
                     $updateData = [];
                     if (isset($values['groupName'])) {
                         $updateData['groupName'] = 'wcf.acp.group.group' . $newGroupID;

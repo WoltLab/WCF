@@ -51,7 +51,7 @@ class BoxContentList extends DatabaseObjectList
         }
 
         if ($this->imageLoading) {
-            if (!empty($imageIDs)) {
+            if ($imageIDs !== []) {
                 $mediaList = new ViewableMediaList();
                 $mediaList->setObjectIDs($imageIDs);
                 $mediaList->readObjects();
@@ -66,7 +66,7 @@ class BoxContentList extends DatabaseObjectList
         }
 
         if ($this->embeddedObjectLoading) {
-            if (!empty($embeddedObjectBoxContentIDs)) {
+            if ($embeddedObjectBoxContentIDs !== []) {
                 MessageEmbeddedObjectManager::getInstance()->loadObjects(
                     'com.woltlab.wcf.box.content',
                     $embeddedObjectBoxContentIDs

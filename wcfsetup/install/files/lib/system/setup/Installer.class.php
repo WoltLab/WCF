@@ -166,7 +166,7 @@ class Installer
                 $errors[] = $e->getMessage();
             }
         }
-        if (!empty($errors)) {
+        if ($errors !== []) {
             throw new SystemException('error(s) during the installation of the files.', 0, \implode("<br>", $errors));
         }
 

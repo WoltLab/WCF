@@ -124,7 +124,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
             $this->conditionObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes($this->conditionDefinition);
         }
 
-        if (!empty($this->validSortFields)) {
+        if ($this->validSortFields !== null && $this->validSortFields !== []) {
             $this->sortField = $this->defaultSortField;
             $this->sortOrder = $this->defaultSortOrder;
         }
@@ -156,7 +156,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 
         $prefix = \str_replace('.', '_', $objectType) . '_';
 
-        if (!empty($this->validSortFields)) {
+        if ($this->validSortFields !== null && $this->validSortFields !== []) {
             $dataContainer->appendChildren([
                 SingleSelectionFormField::create($prefix . 'sortField')
                     ->objectProperty('sortField')
@@ -248,7 +248,11 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
     #[\Override]
     public function getConditionsTemplate()
     {
-        if ($this->defaultLimit !== null || !empty($this->validSortFields) || !empty($this->conditionObjectTypes)) {
+        if (
+            $this->defaultLimit !== null
+            || ($this->validSortFields !== null && $this->validSortFields !== [])
+            || $this->conditionObjectTypes !== []
+        ) {
             return WCF::getTPL()->render('wcf', 'boxConditions', [
                 'boxController' => $this,
                 'conditionObjectTypes' => $this->conditionObjectTypes,
@@ -389,7 +393,8 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
             }
 
             if (
-                !empty($this->validSortFields)
+                $this->validSortFields !== null
+                && $this->validSortFields !== []
                 && $this->box->sortOrder !== null
                 && $this->box->sortOrder !== ''
                 && $this->box->sortField !== null
@@ -425,7 +430,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
             }
         }
 
-        if (!empty($this->validSortFields)) {
+        if ($this->validSortFields !== null && $this->validSortFields !== []) {
             if (!\in_array($this->sortField, $this->validSortFields)) {
                 throw new UserInputException('sorting', 'invalidSortField');
             }

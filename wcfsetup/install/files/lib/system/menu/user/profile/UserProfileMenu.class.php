@@ -115,7 +115,7 @@ class UserProfileMenu extends SingletonFactory
      */
     public function getActiveMenuItem(int $userID = 0)
     {
-        if (empty($this->menuItems)) {
+        if ($this->menuItems === []) {
             return null;
         }
 

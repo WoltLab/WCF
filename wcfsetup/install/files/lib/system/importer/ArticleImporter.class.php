@@ -68,7 +68,7 @@ class ArticleImporter extends AbstractImporter
                 'metaDescription' => (!empty($contentData['metaDescription']) ? $contentData['metaDescription'] : ''),
             ];
         }
-        if (empty($contents)) {
+        if ($contents === []) {
             return 0;
         }
         if (\count($contents) > 1) {

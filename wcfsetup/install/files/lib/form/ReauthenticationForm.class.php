@@ -42,8 +42,9 @@ class ReauthenticationForm extends AbstractFormBuilderForm
     {
         parent::readParameters();
 
-        if (!empty($_GET['url']) && ApplicationHandler::getInstance()->isInternalURL($_GET['url'])) {
-            $this->redirectUrl = $_GET['url'];
+        $url = $_GET['url'] ?? null;
+        if (\is_string($url) && $url !== '' && ApplicationHandler::getInstance()->isInternalURL($url)) {
+            $this->redirectUrl = $url;
         } else {
             throw new IllegalLinkException();
         }

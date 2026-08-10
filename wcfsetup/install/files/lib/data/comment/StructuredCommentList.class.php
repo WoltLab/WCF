@@ -129,7 +129,7 @@ class StructuredCommentList extends CommentList
         }
 
         // fetch last responses
-        if (!empty($responseIDs)) {
+        if ($responseIDs !== []) {
             $responseList = new CommentResponseList();
             $responseList->setObjectIDs(\array_keys($responseIDs));
             $responseList->readObjects();
@@ -159,7 +159,7 @@ class StructuredCommentList extends CommentList
                 CommentResponseRuntimeCache::getInstance()->cacheResponse($response->getDecoratedObject());
             }
 
-            if (!empty($embeddedResponseIDs)) {
+            if ($embeddedResponseIDs !== []) {
                 MessageEmbeddedObjectManager::getInstance()->loadObjects(
                     'com.woltlab.wcf.comment.response',
                     $embeddedResponseIDs
@@ -168,11 +168,11 @@ class StructuredCommentList extends CommentList
         }
 
         // cache user ids
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             UserProfileRuntimeCache::getInstance()->cacheObjectIDs(\array_unique($userIDs));
         }
 
-        if (!empty($embeddedObjectIDs)) {
+        if ($embeddedObjectIDs !== []) {
             MessageEmbeddedObjectManager::getInstance()->loadObjects(
                 'com.woltlab.wcf.comment',
                 $embeddedObjectIDs
@@ -187,7 +187,7 @@ class StructuredCommentList extends CommentList
      */
     public function getLikeData()
     {
-        if (empty($this->objectIDs)) {
+        if ($this->objectIDs === null || $this->objectIDs === []) {
             return [];
         }
 
@@ -196,7 +196,7 @@ class StructuredCommentList extends CommentList
         ReactionHandler::getInstance()->loadLikeObjects($commentObjectType, $this->getObjectIDs());
         $likeData['comment'] = ReactionHandler::getInstance()->getLikeObjects($commentObjectType);
 
-        if (!empty($this->responseIDs)) {
+        if ($this->responseIDs !== []) {
             $responseObjectType = ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.comment.response');
             ReactionHandler::getInstance()->loadLikeObjects($responseObjectType, $this->responseIDs);
             $likeData['response'] = ReactionHandler::getInstance()->getLikeObjects($responseObjectType);

@@ -154,7 +154,7 @@ class SendNewPasswordWorker extends AbstractWorker
         if (
             !isset($this->parameters['userIDs'])
             || !\is_array($this->parameters['userIDs'])
-            || empty($this->parameters['userIDs'])
+            || $this->parameters['userIDs'] === []
         ) {
             throw new SystemException("'userIDs' parameter is missing or invalid");
         }

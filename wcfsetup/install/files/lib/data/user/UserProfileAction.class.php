@@ -82,7 +82,7 @@ class UserProfileAction extends UserAction
             WCF::getSession()->getPermission('user.signature.disallowedBBCodes')
         )));
         $disallowedBBCodes = $htmlInputProcessor->validate();
-        if (!empty($disallowedBBCodes)) {
+        if ($disallowedBBCodes !== []) {
             throw new UserInputException(
                 'message',
                 WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', [
@@ -176,7 +176,7 @@ class UserProfileAction extends UserAction
      */
     public function validateBeginEdit()
     {
-        if (!empty($this->objectIDs) && \count($this->objectIDs) === 1) {
+        if ($this->objectIDs !== [] && \count($this->objectIDs) === 1) {
             $userID = \reset($this->objectIDs);
             $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($userID);
         }
@@ -267,7 +267,7 @@ class UserProfileAction extends UserAction
         }
 
         // validation was successful
-        if (empty($errors)) {
+        if ($errors === []) {
             $saveOptions = $optionHandler->save();
             $data = [
                 'options' => $saveOptions,
@@ -329,7 +329,7 @@ class UserProfileAction extends UserAction
      */
     public function updateUserRank()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -364,7 +364,7 @@ class UserProfileAction extends UserAction
             }
         }
 
-        if (!empty($userToRank)) {
+        if ($userToRank !== []) {
             $sql = "UPDATE  wcf1_user
                     SET     rankID = ?
                     WHERE   userID = ?";
@@ -388,7 +388,7 @@ class UserProfileAction extends UserAction
      */
     public function updateUserOnlineMarking()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 
@@ -451,7 +451,7 @@ class UserProfileAction extends UserAction
         }
 
         // add users to missing default user groups
-        if (!empty($fixUserGroupIDs)) {
+        if ($fixUserGroupIDs !== []) {
             $sql = "INSERT INTO wcf1_user_to_group
                                 (userID, groupID)
                     VALUES      (?, ?)";
@@ -483,7 +483,7 @@ class UserProfileAction extends UserAction
             WCF::getDB()->commitTransaction();
         }
 
-        if (!empty($userToGroup)) {
+        if ($userToGroup !== []) {
             $sql = "UPDATE  wcf1_user
                     SET     userOnlineGroupID = ?
                     WHERE   userID = ?";
@@ -507,7 +507,7 @@ class UserProfileAction extends UserAction
      */
     public function updateSpecialTrophies()
     {
-        if (empty($this->objects)) {
+        if ($this->objects === []) {
             $this->readObjects();
         }
 

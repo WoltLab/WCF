@@ -172,7 +172,7 @@ class MenuItemAddForm extends AbstractFormBuilderForm
                                 $pageFormField = $this->form->getFormField('pageID');
                                 $pageID = $pageFormField->getValue();
                                 $page = new Page($pageID);
-                                $pageObjectID = $formField->getValue();
+                                $pageObjectID = (int)$formField->getValue();
 
                                 if ($page->isNil()) {
                                     return;
@@ -182,7 +182,7 @@ class MenuItemAddForm extends AbstractFormBuilderForm
                                     $pageHandler = $page->getHandler();
 
                                     if ($pageHandler instanceof ILookupPageHandler) {
-                                        if (empty($pageObjectID)) {
+                                        if ($pageObjectID === 0) {
                                             $formField->addValidationError(new FormFieldValidationError('empty'));
                                             return;
                                         }

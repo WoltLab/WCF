@@ -23,7 +23,8 @@ class UserColumnRenderer extends DefaultColumnRenderer
     #[\Override]
     public function render(mixed $value, DatabaseObject $row): string
     {
-        if (empty($value)) {
+        $userID = (int)$value;
+        if ($userID === 0) {
             if ($this->fallbackValue !== '') {
                 return StringUtil::encodeHTML($row->{$this->fallbackValue} ?? '');
             }
@@ -31,7 +32,7 @@ class UserColumnRenderer extends DefaultColumnRenderer
             return '';
         }
 
-        $user = UserRuntimeCache::getInstance()->getObject($value);
+        $user = UserRuntimeCache::getInstance()->getObject($userID);
         if ($user === null) {
             return '';
         }
@@ -42,10 +43,9 @@ class UserColumnRenderer extends DefaultColumnRenderer
     #[\Override]
     public function prepare(mixed $value, DatabaseObject $row): void
     {
-        if (empty($value)) {
-            return;
+        $userID = (int)$value;
+        if ($userID !== 0) {
+            UserRuntimeCache::getInstance()->cacheObjectID($userID);
         }
-
-        UserRuntimeCache::getInstance()->cacheObjectID($value);
     }
 }

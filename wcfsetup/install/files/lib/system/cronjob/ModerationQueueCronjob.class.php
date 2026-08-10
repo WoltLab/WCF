@@ -36,7 +36,7 @@ class ModerationQueueCronjob extends AbstractCronjob
         ]);
         $queueIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
-        if (!empty($queueIDs)) {
+        if ($queueIDs !== []) {
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("queueID IN (?)", [$queueIDs]);
 

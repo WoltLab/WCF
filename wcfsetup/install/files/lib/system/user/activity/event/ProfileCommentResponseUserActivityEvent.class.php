@@ -32,7 +32,7 @@ class ProfileCommentResponseUserActivityEvent extends SingletonFactory implement
         foreach ($this->comments as $comment) {
             $userIDs[] = $comment->objectID;
         }
-        if (!empty($userIDs)) {
+        if ($userIDs !== []) {
             $users = UserProfileRuntimeCache::getInstance()->getObjects($userIDs);
         }
 

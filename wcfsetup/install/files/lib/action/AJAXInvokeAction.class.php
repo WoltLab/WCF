@@ -76,7 +76,7 @@ class AJAXInvokeAction extends AbstractSecureAction
     {
         parent::readParameters();
 
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST' && empty($_POST)) {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $_POST === []) {
             \header('HTTP/1.0 405 Method Not Allowed');
             \header('allow: POST');
             $this->response = [

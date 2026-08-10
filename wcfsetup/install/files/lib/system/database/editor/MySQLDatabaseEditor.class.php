@@ -48,7 +48,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
             $length = '';
             $decimals = '';
             $enumValues = '';
-            if (!empty($typeMatches)) {
+            if ($typeMatches !== []) {
                 $type = $typeMatches[1];
 
                 switch ($type) {
@@ -131,7 +131,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
             ];
         }
 
-        if (empty($foreignKeys)) {
+        if ($foreignKeys === []) {
             return [];
         }
 

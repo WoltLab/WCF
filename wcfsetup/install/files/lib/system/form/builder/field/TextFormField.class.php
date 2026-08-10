@@ -82,7 +82,7 @@ class TextFormField extends AbstractFormField implements
         if ($this->isI18n()) {
             $this->i18nValidate();
 
-            if (empty($this->getValidationErrors())) {
+            if ($this->getValidationErrors() === []) {
                 $value = $this->getValue();
                 if ($this->hasPlainValue()) {
                     $this->validateText($value);

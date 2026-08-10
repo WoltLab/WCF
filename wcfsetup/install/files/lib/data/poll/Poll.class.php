@@ -111,7 +111,7 @@ class Poll extends DatabaseObject
      */
     protected function loadOptions()
     {
-        if (!empty($this->options)) {
+        if ($this->options !== []) {
             return;
         }
 

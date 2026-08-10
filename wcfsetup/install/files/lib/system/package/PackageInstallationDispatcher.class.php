@@ -120,7 +120,7 @@ class PackageInstallationDispatcher
     public function install(string $node): PackageInstallationStep
     {
         $nodes = $this->nodeBuilder->getNodeData($node);
-        if (empty($nodes)) {
+        if ($nodes === []) {
             // guard against possible issues with empty instruction blocks, including
             // these blocks that contain no valid instructions at all (e.g. typo from
             // copy & paste)
@@ -352,7 +352,7 @@ class PackageInstallationDispatcher
         }
 
         $packageServerLogin = DevtoolsSetup::getInstance()->getPackageServerLogin();
-        if (!empty($packageServerLogin)) {
+        if ($packageServerLogin !== []) {
             // All update servers installed at this point are only our own servers for which the same
             // login data can be used.
             $sql = "UPDATE  wcf1_package_update_server

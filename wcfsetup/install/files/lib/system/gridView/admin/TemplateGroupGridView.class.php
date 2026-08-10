@@ -111,7 +111,7 @@ final class TemplateGroupGridView extends AbstractGridView
     protected function createObjectList(): I18nTemplateGroupList
     {
         $list = new I18nTemplateGroupList();
-        if (!empty($list->sqlSelects)) {
+        if ($list->sqlSelects !== '') {
             $list->sqlSelects .= ', ';
         }
 

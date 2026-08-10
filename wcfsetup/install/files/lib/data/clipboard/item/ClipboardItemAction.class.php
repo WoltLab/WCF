@@ -212,7 +212,7 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction
         ];
 
         // break if no items are available (status was cached by browser)
-        if (empty($returnValues['items'])) {
+        if ($returnValues['items'] === []) {
             return $returnValues;
         }
 

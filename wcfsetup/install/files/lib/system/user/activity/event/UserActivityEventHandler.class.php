@@ -178,7 +178,7 @@ class UserActivityEventHandler extends SingletonFactory
      */
     public function removeEvents(string $objectType, array $objectIDs)
     {
-        if (empty($objectIDs)) {
+        if ($objectIDs === []) {
             return;
         }
 
@@ -207,7 +207,7 @@ class UserActivityEventHandler extends SingletonFactory
         $eventIDs = $eventList->validateEvents();
 
         // remove orphaned event ids
-        if (!empty($eventIDs)) {
+        if ($eventIDs !== []) {
             $sql = "DELETE FROM wcf1_user_activity_event
                     WHERE       eventID = ?";
             $statement = WCF::getDB()->prepare($sql);

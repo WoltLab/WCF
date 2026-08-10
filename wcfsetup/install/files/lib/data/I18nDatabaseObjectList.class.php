@@ -41,7 +41,7 @@ abstract class I18nDatabaseObjectList extends DatabaseObjectList
             $languageID = WCF::getLanguage()->languageID;
         }
 
-        if (!empty($this->i18nFields)) {
+        if ($this->i18nFields !== []) {
             if (\count($this->i18nFields) !== \count(\array_flip($this->i18nFields))) {
                 throw new \DomainException("Array values of '" . $this->className . "::\$i18nFields' must be unique.");
             }

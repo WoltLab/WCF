@@ -29,7 +29,7 @@ class ArticleCommentResponseUserActivityEvent extends SingletonFactory implement
 
         // fetch articles
         $articles = $articleContentToArticle = [];
-        if (!empty($this->commentObjectIDs)) {
+        if ($this->commentObjectIDs !== []) {
             $articleList = new ArticleList();
             $articleList->getConditionBuilder()->add(
                 "article.articleID IN (

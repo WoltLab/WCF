@@ -327,7 +327,7 @@ final class WysiwygFormField extends AbstractFormField implements
             $this->addValidationError(new FormFieldValidationError('empty'));
         } else {
             $disallowedBBCodes = $this->htmlInputProcessor->validate();
-            if (!empty($disallowedBBCodes)) {
+            if ($disallowedBBCodes !== []) {
                 $this->addValidationError(new FormFieldValidationError(
                     'disallowedBBCodes',
                     'wcf.message.error.disallowedBBCodes',
@@ -339,7 +339,7 @@ final class WysiwygFormField extends AbstractFormField implements
                     $this->validateMinimumLength($message);
                     $this->validateMaximumLength($message);
 
-                    if (empty($this->getValidationErrors())) {
+                    if ($this->getValidationErrors() === []) {
                         $this->validateCensorship($message);
                     }
                 }

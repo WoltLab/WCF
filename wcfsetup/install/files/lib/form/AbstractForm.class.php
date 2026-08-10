@@ -141,7 +141,7 @@ abstract class AbstractForm extends AbstractPage implements IForm
     #[\Override]
     public function readData()
     {
-        if (!empty($_POST) || !empty($_FILES)) {
+        if ($_POST !== [] || $_FILES !== []) {
             $this->submit();
         }
 

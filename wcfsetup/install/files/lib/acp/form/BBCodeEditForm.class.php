@@ -148,7 +148,7 @@ class BBCodeEditForm extends BBCodeAddForm
     {
         parent::readData();
 
-        if (empty($_POST)) {
+        if ($_POST === []) {
             I18nHandler::getInstance()->setOptions(
                 'buttonLabel',
                 1,
@@ -174,7 +174,7 @@ class BBCodeEditForm extends BBCodeAddForm
     {
         parent::assignVariables();
 
-        I18nHandler::getInstance()->assignVariables(!empty($_POST));
+        I18nHandler::getInstance()->assignVariables($_POST !== []);
 
         WCF::getTPL()->assign([
             'bbcode' => $this->bbcode,

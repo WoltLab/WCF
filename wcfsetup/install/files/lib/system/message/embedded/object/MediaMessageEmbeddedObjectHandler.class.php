@@ -52,7 +52,7 @@ class MediaMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObj
                 }
             }
 
-            if (!empty($mediaIDs)) {
+            if ($mediaIDs !== []) {
                 $conditions = new PreparedStatementConditionBuilder();
                 $conditions->add("mediaID IN (?)", [$mediaIDs]);
                 $conditions->add("languageID = ?", [$contentLanguageID]);

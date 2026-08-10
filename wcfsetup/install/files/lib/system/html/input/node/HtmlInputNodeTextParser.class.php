@@ -181,7 +181,7 @@ class HtmlInputNodeTextParser
         }
 
         $groups = $users = [];
-        if (!empty($usernames)) {
+        if ($usernames !== []) {
             $users = $this->lookupUsernames($usernames);
             $groups = $this->lookupGroups($usernames);
         }
@@ -207,7 +207,7 @@ class HtmlInputNodeTextParser
                 $value = $this->parseSmiley($node, $value);
             }
 
-            if (!empty($users) || !empty($groups)) {
+            if ($users !== [] || $groups !== []) {
                 $value = $this->parseMention($node, $value, $users, $groups);
             }
 
@@ -279,11 +279,11 @@ class HtmlInputNodeTextParser
 
         $conditions = new PreparedStatementConditionBuilder(true, 'OR');
 
-        if (!empty($exactValues)) {
+        if ($exactValues !== []) {
             $conditions->add('username IN (?)', [$exactValues]);
         }
 
-        if (!empty($likeValues)) {
+        if ($likeValues !== []) {
             for ($i = 0, $length = \count($likeValues); $i < $length; $i++) {
                 $conditions->add('username LIKE ?', [WCF::getDB()->escapeLikeValue($likeValues[$i]) . '%']);
             }
@@ -326,7 +326,7 @@ class HtmlInputNodeTextParser
             $availableUserGroups[] = $group;
         }
 
-        if (empty($availableUserGroups)) {
+        if ($availableUserGroups === []) {
             return [];
         }
 
@@ -554,7 +554,7 @@ class HtmlInputNodeTextParser
                 }
             }
 
-            if (!empty($codes['difficult'])) {
+            if ($codes['difficult'] !== []) {
                 if (!empty($tmp)) {
                     $tmp .= '|';
                 }

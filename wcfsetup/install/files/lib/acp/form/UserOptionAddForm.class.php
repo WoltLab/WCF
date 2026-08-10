@@ -115,7 +115,7 @@ class UserOptionAddForm extends AbstractFormBuilderForm
         $categoryList->readObjects();
         $this->availableCategories = $categoryList->getObjects();
 
-        if (empty($this->availableCategories)) {
+        if ($this->availableCategories === []) {
             $this->setPsr7Response(
                 new HtmlResponse(
                     (new HtmlErrorRenderer())->renderHtmlMessage(
@@ -321,7 +321,7 @@ class UserOptionAddForm extends AbstractFormBuilderForm
                         $outputClass = $parameters['data']['outputClass'];
                         $optionType = $parameters['data']['optionType'];
 
-                        if (empty($outputClass)) {
+                        if ((string)$outputClass === '') {
                             if (\in_array($optionType, self::$optionTypesUsingSelectOptions)) {
                                 $parameters['data']['outputClass'] = SelectOptionsUserOptionOutput::class;
                             } else {

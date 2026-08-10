@@ -110,7 +110,7 @@ class UserProfileMenuItemAction extends AbstractDatabaseObjectAction implements 
             unset($menuItemIDs[$menuItemID]);
         }
 
-        if (!empty($menuItemIDs)) {
+        if ($menuItemIDs !== []) {
             throw new UserInputException('structure');
         }
     }

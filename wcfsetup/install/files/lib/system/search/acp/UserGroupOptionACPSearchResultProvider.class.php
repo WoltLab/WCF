@@ -69,12 +69,12 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
             $languageItems[$itemName] = $languageItem;
         }
 
-        if (empty($languageItems) && !(\ENABLE_DEBUG_MODE !== 0 && \ENABLE_DEVELOPER_TOOLS !== 0)) {
+        if ($languageItems === [] && !(\ENABLE_DEBUG_MODE !== 0 && \ENABLE_DEVELOPER_TOOLS !== 0)) {
             return [];
         }
 
         $conditions = new PreparedStatementConditionBuilder(true, 'OR');
-        if (!empty($languageItems)) {
+        if ($languageItems !== []) {
             $conditions->add("optionName IN (?)", [\array_keys($languageItems)]);
         }
         if (\ENABLE_DEBUG_MODE !== 0 && \ENABLE_DEVELOPER_TOOLS !== 0) {

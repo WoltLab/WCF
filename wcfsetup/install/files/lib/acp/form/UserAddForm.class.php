@@ -225,7 +225,7 @@ class UserAddForm extends UserOptionListForm
         }
 
         // validate user groups
-        if (!empty($this->groupIDs)) {
+        if ($this->groupIDs !== []) {
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("groupID IN (?)", [$this->groupIDs]);
             $conditions->add("groupType NOT IN (?)", [[UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]]);
@@ -258,7 +258,7 @@ class UserAddForm extends UserOptionListForm
             }
         }
         if (
-            empty($this->visibleLanguages)
+            $this->visibleLanguages === []
             && ($language = LanguageFactory::getInstance()->getLanguage($this->languageID)) !== null
             && $language->hasContent !== 0
         ) {
@@ -286,7 +286,7 @@ class UserAddForm extends UserOptionListForm
             WCF::getSession()->getPermission('user.signature.disallowedBBCodes')
         ));
         $disallowedBBCodes = $this->htmlInputProcessor->validate();
-        if (!empty($disallowedBBCodes)) {
+        if ($disallowedBBCodes !== []) {
             WCF::getTPL()->assign('disallowedBBCodes', $disallowedBBCodes);
             throw new UserInputException('signature', 'disallowedBBCodes');
         }

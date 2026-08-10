@@ -75,7 +75,7 @@ class BBCodeParser extends SingletonFactory
                 $sourceCodeTags[] = $bbcode->bbcodeTag;
             }
         }
-        if (!empty($sourceCodeTags)) {
+        if ($sourceCodeTags !== []) {
             $this->sourceCodeRegEx = \implode('|', $sourceCodeTags);
         }
     }

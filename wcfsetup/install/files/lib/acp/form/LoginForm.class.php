@@ -107,8 +107,9 @@ class LoginForm extends AbstractFormBuilderForm
     {
         parent::readParameters();
 
-        if (!empty($_REQUEST['url'])) {
-            LoginRedirect::setUrl(StringUtil::trim($_REQUEST['url']));
+        $url = $_REQUEST['url'] ?? null;
+        if (\is_string($url) && $url !== '') {
+            LoginRedirect::setUrl(StringUtil::trim($url));
         }
 
         if (!WCF::getUser()->isGuest()) {

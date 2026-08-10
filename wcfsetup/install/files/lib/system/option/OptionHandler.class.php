@@ -214,13 +214,13 @@ class OptionHandler implements IOptionHandler
                         $superCategory['categories'] = $this->getOptionTree($superCategoryName, $level + 1);
                     }
 
-                    if ($level > 1 || empty($superCategory['categories'])) {
+                    if ($level > 1 || $superCategory['categories'] === []) {
                         $superCategory['options'] = $this->getCategoryOptions($superCategoryName);
                     } else {
                         $superCategory['options'] = $this->getCategoryOptions($superCategoryName, false);
                     }
 
-                    if (!empty($superCategory['categories']) || !empty($superCategory['options'])) {
+                    if ($superCategory['categories'] !== [] || $superCategory['options'] !== []) {
                         $tree[] = $superCategory;
                     }
                 }

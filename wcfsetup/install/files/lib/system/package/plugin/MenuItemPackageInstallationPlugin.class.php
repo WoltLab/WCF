@@ -241,7 +241,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     {
         // updating menu items is not supported because all fields that could be modified
         // would potentially overwrite changes made by the user
-        if (!empty($row)) {
+        if ($row !== []) {
             return new MenuItem(null, $row);
         }
 

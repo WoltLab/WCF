@@ -108,7 +108,7 @@ class PageRebuildDataWorker extends AbstractRebuildDataWorker
                 );
             }
 
-            if (!empty($data)) {
+            if ($data !== []) {
                 $pageContentEditor = new PageContentEditor($pageContent);
                 $pageContentEditor->update($data);
             }

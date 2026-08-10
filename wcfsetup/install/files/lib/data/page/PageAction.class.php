@@ -393,12 +393,12 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 
         $count = parent::delete();
 
-        if (!empty($this->getObjectIDs())) {
+        if ($this->getObjectIDs() !== []) {
             // delete page comments
             CommentHandler::getInstance()->deleteObjects('com.woltlab.wcf.page', $this->getObjectIDs());
         }
 
-        if (!empty($pageContentIDs)) {
+        if ($pageContentIDs !== []) {
             // delete entry from search index
             SearchIndexManager::getInstance()->delete('com.woltlab.wcf.page', $pageContentIDs);
             // delete embedded object references

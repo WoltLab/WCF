@@ -150,7 +150,7 @@ class EditHistoryPage extends AbstractPage
             $this->mode = 'raw';
         }
 
-        if (!empty($_POST)) {
+        if ($_POST !== []) {
             HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(EditHistoryPage::class, [
                 'objectID' => $this->objectID,
                 'objectType' => $this->objectType->objectType,

@@ -95,7 +95,7 @@ class PreparedStatement
                     \preg_replace_callback(
                         '/\?/',
                         static function ($matches) use (&$benchmarkParameters) {
-                            if (empty($benchmarkParameters)) {
+                            if ($benchmarkParameters === []) {
                                 return $matches[0];
                             }
 

@@ -54,7 +54,7 @@ class ModerationQueueManager extends SingletonFactory
     protected function init()
     {
         $moderationTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.moderation.type');
-        if (empty($moderationTypes)) {
+        if ($moderationTypes === []) {
             throw new SystemException("There are no registered moderation types");
         }
 
@@ -405,7 +405,7 @@ class ModerationQueueManager extends SingletonFactory
             $queues[$objectTypeID][$row['objectID']] = $row['queueID'];
         }
 
-        if (!empty($queues)) {
+        if ($queues !== []) {
             $queueIDs = [];
             foreach ($queues as $objectTypeID => $objectQueues) {
                 $queueIDs = \array_merge(
@@ -430,7 +430,7 @@ class ModerationQueueManager extends SingletonFactory
      */
     public function removeOrphans(array $queueIDs)
     {
-        if (!empty($queueIDs)) {
+        if ($queueIDs !== []) {
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("queueID IN (?)", [$queueIDs]);
             $sql = "DELETE FROM wcf1_moderation_queue
@@ -504,7 +504,7 @@ class ModerationQueueManager extends SingletonFactory
     public function removeQueues(string $objectType, array $objectIDs)
     {
         $definitionNames = $this->getDefinitionNamesByObjectType($objectType);
-        if (empty($definitionNames)) {
+        if ($definitionNames === []) {
             throw new SystemException("Object type '" . $objectType . "' is invalid");
         }
 

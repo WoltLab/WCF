@@ -127,7 +127,7 @@ class AbstractCommentResponseModerationQueueHandler extends AbstractCommentComme
         }
 
         $comments = [];
-        if (!empty($commentIDs)) {
+        if ($commentIDs !== []) {
             $comments = CommentRuntimeCache::getInstance()->getObjects($commentIDs);
         }
 

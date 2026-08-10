@@ -190,7 +190,7 @@ trait TFormParentNode
      */
     public function hasChildren(): bool
     {
-        return !empty($this->children);
+        return $this->children !== [];
     }
 
     /**
@@ -201,7 +201,7 @@ trait TFormParentNode
     {
         foreach ($this->children() as $child) {
             if ($child instanceof IFormField) {
-                if (!empty($child->getValidationErrors())) {
+                if ($child->getValidationErrors() !== []) {
                     return true;
                 }
             } elseif ($child instanceof IFormParentNode) {
@@ -354,11 +354,11 @@ trait TFormParentNode
 
                 $child->validate();
 
-                if ($child instanceof IFormField && empty($child->getValidationErrors())) {
+                if ($child instanceof IFormField && $child->getValidationErrors() === []) {
                     foreach ($child->getValidators() as $validator) {
                         $validator($child);
 
-                        if (!empty($child->getValidationErrors())) {
+                        if ($child->getValidationErrors() !== []) {
                             break;
                         }
                     }
