@@ -17,7 +17,6 @@ use wcf\system\form\builder\field\CaptchaFormField;
 use wcf\system\form\builder\field\PasswordFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
-use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\user\authentication\configuration\UserAuthenticationConfigurationFactory;
@@ -70,11 +69,7 @@ class LoginForm extends AbstractFormBuilderForm
                 ->passwordStrengthMeter(false)
                 ->removeFieldClass('medium')
                 ->addFieldClass('long')
-                ->autocomplete("current-password")
-                ->addValidator(new FormFieldValidator(
-                    'passwordValidator',
-                    $this->validatePassword(...)
-                )),
+                ->autocomplete("current-password"),
             CaptchaFormField::create()
                 ->available($this->useCaptcha)
                 ->objectType(CAPTCHA_TYPE)
@@ -142,6 +137,29 @@ class LoginForm extends AbstractFormBuilderForm
                     }
                 }
             }
+        }
+    }
+
+    #[\Override]
+    public function validate()
+    {
+        // Validators of sibling form fields are unable to depend on each other,
+        // therefore the credentials must not be checked from within a validator
+        // of the password field: The captcha would be validated afterwards,
+        // rendering it useless as a protection against brute force attacks.
+        //
+        // `parent::validate()` throws if any form field, including the captcha,
+        // is invalid, thus the credentials are only checked after the captcha
+        // has been solved.
+        parent::validate();
+
+        $passwordFormField = $this->form->getFormField('password');
+        \assert($passwordFormField instanceof PasswordFormField);
+
+        $this->validatePassword($passwordFormField);
+
+        if ($this->form->hasValidationErrors()) {
+            throw new UserInputException($this->form->getPrefixedId());
         }
     }
 
