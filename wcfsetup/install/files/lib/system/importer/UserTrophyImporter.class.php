@@ -38,7 +38,9 @@ class UserTrophyImporter extends AbstractImporter
         $userTrophy = UserTrophyEditor::create($data);
 
         if (isset($additionalData['i18n']['description'])) {
-            $updateData['description'] = 'wcf.user.trophy.description' . $userTrophy->userTrophyID;
+            $updateData = [
+                'description' => 'wcf.user.trophy.description' . $userTrophy->userTrophyID,
+            ];
 
             $items = [];
             foreach ($additionalData['i18n']['description'] as $languageID => $languageItemValue) {

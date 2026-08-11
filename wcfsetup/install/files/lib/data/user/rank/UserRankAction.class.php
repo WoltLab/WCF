@@ -58,7 +58,9 @@ class UserRankAction extends AbstractDatabaseObjectAction
                 );
                 $rankImageFile->setProcessed(\WCF_DIR . UserRank::RANK_IMAGE_DIR . $fileName);
 
-                $updateData['rankImage'] = $fileName;
+                $updateData = [
+                    'rankImage' => $fileName,
+                ];
 
                 $rankEditor = new UserRankEditor($rank);
                 $rankEditor->update($updateData);

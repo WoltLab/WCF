@@ -151,8 +151,6 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
                         $matches
                     )
                 ) {
-                    $templates[$template->templateName] = $template->templateName;
-
                     foreach ($matches['event'] as $event) {
                         if (!isset($templateEvents[$template->templateName])) {
                             $templateEvents[$template->templateName] = [];
