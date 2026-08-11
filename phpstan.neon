@@ -54,7 +54,7 @@ parameters:
         disallowedImplicitArrayCreation: true
         disallowedShortTernary: false
         overwriteVariablesWithLoop: false
-        closureUsesThis: false
+        closureUsesThis: true
         matchingInheritedMethodNames: false
         numericOperandsInArithmeticOperators: false
         strictFunctionCalls: false
