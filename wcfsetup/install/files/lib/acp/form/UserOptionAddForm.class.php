@@ -197,11 +197,22 @@ class UserOptionAddForm extends AbstractFormBuilderForm
                         ->required()
                         ->addValidator(
                             new FormFieldValidator('labeldUrlValidator', function (TextFormField $field) {
-                                if (!\strpos($field->getValue(), '%s')) {
+                                if (\substr_count($field->getValue(), '%s') !== 1) {
                                     $field->addValidationError(
                                         new FormFieldValidationError(
                                             'invalid',
                                             'wcf.acp.user.option.labeledUrl.error.invalid'
+                                        )
+                                    );
+
+                                    return;
+                                }
+
+                                if (!\preg_match('~^https?://~i', $field->getValue())) {
+                                    $field->addValidationError(
+                                        new FormFieldValidationError(
+                                            'invalidScheme',
+                                            'wcf.acp.user.option.labeledUrl.error.invalidScheme'
                                         )
                                     );
                                 }
