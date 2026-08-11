@@ -1471,6 +1471,12 @@ parameters:
 			path: wcfsetup/install/files/lib/system/database/editor/MySQLDatabaseEditor.class.php
 
 		-
+			message: '#^Switch condition type \(''array''\|''double''\|''integer''\|''NULL''\|''string''\) does not match case condition ''boolean'' \(string\)\.$#'
+			identifier: switch.type
+			count: 1
+			path: wcfsetup/install/files/lib/system/database/exception/DatabaseQueryExecutionException.class.php
+
+		-
 			message: '#^Instanceof between wcf\\system\\database\\table\\column\\IDatabaseTableColumn and wcf\\system\\database\\table\\column\\IDatabaseTableColumn will always evaluate to true\.$#'
 			identifier: instanceof.alwaysTrue
 			count: 1
@@ -2979,6 +2985,30 @@ parameters:
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
+			count: 1
+			path: wcfsetup/install/files/lib/util/HTTPRequest.class.php
+
+		-
+			message: '#^Switch condition type \(int\) does not match case condition ''401'' \(string\)\.$#'
+			identifier: switch.type
+			count: 1
+			path: wcfsetup/install/files/lib/util/HTTPRequest.class.php
+
+		-
+			message: '#^Switch condition type \(int\) does not match case condition ''402'' \(string\)\.$#'
+			identifier: switch.type
+			count: 1
+			path: wcfsetup/install/files/lib/util/HTTPRequest.class.php
+
+		-
+			message: '#^Switch condition type \(int\) does not match case condition ''403'' \(string\)\.$#'
+			identifier: switch.type
+			count: 1
+			path: wcfsetup/install/files/lib/util/HTTPRequest.class.php
+
+		-
+			message: '#^Switch condition type \(int\) does not match case condition ''404'' \(string\)\.$#'
+			identifier: switch.type
 			count: 1
 			path: wcfsetup/install/files/lib/util/HTTPRequest.class.php
 
