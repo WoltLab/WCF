@@ -56,7 +56,7 @@ parameters:
         overwriteVariablesWithLoop: false
         closureUsesThis: true
         matchingInheritedMethodNames: true
-        numericOperandsInArithmeticOperators: false
+        numericOperandsInArithmeticOperators: true
         strictFunctionCalls: false
         dynamicCallOnStaticMethod: false
         switchConditionsMatchingType: false
