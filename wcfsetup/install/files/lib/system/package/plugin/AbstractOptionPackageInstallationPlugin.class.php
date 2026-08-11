@@ -873,7 +873,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                         if ($optionalProperty !== null) {
                             $data[$optionalPropertyName] = StringUtil::normalizeCsv($optionalProperty->nodeValue);
                         } else {
-                            $daota[$optionalPropertyName] = '';
+                            $data[$optionalPropertyName] = '';
                         }
                     }
 
