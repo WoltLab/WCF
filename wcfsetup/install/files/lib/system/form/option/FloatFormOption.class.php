@@ -30,11 +30,11 @@ class FloatFormOption extends AbstractNumericFormOption
     public function getFormField(string $id, array $configuration = []): AbstractFormField
     {
         $formField = FloatFormField::create($id);
-        if (isset($configuration['minValue'])) {
-            $formField->minimum($configuration['minValue']);
+        if (isset($configuration['minFloatValue'])) {
+            $formField->minimum($configuration['minFloatValue']);
         }
-        if (isset($configuration['maxValue'])) {
-            $formField->maximum($configuration['maxValue']);
+        if (isset($configuration['maxFloatValue'])) {
+            $formField->maximum($configuration['maxFloatValue']);
         }
 
         return $formField;
