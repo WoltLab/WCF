@@ -23,7 +23,7 @@ trait TAutoCompleteFormField
      * @throws      \InvalidArgumentException       if an invalid `autocomplete` token is included in the attribute value
      * @return      static                          this form field
      */
-    public function autocomplete(?string $autoComplete)
+    public function autoComplete(?string $autoComplete)
     {
         if ($autoComplete !== null && $autoComplete !== 'on' && $autoComplete !== 'off') {
             if (\preg_match('~^(?:section-\w+ )?(?:(shipping|billing) )?(?P<token>.+)$~', $autoComplete, $matches)) {

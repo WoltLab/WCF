@@ -70,7 +70,7 @@ class LoginForm extends AbstractFormBuilderForm
                 ->passwordStrengthMeter(false)
                 ->removeFieldClass('medium')
                 ->addFieldClass('long')
-                ->autocomplete("current-password")
+                ->autoComplete("current-password")
                 ->addValidator(new FormFieldValidator(
                     'passwordValidator',
                     $this->validatePassword(...)

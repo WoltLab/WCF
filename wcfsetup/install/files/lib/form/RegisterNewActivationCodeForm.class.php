@@ -57,7 +57,7 @@ final class RegisterNewActivationCodeForm extends AbstractFormBuilderForm
                         ->addFieldClass('long')
                         ->addMeterRelatedFieldId('username')
                         ->addMeterRelatedFieldId('email')
-                        ->autocomplete('current-password')
+                        ->autoComplete('current-password')
                         ->addValidator(new FormFieldValidator(
                             'passwordValidator',
                             $this->validatePassword(...)

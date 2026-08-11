@@ -143,7 +143,7 @@ class PackageUpdateServerAddForm extends AbstractFormBuilderForm
                         ->description('wcf.acp.updateServer.loginPassword.description')
                         ->addFieldClass('medium')
                         ->passwordStrengthMeter(false)
-                        ->autocomplete('off'),
+                        ->autoComplete('off'),
                     BooleanFormField::create('isDisabled')
                         ->label('wcf.acp.updateServer.isDisabled'),
                 ]),

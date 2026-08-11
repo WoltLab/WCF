@@ -68,7 +68,7 @@ class ReauthenticationForm extends AbstractFormBuilderForm
                 ->templateName('__reauthenticationLoginAs'),
             UserPasswordField::create()
                 ->required()
-                ->autocomplete('current-password')
+                ->autoComplete('current-password')
                 ->autoFocus(),
         ]);
     }

@@ -31,7 +31,7 @@ final class CodeFormField extends TextFormField
         $this->minimumLength($this->getChunks() * $this->getChunkLength());
         $this->fieldAttribute('size', (string)($this->getChunks() - 1 + $this->getChunks() * $this->getChunkLength()));
         $this->addFieldClass('multifactorBackupCode');
-        $this->autocomplete('off');
+        $this->autoComplete('off');
         $this->inputMode('numeric');
         $this->pattern('[0-9\s]*');
 

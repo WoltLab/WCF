@@ -57,7 +57,7 @@ final class EmailNewActivationCodeForm extends AbstractFormBuilderForm
                         ->required()
                         ->removeFieldClass('medium')
                         ->addFieldClass('long')
-                        ->autocomplete('current-password')
+                        ->autoComplete('current-password')
                         ->addMeterRelatedFieldId('username')
                         ->addValidator(new FormFieldValidator(
                             'passwordValidator',
