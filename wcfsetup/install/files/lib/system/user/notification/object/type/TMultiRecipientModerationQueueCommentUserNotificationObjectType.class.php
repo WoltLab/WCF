@@ -49,11 +49,11 @@ trait TMultiRecipientModerationQueueCommentUserNotificationObjectType
         $recipientIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
         // make sure that all users (still) have permission to access moderation
-        if (!$recipientIDs) {
+        if ($recipientIDs !== []) {
             UserStorageHandler::getInstance()->loadStorage($recipientIDs);
             $userProfiles = UserProfileRuntimeCache::getInstance()->getObjects($recipientIDs);
-            $recipientIDs = \array_keys(\array_filter($userProfiles, static function (UserProfile $userProfile) {
-                return $userProfile->getPermission('mod.general.canUseModeration');
+            $recipientIDs = \array_keys(\array_filter($userProfiles, static function (?UserProfile $userProfile) {
+                return $userProfile !== null && $userProfile->getPermission('mod.general.canUseModeration');
             }));
         }
 
