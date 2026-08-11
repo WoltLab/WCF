@@ -58,7 +58,7 @@ parameters:
         matchingInheritedMethodNames: true
         numericOperandsInArithmeticOperators: true
         strictFunctionCalls: true
-        dynamicCallOnStaticMethod: false
+        dynamicCallOnStaticMethod: true
         switchConditionsMatchingType: false
         noVariableVariables: false
         strictArrayFilter: false

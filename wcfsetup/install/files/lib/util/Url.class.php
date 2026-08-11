@@ -246,7 +246,7 @@ final class Url implements \ArrayAccess
 
         $parts = self::parseQueryString($queryString);
 
-        return $uri->withQueryValues($uri, $parts);
+        return Uri::withQueryValues($uri, $parts);
     }
 
     /**

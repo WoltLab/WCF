@@ -323,7 +323,7 @@ final class StyleCompiler extends SingletonFactory
             $this->extractPreloadRequests($css)
         );
 
-        $this->writeCss($this->getFilenameForStyle($style), $css, $preloadManifest);
+        $this->writeCss(self::getFilenameForStyle($style), $css, $preloadManifest);
 
         new CreateManifest($style)();
     }

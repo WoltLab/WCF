@@ -29,7 +29,7 @@ final class PackageUpdateListChangedLicenseListener
         }
 
         try {
-            $licenseData = $this->licenseApi->fetchFromRemote();
+            $licenseData = LicenseApi::fetchFromRemote();
             $this->licenseApi->updateLicenseFile($licenseData);
         } catch (\Throwable) {
             // This is a “silent” operation that should not interrupt the

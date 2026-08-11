@@ -84,7 +84,7 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
                             $licenseNo = $serialNo->getDocument()->getFormField('licenseNo');
 
                             try {
-                                $this->licenseData = $this->licenseApi->fetchFromRemote([
+                                $this->licenseData = LicenseApi::fetchFromRemote([
                                     'username' => $licenseNo->getValue(),
                                     'password' => $serialNo->getValue(),
                                 ]);

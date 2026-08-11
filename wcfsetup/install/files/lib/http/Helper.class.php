@@ -190,7 +190,7 @@ final class Helper
 
         if ($dbo->isNil()) {
             throw new UserInputException(
-                $dbo->getDatabaseTableIndexName(),
+                $className::getDatabaseTableIndexName(),
             );
         }
 
