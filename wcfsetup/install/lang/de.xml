@@ -3138,6 +3138,7 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration �
 		<item name="wcf.acp.user.option.labeledUrl"><![CDATA[URL]]></item>
 		<item name="wcf.acp.user.option.labeledUrl.description"><![CDATA[Wenn der Feldtyp „labeledUrl“ ist, muss hier die URL hinterlegt werden, auf die verlinkt werden soll. {if LANGUAGE_USE_INFORMAL_VARIANT}Nutze{else}Nutzen Sie{/if} <span class="inlineCode">%s</span> als Platzhalter für die Eingabe des Benutzers.]]></item>
 		<item name="wcf.acp.user.option.labeledUrl.error.invalid"><![CDATA[Der Platzhalter <span class="inlineCode">%s</span> fehlt in der URL.]]></item>
+		<item name="wcf.acp.user.option.labeledUrl.error.invalidScheme"><![CDATA[Die URL muss mit <span class="inlineCode">http://</span> oder <span class="inlineCode">https://</span> beginnen.]]></item>
 		<item name="wcf.acp.user.option.optionType"><![CDATA[Feldtyp]]></item>
 		<item name="wcf.acp.user.option.optionType.description"><![CDATA[Die Namen entsprechen in der Regel den HTML-Elementen, die benötigt werden, um so ein Feld beim Benutzer abzufragen.]]></item>
 		<item name="wcf.acp.user.option.askDuringRegistration"><![CDATA[Das Feld wird im Registrierungs-Formular angezeigt.]]></item>
