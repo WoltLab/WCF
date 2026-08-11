@@ -3,6 +3,7 @@
 namespace wcf\system\worker;
 
 use ParagonIE\ConstantTime\Hex;
+use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
@@ -13,6 +14,7 @@ use wcf\system\email\Email;
 use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\UserMailbox;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -158,6 +160,23 @@ class SendNewPasswordWorker extends AbstractWorker
             || empty($this->parameters['userIDs'])
         ) {
             throw new SystemException("'userIDs' parameter is missing or invalid");
+        }
+
+        // This worker is invokable through `WorkerProxyAction` with arbitrary
+        // parameters, therefore it must enforce the group accessibility itself
+        // instead of relying on the validation of the clipboard action.
+        $userList = new UserList();
+        $userList->setObjectIDs($this->parameters['userIDs']);
+        $userList->readObjects();
+
+        foreach ($userList as $user) {
+            if (!UserGroup::isAccessibleGroup($user->getGroupIDs())) {
+                throw new PermissionDeniedException();
+            }
+
+            if ($user->authData !== '') {
+                throw new PermissionDeniedException();
+            }
         }
     }
 }
