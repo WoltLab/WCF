@@ -76,41 +76,44 @@ class CronjobAddForm extends AbstractFormBuilderForm
                         ->description('wcf.acp.cronjob.startMinute.description')
                         ->addFieldClass('short')
                         ->value('*')
-                        ->addValidator(self::getTimeFormFiledValidator())
+                        ->addValidator(self::getTimeFormFieldValidator())
                         ->required(),
                     TextFormField::create('startHour')
                         ->label('wcf.acp.cronjob.startHour')
                         ->description('wcf.acp.cronjob.startHour.description')
                         ->addFieldClass('short')
                         ->value('*')
-                        ->addValidator(self::getTimeFormFiledValidator())
+                        ->addValidator(self::getTimeFormFieldValidator())
                         ->required(),
                     TextFormField::create('startDom')
                         ->label('wcf.acp.cronjob.startDom')
                         ->description('wcf.acp.cronjob.startDom.description')
                         ->addFieldClass('short')
                         ->value('*')
-                        ->addValidator(self::getTimeFormFiledValidator())
+                        ->addValidator(self::getTimeFormFieldValidator())
                         ->required(),
                     TextFormField::create('startMonth')
                         ->label('wcf.acp.cronjob.startMonth')
                         ->description('wcf.acp.cronjob.startMonth.description')
                         ->addFieldClass('short')
                         ->value('*')
-                        ->addValidator(self::getTimeFormFiledValidator())
+                        ->addValidator(self::getTimeFormFieldValidator())
                         ->required(),
                     TextFormField::create('startDow')
                         ->label('wcf.acp.cronjob.startDow')
                         ->description('wcf.acp.cronjob.startDow.description')
                         ->addFieldClass('short')
                         ->value('*')
-                        ->addValidator(self::getTimeFormFiledValidator())
+                        ->addValidator(self::getTimeFormFieldValidator())
                         ->required(),
                 ]),
         ]);
     }
 
-    public static function getTimeFormFiledValidator(): FormFieldValidator
+    /**
+     * @since 6.3
+     */
+    public static function getTimeFormFieldValidator(): FormFieldValidator
     {
         return new FormFieldValidator(
             'format',
@@ -134,6 +137,14 @@ class CronjobAddForm extends AbstractFormBuilderForm
                 }
             }
         );
+    }
+
+    /**
+     * @deprecated 6.3 Use `getTimeFormFieldValidator()` instead.
+     */
+    public static function getTimeFormFiledValidator(): FormFieldValidator
+    {
+        return self::getTimeFormFieldValidator();
     }
 
     #[\Override]

@@ -321,7 +321,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
                             ->fieldId('expressionType')
                             ->values([''])
                     )
-                    ->addValidator(CronjobAddForm::getTimeFormFiledValidator()),
+                    ->addValidator(CronjobAddForm::getTimeFormFieldValidator()),
                 'expression'
             );
         }
