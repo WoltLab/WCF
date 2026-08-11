@@ -121,7 +121,8 @@ final class TemplateGroupNodeTree implements \IteratorAggregate
     {
         return !\in_array(
             $templateGroupNode->templateGroupID,
-            $this->excludedTemplateGroupIDs
+            $this->excludedTemplateGroupIDs,
+            true
         );
     }
 }

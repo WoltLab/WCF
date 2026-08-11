@@ -121,7 +121,7 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 
         // check if required label groups were set
         foreach ($this->labelGroups as $labelGroup) {
-            if ($labelGroup->forceSelection !== 0 && !\in_array($labelGroup->groupID, $satisfiedGroups)) {
+            if ($labelGroup->forceSelection !== 0 && !\in_array($labelGroup->groupID, $satisfiedGroups, true)) {
                 // check if group wasn't set, but is not accessible for this user anyway
                 if ($labelGroup->hasPermissions() && !$labelGroup->getPermission($optionID)) {
                     continue;

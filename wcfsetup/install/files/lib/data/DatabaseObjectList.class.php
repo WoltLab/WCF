@@ -392,7 +392,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
     #[\Override]
     public function seekTo(int $objectID)
     {
-        $this->index = \array_search($objectID, $this->indexToObject);
+        $this->index = \array_search($objectID, $this->indexToObject, true);
 
         if ($this->index === false) {
             throw new SystemException("object id '" . $objectID . "' is invalid");

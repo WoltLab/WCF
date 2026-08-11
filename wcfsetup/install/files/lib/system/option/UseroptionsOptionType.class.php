@@ -29,7 +29,7 @@ class UseroptionsOptionType extends AbstractOptionType
         }
 
         foreach ($newValue as $optionName) {
-            if (!\in_array($optionName, self::getUserOptions())) {
+            if (!\in_array($optionName, self::getUserOptions(), true)) {
                 throw new UserInputException($option->optionName, 'validationFailed');
             }
         }

@@ -322,7 +322,7 @@ class UserOptionAddForm extends AbstractFormBuilderForm
                         $optionType = $parameters['data']['optionType'];
 
                         if ((string)$outputClass === '') {
-                            if (\in_array($optionType, self::$optionTypesUsingSelectOptions)) {
+                            if (\in_array($optionType, self::$optionTypesUsingSelectOptions, true)) {
                                 $parameters['data']['outputClass'] = SelectOptionsUserOptionOutput::class;
                             } else {
                                 $parameters['data']['outputClass'] = match ($optionType) {

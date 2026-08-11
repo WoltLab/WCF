@@ -150,7 +150,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 
         $groupIDs = [];
         foreach ($labelGroupsToCategories as $categoryID => $__groupIDs) {
-            if (\in_array($categoryID, $accessibleCategoryIDs)) {
+            if (\in_array($categoryID, $accessibleCategoryIDs, true)) {
                 $groupIDs = \array_merge($groupIDs, $__groupIDs);
             }
         }
@@ -206,7 +206,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
      */
     public function isSubscribed()
     {
-        return \in_array($this->categoryID, self::getSubscribedCategoryIDs());
+        return \in_array($this->categoryID, self::getSubscribedCategoryIDs(), true);
     }
 
     /**

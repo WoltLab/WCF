@@ -310,7 +310,7 @@ class LabelGroupAddForm extends AbstractFormBuilderForm
                 if (!$hasData) {
                     $object->setOptionValue(0);
                 } else {
-                    $optionValue = \in_array($object->getObjectID(), $data[$objectTypeID]) ? 1 : 0;
+                    $optionValue = \in_array($object->getObjectID(), $data[$objectTypeID], true) ? 1 : 0;
                     $object->setOptionValue($optionValue);
                 }
             }

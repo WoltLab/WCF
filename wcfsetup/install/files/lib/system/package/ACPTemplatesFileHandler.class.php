@@ -109,7 +109,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler
         $statement->execute($conditions->getParameters());
 
         while ($templateName = $statement->fetchColumn()) {
-            $index = \array_search($templateName, $files);
+            $index = \array_search($templateName, $files, true);
 
             if ($index !== false) {
                 unset($files[$index]);

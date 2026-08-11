@@ -53,7 +53,7 @@ class PaidSubscription extends DatabaseObject implements ITitledObject
             }
 
             // check supported currencies
-            if (!\in_array($this->currency, $paymentMethod->getSupportedCurrencies())) {
+            if (!\in_array($this->currency, $paymentMethod->getSupportedCurrencies(), true)) {
                 continue;
             }
 

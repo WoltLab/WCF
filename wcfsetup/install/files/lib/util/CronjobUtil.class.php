@@ -97,8 +97,8 @@ final class CronjobUtil
 
             switch ($fieldName) {
                 case 'dow':
-                    if (\strlen($fieldValue) === 3 && \in_array($fieldValue, $dayNames)) {
-                        $fieldValue = \array_search($fieldValue, $dayNames);
+                    if (\strlen($fieldValue) === 3 && \in_array($fieldValue, $dayNames, true)) {
+                        $fieldValue = \array_search($fieldValue, $dayNames, true);
                     }
                     // When specifying day of week, both day 0 and day 7
                     // will be considered Sunday. -- crontab(5)
@@ -108,8 +108,8 @@ final class CronjobUtil
                     break;
 
                 case 'month':
-                    if (\strlen($fieldValue) === 3 && \in_array($fieldValue, $monthNames)) {
-                        $fieldValue = \array_search($fieldValue, $monthNames) + 1;
+                    if (\strlen($fieldValue) === 3 && \in_array($fieldValue, $monthNames, true)) {
+                        $fieldValue = \array_search($fieldValue, $monthNames, true) + 1;
                     }
                     break;
             }
@@ -582,8 +582,8 @@ final class CronjobUtil
                     }
 
                     // see if digits or names are being given.
-                    $left = \array_search(\mb_strtolower($compare[0]), $namesArr);
-                    $right = \array_search(\mb_strtolower($compare[1]), $namesArr);
+                    $left = \array_search(\mb_strtolower($compare[0]), $namesArr, true);
+                    $right = \array_search(\mb_strtolower($compare[1]), $namesArr, true);
                     if (!$left) {
                         $left = $compare[0];
                     }

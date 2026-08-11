@@ -41,7 +41,7 @@ final class OptionFormField extends ItemListFormField implements IPackagesFormFi
         if ($this->getValidationErrors() === [] && \is_array($this->getValue()) && $this->getValue() !== []) {
             // ignore `module_attachment`, see https://github.com/WoltLab/WCF/issues/2531
             $options = $this->getValue();
-            if (($index = \array_search('module_attachment', $options)) !== false) {
+            if (($index = \array_search('module_attachment', $options, true)) !== false) {
                 unset($options[$index]);
             }
 

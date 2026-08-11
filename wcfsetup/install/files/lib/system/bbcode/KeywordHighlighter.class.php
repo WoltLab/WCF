@@ -75,7 +75,7 @@ class KeywordHighlighter extends SingletonFactory
                     }
                     [$varname, $value] = \explode('=', $element, 2);
 
-                    if (\in_array($varname, static::$searchQueryKeys)) {
+                    if (\in_array($varname, static::$searchQueryKeys, true)) {
                         $this->parseKeywords(\urldecode($value));
                         break;
                     }

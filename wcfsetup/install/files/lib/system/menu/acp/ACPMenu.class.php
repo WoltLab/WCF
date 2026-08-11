@@ -35,7 +35,7 @@ class ACPMenu extends TreeMenu
         if (
             \ENABLE_ENTERPRISE_MODE !== 0
             && !WCF::getUser()->hasOwnerAccess()
-            && \in_array($item->menuItem, $this->enterpriseBlacklist)
+            && \in_array($item->menuItem, $this->enterpriseBlacklist, true)
         ) {
             return false;
         }

@@ -81,7 +81,7 @@ class LanguageMultilingualismForm extends AbstractForm
 
         if ($this->enable === 1) {
             // add default language
-            if (!\in_array(LanguageFactory::getInstance()->getDefaultLanguageID(), $this->languageIDs)) {
+            if (!\in_array(LanguageFactory::getInstance()->getDefaultLanguageID(), $this->languageIDs, true)) {
                 $this->languageIDs[] = LanguageFactory::getInstance()->getDefaultLanguageID();
             }
 
@@ -131,7 +131,7 @@ class LanguageMultilingualismForm extends AbstractForm
             }
 
             // add default language
-            if (!\in_array(LanguageFactory::getInstance()->getDefaultLanguageID(), $this->languageIDs)) {
+            if (!\in_array(LanguageFactory::getInstance()->getDefaultLanguageID(), $this->languageIDs, true)) {
                 $this->languageIDs[] = LanguageFactory::getInstance()->getDefaultLanguageID();
             }
 

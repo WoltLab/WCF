@@ -178,7 +178,7 @@ final class SmtpEmailTransport implements IStatusReportingEmailTransport
                 if ($code === null) {
                     $code = \intval($matches[1]);
 
-                    if (!\in_array($code, $expectedCodes)) {
+                    if (!\in_array($code, $expectedCodes, true)) {
                         // 4xx is a transient failure
                         if (400 <= $code && $code < 500) {
                             throw new TransientFailure(\sprintf(
@@ -315,7 +315,7 @@ final class SmtpEmailTransport implements IStatusReportingEmailTransport
 
         switch ($this->starttls) {
             case 'encrypt':
-                if (!\in_array('starttls', $this->features)) {
+                if (!\in_array('starttls', $this->features, true)) {
                     throw new PermanentFailure(
                         "Remote SMTP server does not advertise STARTTLS, but \$starttls is set to 'encrypt'."
                     );
@@ -370,7 +370,7 @@ final class SmtpEmailTransport implements IStatusReportingEmailTransport
             if ($parameters[0] === 'auth') {
                 // Try mechanisms in order of preference.
                 foreach (['login', 'plain'] as $method) {
-                    if (\in_array($method, $parameters)) {
+                    if (\in_array($method, $parameters, true)) {
                         switch ($method) {
                             case 'login':
                                 try {

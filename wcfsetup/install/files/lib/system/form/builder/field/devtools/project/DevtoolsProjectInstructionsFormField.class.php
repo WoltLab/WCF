@@ -185,7 +185,7 @@ final class DevtoolsProjectInstructionsFormField extends AbstractFormField
                         return false;
                     }
 
-                    if (!\in_array($instruction['pip'], static::$applicationPips)) {
+                    if (!\in_array($instruction['pip'], static::$applicationPips, true)) {
                         return false;
                     }
                 }

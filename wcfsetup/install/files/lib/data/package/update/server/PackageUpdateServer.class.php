@@ -178,7 +178,7 @@ class PackageUpdateServer extends DatabaseObject implements ITitledObject
     {
         $parsedURL = Url::parse($serverURL);
 
-        return \in_array($parsedURL['scheme'], ['https']) && $parsedURL['host'] !== '';
+        return \in_array($parsedURL['scheme'], ['https'], true) && $parsedURL['host'] !== '';
     }
 
     /**

@@ -155,7 +155,7 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
                             $formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE
                             || $this->editedEntry->getAttribute('name') !== $formField->getSaveValue()
                         ) {
-                            if (\in_array($formField->getValue(), $smileyCodes)) {
+                            if (\in_array($formField->getValue(), $smileyCodes, true)) {
                                 $formField->addValidationError(
                                     new FormFieldValidationError(
                                         'notUnique',
@@ -195,7 +195,7 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
                         ) {
                             $notUniqueCodes = [];
                             foreach ($formField->getValue() as $alias) {
-                                if (\in_array($alias, $smileyCodes)) {
+                                if (\in_array($alias, $smileyCodes, true)) {
                                     $notUniqueCodes[] = $alias;
                                 }
                             }

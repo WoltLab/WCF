@@ -122,11 +122,13 @@ class MySQLDatabaseEditor extends DatabaseEditor
                 'referencedColumns' => [],
                 'ON DELETE' => \in_array(
                     $information['DELETE_RULE'],
-                    $validActions
+                    $validActions,
+                    true
                 ) ? $information['DELETE_RULE'] : null,
                 'ON UPDATE' => \in_array(
                     $information['UPDATE_RULE'],
-                    $validActions
+                    $validActions,
+                    true
                 ) ? $information['UPDATE_RULE'] : null,
             ];
         }
@@ -311,7 +313,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
             if ((int)$e->getCode() !== 42000) {
                 throw $e;
             }
-            if (\in_array($columnName, \array_column($this->getColumns($tableName), 'name'))) {
+            if (\in_array($columnName, \array_column($this->getColumns($tableName), 'name'), true)) {
                 throw $e;
             }
         }
@@ -370,7 +372,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
             if ((int)$e->getCode() !== 42000) {
                 throw $e;
             }
-            if (\in_array($indexName, $this->getIndices($tableName))) {
+            if (\in_array($indexName, $this->getIndices($tableName), true)) {
                 throw $e;
             }
         }
@@ -387,7 +389,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
             if ((int)$e->getCode() !== 42000) {
                 throw $e;
             }
-            if (\in_array("PRIMARY", $this->getIndices($tableName))) {
+            if (\in_array("PRIMARY", $this->getIndices($tableName), true)) {
                 throw $e;
             }
         }
@@ -404,7 +406,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
             if ((int)$e->getCode() !== 42000) {
                 throw $e;
             }
-            if (\in_array($indexName, \array_keys($this->getForeignKeys($tableName)))) {
+            if (\in_array($indexName, \array_keys($this->getForeignKeys($tableName)), true)) {
                 throw $e;
             }
         }

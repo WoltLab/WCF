@@ -343,7 +343,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
         $presetMailNotificationType = $element->getElementsByTagName('presetmailnotificationtype')->item(0);
         if (
             $presetMailNotificationType !== null
-            && \in_array($presetMailNotificationType->nodeValue, ['instant', 'daily'])
+            && \in_array($presetMailNotificationType->nodeValue, ['instant', 'daily'], true)
         ) {
             $data['presetMailNotificationType'] = $presetMailNotificationType->nodeValue;
         } elseif ($saveData) {

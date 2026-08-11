@@ -363,7 +363,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
                     \in_array($char, [
                         ' ',
                         "\t",
-                    ])
+                    ], true)
                 ) {
                     $i++;
                     continue;
@@ -393,7 +393,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
                         '~',
                         '<',
                         '>',
-                    ])
+                    ], true)
                 ) {
                     // The last prefix character wins.
                     $prefix = $char;
@@ -454,7 +454,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
                 if (
                     !$isQuoted && \in_array($char, [
                         '*',
-                    ])
+                    ], true)
                 ) {
                     $suffix = $char;
                     $i++;
@@ -487,7 +487,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
                         '~',
                         '<',
                         '>',
-                    ])
+                    ], true)
                 ) {
                     // Ignore valid prefixes after a word is fully parsed: The word
                     // parsing was aborted, because the prefix character was encountered.
@@ -615,7 +615,8 @@ class MysqlSearchEngine extends AbstractSearchEngine
                 'und',
                 'the',
                 'www',
-            ]
+            ],
+            true
         );
     }
 }

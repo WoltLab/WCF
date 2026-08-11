@@ -39,7 +39,7 @@ class TimezoneOptionType extends AbstractOptionType
     #[\Override]
     public function validate(Option $option, mixed $newValue)
     {
-        if (!\in_array($newValue, DateUtil::getAvailableTimezones())) {
+        if (!\in_array($newValue, DateUtil::getAvailableTimezones(), true)) {
             throw new UserInputException($option->optionName, 'validationFailed');
         }
     }

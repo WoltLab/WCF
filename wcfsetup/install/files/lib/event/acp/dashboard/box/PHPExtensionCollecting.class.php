@@ -40,7 +40,7 @@ final class PHPExtensionCollecting implements IPsr14Event
      */
     public function register(string|array $extension): void
     {
-        if (\in_array($extension, $this->extensions)) {
+        if (\in_array($extension, $this->extensions, true)) {
             return;
         }
         $this->extensions[] = $extension;

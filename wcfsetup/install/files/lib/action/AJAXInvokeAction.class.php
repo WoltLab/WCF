@@ -140,7 +140,7 @@ class AJAXInvokeAction extends AbstractSecureAction
 
         // validate accessibility
         $className = $this->className;
-        if (!\property_exists($className, 'allowInvoke') || !\in_array($this->actionName, $className::$allowInvoke)) {
+        if (!\property_exists($className, 'allowInvoke') || !\in_array($this->actionName, $className::$allowInvoke, true)) {
             throw new PermissionDeniedException();
         }
 

@@ -65,7 +65,7 @@ class BBCodeEditForm extends BBCodeAddForm
 
         $this->bbcode = Helper::fetchObjectFromQueryParameter(BBCode::class);
 
-        if (!\in_array($this->bbcode->bbcodeTag, self::$nativeBBCodes)) {
+        if (!\in_array($this->bbcode->bbcodeTag, self::$nativeBBCodes, true)) {
             I18nHandler::getInstance()->register('buttonLabel');
         }
     }
@@ -73,7 +73,7 @@ class BBCodeEditForm extends BBCodeAddForm
     #[\Override]
     protected function readButtonLabelFormParameter()
     {
-        if (!\in_array($this->bbcode->bbcodeTag, self::$nativeBBCodes)) {
+        if (!\in_array($this->bbcode->bbcodeTag, self::$nativeBBCodes, true)) {
             parent::readButtonLabelFormParameter();
         }
     }
@@ -179,7 +179,7 @@ class BBCodeEditForm extends BBCodeAddForm
         WCF::getTPL()->assign([
             'bbcode' => $this->bbcode,
             'action' => 'edit',
-            'nativeBBCode' => \in_array($this->bbcode->bbcodeTag, self::$nativeBBCodes),
+            'nativeBBCode' => \in_array($this->bbcode->bbcodeTag, self::$nativeBBCodes, true),
         ]);
     }
 }

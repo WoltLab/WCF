@@ -201,7 +201,7 @@ class AttachmentHandler implements \Countable
     {
         $extensions = $this->processor->getAllowedExtensions();
 
-        if (\in_array('*', $extensions)) {
+        if (\in_array('*', $extensions, true)) {
             return $extensions;
         }
 
@@ -211,7 +211,7 @@ class AttachmentHandler implements \Countable
             return $extensions;
         }
 
-        if (!\in_array('webp', $extensions)) {
+        if (!\in_array('webp', $extensions, true)) {
             $extensions[] = 'webp';
         }
 

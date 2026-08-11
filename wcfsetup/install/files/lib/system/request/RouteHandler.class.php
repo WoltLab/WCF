@@ -327,7 +327,7 @@ final class RouteHandler extends SingletonFactory
                     unset($path[$index]);
                 }
 
-                if (\in_array($component, $removeComponents)) {
+                if (\in_array($component, $removeComponents, true)) {
                     unset($path[$index]);
                 }
             }

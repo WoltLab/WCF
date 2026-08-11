@@ -123,10 +123,10 @@ class TemplateGroup extends DatabaseObject implements ITitledObject
     protected static function makeSelectList(int $parentID = 0, int $depth = 0, array $ignore = [])
     {
         foreach (self::getParentTemplatesGroups($parentID) as $templateGroup) {
-            if ($ignore !== [] && \in_array($templateGroup->templateGroupID, $ignore)) {
+            if ($ignore !== [] && \in_array($templateGroup->templateGroupID, $ignore, true)) {
                 continue;
             }
-            if (\in_array(-1, $ignore) && $templateGroup->isImmutable()) {
+            if (\in_array(-1, $ignore, true) && $templateGroup->isImmutable()) {
                 continue;
             }
 

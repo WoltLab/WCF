@@ -145,7 +145,12 @@ final class DomBBCodeParser extends SingletonFactory
             }
 
             if ($node->hasAttribute('data-attributes')) {
-                $attributes = \json_decode(\base64_decode($node->getAttribute('data-attributes')), true, flags: \JSON_THROW_ON_ERROR);
+                $encodedAttributes = \base64_decode($node->getAttribute('data-attributes'), true);
+                if ($encodedAttributes === false) {
+                    throw new \UnexpectedValueException("The attribute 'data-attributes' is not valid base64 data.");
+                }
+
+                $attributes = \json_decode($encodedAttributes, true, flags: \JSON_THROW_ON_ERROR);
             } else {
                 $attributes = [];
             }
@@ -159,7 +164,7 @@ final class DomBBCodeParser extends SingletonFactory
 
     private function convertBBCodeToMetacodeMarker(\DOMNode $node): void
     {
-        if (\in_array($node->nodeName, DomBBCodeParser::$codeTagNames)) {
+        if (\in_array($node->nodeName, DomBBCodeParser::$codeTagNames, true)) {
             // don't parse bbcode inside code tags
             return;
         }
@@ -275,6 +280,11 @@ final class DomBBCodeParser extends SingletonFactory
     {
         \assert($node->childNodes->length === 0);
 
-        $node->replaceWith(\base64_decode($node->getAttribute('data-source')));
+        $source = \base64_decode($node->getAttribute('data-source'), true);
+        if ($source === false) {
+            throw new \UnexpectedValueException("The attribute 'data-source' is not valid base64 data.");
+        }
+
+        $node->replaceWith($source);
     }
 }

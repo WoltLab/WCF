@@ -337,7 +337,8 @@ class StyleAddForm extends AbstractForm
                 if (
                     isset($_POST[$variableName . '_unit']) && \in_array(
                         $_POST[$variableName . '_unit'],
-                        $this->availableUnits
+                        $this->availableUnits,
+                        true
                     )
                 ) {
                     $this->variables[$variableName] = \abs($_POST[$variableName]) . $_POST[$variableName . '_unit'];
@@ -354,7 +355,8 @@ class StyleAddForm extends AbstractForm
             if (isset($_POST[$variableName])) {
                 $this->variables[$variableName] = (\in_array(
                     $variableName,
-                    $integerValues
+                    $integerValues,
+                    true
                 )) ? \abs(\intval($_POST[$variableName])) : StringUtil::trim($_POST[$variableName]);
             }
         }
@@ -659,16 +661,17 @@ class StyleAddForm extends AbstractForm
 
                 // cannot override variables covered by style editor
                 if (
-                    \in_array($matches[1], $colorNames) || \in_array(
+                    \in_array($matches[1], $colorNames, true) || \in_array(
                         $matches[1],
-                        $this->globals
-                    ) || \in_array($matches[1], $this->specialVariables)
+                        $this->globals,
+                        true
+                    ) || \in_array($matches[1], $this->specialVariables, true)
                 ) {
                     $errors[] = [
                         'error' => 'predefined',
                         'text' => $matches[1],
                     ];
-                } elseif (!\in_array($matches[1], $variables)) {
+                } elseif (!\in_array($matches[1], $variables, true)) {
                     // unknown style variable
                     $errors[] = [
                         'error' => 'unknown',

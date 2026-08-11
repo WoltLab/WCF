@@ -129,16 +129,16 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController
         }
 
         // all BBCodes are allowed
-        if (\in_array('all', $allowedBBCodeTags)) {
+        if (\in_array('all', $allowedBBCodeTags, true)) {
             return true;
         }
 
         // no BBCode are allowed
-        if (\in_array('none', $allowedBBCodeTags)) {
+        if (\in_array('none', $allowedBBCodeTags, true)) {
             return false;
         }
 
-        return \in_array($bbcodeTag, $allowedBBCodeTags);
+        return \in_array($bbcodeTag, $allowedBBCodeTags, true);
     }
 
     /**

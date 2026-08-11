@@ -162,7 +162,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
         // collect additional tags and their values
         $additionalData = [];
         foreach ($option as $tag => $value) {
-            if (!\in_array($tag, self::$reservedTags)) {
+            if (!\in_array($tag, self::$reservedTags, true)) {
                 $additionalData[$tag] = $value;
             }
         }

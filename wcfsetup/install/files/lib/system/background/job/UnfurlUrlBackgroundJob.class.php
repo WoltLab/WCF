@@ -155,14 +155,17 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
 
             $width = $height = 0;
             if ($file !== null) {
-                $imageData = \getimagesizefromstring(
-                    \base64_decode(
-                        \file_get_contents($file->getPathname())
-                    )
+                // The stored file contains the base64 encoded image, see UnfurlUrlEditor::saveUnfurlImage().
+                $decodedImage = \base64_decode(
+                    \file_get_contents($file->getPathname()),
+                    true
                 );
-                if ($imageData !== false) {
-                    $width = $imageData[0];
-                    $height = $imageData[1];
+                if ($decodedImage !== false) {
+                    $imageData = \getimagesizefromstring($decodedImage);
+                    if ($imageData !== false) {
+                        $width = $imageData[0];
+                        $height = $imageData[1];
+                    }
                 }
             }
 

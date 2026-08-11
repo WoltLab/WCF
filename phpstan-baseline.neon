@@ -31,6 +31,12 @@ parameters:
 			path: wcfsetup/install/files/lib/acp/form/AbstractCategoryEditForm.class.php
 
 		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 2
+			path: wcfsetup/install/files/lib/acp/form/AbstractCustomOptionForm.class.php
+
+		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 2
@@ -53,6 +59,12 @@ parameters:
 			identifier: empty.notAllowed
 			count: 2
 			path: wcfsetup/install/files/lib/acp/form/ArticleAddForm.class.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/acp/form/ArticleCategoryAddForm.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
@@ -385,6 +397,12 @@ parameters:
 			path: wcfsetup/install/files/lib/data/box/BoxAction.class.php
 
 		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/data/category/Category.class.php
+
+		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 2
@@ -445,6 +463,12 @@ parameters:
 			path: wcfsetup/install/files/lib/data/custom/option/CustomOption.class.php
 
 		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 2
+			path: wcfsetup/install/files/lib/data/devtools/project/DevtoolsProjectAction.class.php
+
+		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 2
@@ -499,6 +523,24 @@ parameters:
 			path: wcfsetup/install/files/lib/data/option/OptionAction.class.php
 
 		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/data/package/installation/plugin/PackageInstallationPluginAction.class.php
+
+		-
+			message: '#^Call to function array_search\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/data/package/update/PackageUpdateAction.class.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 4
+			path: wcfsetup/install/files/lib/data/package/update/PackageUpdateAction.class.php
+
+		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 2
@@ -511,10 +553,28 @@ parameters:
 			path: wcfsetup/install/files/lib/data/package/update/server/PackageUpdateServerList.class.php
 
 		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 3
+			path: wcfsetup/install/files/lib/data/page/PageAction.class.php
+
+		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 10
 			path: wcfsetup/install/files/lib/data/page/PageAction.class.php
+
+		-
+			message: '#^Call to function array_search\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/data/poll/PollAction.class.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/data/poll/PollAction.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
@@ -599,6 +659,12 @@ parameters:
 			identifier: empty.notAllowed
 			count: 2
 			path: wcfsetup/install/files/lib/data/user/TeamList.class.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/data/user/User.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
@@ -701,6 +767,12 @@ parameters:
 			identifier: empty.notAllowed
 			count: 4
 			path: wcfsetup/install/files/lib/form/MessageForm.class.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/form/NotificationSettingsForm.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
@@ -901,6 +973,12 @@ parameters:
 			path: wcfsetup/install/files/lib/system/acl/simple/SimpleAclHandler.class.php
 
 		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 2
+			path: wcfsetup/install/files/lib/system/acl/simple/SimpleAclResolver.class.php
+
+		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 2
@@ -1051,10 +1129,22 @@ parameters:
 			path: wcfsetup/install/files/lib/system/cache/builder/OptionCacheBuilder.class.php
 
 		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/cache/builder/TagCloudCacheBuilder.class.php
+
+		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 1
 			path: wcfsetup/install/files/lib/system/cache/builder/TrophyCacheBuilder.class.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 5
+			path: wcfsetup/install/files/lib/system/cache/builder/UserGroupPermissionCacheBuilder.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
@@ -1099,6 +1189,12 @@ parameters:
 			path: wcfsetup/install/files/lib/system/cli/command/WorkerCLICommand.class.php
 
 		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/cli/command/WorkerCLICommand.class.php
+
+		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 2
@@ -1115,6 +1211,12 @@ parameters:
 			identifier: while.alwaysTrue
 			count: 1
 			path: wcfsetup/install/files/lib/system/cli/command/WorkerCLICommand.class.php
+
+		-
+			message: '#^Call to function array_search\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/clipboard/ClipboardHandler.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
@@ -1165,10 +1267,28 @@ parameters:
 			path: wcfsetup/install/files/lib/system/condition/AbstractIntegerCondition.class.php
 
 		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/condition/AbstractMultiCategoryCondition.class.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/condition/AbstractMultiSelectCondition.class.php
+
+		-
 			message: '#^Method wcf\\system\\condition\\AbstractMultiSelectCondition\:\:getData\(\) should return array\<mixed\> but returns null\.$#'
 			identifier: return.type
 			count: 1
 			path: wcfsetup/install/files/lib/system/condition/AbstractMultiSelectCondition.class.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/condition/AbstractObjectTextPropertyCondition.class.php
 
 		-
 			message: '#^Strict comparison using \=\=\= between array\<mixed\> and null will always evaluate to false\.$#'
@@ -1195,16 +1315,40 @@ parameters:
 			path: wcfsetup/install/files/lib/system/condition/AbstractTimestampCondition.class.php
 
 		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/condition/DaysOfWeekCondition.class.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/condition/TimeCondition.class.php
+
+		-
 			message: '#^Method wcf\\system\\condition\\TimeCondition\:\:getData\(\) should return array\<mixed\> but returns null\.$#'
 			identifier: return.type
 			count: 1
 			path: wcfsetup/install/files/lib/system/condition/TimeCondition.class.php
 
 		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/condition/UserBirthdayCondition.class.php
+
+		-
 			message: '#^Method wcf\\system\\condition\\UserBirthdayCondition\:\:getData\(\) should return array\<mixed\> but returns null\.$#'
 			identifier: return.type
 			count: 1
 			path: wcfsetup/install/files/lib/system/condition/UserBirthdayCondition.class.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/condition/UserGroupCondition.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
@@ -1217,6 +1361,12 @@ parameters:
 			identifier: return.type
 			count: 1
 			path: wcfsetup/install/files/lib/system/condition/UserGroupCondition.class.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 3
+			path: wcfsetup/install/files/lib/system/condition/UserLanguageCondition.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
@@ -1261,6 +1411,12 @@ parameters:
 			path: wcfsetup/install/files/lib/system/condition/UserStateCondition.class.php
 
 		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/condition/UserTrophyCondition.class.php
+
+		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 2
@@ -1283,6 +1439,12 @@ parameters:
 			identifier: return.type
 			count: 1
 			path: wcfsetup/install/files/lib/system/condition/UserUserIDCondition.class.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/condition/page/MultiPageCondition.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
@@ -1375,6 +1537,12 @@ parameters:
 			path: wcfsetup/install/files/lib/system/devtools/package/DevtoolsTar.class.php
 
 		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/email/EmailGrammar.class.php
+
+		-
 			message: '#^Call to function is_array\(\) with string will always evaluate to false\.$#'
 			identifier: function.impossibleType
 			count: 1
@@ -1403,6 +1571,12 @@ parameters:
 			identifier: empty.notAllowed
 			count: 1
 			path: wcfsetup/install/files/lib/system/exception/LoggedException.class.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 2
+			path: wcfsetup/install/files/lib/system/file/upload/UploadFile.class.php
 
 		-
 			message: '#^Instanceof between wcf\\system\\file\\upload\\UploadFile and wcf\\system\\file\\upload\\UploadFile will always evaluate to true\.$#'
@@ -1457,6 +1631,12 @@ parameters:
 			identifier: empty.notAllowed
 			count: 3
 			path: wcfsetup/install/files/lib/system/form/builder/field/MultipleSelectionFormField.class.php
+
+		-
+			message: '#^Call to function array_search\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/form/builder/field/ShowOrderFormField.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
@@ -1519,6 +1699,12 @@ parameters:
 			path: wcfsetup/install/files/lib/system/form/builder/field/dependency/NonEmptyFormFieldDependency.class.php
 
 		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/form/builder/field/dependency/ValueFormFieldDependency.class.php
+
+		-
 			message: '#^Instanceof between wcf\\data\\DatabaseObjectList\<wcf\\data\\DatabaseObject\> and wcf\\data\\DatabaseObjectList will always evaluate to true\.$#'
 			identifier: instanceof.alwaysTrue
 			count: 1
@@ -1535,6 +1721,12 @@ parameters:
 			identifier: empty.notAllowed
 			count: 1
 			path: wcfsetup/install/files/lib/system/form/builder/field/devtools/project/DevtoolsProjectInstructionsFormField.class.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/form/builder/field/label/LabelFormField.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
@@ -1621,10 +1813,22 @@ parameters:
 			path: wcfsetup/install/files/lib/system/html/input/node/HtmlInputNodeWoltlabMetacodeMarker.class.php
 
 		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/html/metacode/converter/ImgMetacodeConverter.class.php
+
+		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 1
 			path: wcfsetup/install/files/lib/system/html/metacode/converter/ListMetacodeConverter.class.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/html/metacode/converter/SizeMetacodeConverter.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
@@ -1831,6 +2035,12 @@ parameters:
 			path: wcfsetup/install/files/lib/system/label/object/AbstractLabelObjectHandler.class.php
 
 		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/label/object/ArticleLabelObjectHandler.class.php
+
+		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 3
@@ -2011,6 +2221,12 @@ parameters:
 			path: wcfsetup/install/files/lib/system/option/TextareaIpAddressOptionType.class.php
 
 		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/option/TextareaOptionType.class.php
+
+		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 1
@@ -2119,6 +2335,12 @@ parameters:
 			path: wcfsetup/install/files/lib/system/option/user/group/TextareaUserGroupOptionType.class.php
 
 		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/option/user/group/UserGroupsUserGroupOptionType.class.php
+
+		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 4
@@ -2129,6 +2351,12 @@ parameters:
 			identifier: empty.notAllowed
 			count: 1
 			path: wcfsetup/install/files/lib/system/package/PackageArchive.class.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/package/PackageInstallationDispatcher.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
@@ -2389,6 +2617,12 @@ parameters:
 			path: wcfsetup/install/files/lib/system/reaction/ReactionHandler.class.php
 
 		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/registry/RegistryHandler.class.php
+
+		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 1
@@ -2563,10 +2797,22 @@ parameters:
 			path: wcfsetup/install/files/lib/system/template/plugin/HascontentPrefilterTemplatePlugin.class.php
 
 		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/template/plugin/HtmlCheckboxesFunctionTemplatePlugin.class.php
+
+		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 3
 			path: wcfsetup/install/files/lib/system/template/plugin/HtmlCheckboxesFunctionTemplatePlugin.class.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/template/plugin/HtmlOptionsFunctionTemplatePlugin.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
@@ -2605,6 +2851,12 @@ parameters:
 			path: wcfsetup/install/files/lib/system/template/plugin/PagesFunctionTemplatePlugin.class.php
 
 		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/system/template/plugin/PluralFunctionTemplatePlugin.class.php
+
+		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 3
@@ -2627,6 +2879,12 @@ parameters:
 			identifier: empty.notAllowed
 			count: 2
 			path: wcfsetup/install/files/lib/system/user/authentication/oauth/User.class.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 2
+			path: wcfsetup/install/files/lib/system/user/collapsible/content/UserCollapsibleContentHandler.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
@@ -2687,6 +2945,18 @@ parameters:
 			identifier: empty.notAllowed
 			count: 1
 			path: wcfsetup/install/files/lib/util/ArrayUtil.class.php
+
+		-
+			message: '#^Call to function array_search\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: wcfsetup/install/files/lib/util/CronjobUtil.class.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 2
+			path: wcfsetup/install/files/lib/util/CronjobUtil.class.php
 
 		-
 			message: '#^Parameter \#1 \$iterator of class RecursiveIteratorIterator constructor expects T of IteratorAggregate\|RecursiveIterator, DirectoryIterator given\.$#'

@@ -377,7 +377,7 @@ final class UserExportGdprAction extends AbstractAction
             foreach ($optionTree['options'] as $optionData) {
                 $option = $optionData['object'];
 
-                if (\in_array($option->optionName, $this->skipUserOptions)) {
+                if (\in_array($option->optionName, $this->skipUserOptions, true)) {
                     // blacklisted option name
                     continue;
                 } else {
@@ -387,11 +387,11 @@ final class UserExportGdprAction extends AbstractAction
                     }
                 }
 
-                $forceExport = \in_array($option->optionName, $this->exportUserOptionSettings);
+                $forceExport = \in_array($option->optionName, $this->exportUserOptionSettings, true);
 
                 // ignore settings unless they are explicitly white-listed
                 if (!$forceExport && \strpos($option->categoryName, 'settings.') === 0) {
-                    if (!\in_array($option->optionName, $this->exportUserOptionSettingsIfNotEmpty)) {
+                    if (!\in_array($option->optionName, $this->exportUserOptionSettingsIfNotEmpty, true)) {
                         continue;
                     }
                 }

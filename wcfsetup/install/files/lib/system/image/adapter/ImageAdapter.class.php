@@ -167,7 +167,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
         }
 
         // validate position
-        if (!\in_array($position, $this->relativePositions)) {
+        if (!\in_array($position, $this->relativePositions, true)) {
             throw new SystemException("Unknown relative position '" . $position . "'.");
         }
 
@@ -289,7 +289,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter, ISingleFr
         }
 
         // validate position
-        if (!\in_array($position, $this->relativePositions)) {
+        if (!\in_array($position, $this->relativePositions, true)) {
             throw new SystemException("Unknown relative position '" . $position . "'.");
         }
 

@@ -147,7 +147,7 @@ abstract class MessageForm extends AbstractCaptchaForm
             $this->availableContentLanguages = LanguageFactory::getInstance()->getContentLanguages();
             if (!WCF::getUser()->isGuest()) {
                 foreach ($this->availableContentLanguages as $key => $value) {
-                    if (!\in_array($key, WCF::getUser()->getLanguageIDs())) {
+                    if (!\in_array($key, WCF::getUser()->getLanguageIDs(), true)) {
                         unset($this->availableContentLanguages[$key]);
                     }
                 }

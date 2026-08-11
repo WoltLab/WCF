@@ -244,7 +244,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                         return false;
                     }
 
-                    return $className !== '' && \in_array($className, self::$allowedClassNames[$nodeName]);
+                    return $className !== '' && \in_array($className, self::$allowedClassNames[$nodeName], true);
                 });
 
                 if ($classNames !== []) {
@@ -377,7 +377,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
         while ($node) {
             if ($node->nodeType === \XML_ELEMENT_NODE && $node->nodeName === 'woltlab-metacode-marker') {
                 $node = $appendToPreviousParagraph($node);
-            } elseif ($node->nodeType === \XML_ELEMENT_NODE && \in_array($node->nodeName, self::$inlineElements)) {
+            } elseif ($node->nodeType === \XML_ELEMENT_NODE && \in_array($node->nodeName, self::$inlineElements, true)) {
                 $node = $appendToPreviousParagraph($node);
             } elseif ($node->nodeType === \XML_TEXT_NODE) {
                 // text node contains only a line break
@@ -405,7 +405,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
         // Remove style attributes from non-whitelisted elements.
         /** @var \DOMElement $element */
         foreach ($this->getXPath()->query('//*[@style]') as $element) {
-            if (!\in_array($element->nodeName, self::$allowedStyleElements)) {
+            if (!\in_array($element->nodeName, self::$allowedStyleElements, true)) {
                 $element->removeAttribute('style');
             }
         }
@@ -563,7 +563,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
 
             /** @var \DOMElement $element */
             foreach ($paragraph->getElementsByTagName('*') as $element) {
-                if (!\in_array($element->nodeName, self::$emptyTags)) {
+                if (!\in_array($element->nodeName, self::$emptyTags, true)) {
                     continue 2;
                 }
             }
@@ -633,7 +633,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                 $tmp = \array_filter(\explode(';', $element->getAttribute('style')));
                 foreach ($tmp as $style) {
                     $property = \explode(':', $style, 2)[0];
-                    if (\in_array($property, $inlineStyles) && !\in_array($property, $result)) {
+                    if (\in_array($property, $inlineStyles, true) && !\in_array($property, $result, true)) {
                         $result[] = $property;
                     }
                 }
@@ -689,7 +689,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
 
         /** @var \DOMElement $element */
         foreach ($body->getElementsByTagName('*') as $element) {
-            if (!\in_array($element->nodeName, self::$emptyTags)) {
+            if (!\in_array($element->nodeName, self::$emptyTags, true)) {
                 return false;
             }
         }

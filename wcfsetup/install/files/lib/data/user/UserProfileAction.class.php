@@ -396,12 +396,12 @@ class UserProfileAction extends UserAction
         $newGroupIDs = [];
         foreach ($this->getObjects() as $user) {
             $groupIDs = $user->getGroupIDs();
-            if (!\in_array(UserGroup::EVERYONE, $groupIDs)) {
+            if (!\in_array(UserGroup::EVERYONE, $groupIDs, true)) {
                 $fixUserGroupIDs[$user->userID] = [UserGroup::EVERYONE];
                 $groupIDs[] = UserGroup::EVERYONE;
             }
             if ($user->pendingActivation()) {
-                if (!\in_array(UserGroup::GUESTS, $groupIDs)) {
+                if (!\in_array(UserGroup::GUESTS, $groupIDs, true)) {
                     if (!isset($fixUserGroupIDs[$user->userID])) {
                         $fixUserGroupIDs[$user->userID] = [];
                     }
@@ -409,7 +409,7 @@ class UserProfileAction extends UserAction
                     $groupIDs[] = UserGroup::GUESTS;
                 }
 
-                if (\in_array(UserGroup::USERS, $groupIDs)) {
+                if (\in_array(UserGroup::USERS, $groupIDs, true)) {
                     if (!isset($removeFromGroupIDs[$user->userID])) {
                         $removeFromGroupIDs[$user->userID] = [];
                     }
@@ -417,7 +417,7 @@ class UserProfileAction extends UserAction
                     $removeFromGroupIDs[$user->userID][] = UserGroup::USERS;
                 }
             } else {
-                if (!\in_array(UserGroup::USERS, $groupIDs)) {
+                if (!\in_array(UserGroup::USERS, $groupIDs, true)) {
                     if (!isset($fixUserGroupIDs[$user->userID])) {
                         $fixUserGroupIDs[$user->userID] = [];
                     }
@@ -425,7 +425,7 @@ class UserProfileAction extends UserAction
                     $groupIDs[] = UserGroup::USERS;
                 }
 
-                if (\in_array(UserGroup::GUESTS, $groupIDs)) {
+                if (\in_array(UserGroup::GUESTS, $groupIDs, true)) {
                     if (!isset($removeFromGroupIDs[$user->userID])) {
                         $removeFromGroupIDs[$user->userID] = [];
                     }

@@ -41,7 +41,7 @@ class HtmlOutputUnfurlUrlNode extends AbstractHtmlOutputNode
 
         if (
             $htmlProcessor instanceof AbstractHtmlProcessor
-            && \in_array($htmlProcessor->getContext()['objectType'], self::$disableUnfurlingForContext)
+            && \in_array($htmlProcessor->getContext()['objectType'], self::$disableUnfurlingForContext, true)
         ) {
             return;
         }

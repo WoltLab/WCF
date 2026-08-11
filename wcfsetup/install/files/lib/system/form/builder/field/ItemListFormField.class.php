@@ -180,7 +180,7 @@ class ItemListFormField extends AbstractFormField implements
                 self::SAVE_VALUE_TYPE_CSV,
                 self::SAVE_VALUE_TYPE_NSV,
                 self::SAVE_VALUE_TYPE_SSV,
-            ])
+            ], true)
         ) {
             throw new \InvalidArgumentException("Unknown save value type '{$saveValueType}' for field '{$this->getId()}'.");
         }

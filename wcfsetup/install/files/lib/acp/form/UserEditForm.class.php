@@ -553,7 +553,7 @@ class UserEditForm extends UserAddForm
     {
         if ($this->user->userID === WCF::getUser()->userID && WCF::getUser()->hasOwnerAccess()) {
             $ownerGroupID = UserGroup::getOwnerGroupID();
-            if ($ownerGroupID !== null && !\in_array($ownerGroupID, $this->groupIDs)) {
+            if ($ownerGroupID !== null && !\in_array($ownerGroupID, $this->groupIDs, true)) {
                 // Members of the owner group cannot remove themselves.
                 throw new PermissionDeniedException();
             }

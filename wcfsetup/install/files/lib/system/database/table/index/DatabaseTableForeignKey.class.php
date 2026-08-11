@@ -211,12 +211,11 @@ final class DatabaseTableForeignKey
      * key.
      *
      * @param ?string $onDelete action executed in referenced table if row is deleted
-     * @return $this this foreign key
      * @throws \InvalidArgumentException if given action is invalid
      */
     public function onDelete(?string $onDelete): self
     {
-        if ($onDelete !== null && !\in_array($onDelete, static::VALID_ACTIONS)) {
+        if ($onDelete !== null && !\in_array($onDelete, static::VALID_ACTIONS, true)) {
             throw new \InvalidArgumentException("Unknown on delete action '{$onDelete}'.");
         }
 
@@ -234,7 +233,7 @@ final class DatabaseTableForeignKey
      */
     public function onUpdate(?string $onUpdate): self
     {
-        if ($onUpdate !== null && !\in_array($onUpdate, static::VALID_ACTIONS)) {
+        if ($onUpdate !== null && !\in_array($onUpdate, static::VALID_ACTIONS, true)) {
             throw new \InvalidArgumentException("Unknown on update action '{$onUpdate}'.");
         }
 

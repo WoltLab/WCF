@@ -70,7 +70,7 @@ abstract class SortablePage extends MultipleLinkPage
         // call validateSortField event
         EventHandler::getInstance()->fireAction($this, 'validateSortField');
 
-        if (!\in_array($this->sortField, $this->validSortFields)) {
+        if (!\in_array($this->sortField, $this->validSortFields, true)) {
             $this->sortField = $this->defaultSortField;
         }
     }

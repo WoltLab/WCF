@@ -238,7 +238,8 @@ class UserSearchForm extends UserOptionListForm
         if (
             !WCF::getSession()->hasPermission('admin.user.canEditMailAddress') && ($key = \array_search(
                 'email',
-                $this->columns
+                $this->columns,
+                true
             )) !== false
         ) {
             unset($this->columns[$key]);

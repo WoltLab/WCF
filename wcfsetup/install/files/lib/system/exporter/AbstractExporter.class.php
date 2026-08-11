@@ -179,8 +179,8 @@ abstract class AbstractExporter implements IExporter
             }
 
             foreach ($supportedData as $key => $data) {
-                if (\in_array($name, $data)) {
-                    if (!\in_array($key, $selectedData)) {
+                if (\in_array($name, $data, true)) {
+                    if (!\in_array($key, $selectedData, true)) {
                         return false;
                     }
 

@@ -148,7 +148,7 @@ trait TAttributeFormField
     {
         static::validateAttribute($name);
 
-        if (\in_array(\strtolower($name), static::getReservedFieldAttributes())) {
+        if (\in_array(\strtolower($name), static::getReservedFieldAttributes(), true)) {
             throw new \InvalidArgumentException("Attribute '{$name}' is not accessible as a field attribute.");
         }
     }

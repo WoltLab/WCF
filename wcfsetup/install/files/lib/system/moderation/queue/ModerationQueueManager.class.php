@@ -123,7 +123,7 @@ class ModerationQueueManager extends SingletonFactory
     public function getLink(int $objectTypeID, int $queueID)
     {
         foreach ($this->objectTypeNames as $definitionName => $objectTypeIDs) {
-            if (\in_array($objectTypeID, $objectTypeIDs)) {
+            if (\in_array($objectTypeID, $objectTypeIDs, true)) {
                 return $this->moderationTypes[$definitionName]->getProcessor()->getLink($queueID);
             }
         }
@@ -196,7 +196,7 @@ class ModerationQueueManager extends SingletonFactory
     {
         $moderationType = '';
         foreach ($this->objectTypeNames as $definitionName => $data) {
-            if (\in_array($objectTypeID, $data)) {
+            if (\in_array($objectTypeID, $data, true)) {
                 $moderationType = $definitionName;
                 break;
             }
@@ -523,7 +523,7 @@ class ModerationQueueManager extends SingletonFactory
     public function getController(int $objectTypeID): ?string
     {
         foreach ($this->objectTypeNames as $definitionName => $objectTypeIDs) {
-            if (\in_array($objectTypeID, $objectTypeIDs)) {
+            if (\in_array($objectTypeID, $objectTypeIDs, true)) {
                 $processor = $this->moderationTypes[$definitionName]->getProcessor();
                 \assert($processor instanceof IModerationQueueManager);
 

@@ -59,7 +59,7 @@ final class DevtoolsProjectExcludedPackagesFormField extends AbstractFormField
             // validate package identifier
             if (
                 !Package::isValidPackageName($package['packageIdentifier'])
-                || \in_array($package['packageIdentifier'], $packageIdentifiers)
+                || \in_array($package['packageIdentifier'], $packageIdentifiers, true)
             ) {
                 continue;
             }
@@ -74,6 +74,7 @@ final class DevtoolsProjectExcludedPackagesFormField extends AbstractFormField
             }
 
             $excludedPackages[] = $package;
+            $packageIdentifiers[] = $package['packageIdentifier'];
         }
 
         $this->value($excludedPackages);

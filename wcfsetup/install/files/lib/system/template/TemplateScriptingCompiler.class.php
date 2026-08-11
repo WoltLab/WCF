@@ -1031,7 +1031,7 @@ class TemplateScriptingCompiler
                 $this->staticIncludes[$application] = [];
             }
 
-            if (!\in_array($templateName, $this->staticIncludes[$application])) {
+            if (!\in_array($templateName, $this->staticIncludes[$application], true)) {
                 $this->staticIncludes[$application][] = $templateName;
             }
 
@@ -1552,14 +1552,14 @@ class TemplateScriptingCompiler
                             $this->autoloadPlugins[$modifierData['className']] = $modifierData['className'];
                         } elseif (
                             !\function_exists($modifierData['name'])
-                            && !\in_array($modifierData['name'], $this->unknownPHPFunctions)
+                            && !\in_array($modifierData['name'], $this->unknownPHPFunctions, true)
                         ) {
                             throw new SystemException(static::formatSyntaxError(
                                 "unknown modifier '" . $values[$i] . "'",
                                 $this->currentIdentifier,
                                 $this->currentLineNo
                             ));
-                        } elseif (!\in_array($modifierData['name'], $this->allowedModifierFunctions)) {
+                        } elseif (!\in_array($modifierData['name'], $this->allowedModifierFunctions, true)) {
                             throw new SystemException(static::formatSyntaxError(
                                 "function '" . $values[$i] . "' may not be called within a template",
                                 $this->currentIdentifier,

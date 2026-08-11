@@ -53,7 +53,7 @@ final class ConfigureBoxes
         }
 
         foreach ($this->dashboard->getBoxes() as $box) {
-            if (\in_array($box->getName(), $this->boxes)) {
+            if (\in_array($box->getName(), $this->boxes, true)) {
                 continue;
             }
 

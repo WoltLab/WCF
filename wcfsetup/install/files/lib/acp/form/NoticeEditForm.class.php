@@ -69,7 +69,7 @@ class NoticeEditForm extends NoticeAddForm
             I18nHandler::getInstance()->setOptions('notice', 1, $this->notice->notice, 'wcf.notice.notice.notice\d+');
 
             $this->cssClassName = $this->notice->cssClassName;
-            if (!\in_array($this->cssClassName, Notice::TYPES)) {
+            if (!\in_array($this->cssClassName, Notice::TYPES, true)) {
                 $this->customCssClassName = $this->cssClassName;
                 $this->cssClassName = 'custom';
             }

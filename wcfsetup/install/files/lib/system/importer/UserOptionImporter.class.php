@@ -112,7 +112,7 @@ class UserOptionImporter extends AbstractImporter
             }
         }
 
-        if (!\in_array($name, $this->categoryCache)) {
+        if (!\in_array($name, $this->categoryCache, true)) {
             // create category
             UserOptionCategoryEditor::create([
                 'packageID' => 1,

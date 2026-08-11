@@ -169,7 +169,7 @@ final class StyleCompiler extends SingletonFactory
         $files = $this->getFiles();
 
         if ($customCustomSCSSFile !== null) {
-            if (($customSCSSFileKey = \array_search(\WCF_DIR . self::FILE_GLOBAL_VALUES, $files)) !== false) {
+            if (($customSCSSFileKey = \array_search(\WCF_DIR . self::FILE_GLOBAL_VALUES, $files, true)) !== false) {
                 unset($files[$customSCSSFileKey]);
             }
 
@@ -658,7 +658,7 @@ final class StyleCompiler extends SingletonFactory
         // add options as SCSS variables
         if (\PACKAGE_ID !== 0) {
             foreach (Option::getOptions() as $constantName => $option) {
-                if (\in_array($option->optionType, static::$supportedOptionType)) {
+                if (\in_array($option->optionType, static::$supportedOptionType, true)) {
                     $variables['wcf_option_' . \mb_strtolower($constantName)] = \is_numeric($option->optionValue) ? $option->optionValue : '"' . $option->optionValue . '"';
                 }
             }
@@ -789,7 +789,7 @@ final class StyleCompiler extends SingletonFactory
     /**
      * Exports the style variables as CSS variables on the `html` element.
      *
-     * @param mixed[] $variables
+     * @param array<string, mixed> $variables
      * @since 6.0
      */
     private function exportStyleVariables(array $variables): string
@@ -805,7 +805,7 @@ final class StyleCompiler extends SingletonFactory
                 continue;
             }
 
-            if (\in_array($key, $skipVariables)) {
+            if (\in_array($key, $skipVariables, true)) {
                 continue;
             }
 

@@ -128,7 +128,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
         EventHandler::getInstance()->fireAction($this, 'filterGroups', $data);
 
         foreach ($groups as $name => $pairs) {
-            if (!\in_array($name, $data['bbcodes']) || !BBCodeHandler::getInstance()->isAvailableBBCode($name)) {
+            if (!\in_array($name, $data['bbcodes'], true) || !BBCodeHandler::getInstance()->isAvailableBBCode($name)) {
                 foreach ($pairs as $pair) {
                     $pair['attributes'] = $htmlNodeProcessor->parseAttributes($pair['attributes']);
                     $this->convertToBBCode($name, $pair);
@@ -201,7 +201,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
                 return true;
             } elseif (
                 $nodeName === 'woltlab-metacode'
-                && \in_array($parent->getAttribute('data-name'), $sourceBBCodes)
+                && \in_array($parent->getAttribute('data-name'), $sourceBBCodes, true)
             ) {
                 return true;
             }
@@ -224,7 +224,11 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
             $attributes = $element->getAttribute('data-attributes');
             $name = $element->getAttribute('data-name');
             $uuid = $element->getAttribute('data-uuid');
-            $source = @\base64_decode($element->getAttribute('data-source'));
+            // The attribute is user controlled and may contain invalid base64 data.
+            $source = \base64_decode($element->getAttribute('data-source'), true);
+            if ($source === false) {
+                $source = '';
+            }
 
             if (!isset($pairs[$uuid])) {
                 $pairs[$uuid] = [
@@ -321,7 +325,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
                     continue;
                 }
 
-                if (\in_array($name, $this->blockElements)) {
+                if (\in_array($name, $this->blockElements, true)) {
                     $this->convertBlockElement($name, $data['open'], $data['close'], $data['attributes']);
                 } else {
                     $this->convertInlineElement($name, $data['open'], $data['close'], $data['attributes']);
@@ -607,10 +611,10 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
 
             case 'woltlab-metacode':
                 /** @var \DOMElement $node */
-                return \in_array($node->getAttribute('data-name'), $this->blockElements);
+                return \in_array($node->getAttribute('data-name'), $this->blockElements, true);
 
             default:
-                return \in_array($node->nodeName, self::$customBlockElementTagNames);
+                return \in_array($node->nodeName, self::$customBlockElementTagNames, true);
         }
     }
 

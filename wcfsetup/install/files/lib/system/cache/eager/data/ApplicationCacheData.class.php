@@ -39,6 +39,6 @@ final class ApplicationCacheData
 
     public function getAbbreviationByPackageID(int $packageID): ?string
     {
-        return \array_search($packageID, $this->abbreviations) ?: null;
+        return \array_search($packageID, $this->abbreviations, true) ?: null;
     }
 }

@@ -190,7 +190,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
         $headers['requested-woltlab-suite-version'] = $requestedVersion;
 
         $apiVersion = $updateServer->apiVersion;
-        if (\in_array($apiVersion, ['2.1', '3.1'])) {
+        if (\in_array($apiVersion, ['2.1', '3.1'], true)) {
             // skip etag check for WoltLab servers when an auth code is provided
             if (
                 !\preg_match('~^https?://(?:update|store)\.woltlab\.com\/~', $updateServer->serverURL)
@@ -242,9 +242,9 @@ final class PackageUpdateDispatcher extends SingletonFactory
         // check if server indicates support for a newer API
         if ($updateServer->apiVersion !== '3.1' && $response->getHeader('wcf-update-server-api') !== []) {
             $apiVersions = \explode(' ', $response->getHeader('wcf-update-server-api')[0]);
-            if (\in_array('3.1', $apiVersions)) {
+            if (\in_array('3.1', $apiVersions, true)) {
                 $apiVersion = $data['apiVersion'] = '3.1';
-            } elseif (\in_array('2.1', $apiVersions)) {
+            } elseif (\in_array('2.1', $apiVersions, true)) {
                 $apiVersion = $data['apiVersion'] = '2.1';
             }
         }
@@ -261,7 +261,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
         }
 
         $metaData = [];
-        if (\in_array($apiVersion, ['2.1', '3.1'])) {
+        if (\in_array($apiVersion, ['2.1', '3.1'], true)) {
             if ($response->getHeader('etag') === [] && $response->getHeader('last-modified') === []) {
                 throw new SystemException("Missing required HTTP headers 'etag' and 'last-modified'.");
             }

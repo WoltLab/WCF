@@ -60,7 +60,7 @@ class HtmlNodeUnfurlLink extends HtmlNodePlainLink
         }
 
         // Ignore non-HTTP schemes.
-        if (!\in_array($uri->getScheme(), ['http', 'https'])) {
+        if (!\in_array($uri->getScheme(), ['http', 'https'], true)) {
             return;
         }
 

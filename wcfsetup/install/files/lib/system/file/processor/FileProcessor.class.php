@@ -81,7 +81,7 @@ final class FileProcessor extends SingletonFactory
     public function getHtmlElement(IFileProcessor $fileProcessor, array $context): string
     {
         $allowedFileExtensions = $fileProcessor->getAllowedFileExtensions($context);
-        if (\in_array('*', $allowedFileExtensions)) {
+        if (\in_array('*', $allowedFileExtensions, true)) {
             $allowedFileExtensions = '';
         } else {
             // The `accept` attribute of `input[type="file"]` is a bit weird and

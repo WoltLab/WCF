@@ -83,7 +83,7 @@ final class ExceptionLogUtil
             } else {
                 try {
                     $item['information'] = \unserialize(
-                        \base64_decode($item['information']),
+                        \base64_decode($item['information'], true),
                         ['allowed_classes' => false]
                     );
                 } catch (SystemException $e) {

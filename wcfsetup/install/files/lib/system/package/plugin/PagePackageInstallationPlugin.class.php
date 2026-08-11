@@ -522,7 +522,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 
                     /** @var PageNode $pageNode */
                     foreach ($pageNodeList as $pageNode) {
-                        if (\in_array($pageNode->packageID, $packageIDs)) {
+                        if (\in_array($pageNode->packageID, $packageIDs, true)) {
                             $nestedOptions[] = [
                                 'depth' => $pageNode->getDepth() - 1,
                                 'label' => $pageNode->name,
@@ -631,7 +631,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
     }
 
     /**
-     * @return array<string, int|string>
+     * @return array<string, mixed>
      * @since   5.2
      */
     #[\Override]
@@ -681,7 +681,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
             if ($optionalElement !== null) {
                 $data[$optionalElementName] = $optionalElement->nodeValue;
             } elseif ($saveData) {
-                if (\in_array($optionalElementName, $zeroDefaultOptions)) {
+                if (\in_array($optionalElementName, $zeroDefaultOptions, true)) {
                     $data[$optionalElementName] = 0;
                 } else {
                     $data[$optionalElementName] = '';
@@ -692,9 +692,6 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
         $readData = static function ($languageID, \DOMElement $content) use (&$data, $saveData) {
             foreach (['title', 'content', 'customURL', 'metaDescription'] as $contentElementName) {
                 $contentElement = $content->getElementsByTagName($contentElementName)->item(0);
-                if (!isset($data[$contentElementName])) {
-                    $data[$contentElementName] = [];
-                }
 
                 if ($contentElement !== null) {
                     $data[$contentElementName][$languageID] = $contentElement->nodeValue;

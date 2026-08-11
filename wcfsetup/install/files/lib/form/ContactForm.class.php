@@ -166,7 +166,7 @@ class ContactForm extends AbstractFormBuilderForm
             if (!\in_array($option->optionType, [
                 'text',
                 'textarea'
-            ])) {
+            ], true)) {
                 continue;
             }
 

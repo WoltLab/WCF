@@ -139,7 +139,7 @@ class HtmlBBCodeParser extends BBCodeParser
                     continue;
                 }
 
-                if (\in_array($name, $sourceBBCodes)) {
+                if (\in_array($name, $sourceBBCodes, true)) {
                     // look ahead to see if there is a closing tag
                     $hasClosingTag = false;
                     for ($j = $i + 1; $j < $length; $j++) {
@@ -181,7 +181,7 @@ class HtmlBBCodeParser extends BBCodeParser
                     $sibling = $this->tagArray[$j];
                     if ($sibling['name'] === $name) {
                         if (!$sibling['closing']) {
-                            if (!\in_array($name, self::$disallowNesting)) {
+                            if (!\in_array($name, self::$disallowNesting, true)) {
                                 continue;
                             }
 
@@ -450,7 +450,7 @@ class HtmlBBCodeParser extends BBCodeParser
         if ($data['name'] !== $name) {
             // check if this is a source code tag as some people
             // love to nest the same source bbcode
-            if (\in_array($name, $this->getSourceBBCodes())) {
+            if (\in_array($name, $this->getSourceBBCodes(), true)) {
                 return $tag['source'];
             }
 

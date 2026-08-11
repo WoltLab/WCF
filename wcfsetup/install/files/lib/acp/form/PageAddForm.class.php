@@ -329,7 +329,7 @@ class PageAddForm extends AbstractForm
             $this->boxIDs = ArrayUtil::toIntegerArray($_POST['boxIDs']);
         }
         $box = Box::getBoxByIdentifier('com.woltlab.wcf.MainMenu');
-        if (!\in_array($box->boxID, $this->boxIDs)) {
+        if (!\in_array($box->boxID, $this->boxIDs, true)) {
             $this->boxIDs[] = $box->boxID;
         }
 
@@ -410,7 +410,7 @@ class PageAddForm extends AbstractForm
      */
     protected function validatePageType()
     {
-        if (!\in_array($this->pageType, Page::$availablePageTypes) || $this->pageType === 'system') {
+        if (!\in_array($this->pageType, Page::$availablePageTypes, true) || $this->pageType === 'system') {
             throw new UserInputException('pageType');
         }
 
@@ -583,14 +583,14 @@ class PageAddForm extends AbstractForm
         $boxToPage = [];
         foreach ($this->availableBoxes as $box) {
             if ($box->visibleEverywhere !== 0) {
-                if (!\in_array($box->boxID, $this->boxIDs)) {
+                if (!\in_array($box->boxID, $this->boxIDs, true)) {
                     $boxToPage[] = [
                         'boxID' => $box->boxID,
                         'visible' => 0,
                     ];
                 }
             } else {
-                if (\in_array($box->boxID, $this->boxIDs)) {
+                if (\in_array($box->boxID, $this->boxIDs, true)) {
                     $boxToPage[] = [
                         'boxID' => $box->boxID,
                         'visible' => 1,
@@ -767,11 +767,11 @@ class PageAddForm extends AbstractForm
                 $this->boxIDs = [];
                 foreach ($this->availableBoxes as $box) {
                     if ($box->visibleEverywhere !== 0) {
-                        if (!\in_array($box->boxID, $this->presetPage->getBoxIDs())) {
+                        if (!\in_array($box->boxID, $this->presetPage->getBoxIDs(), true)) {
                             $this->boxIDs[] = $box->boxID;
                         }
                     } else {
-                        if (\in_array($box->boxID, $this->presetPage->getBoxIDs())) {
+                        if (\in_array($box->boxID, $this->presetPage->getBoxIDs(), true)) {
                             $this->boxIDs[] = $box->boxID;
                         }
                     }

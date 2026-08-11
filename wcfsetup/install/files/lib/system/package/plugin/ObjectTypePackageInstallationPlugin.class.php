@@ -129,7 +129,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     {
         $additionalData = [];
         foreach ($data['elements'] as $tagName => $nodeValue) {
-            if (!\in_array($tagName, self::$reservedTags)) {
+            if (!\in_array($tagName, self::$reservedTags, true)) {
                 $additionalData[$tagName] = $nodeValue;
             }
         }
@@ -226,7 +226,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 
         /** @var \DOMElement $child */
         foreach ($element->childNodes as $child) {
-            if (!\in_array($child->nodeName, self::$reservedTags)) {
+            if (!\in_array($child->nodeName, self::$reservedTags, true)) {
                 $additionalData[$child->nodeName] = $child->nodeValue;
             }
         }
@@ -777,7 +777,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                         if (!empty($formField->getValue())) {
                             $value = ApplicationHandler::insertRealDatabaseTableNames($formField->getValue());
 
-                            if (!\in_array($value, WCF::getDB()->getEditor()->getTableNames())) {
+                            if (!\in_array($value, WCF::getDB()->getEditor()->getTableNames(), true)) {
                                 $formField->addValidationError(new FormFieldValidationError(
                                     'nonExistent',
                                     'wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.tableName.error.nonExistent',

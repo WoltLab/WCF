@@ -80,7 +80,7 @@ class GroupedUserList implements \Countable, \Iterator, \Stringable
     {
         foreach ($userIDs as $userID) {
             // already added, ignore
-            if (\in_array($userID, $this->userIDs)) {
+            if (\in_array($userID, $this->userIDs, true)) {
                 continue;
             }
 

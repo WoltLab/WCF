@@ -974,6 +974,10 @@ class PackageInstallationDispatcher
                 $packageDir = $directory;
             } else {
                 $document = PackageInstallationFormManager::getForm($this->queue, 'packageDir');
+                if ($document === null) {
+                    throw new \RuntimeException("Unable to read the stored form document 'packageDir'.");
+                }
+
                 $document->handleRequest();
                 $packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(FileUtil::unifyDirSeparator(
                     $document->getValue('packageDir')
@@ -1080,6 +1084,10 @@ class PackageInstallationDispatcher
             return $document;
         } else {
             $document = PackageInstallationFormManager::getForm($this->queue, 'optionalPackages');
+            if ($document === null) {
+                throw new \RuntimeException("Unable to read the stored form document 'optionalPackages'.");
+            }
+
             $document->handleRequest();
 
             return $document->getValue('optionalPackages');

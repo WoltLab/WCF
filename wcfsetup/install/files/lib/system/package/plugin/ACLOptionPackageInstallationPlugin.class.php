@@ -356,7 +356,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
         );
 
         foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.acl') as $objectType) {
-            if (\in_array($objectType->packageID, $requiredPackageIDs)) {
+            if (\in_array($objectType->packageID, $requiredPackageIDs, true)) {
                 $objectTypes[$objectType->objectType] = $objectType->objectType;
             }
         }

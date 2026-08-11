@@ -117,13 +117,13 @@ class Notice extends DatabaseObject implements IRouteController, \Stringable
                     );
                 } else {
                     $dismissedNoticeIDs = @\unserialize($dismissedNotices);
-                    $this->isDismissed = \in_array($this->noticeID, $dismissedNoticeIDs);
+                    $this->isDismissed = \in_array($this->noticeID, $dismissedNoticeIDs, true);
                 }
             } else {
                 $dismissedNotices = WCF::getSession()->getVar('dismissedNotices');
                 if ($dismissedNotices !== null) {
                     $dismissedNotices = @\unserialize($dismissedNotices);
-                    $this->isDismissed = \in_array($this->noticeID, $dismissedNotices);
+                    $this->isDismissed = \in_array($this->noticeID, $dismissedNotices, true);
                 } else {
                     $this->isDismissed = false;
                 }
@@ -138,6 +138,6 @@ class Notice extends DatabaseObject implements IRouteController, \Stringable
      */
     public function isCustom(): bool
     {
-        return !\in_array($this->cssClassName, self::TYPES);
+        return !\in_array($this->cssClassName, self::TYPES, true);
     }
 }

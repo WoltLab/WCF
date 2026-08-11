@@ -315,13 +315,13 @@ class ImportCLICommand implements ICLICommand
 
         // remove unsupported data
         foreach ($this->supportedData as $objectType => $subData) {
-            if (!\in_array($objectType, $this->importers)) {
+            if (!\in_array($objectType, $this->importers, true)) {
                 unset($this->supportedData[$objectType]);
                 continue;
             }
 
             foreach ($subData as $key => $value) {
-                if (!\in_array($value, $this->importers)) {
+                if (!\in_array($value, $this->importers, true)) {
                     unset($this->supportedData[$objectType][$key]);
                 }
             }

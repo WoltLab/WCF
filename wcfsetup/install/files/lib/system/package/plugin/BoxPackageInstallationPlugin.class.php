@@ -176,7 +176,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
         $isMultilingual = false;
         $position = $data['elements']['position'];
 
-        if (!\in_array($position, Box::$availablePositions)) {
+        if (!\in_array($position, Box::$availablePositions, true)) {
             throw new SystemException("Unknown box position '{$position}' for box '{$identifier}'");
         }
 
@@ -252,7 +252,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 
         $additionalData = [];
         foreach ($data['elements'] as $tagName => $nodeValue) {
-            if (!\in_array($tagName, self::$reservedTags)) {
+            if (!\in_array($tagName, self::$reservedTags, true)) {
                 $additionalData[$tagName] = $nodeValue;
             }
         }

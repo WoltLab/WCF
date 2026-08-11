@@ -27,7 +27,7 @@ trait TAutoCompleteFormField
     {
         if ($autoComplete !== null && $autoComplete !== 'on' && $autoComplete !== 'off') {
             if (\preg_match('~^(?:section-\w+ )?(?:(shipping|billing) )?(?P<token>.+)$~', $autoComplete, $matches)) {
-                if (!\in_array($matches['token'], $this->getValidAutoCompleteTokens())) {
+                if (!\in_array($matches['token'], $this->getValidAutoCompleteTokens(), true)) {
                     throw new \InvalidArgumentException(
                         "Invalid autocomplete attribute '{$autoComplete}' for field '{$this->getId()}'."
                     );

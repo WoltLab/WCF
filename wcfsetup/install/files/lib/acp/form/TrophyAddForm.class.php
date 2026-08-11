@@ -235,7 +235,7 @@ class TrophyAddForm extends AbstractAcpForm
     {
         parent::validate();
 
-        if (!\in_array($this->type, \array_keys($this->availableTypes))) {
+        if (!\in_array($this->type, \array_keys($this->availableTypes), true)) {
             throw new UserInputException('type');
         }
 

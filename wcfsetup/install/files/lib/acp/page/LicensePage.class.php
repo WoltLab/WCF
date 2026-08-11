@@ -357,7 +357,7 @@ final class LicensePage extends AbstractPage
         foreach ($possiblePackages as $identifier => $packageSources) {
             $hasTrustedSource = false;
             foreach ($packageSources as $packageUpdateServerID) {
-                if (\in_array($packageUpdateServerID, $trustedServerIDs)) {
+                if (\in_array($packageUpdateServerID, $trustedServerIDs, true)) {
                     $hasTrustedSource = true;
                     break;
                 }
@@ -367,7 +367,7 @@ final class LicensePage extends AbstractPage
                 $possiblePackages[$identifier] = \array_filter(
                     $packageSources,
                     static function ($packageUpdateServerID) use ($trustedServerIDs) {
-                        return \in_array($packageUpdateServerID, $trustedServerIDs);
+                        return \in_array($packageUpdateServerID, $trustedServerIDs, true);
                     }
                 );
             }
@@ -413,7 +413,7 @@ final class LicensePage extends AbstractPage
 
         // filter by package update version ids
         foreach ($packageUpdates as $packageUpdateID => $packageData) {
-            if (!\in_array($packageUpdateID, $validPackageUpdateIDs)) {
+            if (!\in_array($packageUpdateID, $validPackageUpdateIDs, true)) {
                 unset($packageUpdates[$packageUpdateID]);
             }
         }
@@ -656,7 +656,7 @@ final class LicensePage extends AbstractPage
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {
-                if (!\in_array($row['package'], $openRequirements)) {
+                if (!\in_array($row['package'], $openRequirements, true)) {
                     // The dependency has already been satisfied by another update server.
                     continue;
                 }
@@ -668,7 +668,7 @@ final class LicensePage extends AbstractPage
                     $excludedPackagesOfInstalledPackages
                 );
                 if ($result !== []) {
-                    $index = \array_search($row['package'], $openRequirements);
+                    $index = \array_search($row['package'], $openRequirements, true);
                     unset($openRequirements[$index]);
                 }
             }

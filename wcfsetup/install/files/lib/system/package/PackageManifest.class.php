@@ -39,17 +39,17 @@ final class PackageManifest
      */
     public function getHash(int $version = self::CURRENT_VERSION): string
     {
-        if ($version === 1) {
-            return \sprintf(
+        if (!\in_array($version, self::SUPPORTED_VERSIONS, true)) {
+            throw new \InvalidArgumentException("Unknown manifest version '{$version}'.");
+        }
+
+        return match ($version) {
+            1 => \sprintf(
                 "%d-%s",
                 $version,
                 \hash('sha256', $this->getManifest($version))
-            );
-        } elseif (\in_array($version, self::SUPPORTED_VERSIONS)) {
-            throw new \LogicException("Unhandled, but supported, manifest version '{$version}'.");
-        } else {
-            throw new \InvalidArgumentException("Unknown manifest version '{$version}'.");
-        }
+            ),
+        };
     }
 
     /**
@@ -59,13 +59,13 @@ final class PackageManifest
      */
     public function getManifest(int $version = self::CURRENT_VERSION): string
     {
-        if ($version === 1) {
-            return $this->getManifestV1();
-        } elseif (\in_array($version, self::SUPPORTED_VERSIONS)) {
-            throw new \LogicException("Unhandled, but supported, manifest version '{$version}'.");
-        } else {
+        if (!\in_array($version, self::SUPPORTED_VERSIONS, true)) {
             throw new \InvalidArgumentException("Unknown manifest version '{$version}'.");
         }
+
+        return match ($version) {
+            1 => $this->getManifestV1(),
+        };
     }
 
     private function getManifestV1(): string

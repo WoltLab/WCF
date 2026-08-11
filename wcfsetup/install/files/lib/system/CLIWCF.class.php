@@ -138,7 +138,7 @@ class CLIWCF extends WCF
 
             exit;
         }
-        if (\in_array('moo', self::getArgvParser()->getRemainingArgs())) {
+        if (\in_array('moo', self::getArgvParser()->getRemainingArgs(), true)) {
             echo '...."Have you mooed today?"...' . \PHP_EOL;
         }
 

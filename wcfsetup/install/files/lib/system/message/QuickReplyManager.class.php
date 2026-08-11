@@ -189,7 +189,7 @@ class QuickReplyManager extends SingletonFactory
         $allowedDataParameters = $eventParameters['allowedDataParameters'];
 
         foreach ($parameters['data'] as $key => $value) {
-            if (!\in_array($key, $allowedDataParameters)) {
+            if (!\in_array($key, $allowedDataParameters, true)) {
                 unset($parameters['data'][$key]);
             }
         }

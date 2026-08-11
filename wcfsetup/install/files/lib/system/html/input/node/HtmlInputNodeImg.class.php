@@ -227,7 +227,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
                     break 2;
 
                 case 'woltlab-metacode':
-                    if (\in_array($parent->getAttribute('data-name'), $blockElements)) {
+                    if (\in_array($parent->getAttribute('data-name'), $blockElements, true)) {
                         $blockLevelParent = $parent;
                         break 2;
                     }

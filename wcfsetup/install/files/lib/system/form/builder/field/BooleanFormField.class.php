@@ -72,7 +72,7 @@ class BooleanFormField extends AbstractFormField implements
     #[\Override]
     public function value(mixed $value)
     {
-        if (\is_string($value) && \in_array($value, ['0', '1', 'true', 'false'])) {
+        if (\is_string($value) && \in_array($value, ['0', '1', 'true', 'false'], true)) {
             $value = ($value === '1' || $value === 'true');
         }
         if (\is_int($value) && ($value === 0 || $value === 1)) {

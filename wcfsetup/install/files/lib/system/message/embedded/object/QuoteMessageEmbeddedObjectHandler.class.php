@@ -27,7 +27,7 @@ class QuoteMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHan
         /** @var \DOMElement $element */
         foreach ($quoteElements as $element) {
             $username = StringUtil::trim($element->getAttribute('data-author'));
-            if (!empty($username) && !\in_array($username, $usernames)) {
+            if (!empty($username) && !\in_array($username, $usernames, true)) {
                 $usernames[] = $username;
             }
         }

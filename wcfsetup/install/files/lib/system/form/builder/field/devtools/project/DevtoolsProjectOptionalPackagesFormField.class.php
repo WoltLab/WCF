@@ -59,12 +59,13 @@ final class DevtoolsProjectOptionalPackagesFormField extends AbstractFormField
             // validate package identifier
             if (
                 !Package::isValidPackageName($package['packageIdentifier'])
-                || \in_array($package['packageIdentifier'], $packageIdentifiers)
+                || \in_array($package['packageIdentifier'], $packageIdentifiers, true)
             ) {
                 continue;
             }
 
             $optionalPackages[] = $package;
+            $packageIdentifiers[] = $package['packageIdentifier'];
         }
 
         $this->value($optionalPackages);

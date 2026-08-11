@@ -821,7 +821,7 @@ EXPLANATION;
 					'include_once',
 					'require',
 					'require_once',
-				]);
+				], true);
 
 				if (!empty($item['args']) && !$cannotBeReflected) {
 					if ($item['class'] !== '') {

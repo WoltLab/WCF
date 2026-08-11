@@ -591,7 +591,7 @@ final class StringUtil
                  * and omit the opening tag if it has been closed already
                  */
                 elseif (\preg_match('/<\/([\w]+)[^>]*>/s', $tag[0], $closeTag)) {
-                    $position = \array_search($closeTag[1], $openTags);
+                    $position = \array_search($closeTag[1], $openTags, true);
                     if ($position !== false) {
                         \array_splice($openTags, $position, 1);
                     }

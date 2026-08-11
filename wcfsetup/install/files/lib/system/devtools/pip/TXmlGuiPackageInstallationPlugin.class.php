@@ -699,7 +699,7 @@ XML;
      */
     public function setEntryType(string $entryType)
     {
-        if (!\in_array($entryType, $this->getEntryTypes())) {
+        if (!\in_array($entryType, $this->getEntryTypes(), true)) {
             throw new \InvalidArgumentException("Unknown entry type '{$entryType}'.");
         }
 

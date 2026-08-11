@@ -35,7 +35,7 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
         $type = $tagArgs['type'] ?? '';
         $encodeJson = (bool)($tagArgs['encodeJson'] ?? false);
 
-        if (!\in_array($size, self::SIZES)) {
+        if (!\in_array($size, self::SIZES, true)) {
             throw new \InvalidArgumentException("An unsupported size '{$size}' was requested.");
         }
 
@@ -43,7 +43,7 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
             throw new \InvalidArgumentException("The 'name' attribute must be present and non-empty.");
         }
 
-        if ($type !== '' && !\in_array($type, self::TYPES)) {
+        if ($type !== '' && !\in_array($type, self::TYPES, true)) {
             throw new \InvalidArgumentException("An unsupported type '{$type}' was specified.");
         }
 

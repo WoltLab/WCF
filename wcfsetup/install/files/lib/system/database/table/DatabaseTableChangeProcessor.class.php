@@ -395,7 +395,7 @@ final class DatabaseTableChangeProcessor
             ];
 
             foreach ($this->getExistingTable($tableName)->getForeignKeys() as $foreignKey) {
-                if (\in_array($droppedColumn->getName(), $foreignKey->getColumns())) {
+                if (\in_array($droppedColumn->getName(), $foreignKey->getColumns(), true)) {
                     $dropForeignKeys[] = $foreignKey;
                 }
             }
@@ -433,7 +433,7 @@ final class DatabaseTableChangeProcessor
             $tableName = $table->getName();
 
             if ($table->willBeDropped()) {
-                if (\in_array($tableName, $this->existingTableNames)) {
+                if (\in_array($tableName, $this->existingTableNames, true)) {
                     $this->tablesToDrop[] = $table;
 
                     $this->splitNodeMessage .= "Dropped table '{$tableName}'.";
@@ -442,7 +442,7 @@ final class DatabaseTableChangeProcessor
                     $this->deleteTableLog($table);
                 }
             } elseif (
-                \in_array($tableName, $this->existingTableNames)
+                \in_array($tableName, $this->existingTableNames, true)
                 && !isset($this->tablePackageIDs[$table->getName()])
             ) {
                 if ($table instanceof PartialDatabaseTable) {
@@ -457,7 +457,7 @@ final class DatabaseTableChangeProcessor
 
                 $this->tablesToCreate[] = $table;
                 $this->splitNodeMessage .= "Created table '{$tableName}'.";
-            } elseif (!\in_array($tableName, $this->existingTableNames)) {
+            } elseif (!\in_array($tableName, $this->existingTableNames, true)) {
                 if ($table instanceof PartialDatabaseTable) {
                     throw new \LogicException("Partial table '{$tableName}' cannot be created.");
                 }
@@ -533,7 +533,7 @@ final class DatabaseTableChangeProcessor
                     } elseif ($matchingExistingForeignKey === null) {
                         // If the referenced database table does not already exists, delay the
                         // foreign key creation until after the referenced table has been created.
-                        if (!\in_array($foreignKey->getReferencedTable(), $this->existingTableNames)) {
+                        if (!\in_array($foreignKey->getReferencedTable(), $this->existingTableNames, true)) {
                             continue;
                         }
 
@@ -644,7 +644,7 @@ final class DatabaseTableChangeProcessor
         while ($row = $statement->fetchArray()) {
             // table
             if ($row['sqlIndex'] === '' && $row['sqlColumn'] === '') {
-                if (\in_array($row['sqlTable'], $this->existingTableNames)) {
+                if (\in_array($row['sqlTable'], $this->existingTableNames, true)) {
                     $doneEntries[] = $row;
                 } else {
                     $undoneEntries[] = $row;
@@ -743,7 +743,7 @@ final class DatabaseTableChangeProcessor
             // If it will be created later on, delay the foreign key creation until after the
             // referenced table has been created.
             if (
-                \in_array($foreignKey->getReferencedTable(), $this->existingTableNames)
+                \in_array($foreignKey->getReferencedTable(), $this->existingTableNames, true)
                 || $foreignKey->getReferencedTable() === $table->getName()
             ) {
                 $this->dbEditor->addForeignKey($table->getName(), $foreignKey->getName(), $foreignKey->getData());
@@ -1209,7 +1209,7 @@ final class DatabaseTableChangeProcessor
         $errors = [];
         foreach ($this->tables as $table) {
             if ($table->willBeDropped()) {
-                if (\in_array($table->getName(), $this->existingTableNames)) {
+                if (\in_array($table->getName(), $this->existingTableNames, true)) {
                     if (!isset($this->tablePackageIDs[$table->getName()])) {
                         $errors[] = [
                             'tableName' => $table->getName(),
@@ -1224,7 +1224,7 @@ final class DatabaseTableChangeProcessor
                 }
             } else {
                 $existingTable = null;
-                if (\in_array($table->getName(), $this->existingTableNames)) {
+                if (\in_array($table->getName(), $this->existingTableNames, true)) {
                     if (!isset($this->tablePackageIDs[$table->getName()])) {
                         $abbreviationWithWcfNumber = \explode('_', $table->getName(), 2)[0];
 
@@ -1242,7 +1242,8 @@ final class DatabaseTableChangeProcessor
                             \PACKAGE_ID !== 0
                             && !\in_array(
                                 $abbreviation,
-                                ApplicationHandler::getInstance()->getAbbreviations()
+                                ApplicationHandler::getInstance()->getAbbreviations(),
+                                true
                             )
                         ) {
                             $errors[] = [
@@ -1375,7 +1376,7 @@ final class DatabaseTableChangeProcessor
                 }
 
                 foreach ($table->getForeignKeys() as $foreignKey) {
-                    $referencedTableExists = \in_array($foreignKey->getReferencedTable(), $this->existingTableNames);
+                    $referencedTableExists = \in_array($foreignKey->getReferencedTable(), $this->existingTableNames, true);
                     foreach ($this->tables as $processedTable) {
                         if ($processedTable->getName() === $foreignKey->getReferencedTable()) {
                             $referencedTableExists = !$processedTable->willBeDropped();

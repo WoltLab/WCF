@@ -124,7 +124,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
         }
 
         foreach ($newValue as $tag) {
-            if (!\in_array($tag, $this->bbCodes)) {
+            if (!\in_array($tag, $this->bbCodes, true)) {
                 throw new UserInputException($option->optionName, 'validationFailed');
             }
         }

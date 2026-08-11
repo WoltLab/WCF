@@ -156,13 +156,13 @@ class DataImportForm extends AbstractForm
 
             // remove unsupported data
             foreach ($this->supportedData as $key => $subData) {
-                if (!\in_array($key, $this->importers)) {
+                if (!\in_array($key, $this->importers, true)) {
                     unset($this->supportedData[$key]);
                     continue;
                 }
 
                 foreach ($subData as $key2 => $value) {
-                    if (!\in_array($value, $this->importers)) {
+                    if (!\in_array($value, $this->importers, true)) {
                         unset($this->supportedData[$key][$key2]);
                     }
                 }

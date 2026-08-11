@@ -210,7 +210,7 @@ class SettingsForm extends AbstractForm
                 if (
                     !\in_array($trophyID, \array_map(static function ($trophy) {
                         return $trophy->trophyID;
-                    }, $this->availableTrophies))
+                    }, $this->availableTrophies), true)
                 ) {
                     throw new UserInputException('specialTrophies', 'invalid');
                 }

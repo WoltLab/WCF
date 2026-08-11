@@ -243,7 +243,7 @@ final class MessageQuoteManager extends SingletonFactory
     public function markQuotesForRemoval(array $quoteIDs): void
     {
         foreach ($quoteIDs as $index => $quoteID) {
-            if (\in_array($quoteID, $this->removeQuoteIDs)) {
+            if (\in_array($quoteID, $this->removeQuoteIDs, true)) {
                 unset($quoteIDs[$index]);
             }
         }

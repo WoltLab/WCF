@@ -334,7 +334,7 @@ class ACLHandler extends SingletonFactory
                         'optionName' => $option->optionName,
                     ];
 
-                    if (!\in_array($option->categoryName, $categoryNames)) {
+                    if (!\in_array($option->categoryName, $categoryNames, true)) {
                         $categoryNames[] = $option->categoryName;
                     }
                 }

@@ -48,7 +48,7 @@ abstract class AbstractClipboardAction implements IClipboardAction
     #[\Override]
     public function execute(array $objects, ClipboardAction $action)
     {
-        if (!\in_array($action->actionName, $this->supportedActions)) {
+        if (!\in_array($action->actionName, $this->supportedActions, true)) {
             throw new SystemException("Unknown clipboard action '" . $action->actionName . "'");
         }
 
@@ -58,7 +58,7 @@ abstract class AbstractClipboardAction implements IClipboardAction
         $item->setName($this->getTypeName() . '.' . $action->actionName);
 
         // set action class-related data
-        if (\in_array($action->actionName, $this->actionClassActions)) {
+        if (\in_array($action->actionName, $this->actionClassActions, true)) {
             $item->addParameter('actionName', $action->actionName);
             $item->addParameter('className', $this->getClassName());
         }

@@ -38,11 +38,11 @@ class UserBirthdayAction extends UserProfileAction implements IGroupedUserListAc
         }
 
         if ($this->parameters['sortField'] !== '' && $this->parameters['sortOrder'] !== '') {
-            if (!\in_array($this->parameters['sortField'], ['username', 'activityPoints', 'registrationDate'])) {
+            if (!\in_array($this->parameters['sortField'], ['username', 'activityPoints', 'registrationDate'], true)) {
                 throw new UserInputException('sortField');
             }
 
-            if (!\in_array($this->parameters['sortOrder'], ['ASC', 'DESC'])) {
+            if (!\in_array($this->parameters['sortOrder'], ['ASC', 'DESC'], true)) {
                 throw new UserInputException('sortOrder');
             }
         }

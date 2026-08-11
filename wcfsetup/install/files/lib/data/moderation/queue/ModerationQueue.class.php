@@ -155,6 +155,6 @@ class ModerationQueue extends DatabaseObject
      */
     public function canChangeJustifiedStatus(): bool
     {
-        return \in_array($this->status, [self::STATUS_REJECTED, self::STATUS_CONFIRMED]);
+        return \in_array($this->status, [self::STATUS_REJECTED, self::STATUS_CONFIRMED], true);
     }
 }

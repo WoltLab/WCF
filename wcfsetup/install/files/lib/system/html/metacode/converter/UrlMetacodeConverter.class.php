@@ -34,7 +34,7 @@ class UrlMetacodeConverter extends AbstractMetacodeConverter
             // dynamic protocol, treat as https
             $href = "https:{$href}";
         } elseif (\preg_match('~^(?P<schema>[a-z0-9]+)://~', $href, $match)) {
-            if (!\in_array($match['schema'], self::$allowedSchemes)) {
+            if (!\in_array($match['schema'], self::$allowedSchemes, true)) {
                 // invalid schema, replace it with `http`
                 $href = 'http' . \mb_substr($href, \strlen($match['schema']));
             }

@@ -934,7 +934,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                 /** @var OptionCategory $category */
                 $category = $categoryData['object'];
 
-                if (\in_array($category->packageID, $relevantPackageIDs)) {
+                if (\in_array($category->packageID, $relevantPackageIDs, true)) {
                     $categories[$category->categoryName] = $category;
 
                     $categories = \array_merge($categories, $buildSortedCategories($categoryData['categories']));

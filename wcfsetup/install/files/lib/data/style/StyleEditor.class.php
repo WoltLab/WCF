@@ -702,7 +702,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                         $path = FileUtil::getRealPath($val['filename']);
                         $fileExtension = \pathinfo($path, \PATHINFO_EXTENSION);
 
-                        if (!\in_array($fileExtension, self::VALID_IMAGE_EXTENSIONS)) {
+                        if (!\in_array($fileExtension, self::VALID_IMAGE_EXTENSIONS, true)) {
                             continue;
                         }
 
@@ -750,7 +750,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         foreach (['image', 'image2x'] as $type) {
             if (!empty($data[$type])) {
                 $fileExtension = \pathinfo($data[$type], \PATHINFO_EXTENSION);
-                if (!\in_array($fileExtension, self::VALID_IMAGE_EXTENSIONS)) {
+                if (!\in_array($fileExtension, self::VALID_IMAGE_EXTENSIONS, true)) {
                     continue;
                 }
 
@@ -782,7 +782,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         if (!empty($data['coverPhoto'])) {
             $fileExtension = \pathinfo($data['coverPhoto'], \PATHINFO_EXTENSION);
             $index = $tar->getIndexByFilename($data['coverPhoto']);
-            if ($index !== false && \in_array($fileExtension, self::VALID_IMAGE_EXTENSIONS)) {
+            if ($index !== false && \in_array($fileExtension, self::VALID_IMAGE_EXTENSIONS, true)) {
                 $coverPhoto = "{$style->getAssetPath()}coverPhoto.{$fileExtension}";
                 $tar->extract($index, $coverPhoto);
                 FileUtil::makeWritable($coverPhoto);

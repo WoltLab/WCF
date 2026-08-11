@@ -394,7 +394,7 @@ class SmileyAddForm extends AbstractForm
             $known[] = $row['smileyCode'];
             $known = \array_map(\mb_strtolower(...), $known);
 
-            if (\in_array(\mb_strtolower($this->smileyCode), $known)) {
+            if (\in_array(\mb_strtolower($this->smileyCode), $known, true)) {
                 throw new UserInputException('smileyCode', 'notUnique');
             } else {
                 $conflicts = \array_intersect($aliases, $known);

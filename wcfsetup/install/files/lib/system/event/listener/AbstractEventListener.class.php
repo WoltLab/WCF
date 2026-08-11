@@ -43,7 +43,7 @@ abstract class AbstractEventListener implements IParameterizedEventListener
     {
         $methodName = 'on' . \ucfirst($eventName);
 
-        if ($eventObj instanceof AbstractDatabaseObjectAction && \in_array($eventName, self::DBOACTION_EVENT_NAMES)) {
+        if ($eventObj instanceof AbstractDatabaseObjectAction && \in_array($eventName, self::DBOACTION_EVENT_NAMES, true)) {
             $actionMethod = $methodName . \ucfirst($eventObj->getActionName());
             if (\method_exists($this, $actionMethod)) {
                 $this->{$actionMethod}($eventObj, $parameters);

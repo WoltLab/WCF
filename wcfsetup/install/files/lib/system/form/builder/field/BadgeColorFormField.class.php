@@ -90,7 +90,7 @@ final class BadgeColorFormField extends RadioButtonFormField implements IPattern
     #[\Override]
     public function value(mixed $value)
     {
-        if ($this->supportsCustomClassName() && !\in_array($value, self::AVAILABLE_CSS_CLASSNAMES)) {
+        if ($this->supportsCustomClassName() && !\in_array($value, self::AVAILABLE_CSS_CLASSNAMES, true)) {
             parent::value(BadgeColorFormField::CUSTOM_CSS_CLASSNAME);
             $this->customClassName = $value;
         } else {
@@ -183,6 +183,6 @@ final class BadgeColorFormField extends RadioButtonFormField implements IPattern
      */
     public function supportsCustomClassName(): bool
     {
-        return \in_array(BadgeColorFormField::CUSTOM_CSS_CLASSNAME, $this->options);
+        return \in_array(BadgeColorFormField::CUSTOM_CSS_CLASSNAME, $this->options, true);
     }
 }

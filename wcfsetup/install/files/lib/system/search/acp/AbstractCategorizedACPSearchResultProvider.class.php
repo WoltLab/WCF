@@ -73,7 +73,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
         }
 
         // this is a top category
-        if (\in_array($categoryName, $this->topCategories)) {
+        if (\in_array($categoryName, $this->topCategories, true)) {
             return $this->categories[$categoryName];
         }
 
@@ -125,7 +125,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
                 // child categories are also invalid
                 if (!isset($this->categories[$category->parentCategoryName])) {
                     unset($this->categories[$key]);
-                } elseif (\in_array($category->parentCategoryName, $this->topCategories)) {
+                } elseif (\in_array($category->parentCategoryName, $this->topCategories, true)) {
                     // @phpstan-ignore property.notFound
                     $topCategories[] = $category->categoryName;
                 }

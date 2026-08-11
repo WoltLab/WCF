@@ -205,7 +205,7 @@ class SystemCheckPage extends AbstractPage
     {
         parent::readData();
 
-        if (\IMAGE_ADAPTER_TYPE === 'imagick' && !\in_array('imagick', $this->phpExtensions)) {
+        if (\IMAGE_ADAPTER_TYPE === 'imagick' && !\in_array('imagick', $this->phpExtensions, true)) {
             $this->phpExtensions[] = 'imagick';
         }
 
@@ -280,7 +280,7 @@ class SystemCheckPage extends AbstractPage
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {
-            if ($row['Engine'] === 'InnoDB' && \in_array($row['Support'], ['DEFAULT', 'YES'])) {
+            if ($row['Engine'] === 'InnoDB' && \in_array($row['Support'], ['DEFAULT', 'YES'], true)) {
                 $this->results['mysql']['innodb'] = true;
                 break;
             }

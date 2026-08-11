@@ -635,7 +635,7 @@ class Box extends DatabaseObject
         if (
             WCF::getSession()->hasPermission('admin.content.cms.canManageBox')
             && $this->boxType !== 'menu'
-            && \in_array($this->position, $this->editButtonPositions)
+            && \in_array($this->position, $this->editButtonPositions, true)
         ) {
             return true;
         }

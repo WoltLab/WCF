@@ -26,7 +26,7 @@ class LineBreakSeparatedTextOptionType extends TextareaOptionType
         static $identifiers = [];
         do {
             $identifier = \bin2hex(\random_bytes(4));
-        } while (\in_array($identifier, $identifiers));
+        } while (\in_array($identifier, $identifiers, true));
         $identifiers[] = $identifier;
 
         return WCF::getTPL()->render('wcf', 'shared_lineBreakSeparatedTextOptionType', [

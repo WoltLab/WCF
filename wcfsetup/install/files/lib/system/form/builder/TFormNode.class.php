@@ -64,7 +64,7 @@ trait TFormNode
     {
         static::validateClass($class);
 
-        if (!\in_array($class, $this->classes)) {
+        if (!\in_array($class, $this->classes, true)) {
             $this->classes[] = $class;
         }
 
@@ -320,7 +320,7 @@ trait TFormNode
     {
         static::validateClass($class);
 
-        return \array_search($class, $this->classes) !== false;
+        return \array_search($class, $this->classes, true) !== false;
     }
 
     /**
@@ -460,7 +460,7 @@ trait TFormNode
     {
         static::validateClass($class);
 
-        $index = \array_search($class, $this->classes);
+        $index = \array_search($class, $this->classes, true);
         if ($index !== false) {
             unset($this->classes[$index]);
         }
@@ -533,7 +533,7 @@ trait TFormNode
             throw new \InvalidArgumentException("Invalid name '{$name}' given.");
         }
 
-        if (\in_array(\strtolower($name), static::getReservedAttributes())) {
+        if (\in_array(\strtolower($name), static::getReservedAttributes(), true)) {
             throw new \InvalidArgumentException("Attribute '{$name}' is not accessible as an attribute.");
         }
     }

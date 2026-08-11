@@ -165,7 +165,7 @@ class AttachmentPage extends AbstractPage
                 'filename' => $this->attachment->filename,
                 'mimeType' => $mimeType,
                 'filesize' => $filesize,
-                'showInline' => \in_array($mimeType, self::$inlineMimeTypes),
+                'showInline' => \in_array($mimeType, self::$inlineMimeTypes, true),
                 'enableRangeSupport' => $this->tiny === 0 && $this->thumbnail === 0,
                 'lastModificationTime' => $this->attachment->uploadTime,
                 'expirationDate' => \TIME_NOW + $cacheDuration,

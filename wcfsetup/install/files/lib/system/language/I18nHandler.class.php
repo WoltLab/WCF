@@ -66,7 +66,7 @@ final class I18nHandler extends SingletonFactory
      */
     public function register(string $elementID): bool
     {
-        if (\in_array($elementID, $this->elementIDs)) {
+        if (\in_array($elementID, $this->elementIDs, true)) {
             return false;
         }
 
@@ -84,7 +84,7 @@ final class I18nHandler extends SingletonFactory
      */
     public function unregister(string $elementID): void
     {
-        $index = \array_search($elementID, $this->elementIDs);
+        $index = \array_search($elementID, $this->elementIDs, true);
         if ($index !== false) {
             unset($this->elementIDs[$index]);
         }

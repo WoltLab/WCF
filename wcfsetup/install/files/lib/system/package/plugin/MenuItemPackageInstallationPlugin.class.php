@@ -364,7 +364,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 
                     /** @var PageNode $pageNode */
                     foreach ($pageNodeList as $pageNode) {
-                        if (\in_array($pageNode->packageID, $packageIDs)) {
+                        if (\in_array($pageNode->packageID, $packageIDs, true)) {
                             $nestedOptions[] = [
                                 'depth' => $pageNode->getDepth() - 1,
                                 'label' => $pageNode->name,
@@ -423,7 +423,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 
                         /** @var MenuItemNode $menuItem */
                         foreach ($menu->getMenuItemNodeList() as $menuItem) {
-                            if (\in_array($menuItem->packageID, $packageIDs)) {
+                            if (\in_array($menuItem->packageID, $packageIDs, true)) {
                                 $options[] = [
                                     'depth' => $menuItem->getDepth() - 1,
                                     'label' => $menuItem->identifier,

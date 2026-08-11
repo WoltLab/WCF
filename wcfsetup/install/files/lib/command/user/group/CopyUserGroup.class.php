@@ -137,7 +137,7 @@ final class CopyUserGroup
         $groupType = $group->groupType;
         // When copying special user groups of which only one may exist,
         // change the group type to 'other'.
-        if (\in_array($groupType, [UserGroup::EVERYONE, UserGroup::GUESTS, UserGroup::USERS, UserGroup::OWNER])) {
+        if (\in_array($groupType, [UserGroup::EVERYONE, UserGroup::GUESTS, UserGroup::USERS, UserGroup::OWNER], true)) {
             $groupType = UserGroup::OTHER;
         }
 

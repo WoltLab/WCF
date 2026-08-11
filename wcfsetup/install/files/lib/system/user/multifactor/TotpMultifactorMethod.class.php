@@ -223,7 +223,7 @@ final class TotpMultifactorMethod implements IMultifactorMethod
 
                 for ($i = 1;; $i++) {
                     $deviceName = $defaultName . ($i > 1 ? " ({$i})" : '');
-                    if (!\in_array($deviceName, $deviceNames)) {
+                    if (!\in_array($deviceName, $deviceNames, true)) {
                         break;
                     }
                 }

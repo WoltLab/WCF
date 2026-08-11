@@ -280,7 +280,7 @@ class NoticeAddForm extends AbstractForm
             if (Regex::compile('^-?[_a-zA-Z]+[_a-zA-Z0-9-]+$')->match($this->customCssClassName) === 0) {
                 throw new UserInputException('cssClassName', 'invalid');
             }
-        } elseif (!\in_array($this->cssClassName, Notice::TYPES)) {
+        } elseif (!\in_array($this->cssClassName, Notice::TYPES, true)) {
             throw new UserInputException('cssClassName', 'invalid');
         }
 

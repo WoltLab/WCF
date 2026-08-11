@@ -112,6 +112,6 @@ class Template extends DatabaseObject
      */
     public static function isSystemCritical(string $templateName)
     {
-        return \in_array($templateName, self::$systemCriticalTemplates);
+        return \in_array($templateName, self::$systemCriticalTemplates, true);
     }
 }

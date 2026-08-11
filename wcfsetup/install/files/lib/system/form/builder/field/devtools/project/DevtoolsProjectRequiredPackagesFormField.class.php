@@ -64,7 +64,7 @@ final class DevtoolsProjectRequiredPackagesFormField extends AbstractFormField
             // validate package identifier
             if (
                 !Package::isValidPackageName($package['packageIdentifier'])
-                || \in_array($package['packageIdentifier'], $packageIdentifiers)
+                || \in_array($package['packageIdentifier'], $packageIdentifiers, true)
             ) {
                 continue;
             }
@@ -77,6 +77,7 @@ final class DevtoolsProjectRequiredPackagesFormField extends AbstractFormField
             $package['file'] = \intval($package['file']);
 
             $requiredPackages[] = $package;
+            $packageIdentifiers[] = $package['packageIdentifier'];
         }
 
         $this->value($requiredPackages);

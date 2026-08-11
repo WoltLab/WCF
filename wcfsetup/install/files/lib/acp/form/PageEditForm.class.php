@@ -304,11 +304,11 @@ class PageEditForm extends PageAddForm
             $this->boxIDs = [];
             foreach ($this->availableBoxes as $box) {
                 if ($box->visibleEverywhere !== 0) {
-                    if (!\in_array($box->boxID, $this->page->getBoxIDs())) {
+                    if (!\in_array($box->boxID, $this->page->getBoxIDs(), true)) {
                         $this->boxIDs[] = $box->boxID;
                     }
                 } else {
-                    if (\in_array($box->boxID, $this->page->getBoxIDs())) {
+                    if (\in_array($box->boxID, $this->page->getBoxIDs(), true)) {
                         $this->boxIDs[] = $box->boxID;
                     }
                 }

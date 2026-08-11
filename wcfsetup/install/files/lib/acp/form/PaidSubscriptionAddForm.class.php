@@ -255,7 +255,7 @@ class PaidSubscriptionAddForm extends AbstractForm
             throw new UserInputException('cost');
         }
         // validate currency
-        if (!\in_array($this->currency, $this->availableCurrencies)) {
+        if (!\in_array($this->currency, $this->availableCurrencies, true)) {
             throw new UserInputException('cost');
         }
 

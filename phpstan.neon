@@ -57,7 +57,7 @@ parameters:
         closureUsesThis: true
         matchingInheritedMethodNames: true
         numericOperandsInArithmeticOperators: true
-        strictFunctionCalls: false
+        strictFunctionCalls: true
         dynamicCallOnStaticMethod: false
         switchConditionsMatchingType: false
         noVariableVariables: false

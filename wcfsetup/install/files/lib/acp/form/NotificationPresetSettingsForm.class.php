@@ -95,7 +95,7 @@ class NotificationPresetSettingsForm extends AbstractForm
 
         foreach ($this->settings as $eventID => &$settings) {
             // validate event id
-            if (!\in_array($eventID, $validEventIDs)) {
+            if (!\in_array($eventID, $validEventIDs, true)) {
                 throw new UserInputException();
             }
 
@@ -108,7 +108,8 @@ class NotificationPresetSettingsForm extends AbstractForm
             if (
                 !isset($settings['mailNotificationType']) || !\in_array(
                     $settings['mailNotificationType'],
-                    self::$validMailNotificationTypes
+                    self::$validMailNotificationTypes,
+                    true
                 )
             ) {
                 $settings['mailNotificationType'] = 'none';

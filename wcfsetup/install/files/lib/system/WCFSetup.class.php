@@ -555,7 +555,7 @@ final class WCFSetup extends WCF
                 $statement->execute();
                 $hasInnoDB = false;
                 while ($row = $statement->fetchArray()) {
-                    if ($row['Engine'] === 'InnoDB' && \in_array($row['Support'], ['DEFAULT', 'YES'])) {
+                    if ($row['Engine'] === 'InnoDB' && \in_array($row['Support'], ['DEFAULT', 'YES'], true)) {
                         $hasInnoDB = true;
                         break;
                     }
@@ -665,7 +665,7 @@ final class WCFSetup extends WCF
         $dbEditor = self::getDB()->getEditor();
 
         $tableNames = $dbEditor->getTableNames();
-        if (!\in_array('wcf1_package_installation_sql_log', $tableNames)) {
+        if (!\in_array('wcf1_package_installation_sql_log', $tableNames, true)) {
             $dbEditor->createTable('wcf1_package_installation_sql_log', [
                 ['name' => 'packageID', 'data' => ['type' => 'int', 'notNull' => true]],
                 ['name' => 'sqlTable', 'data' => ['type' => 'varchar', 'length' => 100, 'notNull' => true, 'default' => "''"]],
@@ -825,7 +825,8 @@ final class WCFSetup extends WCF
 
         $defaultLanguageCode = \in_array(
             self::$selectedLanguageCode,
-            $languageCodes
+            $languageCodes,
+            true
         ) ? self::$selectedLanguageCode : $languageCodes[0];
 
         $sql = "UPDATE  wcf1_language

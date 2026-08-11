@@ -143,7 +143,7 @@ class ViewableArticle extends DatabaseObjectDecorator
     {
         $accessibleCategoryIDs = ArticleCategory::getAccessibleCategoryIDs();
 
-        if (!\in_array($articleCategoryID, $accessibleCategoryIDs)) {
+        if (!\in_array($articleCategoryID, $accessibleCategoryIDs, true)) {
             // the category is not accessible
             return 0;
         }

@@ -316,7 +316,7 @@ class BoxAddForm extends AbstractForm
         }
 
         // validate box type
-        if (!\in_array($this->boxType, Box::$availableBoxTypes)) {
+        if (!\in_array($this->boxType, Box::$availableBoxTypes, true)) {
             throw new IllegalLinkException();
         }
     }
@@ -578,12 +578,12 @@ class BoxAddForm extends AbstractForm
      */
     protected function validateBoxPosition()
     {
-        if (!\in_array($this->position, Box::$availablePositions)) {
+        if (!\in_array($this->position, Box::$availablePositions, true)) {
             throw new UserInputException('position');
         }
 
         if ($this->boxType === 'system') {
-            if (!\in_array($this->position, $this->availableBoxPositions[$this->boxController->objectTypeID])) {
+            if (!\in_array($this->position, $this->availableBoxPositions[$this->boxController->objectTypeID], true)) {
                 throw new UserInputException('position', 'invalid');
             }
         }

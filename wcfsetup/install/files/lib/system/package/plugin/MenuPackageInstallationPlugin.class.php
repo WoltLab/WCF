@@ -153,7 +153,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 
             if ($identifier === 'com.woltlab.wcf.MainMenu') {
                 $position = 'mainMenu';
-            } elseif (!\in_array($position, Box::$availableMenuPositions)) {
+            } elseif (!\in_array($position, Box::$availableMenuPositions, true)) {
                 throw new SystemException("Unknown box position '{$position}' for menu box '{$identifier}'");
             }
 

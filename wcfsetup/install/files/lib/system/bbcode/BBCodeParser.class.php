@@ -142,7 +142,7 @@ class BBCodeParser extends SingletonFactory
         foreach ($this->tagArray as $i => $tag) {
             if ($tag['closing']) {
                 // closing tag
-                if (\in_array($tag['name'], $openTagStack)) {
+                if (\in_array($tag['name'], $openTagStack, true)) {
                     // close unclosed tags
                     $tmpOpenTags = [];
                     while (($previousTag = \end($openTagStack)) !== $tag['name']) {

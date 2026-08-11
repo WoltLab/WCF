@@ -113,7 +113,7 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
             $labelIDs = $this->getLabelGroup()->getLabelIDs();
             /** @var Label $label */
             foreach (static::$loadedLabels[$objectTypeID][$objectID] as $label) {
-                if (\in_array($label->labelID, $labelIDs)) {
+                if (\in_array($label->labelID, $labelIDs, true)) {
                     $this->value($label->labelID);
                 }
             }

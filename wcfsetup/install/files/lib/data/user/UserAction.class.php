@@ -95,8 +95,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
     protected function __validateAccessibleGroups(bool $ignoreOwnUser = true)
     {
         if ($ignoreOwnUser) {
-            if (\in_array(WCF::getUser()->userID, $this->objectIDs)) {
-                unset($this->objectIDs[\array_search(WCF::getUser()->userID, $this->objectIDs)]);
+            if (\in_array(WCF::getUser()->userID, $this->objectIDs, true)) {
+                unset($this->objectIDs[\array_search(WCF::getUser()->userID, $this->objectIDs, true)]);
                 if (isset($this->objects[WCF::getUser()->userID])) {
                     unset($this->objects[WCF::getUser()->userID]);
                 }
@@ -521,7 +521,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         }
 
         if ($this->parameters['data']['scope'] !== '') {
-            if (!\in_array($this->parameters['data']['scope'], ['mention'])) {
+            if (!\in_array($this->parameters['data']['scope'], ['mention'], true)) {
                 throw new UserInputException('scope');
             }
         }
@@ -548,7 +548,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
                 if (
                     !empty($this->parameters['data']['restrictUserGroupIDs']) && !\in_array(
                         $group->groupID,
-                        $this->parameters['data']['restrictUserGroupIDs']
+                        $this->parameters['data']['restrictUserGroupIDs'],
+                        true
                     )
                 ) {
                     continue;
@@ -559,7 +560,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
                 }
 
                 $groupName = $group->getName();
-                if (!\in_array($groupName, $excludedSearchValues)) {
+                if (!\in_array($groupName, $excludedSearchValues, true)) {
                     $pos = \mb_strripos($groupName, $searchString);
                     if ($pos !== false && $pos === 0) {
                         $list[] = [

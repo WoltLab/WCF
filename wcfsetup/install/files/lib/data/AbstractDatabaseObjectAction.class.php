@@ -170,12 +170,13 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
     public function validateAction()
     {
         // validate if user is logged in
-        if (WCF::getUser()->isGuest() && !\in_array($this->getActionName(), $this->allowGuestAccess)) {
+        if (WCF::getUser()->isGuest() && !\in_array($this->getActionName(), $this->allowGuestAccess, true)) {
             throw new PermissionDeniedException();
         } elseif (
             !RequestHandler::getInstance()->isACPRequest() && \in_array(
                 $this->getActionName(),
-                $this->requireACP
+                $this->requireACP,
+                true
             )
         ) {
             // attempt to invoke method, but origin is not the ACP
@@ -214,7 +215,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
         $this->returnValues = $this->{$this->getActionName()}();
 
         // reset cache
-        if (\in_array($this->getActionName(), $this->resetCache)) {
+        if (\in_array($this->getActionName(), $this->resetCache, true)) {
             $this->resetCache();
         }
 

@@ -318,7 +318,7 @@ class UploadFormField extends AbstractFormField
             });
 
             foreach ($this->getValue() as $file) {
-                if (\in_array($file->getFilenameExtension(), $allowedFileExtensions)) {
+                if (\in_array($file->getFilenameExtension(), $allowedFileExtensions, true)) {
                     continue;
                 }
 

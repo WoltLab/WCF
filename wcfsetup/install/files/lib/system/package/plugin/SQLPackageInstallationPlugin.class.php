@@ -106,10 +106,10 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin
             if (!empty($entry['sqlTable']) && empty($entry['sqlColumn']) && empty($entry['sqlIndex'])) {
                 WCF::getDB()->getEditor()->dropTable($entry['sqlTable']);
             } // drop column
-            elseif (\in_array($entry['sqlTable'], $existingTableNames) && !empty($entry['sqlColumn'])) {
+            elseif (\in_array($entry['sqlTable'], $existingTableNames, true) && !empty($entry['sqlColumn'])) {
                 WCF::getDB()->getEditor()->dropColumn($entry['sqlTable'], $entry['sqlColumn']);
             } // drop index
-            elseif (\in_array($entry['sqlTable'], $existingTableNames) && !empty($entry['sqlIndex'])) {
+            elseif (\in_array($entry['sqlTable'], $existingTableNames, true) && !empty($entry['sqlIndex'])) {
                 if (\substr($entry['sqlIndex'], -3) === '_fk') {
                     WCF::getDB()->getEditor()->dropForeignKey($entry['sqlTable'], $entry['sqlIndex']);
                 } else {

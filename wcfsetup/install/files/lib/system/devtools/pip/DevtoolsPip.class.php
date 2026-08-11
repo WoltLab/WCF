@@ -488,6 +488,6 @@ class DevtoolsPip extends DatabaseObjectDecorator
      */
     public function isImportant(): bool
     {
-        return \in_array($this->getDecoratedObject()->pluginName, ['acpTemplate', 'file', 'language', 'template']);
+        return \in_array($this->getDecoratedObject()->pluginName, ['acpTemplate', 'file', 'language', 'template'], true);
     }
 }

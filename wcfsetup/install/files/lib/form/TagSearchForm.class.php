@@ -85,7 +85,7 @@ class TagSearchForm extends AbstractCaptchaForm
         parent::validate();
 
         if ($this->languageID !== null) {
-            if (!\in_array($this->languageID, LanguageFactory::getInstance()->getContentLanguageIDs())) {
+            if (!\in_array($this->languageID, LanguageFactory::getInstance()->getContentLanguageIDs(), true)) {
                 throw new UserInputException('languageID');
             }
         }

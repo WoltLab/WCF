@@ -114,7 +114,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         // fix height/width for animated gifs as getImageHeight/getImageWidth
         // returns the height/width of ONE frame of the animated image,
         // not the "real" height/width of the image
-        if (\in_array($this->imagick->getImageFormat(), self::$animatedFormats)) {
+        if (\in_array($this->imagick->getImageFormat(), self::$animatedFormats, true)) {
             $imagick = $this->imagick->coalesceImages();
 
             $this->height = $imagick->getImageHeight();
@@ -141,7 +141,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     {
         $thumbnail = clone $this->imagick;
 
-        if (\in_array($thumbnail->getImageFormat(), self::$animatedFormats)) {
+        if (\in_array($thumbnail->getImageFormat(), self::$animatedFormats, true)) {
             $thumbnail = $thumbnail->coalesceImages();
 
             do {
@@ -165,7 +165,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     #[\Override]
     public function clip(int $originX, int $originY, int $width, int $height)
     {
-        if (\in_array($this->imagick->getImageFormat(), self::$animatedFormats)) {
+        if (\in_array($this->imagick->getImageFormat(), self::$animatedFormats, true)) {
             $this->imagick = $this->imagick->coalesceImages();
 
             do {
@@ -180,7 +180,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     #[\Override]
     public function resize(int $originX, int $originY, int $originWidth, int $originHeight, int $targetWidth, int $targetHeight)
     {
-        if (\in_array($this->imagick->getImageFormat(), self::$animatedFormats)) {
+        if (\in_array($this->imagick->getImageFormat(), self::$animatedFormats, true)) {
             $image = $this->imagick->coalesceImages();
 
             foreach ($image as $frame) {
@@ -221,7 +221,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         // draw text
         $draw->annotation($x, $y, $text);
 
-        if (\in_array($this->imagick->getImageFormat(), self::$animatedFormats)) {
+        if (\in_array($this->imagick->getImageFormat(), self::$animatedFormats, true)) {
             $this->imagick = $this->imagick->coalesceImages();
 
             do {
@@ -406,7 +406,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
 
         $overlayImage->evaluateImage(\Imagick::EVALUATE_MULTIPLY, $opacity, \Imagick::CHANNEL_OPACITY);
 
-        if (\in_array($this->imagick->getImageFormat(), self::$animatedFormats)) {
+        if (\in_array($this->imagick->getImageFormat(), self::$animatedFormats, true)) {
             $this->imagick = $this->imagick->coalesceImages();
 
             do {
@@ -522,6 +522,6 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
     #[\Override]
     public static function supportsWebp(): bool
     {
-        return \in_array('WEBP', \Imagick::queryFormats());
+        return \in_array('WEBP', \Imagick::queryFormats(), true);
     }
 }

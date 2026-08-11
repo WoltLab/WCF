@@ -53,7 +53,7 @@ class UserGroupAssignmentHandler extends SingletonFactory
             $newGroupIDs = [];
 
             foreach ($assignments as $assignment) {
-                if (\in_array($assignment->groupID, $groupIDs) || \in_array($assignment->groupID, $newGroupIDs)) {
+                if (\in_array($assignment->groupID, $groupIDs, true) || \in_array($assignment->groupID, $newGroupIDs, true)) {
                     continue;
                 }
 

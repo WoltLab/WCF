@@ -62,7 +62,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
             && !\in_array($this->parameters['data']['type'], [
                 UserIgnore::TYPE_BLOCK_DIRECT_CONTACT,
                 UserIgnore::TYPE_HIDE_MESSAGES,
-            ])
+            ], true)
         ) {
             throw new UserInputException('type', 'invalid');
         }

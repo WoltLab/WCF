@@ -128,7 +128,7 @@ class AnchorFunctionTemplatePlugin implements IFunctionTemplatePlugin
         if (
             $object !== null
             && ($object instanceof IPopoverObject || ClassUtil::isDecoratedInstanceOf($object, IPopoverObject::class))
-            && \in_array($object->getPopoverLinkClass(), $classes)
+            && \in_array($object->getPopoverLinkClass(), $classes, true)
         ) {
             $additionalParameters .= ' data-object-id="' . $object->getObjectID() . '"';
         }

@@ -521,7 +521,7 @@ class OptionHandler implements IOptionHandler
     public function filterOptions(array $optionNames)
     {
         $this->options = \array_filter($this->options, static function (Option $option) use ($optionNames) {
-            return \in_array($option->optionName, $optionNames);
+            return \in_array($option->optionName, $optionNames, true);
         });
     }
 
@@ -562,7 +562,7 @@ class OptionHandler implements IOptionHandler
         }
 
         if (\ENABLE_ENTERPRISE_MODE !== 0 && !WCF::getUser()->hasOwnerAccess() && \get_class($category) === OptionCategory::class) {
-            return !\in_array($category->categoryName, $this->enterpriseBlacklist['categories']);
+            return !\in_array($category->categoryName, $this->enterpriseBlacklist['categories'], true);
         }
 
         return true;
@@ -592,7 +592,7 @@ class OptionHandler implements IOptionHandler
         }
 
         if (\ENABLE_ENTERPRISE_MODE !== 0 && !WCF::getUser()->hasOwnerAccess() && \get_class($option) === Option::class) {
-            return !\in_array($option->optionName, $this->enterpriseBlacklist['options']);
+            return !\in_array($option->optionName, $this->enterpriseBlacklist['options'], true);
         }
 
         return true;

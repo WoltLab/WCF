@@ -98,7 +98,7 @@ final class EmailGrammar
             if (\ord($character) === 0x20) {
                 return true;
             }
-            if (\in_array($character, ["=", "?", "_"])) {
+            if (\in_array($character, ["=", "?", "_"], true)) {
                 return true;
             }
 

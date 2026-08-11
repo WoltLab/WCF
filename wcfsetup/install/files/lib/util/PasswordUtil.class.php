@@ -64,7 +64,7 @@ final class PasswordUtil
      */
     public static function isSupported(string $type): bool
     {
-        if (\in_array($type, self::$supportedEncryptionTypes)) {
+        if (\in_array($type, self::$supportedEncryptionTypes, true)) {
             return true;
         }
 
@@ -121,7 +121,7 @@ final class PasswordUtil
         }
 
         // compare hash
-        if (\in_array($type, self::$supportedEncryptionTypes)) {
+        if (\in_array($type, self::$supportedEncryptionTypes, true)) {
             return \call_user_func('\wcf\util\PasswordUtil::' . $type, $username, $password, $salt, $dbHash);
         } else {
             // WCF 1.x with different encryption

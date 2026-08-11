@@ -376,7 +376,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
 
         foreach ($tags as $tagName) {
             if (
-                \in_array($tagName, $skipTags)
+                \in_array($tagName, $skipTags, true)
                 || \str_starts_with($tagName, 'wcfNode-')
             ) {
                 continue;

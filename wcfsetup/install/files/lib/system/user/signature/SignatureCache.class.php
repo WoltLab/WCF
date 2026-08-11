@@ -46,7 +46,7 @@ class SignatureCache extends SingletonFactory
                 $this->htmlOutputProcessor = new HtmlOutputProcessor();
             }
 
-            if (!\in_array($user->userID, $this->cachedUserIDs)) {
+            if (!\in_array($user->userID, $this->cachedUserIDs, true)) {
                 $this->cacheUserSignature([$user->userID]);
             }
 

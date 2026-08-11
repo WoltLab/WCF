@@ -141,7 +141,7 @@ final class FontManager extends SingletonFactory
                     $css
                 );
 
-                if (\in_array($filename, $preload)) {
+                if (\in_array($filename, $preload, true)) {
                     $preloadRequests .= \sprintf(
                         <<<'EOT'
                             --woltlab-suite-preload: #{preload(

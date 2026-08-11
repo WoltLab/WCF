@@ -190,7 +190,8 @@ class CategoryNodeTree implements \IteratorAggregate
     {
         return ($categoryNode->isDisabled === 0 || $this->includeDisabledCategories) && !\in_array(
             $categoryNode->categoryID,
-            $this->excludedCategoryIDs
+            $this->excludedCategoryIDs,
+            true
         );
     }
 }

@@ -26,7 +26,7 @@ final class FontAwesomeIconBrand implements IFontAwesomeIcon
     #[\Override]
     public function toHtml(int $size = 16): string
     {
-        if (!\in_array($size, self::SIZES)) {
+        if (!\in_array($size, self::SIZES, true)) {
             throw new InvalidIconSize($size);
         }
 

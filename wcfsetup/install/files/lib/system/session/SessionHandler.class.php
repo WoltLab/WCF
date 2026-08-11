@@ -726,7 +726,7 @@ final class SessionHandler extends SingletonFactory
     {
         // check if a users only permission is checked for a guest and return
         // false if that is the case
-        if ($this->user->isGuest() && \in_array($permission, $this->usersOnlyPermissions)) {
+        if ($this->user->isGuest() && \in_array($permission, $this->usersOnlyPermissions, true)) {
             return false;
         }
 

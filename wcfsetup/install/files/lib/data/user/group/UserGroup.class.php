@@ -117,9 +117,10 @@ class UserGroup extends DatabaseObject implements ITitledObject, \Stringable
         $groups = [];
         foreach (self::$cache['groups'] as $group) {
             if (
-                ($types === [] || \in_array($group->groupType, $types)) && !\in_array(
+                ($types === [] || \in_array($group->groupType, $types, true)) && !\in_array(
                     $group->groupType,
-                    $invalidGroupTypes
+                    $invalidGroupTypes,
+                    true
                 )
             ) {
                 $groups[$group->groupID] = $group;
@@ -208,7 +209,7 @@ class UserGroup extends DatabaseObject implements ITitledObject, \Stringable
             $user = WCF::getUser();
         }
 
-        if (\in_array($this->groupID, $user->getGroupIDs())) {
+        if (\in_array($this->groupID, $user->getGroupIDs(), true)) {
             return true;
         }
 
@@ -277,7 +278,7 @@ class UserGroup extends DatabaseObject implements ITitledObject, \Stringable
         }
 
         foreach ($groupIDs as $groupID) {
-            if (!\in_array($groupID, self::$accessibleGroups)) {
+            if (!\in_array($groupID, self::$accessibleGroups, true)) {
                 return false;
             }
         }
@@ -526,7 +527,7 @@ class UserGroup extends DatabaseObject implements ITitledObject, \Stringable
      */
     public function isUnmentionableGroup()
     {
-        return \in_array($this->groupType, [self::EVERYONE, self::GUESTS, self::USERS]);
+        return \in_array($this->groupType, [self::EVERYONE, self::GUESTS, self::USERS], true);
     }
 
     /**

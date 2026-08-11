@@ -60,8 +60,8 @@ class XMLWriter
             ],
             // `xmlns`, `xmlns:xsi`, and `xsi:schemaLocation` are explicitly set
             // as first attributes in that order
-            \array_filter($attributes, static function ($attributeName) {
-                return !\in_array($attributeName, ['xmlns', 'xmlns:xsi', 'xsi:schemaLocation']);
+            \array_filter($attributes, static function (string $attributeName) {
+                return !\in_array($attributeName, ['xmlns', 'xmlns:xsi', 'xsi:schemaLocation'], true);
             }, \ARRAY_FILTER_USE_KEY)
         );
         $this->writeAttributes($attributes);

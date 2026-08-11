@@ -82,7 +82,7 @@ final class ClipboardEditorItem
             throw new SystemException("internal data name '" . $name . "' is invalid");
         }
 
-        if (\in_array($name, $this->internalData)) {
+        if (\array_key_exists($name, $this->internalData)) {
             throw new SystemException("internal data name '" . $name . "' is not unique");
         }
 
@@ -100,7 +100,7 @@ final class ClipboardEditorItem
             throw new SystemException("parameter name '" . $name . "' is invalid");
         }
 
-        if (\in_array($name, $this->parameters)) {
+        if (\array_key_exists($name, $this->parameters)) {
             throw new SystemException("parameter name '" . $name . "' is not unique");
         }
 

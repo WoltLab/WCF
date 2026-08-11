@@ -348,14 +348,14 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         $htmlValidator = new FormFieldValidator('format', static function (TextFormField $formField) {
             $value = $formField->getValue();
             if ($value !== null && $value !== '') {
-                if (\in_array(\substr($formField->getValue(), 0, 1), ['<', '>'])) {
+                if (\in_array(\substr($formField->getValue(), 0, 1), ['<', '>'], true)) {
                     $formField->addValidationError(
                         new FormFieldValidationError(
                             'leadingBracket',
                             'wcf.acp.pip.bbcode.htmlOpen.error.leadingBracket'
                         )
                     );
-                } elseif (\in_array(\substr($formField->getValue(), -1, 1), ['<', '>'])) {
+                } elseif (\in_array(\substr($formField->getValue(), -1, 1), ['<', '>'], true)) {
                     $formField->addValidationError(
                         new FormFieldValidationError(
                             'trailingBracket',

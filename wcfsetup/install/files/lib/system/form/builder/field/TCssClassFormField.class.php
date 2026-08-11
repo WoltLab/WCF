@@ -28,7 +28,7 @@ trait TCssClassFormField
     {
         static::validateClass($class);
 
-        if (!\in_array($class, $this->fieldClasses)) {
+        if (!\in_array($class, $this->fieldClasses, true)) {
             $this->fieldClasses[] = $class;
         }
 
@@ -71,7 +71,7 @@ trait TCssClassFormField
     {
         static::validateClass($class);
 
-        return \array_search($class, $this->fieldClasses) !== false;
+        return \array_search($class, $this->fieldClasses, true) !== false;
     }
 
     /**
@@ -86,7 +86,7 @@ trait TCssClassFormField
     {
         static::validateClass($class);
 
-        $index = \array_search($class, $this->fieldClasses);
+        $index = \array_search($class, $this->fieldClasses, true);
         if ($index !== false) {
             unset($this->fieldClasses[$index]);
         }

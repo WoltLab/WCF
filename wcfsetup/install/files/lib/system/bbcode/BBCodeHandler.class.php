@@ -73,7 +73,7 @@ class BBCodeHandler extends SingletonFactory
             }
         }
 
-        return !\in_array($bbCodeTag, $this->disallowedBBCodes);
+        return !\in_array($bbCodeTag, $this->disallowedBBCodes, true);
     }
 
     /**
@@ -116,7 +116,7 @@ class BBCodeHandler extends SingletonFactory
             'url',
         ];
         foreach ($this->buttonBBCodes as $bbcode) {
-            if ($excludeCoreBBCodes && \in_array($bbcode->bbcodeTag, $coreBBCodes)) {
+            if ($excludeCoreBBCodes && \in_array($bbcode->bbcodeTag, $coreBBCodes, true)) {
                 continue;
             }
 

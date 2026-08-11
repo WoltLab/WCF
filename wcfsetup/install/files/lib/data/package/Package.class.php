@@ -101,7 +101,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
     {
         self::loadRequirements();
 
-        return \in_array($this->packageID, self::$requiredPackageIDs);
+        return \in_array($this->packageID, self::$requiredPackageIDs, true);
     }
 
     /**
@@ -242,7 +242,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
 
             $this->dependentPackages = [];
             foreach (self::$requirements as $packageID => $requiredPackageIDs) {
-                if (\in_array($this->packageID, $requiredPackageIDs)) {
+                if (\in_array($this->packageID, $requiredPackageIDs, true)) {
                     $this->dependentPackages[$packageID] = PackageCache::getInstance()->getPackage($packageID);
                 }
             }
@@ -295,7 +295,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
 
                 self::$requirements[$row['packageID']][] = $row['requirement'];
 
-                if (!\in_array($row['requirement'], self::$requiredPackageIDs)) {
+                if (!\in_array($row['requirement'], self::$requiredPackageIDs, true)) {
                     self::$requiredPackageIDs[] = $row['requirement'];
                 }
             }

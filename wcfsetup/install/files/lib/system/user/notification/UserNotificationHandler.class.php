@@ -176,7 +176,7 @@ class UserNotificationHandler extends SingletonFactory
             // filter array of existing notifications and remove values which
             // do not have a notification from this author yet (inverse logic!)
             foreach ($notifications as $userID => $notificationID) {
-                if (!\in_array($notificationID, $notificationIDs)) {
+                if (!\in_array($notificationID, $notificationIDs, true)) {
                     unset($notifications[$userID]);
                 }
             }

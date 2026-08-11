@@ -25,7 +25,15 @@ class EmbeddedObjectBlockTemplatePlugin implements IBlockTemplatePlugin
     #[\Override]
     public function execute(array $tagArgs, string $blockContent, TemplateEngine $tplObj)
     {
-        $data = \unserialize(\base64_decode($blockContent));
+        $serializedData = \base64_decode($blockContent, true);
+        if ($serializedData === false) {
+            throw new \UnexpectedValueException("The block content is not valid base64 data.");
+        }
+
+        $data = \unserialize($serializedData, ['allowed_classes' => false]);
+        if (!\is_array($data)) {
+            throw new \UnexpectedValueException("The block content does not contain valid embedded object data.");
+        }
 
         return HtmlSimpleParser::getInstance()->replaceTag($data);
     }

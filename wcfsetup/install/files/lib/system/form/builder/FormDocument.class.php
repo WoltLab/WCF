@@ -212,7 +212,7 @@ class FormDocument implements IFormDocument
 
         /** @var IFormNode $node */
         foreach ($this->getIterator() as $node) {
-            if (\in_array($node->getId(), $nodeIds)) {
+            if (\in_array($node->getId(), $nodeIds, true)) {
                 $doubleNodeIds[] = $node->getId();
             } else {
                 $nodeIds[] = $node->getId();
@@ -228,7 +228,7 @@ class FormDocument implements IFormDocument
         }
 
         foreach ($this->getButtons() as $button) {
-            if (\in_array($button->getId(), $nodeIds)) {
+            if (\in_array($button->getId(), $nodeIds, true)) {
                 $doubleNodeIds[] = $button->getId();
             } else {
                 $nodeIds[] = $button->getId();

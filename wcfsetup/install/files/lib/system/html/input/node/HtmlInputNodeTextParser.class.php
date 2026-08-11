@@ -692,7 +692,7 @@ class HtmlInputNodeTextParser
             } elseif (
                 $nodeName === 'woltlab-metacode'
                 && $parent instanceof \DOMElement
-                && \in_array($parent->getAttribute('data-name'), $this->sourceBBCodes)
+                && \in_array($parent->getAttribute('data-name'), $this->sourceBBCodes, true)
             ) {
                 return true;
             }

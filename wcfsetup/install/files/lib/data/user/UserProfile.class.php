@@ -251,7 +251,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
             if ($type === null) {
                 return true;
             } elseif ($type === UserIgnore::TYPE_BLOCK_DIRECT_CONTACT) {
-                return \in_array($userType, [UserIgnore::TYPE_BLOCK_DIRECT_CONTACT, UserIgnore::TYPE_HIDE_MESSAGES]);
+                return \in_array($userType, [UserIgnore::TYPE_BLOCK_DIRECT_CONTACT, UserIgnore::TYPE_HIDE_MESSAGES], true);
             } elseif ($type === UserIgnore::TYPE_HIDE_MESSAGES) {
                 return $userType === UserIgnore::TYPE_HIDE_MESSAGES;
             } else {
@@ -311,7 +311,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
             return UserProfileHandler::getInstance()->getUserProfile()->isFollower($this->userID);
         }
 
-        return \in_array($userID, $this->getFollowingUsers());
+        return \in_array($userID, $this->getFollowingUsers(), true);
     }
 
     /**
@@ -321,7 +321,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function isFollower(int $userID)
     {
-        return \in_array($userID, $this->getFollowers());
+        return \in_array($userID, $this->getFollowers(), true);
     }
 
     /**
@@ -332,7 +332,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function isIgnoredUser(int $userID, ?int $type = null)
     {
-        return \in_array($userID, $this->getIgnoredUsers($type));
+        return \in_array($userID, $this->getIgnoredUsers($type), true);
     }
 
     /**
@@ -342,7 +342,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function isIgnoredByUser(int $userID)
     {
-        return \in_array($userID, $this->getIgnoredByUsers());
+        return \in_array($userID, $this->getIgnoredByUsers(), true);
     }
 
     /**

@@ -412,7 +412,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
             'tinyThumbnailType',
             'tinyThumbnailWidth',
             'tinyThumbnailHeight',
-        ])) {
+        ], true)) {
             $file = $this->getFile();
             if ($file === null) {
                 return parent::__get($name);
