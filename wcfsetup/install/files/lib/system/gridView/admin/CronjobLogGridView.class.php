@@ -59,7 +59,7 @@ final class CronjobLogGridView extends AbstractGridView
 
                         public function render(mixed $value, DatabaseObject $row): string
                         {
-                            return $this->availableCronjobs[$value];
+                            return StringUtil::encodeHTML($this->availableCronjobs[$value]);
                         }
                     },
                 ]),
