@@ -57,6 +57,16 @@ class Language extends DatabaseObject
     protected $categoriesBeingLoaded = [];
 
     /**
+     * @since 6.2
+     */
+    public const CATEGORY_PATTERN = '~^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$~';
+
+    /**
+     * @since 6.2
+     */
+    public const PHRASE_PATTERN = '~^([a-zA-Z0-9-_]+\.){2,}[a-zA-Z0-9-_]+$~';
+
+    /**
      * Returns the name of this language.
      */
     public function __toString(): string

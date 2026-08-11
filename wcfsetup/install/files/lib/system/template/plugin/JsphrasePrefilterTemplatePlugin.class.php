@@ -2,6 +2,7 @@
 
 namespace wcf\system\template\plugin;
 
+use wcf\data\language\Language;
 use wcf\system\template\TemplateScriptingCompiler;
 
 /**
@@ -25,9 +26,15 @@ final class JsphrasePrefilterTemplatePlugin implements IPrefilterTemplatePlugin
         $rdq = \preg_quote($compiler->getRightDelimiter(), '~');
 
         return \preg_replace_callback(
-            "~{$ldq}jsphrase name='(?<name>[A-z0-9-_]+(\\.[A-z0-9-_]+){2,})'{$rdq}~",
+            "~{$ldq}jsphrase name='(?<name>[^']+)'{$rdq}~",
             static function ($match) {
                 $name = $match['name'];
+
+                // Invalid names are left untouched, the tag is then reported
+                // by the accompanying function plugin at runtime.
+                if (!\preg_match(Language::PHRASE_PATTERN, $name)) {
+                    return $match[0];
+                }
 
                 return \sprintf(
                     "WoltLabLanguage.registerPhrase('%s', '{jslang}%s{/jslang}');",
