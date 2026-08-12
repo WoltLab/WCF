@@ -18,19 +18,27 @@ define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listen
         #state;
         #noItemsNotice;
         #bulkInteractionProviderClassName;
+        #allowFiltering;
+        #allowSorting;
+        #allowInteractions;
+        #allowBulkInteractions;
         #listViewParameters;
-        constructor(viewId, viewClassName, pageNo, baseUrl = "", sortField = "", sortOrder = "ASC", defaultSortField = "", defaultSortOrder = "ASC", bulkInteractionProviderClassName, listViewParameters) {
+        constructor(viewId, viewClassName, pageNo, baseUrl = "", sortField = "", sortOrder = "ASC", defaultSortField = "", defaultSortOrder = "ASC", bulkInteractionProviderClassName, allowFiltering = true, allowSorting = true, allowInteractions = true, allowBulkInteractions = true, listViewParameters) {
             this.#viewClassName = viewClassName;
             this.#viewElement = document.getElementById(`${viewId}_items`);
             this.#noItemsNotice = document.getElementById(`${viewId}_noItemsNotice`);
             this.#bulkInteractionProviderClassName = bulkInteractionProviderClassName;
+            this.#allowFiltering = allowFiltering;
+            this.#allowSorting = allowSorting;
+            this.#allowInteractions = allowInteractions;
+            this.#allowBulkInteractions = allowBulkInteractions;
             this.#listViewParameters = listViewParameters;
             this.#initInteractions();
             this.#state = this.#setupState(viewId, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder);
             this.#initEventListeners();
         }
         async #loadItems(cause) {
-            const response = await (0, GetItems_1.getItems)(this.#viewClassName, this.#state.getPageNo(), this.#state.getSortField(), this.#state.getSortOrder(), this.#state.getActiveFilters(), this.#listViewParameters);
+            const response = await (0, GetItems_1.getItems)(this.#viewClassName, this.#state.getPageNo(), this.#state.getSortField(), this.#state.getSortOrder(), this.#state.getActiveFilters(), this.#listViewParameters, this.#allowFiltering, this.#allowSorting, this.#allowInteractions, this.#allowBulkInteractions);
             (0, Util_1.setInnerHtml)(this.#viewElement, response.template);
             this.#viewElement.hidden = response.totalItems === 0;
             this.#noItemsNotice.hidden = response.totalItems !== 0;
@@ -41,7 +49,7 @@ define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listen
             (0, Listener_1.trigger)();
         }
         async #refreshItem(item) {
-            const { template } = await (0, GetItem_1.getItem)(this.#viewClassName, item.dataset.objectId, this.#state.getActiveFilters(), this.#listViewParameters);
+            const { template } = await (0, GetItem_1.getItem)(this.#viewClassName, item.dataset.objectId, this.#state.getActiveFilters(), this.#listViewParameters, this.#allowInteractions, this.#allowBulkInteractions);
             item.replaceWith((0, Util_1.createFragmentFromHtml)(template));
             this.#state.refreshSelection();
             (0, Listener_1.trigger)();

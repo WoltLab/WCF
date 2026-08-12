@@ -18,8 +18,19 @@ final class FileUtil
 {
     /**
      * A regular expression that allows to detect links within text.
+     *
+     * UTF-8 mode is mandatory because the trailing character class contains
+     * multi-byte characters. Without it the class excludes their individual
+     * bytes, so a match can end in the middle of an unrelated multi-byte
+     * character (e.g. `λ` = 0xCE 0xBB, whose 0xBB byte also occurs in `»`),
+     * yielding invalid UTF-8 that makes every subsequent `/u` pattern fail.
+     *
+     * `(*UTF)` is used instead of the `u` modifier on purpose: the modifier
+     * additionally enables PCRE2_UCP, which would make `\b` Unicode-aware and
+     * thus stop detecting links that directly follow a non-ASCII letter
+     * (e.g. `詳細はhttp://example.com`).
      */
-    public const LINK_REGEX = "#(?i)\\b((?:https?://|www\\d{0,3}[.])(?:[^\\s()<>\\[\\]]+|\\([^\\s()<>\\[\\]]*\\))+(?:\\([^\\s()<>\\[\\]]*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))#iS";
+    public const LINK_REGEX = "#(*UTF)(?i)\\b((?:https?://|www\\d{0,3}[.])(?:[^\\s()<>\\[\\]]+|\\([^\\s()<>\\[\\]]*\\))+(?:\\([^\\s()<>\\[\\]]*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))#iS";
 
     /**
      * Prepares the temporary folder and returns its path.

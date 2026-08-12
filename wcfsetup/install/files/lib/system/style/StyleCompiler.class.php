@@ -705,6 +705,7 @@ final class StyleCompiler extends SingletonFactory
      */
     private function compileStylesheet(string $scss, array $variables): string
     {
+        $variables = \array_filter($variables, static fn($value) => $value !== null);
         $compiler = $this->makeCompiler();
         $compiler->replaceVariables(\array_map(static function ($value) {
             if ($value === "" || \is_int($value)) {

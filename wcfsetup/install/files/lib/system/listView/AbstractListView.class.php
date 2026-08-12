@@ -82,6 +82,11 @@ abstract class AbstractListView
     protected DatabaseObjectList $objectList;
 
     /**
+     * unique identifier of this view to prevent collisions
+     */
+    private string $uniqueID;
+
+    /**
      * Returns the number of items per page.
      */
     public function getItemsPerPage(): int
@@ -406,16 +411,19 @@ abstract class AbstractListView
      */
     public function getID(): string
     {
-        $id = \str_replace('\\', '_', static::class);
-
-        if ($this->getParameters() !== []) {
-            $parameters = $this->getParameters();
-            \array_multisort($parameters);
-
-            $id .= '_' . \sha1(\serialize($parameters));
+        if (!isset($this->uniqueID)) {
+            // This must be as unique as possible to avoid collisions with
+            // list views generated for the same class and parameters within
+            // the same page. This can happen when an identically configured
+            // view in a box appears on the page.
+            $this->uniqueID = \sprintf(
+                '%s_%s',
+                \str_replace('\\', '_', static::class),
+                \bin2hex(\random_bytes(20)),
+            );
         }
 
-        return $id;
+        return $this->uniqueID;
     }
 
     /**
@@ -467,6 +475,11 @@ abstract class AbstractListView
         $this->allowSorting = $allowSorting;
     }
 
+    public function getAllowSorting(): bool
+    {
+        return $this->allowSorting;
+    }
+
     /**
      * @return ListViewSortField[]
      */
@@ -493,6 +506,11 @@ abstract class AbstractListView
     public function setAllowFiltering(bool $allowFiltering): void
     {
         $this->allowFiltering = $allowFiltering;
+    }
+
+    public function getAllowFiltering(): bool
+    {
+        return $this->allowFiltering;
     }
 
     /**
@@ -589,9 +607,19 @@ abstract class AbstractListView
         $this->allowInteractions = $allowInteractions;
     }
 
+    public function getAllowInteractions(): bool
+    {
+        return $this->allowInteractions;
+    }
+
     public function setAllowBulkInteractions(bool $allowBulkInteractions): void
     {
         $this->allowBulkInteractions = $allowBulkInteractions;
+    }
+
+    public function getAllowBulkInteractions(): bool
+    {
+        return $this->allowBulkInteractions;
     }
 
     /**

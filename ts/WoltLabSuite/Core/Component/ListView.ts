@@ -24,6 +24,10 @@ export class ListView {
   readonly #state: State;
   readonly #noItemsNotice: HTMLElement;
   readonly #bulkInteractionProviderClassName: string;
+  readonly #allowFiltering: boolean;
+  readonly #allowSorting: boolean;
+  readonly #allowInteractions: boolean;
+  readonly #allowBulkInteractions: boolean;
   #listViewParameters?: Map<string, string>;
 
   constructor(
@@ -36,12 +40,20 @@ export class ListView {
     defaultSortField = "",
     defaultSortOrder = "ASC",
     bulkInteractionProviderClassName: string,
+    allowFiltering = true,
+    allowSorting = true,
+    allowInteractions = true,
+    allowBulkInteractions = true,
     listViewParameters?: Map<string, string>,
   ) {
     this.#viewClassName = viewClassName;
     this.#viewElement = document.getElementById(`${viewId}_items`) as HTMLElement;
     this.#noItemsNotice = document.getElementById(`${viewId}_noItemsNotice`) as HTMLElement;
     this.#bulkInteractionProviderClassName = bulkInteractionProviderClassName;
+    this.#allowFiltering = allowFiltering;
+    this.#allowSorting = allowSorting;
+    this.#allowInteractions = allowInteractions;
+    this.#allowBulkInteractions = allowBulkInteractions;
     this.#listViewParameters = listViewParameters;
 
     this.#initInteractions();
@@ -57,6 +69,10 @@ export class ListView {
       this.#state.getSortOrder(),
       this.#state.getActiveFilters(),
       this.#listViewParameters,
+      this.#allowFiltering,
+      this.#allowSorting,
+      this.#allowInteractions,
+      this.#allowBulkInteractions,
     );
     setInnerHtml(this.#viewElement, response.template);
 
@@ -76,6 +92,8 @@ export class ListView {
       item.dataset.objectId!,
       this.#state.getActiveFilters(),
       this.#listViewParameters,
+      this.#allowInteractions,
+      this.#allowBulkInteractions,
     );
     item.replaceWith(createFragmentFromHtml(template));
     this.#state.refreshSelection();

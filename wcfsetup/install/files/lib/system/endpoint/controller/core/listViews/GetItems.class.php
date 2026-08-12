@@ -40,6 +40,11 @@ final class GetItems implements IController
             throw new PermissionDeniedException();
         }
 
+        $view->setAllowFiltering($parameters->allowFiltering);
+        $view->setAllowSorting($parameters->allowSorting);
+        $view->setAllowInteractions($parameters->allowInteractions);
+        $view->setAllowBulkInteractions($parameters->allowBulkInteractions);
+
         $view->setPageNo($parameters->pageNo);
         if ($parameters->sortField !== '') {
             $view->setSortField($parameters->sortField);
@@ -89,5 +94,9 @@ final class GetItemsParameters
         public readonly array $filters,
         /** @var array<string, string|string[]> */
         public readonly array $listViewParameters,
+        public readonly bool $allowFiltering = true,
+        public readonly bool $allowSorting = true,
+        public readonly bool $allowInteractions = true,
+        public readonly bool $allowBulkInteractions = true,
     ) {}
 }

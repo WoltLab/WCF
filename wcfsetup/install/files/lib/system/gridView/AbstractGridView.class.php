@@ -87,6 +87,11 @@ abstract class AbstractGridView
     private array $extraFilters = [];
 
     /**
+     * unique identifier of this view to prevent collisions
+     */
+    private string $uniqueID;
+
+    /**
      * Adds a new column to the grid view.
      */
     public function addColumn(GridViewColumn $column): void
@@ -450,16 +455,19 @@ abstract class AbstractGridView
      */
     public function getID(): string
     {
-        $id = \str_replace('\\', '_', static::class);
-
-        if ($this->getParameters() !== []) {
-            $parameters = $this->getParameters();
-            \array_multisort($parameters);
-
-            $id .= '_' . \sha1(\serialize($parameters));
+        if (!isset($this->uniqueID)) {
+            // This must be as unique as possible to avoid collisions with
+            // list views generated for the same class and parameters within
+            // the same page. This can happen when an identically configured
+            // view in a box appears on the page.
+            $this->uniqueID = \sprintf(
+                '%s_%s',
+                \str_replace('\\', '_', static::class),
+                \bin2hex(\random_bytes(20)),
+            );
         }
 
-        return $id;
+        return $this->uniqueID;
     }
 
     /**
@@ -754,7 +762,7 @@ abstract class AbstractGridView
             if (!\in_array($this->getSortField(), $sortableColumnIDs, true)) {
                 if (\ENABLE_DEBUG_MODE !== 0) {
                     throw new \InvalidArgumentException("Invalid value '{$this->getSortField()}' as sort field given.");
-                } {
+                } else {
                     $this->setSortField('');
                 }
             }
