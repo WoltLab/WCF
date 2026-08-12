@@ -755,7 +755,7 @@ abstract class AbstractGridView
             if (!\in_array($this->getSortField(), \array_map(fn($column) => $column->getID(), $this->getSortableColumns()))) {
                 if (\ENABLE_DEBUG_MODE) {
                     throw new \InvalidArgumentException("Invalid value '{$this->getSortField()}' as sort field given.");
-                } {
+                } else {
                     $this->setSortField('');
                 }
             }
