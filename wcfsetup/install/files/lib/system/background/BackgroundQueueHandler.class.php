@@ -113,7 +113,7 @@ final class BackgroundQueueHandler extends SingletonFactory
         $user = WCF::getUser();
 
         try {
-            SessionHandler::getInstance()->changeUser(new User(null), true);
+            SessionHandler::getInstance()->changeUser(User::getGuestUser(), true);
             if (!WCF::debugModeIsEnabled()) {
                 \ob_start();
             }

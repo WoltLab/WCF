@@ -108,9 +108,11 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
     {
         if ($this->affectedObject !== null && $this->userProfile === null) {
             if ($this->affectedObject->getUserID() !== null) {
-                $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->affectedObject->getUserID());
+                $this->userProfile = UserProfileRuntimeCache::getInstance()
+                    ->getObject($this->affectedObject->getUserID())
+                    ?? UserProfile::getGuestUserProfile($this->affectedObject->getUsername());
             } else {
-                $this->userProfile = new UserProfile(new User(null, []));
+                $this->userProfile = UserProfile::getGuestUserProfile();
             }
         }
 

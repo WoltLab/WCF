@@ -509,7 +509,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
         $this->actualUser = WCF::getUser();
 
         // login as system user
-        WCF::getSession()->changeUser(new User(null, ['username' => 'System', 'userID' => 0]), true);
+        WCF::getSession()->changeUser(User::getGuestUser('System'), true);
     }
 
     /**

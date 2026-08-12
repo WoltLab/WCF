@@ -983,7 +983,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function canEditOwnProfile()
     {
-        if ($this->pendingActivation() || !$this->hasPermission('user.profile.canEditUserProfile')) {
+        if ($this->isGuest() || $this->pendingActivation() || !$this->hasPermission('user.profile.canEditUserProfile')) {
             return false;
         }
 
@@ -1219,12 +1219,10 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      *
      * Such objects can also be used in situations where the relevant user has been deleted
      * but their original username is still known.
-     *
-     * @return  UserProfile
      */
-    public static function getGuestUserProfile(string $username)
+    public static function getGuestUserProfile(string $username = ''): UserProfile
     {
-        return new self(new User(null, ['username' => $username]));
+        return new self(User::getGuestUser($username));
     }
 
     /**

@@ -118,7 +118,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 
         // switch session owner to 'system' during execution of cronjobs
         $actualUser = WCF::getUser();
-        WCF::getSession()->changeUser(new User(null, ['userID' => 0, 'username' => 'System']), true);
+        WCF::getSession()->changeUser(User::getGuestUser('System'), true);
         WCF::getSession()->disableUpdate();
 
         try {
@@ -233,7 +233,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
     public function executeCronjobs()
     {
         // switch session owner to 'system' during execution of cronjobs
-        WCF::getSession()->changeUser(new User(null, ['userID' => 0, 'username' => 'System']), true);
+        WCF::getSession()->changeUser(User::getGuestUser('System'), true);
         WCF::getSession()->disableUpdate();
 
         CronjobScheduler::getInstance()->executeCronjobs();

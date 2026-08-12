@@ -55,7 +55,7 @@ final class CronjobScheduler extends SingletonFactory
 
         $user = WCF::getUser();
         try {
-            SessionHandler::getInstance()->changeUser(new User(null), true);
+            SessionHandler::getInstance()->changeUser(User::getGuestUser(), true);
 
             foreach ($cronjobEditors as $cronjobEditor) {
                 // Reset the memory usage for each cronjob, allowing to measure each individual

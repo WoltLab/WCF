@@ -97,7 +97,7 @@ class UserTrophy extends DatabaseObject
         }
 
         if ($user->isGuest()) {
-            $userProfile = new UserProfile(new User(null, []));
+            $userProfile = UserProfile::getGuestUserProfile();
         } else {
             $userProfile = UserProfileRuntimeCache::getInstance()->getObject($user->userID);
         }

@@ -2,7 +2,6 @@
 
 namespace wcf\form;
 
-use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
@@ -38,7 +37,7 @@ class ModerationReportForm extends AbstractModerationForm
 
         $reportUser = UserProfileRuntimeCache::getInstance()->getObject($this->queue->userID);
         if ($reportUser === null) {
-            $reportUser = new UserProfile(new User(null, []));
+            $reportUser = UserProfile::getGuestUserProfile();
         }
 
         WCF::getTPL()->assign([

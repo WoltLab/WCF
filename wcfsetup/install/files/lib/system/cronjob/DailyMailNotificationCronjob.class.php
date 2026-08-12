@@ -134,10 +134,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob
 
         // load authors
         $authors = UserProfileRuntimeCache::getInstance()->getObjects($authorIDs);
-        $unknownAuthor = new UserProfile(new User(
-            null,
-            ['userID' => null, 'username' => WCF::getLanguage()->get('wcf.user.guest')]
-        ));
+        $unknownAuthor = UserProfile::getGuestUserProfile(WCF::getLanguage()->get('wcf.user.guest'));
 
         // load objects associated with each object type
         foreach ($objectTypes as $objectType => $objectData) {

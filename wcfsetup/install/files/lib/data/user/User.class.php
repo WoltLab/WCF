@@ -716,4 +716,69 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     {
         return $this->userID === 0;
     }
+
+    /**
+     * Returns a user object for a guest with the given username.
+     *
+     * Such objects can also be used in situations where the relevant user has been deleted
+     * but their original username is still known.
+     *
+     * Every property is populated: the non-nullable ones receive the default value of their
+     * database column, while the nullable ones implicitly resolve to `null`. Reading any
+     * property is therefore safe and yields a value of the documented type. The `userID` is
+     * always `0`, thus `isGuest()` returns `true` for these objects.
+     *
+     * The `password` is set to the invalid hash `invalid:`, matching the default of the
+     * database column, therefore `checkPassword()` will never succeed.
+     *
+     * `disableAvatar`, `disableSignature` and `disableCoverPhoto` deliberately deviate from
+     * the default of their database column and are set to `1`. A guest can never own any of
+     * these assets and the checks guarding them compare the `userID` against the one of the
+     * active user, which matches for a guest viewing a guest. The disabled state is what
+     * prevents `UserProfile::canEditAvatar()` and `UserProfile::canEditCoverPhoto()` from
+     * falling through to the permission check in that case. Do not change these values to
+     * the default of their database column.
+     *
+     * @since 6.3
+     */
+    public static function getGuestUser(string $username = ''): User
+    {
+        return new self(null, [
+            'userID' => 0,
+            'username' => $username,
+            'email' => '',
+            'password' => 'invalid:',
+            'accessToken' => '',
+            'languageID' => 0,
+            'registrationDate' => 0,
+            'styleID' => 0,
+            'banned' => 0,
+            'banExpires' => 0,
+            'activationCode' => 0,
+            'lastLostPasswordRequestTime' => 0,
+            'lastUsernameChange' => 0,
+            'newEmail' => '',
+            'oldUsername' => '',
+            'quitStarted' => 0,
+            'reactivationCode' => 0,
+            'registrationIpAddress' => '',
+            'disableAvatar' => 1,
+            'disableAvatarExpires' => 0,
+            'signatureEnableHtml' => 0,
+            'disableSignature' => 1,
+            'disableSignatureExpires' => 0,
+            'lastActivityTime' => 0,
+            'userTitle' => '',
+            'activityPoints' => 0,
+            'notificationMailToken' => '',
+            'authData' => '',
+            'likesReceived' => 0,
+            'disableCoverPhoto' => 1,
+            'disableCoverPhotoExpires' => 0,
+            'articles' => 0,
+            'blacklistMatches' => '',
+            'multifactorActive' => 0,
+            'trophyPoints' => 0,
+        ]);
+    }
 }

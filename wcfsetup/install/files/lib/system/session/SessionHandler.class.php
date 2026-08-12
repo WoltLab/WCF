@@ -551,7 +551,7 @@ final class SessionHandler extends SingletonFactory
         }
 
         $this->sessionID = $sessionID;
-        $this->user = new User($row['userID']);
+        $this->user = $row['userID'] === null ? User::getGuestUser() : new User($row['userID']);
         $this->variables = $variables;
 
         // Update ipAddress, userAgent and lastActivityTime only once per minute to
@@ -665,7 +665,7 @@ final class SessionHandler extends SingletonFactory
         ]);
 
         $this->variables = $variables;
-        $this->user = new User(null);
+        $this->user = User::getGuestUser();
         $this->firstVisit = true;
 
         HeaderUtil::setCookie(
