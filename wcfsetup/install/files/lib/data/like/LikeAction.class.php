@@ -76,6 +76,10 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
     public function validateGetLikeDetails()
     {
         $this->validateObjectParameters();
+
+        if (!WCF::getSession()->getPermission('user.like.canViewLike')) {
+            throw new PermissionDeniedException();
+        }
     }
 
     /**
@@ -254,6 +258,10 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
     public function validateGetGroupedUserList()
     {
         $this->validateObjectParameters();
+
+        if (!WCF::getSession()->getPermission('user.like.canViewLike')) {
+            throw new PermissionDeniedException();
+        }
 
         $this->readInteger('pageNo');
 
