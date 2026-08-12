@@ -26,12 +26,12 @@ final class TypeNodeBuilder implements NodeBuilder
     public function __construct(
         private ArrayNodeBuilder $arrayNodeBuilder,
         private ListNodeBuilder $listNodeBuilder,
-        private ShapedArrayNodeBuilder $shapedArrayNodeBuilder,
         private ScalarNodeBuilder $scalarNodeBuilder,
         private UnionNodeBuilder $unionNodeBuilder,
         private NullNodeBuilder $nullNodeBuilder,
         private MixedNodeBuilder $mixedNodeBuilder,
         private UndefinedObjectNodeBuilder $undefinedObjectNodeBuilder,
+        private KeyConverterNodeBuilder $shapedArrayNodeBuilder,
         private ObjectNodeBuilder $objectNodeBuilder,
     ) {}
 
