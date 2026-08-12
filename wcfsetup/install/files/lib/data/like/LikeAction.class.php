@@ -337,10 +337,21 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         $this->readInteger('likeValue');
         $this->readString('likeType');
 
+        if (!WCF::getSession()->getPermission('user.like.canViewLike')) {
+            throw new PermissionDeniedException();
+        }
+
         $user = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
 
         if ($user === null) {
             throw new IllegalLinkException();
+        }
+
+        if (
+            $user->userID !== WCF::getUser()->userID
+            && !WCF::getSession()->getPermission('user.profile.canViewUserProfile')
+        ) {
+            throw new PermissionDeniedException();
         }
 
         if ($user->isProtected()) {
