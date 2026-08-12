@@ -2,13 +2,11 @@
 
 namespace wcf\acp\form;
 
-use CuyZ\Valinor\Mapper\MappingError;
 use wcf\acp\page\MenuItemListPage;
 use wcf\data\menu\item\MenuItem;
 use wcf\data\menu\Menu;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\http\Helper;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\interaction\admin\MenuItemInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\request\LinkHandler;
@@ -33,23 +31,7 @@ class MenuItemEditForm extends MenuItemAddForm
     {
         AbstractFormBuilderForm::readParameters();
 
-        try {
-            $queryParameters = Helper::mapQueryParameters(
-                $_GET,
-                <<<'EOT'
-                    array {
-                        id: positive-int
-                    }
-                    EOT
-            );
-            $this->formObject = new MenuItem($queryParameters['id']);
-
-            if ($this->formObject->getObjectID() === 0) {
-                throw new IllegalLinkException();
-            }
-        } catch (MappingError) {
-            throw new IllegalLinkException();
-        }
+        $this->formObject = Helper::fetchObjectFromQueryParameter(MenuItem::class);
 
         $this->menuID = $this->formObject->menuID;
         $this->menu = new Menu($this->menuID);

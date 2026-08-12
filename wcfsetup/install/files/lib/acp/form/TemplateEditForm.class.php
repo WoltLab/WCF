@@ -2,7 +2,6 @@
 
 namespace wcf\acp\form;
 
-use CuyZ\Valinor\Mapper\MappingError;
 use wcf\acp\page\TemplateListPage;
 use wcf\data\template\Template;
 use wcf\form\AbstractFormBuilderForm;
@@ -37,21 +36,9 @@ class TemplateEditForm extends TemplateAddForm
     {
         AbstractFormBuilderForm::readParameters();
 
-        try {
-            $queryParameters = Helper::mapQueryParameters(
-                $_GET,
-                <<<'EOT'
-                    array {
-                        id: positive-int
-                    }
-                    EOT
-            );
-            $this->formObject = new Template($queryParameters['id']);
+        $this->formObject = Helper::fetchObjectFromQueryParameter(Template::class);
 
-            if ($this->formObject->getObjectID() === 0 || $this->formObject->templateGroupID === null) {
-                throw new IllegalLinkException();
-            }
-        } catch (MappingError) {
+        if ($this->formObject->templateGroupID === null) {
             throw new IllegalLinkException();
         }
     }

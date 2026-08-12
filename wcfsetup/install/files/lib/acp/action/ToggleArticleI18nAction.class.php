@@ -2,7 +2,6 @@
 
 namespace wcf\acp\action;
 
-use CuyZ\Valinor\Mapper\MappingError;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -33,23 +32,7 @@ final class ToggleArticleI18nAction implements RequestHandlerInterface
     {
         WCF::getSession()->checkPermissions(['admin.content.article.canManageArticle']);
 
-        try {
-            $parameters = Helper::mapQueryParameters(
-                $_GET,
-                <<<'EOT'
-                    array {
-                        id: positive-int
-                    }
-                    EOT
-            );
-            $article = new Article($parameters['id']);
-
-            if ($article->isNil()) {
-                throw new IllegalLinkException();
-            }
-        } catch (MappingError) {
-            throw new IllegalLinkException();
-        }
+        $article = Helper::fetchObjectFromQueryParameter(Article::class);
 
         $this->assertUserCanToggleI18n($article);
 

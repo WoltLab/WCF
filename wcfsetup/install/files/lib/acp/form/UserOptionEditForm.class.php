@@ -2,12 +2,10 @@
 
 namespace wcf\acp\form;
 
-use CuyZ\Valinor\Mapper\MappingError;
 use wcf\acp\page\UserOptionListPage;
 use wcf\data\user\option\UserOption;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\http\Helper;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\interaction\admin\UserOptionInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
@@ -39,24 +37,7 @@ class UserOptionEditForm extends UserOptionAddForm
     {
         parent::readParameters();
 
-        try {
-            $queryParameters = Helper::mapQueryParameters(
-                $_GET,
-                <<<'EOT'
-                    array {
-                        id: positive-int
-                    }
-                    EOT
-            );
-        } catch (MappingError) {
-            throw new IllegalLinkException();
-        }
-
-        $this->formObject = new UserOption($queryParameters['id']);
-
-        if ($this->formObject->getObjectID() === 0) {
-            throw new IllegalLinkException();
-        }
+        $this->formObject = Helper::fetchObjectFromQueryParameter(UserOption::class);
     }
 
     #[\Override]

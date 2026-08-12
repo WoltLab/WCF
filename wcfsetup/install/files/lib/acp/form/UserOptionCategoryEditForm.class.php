@@ -2,11 +2,9 @@
 
 namespace wcf\acp\form;
 
-use CuyZ\Valinor\Mapper\MappingError;
 use wcf\data\user\option\category\UserOptionCategory;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\http\Helper;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\I18nHandler;
 
 /**
@@ -33,23 +31,7 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm
     {
         parent::readParameters();
 
-        try {
-            $queryParameters = Helper::mapQueryParameters(
-                $_GET,
-                <<<'EOT'
-                    array {
-                        id: positive-int
-                    }
-                    EOT
-            );
-            $this->formObject = new UserOptionCategory($queryParameters['id']);
-
-            if ($this->formObject->getObjectID() === 0) {
-                throw new IllegalLinkException();
-            }
-        } catch (MappingError) {
-            throw new IllegalLinkException();
-        }
+        $this->formObject = Helper::fetchObjectFromQueryParameter(UserOptionCategory::class);
     }
 
     #[\Override]

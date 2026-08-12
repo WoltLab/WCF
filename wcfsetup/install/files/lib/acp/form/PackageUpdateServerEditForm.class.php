@@ -2,13 +2,11 @@
 
 namespace wcf\acp\form;
 
-use CuyZ\Valinor\Mapper\MappingError;
 use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\acp\page\PackageUpdateServerListPage;
 use wcf\data\IStorableObject;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\http\Helper;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\PasswordFormField;
 use wcf\system\form\builder\field\UrlFormField;
@@ -42,23 +40,7 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm
     {
         parent::readParameters();
 
-        try {
-            $queryParameters = Helper::mapQueryParameters(
-                $_GET,
-                <<<'EOT'
-                    array {
-                        id: positive-int
-                    }
-                    EOT
-            );
-            $this->formObject = new PackageUpdateServer($queryParameters['id']);
-
-            if ($this->formObject->getObjectID() === 0) {
-                throw new IllegalLinkException();
-            }
-        } catch (MappingError) {
-            throw new IllegalLinkException();
-        }
+        $this->formObject = Helper::fetchObjectFromQueryParameter(PackageUpdateServer::class);
 
         if ($this->formObject->isWoltLabUpdateServer() || $this->formObject->isWoltLabStoreServer()) {
             return new RedirectResponse(

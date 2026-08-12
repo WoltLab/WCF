@@ -2,11 +2,9 @@
 
 namespace wcf\acp\form;
 
-use CuyZ\Valinor\Mapper\MappingError;
 use wcf\acp\page\LabelListPage;
 use wcf\data\label\Label;
 use wcf\http\Helper;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\interaction\admin\LabelInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\request\LinkHandler;
@@ -41,24 +39,7 @@ class LabelEditForm extends LabelAddForm
     {
         parent::readParameters();
 
-        try {
-            $queryParameters = Helper::mapQueryParameters(
-                $_GET,
-                <<<'EOT'
-                    array {
-                        id: positive-int
-                    }
-                    EOT
-            );
-        } catch (MappingError) {
-            throw new IllegalLinkException();
-        }
-
-        $this->formObject = new Label($queryParameters['id']);
-
-        if ($this->formObject->getObjectID() === 0) {
-            throw new IllegalLinkException();
-        }
+        $this->formObject = Helper::fetchObjectFromQueryParameter(Label::class);
     }
 
     #[\Override]

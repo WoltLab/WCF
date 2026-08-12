@@ -2,11 +2,9 @@
 
 namespace wcf\acp\form;
 
-use CuyZ\Valinor\Mapper\MappingError;
 use wcf\acp\page\BBCodeMediaProviderListPage;
 use wcf\data\bbcode\media\provider\BBCodeMediaProvider;
 use wcf\http\Helper;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\interaction\admin\BBCodeMediaProviderInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\request\LinkHandler;
@@ -41,24 +39,7 @@ class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm
     {
         parent::readParameters();
 
-        try {
-            $queryParameters = Helper::mapQueryParameters(
-                $_GET,
-                <<<'EOT'
-                    array {
-                        id: positive-int
-                    }
-                    EOT
-            );
-        } catch (MappingError) {
-            throw new IllegalLinkException();
-        }
-
-        $this->formObject = new BBCodeMediaProvider($queryParameters['id']);
-
-        if ($this->formObject->getObjectID() === 0) {
-            throw new IllegalLinkException();
-        }
+        $this->formObject = Helper::fetchObjectFromQueryParameter(BBCodeMediaProvider::class);
     }
 
     #[\Override]

@@ -2,11 +2,9 @@
 
 namespace wcf\acp\form;
 
-use CuyZ\Valinor\Mapper\MappingError;
 use wcf\acp\page\TemplateGroupListPage;
 use wcf\data\template\group\TemplateGroup;
 use wcf\http\Helper;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\interaction\admin\TemplateGroupInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
@@ -37,26 +35,10 @@ class TemplateGroupEditForm extends TemplateGroupAddForm
     {
         parent::readParameters();
 
-        try {
-            $queryParameters = Helper::mapQueryParameters(
-                $_GET,
-                <<<'EOT'
-                    array {
-                        id: positive-int
-                    }
-                    EOT
-            );
-            $this->formObject = new TemplateGroup($queryParameters['id']);
+        $this->formObject = Helper::fetchObjectFromQueryParameter(TemplateGroup::class);
 
-            if ($this->formObject->getObjectID() === 0) {
-                throw new IllegalLinkException();
-            }
-
-            if ($this->formObject->isImmutable()) {
-                throw new PermissionDeniedException();
-            }
-        } catch (MappingError) {
-            throw new IllegalLinkException();
+        if ($this->formObject->isImmutable()) {
+            throw new PermissionDeniedException();
         }
     }
 

@@ -2,7 +2,6 @@
 
 namespace wcf\acp\action;
 
-use CuyZ\Valinor\Mapper\MappingError;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -14,7 +13,6 @@ use wcf\data\template\group\TemplateGroupAction;
 use wcf\data\template\TemplateAction;
 use wcf\data\template\TemplateList;
 use wcf\http\Helper;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\Psr15DialogForm;
@@ -38,23 +36,7 @@ final class TemplateGroupCopyAction implements RequestHandlerInterface
             throw new PermissionDeniedException();
         }
 
-        try {
-            $queryParameters = Helper::mapQueryParameters(
-                $_GET,
-                <<<'EOT'
-                    array {
-                        id: positive-int
-                    }
-                    EOT
-            );
-            $templateGroup = new TemplateGroup($queryParameters['id']);
-
-            if ($templateGroup->isNil()) {
-                throw new IllegalLinkException();
-            }
-        } catch (MappingError) {
-            throw new IllegalLinkException();
-        }
+        $templateGroup = Helper::fetchObjectFromQueryParameter(TemplateGroup::class);
 
         $form = $this->getForm($templateGroup);
 
