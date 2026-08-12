@@ -2,7 +2,6 @@
 
 namespace wcf\system\html\input\node;
 
-use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\bbcode\BBCodeParser;
@@ -174,7 +173,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
 
         if (
             \preg_match(
-                '~thumbnail=(?P<thumbnail>tiny|small|large|medium)\b~',
+                '~thumbnail=(?P<thumbnail>small|large|medium)\b~',
                 $element->getAttribute('src'),
                 $matches
             )
