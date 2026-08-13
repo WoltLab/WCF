@@ -138,10 +138,7 @@ abstract class AbstractNodeTreeView
     /**
      * Returns true, if this node tree view is accessible for the active user.
      */
-    public function isAccessible(): bool
-    {
-        return true;
-    }
+    abstract public function isAccessible(): bool;
 
     /**
      * Gets the additional parameters of the node tree view.
