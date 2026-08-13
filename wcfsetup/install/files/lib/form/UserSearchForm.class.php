@@ -2,6 +2,7 @@
 
 namespace wcf\form;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\acp\form\UserOptionListForm;
 use wcf\data\search\SearchEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -11,7 +12,6 @@ use wcf\system\option\user\UserOptionHandler;
 use wcf\system\page\PageLocationManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -88,6 +88,10 @@ class UserSearchForm extends UserOptionListForm
     {
         parent::readData();
 
+        if ($this->hasPsr7Response()) {
+            return;
+        }
+
         $this->readOptionTree();
 
         // add breadcrumbs
@@ -136,9 +140,7 @@ class UserSearchForm extends UserOptionListForm
 
         // forward to result page
         $url = LinkHandler::getInstance()->getLink('MembersList', ['id' => $this->searchID]);
-        HeaderUtil::redirect($url);
-
-        exit;
+        $this->setPsr7Response(new RedirectResponse($url, 303));
     }
 
     #[\Override]

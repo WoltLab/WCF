@@ -129,9 +129,6 @@ class MediaPage extends AbstractPage
         }
     }
 
-    /**
-     * @return \Psr\Http\Message\ResponseInterface
-     */
     #[\Override]
     public function show()
     {
@@ -139,7 +136,9 @@ class MediaPage extends AbstractPage
 
         // etag caching
         if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] === '"' . $this->eTag . '"') {
-            return new EmptyResponse(304);
+            $this->setPsr7Response(new EmptyResponse(304));
+
+            return;
         }
 
         if ($this->thumbnail === '') {

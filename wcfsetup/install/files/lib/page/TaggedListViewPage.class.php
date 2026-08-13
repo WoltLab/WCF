@@ -3,7 +3,6 @@
 namespace wcf\page;
 
 use Laminas\Diactoros\Response\RedirectResponse;
-use wcf\data\DatabaseObjectList;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\tag\Tag;
@@ -122,12 +121,13 @@ class TaggedListViewPage extends AbstractListViewPage
         if ($this->objectType->getProcessor() instanceof ITaggedListViewProvider) {
             $this->provider = $this->objectType->getProcessor();
         } else {
-            return new RedirectResponse(
+            $this->setPsr7Response(new RedirectResponse(
                 LinkHandler::getInstance()->getControllerLink(CombinedTaggedPage::class, [
                     'objectType' => $this->objectType->objectType,
                     'tagIDs' => $this->tagIDs,
                 ]),
-            );
+                303
+            ));
         }
     }
 

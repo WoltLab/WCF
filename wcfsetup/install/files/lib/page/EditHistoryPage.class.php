@@ -2,6 +2,7 @@
 
 namespace wcf\page;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\data\DatabaseObject;
 use wcf\data\edit\history\entry\EditHistoryEntry;
 use wcf\data\edit\history\entry\EditHistoryEntryList;
@@ -13,7 +14,6 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\Diff;
-use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -151,15 +151,18 @@ class EditHistoryPage extends AbstractPage
         }
 
         if ($_POST !== []) {
-            HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(EditHistoryPage::class, [
-                'objectID' => $this->objectID,
-                'objectType' => $this->objectType->objectType,
-                'newID' => $this->newID,
-                'oldID' => $this->oldID,
-                'mode' => $this->mode,
-            ]));
+            $this->setPsr7Response(new RedirectResponse(
+                LinkHandler::getInstance()->getControllerLink(EditHistoryPage::class, [
+                    'objectID' => $this->objectID,
+                    'objectType' => $this->objectType->objectType,
+                    'newID' => $this->newID,
+                    'oldID' => $this->oldID,
+                    'mode' => $this->mode,
+                ]),
+                303
+            ));
 
-            exit;
+            return;
         }
     }
 

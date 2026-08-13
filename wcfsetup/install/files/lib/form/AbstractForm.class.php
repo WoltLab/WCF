@@ -57,6 +57,7 @@ abstract class AbstractForm extends AbstractPage implements IForm
         EventHandler::getInstance()->fireAction($this, 'submit');
 
         $this->maybeSetPsr7Response(
+            // @phpstan-ignore method.void (intended for reasons of backward compatibility)
             $this->readFormParameters()
         );
         if ($this->hasPsr7Response()) {
@@ -65,6 +66,7 @@ abstract class AbstractForm extends AbstractPage implements IForm
 
         try {
             $this->maybeSetPsr7Response(
+                // @phpstan-ignore method.void (intended for reasons of backward compatibility)
                 $this->validate()
             );
             if ($this->hasPsr7Response()) {
@@ -75,6 +77,7 @@ abstract class AbstractForm extends AbstractPage implements IForm
             // this point the input is correct.
 
             $this->maybeSetPsr7Response(
+                // @phpstan-ignore method.void (intended for reasons of backward compatibility)
                 $this->save()
             );
             if ($this->hasPsr7Response()) {
@@ -143,6 +146,9 @@ abstract class AbstractForm extends AbstractPage implements IForm
     {
         if ($_POST !== [] || $_FILES !== []) {
             $this->submit();
+            if ($this->hasPsr7Response()) {
+                return;
+            }
         }
 
         parent::readData();

@@ -2,13 +2,13 @@
 
 namespace wcf\page;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\data\page\PageCache;
 use wcf\data\user\online\UsersOnlineList;
 use wcf\system\page\handler\IOnlineLocationPageHandler;
 use wcf\system\page\PageLocationManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
 
 /**
  * Shows page which lists all users who are online.
@@ -68,13 +68,16 @@ class UsersOnlineListPage extends SortablePage
         }
 
         if ($_POST !== []) {
-            HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(
-                UsersOnlineListPage::class,
-                [],
-                'sortField=' . $this->sortField . '&sortOrder=' . $this->sortOrder
+            $this->setPsr7Response(new RedirectResponse(
+                LinkHandler::getInstance()->getControllerLink(
+                    UsersOnlineListPage::class,
+                    [],
+                    'sortField=' . $this->sortField . '&sortOrder=' . $this->sortOrder
+                ),
+                303
             ));
 
-            exit;
+            return;
         }
     }
 

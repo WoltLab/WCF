@@ -22,7 +22,6 @@ use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\FileUtil;
-use wcf\util\HeaderUtil;
 use wcf\util\HtmlString;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;
@@ -315,9 +314,10 @@ final class RescueModeForm extends AbstractForm
         $application = new Application($application->packageID);
 
         // redirect to ACP of currently active application
-        HeaderUtil::redirect($application->getPageURL() . 'acp/');
-
-        exit;
+        $this->setPsr7Response(new RedirectResponse(
+            $application->getPageURL() . 'acp/',
+            303
+        ));
     }
 
     #[\Override]

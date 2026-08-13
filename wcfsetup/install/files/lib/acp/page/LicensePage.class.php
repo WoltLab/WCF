@@ -75,14 +75,17 @@ final class LicensePage extends AbstractPage
         }
 
         if (!LicenseApi::hasLicenseCredentials()) {
-            return new RedirectResponse(
+            $this->setPsr7Response(new RedirectResponse(
                 LinkHandler::getInstance()->getControllerLink(
                     LicenseEditForm::class,
                     [
                         'url' => LinkHandler::getInstance()->getControllerLink(LicensePage::class),
                     ],
                 ),
-            );
+                303
+            ));
+
+            return;
         }
 
         PackageUpdateDispatcher::getInstance()->refreshPackageDatabase();
@@ -91,7 +94,7 @@ final class LicensePage extends AbstractPage
         try {
             $licenseData = $licenseApi->getUpToDateLicenseData();
         } catch (ConnectException | ClientExceptionInterface) {
-            return new RedirectResponse(
+            $this->setPsr7Response(new RedirectResponse(
                 LinkHandler::getInstance()->getControllerLink(
                     LicenseEditForm::class,
                     [
@@ -99,7 +102,10 @@ final class LicensePage extends AbstractPage
                         'url' => LinkHandler::getInstance()->getControllerLink(LicensePage::class),
                     ],
                 ),
-            );
+                303
+            ));
+
+            return;
         } catch (ParsingFailed $e) {
             if (\ENABLE_DEBUG_MODE !== 0 && \ENABLE_DEVELOPER_TOOLS !== 0) {
                 throw $e;

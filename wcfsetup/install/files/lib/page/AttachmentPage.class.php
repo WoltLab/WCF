@@ -135,7 +135,9 @@ class AttachmentPage extends AbstractPage
                 $url = $this->attachment->getLink();
             }
 
-            return new RedirectResponse($url);
+            $this->setPsr7Response(new RedirectResponse($url, 303));
+
+            return;
         }
 
         // get file data
@@ -205,7 +207,9 @@ class AttachmentPage extends AbstractPage
 
         // etag caching
         if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] === '"' . $this->eTag . '"') {
-            return new EmptyResponse(304);
+            $this->setPsr7Response(new EmptyResponse(304));
+
+            return;
         }
 
         if ($this->tiny === 0 && $this->thumbnail === 0) {

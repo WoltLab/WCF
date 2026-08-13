@@ -54,7 +54,7 @@ class ReauthenticationForm extends AbstractFormBuilderForm
         }
 
         if (!WCF::getSession()->needsReauthentication()) {
-            return $this->getRedirectResponse();
+            $this->setPsr7Response($this->getRedirectResponse());
         }
     }
 

@@ -2,6 +2,7 @@
 
 namespace wcf\acp\form;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\acp\action\FirstTimeSetupAction;
 use wcf\data\option\Option;
 use wcf\data\option\OptionAction;
@@ -9,7 +10,6 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\option\OptionHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
 
 /**
  * Shows general options during first time setup.
@@ -67,6 +67,10 @@ final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
     {
         parent::readData();
 
+        if ($this->hasPsr7Response()) {
+            return;
+        }
+
         foreach ($this->optionNames as $optionName) {
             $this->options[] = $this->optionHandler->getSingleOption($optionName);
         }
@@ -83,12 +87,12 @@ final class FirstTimeSetupOptionsForm extends AbstractOptionListForm
         $this->objectAction->executeAction();
         $this->saved();
 
-        \http_response_code(303);
-        HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(
-            FirstTimeSetupAction::class,
+        $this->setPsr7Response(new RedirectResponse(
+            LinkHandler::getInstance()->getControllerLink(
+                FirstTimeSetupAction::class,
+            ),
+            303
         ));
-
-        exit;
     }
 
     #[\Override]

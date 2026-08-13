@@ -71,10 +71,15 @@ class DeletedContentListPage extends MultipleLinkPage
 
             $provider = \reset($this->providers);
             if ($provider instanceof IDeletedContentListViewProvider) {
-                return new RedirectResponse(LinkHandler::getInstance()->getControllerLink(
-                    DeletedContentListViewPage::class,
-                    ['provider' => $provider->getIdentifier()]
+                $this->setPsr7Response(new RedirectResponse(
+                    LinkHandler::getInstance()->getControllerLink(
+                        DeletedContentListViewPage::class,
+                        ['provider' => $provider->getIdentifier()]
+                    ),
+                    303
                 ));
+
+                return;
             }
 
             $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(

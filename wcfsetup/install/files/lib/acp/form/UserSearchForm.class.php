@@ -2,6 +2,7 @@
 
 namespace wcf\acp\form;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\acp\page\UserListPage;
 use wcf\data\condition\Condition;
 use wcf\data\object\type\ObjectType;
@@ -16,7 +17,6 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
 
 /**
  * Shows the user search form.
@@ -177,6 +177,10 @@ class UserSearchForm extends UserOptionListForm
 
         parent::readData();
 
+        if ($this->hasPsr7Response()) {
+            return;
+        }
+
         // add email column for authorized users
         if (WCF::getSession()->hasPermission('admin.user.canEditMailAddress')) {
             \array_unshift($this->columns, 'email');
@@ -222,11 +226,12 @@ class UserSearchForm extends UserOptionListForm
         $this->saved();
 
         // forward to result page
-        HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(UserListPage::class, [
-            'id' => $this->searchID,
-        ], 'sortField=' . \rawurlencode($this->sortField) . '&sortOrder=' . \rawurlencode($this->sortOrder)));
-
-        exit;
+        $this->setPsr7Response(new RedirectResponse(
+            LinkHandler::getInstance()->getControllerLink(UserListPage::class, [
+                'id' => $this->searchID,
+            ], 'sortField=' . \rawurlencode($this->sortField) . '&sortOrder=' . \rawurlencode($this->sortOrder)),
+            303
+        ));
     }
 
     #[\Override]

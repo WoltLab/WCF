@@ -84,9 +84,14 @@ final class DeletedContentListViewPage extends AbstractListViewPage
         }
 
         if (!($this->providers[$this->providerID] instanceof IDeletedContentListViewProvider)) {
-            return new RedirectResponse(LinkHandler::getInstance()->getControllerLink(DeletedContentListPage::class, [
-                'objectType' => $this->providerID,
-            ]));
+            $this->setPsr7Response(new RedirectResponse(
+                LinkHandler::getInstance()->getControllerLink(DeletedContentListPage::class, [
+                    'objectType' => $this->providerID,
+                ]),
+                303
+            ));
+
+            return;
         }
 
         $this->provider = $this->providers[$this->providerID];

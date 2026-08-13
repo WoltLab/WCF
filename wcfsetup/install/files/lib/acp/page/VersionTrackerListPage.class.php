@@ -2,6 +2,7 @@
 
 namespace wcf\acp\page;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\data\DatabaseObject;
 use wcf\data\IVersionTrackerObject;
 use wcf\data\language\Language;
@@ -15,7 +16,6 @@ use wcf\system\version\VersionTracker;
 use wcf\system\version\VersionTrackerEntry;
 use wcf\system\WCF;
 use wcf\util\Diff;
-use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -151,14 +151,17 @@ class VersionTrackerListPage extends AbstractPage
         }
 
         if ($_POST !== []) {
-            HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(VersionTrackerListPage::class, [
-                'objectID' => $this->objectID,
-                'objectType' => $this->objectType,
-                'newID' => $this->newID,
-                'oldID' => $this->oldID,
-            ]));
+            $this->setPsr7Response(new RedirectResponse(
+                LinkHandler::getInstance()->getControllerLink(VersionTrackerListPage::class, [
+                    'objectID' => $this->objectID,
+                    'objectType' => $this->objectType,
+                    'newID' => $this->newID,
+                    'oldID' => $this->oldID,
+                ]),
+                303
+            ));
 
-            exit;
+            return;
         }
     }
 

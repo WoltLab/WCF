@@ -2,6 +2,7 @@
 
 namespace wcf\acp\form;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\command\article\CreateArticle;
 use wcf\command\article\UpdateArticle;
 use wcf\data\article\Article;
@@ -44,7 +45,6 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\tagging\TagEngine;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
 use wcf\util\HtmlString;
 use wcf\util\StringUtil;
 
@@ -127,9 +127,12 @@ class ArticleAddForm extends AbstractDatabaseObjectBuilderForm
             if ($this->categoryID !== 0) {
                 $parameters['categoryID'] = $this->categoryID;
             }
-            HeaderUtil::redirect(LinkHandler::getInstance()->getLink('ArticleList', $parameters));
 
-            exit;
+            // The omission of `getControllerLink` is intentional, since the form is also used in the front end.
+            $this->setPsr7Response(new RedirectResponse(
+                LinkHandler::getInstance()->getLink('ArticleList', $parameters),
+                303
+            ));
         }
     }
 

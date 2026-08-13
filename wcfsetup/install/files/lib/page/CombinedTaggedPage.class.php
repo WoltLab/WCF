@@ -134,12 +134,13 @@ class CombinedTaggedPage extends MultipleLinkPage
         }
 
         if ($this->objectType->getProcessor() instanceof ITaggedListViewProvider) {
-            return new RedirectResponse(
+            $this->setPsr7Response(new RedirectResponse(
                 LinkHandler::getInstance()->getControllerLink(TaggedListViewPage::class, [
                     'objectType' => $this->objectType->objectType,
                     'tagIDs' => $this->tagIDs,
                 ]),
-            );
+                303
+            ));
         } else {
             $this->processor = $this->objectType->getProcessor();
         }

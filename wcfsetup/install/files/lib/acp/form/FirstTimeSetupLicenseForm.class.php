@@ -3,6 +3,7 @@
 namespace wcf\acp\form;
 
 use GuzzleHttp\Exception\ConnectException;
+use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Client\ClientExceptionInterface;
 use wcf\acp\action\FirstTimeSetupAction;
 use wcf\data\option\Option;
@@ -22,7 +23,6 @@ use wcf\system\package\license\exception\ParsingFailed;
 use wcf\system\package\license\LicenseApi;
 use wcf\system\package\license\LicenseData;
 use wcf\system\request\LinkHandler;
-use wcf\util\HeaderUtil;
 
 /**
  * Sets up license data during first time setup.
@@ -172,11 +172,11 @@ final class FirstTimeSetupLicenseForm extends AbstractFormBuilderForm
 
         $this->saved();
 
-        \http_response_code(303);
-        HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(
-            FirstTimeSetupAction::class,
+        $this->setPsr7Response(new RedirectResponse(
+            LinkHandler::getInstance()->getControllerLink(
+                FirstTimeSetupAction::class,
+            ),
+            303
         ));
-
-        exit;
     }
 }

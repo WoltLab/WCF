@@ -43,9 +43,10 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm
         $this->formObject = Helper::fetchObjectFromQueryParameter(PackageUpdateServer::class);
 
         if ($this->formObject->isWoltLabUpdateServer() || $this->formObject->isWoltLabStoreServer()) {
-            return new RedirectResponse(
+            $this->setPsr7Response(new RedirectResponse(
                 LinkHandler::getInstance()->getControllerLink(LicenseEditForm::class),
-            );
+                303
+            ));
         }
     }
 

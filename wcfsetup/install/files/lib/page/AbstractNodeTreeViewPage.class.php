@@ -24,15 +24,12 @@ abstract class AbstractNodeTreeViewPage extends AbstractPage
      */
     protected AbstractNodeTreeView $nodeTreeView;
 
-    /**
-     * @phpstan-ignore return.unusedType
-     */
     #[\Override]
     public function show()
     {
         $this->canonicalURL = $this->getCanonicalUrl();
 
-        return parent::show();
+        parent::show();
     }
 
     #[\Override]

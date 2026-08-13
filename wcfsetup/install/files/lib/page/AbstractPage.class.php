@@ -107,6 +107,7 @@ abstract class AbstractPage implements IPage
     public function __run()
     {
         $this->maybeSetPsr7Response(
+            // @phpstan-ignore method.void (intended for reasons of backward compatibility)
             $this->readParameters()
         );
         if ($this->hasPsr7Response()) {
@@ -114,6 +115,7 @@ abstract class AbstractPage implements IPage
         }
 
         $this->maybeSetPsr7Response(
+            // @phpstan-ignore method.void (intended for reasons of backward compatibility)
             $this->show()
         );
         if ($this->hasPsr7Response()) {
@@ -221,9 +223,6 @@ abstract class AbstractPage implements IPage
         }
     }
 
-    /**
-     * @phpstan-ignore return.unusedType
-     */
     #[\Override]
     public function show()
     {
@@ -316,6 +315,7 @@ abstract class AbstractPage implements IPage
         $this->setActiveMenuItem();
 
         $this->maybeSetPsr7Response(
+            // @phpstan-ignore method.void (intended for reasons of backward compatibility)
             $this->readData()
         );
 

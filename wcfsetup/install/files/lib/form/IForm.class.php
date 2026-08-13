@@ -2,7 +2,6 @@
 
 namespace wcf\form;
 
-use Psr\Http\Message\ResponseInterface;
 use wcf\page\IPage;
 
 /**
@@ -24,21 +23,21 @@ interface IForm extends IPage
     /**
      * Validates form inputs.
      *
-     * @return void|ResponseInterface
+     * @return void
      */
     public function validate();
 
     /**
      * Saves the data of the form.
      *
-     * @return void|ResponseInterface
+     * @return void
      */
     public function save();
 
     /**
      * Reads the given form parameters.
      *
-     * @return void|ResponseInterface
+     * @return void
      */
     public function readFormParameters();
 }

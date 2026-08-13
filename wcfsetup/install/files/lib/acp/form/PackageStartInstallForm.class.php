@@ -2,6 +2,7 @@
 
 namespace wcf\acp\form;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\acp\page\PackageInstallationConfirmPage;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
@@ -16,7 +17,6 @@ use wcf\system\package\validation\PackageValidationManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
-use wcf\util\HeaderUtil;
 
 /**
  * Shows the package install and update form.
@@ -216,14 +216,15 @@ class PackageStartInstallForm extends AbstractForm
 
         $this->saved();
 
-        HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(
-            PackageInstallationConfirmPage::class,
-            [
-                'queueID' => $this->queue->queueID,
-            ]
+        $this->setPsr7Response(new RedirectResponse(
+            LinkHandler::getInstance()->getControllerLink(
+                PackageInstallationConfirmPage::class,
+                [
+                    'queueID' => $this->queue->queueID,
+                ]
+            ),
+            303
         ));
-
-        exit;
     }
 
     #[\Override]

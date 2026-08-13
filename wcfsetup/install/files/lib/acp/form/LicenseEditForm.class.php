@@ -60,7 +60,7 @@ final class LicenseEditForm extends AbstractFormBuilderForm
     private bool $failedValidation = false;
 
     #[\Override]
-    public function readParameters()
+    public function readParameters(): void
     {
         parent::readParameters();
 
@@ -75,7 +75,7 @@ final class LicenseEditForm extends AbstractFormBuilderForm
     }
 
     #[\Override]
-    protected function createForm()
+    protected function createForm(): void
     {
         parent::createForm();
 
@@ -162,7 +162,7 @@ final class LicenseEditForm extends AbstractFormBuilderForm
     }
 
     #[\Override]
-    protected function setFormAction()
+    protected function setFormAction(): void
     {
         if (!isset($this->url)) {
             parent::setFormAction();
@@ -177,7 +177,7 @@ final class LicenseEditForm extends AbstractFormBuilderForm
     }
 
     #[\Override]
-    public function save()
+    public function save(): void
     {
         AbstractForm::save();
 
@@ -237,7 +237,7 @@ final class LicenseEditForm extends AbstractFormBuilderForm
         $this->saved();
 
         if (isset($this->url)) {
-            return new RedirectResponse($this->url);
+            $this->setPsr7Response(new RedirectResponse($this->url, 303));
         }
     }
 }

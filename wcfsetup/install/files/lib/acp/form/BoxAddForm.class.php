@@ -2,6 +2,7 @@
 
 namespace wcf\acp\form;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\acp\page\BoxListPage;
 use wcf\data\box\Box;
 use wcf\data\box\BoxAction;
@@ -30,7 +31,6 @@ use wcf\system\page\handler\IMenuPageHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -246,6 +246,9 @@ class BoxAddForm extends AbstractForm
         }
 
         $this->readBoxType();
+        if ($this->hasPsr7Response()) {
+            return;
+        }
 
         $this->pageNodeList = (new PageNodeTree())->getNodeList();
 
@@ -310,9 +313,12 @@ class BoxAddForm extends AbstractForm
 
         // work-around to force adding boxes via dialog overlay
         if ($_POST === [] && $this->boxType === '') {
-            HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(BoxListPage::class, ['showBoxAddDialog' => 1]));
+            $this->setPsr7Response(new RedirectResponse(
+                LinkHandler::getInstance()->getControllerLink(BoxListPage::class, ['showBoxAddDialog' => 1]),
+                303
+            ));
 
-            exit;
+            return;
         }
 
         // validate box type

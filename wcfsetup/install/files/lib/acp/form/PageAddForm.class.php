@@ -2,6 +2,7 @@
 
 namespace wcf\acp\form;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\acp\page\PageListPage;
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationList;
@@ -31,7 +32,6 @@ use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -264,9 +264,12 @@ class PageAddForm extends AbstractForm
 
         // work-around to force adding pages via dialog overlay
         if ($_POST === [] && $this->pageType === '') {
-            HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(PageListPage::class, ['showPageAddDialog' => 1]));
+            $this->setPsr7Response(new RedirectResponse(
+                LinkHandler::getInstance()->getControllerLink(PageListPage::class, ['showPageAddDialog' => 1]),
+                303
+            ));
 
-            exit;
+            return;
         }
 
         try {

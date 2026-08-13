@@ -2,6 +2,7 @@
 
 namespace wcf\form;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\data\language\Language;
 use wcf\data\tag\Tag;
 use wcf\system\exception\UserInputException;
@@ -11,7 +12,6 @@ use wcf\system\tagging\TagCloud;
 use wcf\system\tagging\TagEngine;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\HeaderUtil;
 
 /**
  * Shows the tag search form.
@@ -118,6 +118,10 @@ class TagSearchForm extends AbstractCaptchaForm
 
         parent::readData();
 
+        if ($this->hasPsr7Response()) {
+            return;
+        }
+
         $this->tagCloud = new TagCloud();
     }
 
@@ -134,11 +138,10 @@ class TagSearchForm extends AbstractCaptchaForm
             $tagIDs .= 'tagIDs[]=' . $tag->tagID;
         }
 
-        HeaderUtil::redirect(
+        $this->setPsr7Response(new RedirectResponse(
             LinkHandler::getInstance()->getLink('CombinedTagged', [], $tagIDs),
-            true,
-            true
-        );
+            303
+        ));
     }
 
     #[\Override]

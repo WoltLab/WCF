@@ -23,7 +23,7 @@ interface IPage
     /**
      * Reads the given parameters.
      *
-     * @return void|ResponseInterface
+     * @return void
      */
     public function readParameters();
 
@@ -44,7 +44,7 @@ interface IPage
     /**
      * Reads/Gets the data to be displayed on this page.
      *
-     * @return void|ResponseInterface
+     * @return void
      */
     public function readData();
 
@@ -58,7 +58,7 @@ interface IPage
     /**
      * Shows the requested page.
      *
-     * @return void|ResponseInterface
+     * @return void
      */
     public function show();
 }
