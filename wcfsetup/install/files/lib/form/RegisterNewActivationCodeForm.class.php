@@ -134,7 +134,7 @@ final class RegisterNewActivationCodeForm extends AbstractFormBuilderForm
         }
 
         if (\mb_strtolower($value) !== \mb_strtolower($this->user->email)) {
-            if (User::getUserByEmail($value)->userID !== 0) {
+            if (!User::getUserByEmail($value)->isGuest()) {
                 $formField->addValidationError(
                     new FormFieldValidationError(
                         'notUnique',

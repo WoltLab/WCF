@@ -46,7 +46,7 @@ final class CheckForMultifactorRequirement implements MiddlewareInterface
 
     private function multifactorRequired(): bool
     {
-        return WCF::getUser()->userID !== 0
+        return !WCF::getUser()->isGuest()
             && WCF::getUser()->requiresMultifactor()
             && WCF::getUser()->multifactorActive === 0;
     }

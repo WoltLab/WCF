@@ -140,7 +140,7 @@ final class CheckForForceLogin implements MiddlewareInterface
 
     private function userCanBypassForceLogin(): bool
     {
-        return WCF::getUser()->userID !== 0
+        return !WCF::getUser()->isGuest()
             && !WCF::getUser()->pendingActivation();
     }
 

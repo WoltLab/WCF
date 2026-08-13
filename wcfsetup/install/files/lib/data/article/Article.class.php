@@ -362,7 +362,7 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
     {
         return \MODULE_LIKE !== 0
             && \ARTICLE_ENABLE_LIKE !== 0
-            && WCF::getUser()->userID !== 0
+            && !WCF::getUser()->isGuest()
             && $this->userID !== WCF::getUser()->userID
             && WCF::getSession()->hasPermission('user.like.canLike');
     }

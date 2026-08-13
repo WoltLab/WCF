@@ -89,7 +89,7 @@ final class HandleAccessToken implements MiddlewareInterface
         } else {
             $user = new User($userID);
             if (
-                $user->userID !== 0 && $user->accessToken !== '' && \hash_equals(
+                !$user->isGuest() && $user->accessToken !== '' && \hash_equals(
                     $user->accessToken,
                     $token
                 )

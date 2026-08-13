@@ -1,4 +1,4 @@
-{if !MESSAGE_ENABLE_USER_CONSENT || ($__wcf->user->userID && $__wcf->user->getUserOption('enableEmbeddedMedia'))}
+{if !MESSAGE_ENABLE_USER_CONSENT || (!$__wcf->user->isGuest() && $__wcf->user->getUserOption('enableEmbeddedMedia'))}
 	{assign var='googleMapsHidden' value=false}
 {else}
 	{assign var='googleMapsHidden' value=true}

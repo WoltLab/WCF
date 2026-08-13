@@ -206,7 +206,7 @@ class CLIWCF extends WCF
         if (!empty($_ENV['WCF_SESSION_ID'])) {
             self::getSession()->delete();
             self::getSession()->load(SessionEditor::class, $_ENV['WCF_SESSION_ID']);
-            if (self::getUser()->userID === 0) {
+            if (self::getUser()->isGuest()) {
                 self::getReader()->println('Invalid sessionID');
 
                 exit(1);

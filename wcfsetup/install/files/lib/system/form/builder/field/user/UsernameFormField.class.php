@@ -123,7 +123,7 @@ final class UsernameFormField extends AbstractFormField implements
                         'invalid',
                         'wcf.form.field.username.error.invalid'
                     ));
-                } elseif (User::getUserByUsername($this->getValue())->userID !== 0) {
+                } elseif (!User::getUserByUsername($this->getValue())->isGuest()) {
                     $this->addValidationError(new FormFieldValidationError(
                         'notUnique',
                         'wcf.form.field.username.error.notUnique'

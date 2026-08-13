@@ -552,7 +552,7 @@ class WCF
      */
     protected function initLanguage(): void
     {
-        if (isset($_GET['l']) && self::getUser()->userID === 0) {
+        if (isset($_GET['l']) && self::getUser()->isGuest()) {
             self::getSession()->setLanguageID(\intval($_GET['l']));
         }
 
@@ -577,7 +577,7 @@ class WCF
      */
     protected function initStyle(): void
     {
-        if (self::getSession()->getUser()->userID !== 0) {
+        if (!self::getSession()->getUser()->isGuest()) {
             $styleID = self::getSession()->getUser()->styleID ?: 0;
         } else {
             $styleID = self::getSession()->getVar('styleID') ?: 0;

@@ -43,7 +43,7 @@ final class UpdateResponse implements IController
 
         $event = new MessageSpamChecking(
             $htmlInputProcessor,
-            WCF::getUser()->userID !== 0 ? WCF::getUser() : null,
+            WCF::getUser()->isGuest() ? null : WCF::getUser(),
             UserUtil::getIpAddress(),
         );
         EventHandler::getInstance()->fire($event);

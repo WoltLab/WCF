@@ -13,7 +13,7 @@
 		</div>
 
 		<div class="userCard__header__interactions">
-			{if $__wcf->user->userID && $user->userID != $__wcf->user->userID}
+			{if !$__wcf->user->isGuest() && $user->userID != $__wcf->user->userID}
 				{if !$__wcf->getUserProfileHandler()->isIgnoredByUser($user->userID)}
 					{if $__wcf->getUserProfileHandler()->isFollowing($user->userID)}
 						<button

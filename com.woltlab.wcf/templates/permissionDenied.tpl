@@ -30,7 +30,7 @@
 	</p>
 </section>
 
-{if !$__wcf->user->userID}
+{if $__wcf->user->isGuest()}
 	<section class="section">
 		<h2 class="sectionTitle">{lang}wcf.user.login{/lang}</h2>
 		

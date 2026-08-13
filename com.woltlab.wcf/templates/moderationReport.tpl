@@ -36,7 +36,7 @@
 		<div>
 			<div class="containerHeadline">
 				<h3>
-					{if $reportUser->userID}
+					{if !$reportUser->isGuest()}
 						{user object=$reportUser}
 					{else}
 						{lang}wcf.user.guest{/lang}

@@ -31,7 +31,7 @@
 {capture assign='contentInteractionButtons'}
 	{unsafe:$interactionContextMenu->render()}
 	
-	{if $article->isMultilingual && $__wcf->user->userID}
+	{if $article->isMultilingual && !$__wcf->user->isGuest()}
 		<div class="contentInteractionButton dropdown jsOnly">
 			<button type="button" class="dropdownToggle boxFlag box24 button small">
 				<span><img src="{$articleContent->getLanguage()->getIconPath()}" alt="" class="iconFlag"></span>

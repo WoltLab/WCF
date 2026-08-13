@@ -1,4 +1,4 @@
-{if ($__wcf->getUser()->userID || $poll->canSeeResult() || $poll->canViewParticipants()) && !$__pollLoadedJavaScript|isset}
+{if (!$__wcf->getUser()->isGuest() || $poll->canSeeResult() || $poll->canViewParticipants()) && !$__pollLoadedJavaScript|isset}
 	{assign var=__pollLoadedJavaScript value=true}
 	<script data-relocate="true">
 		require(['WoltLabSuite/Core/Ui/Poll/Poll'], function({ setupAll }) {
@@ -20,7 +20,7 @@
 		<h2>{$poll->question} <span class="badge jsTooltip pollTotalVotesBadge" title="{lang}wcf.poll.totalVotes{/lang}">{#$poll->votes}</span></h2>
 
 		<div class="pollInnerContainer">
-			{if !$__wcf->getUser()->userID}
+			{if $__wcf->getUser()->isGuest()}
 				{if $poll->canSeeResult()}
 					{assign var='__pollView' value='result'}
 					<div data-key="results">
@@ -53,7 +53,7 @@
 	{hascontent}
 		<div class="formSubmit jsOnly"{if !$poll->canVote() && $__pollView === 'result' && !$poll->canSeeResult()} style="display: none"{/if}>
 			{content}
-				{if $__wcf->getUser()->userID}
+				{if !$__wcf->getUser()->isGuest()}
 					<button type="button" class="button small votePollButton"{if $poll->canVote() && $__pollView === 'vote'} disabled{else} hidden{/if}>{lang}wcf.poll.button.vote{/lang}</button>
 					<button type="button" class="button small showVoteFormButton"{if $__pollView === 'vote' || !$poll->canVote()} hidden{/if}>{lang}wcf.poll.button.showVote{/lang}</button>
 					<button type="button" class="button small showResultsButton"{if $__pollView === 'result' || !$poll->canSeeResult()} hidden{/if}>{lang}wcf.poll.button.showResult{/lang}</button>

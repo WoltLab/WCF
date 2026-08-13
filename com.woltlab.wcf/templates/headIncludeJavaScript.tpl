@@ -21,7 +21,7 @@
 	
 	{if ENABLE_DEBUG_MODE}
 		{* This constant is a compiler option, it does not exist in production. *}
-		var COMPILER_TARGET_DEFAULT = {if !VISITOR_USE_TINY_BUILD || $__wcf->user->userID}true{else}false{/if};
+		var COMPILER_TARGET_DEFAULT = {if !VISITOR_USE_TINY_BUILD || !$__wcf->user->isGuest()}true{else}false{/if};
 	{/if}
 
 	{if $__wcf->getStyleHandler()->getColorScheme() === 'system'}
@@ -68,8 +68,8 @@ window.addEventListener('pageshow', function(event) {
 		
 		User.init(
 			{$__wcf->user->userID},
-			{if $__wcf->user->userID}'{unsafe:$__wcf->user->username|encodeJS}'{else}''{/if},
-			{if $__wcf->user->userID}'{unsafe:$__wcf->user->getLink()|encodeJS}'{else}''{/if},
+			{if !$__wcf->user->isGuest()}'{unsafe:$__wcf->user->username|encodeJS}'{else}''{/if},
+			{if !$__wcf->user->isGuest()}'{unsafe:$__wcf->user->getLink()|encodeJS}'{else}''{/if},
 			'{link controller='GuestTokenDialog'}{/link}'
 		);
 		
@@ -78,7 +78,7 @@ window.addEventListener('pageshow', function(event) {
 				url: '{link controller="BackgroundQueuePerform"}{/link}',
 				force: {if $forceBackgroundQueuePerform|isset}true{else}false{/if}
 			},
-			{if $__wcf->user->userID && SERVICE_WORKER_PUBLIC_KEY !== ''}
+			{if !$__wcf->user->isGuest() && SERVICE_WORKER_PUBLIC_KEY !== ''}
 			serviceWorker: {
 				publicKey: '{unsafe:SERVICE_WORKER_PUBLIC_KEY|encodeJS}',
 				serviceWorkerJsUrl: '{$__wcf->getPath('wcf')}service-worker/',
@@ -102,8 +102,8 @@ window.addEventListener('pageshow', function(event) {
 				],
 			{/if}
 			styleChanger: {if $__wcf->getStyleHandler()->showStyleChanger()}true{else}false{/if},
-			{if $__wcf->user->userID && !$__wcf->getMessageQuoteManager()->getRemoveQuoteIDs()|empty}removeQuotes: [{implode from=$__wcf->getMessageQuoteManager()->getRemoveQuoteIDs() item=uuid}'{unsafe:$uuid|encodeJS}'{/implode}],{/if}
-			{if $__wcf->user->userID && !$__wcf->getMessageQuoteManager()->getUsedQuotes()|empty}usedQuotes: new Map([
+			{if !$__wcf->user->isGuest() && !$__wcf->getMessageQuoteManager()->getRemoveQuoteIDs()|empty}removeQuotes: [{implode from=$__wcf->getMessageQuoteManager()->getRemoveQuoteIDs() item=uuid}'{unsafe:$uuid|encodeJS}'{/implode}],{/if}
+			{if !$__wcf->user->isGuest() && !$__wcf->getMessageQuoteManager()->getUsedQuotes()|empty}usedQuotes: new Map([
 				{foreach from=$__wcf->getMessageQuoteManager()->getUsedQuotes() key=editorID item=uuids}['{unsafe:$editorID|encodeJS}', [{implode from=$uuids item=uuid}'{unsafe:$uuid|encodeJS}'{/implode}]]{/foreach}
 			]),
 			{/if}
@@ -150,7 +150,7 @@ button:not([type])::before {
 <script data-relocate="true">
 	WCF.User.init(
 		{$__wcf->user->userID},
-		{if $__wcf->user->userID}'{unsafe:$__wcf->user->username|encodeJS}'{else}''{/if}
+		{if !$__wcf->user->isGuest()}'{unsafe:$__wcf->user->username|encodeJS}'{else}''{/if}
 	);
 </script>
 
@@ -185,7 +185,7 @@ button:not([type])::before {
 		
 		{event name='javascriptInit'}
 		
-		{if ENABLE_POLLING && $__wcf->user->userID}
+		{if ENABLE_POLLING && !$__wcf->user->isGuest()}
 			require(['WoltLabSuite/Core/Notification/Handler'], function(NotificationHandler) {
 				NotificationHandler.setup({
 					icon: '{$__wcf->getStyleHandler()->getStyle()->getFaviconAppleTouchIcon()}',

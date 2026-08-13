@@ -1,6 +1,6 @@
 <nav id="topMenu" class="userPanel">
 	<ul class="userPanelItems">
-		{if $__wcf->user->userID}
+		{if !$__wcf->user->isGuest()}
 			{if PACKAGE_ID}
 				<li id="userMenu" class="dropdown">
 					<a href="#" class="dropdownToggle jsTooltip" title="{$__wcf->user->username}">{unsafe:$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(24)}</a>

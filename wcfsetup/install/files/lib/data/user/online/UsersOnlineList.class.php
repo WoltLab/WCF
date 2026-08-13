@@ -76,7 +76,7 @@ class UsersOnlineList extends SessionList
         foreach ($objects as $object) {
             // @phpstan-ignore argument.type
             $object = new UserOnline(new User(null, null, $object));
-            if ($object->userID === 0 || self::isVisibleUser($object)) {
+            if ($object->isGuest() || self::isVisibleUser($object)) {
                 $this->objects[$object->sessionID] = $object;
                 $this->indexToObject[] = $object->sessionID;
             }

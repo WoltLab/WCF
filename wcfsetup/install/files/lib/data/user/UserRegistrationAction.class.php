@@ -52,7 +52,7 @@ class UserRegistrationAction extends UserAction
             ];
         }
 
-        if (User::getUserByUsername($this->parameters['username'])->userID !== 0) {
+        if (!User::getUserByUsername($this->parameters['username'])->isGuest()) {
             return [
                 'isValid' => false,
                 'error' => 'notUnique',
@@ -78,7 +78,7 @@ class UserRegistrationAction extends UserAction
             ];
         }
 
-        if (User::getUserByEmail($this->parameters['email'])->userID !== 0) {
+        if (!User::getUserByEmail($this->parameters['email'])->isGuest()) {
             return [
                 'isValid' => false,
                 'error' => 'notUnique',

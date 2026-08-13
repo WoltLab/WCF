@@ -1,5 +1,5 @@
 {capture append='headContent'}
-	{if $__wcf->user->userID}
+	{if !$__wcf->user->isGuest()}
 		<link rel="alternate" type="application/rss+xml" title="{lang}wcf.global.button.rss{/lang}" href="{link controller='ArticleRssFeed' at=$__wcf->user->getAccessToken()}{/link}">
 	{else}
 		<link rel="alternate" type="application/rss+xml" title="{lang}wcf.global.button.rss{/lang}" href="{link controller='ArticleRssFeed'}{/link}">
@@ -35,7 +35,7 @@
 {/capture}
 
 {capture assign='contentInteractionDropdownItems'}
-	{if $__wcf->user->userID}
+	{if !$__wcf->user->isGuest()}
 		<li><a rel="alternate" href="{link controller='ArticleRssFeed' at=$__wcf->user->getAccessToken()}{/link}" class="rssFeed">{lang}wcf.global.button.rss{/lang}</a></li>
 	{else}
 		<li><a rel="alternate" href="{link controller='ArticleRssFeed'}{/link}" class="rssFeed">{lang}wcf.global.button.rss{/lang}</a></li>

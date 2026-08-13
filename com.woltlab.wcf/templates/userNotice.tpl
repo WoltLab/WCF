@@ -6,7 +6,7 @@
 		</woltlab-core-notice>
 	{/if}
 
-	{if $templateName != 'accountManagement' && $__wcf->user->userID && $__wcf->user->quitStarted > 0}
+	{if $templateName != 'accountManagement' && !$__wcf->user->isGuest() && $__wcf->user->quitStarted > 0}
 		<woltlab-core-notice type="warning">{lang}wcf.user.quit.active{/lang}</woltlab-core-notice>
 	{/if}
 	

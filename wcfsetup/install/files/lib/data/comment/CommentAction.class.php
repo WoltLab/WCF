@@ -306,7 +306,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
         $event = new MessageSpamChecking(
             $this->parameters['htmlInputProcessor'],
-            WCF::getUser()->userID !== 0 ? WCF::getUser() : null,
+            WCF::getUser()->isGuest() ? null : WCF::getUser(),
             UserUtil::getIpAddress(),
         );
         EventHandler::getInstance()->fire($event);
@@ -339,7 +339,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             'objectID' => $this->parameters['data']['objectID'],
             'time' => \TIME_NOW,
             'userID' => WCF::getUser()->userID ?: null,
-            'username' => WCF::getUser()->userID !== 0 ? WCF::getUser()->username : $this->parameters['data']['username'],
+            'username' => WCF::getUser()->isGuest() ? $this->parameters['data']['username'] : WCF::getUser()->username,
             'message' => $htmlInputProcessor->getHtml(),
             'responses' => 0,
             'responseIDs' => \serialize([]),
@@ -482,7 +482,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
         $event = new MessageSpamChecking(
             $this->parameters['htmlInputProcessor'],
-            WCF::getUser()->userID !== 0 ? WCF::getUser() : null,
+            WCF::getUser()->isGuest() ? null : WCF::getUser(),
             UserUtil::getIpAddress(),
         );
         EventHandler::getInstance()->fire($event);
@@ -516,7 +516,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             'commentID' => $comment->commentID,
             'time' => \TIME_NOW,
             'userID' => WCF::getUser()->userID ?: null,
-            'username' => WCF::getUser()->userID !== 0 ? WCF::getUser()->username : $this->parameters['data']['username'],
+            'username' => WCF::getUser()->isGuest() ? $this->parameters['data']['username'] : WCF::getUser()->username,
             'message' => $htmlInputProcessor->getHtml(),
             'enableHtml' => 1,
             'isDisabled' => $this->commentProcessor->canAddWithoutApproval($comment->objectID) ? 0 : 1,
@@ -1279,7 +1279,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             if (!UserRegistrationUtil::isValidUsername($this->parameters['data']['username'])) {
                 throw new UserInputException('username', 'invalid');
             }
-            if (User::getUserByUsername($this->parameters['data']['username'])->userID !== 0) {
+            if (!User::getUserByUsername($this->parameters['data']['username'])->isGuest()) {
                 throw new UserInputException('username', 'notUnique');
             }
         } catch (UserInputException $e) {

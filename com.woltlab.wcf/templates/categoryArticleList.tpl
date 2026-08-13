@@ -4,7 +4,7 @@
 {capture assign='contentDescription'}{if $category->descriptionUseHtml}{unsafe:$category->getDescription()}{else}{$category->getDescription()}{/if}{/capture}
 
 {capture append='headContent'}
-	{if $__wcf->user->userID}
+	{if !$__wcf->user->isGuest()}
 		<link rel="alternate" type="application/rss+xml" title="{lang}wcf.global.button.rss{/lang}" href="{link controller='ArticleRssFeed' id=$categoryID at=$__wcf->user->getAccessToken()}{/link}">
 	{else}
 		<link rel="alternate" type="application/rss+xml" title="{lang}wcf.global.button.rss{/lang}" href="{link controller='ArticleRssFeed' id=$categoryID}{/link}">
@@ -42,7 +42,7 @@
 {/capture}
 
 {capture assign='contentInteractionDropdownItems'}
-	{if $__wcf->user->userID}
+	{if !$__wcf->user->isGuest()}
 		<li><a rel="alternate" href="{link controller='ArticleRssFeed' id=$categoryID at=$__wcf->user->getAccessToken()}{/link}" class="rssFeed">{lang}wcf.global.button.rss{/lang}</a></li>
 	{else}
 		<li><a rel="alternate" href="{link controller='ArticleRssFeed' id=$categoryID}{/link}" class="rssFeed">{lang}wcf.global.button.rss{/lang}</a></li>

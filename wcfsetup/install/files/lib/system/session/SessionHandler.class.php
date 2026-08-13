@@ -1052,7 +1052,7 @@ final class SessionHandler extends SingletonFactory
      */
     public function needsReauthentication(): bool
     {
-        if ($this->getUser()->userID === 0) {
+        if ($this->getUser()->isGuest()) {
             throw new \BadMethodCallException('The current user is a guest.');
         }
 
@@ -1145,7 +1145,7 @@ final class SessionHandler extends SingletonFactory
      */
     public function registerReauthentication(): void
     {
-        if ($this->getUser()->userID === 0) {
+        if ($this->getUser()->isGuest()) {
             throw new \BadMethodCallException('The current user is a guest.');
         }
 
@@ -1168,7 +1168,7 @@ final class SessionHandler extends SingletonFactory
      */
     public function clearReauthentication(): void
     {
-        if ($this->getUser()->userID === 0) {
+        if ($this->getUser()->isGuest()) {
             throw new \BadMethodCallException('The current user is a guest.');
         }
 
@@ -1289,7 +1289,7 @@ final class SessionHandler extends SingletonFactory
      */
     public function deleteIfNew(): void
     {
-        if ($this->isFirstVisit() && $this->getUser()->userID === 0) {
+        if ($this->isFirstVisit() && $this->getUser()->isGuest()) {
             $this->delete();
         }
     }

@@ -12,7 +12,7 @@
 {/capture}
 
 {capture assign='contentInteractionButtons'}
-	{if $page->isMultilingual && $__wcf->user->userID && $page->getPageLanguages()|count > 1}
+	{if $page->isMultilingual && !$__wcf->user->isGuest() && $page->getPageLanguages()|count > 1}
 		<div class="contentInteractionButton dropdown jsOnly">
 			<button type="button" class="button small dropdownToggle boxFlag box24">
 				<span><img src="{$activePageLanguage->getIconPath()}" alt="" class="iconFlag"></span>

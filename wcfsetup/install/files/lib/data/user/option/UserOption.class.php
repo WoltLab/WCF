@@ -147,7 +147,7 @@ class UserOption extends Option implements ITitledObject
         }
 
         // proceed if option is visible for registered users and current user is logged in
-        if (($this->visible & self::VISIBILITY_REGISTERED) !== 0 && WCF::getUser()->userID !== 0) {
+        if (($this->visible & self::VISIBILITY_REGISTERED) !== 0 && !WCF::getUser()->isGuest()) {
             return true;
         }
 

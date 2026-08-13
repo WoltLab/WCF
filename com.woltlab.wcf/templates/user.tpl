@@ -3,7 +3,7 @@
 {capture assign='headContent'}
 	{event name='javascriptInclude'}
 	<script data-relocate="true">
-		{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}
+		{if !$__wcf->getUser()->isGuest() && $__wcf->getUser()->userID != $user->userID}
 			require(['WoltLabSuite/Core/Ui/User/Editor'], function(UiUserEditor) {
 				{jsphrase name='wcf.acp.user.disable'}
 				{jsphrase name='wcf.acp.user.enable'}
@@ -42,7 +42,7 @@
 		{/if}
 
 		$(function() {
-			{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}
+			{if !$__wcf->getUser()->isGuest() && $__wcf->getUser()->userID != $user->userID}
 				{jsphrase name='wcf.user.activityPoint'}
 			{/if}
 

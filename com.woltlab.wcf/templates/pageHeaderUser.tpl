@@ -1,6 +1,6 @@
-<nav id="topMenu" class="userPanel{if $__wcf->user->userID} userPanelLoggedIn{/if}">
+<nav id="topMenu" class="userPanel{if !$__wcf->user->isGuest()} userPanelLoggedIn{/if}">
 	<ul class="userPanelItems">
-		{if $__wcf->user->userID}
+		{if !$__wcf->user->isGuest()}
 			<!-- user menu -->
 			<li id="userMenu">
 				<a
@@ -181,7 +181,7 @@
 		{/if}
 		
 		{if !$__hideUserMenu|isset}
-			{if $__wcf->user->userID && $__wcf->session->getPermission('mod.general.canUseModeration')}
+			{if !$__wcf->user->isGuest() && $__wcf->session->getPermission('mod.general.canUseModeration')}
 				<li id="outstandingModeration" data-count="{$__wcf->getModerationQueueManager()->getUnreadModerationCount()}">
 					<a
 						class="jsTooltip"
@@ -222,7 +222,7 @@
 		</li>
 	</ul>
 </nav>
-{if $__wcf->user->userID}
+{if !$__wcf->user->isGuest()}
 	<button type="button" class="pageHeaderUserMobile" aria-expanded="false" aria-label="{lang}wcf.menu.user{/lang}">
 		<span class="pageHeaderUserMobileInactive">
 			{unsafe:$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32, false)}

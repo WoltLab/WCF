@@ -94,8 +94,8 @@
 			
 			User.init(
 				{$__wcf->user->userID},
-				{if $__wcf->user->userID}'{unsafe:$__wcf->user->username|encodeJS}'{else}''{/if},
-				{if $__wcf->user->userID}'{unsafe:$__wcf->user->getLink()|encodeJS}'{else}''{/if}
+				{if !$__wcf->user->isGuest()}'{unsafe:$__wcf->user->username|encodeJS}'{else}''{/if},
+				{if !$__wcf->user->isGuest()}'{unsafe:$__wcf->user->getLink()|encodeJS}'{else}''{/if}
 			);
 			
 			AcpBootstrap.setup({
@@ -126,7 +126,7 @@
 		$.holdReady(true);
 		WCF.User.init(
 			{$__wcf->user->userID},
-			{if $__wcf->user->userID}'{unsafe:$__wcf->user->username|encodeJS}'{else}''{/if}
+			{if !$__wcf->user->isGuest()}'{unsafe:$__wcf->user->username|encodeJS}'{else}''{/if}
 		);
 	</script>
 	{js application='wcf' file='WCF.Message' bundle='WCF.Combined'}
@@ -174,7 +174,7 @@
 			{if $_sectionMenuItem->menuItem|in_array:$_activeMenuItems}{assign var=_acpPageSubMenuActive value=true}{/if}
 		{/foreach}
 	{/if}
-	<div id="pageContainer" class="pageContainer{if !PACKAGE_ID || !$__wcf->user->userID || !$__isLogin|empty} acpPageHiddenMenu{elseif $_acpPageSubMenuActive} acpPageSubMenuActive{/if}">
+	<div id="pageContainer" class="pageContainer{if !PACKAGE_ID || $__wcf->user->isGuest() || !$__isLogin|empty} acpPageHiddenMenu{elseif $_acpPageSubMenuActive} acpPageSubMenuActive{/if}">
 		{event name='beforePageHeader'}
 		
 		{include file='pageHeader'}

@@ -181,7 +181,7 @@ class UserProfileAction extends UserAction
             $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($userID);
         }
 
-        if ($this->userProfile === null || $this->userProfile->userID === 0) {
+        if ($this->userProfile === null || $this->userProfile->isGuest()) {
             throw new UserInputException('objectIDs');
         }
 

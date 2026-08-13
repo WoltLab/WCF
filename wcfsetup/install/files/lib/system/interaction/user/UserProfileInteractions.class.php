@@ -29,7 +29,7 @@ class UserProfileInteractions extends AbstractInteractionProvider
         $this->addInteractions([
             new class(
                 'ignore',
-                static fn(UserProfile $user) => WCF::getUser()->userID !== 0 && WCF::getUser()->userID !== $user->userID
+                static fn(UserProfile $user) => !WCF::getUser()->isGuest() && WCF::getUser()->userID !== $user->userID
             ) extends AbstractInteraction {
                 #[\Override]
                 public function render(DatabaseObject $object): string

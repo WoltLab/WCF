@@ -88,7 +88,7 @@ class UserImporter extends AbstractImporter
                 $targetUser = $conflictingUser;
 
                 // check whether user exists
-                if ($targetUser->userID !== 0) {
+                if (!$targetUser->isGuest()) {
                     $performMerge = true;
                     break;
                 }
@@ -97,7 +97,7 @@ class UserImporter extends AbstractImporter
                 // fetch merge target
                 $targetUser = User::getUserByEmail($data['email']);
                 // if it exists: perform a merge
-                if ($targetUser->userID !== 0) {
+                if (!$targetUser->isGuest()) {
                     $performMerge = true;
                 }
                 break;
@@ -111,7 +111,7 @@ class UserImporter extends AbstractImporter
         }
 
         // a conflict arose, but no merge was performed, resolve
-        if ($conflictingUser->userID !== 0) {
+        if (!$conflictingUser->isGuest()) {
             // rename user
             $data['username'] = self::resolveDuplicate($data['username']);
         }

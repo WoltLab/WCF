@@ -212,7 +212,7 @@ class UserNotificationHandler extends SingletonFactory
         }
 
         // remove recipients that are blocking the current user
-        if ($userProfile->getUserID() !== 0) {
+        if (!$userProfile->isGuest()) {
             // we use a live query here to avoid offloading this to the UserProfile
             // class, as we're potentially dealing with a lot of users and loading
             // their user storage data can get really expensive

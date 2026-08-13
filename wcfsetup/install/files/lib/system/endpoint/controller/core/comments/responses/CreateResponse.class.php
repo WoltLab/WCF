@@ -62,7 +62,7 @@ final class CreateResponse implements IController
 
         $event = new MessageSpamChecking(
             $htmlInputProcessor,
-            WCF::getUser()->userID !== 0 ? WCF::getUser() : null,
+            WCF::getUser()->isGuest() ? null : WCF::getUser(),
             UserUtil::getIpAddress(),
         );
         EventHandler::getInstance()->fire($event);
@@ -73,7 +73,7 @@ final class CreateResponse implements IController
         $response = new \wcf\command\comment\response\CreateResponse(
             $comment,
             $htmlInputProcessor,
-            WCF::getUser()->userID !== 0 ? WCF::getUser() : null,
+            WCF::getUser()->isGuest() ? null : WCF::getUser(),
             $username,
             $isDisabled,
         )();

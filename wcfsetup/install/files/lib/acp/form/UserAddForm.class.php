@@ -375,7 +375,7 @@ class UserAddForm extends UserOptionListForm
         }
 
         // Check if username exists already.
-        if (User::getUserByUsername($username)->userID !== 0) {
+        if (!User::getUserByUsername($username)->isGuest()) {
             throw new UserInputException('username', 'notUnique');
         }
     }
@@ -396,7 +396,7 @@ class UserAddForm extends UserOptionListForm
         }
 
         // Check if email exists already.
-        if (User::getUserByEmail($email)->userID !== 0) {
+        if (!User::getUserByEmail($email)->isGuest()) {
             throw new UserInputException('email', 'notUnique');
         }
     }

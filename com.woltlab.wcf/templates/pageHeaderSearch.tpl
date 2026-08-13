@@ -67,7 +67,7 @@
 	</form>
 </div>
 
-{if (!OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')) && (!FORCE_LOGIN || $__wcf->user->userID)}
+{if (!OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')) && (!FORCE_LOGIN || !$__wcf->user->isGuest())}
 	<script data-relocate="true">
 		require(['WoltLabSuite/Core/Ui/Search/Page'], function(UiSearchPage) {
 			UiSearchPage.init('{if !$__searchObjectTypeName|empty}{unsafe:$__searchObjectTypeName|encodeJS}{elseif !$searchPreselectObjectType|empty}{$searchPreselectObjectType}{else}everywhere{/if}');

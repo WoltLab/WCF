@@ -8,11 +8,11 @@
 	{assign var=__messageSidebarJavascript value=true}
 {/if}
 
-<aside role="presentation" class="messageSidebar{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && !$isReply && $userProfile->isOnline()} userOnline{/if} {if $userProfile->userID}member{else}guest{/if}"{if $enableMicrodata} itemprop="author" itemscope itemtype="http://schema.org/Person"{/if}>
+<aside role="presentation" class="messageSidebar{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && !$isReply && $userProfile->isOnline()} userOnline{/if} {if !$userProfile->isGuest()}member{else}guest{/if}"{if $enableMicrodata} itemprop="author" itemscope itemtype="http://schema.org/Person"{/if}>
 	<div class="messageAuthor">
 		{event name='messageAuthor'}
 		
-		{if $userProfile->userID}
+		{if !$userProfile->isGuest()}
 			{assign var='username' value=$userProfile->username}
 			
 			{if $userProfile->getAvatar()}
@@ -89,7 +89,7 @@
 	{if !$isReply}
 		{event name='beforeCredits'}
 		
-		{if $userProfile->userID}
+		{if !$userProfile->isGuest()}
 			{hascontent}
 				<div class="userCredits">
 					<dl class="plain dataList">

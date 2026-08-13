@@ -298,7 +298,7 @@ class SearchForm extends AbstractCaptchaForm
                     WHERE   searchHash = ?
                         AND searchType = ?
                         AND searchTime > ?
-                        " . (WCF::getUser()->userID !== 0 ? 'AND userID = ?' : 'AND userID IS NULL');
+                        " . (WCF::getUser()->isGuest() ? 'AND userID IS NULL' : 'AND userID = ?');
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute($parameters);
             $row = $statement->fetchArray();

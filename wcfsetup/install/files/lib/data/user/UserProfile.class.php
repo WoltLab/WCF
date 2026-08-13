@@ -145,7 +145,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
         if ($this->followingUserIDs === null) {
             $this->followingUserIDs = [];
 
-            if ($this->userID !== 0) {
+            if (!$this->isGuest()) {
                 // get ids
                 $data = UserStorageHandler::getInstance()->getField('followingUserIDs', $this->userID);
 
@@ -183,7 +183,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
         if ($this->followerUserIDs === null) {
             $this->followerUserIDs = [];
 
-            if ($this->userID !== 0) {
+            if (!$this->isGuest()) {
                 // get ids
                 $data = UserStorageHandler::getInstance()->getField('followerUserIDs', $this->userID);
 
@@ -222,7 +222,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
         if ($this->ignoredUserIDs === null) {
             $this->ignoredUserIDs = [];
 
-            if ($this->userID !== 0) {
+            if (!$this->isGuest()) {
                 // get ids
                 $data = UserStorageHandler::getInstance()->getField('ignoredUserIDs', $this->userID);
 
@@ -270,7 +270,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
         if ($this->ignoredByUserIDs === null) {
             $this->ignoredByUserIDs = [];
 
-            if ($this->userID !== 0) {
+            if (!$this->isGuest()) {
                 // get ids
                 $data = UserStorageHandler::getInstance()->getField('ignoredByUserIDs', $this->userID);
 
@@ -1074,7 +1074,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
         if ($this->banned !== 0) {
             return false;
         }
-        if (WCF::getUser()->userID !== 0 && WCF::getUser()->showSignature === 0) {
+        if (!WCF::getUser()->isGuest() && WCF::getUser()->showSignature === 0) {
             return false;
         }
 

@@ -1,4 +1,4 @@
-{if PACKAGE_ID && $__wcf->user->userID && $__isLogin|empty}
+{if PACKAGE_ID && !$__wcf->user->isGuest() && $__isLogin|empty}
 	{hascontent}
 		<nav class="acpBreadcrumbs" aria-label="{lang}wcf.page.breadcrumb{/lang}">
 			<ol class="acpBreadcrumbs__list">

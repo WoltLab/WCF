@@ -103,7 +103,7 @@
 	{/capture}
 
 	{assign var=spider value=$user->getSpider()}
-	{if $user->userID}
+	{if !$user->isGuest()}
 		{* member *}
 		{capture append=usersOnlineList}
 			<li>

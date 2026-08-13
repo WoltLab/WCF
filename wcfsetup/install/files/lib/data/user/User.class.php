@@ -196,7 +196,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     public function getGroupIDs(bool $skipCache = false): array
     {
         if ($this->groupIDs === null || $skipCache) {
-            if ($this->userID === 0) {
+            if ($this->isGuest()) {
                 // user is a guest, use default guest group
                 $this->groupIDs = UserGroup::getGroupIDsByType([UserGroup::GUESTS, UserGroup::EVERYONE]);
             } else {
@@ -241,7 +241,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
         if ($this->languageIDs === null) {
             $this->languageIDs = [];
 
-            if ($this->userID !== 0) {
+            if (!$this->isGuest()) {
                 // get language ids
                 $data = UserStorageHandler::getInstance()->getField('languageIDs', $this->userID);
 
@@ -516,7 +516,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
         if ($this->hasAdministrativePermissions === null) {
             $this->hasAdministrativePermissions = false;
 
-            if ($this->userID !== 0) {
+            if (!$this->isGuest()) {
                 foreach (UserGroup::getGroupsByIDs($this->getGroupIDs()) as $group) {
                     if ($group->isAdminGroup()) {
                         $this->hasAdministrativePermissions = true;
@@ -588,7 +588,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public function canPurchasePaidSubscriptions(): bool
     {
-        return WCF::getUser()->userID !== 0 && !$this->pendingActivation();
+        return !$this->isGuest() && !$this->pendingActivation();
     }
 
     /**

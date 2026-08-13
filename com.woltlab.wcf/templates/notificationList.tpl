@@ -65,7 +65,7 @@
 						<div class="notificationListItem__authors">
 							<ul class="userAvatarList small">
 								{foreach from=$notification[event]->getAuthors() item=author}
-									{if $author->userID}
+									{if !$author->isGuest()}
 										<li class="jsTooltip" title="{$author->username}">{user object=$author type='avatar24'}</li>
 									{/if}
 								{/foreach}

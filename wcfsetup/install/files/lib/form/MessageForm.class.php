@@ -355,7 +355,7 @@ abstract class MessageForm extends AbstractCaptchaForm
     {
         $event = new MessageSpamChecking(
             $this->htmlInputProcessor,
-            WCF::getUser()->userID !== 0 ? WCF::getUser() : null,
+            WCF::getUser()->isGuest() ? null : WCF::getUser(),
             UserUtil::getIpAddress(),
             $this->subject,
         );

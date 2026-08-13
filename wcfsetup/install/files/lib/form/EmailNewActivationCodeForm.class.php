@@ -47,7 +47,7 @@ final class EmailNewActivationCodeForm extends AbstractFormBuilderForm
                         ->required()
                         ->autoFocus()
                         ->maximumLength(255)
-                        ->value(WCF::getUser()->userID !== 0 ? WCF::getUser()->username : '')
+                        ->value(WCF::getUser()->isGuest() ? '' : WCF::getUser()->username)
                         ->addValidator(new FormFieldValidator(
                             'usernameValidator',
                             $this->validateUsername(...)

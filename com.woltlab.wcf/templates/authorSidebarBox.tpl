@@ -17,7 +17,7 @@
 				{/if}
 			</div>
 			
-			{if $userProfile->userID}
+			{if !$userProfile->isGuest()}
 				<dl class="plain dataList containerContent small">
 					{include file='userInformationStatistics' user=$userProfile}
 				</dl>
