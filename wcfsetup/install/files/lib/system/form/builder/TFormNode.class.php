@@ -529,7 +529,7 @@ trait TFormNode
      */
     public static function validateAttribute(string $name)
     {
-        if (\preg_match('~^[_A-z][_A-z0-9-]*$~', $name) !== 1) {
+        if (\preg_match('~^[_A-Za-z][_A-Za-z0-9-]*$~', $name) !== 1) {
             throw new \InvalidArgumentException("Invalid name '{$name}' given.");
         }
 
@@ -550,7 +550,7 @@ trait TFormNode
     {
         // regular expression is a more restrictive version of
         // https://www.w3.org/TR/2011/REC-css3-selectors-20110929/#w3cselgrammar
-        if (\preg_match('~^-?[_A-z][_A-z0-9-]*$~', $class) !== 1) {
+        if (\preg_match('~^-?[_A-Za-z][_A-Za-z0-9-]*$~', $class) !== 1) {
             throw new \InvalidArgumentException("Invalid class '{$class}' given.");
         }
     }
@@ -567,7 +567,7 @@ trait TFormNode
     {
         // regular expression is a more restrictive version of
         // https://www.w3.org/TR/CSS21/syndata.html#value-def-identifier
-        if (\preg_match('~^-?[_A-z][_A-z0-9-]*$~', $id) !== 1) {
+        if (\preg_match('~^-?[_A-Za-z][_A-Za-z0-9-]*$~', $id) !== 1) {
             throw new \InvalidArgumentException("Invalid id '{$id}' given.");
         }
     }

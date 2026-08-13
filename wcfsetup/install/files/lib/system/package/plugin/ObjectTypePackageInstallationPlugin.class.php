@@ -391,7 +391,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                         if (!empty($formField->getValue())) {
                             $invalidClasses = [];
                             foreach ($formField->getValue() as $class) {
-                                if (\preg_match('~^-?[_A-z][_A-z0-9-]*$~', $class) !== 1) {
+                                if (\preg_match('~^-?[_A-Za-z][_A-Za-z0-9-]*$~', $class) !== 1) {
                                     $invalidClasses[] = $class;
                                 }
                             }
@@ -633,7 +633,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                     ->required()
                     ->addValidator(new FormFieldValidator('tableName', static function (TextFormField $formField) {
                         if (!empty($formField->getValue())) {
-                            if (\preg_match('~^(?P<app>[A-z]+)1_[A-z_]+$~', $formField->getValue(), $match)) {
+                            if (\preg_match('~^(?P<app>[A-Za-z]+)1_[A-Za-z_]+$~', $formField->getValue(), $match)) {
                                 if (ApplicationHandler::getInstance()->getApplication($match['app']) === null) {
                                     $formField->addValidationError(
                                         new FormFieldValidationError(
@@ -958,7 +958,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                     ->label('wcf.acp.pip.objectType.bulkProcessing.action')
                     ->description('wcf.acp.pip.objectType.bulkProcessing.action.description')
                     ->addValidator(new FormFieldValidator('format', static function (TextFormField $formField) {
-                        if (!\preg_match('~^[a-z][A-z]+$~', $formField->getValue())) {
+                        if (!\preg_match('~^[a-z][A-Za-z]*$~', $formField->getValue())) {
                             $formField->addValidationError(
                                 new FormFieldValidationError(
                                     'format',
@@ -1034,7 +1034,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                     ->label('wcf.acp.pip.objectType.condition.conditionGroup')
                     ->description('wcf.acp.pip.objectType.condition.conditionGroup.description')
                     ->addValidator(new FormFieldValidator('format', static function (TextFormField $formField) {
-                        if (!empty($formField->getValue()) && !\preg_match('~^[a-z][A-z]+$~', $formField->getValue())) {
+                        if (!empty($formField->getValue()) && !\preg_match('~^[a-z][A-Za-z]*$~', $formField->getValue())) {
                             $formField->addValidationError(
                                 new FormFieldValidationError(
                                     'format',

@@ -27,7 +27,7 @@ final class JsphraseFunctionTemplatePlugin implements IFunctionTemplatePlugin
             throw new SystemException("missing 'name' argument in jsphrase tag");
         }
 
-        if (!\preg_match('~[A-z0-9-_]+(\.[A-z0-9-_]+){2,}~', $name)) {
+        if (!\preg_match('~[A-Za-z0-9-_]+(\.[A-Za-z0-9-_]+){2,}~', $name)) {
             throw new SystemException("The provided name does not appear to be a valid phrase identifier.");
         }
 

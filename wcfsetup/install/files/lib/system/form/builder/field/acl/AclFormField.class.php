@@ -64,7 +64,7 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
     {
         if (
             !\is_string($categoryName)
-            || !\preg_match('~^[A-z0-9\-\_]+((\.[A-z0-9\-\_]+)+|(\.[A-z0-9\-\_]+)*?\.\*)$~', $categoryName)
+            || !\preg_match('~^[A-Za-z0-9\-\_]+((\.[A-Za-z0-9\-\_]+)+|(\.[A-Za-z0-9\-\_]+)*?\.\*)$~', $categoryName)
         ) {
             throw new \InvalidArgumentException("Invalid category name given for field '{$this->getId()}'.");
         }

@@ -393,7 +393,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                 ->required()
                 ->maximumLength(191)
                 ->addValidator(FormFieldValidatorUtil::getRegularExpressionValidator(
-                    '^[A-z0-9-_]+(\.[A-z0-9-_]+){2,}$',
+                    '^[A-Za-z0-9-_]+(\.[A-Za-z0-9-_]+){2,}$',
                     'wcf.acp.language.item.languageItem'
                 ))
                 ->addValidator(new FormFieldValidator('languageCategory', static function (TextFormField $formField) {

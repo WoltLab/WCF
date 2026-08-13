@@ -111,7 +111,7 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
         $menuItemFormField
             ->description('wcf.acp.pip.userMenu.menuItem.description')
             ->addValidator(FormFieldValidatorUtil::getRegularExpressionValidator(
-                '[a-z]+\.user.menu(\.[A-z0-9])+',
+                '^[a-z]+\.user\.menu(\.[A-Za-z0-9]+)+$',
                 'wcf.acp.pip.userMenu.menuItem'
             ));
 

@@ -43,7 +43,7 @@ final class CustomFormDataProcessor extends AbstractFormDataProcessor
      */
     public function __construct(string $id, ?callable $formDataProcessor = null, ?callable $objectDataProcessor = null)
     {
-        if (\preg_match('~^[a-z][A-z0-9-]*$~', $id) !== 1) {
+        if (\preg_match('~^[a-z][_A-Za-z0-9-]*$~', $id) !== 1) {
             throw new \InvalidArgumentException("Invalid id '{$id}' given.");
         }
 

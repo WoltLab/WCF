@@ -192,7 +192,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
                 ->description('wcf.acp.pip.clipboardAction.actionName.description')
                 ->required()
                 ->addValidator(new FormFieldValidator('format', static function (TextFormField $formField) {
-                    if (!\preg_match('~^[a-z][A-z]+$~', $formField->getValue())) {
+                    if (!\preg_match('~^[a-z][A-Za-z]*$~', $formField->getValue())) {
                         $formField->addValidationError(
                             new FormFieldValidationError(
                                 'format',

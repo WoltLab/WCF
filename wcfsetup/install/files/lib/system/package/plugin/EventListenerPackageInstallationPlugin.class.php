@@ -175,7 +175,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
                 ->description('wcf.acp.pip.eventListener.listenerName.description')
                 ->required()
                 ->addValidator(new FormFieldValidator('format', static function (TextFormField $formField) {
-                    if (\preg_match('~^[a-z][A-z0-9]*$~', $formField->getSaveValue()) !== 1) {
+                    if (\preg_match('~^[a-z][A-Za-z0-9_]*$~', $formField->getSaveValue()) !== 1) {
                         $formField->addValidationError(
                             new FormFieldValidationError(
                                 'format',

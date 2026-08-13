@@ -92,7 +92,7 @@ class LanguageItemAddForm extends AbstractFormBuilderForm
                     ->required()
                     ->maximumLength(191)
                     ->addValidator(new FormFieldValidator('format', static function (TextFormField $formField) {
-                        if (!\preg_match('~^[A-z0-9-_]+(\.[A-z0-9-_]+){2,}$~', $formField->getSaveValue(), $m)) {
+                        if (!\preg_match('~^[A-Za-z0-9-_]+(\.[A-Za-z0-9-_]+){2,}$~', $formField->getSaveValue(), $m)) {
                             $formField->addValidationError(
                                 new FormFieldValidationError(
                                     'format',

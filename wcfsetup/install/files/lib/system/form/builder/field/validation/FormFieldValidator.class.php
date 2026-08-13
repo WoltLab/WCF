@@ -78,7 +78,7 @@ final class FormFieldValidator implements IFormFieldValidator
      */
     public static function validateId(string $id): void
     {
-        if (\preg_match('~^[a-z][A-z0-9-]*$~', $id) !== 1) {
+        if (\preg_match('~^[a-z][_A-Za-z0-9-]*$~', $id) !== 1) {
             throw new \InvalidArgumentException("Invalid id '{$id}' given.");
         }
     }

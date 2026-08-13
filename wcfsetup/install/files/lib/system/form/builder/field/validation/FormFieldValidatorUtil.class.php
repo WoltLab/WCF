@@ -30,7 +30,7 @@ abstract class FormFieldValidatorUtil
         string $languageItemPrefix,
         int $minimumSegmentCount = 3,
         int $maximumSegmentCount = -1,
-        string $segmentRegularExpression = '^[A-z0-9\-\_]+$'
+        string $segmentRegularExpression = '^[A-Za-z0-9\-\_]+$'
     ) {
         $regex = Regex::compile($segmentRegularExpression);
         if (!$regex->isValid()) {

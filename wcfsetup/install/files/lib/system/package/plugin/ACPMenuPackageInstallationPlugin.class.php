@@ -116,7 +116,7 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
         $menuItemFormField
             ->description('wcf.acp.pip.acpMenu.menuItem.description')
             ->addValidator(FormFieldValidatorUtil::getRegularExpressionValidator(
-                '[a-z]+\.acp\.menu\.link(\.[A-z0-9])+',
+                '^[a-z]+\.acp\.menu\.link(\.[A-Za-z0-9]+)+$',
                 'wcf.acp.pip.acpMenu.menuItem'
             ));
 

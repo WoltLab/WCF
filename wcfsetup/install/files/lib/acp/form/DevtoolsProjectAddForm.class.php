@@ -274,7 +274,7 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                     ->description('wcf.acp.devtools.project.applicationDirectory.description')
                     ->available($this->formObject === null || !$this->formObject->isCore())
                     ->addValidator(FormFieldValidatorUtil::getRegularExpressionValidator(
-                        '[A-z0-9\-\_]+$',
+                        '^[A-Za-z0-9\-\_]+$',
                         'wcf.acp.devtools.project.applicationDirectory'
                     )),
 

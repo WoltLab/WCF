@@ -93,7 +93,7 @@ class UserFunctionTemplatePlugin implements IFunctionTemplatePlugin
         }
 
         foreach ($tagArgs as $name => $value) {
-            if (!\preg_match('~^[a-z]+([A-z]+)+$~', $name)) {
+            if (!\preg_match('~^[a-z]+([A-Z][a-z]+)*$~', $name)) {
                 throw new \InvalidArgumentException("Invalid additional argument name '{$name}'.");
             }
 
