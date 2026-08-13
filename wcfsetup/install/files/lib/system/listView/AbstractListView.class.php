@@ -400,9 +400,21 @@ abstract class AbstractListView
 
     /**
      * Returns true, if this list view is accessible for the active user.
+     *
+     * @deprecated 6.3 The default implementation exists for backwards compatibility only and will be
+     *             removed with 6.4, this method becomes abstract. Implement it in your list view.
      */
     public function isAccessible(): bool
     {
+        if (\ENABLE_DEBUG_MODE !== 0 && \ENABLE_DEVELOPER_TOOLS !== 0) {
+            throw new \BadMethodCallException(
+                \sprintf(
+                    "'%s' does not implement 'isAccessible()' which grants everybody access to this list view. This method becomes abstract with version 6.4, please implement it and return whether the active user is allowed to see this list view.",
+                    $this->getClassName(),
+                )
+            );
+        }
+
         return true;
     }
 

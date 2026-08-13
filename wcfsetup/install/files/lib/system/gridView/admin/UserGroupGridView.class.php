@@ -144,4 +144,11 @@ final class UserGroupGridView extends AbstractGridView
     {
         return new UserGroupGridViewInitialized($this);
     }
+
+    #[\Override]
+    public function isAccessible(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canEditGroup')
+            || WCF::getSession()->hasPermission('admin.user.canDeleteGroup');
+    }
 }
