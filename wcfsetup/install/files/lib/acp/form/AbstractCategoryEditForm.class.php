@@ -211,11 +211,13 @@ abstract class AbstractCategoryEditForm extends AbstractCategoryAddForm
     {
         parent::validateParentCategory();
 
-        // check if new parent category is no child category of the category
-        $childCategories = CategoryHandler::getInstance()->getChildCategories(
-            $this->categoryID,
-            $this->objectType->objectTypeID
-        );
+        if ($this->parentCategoryID === $this->categoryID) {
+            throw new UserInputException('parentCategoryID', 'invalid');
+        }
+
+        // check if new parent category is no child category of the category; descendants
+        // are covered as well because a cycle makes the permission lookup recurse forever
+        $childCategories = $this->category->getAllChildCategories();
         if (isset($childCategories[$this->parentCategoryID])) {
             throw new UserInputException('parentCategoryID', 'invalid');
         }

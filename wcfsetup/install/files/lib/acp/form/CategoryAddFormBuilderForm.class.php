@@ -282,7 +282,10 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
                                 return;
                             }
 
-                            if ($this->formObject->getObjectID() === $formField->getValue()) {
+                            // The value of a select field is always a string.
+                            $parentCategoryID = \intval($formField->getValue());
+
+                            if ($this->formObject->getObjectID() === $parentCategoryID) {
                                 $formField->addValidationError(
                                     new FormFieldValidationError(
                                         'invalid',
@@ -295,12 +298,14 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
                                 return;
                             }
 
-                            $childCategories = CategoryHandler::getInstance()->getChildCategories(
-                                $this->formObject->getObjectID(),
-                                $this->objectType->getObjectID()
+                            // Any descendant is rejected, not just a direct child, because a
+                            // cycle makes the permission lookup recurse forever.
+                            $category = CategoryHandler::getInstance()->getCategory(
+                                $this->formObject->getObjectID()
                             );
+                            $childCategories = $category !== null ? $category->getAllChildCategories() : [];
 
-                            if (isset($childCategories[$formField->getValue()])) {
+                            if (isset($childCategories[$parentCategoryID])) {
                                 $formField->addValidationError(
                                     new FormFieldValidationError(
                                         'invalid',
