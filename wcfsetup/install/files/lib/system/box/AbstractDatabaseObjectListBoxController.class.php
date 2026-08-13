@@ -406,8 +406,17 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
             }
 
             if (!empty($this->validSortFields) && $this->box->sortOrder && $this->box->sortField) {
-                $this->sortOrder = $this->box->sortOrder;
-                $this->sortField = $this->box->sortField;
+                if (
+                    \in_array($this->box->sortField, $this->validSortFields, true)
+                    && ($this->box->sortOrder === 'ASC' || $this->box->sortOrder === 'DESC')
+                ) {
+                    $this->sortOrder = $this->box->sortOrder;
+                    $this->sortField = $this->box->sortField;
+                } elseif (\ENABLE_DEBUG_MODE) {
+                    throw new \LogicException(
+                        "Invalid sort field '{$this->box->sortField}' or sort order '{$this->box->sortOrder}' given for box '{$this->box->identifier}'."
+                    );
+                }
             }
 
             if ($this->conditionDefinition) {
@@ -439,7 +448,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
         }
 
         if (!empty($this->validSortFields)) {
-            if (!\in_array($this->sortField, $this->validSortFields)) {
+            if (!\in_array($this->sortField, $this->validSortFields, true)) {
                 throw new UserInputException('sorting', 'invalidSortField');
             }
 
