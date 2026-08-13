@@ -11,6 +11,8 @@ use wcf\command\contact\form\SubmitContactForm;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\file\processor\ContactFormFileProcessor;
+use wcf\system\file\processor\FileProcessor;
 use wcf\system\flood\FloodControl;
 use wcf\system\form\builder\field\CaptchaFormField;
 use wcf\system\form\builder\field\EmailFormField;
@@ -128,14 +130,18 @@ class ContactForm extends AbstractFormBuilderForm
             $optionValues
         );
 
+        $fileIDs = $formData['attachments'] ?? [];
+
         $command = new SubmitContactForm(
             $recipient,
             $data['name'],
             $data['email'],
             $optionValues,
-            $formData['attachments'] ?? []
+            $fileIDs
         );
         $command();
+
+        $this->releaseAttachments($fileIDs);
 
         $this->saved();
 
@@ -147,6 +153,21 @@ class ContactForm extends AbstractFormBuilderForm
         );
 
         exit;
+    }
+
+    /**
+     * @param list<int> $fileIDs
+     */
+    private function releaseAttachments(array $fileIDs): void
+    {
+        if ($fileIDs === []) {
+            return;
+        }
+
+        $fileProcessor = FileProcessor::getInstance()->getProcessorByName('com.woltlab.wcf.contact.form');
+        if ($fileProcessor instanceof ContactFormFileProcessor) {
+            $fileProcessor->releaseFiles($fileIDs);
+        }
     }
 
     /**
