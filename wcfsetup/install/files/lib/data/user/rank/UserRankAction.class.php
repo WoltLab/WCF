@@ -75,14 +75,14 @@ class UserRankAction extends AbstractDatabaseObjectAction
      */
     public function update()
     {
-        $removedFiles = $this->parameters['rankImageFile__removedFiles'] ?? [];
+        $removedFiles = $this->parameters['rankImageFile_removedFiles'] ?? [];
         if (\is_array($removedFiles)) {
             foreach ($removedFiles as $file) {
                 if (!($file instanceof UploadFile)) {
                     throw new InvalidObjectArgument(
                         $file,
                         UploadFile::class,
-                        "An array values of 'rankImageFile__removedFiles'"
+                        "An array values of 'rankImageFile_removedFiles'"
                     );
                 }
 
