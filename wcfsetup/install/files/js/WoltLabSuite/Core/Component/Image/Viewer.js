@@ -4,7 +4,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  */
-define(["require", "exports", "@fancyapps/ui", "WoltLabSuite/Core/Helper/PageOverlay", "WoltLabSuite/Core/Language", "./Fancybox/ConsentPlugin", "WoltLabSuite/Core/Ui/Screen"], function (require, exports, ui_1, PageOverlay_1, Language_1, ConsentPlugin_1, Screen_1) {
+define(["require", "exports", "@fancyapps/ui", "WoltLabSuite/Core/Helper/PageOverlay", "WoltLabSuite/Core/Language", "./Fancybox/ConsentPlugin", "WoltLabSuite/Core/StringUtil", "WoltLabSuite/Core/Ui/Screen"], function (require, exports, ui_1, PageOverlay_1, Language_1, ConsentPlugin_1, StringUtil_1, Screen_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -30,6 +30,16 @@ define(["require", "exports", "@fancyapps/ui", "WoltLabSuite/Core/Helper/PageOve
         defaultConfig.Carousel = {
             Video: {
                 autoplay: false,
+            },
+            // Captions are inserted through `innerHTML`, but they usually originate from
+            // a `data-caption` attribute whose value is plaintext, such as the filename
+            // of an attachment. Pass an `HTMLElement` as the caption if markup is needed.
+            formatCaption(_carousel, slide) {
+                const caption = slide.caption;
+                if (caption instanceof HTMLElement) {
+                    return caption;
+                }
+                return (0, StringUtil_1.escapeHTML)(caption ?? "");
             },
         };
         if (!defaultConfig.plugins) {

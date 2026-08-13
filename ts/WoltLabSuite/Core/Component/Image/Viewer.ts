@@ -9,6 +9,7 @@ import { Fancybox, CarouselSlide } from "@fancyapps/ui";
 import { getPageOverlayContainer } from "WoltLabSuite/Core/Helper/PageOverlay";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import { ConsentPlugin } from "./Fancybox/ConsentPlugin";
+import { escapeHTML } from "WoltLabSuite/Core/StringUtil";
 import { scrollDisable, scrollEnable } from "WoltLabSuite/Core/Ui/Screen";
 
 setDefaultConfig();
@@ -36,6 +37,17 @@ function setDefaultConfig(): void {
   defaultConfig.Carousel = {
     Video: {
       autoplay: false,
+    },
+    // Captions are inserted through `innerHTML`, but they usually originate from
+    // a `data-caption` attribute whose value is plaintext, such as the filename
+    // of an attachment. Pass an `HTMLElement` as the caption if markup is needed.
+    formatCaption(_carousel, slide) {
+      const caption = slide.caption;
+      if (caption instanceof HTMLElement) {
+        return caption;
+      }
+
+      return escapeHTML(caption ?? "");
     },
   };
   if (!defaultConfig.plugins) {
