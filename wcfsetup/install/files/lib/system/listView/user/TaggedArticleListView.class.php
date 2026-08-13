@@ -4,6 +4,7 @@ namespace wcf\system\listView\user;
 
 use wcf\data\article\AccessibleArticleList;
 use wcf\system\tagging\TagEngine;
+use wcf\system\WCF;
 
 /**
  * List view for the list of articles filtered by tags.
@@ -44,5 +45,13 @@ class TaggedArticleListView extends ArticleListView
     public function getParameters(): array
     {
         return ['tagIDs' => $this->tagIDs];
+    }
+
+    #[\Override]
+    public function isAccessible(): bool
+    {
+        return parent::isAccessible()
+            && \MODULE_TAGGING !== 0
+            && WCF::getSession()->hasPermission('user.tag.canViewTag');
     }
 }
