@@ -6,7 +6,9 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISearchAction;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
 /**
@@ -58,8 +60,20 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction
      */
     public function validateGetSearchResultList()
     {
+        if (!\MODULE_TAGGING) {
+            throw new IllegalLinkException();
+        }
+        WCF::getSession()->checkPermissions(['user.tag.canViewTag']);
+
         $this->readString('searchString', false, 'data');
         $this->readInteger('languageID', true);
+
+        if (
+            $this->parameters['languageID'] !== 0
+            && LanguageFactory::getInstance()->getLanguage($this->parameters['languageID']) === null
+        ) {
+            throw new UserInputException('languageID');
+        }
 
         if (isset($this->parameters['data']['excludedSearchValues']) && !\is_array($this->parameters['data']['excludedSearchValues'])) {
             throw new UserInputException('excludedSearchValues');
