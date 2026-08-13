@@ -22,7 +22,7 @@ class UserActivityEventHandler extends SingletonFactory
 {
     /**
      * cached object types
-     * @var ObjectType[]
+     * @var array{names?: array<string, int>, objects?: array<int, ObjectType>}
      */
     protected $objectTypes = [];
 
