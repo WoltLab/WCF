@@ -2,7 +2,7 @@
 
 namespace wcf\system\page\handler;
 
-use wcf\data\article\ViewableArticleList;
+use wcf\data\article\AccessibleArticleList;
 use wcf\data\page\Page;
 use wcf\data\user\online\UserOnline;
 use wcf\system\cache\runtime\ViewableArticleContentRuntimeCache;
@@ -52,8 +52,11 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
      */
     public function lookup($searchString)
     {
-        $articleList = new ViewableArticleList();
-        $articleList->sqlSelects = "(
+        $articleList = new AccessibleArticleList();
+        if ($articleList->sqlSelects !== '') {
+            $articleList->sqlSelects .= ',';
+        }
+        $articleList->sqlSelects .= "(
             SELECT  title
             FROM    wcf" . WCF_N . "_article_content
             WHERE   articleID = article.articleID
