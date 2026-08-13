@@ -207,6 +207,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
             TextFormField::create('name')
                 ->label('wcf.acp.pip.templateListener.name')
                 ->description('wcf.acp.pip.templateListener.name.description')
+                ->maximumLength(80)
                 ->required()
                 ->addValidator(new FormFieldValidator('format', static function (TextFormField $formField) {
                     if (!\preg_match('~^[a-z][A-z]+$~', $formField->getValue())) {
