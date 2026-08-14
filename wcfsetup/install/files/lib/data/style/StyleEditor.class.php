@@ -469,7 +469,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         // handle templates
         if (!empty($data['templates'])) {
             $templateGroupFolderName = '';
-            if ($style !== null && $style->templateGroupID !== 0) {
+            if ($style !== null && $style->templateGroupID !== null) {
                 $templateGroupFolderName = (new TemplateGroup($style->templateGroupID))->templateGroupFolderName;
                 $styleData['templateGroupID'] = $style->templateGroupID;
             }
@@ -551,7 +551,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                 }
 
                 $knownTemplates = [];
-                if ($style !== null && $style->templateGroupID !== 0) {
+                if ($style !== null && $style->templateGroupID !== null) {
                     $sql = "SELECT  *
                             FROM    wcf1_template
                             WHERE   templateGroupID = ?";
@@ -1046,7 +1046,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             $styleTar->addString('variables_dark.xml', $xml->endDocument());
         }
 
-        if ($templates && $this->templateGroupID !== 0) {
+        if ($templates && $this->templateGroupID !== null) {
             $templateGroup = new TemplateGroup($this->templateGroupID);
 
             // create templates tar

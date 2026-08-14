@@ -19,7 +19,7 @@ use wcf\util\ImageUtil;
  * @property-read   int     $styleID            unique id of the style
  * @property-read   int     $packageID          id of the package which delivers the style
  * @property-read   string  $styleName          name of style
- * @property-read   int     $templateGroupID    id of the template group used for the style or `0` if the style uses no specific template group
+ * @property-read   ?int    $templateGroupID    id of the template group used for the style or `null` if the style uses no specific template group
  * @property-read   0|1     $isDefault          is `1` if the style is the default style for guests and users, otherwise `0`
  * @property-read   0|1     $isDisabled         is `1` if the style is disabled and thus cannot be used without having the specific permission to do so, otherwise `0`
  * @property-read   string  $styleDescription   description of the style or name of the language item which contains the description

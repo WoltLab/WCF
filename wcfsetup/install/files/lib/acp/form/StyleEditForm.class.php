@@ -255,7 +255,7 @@ class StyleEditForm extends StyleAddForm
             $this->styleDescription = $this->style->styleDescription;
             $this->styleName = $this->style->styleName;
             $this->styleVersion = $this->style->styleVersion;
-            $this->templateGroupID = $this->style->templateGroupID;
+            $this->templateGroupID = $this->style->templateGroupID ?? 0;
             if ($this->style->image !== '' && \file_exists(\WCF_DIR . 'images/' . $this->style->image)) {
                 $file = new UploadFile(
                     \WCF_DIR . 'images/' . $this->style->image,
@@ -352,7 +352,7 @@ class StyleEditForm extends StyleAddForm
         $this->objectAction = new StyleAction([$this->style], 'update', [
             'data' => \array_merge($this->additionalFields, [
                 'styleName' => $this->styleName,
-                'templateGroupID' => $this->templateGroupID,
+                'templateGroupID' => $this->templateGroupID ?: null,
                 'styleVersion' => $this->styleVersion,
                 'styleDate' => $this->styleDate,
                 'copyright' => $this->copyright,

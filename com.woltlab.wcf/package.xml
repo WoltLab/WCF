@@ -54,4 +54,13 @@
 		<instruction type="template">templates_update.tar</instruction>
 		<instruction type="script">acp/update_com.woltlab.wcf_6.2.6_cacheReset.php</instruction>
 	</instructions>
+
+	<!--
+	Required order of the following steps for the update to 6.3:
+	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_likeObject.php</instruction>
+	<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.3_step1.php</instruction>
+	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_styleTemplateGroup.php</instruction>
+	<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.3_step2.php</instruction>
+	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_embeddedObjects.php</instruction>
+	-->
 </package>

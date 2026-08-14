@@ -3347,8 +3347,7 @@ return [
             NotNullInt10DatabaseTableColumn::create('packageID'),
             NotNullVarchar255DatabaseTableColumn::create('styleName')
                 ->defaultValue(''),
-            NotNullInt10DatabaseTableColumn::create('templateGroupID')
-                ->defaultValue(0),
+            IntDatabaseTableColumn::create('templateGroupID'),
             DefaultFalseBooleanDatabaseTableColumn::create('isDefault'),
             DefaultFalseBooleanDatabaseTableColumn::create('isDisabled'),
             VarcharDatabaseTableColumn::create('styleDescription')
@@ -3395,6 +3394,12 @@ return [
                 ->referencedTable('wcf1_package')
                 ->referencedColumns(['packageID'])
                 ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['templateGroupID'])
+                ->referencedTable('wcf1_template_group')
+                ->referencedColumns(['templateGroupID'])
+                ->onDelete('SET NULL')
                 ->onUpdate('NO ACTION'),
         ]),
     DatabaseTable::create('wcf1_style_variable')

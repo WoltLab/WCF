@@ -10,6 +10,7 @@
 
 use wcf\system\database\table\column\CharDatabaseTableColumn;
 use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
+use wcf\system\database\table\column\IntDatabaseTableColumn;
 use wcf\system\database\table\column\JsonDatabaseTableColumn;
 use wcf\system\database\table\column\MediumintDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
@@ -67,6 +68,10 @@ return [
         ->columns([
             CharDatabaseTableColumn::create('lostPasswordKey')
                 ->length(64),
+        ]),
+    PartialDatabaseTable::create('wcf1_style')
+        ->columns([
+            IntDatabaseTableColumn::create('templateGroupID'),
         ]),
     PartialDatabaseTable::create('wcf1_acp_session_log')
         ->columns([

@@ -847,7 +847,7 @@ class StyleAddForm extends AbstractForm
         $this->objectAction = new StyleAction([], 'create', [
             'data' => \array_merge($this->additionalFields, [
                 'styleName' => $this->styleName,
-                'templateGroupID' => $this->templateGroupID,
+                'templateGroupID' => $this->templateGroupID ?: null,
                 'packageName' => $this->packageName,
                 'isDisabled' => 1, // styles are disabled by default
                 'isTainted' => 1,

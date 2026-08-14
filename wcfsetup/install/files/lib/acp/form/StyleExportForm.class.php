@@ -64,7 +64,7 @@ class StyleExportForm extends AbstractForm
 
         $this->style = Helper::fetchObjectFromQueryParameter(Style::class);
 
-        if ($this->style->templateGroupID !== 0) {
+        if ($this->style->templateGroupID !== null) {
             $this->canExportTemplates = true;
 
             if ($_POST === []) {
