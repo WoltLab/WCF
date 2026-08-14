@@ -32,6 +32,10 @@ final class WoltLabSuitePageBBCode extends AbstractBBCode
         /** @var ?Page $page */
         $page = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.page', $pageID);
         if ($page !== null) {
+            if (!$page->isVisible() || !$page->isAccessible()) {
+                return ContentNotVisibleView::forNoPermission();
+            }
+
             return StringUtil::getAnchorTag($page->getLink(), $title ?: $page->getTitle());
         }
 
