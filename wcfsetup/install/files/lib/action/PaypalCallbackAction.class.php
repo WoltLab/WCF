@@ -43,7 +43,9 @@ final class PaypalCallbackAction extends AbstractAction
                 $request = new Request('POST', $url, [
                     'Content-Type' => 'application/x-www-form-urlencoded',
                 ], \http_build_query(
-                    \array_merge(['cmd' => '_notify-validate'], $_POST),
+                    // The `cmd` must be merged last, otherwise a request carrying its own
+                    // `cmd` parameter would replace the validation command.
+                    \array_merge($_POST, ['cmd' => '_notify-validate']),
                     '',
                     '&',
                     \PHP_QUERY_RFC1738
@@ -55,7 +57,7 @@ final class PaypalCallbackAction extends AbstractAction
                 throw new \Exception('PayPal IPN validation request failed: ' . $e->getMessage(), 0, $e);
             }
 
-            if (\strpos($content, "VERIFIED") === false) {
+            if (\trim($content) !== 'VERIFIED') {
                 throw new \Exception("PayPal IPN validation did not return 'VERIFIED'.");
             }
         } catch (\Exception $e) {
