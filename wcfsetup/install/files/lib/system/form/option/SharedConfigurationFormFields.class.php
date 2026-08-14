@@ -4,12 +4,15 @@ namespace wcf\system\form\option;
 
 use wcf\event\form\option\SharedConfigurationFormFieldCollecting;
 use wcf\system\event\EventHandler;
+use wcf\system\form\builder\field\AbstractNumericFormField;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\FloatFormField;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\SelectOptionsFormField;
 use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
 
 /**
  * Provides the available shared configuration form fields.
@@ -46,15 +49,23 @@ final class SharedConfigurationFormFields
                 ->label('wcf.form.option.shared.defaultValue')
                 ->addFieldClass('medium'),
             'maxLength' => IntegerFormField::create('maxLength')
-                ->label('wcf.form.option.shared.maxLength'),
+                ->label('wcf.form.option.shared.maxLength')
+                ->nullable()
+                ->minimum(1),
             'minIntegerValue' => IntegerFormField::create('minIntegerValue')
-                ->label('wcf.form.option.shared.minValue'),
+                ->label('wcf.form.option.shared.minValue')
+                ->nullable(),
             'maxIntegerValue' => IntegerFormField::create('maxIntegerValue')
-                ->label('wcf.form.option.shared.maxValue'),
+                ->label('wcf.form.option.shared.maxValue')
+                ->nullable()
+                ->addValidator($this->getMaximumValueValidator('minIntegerValue')),
             'minFloatValue' => FloatFormField::create('minFloatValue')
-                ->label('wcf.form.option.shared.minValue'),
+                ->label('wcf.form.option.shared.minValue')
+                ->nullable(),
             'maxFloatValue' => FloatFormField::create('maxFloatValue')
-                ->label('wcf.form.option.shared.maxValue'),
+                ->label('wcf.form.option.shared.maxValue')
+                ->nullable()
+                ->addValidator($this->getMaximumValueValidator('minFloatValue')),
             'selectOptions' => SelectOptionsFormField::create('selectOptions')
                 ->label('wcf.form.option.shared.selectOptions')
                 ->required(),
@@ -69,6 +80,41 @@ final class SharedConfigurationFormFields
                 ->maximumLength(80)
                 ->minimumLength(2)
         ];
+    }
+
+    /**
+     * Returns a validator that ensures that the maximum value of a form field is not
+     * smaller than the minimum value provided by the form field with the given id.
+     */
+    private function getMaximumValueValidator(string $minimumFieldId): FormFieldValidator
+    {
+        return new FormFieldValidator(
+            'maximumValue',
+            static function (AbstractNumericFormField $formField) use ($minimumFieldId) {
+                $maximum = $formField->getValue();
+                if ($maximum === null) {
+                    return;
+                }
+
+                $minimumFormField = $formField->getDocument()->getNodeById($minimumFieldId);
+                \assert($minimumFormField === null || $minimumFormField instanceof AbstractNumericFormField);
+
+                $minimum = $minimumFormField?->getValue();
+                if ($minimum === null) {
+                    return;
+                }
+
+                if ($minimum > $maximum) {
+                    $formField->addValidationError(
+                        new FormFieldValidationError(
+                            'minimum',
+                            'wcf.form.option.shared.maxValue.error.minimum',
+                            ['minimum' => $minimum]
+                        )
+                    );
+                }
+            }
+        );
     }
 
     /**

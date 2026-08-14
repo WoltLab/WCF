@@ -35,7 +35,14 @@ class IntegerFormOption extends AbstractNumericFormOption
             $formField->minimum($configuration['minIntegerValue']);
         }
         if (isset($configuration['maxIntegerValue'])) {
-            $formField->maximum($configuration['maxIntegerValue']);
+            // Guards against invalid configurations that have been stored before the
+            // maximum was validated against the minimum.
+            if (
+                !isset($configuration['minIntegerValue'])
+                || $configuration['minIntegerValue'] <= $configuration['maxIntegerValue']
+            ) {
+                $formField->maximum($configuration['maxIntegerValue']);
+            }
         }
 
         return $formField;

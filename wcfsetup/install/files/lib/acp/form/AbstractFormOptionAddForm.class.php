@@ -6,10 +6,12 @@ use wcf\data\DatabaseObject;
 use wcf\data\IStorableObject;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
+use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\IFormDocument;
+use wcf\system\form\builder\IFormNode;
 use wcf\system\form\option\FormOptionHandler;
 use wcf\system\form\option\SharedConfigurationFormFields;
 
@@ -38,7 +40,9 @@ abstract class AbstractFormOptionAddForm extends AbstractFormBuilderForm
                     $configuration = [];
 
                     foreach ($this->getConfigurationFormFieldIds() as $parameter) {
-                        if ($this->isConfigurationValueSet($parameters['data'][$parameter] ?? null)) {
+                        $formField = $document->getNodeById($parameter);
+
+                        if ($this->isConfigurationValueSet($formField, $parameters['data'][$parameter] ?? null)) {
                             $configuration[$parameter] = $parameters['data'][$parameter];
                         }
                         if (\array_key_exists($parameter, $parameters['data'])) {
@@ -70,12 +74,16 @@ abstract class AbstractFormOptionAddForm extends AbstractFormBuilderForm
      * state of a form field, for example an empty text or a disabled checkbox, are
      * not stored.
      */
-    private function isConfigurationValueSet(mixed $value): bool
+    private function isConfigurationValueSet(?IFormNode $formField, mixed $value): bool
     {
+        // `BooleanFormField::getSaveValue()` returns `0` or `1` instead of a
+        // boolean, therefore a disabled checkbox has to be recognized explicitly.
+        if ($formField instanceof BooleanFormField && $value === 0) {
+            return false;
+        }
+
         return $value !== null
             && $value !== ''
-            && $value !== 0
-            && $value !== 0.0
             && $value !== false
             && $value !== [];
     }

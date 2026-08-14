@@ -34,7 +34,14 @@ class FloatFormOption extends AbstractNumericFormOption
             $formField->minimum($configuration['minFloatValue']);
         }
         if (isset($configuration['maxFloatValue'])) {
-            $formField->maximum($configuration['maxFloatValue']);
+            // Guards against invalid configurations that have been stored before the
+            // maximum was validated against the minimum.
+            if (
+                !isset($configuration['minFloatValue'])
+                || $configuration['minFloatValue'] <= $configuration['maxFloatValue']
+            ) {
+                $formField->maximum($configuration['maxFloatValue']);
+            }
         }
 
         return $formField;

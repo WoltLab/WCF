@@ -4043,6 +4043,7 @@ Dateianhänge:
 		<item name="wcf.form.option.shared.maxLength"><![CDATA[Maximale Textlänge]]></item>
 		<item name="wcf.form.option.shared.minValue"><![CDATA[Minimum]]></item>
 		<item name="wcf.form.option.shared.maxValue"><![CDATA[Maximum]]></item>
+		<item name="wcf.form.option.shared.maxValue.error.minimum"><![CDATA[Das Maximum darf nicht kleiner als das Minimum ({#$minimum}) sein.]]></item>
 		<item name="wcf.form.option.shared.selectOptions"><![CDATA[Auswahloptionen]]></item>
 		<item name="wcf.form.option.shared.required"><![CDATA[Das Feld muss zwingend ausgefüllt werden]]></item>
 		<item name="wcf.form.option.shared.unit"><![CDATA[Einheit]]></item>
