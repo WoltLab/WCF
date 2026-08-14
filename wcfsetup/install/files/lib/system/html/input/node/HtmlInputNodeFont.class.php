@@ -105,6 +105,10 @@ class HtmlInputNodeFont extends AbstractHtmlInputNode
      */
     protected function convertToSpan(\DOMElement $element, $property, $value)
     {
+        // `face` is passed through by HTMLPurifier as arbitrary text, therefore it must be
+        // held to the same standard as the `[font]` bbcode's attribute validation.
+        $value = \preg_replace('~["\';}\(\)]~', '', $value);
+
         $span = $element->ownerDocument->createElement('span');
         $span->setAttribute('style', "{$property}: {$value}");
 
