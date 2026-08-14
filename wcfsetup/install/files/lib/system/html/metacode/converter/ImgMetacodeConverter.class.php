@@ -20,7 +20,15 @@ class ImgMetacodeConverter extends AbstractMetacodeConverter
     public function convert(\DOMDocumentFragment $fragment, array $attributes)
     {
         $element = $fragment->ownerDocument->createElement('img');
-        $element->setAttribute('src', StringUtil::decodeHTML($attributes[0]));
+
+        // The src is not filtered after this point, because the bbcode is evaluated
+        // after HTMLPurifier has run. Decoding and normalizing the url upfront
+        // guarantees that the scheme check in `validateAttributes()` sees the same
+        // value as the browser will.
+        $element->setAttribute(
+            'src',
+            UrlMetacodeConverter::normalizeUrl(StringUtil::decodeHTML($attributes[0]))
+        );
 
         if (isset($attributes[1]) && \in_array($attributes[1], ['left', 'right'])) {
             $element->setAttribute('class', 'messageFloatObject' . \ucfirst($attributes[1]));
@@ -36,14 +44,25 @@ class ImgMetacodeConverter extends AbstractMetacodeConverter
     {
         $count = \count($attributes);
         if ($count > 0 && $count < 4) {
-            // reject data URIs
-            if (\preg_match('~^\s*data:~', $attributes[0])) {
-                return false;
-            }
-
-            return true;
+            return $this->hasAllowedScheme(StringUtil::decodeHTML($attributes[0]));
         }
 
         return false;
+    }
+
+    /**
+     * Returns true if the url carries no scheme at all, or one that an image can
+     * actually be fetched from. This is deliberately stricter than
+     * `UrlMetacodeConverter::hasAllowedScheme()`, whose list applies to links.
+     */
+    private function hasAllowedScheme(string $url): bool
+    {
+        $url = UrlMetacodeConverter::normalizeUrl($url);
+
+        if (\preg_match('~^(?P<scheme>[a-z][a-z0-9+.\-]*):~i', $url, $match)) {
+            return \in_array(\mb_strtolower($match['scheme']), ['http', 'https'], true);
+        }
+
+        return true;
     }
 }
