@@ -2,7 +2,7 @@
 		</div>
 	</section>
 	
-	{include file='pageFooter'}
+	{include file='pageFooter' __disableAds=true}
 </div>
 
 {event name='footer'}
