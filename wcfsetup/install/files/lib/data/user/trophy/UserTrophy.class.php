@@ -123,7 +123,12 @@ class UserTrophy extends DatabaseObject
     {
         if ($this->replacements == null) {
             $replacements = [
-                '{$username}' => $this->getUserProfile()->username,
+                // HTML descriptions are emitted as-is, therefore the username must be
+                // escaped upfront. Plaintext descriptions are escaped after the
+                // replacement, escaping here would yield double encoded values.
+                '{$username}' => $this->trophyUseHtml
+                    ? StringUtil::encodeHTML($this->getUserProfile()->username)
+                    : $this->getUserProfile()->username,
             ];
 
             $parameters = ['replacements' => $replacements];
