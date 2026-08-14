@@ -152,7 +152,7 @@ class PageLocationManager extends SingletonFactory
                 $landingPage = PageCache::getInstance()->getLandingPage();
                 while ($page !== null && $page->parentPageID) {
                     $page = PageCache::getInstance()->getPage($page->parentPageID);
-                    if (!$page->isVisible()) {
+                    if (!$page->isVisible() || !$page->isAccessible()) {
                         continue;
                     }
 

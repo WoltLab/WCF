@@ -38,6 +38,13 @@ trait TUserOnlineLocationPageHandler
             return '';
         }
 
+        if (
+            $userObject->userID !== WCF::getUser()->userID
+            && !WCF::getSession()->getPermission('user.profile.canViewUserProfile')
+        ) {
+            return '';
+        }
+
         return WCF::getLanguage()->getDynamicVariable('wcf.page.onlineLocation.' . $page->identifier, [
             'user' => $userObject,
             'userOnline' => $user,
