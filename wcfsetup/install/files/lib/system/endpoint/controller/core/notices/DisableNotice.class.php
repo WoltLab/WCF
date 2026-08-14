@@ -26,6 +26,8 @@ final class DisableNotice implements IController
 {
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
+        WCF::getSession()->checkPermissions(['admin.notice.canManageNotice']);
+
         $notice = Helper::fetchObjectFromRequestParameter($variables['id'], Notice::class);
 
         $this->assertNoticeCanBeDisabled($notice);
@@ -37,8 +39,6 @@ final class DisableNotice implements IController
 
     private function assertNoticeCanBeDisabled(Notice $notice): void
     {
-        WCF::getSession()->checkPermissions(['admin.notice.canManageNotice']);
-
         if ($notice->isDisabled) {
             throw new PermissionDeniedException();
         }
