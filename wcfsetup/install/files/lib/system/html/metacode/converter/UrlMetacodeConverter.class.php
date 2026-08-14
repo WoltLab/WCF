@@ -21,6 +21,37 @@ class UrlMetacodeConverter extends AbstractMetacodeConverter
     public static $allowedSchemes = ['http', 'https', 'mailto', 'ftp', 'nntp', 'news', 'tel', 'steam', 'ts3server'];
 
     /**
+     * Strips the characters that browsers remove before parsing an url,
+     * otherwise a scheme could be masked using control characters, e.g.
+     * `java&#9;script:`.
+     *
+     * @since 6.2
+     */
+    public static function normalizeUrl(string $url): string
+    {
+        $url = \preg_replace('~^[\x00-\x20]+|[\x00-\x20]+$~', '', $url);
+
+        return \preg_replace('~[\t\r\n]~', '', $url);
+    }
+
+    /**
+     * Returns true if the url carries no scheme at all, or one that is part of
+     * the list of allowed schemes.
+     *
+     * @since 6.2
+     */
+    public static function hasAllowedScheme(string $url): bool
+    {
+        $url = self::normalizeUrl($url);
+
+        if (\preg_match('~^(?P<scheme>[a-z][a-z0-9+.\-]*):~i', $url, $match)) {
+            return \in_array(\mb_strtolower($match['scheme']), self::$allowedSchemes, true);
+        }
+
+        return true;
+    }
+
+    /**
      * @inheritDoc
      */
     public function convert(\DOMDocumentFragment $fragment, array $attributes)
@@ -32,14 +63,19 @@ class UrlMetacodeConverter extends AbstractMetacodeConverter
             $href = $fragment->textContent;
         }
 
-        $href = StringUtil::decodeHTML($href);
+        // The href is not filtered after this point, because the bbcode is
+        // evaluated after HTMLPurifier has run. Normalizing the url upfront
+        // guarantees that the scheme check below sees the same value as the
+        // browser will.
+        $href = self::normalizeUrl(StringUtil::decodeHTML($href));
+
         if (\str_starts_with($href, '//')) {
             // dynamic protocol, treat as https
             $href = "https:{$href}";
-        } elseif (\preg_match('~^(?P<schema>[a-z0-9]+)://~', $href, $match)) {
-            if (!\in_array($match['schema'], self::$allowedSchemes)) {
+        } elseif (\preg_match('~^[a-z][a-z0-9+.\-]*:(?://)?~i', $href, $match)) {
+            if (!self::hasAllowedScheme($href)) {
                 // invalid schema, replace it with `http`
-                $href = 'http' . \mb_substr($href, \strlen($match['schema']));
+                $href = 'http://' . \mb_substr($href, \mb_strlen($match[0]));
             }
         } elseif (!\str_contains($href, 'index.php')) {
             // unless it's a relative `index.php` link, assume it is missing the protocol
