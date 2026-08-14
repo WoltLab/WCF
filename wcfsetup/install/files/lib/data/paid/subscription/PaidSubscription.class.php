@@ -10,6 +10,7 @@ use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\payment\method\PaymentMethodHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Represents a paid subscription.
@@ -97,7 +98,7 @@ class PaidSubscription extends DatabaseObject implements ITitledObject
             return $processor->getHtml();
         }
 
-        return \nl2br($description, false);
+        return \nl2br(StringUtil::encodeHTML($description), false);
     }
 
     /**
