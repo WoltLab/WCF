@@ -767,12 +767,12 @@ final class StyleCompiler extends SingletonFactory
             return '';
         }
 
-        $cssFile = FontManager::getInstance()->getCssFilename($font);
-        if (!\is_readable($cssFile)) {
+        $fontManager = FontManager::getInstance();
+        if (!$fontManager->isFamilyDownloaded($font)) {
             return '';
         }
 
-        return \file_get_contents($cssFile);
+        return \file_get_contents($fontManager->getCssFilename($font));
     }
 
     /**
