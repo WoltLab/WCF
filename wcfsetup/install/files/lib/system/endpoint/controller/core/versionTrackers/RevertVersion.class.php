@@ -44,7 +44,7 @@ final class RevertVersion implements IController
         }
 
         $version = VersionTracker::getInstance()->getVersion($parameters->objectType, $parameters->versionId);
-        if (!$version->versionID) {
+        if ($version === null || $version->objectID !== $object->getObjectID()) {
             throw new UserInputException('versionId');
         }
 
