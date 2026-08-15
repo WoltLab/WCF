@@ -9,6 +9,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
+use wcf\util\StringUtil;
 
 /**
  * IMessageEmbeddedObjectHandler implementation for shared media.
@@ -98,10 +99,14 @@ class MediaMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObj
             return null;
         }
 
+        if (!$media->isAccessible()) {
+            return null;
+        }
+
         $return = (!empty($attributes['return'])) ? $attributes['return'] : 'link';
         switch ($return) {
             case 'title':
-                return $media->getTitle();
+                return StringUtil::encodeHTML($media->getTitle());
 
             case 'link':
             default:
