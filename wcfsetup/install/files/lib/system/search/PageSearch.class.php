@@ -96,14 +96,31 @@ class PageSearch extends AbstractSearchProvider
             'wcf1_page.pageType IN (?) AND wcf1_page.isDisabled = ?',
             [['text', 'html'], 0]
         );
-        // Exclude versions of disabled languages.
-        $conditionBuilder->add(
-            '(wcf1_page_content.languageID IS NULL OR wcf1_page_content.languageID IN (?))',
-            [\array_keys(LanguageFactory::getInstance()->getLanguages())]
-        );
+        $this->initLanguageCondition($conditionBuilder);
         $this->initAclCondition($conditionBuilder);
 
         return $conditionBuilder;
+    }
+
+    /**
+     * Restricts the results to a single version of each page, otherwise
+     * multilingual pages would show up once per language. The version of the
+     * active language is preferred, because that is the version the user is
+     * being redirected to. Versions of disabled languages are excluded.
+     */
+    private function initLanguageCondition(PreparedStatementConditionBuilder $conditionBuilder): void
+    {
+        $conditionBuilder->add('wcf1_page_content.pageContentID = (
+            SELECT      pageContentID
+            FROM        wcf1_page_content
+            WHERE       pageID = wcf1_page.pageID
+                    AND (languageID IS NULL OR languageID IN (?))
+            ORDER BY    IF(languageID = ?, 0, 1), pageContentID
+            LIMIT       1
+        )', [
+            \array_keys(LanguageFactory::getInstance()->getLanguages()),
+            WCF::getLanguage()->languageID,
+        ]);
     }
 
     private function initAclCondition(PreparedStatementConditionBuilder $conditionBuilder): void
