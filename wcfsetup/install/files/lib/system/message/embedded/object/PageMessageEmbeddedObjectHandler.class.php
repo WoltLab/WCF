@@ -6,6 +6,7 @@ use wcf\data\page\Page;
 use wcf\data\page\PageCache;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\util\ArrayUtil;
+use wcf\util\StringUtil;
 
 /**
  * Parses embedded pages and outputs their link or title.
@@ -74,10 +75,14 @@ class PageMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObje
             return;
         }
 
+        if (!$page->isVisible() || !$page->isAccessible()) {
+            return;
+        }
+
         $return = (!empty($attributes['return'])) ? $attributes['return'] : 'link';
         switch ($return) {
             case 'title':
-                return $page->getTitle();
+                return StringUtil::encodeHTML($page->getTitle());
                 break;
 
             case 'link':
