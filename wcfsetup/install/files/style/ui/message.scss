@@ -607,6 +607,14 @@
 		@include screen-md-up {
 			padding: 10px 20px;
 		}
+
+		a {
+			color: var(--wcfSidebarLink);
+
+			&:hover {
+				color: var(--wcfSidebarLinkActive);
+			}
+		}
 	}
 
 	.messageTitle {
