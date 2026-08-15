@@ -610,7 +610,14 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                                 continue;
                             }
 
-                            $templatesTar->extract($template['index'], $templatesDir . $template['filename']);
+                            // The filename originates from the archive and must not be
+                            // able to escape the template group of this style.
+                            $targetFile = FileUtil::getRealPath($templatesDir . $template['filename']);
+                            if (!\str_starts_with($targetFile, $templatesDir)) {
+                                continue;
+                            }
+
+                            $templatesTar->extract($template['index'], $targetFile);
 
                             $templateName = \str_replace('.tpl', '', $template['filename']);
 

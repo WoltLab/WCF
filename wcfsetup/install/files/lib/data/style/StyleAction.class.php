@@ -16,6 +16,7 @@ use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\ImageUtil;
+use wcf\util\StringUtil;
 
 /**
  * Executes style-related actions.
@@ -391,7 +392,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
 
         if ($style->hasFavicon) {
             $style->loadVariables();
-            $tileColor = $style->getVariable('wcfHeaderBackground', true);
+            $tileColor = StringUtil::encodeHTML($style->getVariable('wcfHeaderBackground', true));
 
             // update browserconfig.xml
             $browserconfig = <<<BROWSERCONFIG
