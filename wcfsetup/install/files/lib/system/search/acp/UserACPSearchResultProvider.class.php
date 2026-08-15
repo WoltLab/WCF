@@ -33,10 +33,11 @@ class UserACPSearchResultProvider implements IACPSearchResultProvider
             $conditionBuilder->add("email LIKE ?", [[WCF::getDB()->escapeLikeValue($query) . '%']]);
         }
 
-        $sql = "SELECT  *
-                FROM    wcf1_user
-                {$conditionBuilder}";
-        $statement = WCF::getDB()->prepare($sql);
+        $sql = "SELECT      *
+                FROM        wcf1_user
+                {$conditionBuilder}
+                ORDER BY    username";
+        $statement = WCF::getDB()->prepare($sql, 50);
         $statement->execute($conditionBuilder->getParameters());
 
         $results = [];
@@ -46,6 +47,10 @@ class UserACPSearchResultProvider implements IACPSearchResultProvider
                 $results[] = new ACPSearchResult($user->username, LinkHandler::getInstance()->getLink('UserEdit', [
                     'object' => $user,
                 ]));
+
+                if (\count($results) === 10) {
+                    break;
+                }
             }
         }
 

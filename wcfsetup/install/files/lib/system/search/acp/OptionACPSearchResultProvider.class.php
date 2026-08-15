@@ -2,6 +2,7 @@
 
 namespace wcf\system\search\acp;
 
+use wcf\data\option\category\OptionCategory;
 use wcf\data\option\category\OptionCategoryList;
 use wcf\data\option\Option;
 use wcf\system\cache\builder\OptionCacheBuilder;
@@ -23,6 +24,34 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
      * @inheritDoc
      */
     protected $listClassName = OptionCategoryList::class;
+
+    /**
+     * Mirrors the blacklist of `OptionHandler`, keep both in sync.
+     *
+     * @var list<string>
+     */
+    private array $restrictedCategoryNames = [
+        'general.cache',
+        'general.mail.send',
+        'general.page.seo',
+        'general.system.cookie',
+        'general.system.http',
+        'general.system.packageServer',
+        'general.system.proxy',
+        'general.system.search',
+        'module.development',
+        'security.general.secrets',
+    ];
+
+    /**
+     * Mirrors the blacklist of `OptionHandler`, keep both in sync.
+     *
+     * @var list<string>
+     */
+    private array $restrictedOptionNames = [
+        'image_adapter_type',
+        'mail_from_address',
+    ];
 
     /**
      * @inheritDoc
@@ -93,10 +122,15 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
                 continue;
             }
 
+            if ($this->isUnavailableOption($option, $optionCategories)) {
+                continue;
+            }
+
             $link = LinkHandler::getInstance()->getLink('Option', [
                 // @phpstan-ignore property.notFound
                 'id' => $this->getCategoryID($this->getTopCategory($option->categoryName)->parentCategoryName),
-            ], 'optionName=' . $option->optionName . '#category_' . $this->getCategoryName($option->categoryName));
+            ], 'optionName=' . \rawurlencode($option->optionName)
+                . '#category_' . \rawurlencode($this->getCategoryName($option->categoryName)));
             $categoryName = $option->categoryName;
             $parentCategories = [];
             while (isset($optionCategories[$categoryName])) {
@@ -119,5 +153,32 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
         }
 
         return $results;
+    }
+
+    /**
+     * @param array<string, OptionCategory> $optionCategories
+     * @since 6.2
+     */
+    private function isUnavailableOption(Option $option, array $optionCategories): bool
+    {
+        if (!ENABLE_ENTERPRISE_MODE || WCF::getUser()->hasOwnerAccess()) {
+            return false;
+        }
+
+        if (\in_array($option->optionName, $this->restrictedOptionNames, true)) {
+            return true;
+        }
+
+        // A blacklisted category hides its child categories, too.
+        $categoryName = $option->categoryName;
+        while (isset($optionCategories[$categoryName])) {
+            if (\in_array($categoryName, $this->restrictedCategoryNames, true)) {
+                return true;
+            }
+
+            $categoryName = $optionCategories[$categoryName]->parentCategoryName;
+        }
+
+        return false;
     }
 }

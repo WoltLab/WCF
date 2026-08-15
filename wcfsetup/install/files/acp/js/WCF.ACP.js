@@ -896,13 +896,13 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 		}
 		
 		// add caption
-		$('<li class="dropdownText">' + resultList.title + '</li>').appendTo(this._list);
+		$('<li class="dropdownText">' + WCF.String.escapeHTML(resultList.title) + '</li>').appendTo(this._list);
 		
 		// add menu items
 		for (var $i in resultList.items) {
 			var $item = resultList.items[$i];
 			
-			$('<li><a href="' + $item.link + '"><span>' + WCF.String.escapeHTML($item.title) + '</span>' + ($item.subtitle ? '<small>' + WCF.String.escapeHTML($item.subtitle) + '</small>' : '') + '</a></li>').appendTo(this._list);
+			$('<li><a href="' + WCF.String.escapeHTML($item.link) + '"><span>' + WCF.String.escapeHTML($item.title) + '</span>' + ($item.subtitle ? '<small>' + WCF.String.escapeHTML($item.subtitle) + '</small>' : '') + '</a></li>').appendTo(this._list);
 			
 			this._itemCount++;
 		}
