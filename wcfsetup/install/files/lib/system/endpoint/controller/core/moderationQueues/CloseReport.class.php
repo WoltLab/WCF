@@ -7,10 +7,12 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueEditor;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\WCF;
 
 /**
  * Closes the report with the given ID by marking it as done without further processing.
@@ -40,7 +42,14 @@ final class CloseReport implements IController
 
     private function assertReportCanBeClosed(ModerationQueue $queue): void
     {
+        WCF::getSession()->checkPermissions(['mod.general.canUseModeration']);
+
         if (!$queue->canEdit()) {
+            throw new PermissionDeniedException();
+        }
+
+        $definition = ObjectTypeCache::getInstance()->getObjectType($queue->objectTypeID)->getDefinition();
+        if ($definition->definitionName !== 'com.woltlab.wcf.moderation.report') {
             throw new PermissionDeniedException();
         }
     }

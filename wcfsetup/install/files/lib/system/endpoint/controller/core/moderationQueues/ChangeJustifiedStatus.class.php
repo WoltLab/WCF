@@ -11,6 +11,7 @@ use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\WCF;
 
 /**
  * Changes the justified status of the report with the given ID.
@@ -48,6 +49,8 @@ final class ChangeJustifiedStatus implements IController
 
     private function assertJustifiedStatusCanBeChanged(ModerationQueue $queue): void
     {
+        WCF::getSession()->checkPermissions(['mod.general.canUseModeration']);
+
         if (!$queue->canEdit() || !$queue->canChangeJustifiedStatus()) {
             throw new PermissionDeniedException();
         }

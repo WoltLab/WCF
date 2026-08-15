@@ -13,6 +13,7 @@ use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\moderation\queue\AbstractModerationQueueManager;
+use wcf\system\WCF;
 
 /**
  * Deletes the content associated with the moderation queue entry with the given ID.
@@ -41,6 +42,12 @@ final class DeleteContent implements IController
 
     private function assertContentCanBeRemoved(ModerationQueue $queue): void
     {
+        WCF::getSession()->checkPermissions(['mod.general.canUseModeration']);
+
+        if (!$queue->canEdit()) {
+            throw new PermissionDeniedException();
+        }
+
         if (!$this->getManager($queue)::getInstance()->canRemoveContent($queue)) {
             throw new PermissionDeniedException();
         }
