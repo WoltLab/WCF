@@ -163,7 +163,12 @@ class QuickReplyManager extends SingletonFactory
         $parameters['htmlInputProcessor'] = $object->getHtmlInputProcessor($parameters['data']['message']);
         unset($parameters['data']['message']);
 
-        $parameters['htmlInputProcessor']->validate();
+        $disallowedBBCodes = $parameters['htmlInputProcessor']->validate();
+        if ($disallowedBBCodes !== []) {
+            throw new UserInputException('message', 'wcf.message.error.disallowedBBCodes', [
+                'disallowedBBCodes' => $disallowedBBCodes,
+            ]);
+        }
         if ($parameters['htmlInputProcessor']->appearsToBeEmpty()) {
             throw new UserInputException('message');
         }
