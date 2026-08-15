@@ -344,6 +344,10 @@ final class UnfurlResponse
             throw new UrlInaccessible("Refusing to request images from non-standard ports.");
         }
 
+        if (!\in_array($imageUri->getScheme(), ['http', 'https'], true)) {
+            throw new UrlInaccessible("Refusing to request images from non-HTTP schemes.");
+        }
+
         try {
             $request = new Request('GET', $imageUri, [
                 'accept' => 'image/*',
