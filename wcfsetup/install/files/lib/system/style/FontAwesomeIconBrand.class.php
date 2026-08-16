@@ -33,6 +33,9 @@ final class FontAwesomeIconBrand implements IFontAwesomeIcon
         }
 
         $content = \file_get_contents(self::getFilename($this->name));
+        if ($content === false) {
+            throw new UnknownIcon($this->name);
+        }
 
         return <<<HTML
         <fa-brand size="{$size}">{$content}</fa-brand>
@@ -46,6 +49,13 @@ final class FontAwesomeIconBrand implements IFontAwesomeIcon
 
     public static function isValidName(string $name): bool
     {
+        // The name is interpolated into a path whose contents are embedded
+        // into the page verbatim, therefore it must not be able to escape
+        // the directory of the bundled brand icons.
+        if (!\preg_match('/\A[a-z0-9-]+\z/', $name)) {
+            return false;
+        }
+
         return \file_exists(self::getFilename($name));
     }
 
