@@ -236,7 +236,7 @@ final class EmailGrammar
      */
     public static function encodeHeader(string $header): string
     {
-        if (!\preg_match('(^' . self::getGrammar('atom') . '$)', $header)) {
+        if (!\preg_match('(^' . self::getGrammar('atom') . '$)D', $header)) {
             if (($encoded = self::encodeQuotedPrintableHeader($header)) === $header) {
                 $header = '"' . \addcslashes($header, '\\"') . '"';
             } else {

@@ -193,7 +193,7 @@ class Email
             return;
         }
 
-        if (!\preg_match('(^' . EmailGrammar::getGrammar('id-left') . '$)', $messageID)) {
+        if (!\preg_match('(^' . EmailGrammar::getGrammar('id-left') . '$)D', $messageID)) {
             throw new \DomainException("The given message id '" . $messageID . "' is invalid. Note: You must not specify the part right of the at sign (@).");
         }
         if (\strlen($messageID) > 200) {
@@ -229,7 +229,7 @@ class Email
      */
     public function addInReplyTo($messageID)
     {
-        if (!\preg_match('(^' . EmailGrammar::getGrammar('msg-id') . '$)', $messageID)) {
+        if (!\preg_match('(^' . EmailGrammar::getGrammar('msg-id') . '$)D', $messageID)) {
             throw new \DomainException("The given reference '" . $messageID . "' is invalid.");
         }
 
@@ -266,7 +266,7 @@ class Email
      */
     public function addReferences($messageID)
     {
-        if (!\preg_match('(^' . EmailGrammar::getGrammar('msg-id') . '$)', $messageID)) {
+        if (!\preg_match('(^' . EmailGrammar::getGrammar('msg-id') . '$)D', $messageID)) {
             throw new \DomainException("The given reference '" . $messageID . "' is invalid.");
         }
 
@@ -311,7 +311,7 @@ class Email
             return;
         }
 
-        if (!\preg_match('(^' . EmailGrammar::getGrammar('list-label') . '$)', $listId)) {
+        if (!\preg_match('(^' . EmailGrammar::getGrammar('list-label') . '$)D', $listId)) {
             throw new \DomainException("The given list id '" . $listId . "' is invalid.");
         }
         if (\strlen($listId) > 200) {
@@ -321,7 +321,7 @@ class Email
         }
         if ($humanReadable !== null) {
             $humanReadable = EmailGrammar::encodeHeader($humanReadable);
-            if (!\preg_match('(^' . EmailGrammar::getGrammar('phrase') . '$)', $humanReadable)) {
+            if (!\preg_match('(^' . EmailGrammar::getGrammar('phrase') . '$)D', $humanReadable)) {
                 throw new \DomainException("The given human readable name '" . $humanReadable . "' is invalid.");
             }
         }
