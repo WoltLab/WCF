@@ -101,7 +101,7 @@ final class IpAddress
 
         $mask = '';
         for ($i = 0; $i < $bytes; $i++, $maskBits -= 8) {
-            $mask .= \chr(0xff << (8 - \min(8, $maskBits)));
+            $mask .= \chr((0xff << (8 - \min(8, $maskBits))) & 0xff);
         }
 
         return new self(\inet_ntop(\inet_pton((string)$ipAddress) & $mask));
