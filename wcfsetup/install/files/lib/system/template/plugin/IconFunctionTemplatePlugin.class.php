@@ -51,7 +51,7 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
         }
 
         try {
-            $icon = $this->getIcon($type, $name);
+            $html = $this->getIcon($type, $name)->toHtml($size);
         } catch (IconValidationFailed) {
             $attributes = [];
             foreach ($tagArgs as $key => $value) {
@@ -73,8 +73,6 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
 
             return $fallback;
         }
-
-        $html = $icon->toHtml($size);
 
         if ($encodeJson) {
             return \json_encode($html, \JSON_THROW_ON_ERROR);
