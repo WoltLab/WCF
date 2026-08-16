@@ -177,7 +177,7 @@ final class StyleCompiler extends SingletonFactory
             $files[] = $customCustomSCSSFile;
         }
 
-        $scss = "/*!\n\nstylesheet for '" . $styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
+        $scss = "/*!\n\nstylesheet for '" . \str_replace(['*', '/'], '', $styleName) . "', generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
         $scss .= $this->bootstrap($variables);
         foreach ($files as $file) {
             $scss .= $this->prepareFile($file);
@@ -305,7 +305,7 @@ final class StyleCompiler extends SingletonFactory
         $parameters = ['scss' => ''];
         EventHandler::getInstance()->fireAction($this, 'compile', $parameters);
 
-        $scss = "/*!\n\nstylesheet for '" . $style->styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
+        $scss = "/*!\n\nstylesheet for '" . \str_replace(['*', '/'], '', $style->styleName) . "', generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
         $scss .= $this->bootstrap($variables);
         foreach ($this->getFiles() as $file) {
             $scss .= $this->prepareFile($file);
@@ -402,6 +402,12 @@ final class StyleCompiler extends SingletonFactory
                 return $parameter;
             }, $parameters);
             [$filename, $as, $crossorigin, $type] = $parameters;
+
+            // The values are used to build HTTP header values, they must not be
+            // able to inject additional headers.
+            if (\preg_match('~[\r\n]~', $filename . $as . $type)) {
+                continue;
+            }
 
             yield [
                 'filename' => $filename,

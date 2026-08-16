@@ -362,6 +362,15 @@ class StyleAddForm extends AbstractForm
                 )) ? \abs(\intval($_POST[$variableName])) : StringUtil::trim($_POST[$variableName]);
             }
         }
+
+        // Ignore font families that are not part of the predefined list.
+        if (
+            isset($this->variables['wcfFontFamilyFallback'])
+            && !isset($this->availableFontFamilies[$this->variables['wcfFontFamilyFallback']])
+        ) {
+            unset($this->variables['wcfFontFamilyFallback']);
+        }
+
         $this->variables['useFluidLayout'] = isset($_POST['useFluidLayout']) ? 1 : 0;
 
         // style data
