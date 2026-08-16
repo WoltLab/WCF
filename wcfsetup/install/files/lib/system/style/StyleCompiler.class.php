@@ -558,7 +558,7 @@ final class StyleCompiler extends SingletonFactory
             $variables,
             static function (string $value, string $key) use (&$darkModeVariables, $prefixLength) {
                 if (\str_starts_with($key, Style::DARK_MODE_PREFIX)) {
-                    if (\str_starts_with($value, 'rgba(')) {
+                    if (\preg_match('~^rgba\( *\d{1,3} *, *\d{1,3} *, *\d{1,3} *, *(?:1(?:\.0+)?|0?\.\d+|0|\d{1,3}%) *\)\z~', $value)) {
                         $darkModeVariables[\substr($key, $prefixLength)] = $value;
                     }
 
@@ -649,7 +649,7 @@ final class StyleCompiler extends SingletonFactory
             $variables['wcfFontFamily'] = self::SYSTEM_FONT_FAMILY;
         }
 
-        if (!empty($variables['wcfFontFamilyGoogle'])) {
+        if (!empty($variables['wcfFontFamilyGoogle']) && FontManager::isValidFamily($variables['wcfFontFamilyGoogle'])) {
             $variables['wcfFontFamily'] = \sprintf(
                 '"%s", %s',
                 $variables['wcfFontFamilyGoogle'],
@@ -809,6 +809,13 @@ final class StyleCompiler extends SingletonFactory
             }
 
             if (\in_array($key, $skipVariables)) {
+                continue;
+            }
+
+            // The value is emitted verbatim, therefore it must not be able to
+            // terminate the declaration or the surrounding block. Rejecting `{`
+            // also rules out the SCSS interpolation `#{…}`.
+            if (\preg_match('~[;{}]~', $value)) {
                 continue;
             }
 
