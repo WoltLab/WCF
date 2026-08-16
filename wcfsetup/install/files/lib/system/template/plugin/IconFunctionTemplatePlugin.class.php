@@ -7,7 +7,7 @@ use wcf\system\style\FontAwesomeIcon;
 use wcf\system\style\FontAwesomeIconBrand;
 use wcf\system\style\IFontAwesomeIcon;
 use wcf\system\template\TemplateEngine;
-use wcf\util\JSON;
+use wcf\util\StringUtil;
 
 /**
  * Template function plugin that embeds icons into the page. The
@@ -55,19 +55,29 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
         } catch (IconValidationFailed) {
             $attributes = [];
             foreach ($tagArgs as $key => $value) {
-                $attributes[] = "{$key}='{$value}'";
+                $attributes[] = \sprintf(
+                    "%s='%s'",
+                    StringUtil::encodeHTML((string)$key),
+                    StringUtil::encodeHTML((string)$value),
+                );
             }
 
-            return \sprintf(
+            $fallback = \sprintf(
                 '{icon %s}',
                 \implode(' ', $attributes),
             );
+
+            if ($encodeJson) {
+                return \json_encode($fallback, \JSON_THROW_ON_ERROR);
+            }
+
+            return $fallback;
         }
 
         $html = $icon->toHtml($size);
 
         if ($encodeJson) {
-            return JSON::encode($html);
+            return \json_encode($html, \JSON_THROW_ON_ERROR);
         }
 
         return $html;
