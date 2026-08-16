@@ -121,7 +121,7 @@ class RecaptchaHandler implements ICaptchaHandler
             throw new UserInputException('recaptchaString', 'false');
         }
 
-        $type = $this->challenge ?: 'v3';
+        $type = $this->getType();
 
         $key = match ($type) {
             'v3' => RECAPTCHA_PRIVATEKEY_V3,
@@ -172,6 +172,31 @@ class RecaptchaHandler implements ICaptchaHandler
         }
 
         WCF::getSession()->register('recaptchaDone', true);
+    }
+
+    /**
+     * Returns the type of the challenge that is expected for the current
+     * configuration.
+     *
+     * The type selects the secret key and decides whether the score of a v3
+     * response is evaluated, therefore it must not be derived from the request.
+     * The order matches the one used by the template to render the challenge.
+     */
+    private function getType(): string
+    {
+        if (\RECAPTCHA_PUBLICKEY_V3 && \RECAPTCHA_PRIVATEKEY_V3) {
+            return 'v3';
+        }
+
+        if (\RECAPTCHA_PUBLICKEY && \RECAPTCHA_PRIVATEKEY) {
+            if (\RECAPTCHA_PUBLICKEY_INVISIBLE && \RECAPTCHA_PRIVATEKEY_INVISIBLE) {
+                return 'invisible';
+            }
+
+            return 'v2';
+        }
+
+        throw new UserInputException('recaptchaString', 'false');
     }
 
     private function getHttpClient(): ClientInterface
