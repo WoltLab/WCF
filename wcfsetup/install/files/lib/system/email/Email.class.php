@@ -496,7 +496,7 @@ class Email
     public function addHeader($header, $value)
     {
         $header = \mb_strtolower($header);
-        if (!\str_starts_with($header, 'x-')) {
+        if (!\preg_match('/^x-[a-z0-9!#$%&\'*+\-.^_`|~]+$/D', $header)) {
             throw new \DomainException(
                 "The header '{$header}' may not be set. You may only set user defined headers (starting with 'X-')."
             );
