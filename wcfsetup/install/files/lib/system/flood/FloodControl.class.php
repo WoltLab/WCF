@@ -6,6 +6,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
+use wcf\util\IpAddress;
 use wcf\util\UserUtil;
 
 /**
@@ -117,7 +118,7 @@ final class FloodControl extends SingletonFactory
     {
         return \hash_hmac(
             'md5',
-            'guest:' . $ipAddress,
+            'guest:' . $this->normalizeIpAddress($ipAddress),
             self::IDENTIFIER_PREFIX . $objectType,
             true
         );
@@ -209,6 +210,20 @@ final class FloodControl extends SingletonFactory
             $objectType,
             $this->getUserIdentifier($objectType, $userID)
         );
+    }
+
+    /**
+     * Reduces an IPv6 address to its network part, because clients routinely have an entire
+     * prefix at their disposal and could otherwise use a fresh address for every request.
+     */
+    private function normalizeIpAddress(string $ipAddress): string
+    {
+        // Callers may pass a sentinel value such as 'global' in place of an actual address.
+        if (\filter_var($ipAddress, \FILTER_VALIDATE_IP) === false) {
+            return $ipAddress;
+        }
+
+        return (new IpAddress($ipAddress))->toMasked(32, 64)->getIpAddress();
     }
 
     /**
