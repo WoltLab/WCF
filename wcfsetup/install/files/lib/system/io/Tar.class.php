@@ -177,7 +177,7 @@ class Tar implements IArchive
         }
 
         if (!isset($this->contentList[$index])) {
-            throw new SystemException("Tar: could find file '" . $index . "' in archive");
+            throw new SystemException("Tar: could not find file '" . $index . "' in archive");
         }
 
         return $this->contentList[$index];
