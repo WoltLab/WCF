@@ -253,12 +253,12 @@ class Tar implements IArchive
         $this->file->seek($header['offset']);
 
         $fileSize = $header['size'];
-        $iterations = ceil($fileSize / $chunkSize);
+        $iterations = (int)\ceil($fileSize / $chunkSize);
         for ($i = 0; $i < $iterations; $i++) {
-            $length = $chunkSize;
-            if ($i + 1 >= $iterations) {
-                $length = $fileSize % $chunkSize;
-            }
+            // The length of the last chunk must not be derived from the modulo of
+            // the file size, because it is zero whenever the size is an exact
+            // multiple of the chunk size. Reading zero bytes is an error.
+            $length = \min($chunkSize, $fileSize - ($i * $chunkSize));
 
             yield $this->file->read($length);
         }
