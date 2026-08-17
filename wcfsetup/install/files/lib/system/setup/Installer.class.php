@@ -139,6 +139,13 @@ class Installer
 
                 // remove leading slash
                 $file['filename'] = FileUtil::getRealPath(FileUtil::removeLeadingSlash($file['filename']));
+
+                // `getRealPath()` preserves leading `..` segments, therefore the
+                // concatenation with the target directory below is able to escape it.
+                if (\str_starts_with($file['filename'], '../') || $file['filename'] === '..') {
+                    throw new SystemException("Could not untar file '" . $file['filename'] . "', because it points outside of the target directory.");
+                }
+
                 if ($file['type'] == 'folder') {
                     // remove trailing slash
                     $directories[] = FileUtil::removeTrailingSlash($file['filename']);
