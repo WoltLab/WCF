@@ -313,11 +313,11 @@ class AjaxRequest {
 
     if (data !== null && Object.keys(data).length > 0) {
       if (data.returnValues && data.returnValues.description) {
-        details += `<br><p>Description:</p><p>${data.returnValues.description}</p>`;
+        details += `<br><p>Description:</p><p>${escapeHTML(data.returnValues.description)}</p>`;
       }
 
       if (data.file && data.line) {
-        details += `<br><p>File:</p><p>${data.file} in line ${data.line}</p>`;
+        details += `<br><p>File:</p><p>${escapeHTML(data.file)} in line ${data.line}</p>`;
       }
 
       if (data.extraInformation) {
@@ -325,7 +325,7 @@ class AjaxRequest {
 
         details += data.extraInformation
           .map(([key, value]) => {
-            return `<p>${key}: <code>${value.toString()}</code></p>`;
+            return `<p>${escapeHTML(key)}: <code>${escapeHTML(value.toString())}</code></p>`;
           })
           .join("");
       }
@@ -333,17 +333,19 @@ class AjaxRequest {
       if (data.exception) {
         details += `<br>Exception: <div style="white-space: pre;">${escapeHTML(data.exception)}</div>`;
       } else if (data.stacktrace) {
-        details += `<br><p>Stacktrace:</p><pre>${data.stacktrace}</pre>`;
+        details += `<br><p>Stacktrace:</p><pre>${escapeHTML(data.stacktrace)}</pre>`;
       } else if (data.exceptionID) {
-        details += `<br><p>Exception ID: <code>${data.exceptionID}</code></p>`;
+        details += `<br><p>Exception ID: <code>${escapeHTML(data.exceptionID)}</code></p>`;
       }
 
+      // `NamedUserException` yields HTML by design, matching `{unsafe:$message}`
+      // in `userException.tpl`.
       message = data.message;
 
       if (data.previous) {
         data.previous.forEach((previous) => {
-          details += `<hr><p>${previous.message}</p>`;
-          details += `<br><p>Stacktrace</p><pre>${previous.stacktrace}</pre>`;
+          details += `<hr><p>${escapeHTML(previous.message)}</p>`;
+          details += `<br><p>Stacktrace</p><pre>${escapeHTML(previous.stacktrace)}</pre>`;
         });
       }
     } else if (xhr.getResponseHeader("content-type")?.startsWith("text/html")) {
@@ -354,7 +356,7 @@ class AjaxRequest {
 
       return iframe;
     } else {
-      message = xhr.responseText;
+      message = escapeHTML(xhr.responseText);
     }
 
     if (!message || message === "undefined") {
