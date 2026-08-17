@@ -58,6 +58,9 @@ abstract class AbstractRssFeedPage extends AbstractPage
 
         @\header('Content-Type: application/rss+xml; charset=UTF-8');
 
+        // The response depends on the active session and must not be cached.
+        @\header('Cache-Control: private');
+
         echo $output;
     }
 
