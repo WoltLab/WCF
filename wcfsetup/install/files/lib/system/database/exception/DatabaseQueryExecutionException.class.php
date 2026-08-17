@@ -4,7 +4,6 @@ namespace wcf\system\database\exception;
 
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\exception\IExtraInformationException;
-use wcf\util\StringUtil;
 
 /**
  * Denotes an error that is related to a specific database query.
@@ -99,7 +98,7 @@ class DatabaseQueryExecutionException extends DatabaseQueryException implements 
                     $val = 'null';
                     break;
                 case 'string':
-                    $val = "'" . \addcslashes(StringUtil::encodeHTML($val), "\\'") . "'";
+                    $val = "'" . \addcslashes($val, "\\'") . "'";
                     break;
                 case 'boolean':
                     $val = $val ? 'true' : 'false';
