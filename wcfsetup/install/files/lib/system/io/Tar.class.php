@@ -158,7 +158,14 @@ class Tar implements IArchive
     public function getFileInfo($index)
     {
         if (!\is_int($index)) {
-            $index = $this->getIndexByFilename($index);
+            $filename = $index;
+            $index = $this->getIndexByFilename($filename);
+
+            // `false` would be cast to the array key `0`, silently returning
+            // the first entry of the archive for an unknown filename.
+            if ($index === false) {
+                throw new SystemException("Tar: could not find file '" . $filename . "' in archive");
+            }
         }
 
         if (!isset($this->contentList[$index])) {
@@ -174,7 +181,7 @@ class Tar implements IArchive
     public function getIndexByFilename($filename)
     {
         foreach ($this->contentList as $index => $file) {
-            if ($file['filename'] == $filename) {
+            if ($file['filename'] === $filename) {
                 return $index;
             }
         }
