@@ -52,7 +52,7 @@ class DevtoolsMissingLanguageItemAction extends AbstractDatabaseObjectAction imp
                         }
 
                         return '[ ' . \implode(', ', \array_map(static function ($item) {
-                            return $item . ' => ';
+                            return StringUtil::encodeHTML($item) . ' => ';
                         }, $keys)) . ']';
                     case 'object':
                         if ($item instanceof \UnitEnum) {
