@@ -8,6 +8,7 @@ use Minishlink\WebPush\VAPID;
 use Minishlink\WebPush\WebPush;
 use wcf\data\option\OptionEditor;
 use wcf\data\service\worker\ServiceWorker;
+use wcf\system\io\http\RedirectGuard;
 use wcf\system\io\HttpFactory;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\SingletonFactory;
@@ -103,6 +104,9 @@ final class ServiceWorkerHandler extends SingletonFactory
                         'user-agent' => HttpFactory::getDefaultUserAgent(),
                     ],
                     RequestOptions::TIMEOUT => 60,
+                    RequestOptions::ALLOW_REDIRECTS => [
+                        'on_redirect' => new RedirectGuard(),
+                    ],
                 ]
             );
             $this->pushClient->setAutomaticPadding(self::MAX_PAYLOAD_LENGTH);
