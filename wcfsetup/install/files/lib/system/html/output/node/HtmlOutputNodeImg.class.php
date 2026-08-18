@@ -64,6 +64,11 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
                     continue;
                 }
 
+                // `srcset` takes precedence over `src` in the browser and could be
+                // used to bypass the restrictions below. It is not supported for
+                // anything but smilies, whose markup is rebuilt above anyway.
+                $element->removeAttribute('srcset');
+
                 $class = $element->getAttribute('class');
                 if ($class) {
                     $class .= ' ';
@@ -120,29 +125,6 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
                     }
 
                     $element->setAttribute('src', $this->getProxyLink($src));
-
-                    $srcset = $element->getAttribute('srcset');
-                    if ($srcset) {
-                        // simplified regex to check if it appears to be a valid list of sources
-                        if (!\preg_match('~^[^\s]+\s+[0-9\.]+[wx](,\s*[^\s]+\s+[0-9\.]+[wx])*~', $srcset)) {
-                            $element->removeAttribute('srcset');
-                            continue;
-                        }
-
-                        $sources = \explode(',', $srcset);
-                        $srcset = '';
-                        foreach ($sources as $source) {
-                            $tmp = \preg_split('~\s+~', StringUtil::trim($source));
-                            if (\count($tmp) === 2) {
-                                if (!empty($srcset)) {
-                                    $srcset .= ', ';
-                                }
-                                $srcset .= $this->getProxyLink($tmp[0]) . ' ' . $tmp[1];
-                            }
-                        }
-
-                        $element->setAttribute('srcset', $srcset);
-                    }
                 } elseif (!IMAGE_ALLOW_EXTERNAL_SOURCE && !$this->isAllowedOrigin($src)) {
                     /** @var HtmlOutputNodeProcessor $htmlNodeProcessor */
                     $this->replaceExternalSource($element, $src, $htmlNodeProcessor->getHtmlProcessor()->enableUgc);
@@ -244,7 +226,30 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
             );
         }
 
-        $host = Url::parse($src)['host'];
+        // `parse_url()` implements RFC 3986, but browsers implement the WHATWG
+        // URL specs where a backslash acts as a forward slash and any number of
+        // slashes - including none at all - is accepted after the scheme. Both
+        // can be used to hide the real host, e.g. `https:/evil.com/x.png` looks
+        // relative and `https://evil.com\@example.com/x.png` looks whitelisted.
+        $src = \preg_replace('~^[\x00-\x20]+|[\x00-\x20]+$~', '', $src);
+        if (\preg_match('~[\\\\\t\r\n]~', $src)) {
+            return false;
+        }
+        if (
+            \preg_match('~^[a-z][a-z0-9+.\-]*:~i', $src)
+            && !\preg_match('~^[a-z][a-z0-9+.\-]*://~i', $src)
+        ) {
+            return false;
+        }
+
+        // Urls that cannot be parsed at all are not necessarily rejected by
+        // browsers, e.g. `///evil.com/x.png` resolves to `//evil.com/x.png`.
+        $components = \parse_url($src);
+        if ($components === false) {
+            return false;
+        }
+
+        $host = $components['host'] ?? '';
 
         return !$host || $matcher($host);
     }
