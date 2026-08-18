@@ -26,10 +26,11 @@ final class UserUtil
         }
 
         // Check for invalid bytes:
-        // (a) ASCII control characters (0x00 - 0x19) are unacceptable.
-        // (b) The comma is unacceptable (used as a separator in lists).
-        // (c) Invalid UTF-8 sequences are unacceptable.
-        if (!\preg_match('/^[^\x00-\x19,]+$/u', $name)) {
+        // (a) ASCII control characters (0x00 - 0x1F and 0x7F) are unacceptable.
+        // (b) C1 control characters (U+0080 - U+009F) are unacceptable.
+        // (c) The comma is unacceptable (used as a separator in lists).
+        // (d) Invalid UTF-8 sequences are unacceptable.
+        if (!\preg_match('/^[^\x00-\x1F\x7F\x{0080}-\x{009F},]+$/u', $name)) {
             return false;
         }
 
