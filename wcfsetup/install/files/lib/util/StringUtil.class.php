@@ -512,7 +512,8 @@ final class StringUtil
      */
     public static function stripHTML($string): string
     {
-        $string = \preg_replace('~<!--(.*?)-->~', '', $string);
+        // The 's' modifier is required, because comments may span multiple lines.
+        $string = \preg_replace('~<!--.*?-->~s', '', $string);
 
         return \preg_replace(
             // Note the possessive quantifier '*+' at the end of the
