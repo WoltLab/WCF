@@ -366,53 +366,41 @@ final class StringUtil
 
     /**
      * Takes a numeric HTML entity value and returns the appropriate UTF-8 bytes.
+     *
+     * Returns an empty string if the value has no representation in UTF-8.
      */
     public static function getCharacter(int $dec): string
     {
-        if ($dec < 128) {
-            $utf = \chr($dec);
-        } elseif ($dec < 2048) {
-            $utf = \chr(192 + (($dec - ($dec % 64)) / 64));
-            $utf .= \chr(128 + ($dec % 64));
-        } else {
-            $utf = \chr(224 + (($dec - ($dec % 4096)) / 4096));
-            $utf .= \chr(128 + ((($dec % 4096) - ($dec % 64)) / 64));
-            $utf .= \chr(128 + ($dec % 64));
+        // Reject anything that has no representation in UTF-8, previously these
+        // values were silently truncated into malformed byte sequences.
+        if ($dec < 0 || $dec > 0x10FFFF || ($dec >= 0xD800 && $dec <= 0xDFFF)) {
+            return '';
         }
 
-        return $utf;
+        return \mb_chr($dec, 'UTF-8');
     }
 
     /**
-     * Converts UTF-8 to Unicode
-     * @see     http://www1.tip.nl/~t876506/utf8tbl.html
+     * Takes the UTF-8 bytes of a character and returns its code point.
+     *
+     * Only the first character is evaluated, trailing bytes are ignored.
+     * Returns `0` if the string does not start with a valid UTF-8 character,
+     * previously overlong sequences, surrogates and the obsolete five and six
+     * byte forms were decoded into a code point of their own.
      */
     public static function getCharValue(string $c): int
     {
-        $ud = 0;
-        if (\ord($c[0]) <= 127) {
-            $ud = \ord($c[0]);
-        }
-        if (\ord($c[0]) >= 192 && \ord($c[0]) <= 223) {
-            $ud = (\ord($c[0]) - 192) * 64 + (\ord($c[1]) - 128);
-        }
-        if (\ord($c[0]) >= 224 && \ord($c[0]) <= 239) {
-            $ud = (\ord($c[0]) - 224) * 4096 + (\ord($c[1]) - 128) * 64 + (\ord($c[2]) - 128);
-        }
-        if (\ord($c[0]) >= 240 && \ord($c[0]) <= 247) {
-            $ud = (\ord($c[0]) - 240) * 262144 + (\ord($c[1]) - 128) * 4096 + (\ord($c[2]) - 128) * 64 + (\ord($c[3]) - 128);
-        }
-        if (\ord($c[0]) >= 248 && \ord($c[0]) <= 251) {
-            $ud = (\ord($c[0]) - 248) * 16777216 + (\ord($c[1]) - 128) * 262144 + (\ord($c[2]) - 128) * 4096 + (\ord($c[3]) - 128) * 64 + (\ord($c[4]) - 128);
-        }
-        if (\ord($c[0]) >= 252 && \ord($c[0]) <= 253) {
-            $ud = (\ord($c[0]) - 252) * 1073741824 + (\ord($c[1]) - 128) * 16777216 + (\ord($c[2]) - 128) * 262144 + (\ord($c[3]) - 128) * 4096 + (\ord($c[4]) - 128) * 64 + (\ord($c[5]) - 128);
-        }
-        if (\ord($c[0]) >= 254) {
-            $ud = false; // error
+        // `mb_ord()` rejects an empty string with a `ValueError`.
+        if ($c === '') {
+            return 0;
         }
 
-        return $ud;
+        $codePoint = \mb_ord($c, 'UTF-8');
+        if ($codePoint === false) {
+            return 0;
+        }
+
+        return $codePoint;
     }
 
     /**
