@@ -103,7 +103,18 @@ class AttachmentHandler implements \Countable
             if ($this->objectID) {
                 $this->attachmentList->getConditionBuilder()->add('objectID = ?', [$this->objectID]);
             } else {
-                $this->attachmentList->getConditionBuilder()->add('tmpHash IN (?)', [$this->tmpHash]);
+                // Attachments that belong to an object carry an empty hash, therefore a
+                // blank value must never be used to look them up. Trailing whitespace is
+                // ignored by the comparison of the database.
+                $tmpHashes = \array_filter($this->tmpHash, static function ($tmpHash) {
+                    return \trim($tmpHash) !== '';
+                });
+
+                if ($tmpHashes === []) {
+                    $this->attachmentList->getConditionBuilder()->add('1 = 0');
+                } else {
+                    $this->attachmentList->getConditionBuilder()->add('tmpHash IN (?)', [$tmpHashes]);
+                }
             }
             $this->attachmentList->readObjects();
         }

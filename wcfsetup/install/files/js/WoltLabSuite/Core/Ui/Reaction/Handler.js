@@ -266,7 +266,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                     reactionTypeItem.title = reactionType.title;
                     const reactionTypeItemSpan = document.createElement("span");
                     reactionTypeItemSpan.className = "reactionTypeButtonTitle";
-                    reactionTypeItemSpan.innerHTML = reactionType.title;
+                    reactionTypeItemSpan.textContent = reactionType.title;
                     reactionTypeItem.innerHTML = reactionType.renderedIcon;
                     reactionTypeItem.appendChild(reactionTypeItemSpan);
                     reactionTypeItem.addEventListener("click", () => this._react(reactionType.reactionTypeID));

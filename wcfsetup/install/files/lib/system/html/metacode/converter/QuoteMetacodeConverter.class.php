@@ -21,7 +21,12 @@ class QuoteMetacodeConverter extends AbstractMetacodeConverter
     {
         $element = $fragment->ownerDocument->createElement('woltlab-quote');
         $element->setAttribute('data-author', isset($attributes[0]) ? StringUtil::decodeHTML($attributes[0]) : '');
-        $element->setAttribute('data-link', isset($attributes[1]) ? StringUtil::decodeHTML($attributes[1]) : '');
+
+        // This attribute is declared as an `URI` in `MessageHtmlInputFilter`, but the
+        // bbcode is evaluated after HTMLPurifier has run, therefore the scheme must be
+        // validated here to uphold the same guarantee.
+        $link = isset($attributes[1]) ? StringUtil::decodeHTML($attributes[1]) : '';
+        $element->setAttribute('data-link', UrlMetacodeConverter::hasAllowedScheme($link) ? $link : '');
         $element->appendChild($fragment);
 
         return $element;

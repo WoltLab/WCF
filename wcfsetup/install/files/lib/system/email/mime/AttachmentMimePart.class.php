@@ -3,7 +3,6 @@
 namespace wcf\system\email\mime;
 
 use wcf\util\FileUtil;
-use wcf\util\StringUtil;
 
 /**
  * Represents an email attachment.
@@ -84,7 +83,10 @@ class AttachmentMimePart extends AbstractMimePart
      */
     public function getAdditionalHeaders()
     {
-        if (StringUtil::isASCII($this->filename)) {
+        // The filename is embedded into a quoted-string without being escaped, it must
+        // not be able to terminate the quoted-string or the header. Anything else is
+        // handed to the RFC 2184 branch below, which percent-encodes the filename.
+        if (\preg_match('/^[\x20\x21\x23-\x5B\x5D-\x7E]*$/D', $this->filename)) {
             $encodedFilename = 'filename="' . $this->filename . '"';
         } else {
             // Encode according to RFC 2184

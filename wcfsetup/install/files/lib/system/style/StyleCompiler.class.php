@@ -174,7 +174,7 @@ final class StyleCompiler extends SingletonFactory
             $files[] = $customCustomSCSSFile;
         }
 
-        $scss = "/*!\n\nstylesheet for '" . $styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
+        $scss = "/*!\n\nstylesheet for '" . \str_replace(['*', '/'], '', $styleName) . "', generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
         $scss .= $this->bootstrap($variables);
         foreach ($files as $file) {
             $scss .= $this->prepareFile($file);
@@ -302,7 +302,7 @@ final class StyleCompiler extends SingletonFactory
         $parameters = ['scss' => ''];
         EventHandler::getInstance()->fireAction($this, 'compile', $parameters);
 
-        $scss = "/*!\n\nstylesheet for '" . $style->styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
+        $scss = "/*!\n\nstylesheet for '" . \str_replace(['*', '/'], '', $style->styleName) . "', generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
         $scss .= $this->bootstrap($variables);
         foreach ($this->getFiles() as $file) {
             $scss .= $this->prepareFile($file);
@@ -396,6 +396,12 @@ final class StyleCompiler extends SingletonFactory
                 return $parameter;
             }, $parameters);
             [$filename, $as, $crossorigin, $type] = $parameters;
+
+            // The values are used to build HTTP header values, they must not be
+            // able to inject additional headers.
+            if (\preg_match('~[\r\n]~', $filename . $as . $type)) {
+                continue;
+            }
 
             yield [
                 'filename' => $filename,
@@ -552,7 +558,7 @@ final class StyleCompiler extends SingletonFactory
             $variables,
             static function (string $value, string $key) use (&$darkModeVariables, $prefixLength) {
                 if (\str_starts_with($key, Style::DARK_MODE_PREFIX)) {
-                    if (\str_starts_with($value, 'rgba(')) {
+                    if (\preg_match('~^rgba\( *\d{1,3} *, *\d{1,3} *, *\d{1,3} *, *(?:1(?:\.0+)?|0?\.\d+|0|\d{1,3}%) *\)\z~', $value)) {
                         $darkModeVariables[\substr($key, $prefixLength)] = $value;
                     }
 
@@ -643,7 +649,7 @@ final class StyleCompiler extends SingletonFactory
             $variables['wcfFontFamily'] = self::SYSTEM_FONT_FAMILY;
         }
 
-        if (!empty($variables['wcfFontFamilyGoogle'])) {
+        if (!empty($variables['wcfFontFamilyGoogle']) && FontManager::isValidFamily($variables['wcfFontFamilyGoogle'])) {
             $variables['wcfFontFamily'] = \sprintf(
                 '"%s", %s',
                 $variables['wcfFontFamilyGoogle'],
@@ -793,6 +799,13 @@ final class StyleCompiler extends SingletonFactory
             }
 
             if (\in_array($key, $skipVariables)) {
+                continue;
+            }
+
+            // The value is emitted verbatim, therefore it must not be able to
+            // terminate the declaration or the surrounding block. Rejecting `{`
+            // also rules out the SCSS interpolation `#{…}`.
+            if (\preg_match('~[;{}]~', $value)) {
                 continue;
             }
 

@@ -475,8 +475,11 @@ final class StringUtil
      */
     public static function isUTF8($string): bool
     {
-        return !!\preg_match('/^(
-				[\x09\x0A\x0D\x20-\x7E]*		# ASCII
+        // Every alternative is uniquely identified by its leading byte, therefore
+        // the repetition can be possessive. A non-possessive quantifier caused the
+        // backtrack limit to be exhausted for any input that is not valid UTF-8.
+        return !!\preg_match('/^(?:
+				[\x09\x0A\x0D\x20-\x7E]			# ASCII
 			|	[\xC2-\xDF][\x80-\xBF]			# non-overlong 2-byte
 			|	\xE0[\xA0-\xBF][\x80-\xBF]		# excluding overlongs
 			|	[\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}	# straight 3-byte
@@ -484,7 +487,7 @@ final class StringUtil
 			|	\xF0[\x90-\xBF][\x80-\xBF]{2}		# planes 1-3
 			|	[\xF1-\xF3][\x80-\xBF]{3}		# planes 4-15
 			|	\xF4[\x80-\x8F][\x80-\xBF]{2}		# plane 16
-			)*$/x', $string);
+			)*+$/x', $string);
     }
 
     /**
@@ -512,7 +515,8 @@ final class StringUtil
      */
     public static function stripHTML($string): string
     {
-        $string = \preg_replace('~<!--(.*?)-->~', '', $string);
+        // The 's' modifier is required, because comments may span multiple lines.
+        $string = \preg_replace('~<!--.*?-->~s', '', $string);
 
         return \preg_replace(
             // Note the possessive quantifier '*+' at the end of the

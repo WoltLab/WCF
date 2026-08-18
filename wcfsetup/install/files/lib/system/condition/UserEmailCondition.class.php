@@ -53,7 +53,9 @@ class UserEmailCondition extends AbstractTextCondition implements
      */
     public function checkUser(Condition $condition, User $user)
     {
-        return \str_contains($user->email, $condition->email);
+        // Must match the case-insensitive `LIKE` in addObjectListCondition(),
+        // otherwise the cronjob grants the group to users this check rejects.
+        return \mb_stripos($user->email, $condition->email) !== false;
     }
 
     /**

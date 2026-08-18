@@ -127,6 +127,17 @@ class UserProfileAction extends UserAction
         if ($this->userProfile === null) {
             throw new UserInputException('objectIDs');
         }
+
+        if (
+            $this->userProfile->userID !== WCF::getUser()->userID
+            && !WCF::getSession()->getPermission('user.profile.canViewUserProfile')
+        ) {
+            throw new PermissionDeniedException();
+        }
+
+        if ($this->userProfile->isProtected()) {
+            throw new PermissionDeniedException();
+        }
     }
 
     /**

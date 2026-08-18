@@ -52,6 +52,15 @@ class MimePartFacade extends AbstractMimePart implements IRecipientAwareMimePart
     }
 
     /**
+     * Deep clones the inner mime part, otherwise a cloned email would share
+     * the recipient aware parts with the original one.
+     */
+    public function __clone(): void
+    {
+        $this->mimePart = clone $this->mimePart;
+    }
+
+    /**
      * @inheritDoc
      */
     public function setRecipient(?Mailbox $mailbox = null)

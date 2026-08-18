@@ -1017,6 +1017,13 @@ class Tar
 		// Read the 512 bytes header
 		$longFilename = null;
 		while (strlen($binaryData = $this->file->read(512)) != 0) {
+			// A block of NUL bytes terminates the archive. Everything beyond it is
+			// invisible to every standard tar implementation, therefore it must not
+			// be treated as archive content either.
+			if (trim($binaryData, "\0") === '') {
+				break;
+			}
+
 			// read header
 			$header = $this->readHeader($binaryData);
 			if ($header === false) {

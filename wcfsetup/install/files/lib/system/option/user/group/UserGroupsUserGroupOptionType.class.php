@@ -6,6 +6,7 @@ use wcf\data\option\Option;
 use wcf\data\user\group\UserGroup;
 use wcf\system\exception\UserInputException;
 use wcf\system\option\AbstractOptionType;
+use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
@@ -32,10 +33,14 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
         // generate html
         $html = '';
         foreach ($groups as $group) {
+            if ($group->isOwner() && !WCF::getUser()->hasOwnerAccess()) {
+                continue;
+            }
+
             $html .= '<label><input type="checkbox" name="values[' . StringUtil::encodeHTML($option->optionName) . '][]" value="' . $group->groupID . '"' . (\in_array(
                 $group->groupID,
                 $selectedGroups
-            ) ? ' checked' : '') . '> ' . $group->getName() . '</label>';
+            ) ? ' checked' : '') . '> ' . StringUtil::encodeHTML($group->getName()) . '</label>';
         }
 
         return $html;
@@ -49,11 +54,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
         // get all groups
         $groups = UserGroup::getGroupsByType();
 
-        // get new value
-        if (!\is_array($newValue)) {
-            $newValue = [];
-        }
-        $selectedGroups = ArrayUtil::toIntegerArray($newValue);
+        $selectedGroups = $this->getSelectedGroups($newValue);
 
         // check groups
         foreach ($selectedGroups as $groupID) {
@@ -61,6 +62,35 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
                 throw new UserInputException($option->optionName, 'validationFailed');
             }
         }
+
+        // Only members of the owner group may reference it, otherwise an
+        // administrator could grant themselves access to the owner group.
+        $ownerGroupID = UserGroup::getOwnerGroupID();
+        if (
+            $ownerGroupID !== null
+            && \in_array($ownerGroupID, $selectedGroups, true)
+            && !WCF::getUser()->hasOwnerAccess()
+        ) {
+            throw new UserInputException($option->optionName, 'validationFailed');
+        }
+    }
+
+    /**
+     * Normalizes the submitted value, which is either the raw list of group ids
+     * or the already serialized value returned by `getData()`.
+     *
+     * @return list<int>
+     */
+    private function getSelectedGroups(mixed $newValue): array
+    {
+        if (\is_string($newValue)) {
+            $newValue = $newValue !== '' ? \explode(',', $newValue) : [];
+        }
+        if (!\is_array($newValue)) {
+            $newValue = [];
+        }
+
+        return ArrayUtil::toIntegerArray($newValue);
     }
 
     /**

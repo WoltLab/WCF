@@ -7,6 +7,9 @@ use wcf\data\box\Box;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\box\RecentActivityListBoxController;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\WCF;
@@ -56,6 +59,24 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction
             }
 
             throw new UserInputException('boxID');
+        }
+
+        if ($this->parameters['userID']) {
+            $user = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
+            if ($user === null) {
+                throw new IllegalLinkException();
+            }
+
+            if (
+                $user->userID !== WCF::getUser()->userID
+                && !WCF::getSession()->getPermission('user.profile.canViewUserProfile')
+            ) {
+                throw new PermissionDeniedException();
+            }
+
+            if ($user->isProtected()) {
+                throw new PermissionDeniedException();
+            }
         }
     }
 

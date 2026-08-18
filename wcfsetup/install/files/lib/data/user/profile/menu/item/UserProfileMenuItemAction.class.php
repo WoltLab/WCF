@@ -65,6 +65,13 @@ class UserProfileMenuItemAction extends AbstractDatabaseObjectAction implements 
             throw new IllegalLinkException();
         }
 
+        if (
+            $user->userID !== WCF::getUser()->userID
+            && !WCF::getSession()->getPermission('user.profile.canViewUserProfile')
+        ) {
+            throw new PermissionDeniedException();
+        }
+
         if ($user->isProtected()) {
             throw new PermissionDeniedException();
         }

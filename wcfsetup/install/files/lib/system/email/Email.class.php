@@ -482,7 +482,7 @@ class Email
     public function addHeader($header, $value)
     {
         $header = \mb_strtolower($header);
-        if (!\str_starts_with($header, 'x-')) {
+        if (!\preg_match('/^x-[a-z0-9!#$%&\'*+\-.^_`|~]+$/D', $header)) {
             throw new \DomainException(
                 "The header '{$header}' may not be set. You may only set user defined headers (starting with 'X-')."
             );
@@ -610,6 +610,17 @@ class Email
     }
 
     /**
+     * Deep clones the body, otherwise every clone of this email would share a
+     * single body and thus a single recipient (see getJobs()).
+     */
+    public function __clone(): void
+    {
+        if ($this->body !== null) {
+            $this->body = clone $this->body;
+        }
+    }
+
+    /**
      * Sets the body of this email.
      *
      * @param AbstractMimePart $body
@@ -680,8 +691,9 @@ class Email
                 $mail->addHeader('X-WoltLab-Suite-Recipient', $recipient['mailbox']->getUser()->username);
             }
 
-            if ($this->body instanceof IRecipientAwareMimePart) {
-                $this->body->setRecipient($recipient['mailbox']);
+            $body = $mail->getBody();
+            if ($body instanceof IRecipientAwareMimePart) {
+                $body->setRecipient($recipient['mailbox']);
             }
 
             $data = [

@@ -268,16 +268,16 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             let message;
             if (data !== null && Object.keys(data).length > 0) {
                 if (data.returnValues && data.returnValues.description) {
-                    details += `<br><p>Description:</p><p>${data.returnValues.description}</p>`;
+                    details += `<br><p>Description:</p><p>${(0, StringUtil_1.escapeHTML)(data.returnValues.description)}</p>`;
                 }
                 if (data.file && data.line) {
-                    details += `<br><p>File:</p><p>${data.file} in line ${data.line}</p>`;
+                    details += `<br><p>File:</p><p>${(0, StringUtil_1.escapeHTML)(data.file)} in line ${data.line}</p>`;
                 }
                 if (data.extraInformation) {
                     details += "<br>";
                     details += data.extraInformation
                         .map(([key, value]) => {
-                        return `<p>${key}: <code>${value.toString()}</code></p>`;
+                        return `<p>${(0, StringUtil_1.escapeHTML)(key)}: <code>${(0, StringUtil_1.escapeHTML)(value.toString())}</code></p>`;
                     })
                         .join("");
                 }
@@ -285,16 +285,18 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
                     details += `<br>Exception: <div style="white-space: pre;">${(0, StringUtil_1.escapeHTML)(data.exception)}</div>`;
                 }
                 else if (data.stacktrace) {
-                    details += `<br><p>Stacktrace:</p><pre>${data.stacktrace}</pre>`;
+                    details += `<br><p>Stacktrace:</p><pre>${(0, StringUtil_1.escapeHTML)(data.stacktrace)}</pre>`;
                 }
                 else if (data.exceptionID) {
-                    details += `<br><p>Exception ID: <code>${data.exceptionID}</code></p>`;
+                    details += `<br><p>Exception ID: <code>${(0, StringUtil_1.escapeHTML)(data.exceptionID)}</code></p>`;
                 }
+                // `NamedUserException` yields HTML by design, matching `{unsafe:$message}`
+                // in `userException.tpl`.
                 message = data.message;
                 if (data.previous) {
                     data.previous.forEach((previous) => {
-                        details += `<hr><p>${previous.message}</p>`;
-                        details += `<br><p>Stacktrace</p><pre>${previous.stacktrace}</pre>`;
+                        details += `<hr><p>${(0, StringUtil_1.escapeHTML)(previous.message)}</p>`;
+                        details += `<br><p>Stacktrace</p><pre>${(0, StringUtil_1.escapeHTML)(previous.stacktrace)}</pre>`;
                     });
                 }
             }
@@ -307,7 +309,7 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
                 return iframe;
             }
             else {
-                message = xhr.responseText;
+                message = (0, StringUtil_1.escapeHTML)(xhr.responseText);
             }
             if (!message || message === "undefined") {
                 if (!window.ENABLE_DEBUG_MODE) {

@@ -80,14 +80,18 @@ final class Helper
      */
     public static function getPreferredContentType(RequestInterface $request, array $availableTypes): string
     {
-        if (!$request->hasHeader('accept')) {
+        $accept = $request->getHeaderLine('accept');
+
+        // The negotiator rejects any header value that is falsy thus merely
+        // testing for the presence is insufficient.
+        if ($accept === '' || $accept === '0') {
             // Anything is acceptable, use the server-preferred type.
             return $availableTypes[0];
         }
 
         $negotiator = new Negotiator();
 
-        $best = $negotiator->getBest($request->getHeaderLine('accept'), $availableTypes);
+        $best = $negotiator->getBest($accept, $availableTypes);
 
         if ($best === null) {
             // Nothing is acceptable, use the server-preferred type.

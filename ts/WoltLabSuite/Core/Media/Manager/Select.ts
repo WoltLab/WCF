@@ -14,6 +14,7 @@ import * as DomTraverse from "../../Dom/Traverse";
 import * as FileUtil from "../../FileUtil";
 import * as Language from "../../Language";
 import * as UiDialog from "../../Ui/Dialog";
+import { escapeHTML } from "WoltLabSuite/Core/StringUtil";
 
 class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
   protected _activeButton: HTMLElement | null = null;
@@ -102,9 +103,10 @@ class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
       const displayElement = document.getElementById(display);
       if (displayElement) {
         if (media.isImage) {
-          const thumbnailLink: string = media.smallThumbnailLink ? media.smallThumbnailLink : media.link;
-          const altText: string =
-            media.altText && media.altText[window.LANGUAGE_ID] ? media.altText[window.LANGUAGE_ID] : "";
+          const thumbnailLink: string = escapeHTML(media.smallThumbnailLink ? media.smallThumbnailLink : media.link);
+          const altText: string = escapeHTML(
+            media.altText && media.altText[window.LANGUAGE_ID] ? media.altText[window.LANGUAGE_ID] : "",
+          );
           displayElement.innerHTML = `<img src="${thumbnailLink}" alt="${altText}" />`;
         } else {
           let fileIcon = FileUtil.getIconNameByFilename(media.filename);
@@ -118,7 +120,7 @@ class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
             <div class="box48" style="margin-bottom: 10px;">
               <fa-icon size="48" name="${fileIcon}"></fa-icon>
               <div class="containerHeadline">
-                <h3>${media.filename}</h3>
+                <h3>${escapeHTML(media.filename)}</h3>
                 <p>${media.formattedFilesize}</p>
               </div>
             </div>`;

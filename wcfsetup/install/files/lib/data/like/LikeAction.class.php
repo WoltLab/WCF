@@ -63,6 +63,10 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
     public function validateGetLikeDetails()
     {
         $this->validateObjectParameters();
+
+        if (!WCF::getSession()->getPermission('user.like.canViewLike')) {
+            throw new PermissionDeniedException();
+        }
     }
 
     /**
@@ -238,6 +242,10 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
     {
         $this->validateObjectParameters();
 
+        if (!WCF::getSession()->getPermission('user.like.canViewLike')) {
+            throw new PermissionDeniedException();
+        }
+
         $this->readInteger('pageNo');
 
         if ($this->parameters['pageNo'] < 1) {
@@ -320,10 +328,21 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         $this->readInteger('likeValue');
         $this->readString('likeType');
 
+        if (!WCF::getSession()->getPermission('user.like.canViewLike')) {
+            throw new PermissionDeniedException();
+        }
+
         $user = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
 
         if ($user === null) {
             throw new IllegalLinkException();
+        }
+
+        if (
+            $user->userID !== WCF::getUser()->userID
+            && !WCF::getSession()->getPermission('user.profile.canViewUserProfile')
+        ) {
+            throw new PermissionDeniedException();
         }
 
         if ($user->isProtected()) {

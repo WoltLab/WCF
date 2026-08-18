@@ -85,20 +85,34 @@ class ACLHandler extends SingletonFactory
                 ];
 
                 foreach ($optionData as $typeID => $optionValues) {
+                    // The ids originate from the request and may reference
+                    // objects that do not exist.
+                    $userGroup = null;
+                    if ($type === 'group') {
+                        $userGroup = UserGroup::getGroupByID($typeID);
+                        if ($userGroup === null) {
+                            continue;
+                        }
+                    } elseif (!isset($users[$typeID])) {
+                        continue;
+                    }
+
                     foreach ($optionValues as $optionID => $optionValue) {
-                        if (!isset($data['options'][$optionID])) {
+                        if (isset($data['options'][$optionID])) {
+                            $optionValues[$optionID] = (int)$optionValue;
+                        } else {
                             unset($optionValues[$optionID]);
                         }
                     }
 
-                    if (empty($optionValues)) {
+                    if ($optionValues === []) {
                         continue;
                     }
 
                     $values[$type]['option'][$typeID] = $optionValues;
 
                     if ($type === 'group') {
-                        $values[$type]['label'][$typeID] = UserGroup::getGroupByID($typeID)->getName();
+                        $values[$type]['label'][$typeID] = $userGroup->getName();
                     } else {
                         $values[$type]['label'][$typeID] = $users[$typeID]->username;
                     }
@@ -160,7 +174,7 @@ class ACLHandler extends SingletonFactory
 
                         foreach ($optionData as $optionID => $optionValue) {
                             if (isset($options[$optionID])) {
-                                $this->__readValues[$objectTypeID][$type][$typeID][$optionID] = $optionValue;
+                                $this->__readValues[$objectTypeID][$type][$typeID][$optionID] = (int)$optionValue;
                             }
                         }
                     }
@@ -289,7 +303,7 @@ class ACLHandler extends SingletonFactory
                     $optionID,
                     $objectID,
                     $typeID,
-                    $optionValue,
+                    (int)$optionValue,
                 ]);
             }
         }

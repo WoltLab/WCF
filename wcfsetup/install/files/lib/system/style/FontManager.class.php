@@ -32,6 +32,12 @@ final class FontManager extends SingletonFactory
     private TreeMapper $mapper;
 
     /**
+     * The files of a family are written into a directory that is served by the
+     * web server, therefore the name must not be controlled by the remote host.
+     */
+    private const FONT_FILE_NAME = '~^[a-zA-Z0-9][a-zA-Z0-9._\[\],-]*\.(?:woff2|woff|ttf|otf|txt)\z~';
+
+    /**
      * @inheritDoc
      */
     protected function init()
@@ -118,7 +124,7 @@ final class FontManager extends SingletonFactory
 
             $preloadRequests = "";
             foreach ($manifest['font_files'] as $filename) {
-                if ($filename !== \basename($filename)) {
+                if ($filename !== \basename($filename) || !\preg_match(self::FONT_FILE_NAME, $filename)) {
                     throw new \InvalidArgumentException("Invalid filename '" . $filename . "' given.");
                 }
 

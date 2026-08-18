@@ -18,7 +18,7 @@ class FontMetacodeConverter extends AbstractMetacodeConverter
     public function convert(\DOMDocumentFragment $fragment, array $attributes)
     {
         $element = $fragment->ownerDocument->createElement('span');
-        $element->setAttribute('style', 'font-family: ' . \preg_replace('["\']', '', $attributes[0]));
+        $element->setAttribute('style', 'font-family: ' . \preg_replace('~["\';]~', '', $attributes[0]));
         $element->appendChild($fragment);
 
         return $element;

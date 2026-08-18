@@ -35,12 +35,16 @@ class IpSearchModifierTemplatePlugin implements IModifierTemplatePlugin
     {
         $domain = Url::parse(IP_ADDRESS_SEARCH_ENGINE ?: self::SEARCH_ENGINE_URL_DEFAULT)['host'];
         $ipAddress = StringUtil::trim(MessageUtil::stripCrap($tagArgs[0]));
-        $url = \sprintf(IP_ADDRESS_SEARCH_ENGINE ?: self::SEARCH_ENGINE_URL_DEFAULT, $ipAddress);
+        $url = \sprintf(
+            IP_ADDRESS_SEARCH_ENGINE ?: self::SEARCH_ENGINE_URL_DEFAULT,
+            \rawurlencode($ipAddress)
+        );
         $title = WCF::getLanguage()->getDynamicVariable(
             'wcf.user.ipAddress.searchEngine',
             ['host' => $domain, 'ipAddress' => $ipAddress]
         );
 
-        return '<a ' . StringUtil::getAnchorTagAttributes($url) . ' title="' . $title . '">' . $ipAddress . '</a>';
+        return '<a ' . StringUtil::getAnchorTagAttributes($url) . ' title="' . $title . '">'
+            . StringUtil::encodeHTML($ipAddress) . '</a>';
     }
 }

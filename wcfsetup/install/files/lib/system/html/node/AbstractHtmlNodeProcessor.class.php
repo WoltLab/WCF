@@ -168,14 +168,11 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
                     }
 
                     if (!isset($data['data']['skipInnerContent']) || $data['data']['skipInnerContent'] !== true) {
+                        // The HTML encoded representation of the placeholder must not be
+                        // recognized, it is indistinguishable from untrusted input that
+                        // `replaceTag()` has correctly escaped.
                         if (\str_contains($string, '<!-- META_CODE_INNER_CONTENT -->')) {
                             return \str_replace('<!-- META_CODE_INNER_CONTENT -->', $matches['content'], $string);
-                        } elseif (\str_contains($string, '&lt;!-- META_CODE_INNER_CONTENT --&gt;')) {
-                            return \str_replace(
-                                '&lt;!-- META_CODE_INNER_CONTENT --&gt;',
-                                $matches['content'],
-                                $string
-                            );
                         }
                     }
 

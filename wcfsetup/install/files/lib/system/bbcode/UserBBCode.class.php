@@ -5,6 +5,7 @@ namespace wcf\system\bbcode;
 use wcf\data\user\UserProfile;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Parses the [user] bbcode tag.
@@ -28,7 +29,7 @@ final class UserBBCode extends AbstractBBCode
 
         $userID = (!empty($openingTag['attributes'][1])) ? \intval($openingTag['attributes'][1]) : 0;
         if (!$userID) {
-            return $content;
+            return StringUtil::encodeHTML($content);
         }
 
         /** @var UserProfile $userProfile */

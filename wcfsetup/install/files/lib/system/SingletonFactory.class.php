@@ -51,6 +51,14 @@ abstract class SingletonFactory
     }
 
     /**
+     * Object unserializing is disallowed.
+     */
+    final public function __wakeup()
+    {
+        throw new SystemException('Unserializing of Singletons is not allowed');
+    }
+
+    /**
      * Returns an unique instance of current child class.
      *
      * @return  static
@@ -77,11 +85,14 @@ abstract class SingletonFactory
      * Returns whether this singleton is already initialized.
      *
      * @return  bool
+     * @deprecated 6.2 This method is unused and will be removed.
      */
     final public static function isInitialized()
     {
         $className = static::class;
 
-        return isset(self::$__singletonObjects[$className]);
+        // `getInstance()` parks `false` in the list while the constructor runs, therefore
+        // a plain `isset()` would report an object that does not exist (yet) as initialized.
+        return (self::$__singletonObjects[$className] ?? false) !== false;
     }
 }

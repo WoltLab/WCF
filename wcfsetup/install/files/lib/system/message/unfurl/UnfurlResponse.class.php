@@ -8,6 +8,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Client\ClientExceptionInterface;
 use ValueError;
@@ -325,7 +326,8 @@ final class UnfurlResponse
      *
      * @throws BadMethodCallException If the url does not have an image.
      * @throws DownloadFailed If the url can not be downloaded. This can be a temporary error.
-     * @throws UrlInaccessible If the url is inaccessible (e.g. sends status code 403).
+     * @throws UrlInaccessible If the url is inaccessible (e.g. sends status code 403) or if it is
+     *                        malformed or points to a non-standard port.
      */
     public function getImage(): Response
     {
@@ -333,8 +335,22 @@ final class UnfurlResponse
             throw new BadMethodCallException("This url does not have an image.");
         }
 
+        // The image url is controlled by the remote document, thus it must be
+        // validated like any other url that is fetched. The `RedirectGuard` of
+        // the http client only applies to redirects, but not to this initial
+        // request.
         try {
-            $request = new Request('GET', $this->getImageUrl(), [
+            $imageUri = new Uri($this->getImageUrl());
+        } catch (\InvalidArgumentException $e) {
+            throw new UrlInaccessible("Refusing to request a malformed image url.", 0, $e);
+        }
+
+        if ($imageUri->getPort() !== null) {
+            throw new UrlInaccessible("Refusing to request images from non-standard ports.");
+        }
+
+        try {
+            $request = new Request('GET', $imageUri, [
                 'accept' => 'image/*',
             ]);
 

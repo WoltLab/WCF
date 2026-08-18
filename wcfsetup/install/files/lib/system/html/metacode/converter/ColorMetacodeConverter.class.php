@@ -18,7 +18,7 @@ class ColorMetacodeConverter extends AbstractMetacodeConverter
     public function convert(\DOMDocumentFragment $fragment, array $attributes)
     {
         $element = $fragment->ownerDocument->createElement('span');
-        $element->setAttribute('style', 'color: ' . $attributes[0]);
+        $element->setAttribute('style', 'color: ' . \preg_replace('~["\';]~', '', $attributes[0]));
         $element->appendChild($fragment);
 
         return $element;

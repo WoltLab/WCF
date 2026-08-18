@@ -14,6 +14,7 @@ use wcf\system\exception\InvalidObjectArgument;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
+use wcf\util\StringUtil;
 
 /**
  * User condition for the interval (in days) of their last activity.
@@ -131,14 +132,16 @@ class UserLastActivityTimeIntervalDaysCondition extends AbstractSingleFieldCondi
         $start = WCF::getLanguage()->get('wcf.date.period.start');
         $end = WCF::getLanguage()->get('wcf.date.period.end');
         $days = WCF::getLanguage()->get('wcf.acp.option.suffix.days');
+        $startDays = StringUtil::encodeHTML($this->startDays);
+        $endDays = StringUtil::encodeHTML($this->endDays);
 
         return <<<HTML
 <div class="inputAddon">
-	<input type="number" id="userLastActivityTimeIntervalStartDays" name="userLastActivityTimeIntervalStartDays" class="short" min="1" value="{$this->startDays}" placeholder="{$start}">
+	<input type="number" id="userLastActivityTimeIntervalStartDays" name="userLastActivityTimeIntervalStartDays" class="short" min="1" value="{$startDays}" placeholder="{$start}">
 	<span class="inputSuffix">{$days}</span>
 </div>
 <div class="inputAddon">
-	<input type="number" id="userLastActivityTimeIntervalEndDays" name="userLastActivityTimeIntervalEndDays" class="short" min="1" value="{$this->endDays}" placeholder="{$end}">
+	<input type="number" id="userLastActivityTimeIntervalEndDays" name="userLastActivityTimeIntervalEndDays" class="short" min="1" value="{$endDays}" placeholder="{$end}">
 	<span class="inputSuffix">{$days}</span>
 </div>
 HTML;
@@ -197,6 +200,10 @@ HTML;
 
                 throw new UserInputException('userLastActivityTimeIntervalDays', 'invalidStart');
             }
+
+            // Only the normalized value may be persisted, the raw input is
+            // written to the condition data verbatim otherwise.
+            $this->startDays = $startDays;
         }
         if (\strlen($this->endDays)) {
             $endDays = \intval($this->endDays);
@@ -205,6 +212,8 @@ HTML;
 
                 throw new UserInputException('userLastActivityTimeIntervalDays', 'invalidEnd');
             }
+
+            $this->endDays = $endDays;
         }
 
         if ($endDays !== null && $startDays !== null && $endDays <= $startDays) {

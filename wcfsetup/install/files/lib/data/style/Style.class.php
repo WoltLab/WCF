@@ -176,6 +176,12 @@ class Style extends DatabaseObject
             $fontFamily = StyleCompiler::SYSTEM_FONT_FAMILY;
         }
 
+        // The value is embedded into a `<style>` element without being escaped,
+        // it must not be able to terminate the declaration or the element.
+        if ($fontFamily === null || \preg_match('~[;{}<>]~', $fontFamily)) {
+            return StyleCompiler::SYSTEM_FONT_FAMILY;
+        }
+
         return $fontFamily;
     }
 
