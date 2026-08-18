@@ -112,13 +112,15 @@ class Notice extends DatabaseObject implements IRouteController
                     );
                 } else {
                     $dismissedNoticeIDs = @\unserialize($dismissedNotices);
-                    $this->isDismissed = \in_array($this->noticeID, $dismissedNoticeIDs);
+                    $this->isDismissed = \is_array($dismissedNoticeIDs)
+                        && \in_array($this->noticeID, $dismissedNoticeIDs);
                 }
             } else {
                 $dismissedNotices = WCF::getSession()->getVar('dismissedNotices');
                 if ($dismissedNotices !== null) {
                     $dismissedNotices = @\unserialize($dismissedNotices);
-                    $this->isDismissed = \in_array($this->noticeID, $dismissedNotices);
+                    $this->isDismissed = \is_array($dismissedNotices)
+                        && \in_array($this->noticeID, $dismissedNotices);
                 } else {
                     $this->isDismissed = false;
                 }
