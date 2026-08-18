@@ -53,6 +53,14 @@ abstract class SingletonFactory
     }
 
     /**
+     * Object unserializing is disallowed.
+     */
+    final public function __wakeup()
+    {
+        throw new SystemException('Unserializing of Singletons is not allowed');
+    }
+
+    /**
      * Returns an unique instance of current child class.
      *
      * @return  static
