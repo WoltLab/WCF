@@ -249,7 +249,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
      * Parses an attribute string.
      *
      * @param string $attributes base64 and JSON encoded attributes
-     * @return      array           parsed attributes
+     * @return array<string|int, string|int|float|bool|null> parsed attributes
      */
     public function parseAttributes($attributes)
     {
@@ -261,6 +261,20 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
                 } catch (SystemException $e) {
                     /* parse errors can occur if user provided malicious content - ignore them */
                     $parsedAttributes = [];
+                }
+
+                // Enforce the attributes to be a list containing nothing but
+                // scalar values plus null.
+                if (!\is_array($parsedAttributes) || !\array_is_list($parsedAttributes)) {
+                    $parsedAttributes = [];
+                } else {
+                    foreach ($parsedAttributes as $attribute) {
+                        if ($attribute !== null && !\is_scalar($attribute)) {
+                            $parsedAttributes = [];
+
+                            break;
+                        }
+                    }
                 }
 
                 return $parsedAttributes;
