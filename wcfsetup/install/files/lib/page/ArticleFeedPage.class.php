@@ -19,6 +19,11 @@ use wcf\system\WCF;
 class ArticleFeedPage extends AbstractFeedPage
 {
     /**
+     * @inheritDoc
+     */
+    public $neededModules = ['MODULE_ARTICLE'];
+
+    /**
      * category the listed articles belong to
      * @var ArticleCategory
      */
