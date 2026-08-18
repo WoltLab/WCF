@@ -53,7 +53,9 @@ final class AttachmentBBCode extends AbstractBBCode
                 $hasParentLink,
             );
         } elseif (!$attachment->canDownload()) {
-            return ContentNotVisibleView::forNoPermission();
+            // `ContentNotVisibleView` does not exist in this version, therefore the
+            // filename is rendered as plain text without a link to the attachment.
+            return StringUtil::encodeHTML($attachment->filename);
         } elseif (\substr($attachment->fileType, 0, 6) === 'video/' && $outputType == 'text/html') {
             return $this->showVideoPlayer($attachment);
         } elseif (\substr($attachment->fileType, 0, 6) === 'audio/' && $outputType == 'text/html') {
