@@ -18,6 +18,7 @@ use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\ImageUtil;
+use wcf\util\StringUtil;
 
 /**
  * Executes style-related actions.
@@ -411,7 +412,7 @@ MANIFEST;
             \file_put_contents($style->getAssetPath() . "manifest.json", $manifest);
 
             $style->loadVariables();
-            $tileColor = $style->getVariable('wcfHeaderBackground', true);
+            $tileColor = StringUtil::encodeHTML($style->getVariable('wcfHeaderBackground', true));
 
             // update browserconfig.xml
             $browserconfig = <<<BROWSERCONFIG
