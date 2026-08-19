@@ -5,8 +5,8 @@
 				'wcf.global.button.disabledI18n': '{jslang}wcf.global.button.disabledI18n{/jslang}'
 			});
 			
-			var availableLanguages = { {implode from=$availableLanguages key=languageID item=languageName}{@$languageID}: '{$languageName}'{/implode} };
-			var values = { {implode from=$i18nValues[$elementIdentifier] key=languageID item=value}'{@$languageID}': '{$value}'{/implode} };
+			var availableLanguages = { {implode from=$availableLanguages key=languageID item=languageName}{@$languageID}: '{@$languageName|encodeJS}'{/implode} };
+			var values = { {implode from=$i18nValues[$elementIdentifier] key=languageID item=value}'{@$languageID}': '{@$value|encodeJS}'{/implode} };
 			
 			var element = elById('{@$elementIdentifier}');
 			var type = LanguageInput;
