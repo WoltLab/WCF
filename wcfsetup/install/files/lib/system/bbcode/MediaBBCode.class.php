@@ -32,7 +32,7 @@ final class MediaBBCode extends AbstractBBCode
                 if ($provider->matches($content)) {
                     return \sprintf(
                         '<div class="mediaBBCodeContainer%s">%s</div>',
-                        \ucfirst($alignment),
+                        StringUtil::encodeHTML(\ucfirst($alignment)),
                         $provider->getOutput($content)
                     );
                 }

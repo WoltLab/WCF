@@ -32,11 +32,8 @@ final class WoltLabSuitePageBBCode extends AbstractBBCode
         /** @var Page $page */
         $page = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.page', $pageID);
         if ($page !== null) {
-            // `ContentNotVisibleView` does not exist in this version. An
-            // inaccessible page is treated like a missing one, which also avoids
-            // disclosing its title.
             if (!$page->isVisible() || !$page->isAccessible()) {
-                return '';
+                return ContentNotVisibleView::forNoPermission();
             }
 
             return StringUtil::getAnchorTag($page->getLink(), $title ?: $page->getTitle());
