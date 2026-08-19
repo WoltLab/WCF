@@ -6,7 +6,7 @@
 			});
 
 			var availableLanguages = { {implode from=$availableLanguages key=languageID item=languageName}{$languageID}: '{unsafe:$languageName|encodeJS}'{/implode} };
-			var values = { {implode from=$i18nValues[$elementIdentifier] key=languageID item=value}'{$languageID}': '{$value}'{/implode} };
+			var values = { {implode from=$i18nValues[$elementIdentifier] key=languageID item=value}'{$languageID}': '{unsafe:$value|encodeJS}'{/implode} };
 			
 			var element = elById('{unsafe:$elementIdentifier|encodeJS}');
 			var type = LanguageInput;
