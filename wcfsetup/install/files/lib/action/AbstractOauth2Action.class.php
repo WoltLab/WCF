@@ -193,6 +193,20 @@ abstract class AbstractOauth2Action extends AbstractAction
 
     protected function handleError(string $error): ResponseInterface
     {
+        // The error code originates from the request of the remote service and
+        // therefore is not trustworthy. Unknown phrases are returned verbatim by
+        // the phrase API, thus an unvalidated error code must not be used to build
+        // the name of the phrase. Such a code is reported through a template
+        // variable instead, causing it to be properly escaped.
+        if (!\preg_match('/^[a-zA-Z0-9_-]+$/', $error)) {
+            throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
+                'wcf.user.3rdparty.login.error.unknownError',
+                [
+                    'errorCode' => \mb_substr($error, 0, 100),
+                ]
+            ));
+        }
+
         throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.3rdparty.login.error.' . $error));
     }
 

@@ -10,6 +10,7 @@ use wcf\data\language\item\LanguageItemAction;
 use wcf\data\TDatabaseObjectToggle;
 use wcf\system\acl\ACLHandler;
 use wcf\system\category\CategoryHandler;
+use wcf\system\category\ICategoryType;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
@@ -220,6 +221,8 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
         if (!$objectType->getProcessor()->canAddCategory()) {
             throw new PermissionDeniedException();
         }
+
+        $this->validateDescriptionUseHtml($objectType->getProcessor());
     }
 
     /**
@@ -269,6 +272,21 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
             if (!$categoryEditor->getProcessor()->canEditCategory()) {
                 throw new PermissionDeniedException();
             }
+
+            // The object type decides which permission guards a category, therefore an
+            // update must never move a category into a different type.
+            if (
+                isset($this->parameters['data']['objectTypeID'])
+                && $categoryEditor->objectTypeID !== \intval($this->parameters['data']['objectTypeID'])
+            ) {
+                throw new PermissionDeniedException();
+            }
+
+            $this->validateDescriptionUseHtml($categoryEditor->getProcessor());
+        }
+
+        if (isset($this->parameters['data']['parentCategoryID'])) {
+            $this->validateParentCategoryID(\intval($this->parameters['data']['parentCategoryID']));
         }
     }
 
@@ -282,8 +300,15 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
             throw new UserInputException('structure');
         }
 
+        $objectTypeID = null;
+        $newParentCategoryIDs = [];
+
         // validate given category ids
         foreach ($this->parameters['data']['structure'] as $parentCategoryID => $categoryIDs) {
+            if (!\is_array($categoryIDs)) {
+                throw new UserInputException('structure');
+            }
+
             if ($parentCategoryID) {
                 // validate category
                 $category = CategoryHandler::getInstance()->getCategory($parentCategoryID);
@@ -294,6 +319,12 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
                 // validate permissions
                 if (!$category->getProcessor()->canEditCategory()) {
                     throw new PermissionDeniedException();
+                }
+
+                if ($objectTypeID === null) {
+                    $objectTypeID = $category->objectTypeID;
+                } elseif ($category->objectTypeID !== $objectTypeID) {
+                    throw new UserInputException('structure');
                 }
 
                 $this->objects[$category->categoryID] = new $this->className($category);
@@ -311,7 +342,99 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
                     throw new PermissionDeniedException();
                 }
 
+                if ($objectTypeID === null) {
+                    $objectTypeID = $category->objectTypeID;
+                } elseif ($category->objectTypeID !== $objectTypeID) {
+                    throw new UserInputException('structure');
+                }
+
                 $this->objects[$category->categoryID] = new $this->className($category);
+                $newParentCategoryIDs[$category->categoryID] = \intval($parentCategoryID);
+            }
+        }
+
+        $this->validateAcyclicStructure($newParentCategoryIDs, 'structure');
+    }
+
+    /**
+     * Rejects an enabled HTML description for category types that do not support it.
+     *
+     * @return void
+     */
+    protected function validateDescriptionUseHtml(ICategoryType $categoryType)
+    {
+        if (!isset($this->parameters['data']['descriptionUseHtml'])) {
+            return;
+        }
+
+        if (!$this->parameters['data']['descriptionUseHtml']) {
+            return;
+        }
+
+        if (!$categoryType->supportsHtmlDescription()) {
+            throw new PermissionDeniedException();
+        }
+    }
+
+    /**
+     * Validates the parent category shared by all updated categories.
+     *
+     * @return void
+     */
+    protected function validateParentCategoryID(int $parentCategoryID)
+    {
+        if ($parentCategoryID) {
+            $parentCategory = CategoryHandler::getInstance()->getCategory($parentCategoryID);
+            if ($parentCategory === null) {
+                throw new UserInputException('parentCategoryID', 'invalid');
+            }
+
+            foreach ($this->getObjects() as $categoryEditor) {
+                if ($parentCategory->objectTypeID !== $categoryEditor->objectTypeID) {
+                    throw new UserInputException('parentCategoryID', 'invalid');
+                }
+            }
+        }
+
+        $newParentCategoryIDs = [];
+        foreach ($this->getObjects() as $categoryEditor) {
+            $newParentCategoryIDs[$categoryEditor->categoryID] = $parentCategoryID;
+        }
+
+        $this->validateAcyclicStructure($newParentCategoryIDs, 'parentCategoryID');
+    }
+
+    /**
+     * Rejects category movements that would make a category its own ancestor. Such a cycle
+     * makes `Category::getParentCategories()` and `Category::getPermission()` recurse until
+     * the request runs out of memory.
+     *
+     * @param array<int, int> $newParentCategoryIDs maps the id of a moved category to its new parent category id
+     * @return void
+     */
+    protected function validateAcyclicStructure(array $newParentCategoryIDs, string $field)
+    {
+        foreach (\array_keys($newParentCategoryIDs) as $categoryID) {
+            $visitedCategoryIDs = [$categoryID => true];
+            $currentCategoryID = $categoryID;
+
+            while (true) {
+                if (isset($newParentCategoryIDs[$currentCategoryID])) {
+                    $currentCategoryID = $newParentCategoryIDs[$currentCategoryID];
+                } else {
+                    $category = CategoryHandler::getInstance()->getCategory($currentCategoryID);
+                    $currentCategoryID = $category !== null ? $category->parentCategoryID : 0;
+                }
+
+                if (!$currentCategoryID) {
+                    break;
+                }
+
+                if (isset($visitedCategoryIDs[$currentCategoryID])) {
+                    throw new UserInputException($field, 'invalid');
+                }
+
+                $visitedCategoryIDs[$currentCategoryID] = true;
             }
         }
     }

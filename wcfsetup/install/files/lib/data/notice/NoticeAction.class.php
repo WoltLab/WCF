@@ -82,33 +82,44 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
      */
     public function dismiss()
     {
+        // The validated object is used instead of the request parameter, because
+        // `getSingleObject()` only requires that exactly one of the submitted ids
+        // resolves to an existing notice, not that only one id was submitted.
+        $noticeID = $this->getSingleObject()->noticeID;
+
         if (WCF::getUser()->userID) {
             $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_notice_dismissed
                                         (noticeID, userID)
                     VALUES              (?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
-                \reset($this->objectIDs),
+                $noticeID,
                 WCF::getUser()->userID,
             ]);
 
             UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'dismissedNotices');
         } else {
-            $dismissedNotices = WCF::getSession()->getVar('dismissedNotices');
-            if ($dismissedNotices !== null) {
-                $dismissedNotices = @\unserialize($dismissedNotices);
-                $dismissedNotices[] = \reset($this->objectIDs);
-            } else {
-                $dismissedNotices = [
-                    \reset($this->objectIDs),
-                ];
+            $dismissedNotices = [];
+
+            $sessionValue = WCF::getSession()->getVar('dismissedNotices');
+            if ($sessionValue !== null) {
+                $dismissedNotices = @\unserialize($sessionValue);
+                if (!\is_array($dismissedNotices)) {
+                    $dismissedNotices = [];
+                }
             }
 
-            WCF::getSession()->register('dismissedNotices', \serialize($dismissedNotices));
+            // Skipping the update for an already dismissed notice keeps repeated
+            // requests from growing the session variables without bounds.
+            if (!\in_array($noticeID, $dismissedNotices, true)) {
+                $dismissedNotices[] = $noticeID;
+
+                WCF::getSession()->register('dismissedNotices', \serialize($dismissedNotices));
+            }
         }
 
         return [
-            'noticeID' => \reset($this->objectIDs),
+            'noticeID' => $noticeID,
         ];
     }
 

@@ -31,6 +31,15 @@ class BlacklistStatus extends DatabaseObject
     protected static $databaseTableIndexIsIdentity = false;
 
     /**
+     * The names of the columns that track the already fetched deltas. These are
+     * used as column names in SQL queries, therefore any value that originates
+     * from the remote server must be validated against this list.
+     *
+     * @since 6.0
+     */
+    public const DELTAS = ['delta1', 'delta2', 'delta3', 'delta4'];
+
+    /**
      * Returns true if the delta for the time period of the UTC hour has already been fetched.
      *
      * @param int $utcHour
@@ -115,7 +124,7 @@ class BlacklistStatus extends DatabaseObject
 
         $data = JSON::decode((string)$response->getBody());
         if (\is_array($data)) {
-            $deltas = ['delta1', 'delta2', 'delta3', 'delta4'];
+            $deltas = self::DELTAS;
 
             // The array is ordered from "now" to "14 days ago".
             foreach (\array_reverse($data) as $entry) {

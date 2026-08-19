@@ -3067,6 +3067,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.user.option.labeledUrl"><![CDATA[URL]]></item>
 		<item name="wcf.acp.user.option.labeledUrl.description"><![CDATA[If the field type is “labeledUrl”, the URL to be linked to must be entered here. Use <span class="inlineCode">%s</span> as placeholder for the user input.]]></item>
 		<item name="wcf.acp.user.option.labeledUrl.error.invalid"><![CDATA[The URL does not contain the placeholder <span class="inlineCode">%s</span>.]]></item>
+		<item name="wcf.acp.user.option.labeledUrl.error.invalidScheme"><![CDATA[The URL must begin with <span class="inlineCode">http://</span> or <span class="inlineCode">https://</span>.]]></item>
 		<item name="wcf.acp.user.option.optionType"><![CDATA[Option Type]]></item>
 		<item name="wcf.acp.user.option.optionType.description"><![CDATA[The option names usually equal the HTML-tag used as input element.]]></item>
 		<item name="wcf.acp.user.option.askDuringRegistration"><![CDATA[Field will be visible during registration]]></item>
@@ -5170,6 +5171,7 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.user.3rdparty.login.error.httpError"><![CDATA[Unable to communicate with the external service. Internal error code: <code>{$exceptionID}</code>.]]></item>
 		<item name="wcf.user.3rdparty.login.error.genericException"><![CDATA[An error occurred while processing your authentication request. Please contact the administrator for help. Internal error code: <code>{$exceptionID}</code>.]]></item>
 		<item name="wcf.user.3rdparty.login.error.stateValidation"><![CDATA[Unable to find the authentication request. Maybe your session expired.]]></item>
+		<item name="wcf.user.3rdparty.login.error.unknownError"><![CDATA[The external service reported an error that could not be understood: <kbd>{$errorCode}</kbd>]]></item>
 		<item name="wcf.user.3rdparty.github"><![CDATA[GitHub]]></item>
 		<item name="wcf.user.3rdparty.github.login"><![CDATA[Login with GitHub]]></item>
 		<item name="wcf.user.3rdparty.github.register"><![CDATA[You are creating an account through {icon size='16' name='github' type='brand'}&nbsp;GitHub. The username and your email address have therefore already been entered.]]></item>

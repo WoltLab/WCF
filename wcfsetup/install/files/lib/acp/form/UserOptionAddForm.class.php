@@ -332,8 +332,14 @@ class UserOptionAddForm extends AbstractForm
             $this->editable = UserOption::EDITABILITY_ALL;
         }
 
-        if ($this->optionType == 'labeledUrl' && \strpos($this->labeledUrl, '%s') === false) {
-            throw new UserInputException('labeledUrl', 'invalid');
+        if ($this->optionType == 'labeledUrl') {
+            if (\substr_count($this->labeledUrl, '%s') !== 1) {
+                throw new UserInputException('labeledUrl', 'invalid');
+            }
+
+            if (!\preg_match('~^https?://~i', $this->labeledUrl)) {
+                throw new UserInputException('labeledUrl', 'invalidScheme');
+            }
         }
     }
 

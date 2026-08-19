@@ -114,8 +114,8 @@ class ArticleSearch extends AbstractSearchProvider
             $conditionBuilder->add('1=0');
         } else {
             $conditionBuilder->add(
-                'wcf' . WCF_N . '_article.categoryID IN (?) AND wcf' . WCF_N . '_article.publicationStatus = ?',
-                [$articleCategoryIDs, Article::PUBLISHED]
+                'wcf' . WCF_N . '_article.categoryID IN (?) AND wcf' . WCF_N . '_article.publicationStatus = ? AND wcf' . WCF_N . '_article.isDeleted = ?',
+                [$articleCategoryIDs, Article::PUBLISHED, 0]
             );
         }
 

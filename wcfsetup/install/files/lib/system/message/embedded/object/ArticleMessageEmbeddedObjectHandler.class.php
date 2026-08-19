@@ -3,10 +3,11 @@
 namespace wcf\system\message\embedded\object;
 
 use wcf\data\article\AccessibleArticleList;
-use wcf\data\article\Article;
 use wcf\data\article\content\ViewableArticleContentList;
+use wcf\data\article\ViewableArticle;
 use wcf\data\article\ViewableArticleList;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\util\StringUtil;
 
 /**
  * Parses embedded articles and outputs their link or title.
@@ -92,16 +93,20 @@ class ArticleMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedO
      */
     public function replaceSimple($objectType, $objectID, $value, array $attributes)
     {
-        /** @var Article $article */
+        /** @var ViewableArticle $article */
         $article = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.article', $value);
         if ($article === null) {
+            return;
+        }
+
+        if (!$article->canRead()) {
             return;
         }
 
         $return = (!empty($attributes['return'])) ? $attributes['return'] : 'link';
         switch ($return) {
             case 'title':
-                return $article->getTitle();
+                return StringUtil::encodeHTML($article->getTitle());
                 break;
 
             case 'link':

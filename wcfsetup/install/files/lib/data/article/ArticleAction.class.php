@@ -11,6 +11,7 @@ use wcf\data\language\Language;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\comment\CommentHandler;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
@@ -879,6 +880,10 @@ class ArticleAction extends AbstractDatabaseObjectAction
      */
     public function validateSearch()
     {
+        if (\MODULE_ARTICLE === 0) {
+            throw new IllegalLinkException();
+        }
+
         $this->readString('searchString');
     }
 
@@ -889,27 +894,37 @@ class ArticleAction extends AbstractDatabaseObjectAction
      */
     public function search()
     {
-        $sql = "SELECT      articleID
-                FROM        wcf" . WCF_N . "_article_content
-                WHERE       title LIKE ?
-                        AND (
-                                languageID = ?
-                                OR languageID IS NULL
-                            )
-                ORDER BY    title";
-        $statement = WCF::getDB()->prepareStatement($sql, 5);
-        $statement->execute([
-            '%' . $this->parameters['searchString'] . '%',
-            WCF::getLanguage()->languageID,
-        ]);
-
-        $articleIDs = [];
-        while ($articleID = $statement->fetchColumn()) {
-            $articleIDs[] = $articleID;
+        $articleList = new AccessibleArticleList();
+        if ($articleList->sqlSelects !== '') {
+            $articleList->sqlSelects .= ',';
         }
-
-        $articleList = new ArticleList();
-        $articleList->setObjectIDs($articleIDs);
+        $articleList->sqlSelects .= "(
+            SELECT  title
+            FROM    wcf" . WCF_N . "_article_content
+            WHERE   articleID = article.articleID
+                AND (
+                        languageID IS NULL
+                     OR languageID = " . WCF::getLanguage()->languageID . "
+                    )
+            LIMIT   1
+        ) AS title";
+        $articleList->getConditionBuilder()->add(
+            "article.articleID IN (
+                SELECT  articleID
+                FROM    wcf" . WCF_N . "_article_content
+                WHERE   title LIKE ?
+                    AND (
+                            languageID = ?
+                         OR languageID IS NULL
+                        )
+            )",
+            [
+                '%' . WCF::getDB()->escapeLikeValue($this->parameters['searchString']) . '%',
+                WCF::getLanguage()->languageID,
+            ]
+        );
+        $articleList->sqlOrderBy = 'title';
+        $articleList->sqlLimit = 5;
         $articleList->readObjects();
 
         $articles = [];

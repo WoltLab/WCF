@@ -96,6 +96,9 @@ abstract class AbstractFeedPage extends AbstractAuthedPage
         // set correct content-type
         @\header('Content-Type: application/rss+xml; charset=UTF-8');
 
+        // The response depends on the active session and must not be cached.
+        @\header('Cache-Control: private');
+
         // show template
         WCF::getTPL()->display($this->templateName, $this->application, false);
     }

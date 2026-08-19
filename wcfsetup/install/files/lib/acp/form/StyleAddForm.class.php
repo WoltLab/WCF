@@ -325,7 +325,7 @@ class StyleAddForm extends AbstractForm
         }
 
         // ignore everything except well-formed rgba()
-        $regEx = new Regex('rgba\(\d{1,3}, \d{1,3}, \d{1,3}, (1|1\.00?|0|0?\.[0-9]{1,2})\)');
+        $regEx = new Regex('^rgba\(\d{1,3}, \d{1,3}, \d{1,3}, (1|1\.00?|0|0?\.[0-9]{1,2})\)\z');
         foreach ($colors as $variableName) {
             if (isset($_POST[$variableName]) && $regEx->match($_POST[$variableName])) {
                 $this->variables[$variableName] = $_POST[$variableName];

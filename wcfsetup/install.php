@@ -476,7 +476,7 @@ function printException($e)
 													$keys = array_keys($item);
 													if (count($keys) > 5) return "[ " . count($keys) . " items ]";
 													return '[ ' . implode(', ', array_map(function ($item) {
-														return $item . ' => ';
+														return htmlspecialchars($item) . ' => ';
 													}, $keys)) . ']';
 												case 'object':
 													return get_class($item);
@@ -906,11 +906,18 @@ class Tar
 	public function getFileInfo($fileIndex)
 	{
 		if (!is_int($fileIndex)) {
-			$fileIndex = $this->getIndexByFilename($fileIndex);
+			$filename = $fileIndex;
+			$fileIndex = $this->getIndexByFilename($filename);
+
+			// `false` would be cast to the array key `0`, silently returning
+			// the first entry of the archive for an unknown filename.
+			if ($fileIndex === false) {
+				throw new SystemException("Tar: could not find file '" . $filename . "' in archive");
+			}
 		}
 
 		if (!isset($this->contentList[$fileIndex])) {
-			throw new SystemException("Tar: could find file '" . $fileIndex . "' in archive");
+			throw new SystemException("Tar: could not find file '" . $fileIndex . "' in archive");
 		}
 		return $this->contentList[$fileIndex];
 	}
@@ -921,7 +928,7 @@ class Tar
 	public function getIndexByFilename($filename)
 	{
 		foreach ($this->contentList as $index => $file) {
-			if ($file['filename'] == $filename) {
+			if ($file['filename'] === $filename) {
 				return $index;
 			}
 		}
