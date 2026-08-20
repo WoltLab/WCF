@@ -67,6 +67,18 @@ export class ConsentPlugin {
     externalURL.href = slide.src!;
     externalURL.innerText = url.host;
 
+    const showOnceButton = clone.querySelector(".jsButtonMessageUserConsentOnce") as HTMLButtonElement;
+    // The Fancybox plugin handles this button because there is no payload for the generic consent handler.
+    showOnceButton.classList.remove("jsButtonMessageUserConsentOnce");
+    showOnceButton.addEventListener("click", () => {
+      slide.type = this.#sliderToType.get(slide);
+      slide.el!.innerHTML = "";
+
+      // refresh current slide content
+      carousel.emit("detachSlideEl", slide);
+      carousel.emit("attachSlideEl", slide);
+    });
+
     const button = clone.querySelector(".jsButtonMessageUserConsentEnable") as HTMLButtonElement;
     button.addEventListener("click", () => {
       this.destroy();
