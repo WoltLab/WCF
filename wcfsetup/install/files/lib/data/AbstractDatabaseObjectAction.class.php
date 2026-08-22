@@ -208,6 +208,23 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
             throw new PermissionDeniedException();
         }
 
+        // `create()` and `update()` forward these keys to `DatabaseObjectEditor`,
+        // which embeds them verbatim into the query as column names. Any other
+        // action may use these parameters for something entirely different.
+        if (\in_array($this->getActionName(), ['create', 'update'], true)) {
+            foreach (['data', 'counters'] as $parameterName) {
+                if (!isset($this->parameters[$parameterName]) || !\is_array($this->parameters[$parameterName])) {
+                    continue;
+                }
+
+                foreach (\array_keys($this->parameters[$parameterName]) as $columnName) {
+                    if (!\is_string($columnName) || !\preg_match('~^[a-zA-Z_][a-zA-Z0-9_]*\z~', $columnName)) {
+                        throw new UserInputException($parameterName);
+                    }
+                }
+            }
+        }
+
         $actionName = 'validate' . StringUtil::firstCharToUpperCase($this->getActionName());
         if (!\method_exists($this, $actionName)) {
             throw new PermissionDeniedException();
