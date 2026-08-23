@@ -189,6 +189,17 @@ final class WysiwygFormField extends AbstractFormField implements
     }
 
     /**
+     * Returns the input processor containing the wysiwyg text or `null` if the field
+     * has not been validated yet.
+     *
+     * @since 6.2
+     */
+    public function getHtmlInputProcessor(): ?HtmlInputProcessor
+    {
+        return $this->htmlInputProcessor;
+    }
+
+    /**
      * Sets the last time this field has been edited and returns this field.
      *
      * @param int $lastEditTime last time field has been edited
