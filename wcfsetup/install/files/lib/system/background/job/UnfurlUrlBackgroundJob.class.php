@@ -4,8 +4,9 @@ namespace wcf\system\background\job;
 
 use Psr\Http\Message\ResponseInterface;
 use wcf\data\file\File;
+use wcf\data\unfurl\url\image\UnfurlUrlImageBuilder;
 use wcf\data\unfurl\url\UnfurlUrl;
-use wcf\data\unfurl\url\UnfurlUrlAction;
+use wcf\data\unfurl\url\UnfurlUrlBuilder;
 use wcf\data\unfurl\url\UnfurlUrlEditor;
 use wcf\system\message\unfurl\exception\DownloadFailed;
 use wcf\system\message\unfurl\exception\ParsingFailed;
@@ -122,9 +123,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
     /**
      * @return array{
      *  imageUrl: string,
-     *  imageUrlHash: string,
      *  fileID: ?int,
-     *  isStored: 1|0,
      *  width: int,
      *  height: int,
      * }|array{}
@@ -171,9 +170,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
 
             return [
                 'imageUrl' => $unfurlResponse->getImageUrl(),
-                'imageUrlHash' => \sha1($unfurlResponse->getImageUrl()),
                 'fileID' => $file?->fileID,
-                'isStored' => $file !== null ? 1 : 0,
                 'width' => $width,
                 'height' => $height,
             ];
@@ -280,7 +277,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
     }
 
     /**
-     * @param array{imageUrl: string, imageUrlHash: string, fileID: ?int, isStored: 1|0, width: int, height: int}|array{} $imageData
+     * @param array{imageUrl: string, fileID: ?int, width: int, height: int}|array{} $imageData
      */
     private function save(
         string $status,
@@ -303,17 +300,22 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
             throw new \BadMethodCallException("You cannot pass an imageID and imageData at the same time.");
         }
 
-        $urlAction = new UnfurlUrlAction([$this->urlID], 'update', [
-            'data' => [
-                'status' => $status,
-                'title' => $title,
-                'description' => $description,
-                'imageID' => $imageID,
-                'lastFetch' => \TIME_NOW,
-            ],
-            'imageData' => $imageData,
-        ]);
-        $urlAction->executeAction();
+        if ($imageData !== []) {
+            $imageID = UnfurlUrlImageBuilder::forCreate()
+                ->setImageUrl($imageData['imageUrl'])
+                ->setFileID($imageData['fileID'])
+                ->setWidth($imageData['width'])
+                ->setHeight($imageData['height'])
+                ->create()->imageID;
+        }
+
+        UnfurlUrlBuilder::forUpdate(new UnfurlUrl($this->urlID))
+            ->setStatus($status)
+            ->setTitle($title)
+            ->setDescription($description)
+            ->setImageID($imageID)
+            ->setLastFetch(\TIME_NOW)
+            ->update();
     }
 
     #[\Override]

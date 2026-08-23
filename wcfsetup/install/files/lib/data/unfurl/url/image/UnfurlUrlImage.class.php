@@ -22,7 +22,7 @@ use wcf\util\CryptoUtil;
  * @property-read   ?string $imageUrlHash
  * @property-read   int     $width
  * @property-read   int     $height
- * @property-read   ?string $imageExtension
+ * @property-read   ?string $imageExtension deprecated, only in use to migrate old files
  * @property-read   int     $isStored
  * @property-read   ?int    $fileID
  *

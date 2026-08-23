@@ -3,7 +3,7 @@
 namespace wcf\command\unfurl\url;
 
 use wcf\data\unfurl\url\UnfurlUrl;
-use wcf\data\unfurl\url\UnfurlUrlAction;
+use wcf\data\unfurl\url\UnfurlUrlBuilder;
 use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\background\job\UnfurlUrlBackgroundJob;
 
@@ -28,15 +28,8 @@ final class FindOrCreateUnfurlUrl
         $object = UnfurlUrl::getByUrl($this->url);
 
         if ($object === null) {
-            $returnValues = (new UnfurlUrlAction([], 'create', [
-                'data' => [
-                    'url' => $this->url,
-                    'urlHash' => \sha1($this->url),
-                ],
-            ]))->executeAction();
-
-            $object = $returnValues['returnValues'];
-            \assert($object instanceof UnfurlUrl);
+            $object = new CreateUnfurlUrl(UnfurlUrlBuilder::forCreate()
+                ->setUrl($this->url))();
         }
 
         if ($object->status !== UnfurlUrl::STATUS_PENDING && $object->lastFetch < \TIME_NOW - self::REFETCH_UNFURL_URL) {

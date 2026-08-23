@@ -3,7 +3,6 @@
 namespace wcf\data\unfurl\url\image;
 
 use wcf\data\DatabaseObjectBuilder;
-use wcf\data\file\File;
 use wcf\data\file\FileEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
@@ -52,10 +51,10 @@ final class UnfurlUrlImageBuilder extends DatabaseObjectBuilder
         return $this;
     }
 
-    public function setFile(?File $file): static
+    public function setFileID(?int $fileID): static
     {
-        $this->properties['fileID'] = $file?->fileID;
-        $this->properties['isStored'] = $file !== null ? 1 : 0;
+        $this->properties['fileID'] = $fileID;
+        $this->properties['isStored'] = $fileID !== null ? 1 : 0;
 
         return $this;
     }
