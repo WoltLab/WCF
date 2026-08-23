@@ -49,26 +49,26 @@ final class UnfurlUrlRebuildDataWorker extends AbstractLinearRebuildDataWorker
         $deleteFileIDs = [];
         $cleanUpImageIDs = [];
         foreach ($this->getObjectList()->getObjects() as $unfurlUrl) {
-            if ($unfurlUrl->isStored === 0 || $unfurlUrl->imageID === null) {
+            if ($unfurlUrl->imageID === null || $unfurlUrl->getImage()->isStored === 0) {
                 continue;
             }
 
             if (\URL_UNFURLING_SAVE_IMAGES === 0) {
                 // delete stored images
-                if ($unfurlUrl->fileID !== null) {
-                    $deleteFileIDs[] = $unfurlUrl->fileID;
+                if ($unfurlUrl->getImage()->fileID !== null) {
+                    $deleteFileIDs[] = $unfurlUrl->getImage()->fileID;
                 } else {
                     $fileLocation = $this->getOldFileLocation($unfurlUrl);
                     @\unlink($fileLocation);
                 }
 
                 $cleanUpImageIDs[] = $unfurlUrl->imageID;
-            } elseif ($unfurlUrl->fileID === null) {
+            } elseif ($unfurlUrl->getImage()->fileID === null) {
                 $fileLocation = $this->getOldFileLocation($unfurlUrl);
 
                 $file = UnfurlUrlEditor::saveUnfurlImage(
                     $fileLocation,
-                    \pathinfo($unfurlUrl->imageUrl, \PATHINFO_FILENAME)
+                    \pathinfo($unfurlUrl->getImage()->imageUrl, \PATHINFO_FILENAME)
                 );
 
                 @\unlink($fileLocation);
@@ -101,9 +101,9 @@ final class UnfurlUrlRebuildDataWorker extends AbstractLinearRebuildDataWorker
             '%s%s%s/%s.%s',
             \WCF_DIR,
             UnfurlUrl::IMAGE_DIR,
-            \substr($unfurlUrl->imageUrlHash, 0, 2),
-            $unfurlUrl->imageUrlHash,
-            $unfurlUrl->imageExtension
+            \substr($unfurlUrl->getImage()->imageUrlHash, 0, 2),
+            $unfurlUrl->getImage()->imageUrlHash,
+            $unfurlUrl->getImage()->imageExtension
         );
     }
 }
