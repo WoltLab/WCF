@@ -15,6 +15,7 @@ use wcf\system\WCF;
  * @copyright   2001-2021 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       5.4
+ * @deprecated  6.3 Use `UnfurlUrlBuilder` instead.
  *
  * @extends AbstractDatabaseObjectAction<UnfurlUrl, UnfurlUrlEditor>
  */

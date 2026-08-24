@@ -2,12 +2,9 @@
 
 namespace wcf\data\unfurl\url;
 
-use wcf\action\ImageProxyAction;
-use wcf\data\DatabaseObject;
-use wcf\system\cache\runtime\FileRuntimeCache;
-use wcf\system\request\LinkHandler;
+use wcf\data\CollectionDatabaseObject;
+use wcf\data\unfurl\url\image\UnfurlUrlImage;
 use wcf\system\WCF;
-use wcf\util\CryptoUtil;
 use wcf\util\Url;
 
 /**
@@ -23,19 +20,13 @@ use wcf\util\Url;
  * @property-read   string  $urlHash
  * @property-read   string  $title
  * @property-read   ?string $description
- * @property-read   string  $imageHash
- * @property-read   string  $imageUrl
- * @property-read   ?string $imageUrlHash
- * @property-read   ?string $imageExtension
- * @property-read   int     $width
- * @property-read   int     $height
- * @property-read   int     $lastFetch
  * @property-read   ?int    $imageID
- * @property-read   int     $isStored
  * @property-read   string  $status
- * @property-read   ?int    $fileID
+ * @property-read   int     $lastFetch
+ *
+ * @extends CollectionDatabaseObject<UnfurlUrlCollection>
  */
-class UnfurlUrl extends DatabaseObject
+class UnfurlUrl extends CollectionDatabaseObject
 {
     private const IMAGE_SQUARED = "SQUARED";
 
@@ -55,27 +46,6 @@ class UnfurlUrl extends DatabaseObject
     public const IMAGE_DIR = "images/unfurlUrl/";
     public const THUMBNAIL_WIDTH = 800;
     public const THUMBNAIL_HEIGHT = 400;
-
-    public function __construct(null|string|int $id, ?array $row = null, ?DatabaseObject $object = null)
-    {
-        if ($id !== null) {
-            $sql = "SELECT      unfurl_url.*, unfurl_url_image.*
-                    FROM        wcf1_unfurl_url unfurl_url
-                    LEFT JOIN   wcf1_unfurl_url_image unfurl_url_image
-                    ON          unfurl_url_image.imageID = unfurl_url.imageID
-                    WHERE       unfurl_url.urlID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$id]);
-            $row = $statement->fetchArray();
-
-            // enforce data type 'array'
-            if ($row === false) {
-                $row = [];
-            }
-        }
-
-        parent::__construct(null, $row, $id !== null ? null : $object);
-    }
 
     /**
      * Renders the unfurl url card and returns the template.
@@ -98,41 +68,22 @@ class UnfurlUrl extends DatabaseObject
         return $url['host'];
     }
 
-    /**
-     * Returns the image url for the url.
-     *
-     * @throws \wcf\system\exception\SystemException
-     */
     public function getImageUrl(): ?string
     {
-        if (\URL_UNFURLING_SAVE_IMAGES !== 0 && $this->isStored !== 0 && $this->fileID !== null) {
-            $file = FileRuntimeCache::getInstance()->getObject($this->fileID);
-
-            return 'data:image/webp;base64, ' . \file_get_contents($file->getPathname());
-        } elseif (!empty($this->imageUrl)) {
-            if (\MODULE_IMAGE_PROXY !== 0) {
-                $key = CryptoUtil::createSignedString($this->imageUrl);
-
-                return LinkHandler::getInstance()->getControllerLink(ImageProxyAction::class, [
-                    'key' => $key,
-                ]);
-            } elseif (\IMAGE_ALLOW_EXTERNAL_SOURCE !== 0) {
-                return $this->imageUrl;
-            }
+        if ($this->imageID === null) {
+            return null;
         }
 
-        return null;
+        return $this->getImage()->getImageUrl();
     }
 
     public function hasImageUrl(): bool
     {
-        if (\URL_UNFURLING_SAVE_IMAGES !== 0 && $this->isStored !== 0 && $this->fileID !== null) {
-            return true;
-        } elseif (!empty($this->imageUrl) && (\MODULE_IMAGE_PROXY !== 0 || \IMAGE_ALLOW_EXTERNAL_SOURCE !== 0)) {
-            return true;
+        if ($this->imageID === null) {
+            return false;
         }
 
-        return false;
+        return $this->getImage()->hasImageUrl();
     }
 
     public function hasCoverImage(): bool
@@ -147,7 +98,7 @@ class UnfurlUrl extends DatabaseObject
 
     public function isPlainUrl(): bool
     {
-        return empty($this->description) && empty($this->imageID);
+        return ($this->description ?? '') === '' && $this->imageID === null;
     }
 
     private function getImageType(): string
@@ -156,7 +107,7 @@ class UnfurlUrl extends DatabaseObject
             return self::IMAGE_NO_IMAGE;
         }
 
-        if ($this->width === $this->height) {
+        if ($this->getImage()->width === $this->getImage()->height) {
             return self::IMAGE_SQUARED;
         }
 
@@ -172,6 +123,14 @@ class UnfurlUrl extends DatabaseObject
     }
 
     /**
+     * @since 6.3
+     */
+    public function getImage(): ?UnfurlUrlImage
+    {
+        return $this->getCollection()->getImage($this);
+    }
+
+    /**
      * Returns the unfurl url object for a given url.
      *
      * @throws \InvalidArgumentException If the given URL is invalid.
@@ -182,18 +141,12 @@ class UnfurlUrl extends DatabaseObject
             throw new \InvalidArgumentException("Given URL is not a valid URL.");
         }
 
-        $sql = "SELECT      unfurl_url.*, unfurl_url_image.*
-                FROM        wcf1_unfurl_url unfurl_url
-                LEFT JOIN   wcf1_unfurl_url_image unfurl_url_image
-                ON          unfurl_url_image.imageID = unfurl_url.imageID
-                WHERE       unfurl_url.urlHash = ?";
+        $sql = "SELECT  *
+                FROM    wcf1_unfurl_url
+                WHERE   urlHash = ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([\sha1($url)]);
-        $row = $statement->fetchArray();
-        if ($row === false) {
-            return null;
-        }
 
-        return new self(null, $row);
+        return $statement->fetchSingleObject(self::class);
     }
 }

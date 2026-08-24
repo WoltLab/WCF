@@ -639,20 +639,8 @@ parameters:
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
-			count: 4
-			path: wcfsetup/install/files/lib/data/unfurl/url/UnfurlUrl.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
 			count: 3
 			path: wcfsetup/install/files/lib/data/unfurl/url/UnfurlUrlAction.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
-			count: 1
-			path: wcfsetup/install/files/lib/data/unfurl/url/UnfurlUrlList.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'

@@ -8,7 +8,7 @@
 				*}{if $object->hasSquaredImage()} unfurlUrlCardSquaredImage{/if}{*
 			*}">
 				{if $object->hasImageUrl()}
-					<img src="{$object->getImageUrl()}" height="{$object->height}" width="{$object->width}" class="unfurlUrlImage" alt="" loading="lazy">
+					<img src="{$object->getImageUrl()}" height="{$object->getImage()->height}" width="{$object->getImage()->width}" class="unfurlUrlImage" alt="" loading="lazy">
 				{/if}
 				<div class="unfurlUrlInformation">
 					<a class="unfurlUrlTitle" {anchorAttributes url=$object->url appendClassname=false isUgc=$enableUgc}>{$object->title}</a>
