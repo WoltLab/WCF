@@ -2,9 +2,9 @@
 
 namespace wcf\system\worker;
 
+use wcf\command\unfurl\url\CreateUnfurlUrlImageFile;
 use wcf\data\file\FileEditor;
 use wcf\data\unfurl\url\UnfurlUrl;
-use wcf\data\unfurl\url\UnfurlUrlEditor;
 use wcf\data\unfurl\url\UnfurlUrlList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
@@ -66,10 +66,10 @@ final class UnfurlUrlRebuildDataWorker extends AbstractLinearRebuildDataWorker
             } elseif ($unfurlUrl->getImage()->fileID === null) {
                 $fileLocation = $this->getOldFileLocation($unfurlUrl);
 
-                $file = UnfurlUrlEditor::saveUnfurlImage(
+                $file = new CreateUnfurlUrlImageFile(
                     $fileLocation,
                     \pathinfo($unfurlUrl->getImage()->imageUrl, \PATHINFO_FILENAME)
-                );
+                )();
 
                 @\unlink($fileLocation);
 

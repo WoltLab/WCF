@@ -3,11 +3,11 @@
 namespace wcf\system\background\job;
 
 use Psr\Http\Message\ResponseInterface;
+use wcf\command\unfurl\url\CreateUnfurlUrlImageFile;
 use wcf\data\file\File;
 use wcf\data\unfurl\url\image\UnfurlUrlImageBuilder;
 use wcf\data\unfurl\url\UnfurlUrl;
 use wcf\data\unfurl\url\UnfurlUrlBuilder;
-use wcf\data\unfurl\url\UnfurlUrlEditor;
 use wcf\system\message\unfurl\exception\DownloadFailed;
 use wcf\system\message\unfurl\exception\ParsingFailed;
 use wcf\system\message\unfurl\exception\UrlInaccessible;
@@ -154,7 +154,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
 
             $width = $height = 0;
             if ($file !== null) {
-                // The stored file contains the base64 encoded image, see UnfurlUrlEditor::saveUnfurlImage().
+                // The stored file contains the base64 encoded image, see CreateUnfurlUrlImageFile.
                 $decodedImage = \base64_decode(
                     \file_get_contents($file->getPathname()),
                     true
@@ -243,14 +243,14 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
         $tmp = FileUtil::getTemporaryFilename(extension: $extension);
         \file_put_contents($tmp, $image);
 
-        $file = UnfurlUrlEditor::saveUnfurlImage(
+        $file = new CreateUnfurlUrlImageFile(
             $tmp,
             \sprintf(
                 "%s.%s",
                 $originalFile,
                 $extension
             )
-        );
+        )();
 
         // Clean up temporary files
         @\unlink($tmp);
