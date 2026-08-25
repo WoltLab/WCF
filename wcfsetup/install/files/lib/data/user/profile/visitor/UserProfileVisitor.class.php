@@ -2,7 +2,8 @@
 
 namespace wcf\data\user\profile\visitor;
 
-use wcf\data\DatabaseObject;
+use wcf\data\CollectionDatabaseObject;
+use wcf\data\user\UserProfile;
 use wcf\system\WCF;
 
 /**
@@ -16,15 +17,15 @@ use wcf\system\WCF;
  * @property-read   int     $ownerID    id of the user whose user profile has been visited
  * @property-read   int     $userID     id of the user visiting the user profile
  * @property-read   int     $time       timestamp of the (latest) visit
+ *
+ * @extends CollectionDatabaseObject<UserProfileVisitorCollection>
  */
-class UserProfileVisitor extends DatabaseObject
+class UserProfileVisitor extends CollectionDatabaseObject
 {
     /**
      * Returns a profile visitor object or `null` if it does not exist.
-     *
-     * @return  UserProfileVisitor|null
      */
-    public static function getObject(int $ownerID, int $userID)
+    public static function getObject(int $ownerID, int $userID): ?self
     {
         $sql = "SELECT  *
                 FROM    " . static::getDatabaseTableName() . "
@@ -32,10 +33,15 @@ class UserProfileVisitor extends DatabaseObject
                     AND userID = ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$ownerID, $userID]);
-        if (($row = $statement->fetchArray()) !== false) {
-            return new self(null, $row);
-        }
 
-        return null;
+        return $statement->fetchSingleObject(self::class);
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getUserProfile(): UserProfile
+    {
+        return $this->getCollection()->getUserProfile($this);
     }
 }
