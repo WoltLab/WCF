@@ -39,6 +39,38 @@ class UserOptionCategory extends DatabaseObject implements ITitledObject, \Strin
     }
 
     /**
+     * Returns true if this category can be deleted, i.e. if it is a category of the user profile
+     * and does not contain any user options.
+     *
+     * @since 6.3
+     */
+    public function canDelete(): bool
+    {
+        return $this->parentCategoryName === 'profile'
+            && $this->getUserOptionCount() === 0;
+    }
+
+    /**
+     * Returns the number of user options within this category.
+     *
+     * @since 6.3
+     */
+    public function getUserOptionCount(): int
+    {
+        if (isset($this->data['userOptions'])) {
+            return (int)$this->data['userOptions'];
+        }
+
+        $sql = "SELECT  COUNT(*)
+                FROM    wcf1_user_option
+                WHERE   categoryName = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([$this->categoryName]);
+
+        return (int)$statement->fetchSingleColumn();
+    }
+
+    /**
      * Returns an instance of UserOptionCategory by name.
      *
      * @return  UserOptionCategory|null
