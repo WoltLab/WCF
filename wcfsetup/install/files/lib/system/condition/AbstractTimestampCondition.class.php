@@ -8,6 +8,7 @@ use wcf\data\DatabaseObjectList;
 use wcf\system\exception\InvalidObjectArgument;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Condition implementation for comparing a user-bound timestamp with a fixed time
@@ -142,10 +143,12 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
     {
         $start = WCF::getLanguage()->get('wcf.date.period.start');
         $end = WCF::getLanguage()->get('wcf.date.period.end');
+        $startTime = StringUtil::encodeHTML($this->startTime);
+        $endTime = StringUtil::encodeHTML($this->endTime);
 
         return <<<HTML
-<input type="date" id="{$this->getPropertyName()}StartTime" name="{$this->getPropertyName()}StartTime" value="{$this->startTime}" placeholder="{$start}">
-<input type="date" id="{$this->getPropertyName()}EndTime" name="{$this->getPropertyName()}EndTime" value="{$this->endTime}" placeholder="{$end}">
+<input type="date" id="{$this->getPropertyName()}StartTime" name="{$this->getPropertyName()}StartTime" value="{$startTime}" placeholder="{$start}">
+<input type="date" id="{$this->getPropertyName()}EndTime" name="{$this->getPropertyName()}EndTime" value="{$endTime}" placeholder="{$end}">
 HTML;
     }
 
