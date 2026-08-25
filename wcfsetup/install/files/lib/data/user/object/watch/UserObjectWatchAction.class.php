@@ -102,26 +102,24 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction
         if ($this->parameters['subscribe'] === true) {
             // newly subscribed
             if ($this->userObjectWatch === null) {
-                UserObjectWatchEditor::createOrIgnore([
-                    'notification' => $this->parameters['enableNotification'] === true ? 1 : 0,
-                    'objectID' => $this->parameters['objectID'],
-                    'objectTypeID' => $this->objectType->objectTypeID,
-                    'userID' => WCF::getUser()->userID,
-                ]);
+                UserObjectWatchBuilder::forCreate()
+                    ->setObjectType($this->objectType)
+                    ->setObjectID($this->parameters['objectID'])
+                    ->setUser(WCF::getUser())
+                    ->setNotification($this->parameters['enableNotification'])
+                    ->createOrIgnore();
             } elseif ((bool)$this->userObjectWatch->notification !== $this->parameters['enableNotification']) {
                 // update notification type
-                $editor = new UserObjectWatchEditor($this->userObjectWatch);
-                $editor->update([
-                    'notification' => $this->parameters['enableNotification'] === true ? 1 : 0,
-                ]);
+                UserObjectWatchBuilder::forUpdate($this->userObjectWatch)
+                    ->setNotification($this->parameters['enableNotification'])
+                    ->update();
             }
 
             // reset user storage
             $this->objectType->getProcessor()->resetUserStorage([WCF::getUser()->userID]);
         } elseif ($this->userObjectWatch !== null) {
             // unsubscribe
-            $editor = new UserObjectWatchEditor($this->userObjectWatch);
-            $editor->delete();
+            UserObjectWatchBuilder::delete($this->userObjectWatch);
 
             // reset user storage
             $this->objectType->getProcessor()->resetUserStorage([WCF::getUser()->userID]);
@@ -146,12 +144,12 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction
             $this->parameters['data']['objectType']
         );
 
-        UserObjectWatchEditor::create([
-            'userID' => WCF::getUser()->userID,
-            'objectID' => \intval($this->parameters['data']['objectID']),
-            'objectTypeID' => $objectType->objectTypeID,
-            'notification' => !empty($this->parameters['enableNotification']) ? 1 : 0,
-        ]);
+        UserObjectWatchBuilder::forCreate()
+            ->setObjectType($objectType)
+            ->setObjectID((int)$this->parameters['data']['objectID'])
+            ->setUser(WCF::getUser())
+            ->setNotification(!empty($this->parameters['enableNotification']))
+            ->create();
 
         // reset user storage
         $objectType->getProcessor()->resetUserStorage([WCF::getUser()->userID]);
@@ -175,11 +173,10 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction
             $userObjectWatch = UserObjectWatch::getUserObjectWatch(
                 $objectType->objectTypeID,
                 WCF::getUser()->userID,
-                \intval($this->parameters['data']['objectID'])
+                (int)$this->parameters['data']['objectID']
             );
         }
-        $editor = new UserObjectWatchEditor($userObjectWatch);
-        $editor->delete();
+        UserObjectWatchBuilder::delete($userObjectWatch);
 
         // reset user storage
         $objectType->getProcessor()->resetUserStorage([WCF::getUser()->userID]);
@@ -205,13 +202,13 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction
         }
 
         // validate object id
-        $objectType->getProcessor()->validateObjectID(\intval($this->parameters['data']['objectID']));
+        $objectType->getProcessor()->validateObjectID((int)$this->parameters['data']['objectID']);
 
         // get existing subscription
         $this->userObjectWatch = UserObjectWatch::getUserObjectWatch(
             $objectType->objectTypeID,
             WCF::getUser()->userID,
-            \intval($this->parameters['data']['objectID'])
+            (int)$this->parameters['data']['objectID']
         );
     }
 

@@ -3,8 +3,7 @@
 namespace wcf\system\importer;
 
 use wcf\data\user\object\watch\UserObjectWatch;
-use wcf\data\user\object\watch\UserObjectWatchEditor;
-use wcf\system\database\exception\DatabaseException;
+use wcf\data\user\object\watch\UserObjectWatchBuilder;
 
 /**
  * Imports watched objects.
@@ -34,17 +33,13 @@ class AbstractWatchedObjectImporter extends AbstractImporter
             return 0;
         }
 
-        try {
-            $watch = UserObjectWatchEditor::create(\array_merge($data, ['objectTypeID' => $this->objectTypeID]));
+        $watch = UserObjectWatchBuilder::forCreate()
+            ->setObjectTypeID($this->objectTypeID)
+            ->setObjectID((int)$data['objectID'])
+            ->setUserID($data['userID'])
+            ->setNotification((bool)($data['notification'] ?? false))
+            ->createOrIgnore();
 
-            return $watch->watchID;
-        } catch (DatabaseException $e) {
-            // 23000 = INTEGRITY CONSTRAINT VIOLATION a.k.a. duplicate key
-            if ((int)$e->getCode() !== 23000) {
-                throw $e;
-            }
-        }
-
-        return 0;
+        return $watch?->watchID ?: 0;
     }
 }

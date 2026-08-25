@@ -21,12 +21,9 @@ use wcf\system\WCF;
 class UserObjectWatch extends DatabaseObject
 {
     /**
-     * Returns the UserObjectWatch with the given data or null if no such object
-     * exists.
-     *
-     * @return  UserObjectWatch|null
+     * Returns the UserObjectWatch with the given data or null if no such object exists.
      */
-    public static function getUserObjectWatch(int $objectTypeID, int $userID, int $objectID)
+    public static function getUserObjectWatch(int $objectTypeID, int $userID, int $objectID): ?self
     {
         $sql = "SELECT  *
                 FROM    wcf1_user_object_watch
@@ -35,11 +32,7 @@ class UserObjectWatch extends DatabaseObject
                     AND objectID = ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$objectTypeID, $userID, $objectID]);
-        $row = $statement->fetch();
-        if ($row === false) {
-            return null;
-        }
 
-        return new self(null, $row);
+        return $statement->fetchSingleObject(self::class);
     }
 }
