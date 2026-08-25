@@ -726,6 +726,14 @@ final class StyleCompiler extends SingletonFactory
                 if (\str_contains($e->getMessage(), 'Sass modules are not implemented yet')) {
                     return ValueConverter::fromPhp($value);
                 }
+
+                // The SCSS compiler is unable to process urls like for the page
+                // logo thus these must be presented as plain strings.
+                if (\is_string($value)) {
+                    return ValueConverter::fromPhp($value);
+                }
+
+                throw $e;
             }
         }, $variables));
 
