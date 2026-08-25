@@ -379,6 +379,12 @@ parameters:
 			path: wcfsetup/install/files/lib/data/article/ArticleAction.class.php
 
 		-
+			message: '#^Instanceof between wcf\\data\\article\\Article and wcf\\data\\DatabaseObject will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/data/article/ArticleCollection.class.php
+
+		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 1
@@ -725,6 +731,18 @@ parameters:
 			identifier: empty.notAllowed
 			count: 1
 			path: wcfsetup/install/files/lib/data/user/profile/menu/item/UserProfileMenuItemEditor.class.php
+
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/data/user/profile/visitor/UserProfileVisitorCollection.class.php
+
+		-
+			message: '#^Instanceof between wcf\\data\\user\\profile\\visitor\\UserProfileVisitor and wcf\\data\\DatabaseObject will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/data/user/profile/visitor/UserProfileVisitorCollection.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
