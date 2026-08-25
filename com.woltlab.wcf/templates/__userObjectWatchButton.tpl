@@ -21,10 +21,10 @@
 	</div>
 
 	<script data-relocate="true">
-		require(['WoltLabSuite/Core/Ui/User/ObjectWatch'], (ObjectWatch) => {
+		require(['WoltLabSuite/Core/Component/User/ObjectWatch'], ({ setup }) => {
 			{jsphrase name='wcf.user.objectWatch.button.subscribe'}
 			{jsphrase name='wcf.user.objectWatch.button.subscribed'}
-			ObjectWatch.setup();
+			setup();
 		});
 	</script>
 {/if}
