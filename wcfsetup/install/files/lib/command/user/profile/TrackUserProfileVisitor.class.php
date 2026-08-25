@@ -2,8 +2,9 @@
 
 namespace wcf\command\user\profile;
 
+use wcf\data\user\profile\visitor\UserProfileVisitor;
+use wcf\data\user\profile\visitor\UserProfileVisitorBuilder;
 use wcf\data\user\User;
-use wcf\system\WCF;
 
 /**
  * Tracks a visit to a user profile, updating the time if the visitor is already
@@ -24,15 +25,21 @@ final class TrackUserProfileVisitor
 
     public function __invoke(): void
     {
-        $sql = "INSERT INTO             wcf1_user_profile_visitor
-                                        (ownerID, userID, time)
-                VALUES                  (?, ?, ?)
-                ON DUPLICATE KEY UPDATE time = VALUES(time)";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            $this->target->userID,
-            $this->user->userID,
-            $this->time,
-        ]);
+        $visitor = UserProfileVisitor::getObject($this->target->userID, $this->user->userID);
+        if ($visitor !== null) {
+            UserProfileVisitorBuilder::forUpdate($visitor)
+                ->setTime($this->time)
+                ->update();
+
+            return;
+        }
+
+        // A concurrent request may have inserted the visitor in the meantime,
+        // in which case the visit has already been tracked.
+        UserProfileVisitorBuilder::forCreate()
+            ->setOwner($this->target)
+            ->setUser($this->user)
+            ->setTime($this->time)
+            ->createOrIgnore();
     }
 }

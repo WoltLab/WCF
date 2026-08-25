@@ -18,6 +18,7 @@ use wcf\system\WCF;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Use `UserProfileVisitorBuilder` and the `TrackUserProfileVisitor` command instead.
  *
  * @extends AbstractDatabaseObjectAction<UserProfileVisitor, UserProfileVisitorEditor>
  */
@@ -99,7 +100,7 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
      * @return void
      * @since       5.2
      *
-     * @deprecated 6.3 use the `TrackUserProfileVisitor` command instead.
+     * @deprecated 6.3 Use the `TrackUserProfileVisitor` command instead.
      */
     public function registerVisitor()
     {
