@@ -2,7 +2,7 @@
 
 namespace wcf\data\attachment;
 
-use wcf\data\DatabaseObject;
+use wcf\data\CollectionDatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\IThumbnailFile;
 use wcf\data\file\File;
@@ -10,7 +10,6 @@ use wcf\data\file\thumbnail\FileThumbnail;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\file\processor\IImageDataProvider;
 use wcf\system\file\processor\ImageData;
-use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -50,8 +49,10 @@ use wcf\util\FileUtil;
  * @property-read   ?int    $fileID
  * @property-read   ?int    $thumbnailID
  * @property-read   ?int    $tinyThumbnailID
+ *
+ * @extends CollectionDatabaseObject<AttachmentCollection>
  */
-class Attachment extends DatabaseObject implements ILinkableObject, IRouteController, IThumbnailFile, IImageDataProvider
+class Attachment extends CollectionDatabaseObject implements ILinkableObject, IRouteController, IThumbnailFile, IImageDataProvider
 {
     /**
      * indicates if the attachment is embedded
@@ -64,8 +65,6 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      * @var array<string, bool>
      */
     protected $permissions = [];
-
-    protected File $file;
 
     #[\Override]
     public function getLink(): string
@@ -370,18 +369,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
             return null;
         }
 
-        if (!isset($this->file)) {
-            $this->file = FileRuntimeCache::getInstance()->getObject($this->fileID);
-        }
-
-        return $this->file;
-    }
-
-    public function setFile(File $file): void
-    {
-        if ($this->fileID === $file->fileID) {
-            $this->file = $file;
-        }
+        return $this->getCollection()->getFile($this);
     }
 
     #[\Override]
