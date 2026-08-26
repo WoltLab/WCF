@@ -43,8 +43,13 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
     public function isVisible($objectID = null)
     {
         $article = ViewableArticleRuntimeCache::getInstance()->getObject($objectID);
+        if ($article === null || !$article->canRead()) {
+            return false;
+        }
 
-        return $article !== null && $article->canRead();
+        // Multilingual articles are not necessarily available in the active
+        // language, there is no link that could be used in this case.
+        return $article->getArticleContent() !== null;
     }
 
     /**
