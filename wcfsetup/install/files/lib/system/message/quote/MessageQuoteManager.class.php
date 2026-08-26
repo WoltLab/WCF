@@ -55,7 +55,13 @@ final class MessageQuoteManager extends SingletonFactory
         // load stored quotes from session
         $messageQuotes = WCF::getSession()->getVar('__messageQuotes');
         if (\is_array($messageQuotes)) {
-            $this->removeQuoteIDs = $messageQuotes['removeQuoteIDs'] ?? [];
+            $removeQuoteIDs = $messageQuotes['removeQuoteIDs'] ?? [];
+
+            // Sessions written by an earlier version may hold values that are not
+            // strings, which breaks the rendering of the ids in the page header.
+            $this->removeQuoteIDs = \is_array($removeQuoteIDs)
+                ? \array_values(\array_filter($removeQuoteIDs, \is_string(...)))
+                : [];
         }
     }
 
@@ -278,7 +284,10 @@ final class MessageQuoteManager extends SingletonFactory
     public function markQuotesForRemoval(array $quoteIDs): void
     {
         foreach ($quoteIDs as $index => $quoteID) {
-            if (\in_array($quoteID, $this->removeQuoteIDs)) {
+            // The uuids end up in the session and are later emitted as JavaScript
+            // string literals, therefore anything but a string must be rejected.
+            // @phpstan-ignore function.alreadyNarrowedType
+            if (!\is_string($quoteID) || \in_array($quoteID, $this->removeQuoteIDs, true)) {
                 unset($quoteIDs[$index]);
             }
         }
@@ -380,7 +389,18 @@ final class MessageQuoteManager extends SingletonFactory
             foreach ($quoteIDs as $editorID => $uuids) {
                 if (!\is_string($editorID) || !\is_array($uuids)) {
                     unset($quoteIDs[$editorID]);
+                    continue;
                 }
+
+                // The uuids end up in the session and are later emitted as JavaScript
+                // string literals, therefore anything but a string must be rejected.
+                $uuids = \array_values(\array_filter($uuids, \is_string(...)));
+                if ($uuids === []) {
+                    unset($quoteIDs[$editorID]);
+                    continue;
+                }
+
+                $quoteIDs[$editorID] = $uuids;
             }
 
             if (!empty($quoteIDs)) {

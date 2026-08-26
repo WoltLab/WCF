@@ -70,7 +70,7 @@ class QuoteList {
     </button>
   </div>
   <div class="quoteBoxContent htmlContent">
-    ${quote.rawMessage ?? escapeHTML(quote.message ?? "")}
+    ${quote.rawMessage !== null ? (quote.message ?? "") : escapeHTML(quote.message ?? "")}
   </div>
 </div>
         `);

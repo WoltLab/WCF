@@ -12,6 +12,7 @@ use wcf\http\Helper;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\endpoint\GetRequest;
 use wcf\system\endpoint\IController;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NotImplementedException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\html\input\HtmlInputProcessor;
@@ -37,6 +38,10 @@ final class RenderQuote implements IController
             'com.woltlab.wcf.message.quote',
             $parameters->objectType,
         );
+        if ($objectType === null) {
+            throw new IllegalLinkException();
+        }
+
         $processor = $objectType->getProcessor();
         \assert($processor instanceof IMessageQuoteHandler);
 
