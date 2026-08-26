@@ -3,8 +3,7 @@
 namespace wcf\data\unfurl\url\image;
 
 use wcf\data\DatabaseObjectCollection;
-use wcf\data\file\File;
-use wcf\system\cache\runtime\FileRuntimeCache;
+use wcf\data\TCollectionFiles;
 
 /**
  * Represents a collection of unfurled url images.
@@ -18,34 +17,5 @@ use wcf\system\cache\runtime\FileRuntimeCache;
  */
 class UnfurlUrlImageCollection extends DatabaseObjectCollection
 {
-    private bool $filesCached = false;
-
-    public function getFile(UnfurlUrlImage $object): ?File
-    {
-        $this->cacheFiles();
-
-        return FileRuntimeCache::getInstance()->getObject($object->fileID);
-    }
-
-    private function cacheFiles(): void
-    {
-        if ($this->filesCached) {
-            return;
-        }
-
-        $this->filesCached = true;
-
-        $fileIDs = \array_unique(\array_map(
-            fn($object) => $object->fileID,
-            \array_filter(
-                $this->getObjects(),
-                fn($object) => $object->fileID !== null
-            )
-        ));
-        if ($fileIDs === []) {
-            return;
-        }
-
-        FileRuntimeCache::getInstance()->cacheObjectIDs($fileIDs);
-    }
+    use TCollectionFiles;
 }
