@@ -7,6 +7,7 @@ use wcf\data\ILinkableObject;
 use wcf\data\IThumbnailFile;
 use wcf\data\file\File;
 use wcf\data\file\thumbnail\FileThumbnail;
+use wcf\data\ITitledLinkObject;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\file\processor\IImageDataProvider;
 use wcf\system\file\processor\ImageData;
@@ -523,5 +524,15 @@ class Attachment extends CollectionDatabaseObject implements ILinkableObject, IR
             ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID)->objectType,
             $this->objectID
         );
+    }
+
+    /**
+     * Returns the container object of this attachment.
+     *
+     * @since 6.3
+     */
+    public function getContainerObject(): ?ITitledLinkObject
+    {
+        return $this->getCollection()->getContainerObject($this);
     }
 }

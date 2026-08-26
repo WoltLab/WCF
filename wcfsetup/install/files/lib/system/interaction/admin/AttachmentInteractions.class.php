@@ -2,7 +2,7 @@
 
 namespace wcf\system\interaction\admin;
 
-use wcf\data\attachment\AdministrativeAttachment;
+use wcf\data\attachment\Attachment;
 use wcf\event\interaction\admin\AttachmentInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
@@ -32,6 +32,6 @@ final class AttachmentInteractions extends AbstractInteractionProvider
     #[\Override]
     public function getObjectClassName(): string
     {
-        return AdministrativeAttachment::class;
+        return Attachment::class;
     }
 }

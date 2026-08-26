@@ -2,7 +2,7 @@
 
 namespace wcf\system\interaction\bulk\admin;
 
-use wcf\data\attachment\AdministrativeAttachmentList;
+use wcf\data\attachment\AttachmentList;
 use wcf\event\interaction\bulk\admin\AttachmentBulkInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\bulk\AbstractBulkInteractionProvider;
@@ -32,6 +32,6 @@ final class AttachmentBulkInteractions extends AbstractBulkInteractionProvider
     #[\Override]
     public function getObjectListClassName(): string
     {
-        return AdministrativeAttachmentList::class;
+        return AttachmentList::class;
     }
 }

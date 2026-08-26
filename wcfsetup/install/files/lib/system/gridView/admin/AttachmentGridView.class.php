@@ -3,8 +3,8 @@
 namespace wcf\system\gridView\admin;
 
 use wcf\acp\form\UserEditForm;
-use wcf\data\attachment\AdministrativeAttachment;
-use wcf\data\attachment\AdministrativeAttachmentList;
+use wcf\data\attachment\Attachment;
+use wcf\data\attachment\AttachmentList;
 use wcf\data\DatabaseObject;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\event\gridView\admin\AttachmentGridViewInitialized;
@@ -41,7 +41,7 @@ use wcf\util\StringUtil;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  *
- * @extends AbstractGridView<AdministrativeAttachment, AdministrativeAttachmentList>
+ * @extends AbstractGridView<Attachment, AttachmentList>
  */
 final class AttachmentGridView extends AbstractGridView
 {
@@ -60,7 +60,7 @@ final class AttachmentGridView extends AbstractGridView
                         #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
-                            \assert($row instanceof AdministrativeAttachment);
+                            \assert($row instanceof Attachment);
 
                             $isImage = $row->isImage;
                             $link = StringUtil::encodeHTML($row->getLink());
@@ -102,16 +102,17 @@ final class AttachmentGridView extends AbstractGridView
                         #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
-                            \assert($row instanceof AdministrativeAttachment);
+                            \assert($row instanceof Attachment);
 
-                            if ($row->getContainerObject() === null) {
+                            $containerObject = $row->getContainerObject();
+                            if ($containerObject === null) {
                                 return '';
                             }
 
                             return \sprintf(
                                 '<a href="%s">%s</a>',
-                                StringUtil::encodeHTML($row->getContainerObject()->getLink()),
-                                StringUtil::encodeHTML($row->getContainerObject()->getTitle())
+                                StringUtil::encodeHTML($containerObject->getLink()),
+                                StringUtil::encodeHTML($containerObject->getTitle())
                             );
                         }
                     }
@@ -124,7 +125,7 @@ final class AttachmentGridView extends AbstractGridView
                         #[\Override]
                         public function render(mixed $value, DatabaseObject $row): string
                         {
-                            \assert($row instanceof AdministrativeAttachment);
+                            \assert($row instanceof Attachment);
 
                             if ($row->userID === null) {
                                 return WCF::getLanguage()->get('wcf.user.guest');
@@ -141,10 +142,10 @@ final class AttachmentGridView extends AbstractGridView
                                             ]
                                         )
                                     ),
-                                    StringUtil::encodeHTML($row->username)
+                                    StringUtil::encodeHTML($row->__get('username') ?? '')
                                 );
                             } else {
-                                return StringUtil::encodeHTML($row->username);
+                                return StringUtil::encodeHTML($row->__get('username') ?? '');
                             }
                         }
                     }
@@ -223,9 +224,17 @@ final class AttachmentGridView extends AbstractGridView
     }
 
     #[\Override]
-    protected function createObjectList(): AdministrativeAttachmentList
+    protected function createObjectList(): AttachmentList
     {
-        $list = new AdministrativeAttachmentList();
+        $list = new AttachmentList();
+        $list->sqlSelects = 'user_table.username';
+
+        $join = "LEFT JOIN   wcf1_user user_table
+                 ON          user_table.userID = attachment.userID
+                 LEFT JOIN   wcf1_file file_table
+                 ON          file_table.fileID = attachment.fileID";
+        $list->sqlJoins = $join;
+        $list->sqlConditionJoins = $join;
 
         $objectTypeIDs = $this->getAvailableObjectTypeIDs();
         if ($objectTypeIDs !== []) {

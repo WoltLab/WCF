@@ -5,7 +5,7 @@ namespace wcf\data\article\content;
 use wcf\data\article\Article;
 use wcf\data\attachment\Attachment;
 use wcf\data\CollectionDatabaseObject;
-use wcf\data\ILinkableObject;
+use wcf\data\ITitledLinkObject;
 use wcf\data\language\Language;
 use wcf\data\media\ViewableMedia;
 use wcf\page\ArticlePage;
@@ -42,7 +42,7 @@ use wcf\util\StringUtil;
  *
  * @extends CollectionDatabaseObject<ArticleContentCollection>
  */
-class ArticleContent extends CollectionDatabaseObject implements ILinkableObject, IRouteController
+class ArticleContent extends CollectionDatabaseObject implements ITitledLinkObject, IRouteController
 {
     /**
      * @inheritDoc
