@@ -175,7 +175,16 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
             throw new PermissionDeniedException();
         }
 
-        if (!isset($this->parameters['optionIDs'])) {
+        if (!isset($this->parameters['optionIDs']) || !\is_array($this->parameters['optionIDs'])) {
+            throw new UserInputException('optionIDs');
+        }
+
+        $this->parameters['optionIDs'] = \array_map(
+            \intval(...),
+            $this->parameters['optionIDs']
+        );
+
+        if ($this->parameters['optionIDs'] === []) {
             throw new UserInputException('optionIDs');
         }
 
@@ -189,7 +198,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         }
 
         foreach ($this->parameters['optionIDs'] as $optionID) {
-            if (!\in_array($optionID, $optionIDs)) {
+            if (!\in_array($optionID, $optionIDs, true)) {
                 throw new UserInputException('optionIDs', 'unknownOption');
             }
         }
