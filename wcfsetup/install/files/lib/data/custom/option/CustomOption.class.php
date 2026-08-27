@@ -208,6 +208,10 @@ abstract class CustomOption extends Option implements ITitledObject
                 // no break
             case 'URL':
                 if (!$forcePlaintext) {
+                    if (!\preg_match('~^https?://~i', $this->optionValue)) {
+                        return StringUtil::encodeHTML($this->optionValue);
+                    }
+
                     return StringUtil::getAnchorTag($this->optionValue, '', true, true);
                 }
                 // no break
