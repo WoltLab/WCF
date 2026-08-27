@@ -10,7 +10,7 @@ use wcf\system\template\TemplateEngine;
  * Usage:
  *  { "title": {$foo->getTitle()|json} }
  *
- * Inside a `<script>` element `{@$var|json}` must be used, the result contains no
+ * Inside a `<script>` element `{unsafe:$var|json}` must be used, the result contains no
  * verbatim `<` and therefore cannot terminate the element. Within an HTML attribute
  * `{$var|json}` must be used, because the structural quotes of the JSON value itself are
  * not escaped and require the HTML-encoding.
