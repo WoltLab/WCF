@@ -3,7 +3,7 @@
 namespace wcf\system\worker;
 
 use wcf\data\attachment\Attachment;
-use wcf\data\attachment\AttachmentEditor;
+use wcf\data\attachment\AttachmentBuilder;
 use wcf\data\attachment\AttachmentList;
 use wcf\data\file\FileEditor;
 use wcf\data\file\thumbnail\FileThumbnailList;
@@ -115,7 +115,7 @@ class AttachmentRebuildDataWorker extends AbstractLinearRebuildDataWorker
             return;
         }
 
-        AttachmentEditor::deleteAll($attachmentIDs);
+        AttachmentBuilder::deleteAll($attachmentIDs);
     }
 
     private function removeThumbnails(Attachment $attachment): void
@@ -151,13 +151,13 @@ class AttachmentRebuildDataWorker extends AbstractLinearRebuildDataWorker
                     $content->getObjectID()
                 );
             } else {
-                (new AttachmentEditor($attachment))->update([
-                    'objectTypeID' => ObjectTypeCache::getInstance()->getObjectTypeIDByName(
+                AttachmentBuilder::forUpdate($attachment)
+                    ->setObjectTypeID(ObjectTypeCache::getInstance()->getObjectTypeIDByName(
                         'com.woltlab.wcf.attachment.objectType',
                         'com.woltlab.wcf.article.content'
-                    ),
-                    'objectID' => $content->getObjectID(),
-                ]);
+                    ))
+                    ->setObjectID($content->getObjectID())
+                    ->update();
 
                 $copyAttachments = true;
             }
@@ -191,35 +191,20 @@ class AttachmentRebuildDataWorker extends AbstractLinearRebuildDataWorker
             }
         }
 
-        AttachmentEditor::create([
-            'objectTypeID' => ObjectTypeCache::getInstance()->getObjectTypeIDByName(
+        AttachmentBuilder::forCreate()
+            ->setObjectTypeID(ObjectTypeCache::getInstance()->getObjectTypeIDByName(
                 'com.woltlab.wcf.attachment.objectType',
                 $targetObjectType
-            ),
-            'objectID' => $targetObjectID,
-            'userID' => $oldAttachment->userID,
-            'filename' => $oldAttachment->filename,
-            'filesize' => $oldAttachment->filesize,
-            'fileType' => $oldAttachment->fileType,
-            'fileHash' => $oldAttachment->fileHash,
-            'isImage' => $oldAttachment->isImage,
-            'width' => $oldAttachment->width,
-            'height' => $oldAttachment->height,
-            'tinyThumbnailType' => $oldAttachment->tinyThumbnailType,
-            'tinyThumbnailSize' => $oldAttachment->tinyThumbnailSize,
-            'tinyThumbnailWidth' => $oldAttachment->tinyThumbnailWidth,
-            'tinyThumbnailHeight' => $oldAttachment->tinyThumbnailHeight,
-            'thumbnailType' => $oldAttachment->thumbnailType,
-            'thumbnailSize' => $oldAttachment->thumbnailSize,
-            'thumbnailWidth' => $oldAttachment->thumbnailWidth,
-            'thumbnailHeight' => $oldAttachment->thumbnailHeight,
-            'downloads' => $oldAttachment->downloads,
-            'lastDownloadTime' => $oldAttachment->lastDownloadTime,
-            'uploadTime' => $oldAttachment->uploadTime,
-            'showOrder' => $oldAttachment->showOrder,
-            'fileID' => $file?->fileID,
-            'thumbnailID' => $thumbnailID,
-            'tinyThumbnailID' => $tinyThumbnailID,
-        ]);
+            ))
+            ->setObjectID($targetObjectID)
+            ->setUserID($oldAttachment->userID)
+            ->setDownloads($oldAttachment->downloads)
+            ->setLastDownloadTime($oldAttachment->lastDownloadTime)
+            ->setUploadTime($oldAttachment->uploadTime)
+            ->setShowOrder($oldAttachment->showOrder)
+            ->setFile($file)
+            ->setThumbnailID($thumbnailID)
+            ->setTinyThumbnailID($tinyThumbnailID)
+            ->create();
     }
 }

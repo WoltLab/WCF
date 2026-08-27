@@ -3,9 +3,8 @@
 namespace wcf\system\importer;
 
 use wcf\data\attachment\Attachment;
-use wcf\data\attachment\AttachmentEditor;
-use wcf\system\exception\SystemException;
-use wcf\util\FileUtil;
+use wcf\data\attachment\AttachmentBuilder;
+use wcf\data\file\FileEditor;
 
 /**
  * Imports attachments.
@@ -35,64 +34,49 @@ class AbstractAttachmentImporter extends AbstractImporter
             return 0;
         }
 
-        // Extract metadata from the file ourselves, because the
-        // information pulled from the source database might not
-        // be reliable.
-        $data['fileHash'] = \sha1_file($additionalData['fileLocation']);
-        $data['filesize'] = \filesize($additionalData['fileLocation']);
-        $data['fileType'] = FileUtil::getMimeType($additionalData['fileLocation']);
+        $objectID = $data['objectID'] ?? null;
+        $userID = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID'] ?? null);
+        $downloads = (int)($data['downloads'] ?? 0);
+        $uploadTime = (int)($data['uploadTime'] ?? 0);
 
-        $imageData = @\getimagesize($additionalData['fileLocation']);
-        if ($imageData !== false) {
-            $data['isImage'] = 1;
-            $data['width'] = $imageData[0];
-            $data['height'] = $imageData[1];
-        } else {
-            $data['isImage'] = 0;
-            $data['width'] = 0;
-            $data['height'] = 0;
+        // set default last download time
+        $lastDownloadTime = (int)($data['lastDownloadTime'] ?? 0);
+        if ($lastDownloadTime === 0 && $downloads !== 0) {
+            $lastDownloadTime = \TIME_NOW;
         }
 
-        // get user id
-        $data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
+        // The source file must be preserved, therefore it is copied into the
+        // storage of the file API instead of being moved.
+        $file = FileEditor::createFromExistingFile(
+            $additionalData['fileLocation'],
+            $data['filename'] ?? \basename($additionalData['fileLocation']),
+            'com.woltlab.wcf.attachment',
+            true,
+            $uploadTime ?: null
+        );
+        if ($file === null) {
+            return 0;
+        }
+
+        $builder = AttachmentBuilder::forCreate()
+            ->setObjectTypeID($this->objectTypeID)
+            ->setObjectID($objectID !== null ? (int)$objectID : null)
+            ->setUserID($userID)
+            ->setUploadTime($uploadTime)
+            ->setShowOrder((int)($data['showOrder'] ?? 0))
+            ->setDownloads($downloads)
+            ->setLastDownloadTime($lastDownloadTime)
+            ->setFile($file);
 
         // check existing attachment id
         if (\ctype_digit((string)$oldID)) {
             $attachment = new Attachment($oldID);
             if ($attachment->isNil()) {
-                $data['attachmentID'] = $oldID;
+                $builder->setID((int)$oldID);
             }
         }
 
-        // set default last download time
-        if (empty($data['lastDownloadTime']) && !empty($data['downloads'])) {
-            $data['lastDownloadTime'] = \TIME_NOW;
-        }
-
-        // save attachment
-        $attachment = AttachmentEditor::create(\array_merge($data, ['objectTypeID' => $this->objectTypeID]));
-
-        // check attachment directory
-        // and create subdirectory if necessary
-        $dir = \dirname($attachment->getLocation());
-        if (!@\file_exists($dir)) {
-            @\mkdir($dir, 0777);
-        }
-
-        // copy file
-        try {
-            if (!\copy($additionalData['fileLocation'], $attachment->getLocation())) {
-                throw new SystemException();
-            }
-
-            return $attachment->attachmentID;
-        } catch (SystemException) {
-            // copy failed; delete attachment
-            $editor = new AttachmentEditor($attachment);
-            $editor->delete();
-        }
-
-        return 0;
+        return $builder->create()->attachmentID;
     }
 
     /**

@@ -6,7 +6,7 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\attachment\Attachment;
-use wcf\data\attachment\AttachmentAction;
+use wcf\data\attachment\AttachmentBuilder;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\http\Helper;
 use wcf\system\endpoint\DeleteRequest;
@@ -32,7 +32,7 @@ final class DeleteAttachment implements IController
 
         $this->assertAttachmentBeDeleted($attachment);
 
-        (new AttachmentAction([$attachment], 'delete'))->executeAction();
+        AttachmentBuilder::delete($attachment);
 
         return new JsonResponse([]);
     }

@@ -4,14 +4,12 @@ namespace wcf\system\file\processor;
 
 use CuyZ\Valinor\Mapper\MappingError;
 use wcf\data\attachment\Attachment;
-use wcf\data\attachment\AttachmentAction;
-use wcf\data\attachment\AttachmentEditor;
+use wcf\data\attachment\AttachmentBuilder;
 use wcf\data\attachment\AttachmentList;
 use wcf\data\file\File;
 use wcf\data\file\thumbnail\FileThumbnail;
 use wcf\http\Helper;
 use wcf\system\attachment\AttachmentHandler;
-use wcf\system\file\processor\exception\UnexpectedThumbnailIdentifier;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -65,15 +63,15 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
 
         $showOrder = $this->getShowOrderFromContext($context);
 
-        AttachmentEditor::fastCreate([
-            'objectTypeID' => $attachmentHandler->getObjectType()->objectTypeID,
-            'objectID' => $objectID,
-            'tmpHash' => $tmpHash,
-            'fileID' => $file->fileID,
-            'userID' => WCF::getUser()->userID ?: null,
-            'uploadTime' => \TIME_NOW,
-            'showOrder' => $showOrder,
-        ]);
+        AttachmentBuilder::forCreate()
+            ->setObjectType($attachmentHandler->getObjectType())
+            ->setObjectID($objectID)
+            ->setTmpHash($tmpHash)
+            ->setFile($file)
+            ->setUserID(WCF::getUser()->userID ?: null)
+            ->setUploadTime(\TIME_NOW)
+            ->setShowOrder($showOrder)
+            ->create();
     }
 
     #[\Override]
@@ -204,16 +202,9 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
             return;
         }
 
-        $columnName = match ($thumbnail->identifier) {
-            '' => 'thumbnailID',
-            'tiny' => 'tinyThumbnailID',
-            default => throw new UnexpectedThumbnailIdentifier($thumbnail->identifier),
-        };
-
-        $attachmentEditor = new AttachmentEditor($attachment);
-        $attachmentEditor->update([
-            $columnName => $thumbnail->thumbnailID,
-        ]);
+        AttachmentBuilder::forUpdate($attachment)
+            ->setThumbnail($thumbnail)
+            ->update();
     }
 
     #[\Override]
@@ -227,7 +218,7 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
             return;
         }
 
-        (new AttachmentAction($attachmentList->getObjects(), 'delete'))->executeAction();
+        AttachmentBuilder::deleteAll($attachmentList->getObjectIDs());
     }
 
     #[\Override]
@@ -242,18 +233,18 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
         //              the user is still writing their message, preventing it
         //              from vanishing prematurely.
         if ($attachment->tmpHash !== '') {
-            (new AttachmentEditor($attachment))->update([
-                'uploadTime' => \TIME_NOW,
-            ]);
+            AttachmentBuilder::forUpdate($attachment)
+                ->setUploadTime(\TIME_NOW)
+                ->update();
 
             // Do not update the download counter for temporary attachments.
             return;
         }
 
-        (new AttachmentEditor($attachment))->update([
-            'downloads' => $attachment->downloads + 1,
-            'lastDownloadTime' => \TIME_NOW,
-        ]);
+        AttachmentBuilder::forUpdate($attachment)
+            ->incrementDownloads(1)
+            ->setLastDownloadTime(\TIME_NOW)
+            ->update();
     }
 
     #[\Override]

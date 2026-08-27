@@ -2,7 +2,7 @@
 
 namespace wcf\system\attachment;
 
-use wcf\data\attachment\AttachmentAction;
+use wcf\data\attachment\AttachmentBuilder;
 use wcf\data\attachment\AttachmentList;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
@@ -181,8 +181,7 @@ class AttachmentHandler implements \Countable
         $attachmentList->readObjects();
 
         if (\count($attachmentList) > 0) {
-            $attachmentAction = new AttachmentAction($attachmentList->getObjects(), 'delete');
-            $attachmentAction->executeAction();
+            AttachmentBuilder::deleteAll($attachmentList->getObjectIDs());
         }
     }
 

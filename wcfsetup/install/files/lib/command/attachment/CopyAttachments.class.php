@@ -3,7 +3,7 @@
 namespace wcf\command\attachment;
 
 use wcf\data\attachment\Attachment;
-use wcf\data\attachment\AttachmentEditor;
+use wcf\data\attachment\AttachmentBuilder;
 use wcf\data\attachment\AttachmentList;
 use wcf\data\file\thumbnail\FileThumbnailList;
 use wcf\data\object\type\ObjectType;
@@ -26,8 +26,7 @@ final class CopyAttachments
         private readonly int $sourceObjectID,
         private readonly string $targetObjectType,
         private readonly int $targetObjectID,
-    ) {
-    }
+    ) {}
 
     /**
      * @return array<int, int>
@@ -91,32 +90,17 @@ final class CopyAttachments
             }
         }
 
-        return AttachmentEditor::create([
-            'objectTypeID' => $targetObjectType->objectTypeID,
-            'objectID' => $this->targetObjectID,
-            'userID' => $oldAttachment->userID,
-            'filename' => $oldAttachment->filename,
-            'filesize' => $oldAttachment->filesize,
-            'fileType' => $oldAttachment->fileType,
-            'fileHash' => $oldAttachment->fileHash,
-            'isImage' => $oldAttachment->isImage,
-            'width' => $oldAttachment->width,
-            'height' => $oldAttachment->height,
-            'tinyThumbnailType' => $oldAttachment->tinyThumbnailType,
-            'tinyThumbnailSize' => $oldAttachment->tinyThumbnailSize,
-            'tinyThumbnailWidth' => $oldAttachment->tinyThumbnailWidth,
-            'tinyThumbnailHeight' => $oldAttachment->tinyThumbnailHeight,
-            'thumbnailType' => $oldAttachment->thumbnailType,
-            'thumbnailSize' => $oldAttachment->thumbnailSize,
-            'thumbnailWidth' => $oldAttachment->thumbnailWidth,
-            'thumbnailHeight' => $oldAttachment->thumbnailHeight,
-            'downloads' => $oldAttachment->downloads,
-            'lastDownloadTime' => $oldAttachment->lastDownloadTime,
-            'uploadTime' => $oldAttachment->uploadTime,
-            'showOrder' => $oldAttachment->showOrder,
-            'fileID' => $file?->fileID,
-            'thumbnailID' => $thumbnailID,
-            'tinyThumbnailID' => $tinyThumbnailID,
-        ]);
+        return AttachmentBuilder::forCreate()
+            ->setObjectType($targetObjectType)
+            ->setObjectID($this->targetObjectID)
+            ->setUserID($oldAttachment->userID)
+            ->setDownloads($oldAttachment->downloads)
+            ->setLastDownloadTime($oldAttachment->lastDownloadTime)
+            ->setUploadTime($oldAttachment->uploadTime)
+            ->setShowOrder($oldAttachment->showOrder)
+            ->setFile($file)
+            ->setThumbnailID($thumbnailID)
+            ->setTinyThumbnailID($tinyThumbnailID)
+            ->create();
     }
 }

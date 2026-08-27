@@ -5,7 +5,7 @@ namespace wcf\page;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\data\attachment\Attachment;
-use wcf\data\attachment\AttachmentEditor;
+use wcf\data\attachment\AttachmentBuilder;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -214,11 +214,10 @@ class AttachmentPage extends AbstractPage
 
         if ($this->tiny === 0 && $this->thumbnail === 0) {
             // update download count
-            $editor = new AttachmentEditor($this->attachment);
-            $editor->update([
-                'downloads' => $this->attachment->downloads + 1,
-                'lastDownloadTime' => \TIME_NOW,
-            ]);
+            AttachmentBuilder::forUpdate($this->attachment)
+                ->incrementDownloads(1)
+                ->setLastDownloadTime(\TIME_NOW)
+                ->update();
         }
 
         // send file to client

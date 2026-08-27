@@ -1918,12 +1918,6 @@ parameters:
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 2
-			path: wcfsetup/install/files/lib/system/importer/AbstractAttachmentImporter.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
-			count: 2
 			path: wcfsetup/install/files/lib/system/importer/AbstractCategoryImporter.class.php
 
 		-

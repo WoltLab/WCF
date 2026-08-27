@@ -2,7 +2,7 @@
 
 namespace wcf\system\cronjob;
 
-use wcf\data\attachment\AttachmentEditor;
+use wcf\data\attachment\AttachmentBuilder;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\WCF;
@@ -48,7 +48,7 @@ class AttachmentCleanUpCronjob extends AbstractCronjob
         }
 
         if ($attachmentIDs !== []) {
-            AttachmentEditor::deleteAll($attachmentIDs);
+            AttachmentBuilder::deleteAll($attachmentIDs);
         }
     }
 
