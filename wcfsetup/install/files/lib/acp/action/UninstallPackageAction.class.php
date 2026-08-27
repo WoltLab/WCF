@@ -11,6 +11,7 @@ use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\package\PackageUninstallationDispatcher;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -69,6 +70,14 @@ final class UninstallPackageAction extends AbstractSecureAction
 
             if (!isset($this->queue) || !$this->queue->queueID) {
                 throw new IllegalLinkException();
+            }
+
+            // `stepPrepare()` is guarded by `Package::canUninstall()`, but this branch
+            // resumes an existing queue and is reached without passing through it.
+            WCF::getSession()->checkPermissions(['admin.configuration.package.canInstallPackage']);
+
+            if ($this->queue->userID !== WCF::getUser()->userID) {
+                throw new PermissionDeniedException();
             }
 
             $this->installation = new PackageUninstallationDispatcher($this->queue);
