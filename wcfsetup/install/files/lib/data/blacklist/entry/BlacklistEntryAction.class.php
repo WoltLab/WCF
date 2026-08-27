@@ -6,7 +6,7 @@ use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientExceptionInterface;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\blacklist\status\BlacklistStatus;
-use wcf\data\blacklist\status\BlacklistStatusEditor;
+use wcf\data\blacklist\status\BlacklistStatusBuilder;
 use wcf\system\io\HttpFactory;
 use wcf\system\WCF;
 
@@ -85,9 +85,13 @@ class BlacklistEntryAction extends AbstractDatabaseObjectAction
 
         $blacklistStatus = new BlacklistStatus($data['meta']['date']);
         if ($blacklistStatus->isNil()) {
-            $blacklistStatus = BlacklistStatusEditor::create(['date' => $data['meta']['date']]);
+            $blacklistStatus = BlacklistStatusBuilder::forCreate()
+                ->setDate($data['meta']['date'])
+                ->create();
         }
 
-        (new BlacklistStatusEditor($blacklistStatus))->update([$data['meta']['type'] => 1]);
+        BlacklistStatusBuilder::forUpdate($blacklistStatus)
+            ->setDelta($data['meta']['type'])
+            ->update();
     }
 }

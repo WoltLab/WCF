@@ -25,6 +25,13 @@ use wcf\system\io\HttpFactory;
  */
 class BlacklistStatus extends DatabaseObject
 {
+    /**
+     * names of the deltas of a day, ordered by their time period
+     *
+     * @since 6.3
+     */
+    public const DELTAS = ['delta1', 'delta2', 'delta3', 'delta4'];
+
     protected static $databaseTableIndexName = 'date';
 
     protected static $databaseTableIndexIsIdentity = false;
@@ -112,7 +119,6 @@ class BlacklistStatus extends DatabaseObject
         }
 
         $data = \json_decode((string)$response->getBody(), true, flags: \JSON_THROW_ON_ERROR);
-        $deltas = ['delta1', 'delta2', 'delta3', 'delta4'];
 
         // The array is ordered from "now" to "14 days ago".
         foreach (\array_reverse($data) as $entry) {
@@ -123,13 +129,13 @@ class BlacklistStatus extends DatabaseObject
                     continue;
                 }
 
-                foreach ($deltas as $delta) {
+                foreach (self::DELTAS as $delta) {
                     if ($entry['files'][$delta] === true && $dateStatus->{$delta} === 0) {
                         return "{$date}/{$delta}.json";
                     }
                 }
             } else {
-                foreach ($deltas as $delta) {
+                foreach (self::DELTAS as $delta) {
                     if ($entry['files'][$delta] === true) {
                         return "{$date}/{$delta}.json";
                     }
