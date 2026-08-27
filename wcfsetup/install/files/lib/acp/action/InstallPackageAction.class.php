@@ -8,6 +8,7 @@ use wcf\action\AbstractSecureAction;
 use wcf\data\application\Application;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -65,12 +66,38 @@ class InstallPackageAction extends AbstractSecureAction
             throw new IllegalLinkException();
         }
 
+        $this->checkQueuePermissions();
+
         $redirectLocation = $_REQUEST['redirectLocation'] ?? '';
         if ($redirectLocation === 'license') {
             $this->redirectLocation = $redirectLocation;
         }
 
         $this->installation = new PackageInstallationDispatcher($this->queue);
+    }
+
+    /**
+     * Validates that the active user is allowed to process this queue.
+     *
+     * @since 6.2
+     */
+    protected function checkQueuePermissions(): void
+    {
+        // The Core is installed through this action while the WCFSetup is still
+        // running, at which point there is neither a user nor any permission.
+        if (\PACKAGE_ID === 0) {
+            return;
+        }
+
+        if ($this->queue->action === 'install') {
+            WCF::getSession()->checkPermissions(['admin.configuration.package.canInstallPackage']);
+        } else {
+            WCF::getSession()->checkPermissions(['admin.configuration.package.canUpdatePackage']);
+        }
+
+        if ($this->queue->userID !== WCF::getUser()->userID) {
+            throw new PermissionDeniedException();
+        }
     }
 
     public function execute()

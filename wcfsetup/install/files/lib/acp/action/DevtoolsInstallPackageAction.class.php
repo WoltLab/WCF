@@ -78,6 +78,8 @@ final class DevtoolsInstallPackageAction extends InstallPackageAction
             throw new IllegalLinkException();
         }
 
+        $this->checkQueuePermissions();
+
         $this->installation = new DevtoolsPackageInstallationDispatcher($this->project, $this->queue);
     }
 }
