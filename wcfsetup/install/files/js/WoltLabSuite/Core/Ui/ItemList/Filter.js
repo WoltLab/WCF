@@ -169,8 +169,11 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../La
                     Util_1.default.show(item.item);
                 }
                 else {
-                    if (regexp.test(item.text)) {
-                        item.span.innerHTML = item.text.replace(regexp, "<u>$1</u>");
+                    const match = regexp.exec(item.text);
+                    if (match !== null) {
+                        const highlight = document.createElement("u");
+                        highlight.textContent = match[0];
+                        item.span.replaceChildren(item.text.slice(0, match.index), highlight, item.text.slice(match.index + match[0].length));
                         Util_1.default.show(item.item);
                         hasVisibleItems = true;
                     }
