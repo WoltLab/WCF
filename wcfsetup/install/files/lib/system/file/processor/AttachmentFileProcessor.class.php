@@ -3,6 +3,7 @@
 namespace wcf\system\file\processor;
 
 use CuyZ\Valinor\Mapper\MappingError;
+use wcf\command\attachment\CreateAttachment;
 use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentBuilder;
 use wcf\data\attachment\AttachmentList;
@@ -63,15 +64,16 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
 
         $showOrder = $this->getShowOrderFromContext($context);
 
-        AttachmentBuilder::forCreate()
+        $builder = AttachmentBuilder::forCreate()
             ->setObjectType($attachmentHandler->getObjectType())
             ->setObjectID($objectID)
             ->setTmpHash($tmpHash)
             ->setFile($file)
             ->setUserID(WCF::getUser()->userID ?: null)
             ->setUploadTime(\TIME_NOW)
-            ->setShowOrder($showOrder)
-            ->create();
+            ->setShowOrder($showOrder);
+
+        new CreateAttachment($builder)();
     }
 
     #[\Override]

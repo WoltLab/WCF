@@ -90,7 +90,7 @@ final class CopyAttachments
             }
         }
 
-        return AttachmentBuilder::forCreate()
+        $builder = AttachmentBuilder::forCreate()
             ->setObjectType($targetObjectType)
             ->setObjectID($this->targetObjectID)
             ->setUserID($oldAttachment->userID)
@@ -100,7 +100,8 @@ final class CopyAttachments
             ->setShowOrder($oldAttachment->showOrder)
             ->setFile($file)
             ->setThumbnailID($thumbnailID)
-            ->setTinyThumbnailID($tinyThumbnailID)
-            ->create();
+            ->setTinyThumbnailID($tinyThumbnailID);
+
+        return new CreateAttachment($builder)();
     }
 }
