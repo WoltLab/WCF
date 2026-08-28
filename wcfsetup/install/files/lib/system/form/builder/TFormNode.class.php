@@ -567,7 +567,9 @@ trait TFormNode
     {
         // regular expression is a more restrictive version of
         // https://www.w3.org/TR/CSS21/syndata.html#value-def-identifier
-        if (\preg_match('~^-?[_A-Za-z][_A-Za-z0-9-]*$~', $id) !== 1) {
+        // An earlier version allowed backslashes, so we allow them for backward compatibility.
+        // @see https://github.com/WoltLab/WCF/commit/2f4464ad1e07c5913a756c572539938b5bae1e1e
+        if (\preg_match('~^-?[_A-Za-z][\\\\_A-Za-z0-9-]*$~', $id) !== 1) {
             throw new \InvalidArgumentException("Invalid id '{$id}' given.");
         }
     }
