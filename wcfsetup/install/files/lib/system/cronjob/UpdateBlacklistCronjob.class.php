@@ -2,7 +2,7 @@
 
 namespace wcf\system\cronjob;
 
-use wcf\data\blacklist\entry\BlacklistEntryAction;
+use wcf\command\blacklist\ImportBlacklist;
 use wcf\data\cronjob\Cronjob;
 
 /**
@@ -22,6 +22,6 @@ class UpdateBlacklistCronjob extends AbstractCronjob
             return;
         }
 
-        (new BlacklistEntryAction([], 'import'))->executeAction();
+        (new ImportBlacklist())();
     }
 }

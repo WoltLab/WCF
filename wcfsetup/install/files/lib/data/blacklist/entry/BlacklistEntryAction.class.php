@@ -2,13 +2,8 @@
 
 namespace wcf\data\blacklist\entry;
 
-use GuzzleHttp\Psr7\Request;
-use Psr\Http\Client\ClientExceptionInterface;
+use wcf\command\blacklist\ImportBlacklist;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\data\blacklist\status\BlacklistStatus;
-use wcf\data\blacklist\status\BlacklistStatusBuilder;
-use wcf\system\io\HttpFactory;
-use wcf\system\WCF;
 
 /**
  * Executes blacklist entry-related actions.
@@ -16,6 +11,7 @@ use wcf\system\WCF;
  * @author      Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated  6.3
  *
  * @extends AbstractDatabaseObjectAction<BlacklistEntry, BlacklistEntryEditor>
  * @since 5.2
@@ -29,69 +25,10 @@ class BlacklistEntryAction extends AbstractDatabaseObjectAction
 
     /**
      * @return void
+     * @deprecated 6.3 Use `ImportBlacklist` instead.
      */
     public function import()
     {
-        $client = HttpFactory::makeClientWithTimeout(5);
-
-        // Check if we need to import any data at all.
-        $status = BlacklistStatus::getAll();
-        $nextDelta = BlacklistStatus::getNextDelta($status, $client);
-        if ($nextDelta === null) {
-            return;
-        }
-
-        $request = new Request(
-            'GET',
-            "https://assets.woltlab.com/blacklist/{$nextDelta}",
-            [
-                'accept-encoding' => 'gzip',
-            ]
-        );
-        try {
-            $response = $client->send($request);
-        } catch (ClientExceptionInterface $e) {
-            \wcf\functions\exception\logThrowable($e);
-
-            return;
-        }
-
-        if ($response->getStatusCode() !== 200) {
-            return;
-        }
-
-        $data = \json_decode((string)$response->getBody(), true, flags: \JSON_THROW_ON_ERROR);
-        $sql = "INSERT INTO             wcf1_blacklist_entry
-                                        (type, hash, lastSeen, occurrences)
-                VALUES                  (?, ?, ?, ?)
-                ON DUPLICATE KEY UPDATE lastSeen = VALUES(lastSeen),
-                                        occurrences = VALUES(occurrences)";
-        $statement = WCF::getDB()->prepare($sql);
-
-        $lastSeen = \preg_replace('~^(.+)T(.+)Z~', '$1 $2', $data['meta']['end']);
-
-        WCF::getDB()->beginTransaction();
-        foreach (['email', 'ipv4', 'ipv6', 'username'] as $type) {
-            foreach ($data[$type] as $hash => $occurrences) {
-                $statement->execute([
-                    $type,
-                    \hex2bin($hash),
-                    $lastSeen,
-                    \min($occurrences, 32767),
-                ]);
-            }
-        }
-        WCF::getDB()->commitTransaction();
-
-        $blacklistStatus = new BlacklistStatus($data['meta']['date']);
-        if ($blacklistStatus->isNil()) {
-            $blacklistStatus = BlacklistStatusBuilder::forCreate()
-                ->setDate($data['meta']['date'])
-                ->create();
-        }
-
-        BlacklistStatusBuilder::forUpdate($blacklistStatus)
-            ->setDelta($data['meta']['type'])
-            ->update();
+        (new ImportBlacklist())();
     }
 }

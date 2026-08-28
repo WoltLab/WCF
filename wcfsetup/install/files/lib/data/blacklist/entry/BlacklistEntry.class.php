@@ -23,6 +23,20 @@ use wcf\util\IpAddress;
 class BlacklistEntry extends DatabaseObject
 {
     /**
+     * types of values that can be reported
+     *
+     * @since 6.3
+     */
+    public const TYPES = ['email', 'ipv4', 'ipv6', 'username'];
+
+    /**
+     * maximum number of occurrences that can be stored
+     *
+     * @since 6.3
+     */
+    public const MAX_OCCURRENCES = 32767;
+
+    /**
      * @return string[]
      */
     public static function getMatches(string $username, string $email, string $ipAddress)
@@ -73,6 +87,8 @@ class BlacklistEntry extends DatabaseObject
     }
 
     /**
+     * Returns the raw binary SHA256 hash of the given value.
+     *
      * @return string
      */
     protected static function getHash(string $string)
