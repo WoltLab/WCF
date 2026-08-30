@@ -2,6 +2,7 @@
 
 namespace wcf\system\box;
 
+use wcf\data\comment\CommentList;
 use wcf\data\comment\ViewableCommentList;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
@@ -17,7 +18,7 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @extends AbstractDatabaseObjectListBoxController<ViewableCommentList>
+ * @extends AbstractDatabaseObjectListBoxController<CommentList>
  */
 abstract class AbstractCommentListBoxController extends AbstractDatabaseObjectListBoxController
 {
@@ -76,18 +77,28 @@ abstract class AbstractCommentListBoxController extends AbstractDatabaseObjectLi
     /**
      * Applies object type-specific filters to the comments.
      *
+     * @since 6.3
+     */
+    protected function applyFilters(CommentList $commentList): void
+    {
+        // does nothing by default
+    }
+
+    /**
+     * @deprecated 6.3 Override `applyFilters()` instead.
      * @return void
      */
-    abstract protected function applyObjectTypeFilters(ViewableCommentList $commentList);
+    protected function applyObjectTypeFilters(ViewableCommentList $commentList)
+    {
+        // does nothing by default
+    }
 
     #[\Override]
-    protected function getObjectList(): ViewableCommentList
+    protected function getObjectList(): CommentList
     {
-        $commentList = new ViewableCommentList();
+        $commentList = $this->createCommentList();
         $commentList->getConditionBuilder()->add('comment.isDisabled = ?', [0]);
         $commentList->getConditionBuilder()->add('comment.objectTypeID = ?', [$this->objectType->objectTypeID]);
-
-        $this->applyObjectTypeFilters($commentList);
 
         if (UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES) !== []) {
             $commentList->getConditionBuilder()->add(
@@ -106,5 +117,27 @@ abstract class AbstractCommentListBoxController extends AbstractDatabaseObjectLi
             'boxCommentList' => $this->objectList,
             'boxSortField' => $this->sortField,
         ]);
+    }
+
+    private function createCommentList(): CommentList
+    {
+        if ($this->usesLegacyFilters()) {
+            $commentList = new ViewableCommentList();
+            $this->applyObjectTypeFilters($commentList);
+
+            return $commentList;
+        }
+
+        $commentList = new CommentList();
+        $this->applyFilters($commentList);
+
+        return $commentList;
+    }
+
+    private function usesLegacyFilters(): bool
+    {
+        $method = new \ReflectionMethod($this, 'applyObjectTypeFilters');
+
+        return $method->getDeclaringClass()->getName() !== self::class;
     }
 }
