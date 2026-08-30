@@ -2,7 +2,7 @@
 
 namespace wcf\acp\form;
 
-use wcf\data\bbcode\attribute\BBCodeAttributeAction;
+use wcf\data\bbcode\attribute\BBCodeAttributeBuilder;
 use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeAction;
 use wcf\data\bbcode\BBCodeEditor;
@@ -254,17 +254,14 @@ class BBCodeAddForm extends AbstractForm
         ]);
         $returnValues = $this->objectAction->executeAction();
         foreach ($this->attributes as $attribute) {
-            $attributeAction = new BBCodeAttributeAction([], 'create', [
-                'data' => [
-                    'bbcodeID' => $returnValues['returnValues']->bbcodeID,
-                    'attributeNo' => $attribute->attributeNo,
-                    'attributeHtml' => $attribute->attributeHtml,
-                    'validationPattern' => $attribute->validationPattern,
-                    'required' => $attribute->required,
-                    'useText' => $attribute->useText,
-                ],
-            ]);
-            $attributeAction->executeAction();
+            BBCodeAttributeBuilder::forCreate()
+                ->setBBCodeID($returnValues['returnValues']->bbcodeID)
+                ->setAttributeNo($attribute->attributeNo)
+                ->setAttributeHtml($attribute->attributeHtml)
+                ->setValidationPattern($attribute->validationPattern)
+                ->setRequired((bool)$attribute->required)
+                ->setUseText((bool)$attribute->useText)
+                ->create();
         }
 
         if ($this->showButton && !I18nHandler::getInstance()->isPlainValue('buttonLabel')) {

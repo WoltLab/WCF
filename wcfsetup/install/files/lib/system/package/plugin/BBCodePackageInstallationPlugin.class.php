@@ -2,7 +2,7 @@
 
 namespace wcf\system\package\plugin;
 
-use wcf\data\bbcode\attribute\BBCodeAttributeEditor;
+use wcf\data\bbcode\attribute\BBCodeAttributeBuilder;
 use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeEditor;
 use wcf\data\bbcode\BBCodeList;
@@ -215,14 +215,16 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
                 }
 
                 foreach ($bbcodeAttributes as $attributeNo => $attribute) {
-                    BBCodeAttributeEditor::create([
-                        'bbcodeID' => $bbcodeID,
-                        'attributeNo' => $attributeNo,
-                        'attributeHtml' => !empty($attribute['html']) ? $attribute['html'] : '',
-                        'validationPattern' => !empty($attribute['validationpattern']) ? $attribute['validationpattern'] : '',
-                        'required' => !empty($attribute['required']) ? $attribute['required'] : 0,
-                        'useText' => !empty($attribute['usetext']) ? $attribute['usetext'] : 0,
-                    ]);
+                    BBCodeAttributeBuilder::forCreate()
+                        ->setBBCodeID((int)$bbcodeID)
+                        ->setAttributeNo((int)$attributeNo)
+                        ->setAttributeHtml(!empty($attribute['html']) ? $attribute['html'] : '')
+                        ->setValidationPattern(
+                            !empty($attribute['validationpattern']) ? $attribute['validationpattern'] : ''
+                        )
+                        ->setRequired(!empty($attribute['required']))
+                        ->setUseText(!empty($attribute['usetext']))
+                        ->create();
                 }
             }
         }

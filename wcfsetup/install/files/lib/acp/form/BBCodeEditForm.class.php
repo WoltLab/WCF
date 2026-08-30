@@ -3,7 +3,7 @@
 namespace wcf\acp\form;
 
 use wcf\data\bbcode\attribute\BBCodeAttribute;
-use wcf\data\bbcode\attribute\BBCodeAttributeAction;
+use wcf\data\bbcode\attribute\BBCodeAttributeBuilder;
 use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeAction;
 use wcf\form\AbstractForm;
@@ -124,17 +124,14 @@ class BBCodeEditForm extends BBCodeAddForm
         $statement->execute([$this->bbcode->bbcodeID]);
 
         foreach ($this->attributes as $attribute) {
-            $attributeAction = new BBCodeAttributeAction([], 'create', [
-                'data' => [
-                    'bbcodeID' => $this->bbcode->bbcodeID,
-                    'attributeNo' => $attribute->attributeNo,
-                    'attributeHtml' => $attribute->attributeHtml,
-                    'validationPattern' => $attribute->validationPattern,
-                    'required' => $attribute->required,
-                    'useText' => $attribute->useText,
-                ],
-            ]);
-            $attributeAction->executeAction();
+            BBCodeAttributeBuilder::forCreate()
+                ->setBBCode($this->bbcode)
+                ->setAttributeNo($attribute->attributeNo)
+                ->setAttributeHtml($attribute->attributeHtml)
+                ->setValidationPattern($attribute->validationPattern)
+                ->setRequired((bool)$attribute->required)
+                ->setUseText((bool)$attribute->useText)
+                ->create();
         }
 
         $this->saved();
