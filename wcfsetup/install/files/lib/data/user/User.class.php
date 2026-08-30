@@ -180,15 +180,6 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     }
 
     /**
-     * @return false
-     * @deprecated 5.4 - This method always returns false, as user sessions are long-lived now.
-     */
-    public function checkCookiePassword(string $passwordHash): bool
-    {
-        return false;
-    }
-
-    /**
      * Returns an array with all the groups in which the actual user is a member.
      *
      * @return int[]

@@ -9,14 +9,13 @@ use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**
- * Executes session-related actions.
+ * Executes legacy session-related actions.
  *
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @extends AbstractDatabaseObjectAction<Session, SessionEditor>
- * @phpstan-ignore generics.notSubtype
  */
 class SessionAction extends AbstractDatabaseObjectAction
 {

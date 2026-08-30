@@ -68,14 +68,6 @@ final class Session
     }
 
     /**
-     * @deprecated 5.4 Use ->getUserAgent()->getDeviceIcon().
-     */
-    public function getDeviceIcon(): string
-    {
-        return $this->getUserAgent()->getDeviceIcon();
-    }
-
-    /**
      * Returns the last used ip address of the session.
      */
     public function getIpAddress(): IpAddress

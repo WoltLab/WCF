@@ -1231,11 +1231,6 @@ final class SessionHandler extends SingletonFactory
     }
 
     /**
-     * @deprecated 5.4 - This method is a noop. The lastActivityTime is always updated immediately after loading.
-     */
-    public function keepAlive(): void {}
-
-    /**
      * Deletes this session and its related data.
      */
     public function delete(): void

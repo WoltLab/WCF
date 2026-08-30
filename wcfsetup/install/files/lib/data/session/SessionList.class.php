@@ -6,7 +6,7 @@ use wcf\data\DatabaseObjectDecorator;
 use wcf\data\DatabaseObjectList;
 
 /**
- * Represents a list of sessions.
+ * Represents a list of legacy sessions.
  *
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
