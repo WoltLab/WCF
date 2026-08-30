@@ -92,22 +92,26 @@ abstract class AbstractArticlePage extends AbstractPage
             throw new IllegalLinkException();
         }
 
+        // Update the interface language before any article is fetched from the
+        // runtime cache, because the contents of an article are read for the
+        // active language only. Changing the language afterwards would cause
+        // already cached articles to no longer expose a content object, for
+        // example causing `Article::getLink()` to return an empty string.
+        if (
+            !WCF::getUser()->userID
+            && $this->articleContent->getArticle()->isMultilingual
+            && $this->articleContent->languageID !== null
+            && $this->articleContent->languageID != WCF::getLanguage()->languageID
+        ) {
+            WCF::setLanguage($this->articleContent->languageID);
+        }
+
         $this->article = ViewableArticleRuntimeCache::getInstance()->getObject($this->articleContent->articleID);
         $this->article->getDiscussionProvider()->setArticleContent($this->articleContent->getDecoratedObject());
         $this->category = $this->article->getCategory();
 
         if (!$this->article->canRead()) {
             throw new PermissionDeniedException();
-        }
-
-        // update interface language
-        if (
-            !WCF::getUser()->userID
-            && $this->article->isMultilingual
-            && $this->articleContent->languageID !== null
-            && $this->articleContent->languageID != WCF::getLanguage()->languageID
-        ) {
-            WCF::setLanguage($this->articleContent->languageID);
         }
     }
 
