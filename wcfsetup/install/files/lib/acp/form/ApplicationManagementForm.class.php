@@ -2,7 +2,7 @@
 
 namespace wcf\acp\form;
 
-use wcf\data\application\ViewableApplicationList;
+use wcf\data\application\ApplicationList;
 use wcf\data\page\Page;
 use wcf\data\page\PageList;
 use wcf\data\page\PageNode;
@@ -37,7 +37,7 @@ final class ApplicationManagementForm extends AbstractForm
     /**
      * list of applications
      */
-    public ?ViewableApplicationList $applicationList = null;
+    public ?ApplicationList $applicationList = null;
 
     public string $cookieDomain = '';
 
@@ -137,7 +137,7 @@ final class ApplicationManagementForm extends AbstractForm
     {
         parent::readData();
 
-        $this->applicationList = new ViewableApplicationList();
+        $this->applicationList = new ApplicationList();
         $this->applicationList->readObjects();
 
         $core = ApplicationHandler::getInstance()->getApplicationByID(1);
@@ -183,7 +183,7 @@ final class ApplicationManagementForm extends AbstractForm
         StyleHandler::resetStylesheets();
 
         // Reload the applications to update the selected landing page id.
-        $this->applicationList = new ViewableApplicationList();
+        $this->applicationList = new ApplicationList();
         $this->applicationList->readObjects();
 
         // show success message
