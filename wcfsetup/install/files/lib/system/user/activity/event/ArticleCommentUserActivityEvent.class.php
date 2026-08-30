@@ -3,7 +3,7 @@
 namespace wcf\system\user\activity\event;
 
 use wcf\data\article\ArticleList;
-use wcf\system\cache\runtime\ViewableCommentRuntimeCache;
+use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -30,7 +30,7 @@ class ArticleCommentUserActivityEvent extends SingletonFactory implements IUserA
         }
 
         // fetch comments
-        $comments = ViewableCommentRuntimeCache::getInstance()->getObjects($commentIDs);
+        $comments = CommentRuntimeCache::getInstance()->getObjects($commentIDs);
 
         // fetch articles
         $articleContentIDs = [];

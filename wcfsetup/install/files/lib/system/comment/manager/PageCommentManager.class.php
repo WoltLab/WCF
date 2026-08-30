@@ -6,9 +6,8 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\page\Page;
 use wcf\data\page\PageList;
 use wcf\data\user\UserProfile;
-use wcf\system\cache\runtime\UserProfileRuntimeCache;
-use wcf\system\cache\runtime\ViewableCommentResponseRuntimeCache;
-use wcf\system\cache\runtime\ViewableCommentRuntimeCache;
+use wcf\system\cache\runtime\CommentResponseRuntimeCache;
+use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\like\IViewableLikeProvider;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -118,35 +117,23 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
         }
 
         // fetch response
-        $userIDs = $responses = [];
+        $responses = [];
         if ($responseIDs !== []) {
-            $responses = ViewableCommentResponseRuntimeCache::getInstance()->getObjects($responseIDs);
+            $responses = CommentResponseRuntimeCache::getInstance()->getObjects($responseIDs);
 
             foreach ($responses as $response) {
                 $commentIDs[] = $response->commentID;
-                if ($response->userID !== null) {
-                    $userIDs[] = $response->userID;
-                }
             }
         }
 
         // fetch comments
-        $comments = ViewableCommentRuntimeCache::getInstance()->getObjects($commentIDs);
+        $comments = CommentRuntimeCache::getInstance()->getObjects($commentIDs);
 
-        // fetch users
-        $users = [];
+        // fetch pages
         $pageIDs = [];
         foreach ($comments as $comment) {
             $pageIDs[] = $comment->objectID;
-            if ($comment->userID !== null) {
-                $userIDs[] = $comment->userID;
-            }
         }
-        if ($userIDs !== []) {
-            $users = UserProfileRuntimeCache::getInstance()->getObjects(\array_unique($userIDs));
-        }
-
-        // fetch pages
         $pages = [];
         if ($pageIDs !== []) {
             $pageList = new PageList();
@@ -168,7 +155,7 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
                         $like->setTitle(WCF::getLanguage()->getDynamicVariable(
                             'wcf.like.title.com.woltlab.wcf.pageComment',
                             [
-                                'commentAuthor' => $comment->userID !== null ? $users[$comment->userID] : null,
+                                'commentAuthor' => $comment->userID !== null ? $comment->getUserProfile() : null,
                                 'comment' => $comment,
                                 'page' => $pages[$comment->objectID],
                                 'reaction' => $like,
@@ -191,8 +178,8 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
                         $like->setTitle(WCF::getLanguage()->getDynamicVariable(
                             'wcf.like.title.com.woltlab.wcf.pageComment.response',
                             [
-                                'responseAuthor' => $response->userID !== null ? $users[$response->userID] : null,
-                                'commentAuthor' => $comment->userID !== null ? $users[$comment->userID] : null,
+                                'responseAuthor' => $response->userID !== null ? $response->getUserProfile() : null,
+                                'commentAuthor' => $comment->userID !== null ? $comment->getUserProfile() : null,
                                 'page' => $pages[$comment->objectID],
                                 'reaction' => $like,
                                 'author' => $like->getUserProfile(),

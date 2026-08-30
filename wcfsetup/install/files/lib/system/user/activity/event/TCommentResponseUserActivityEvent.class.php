@@ -4,13 +4,11 @@ namespace wcf\system\user\activity\event;
 
 use wcf\data\comment\Comment;
 use wcf\data\comment\response\CommentResponse;
-use wcf\data\comment\response\ViewableCommentResponse;
-use wcf\data\comment\ViewableComment;
 use wcf\data\user\activity\event\ViewableUserActivityEvent;
 use wcf\data\user\UserProfile;
+use wcf\system\cache\runtime\CommentResponseRuntimeCache;
+use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
-use wcf\system\cache\runtime\ViewableCommentResponseRuntimeCache;
-use wcf\system\cache\runtime\ViewableCommentRuntimeCache;
 
 /**
  * Provides a method to read the comment response, comment, and user objects related to comment
@@ -37,13 +35,13 @@ trait TCommentResponseUserActivityEvent
 
     /**
      * comment objects the responses belongs to
-     * @var (Comment|ViewableComment)[]
+     * @var Comment[]
      */
     protected $comments = [];
 
     /**
      * comment response the comment response user activity events belong to
-     * @var (CommentResponse|ViewableCommentResponse)[]
+     * @var CommentResponse[]
      */
     protected $responses = [];
 
@@ -60,7 +58,7 @@ trait TCommentResponseUserActivityEvent
             $responseIDs[] = $event->objectID;
         }
 
-        $this->responses = \array_filter(ViewableCommentResponseRuntimeCache::getInstance()->getObjects($responseIDs));
+        $this->responses = \array_filter(CommentResponseRuntimeCache::getInstance()->getObjects($responseIDs));
 
         $commentIDs = [];
         foreach ($this->responses as $response) {
@@ -68,7 +66,7 @@ trait TCommentResponseUserActivityEvent
         }
 
         if ($commentIDs !== []) {
-            $this->comments = \array_filter(ViewableCommentRuntimeCache::getInstance()->getObjects($commentIDs));
+            $this->comments = \array_filter(CommentRuntimeCache::getInstance()->getObjects($commentIDs));
         }
 
         $userIDs = [];

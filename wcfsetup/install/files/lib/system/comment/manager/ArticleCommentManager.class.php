@@ -10,9 +10,8 @@ use wcf\data\comment\response\CommentResponse;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\ArticleContentRuntimeCache;
-use wcf\system\cache\runtime\UserProfileRuntimeCache;
-use wcf\system\cache\runtime\ViewableCommentResponseRuntimeCache;
-use wcf\system\cache\runtime\ViewableCommentRuntimeCache;
+use wcf\system\cache\runtime\CommentResponseRuntimeCache;
+use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\like\IViewableLikeProvider;
 use wcf\system\WCF;
 
@@ -132,32 +131,22 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
         }
 
         // fetch response
-        $userIDs = $responses = [];
+        $responses = [];
         if ($responseIDs !== []) {
-            $responses = ViewableCommentResponseRuntimeCache::getInstance()->getObjects($responseIDs);
+            $responses = CommentResponseRuntimeCache::getInstance()->getObjects($responseIDs);
 
             foreach ($responses as $response) {
                 $commentIDs[] = $response->commentID;
-                if ($response->userID !== null) {
-                    $userIDs[] = $response->userID;
-                }
             }
         }
 
         // fetch comments
-        $comments = ViewableCommentRuntimeCache::getInstance()->getObjects($commentIDs);
+        $comments = CommentRuntimeCache::getInstance()->getObjects($commentIDs);
 
         // fetch users
-        $users = [];
         $articleContentIDs = [];
         foreach ($comments as $comment) {
             $articleContentIDs[] = $comment->objectID;
-            if ($comment->userID !== null) {
-                $userIDs[] = $comment->userID;
-            }
-        }
-        if ($userIDs !== []) {
-            $users = UserProfileRuntimeCache::getInstance()->getObjects(\array_unique($userIDs));
         }
 
         // fetch articles
@@ -185,7 +174,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
                         $like->setTitle(WCF::getLanguage()->getDynamicVariable(
                             'wcf.like.title.com.woltlab.wcf.articleComment',
                             [
-                                'commentAuthor' => $comment->userID !== null ? $users[$comment->userID] : null,
+                                'commentAuthor' => $comment->userID !== null ? $comment->getUserProfile() : null,
                                 'comment' => $comment,
                                 'articleContent' => $articleContents[$comment->objectID],
                                 'reaction' => $like,
@@ -211,8 +200,8 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
                         $like->setTitle(WCF::getLanguage()->getDynamicVariable(
                             'wcf.like.title.com.woltlab.wcf.articleComment.response',
                             [
-                                'responseAuthor' => $response->userID !== null ? $users[$response->userID] : null,
-                                'commentAuthor' => $comment->userID !== null ? $users[$comment->userID] : null,
+                                'responseAuthor' => $response->userID !== null ? $response->getUserProfile() : null,
+                                'commentAuthor' => $comment->userID !== null ? $comment->getUserProfile() : null,
                                 'articleContent' => $articleContents[$comment->objectID],
                                 'reaction' => $like,
                                 'author' => $like->getUserProfile(),

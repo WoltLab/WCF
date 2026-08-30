@@ -3,7 +3,7 @@
 namespace wcf\data\user\profile\comment;
 
 use wcf\data\comment\Comment;
-use wcf\data\comment\ViewableComment;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\WCF;
 
@@ -14,11 +14,16 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @method      Comment         getDecoratedObject()
- * @mixin       Comment
+ * @mixin   Comment
+ * @extends DatabaseObjectDecorator<Comment>
  */
-class ViewableUserProfileComment extends ViewableComment
+class ViewableUserProfileComment extends DatabaseObjectDecorator
 {
+    /**
+     * @inheritDoc
+     */
+    protected static $baseClass = Comment::class;
+
     #[\Override]
     public function __get(string $name)
     {
