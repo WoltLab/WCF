@@ -13,7 +13,6 @@
 	{assign var='commentList' value=$commentsView->getCommentList()}
 	{assign var='commentObjectTypeID' value=$commentsView->getObjectTypeID()}
 	{assign var='lastCommentTime' value=$commentsView->getLastCommentTime()}
-	{assign var='likeData' value=$commentsView->getLikeData()}
 	{include file='comments'}
 
 	{if $commentsView->showSection}

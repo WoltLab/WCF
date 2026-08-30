@@ -16,7 +16,6 @@ use wcf\system\endpoint\GetRequest;
 use wcf\system\endpoint\IController;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\reaction\ReactionHandler;
 use wcf\system\WCF;
 
 /**
@@ -151,22 +150,6 @@ final class RenderComment implements IController
             'commentList' => [$structuredComment],
             'commentManager' => $commentManager,
         ]);
-
-        // load like data
-        if (\MODULE_LIKE !== 0) {
-            $likeData = [];
-            $commentObjectType = ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.comment');
-            ReactionHandler::getInstance()->loadLikeObjects($commentObjectType, [$comment->commentID]);
-            $likeData['comment'] = ReactionHandler::getInstance()->getLikeObjects($commentObjectType);
-
-            if ($response !== null) {
-                $responseObjectType = ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.comment.response');
-                ReactionHandler::getInstance()->loadLikeObjects($responseObjectType, [$response->responseID]);
-                $likeData['response'] = ReactionHandler::getInstance()->getLikeObjects($responseObjectType);
-            }
-
-            $tplVariables['likeData'] = $likeData;
-        }
 
         $returnValue = [
             'template' => WCF::getTPL()->render('wcf', 'commentList', $tplVariables),

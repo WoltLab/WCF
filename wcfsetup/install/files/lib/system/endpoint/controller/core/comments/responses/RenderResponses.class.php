@@ -86,7 +86,6 @@ final class RenderResponses implements IController
             'lastResponseID' => $lastResponseID,
             'template' => WCF::getTPL()->render('wcf', 'commentResponseList', [
                 'commentCanModerate' => $commentCanModerate,
-                'likeData' => \MODULE_LIKE !== 0 ? $responseList->getLikeData() : [],
                 'responseList' => $responseList,
                 'commentManager' => $commentManager,
             ]),

@@ -79,6 +79,7 @@ class StructuredCommentResponseList extends CommentResponseList
      * Fetches the like data.
      *
      * @return  LikeObject[][]
+     * @deprecated 6.3 No longer in use.
      */
     public function getLikeData()
     {

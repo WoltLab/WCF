@@ -10,6 +10,8 @@ use wcf\data\user\UserProfile;
 use wcf\system\comment\CommentHandler;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\html\output\HtmlOutputProcessor;
+use wcf\system\reaction\ReactionData;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
@@ -34,12 +36,6 @@ use wcf\util\StringUtil;
 class CommentResponse extends CollectionDatabaseObject implements IMessage
 {
     use TUserContent;
-
-    /**
-     * comment object
-     * @var ?Comment
-     */
-    protected $comment;
 
     #[\Override]
     public function getFormattedMessage()
@@ -134,29 +130,19 @@ class CommentResponse extends CollectionDatabaseObject implements IMessage
 
     /**
      * Returns comment object related to this response.
-     *
-     * @return  Comment
      */
-    public function getComment()
+    public function getComment(): Comment
     {
-        if ($this->comment === null) {
-            $this->comment = new Comment($this->commentID);
-        }
-
-        return $this->comment;
+        return $this->getCollection()->getComment($this);
     }
 
     /**
      * Sets related comment object.
      *
      * @return void
+     * @deprecated 6.3 Does nothing.
      */
-    public function setComment(Comment $comment)
-    {
-        if ($this->commentID === $comment->commentID) {
-            $this->comment = $comment;
-        }
-    }
+    public function setComment(Comment $comment) {}
 
     #[\Override]
     public function getLink(): string
@@ -187,5 +173,35 @@ class CommentResponse extends CollectionDatabaseObject implements IMessage
     public function __toString(): string
     {
         return $this->getFormattedMessage();
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function canViewReactions(): bool
+    {
+        return \MODULE_LIKE !== 0
+            && WCF::getSession()->hasPermission('user.like.canViewLike')
+            && $this->getComment()->getCommentManager()->supportsLike();
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function canReact(): bool
+    {
+        return \MODULE_LIKE !== 0
+            && !WCF::getUser()->isGuest()
+            && $this->userID !== WCF::getUser()->userID
+            && WCF::getSession()->hasPermission('user.like.canLike')
+            && $this->getComment()->getCommentManager()->supportsLike();
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getReactionData(): ReactionData
+    {
+        return $this->getCollection()->getReactionData($this);
     }
 }

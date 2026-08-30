@@ -70,8 +70,6 @@ trait TTestableCommentResponseUserNotificationEvent
             ],
         ]))->executeAction()['returnValues'];
 
-        $commentResponse->setComment($comment);
-
         $commentEditor = new CommentEditor($comment);
         $commentEditor->updateResponseIDs();
         $commentEditor->updateUnfilteredResponseIDs();

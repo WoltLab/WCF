@@ -7,7 +7,6 @@ use wcf\data\comment\response\CommentResponse;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\system\cache\runtime\CommentResponseRuntimeCache;
-use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\comment\manager\ICommentPermissionManager;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -118,24 +117,9 @@ class AbstractCommentResponseModerationQueueHandler extends AbstractCommentComme
 
         $responses = CommentResponseRuntimeCache::getInstance()->getObjects($objectIDs);
 
-        $commentIDs = [];
-        foreach ($responses as $response) {
-            if ($response !== null) {
-                $commentIDs[] = $response->commentID;
-            }
-        }
-
-        $comments = [];
-        if ($commentIDs !== []) {
-            $comments = CommentRuntimeCache::getInstance()->getObjects($commentIDs);
-        }
-
         foreach ($queues as $object) {
             if ($responses[$object->objectID] !== null) {
-                $response = $responses[$object->objectID];
-                $response->setComment($comments[$response->commentID]);
-
-                $object->setAffectedObject($response);
+                $object->setAffectedObject($responses[$object->objectID]);
             } else {
                 $object->setIsOrphaned();
             }

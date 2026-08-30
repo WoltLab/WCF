@@ -99,24 +99,14 @@
 				
 				<div class="commentResponse__footer">
 					<div class="commentResponse__reactions">
-						{if MODULE_LIKE && $commentManager->supportsLike() && $likeData|isset}
-							{include file="reactionSummaryList" reactionData=$likeData[response] objectType="com.woltlab.wcf.comment.response" objectID=$response->responseID}
+						{if $response->canViewReactions()}
+							{include file="reactionSummary" reactionData=$response->getReactionData()}
 						{/if}
 					</div>
 
 					<div class="commentResponse__buttons">
-						{if MODULE_LIKE && $commentManager->supportsLike() && $__wcf->session->getPermission('user.like.canLike') && $response->userID != $__wcf->user->userID}
-							<button
-								type="button"
-								class="reactionButton commentResponse__button commentResponse__button--react jsTooltip button small{if $likeData[response][$response->responseID]|isset && $likeData[response][$response->responseID]->reactionTypeID} active{/if}"
-								title="{lang}wcf.reactions.react{/lang}"
-								aria-pressed="{if $likeData[response][$response->responseID]|isset && $likeData[response][$response->responseID]->reactionTypeID}true{else}false{/if}"
-								data-reaction-type-id="{if $likeData[response][$response->responseID]|isset && $likeData[response][$response->responseID]->reactionTypeID}{$likeData[response][$response->responseID]->reactionTypeID}{else}0{/if}"
-								data-reaction-object-type="com.woltlab.wcf.comment.response"
-								data-object-id="{$response->responseID}"
-							>
-								{icon name='face-smile'}
-							</button>
+						{if $response->canReact()}
+							{include file="reactionButton" reactionData=$response->getReactionData()}
 						{/if}
 
 						{event name='commentResponseButtons'}

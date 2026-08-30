@@ -9,6 +9,8 @@ use wcf\data\user\UserProfile;
 use wcf\system\comment\CommentHandler;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\html\output\HtmlOutputProcessor;
+use wcf\system\reaction\ReactionData;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
@@ -171,16 +173,13 @@ class Comment extends CollectionDatabaseObject implements IMessage
     #[\Override]
     public function getLink(): string
     {
-        /** @var ICommentManager $processor */
-        $processor = CommentHandler::getInstance()->getObjectType($this->objectTypeID)->getProcessor();
-
-        return $processor->getCommentLink($this);
+        return $this->getCommentManager()->getCommentLink($this);
     }
 
     #[\Override]
     public function getTitle(): string
     {
-        return CommentHandler::getInstance()->getObjectType($this->objectTypeID)->getProcessor()->getTitle(
+        return $this->getCommentManager()->getTitle(
             $this->objectTypeID,
             $this->objectID
         );
@@ -196,5 +195,43 @@ class Comment extends CollectionDatabaseObject implements IMessage
     public function __toString(): string
     {
         return $this->getFormattedMessage();
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function canViewReactions(): bool
+    {
+        return \MODULE_LIKE !== 0
+            && WCF::getSession()->hasPermission('user.like.canViewLike')
+            && $this->getCommentManager()->supportsLike();
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function canReact(): bool
+    {
+        return \MODULE_LIKE !== 0
+            && !WCF::getUser()->isGuest()
+            && $this->userID !== WCF::getUser()->userID
+            && WCF::getSession()->hasPermission('user.like.canLike')
+            && $this->getCommentManager()->supportsLike();
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getReactionData(): ReactionData
+    {
+        return $this->getCollection()->getReactionData($this);
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getCommentManager(): ICommentManager
+    {
+        return CommentHandler::getInstance()->getObjectType($this->objectTypeID)->getProcessor();
     }
 }

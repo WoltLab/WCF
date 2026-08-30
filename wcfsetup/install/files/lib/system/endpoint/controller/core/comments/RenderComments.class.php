@@ -54,7 +54,6 @@ final class RenderComments implements IController
             'lastCommentTime' => $commentList->getMinCommentTime(),
             'template' => WCF::getTPL()->render('wcf', 'commentList', [
                 'commentList' => $commentList,
-                'likeData' => \MODULE_LIKE !== 0 ? $commentList->getLikeData() : [],
             ]),
         ]);
     }

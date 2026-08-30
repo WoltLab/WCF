@@ -166,7 +166,6 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             'lastCommentTime' => $commentList->getMinCommentTime(),
             'template' => WCF::getTPL()->render('wcf', 'commentList', [
                 'commentList' => $commentList,
-                'likeData' => \MODULE_LIKE !== 0 ? $commentList->getLikeData() : [],
             ]),
         ];
     }
@@ -521,7 +520,6 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             'enableHtml' => 1,
             'isDisabled' => $this->commentProcessor->canAddWithoutApproval($comment->objectID) ? 0 : 1,
         ]);
-        $this->createdResponse->setComment($comment->getDecoratedObject());
 
         $htmlInputProcessor->setObjectID($this->createdResponse->getObjectID());
         if (MessageEmbeddedObjectManager::getInstance()->registerObjects($htmlInputProcessor)) {
@@ -1070,31 +1068,6 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             'commentList' => [$comment],
             'commentManager' => $this->commentProcessor,
         ]);
-
-        // load like data
-        if (\MODULE_LIKE !== 0) {
-            $likeData = [];
-            $commentObjectType = ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.comment');
-            ReactionHandler::getInstance()->loadLikeObjects($commentObjectType, [$comment->commentID]);
-            $likeData['comment'] = ReactionHandler::getInstance()->getLikeObjects($commentObjectType);
-
-            $responseIDs = [];
-            foreach ($comment as $visibleResponse) {
-                $responseIDs[] = $visibleResponse->responseID;
-            }
-
-            if ($response !== null) {
-                $responseIDs[] = $response->responseID;
-            }
-
-            if ($responseIDs !== []) {
-                $responseObjectType = ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.comment.response');
-                ReactionHandler::getInstance()->loadLikeObjects($responseObjectType, $responseIDs);
-                $likeData['response'] = ReactionHandler::getInstance()->getLikeObjects($responseObjectType);
-            }
-
-            $tplVariables['likeData'] = $likeData;
-        }
 
         $template = WCF::getTPL()->render('wcf', 'commentList', $tplVariables);
         if ($response === null) {

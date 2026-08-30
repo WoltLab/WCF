@@ -74,6 +74,7 @@ final class CommentsView
 
     /**
      * @return array{}|array{comment: LikeObject[], response?: LikeObject[]}
+     * @deprecated 6.3 No longer in use.
      */
     public function getLikeData(): array
     {

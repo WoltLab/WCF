@@ -4,6 +4,7 @@ namespace wcf\data\comment;
 
 use wcf\data\DatabaseObjectCollection;
 use wcf\data\TCollectionEmbeddedObjects;
+use wcf\data\TCollectionReactions;
 use wcf\data\TCollectionUserProfiles;
 
 /**
@@ -20,4 +21,11 @@ class CommentCollection extends DatabaseObjectCollection
 {
     use TCollectionUserProfiles;
     use TCollectionEmbeddedObjects;
+    use TCollectionReactions;
+
+    #[\Override]
+    protected function getReactionObjectType(): string
+    {
+        return 'com.woltlab.wcf.comment';
+    }
 }

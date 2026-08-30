@@ -48,7 +48,6 @@ class CommentUserProfileMenuContent extends SingletonFactory implements IUserPro
             'commentObjectTypeID' => $this->objectTypeID,
             'userID' => $userID,
             'lastCommentTime' => $commentList->getMinCommentTime(),
-            'likeData' => \MODULE_LIKE !== 0 ? $commentList->getLikeData() : [],
         ]);
     }
 
