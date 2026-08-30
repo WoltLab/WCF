@@ -16,7 +16,7 @@ use wcf\acp\page\MediaPage;
 use wcf\action\AJAXInvokeAction;
 use wcf\data\acp\session\access\log\ACPSessionAccessLogEditor;
 use wcf\data\acp\session\log\ACPSessionLog;
-use wcf\data\acp\session\log\ACPSessionLogEditor;
+use wcf\data\acp\session\log\ACPSessionLogBuilder;
 use wcf\http\error\ErrorDetail;
 use wcf\http\error\PermissionDeniedHandler;
 use wcf\http\Helper;
@@ -152,20 +152,19 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
         $row = $statement->fetchArray();
         $sessionLogID = (int)($row['sessionLogID'] ?? 0);
         if ($sessionLogID !== 0) {
-            $sessionLogEditor = new ACPSessionLogEditor(new ACPSessionLog(null, ['sessionLogID' => $sessionLogID]));
-            $sessionLogEditor->update([
-                'lastActivityTime' => \TIME_NOW,
-            ]);
+            ACPSessionLogBuilder::forUpdate(new ACPSessionLog(null, ['sessionLogID' => $sessionLogID]))
+                ->setLastActivityTime(\TIME_NOW)
+                ->update();
         } else {
             // create new session log
-            $sessionLog = ACPSessionLogEditor::create([
-                'sessionID' => WCF::getSession()->sessionID,
-                'userID' => WCF::getUser()->userID,
-                'ipAddress' => UserUtil::getIpAddress(),
-                'userAgent' => \mb_substr(Helper::getUserAgent($request) ?? '', 0, 191),
-                'time' => \TIME_NOW,
-                'lastActivityTime' => \TIME_NOW,
-            ]);
+            $sessionLog = ACPSessionLogBuilder::forCreate()
+                ->setSessionID(WCF::getSession()->sessionID)
+                ->setUser(WCF::getUser())
+                ->setIpAddress(UserUtil::getIpAddress())
+                ->setUserAgent(\mb_substr(Helper::getUserAgent($request) ?? '', 0, 191))
+                ->setTime(\TIME_NOW)
+                ->setLastActivityTime(\TIME_NOW)
+                ->create();
             $sessionLogID = $sessionLog->sessionLogID;
         }
 
