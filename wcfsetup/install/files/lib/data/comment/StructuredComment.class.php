@@ -4,8 +4,6 @@ namespace wcf\data\comment;
 
 use wcf\data\comment\response\StructuredCommentResponse;
 use wcf\data\DatabaseObjectDecorator;
-use wcf\data\user\UserProfile;
-use wcf\system\cache\runtime\UserProfileRuntimeCache;
 
 /**
  * Provides methods to handle responses for this comment.
@@ -49,17 +47,6 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
      */
     private $position = 0;
 
-    /**
-     * user profile object of the comment author
-     * @var ?UserProfile
-     */
-    public $userProfile;
-
-    /**
-     * Adds an response
-     *
-     * @param StructuredCommentResponse $response
-     */
     public function addResponse(StructuredCommentResponse $response): void
     {
         $this->responses[] = $response;
@@ -77,8 +64,6 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
 
     /**
      * Returns timestamp of newest response loaded.
-     *
-     * @return  int
      */
     public function getLastResponseTime(): int
     {
@@ -106,35 +91,6 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
         }
 
         return $this->responses[\count($this->responses) - 1]->responseID;
-    }
-
-    /**
-     * Sets the user's profile.
-     *
-     * @return void
-     * @deprecated  3.0
-     */
-    public function setUserProfile(UserProfile $userProfile)
-    {
-        $this->userProfile = $userProfile;
-    }
-
-    /**
-     * Returns the user's profile.
-     *
-     * @return  UserProfile
-     */
-    public function getUserProfile()
-    {
-        if ($this->userProfile === null) {
-            if ($this->userID !== null) {
-                $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
-            } else {
-                $this->userProfile = UserProfile::getGuestUserProfile($this->username);
-            }
-        }
-
-        return $this->userProfile;
     }
 
     /**

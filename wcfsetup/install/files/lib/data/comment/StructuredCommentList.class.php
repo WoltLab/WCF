@@ -99,7 +99,7 @@ class StructuredCommentList extends CommentList
         $canModerate = $this->commentManager->canModerate($this->objectTypeID, $this->objectID);
 
         // fetch response ids
-        $embeddedObjectIDs = $responseIDs = $userIDs = [];
+        $responseIDs = $userIDs = [];
         /** @var StructuredComment $comment */
         foreach ($this->objects as $comment) {
             if ($this->minCommentTime === 0 || $comment->time < $this->minCommentTime) {
@@ -112,14 +112,6 @@ class StructuredCommentList extends CommentList
                     $this->responseIDs[] = $responseID;
                     $responseIDs[$responseID] = $comment->commentID;
                 }
-            }
-
-            if ($comment->userID !== null) {
-                $userIDs[] = $comment->userID;
-            }
-
-            if ($comment->hasEmbeddedObjects !== 0) {
-                $embeddedObjectIDs[] = $comment->getObjectID();
             }
 
             $comment->setIsDeletable($this->commentManager->canDeleteComment($comment->getDecoratedObject()));
@@ -170,13 +162,6 @@ class StructuredCommentList extends CommentList
         // cache user ids
         if ($userIDs !== []) {
             UserProfileRuntimeCache::getInstance()->cacheObjectIDs(\array_unique($userIDs));
-        }
-
-        if ($embeddedObjectIDs !== []) {
-            MessageEmbeddedObjectManager::getInstance()->loadObjects(
-                'com.woltlab.wcf.comment',
-                $embeddedObjectIDs
-            );
         }
     }
 

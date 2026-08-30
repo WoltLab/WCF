@@ -3,7 +3,6 @@
 namespace wcf\system\moderation\queue;
 
 use wcf\data\comment\Comment;
-use wcf\data\comment\ViewableComment;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\data\object\type\ObjectTypeCache;
@@ -163,7 +162,7 @@ class AbstractCommentCommentModerationQueueHandler extends AbstractModerationQue
     protected function getRelatedContent(ViewableModerationQueue $queue)
     {
         return WCF::getTPL()->render('wcf', 'moderationComment', [
-            'message' => ViewableComment::getComment($queue->objectID),
+            'message' => CommentRuntimeCache::getInstance()->getObject($queue->objectID),
         ]);
     }
 

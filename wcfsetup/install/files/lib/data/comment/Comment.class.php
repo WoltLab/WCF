@@ -2,13 +2,13 @@
 
 namespace wcf\data\comment;
 
-use wcf\data\DatabaseObject;
+use wcf\data\CollectionDatabaseObject;
 use wcf\data\IMessage;
 use wcf\data\TUserContent;
+use wcf\data\user\UserProfile;
 use wcf\system\comment\CommentHandler;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\html\output\HtmlOutputProcessor;
-use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\util\StringUtil;
 
 /**
@@ -32,8 +32,10 @@ use wcf\util\StringUtil;
  * @property-read   0|1     $enableHtml             is `1` if HTML will rendered in the comment, otherwise `0`
  * @property-read   0|1     $isDisabled             is `1` if the comment is disabled, otherwise `0`
  * @property-read   0|1     $hasEmbeddedObjects     is `1` if there are embedded objects in the comment, otherwise `0`
+ *
+ * @extends CollectionDatabaseObject<CommentCollection>
  */
-class Comment extends DatabaseObject implements IMessage
+class Comment extends CollectionDatabaseObject implements IMessage
 {
     use TUserContent;
 
@@ -78,6 +80,8 @@ class Comment extends DatabaseObject implements IMessage
     #[\Override]
     public function getFormattedMessage()
     {
+        $this->loadEmbeddedObjects();
+
         $processor = new HtmlOutputProcessor();
         $processor->process($this->message, 'com.woltlab.wcf.comment', $this->commentID);
 
@@ -91,6 +95,8 @@ class Comment extends DatabaseObject implements IMessage
      */
     public function getSimplifiedFormattedMessage()
     {
+        $this->loadEmbeddedObjects();
+
         $processor = new HtmlOutputProcessor();
         $processor->setOutputType('text/simplified-html');
         $processor->process($this->message, 'com.woltlab.wcf.comment', $this->commentID);
@@ -103,6 +109,8 @@ class Comment extends DatabaseObject implements IMessage
      */
     public function getPlainTextMessage(): string
     {
+        $this->loadEmbeddedObjects();
+
         $processor = new HtmlOutputProcessor();
         $processor->setOutputType('text/plain');
         $processor->process($this->message, 'com.woltlab.wcf.comment', $this->commentID);
@@ -118,13 +126,6 @@ class Comment extends DatabaseObject implements IMessage
      */
     public function getMailText(string $mimeType = 'text/plain')
     {
-        if ($this->hasEmbeddedObjects !== 0) {
-            MessageEmbeddedObjectManager::getInstance()->loadObjects(
-                'com.woltlab.wcf.comment',
-                [$this->commentID]
-            );
-        }
-
         switch ($mimeType) {
             case 'text/plain':
                 return $this->getPlainTextMessage();
@@ -133,6 +134,26 @@ class Comment extends DatabaseObject implements IMessage
         }
 
         throw new \LogicException('Unreachable');
+    }
+
+    /**
+     * Returns the user profile of the comment author.
+     *
+     * @since 6.3
+     */
+    public function getUserProfile(): UserProfile
+    {
+        return $this->getCollection()->getUserProfile($this);
+    }
+
+    /**
+     * Loads the embedded objects of all comments of the collection.
+     *
+     * @since 6.3
+     */
+    public function loadEmbeddedObjects(): void
+    {
+        $this->getCollection()->loadEmbeddedObjects('com.woltlab.wcf.comment');
     }
 
     #[\Override]
