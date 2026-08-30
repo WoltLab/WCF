@@ -4,7 +4,7 @@ namespace wcf\system\package;
 
 use ParagonIE\ConstantTime\Hex;
 use wcf\data\application\Application;
-use wcf\data\application\ApplicationEditor;
+use wcf\data\application\ApplicationBuilder;
 use wcf\data\devtools\project\DevtoolsProjectAction;
 use wcf\data\language\category\LanguageCategory;
 use wcf\data\language\LanguageList;
@@ -571,20 +571,20 @@ class PackageInstallationDispatcher
                 $host = \str_replace(RouteHandler::getProtocol(), '', RouteHandler::getHost());
                 $path = RouteHandler::getPath(['acp']);
 
-                $isTainted = 1;
+                $isTainted = true;
                 if ($this->getPackage()->package === 'com.woltlab.wcf') {
                     // com.woltlab.wcf is special, because promptPackageDir() will not be executed.
-                    $isTainted = 0;
+                    $isTainted = false;
                 }
 
                 // insert as application
-                ApplicationEditor::create([
-                    'domainName' => $host,
-                    'domainPath' => $path,
-                    'cookieDomain' => $host,
-                    'packageID' => $package->packageID,
-                    'isTainted' => $isTainted,
-                ]);
+                ApplicationBuilder::forCreate()
+                    ->setPackage($package)
+                    ->setDomainName($host)
+                    ->setDomainPath($path)
+                    ->setCookieDomain($host)
+                    ->setIsTainted($isTainted)
+                    ->create();
             }
         }
 
@@ -1033,11 +1033,10 @@ class PackageInstallationDispatcher
 
             // update application path and untaint application
             $application = new Application($this->getPackage()->packageID);
-            $applicationEditor = new ApplicationEditor($application);
-            $applicationEditor->update([
-                'domainPath' => $domainPath,
-                'isTainted' => 0,
-            ]);
+            ApplicationBuilder::forUpdate($application)
+                ->setDomainPath($domainPath)
+                ->setIsTainted(false)
+                ->update();
 
             // create directory and set permissions
             @\mkdir($packageDir, 0777, true);

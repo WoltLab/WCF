@@ -3,7 +3,7 @@
 namespace wcf\command\application;
 
 use wcf\data\application\Application;
-use wcf\data\application\ApplicationEditor;
+use wcf\data\application\ApplicationBuilder;
 use wcf\system\cache\eager\ApplicationCache;
 
 /**
@@ -23,8 +23,9 @@ final class MarkApplicationAsTainted
 
     public function __invoke(): void
     {
-        $applicationEditor = new ApplicationEditor($this->application);
-        $applicationEditor->update(['isTainted' => 1]);
+        ApplicationBuilder::forUpdate($this->application)
+            ->setIsTainted(true)
+            ->update();
 
         (new ApplicationCache())->rebuild();
     }

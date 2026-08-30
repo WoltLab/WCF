@@ -5,7 +5,7 @@ namespace wcf\acp\form;
 use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\command\application\SynchronizeCookieDomain;
 use wcf\data\application\Application;
-use wcf\data\application\ApplicationEditor;
+use wcf\data\application\ApplicationBuilder;
 use wcf\data\application\ApplicationList;
 use wcf\data\user\authentication\failure\UserAuthenticationFailure;
 use wcf\data\user\authentication\failure\UserAuthenticationFailureAction;
@@ -300,11 +300,11 @@ final class RescueModeForm extends AbstractForm
         $cookieDomain = $regex->replace($this->domainName, '');
 
         foreach ($this->applications as $application) {
-            (new ApplicationEditor($application))->update([
-                'domainName' => $this->domainName,
-                'domainPath' => $this->applicationValues[$application->packageID],
-                'cookieDomain' => $cookieDomain,
-            ]);
+            ApplicationBuilder::forUpdate($application)
+                ->setDomainName($this->domainName)
+                ->setDomainPath($this->applicationValues[$application->packageID])
+                ->setCookieDomain($cookieDomain)
+                ->update();
         }
 
         new SynchronizeCookieDomain()();
