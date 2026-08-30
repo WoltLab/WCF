@@ -3,6 +3,7 @@
 namespace wcf\system\comment\response\command;
 
 use wcf\data\comment\response\CommentResponse;
+use wcf\data\comment\response\CommentResponseBuilder;
 use wcf\system\html\input\HtmlInputProcessor;
 
 /**
@@ -24,8 +25,8 @@ final class UpdateResponse
     public function __invoke(): void
     {
         new \wcf\command\comment\response\UpdateResponse(
-            $this->response,
-            $this->htmlInputProcessor
+            CommentResponseBuilder::forUpdate($this->response)
+                ->setHtmlInputProcessor($this->htmlInputProcessor)
         )();
     }
 }

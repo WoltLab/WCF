@@ -5,7 +5,7 @@ namespace wcf\command\comment\response;
 use wcf\data\comment\Comment;
 use wcf\data\comment\CommentBuilder;
 use wcf\data\comment\response\CommentResponse;
-use wcf\data\comment\response\CommentResponseEditor;
+use wcf\data\comment\response\CommentResponseBuilder;
 use wcf\data\object\type\ObjectType;
 use wcf\event\comment\response\ResponsePublished;
 use wcf\system\comment\CommentHandler;
@@ -42,9 +42,9 @@ final class PublishResponse
     public function __invoke(): void
     {
         if ($this->response->isDisabled !== 0) {
-            (new CommentResponseEditor($this->response))->update([
-                'isDisabled' => 0,
-            ]);
+            CommentResponseBuilder::forUpdate($this->response)
+                ->setIsDisabled(false)
+                ->update();
         }
 
         CommentBuilder::forUpdate($this->comment)

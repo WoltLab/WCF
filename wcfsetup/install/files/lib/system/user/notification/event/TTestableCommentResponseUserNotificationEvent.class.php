@@ -4,7 +4,7 @@ namespace wcf\system\user\notification\event;
 
 use wcf\data\comment\CommentBuilder;
 use wcf\data\comment\response\CommentResponse;
-use wcf\data\comment\response\CommentResponseAction;
+use wcf\data\comment\response\CommentResponseBuilder;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
 use wcf\system\comment\manager\ICommentManager;
@@ -56,17 +56,13 @@ trait TTestableCommentResponseUserNotificationEvent
         $commentManager = ObjectTypeCache::getInstance()->getObjectType($comment->objectTypeID)->getProcessor();
         $commentManager->updateCounter($comment->objectID, 1);
 
-        /** @var CommentResponse $commentResponse */
-        $commentResponse = (new CommentResponseAction([], 'create', [
-            'data' => [
-                'commentID' => $comment->commentID,
-                'time' => \TIME_NOW - 10,
-                'userID' => $author->userID,
-                'username' => $author->username,
-                'message' => 'Test Response',
-                'isDisabled' => 0,
-            ],
-        ]))->executeAction()['returnValues'];
+        $commentResponse = CommentResponseBuilder::forCreate()
+            ->setComment($comment)
+            ->setTime(\TIME_NOW - 10)
+            ->setUser($author->getDecoratedObject())
+            ->setMessage('Test Response')
+            ->setIsDisabled(false)
+            ->create();
 
         CommentBuilder::forUpdate($comment)
             ->recalculateResponseIDs()

@@ -25,6 +25,7 @@ use wcf\util\MessageUtil;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Use `CommentResponseBuilder` and commands instead.
  *
  * @extends AbstractDatabaseObjectAction<CommentResponse, CommentResponseEditor>
  */

@@ -6,7 +6,7 @@ use wcf\command\reaction\DeleteObjectReactions;
 use wcf\data\comment\CommentBuilder;
 use wcf\data\comment\CommentList;
 use wcf\data\comment\response\CommentResponse;
-use wcf\data\comment\response\CommentResponseAction;
+use wcf\data\comment\response\CommentResponseBuilder;
 use wcf\data\object\type\ObjectType;
 use wcf\event\comment\response\ResponsesDeleted;
 use wcf\system\comment\CommentHandler;
@@ -58,8 +58,7 @@ final class DeleteResponses
         $this->deleteModerationQueues();
         $this->deleteMessageEmbeddedObjects();
 
-        $action = new CommentResponseAction($this->responseIDs, 'delete');
-        $action->executeAction();
+        CommentResponseBuilder::deleteAll($this->responseIDs);
 
         $this->updateCounters();
 

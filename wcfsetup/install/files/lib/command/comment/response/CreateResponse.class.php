@@ -2,16 +2,11 @@
 
 namespace wcf\command\comment\response;
 
-use wcf\data\comment\Comment;
 use wcf\data\comment\CommentBuilder;
 use wcf\data\comment\response\CommentResponse;
-use wcf\data\comment\response\CommentResponseAction;
-use wcf\data\comment\response\CommentResponseEditor;
-use wcf\data\user\User;
+use wcf\data\comment\response\CommentResponseBuilder;
 use wcf\event\comment\response\ResponseCreated;
 use wcf\system\event\EventHandler;
-use wcf\system\html\input\HtmlInputProcessor;
-use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\moderation\queue\ModerationQueueActivationManager;
 
 /**
@@ -25,38 +20,14 @@ use wcf\system\moderation\queue\ModerationQueueActivationManager;
 final class CreateResponse
 {
     public function __construct(
-        private readonly Comment $comment,
-        private readonly HtmlInputProcessor $htmlInputProcessor,
-        private readonly ?User $user = null,
-        private readonly string $username = '',
-        private readonly bool $isDisabled = false,
+        private readonly CommentResponseBuilder $builder,
     ) {}
 
     public function __invoke(): CommentResponse
     {
-        $action = new CommentResponseAction([], 'create', [
-            'data' => [
-                'commentID' => $this->comment->commentID,
-                'time' => \TIME_NOW,
-                'userID' => $this->user !== null ? $this->user->userID : null,
-                'username' => $this->user !== null ? $this->user->username : $this->username,
-                'message' => $this->htmlInputProcessor->getHtml(),
-                'enableHtml' => 1,
-                'isDisabled' => $this->isDisabled ? 1 : 0,
-            ]
-        ]);
-        $response = $action->executeAction()['returnValues'];
-        \assert($response instanceof CommentResponse);
+        $response = $this->builder->create();
 
         $this->updateResponseData($response);
-
-        $this->htmlInputProcessor->setObjectID($response->getObjectID());
-        if (MessageEmbeddedObjectManager::getInstance()->registerObjects($this->htmlInputProcessor)) {
-            (new CommentResponseEditor($response))->update([
-                'hasEmbeddedObjects' => 1,
-            ]);
-            $response = new CommentResponse($response->getObjectID());
-        }
 
         if ($response->isDisabled === 0) {
             new PublishResponse($response)();
@@ -67,19 +38,21 @@ final class CreateResponse
             );
         }
 
-        $event = new ResponseCreated($response);
-        EventHandler::getInstance()->fire($event);
+        EventHandler::getInstance()->fire(new ResponseCreated($response, $this->builder));
 
         return $response;
     }
 
     private function updateResponseData(CommentResponse $response): void
     {
-        $unfilteredResponseIDs = $this->comment->getUnfilteredResponseIDs();
+        $comment = $this->builder->comment;
+
+        $unfilteredResponseIDs = $comment->getUnfilteredResponseIDs();
         if (\count($unfilteredResponseIDs) < 5) {
             $unfilteredResponseIDs[] = $response->responseID;
         }
-        CommentBuilder::forUpdate($this->comment)
+
+        CommentBuilder::forUpdate($comment)
             ->setUnfilteredResponseIDs($unfilteredResponseIDs)
             ->incrementUnfilteredResponses(1)
             ->update();

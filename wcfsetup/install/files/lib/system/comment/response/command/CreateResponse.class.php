@@ -4,6 +4,7 @@ namespace wcf\system\comment\response\command;
 
 use wcf\data\comment\Comment;
 use wcf\data\comment\response\CommentResponse;
+use wcf\data\comment\response\CommentResponseBuilder;
 use wcf\data\user\User;
 use wcf\system\html\input\HtmlInputProcessor;
 
@@ -28,12 +29,18 @@ final class CreateResponse
 
     public function __invoke(): CommentResponse
     {
-        return new \wcf\command\comment\response\CreateResponse(
-            $this->comment,
-            $this->htmlInputProcessor,
-            $this->user,
-            $this->username,
-            $this->isDisabled
-        )();
+        $builder = CommentResponseBuilder::forCreate()
+            ->setComment($this->comment)
+            ->setTime(\TIME_NOW)
+            ->setHtmlInputProcessor($this->htmlInputProcessor)
+            ->setIsDisabled($this->isDisabled);
+
+        if ($this->user !== null) {
+            $builder->setUser($this->user);
+        } else {
+            $builder->setGuest($this->username);
+        }
+
+        return new \wcf\command\comment\response\CreateResponse($builder)();
     }
 }

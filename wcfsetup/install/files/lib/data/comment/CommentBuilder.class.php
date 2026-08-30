@@ -47,7 +47,7 @@ final class CommentBuilder extends DatabaseObjectBuilder
 
     /**
      * Sets the author of the comment. Comments written by a guest have no user,
-     * use `setUsername()` to store the name that was provided by the guest.
+     * use `setGuest()` to store the name that was provided by the guest.
      */
     public function setUser(User $user): static
     {

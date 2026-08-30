@@ -6,6 +6,7 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\comment\Comment;
+use wcf\data\comment\response\CommentResponseBuilder;
 use wcf\event\message\MessageSpamChecking;
 use wcf\http\Helper;
 use wcf\system\comment\CommentHandler;
@@ -70,13 +71,19 @@ final class CreateResponse implements IController
             $isDisabled = true;
         }
 
-        $response = new \wcf\command\comment\response\CreateResponse(
-            $comment,
-            $htmlInputProcessor,
-            WCF::getUser()->isGuest() ? null : WCF::getUser(),
-            $username,
-            $isDisabled,
-        )();
+        $builder = CommentResponseBuilder::forCreate()
+            ->setComment($comment)
+            ->setTime(\TIME_NOW)
+            ->setHtmlInputProcessor($htmlInputProcessor)
+            ->setIsDisabled($isDisabled);
+
+        if (WCF::getUser()->isGuest()) {
+            $builder->setGuest($username);
+        } else {
+            $builder->setUser(WCF::getUser());
+        }
+
+        $response = new \wcf\command\comment\response\CreateResponse($builder)();
 
         FloodControl::getInstance()->registerContent('com.woltlab.wcf.comment');
 

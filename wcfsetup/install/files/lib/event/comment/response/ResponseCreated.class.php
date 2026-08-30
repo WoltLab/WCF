@@ -3,6 +3,7 @@
 namespace wcf\event\comment\response;
 
 use wcf\data\comment\response\CommentResponse;
+use wcf\data\comment\response\CommentResponseBuilder;
 use wcf\event\IPsr14Event;
 
 /**
@@ -17,5 +18,6 @@ final class ResponseCreated implements IPsr14Event
 {
     public function __construct(
         public readonly CommentResponse $response,
+        public readonly CommentResponseBuilder $builder
     ) {}
 }
