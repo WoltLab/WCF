@@ -3,6 +3,7 @@
 namespace wcf\system\comment\command;
 
 use wcf\data\comment\Comment;
+use wcf\data\comment\CommentBuilder;
 use wcf\system\html\input\HtmlInputProcessor;
 
 /**
@@ -23,6 +24,9 @@ final class UpdateComment
 
     public function __invoke(): void
     {
-        new \wcf\command\comment\UpdateComment($this->comment, $this->htmlInputProcessor)();
+        new \wcf\command\comment\UpdateComment(
+            CommentBuilder::forUpdate($this->comment)
+                ->setHtmlInputProcessor($this->htmlInputProcessor)
+        )();
     }
 }

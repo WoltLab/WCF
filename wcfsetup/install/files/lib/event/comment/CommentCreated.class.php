@@ -3,6 +3,7 @@
 namespace wcf\event\comment;
 
 use wcf\data\comment\Comment;
+use wcf\data\comment\CommentBuilder;
 use wcf\event\IPsr14Event;
 
 /**
@@ -17,6 +18,6 @@ final class CommentCreated implements IPsr14Event
 {
     public function __construct(
         public readonly Comment $comment,
-    ) {
-    }
+        public readonly CommentBuilder $builder
+    ) {}
 }

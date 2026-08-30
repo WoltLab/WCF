@@ -6,6 +6,7 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\comment\Comment;
+use wcf\data\comment\CommentBuilder;
 use wcf\event\message\MessageSpamChecking;
 use wcf\http\Helper;
 use wcf\system\comment\CommentHandler;
@@ -51,8 +52,8 @@ final class UpdateComment implements IController
         }
 
         new \wcf\command\comment\UpdateComment(
-            $comment,
-            $htmlInputProcessor,
+            CommentBuilder::forUpdate($comment)
+                ->setHtmlInputProcessor($htmlInputProcessor)
         )();
 
         return new JsonResponse([]);

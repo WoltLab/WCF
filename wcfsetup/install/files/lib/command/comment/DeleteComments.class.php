@@ -3,7 +3,7 @@
 namespace wcf\command\comment;
 
 use wcf\data\comment\Comment;
-use wcf\data\comment\CommentAction;
+use wcf\data\comment\CommentBuilder;
 use wcf\data\comment\response\CommentResponseList;
 use wcf\data\object\type\ObjectType;
 use wcf\event\comment\CommentsDeleted;
@@ -58,8 +58,7 @@ final class DeleteComments
         $this->deleteMessageEmbeddedObjects();
         $this->deleteResponses();
 
-        $action = new CommentAction($this->commentIDs, 'delete');
-        $action->executeAction();
+        CommentBuilder::deleteAll($this->commentIDs);
 
         $this->updateCounters();
 

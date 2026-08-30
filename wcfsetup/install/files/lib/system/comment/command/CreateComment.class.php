@@ -3,6 +3,7 @@
 namespace wcf\system\comment\command;
 
 use wcf\data\comment\Comment;
+use wcf\data\comment\CommentBuilder;
 use wcf\data\object\type\ObjectType;
 use wcf\data\user\User;
 use wcf\system\html\input\HtmlInputProcessor;
@@ -29,13 +30,19 @@ final class CreateComment
 
     public function __invoke(): Comment
     {
-        return new \wcf\command\comment\CreateComment(
-            $this->objectType,
-            $this->objectID,
-            $this->htmlInputProcessor,
-            $this->user,
-            $this->username,
-            $this->isDisabled
-        )();
+        $builder = CommentBuilder::forCreate()
+            ->setObjectType($this->objectType)
+            ->setObjectID($this->objectID)
+            ->setTime(\TIME_NOW)
+            ->setHtmlInputProcessor($this->htmlInputProcessor)
+            ->setIsDisabled($this->isDisabled);
+
+        if ($this->user !== null) {
+            $builder->setUser($this->user);
+        } else {
+            $builder->setGuest($this->username);
+        }
+
+        return new \wcf\command\comment\CreateComment($builder)();
     }
 }

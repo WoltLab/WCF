@@ -2,10 +2,11 @@
 
 namespace wcf\system\moderation\queue\activation;
 
-use wcf\data\comment\CommentAction;
+use wcf\command\comment\PublishComment;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\system\moderation\queue\AbstractCommentCommentModerationQueueHandler;
+use wcf\system\moderation\queue\ModerationQueueActivationManager;
 
 /**
  * An implementation of IModerationQueueActivationHandler for comments.
@@ -26,8 +27,12 @@ class CommentCommentModerationQueueActivationHandler extends AbstractCommentComm
     public function enableContent(ModerationQueue $queue)
     {
         if ($this->isValid($queue->objectID) && $this->getComment($queue->objectID)->isDisabled !== 0) {
-            $commentAction = new CommentAction([$this->getComment($queue->objectID)], 'enable');
-            $commentAction->executeAction();
+            new PublishComment($this->getComment($queue->objectID))();
+
+            ModerationQueueActivationManager::getInstance()->removeModeratedContent(
+                'com.woltlab.wcf.comment.comment',
+                [$queue->objectID]
+            );
         }
     }
 

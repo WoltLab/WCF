@@ -3,7 +3,7 @@
 namespace wcf\command\comment;
 
 use wcf\data\comment\Comment;
-use wcf\data\comment\CommentEditor;
+use wcf\data\comment\CommentBuilder;
 use wcf\data\object\type\ObjectType;
 use wcf\event\comment\CommentPublished;
 use wcf\system\comment\CommentHandler;
@@ -38,9 +38,9 @@ final class PublishComment
     public function __invoke(): void
     {
         if ($this->comment->isDisabled !== 0) {
-            (new CommentEditor($this->comment))->update([
-                'isDisabled' => 0
-            ]);
+            CommentBuilder::forUpdate($this->comment)
+                ->setIsDisabled(false)
+                ->update();
         }
         $this->commentManager->updateCounter($this->comment->objectID, 1);
 

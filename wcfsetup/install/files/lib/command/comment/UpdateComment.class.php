@@ -2,12 +2,9 @@
 
 namespace wcf\command\comment;
 
-use wcf\data\comment\Comment;
-use wcf\data\comment\CommentAction;
+use wcf\data\comment\CommentBuilder;
 use wcf\event\comment\CommentUpdated;
 use wcf\system\event\EventHandler;
-use wcf\system\html\input\HtmlInputProcessor;
-use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 
 /**
  * Updates a comment.
@@ -20,28 +17,13 @@ use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 final class UpdateComment
 {
     public function __construct(
-        private readonly Comment $comment,
-        private readonly HtmlInputProcessor $htmlInputProcessor,
+        private readonly CommentBuilder $builder,
     ) {}
 
     public function __invoke(): void
     {
-        $data = [
-            'message' => $this->htmlInputProcessor->getHtml(),
-        ];
+        $comment = $this->builder->update();
 
-        $this->htmlInputProcessor->setObjectID($this->comment->getObjectID());
-        $hasEmbeddedObjects = MessageEmbeddedObjectManager::getInstance()->registerObjects($this->htmlInputProcessor);
-        if ((bool)$this->comment->hasEmbeddedObjects !== $hasEmbeddedObjects) {
-            $data['hasEmbeddedObjects'] = $this->comment->hasEmbeddedObjects !== 0 ? 0 : 1;
-        }
-
-        $action = new CommentAction([$this->comment], 'update', [
-            'data' => $data,
-        ]);
-        $action->executeAction();
-
-        $event = new CommentUpdated(new Comment($this->comment->commentID));
-        EventHandler::getInstance()->fire($event);
+        EventHandler::getInstance()->fire(new CommentUpdated($comment, $this->builder));
     }
 }

@@ -2,9 +2,7 @@
 
 namespace wcf\system\user\notification\event;
 
-use wcf\data\comment\Comment;
-use wcf\data\comment\CommentAction;
-use wcf\data\comment\CommentEditor;
+use wcf\data\comment\CommentBuilder;
 use wcf\data\comment\response\CommentResponse;
 use wcf\data\comment\response\CommentResponseAction;
 use wcf\data\object\type\ObjectTypeCache;
@@ -42,17 +40,17 @@ trait TTestableCommentResponseUserNotificationEvent
      */
     public static function createTestCommentResponse(UserProfile $recipient, UserProfile $author)
     {
-        /** @var Comment $comment */
-        $comment = (new CommentAction([], 'create', [
-            'data' => \array_merge([
-                'enableHtml' => 1,
-                'isDisabled' => 0,
-                'message' => '<p>Test Comment</p>',
-                'time' => \TIME_NOW - 10,
-                'userID' => $recipient->userID,
-                'username' => $recipient->username,
-            ], self::getTestCommentObjectData($recipient, $author)),
-        ]))->executeAction()['returnValues'];
+        $objectData = self::getTestCommentObjectData($recipient, $author);
+
+        $comment = CommentBuilder::forCreate()
+            ->setObjectType(ObjectTypeCache::getInstance()->getObjectType($objectData['objectTypeID']))
+            ->setObjectID($objectData['objectID'])
+            ->setTime(\TIME_NOW - 10)
+            ->setUser($recipient->getDecoratedObject())
+            ->setMessage('<p>Test Comment</p>')
+            ->setEnableHtml(true)
+            ->setIsDisabled(false)
+            ->create();
 
         /** @var ICommentManager $commentManager */
         $commentManager = ObjectTypeCache::getInstance()->getObjectType($comment->objectTypeID)->getProcessor();
@@ -70,9 +68,10 @@ trait TTestableCommentResponseUserNotificationEvent
             ],
         ]))->executeAction()['returnValues'];
 
-        $commentEditor = new CommentEditor($comment);
-        $commentEditor->updateResponseIDs();
-        $commentEditor->updateUnfilteredResponseIDs();
+        CommentBuilder::forUpdate($comment)
+            ->recalculateResponseIDs()
+            ->recalculateUnfilteredResponseIDs()
+            ->update();
 
         return $commentResponse;
     }

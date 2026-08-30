@@ -26,7 +26,6 @@ use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\html\upcast\HtmlUpcastProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\moderation\queue\ModerationQueueActivationManager;
-use wcf\system\reaction\ReactionHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 use wcf\system\user\notification\object\CommentUserNotificationObject;
@@ -44,6 +43,7 @@ use wcf\util\UserUtil;
  * @author  Alexander Ebert
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Use `CommentBuilder` and commands instead.
  *
  * @extends AbstractDatabaseObjectAction<Comment, CommentEditor>
  */

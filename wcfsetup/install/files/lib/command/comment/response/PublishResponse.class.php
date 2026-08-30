@@ -3,7 +3,7 @@
 namespace wcf\command\comment\response;
 
 use wcf\data\comment\Comment;
-use wcf\data\comment\CommentEditor;
+use wcf\data\comment\CommentBuilder;
 use wcf\data\comment\response\CommentResponse;
 use wcf\data\comment\response\CommentResponseEditor;
 use wcf\data\object\type\ObjectType;
@@ -47,10 +47,11 @@ final class PublishResponse
             ]);
         }
 
-        $commentEditor = new CommentEditor($this->comment);
-        $commentEditor->updateCounters(['responses' => 1]);
-        // do not prepend the response id as the approved response can appear anywhere
-        $commentEditor->updateResponseIDs();
+        CommentBuilder::forUpdate($this->comment)
+            ->incrementResponses(1)
+            // do not prepend the response id as the approved response can appear anywhere
+            ->recalculateResponseIDs()
+            ->update();
 
         $this->commentManager->updateCounter($this->comment->objectID, 1);
 

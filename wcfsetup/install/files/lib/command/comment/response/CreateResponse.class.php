@@ -3,7 +3,7 @@
 namespace wcf\command\comment\response;
 
 use wcf\data\comment\Comment;
-use wcf\data\comment\CommentEditor;
+use wcf\data\comment\CommentBuilder;
 use wcf\data\comment\response\CommentResponse;
 use wcf\data\comment\response\CommentResponseAction;
 use wcf\data\comment\response\CommentResponseEditor;
@@ -79,11 +79,9 @@ final class CreateResponse
         if (\count($unfilteredResponseIDs) < 5) {
             $unfilteredResponseIDs[] = $response->responseID;
         }
-        $unfilteredResponses = $this->comment->unfilteredResponses + 1;
-
-        (new CommentEditor($this->comment))->update([
-            'unfilteredResponseIDs' => \serialize($unfilteredResponseIDs),
-            'unfilteredResponses' => $unfilteredResponses,
-        ]);
+        CommentBuilder::forUpdate($this->comment)
+            ->setUnfilteredResponseIDs($unfilteredResponseIDs)
+            ->incrementUnfilteredResponses(1)
+            ->update();
     }
 }

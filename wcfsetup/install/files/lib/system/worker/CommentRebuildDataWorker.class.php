@@ -3,7 +3,7 @@
 namespace wcf\system\worker;
 
 use wcf\data\comment\Comment;
-use wcf\data\comment\CommentEditor;
+use wcf\data\comment\CommentBuilder;
 use wcf\data\comment\CommentList;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\html\input\HtmlInputProcessor;
@@ -52,17 +52,14 @@ final class CommentRebuildDataWorker extends AbstractLinearRebuildDataWorker
         WCF::getDB()->beginTransaction();
         /** @var Comment $comment */
         foreach ($this->objectList as $comment) {
-            $commentEditor = new CommentEditor($comment);
-
-            $commentEditor->updateResponseIDs();
-            $commentEditor->updateUnfilteredResponseIDs();
+            $builder = CommentBuilder::forUpdate($comment)
+                ->recalculateResponseIDs()
+                ->recalculateUnfilteredResponseIDs();
 
             BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
                 ',',
                 $this->getBulkUserPermissionValue($userPermissions, $comment->userID, 'user.comment.disallowedBBCodes')
             ));
-
-            $data = [];
 
             // update message
             if ($comment->enableHtml === 0) {
@@ -73,7 +70,7 @@ final class CommentRebuildDataWorker extends AbstractLinearRebuildDataWorker
                     true
                 );
 
-                $data['enableHtml'] = 1;
+                $builder->setEnableHtml(true);
             } else {
                 $this->getHtmlInputProcessor()->reprocess(
                     $comment->message,
@@ -82,14 +79,13 @@ final class CommentRebuildDataWorker extends AbstractLinearRebuildDataWorker
                 );
             }
 
-            if (MessageEmbeddedObjectManager::getInstance()->registerObjects($this->getHtmlInputProcessor(), true)) {
-                $data['hasEmbeddedObjects'] = 1;
-            } else {
-                $data['hasEmbeddedObjects'] = 0;
-            }
+            $builder->setHasEmbeddedObjects(
+                MessageEmbeddedObjectManager::getInstance()->registerObjects($this->getHtmlInputProcessor(), true)
+            );
 
-            $data['message'] = $this->getHtmlInputProcessor()->getHtml();
-            $commentEditor->update($data);
+            $builder
+                ->setMessage($this->getHtmlInputProcessor()->getHtml())
+                ->update();
         }
         WCF::getDB()->commitTransaction();
 

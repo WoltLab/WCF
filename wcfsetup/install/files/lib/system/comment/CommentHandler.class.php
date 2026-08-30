@@ -3,7 +3,7 @@
 namespace wcf\system\comment;
 
 use wcf\command\reaction\DeleteObjectReactions;
-use wcf\data\comment\CommentEditor;
+use wcf\data\comment\CommentBuilder;
 use wcf\data\comment\CommentList;
 use wcf\data\comment\response\CommentResponse;
 use wcf\data\comment\response\CommentResponseList;
@@ -207,7 +207,7 @@ class CommentHandler extends SingletonFactory
         }
 
         // delete comments / responses
-        CommentEditor::deleteAll($commentIDs);
+        CommentBuilder::deleteAll($commentIDs);
     }
 
     /**

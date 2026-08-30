@@ -3,7 +3,7 @@
 namespace wcf\command\comment\response;
 
 use wcf\command\reaction\DeleteObjectReactions;
-use wcf\data\comment\CommentEditor;
+use wcf\data\comment\CommentBuilder;
 use wcf\data\comment\CommentList;
 use wcf\data\comment\response\CommentResponse;
 use wcf\data\comment\response\CommentResponseAction;
@@ -132,11 +132,12 @@ final class DeleteResponses
         $comments = $commentList->getObjects();
 
         foreach ($comments as $comment) {
-            $commentEditor = new CommentEditor($comment);
-            $commentEditor->updateResponseIDs();
-            $commentEditor->updateUnfilteredResponseIDs();
-            $commentEditor->updateResponses();
-            $commentEditor->updateUnfilteredResponses();
+            CommentBuilder::forUpdate($comment)
+                ->recalculateResponseIDs()
+                ->recalculateUnfilteredResponseIDs()
+                ->recalculateResponses()
+                ->recalculateUnfilteredResponses()
+                ->update();
         }
 
         foreach ($this->responses as $response) {

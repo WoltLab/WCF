@@ -5,6 +5,7 @@ namespace wcf\system\endpoint\controller\core\comments;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\data\comment\CommentBuilder;
 use wcf\event\message\MessageSpamChecking;
 use wcf\http\Helper;
 use wcf\system\comment\CommentHandler;
@@ -73,14 +74,20 @@ final class CreateComment implements IController
             $isDisabled = true;
         }
 
-        $comment = new \wcf\command\comment\CreateComment(
-            $objectType,
-            $parameters->objectID,
-            $htmlInputProcessor,
-            WCF::getUser()->isGuest() ? null : WCF::getUser(),
-            $username,
-            $isDisabled,
-        )();
+        $builder = CommentBuilder::forCreate()
+            ->setObjectType($objectType)
+            ->setObjectID($parameters->objectID)
+            ->setTime(\TIME_NOW)
+            ->setHtmlInputProcessor($htmlInputProcessor)
+            ->setIsDisabled($isDisabled);
+
+        if (WCF::getUser()->isGuest()) {
+            $builder->setGuest($username);
+        } else {
+            $builder->setUser(WCF::getUser());
+        }
+
+        $comment = new \wcf\command\comment\CreateComment($builder)();
 
         FloodControl::getInstance()->registerContent('com.woltlab.wcf.comment');
 

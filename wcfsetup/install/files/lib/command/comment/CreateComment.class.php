@@ -3,14 +3,9 @@
 namespace wcf\command\comment;
 
 use wcf\data\comment\Comment;
-use wcf\data\comment\CommentAction;
-use wcf\data\comment\CommentEditor;
-use wcf\data\object\type\ObjectType;
-use wcf\data\user\User;
+use wcf\data\comment\CommentBuilder;
 use wcf\event\comment\CommentCreated;
 use wcf\system\event\EventHandler;
-use wcf\system\html\input\HtmlInputProcessor;
-use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\moderation\queue\ModerationQueueActivationManager;
 
 /**
@@ -24,40 +19,12 @@ use wcf\system\moderation\queue\ModerationQueueActivationManager;
 final class CreateComment
 {
     public function __construct(
-        private readonly ObjectType $objectType,
-        private readonly int $objectID,
-        private readonly HtmlInputProcessor $htmlInputProcessor,
-        private readonly ?User $user = null,
-        private readonly string $username = '',
-        private readonly bool $isDisabled = false,
+        private readonly CommentBuilder $builder,
     ) {}
 
     public function __invoke(): Comment
     {
-        $action = new CommentAction([], 'create', [
-            'data' => [
-                'objectTypeID' => $this->objectType->objectTypeID,
-                'objectID' => $this->objectID,
-                'time' => \TIME_NOW,
-                'userID' => $this->user !== null ? $this->user->userID : null,
-                'username' => $this->user !== null ? $this->user->username : $this->username,
-                'message' => $this->htmlInputProcessor->getHtml(),
-                'responses' => 0,
-                'responseIDs' => \serialize([]),
-                'enableHtml' => 1,
-                'isDisabled' => $this->isDisabled ? 1 : 0,
-            ]
-        ]);
-        $comment = $action->executeAction()['returnValues'];
-        \assert($comment instanceof Comment);
-
-        $this->htmlInputProcessor->setObjectID($comment->getObjectID());
-        if (MessageEmbeddedObjectManager::getInstance()->registerObjects($this->htmlInputProcessor)) {
-            (new CommentEditor($comment))->update([
-                'hasEmbeddedObjects' => 1,
-            ]);
-            $comment = new Comment($comment->getObjectID());
-        }
+        $comment = $this->builder->create();
 
         if ($comment->isDisabled === 0) {
             new PublishComment($comment)();
@@ -68,8 +35,7 @@ final class CreateComment
             );
         }
 
-        $event = new CommentCreated($comment);
-        EventHandler::getInstance()->fire($event);
+        EventHandler::getInstance()->fire(new CommentCreated($comment, $this->builder));
 
         return $comment;
     }
