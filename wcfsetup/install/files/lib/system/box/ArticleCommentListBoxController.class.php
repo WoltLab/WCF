@@ -4,7 +4,7 @@ namespace wcf\system\box;
 
 use wcf\data\article\Article;
 use wcf\data\article\category\ArticleCategory;
-use wcf\data\comment\ViewableCommentList;
+use wcf\data\comment\CommentList;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
@@ -23,7 +23,7 @@ class ArticleCommentListBoxController extends AbstractCommentListBoxController
     protected $objectTypeName = 'com.woltlab.wcf.articleComment';
 
     #[\Override]
-    protected function applyObjectTypeFilters(ViewableCommentList $commentList)
+    protected function applyFilters(CommentList $commentList): void
     {
         $accessibleCategoryIDs = ArticleCategory::getAccessibleCategoryIDs();
         if ($accessibleCategoryIDs !== []) {

@@ -2,7 +2,7 @@
 
 namespace wcf\system\box;
 
-use wcf\data\comment\ViewableCommentList;
+use wcf\data\comment\CommentList;
 use wcf\data\user\profile\comment\ViewableUserProfileComment;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
@@ -24,7 +24,7 @@ class ProfileCommentListBoxController extends AbstractCommentListBoxController
     protected $objectTypeName = 'com.woltlab.wcf.user.profileComment';
 
     #[\Override]
-    protected function applyObjectTypeFilters(ViewableCommentList $commentList)
+    protected function applyFilters(CommentList $commentList): void
     {
         $commentList->decoratorClassName = ViewableUserProfileComment::class;
 
