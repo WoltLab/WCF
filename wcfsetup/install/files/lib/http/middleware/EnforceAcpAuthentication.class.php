@@ -14,7 +14,7 @@ use wcf\acp\form\MultifactorAuthenticationForm;
 use wcf\acp\form\ReauthenticationForm;
 use wcf\acp\page\MediaPage;
 use wcf\action\AJAXInvokeAction;
-use wcf\data\acp\session\access\log\ACPSessionAccessLogEditor;
+use wcf\data\acp\session\access\log\ACPSessionAccessLogBuilder;
 use wcf\data\acp\session\log\ACPSessionLog;
 use wcf\data\acp\session\log\ACPSessionLogBuilder;
 use wcf\http\error\ErrorDetail;
@@ -139,24 +139,12 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
 
     private function logRequest(ServerRequestInterface $request): void
     {
-        // try to find existing session log
-        $sql = "SELECT  sessionLogID
-                FROM    wcf1_acp_session_log
-                WHERE   sessionID = ?
-                    AND lastActivityTime > ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            WCF::getSession()->sessionID,
-            (\TIME_NOW - 15 * 60),
-        ]);
-        $row = $statement->fetchArray();
-        $sessionLogID = (int)($row['sessionLogID'] ?? 0);
-        if ($sessionLogID !== 0) {
-            ACPSessionLogBuilder::forUpdate(new ACPSessionLog(null, ['sessionLogID' => $sessionLogID]))
+        $sessionLog = ACPSessionLog::getActiveLogBySessionID(WCF::getSession()->sessionID);
+        if ($sessionLog !== null) {
+            ACPSessionLogBuilder::forUpdate($sessionLog)
                 ->setLastActivityTime(\TIME_NOW)
                 ->update();
         } else {
-            // create new session log
             $sessionLog = ACPSessionLogBuilder::forCreate()
                 ->setSessionID(WCF::getSession()->sessionID)
                 ->setUser(WCF::getUser())
@@ -165,7 +153,6 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
                 ->setTime(\TIME_NOW)
                 ->setLastActivityTime(\TIME_NOW)
                 ->create();
-            $sessionLogID = $sessionLog->sessionLogID;
         }
 
         // Fetch request URI + request ID (if available).
@@ -189,14 +176,13 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
             }
         }
 
-        // save access
-        ACPSessionAccessLogEditor::create([
-            'sessionLogID' => $sessionLogID,
-            'ipAddress' => UserUtil::getIpAddress(),
-            'time' => \TIME_NOW,
-            'requestURI' => \substr($requestURI, 0, 255),
-            'requestMethod' => \substr($request->getMethod(), 0, 255),
-            'className' => \substr($className, 0, 255),
-        ]);
+        ACPSessionAccessLogBuilder::forCreate()
+            ->setSessionLog($sessionLog)
+            ->setIpAddress(UserUtil::getIpAddress())
+            ->setTime(\TIME_NOW)
+            ->setRequestURI(\substr($requestURI, 0, 255))
+            ->setRequestMethod(\substr($request->getMethod(), 0, 255))
+            ->setClassName(\substr($className, 0, 255))
+            ->create();
     }
 }

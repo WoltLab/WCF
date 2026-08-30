@@ -57,4 +57,22 @@ class ACPSessionLog extends DatabaseObject
     {
         return UserUtil::convertIPv6To4($this->ipAddress);
     }
+
+    /**
+     * @since 6.3
+     */
+    public static function getActiveLogBySessionID(string $sessionID): ?self
+    {
+        $sql = "SELECT  *
+                FROM    wcf1_acp_session_log
+                WHERE   sessionID = ?
+                    AND lastActivityTime > ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            $sessionID,
+            (\TIME_NOW - 15 * 60),
+        ]);
+
+        return $statement->fetchSingleObject(self::class);
+    }
 }
