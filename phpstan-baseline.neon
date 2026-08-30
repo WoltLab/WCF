@@ -463,6 +463,12 @@ parameters:
 			path: wcfsetup/install/files/lib/data/comment/response/CommentResponseAction.class.php
 
 		-
+			message: '#^Instanceof between wcf\\data\\comment\\response\\CommentResponse and wcf\\data\\DatabaseObject will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
+			count: 1
+			path: wcfsetup/install/files/lib/data/comment/response/CommentResponseCollection.class.php
+
+		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 2

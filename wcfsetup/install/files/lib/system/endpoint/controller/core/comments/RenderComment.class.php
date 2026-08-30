@@ -16,7 +16,6 @@ use wcf\system\endpoint\GetRequest;
 use wcf\system\endpoint\IController;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\reaction\ReactionHandler;
 use wcf\system\WCF;
 
@@ -115,13 +114,6 @@ final class RenderComment implements IController
      */
     private function renderComment(Comment $comment, ?CommentResponse $response = null, bool $messageOnly = false): array
     {
-        if ($comment->hasEmbeddedObjects !== 0) {
-            MessageEmbeddedObjectManager::getInstance()->loadObjects(
-                'com.woltlab.wcf.comment',
-                [$comment->getObjectID()]
-            );
-        }
-
         if ($messageOnly) {
             $returnValue = [
                 'template' => $comment->getFormattedMessage(),
@@ -188,13 +180,6 @@ final class RenderComment implements IController
 
     private function renderResponse(CommentResponse $response, bool $messageOnly = false): string
     {
-        if ($response->hasEmbeddedObjects !== 0) {
-            MessageEmbeddedObjectManager::getInstance()->loadObjects(
-                'com.woltlab.wcf.comment.response',
-                [$response->getObjectID()]
-            );
-        }
-
         if ($messageOnly) {
             return $response->getFormattedMessage();
         }

@@ -3,8 +3,6 @@
 namespace wcf\data\comment\response;
 
 use wcf\data\DatabaseObjectDecorator;
-use wcf\data\user\UserProfile;
-use wcf\system\cache\runtime\UserProfileRuntimeCache;
 
 /**
  * Provides methods to handle response data.
@@ -36,41 +34,6 @@ class StructuredCommentResponse extends DatabaseObjectDecorator
     public $editable = false;
 
     /**
-     * user profile of the comment response author
-     * @var ?UserProfile
-     */
-    public $userProfile;
-
-    /**
-     * Sets the user's profile.
-     *
-     * @return void
-     * @deprecated  3.0
-     */
-    public function setUserProfile(UserProfile $userProfile)
-    {
-        $this->userProfile = $userProfile;
-    }
-
-    /**
-     * Returns the user's profile.
-     *
-     * @return  UserProfile
-     */
-    public function getUserProfile()
-    {
-        if ($this->userProfile === null) {
-            if ($this->userID !== null) {
-                $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
-            } else {
-                $this->userProfile = UserProfile::getGuestUserProfile($this->username);
-            }
-        }
-
-        return $this->userProfile;
-    }
-
-    /**
      * Returns a structured response.
      *
      * @return ?StructuredCommentResponse
@@ -84,11 +47,6 @@ class StructuredCommentResponse extends DatabaseObjectDecorator
 
         // prepare structured response
         $response = new self($response);
-
-        // cache user profile
-        if ($response->userID !== null) {
-            UserProfileRuntimeCache::getInstance()->cacheObjectID($response->userID);
-        }
 
         return $response;
     }

@@ -7,9 +7,7 @@ use wcf\data\comment\response\StructuredCommentResponse;
 use wcf\data\like\object\LikeObject;
 use wcf\system\cache\runtime\CommentResponseRuntimeCache;
 use wcf\system\cache\runtime\CommentRuntimeCache;
-use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\comment\manager\ICommentManager;
-use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\reaction\ReactionHandler;
 
 /**
@@ -99,7 +97,7 @@ class StructuredCommentList extends CommentList
         $canModerate = $this->commentManager->canModerate($this->objectTypeID, $this->objectID);
 
         // fetch response ids
-        $responseIDs = $userIDs = [];
+        $responseIDs = [];
         /** @var StructuredComment $comment */
         foreach ($this->objects as $comment) {
             if ($this->minCommentTime === 0 || $comment->time < $this->minCommentTime) {
@@ -126,7 +124,6 @@ class StructuredCommentList extends CommentList
             $responseList->setObjectIDs(\array_keys($responseIDs));
             $responseList->readObjects();
 
-            $embeddedResponseIDs = [];
             foreach ($responseList as $response) {
                 $response = new StructuredCommentResponse($response);
 
@@ -140,28 +137,8 @@ class StructuredCommentList extends CommentList
                 $commentID = $responseIDs[$response->responseID];
                 $this->objects[$commentID]->addResponse($response);
 
-                if ($response->userID !== null) {
-                    $userIDs[] = $response->userID;
-                }
-
-                if ($response->hasEmbeddedObjects !== 0) {
-                    $embeddedResponseIDs[] = $response->getObjectID();
-                }
-
                 CommentResponseRuntimeCache::getInstance()->cacheResponse($response->getDecoratedObject());
             }
-
-            if ($embeddedResponseIDs !== []) {
-                MessageEmbeddedObjectManager::getInstance()->loadObjects(
-                    'com.woltlab.wcf.comment.response',
-                    $embeddedResponseIDs
-                );
-            }
-        }
-
-        // cache user ids
-        if ($userIDs !== []) {
-            UserProfileRuntimeCache::getInstance()->cacheObjectIDs(\array_unique($userIDs));
         }
     }
 

@@ -4,9 +4,7 @@ namespace wcf\data\comment\response;
 
 use wcf\data\comment\Comment;
 use wcf\data\like\object\LikeObject;
-use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\comment\manager\ICommentManager;
-use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\reaction\ReactionHandler;
 
 /**
@@ -67,32 +65,13 @@ class StructuredCommentResponseList extends CommentResponseList
     {
         parent::readObjects();
 
-        // get user ids
-        $embeddedObjectIDs = $userIDs = [];
         foreach ($this->objects as $response) {
             if ($this->minResponseTime === 0 || $response->time < $this->minResponseTime) {
                 $this->minResponseTime = $response->time;
             }
-            $userIDs[] = $response->userID;
-
-            if ($response->hasEmbeddedObjects !== 0) {
-                $embeddedObjectIDs[] = $response->getObjectID();
-            }
 
             $response->setIsDeletable($this->commentManager->canDeleteResponse($response->getDecoratedObject()));
             $response->setIsEditable($this->commentManager->canEditResponse($response->getDecoratedObject()));
-        }
-
-        // cache user ids
-        if ($userIDs !== []) {
-            UserProfileRuntimeCache::getInstance()->cacheObjectIDs(\array_unique($userIDs));
-        }
-
-        if ($embeddedObjectIDs !== []) {
-            MessageEmbeddedObjectManager::getInstance()->loadObjects(
-                'com.woltlab.wcf.comment.response',
-                $embeddedObjectIDs
-            );
         }
     }
 

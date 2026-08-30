@@ -2,15 +2,13 @@
 
 namespace wcf\data\comment\response;
 
-use wcf\system\cache\runtime\UserProfileRuntimeCache;
-use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
-
 /**
  * Represents a list of decorated comment response objects.
  *
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Use `CommentResponseList` instead.
  *
  * @method  ViewableCommentResponse     current()
  * @method  ViewableCommentResponse[]   getObjects()
@@ -24,34 +22,4 @@ class ViewableCommentResponseList extends CommentResponseList
      * @inheritDoc
      */
     public $decoratorClassName = ViewableCommentResponse::class;
-
-    #[\Override]
-    public function readObjects()
-    {
-        parent::readObjects();
-
-        if ($this->objects !== []) {
-            $embeddedObjectIDs = $userIDs = [];
-            foreach ($this->objects as $response) {
-                if ($response->userID !== null) {
-                    $userIDs[] = $response->userID;
-                }
-
-                if ($response->hasEmbeddedObjects !== 0) {
-                    $embeddedObjectIDs[] = $response->getObjectID();
-                }
-            }
-
-            if ($userIDs !== []) {
-                UserProfileRuntimeCache::getInstance()->cacheObjectIDs($userIDs);
-            }
-
-            if ($embeddedObjectIDs !== []) {
-                MessageEmbeddedObjectManager::getInstance()->loadObjects(
-                    'com.woltlab.wcf.comment.response',
-                    $embeddedObjectIDs
-                );
-            }
-        }
-    }
 }
