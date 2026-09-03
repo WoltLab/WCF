@@ -51,8 +51,9 @@
 	</instructions>
 
 	<instructions type="update" fromversion="6.2.6">
-		<instruction type="file" run="standalone">files_update.tar</instruction>
+		<instruction type="file" run="standalone">files_pre_update.tar</instruction>
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		<instruction type="language"/>
 		<instruction type="mediaProvider"/>
@@ -63,6 +64,6 @@
 		<instruction type="template">templates_update.tar</instruction>
 	</instructions>
 	<instructions type="update" fromversion="6.2.7 dev 2">
-		<void/>
+		<instruction type="file">files_update.tar</instruction>
 	</instructions>
 </package>
