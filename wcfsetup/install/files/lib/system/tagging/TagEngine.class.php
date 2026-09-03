@@ -330,7 +330,7 @@ class TagEngine extends SingletonFactory
                 WHERE       objectTypeID = ?
                         AND tagID IN (" . $placeholders . ")
                 GROUP BY    objectID
-                HAVING  COUNT(objectID) = ?";
+                HAVING      COUNT(objectID) = ?";
 
         return [
             'sql' => $sql,
