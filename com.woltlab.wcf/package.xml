@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>6.2.7 dev 2</version>
-		<date>2026-08-30</date>
+		<version>6.2.7</version>
+		<date>2026-09-03</date>
 	</packageinformation>
 
 	<authorinformation>
@@ -61,5 +61,8 @@
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
+	</instructions>
+	<instructions type="update" fromversion="6.2.7 dev 2">
+		<void/>
 	</instructions>
 </package>
