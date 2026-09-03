@@ -323,7 +323,7 @@ class TagEngine extends SingletonFactory
     {
         $parameters = \array_merge([$this->getObjectTypeID($objectType)], $tagIDs);
         $parameters[] = \count($tagIDs);
-        $placeholders = \implode(',', \array_map(static fn(int $tagID) => '?', $tagIDs));
+        $placeholders = \implode(',', \array_map(static fn() => '?', $tagIDs));
 
         $sql = "SELECT      objectID
                 FROM        wcf1_tag_to_object
