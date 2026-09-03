@@ -113,16 +113,59 @@ final class Helper
      */
     public static function mapQueryParameters(array $queryParameters, string $schema): mixed
     {
-        $mapper = (new MapperBuilder())
-            ->allowSuperfluousKeys()
-            ->allowScalarValueCasting()
-            ->allowUndefinedValues()
-            ->mapper();
+        $mapper = self::getQueryParameterMapperBuilder()->mapper();
 
         return $mapper->map(
             $schema,
             Source::array($queryParameters)
         );
+    }
+
+    /**
+     * Validates query parameters against the constructor signature of the
+     * provided class and invokes the constructor with the mapped arguments.
+     * No other properties of the class are mapped.
+     *
+     * @template T of object
+     * @param mixed[] $queryParameters
+     * @param class-string<T> $className
+     * @return T
+     * @throws MappingError
+     */
+    public static function mapQueryParametersToClass(array $queryParameters, string $className): object
+    {
+        $reflectionClass = new \ReflectionClass($className);
+        if (!$reflectionClass->isInstantiable()) {
+            throw new \InvalidArgumentException("Class '{$className}' is not instantiable.");
+        }
+
+        $constructor = $reflectionClass->getConstructor();
+        if ($constructor === null) {
+            return $reflectionClass->newInstance();
+        }
+
+        $object = $reflectionClass->newInstanceWithoutConstructor();
+        $constructorClosure = $constructor->getClosure($object);
+        \assert($constructorClosure !== null);
+
+        $arguments = self::getQueryParameterMapperBuilder()
+            ->argumentsMapper()
+            ->mapArguments(
+                $constructorClosure,
+                Source::array($queryParameters)
+            );
+
+        $constructorClosure(...$arguments);
+
+        return $object;
+    }
+
+    private static function getQueryParameterMapperBuilder(): MapperBuilder
+    {
+        return (new MapperBuilder())
+            ->allowSuperfluousKeys()
+            ->allowScalarValueCasting()
+            ->allowUndefinedValues();
     }
 
     /**

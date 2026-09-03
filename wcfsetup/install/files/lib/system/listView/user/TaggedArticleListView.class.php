@@ -16,7 +16,7 @@ use wcf\system\tagging\TagEngine;
 class TaggedArticleListView extends ArticleListView
 {
     public function __construct(
-        /** @var list<int> */
+        /** @var non-empty-list<positive-int> */
         public readonly array $tagIDs,
     ) {
         parent::__construct();
