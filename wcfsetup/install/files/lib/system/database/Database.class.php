@@ -548,6 +548,14 @@ abstract class Database
     }
 
     /**
+     * @since 6.2
+     */
+    public function isInsideTransaction(): bool
+    {
+        return $this->activeTransactions > 0;
+    }
+
+    /**
      * Returns true if this database type is supported.
      *
      * @return bool

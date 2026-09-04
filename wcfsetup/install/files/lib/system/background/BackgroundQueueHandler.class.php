@@ -5,6 +5,7 @@ namespace wcf\system\background;
 use wcf\data\user\User;
 use wcf\system\background\job\AbstractBackgroundJob;
 use wcf\system\background\job\AbstractUniqueBackgroundJob;
+use wcf\system\database\exception\DatabaseQueryExecutionException;
 use wcf\system\exception\ParentClassException;
 use wcf\system\session\SessionHandler;
 use wcf\system\SingletonFactory;
@@ -89,11 +90,20 @@ final class BackgroundQueueHandler extends SingletonFactory
                 $identifier = $job->identifier();
             }
 
-            $statement->execute([
-                \serialize($job),
-                $time,
-                $identifier,
-            ]);
+            try {
+                $statement->execute([
+                    \serialize($job),
+                    $time,
+                    $identifier,
+                ]);
+            } catch (DatabaseQueryExecutionException $e) {
+                // Two requests enqueuing the same unique job can deadlock on
+                // the duplicate check. InnoDB always leaves one of them alive
+                // to insert the row, so the victim has nothing left to do.
+                if ($e->getSqlState() !== '40001' || $identifier === null || WCF::getDB()->isInsideTransaction()) {
+                    throw $e;
+                }
+            }
         }
     }
 
