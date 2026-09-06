@@ -4,6 +4,8 @@ namespace wcf\command\article;
 
 use wcf\data\article\Article;
 use wcf\data\article\ArticleBuilder;
+use wcf\event\article\ArticleCreated;
+use wcf\system\event\EventHandler;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\ArticleUserNotificationObject;
@@ -54,6 +56,8 @@ final class CreateArticle
 
             new MarkArticleAsRead($article)();
         }
+
+        EventHandler::getInstance()->fire(new ArticleCreated($article, $this->builder));
 
         return $article;
     }

@@ -6,6 +6,8 @@ use wcf\data\article\Article;
 use wcf\data\article\ArticleBuilder;
 use wcf\data\article\ArticleVersionTracker;
 use wcf\data\article\content\ArticleContent;
+use wcf\event\article\ArticleUpdated;
+use wcf\system\event\EventHandler;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\ArticleUserNotificationObject;
@@ -78,6 +80,8 @@ final class UpdateArticle
         if ($newUserID !== $oldUserID) {
             $this->updateActivityEventAuthor($article->articleID, (int)$newUserID);
         }
+
+        EventHandler::getInstance()->fire(new ArticleUpdated($article, $this->builder));
 
         return $article;
     }
