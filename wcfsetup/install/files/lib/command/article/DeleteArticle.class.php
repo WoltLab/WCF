@@ -5,8 +5,10 @@ namespace wcf\command\article;
 use wcf\command\reaction\DeleteObjectReactions;
 use wcf\data\article\Article;
 use wcf\data\article\ArticleBuilder;
+use wcf\event\article\ArticleDeleted;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\comment\CommentHandler;
+use wcf\system\event\EventHandler;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\tagging\TagEngine;
@@ -74,5 +76,7 @@ final class DeleteArticle
                 $attachmentArticleContentIDs
             );
         }
+
+        EventHandler::getInstance()->fire(new ArticleDeleted($this->article));
     }
 }
