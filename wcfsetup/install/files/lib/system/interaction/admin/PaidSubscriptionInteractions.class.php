@@ -36,7 +36,7 @@ final class PaidSubscriptionInteractions extends AbstractInteractionProvider
                 PaidSubscriptionUserAddForm::class,
                 'wcf.acp.paidSubscription.user.add'
             ),
-            new DeleteInteraction("core/paidSubscriptions/%s"),
+            new DeleteInteraction("core/paid-subscriptions/%s"),
         ]);
 
         EventHandler::getInstance()->fire(

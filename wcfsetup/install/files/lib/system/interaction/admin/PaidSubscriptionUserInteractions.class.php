@@ -29,7 +29,7 @@ final class PaidSubscriptionUserInteractions extends AbstractInteractionProvider
         }
 
         $this->addInteractions([
-            new DeleteInteraction('core/paidSubscriptions/users/%s')
+            new DeleteInteraction('core/paid-subscriptions/users/%s')
         ]);
 
         EventHandler::getInstance()->fire(
