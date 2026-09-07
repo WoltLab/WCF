@@ -17,6 +17,6 @@ final class SourceCodeFormatter implements IFormOptionFormatter
     #[\Override]
     public function format(string $value, int $languageID, array $configuration): string
     {
-        return '<pre>' . StringUtil::encodeHTML($value) . '</pre>';
+        return '<pre style="overflow: auto">' . StringUtil::encodeHTML($value) . '</pre>';
     }
 }
