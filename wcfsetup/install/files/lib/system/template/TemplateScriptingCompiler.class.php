@@ -322,6 +322,8 @@ class TemplateScriptingCompiler
                 // as template scripting tags
                 $compiledTags[] = '{}';
             } else {
+                $this->assertContainsNoLiterals($templateTags[$i]);
+
                 $compiledTags[] = $this->compileTag($templateTags[$i], $identifier, $metaData);
             }
 
@@ -1382,10 +1384,39 @@ class TemplateScriptingCompiler
             $type = $this->getVariableType($variable);
         }
 
-        if ($type === 'variable') {
-            return '$this->v[\'' . \substr($variable, 1) . '\']';
-        } elseif ($type === 'string') {
+        // Quotes, numbers and other constants are replaced with `@@…@@` placeholders before a
+        // value is parsed and are reinserted verbatim after the compilation. A placeholder that
+        // is not a value of its own but concatenated with other characters (e.g. `$foo'…'` or
+        // `'…';code`) would smuggle its reinserted contents into a variable name or a string
+        // literal of the compiled template and thereby inject arbitrary code. Such placeholders
+        // never occur in legitimate input because they are always separated by an operator.
+        if ($type === 'string') {
+            // A string value must consist of exactly one placeholder.
+            if (!\preg_match('~^@@[0-9a-f]+@@$~', $variable)) {
+                throw new SystemException(
+                    static::formatSyntaxError(
+                        "unexpected '" . $variable . "'",
+                        $this->currentIdentifier,
+                        $this->currentLineNo
+                    )
+                );
+            }
+
             return $variable;
+        }
+
+        if (\str_contains($variable, '@@')) {
+            throw new SystemException(
+                static::formatSyntaxError(
+                    "unexpected '" . $variable . "'",
+                    $this->currentIdentifier,
+                    $this->currentLineNo
+                )
+            );
+        }
+
+        if ($type === 'variable') {
+            return '$this->v[\'' . \addcslashes(\substr($variable, 1), '\\\'') . '\']';
         } elseif (
             $allowConstants
             && ($variable === 'true'
@@ -1397,7 +1428,10 @@ class TemplateScriptingCompiler
         ) {
             return $variable;
         } else {
-            return "'" . $variable . "'";
+            // The value is emitted verbatim into a single quoted PHP string, therefore any
+            // backslash or single quote must be escaped. Otherwise a trailing backslash could
+            // escape the closing quote and inject arbitrary code into the compiled template.
+            return "'" . \addcslashes($variable, '\\\'') . "'";
         }
     }
 
@@ -1488,6 +1522,20 @@ class TemplateScriptingCompiler
                         if (\strpos($values[$i], '$') !== false) {
                             $result .= '{' . $this->compileSimpleVariable($values[$i], $variableType) . '}';
                         } else {
+                            // The property or method name is emitted verbatim into the compiled
+                            // template, therefore it must be a plain identifier. Otherwise
+                            // characters such as `;` or backticks could be used to break out of
+                            // the expression and inject arbitrary code (e.g. `{$foo->x;evil()}`).
+                            if (!\preg_match('~^' . $this->validVarnamePattern . '$~', $values[$i])) {
+                                throw new SystemException(
+                                    static::formatSyntaxError(
+                                        "unexpected '->" . $values[$i] . "' in tag '" . $tag . "'",
+                                        $this->currentIdentifier,
+                                        $this->currentLineNo
+                                    )
+                                );
+                            }
+
                             $result .= $values[$i];
                         }
 
@@ -1989,12 +2037,51 @@ class TemplateScriptingCompiler
     /**
      * Callback function used in replaceLiterals()
      *
+     * The contents of a `{literal}` tag are reinserted into the compiled template after the
+     * compilation has finished, therefore any php tags must be neutralized here. Otherwise
+     * they would end up as executable code in the compiled template.
+     *
+     * Neutralizing the php tags of each `{literal}` block on its own is not sufficient: the
+     * blocks are reinserted verbatim and adjacent blocks are placed right next to each other,
+     * therefore a php tag could be assembled from characters spread across multiple blocks
+     * (e.g. `{literal}<{/literal}{literal}?php{/literal}`). The contents are therefore emitted
+     * through an echo of a single quoted string, which is inert regardless of the surrounding
+     * characters because no byte can start or complete a php tag from within a string literal.
+     *
      * @param string[] $matches
      * @return  string
      */
     private function replaceLiteralsCallback(array $matches)
     {
-        return StringStack::pushToStringStack($matches[1], 'literal');
+        $literal = $matches[1];
+        $replacement = $literal === '' ? '' : "<?='" . \addcslashes($literal, '\\\'') . "';?>";
+
+        return StringStack::pushToStringStack($replacement, 'literal');
+    }
+
+    /**
+     * Throws if a template tag contains the placeholder of a `{literal}` block.
+     *
+     * `{literal}` blocks are extracted before the template tags are matched, therefore a
+     * placeholder can appear inside a template tag. Its contents are reinserted verbatim
+     * after the compilation has finished and would thus end up inside the generated PHP
+     * code, allowing arbitrary code to be injected.
+     *
+     * @throws SystemException
+     */
+    private function assertContainsNoLiterals(string $tag): void
+    {
+        foreach (\array_keys(StringStack::getStack('literal')) as $hash) {
+            if (\str_contains($tag, $hash)) {
+                throw new SystemException(
+                    static::formatSyntaxError(
+                        '{literal} must not be used inside of a template tag',
+                        $this->currentIdentifier,
+                        $this->currentLineNo
+                    )
+                );
+            }
+        }
     }
 
     /**

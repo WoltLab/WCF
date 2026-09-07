@@ -162,14 +162,11 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
                     }
 
                     if (!isset($data['data']['skipInnerContent']) || $data['data']['skipInnerContent'] !== true) {
+                        // The HTML encoded representation of the placeholder must not be
+                        // recognized, it is indistinguishable from untrusted input that
+                        // `replaceTag()` has correctly escaped.
                         if (\str_contains($string, '<!-- META_CODE_INNER_CONTENT -->')) {
                             return \str_replace('<!-- META_CODE_INNER_CONTENT -->', $matches['content'], $string);
-                        } elseif (\str_contains($string, '&lt;!-- META_CODE_INNER_CONTENT --&gt;')) {
-                            return \str_replace(
-                                '&lt;!-- META_CODE_INNER_CONTENT --&gt;',
-                                $matches['content'],
-                                $string
-                            );
                         }
                     }
 
@@ -294,7 +291,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
      * Parses an attribute string.
      *
      * @param string $attributes base64 and JSON encoded attributes
-     * @return array<string|int, string|int|bool|null> parsed attributes
+     * @return array<string|int, string|int|float|bool|null> parsed attributes
      */
     public function parseAttributes(string $attributes)
     {
@@ -306,6 +303,20 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
                 } catch (\JsonException) {
                     /* parse errors can occur if user provided malicious content - ignore them */
                     $parsedAttributes = [];
+                }
+
+                // Enforce the attributes to be a list containing nothing but
+                // scalar values plus null.
+                if (!\is_array($parsedAttributes) || !\array_is_list($parsedAttributes)) {
+                    $parsedAttributes = [];
+                } else {
+                    foreach ($parsedAttributes as $attribute) {
+                        if ($attribute !== null && !\is_scalar($attribute)) {
+                            $parsedAttributes = [];
+
+                            break;
+                        }
+                    }
                 }
 
                 return $parsedAttributes;

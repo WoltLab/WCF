@@ -51,7 +51,17 @@ final class DismissNotice
     private function dismissForGuest(Notice $notice): void
     {
         $sessionVar = WCF::getSession()->getVar('dismissedNotices') ?? '';
-        $dismissedNotices = @\unserialize($sessionVar) ?: [];
+        $dismissedNotices = @\unserialize($sessionVar);
+        if (!\is_array($dismissedNotices)) {
+            $dismissedNotices = [];
+        }
+
+        // Skipping the update for an already dismissed notice keeps repeated
+        // requests from growing the session variables without bounds.
+        if (\in_array($notice->noticeID, $dismissedNotices, true)) {
+            return;
+        }
+
         $dismissedNotices[] = $notice->noticeID;
 
         WCF::getSession()->register('dismissedNotices', \serialize($dismissedNotices));

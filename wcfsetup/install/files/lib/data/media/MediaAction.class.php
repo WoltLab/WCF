@@ -738,7 +738,9 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
     {
         WCF::getSession()->checkPermissions(['admin.content.cms.canManageMedia']);
 
-        $this->getSingleObject();
+        if (!$this->getSingleObject()->canManage()) {
+            throw new PermissionDeniedException();
+        }
 
         $this->parameters['__files']->validateFiles(
             new MediaReplaceUploadFileValidationStrategy($this->getSingleObject()->getDecoratedObject())

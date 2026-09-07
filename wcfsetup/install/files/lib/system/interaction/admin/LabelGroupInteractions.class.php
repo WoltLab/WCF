@@ -26,6 +26,10 @@ final class LabelGroupInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->hasPermission('admin.content.label.canManageLabel')) {
+            return;
+        }
+
         $this->addInteractions([
             new DeleteInteraction('core/labels/groups/%s'),
             new class(

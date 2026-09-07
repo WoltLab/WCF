@@ -12,6 +12,7 @@ use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\Psr15DialogForm;
+use wcf\system\WCF;
 
 /**
  * @author      Olaf Braun
@@ -85,6 +86,8 @@ abstract class AbstractModerationAction implements RequestHandlerInterface
 
     protected function assertCanEditQueueEntry(ModerationQueue $queue): void
     {
+        WCF::getSession()->checkPermissions(['mod.general.canUseModeration']);
+
         if (!$queue->canEdit()) {
             throw new PermissionDeniedException();
         }

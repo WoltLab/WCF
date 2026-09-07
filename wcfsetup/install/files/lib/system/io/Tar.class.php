@@ -159,11 +159,18 @@ class Tar implements IArchive
     public function getFileInfo(int|string $index)
     {
         if (!\is_int($index)) {
-            $index = $this->getIndexByFilename($index);
+            $filename = $index;
+            $index = $this->getIndexByFilename($filename);
+
+            // `false` would be cast to the array key `0`, silently returning
+            // the first entry of the archive for an unknown filename.
+            if ($index === false) {
+                throw new SystemException("Tar: could not find file '" . $filename . "' in archive");
+            }
         }
 
         if (!isset($this->contentList[$index])) {
-            throw new SystemException("Tar: could find file '" . $index . "' in archive");
+            throw new SystemException("Tar: could not find file '" . $index . "' in archive");
         }
 
         return $this->contentList[$index];
@@ -235,12 +242,12 @@ class Tar implements IArchive
         $this->file->seek($header['offset']);
 
         $fileSize = $header['size'];
-        $iterations = ceil($fileSize / $chunkSize);
+        $iterations = (int)\ceil($fileSize / $chunkSize);
         for ($i = 0; $i < $iterations; $i++) {
-            $length = $chunkSize;
-            if ($i + 1 >= $iterations) {
-                $length = $fileSize % $chunkSize;
-            }
+            // The length of the last chunk must not be derived from the modulo of
+            // the file size, because it is zero whenever the size is an exact
+            // multiple of the chunk size. Reading zero bytes is an error.
+            $length = \min($chunkSize, $fileSize - ($i * $chunkSize));
 
             yield $this->file->read($length);
         }
@@ -307,6 +314,13 @@ class Tar implements IArchive
         // Read the 512 bytes header
         $longFilename = null;
         while (\strlen($binaryData = $this->file->read(512)) !== 0) {
+            // A block of NUL bytes terminates the archive. Everything beyond it is
+            // invisible to every standard tar implementation, therefore it must not
+            // be treated as archive content either.
+            if (\trim($binaryData, "\0") === '') {
+                break;
+            }
+
             // read header
             $header = $this->readHeader($binaryData);
             if ($header === false) {

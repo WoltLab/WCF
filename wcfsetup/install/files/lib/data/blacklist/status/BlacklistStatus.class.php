@@ -26,7 +26,10 @@ use wcf\system\io\HttpFactory;
 class BlacklistStatus extends DatabaseObject
 {
     /**
-     * names of the deltas of a day, ordered by their time period
+     * The names of the columns that track the already fetched deltas, ordered by
+     * their time period. These are used as column names in SQL queries, therefore
+     * any value that originates from the remote server must be validated against
+     * this list.
      *
      * @since 6.3
      */

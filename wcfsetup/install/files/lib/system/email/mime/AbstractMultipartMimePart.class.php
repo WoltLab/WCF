@@ -36,6 +36,21 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
         $this->parts = new \SplObjectStorage();
     }
 
+    /**
+     * Deep clones the contained mime parts, otherwise a cloned email would
+     * share the recipient aware parts with the original one.
+     */
+    public function __clone(): void
+    {
+        /** @var \SplObjectStorage<AbstractMimePart, mixed> $parts */
+        $parts = new \SplObjectStorage();
+        foreach ($this->parts as $part) {
+            $parts[clone $part] = $this->parts[$part];
+        }
+
+        $this->parts = $parts;
+    }
+
     #[\Override]
     public function getContentTransferEncoding()
     {

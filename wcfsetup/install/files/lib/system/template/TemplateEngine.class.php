@@ -739,9 +739,8 @@ class TemplateEngine extends SingletonFactory
             \assert($output !== false);
         } finally {
             \ob_end_clean();
+            $this->disableSandbox();
         }
-
-        $this->disableSandbox();
 
         return $output;
     }
@@ -781,11 +780,11 @@ class TemplateEngine extends SingletonFactory
             $this->display($templateName, $application, false);
         } finally {
             \ob_end_clean();
-        }
 
-        // disable sandbox
-        if ($sandbox) {
-            $this->disableSandbox();
+            // disable sandbox
+            if ($sandbox) {
+                $this->disableSandbox();
+            }
         }
 
         $stream->rewind();
@@ -813,14 +812,17 @@ class TemplateEngine extends SingletonFactory
         }
 
         // get output
-        \ob_start();
-        eval('?>' . $compiledSource);
-        $output = \ob_get_contents();
-        \ob_end_clean();
+        try {
+            \ob_start();
+            eval('?>' . $compiledSource);
+            $output = \ob_get_contents();
+        } finally {
+            \ob_end_clean();
 
-        // disable sandbox
-        if ($sandbox) {
-            $this->disableSandbox();
+            // disable sandbox
+            if ($sandbox) {
+                $this->disableSandbox();
+            }
         }
 
         return $output;

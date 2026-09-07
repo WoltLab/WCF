@@ -31,6 +31,18 @@ final class FontManager extends SingletonFactory
 
     private TreeMapper $mapper;
 
+    /**
+     * The files of a family are written into a directory that is served by the
+     * web server, therefore the name must not be controlled by the remote host.
+     */
+    private const FONT_FILE_NAME = '~^[a-zA-Z0-9][a-zA-Z0-9._\[\],-]*\.(?:woff2|woff|ttf|otf|txt)\z~';
+
+    /**
+     * The name of a family is used as a path component, therefore it must not
+     * be able to escape the directory that holds the downloaded families.
+     */
+    private const FAMILY_NAME = '~^[a-zA-Z0-9][a-zA-Z0-9 _-]*\z~';
+
     #[\Override]
     protected function init(): void
     {
@@ -49,6 +61,10 @@ final class FontManager extends SingletonFactory
      */
     public function getCssFilename(string $family): string
     {
+        if (!self::isValidFamily($family)) {
+            throw new \InvalidArgumentException("Invalid font family '" . $family . "' given.");
+        }
+
         return \WCF_DIR . 'font/families/' . $family . '/font.css';
     }
 
@@ -58,7 +74,21 @@ final class FontManager extends SingletonFactory
      */
     public function isFamilyDownloaded(string $family): bool
     {
+        if (!self::isValidFamily($family)) {
+            return false;
+        }
+
         return \is_readable($this->getCssFilename($family));
+    }
+
+    /**
+     * Returns whether the name of the family is well-formed.
+     *
+     * @since 6.2
+     */
+    public static function isValidFamily(string $family): bool
+    {
+        return \preg_match(self::FAMILY_NAME, $family) === 1;
     }
 
     /**
@@ -85,6 +115,10 @@ final class FontManager extends SingletonFactory
      */
     public function downloadFamily(string $family): array
     {
+        if (!self::isValidFamily($family)) {
+            throw new FontDownloadFailed("Unable to download font family '{$family}'.", 'notFound');
+        }
+
         try {
             $request = new Request('GET', \rawurlencode($family) . '/manifest.json');
             $response = $this->http->send($request);
@@ -115,7 +149,7 @@ final class FontManager extends SingletonFactory
 
             $preloadRequests = "";
             foreach ($manifest['font_files'] as $filename) {
-                if ($filename !== \basename($filename)) {
+                if ($filename !== \basename($filename) || !\preg_match(self::FONT_FILE_NAME, $filename)) {
                     throw new \InvalidArgumentException("Invalid filename '" . $filename . "' given.");
                 }
 

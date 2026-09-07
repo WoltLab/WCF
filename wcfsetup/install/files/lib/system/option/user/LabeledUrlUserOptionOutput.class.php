@@ -20,7 +20,13 @@ class LabeledUrlUserOptionOutput implements IUserOptionOutput
     public function getOutput(User $user, UserOption $option, string $value)
     {
         if ($value !== '') {
-            return StringUtil::getAnchorTag(self::getURL($option, $value), $value, true, true);
+            $url = self::getURL($option, $value);
+
+            if (!\preg_match('~^https?://~i', $url)) {
+                return StringUtil::encodeHTML($value);
+            }
+
+            return StringUtil::getAnchorTag($url, $value, true, true);
         }
 
         return '';

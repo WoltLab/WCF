@@ -52,6 +52,41 @@ class UserGroupAction extends AbstractDatabaseObjectAction
     protected $requireACP = ['copy', 'create', 'delete', 'update'];
 
     #[\Override]
+    public function validateCreate()
+    {
+        // This method has been unused for over a decade. We cannot remove its
+        // definition because it would be implicitly enabled due to the
+        // `$permissionsCreate` property which we cannot nullify to preserve
+        // the backwards-compatibility.
+        throw new PermissionDeniedException();
+    }
+
+    #[\Override]
+    public function validateUpdate()
+    {
+        // This method has been unused for over a decade. We cannot remove its
+        // definition because it would be implicitly enabled due to the
+        // `$permissionsUpdate` property which we cannot nullify to preserve
+        // the backwards-compatibility.
+        throw new PermissionDeniedException();
+    }
+
+    #[\Override]
+    public function validateDelete()
+    {
+        parent::validateDelete();
+
+        foreach ($this->getObjects() as $object) {
+            if (!$object->isDeletable()) {
+                throw new PermissionDeniedException();
+            }
+        }
+    }
+
+    /**
+     * @return  UserGroup
+     */
+    #[\Override]
     public function create()
     {
         /** @var UserGroup $group */

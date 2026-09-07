@@ -5,6 +5,7 @@ namespace wcf\system\message\embedded\object;
 use wcf\data\article\AccessibleArticleList;
 use wcf\data\article\Article;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\util\StringUtil;
 
 /**
  * Parses embedded articles and outputs their link or title.
@@ -69,10 +70,14 @@ class ArticleMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedO
 
         \assert($article instanceof Article);
 
+        if (!$article->canRead()) {
+            return null;
+        }
+
         $return = (!empty($attributes['return'])) ? $attributes['return'] : 'link';
         switch ($return) {
             case 'title':
-                return $article->getTitle();
+                return StringUtil::encodeHTML($article->getTitle());
 
             case 'link':
             default:

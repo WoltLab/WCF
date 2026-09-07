@@ -632,9 +632,11 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
             foreach ($this->getXPath()->query('//*[@style]') as $element) {
                 $tmp = \array_filter(\explode(';', $element->getAttribute('style')));
                 foreach ($tmp as $style) {
-                    $property = \explode(':', $style, 2)[0];
-                    if (\in_array($property, $inlineStyles, true) && !\in_array($property, $result, true)) {
-                        $result[] = $property;
+                    $property = \mb_strtolower(StringUtil::trim(\explode(':', $style, 2)[0]));
+
+                    $bbcode = \array_search($property, $inlineStyles, true);
+                    if ($bbcode !== false && !\in_array($bbcode, $result, true)) {
+                        $result[] = $bbcode;
                     }
                 }
             }

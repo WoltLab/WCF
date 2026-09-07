@@ -98,7 +98,7 @@ final class IpAddress implements \Stringable
 
         $mask = '';
         for ($i = 0; $i < $bytes; $i++, $maskBits -= 8) {
-            $mask .= \chr((0xff << (8 - \min(8, $maskBits))) % 256);
+            $mask .= \chr((0xff << (8 - \min(8, $maskBits))) & 0xff);
         }
 
         $packed = \inet_pton((string)$ipAddress);

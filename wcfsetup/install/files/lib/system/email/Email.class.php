@@ -190,7 +190,7 @@ class Email implements \Stringable
             return;
         }
 
-        if (!\preg_match('(^' . EmailGrammar::getGrammar('id-left') . '$)', $messageID)) {
+        if (!\preg_match('(^' . EmailGrammar::getGrammar('id-left') . '$)D', $messageID)) {
             throw new \DomainException("The given message id '" . $messageID . "' is invalid. Note: You must not specify the part right of the at sign (@).");
         }
         if (\strlen($messageID) > 200) {
@@ -225,7 +225,7 @@ class Email implements \Stringable
      */
     public function addInReplyTo(string $messageID)
     {
-        if (!\preg_match('(^' . EmailGrammar::getGrammar('msg-id') . '$)', $messageID)) {
+        if (!\preg_match('(^' . EmailGrammar::getGrammar('msg-id') . '$)D', $messageID)) {
             throw new \DomainException("The given reference '" . $messageID . "' is invalid.");
         }
 
@@ -260,7 +260,7 @@ class Email implements \Stringable
      */
     public function addReferences(string $messageID)
     {
-        if (!\preg_match('(^' . EmailGrammar::getGrammar('msg-id') . '$)', $messageID)) {
+        if (!\preg_match('(^' . EmailGrammar::getGrammar('msg-id') . '$)D', $messageID)) {
             throw new \DomainException("The given reference '" . $messageID . "' is invalid.");
         }
 
@@ -302,7 +302,7 @@ class Email implements \Stringable
             return;
         }
 
-        if (!\preg_match('(^' . EmailGrammar::getGrammar('list-label') . '$)', $listId)) {
+        if (!\preg_match('(^' . EmailGrammar::getGrammar('list-label') . '$)D', $listId)) {
             throw new \DomainException("The given list id '" . $listId . "' is invalid.");
         }
         if (\strlen($listId) > 200) {
@@ -312,7 +312,7 @@ class Email implements \Stringable
         }
         if ($humanReadable !== null) {
             $humanReadable = EmailGrammar::encodeHeader($humanReadable);
-            if (!\preg_match('(^' . EmailGrammar::getGrammar('phrase') . '$)', $humanReadable)) {
+            if (!\preg_match('(^' . EmailGrammar::getGrammar('phrase') . '$)D', $humanReadable)) {
                 throw new \DomainException("The given human readable name '" . $humanReadable . "' is invalid.");
             }
         }
@@ -484,7 +484,7 @@ class Email implements \Stringable
     public function addHeader(string $header, string $value)
     {
         $header = \mb_strtolower($header);
-        if (!\str_starts_with($header, 'x-')) {
+        if (!\preg_match('/^x-[a-z0-9!#$%&\'*+\-.^_`|~]+$/D', $header)) {
             throw new \DomainException(
                 "The header '{$header}' may not be set. You may only set user defined headers (starting with 'X-')."
             );
@@ -612,6 +612,17 @@ class Email implements \Stringable
     }
 
     /**
+     * Deep clones the body, otherwise every clone of this email would share a
+     * single body and thus a single recipient (see getJobs()).
+     */
+    public function __clone(): void
+    {
+        if ($this->body !== null) {
+            $this->body = clone $this->body;
+        }
+    }
+
+    /**
      * Sets the body of this email.
      *
      * @param AbstractMimePart $body
@@ -681,8 +692,9 @@ class Email implements \Stringable
                 $mail->addHeader('X-WoltLab-Suite-Recipient', $recipient['mailbox']->getUser()->username);
             }
 
-            if ($this->body instanceof IRecipientAwareMimePart) {
-                $this->body->setRecipient($recipient['mailbox']);
+            $body = $mail->getBody();
+            if ($body instanceof IRecipientAwareMimePart) {
+                $body->setRecipient($recipient['mailbox']);
             }
 
             $data = [

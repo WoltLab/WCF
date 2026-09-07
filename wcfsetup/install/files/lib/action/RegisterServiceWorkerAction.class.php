@@ -54,6 +54,12 @@ final class RegisterServiceWorkerAction implements RequestHandlerInterface
 
             return new EmptyResponse();
         }
+
+        // Push endpoints are always https; anything else is a request forgery attempt.
+        if (\strtolower((string)\parse_url($parameters['endpoint'], \PHP_URL_SCHEME)) !== 'https') {
+            return new TextResponse('Unsupported', 400);
+        }
+
         $serviceWorkerList->readObjects();
 
         // Check if this service worker is already registered.

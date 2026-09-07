@@ -2,7 +2,7 @@
 
 namespace wcf\system\page\handler;
 
-use wcf\data\article\ArticleList;
+use wcf\data\article\AccessibleArticleList;
 use wcf\data\page\Page;
 use wcf\data\user\online\UserOnline;
 use wcf\system\cache\runtime\ArticleContentRuntimeCache;
@@ -36,15 +36,23 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
     public function isVisible(?int $objectID = null)
     {
         $article = ArticleRuntimeCache::getInstance()->getObject($objectID);
+        if ($article === null || !$article->canRead()) {
+            return false;
+        }
 
-        return $article !== null && $article->canRead();
+        // Multilingual articles are not necessarily available in the active
+        // language, there is no link that could be used in this case.
+        return $article->getArticleContent() !== null;
     }
 
     #[\Override]
     public function lookup(string $searchString)
     {
-        $articleList = new ArticleList();
-        $articleList->sqlSelects = "(
+        $articleList = new AccessibleArticleList();
+        if ($articleList->sqlSelects !== '') {
+            $articleList->sqlSelects .= ',';
+        }
+        $articleList->sqlSelects .= "(
             SELECT  title
             FROM    wcf1_article_content
             WHERE   articleID = article.articleID

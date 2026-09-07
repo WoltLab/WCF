@@ -114,7 +114,7 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController
             } else {
                 $output = $this->html;
                 foreach ($regex->getMatches() as $name => $value) {
-                    $output = \str_replace('{$' . $name . '}', $value, $output);
+                    $output = \str_replace('{$' . $name . '}', StringUtil::encodeHTML($value), $output);
                 }
 
                 return $this->getOutputForUserConsent($url, $output);

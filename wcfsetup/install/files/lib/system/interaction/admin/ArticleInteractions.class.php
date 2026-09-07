@@ -4,6 +4,7 @@ namespace wcf\system\interaction\admin;
 
 use wcf\acp\action\ToggleArticleI18nAction;
 use wcf\data\article\Article;
+use wcf\data\article\ViewableArticle;
 use wcf\event\interaction\admin\ArticleInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
@@ -30,15 +31,37 @@ final class ArticleInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (
+            \MODULE_ARTICLE === 0
+            || (
+                !WCF::getSession()->hasPermission('admin.content.article.canManageArticle')
+                && !WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles')
+                && !WCF::getSession()->hasPermission('admin.content.article.canContributeArticle')
+            )
+        ) {
+            return;
+        }
+
         $this->addInteractions([
             new LinkableObjectInteraction('view', 'wcf.acp.article.button.viewArticle'),
-            new SoftDeleteInteraction('core/articles/%s/soft-delete', function (Article $article): bool {
+            new SoftDeleteInteraction('core/articles/%s/soft-delete', function (ViewableArticle|Article $article): bool {
+                if (!$article->canDelete()) {
+                    return false;
+                }
+
                 return $article->isDeleted !== 1;
             }),
-            new RestoreInteraction('core/articles/%s/restore', function (Article $article): bool {
+            new RestoreInteraction('core/articles/%s/restore', function (ViewableArticle|Article $article): bool {
+                if (!$article->canDelete()) {
+                    return false;
+                }
+
                 return $article->isDeleted === 1;
             }),
-            new DeleteInteraction('core/articles/%s', function (Article $article): bool {
+            new DeleteInteraction('core/articles/%s', function (ViewableArticle|Article $article): bool {
+                if (!$article->canDelete()) {
+                    return false;
+                }
                 return $article->isDeleted === 1;
             }),
             new RpcInteraction(

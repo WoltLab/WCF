@@ -479,7 +479,7 @@ function printException($e)
 													$keys = array_keys($item);
 													if (count($keys) > 5) return "[ " . count($keys) . " items ]";
 													return '[ ' . implode(', ', array_map(function ($item) {
-														return $item . ' => ';
+														return htmlspecialchars($item) . ' => ';
 													}, $keys)) . ']';
 												case 'object':
 													return get_class($item);
@@ -898,11 +898,18 @@ class Tar
 	public function getFileInfo($fileIndex)
 	{
 		if (!is_int($fileIndex)) {
-			$fileIndex = $this->getIndexByFilename($fileIndex);
+			$filename = $fileIndex;
+			$fileIndex = $this->getIndexByFilename($filename);
+
+			// `false` would be cast to the array key `0`, silently returning
+			// the first entry of the archive for an unknown filename.
+			if ($fileIndex === false) {
+				throw new SystemException("Tar: could not find file '" . $filename . "' in archive");
+			}
 		}
 
 		if (!isset($this->contentList[$fileIndex])) {
-			throw new SystemException("Tar: could find file '" . $fileIndex . "' in archive");
+			throw new SystemException("Tar: could not find file '" . $fileIndex . "' in archive");
 		}
 		return $this->contentList[$fileIndex];
 	}
@@ -910,7 +917,7 @@ class Tar
 	public function getIndexByFilename($filename)
 	{
 		foreach ($this->contentList as $index => $file) {
-			if ($file['filename'] == $filename) {
+			if ($file['filename'] === $filename) {
 				return $index;
 			}
 		}
@@ -1000,6 +1007,13 @@ class Tar
 		// Read the 512 bytes header
 		$longFilename = null;
 		while (strlen($binaryData = $this->file->read(512)) != 0) {
+			// A block of NUL bytes terminates the archive. Everything beyond it is
+			// invisible to every standard tar implementation, therefore it must not
+			// be treated as archive content either.
+			if (trim($binaryData, "\0") === '') {
+				break;
+			}
+
 			// read header
 			$header = $this->readHeader($binaryData);
 			if ($header === false) {

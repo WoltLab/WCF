@@ -57,9 +57,20 @@ final class ImportBlacklist
             return;
         }
 
+        // The reported type is used as a column name below, therefore it must be
+        // validated against the list of known columns before it is used.
+        $deltaType = $data['meta']['type'];
+        if (!\in_array($deltaType, BlacklistStatus::DELTAS, true)) {
+            logThrowable(new \UnexpectedValueException(
+                \sprintf("Received an unknown delta type '%s' for '%s'.", $deltaType, $nextDelta)
+            ));
+
+            return;
+        }
+
         $this->saveEntries($data);
 
-        $this->updateStatus($data['meta']['date'], $data['meta']['type']);
+        $this->updateStatus($data['meta']['date'], $deltaType);
     }
 
     /**

@@ -26,6 +26,10 @@ class UserProfileInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->hasPermission('user.profile.canViewUserProfile')) {
+            return;
+        }
+
         $this->addInteractions([
             new class(
                 'ignore',

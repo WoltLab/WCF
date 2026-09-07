@@ -366,53 +366,38 @@ final class StringUtil
 
     /**
      * Takes a numeric HTML entity value and returns the appropriate UTF-8 bytes.
+     *
+     * Returns an empty string if the value has no representation in UTF-8.
      */
     public static function getCharacter(int $dec): string
     {
-        if ($dec < 128) {
-            $utf = \chr($dec);
-        } elseif ($dec < 2048) {
-            $utf = \chr(192 + (($dec - ($dec % 64)) / 64));
-            $utf .= \chr(128 + ($dec % 64));
-        } else {
-            $utf = \chr(224 + (($dec - ($dec % 4096)) / 4096));
-            $utf .= \chr(128 + ((($dec % 4096) - ($dec % 64)) / 64));
-            $utf .= \chr(128 + ($dec % 64));
+        // Reject anything that has no representation in UTF-8, previously these
+        // values were silently truncated into malformed byte sequences.
+        if ($dec < 0 || $dec > 0x10FFFF || ($dec >= 0xD800 && $dec <= 0xDFFF)) {
+            return '';
         }
 
-        return $utf;
+        return \mb_chr($dec, 'UTF-8');
     }
 
     /**
-     * Converts UTF-8 to Unicode
-     * @see     http://www1.tip.nl/~t876506/utf8tbl.html
+     * Takes the UTF-8 bytes of a character and returns its code point.
+     *
+     * Only the first character is evaluated, trailing bytes are ignored.
+     * Returns `0` if the string does not start with a valid UTF-8 character,
+     * previously overlong sequences, surrogates and the obsolete five and six
+     * byte forms were decoded into a code point of their own.
      */
     public static function getCharValue(string $c): int
     {
-        $ud = 0;
-        if (\ord($c[0]) <= 127) {
-            $ud = \ord($c[0]);
-        }
-        if (\ord($c[0]) >= 192 && \ord($c[0]) <= 223) {
-            $ud = (\ord($c[0]) - 192) * 64 + (\ord($c[1]) - 128);
-        }
-        if (\ord($c[0]) >= 224 && \ord($c[0]) <= 239) {
-            $ud = (\ord($c[0]) - 224) * 4096 + (\ord($c[1]) - 128) * 64 + (\ord($c[2]) - 128);
-        }
-        if (\ord($c[0]) >= 240 && \ord($c[0]) <= 247) {
-            $ud = (\ord($c[0]) - 240) * 262144 + (\ord($c[1]) - 128) * 4096 + (\ord($c[2]) - 128) * 64 + (\ord($c[3]) - 128);
-        }
-        if (\ord($c[0]) >= 248 && \ord($c[0]) <= 251) {
-            $ud = (\ord($c[0]) - 248) * 16777216 + (\ord($c[1]) - 128) * 262144 + (\ord($c[2]) - 128) * 4096 + (\ord($c[3]) - 128) * 64 + (\ord($c[4]) - 128);
-        }
-        if (\ord($c[0]) >= 252 && \ord($c[0]) <= 253) {
-            $ud = (\ord($c[0]) - 252) * 1073741824 + (\ord($c[1]) - 128) * 16777216 + (\ord($c[2]) - 128) * 262144 + (\ord($c[3]) - 128) * 4096 + (\ord($c[4]) - 128) * 64 + (\ord($c[5]) - 128);
-        }
-        if (\ord($c[0]) >= 254) {
-            $ud = false; // error
+        // `mb_ord()` rejects an empty string with a `ValueError`.
+        if ($c === '') {
+            return 0;
         }
 
-        return $ud;
+        // `mb_ord()` returns `false` for a string that does not start with a valid
+        // UTF-8 character, which the return type of this method maps to `0`.
+        return \mb_ord($c, 'UTF-8');
     }
 
     /**
@@ -443,8 +428,11 @@ final class StringUtil
      */
     public static function isUTF8(string $string): bool
     {
-        return !!\preg_match('/^(
-				[\x09\x0A\x0D\x20-\x7E]*		# ASCII
+        // Every alternative is uniquely identified by its leading byte, therefore
+        // the repetition can be possessive. A non-possessive quantifier caused the
+        // backtrack limit to be exhausted for any input that is not valid UTF-8.
+        return !!\preg_match('/^(?:
+				[\x09\x0A\x0D\x20-\x7E]			# ASCII
 			|	[\xC2-\xDF][\x80-\xBF]			# non-overlong 2-byte
 			|	\xE0[\xA0-\xBF][\x80-\xBF]		# excluding overlongs
 			|	[\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}	# straight 3-byte
@@ -452,7 +440,7 @@ final class StringUtil
 			|	\xF0[\x90-\xBF][\x80-\xBF]{2}		# planes 1-3
 			|	[\xF1-\xF3][\x80-\xBF]{3}		# planes 4-15
 			|	\xF4[\x80-\x8F][\x80-\xBF]{2}		# plane 16
-			)*$/x', $string);
+			)*+$/x', $string);
     }
 
     /**
@@ -476,7 +464,8 @@ final class StringUtil
      */
     public static function stripHTML(string $string): string
     {
-        $string = \preg_replace('~<!--(.*?)-->~', '', $string);
+        // The 's' modifier is required, because comments may span multiple lines.
+        $string = \preg_replace('~<!--.*?-->~s', '', $string);
 
         return \preg_replace(
             // Note the possessive quantifier '*+' at the end of the

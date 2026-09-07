@@ -354,8 +354,7 @@ final class FileProcessor extends SingletonFactory
      */
     public function hasReachedUploadLimit(IFileProcessor $fileProcessor, array $context): bool
     {
-        $isReplacement = (bool)($context['__replace'] ?? false);
-        if ($isReplacement || $fileProcessor->isSingleFile()) {
+        if ($fileProcessor->isSingleFile()) {
             return false;
         }
 
@@ -367,6 +366,16 @@ final class FileProcessor extends SingletonFactory
         $maximumCount = $fileProcessor->getMaximumCount($context);
         if ($maximumCount === null) {
             return false;
+        }
+
+        // The client announces a replacement so that the file being replaced,
+        // which is still present at this point, does not occupy the last slot.
+        // This claim cannot be verified, therefore it grants a single extra
+        // slot instead of lifting the limit. The limit is re-evaluated against
+        // the persisted count on every upload, capping the abuse of this flag
+        // at one file in total.
+        if ((bool)($context['__replace'] ?? false)) {
+            $maximumCount++;
         }
 
         $sql = "SELECT  COUNT(*)

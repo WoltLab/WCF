@@ -20,13 +20,17 @@ final class MediaBBCode extends AbstractBBCode
         $content = StringUtil::trim($openingTag['attributes'][0]);
         $alignment = $openingTag['attributes'][1] ?? 'none';
 
+        if (!\preg_match('~^https?://~i', $content)) {
+            return StringUtil::encodeHTML($content);
+        }
+
         /** @var HtmlBBCodeParser $parser */
         if ($parser->getOutputType() === 'text/html') {
             foreach (BBCodeMediaProvider::getCache() as $provider) {
                 if ($provider->matches($content)) {
                     return \sprintf(
                         '<div class="mediaBBCodeContainer%s">%s</div>',
-                        \ucfirst($alignment),
+                        StringUtil::encodeHTML(\ucfirst($alignment)),
                         $provider->getOutput($content)
                     );
                 }

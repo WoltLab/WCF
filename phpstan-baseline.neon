@@ -589,12 +589,6 @@ parameters:
 			path: wcfsetup/install/files/lib/data/poll/PollAction.class.php
 
 		-
-			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
-			identifier: function.strict
-			count: 1
-			path: wcfsetup/install/files/lib/data/poll/PollAction.class.php
-
-		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 2
@@ -981,7 +975,7 @@ parameters:
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
-			count: 2
+			count: 1
 			path: wcfsetup/install/files/lib/system/acl/ACLHandler.class.php
 
 		-
@@ -1025,12 +1019,6 @@ parameters:
 			identifier: empty.notAllowed
 			count: 2
 			path: wcfsetup/install/files/lib/system/background/job/UnfurlUrlBackgroundJob.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
-			count: 1
-			path: wcfsetup/install/files/lib/system/bbcode/AttachmentBBCode.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
@@ -1881,7 +1869,7 @@ parameters:
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
-			count: 3
+			count: 2
 			path: wcfsetup/install/files/lib/system/html/output/node/HtmlOutputNodeImg.class.php
 
 		-
@@ -2655,7 +2643,7 @@ parameters:
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
-			count: 3
+			count: 2
 			path: wcfsetup/install/files/lib/system/request/RequestHandler.class.php
 
 		-

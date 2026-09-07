@@ -357,7 +357,7 @@ class UiReactionHandler {
 
         const reactionTypeItemSpan = document.createElement("span");
         reactionTypeItemSpan.className = "reactionTypeButtonTitle";
-        reactionTypeItemSpan.innerHTML = reactionType.title;
+        reactionTypeItemSpan.textContent = reactionType.title;
 
         reactionTypeItem.innerHTML = reactionType.renderedIcon;
 

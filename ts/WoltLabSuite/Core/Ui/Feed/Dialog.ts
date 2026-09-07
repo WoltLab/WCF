@@ -35,7 +35,7 @@ function openDialog(event: Event): void {
   const alternative = event.currentTarget as HTMLAnchorElement;
   const linkWithAccessToken = alternative.href;
 
-  const linkWithoutAccessToken = linkWithAccessToken.replace(/(\\?|&)at=[^&]*&?/, "$1").replace(/(\?|&)$/, "");
+  const linkWithoutAccessToken = linkWithAccessToken.replace(/(\?|&)at=[^&]*&?/, "$1").replace(/(\?|&)$/, "");
 
   // When `FORCE_LOGIN` is active, an RSS reader cannot access the feed without an
   // access token. The anonymous link is therefore useless and must not be shown.

@@ -29,6 +29,10 @@ final class ModerationQueueInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
+        if (!WCF::getSession()->hasPermission('mod.general.canUseModeration')) {
+            return;
+        }
+
         $this->addInteractions([
             new FormBuilderDialogInteraction(
                 "assign-user",

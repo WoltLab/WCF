@@ -73,6 +73,9 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
      */
     public function dismiss()
     {
+        // The validated object is used instead of the request parameter, because
+        // `getSingleObject()` only requires that exactly one of the submitted ids
+        // resolves to an existing notice, not that only one id was submitted.
         $editor = $this->getSingleObject();
 
         if ($editor->isDismissible !== 0) {
@@ -80,7 +83,7 @@ class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
         }
 
         return [
-            'noticeID' => \reset($this->objectIDs),
+            'noticeID' => $editor->noticeID,
         ];
     }
 

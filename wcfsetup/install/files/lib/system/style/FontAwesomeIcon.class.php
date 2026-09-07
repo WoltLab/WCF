@@ -7,6 +7,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\style\exception\InvalidIconFormat;
 use wcf\system\style\exception\InvalidIconSize;
 use wcf\system\style\exception\UnknownIcon;
+use wcf\util\StringUtil;
 
 /**
  * Represents an icon for Font Awesome.
@@ -72,14 +73,14 @@ final class FontAwesomeIcon implements IFontAwesomeIcon, \Stringable
             return \sprintf(
                 '<fa-icon size="%d" name="%s" solid></fa-icon>',
                 $size,
-                $this->name,
+                StringUtil::encodeHTML($this->name),
             );
         }
 
         return \sprintf(
             '<fa-icon size="%d" name="%s"></fa-icon>',
             $size,
-            $this->name,
+            StringUtil::encodeHTML($this->name),
         );
     }
 

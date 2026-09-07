@@ -43,7 +43,7 @@
 			
 			<div id="pageHeaderFacade" class="pageHeaderFacade">
 				<div class="layoutBoundary">
-					{include file='pageHeaderLogo'}
+					{include file='pageHeaderLogo' __disableAds=true}
 				</div>
 			</div>
 		</header>

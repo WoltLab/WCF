@@ -3,7 +3,7 @@
 		require(['WoltLabSuite/Core/Language/Input', 'WoltLabSuite/Core/Language/Text'], function(LanguageInput, LanguageText) {
 			{jsphrase name='wcf.global.button.disabledI18n'}
 
-			var availableLanguages = { {implode from=$availableLanguages key=languageID item=languageName}{$languageID}: '{$languageName}'{/implode} };
+			var availableLanguages = { {implode from=$availableLanguages key=languageID item=languageName}{$languageID}: '{unsafe:$languageName|encodeJS}'{/implode} };
 			var values = { {implode from=$i18nValues[$elementIdentifier] key=languageID item=value}'{$languageID}': '{$value}'{/implode} };
 			
 			var element = elById('{unsafe:$elementIdentifier|encodeJS}');

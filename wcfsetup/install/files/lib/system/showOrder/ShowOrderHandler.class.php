@@ -35,7 +35,7 @@ final class ShowOrderHandler
     }
 
     /**
-     * @return ShowOrderItem[]
+     * @return list<ShowOrderItem>
      */
     public function getSortedItemsFromRequest(ServerRequestInterface $request): array
     {
@@ -43,20 +43,20 @@ final class ShowOrderHandler
             $request->getParsedBody(),
             <<<'VALUES'
                 array{
-                    values: list<positive-int|string>
+                    values: list<positive-int|numeric-string>
                 }
                 VALUES,
         );
 
-        /** @var list<positive-int> $values */
-        $values = \array_unique($result['values']);
+        // The ids must be normalized before the deduplication, because a value that is
+        // submitted both as an int and as a string would otherwise survive twice.
+        $values = \array_unique(\array_map(\intval(...), $result['values']));
 
-        $values = \array_filter($values, function (int $value) {
-            return \array_find($this->items, static fn(ShowOrderItem $item) => $item->id === $value) !== null;
-        });
-
-        return \array_map(function (int $value) {
+        $items = \array_filter(\array_map(function (int $value) {
             return \array_find($this->items, static fn(ShowOrderItem $item) => $item->id === $value);
-        }, $values);
+        }, $values));
+
+        // The callers rely on the result being a list, because they iterate it by position.
+        return \array_values($items);
     }
 }

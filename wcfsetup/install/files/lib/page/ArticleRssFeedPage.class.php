@@ -22,6 +22,11 @@ use wcf\util\StringUtil;
  */
 class ArticleRssFeedPage extends AbstractRssFeedPage
 {
+    /**
+     * @inheritDoc
+     */
+    public $neededModules = ['MODULE_ARTICLE'];
+
     public ArticleCategory $category;
     public int $categoryID = 0;
     public AccessibleArticleList $articles;

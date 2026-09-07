@@ -324,7 +324,7 @@ class StyleAddForm extends AbstractForm
         }
 
         // ignore everything except well-formed rgba()
-        $regEx = new Regex('rgba\(\d{1,3}, \d{1,3}, \d{1,3}, (1|1\.00?|0|0?\.[0-9]{1,2})\)');
+        $regEx = new Regex('^rgba\(\d{1,3}, \d{1,3}, \d{1,3}, (1|1\.00?|0|0?\.[0-9]{1,2})\)\z');
         foreach ($colors as $variableName) {
             if (isset($_POST[$variableName]) && $regEx->match($_POST[$variableName]) !== 0) {
                 $this->variables[$variableName] = $_POST[$variableName];
@@ -360,6 +360,15 @@ class StyleAddForm extends AbstractForm
                 )) ? \abs(\intval($_POST[$variableName])) : StringUtil::trim($_POST[$variableName]);
             }
         }
+
+        // Ignore font families that are not part of the predefined list.
+        if (
+            isset($this->variables['wcfFontFamilyFallback'])
+            && !isset($this->availableFontFamilies[$this->variables['wcfFontFamilyFallback']])
+        ) {
+            unset($this->variables['wcfFontFamilyFallback']);
+        }
+
         $this->variables['useFluidLayout'] = isset($_POST['useFluidLayout']) ? 1 : 0;
 
         // style data

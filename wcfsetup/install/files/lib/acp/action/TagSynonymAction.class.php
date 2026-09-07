@@ -17,6 +17,7 @@ use wcf\system\form\builder\field\RadioButtonFormField;
 use wcf\system\form\builder\Psr15DialogForm;
 use wcf\command\tag\SetTagSynonym;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Dialog form for setting tags as synonyms.
@@ -97,7 +98,7 @@ final class TagSynonymAction implements RequestHandlerInterface
                     RadioButtonFormField::create('tagID')
                         ->options(
                             \array_map(
-                                static fn(Tag $tag) => $tag->name,
+                                static fn(Tag $tag) => StringUtil::encodeHTML($tag->name),
                                 $tags,
                             )
                         )

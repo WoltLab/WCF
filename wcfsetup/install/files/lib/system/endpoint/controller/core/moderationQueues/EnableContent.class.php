@@ -7,11 +7,13 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueEditor;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\moderation\queue\ModerationQueueActivationManager;
+use wcf\system\WCF;
 
 /**
  * Enables the content associated with the moderation queue entry with the given ID.
@@ -40,7 +42,14 @@ final class EnableContent implements IController
 
     private function assertContentCanBeEnabled(ModerationQueue $queue): void
     {
+        WCF::getSession()->checkPermissions(['mod.general.canUseModeration']);
+
         if (!$queue->canEdit()) {
+            throw new PermissionDeniedException();
+        }
+
+        $definition = ObjectTypeCache::getInstance()->getObjectType($queue->objectTypeID)->getDefinition();
+        if ($definition->definitionName !== 'com.woltlab.wcf.moderation.activation') {
             throw new PermissionDeniedException();
         }
     }

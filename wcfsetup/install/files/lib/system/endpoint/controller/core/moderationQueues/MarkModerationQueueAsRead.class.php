@@ -11,6 +11,7 @@ use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\moderation\queue\ModerationQueueManager;
+use wcf\system\WCF;
 
 /**
  * Marks the moderation queue with the given ID as read.
@@ -39,6 +40,8 @@ final class MarkModerationQueueAsRead implements IController
 
     private function assertQueueCanBeMarkedAsRead(ModerationQueue $queue): void
     {
+        WCF::getSession()->checkPermissions(['mod.general.canUseModeration']);
+
         if (!$queue->canEdit()) {
             throw new PermissionDeniedException();
         }

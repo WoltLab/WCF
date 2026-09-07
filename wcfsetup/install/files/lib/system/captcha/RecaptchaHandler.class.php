@@ -3,6 +3,7 @@
 namespace wcf\system\captcha;
 
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientExceptionInterface;
 use wcf\system\exception\UserInputException;
@@ -77,9 +78,14 @@ class RecaptchaHandler implements ICaptchaHandler
         } elseif (isset($_POST['parameters']['recaptcha-type'])) {
             $this->challenge = $_POST['parameters']['recaptcha-type'];
         }
-        if (isset($_POST['g-recaptcha-response'])) {
+        // The response is attacker-controlled, an array would be encoded as
+        // `response[0]` and thus verify nothing at all.
+        if (isset($_POST['g-recaptcha-response']) && \is_string($_POST['g-recaptcha-response'])) {
             $this->response = $_POST['g-recaptcha-response'];
-        } elseif (isset($_POST['parameters']['g-recaptcha-response'])) {
+        } elseif (
+            isset($_POST['parameters']['g-recaptcha-response'])
+            && \is_string($_POST['parameters']['g-recaptcha-response'])
+        ) {
             $this->response = $_POST['parameters']['g-recaptcha-response'];
         }
     }
@@ -102,7 +108,13 @@ class RecaptchaHandler implements ICaptchaHandler
             throw new UserInputException('recaptchaString', 'false');
         }
 
-        $type = $this->challenge ?: 'v3';
+        // The length is bounded well above the size of a legitimate token to avoid
+        // relaying arbitrary amounts of data to the API.
+        if (\strlen($this->response) > 8192) {
+            throw new UserInputException('recaptchaString', 'false');
+        }
+
+        $type = $this->getType();
 
         $key = match ($type) {
             'v3' => \RECAPTCHA_PRIVATEKEY_V3,
@@ -111,16 +123,20 @@ class RecaptchaHandler implements ICaptchaHandler
             default => throw new UserInputException('recaptchaString', 'false'),
         };
 
+        // The parameters are sent in the request body, because the exception message of a
+        // failed request contains the request URI, leaking the secret into the log file.
         $request = new Request(
-            'GET',
-            \sprintf(
-                'https://www.recaptcha.net/recaptcha/api/siteverify?%s',
-                \http_build_query([
-                    'secret' => $key,
-                    'response' => $this->response,
-                    'remoteip' => UserUtil::getIpAddress(),
-                ], '', '&')
-            )
+            'POST',
+            'https://www.recaptcha.net/recaptcha/api/siteverify',
+            [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ],
+            \http_build_query([
+                'secret' => $key,
+                'response' => $this->response,
+                'remoteip' => UserUtil::getIpAddress(),
+            ], '', '&', \PHP_QUERY_RFC1738)
         );
 
         try {
@@ -137,12 +153,43 @@ class RecaptchaHandler implements ICaptchaHandler
             } else {
                 throw new UserInputException('recaptchaString', 'false');
             }
+        } catch (BadResponseException $e) {
+            // An error response from the API is not a failure of our connectivity,
+            // therefore the captcha must not be accepted.
+            \wcf\functions\exception\logThrowable($e);
+
+            throw new UserInputException('recaptchaString', 'false');
         } catch (ClientExceptionInterface $e) {
             // log error, but accept captcha
             \wcf\functions\exception\logThrowable($e);
         }
 
         WCF::getSession()->register('recaptchaDone', true);
+    }
+
+    /**
+     * Returns the type of the challenge that is expected for the current
+     * configuration.
+     *
+     * The type selects the secret key and decides whether the score of a v3
+     * response is evaluated, therefore it must not be derived from the request.
+     * The order matches the one used by the template to render the challenge.
+     */
+    private function getType(): string
+    {
+        if (\RECAPTCHA_PUBLICKEY_V3 !== '' && \RECAPTCHA_PRIVATEKEY_V3 !== '') {
+            return 'v3';
+        }
+
+        if (\RECAPTCHA_PUBLICKEY !== '' && \RECAPTCHA_PRIVATEKEY !== '') {
+            if (\RECAPTCHA_PUBLICKEY_INVISIBLE !== '' && \RECAPTCHA_PRIVATEKEY_INVISIBLE !== '') {
+                return 'invisible';
+            }
+
+            return 'v2';
+        }
+
+        throw new UserInputException('recaptchaString', 'false');
     }
 
     private function getHttpClient(): ClientInterface

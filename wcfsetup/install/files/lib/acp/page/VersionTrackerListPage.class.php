@@ -132,14 +132,14 @@ class VersionTrackerListPage extends AbstractPage
         if (isset($_REQUEST['oldID'])) {
             $this->oldID = \intval($_REQUEST['oldID']);
             $this->old = VersionTracker::getInstance()->getVersion($this->objectType, $this->oldID);
-            if ($this->old === null) {
+            if ($this->old === null || $this->old->objectID !== $this->objectID) {
                 throw new IllegalLinkException();
             }
 
             if (isset($_REQUEST['newID']) && $_REQUEST['newID'] !== 'current') {
                 $this->newID = \intval($_REQUEST['newID']);
                 $this->new = VersionTracker::getInstance()->getVersion($this->objectType, $this->newID);
-                if ($this->new === null) {
+                if ($this->new === null || $this->new->objectID !== $this->objectID) {
                     throw new IllegalLinkException();
                 }
             }

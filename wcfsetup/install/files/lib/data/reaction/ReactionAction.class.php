@@ -254,10 +254,21 @@ class ReactionAction extends AbstractDatabaseObjectAction
         $this->readInteger('reactionTypeID', true);
         $this->readString('targetType');
 
+        if (!WCF::getSession()->hasPermission('user.like.canViewLike')) {
+            throw new PermissionDeniedException();
+        }
+
         $user = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
 
         if ($user === null) {
             throw new IllegalLinkException();
+        }
+
+        if (
+            $user->userID !== WCF::getUser()->userID
+            && !WCF::getSession()->hasPermission('user.profile.canViewUserProfile')
+        ) {
+            throw new PermissionDeniedException();
         }
 
         if ($user->isProtected()) {

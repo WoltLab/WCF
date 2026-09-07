@@ -206,7 +206,8 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
         $isStaticFile = $fileExtension !== 'bin';
 
         return \sprintf(
-            '_data/%s/files/%s/%s/',
+            '%s_data/%s/files/%s/%s/',
+            \WCF_DIR,
             $isStaticFile ? 'public' : 'private',
             $folderA,
             $folderB,

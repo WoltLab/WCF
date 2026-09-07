@@ -26,6 +26,11 @@ class StyleGlobalValuesForm extends AbstractForm
     public $activeMenuItem = 'wcf.acp.menu.link.style.globalValues';
 
     /**
+     * @inheritDoc
+     */
+    public $neededPermissions = ['admin.style.canManageStyle'];
+
+    /**
      * global SCSS styles
      * @var string
      */

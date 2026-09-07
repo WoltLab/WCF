@@ -55,7 +55,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
     </button>
   </div>
   <div class="quoteBoxContent htmlContent">
-    ${quote.rawMessage ?? (0, StringUtil_1.escapeHTML)(quote.message ?? "")}
+    ${quote.rawMessage !== null ? (quote.message ?? "") : (0, StringUtil_1.escapeHTML)(quote.message ?? "")}
   </div>
 </div>
         `);

@@ -6,6 +6,7 @@ use wcf\data\language\category\LanguageCategoryList;
 use wcf\data\language\item\LanguageItem;
 use wcf\data\language\item\LanguageItemAction;
 use wcf\data\language\item\LanguageItemList;
+use wcf\data\language\Language;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
@@ -92,7 +93,7 @@ class LanguageItemAddForm extends AbstractFormBuilderForm
                     ->required()
                     ->maximumLength(191)
                     ->addValidator(new FormFieldValidator('format', static function (TextFormField $formField) {
-                        if (!\preg_match('~^[A-Za-z0-9-_]+(\.[A-Za-z0-9-_]+){2,}$~', $formField->getSaveValue(), $m)) {
+                        if (!\preg_match(Language::PHRASE_PATTERN, $formField->getSaveValue(), $m)) {
                             $formField->addValidationError(
                                 new FormFieldValidationError(
                                     'format',

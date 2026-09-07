@@ -51,14 +51,32 @@ class Zip extends File implements IArchive
         return $this->centralDirectory['files'];
     }
 
+    /**
+     * Resolves the name of a file into its offset within the archive.
+     *
+     * @throws  SystemException
+     */
+    private function toOffset(int|string $index): int
+    {
+        if (\is_int($index)) {
+            return $index;
+        }
+
+        $offset = $this->getIndexByFilename($index);
+
+        // `false` would be cast to the offset `0`, silently returning the
+        // first entry of the archive for an unknown filename.
+        if ($offset === false) {
+            throw new SystemException("Zip: could not find file '" . $index . "' in archive");
+        }
+
+        return $offset;
+    }
+
     #[\Override]
     public function getFileInfo(int|string $index)
     {
-        if (!\is_int($index)) {
-            $index = $this->getIndexByFilename($index);
-        }
-
-        $info = $this->readFile($index);
+        $info = $this->readFile($this->toOffset($index));
 
         return $info['header'];
     }
@@ -85,9 +103,7 @@ class Zip extends File implements IArchive
     #[\Override]
     public function extractToString(int|string $index)
     {
-        if (!\is_int($index)) {
-            $index = $this->getIndexByFilename($index);
-        }
+        $index = $this->toOffset($index);
 
         try {
             $file = $this->readFile($index);
@@ -104,9 +120,7 @@ class Zip extends File implements IArchive
     #[\Override]
     public function extract(int|string $index, string $destination)
     {
-        if (!\is_int($index)) {
-            $index = $this->getIndexByFilename($index);
-        }
+        $index = $this->toOffset($index);
 
         try {
             $file = $this->readFile($index);

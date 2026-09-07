@@ -27,8 +27,15 @@ final class JsonBody implements MiddlewareInterface
         $hasValidJson = false;
         if ($this->contentTypeIsJson($request)) {
             try {
-                $data = \json_decode($request->getBody(), true, flags: \JSON_THROW_ON_ERROR);
+                $data = \json_decode((string)$request->getBody(), true, flags: \JSON_THROW_ON_ERROR);
             } catch (\JsonException) {
+                return new TextResponse('Failed to decode the request body.', 400);
+            }
+
+            // A syntactically valid body that decodes into a scalar value (e.g. `0`,
+            // `null` or `"foo"`) cannot be passed to `withParsedBody()`, hence it is
+            // rejected like a malformed one.
+            if (!\is_array($data)) {
                 return new TextResponse('Failed to decode the request body.', 400);
             }
 
