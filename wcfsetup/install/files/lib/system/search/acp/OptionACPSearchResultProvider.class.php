@@ -32,7 +32,6 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
      * @var list<string>
      */
     private array $restrictedCategoryNames = [
-        'general.cache',
         'general.mail.send',
         'general.page.seo',
         'general.system.cookie',
