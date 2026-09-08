@@ -12,9 +12,8 @@ use wcf\data\DatabaseObjectList;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @template TDatabaseObject of DatabaseObject
- * @template TDatabaseObjectList of DatabaseObjectList
- * @implements ISitemapObjectObjectType<TDatabaseObject, TDatabaseObjectList>
+ * @template-covariant TDatabaseObjectList of DatabaseObjectList
+ * @implements ISitemapObjectObjectType<TDatabaseObjectList>
  */
 abstract class AbstractSitemapObjectObjectType implements ISitemapObjectObjectType
 {

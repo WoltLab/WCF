@@ -6,16 +6,14 @@ use wcf\acp\page\SitemapListPage;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
 use wcf\data\ILinkableObject;
-use wcf\data\object\type\ObjectType;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\system\exception\ImplementationException;
-use wcf\system\exception\ParentClassException;
 use wcf\system\io\AtomicWriter;
 use wcf\system\io\File;
 use wcf\system\Regex;
-use wcf\system\registry\RegistryHandler;
 use wcf\system\request\LinkHandler;
+use wcf\system\sitemap\object\RegisteredSitemapObject;
+use wcf\system\sitemap\SitemapHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\MessageUtil;
@@ -39,8 +37,9 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
     /**
      * Prefix for stored data in the registry.
      * @since 5.3
+     * @deprecated 6.3 use `wcf\system\sitemap\SitemapHandler::REGISTRY_PREFIX` instead
      */
-    const REGISTRY_PREFIX = 'sitemapData_';
+    const REGISTRY_PREFIX = SitemapHandler::REGISTRY_PREFIX;
 
     /**
      * @inheritDoc
@@ -48,8 +47,8 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
     public $limit = 250;
 
     /**
-     * All object types for the site maps.
-     * @var ObjectType[]
+     * All objects for the site maps.
+     * @var RegisteredSitemapObject[]
      */
     public $sitemapObjects = [];
 
@@ -71,11 +70,6 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
      */
     private $actualUser;
 
-    /**
-     * @var mixed[]
-     */
-    private $sitemapData = [];
-
     #[\Override]
     public function initObjectList()
     {
@@ -96,22 +90,17 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
                 $this->count = 0;
 
                 // read sitemaps
-                $sitemapObjects = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.sitemap.object');
+                $sitemapObjects = SitemapHandler::getInstance()->getObjects();
                 foreach ($sitemapObjects as $sitemapObject) {
-                    $this->prepareSitemapObject($sitemapObject);
                     $processor = $sitemapObject->getProcessor();
 
                     if (
                         $processor->isAvailableType()
-                        && $this->sitemapData[$sitemapObject->objectType]['isDisabled'] === 0
+                        && !SitemapHandler::getInstance()->isDisabled($sitemapObject)
                     ) {
                         $this->sitemapObjects[] = $sitemapObject;
 
                         $list = $processor->getObjectList();
-
-                        if (!($list instanceof DatabaseObjectList)) {
-                            throw new ParentClassException(\get_class($list), DatabaseObjectList::class);
-                        }
 
                         if (\SITEMAP_INDEX_TIME_FRAME > 0 && $processor->getLastModifiedColumn() !== null) {
                             $list->getConditionBuilder()->add($processor->getLastModifiedColumn() . " > ?", [
@@ -127,7 +116,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
                         }
                         $this->count += $iterations * $this->limit;
                     } else {
-                        $this->deleteSitemaps($sitemapObject->objectType);
+                        $this->deleteSitemaps($sitemapObject->getObjectName());
                     }
                 }
             }
@@ -180,7 +169,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
 
             // delete all previously created sitemap files so that no more relics remain in the system
             if ($sitemapLoopCount === 0) {
-                $this->deleteSitemaps($this->sitemapObjects[$this->workerData['sitemap']]->objectType);
+                $this->deleteSitemaps($this->sitemapObjects[$this->workerData['sitemap']]->getObjectName());
             }
 
             /** @var DatabaseObjectList<DatabaseObject> $objectList */
@@ -207,14 +196,14 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
                     $object->{$sitemapObject->getLastModifiedColumn()}
                 );
 
-                $objectType = $this->sitemapObjects[$this->workerData['sitemap']];
+                $registeredObject = $this->sitemapObjects[$this->workerData['sitemap']];
                 if ($sitemapObject->canView($object)) {
                     $this->file->write(WCF::getTPL()->render('wcf', 'shared_sitemapEntry', [
                         // strip session links
                         'link' => MessageUtil::stripCrap($link),
                         'lastModifiedTime' => $lastModifiedTime,
-                        'priority' => $objectType->priority,
-                        'changeFreq' => $this->sitemapData[$objectType->objectType]['changeFreq'],
+                        'priority' => $registeredObject->getPriority(),
+                        'changeFreq' => SitemapHandler::getInstance()->getChangeFreq($registeredObject),
                     ]));
 
                     $this->workerData['dataCount']++;
@@ -222,9 +211,9 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
             }
 
             if ($this->workerData['dataCount'] + $this->limit > self::SITEMAP_OBJECT_LIMIT) {
-                $packageID = $this->sitemapObjects[$this->workerData['sitemap']]->packageID;
-                $objectTypeName = $this->sitemapObjects[$this->workerData['sitemap']]->objectType;
-                $filename = $objectTypeName . '_' . $this->workerData['sitemapLoopCount'] . '.xml';
+                $packageID = $this->sitemapObjects[$this->workerData['sitemap']]->getPackageID();
+                $objectName = $this->sitemapObjects[$this->workerData['sitemap']]->getObjectName();
+                $filename = $objectName . '_' . $this->workerData['sitemapLoopCount'] . '.xml';
                 $this->finishSitemap($filename, $packageID);
 
                 $this->generateTmpFile(false);
@@ -236,8 +225,8 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
             // finish sitemap
             if (\count($objectList) < $this->limit) {
                 if ($this->workerData['dataCount'] > 0) {
-                    $packageID = $this->sitemapObjects[$this->workerData['sitemap']]->packageID;
-                    $filename = $this->sitemapObjects[$this->workerData['sitemap']]->objectType . '.xml';
+                    $packageID = $this->sitemapObjects[$this->workerData['sitemap']]->getPackageID();
+                    $filename = $this->sitemapObjects[$this->workerData['sitemap']]->getObjectName() . '.xml';
                     $this->finishSitemap($filename, $packageID);
                     $this->generateTmpFile(false);
                 }
@@ -274,12 +263,12 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
         $object = (isset($this->sitemapObjects[$this->workerData['sitemap']])) ? $this->sitemapObjects[$this->workerData['sitemap']] : false;
         while (
             $object
-            && \file_exists(self::getSitemapPath() . $object->objectType . '.xml')
-            && \filectime(self::getSitemapPath() . $object->objectType . '.xml') > \TIME_NOW - ($this->sitemapData[$object->objectType]['rebuildTime'] ?: 60 * 60 * 24 * 7)
+            && \file_exists(self::getSitemapPath() . $object->getObjectName() . '.xml')
+            && \filectime(self::getSitemapPath() . $object->getObjectName() . '.xml') > \TIME_NOW - (SitemapHandler::getInstance()->getRebuildTime($object) ?: 60 * 60 * 24 * 7)
         ) {
             $filenames = \array_merge(
-                \glob(self::getSitemapPath() . $object->objectType . '_*'),
-                [self::getSitemapPath() . $object->objectType . '.xml']
+                \glob(self::getSitemapPath() . $object->getObjectName() . '_*'),
+                [self::getSitemapPath() . $object->getObjectName() . '.xml']
             );
             foreach ($filenames as $filename) {
                 $this->workerData['sitemaps'][] = self::getSitemapURL() . \basename($filename);
@@ -486,13 +475,13 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
     }
 
     /**
-     * Unlink the sitemap files for a given object type name.
+     * Unlink the sitemap files for a given sitemap object name.
      */
-    private function deleteSitemaps(string $objectTypeName): void
+    private function deleteSitemaps(string $objectName): void
     {
-        $files = @\glob(self::getSitemapPath() . $objectTypeName . '*.xml');
+        $files = @\glob(self::getSitemapPath() . $objectName . '*.xml');
         if (\is_array($files)) {
-            $regex = new Regex(\preg_quote($objectTypeName) . '(_[0-9]*|).xml');
+            $regex = new Regex(\preg_quote($objectName) . '(_[0-9]*|).xml');
             foreach ($files as $filename) {
                 if ($regex->match(\basename($filename)) !== 0) {
                     \unlink($filename);
@@ -518,34 +507,5 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
     private function changeToActualUser(): void
     {
         WCF::getSession()->changeUser($this->actualUser, true);
-    }
-
-    /**
-     * Reads the columns changed by the user for this sitemap object from the registry.
-     *
-     * @since       5.3
-     */
-    private function prepareSitemapObject(ObjectType $object): void
-    {
-        $this->sitemapData[$object->objectType] = [
-            'changeFreq' => $object->changeFreq,
-            'rebuildTime' => $object->rebuildTime,
-            'isDisabled' => 0,
-        ];
-
-        $sitemapData = RegistryHandler::getInstance()->get(
-            'com.woltlab.wcf',
-            self::REGISTRY_PREFIX . $object->objectType
-        );
-
-        if ($sitemapData !== null) {
-            $sitemapData = @\unserialize($sitemapData);
-
-            if (\is_array($sitemapData)) {
-                $this->sitemapData[$object->objectType]['changeFreq'] = $sitemapData['changeFreq'];
-                $this->sitemapData[$object->objectType]['rebuildTime'] = $sitemapData['rebuildTime'];
-                $this->sitemapData[$object->objectType]['isDisabled'] = $sitemapData['isDisabled'];
-            }
-        }
     }
 }

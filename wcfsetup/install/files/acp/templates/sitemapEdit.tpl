@@ -3,7 +3,7 @@
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.sitemap.edit{/lang}</h1>
-		<p class="contentHeaderDescription">{lang}wcf.acp.sitemap.objectType.{$formObject->objectType}{/lang}</p>
+		<p class="contentHeaderDescription">{$sitemapObject->getName()}</p>
 	</div>
 	
 	<nav class="contentHeaderNavigation">

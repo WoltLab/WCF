@@ -657,6 +657,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
         $this->definitionElementChildren['com.woltlab.wcf.searchableObjectType'] = ['searchindex'];
 
         // com.woltlab.wcf.sitemap.object
+        // @deprecated 6.3 use `wcf\event\sitemap\SitemapObjectCollecting` instead
         $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.sitemap.object')
             ->appendChildren([
                 FloatFormField::create('sitemapObjectPriority')

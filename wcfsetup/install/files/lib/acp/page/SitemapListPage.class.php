@@ -2,15 +2,15 @@
 
 namespace wcf\acp\page;
 
-use wcf\data\object\type\ObjectType;
-use wcf\data\object\type\ObjectTypeCache;
+use wcf\action\ApiAction;
 use wcf\page\AbstractPage;
-use wcf\system\registry\RegistryHandler;
+use wcf\system\request\LinkHandler;
+use wcf\system\sitemap\object\RegisteredSitemapObject;
+use wcf\system\sitemap\SitemapHandler;
 use wcf\system\WCF;
-use wcf\system\worker\SitemapRebuildWorker;
 
 /**
- * Shows a list of sitemap object types.
+ * Shows a list of sitemap objects.
  *
  * @author  Joshua Ruesweg
  * @copyright   2001-2019 WoltLab GmbH
@@ -29,9 +29,10 @@ class SitemapListPage extends AbstractPage
     public $neededPermissions = ['admin.management.canRebuildData'];
 
     /**
-     * @var array<ObjectType>
+     * @var array<string, RegisteredSitemapObject>
+     * @since 6.3
      */
-    public $sitemapObjectTypes = [];
+    public $sitemapObjects = [];
 
     /**
      * @var mixed[]
@@ -43,29 +44,26 @@ class SitemapListPage extends AbstractPage
     {
         parent::readData();
 
-        $this->sitemapObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.sitemap.object');
+        $this->sitemapObjects = SitemapHandler::getInstance()->getObjects();
 
-        foreach ($this->sitemapObjectTypes as $sitemapObjectType) {
-            $this->sitemapData[$sitemapObjectType->objectType] = [
-                'changeFreq' => $sitemapObjectType->changeFreq,
-                'rebuildTime' => $sitemapObjectType->rebuildTime,
-                'isDisabled' => 0,
+        $apiUrl = LinkHandler::getInstance()->getControllerLink(ApiAction::class, ['id' => 'rpc']);
+
+        foreach ($this->sitemapObjects as $sitemapObject) {
+            $this->sitemapData[$sitemapObject->getObjectName()] = [
+                'changeFreq' => SitemapHandler::getInstance()->getChangeFreq($sitemapObject),
+                'rebuildTime' => SitemapHandler::getInstance()->getRebuildTime($sitemapObject),
+                'isDisabled' => SitemapHandler::getInstance()->isDisabled($sitemapObject),
+                'enableEndpoint' => \sprintf(
+                    '%score/sitemaps/%s/enable',
+                    $apiUrl,
+                    \rawurlencode($sitemapObject->getObjectName())
+                ),
+                'disableEndpoint' => \sprintf(
+                    '%score/sitemaps/%s/disable',
+                    $apiUrl,
+                    \rawurlencode($sitemapObject->getObjectName())
+                ),
             ];
-
-            $sitemapData = RegistryHandler::getInstance()->get(
-                'com.woltlab.wcf',
-                SitemapRebuildWorker::REGISTRY_PREFIX . $sitemapObjectType->objectType
-            );
-
-            if ($sitemapData !== null) {
-                $sitemapData = @\unserialize($sitemapData);
-
-                if (\is_array($sitemapData)) {
-                    $this->sitemapData[$sitemapObjectType->objectType]['changeFreq'] = $sitemapData['changeFreq'];
-                    $this->sitemapData[$sitemapObjectType->objectType]['rebuildTime'] = $sitemapData['rebuildTime'];
-                    $this->sitemapData[$sitemapObjectType->objectType]['isDisabled'] = $sitemapData['isDisabled'];
-                }
-            }
         }
     }
 
@@ -75,7 +73,7 @@ class SitemapListPage extends AbstractPage
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'sitemapObjectTypes' => $this->sitemapObjectTypes,
+            'sitemapObjects' => $this->sitemapObjects,
             'sitemapData' => $this->sitemapData,
         ]);
     }

@@ -3,23 +3,19 @@
 namespace wcf\acp\form;
 
 use CuyZ\Valinor\Mapper\MappingError;
-use wcf\data\IStorableObject;
-use wcf\data\object\type\ObjectType;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\form\builder\container\FormContainer;
-use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\IFormDocument;
-use wcf\system\registry\RegistryHandler;
 use wcf\system\request\LinkHandler;
+use wcf\system\sitemap\object\RegisteredSitemapObject;
+use wcf\system\sitemap\SitemapHandler;
 use wcf\system\WCF;
-use wcf\system\worker\SitemapRebuildWorker;
 
 /**
  * Shows the sitemap edit form.
@@ -28,7 +24,7 @@ use wcf\system\worker\SitemapRebuildWorker;
  * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @extends AbstractFormBuilderForm<ObjectType>
+ * @extends AbstractFormBuilderForm<null>
  */
 class SitemapEditForm extends AbstractFormBuilderForm
 {
@@ -48,9 +44,9 @@ class SitemapEditForm extends AbstractFormBuilderForm
     public $neededPermissions = ['admin.management.canRebuildData'];
 
     /**
-     * @inheritDoc
+     * @since 6.3
      */
-    public $formAction = 'edit';
+    public RegisteredSitemapObject $sitemapObject;
 
     #[\Override]
     public function readParameters()
@@ -70,20 +66,20 @@ class SitemapEditForm extends AbstractFormBuilderForm
             throw new IllegalLinkException();
         }
 
-        $this->formObject = ObjectTypeCache::getInstance()->getObjectTypeByName(
-            'com.woltlab.wcf.sitemap.object',
-            $queryParameters['objectType']
-        );
-
-        if ($this->formObject === null) {
+        $sitemapObject = SitemapHandler::getInstance()->getObject($queryParameters['objectType']);
+        if ($sitemapObject === null) {
             throw new IllegalLinkException();
         }
+
+        $this->sitemapObject = $sitemapObject;
     }
 
     #[\Override]
     protected function createForm()
     {
         parent::createForm();
+
+        $this->form->formMode(IFormDocument::FORM_MODE_UPDATE);
 
         $this->form->appendChildren([
             FormContainer::create('section')
@@ -99,59 +95,20 @@ class SitemapEditForm extends AbstractFormBuilderForm
                             'yearly' => 'wcf.acp.sitemap.changeFreq.yearly',
                             'never' => 'wcf.acp.sitemap.changeFreq.never',
                         ])
-                        ->value('monthly')
+                        ->value(SitemapHandler::getInstance()->getChangeFreq($this->sitemapObject))
                         ->required(),
                     IntegerFormField::create('rebuildTime')
                         ->label('wcf.acp.sitemap.rebuildTime')
                         ->description('wcf.acp.sitemap.rebuildTime.description')
                         ->suffix('wcf.acp.option.suffix.seconds')
                         ->minimum(0)
-                        ->value(172800)
+                        ->value(SitemapHandler::getInstance()->getRebuildTime($this->sitemapObject))
                         ->addFieldClass('short'),
                     BooleanFormField::create('isDisabled')
                         ->label('wcf.acp.sitemap.isDisabled')
+                        ->value(SitemapHandler::getInstance()->isDisabled($this->sitemapObject))
                 ])
         ]);
-    }
-
-    #[\Override]
-    protected function finalizeForm()
-    {
-        parent::finalizeForm();
-
-        $this->form->getDataHandler()
-            ->addProcessor(
-                new CustomFormDataProcessor(
-                    'registryDataProcessor',
-                    null,
-                    function (IFormDocument $document, array $data, IStorableObject $object) {
-                        \assert($object instanceof ObjectType);
-                        $sitemapData = RegistryHandler::getInstance()->get(
-                            'com.woltlab.wcf',
-                            SitemapRebuildWorker::REGISTRY_PREFIX . $object->objectType
-                        );
-                        $sitemapData = @\unserialize($sitemapData);
-
-                        if (\is_array($sitemapData)) {
-                            $data["changeFreq"] = $sitemapData['changeFreq'];
-                            $data["rebuildTime"] = $sitemapData['rebuildTime'];
-                            $data["isDisabled"] = $sitemapData['isDisabled'];
-                        } else {
-                            if ($object->changeFreq !== null) {
-                                $data["changeFreq"] = $object->changeFreq;
-                            }
-                            if ($object->rebuildTime !== null) {
-                                $data["rebuildTime"] = $object->rebuildTime;
-                            }
-                            if ($object->isDisabled !== null) {
-                                $data["isDisabled"] = $object->isDisabled;
-                            }
-                        }
-
-                        return $data;
-                    }
-                )
-            );
     }
 
     #[\Override]
@@ -159,16 +116,13 @@ class SitemapEditForm extends AbstractFormBuilderForm
     {
         AbstractForm::save();
 
-        $formData = $this->form->getData();
-        if (!isset($formData['data'])) {
-            $formData['data'] = [];
-        }
-        $formData['data'] = \array_merge($this->additionalFields, $formData['data']);
+        $formData = $this->form->getData()['data'] ?? [];
 
-        RegistryHandler::getInstance()->set(
-            'com.woltlab.wcf',
-            SitemapRebuildWorker::REGISTRY_PREFIX . $this->formObject->objectType,
-            \serialize($formData['data'])
+        SitemapHandler::getInstance()->setConfiguration(
+            $this->sitemapObject,
+            $formData['changeFreq'],
+            (int)$formData['rebuildTime'],
+            (bool)$formData['isDisabled']
         );
 
         $this->saved();
@@ -176,10 +130,20 @@ class SitemapEditForm extends AbstractFormBuilderForm
     }
 
     #[\Override]
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign([
+            'sitemapObject' => $this->sitemapObject,
+        ]);
+    }
+
+    #[\Override]
     protected function setFormAction()
     {
         $this->form->action(LinkHandler::getInstance()->getControllerLink(static::class, [
-            'objectType' => $this->formObject->objectType
+            'objectType' => $this->sitemapObject->getObjectName()
         ]));
     }
 }

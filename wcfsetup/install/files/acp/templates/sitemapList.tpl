@@ -18,9 +18,9 @@
 
 <woltlab-core-notice type="info">{lang}wcf.acp.sitemap.cliInfo{/lang}</woltlab-core-notice>
 
-{if $sitemapObjectTypes|count}
+{if $sitemapObjects|count}
 	<div class="section tabularBox">
-		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\object\type\SitemapObjectTypeAction">
+		<table id="sitemapObjectList" class="table">
 			<thead>
 				<tr>
 					<th class="columnTitle columnSitemap" colspan="2">{lang}wcf.acp.sitemap{/lang}</th>
@@ -33,20 +33,22 @@
 			</thead>
 			
 			<tbody>
-				{foreach from=$sitemapObjectTypes item=object}
-					<tr class="sitemapObjectRow jsObjectActionObject" data-object-id="{$object->getObjectID()}">
+				{foreach from=$sitemapObjects key=objectName item=object}
+					<tr class="sitemapObjectRow">
 						<td class="columnIcon">
-							{if $sitemapData[$object->objectType]['isDisabled']}
-								{objectAction action="toggle" isDisabled=true}
-							{else}
-								{objectAction action="toggle" isDisabled=false}
-							{/if}
-							<a href="{link controller="SitemapEdit"}objectType={$object->objectType}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon name='pencil'}</a>
+							<woltlab-core-toggle-button
+								data-interaction="sitemapObjectToggle"
+								aria-label="{lang}wcf.global.button.enable{/lang}"
+								data-enable-endpoint="{$sitemapData[$objectName]['enableEndpoint']}"
+								data-disable-endpoint="{$sitemapData[$objectName]['disableEndpoint']}"
+								{if !$sitemapData[$objectName]['isDisabled']}checked{/if}
+							></woltlab-core-toggle-button>
+							<a href="{link controller="SitemapEdit"}objectType={$objectName}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon name='pencil'}</a>
 						</td>
-						<td class="columnTitle columnSitemap"><a href="{link controller="SitemapEdit"}objectType={$object->objectType}{/link}">{lang}wcf.acp.sitemap.objectType.{$object->objectType}{/lang}</a></td>
-						<td class="columnInteger columnPriority">{$object->priority}</td>
-						<td class="columnText columnChangeFreq">{lang}wcf.acp.sitemap.changeFreq.{$sitemapData[$object->objectType]['changeFreq']}{/lang}</td>
-						<td class="columnInteger columnRebuildTime">{dateInterval end=TIME_NOW+$sitemapData[$object->objectType]['rebuildTime'] full=true format='plain'}</td>
+						<td class="columnTitle columnSitemap"><a href="{link controller="SitemapEdit"}objectType={$objectName}{/link}">{$object->getName()}</a></td>
+						<td class="columnInteger columnPriority">{$object->getPriority()}</td>
+						<td class="columnText columnChangeFreq">{lang}wcf.acp.sitemap.changeFreq.{$sitemapData[$objectName]['changeFreq']}{/lang}</td>
+						<td class="columnInteger columnRebuildTime">{dateInterval end=TIME_NOW+$sitemapData[$objectName]['rebuildTime'] full=true format='plain'}</td>
 						
 						{event name='columns'}
 					</tr>
@@ -64,6 +66,12 @@
 			</nav>
 		{/hascontent}
 	</footer>
+	
+	<script data-relocate="true">
+		require(['WoltLabSuite/Core/Component/Interaction/Toggle'], ({ setup }) => {
+			setup('sitemapObjectToggle', document.getElementById('sitemapObjectList'));
+		});
+	</script>
 {else}
 	<woltlab-core-notice type="info">{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
 {/if}

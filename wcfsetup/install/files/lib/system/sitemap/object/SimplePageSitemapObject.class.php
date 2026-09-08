@@ -16,7 +16,7 @@ use wcf\system\exception\PermissionDeniedException;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @extends AbstractSitemapObjectObjectType<Page, PageList>
+ * @extends AbstractSitemapObjectObjectType<PageList>
  */
 class SimplePageSitemapObject extends AbstractSitemapObjectObjectType
 {
@@ -39,6 +39,8 @@ class SimplePageSitemapObject extends AbstractSitemapObjectObjectType
     #[\Override]
     public function canView(DatabaseObject $object)
     {
+        \assert($object instanceof Page);
+
         if ($object->requireObjectID !== 0) {
             return false;
         }

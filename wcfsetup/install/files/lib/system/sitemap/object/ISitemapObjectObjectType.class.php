@@ -12,8 +12,7 @@ use wcf\data\DatabaseObjectList;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @template TDatabaseObject of DatabaseObject
- * @template TDatabaseObjectList of DatabaseObjectList
+ * @template-covariant TDatabaseObjectList of DatabaseObjectList
  */
 interface ISitemapObjectObjectType
 {
@@ -49,7 +48,8 @@ interface ISitemapObjectObjectType
     /**
      * Returns the permission for a guest to view a certain object for this object type.
      *
-     * @param TDatabaseObject $object
+     * The object is always an instance of the class returned by `getObjectClass()`.
+     *
      * @return bool
      */
     public function canView(DatabaseObject $object);

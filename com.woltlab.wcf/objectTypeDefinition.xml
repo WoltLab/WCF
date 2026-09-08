@@ -205,6 +205,7 @@
 			<interfacename>wcf\system\condition\IObjectListCondition</interfacename>
 		</definition>
 		<!-- /box conditions -->
+		<!-- deprecated 6.3, use `wcf\event\sitemap\SitemapObjectCollecting` instead -->
 		<definition>
 			<name>com.woltlab.wcf.sitemap.object</name>
 			<interfacename>wcf\system\sitemap\object\ISitemapObjectObjectType</interfacename>

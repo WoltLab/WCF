@@ -13,6 +13,7 @@ return new class {
     public function __invoke(): void
     {
         $this->initEventListeners();
+        $this->initSitemapObjects();
         $this->initACPMenuItems();
         $this->initACPSearchProviders();
         $this->initLicenseData();
@@ -122,6 +123,39 @@ return new class {
                 $event->register(new \wcf\system\acp\dashboard\box\UsersAwaitingApprovalAcpDashboardBox());
                 $event->register(new \wcf\system\acp\dashboard\box\SystemInfoAcpDashboardBox());
                 $event->register(new \wcf\system\acp\dashboard\box\CreditsAcpDashboardBox());
+            }
+        );
+    }
+
+    private function initSitemapObjects(): void
+    {
+        EventHandler::getInstance()->register(
+            \wcf\event\sitemap\SitemapObjectCollecting::class,
+            static function (\wcf\event\sitemap\SitemapObjectCollecting $event) {
+                $event->register(new \wcf\system\sitemap\object\RegisteredSitemapObject(
+                    'com.woltlab.wcf.sitemap.object.user',
+                    new \wcf\system\sitemap\object\UserSitemapObject(),
+                    rebuildTime: 259200,
+                ));
+                $event->register(new \wcf\system\sitemap\object\RegisteredSitemapObject(
+                    'com.woltlab.wcf.sitemap.object.articleCategory',
+                    new \wcf\system\sitemap\object\ArticleCategorySitemapObject(),
+                    changeFreq: 'weekly',
+                    rebuildTime: 2592000,
+                ));
+                $event->register(new \wcf\system\sitemap\object\RegisteredSitemapObject(
+                    'com.woltlab.wcf.sitemap.object.article',
+                    new \wcf\system\sitemap\object\ArticleSitemapObject(),
+                    rebuildTime: 259200,
+                ));
+                $event->register(new \wcf\system\sitemap\object\RegisteredSitemapObject(
+                    'com.woltlab.wcf.sitemap.object.simplePage',
+                    new \wcf\system\sitemap\object\SimplePageSitemapObject(),
+                ));
+                $event->register(new \wcf\system\sitemap\object\RegisteredSitemapObject(
+                    'com.woltlab.wcf.sitemap.object.multilingualPage',
+                    new \wcf\system\sitemap\object\MultilingualPageSitemapObject(),
+                ));
             }
         );
     }
