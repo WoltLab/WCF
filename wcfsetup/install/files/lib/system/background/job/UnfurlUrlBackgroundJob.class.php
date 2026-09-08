@@ -162,16 +162,21 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
                 $image
             );
 
-            $width = $height = 0;
+            // The remote dimensions are the fallback, because the image is
+            // served through the proxy or from the external source whenever the
+            // thumbnail could not be created. Storing `0` for both would make
+            // the image appear as a squared preview.
+            $width = $imageData[0];
+            $height = $imageData[1];
             if ($file !== null) {
-                $imageData = \getimagesizefromstring(
+                $thumbnailData = \getimagesizefromstring(
                     \base64_decode(
                         \file_get_contents($file->getPathname())
                     )
                 );
-                if ($imageData !== false) {
-                    $width = $imageData[0];
-                    $height = $imageData[1];
+                if ($thumbnailData !== false) {
+                    $width = $thumbnailData[0];
+                    $height = $thumbnailData[1];
                 }
             }
 
