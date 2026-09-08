@@ -3993,6 +3993,8 @@ Attachments:
 		<item name="wcf.form.option.shared.maxValue.error.minimum"><![CDATA[The maximum may not be less than the minimum ({#$minimum}).]]></item>
 		<item name="wcf.form.option.shared.selectOptions"><![CDATA[Options]]></item>
 		<item name="wcf.form.option.shared.required"><![CDATA[This is a required field]]></item>
+		<item name="wcf.form.option.shared.sourceCodeLanguage"><![CDATA[Programming Language]]></item>
+		<item name="wcf.form.option.shared.sourceCodeLanguage.description"><![CDATA[If no language is selected, it is detected automatically based on the entered source code.]]></item>
 		<item name="wcf.form.option.shared.unit"><![CDATA[Unit]]></item>
 		<item name="wcf.form.option.shared.urlLinkText"><![CDATA[Link Text]]></item>
 		<item name="wcf.form.option.optionType"><![CDATA[Option Type]]></item>

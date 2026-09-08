@@ -27,9 +27,22 @@ class SourceCodeFormOption extends AbstractFormOption
     }
 
     #[\Override]
+    public function getConfigurationFormFields(): array
+    {
+        return \array_merge(parent::getConfigurationFormFields(), ['sourceCodeLanguage']);
+    }
+
+    #[\Override]
     public function getFormField(string $id, array $configuration = []): AbstractFormField
     {
-        return SourceCodeFormField::create($id);
+        $formField = SourceCodeFormField::create($id);
+
+        $language = (string)($configuration['sourceCodeLanguage'] ?? '');
+        if (\in_array($language, SourceCodeFormField::LANGUAGES, true)) {
+            $formField->language($language);
+        }
+
+        return $formField;
     }
 
     #[\Override]
