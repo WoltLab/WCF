@@ -29,6 +29,8 @@ final class RegisteredSitemapObject
      * @param $objectName Unique name of the sitemap object, e.g. `com.example.foo.sitemap.object.bar`.
      * @param ISitemapObjectObjectType<DatabaseObjectList<DatabaseObject>> $processor
      * @param $packageID Package that owns the generated sitemap files, defaults to the core.
+     * @param $name Localized name of the sitemap object, defaults to the phrase
+     *              `wcf.acp.sitemap.objectType.{objectName}`.
      */
     public function __construct(
         private readonly string $objectName,
@@ -38,6 +40,7 @@ final class RegisteredSitemapObject
         private readonly int $rebuildTime = self::DEFAULT_REBUILD_TIME,
         private readonly ?int $packageID = null,
         private readonly bool $isDisabled = false,
+        private readonly string $name = '',
     ) {}
 
     /**
@@ -70,6 +73,10 @@ final class RegisteredSitemapObject
      */
     public function getName(): string
     {
+        if ($this->name !== '') {
+            return $this->name;
+        }
+
         return WCF::getLanguage()->getDynamicVariable(
             \sprintf('wcf.acp.sitemap.objectType.%s', $this->objectName)
         );
