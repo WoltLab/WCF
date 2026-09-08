@@ -268,14 +268,7 @@ function addItem(elementId: string, value: ItemData): void {
     handleLimit(elementId);
   }
 
-  let values = syncShadow(data);
-  if (typeof data.options.callbackChange === "function") {
-    if (values === null) {
-      values = getValues(elementId);
-    }
-
-    data.options.callbackChange(elementId, values);
-  }
+  notifyChange(data);
 }
 
 /**
@@ -302,14 +295,24 @@ function removeItem(item: Event | HTMLElement, noFocus?: boolean): void {
 
   handleLimit(elementId);
 
+  notifyChange(data);
+}
+
+/**
+ * Notifies listeners about a changed item list. The `input` event is what the
+ * form builder's dependency manager observes on the visible input element.
+ */
+function notifyChange(data: ElementData): void {
   let values = syncShadow(data);
   if (typeof data.options.callbackChange === "function") {
     if (values === null) {
-      values = getValues(elementId);
+      values = getValues(data.element.id);
     }
 
-    data.options.callbackChange(elementId, values);
+    data.options.callbackChange(data.element.id, values);
   }
+
+  data.element.dispatchEvent(new Event("input", { bubbles: true }));
 }
 
 /**

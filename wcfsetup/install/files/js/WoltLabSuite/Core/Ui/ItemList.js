@@ -244,13 +244,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
         if (!data.element.disabled) {
             handleLimit(elementId);
         }
-        let values = syncShadow(data);
-        if (typeof data.options.callbackChange === "function") {
-            if (values === null) {
-                values = getValues(elementId);
-            }
-            data.options.callbackChange(elementId, values);
-        }
+        notifyChange(data);
     }
     /**
      * Removes an item from the list.
@@ -271,13 +265,21 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
             data.element.focus();
         }
         handleLimit(elementId);
+        notifyChange(data);
+    }
+    /**
+     * Notifies listeners about a changed item list. The `input` event is what the
+     * form builder's dependency manager observes on the visible input element.
+     */
+    function notifyChange(data) {
         let values = syncShadow(data);
         if (typeof data.options.callbackChange === "function") {
             if (values === null) {
-                values = getValues(elementId);
+                values = getValues(data.element.id);
             }
-            data.options.callbackChange(elementId, values);
+            data.options.callbackChange(data.element.id, values);
         }
+        data.element.dispatchEvent(new Event("input", { bubbles: true }));
     }
     /**
      * Synchronizes the shadow input field with the current list item values.
