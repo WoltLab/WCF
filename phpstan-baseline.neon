@@ -1876,12 +1876,6 @@ parameters:
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 1
-			path: wcfsetup/install/files/lib/system/html/output/node/HtmlOutputNodePre.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
-			count: 1
 			path: wcfsetup/install/files/lib/system/html/output/node/HtmlOutputNodeProcessor.class.php
 
 		-

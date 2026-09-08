@@ -2,7 +2,7 @@
 
 namespace wcf\system\form\option\formatter;
 
-use wcf\util\StringUtil;
+use wcf\system\code\SourceCodeRenderer;
 
 /**
  * Formatter for source code values.
@@ -17,6 +17,10 @@ final class SourceCodeFormatter implements IFormOptionFormatter
     #[\Override]
     public function format(string $value, int $languageID, array $configuration): string
     {
-        return '<pre style="overflow: auto">' . StringUtil::encodeHTML($value) . '</pre>';
+        return (new SourceCodeRenderer())->render(
+            $value,
+            (string)($configuration['sourceCodeLanguage'] ?? ''),
+            codeIDPrefix: 'formOption_'
+        );
     }
 }

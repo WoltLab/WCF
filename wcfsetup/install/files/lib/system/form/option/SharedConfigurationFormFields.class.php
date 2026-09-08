@@ -3,6 +3,7 @@
 namespace wcf\system\form\option;
 
 use wcf\event\form\option\SharedConfigurationFormFieldCollecting;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\form\builder\field\AbstractNumericFormField;
 use wcf\system\form\builder\field\BooleanFormField;
@@ -10,9 +11,11 @@ use wcf\system\form\builder\field\FloatFormField;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\SelectOptionsFormField;
+use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\WCF;
 
 /**
  * Provides the available shared configuration form fields.
@@ -72,6 +75,12 @@ final class SharedConfigurationFormFields
             'required' => BooleanFormField::create('required')
                 ->label('wcf.form.option.shared.required')
                 ->value(false),
+            'sourceCodeLanguage' => SingleSelectionFormField::create('sourceCodeLanguage')
+                ->label('wcf.form.option.shared.sourceCodeLanguage')
+                ->description('wcf.form.option.shared.sourceCodeLanguage.description')
+                ->options($this->getSourceCodeLanguageOptions(), labelLanguageItems: false)
+                ->filterable()
+                ->nullable(),
             'unit' => TextFormField::create('unit')
                 ->label('wcf.form.option.shared.unit')
                 ->addFieldClass('short'),
@@ -80,6 +89,23 @@ final class SharedConfigurationFormFields
                 ->maximumLength(80)
                 ->minimumLength(2)
         ];
+    }
+
+    /**
+     * Returns the list of available syntax highlighters.
+     *
+     * @return array<string, string>
+     */
+    private function getSourceCodeLanguageOptions(): array
+    {
+        $options = [];
+        foreach (BBCodeHandler::getInstance()->getHighlighterMeta() as $identifier => $data) {
+            $options[$identifier] = $data['title'] . (\strtolower($data['title']) !== $identifier ? ' (' . $identifier . ')' : '');
+        }
+
+        \asort($options);
+
+        return ['' => WCF::getLanguage()->get('wcf.global.noSelection')] + $options;
     }
 
     /**
