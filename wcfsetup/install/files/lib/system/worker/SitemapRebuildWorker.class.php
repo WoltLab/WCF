@@ -183,6 +183,9 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
 
             $objectList->sqlLimit = $this->limit;
             $objectList->sqlOffset = $this->limit * $sitemapLoopCount;
+            if ($objectList->sqlOrderBy === '') {
+                $objectList->sqlOrderBy = $objectList->getDatabaseTableAlias() . '.' . $objectList->getDatabaseTableIndexName();
+            }
             $objectList->readObjects();
 
             foreach ($objectList->getObjects() as $object) {
