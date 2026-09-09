@@ -154,6 +154,19 @@ final class FileProcessor extends SingletonFactory
 
     public function generateWebpVariant(File $file): File
     {
+        $newFile = $this->createWebpVariant($file);
+
+        // The processor may have stored the pathname of the WebP variant in
+        // a denormalized form, notify it whenever the variant changes.
+        if ($newFile->fileHashWebp !== $file->fileHashWebp) {
+            $newFile->getProcessor()?->sourceFilenameChanged($newFile);
+        }
+
+        return $newFile;
+    }
+
+    private function createWebpVariant(File $file): File
+    {
         $canGenerateThumbnail = match ($file->mimeType) {
             'image/jpeg', 'image/png' => true,
             default => false,
@@ -487,6 +500,12 @@ final class FileProcessor extends SingletonFactory
 
         $command = new ReplaceFileSource($file, $fileWithoutExif, $file->filename, false);
         $newFile = $command();
+
+        // Stripping the EXIF data changes the checksum and thus the pathname
+        // of the file, any denormalized copy of the pathname must be updated.
+        if ($newFile->fileHash !== $file->fileHash) {
+            $newFile->getProcessor()?->sourceFilenameChanged($newFile);
+        }
 
         return $newFile;
     }
