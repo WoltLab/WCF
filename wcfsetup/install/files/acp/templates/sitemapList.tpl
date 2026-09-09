@@ -16,8 +16,6 @@
 
 <woltlab-core-notice type="info">{lang}wcf.acp.sitemap.submitToSearchEngines{/lang}</woltlab-core-notice>
 
-<woltlab-core-notice type="info">{lang}wcf.acp.sitemap.cliInfo{/lang}</woltlab-core-notice>
-
 <div class="section">
 	{unsafe:$gridView->render()}
 </div>
