@@ -6,13 +6,15 @@
 		<p class="contentHeaderDescription">{$sitemapObject->getName()}</p>
 	</div>
 	
-	<nav class="contentHeaderNavigation">
-		<ul>
-			<li><a href="{link controller='SitemapList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.maintenance.sitemap{/lang}</span></a></li>
-			
-			{event name='contentHeaderNavigation'}
-		</ul>
-	</nav>
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {unsafe:$form->getHtml()}
