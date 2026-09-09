@@ -2661,12 +2661,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.sitemap.isDisabled"><![CDATA[Disable Sitemap]]></item>
 		<item name="wcf.acp.sitemap.edit"><![CDATA[Edit Sitemap]]></item>
 		<item name="wcf.acp.sitemap.submitToSearchEngines"><![CDATA[<p>The generated sitemap needs to be submitted once to the search engines, please provide this link: <kbd>{$__wcf->getPath()}sitemaps/sitemap.xml</kbd>.</p>
-<p><br></p>
-<p>Instructions for submitting the sitemap:</p>
-<ul class="nativeList">
-	<li><a href="https://support.google.com/webmasters/answer/7451001" class="externalURL">Google</a></li>
-	<li><a href="https://www.bing.com/webmasters/help/sitemaps-3b5cf6ed" class="externalURL">Bing</a></li>
-</ul>]]></item>
+<p>Instructions for submitting the sitemap: <a href="https://support.google.com/webmasters/answer/7451001" class="externalURL">Google</a>, <a href="https://www.bing.com/webmasters/help/sitemaps-3b5cf6ed" class="externalURL">Bing</a></p>]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.articleCategory"><![CDATA[Article categories]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.article"><![CDATA[Articles]]></item>
