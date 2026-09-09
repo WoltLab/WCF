@@ -10,7 +10,6 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\IntegerFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\request\LinkHandler;
 use wcf\system\sitemap\object\RegisteredSitemapObject;
@@ -84,19 +83,6 @@ class SitemapEditForm extends AbstractFormBuilderForm
         $this->form->appendChildren([
             FormContainer::create('section')
                 ->appendChildren([
-                    SingleSelectionFormField::create('changeFreq')
-                        ->label('wcf.acp.sitemap.changeFreq')
-                        ->options([
-                            'always' => 'wcf.acp.sitemap.changeFreq.always',
-                            'hourly' => 'wcf.acp.sitemap.changeFreq.hourly',
-                            'daily' => 'wcf.acp.sitemap.changeFreq.daily',
-                            'weekly' => 'wcf.acp.sitemap.changeFreq.weekly',
-                            'monthly' => 'wcf.acp.sitemap.changeFreq.monthly',
-                            'yearly' => 'wcf.acp.sitemap.changeFreq.yearly',
-                            'never' => 'wcf.acp.sitemap.changeFreq.never',
-                        ])
-                        ->value(SitemapHandler::getInstance()->getChangeFreq($this->sitemapObject))
-                        ->required(),
                     IntegerFormField::create('rebuildTime')
                         ->label('wcf.acp.sitemap.rebuildTime')
                         ->description('wcf.acp.sitemap.rebuildTime.description')
@@ -120,7 +106,6 @@ class SitemapEditForm extends AbstractFormBuilderForm
 
         SitemapHandler::getInstance()->setConfiguration(
             $this->sitemapObject,
-            $formData['changeFreq'],
             (int)$formData['rebuildTime'],
             (bool)$formData['isDisabled']
         );

@@ -2092,8 +2092,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.searchableObjectType.searchIndex.error.invalid"><![CDATA[The entered database table name is invalid.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.searchableObjectType.searchIndex.error.unknownApp"><![CDATA[No app with the abbreviation <kbd>{@$app}</kbd> is installed.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.data.title"><![CDATA[Sitemap Object Data]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.changeFreq"><![CDATA[Change Frequency]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.changeFreq.description"><![CDATA[The change frequency tells crawlers how often a page changes on average.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.rebuildTime"><![CDATA[Rebuild Time]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.rebuildTime.description"><![CDATA[After the entered time interval, the sitemap will be rebuilt by the system.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.data.title"><![CDATA[Statistics Entry Data]]></item>
@@ -2645,14 +2643,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	</category>
 	<category name="wcf.acp.sitemap">
 		<item name="wcf.acp.sitemap"><![CDATA[Sitemap]]></item>
-		<item name="wcf.acp.sitemap.changeFreq"><![CDATA[Change Frequency]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.always"><![CDATA[Always]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.hourly"><![CDATA[Hourly]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.daily"><![CDATA[Daily]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.weekly"><![CDATA[Weekly]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.monthly"><![CDATA[Monthly]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.yearly"><![CDATA[Yearly]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.never"><![CDATA[Never]]></item>
 		<item name="wcf.acp.sitemap.rebuildTime"><![CDATA[Rebuild Time]]></item>
 		<item name="wcf.acp.sitemap.rebuildTime.description"><![CDATA[Time interval after which the sitemap has to be rebuilt.]]></item>
 		<item name="wcf.acp.sitemap.isDisabled"><![CDATA[Disable Sitemap]]></item>

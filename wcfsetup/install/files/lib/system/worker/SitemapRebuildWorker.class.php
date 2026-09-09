@@ -196,13 +196,11 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
                     $object->{$sitemapObject->getLastModifiedColumn()}
                 );
 
-                $registeredObject = $this->sitemapObjects[$this->workerData['sitemap']];
                 if ($sitemapObject->canView($object)) {
                     $this->file->write(WCF::getTPL()->render('wcf', 'shared_sitemapEntry', [
                         // strip session links
                         'link' => MessageUtil::stripCrap($link),
                         'lastModifiedTime' => $lastModifiedTime,
-                        'changeFreq' => SitemapHandler::getInstance()->getChangeFreq($registeredObject),
                     ]));
 
                     $this->workerData['dataCount']++;

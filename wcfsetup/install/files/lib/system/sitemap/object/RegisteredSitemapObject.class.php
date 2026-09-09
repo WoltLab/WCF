@@ -19,8 +19,6 @@ use wcf\system\WCF;
  */
 final class RegisteredSitemapObject
 {
-    public const DEFAULT_CHANGE_FREQ = 'monthly';
-
     public const DEFAULT_REBUILD_TIME = 604800;
 
     /**
@@ -33,7 +31,6 @@ final class RegisteredSitemapObject
     public function __construct(
         private readonly string $objectName,
         private readonly ISitemapObjectObjectType $processor,
-        private readonly string $changeFreq = self::DEFAULT_CHANGE_FREQ,
         private readonly int $rebuildTime = self::DEFAULT_REBUILD_TIME,
         private readonly ?int $packageID = null,
         private readonly bool $isDisabled = false,
@@ -52,7 +49,6 @@ final class RegisteredSitemapObject
         return new self(
             $objectType->objectType,
             $processor,
-            $objectType->changeFreq ?? self::DEFAULT_CHANGE_FREQ,
             $objectType->rebuildTime !== null ? (int)$objectType->rebuildTime : self::DEFAULT_REBUILD_TIME,
             $objectType->packageID,
             (bool)$objectType->isDisabled,
@@ -84,16 +80,6 @@ final class RegisteredSitemapObject
     public function getProcessor(): ISitemapObjectObjectType
     {
         return $this->processor;
-    }
-
-    /**
-     * Returns the change frequency configured by the developer. The value that is
-     * actually used may be overwritten by the administrator, see
-     * `wcf\system\sitemap\SitemapHandler::getChangeFreq()`.
-     */
-    public function getChangeFreq(): string
-    {
-        return $this->changeFreq;
     }
 
     /**

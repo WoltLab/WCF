@@ -2497,8 +2497,6 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.objectType.condition.conditionObject"><![CDATA[Bezeichner der „bedingten“ Objekte]]></item>
 		<item name="wcf.acp.pip.objectType.condition.conditionObject.description"><![CDATA[Der Objekttyp-ähnliche Bezeichner der Objekte, auf die sich diese Bedingung bezieht, wird dazu verwendet eine größere Menge an Bedingungen in thematisch zusammengehörige Gruppen aufzuspalten.]]></item>
 		<item name="wcf.acp.pip.objectType.condition.conditionObject.error.tooFewSegments"><![CDATA[Der angegebene Bezeichner enthält nur {#$segmentCount} Abschnitt{if $segmentCount > 1}e{/if}.]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.changeFreq"><![CDATA[Änderungsfrequenz]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.changeFreq.description"><![CDATA[Die Änderungsfrequenz informiert Crawler darüber, wie oft sich eine Seite durchschnittlich ändert.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.data.title"><![CDATA[Daten des Sitemap-Objekts]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.rebuildTime"><![CDATA[Erneuerungszeit]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.rebuildTime.description"><![CDATA[Nach dem angegebenen Zeitintervall wird die Sitemap vom System erneuert.]]></item>
@@ -2716,14 +2714,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 	</category>
 	<category name="wcf.acp.sitemap">
 		<item name="wcf.acp.sitemap"><![CDATA[Sitemap]]></item>
-		<item name="wcf.acp.sitemap.changeFreq"><![CDATA[Änderungsfrequenz]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.always"><![CDATA[Immer]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.hourly"><![CDATA[Stündlich]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.daily"><![CDATA[Täglich]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.weekly"><![CDATA[Wöchentlich]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.monthly"><![CDATA[Monatlich]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.yearly"><![CDATA[Jährlich]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.never"><![CDATA[Nie]]></item>
 		<item name="wcf.acp.sitemap.rebuildTime"><![CDATA[Erneuerungszeit]]></item>
 		<item name="wcf.acp.sitemap.rebuildTime.description"><![CDATA[Die Zeit nachdem die Sitemap erneuert werden soll.]]></item>
 		<item name="wcf.acp.sitemap.isDisabled"><![CDATA[Sitemap deaktivieren]]></item>

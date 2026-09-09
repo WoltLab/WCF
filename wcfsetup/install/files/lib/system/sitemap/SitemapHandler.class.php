@@ -51,17 +51,6 @@ final class SitemapHandler extends SingletonFactory
     }
 
     /**
-     * Returns the change frequency of the given object, taking the
-     * configuration of the administrator into account.
-     */
-    public function getChangeFreq(RegisteredSitemapObject $object): string
-    {
-        $data = $this->getConfiguration($object->getObjectName());
-
-        return isset($data['changeFreq']) ? (string)$data['changeFreq'] : $object->getChangeFreq();
-    }
-
-    /**
      * Returns the rebuild time of the given object, taking the
      * configuration of the administrator into account.
      */
@@ -87,7 +76,6 @@ final class SitemapHandler extends SingletonFactory
      */
     public function setConfiguration(
         RegisteredSitemapObject $object,
-        string $changeFreq,
         int $rebuildTime,
         bool $isDisabled
     ): void {
@@ -95,7 +83,6 @@ final class SitemapHandler extends SingletonFactory
             'com.woltlab.wcf',
             self::REGISTRY_PREFIX . $object->getObjectName(),
             \serialize([
-                'changeFreq' => $changeFreq,
                 'rebuildTime' => $rebuildTime,
                 'isDisabled' => $isDisabled ? 1 : 0,
             ])
@@ -109,7 +96,6 @@ final class SitemapHandler extends SingletonFactory
     {
         $this->setConfiguration(
             $object,
-            $this->getChangeFreq($object),
             $this->getRebuildTime($object),
             $isDisabled
         );

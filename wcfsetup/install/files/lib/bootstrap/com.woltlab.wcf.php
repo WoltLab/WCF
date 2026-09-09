@@ -140,7 +140,6 @@ return new class {
                 $event->register(new \wcf\system\sitemap\object\RegisteredSitemapObject(
                     'com.woltlab.wcf.sitemap.object.articleCategory',
                     new \wcf\system\sitemap\object\ArticleCategorySitemapObject(),
-                    changeFreq: 'weekly',
                     rebuildTime: 2592000,
                 ));
                 $event->register(new \wcf\system\sitemap\object\RegisteredSitemapObject(

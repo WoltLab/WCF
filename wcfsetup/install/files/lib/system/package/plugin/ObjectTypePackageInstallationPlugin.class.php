@@ -659,21 +659,6 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
         // @deprecated 6.3 use `wcf\event\sitemap\SitemapObjectCollecting` instead
         $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.sitemap.object')
             ->appendChildren([
-                SingleSelectionFormField::create('sitemapObjectchangeFreq')
-                    ->objectProperty('changeFreq')
-                    ->label('wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.changeFreq')
-                    ->description('wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.changeFreq.description')
-                    ->options([
-                        'always' => 'always',
-                        'hourly' => 'hourly',
-                        'daily' => 'daily',
-                        'weekly' => 'weekly',
-                        'monthly' => 'monthly',
-                        'yearly' => 'yearly',
-                        'never' => 'never',
-                    ])
-                    ->required(),
-
                 IntegerFormField::create('sitemapObjectRebuildTime')
                     ->objectProperty('rebuildTime')
                     ->label('wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.rebuildTime')
@@ -682,7 +667,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                     ->required()
                     ->minimum(0),
             ]);
-        $this->definitionElementChildren['com.woltlab.wcf.sitemap.object'] = ['changeFreq', 'rebuildTime'];
+        $this->definitionElementChildren['com.woltlab.wcf.sitemap.object'] = ['rebuildTime'];
 
         // com.woltlab.wcf.statDailyHandler
         $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.statDailyHandler')

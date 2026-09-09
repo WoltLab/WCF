@@ -40,15 +40,6 @@ final class SitemapGridView extends AbstractGridView
                 ->label('wcf.acp.sitemap')
                 ->titleColumn()
                 ->sortable(),
-            GridViewColumn::for('changeFreq')
-                ->label('wcf.acp.sitemap.changeFreq')
-                ->renderer(new class extends DefaultColumnRenderer {
-                    #[\Override]
-                    public function render(mixed $value, DatabaseObject $row): string
-                    {
-                        return WCF::getLanguage()->get('wcf.acp.sitemap.changeFreq.' . (string)$value);
-                    }
-                }),
             GridViewColumn::for('rebuildTime')
                 ->label('wcf.acp.sitemap.rebuildTime')
                 ->renderer(new class extends DefaultColumnRenderer {
@@ -174,7 +165,6 @@ final class SitemapGridView extends AbstractGridView
         return new class(null, [
             'objectName' => $object->getObjectName(),
             'name' => $object->getName(),
-            'changeFreq' => $handler->getChangeFreq($object),
             'rebuildTime' => $handler->getRebuildTime($object),
             'isDisabled' => $handler->isDisabled($object) ? 1 : 0,
         ]) extends DatabaseObject implements ILinkableObject {
