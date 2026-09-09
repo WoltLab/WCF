@@ -14,22 +14,24 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
     exports.refreshQuoteLists = refreshQuoteLists;
     exports.setup = setup;
     Util_1 = tslib_1.__importDefault(Util_1);
-    const quoteLists = new Map();
+    // Keyed by the container element rather than the editor id: inline editors
+    // reuse the same id for every edit, but each edit creates a fresh element.
+    const quoteLists = new WeakMap();
     class QuoteList {
         #container;
         #editor;
         #editorId;
-        constructor(editorId, editor, containerId) {
+        constructor(editorId, editor, container) {
             this.#editorId = editorId;
             this.#editor = editor;
-            this.#container = document.getElementById(containerId ? containerId : `quotes_${editorId}`);
-            if (this.#container === null) {
-                throw new Error(`The quotes container for '${editorId}' does not exist.`);
-            }
+            this.#container = container;
             this.#editor.closest("form")?.addEventListener("submit", () => {
                 this.#formSubmitted();
             });
             this.renderQuotes();
+        }
+        get editorId() {
+            return this.#editorId;
         }
         renderQuotes() {
             this.#container.innerHTML = "";
@@ -127,26 +129,36 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
             });
         }
     }
+    function getLiveQuoteLists() {
+        // Only containers attached to the document belong to a live editor.
+        return Array.from(document.querySelectorAll(".messageTabMenuContent--quotes"))
+            .map((container) => quoteLists.get(container))
+            .filter((quoteList) => quoteList !== undefined);
+    }
     function getQuoteList(editorId) {
-        return quoteLists.get(editorId);
+        return getLiveQuoteLists().find((quoteList) => quoteList.editorId === editorId);
     }
     function refreshQuoteLists() {
-        for (const quoteList of quoteLists.values()) {
+        for (const quoteList of getLiveQuoteLists()) {
             quoteList.renderQuotes();
         }
     }
     function setup(editorId, containerId) {
-        if (quoteLists.has(editorId)) {
-            return;
-        }
         const editor = document.getElementById(editorId);
         if (editor === null) {
             throw new Error(`The editor '${editorId}' does not exist.`);
         }
+        const container = document.getElementById(containerId ?? `quotes_${editorId}`);
+        if (container === null) {
+            throw new Error(`The quotes container for '${editorId}' does not exist.`);
+        }
+        if (quoteLists.has(container)) {
+            return;
+        }
         (0, Event_1.listenToCkeditor)(editor)
             .ready(({ ckeditor }) => {
             if (ckeditor.features.quoteBlock) {
-                quoteLists.set(editorId, new QuoteList(editorId, editor, containerId));
+                quoteLists.set(container, new QuoteList(editorId, editor, container));
             }
             if (ckeditor.isVisible()) {
                 (0, Message_1.setActiveEditor)(ckeditor, ckeditor.features.quoteBlock);
