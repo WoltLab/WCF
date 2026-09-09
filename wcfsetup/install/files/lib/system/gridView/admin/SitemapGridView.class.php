@@ -11,7 +11,6 @@ use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\DefaultColumnRenderer;
-use wcf\system\gridView\renderer\NumberColumnRenderer;
 use wcf\system\interaction\ToggleInteraction;
 use wcf\system\request\LinkHandler;
 use wcf\system\sitemap\object\RegisteredSitemapObject;
@@ -41,9 +40,6 @@ final class SitemapGridView extends AbstractGridView
                 ->label('wcf.acp.sitemap')
                 ->titleColumn()
                 ->sortable(),
-            GridViewColumn::for('priority')
-                ->label('wcf.acp.sitemap.priority')
-                ->renderer(new NumberColumnRenderer()),
             GridViewColumn::for('changeFreq')
                 ->label('wcf.acp.sitemap.changeFreq')
                 ->renderer(new class extends DefaultColumnRenderer {
@@ -178,7 +174,6 @@ final class SitemapGridView extends AbstractGridView
         return new class(null, [
             'objectName' => $object->getObjectName(),
             'name' => $object->getName(),
-            'priority' => $object->getPriority(),
             'changeFreq' => $handler->getChangeFreq($object),
             'rebuildTime' => $handler->getRebuildTime($object),
             'isDisabled' => $handler->isDisabled($object) ? 1 : 0,

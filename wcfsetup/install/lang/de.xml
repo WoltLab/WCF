@@ -2500,8 +2500,6 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.changeFreq"><![CDATA[Änderungsfrequenz]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.changeFreq.description"><![CDATA[Die Änderungsfrequenz informiert Crawler darüber, wie oft sich eine Seite durchschnittlich ändert.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.data.title"><![CDATA[Daten des Sitemap-Objekts]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.priority"><![CDATA[Priorität]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.priority.description"><![CDATA[Die Priorität informiert Crawler darüber, welche Seiten {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} als wichtiger {if LANGUAGE_USE_INFORMAL_VARIANT}erachtest{else}erachten{/if} als der Rest der Website.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.rebuildTime"><![CDATA[Erneuerungszeit]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.rebuildTime.description"><![CDATA[Nach dem angegebenen Zeitintervall wird die Sitemap vom System erneuert.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName"><![CDATA[Kategorie]]></item>
@@ -2718,7 +2716,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 	</category>
 	<category name="wcf.acp.sitemap">
 		<item name="wcf.acp.sitemap"><![CDATA[Sitemap]]></item>
-		<item name="wcf.acp.sitemap.priority"><![CDATA[Priorität]]></item>
 		<item name="wcf.acp.sitemap.changeFreq"><![CDATA[Änderungsfrequenz]]></item>
 		<item name="wcf.acp.sitemap.changeFreq.always"><![CDATA[Immer]]></item>
 		<item name="wcf.acp.sitemap.changeFreq.hourly"><![CDATA[Stündlich]]></item>

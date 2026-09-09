@@ -19,8 +19,6 @@ use wcf\system\WCF;
  */
 final class RegisteredSitemapObject
 {
-    public const DEFAULT_PRIORITY = 0.5;
-
     public const DEFAULT_CHANGE_FREQ = 'monthly';
 
     public const DEFAULT_REBUILD_TIME = 604800;
@@ -35,7 +33,6 @@ final class RegisteredSitemapObject
     public function __construct(
         private readonly string $objectName,
         private readonly ISitemapObjectObjectType $processor,
-        private readonly float $priority = self::DEFAULT_PRIORITY,
         private readonly string $changeFreq = self::DEFAULT_CHANGE_FREQ,
         private readonly int $rebuildTime = self::DEFAULT_REBUILD_TIME,
         private readonly ?int $packageID = null,
@@ -55,7 +52,6 @@ final class RegisteredSitemapObject
         return new self(
             $objectType->objectType,
             $processor,
-            $objectType->priority !== null ? (float)$objectType->priority : self::DEFAULT_PRIORITY,
             $objectType->changeFreq ?? self::DEFAULT_CHANGE_FREQ,
             $objectType->rebuildTime !== null ? (int)$objectType->rebuildTime : self::DEFAULT_REBUILD_TIME,
             $objectType->packageID,
@@ -88,11 +84,6 @@ final class RegisteredSitemapObject
     public function getProcessor(): ISitemapObjectObjectType
     {
         return $this->processor;
-    }
-
-    public function getPriority(): float
-    {
-        return $this->priority;
     }
 
     /**

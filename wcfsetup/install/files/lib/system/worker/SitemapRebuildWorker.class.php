@@ -202,7 +202,6 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
                         // strip session links
                         'link' => MessageUtil::stripCrap($link),
                         'lastModifiedTime' => $lastModifiedTime,
-                        'priority' => $registeredObject->getPriority(),
                         'changeFreq' => SitemapHandler::getInstance()->getChangeFreq($registeredObject),
                     ]));
 

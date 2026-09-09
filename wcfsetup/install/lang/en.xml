@@ -2092,8 +2092,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.searchableObjectType.searchIndex.error.invalid"><![CDATA[The entered database table name is invalid.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.searchableObjectType.searchIndex.error.unknownApp"><![CDATA[No app with the abbreviation <kbd>{@$app}</kbd> is installed.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.data.title"><![CDATA[Sitemap Object Data]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.priority"><![CDATA[Priority]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.priority.description"><![CDATA[The priority tells crawlers which of your website’s pages you consider more important than the rest.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.changeFreq"><![CDATA[Change Frequency]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.changeFreq.description"><![CDATA[The change frequency tells crawlers how often a page changes on average.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.rebuildTime"><![CDATA[Rebuild Time]]></item>
@@ -2647,7 +2645,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	</category>
 	<category name="wcf.acp.sitemap">
 		<item name="wcf.acp.sitemap"><![CDATA[Sitemap]]></item>
-		<item name="wcf.acp.sitemap.priority"><![CDATA[Priority]]></item>
 		<item name="wcf.acp.sitemap.changeFreq"><![CDATA[Change Frequency]]></item>
 		<item name="wcf.acp.sitemap.changeFreq.always"><![CDATA[Always]]></item>
 		<item name="wcf.acp.sitemap.changeFreq.hourly"><![CDATA[Hourly]]></item>

@@ -24,7 +24,6 @@ use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\ClassNameFormField;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
-use wcf\system\form\builder\field\FloatFormField;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\ItemListFormField;
 use wcf\system\form\builder\field\option\OptionFormField;
@@ -660,16 +659,6 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
         // @deprecated 6.3 use `wcf\event\sitemap\SitemapObjectCollecting` instead
         $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.sitemap.object')
             ->appendChildren([
-                FloatFormField::create('sitemapObjectPriority')
-                    ->objectProperty('priority')
-                    ->label('wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.priority')
-                    ->description('wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.priority.description')
-                    ->required()
-                    ->minimum(0.0)
-                    ->maximum(1.0)
-                    ->step(0.1)
-                    ->value(0.5),
-
                 SingleSelectionFormField::create('sitemapObjectchangeFreq')
                     ->objectProperty('changeFreq')
                     ->label('wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.changeFreq')
@@ -693,7 +682,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                     ->required()
                     ->minimum(0),
             ]);
-        $this->definitionElementChildren['com.woltlab.wcf.sitemap.object'] = ['priority', 'changeFreq', 'rebuildTime'];
+        $this->definitionElementChildren['com.woltlab.wcf.sitemap.object'] = ['changeFreq', 'rebuildTime'];
 
         // com.woltlab.wcf.statDailyHandler
         $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.statDailyHandler')

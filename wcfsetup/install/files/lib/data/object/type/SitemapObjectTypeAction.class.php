@@ -48,7 +48,6 @@ class SitemapObjectTypeAction extends ObjectTypeAction implements IToggleAction
                 $sitemapData['isDisabled'] = $sitemapData['isDisabled'] !== 0 ? 0 : 1;
             } else {
                 $sitemapData = [
-                    'priority' => $objectEditor->priority,
                     'changeFreq' => $objectEditor->changeFreq,
                     'rebuildTime' => $objectEditor->rebuildTime,
                     'isDisabled' => (int)$objectEditor->isDisabled !== 0 ? 0 : 1,
