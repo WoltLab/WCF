@@ -2,8 +2,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.sitemap.edit{/lang}</h1>
-		<p class="contentHeaderDescription">{$sitemapObject->getName()}</p>
+		<h1 class="contentTitle">{lang}wcf.acp.sitemap.edit{/lang}: {$sitemapObject->getName()}</h1>
 	</div>
 	
 	{hascontent}
