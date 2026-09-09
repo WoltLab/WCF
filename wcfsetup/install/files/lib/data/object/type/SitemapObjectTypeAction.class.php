@@ -5,8 +5,8 @@ namespace wcf\data\object\type;
 use wcf\data\IToggleAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\registry\RegistryHandler;
+use wcf\system\sitemap\SitemapHandler;
 use wcf\system\WCF;
-use wcf\system\worker\SitemapRebuildWorker;
 
 /**
  * Executes sitemap object type-related actions.
@@ -18,6 +18,9 @@ use wcf\system\worker\SitemapRebuildWorker;
  * @method  ObjectType      create()
  * @method  ObjectTypeEditor[]  getObjects()
  * @method  ObjectTypeEditor    getSingleObject()
+ *
+ * @deprecated 6.3 Sitemap objects are toggled through the endpoints
+ *             `core/sitemaps/{objectName}/enable` and `core/sitemaps/{objectName}/disable`.
  */
 class SitemapObjectTypeAction extends ObjectTypeAction implements IToggleAction
 {
@@ -37,7 +40,7 @@ class SitemapObjectTypeAction extends ObjectTypeAction implements IToggleAction
         foreach ($this->getObjects() as $objectEditor) {
             $sitemapData = RegistryHandler::getInstance()->get(
                 'com.woltlab.wcf',
-                SitemapRebuildWorker::REGISTRY_PREFIX . $objectEditor->objectType
+                SitemapHandler::REGISTRY_PREFIX . $objectEditor->objectType
             );
             $sitemapData = @\unserialize($sitemapData);
 
@@ -45,8 +48,6 @@ class SitemapObjectTypeAction extends ObjectTypeAction implements IToggleAction
                 $sitemapData['isDisabled'] = $sitemapData['isDisabled'] !== 0 ? 0 : 1;
             } else {
                 $sitemapData = [
-                    'priority' => $objectEditor->priority,
-                    'changeFreq' => $objectEditor->changeFreq,
                     'rebuildTime' => $objectEditor->rebuildTime,
                     'isDisabled' => (int)$objectEditor->isDisabled !== 0 ? 0 : 1,
                 ];
@@ -54,7 +55,7 @@ class SitemapObjectTypeAction extends ObjectTypeAction implements IToggleAction
 
             RegistryHandler::getInstance()->set(
                 'com.woltlab.wcf',
-                SitemapRebuildWorker::REGISTRY_PREFIX . $objectEditor->objectType,
+                SitemapHandler::REGISTRY_PREFIX . $objectEditor->objectType,
                 \serialize($sitemapData)
             );
         }

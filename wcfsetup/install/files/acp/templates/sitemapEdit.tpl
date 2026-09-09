@@ -2,17 +2,18 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.sitemap.edit{/lang}</h1>
-		<p class="contentHeaderDescription">{lang}wcf.acp.sitemap.objectType.{$formObject->objectType}{/lang}</p>
+		<h1 class="contentTitle">{lang}wcf.acp.sitemap.edit{/lang}: {$sitemapObject->getName()}</h1>
 	</div>
 	
-	<nav class="contentHeaderNavigation">
-		<ul>
-			<li><a href="{link controller='SitemapList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.maintenance.sitemap{/lang}</span></a></li>
-			
-			{event name='contentHeaderNavigation'}
-		</ul>
-	</nav>
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {unsafe:$form->getHtml()}

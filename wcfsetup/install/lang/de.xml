@@ -2497,11 +2497,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.objectType.condition.conditionObject"><![CDATA[Bezeichner der „bedingten“ Objekte]]></item>
 		<item name="wcf.acp.pip.objectType.condition.conditionObject.description"><![CDATA[Der Objekttyp-ähnliche Bezeichner der Objekte, auf die sich diese Bedingung bezieht, wird dazu verwendet eine größere Menge an Bedingungen in thematisch zusammengehörige Gruppen aufzuspalten.]]></item>
 		<item name="wcf.acp.pip.objectType.condition.conditionObject.error.tooFewSegments"><![CDATA[Der angegebene Bezeichner enthält nur {#$segmentCount} Abschnitt{if $segmentCount > 1}e{/if}.]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.changeFreq"><![CDATA[Änderungsfrequenz]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.changeFreq.description"><![CDATA[Die Änderungsfrequenz informiert Crawler darüber, wie oft sich eine Seite durchschnittlich ändert.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.data.title"><![CDATA[Daten des Sitemap-Objekts]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.priority"><![CDATA[Priorität]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.priority.description"><![CDATA[Die Priorität informiert Crawler darüber, welche Seiten {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} als wichtiger {if LANGUAGE_USE_INFORMAL_VARIANT}erachtest{else}erachten{/if} als der Rest der Website.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.rebuildTime"><![CDATA[Erneuerungszeit]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.rebuildTime.description"><![CDATA[Nach dem angegebenen Zeitintervall wird die Sitemap vom System erneuert.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName"><![CDATA[Kategorie]]></item>
@@ -2718,27 +2714,12 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 	</category>
 	<category name="wcf.acp.sitemap">
 		<item name="wcf.acp.sitemap"><![CDATA[Sitemap]]></item>
-		<item name="wcf.acp.sitemap.priority"><![CDATA[Priorität]]></item>
-		<item name="wcf.acp.sitemap.changeFreq"><![CDATA[Änderungsfrequenz]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.always"><![CDATA[Immer]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.hourly"><![CDATA[Stündlich]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.daily"><![CDATA[Täglich]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.weekly"><![CDATA[Wöchentlich]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.monthly"><![CDATA[Monatlich]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.yearly"><![CDATA[Jährlich]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.never"><![CDATA[Nie]]></item>
 		<item name="wcf.acp.sitemap.rebuildTime"><![CDATA[Erneuerungszeit]]></item>
 		<item name="wcf.acp.sitemap.rebuildTime.description"><![CDATA[Die Zeit nachdem die Sitemap erneuert werden soll.]]></item>
 		<item name="wcf.acp.sitemap.isDisabled"><![CDATA[Sitemap deaktivieren]]></item>
 		<item name="wcf.acp.sitemap.edit"><![CDATA[Sitemap bearbeiten]]></item>
-		<item name="wcf.acp.sitemap.cliInfo"><![CDATA[Die Sitemap kann auch mittels CLI neu generiert werden. {if LANGUAGE_USE_INFORMAL_VARIANT}Führe{else}Führen Sie{/if} dafür <kbd>worker wcf\\system\\worker\\SitemapRebuildWorker</kbd> in einer CLI Session aus.]]></item>
 		<item name="wcf.acp.sitemap.submitToSearchEngines"><![CDATA[<p>Die generierte Sitemap muss einmalig bei den gewünschten Suchmaschinen manuell hinterlegt werden, die vollständige Adresse lautet: <kbd>{$__wcf->getPath()}sitemaps/sitemap.xml</kbd>.</p>
-<p><br></p>
-<p>Anleitung zum Hinterlegen der XML-Sitemaps:</p>
-<ul class="nativeList">
-	<li><a href="https://support.google.com/webmasters/answer/7451001" class="externalURL">Google</a></li>
-	<li><a href="https://www.bing.com/webmasters/help/sitemaps-3b5cf6ed" class="externalURL">Bing</a></li>
-</ul>]]></item>
+<p>Anleitung zum Hinterlegen der XML-Sitemaps: <a href="https://support.google.com/webmasters/answer/7451001" class="externalURL">Google</a>, <a href="https://www.bing.com/webmasters/help/sitemaps-3b5cf6ed" class="externalURL">Bing</a></p>]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.articleCategory"><![CDATA[Artikel-Kategorien]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.article"><![CDATA[Artikel]]></item>
@@ -5730,5 +5711,6 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.devtools.missingLanguageItem.stackTrace.toggleOutputFormat"/>
 	<item name="wcf.acp.article.setCategory"/>
 	<item name="wcf.acp.trophy.userTrophy.delete.confirmMessage"/>
+	<item name="wcf.acp.sitemap.cliInfo"/>
 </delete>
 </language>

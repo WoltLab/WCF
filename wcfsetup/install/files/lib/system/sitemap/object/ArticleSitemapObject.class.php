@@ -14,7 +14,7 @@ use wcf\data\page\PageCache;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @extends AbstractSitemapObjectObjectType<ArticleContent, ArticleContentList>
+ * @extends AbstractSitemapObjectObjectType<ArticleContentList>
  */
 class ArticleSitemapObject extends AbstractSitemapObjectObjectType
 {
@@ -27,6 +27,8 @@ class ArticleSitemapObject extends AbstractSitemapObjectObjectType
     #[\Override]
     public function canView(DatabaseObject $object)
     {
+        \assert($object instanceof ArticleContent);
+
         return $object->getArticle()->canRead();
     }
 

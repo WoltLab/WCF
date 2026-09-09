@@ -16,57 +16,9 @@
 
 <woltlab-core-notice type="info">{lang}wcf.acp.sitemap.submitToSearchEngines{/lang}</woltlab-core-notice>
 
-<woltlab-core-notice type="info">{lang}wcf.acp.sitemap.cliInfo{/lang}</woltlab-core-notice>
-
-{if $sitemapObjectTypes|count}
-	<div class="section tabularBox">
-		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\object\type\SitemapObjectTypeAction">
-			<thead>
-				<tr>
-					<th class="columnTitle columnSitemap" colspan="2">{lang}wcf.acp.sitemap{/lang}</th>
-					<th class="columnInteger columnPriority">{lang}wcf.acp.sitemap.priority{/lang}</th>
-					<th class="columnText columnChangeFreq">{lang}wcf.acp.sitemap.changeFreq{/lang}</th>
-					<th class="columnInteger columnRebuildTime">{lang}wcf.acp.sitemap.rebuildTime{/lang}</th>
-					
-					{event name='headColumns'}
-				</tr>
-			</thead>
-			
-			<tbody>
-				{foreach from=$sitemapObjectTypes item=object}
-					<tr class="sitemapObjectRow jsObjectActionObject" data-object-id="{$object->getObjectID()}">
-						<td class="columnIcon">
-							{if $sitemapData[$object->objectType]['isDisabled']}
-								{objectAction action="toggle" isDisabled=true}
-							{else}
-								{objectAction action="toggle" isDisabled=false}
-							{/if}
-							<a href="{link controller="SitemapEdit"}objectType={$object->objectType}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon name='pencil'}</a>
-						</td>
-						<td class="columnTitle columnSitemap"><a href="{link controller="SitemapEdit"}objectType={$object->objectType}{/link}">{lang}wcf.acp.sitemap.objectType.{$object->objectType}{/lang}</a></td>
-						<td class="columnInteger columnPriority">{$object->priority}</td>
-						<td class="columnText columnChangeFreq">{lang}wcf.acp.sitemap.changeFreq.{$sitemapData[$object->objectType]['changeFreq']}{/lang}</td>
-						<td class="columnInteger columnRebuildTime">{dateInterval end=TIME_NOW+$sitemapData[$object->objectType]['rebuildTime'] full=true format='plain'}</td>
-						
-						{event name='columns'}
-					</tr>
-				{/foreach}
-			</tbody>
-		</table>
-	</div>
-	
-	<footer class="contentFooter">
-		{hascontent}
-			<nav class="contentFooterNavigation">
-				<ul>
-					{content}{event name='contentFooterNavigation'}{/content}
-				</ul>
-			</nav>
-		{/hascontent}
-	</footer>
-{else}
-	<woltlab-core-notice type="info">{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
-{/if}
+<div class="section">
+	{unsafe:$gridView->render()}
+</div>
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Acp/Ui/Worker'], function (AcpUiWorker) {

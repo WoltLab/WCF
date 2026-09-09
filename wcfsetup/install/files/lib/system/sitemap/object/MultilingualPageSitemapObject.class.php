@@ -18,7 +18,7 @@ use wcf\system\language\LanguageFactory;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @extends AbstractSitemapObjectObjectType<PageContent, PageContentList>
+ * @extends AbstractSitemapObjectObjectType<PageContentList>
  */
 class MultilingualPageSitemapObject extends AbstractSitemapObjectObjectType
 {
@@ -51,6 +51,8 @@ class MultilingualPageSitemapObject extends AbstractSitemapObjectObjectType
     #[\Override]
     public function canView(DatabaseObject $object)
     {
+        \assert($object instanceof PageContent);
+
         $page = new Page($object->pageID);
 
         if ($page->requireObjectID !== 0) {

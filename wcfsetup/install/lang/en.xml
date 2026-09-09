@@ -2092,10 +2092,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.searchableObjectType.searchIndex.error.invalid"><![CDATA[The entered database table name is invalid.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.searchableObjectType.searchIndex.error.unknownApp"><![CDATA[No app with the abbreviation <kbd>{@$app}</kbd> is installed.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.data.title"><![CDATA[Sitemap Object Data]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.priority"><![CDATA[Priority]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.priority.description"><![CDATA[The priority tells crawlers which of your website’s pages you consider more important than the rest.]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.changeFreq"><![CDATA[Change Frequency]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.changeFreq.description"><![CDATA[The change frequency tells crawlers how often a page changes on average.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.rebuildTime"><![CDATA[Rebuild Time]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.rebuildTime.description"><![CDATA[After the entered time interval, the sitemap will be rebuilt by the system.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.data.title"><![CDATA[Statistics Entry Data]]></item>
@@ -2647,27 +2643,12 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	</category>
 	<category name="wcf.acp.sitemap">
 		<item name="wcf.acp.sitemap"><![CDATA[Sitemap]]></item>
-		<item name="wcf.acp.sitemap.priority"><![CDATA[Priority]]></item>
-		<item name="wcf.acp.sitemap.changeFreq"><![CDATA[Change Frequency]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.always"><![CDATA[Always]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.hourly"><![CDATA[Hourly]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.daily"><![CDATA[Daily]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.weekly"><![CDATA[Weekly]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.monthly"><![CDATA[Monthly]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.yearly"><![CDATA[Yearly]]></item>
-		<item name="wcf.acp.sitemap.changeFreq.never"><![CDATA[Never]]></item>
 		<item name="wcf.acp.sitemap.rebuildTime"><![CDATA[Rebuild Time]]></item>
 		<item name="wcf.acp.sitemap.rebuildTime.description"><![CDATA[Time interval after which the sitemap has to be rebuilt.]]></item>
 		<item name="wcf.acp.sitemap.isDisabled"><![CDATA[Disable Sitemap]]></item>
 		<item name="wcf.acp.sitemap.edit"><![CDATA[Edit Sitemap]]></item>
-		<item name="wcf.acp.sitemap.cliInfo"><![CDATA[You can rebuild the sitemap using CLI. For that, execute <kbd>worker wcf\\system\\worker\\SitemapRebuildWorker</kbd> in a CLI session.]]></item>
 		<item name="wcf.acp.sitemap.submitToSearchEngines"><![CDATA[<p>The generated sitemap needs to be submitted once to the search engines, please provide this link: <kbd>{$__wcf->getPath()}sitemaps/sitemap.xml</kbd>.</p>
-<p><br></p>
-<p>Instructions for submitting the sitemap:</p>
-<ul class="nativeList">
-	<li><a href="https://support.google.com/webmasters/answer/7451001" class="externalURL">Google</a></li>
-	<li><a href="https://www.bing.com/webmasters/help/sitemaps-3b5cf6ed" class="externalURL">Bing</a></li>
-</ul>]]></item>
+<p>Instructions for submitting the sitemap: <a href="https://support.google.com/webmasters/answer/7451001" class="externalURL">Google</a>, <a href="https://www.bing.com/webmasters/help/sitemaps-3b5cf6ed" class="externalURL">Bing</a></p>]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.articleCategory"><![CDATA[Article categories]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.article"><![CDATA[Articles]]></item>
@@ -5732,5 +5713,6 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.devtools.missingLanguageItem.stackTrace.toggleOutputFormat"/>
 	<item name="wcf.acp.article.setCategory"/>
 	<item name="wcf.acp.trophy.userTrophy.delete.confirmMessage"/>
+	<item name="wcf.acp.sitemap.cliInfo"/>
 </delete>
 </language>
