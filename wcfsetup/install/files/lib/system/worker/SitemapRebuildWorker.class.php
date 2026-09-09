@@ -42,6 +42,17 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
     const REGISTRY_PREFIX = SitemapHandler::REGISTRY_PREFIX;
 
     /**
+     * Name of the session variable that holds the current worker data.
+     */
+    private const WORKER_DATA_SESSION_VAR = 'sitemapRebuildWorkerData';
+
+    /**
+     * Name of the session variable that holds the total number of iterations.
+     * The value is calculated once per rebuild, see `countObjects()`.
+     */
+    private const COUNT_SESSION_VAR = 'sitemapRebuildWorkerCount';
+
+    /**
      * @inheritDoc
      */
     public $limit = 250;
@@ -81,49 +92,88 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
     #[\Override]
     public function countObjects()
     {
+        if ($this->count !== null) {
+            return;
+        }
+
         // changes session owner to 'System' during the building of sitemaps
         $this->changeUserToGuest();
 
         try {
-            if ($this->count === null) {
-                // reset count
-                $this->count = 0;
+            // The number of iterations is calculated once at the start of a rebuild and
+            // is reused for every following request. Recalculating it would yield a
+            // smaller value over time, because the condition based on the option
+            // `SITEMAP_INDEX_TIME_FRAME` is relative to `TIME_NOW`. The progress would
+            // then reach 100% before the last sitemap has been written, causing the
+            // caller to abort the rebuild before the index file is created.
+            $storedCount = $this->loopCount === 0
+                ? null
+                : WCF::getSession()->getVar(self::COUNT_SESSION_VAR);
 
-                // read sitemaps
-                $sitemapObjects = SitemapHandler::getInstance()->getObjects();
-                foreach ($sitemapObjects as $sitemapObject) {
-                    $processor = $sitemapObject->getProcessor();
+            // reset count
+            $this->count = 0;
 
-                    if (
-                        $processor->isAvailableType()
-                        && !SitemapHandler::getInstance()->isDisabled($sitemapObject)
-                    ) {
-                        $this->sitemapObjects[] = $sitemapObject;
+            // read sitemaps
+            $sitemapObjects = SitemapHandler::getInstance()->getObjects();
+            foreach ($sitemapObjects as $sitemapObject) {
+                $processor = $sitemapObject->getProcessor();
 
-                        $list = $processor->getObjectList();
-
-                        if (\SITEMAP_INDEX_TIME_FRAME > 0 && $processor->getLastModifiedColumn() !== null) {
-                            $list->getConditionBuilder()->add($processor->getLastModifiedColumn() . " > ?", [
-                                \TIME_NOW - \SITEMAP_INDEX_TIME_FRAME * 86400, // one day (60 * 60 * 24)
-                            ]);
-                        }
-
-                        $objectCount = $list->countObjects();
-                        $iterations = (int)\ceil($objectCount / $this->limit);
-                        if (($objectCount % $this->limit) === 0) {
-                            // We need an additional iteration to finalize the sitemap.
-                            $iterations++;
-                        }
-                        $this->count += $iterations * $this->limit;
-                    } else {
-                        $this->deleteSitemaps($sitemapObject->getObjectName());
-                    }
+                if (
+                    !$processor->isAvailableType()
+                    || SitemapHandler::getInstance()->isDisabled($sitemapObject)
+                ) {
+                    $this->deleteSitemaps($sitemapObject->getObjectName());
+                    continue;
                 }
+
+                $this->sitemapObjects[] = $sitemapObject;
+
+                if ($storedCount !== null) {
+                    continue;
+                }
+
+                $list = $processor->getObjectList();
+
+                if (\SITEMAP_INDEX_TIME_FRAME > 0 && $processor->getLastModifiedColumn() !== null) {
+                    $list->getConditionBuilder()->add($processor->getLastModifiedColumn() . " > ?", [
+                        \TIME_NOW - \SITEMAP_INDEX_TIME_FRAME * 86400, // one day (60 * 60 * 24)
+                    ]);
+                }
+
+                $objectCount = $list->countObjects();
+                $iterations = (int)\ceil($objectCount / $this->limit);
+                if (($objectCount % $this->limit) === 0) {
+                    // We need an additional iteration to finalize the sitemap.
+                    $iterations++;
+                }
+                $this->count += $iterations * $this->limit;
+            }
+
+            if ($storedCount !== null) {
+                $this->count = (int)$storedCount;
+            } else {
+                WCF::getSession()->register(self::COUNT_SESSION_VAR, $this->count);
             }
         } finally {
             // change session owner back to the actual user
             $this->changeToActualUser();
         }
+    }
+
+    #[\Override]
+    public function getProgress()
+    {
+        $progress = parent::getProgress();
+
+        // The rebuild is only complete once the sitemap index file has been written.
+        // Reporting 100% any earlier causes the caller to stop the rebuild although
+        // the previous sitemap files have already been deleted, leaving behind a
+        // `sitemap.xml` that references files that no longer exist.
+        if ($progress === 100 && !$this->hasFinished()) {
+            return 99;
+        }
+
+        return $progress;
     }
 
     #[\Override]
@@ -415,7 +465,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
      */
     protected function storeWorkerData()
     {
-        WCF::getSession()->register('sitemapRebuildWorkerData', $this->workerData);
+        WCF::getSession()->register(self::WORKER_DATA_SESSION_VAR, $this->workerData);
     }
 
     /**
@@ -425,7 +475,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
      */
     protected function loadWorkerData()
     {
-        $this->workerData = WCF::getSession()->getVar('sitemapRebuildWorkerData');
+        $this->workerData = WCF::getSession()->getVar(self::WORKER_DATA_SESSION_VAR);
 
         if ($this->loopCount === 0) {
             $this->workerData = [
@@ -440,6 +490,21 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
 
             $this->generateTmpFile();
         }
+    }
+
+    /**
+     * Returns whether the rebuild has been completed, including the sitemap index file.
+     */
+    private function hasFinished(): bool
+    {
+        if ($this->loopCount < 1) {
+            // Any stored data still belongs to the previous rebuild.
+            return false;
+        }
+
+        $workerData = WCF::getSession()->getVar(self::WORKER_DATA_SESSION_VAR);
+
+        return \is_array($workerData) && ($workerData['finished'] ?? false) === true;
     }
 
     #[\Override]
