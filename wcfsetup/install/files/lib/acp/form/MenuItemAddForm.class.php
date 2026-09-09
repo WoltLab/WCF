@@ -20,7 +20,6 @@ use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
 use wcf\system\form\builder\field\SelectFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -100,11 +99,24 @@ class MenuItemAddForm extends AbstractFormBuilderForm
         $pageNodeList = (new PageNodeTree())->getNodeList();
 
         $pageHandlers = [];
+        $pageOptions = [];
         foreach ($pageNodeList as $page) {
             \assert($page instanceof PageNode);
+
+            $isSelectable = true;
             if ($page->getHandler() instanceof ILookupPageHandler) {
                 $pageHandlers[$page->pageID] = $page->requireObjectID;
+            } elseif ($page->requireObjectID) {
+                // there is no way to supply the required object id for this page
+                $isSelectable = false;
             }
+
+            $pageOptions[] = [
+                'depth' => $page->getDepth() - 1,
+                'label' => $page->name,
+                'isSelectable' => $isSelectable,
+                'value' => $page->pageID,
+            ];
         }
 
         $this->form->appendChildren([
@@ -148,9 +160,10 @@ class MenuItemAddForm extends AbstractFormBuilderForm
                         ])
                         ->value(1)
                         ->required(),
-                    SingleSelectionFormField::create('pageID')
+                    SelectFormField::create('pageID')
                         ->label('wcf.acp.page.page')
-                        ->options($pageNodeList, true)
+                        ->options($pageOptions, true)
+                        ->ignoreInvalidValues()
                         ->required()
                         ->addDependency(
                             ValueFormFieldDependency::create('isInternalLinkDependency')
