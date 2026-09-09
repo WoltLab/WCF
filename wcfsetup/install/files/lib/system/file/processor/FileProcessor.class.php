@@ -152,6 +152,7 @@ final class FileProcessor extends SingletonFactory
         return $fileProcessor->canAdopt($file, $context);
     }
 
+    #[\NoDiscard("as the file itself could change")]
     public function generateWebpVariant(File $file): File
     {
         $newFile = $this->createWebpVariant($file);
