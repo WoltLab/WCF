@@ -11,6 +11,7 @@ import { UserMenuButton, UserMenuData, UserMenuFooter, UserMenuProvider } from "
 import { getTimeElement } from "../../../Date/Util";
 import { escapeHTML } from "../../../StringUtil";
 import * as DomChangeListener from "../../../Dom/Change/Listener";
+import * as Environment from "../../../Environment";
 import * as Language from "../../../Language";
 import { createFocusTrap, FocusTrap } from "focus-trap";
 import PerfectScrollbar from "perfect-scrollbar";
@@ -49,9 +50,14 @@ export class UserMenuView {
       fallbackFocus: this.element,
     });
 
+    // Perfect Scrollbar emulates the scrolling through touch events which
+    // causes iOS to suppress the synthesized `click` event of the next tap.
+    // Touch devices must use the native scrolling instead.
+    const supportsPerfectScrollbar = Environment.platform() === "desktop";
+
     UiScreen.on("screen-lg", {
       match: () => {
-        this.usePerfectScrollbar = true;
+        this.usePerfectScrollbar = supportsPerfectScrollbar;
         this.rebuildScrollbar();
       },
       unmatch: () => {
@@ -59,7 +65,7 @@ export class UserMenuView {
         this.rebuildScrollbar();
       },
       setup: () => {
-        this.usePerfectScrollbar = true;
+        this.usePerfectScrollbar = supportsPerfectScrollbar;
         this.rebuildScrollbar();
       },
     });
