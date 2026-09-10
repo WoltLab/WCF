@@ -3,6 +3,7 @@
 namespace wcf\system\form\builder;
 
 use wcf\system\gridView\AbstractGridView;
+use wcf\system\WCF;
 
 /**
  * Form node that shows the contents of a grid view.
@@ -56,7 +57,7 @@ class GridViewFormNode implements IFormChildNode
     #[\Override]
     public function getHtml()
     {
-        return $this->getGridView()->render();
+        return WCF::getTPL()->render('wcf', 'shared_gridViewFormNode', ['node' => $this]);
     }
 
     #[\Override]
