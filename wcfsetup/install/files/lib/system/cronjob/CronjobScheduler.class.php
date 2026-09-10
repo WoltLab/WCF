@@ -24,6 +24,12 @@ use wcf\system\WCF;
 final class CronjobScheduler extends SingletonFactory
 {
     /**
+     * Upper bound for the runtime of a request that executes cronjobs. A cronjob that has been
+     * executing for longer than this is assumed to have crashed.
+     */
+    private const CRASH_GRACE_PERIOD = 3600;
+
+    /**
      * cached times of the next and after next cronjob execution
      * @var array{afterNextExec: int, nextExec: ?int}
      */
@@ -129,66 +135,51 @@ final class CronjobScheduler extends SingletonFactory
                 0,
                 \TIME_NOW,
             ]);
+
+            // A crashed cronjob may be reached twice: through the pending cronjobs of its batch
+            // and through its own timeout. The result set was locked at the start, so the second
+            // visit would still see the stale state.
+            $handledCronjobIDs = [];
             while ($cronjob = $statement->fetchObject(Cronjob::class)) {
-                // In any case: Reset the state to READY.
-                $data = [
-                    'state' => Cronjob::READY,
-                ];
+                if (\in_array($cronjob->cronjobID, $handledCronjobIDs, true)) {
+                    continue;
+                }
+                $handledCronjobIDs[] = $cronjob->cronjobID;
 
                 switch ($cronjob->state) {
                     case Cronjob::EXECUTING:
                         // The cronjob spent two periods in the EXECUTING state.
                         // We must assume it crashed.
-                        $data['failCount'] = $cronjob->failCount + 1;
+                        $this->resetCrashedCronjob($cronjob);
+                        break;
+                    case Cronjob::PENDING:
+                        // The cronjob spent two periods in the PENDING state, which proves that the
+                        // request that loaded it died before reaching it. This is not the fault of
+                        // this cronjob, it is rescheduled without being reported.
+                        $this->rescheduleCronjob($cronjob, ['state' => Cronjob::READY]);
 
-                        // The cronjob exceeded the maximum fail count.
-                        // Cronjobs that can be disabled, should be disabled.
-                        if ($data['failCount'] >= Cronjob::MAX_FAIL_COUNT) {
-                            if ($cronjob->canBeDisabled !== 0) {
-                                $data['isDisabled'] = 1;
-                                $data['failCount'] = 0;
-                            } else {
-                                // Reset failCount for cronjobs, which can't be disabled to
-                                // MAX_FAIL_COUNT - 1, because the column has a max length
-                                // which should not be reached.
-                                $data['failCount'] = Cronjob::MAX_FAIL_COUNT - 1;
+                        // The cronjob that was executing when the request died is the one that
+                        // crashed. All cronjobs of that request share the same `lastExec`, there is
+                        // no need to wait for its own timeout.
+                        //
+                        // The timeout of this cronjob is derived from its own period, therefore it
+                        // may elapse while the request is still working through the batch. Waiting
+                        // for the grace period avoids reporting a slow cronjob as crashed, which
+                        // would release its lock and permit a concurrent execution.
+                        if ($cronjob->lastExec + self::CRASH_GRACE_PERIOD <= \TIME_NOW) {
+                            foreach ($this->getCrashedCronjobs($cronjob->lastExec) as $crashedCronjob) {
+                                if (\in_array($crashedCronjob->cronjobID, $handledCronjobIDs, true)) {
+                                    continue;
+                                }
+                                $handledCronjobIDs[] = $crashedCronjob->cronjobID;
+
+                                $this->resetCrashedCronjob($crashedCronjob);
                             }
                         }
-                        // no break
-                    case Cronjob::PENDING:
-                        // The cronjob spent two periods in the PENDING state.
-                        // We must assume a previous cronjob in the same request hosed
-                        // the whole process (e.g. by exceeding the memory limit).
-                        // This is not the fault of this cronjob, thus the fail counter
-                        // is not being increased.
-
-                        $log = CronjobLogEditor::create([
-                            'cronjobID' => $cronjob->cronjobID,
-                            'execTime' => \TIME_NOW,
-                        ]);
-                        $logEditor = new CronjobLogEditor($log);
-
-                        $errorMessage = \sprintf(
-                            "The cronjob '%s' (ID %d) appears to have failed. (nextExec %d, afterNextExec %d, now %d)",
-                            $cronjob->cronjobName,
-                            $cronjob->cronjobID,
-                            $cronjob->nextExec,
-                            $cronjob->afterNextExec,
-                            \TIME_NOW
-                        );
-                        $this->logResult($logEditor, new \Exception($errorMessage));
                         break;
                     default:
                         throw new \LogicException('Unreachable');
                 }
-
-                // Schedule the cronjob for execution at the next regular execution date. The previous
-                // implementation was executing the cronjob immediately, which may be undesirable if
-                // the cronjob is expected to be executed in a specific time window only.
-                $data['nextExec'] = $cronjob->getNextExec(\TIME_NOW);
-                $data['afterNextExec'] = $cronjob->getNextExec($data['nextExec'] + 120);
-
-                (new CronjobEditor($cronjob))->update($data);
             }
 
             WCF::getDB()->commitTransaction();
@@ -198,6 +189,90 @@ final class CronjobScheduler extends SingletonFactory
                 WCF::getDB()->rollBackTransaction();
             }
         }
+    }
+
+    /**
+     * Reports a crashed cronjob and increases its fail counter. Cronjobs that have failed too often
+     * will be disabled automatically.
+     */
+    private function resetCrashedCronjob(Cronjob $cronjob): void
+    {
+        $data = [
+            'state' => Cronjob::READY,
+            'failCount' => $cronjob->failCount + 1,
+        ];
+
+        // The cronjob exceeded the maximum fail count.
+        // Cronjobs that can be disabled, should be disabled.
+        if ($data['failCount'] >= Cronjob::MAX_FAIL_COUNT) {
+            if ($cronjob->canBeDisabled !== 0) {
+                $data['isDisabled'] = 1;
+                $data['failCount'] = 0;
+            } else {
+                // Reset failCount for cronjobs, which can't be disabled to
+                // MAX_FAIL_COUNT - 1, because the column has a max length
+                // which should not be reached.
+                $data['failCount'] = Cronjob::MAX_FAIL_COUNT - 1;
+            }
+        }
+
+        $log = CronjobLogEditor::create([
+            'cronjobID' => $cronjob->cronjobID,
+            'execTime' => \TIME_NOW,
+        ]);
+        $logEditor = new CronjobLogEditor($log);
+
+        $errorMessage = \sprintf(
+            "The cronjob '%s' (ID %d) did not finish and is assumed to have crashed. (lastExec %d, nextExec %d, afterNextExec %d, now %d)",
+            $cronjob->cronjobName,
+            $cronjob->cronjobID,
+            $cronjob->lastExec,
+            $cronjob->nextExec,
+            $cronjob->afterNextExec,
+            \TIME_NOW
+        );
+        $this->logResult($logEditor, new \Exception($errorMessage));
+
+        $this->rescheduleCronjob($cronjob, $data);
+    }
+
+    /**
+     * Schedules the cronjob for execution at the next regular execution date. The previous
+     * implementation was executing the cronjob immediately, which may be undesirable if
+     * the cronjob is expected to be executed in a specific time window only.
+     *
+     * @param array<string, mixed> $data
+     */
+    private function rescheduleCronjob(Cronjob $cronjob, array $data): void
+    {
+        $data['nextExec'] = $cronjob->getNextExec(\TIME_NOW);
+        $data['afterNextExec'] = $cronjob->getNextExec($data['nextExec'] + 120);
+
+        (new CronjobEditor($cronjob))->update($data);
+    }
+
+    /**
+     * Returns the cronjobs that were loaded by the same request as a cronjob with the given
+     * `lastExec` and are still marked as executing.
+     *
+     * @return Cronjob[]
+     */
+    private function getCrashedCronjobs(int $lastExec): array
+    {
+        $sql = "SELECT  *
+                FROM    wcf1_cronjob
+                WHERE   state = ?
+                    AND isDisabled = ?
+                    AND lastExec = ?
+                FOR UPDATE";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            Cronjob::EXECUTING,
+            0,
+            $lastExec,
+        ]);
+
+        return $statement->fetchObjects(Cronjob::class);
     }
 
     /**
