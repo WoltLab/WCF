@@ -100,7 +100,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                 const reaction = availableReactions[0];
                 elementData.reactButton.title = reaction.title;
                 const textSpan = elementData.reactButton.querySelector(".invisible");
-                textSpan.textContent = reaction.title;
+                if (textSpan !== null) {
+                    textSpan.textContent = reaction.title;
+                }
             }
             elementData.reactButton.setAttribute("role", "button");
             if (availableReactions.length > 1) {

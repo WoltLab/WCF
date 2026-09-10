@@ -163,8 +163,10 @@ class UiReactionHandler {
     if (availableReactions.length === 1) {
       const reaction = availableReactions[0];
       elementData.reactButton.title = reaction.title;
-      const textSpan = elementData.reactButton.querySelector(".invisible")!;
-      textSpan.textContent = reaction.title;
+      const textSpan = elementData.reactButton.querySelector(".invisible");
+      if (textSpan !== null) {
+        textSpan.textContent = reaction.title;
+      }
     }
 
     elementData.reactButton.setAttribute("role", "button");
