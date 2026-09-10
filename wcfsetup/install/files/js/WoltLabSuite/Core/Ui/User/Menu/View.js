@@ -6,11 +6,12 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUtil", "../../../Dom/Change/Listener", "../../../Language", "focus-trap", "perfect-scrollbar", "../../Screen"], function (require, exports, tslib_1, Util_1, StringUtil_1, DomChangeListener, Language, focus_trap_1, perfect_scrollbar_1, UiScreen) {
+define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUtil", "../../../Dom/Change/Listener", "../../../Environment", "../../../Language", "focus-trap", "perfect-scrollbar", "../../Screen"], function (require, exports, tslib_1, Util_1, StringUtil_1, DomChangeListener, Environment, Language, focus_trap_1, perfect_scrollbar_1, UiScreen) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UserMenuView = void 0;
     DomChangeListener = tslib_1.__importStar(DomChangeListener);
+    Environment = tslib_1.__importStar(Environment);
     Language = tslib_1.__importStar(Language);
     perfect_scrollbar_1 = tslib_1.__importDefault(perfect_scrollbar_1);
     UiScreen = tslib_1.__importStar(UiScreen);
@@ -40,9 +41,13 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
                 },
                 fallbackFocus: this.element,
             });
+            // Perfect Scrollbar emulates the scrolling through touch events which
+            // causes iOS to suppress the synthesized `click` event of the next tap.
+            // Touch devices must use the native scrolling instead.
+            const supportsPerfectScrollbar = Environment.platform() === "desktop";
             UiScreen.on("screen-lg", {
                 match: () => {
-                    this.usePerfectScrollbar = true;
+                    this.usePerfectScrollbar = supportsPerfectScrollbar;
                     this.rebuildScrollbar();
                 },
                 unmatch: () => {
@@ -50,7 +55,7 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
                     this.rebuildScrollbar();
                 },
                 setup: () => {
-                    this.usePerfectScrollbar = true;
+                    this.usePerfectScrollbar = supportsPerfectScrollbar;
                     this.rebuildScrollbar();
                 },
             });
