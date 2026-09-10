@@ -103,6 +103,13 @@ html:not(.touch) .userMenuButton {
 	}
 }
 
+/* Touch devices do not use Perfect Scrollbar, they rely on the native scrolling. */
+html.mobile .userMenuContent.userMenuContentScrollable {
+	@include screen-lg {
+		overflow: hidden auto;
+	}
+}
+
 .userMenuItem {
 	background-color: var(--wcfUserMenuBackground);
 	display: grid;
