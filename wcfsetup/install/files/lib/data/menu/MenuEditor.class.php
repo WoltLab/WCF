@@ -115,5 +115,9 @@ class MenuEditor extends DatabaseObjectEditor implements IEditableCachedObject
     public static function resetCache()
     {
         MenuCacheBuilder::getInstance()->reset();
+
+        // The titles are stored as phrases, thus the language cache
+        // has to be reset as well.
+        LanguageFactory::getInstance()->deleteLanguageCache();
     }
 }
