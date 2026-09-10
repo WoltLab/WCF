@@ -113,6 +113,7 @@ class AttachmentHandler implements \Countable
                     $this->attachmentList->getConditionBuilder()->add('1 = 0');
                 } else {
                     $this->attachmentList->getConditionBuilder()->add('tmpHash IN (?)', [$tmpHashes]);
+                    self::addUploaderCondition($this->attachmentList->getConditionBuilder());
                 }
             }
             $this->attachmentList->readObjects();
@@ -141,6 +142,7 @@ class AttachmentHandler implements \Countable
         $conditions->add("objectTypeID = ?", [$this->objectType->objectTypeID]);
         $conditions->add("tmpHash IN (?)", [$this->tmpHash]);
         $conditions->add("(objectID IS NULL OR objectID = 0)");
+        self::addUploaderCondition($conditions);
 
         $sql = "UPDATE  wcf1_attachment
                 SET     objectID = ?,
@@ -152,6 +154,20 @@ class AttachmentHandler implements \Countable
         \array_unshift($parameters, $objectID);
 
         $statement->execute($parameters);
+    }
+
+    /**
+     * The tmpHash of logged-in users is derived from public data, therefore it
+     * must never be the sole key to claim temporary attachments.
+     */
+    private static function addUploaderCondition(PreparedStatementConditionBuilder $conditions): void
+    {
+        $userID = WCF::getUser()->userID;
+        if ($userID === 0) {
+            $conditions->add('userID IS NULL');
+        } else {
+            $conditions->add('userID = ?', [$userID]);
+        }
     }
 
     /**
