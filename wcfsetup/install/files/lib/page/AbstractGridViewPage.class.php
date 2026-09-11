@@ -117,6 +117,11 @@ abstract class AbstractGridViewPage extends AbstractPage
     protected function getHeadContent(): string
     {
         $linkTags = [];
+        // Reading the sort parameters from the grid view instead of the request
+        // discards values that have been rejected during the validation, for
+        // example when the grid view has no sortable columns at all.
+        $sortField = $this->gridView->getSortField();
+        $sortOrder = $sortField !== '' ? $this->gridView->getSortOrder() : '';
         if ($this->gridView->getPageNo() < $this->gridView->countPages()) {
             $linkTags[] = \sprintf(
                 '<link rel="next" href="%s">',
@@ -125,8 +130,8 @@ abstract class AbstractGridViewPage extends AbstractPage
                         $this->getBaseUrlParameters(),
                         [
                             'pageNo' => $this->gridView->getPageNo() + 1,
-                            'sortField' => $this->sortField ?: null,
-                            'sortOrder' => $this->sortOrder ?: null,
+                            'sortField' => $sortField ?: null,
+                            'sortOrder' => $sortOrder ?: null,
                         ]
                     ))
                 )
@@ -141,8 +146,8 @@ abstract class AbstractGridViewPage extends AbstractPage
                         $this->getBaseUrlParameters(),
                         [
                             'pageNo' => $this->gridView->getPageNo() !== 2 ? $this->gridView->getPageNo() - 1 : null,
-                            'sortField' => $this->sortField ?: null,
-                            'sortOrder' => $this->sortOrder ?: null,
+                            'sortField' => $sortField ?: null,
+                            'sortOrder' => $sortOrder ?: null,
                         ]
                     ))
                 )

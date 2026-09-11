@@ -202,6 +202,16 @@ abstract class AbstractGridView
     }
 
     /**
+     * Returns true, if this grid view has at least one sortable column.
+     *
+     * @since 6.3
+     */
+    public function isSortable(): bool
+    {
+        return $this->getSortableColumns() !== [];
+    }
+
+    /**
      * Sets the interaction provider that is used to render the interaction context menu.
      */
     public function setInteractionProvider(IInteractionProvider $provider): void
@@ -765,8 +775,18 @@ abstract class AbstractGridView
     {
         $this->buildAvailableFilters();
 
-        if ($this->getDefaultSortField() === '') {
-            throw new \InvalidArgumentException("Undefined default sort field.");
+        if ($this->isSortable()) {
+            if ($this->getDefaultSortField() === '') {
+                throw new \InvalidArgumentException("Undefined default sort field.");
+            }
+        } elseif ($this->getDefaultSortField() !== '') {
+            if (\ENABLE_DEBUG_MODE !== 0) {
+                throw new \InvalidArgumentException(
+                    "A default sort field has been set, but the grid view with id '{$this->getID()}' has no sortable columns."
+                );
+            }
+
+            $this->setDefaultSortField('');
         }
 
         if ($this->getSortField() !== '') {
@@ -901,6 +921,11 @@ abstract class AbstractGridView
 
             $this->objectList->sqlOrderBy .= ',' . $this->objectList->getDatabaseTableAlias() .
                 '.' . $this->objectList->getDatabaseTableIndexName() . ' ' . $this->getSortOrder();
+        } elseif ($this->objectList->sqlOrderBy === '') {
+            // Grid views without sortable columns must still be read in a deterministic
+            // order, otherwise the pagination can yield duplicated or missing rows.
+            $this->objectList->sqlOrderBy = $this->objectList->getDatabaseTableAlias() .
+                '.' . $this->objectList->getDatabaseTableIndexName() . ' ASC';
         }
     }
 
