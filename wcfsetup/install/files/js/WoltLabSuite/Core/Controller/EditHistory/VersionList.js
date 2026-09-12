@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  */
-define(["require", "exports", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Component/Confirmation", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, Ajax_1, Confirmation_1, Snackbar_1) {
+define(["require", "exports", "WoltLabSuite/Core/Api/EditHistoryEntries/RevertEntry", "WoltLabSuite/Core/Component/Confirmation", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, RevertEntry_1, Confirmation_1, Snackbar_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -22,7 +22,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Compo
         });
     }
     async function revert(objectId) {
-        await (0, Ajax_1.dboAction)("revert", "wcf\\data\\edit\\history\\entry\\EditHistoryEntryAction").objectIds([objectId]).dispatch();
+        await (0, RevertEntry_1.revertEntry)(objectId);
         (0, Snackbar_1.showDefaultSuccessSnackbar)().addEventListener("snackbar:close", () => {
             window.location.reload();
         });

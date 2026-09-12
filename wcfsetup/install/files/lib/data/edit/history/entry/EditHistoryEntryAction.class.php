@@ -12,6 +12,7 @@ use wcf\system\exception\IllegalLinkException;
  * @author  Tim Duesterhus
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated  6.3 Use `EditHistoryEntryBuilder` instead.
  *
  * @extends AbstractDatabaseObjectAction<EditHistoryEntry, EditHistoryEntryEditor>
  */
@@ -26,6 +27,7 @@ class EditHistoryEntryAction extends AbstractDatabaseObjectAction
      * Checks permissions to revert.
      *
      * @return void
+     * @deprecated  6.3 Use the RPC endpoint `POST /core/edit-history-entries/{id}/revert` instead.
      */
     public function validateRevert()
     {
@@ -45,6 +47,7 @@ class EditHistoryEntryAction extends AbstractDatabaseObjectAction
      * Reverts the objects back to this history entry.
      *
      * @return void
+     * @deprecated  6.3 Use the RPC endpoint `POST /core/edit-history-entries/{id}/revert` instead.
      */
     public function revert()
     {
