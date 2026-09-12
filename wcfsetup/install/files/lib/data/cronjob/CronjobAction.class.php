@@ -5,7 +5,7 @@ namespace wcf\data\cronjob;
 use wcf\command\cronjob\DisableCronjob;
 use wcf\command\cronjob\EnableCronjob;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\data\cronjob\log\CronjobLogEditor;
+use wcf\data\cronjob\log\CronjobLogBuilder;
 use wcf\data\IToggleAction;
 use wcf\data\user\User;
 use wcf\system\cronjob\CronjobScheduler;
@@ -149,12 +149,12 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
                     }
                 }
 
-                CronjobLogEditor::create([
-                    'cronjobID' => $cronjob->cronjobID,
-                    'execTime' => \TIME_NOW,
-                    'success' => $exception !== null ? 0 : 1,
-                    'error' => $exception !== null ? \mb_substr($exception->getMessage(), 0, 65000) : '',
-                ]);
+                CronjobLogBuilder::forCreate()
+                    ->setCronjobID($cronjob->cronjobID)
+                    ->setExecTime(\TIME_NOW)
+                    ->setSuccess($exception === null)
+                    ->setError($exception?->getMessage())
+                    ->create();
 
                 // calculate next exec-time
                 $nextExec = $cronjob->getNextExec();

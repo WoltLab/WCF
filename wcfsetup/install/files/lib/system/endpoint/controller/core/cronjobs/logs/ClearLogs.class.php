@@ -5,7 +5,7 @@ namespace wcf\system\endpoint\controller\core\cronjobs\logs;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use wcf\data\cronjob\log\CronjobLogEditor;
+use wcf\data\cronjob\log\CronjobLogBuilder;
 use wcf\system\endpoint\DeleteRequest;
 use wcf\system\endpoint\IController;
 use wcf\system\WCF;
@@ -26,7 +26,7 @@ final class ClearLogs implements IController
     {
         WCF::getSession()->checkPermissions(['admin.management.canManageCronjob']);
 
-        CronjobLogEditor::clearLogs();
+        CronjobLogBuilder::clearAll();
 
         return new JsonResponse([]);
     }

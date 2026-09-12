@@ -4,7 +4,8 @@ namespace wcf\system\cronjob;
 
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobEditor;
-use wcf\data\cronjob\log\CronjobLogEditor;
+use wcf\data\cronjob\log\CronjobLog;
+use wcf\data\cronjob\log\CronjobLogBuilder;
 use wcf\data\user\User;
 use wcf\system\cache\builder\CronjobCacheBuilder;
 use wcf\system\exception\ClassNotFoundException;
@@ -75,11 +76,10 @@ final class CronjobScheduler extends SingletonFactory
                 ]);
 
                 // create log entry
-                $log = CronjobLogEditor::create([
-                    'cronjobID' => $cronjobEditor->cronjobID,
-                    'execTime' => \TIME_NOW,
-                ]);
-                $logEditor = new CronjobLogEditor($log);
+                $log = CronjobLogBuilder::forCreate()
+                    ->setCronjobID($cronjobEditor->cronjobID)
+                    ->setExecTime(\TIME_NOW)
+                    ->create();
 
                 // check if all required options are set for cronjob to be executed
                 // note: a general log is created to avoid confusion why a cronjob
@@ -87,12 +87,12 @@ final class CronjobScheduler extends SingletonFactory
                 // behavior
                 if ($cronjobEditor->validateOptions()) {
                     try {
-                        $this->executeCronjob($cronjobEditor, $logEditor);
+                        $this->executeCronjob($cronjobEditor, $log);
                     } catch (\Throwable $e) {
-                        $this->logResult($logEditor, $e);
+                        $this->logResult($log, $e);
                     }
                 } else {
-                    $this->logResult($logEditor);
+                    $this->logResult($log);
                 }
 
                 // mark cronjob as done
@@ -216,11 +216,10 @@ final class CronjobScheduler extends SingletonFactory
             }
         }
 
-        $log = CronjobLogEditor::create([
-            'cronjobID' => $cronjob->cronjobID,
-            'execTime' => \TIME_NOW,
-        ]);
-        $logEditor = new CronjobLogEditor($log);
+        $log = CronjobLogBuilder::forCreate()
+            ->setCronjob($cronjob)
+            ->setExecTime(\TIME_NOW)
+            ->create();
 
         $errorMessage = \sprintf(
             "The cronjob '%s' (ID %d) did not finish and is assumed to have crashed. (lastExec %d, nextExec %d, afterNextExec %d, now %d)",
@@ -231,7 +230,7 @@ final class CronjobScheduler extends SingletonFactory
             $cronjob->afterNextExec,
             \TIME_NOW
         );
-        $this->logResult($logEditor, new \Exception($errorMessage));
+        $this->logResult($log, new \Exception($errorMessage));
 
         $this->rescheduleCronjob($cronjob, $data);
     }
@@ -335,7 +334,7 @@ final class CronjobScheduler extends SingletonFactory
      *
      * @throws  SystemException
      */
-    private function executeCronjob(CronjobEditor $cronjobEditor, CronjobLogEditor $logEditor): void
+    private function executeCronjob(CronjobEditor $cronjobEditor, CronjobLog $log): void
     {
         $className = $cronjobEditor->className;
         if (!\class_exists($className)) {
@@ -352,13 +351,13 @@ final class CronjobScheduler extends SingletonFactory
         $cronjob = new $className();
         $cronjob->execute($cronjobEditor->getDecoratedObject());
 
-        $this->logResult($logEditor);
+        $this->logResult($log);
     }
 
     /**
      * Logs cronjob exec success or failure.
      */
-    private function logResult(CronjobLogEditor $logEditor, ?\Throwable $exception = null): void
+    private function logResult(CronjobLog $log, ?\Throwable $exception = null): void
     {
         if ($exception !== null) {
             \wcf\functions\exception\logThrowable($exception);
@@ -371,14 +370,14 @@ final class CronjobScheduler extends SingletonFactory
                 $exception->getTraceAsString(),
             ]);
 
-            $logEditor->update([
-                'success' => 0,
-                'error' => $errString,
-            ]);
+            CronjobLogBuilder::forUpdate($log)
+                ->setSuccess(false)
+                ->setError($errString)
+                ->update();
         } else {
-            $logEditor->update([
-                'success' => 1,
-            ]);
+            CronjobLogBuilder::forUpdate($log)
+                ->setSuccess(true)
+                ->update();
         }
     }
 
