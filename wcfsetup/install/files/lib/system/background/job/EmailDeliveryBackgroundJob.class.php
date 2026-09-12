@@ -3,10 +3,9 @@
 namespace wcf\system\background\job;
 
 use wcf\data\email\log\entry\EmailLogEntry;
-use wcf\data\email\log\entry\EmailLogEntryAction;
+use wcf\data\email\log\entry\EmailLogEntryBuilder;
 use wcf\system\email\Email;
 use wcf\system\email\exception\UserDeleted;
-use wcf\system\email\IUserMailbox;
 use wcf\system\email\Mailbox;
 use wcf\system\email\transport\exception\PermanentFailure;
 use wcf\system\email\transport\IStatusReportingEmailTransport;
@@ -79,21 +78,18 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
      */
     private function createLog(): EmailLogEntry
     {
-        return (new EmailLogEntryAction([], 'create', [
-            'data' => [
-                'time' => \TIME_NOW,
-                'messageID' => $this->email->getMessageID(),
-                'subject' => StringUtil::truncate(
-                    $this->email->getSubject(),
-                    20,
-                    StringUtil::HELLIP,
-                    true
-                ),
-                'recipient' => $this->envelopeTo->getAddress(),
-                'recipientID' => ($this->envelopeTo instanceof IUserMailbox) ? $this->envelopeTo->getUser()->userID : null,
-                'status' => EmailLogEntry::STATUS_NEW,
-            ],
-        ]))->executeAction()['returnValues'];
+        return EmailLogEntryBuilder::forCreate()
+            ->setTime(\TIME_NOW)
+            ->setMessageID($this->email->getMessageID())
+            ->setSubject(StringUtil::truncate(
+                $this->email->getSubject(),
+                20,
+                StringUtil::HELLIP,
+                true
+            ))
+            ->setRecipient($this->envelopeTo)
+            ->setStatus(EmailLogEntry::STATUS_NEW)
+            ->create();
     }
 
     /**
@@ -101,12 +97,10 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
      */
     public function updateStatus(string $status, string $message = ''): void
     {
-        (new EmailLogEntryAction([$this->emailLogEntryId], 'update', [
-            'data' => [
-                'status' => $status,
-                'message' => $message,
-            ],
-        ]))->executeAction();
+        EmailLogEntryBuilder::forUpdate(new EmailLogEntry(null, ['entryID' => $this->emailLogEntryId]))
+            ->setStatus($status)
+            ->setMessage($message)
+            ->update();
     }
 
     #[\Override]

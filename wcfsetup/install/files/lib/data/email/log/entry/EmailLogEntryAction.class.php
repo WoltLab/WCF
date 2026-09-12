@@ -11,6 +11,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @author  Tim Duesterhus
  * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated  6.3 Use `EmailLogEntryBuilder` instead.
  *
  * @extends AbstractDatabaseObjectAction<EmailLogEntry, EmailLogEntryEditor>
  */

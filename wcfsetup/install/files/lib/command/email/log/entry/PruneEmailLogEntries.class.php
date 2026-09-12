@@ -3,7 +3,7 @@
 namespace wcf\command\email\log\entry;
 
 use wcf\data\email\log\entry\EmailLogEntry;
-use wcf\system\WCF;
+use wcf\data\email\log\entry\EmailLogEntryBuilder;
 
 /**
  * Prunes old email log entries.
@@ -17,11 +17,6 @@ final class PruneEmailLogEntries
 {
     public function __invoke(): void
     {
-        $sql = "DELETE FROM wcf1_email_log_entry
-                WHERE       time < ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            \TIME_NOW - EmailLogEntry::LIFETIME,
-        ]);
+        EmailLogEntryBuilder::deleteCreatedBefore(\TIME_NOW - EmailLogEntry::LIFETIME);
     }
 }
