@@ -4,6 +4,7 @@ namespace wcf\system\cronjob;
 
 use wcf\command\email\log\entry\PruneEmailLogEntries;
 use wcf\data\cronjob\Cronjob;
+use wcf\data\edit\history\entry\EditHistoryEntryBuilder;
 use wcf\system\flood\FloodControl;
 use wcf\system\user\multifactor\EmailMultifactorMethod;
 use wcf\system\visitTracker\VisitTracker;
@@ -105,18 +106,11 @@ class DailyCleanUpCronjob extends AbstractCronjob
         // clean up expired edit history entries
         if (\MODULE_EDIT_HISTORY !== 0) {
             if (\EDIT_HISTORY_EXPIRATION !== 0) {
-                $sql = "DELETE FROM wcf1_edit_history_entry
-                        WHERE       obsoletedAt < ?";
-                $statement = WCF::getDB()->prepare($sql);
-                $statement->execute([
-                    \TIME_NOW - 86400 * \EDIT_HISTORY_EXPIRATION,
-                ]);
+                EditHistoryEntryBuilder::deleteObsoletedBefore(\TIME_NOW - 86400 * \EDIT_HISTORY_EXPIRATION);
             }
         } else {
             // edit history is disabled, prune old versions
-            $sql = "DELETE FROM wcf1_edit_history_entry";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute();
+            EditHistoryEntryBuilder::clearAll();
         }
 
         // clean up user authentication failure log

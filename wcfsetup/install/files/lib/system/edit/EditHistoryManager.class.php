@@ -2,10 +2,10 @@
 
 namespace wcf\system\edit;
 
+use wcf\data\edit\history\entry\EditHistoryEntryBuilder;
 use wcf\data\edit\history\entry\EditHistoryEntryList;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -62,21 +62,17 @@ class EditHistoryManager extends SingletonFactory
         }
 
         // save new entry
-        $sql = "INSERT INTO wcf1_edit_history_entry
-                            (objectTypeID, objectID, message, time, obsoletedAt, userID, username, editReason, obsoletedByUserID)
-                VALUES      (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            $this->getObjectTypeID($objectType),
-            $objectID,
-            $message,
-            $time,
-            \TIME_NOW,
-            $userID,
-            $username,
-            $editReason,
-            $obsoletedByUserID,
-        ]);
+        EditHistoryEntryBuilder::forCreate()
+            ->setObjectTypeID($this->getObjectTypeID($objectType))
+            ->setObjectID($objectID)
+            ->setMessage($message)
+            ->setTime($time)
+            ->setObsoletedAt(\TIME_NOW)
+            ->setUserID($userID)
+            ->setUsername($username)
+            ->setEditReason($editReason)
+            ->setObsoletedByUserID($obsoletedByUserID)
+            ->create();
     }
 
     /**
@@ -87,25 +83,7 @@ class EditHistoryManager extends SingletonFactory
      */
     public function delete(string $objectType, array $objectIDs)
     {
-        $objectTypeID = $this->getObjectTypeID($objectType);
-
-        $itemsPerLoop = 1000;
-        $loopCount = \ceil(\count($objectIDs) / $itemsPerLoop);
-
-        WCF::getDB()->beginTransaction();
-        for ($i = 0; $i < $loopCount; $i++) {
-            $batchObjectIDs = \array_slice($objectIDs, $i * $itemsPerLoop, $itemsPerLoop);
-
-            $conditionBuilder = new PreparedStatementConditionBuilder();
-            $conditionBuilder->add('objectTypeID = ?', [$objectTypeID]);
-            $conditionBuilder->add('objectID IN (?)', [$batchObjectIDs]);
-
-            $sql = "DELETE FROM wcf1_edit_history_entry
-                    " . $conditionBuilder;
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute($conditionBuilder->getParameters());
-        }
-        WCF::getDB()->commitTransaction();
+        EditHistoryEntryBuilder::deleteByObjectIDs($this->getObjectTypeID($objectType), $objectIDs);
     }
 
     /**
