@@ -91,6 +91,20 @@ abstract class DatabaseObjectDecorator extends DatabaseObject
         return \call_user_func_array([$this->object, $name], $arguments);
     }
 
+    /**
+     * @since 6.3
+     */
+    #[\Override]
+    public static function findByIDs(array $ids): array
+    {
+        $baseClass = static::getBaseClass();
+
+        return \array_map(
+            static fn($object) => new static($object),
+            $baseClass::findByIDs($ids)
+        );
+    }
+
     #[\Override]
     public static function getDatabaseTableAlias()
     {
@@ -118,7 +132,7 @@ abstract class DatabaseObjectDecorator extends DatabaseObject
     /**
      * Returns the name of the base class.
      *
-     * @return string
+     * @return class-string<TDatabaseObject>
      */
     public static function getBaseClass()
     {
