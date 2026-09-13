@@ -6,6 +6,7 @@ use wcf\data\email\log\entry\EmailLogEntry;
 use wcf\data\email\log\entry\EmailLogEntryBuilder;
 use wcf\system\email\Email;
 use wcf\system\email\exception\UserDeleted;
+use wcf\system\email\IUserMailbox;
 use wcf\system\email\Mailbox;
 use wcf\system\email\transport\exception\PermanentFailure;
 use wcf\system\email\transport\IStatusReportingEmailTransport;
