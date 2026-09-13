@@ -3,7 +3,7 @@
 namespace wcf\command\file;
 
 use wcf\data\file\File;
-use wcf\data\file\FileEditor;
+use wcf\data\file\FileBuilder;
 use wcf\system\file\processor\exception\DamagedImage;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\WCF;
@@ -101,17 +101,14 @@ final class ReplaceFileSource
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->file->fileID]);
 
-            (new FileEditor($this->file))->update([
-                'filename' => $filename,
-                'fileSize' => $fileSize,
-                'fileHash' => $fileHash,
-                'fileExtension' => $fileExtension,
-                'mimeType' => $mimeType,
-                'width' => $width,
-                'height' => $height,
-            ]);
-
-            $updatedFile = new File($this->file->fileID);
+            $updatedFile = FileBuilder::forUpdate($this->file)
+                ->setFilename($filename)
+                ->setFileSize($fileSize)
+                ->setFileHash($fileHash)
+                ->setFileExtension($fileExtension)
+                ->setMimeType($mimeType)
+                ->setDimensions($width, $height)
+                ->update();
 
             $path = \dirname($updatedFile->getPathname());
             FileUtil::makePath($path);
@@ -135,10 +132,9 @@ final class ReplaceFileSource
                     // original version with it.
                     @\unlink($webpVariant);
 
-                    (new FileEditor($updatedFile))->update([
-                        'fileHashWebp' => null,
-                    ]);
-                    $updatedFile = new File($updatedFile->fileID);
+                    $updatedFile = FileBuilder::forUpdate($updatedFile)
+                        ->setFileHashWebp(null)
+                        ->update();
                 } else {
                     if (\file_exists($webpVariant)) {
                         $newWebpVariant = $updatedFile->getPathnameWebp();
@@ -151,10 +147,9 @@ final class ReplaceFileSource
                     } else {
                         // The variant file is missing on disk, clear the
                         // stale reference.
-                        (new FileEditor($updatedFile))->update([
-                            'fileHashWebp' => null,
-                        ]);
-                        $updatedFile = new File($updatedFile->fileID);
+                        $updatedFile = FileBuilder::forUpdate($updatedFile)
+                            ->setFileHashWebp(null)
+                            ->update();
                     }
                 }
             }
@@ -185,11 +180,9 @@ final class ReplaceFileSource
             \unlink($file->getPathnameWebp());
         }
 
-        (new FileEditor($file))->update([
-            'fileHashWebp' => null,
-        ]);
-
-        return new File($file->fileID);
+        return FileBuilder::forUpdate($file)
+            ->setFileHashWebp(null)
+            ->update();
     }
 
     private function regenerateExistingThumbnails(File $file): File

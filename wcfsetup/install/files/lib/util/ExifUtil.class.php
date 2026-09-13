@@ -2,6 +2,7 @@
 
 namespace wcf\util;
 
+use wcf\system\image\ImageHandler;
 use WoltLab\WebpExif\Decoder;
 use WoltLab\WebpExif\Encoder;
 use WoltLab\WebpExif\Exception\WebpExifException;
@@ -412,5 +413,63 @@ final class ExifUtil
         }
 
         return $a;
+    }
+
+    /**
+     * Normalizes the image rotation by rotating images that been taken while
+     * the camera was tilted or upside down.
+     *
+     * Rotating the image can cause the dimensions to change, the image size to
+     * differ and the file hash to be different.
+     *
+     * @param null|array<string, array<string, mixed>> $exifData
+     * @return bool true if the image was modified.
+     * @since 6.3
+     */
+    public static function normalizeImageRotation(
+        string $pathname,
+        int $width,
+        int $height,
+        string $mimeType,
+        ?array $exifData,
+    ): bool {
+        $adapter = ImageHandler::getInstance()->getAdapter();
+        if (!$adapter->checkMemoryLimit($width, $height, $mimeType)) {
+            return false;
+        }
+
+        $exifData ??= ExifUtil::getExifData($pathname);
+        if ($exifData === []) {
+            return false;
+        }
+
+        $orientation = ExifUtil::getOrientation($exifData);
+        if ($orientation === ExifUtil::ORIENTATION_ORIGINAL) {
+            return false;
+        }
+
+        $rotateByDegrees = match ($orientation) {
+            ExifUtil::ORIENTATION_180_ROTATE => 180,
+            ExifUtil::ORIENTATION_90_ROTATE => 90,
+            ExifUtil::ORIENTATION_270_ROTATE => 270,
+            // Any other rotation is unsupported.
+            default => null,
+        };
+
+        if ($rotateByDegrees === null) {
+            return false;
+        }
+
+        $adapter->loadFile($pathname);
+
+        $image = $adapter->rotate($rotateByDegrees);
+        if ($image instanceof \Imagick) {
+            $image->setImageOrientation(\Imagick::ORIENTATION_TOPLEFT);
+        }
+
+        $adapter->load($image, $adapter->getType());
+        $adapter->writeImage($pathname);
+
+        return true;
     }
 }

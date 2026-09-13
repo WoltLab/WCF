@@ -2,8 +2,9 @@
 
 namespace wcf\command\unfurl\url;
 
+use wcf\command\file\CreateFileFromExistingFile;
 use wcf\data\file\File;
-use wcf\data\file\FileEditor;
+use wcf\data\file\FileBuilder;
 use wcf\data\unfurl\url\UnfurlUrl;
 use wcf\system\exception\SystemException;
 use wcf\system\image\adapter\exception\ImageNotProcessable;
@@ -61,11 +62,11 @@ final class CreateUnfurlUrlImageFile
             // Save the webp file as a base64 encoded binary file
             \file_put_contents($binFile, \base64_encode($webpContent));
 
-            return FileEditor::createFromExistingFile(
+            return new CreateFileFromExistingFile(
                 $binFile,
                 \pathinfo($this->originalFilename, \PATHINFO_BASENAME) . ".bin",
                 'com.woltlab.wcf.unfurl'
-            );
+            )();
         } catch (SystemException | ImageNotReadable $e) {
             return null;
         } catch (ImageNotProcessable $e) {

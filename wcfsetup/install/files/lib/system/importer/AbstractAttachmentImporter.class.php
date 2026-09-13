@@ -2,9 +2,10 @@
 
 namespace wcf\system\importer;
 
+use wcf\command\file\CreateFileFromExistingFile;
 use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentBuilder;
-use wcf\data\file\FileEditor;
+use wcf\data\file\FileBuilder;
 
 /**
  * Imports attachments.
@@ -47,13 +48,13 @@ class AbstractAttachmentImporter extends AbstractImporter
 
         // The source file must be preserved, therefore it is copied into the
         // storage of the file API instead of being moved.
-        $file = FileEditor::createFromExistingFile(
+        $file = new CreateFileFromExistingFile(
             $additionalData['fileLocation'],
             $data['filename'] ?? \basename($additionalData['fileLocation']),
             'com.woltlab.wcf.attachment',
             true,
             $uploadTime ?: null
-        );
+        )();
         if ($file === null) {
             return 0;
         }

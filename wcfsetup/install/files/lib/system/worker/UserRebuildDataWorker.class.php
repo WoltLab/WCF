@@ -2,7 +2,8 @@
 
 namespace wcf\system\worker;
 
-use wcf\data\file\FileEditor;
+use wcf\command\file\CreateFileFromExistingFile;
+use wcf\data\file\FileBuilder;
 use wcf\data\file\FileList;
 use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\user\avatar\UserAvatarEditor;
@@ -333,11 +334,11 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
                     $adapter->writeImage($adapter->getImage(), $avatar->getLocation());
                 }
 
-                $file = FileEditor::createFromExistingFile(
+                $file = new CreateFileFromExistingFile(
                     $avatar->getLocation(),
                     $avatar->avatarName,
                     'com.woltlab.wcf.user.avatar'
-                );
+                )();
                 $editor->delete();
 
                 if ($file === null) {
@@ -365,11 +366,11 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
             $userProfiles->getConditionBuilder()->add("user_table.coverPhotoHash IS NOT NULL");
             $userProfiles->readObjects();
             foreach ($userProfiles as $user) {
-                $file = FileEditor::createFromExistingFile(
+                $file = new CreateFileFromExistingFile(
                     UserCoverPhoto::getLegacyLocation($user, false),
                     $user->coverPhotoHash . '.' . $user->coverPhotoExtension,
                     'com.woltlab.wcf.user.coverPhoto',
-                );
+                )();
 
                 new SetCoverPhoto($user, $file)();
 

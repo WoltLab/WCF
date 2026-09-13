@@ -3,7 +3,7 @@
 namespace wcf\system\worker;
 
 use wcf\data\file\File;
-use wcf\data\file\FileEditor;
+use wcf\data\file\FileBuilder;
 use wcf\data\file\FileList;
 use wcf\system\file\processor\exception\DamagedImage;
 use wcf\system\file\processor\FileProcessor;
@@ -65,7 +65,7 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
         }
 
         if ($damagedFileIDs !== []) {
-            FileEditor::deleteAll($damagedFileIDs);
+            FileBuilder::deleteAll($damagedFileIDs);
         }
     }
 
@@ -132,12 +132,11 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
                 $renamedFileIDs[] = $file->fileID;
             }
 
-            (new FileEditor($file))->update([
-                'fileExtension' => $detectedFileExtension,
-                'mimeType' => $mimeType,
-                'width' => $width,
-                'height' => $height,
-            ]);
+            FileBuilder::forUpdate($file)
+                ->setFileExtension($detectedFileExtension)
+                ->setMimeType($mimeType)
+                ->setDimensions($width, $height)
+                ->update();
 
             $reloadFiles = true;
         }
@@ -178,22 +177,21 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
         }
 
         // The file does exist but under its WebP filename.
-        (new FileEditor($file))->update([
-            'filename' => \sprintf(
+        $updatedFile = FileBuilder::forUpdate($file)
+            ->setFilename(\sprintf(
                 "%s.webp",
                 \preg_replace(
                     '~\.(?:jpe?g|png)$~i',
                     '',
                     $file->filename,
                 )
-            ),
-            'fileSize' => \filesize($pathnameWebp),
-            'fileHash' => $file->fileHashWebp,
-            'fileHashWebp' => null,
-            'mimeType' => 'image/webp',
-        ]);
+            ))
+            ->setFileSize(\filesize($pathnameWebp))
+            ->setFileHash($file->fileHashWebp)
+            ->setFileHashWebp(null)
+            ->setMimeType('image/webp')
+            ->update();
 
-        $updatedFile = new File($file->fileID);
         $updatedFile->getProcessor()?->sourceFilenameChanged($updatedFile);
 
         return $updatedFile;

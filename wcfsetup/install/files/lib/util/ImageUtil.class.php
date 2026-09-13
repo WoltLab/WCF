@@ -256,6 +256,20 @@ final class ImageUtil
     }
 
     /**
+     * @since 6.3
+     */
+    public static function isImageMimeType(string $mimeType): bool
+    {
+        return match ($mimeType) {
+            'image/gif' => true,
+            'image/jpeg' => true,
+            'image/png' => true,
+            'image/webp' => true,
+            default => false,
+        };
+    }
+
+    /**
      * Forbid creation of ImageUtil objects.
      */
     private function __construct()

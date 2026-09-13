@@ -3,7 +3,7 @@
 namespace wcf\data\unfurl\url\image;
 
 use wcf\data\DatabaseObjectBuilder;
-use wcf\data\file\FileEditor;
+use wcf\data\file\FileBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
@@ -80,7 +80,7 @@ final class UnfurlUrlImageBuilder extends DatabaseObjectBuilder
         $fileIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
         if ($fileIDs !== []) {
-            FileEditor::deleteAll($fileIDs);
+            FileBuilder::deleteAll($fileIDs);
         }
     }
 }

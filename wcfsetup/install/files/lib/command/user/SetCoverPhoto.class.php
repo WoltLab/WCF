@@ -2,8 +2,8 @@
 
 namespace wcf\command\user;
 
+use wcf\command\file\DeleteFile;
 use wcf\data\file\File;
-use wcf\data\file\FileAction;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\event\user\CoverPhotoChanged;
@@ -28,7 +28,7 @@ final class SetCoverPhoto
     public function __invoke(): void
     {
         if ($this->file === null && $this->user->coverPhotoFileID !== null) {
-            (new FileAction([$this->user->coverPhotoFileID], 'delete'))->executeAction();
+            new DeleteFile(new File($this->user->coverPhotoFileID))();
         }
 
         (new UserEditor($this->user))->update([

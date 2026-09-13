@@ -3,8 +3,9 @@
 namespace wcf\data\user;
 
 use ParagonIE\ConstantTime\Hex;
+use wcf\command\file\DeleteFiles;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\data\file\FileAction;
+use wcf\data\file\File;
 use wcf\data\IClipboardAction;
 use wcf\data\ISearchAction;
 use wcf\data\object\type\ObjectTypeCache;
@@ -150,8 +151,9 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
                 $avatarFileIDs[] = $user->avatarFileID;
             }
         }
-        if ($avatarFileIDs !== []) {
-            (new FileAction($avatarFileIDs, 'delete'))->executeAction();
+        $avatarFiles = File::findByIDs($avatarFileIDs);
+        if ($avatarFiles !== []) {
+            new DeleteFiles($avatarFiles)();
         }
 
         // delete profile comments and signature attachments

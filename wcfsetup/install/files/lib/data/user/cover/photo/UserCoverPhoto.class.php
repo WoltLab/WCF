@@ -2,8 +2,8 @@
 
 namespace wcf\data\user\cover\photo;
 
+use wcf\command\file\DeleteFile;
 use wcf\data\file\File;
-use wcf\data\file\FileAction;
 use wcf\data\user\User;
 
 /**
@@ -11,7 +11,7 @@ use wcf\data\user\User;
  *
  * @author      Olaf Braun, Alexander Ebert
  * @copyright   2001-2024 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 final class UserCoverPhoto implements IUserCoverPhoto
 {
@@ -31,7 +31,7 @@ final class UserCoverPhoto implements IUserCoverPhoto
     #[\Override]
     public function delete()
     {
-        (new FileAction([$this->file], 'delete'))->executeAction();
+        new DeleteFile(new File($this->file->fileID))();
     }
 
     #[\Override]

@@ -5,7 +5,8 @@ namespace wcf\system\endpoint\controller\core\files\upload;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use wcf\data\file\FileEditor;
+use wcf\command\file\CreateFileFromTemporary;
+use wcf\data\file\FileBuilder;
 use wcf\data\file\temporary\FileTemporary;
 use wcf\data\file\temporary\FileTemporaryEditor;
 use wcf\http\Helper;
@@ -112,7 +113,7 @@ final class SaveChunk implements IController
                 throw new UserInputException('file', 'checksum');
             }
 
-            $file = FileEditor::createFromTemporary($fileTemporary);
+            $file = new CreateFileFromTemporary($fileTemporary)();
 
             $context = $fileTemporary->getContext();
             (new FileTemporaryEditor($fileTemporary))->delete();
@@ -124,7 +125,7 @@ final class SaveChunk implements IController
                 try {
                     $processor->validateUpload($file);
                 } catch (UserInputException $exception) {
-                    (new FileEditor($file))->delete();
+                    FileBuilder::delete($file);
 
                     throw new UserInputException('validation', $exception->getType());
                 }

@@ -3,7 +3,7 @@
 namespace wcf\system\file\processor;
 
 use wcf\data\file\File;
-use wcf\data\file\FileEditor;
+use wcf\data\file\FileBuilder;
 use wcf\data\file\thumbnail\FileThumbnailEditor;
 use wcf\data\file\thumbnail\FileThumbnailList;
 use wcf\data\object\type\ObjectType;
@@ -160,11 +160,9 @@ final class FileProcessor extends SingletonFactory
 
         if (!$canGenerateThumbnail) {
             if ($file->fileHashWebp !== null) {
-                (new FileEditor($file))->update([
-                    'fileHashWebp' => null,
-                ]);
-
-                return new File($file->fileID);
+                return FileBuilder::forUpdate($file)
+                    ->setFileHashWebp(null)
+                    ->update();
             }
 
             return $file;
@@ -220,11 +218,9 @@ final class FileProcessor extends SingletonFactory
             }
         }
 
-        (new FileEditor($file))->update([
-            'fileHashWebp' => \hash_file('sha256', $filename),
-        ]);
-
-        $file = new File($file->fileID);
+        $file = FileBuilder::forUpdate($file)
+            ->setFileHashWebp(\hash_file('sha256', $filename))
+            ->update();
 
         $pathname = $file->getPathnameWebp();
         \assert($pathname !== null);
@@ -425,17 +421,16 @@ final class FileProcessor extends SingletonFactory
             throw new \InvalidArgumentException("The object type '{$objectType}' is invalid.");
         }
 
-        $newFile = FileEditor::create([
-            'filename' => $oldFile->filename,
-            'fileSize' => $oldFile->fileSize,
-            'fileHash' => $oldFile->fileHash,
-            'fileExtension' => $oldFile->fileExtension,
-            'objectTypeID' => $objectTypeObj->objectTypeID,
-            'mimeType' => $oldFile->mimeType,
-            'width' => $oldFile->width,
-            'height' => $oldFile->height,
-            'fileHashWebp' => $oldFile->fileHashWebp,
-        ]);
+        $newFile = FileBuilder::forCreate()
+            ->setFilename($oldFile->filename)
+            ->setFileSize($oldFile->fileSize)
+            ->setFileHash($oldFile->fileHash)
+            ->setFileExtension($oldFile->fileExtension)
+            ->setObjectType($objectTypeObj)
+            ->setMimeType($oldFile->mimeType)
+            ->setDimensions($oldFile->width, $oldFile->height)
+            ->setFileHashWebp($oldFile->fileHashWebp)
+            ->create();
 
         \copy($oldFile->getPathname(), $newFile->getPathname());
 
