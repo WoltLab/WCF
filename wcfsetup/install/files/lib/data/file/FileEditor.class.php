@@ -34,6 +34,11 @@ class FileEditor extends DatabaseObjectEditor
     {
         @\unlink($this->getPathname());
 
+        $pathnameWebp = $this->getPathnameWebp();
+        if ($pathnameWebp !== null) {
+            @\unlink($pathnameWebp);
+        }
+
         $thumbnailIDs = \array_column($this->getThumbnails(), 'thumbnailID');
         if ($thumbnailIDs !== []) {
             FileThumbnailEditor::deleteAll($thumbnailIDs);
