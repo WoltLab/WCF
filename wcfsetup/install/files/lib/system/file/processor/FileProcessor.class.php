@@ -175,6 +175,11 @@ final class FileProcessor extends SingletonFactory
 
         if (!$canGenerateThumbnail) {
             if ($file->fileHashWebp !== null) {
+                $pathname = $file->getPathnameWebp();
+                \assert($pathname !== null);
+
+                @\unlink($pathname);
+
                 (new FileEditor($file))->update([
                     'fileHashWebp' => null,
                 ]);
