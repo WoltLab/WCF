@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use wcf\command\file\CreateFileFromTemporary;
 use wcf\data\file\FileBuilder;
 use wcf\data\file\temporary\FileTemporary;
-use wcf\data\file\temporary\FileTemporaryEditor;
+use wcf\data\file\temporary\FileTemporaryBuilder;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
@@ -99,14 +99,12 @@ final class SaveChunk implements IController
         }
 
         // Mark the chunk as written.
-        $chunks = $fileTemporary->chunks;
-        $chunks[$sequenceNo] = '1';
-        (new FileTemporaryEditor($fileTemporary))->update([
-            'chunks' => $chunks,
-        ]);
+        $fileTemporary = FileTemporaryBuilder::forUpdate($fileTemporary)
+            ->markChunkAsWritten($sequenceNo)
+            ->update();
 
         // Check if we have all chunks.
-        if ($chunks === \str_repeat('1', $fileTemporary->getChunkCount())) {
+        if ($fileTemporary->chunks === \str_repeat('1', $fileTemporary->getChunkCount())) {
             // Check if the final result matches the expected checksum.
             $checksum = \hash_file('sha256', $tmpPath . $fileTemporary->getFilename());
             if ($checksum !== $fileTemporary->fileHash) {
@@ -116,7 +114,7 @@ final class SaveChunk implements IController
             $file = new CreateFileFromTemporary($fileTemporary)();
 
             $context = $fileTemporary->getContext();
-            (new FileTemporaryEditor($fileTemporary))->delete();
+            FileTemporaryBuilder::delete($fileTemporary);
             unset($fileTemporary);
 
             $processor = $file->getProcessor();
