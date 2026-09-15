@@ -3,7 +3,7 @@
 namespace wcf\data\file;
 
 use wcf\data\DatabaseObjectBuilder;
-use wcf\data\file\thumbnail\FileThumbnailEditor;
+use wcf\data\file\thumbnail\FileThumbnailBuilder;
 use wcf\data\object\type\ObjectType;
 
 /**
@@ -179,7 +179,7 @@ final class FileBuilder extends DatabaseObjectBuilder
         }
 
         if ($thumbnailIDs !== []) {
-            FileThumbnailEditor::deleteAll($thumbnailIDs);
+            FileThumbnailBuilder::deleteAll($thumbnailIDs);
         }
     }
 }
