@@ -3,8 +3,8 @@
 namespace wcf\system\file\processor;
 
 use wcf\data\file\File;
-use wcf\data\file\FileEditor;
-use wcf\data\file\thumbnail\FileThumbnailEditor;
+use wcf\data\file\FileBuilder;
+use wcf\data\file\thumbnail\FileThumbnailBuilder;
 use wcf\data\file\thumbnail\FileThumbnailList;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
@@ -15,6 +15,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\command\file\ReplaceFileSource;
 use wcf\command\file\ReplaceWithWebpVariant;
+use wcf\command\file\thumbnail\CreateThumbnailFromTemporaryFile;
 use wcf\system\file\processor\exception\DamagedImage;
 use wcf\system\image\adapter\exception\ImageNotProcessable;
 use wcf\system\image\adapter\exception\ImageNotReadable;
@@ -160,11 +161,9 @@ final class FileProcessor extends SingletonFactory
 
         if (!$canGenerateThumbnail) {
             if ($file->fileHashWebp !== null) {
-                (new FileEditor($file))->update([
-                    'fileHashWebp' => null,
-                ]);
-
-                return new File($file->fileID);
+                return FileBuilder::forUpdate($file)
+                    ->setFileHashWebp(null)
+                    ->update();
             }
 
             return $file;
@@ -220,11 +219,9 @@ final class FileProcessor extends SingletonFactory
             }
         }
 
-        (new FileEditor($file))->update([
-            'fileHashWebp' => \hash_file('sha256', $filename),
-        ]);
-
-        $file = new File($file->fileID);
+        $file = FileBuilder::forUpdate($file)
+            ->setFileHashWebp(\hash_file('sha256', $filename))
+            ->update();
 
         $pathname = $file->getPathnameWebp();
         \assert($pathname !== null);
@@ -269,7 +266,7 @@ final class FileProcessor extends SingletonFactory
                 // There currently is a thumbnail for this format but the
                 // conditions for its existence are no longer met.
                 if ($existingThumbnail !== null) {
-                    FileThumbnailEditor::deleteAll([$existingThumbnail->thumbnailID]);
+                    FileThumbnailBuilder::deleteAll([$existingThumbnail->thumbnailID]);
                 }
 
                 continue;
@@ -278,7 +275,7 @@ final class FileProcessor extends SingletonFactory
             if ($existingThumbnail !== null) {
                 if ($existingThumbnail->needsRebuild($format)) {
                     // There currently is a thumbnail but it is no longer valid.
-                    FileThumbnailEditor::deleteAll([$existingThumbnail->thumbnailID]);
+                    FileThumbnailBuilder::deleteAll([$existingThumbnail->thumbnailID]);
                 } else {
                     // This thumbnail is still fine.
                     continue;
@@ -322,7 +319,7 @@ final class FileProcessor extends SingletonFactory
                 $imageAdapter->saveImageAs($image, $filename, 'webp', 80);
             }
 
-            $fileThumbnail = FileThumbnailEditor::createFromTemporaryFile($file, $format, $filename);
+            $fileThumbnail = new CreateThumbnailFromTemporaryFile($file, $format, $filename)();
             $processor->adoptThumbnail($fileThumbnail);
         }
     }
@@ -425,17 +422,16 @@ final class FileProcessor extends SingletonFactory
             throw new \InvalidArgumentException("The object type '{$objectType}' is invalid.");
         }
 
-        $newFile = FileEditor::create([
-            'filename' => $oldFile->filename,
-            'fileSize' => $oldFile->fileSize,
-            'fileHash' => $oldFile->fileHash,
-            'fileExtension' => $oldFile->fileExtension,
-            'objectTypeID' => $objectTypeObj->objectTypeID,
-            'mimeType' => $oldFile->mimeType,
-            'width' => $oldFile->width,
-            'height' => $oldFile->height,
-            'fileHashWebp' => $oldFile->fileHashWebp,
-        ]);
+        $newFile = FileBuilder::forCreate()
+            ->setFilename($oldFile->filename)
+            ->setFileSize($oldFile->fileSize)
+            ->setFileHash($oldFile->fileHash)
+            ->setFileExtension($oldFile->fileExtension)
+            ->setObjectType($objectTypeObj)
+            ->setMimeType($oldFile->mimeType)
+            ->setDimensions($oldFile->width, $oldFile->height)
+            ->setFileHashWebp($oldFile->fileHashWebp)
+            ->create();
 
         \copy($oldFile->getPathname(), $newFile->getPathname());
 
@@ -495,15 +491,14 @@ final class FileProcessor extends SingletonFactory
         $thumbnailList->readObjects();
 
         foreach ($thumbnailList as $oldThumbnail) {
-            $newThumbnail = FileThumbnailEditor::create([
-                'fileID' => $newFileID,
-                'identifier' => $oldThumbnail->identifier,
-                'fileHash' => $oldThumbnail->fileHash,
-                'fileExtension' => $oldThumbnail->fileExtension,
-                'width' => $oldThumbnail->width,
-                'height' => $oldThumbnail->height,
-                'formatChecksum' => $oldThumbnail->formatChecksum,
-            ]);
+            $newThumbnail = FileThumbnailBuilder::forCreate()
+                ->setFileID($newFileID)
+                ->setIdentifier($oldThumbnail->identifier)
+                ->setFileHash($oldThumbnail->fileHash)
+                ->setFileExtension($oldThumbnail->fileExtension)
+                ->setDimensions($oldThumbnail->width, $oldThumbnail->height)
+                ->setFormatChecksum($oldThumbnail->formatChecksum)
+                ->create();
 
             \copy(
                 $oldThumbnail->getPath() . $oldThumbnail->getSourceFilename(),

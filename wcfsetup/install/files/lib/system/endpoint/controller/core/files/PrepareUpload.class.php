@@ -6,7 +6,7 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use wcf\data\file\temporary\FileTemporary;
-use wcf\data\file\temporary\FileTemporaryAction;
+use wcf\data\file\temporary\FileTemporaryBuilder;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
@@ -84,26 +84,17 @@ final class PrepareUpload implements IController
             }
         }
 
-        $exifData = $this->parseExifData($exifBytes, $parameters->ignoreExifRotation);
-        if ($exifData !== null) {
-            $exifData = \serialize($exifData);
-        }
-
-        $action = new FileTemporaryAction([], 'create', [
-            'data' => [
-                'identifier' => $identifier,
-                'time' => \TIME_NOW,
-                'filename' => $parameters->filename,
-                'fileSize' => $parameters->fileSize,
-                'fileHash' => $parameters->fileHash,
-                'objectTypeID' => $objectType?->objectTypeID,
-                'context' => $parameters->context,
-                'chunks' => \str_repeat('0', $numberOfChunks),
-                'exifData' => $exifData,
-            ],
-        ]);
-
-        return $action->executeAction()['returnValues'];
+        return FileTemporaryBuilder::forCreate()
+            ->setIdentifier($identifier)
+            ->setTime(\TIME_NOW)
+            ->setFilename($parameters->filename)
+            ->setFileSize($parameters->fileSize)
+            ->setFileHash($parameters->fileHash)
+            ->setObjectType($objectType)
+            ->setContext($parameters->context)
+            ->setNumberOfChunks($numberOfChunks)
+            ->setExifData($this->parseExifData($exifBytes, $parameters->ignoreExifRotation))
+            ->create();
     }
 
     /**

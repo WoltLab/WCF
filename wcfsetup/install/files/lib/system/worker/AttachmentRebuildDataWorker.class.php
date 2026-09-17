@@ -2,10 +2,11 @@
 
 namespace wcf\system\worker;
 
+use wcf\command\file\CreateFileFromExistingFile;
 use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentBuilder;
 use wcf\data\attachment\AttachmentList;
-use wcf\data\file\FileEditor;
+use wcf\data\file\FileBuilder;
 use wcf\data\file\thumbnail\FileThumbnailList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\runtime\ArticleRuntimeCache;
@@ -59,11 +60,11 @@ class AttachmentRebuildDataWorker extends AbstractLinearRebuildDataWorker
 
             $attachment->migrateStorage();
 
-            $file = FileEditor::createFromExistingFile(
+            $file = new CreateFileFromExistingFile(
                 $attachment->getLocation(),
                 $attachment->filename,
                 'com.woltlab.wcf.attachment'
-            );
+            )();
 
             if ($file === null) {
                 $defunctAttachmentIDs[] = $attachment->attachmentID;

@@ -3,7 +3,7 @@
 namespace wcf\system\worker;
 
 use wcf\command\unfurl\url\CreateUnfurlUrlImageFile;
-use wcf\data\file\FileEditor;
+use wcf\data\file\FileBuilder;
 use wcf\data\unfurl\url\UnfurlUrl;
 use wcf\data\unfurl\url\UnfurlUrlList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -91,7 +91,7 @@ final class UnfurlUrlRebuildDataWorker extends AbstractLinearRebuildDataWorker
         }
 
         if ($deleteFileIDs !== []) {
-            FileEditor::deleteAll($deleteFileIDs);
+            FileBuilder::deleteAll($deleteFileIDs);
         }
     }
 

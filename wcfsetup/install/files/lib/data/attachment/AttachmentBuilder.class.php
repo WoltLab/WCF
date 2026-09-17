@@ -4,7 +4,7 @@ namespace wcf\data\attachment;
 
 use wcf\data\DatabaseObjectBuilder;
 use wcf\data\file\File;
-use wcf\data\file\FileEditor;
+use wcf\data\file\FileBuilder;
 use wcf\data\file\thumbnail\FileThumbnail;
 use wcf\data\object\type\ObjectType;
 use wcf\data\user\User;
@@ -158,7 +158,7 @@ final class AttachmentBuilder extends DatabaseObjectBuilder
         }
 
         if ($fileIDs !== []) {
-            FileEditor::deleteAll($fileIDs);
+            FileBuilder::deleteAll($fileIDs);
         }
     }
 

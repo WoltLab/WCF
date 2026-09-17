@@ -2,8 +2,9 @@
 
 namespace wcf\system\importer;
 
+use wcf\command\file\CreateFileFromExistingFile;
 use wcf\data\file\File;
-use wcf\data\file\FileEditor;
+use wcf\data\file\FileBuilder;
 
 /**
  * Import files.
@@ -33,7 +34,12 @@ abstract class AbstractFileImporter extends AbstractImporter
         }
 
         $filename = $filename ?: \basename($fileLocation);
-        $file = FileEditor::createFromExistingFile($fileLocation, $filename, $this->objectType, true);
+        $file = new CreateFileFromExistingFile(
+            $fileLocation,
+            $filename,
+            $this->objectType,
+            true
+        )();
 
         if ($file === null) {
             return null;

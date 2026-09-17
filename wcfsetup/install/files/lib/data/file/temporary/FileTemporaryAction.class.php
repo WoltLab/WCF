@@ -9,6 +9,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @copyright 2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.1
+ * @deprecated 6.3 Use `FileTemporaryBuilder` instead.
  *
  * @extends AbstractDatabaseObjectAction<FileTemporary, FileTemporaryEditor>
  */

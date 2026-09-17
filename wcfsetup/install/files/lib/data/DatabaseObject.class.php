@@ -2,6 +2,7 @@
 
 namespace wcf\data;
 
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
 /**
@@ -72,6 +73,33 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
         }
 
         $this->handleData($row ?? []);
+    }
+
+    /**
+     * Returns the objects with the given ids, indexed by their object id.
+     *
+     * Ids without a matching object are silently omitted from the result.
+     *
+     * @param int[] $ids
+     * @return static[]
+     * @since 6.3
+     */
+    public static function findByIDs(array $ids): array
+    {
+        if ($ids === []) {
+            return [];
+        }
+
+        $conditionBuilder = new PreparedStatementConditionBuilder();
+        $conditionBuilder->add(static::getDatabaseTableIndexName() . " IN (?)", [$ids]);
+
+        $sql = "SELECT  *
+                FROM    " . static::getDatabaseTableName() . "
+                " . $conditionBuilder;
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($conditionBuilder->getParameters());
+
+        return $statement->fetchObjects(static::class, static::getDatabaseTableIndexName());
     }
 
     /**

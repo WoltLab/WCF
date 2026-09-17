@@ -3,7 +3,7 @@
 namespace wcf\system\cronjob;
 
 use wcf\data\cronjob\Cronjob;
-use wcf\data\file\FileEditor;
+use wcf\data\file\FileBuilder;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\WCF;
 
@@ -37,7 +37,7 @@ class FileCleanUpCronjob extends AbstractCronjob
             return;
         }
 
-        FileEditor::deleteAll($fileIDs);
+        FileBuilder::deleteAll($fileIDs);
     }
 
     /**

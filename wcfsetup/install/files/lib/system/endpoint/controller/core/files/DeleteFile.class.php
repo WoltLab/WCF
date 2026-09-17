@@ -6,7 +6,6 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\file\File;
-use wcf\data\file\FileAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\DeleteRequest;
 use wcf\system\endpoint\IController;
@@ -31,8 +30,7 @@ final class DeleteFile implements IController
             throw new PermissionDeniedException();
         }
 
-        $fileAction = new FileAction([$file], 'delete');
-        $fileAction->executeAction();
+        new \wcf\command\file\DeleteFile($file)();
 
         return new JsonResponse([]);
     }

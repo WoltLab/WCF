@@ -9,6 +9,7 @@ use wcf\system\file\processor\FileProcessor;
  * @author Alexander Ebert
  * @copyright 2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Use `FileBuilder` instead.
  *
  * @extends AbstractDatabaseObjectAction<File, FileEditor>
  */

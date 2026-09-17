@@ -2,8 +2,8 @@
 
 namespace wcf\command\user;
 
+use wcf\command\file\DeleteFile;
 use wcf\data\file\File;
-use wcf\data\file\FileAction;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\event\user\AvatarChanged;
@@ -32,7 +32,7 @@ final class SetAvatar
     public function __invoke(): void
     {
         if ($this->file === null && $this->user->avatarFileID !== null) {
-            (new FileAction([$this->user->avatarFileID], 'delete'))->executeAction();
+            new DeleteFile(new File($this->user->avatarFileID))();
         }
 
         $pathname = null;
