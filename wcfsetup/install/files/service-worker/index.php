@@ -9,6 +9,17 @@
  * @since		6.1
  */
 
+self.addEventListener("install", () => {
+	// There is no fetch handler, so a waiting worker has nothing to hand over.
+	self.skipWaiting();
+});
+
+self.addEventListener("activate", (event) => {
+	// Clients opened before the registration have no `controller`, which
+	// silently drops the last-read-time messages sent by the page.
+	event.waitUntil(self.clients.claim());
+});
+
 self.addEventListener("push", (event) => {
 	if (!(self.Notification && self.Notification.permission === "granted")) {
 		return;
@@ -20,7 +31,7 @@ self.addEventListener("push", (event) => {
 	const payload = event.data.json();
 
 	getTimeOfLastReadNotification().then((notificationLastReadTime) => {
-		if (notificationLastReadTime && payload.time < notificationLastReadTime) {
+		if (notificationLastReadTime && payload.time <= notificationLastReadTime) {
 			return;
 		}
 
