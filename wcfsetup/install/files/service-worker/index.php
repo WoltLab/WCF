@@ -30,13 +30,15 @@ self.addEventListener("push", (event) => {
 
 	const payload = event.data.json();
 
-	getTimeOfLastReadNotification().then((notificationLastReadTime) => {
-		if (notificationLastReadTime && payload.time <= notificationLastReadTime) {
-			return;
-		}
+	// `waitUntil()` must be called synchronously during dispatch, otherwise it
+	// throws and the worker may be terminated before the notification is shown.
+	event.waitUntil(
+		getTimeOfLastReadNotification().then((notificationLastReadTime) => {
+			if (notificationLastReadTime && payload.time <= notificationLastReadTime) {
+				return;
+			}
 
-		event.waitUntil(
-			removeOldNotifications(payload.notificationID, payload.time)
+			return removeOldNotifications(payload.notificationID, payload.time)
 				.then(() =>
 					self.registration.showNotification(payload.title, {
 						body: payload.message,
@@ -49,11 +51,9 @@ self.addEventListener("push", (event) => {
 						},
 					}),
 				)
-				.then(() => {
-					sendToClients(payload);
-				}),
-		);
-	});
+				.then(() => sendToClients(payload));
+		}),
+	);
 });
 
 self.addEventListener("notificationclick", (event) => {
