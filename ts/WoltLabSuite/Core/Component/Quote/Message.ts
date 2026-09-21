@@ -554,7 +554,12 @@ function onMouseUp(event?: MouseEvent): void {
   alignQuoteButtons(content);
 
   copyQuote.classList.remove("active");
-  if (wasInaccessible) {
+
+  // Safari on iOS 27 withholds the `touchend` of a selection drag until the
+  // next touch starts, at which point the tap has already been hit-tested
+  // against the inaccessible overlay. A settled selection is a sufficient
+  // indicator that the pointer has stopped moving.
+  if (wasInaccessible && event instanceof Event) {
     copyQuote.classList.add("touchForceInaccessible");
   }
 
