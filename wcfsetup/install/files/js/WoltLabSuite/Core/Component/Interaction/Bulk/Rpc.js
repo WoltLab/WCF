@@ -10,8 +10,8 @@ define(["require", "exports", "WoltLabSuite/Core/Api/DeleteObject", "WoltLabSuit
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
-    async function handleRpcInteraction(container, objectIds, endpoint, label, confirmationType, customConfirmationMessage = "") {
-        const confirmationResult = await (0, Confirmation_1.handleConfirmation)("", confirmationType, customConfirmationMessage);
+    async function handleRpcInteraction(container, objectIds, endpoint, label, confirmationType, customConfirmationMessage = "", affectedObjects = []) {
+        const confirmationResult = await (0, Confirmation_1.handleConfirmation)("", confirmationType, customConfirmationMessage, affectedObjects);
         if (!confirmationResult.result) {
             return;
         }
@@ -47,7 +47,7 @@ define(["require", "exports", "WoltLabSuite/Core/Api/DeleteObject", "WoltLabSuit
     function setup(identifier, container) {
         container.addEventListener("bulk-interaction", (event) => {
             if (event.detail.bulkInteraction === identifier) {
-                void handleRpcInteraction(container, JSON.parse(event.detail.objectIds), event.detail.endpoint, event.detail.label, event.detail.confirmationType, event.detail.confirmationMessage);
+                void handleRpcInteraction(container, JSON.parse(event.detail.objectIds), event.detail.endpoint, event.detail.label, event.detail.confirmationType, event.detail.confirmationMessage, (0, Confirmation_1.parseAffectedObjects)(event.detail.affectedObjects));
             }
         });
     }

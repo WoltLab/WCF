@@ -61,7 +61,13 @@ final class CategoryInteractions extends AbstractInteractionProvider
             },
             new DeleteInteraction(
                 'core/categories/%s',
-                static fn(Category $category) => $category->getObjectType()->getProcessor()->canDeleteCategory()
+                static fn(Category $category) => $category->getObjectType()->getProcessor()->canDeleteCategory(),
+                static function (Category $category): array {
+                    $processor = $category->getObjectType()->getProcessor();
+                    \assert($processor instanceof ICategoryType);
+
+                    return $processor->getAffectedObjects();
+                }
             ),
         ]);
 

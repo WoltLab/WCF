@@ -7,7 +7,6 @@ use wcf\data\DatabaseObject;
 use wcf\system\interaction\InteractionConfirmationType;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-
 use wcf\util\StringUtil;
 
 /**
@@ -34,7 +33,7 @@ class BulkRpcInteraction extends AbstractBulkInteraction
     #[\Override]
     public function render(array $objects): string
     {
-        $identifier = StringUtil::encodeJS($this->getIdentifier());
+        $identifier = StringUtil::encodeHTML($this->getIdentifier());
         $dataLabel = WCF::getLanguage()->get($this->languageItem);
         $label = WCF::getLanguage()->get($this->languageItem);
         $confirmationMessage = WCF::getLanguage()->getDynamicVariable($this->confirmationMessage);
@@ -48,6 +47,15 @@ class BulkRpcInteraction extends AbstractBulkInteraction
             )
         );
 
+        $additionalAttributes = '';
+        foreach ($this->getAdditionalDataAttributes($objects) as $name => $value) {
+            $additionalAttributes .= \sprintf(
+                ' %s="%s"',
+                StringUtil::encodeHTML($name),
+                StringUtil::encodeHTML($value)
+            );
+        }
+
         return <<<HTML
             <button
                 type="button"
@@ -56,11 +64,25 @@ class BulkRpcInteraction extends AbstractBulkInteraction
                 data-object-ids="{$objectIDs}"
                 data-confirmation-type="{$this->confirmationType->toString()}"
                 data-confirmation-message="{$confirmationMessage}"
-                data-label="{$dataLabel}"
+                data-label="{$dataLabel}"{$additionalAttributes}
             >
                 {$label}
             </button>
             HTML;
+    }
+
+    /**
+     * Returns additional data attributes that are added to the rendered button.
+     *
+     * The returned names and values are HTML encoded by the caller.
+     *
+     * @param DatabaseObject[] $objects
+     * @return array<string, string>
+     * @since 6.3
+     */
+    protected function getAdditionalDataAttributes(array $objects): array
+    {
+        return [];
     }
 
     #[\Override]

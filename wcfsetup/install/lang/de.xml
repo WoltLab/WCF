@@ -3733,6 +3733,7 @@ Dateianhänge:
 		<item name="wcf.dialog.button.primary.submit"><![CDATA[Absenden]]></item>
 		<item name="wcf.dialog.confirmation.cannotBeUndone"><![CDATA[Dieser Vorgang kann nicht rückgängig gemacht werden.]]></item>
 		<item name="wcf.dialog.confirmation.delete"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} „{$title}“ wirklich löschen?]]></item>
+		<item name="wcf.dialog.confirmation.delete.affectedObjects"><![CDATA[Die folgenden zugehörigen Inhalte werden ebenfalls gelöscht:]]></item>
 		<item name="wcf.dialog.confirmation.delete.indeterminate"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} dies wirklich löschen?]]></item>
 		<item name="wcf.dialog.confirmation.disable"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} „{$title}“ wirklich deaktivieren?]]></item>
 		<item name="wcf.dialog.confirmation.disable.indeterminate"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} dies wirklich deaktivieren?]]></item>

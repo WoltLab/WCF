@@ -154,4 +154,14 @@ interface ICategoryType
      * @since 6.3
      */
     public function getAddFormLink(?Category $parentCategory = null): string;
+
+    /**
+     * Returns the names of the objects that are deleted along with a category of this type.
+     *
+     * The names are expected to be already localized.
+     *
+     * @return list<string>
+     * @since 6.3
+     */
+    public function getAffectedObjects(): array;
 }

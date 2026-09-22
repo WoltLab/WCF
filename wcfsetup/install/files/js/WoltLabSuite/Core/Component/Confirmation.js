@@ -21,7 +21,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "./Dialog", "../Language", "../Dom/Util", "./Confirmation/Custom"], function (require, exports, tslib_1, Dialog_1, Language_1, DomUtil, Custom_1) {
+define(["require", "exports", "tslib", "./Dialog", "../Language", "../Dom/Util", "./Confirmation/Custom", "../StringUtil"], function (require, exports, tslib_1, Dialog_1, Language_1, DomUtil, Custom_1, StringUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.confirmationFactory = confirmationFactory;
@@ -30,8 +30,14 @@ define(["require", "exports", "tslib", "./Dialog", "../Language", "../Dom/Util",
         custom(question) {
             return new Custom_1.ConfirmationCustom(question);
         }
-        async delete(title) {
-            const html = `<p>${(0, Language_1.getPhrase)("wcf.dialog.confirmation.cannotBeUndone")}</p>`;
+        async delete(title, affectedObjects = []) {
+            let html = "";
+            if (affectedObjects.length > 0) {
+                const items = affectedObjects.map((name) => `<li>${(0, StringUtil_1.escapeHTML)(name)}</li>`).join("");
+                html += `<p>${(0, Language_1.getPhrase)("wcf.dialog.confirmation.delete.affectedObjects")}</p>`;
+                html += `<ul class="nativeList">${items}</ul>`;
+            }
+            html += `<p>${(0, Language_1.getPhrase)("wcf.dialog.confirmation.cannotBeUndone")}</p>`;
             const dialog = (0, Dialog_1.dialogFactory)()
                 .fromHtml(html)
                 .asConfirmation({
