@@ -9,7 +9,7 @@
 
 import { deleteObject } from "WoltLabSuite/Core/Api/DeleteObject";
 import { postObject } from "WoltLabSuite/Core/Api/PostObject";
-import { ConfirmationType, handleConfirmation } from "./Confirmation";
+import { ConfirmationType, handleConfirmation, parseAffectedObjects } from "./Confirmation";
 import { showDefaultSuccessSnackbar, showSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import { InteractionEffect } from "./InteractionEffect";
@@ -24,9 +24,15 @@ async function handleRpcInteraction(
   confirmationType: ConfirmationType,
   customConfirmationMessage: string = "",
   interactionEffect: InteractionEffect = InteractionEffect.ReloadItem,
+  affectedObjects: string[] = [],
   detail: Payload,
 ): Promise<void> {
-  const confirmationResult = await handleConfirmation(objectName, confirmationType, customConfirmationMessage);
+  const confirmationResult = await handleConfirmation(
+    objectName,
+    confirmationType,
+    customConfirmationMessage,
+    affectedObjects,
+  );
   if (!confirmationResult.result) {
     return;
   }
@@ -78,6 +84,7 @@ export function setup(identifier: string, container: HTMLElement): void {
         event.detail.confirmationType as ConfirmationType,
         event.detail.confirmationMessage,
         event.detail.interactionEffect as InteractionEffect,
+        parseAffectedObjects(event.detail.affectedObjects),
         event.detail,
       );
     }

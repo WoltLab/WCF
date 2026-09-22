@@ -10,6 +10,7 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Confirmation"], funct
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ConfirmationType = void 0;
+    exports.parseAffectedObjects = parseAffectedObjects;
     exports.handleConfirmation = handleConfirmation;
     var ConfirmationType;
     (function (ConfirmationType) {
@@ -21,7 +22,26 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Confirmation"], funct
         ConfirmationType["Disable"] = "Disable";
         ConfirmationType["Custom"] = "Custom";
     })(ConfirmationType || (exports.ConfirmationType = ConfirmationType = {}));
-    async function handleConfirmation(objectName, confirmationType, customMessage = "") {
+    /**
+     * Parses the JSON encoded list of affected objects from a data attribute. Absent or
+     * malformed values yield an empty list, the confirmation is then shown without them.
+     */
+    function parseAffectedObjects(value) {
+        if (!value) {
+            return [];
+        }
+        try {
+            const result = JSON.parse(value);
+            if (Array.isArray(result)) {
+                return result.filter((item) => typeof item === "string");
+            }
+        }
+        catch {
+            // Ignore malformed values.
+        }
+        return [];
+    }
+    async function handleConfirmation(objectName, confirmationType, customMessage = "", affectedObjects = []) {
         if (confirmationType == ConfirmationType.SoftDelete) {
             return await (0, Confirmation_1.confirmationFactory)().softDelete(objectName ? objectName : undefined);
         }
@@ -35,7 +55,7 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Confirmation"], funct
         }
         if (confirmationType == ConfirmationType.Delete) {
             return {
-                result: await (0, Confirmation_1.confirmationFactory)().delete(objectName ? objectName : undefined),
+                result: await (0, Confirmation_1.confirmationFactory)().delete(objectName ? objectName : undefined, affectedObjects),
             };
         }
         if (confirmationType == ConfirmationType.Disable) {

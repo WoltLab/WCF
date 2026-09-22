@@ -52,6 +52,12 @@ class TrophyCategoryType extends AbstractCategoryType
     }
 
     #[\Override]
+    public function getAffectedObjects(): array
+    {
+        return [WCF::getLanguage()->get('wcf.user.trophy.trophies')];
+    }
+
+    #[\Override]
     public function beforeDeletion(CategoryEditor $categoryEditor)
     {
         // update user trophyPoints

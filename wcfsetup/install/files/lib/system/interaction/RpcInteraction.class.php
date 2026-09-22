@@ -68,6 +68,15 @@ class RpcInteraction extends AbstractInteraction
             }
         }
 
+        $additionalAttributes = '';
+        foreach ($this->getAdditionalDataAttributes($object) as $name => $value) {
+            $additionalAttributes .= \sprintf(
+                ' %s="%s"',
+                StringUtil::encodeHTML($name),
+                StringUtil::encodeHTML($value)
+            );
+        }
+
         return <<<HTML
             <button
                 type="button"
@@ -76,11 +85,24 @@ class RpcInteraction extends AbstractInteraction
                 data-endpoint="{$endpoint}"
                 data-confirmation-type="{$this->confirmationType->toString()}"
                 data-confirmation-message="{$confirmationMessage}"
-                data-interaction-effect="{$this->interactionEffect->toString()}"
+                data-interaction-effect="{$this->interactionEffect->toString()}"{$additionalAttributes}
             >
                 {$label}
             </button>
             HTML;
+    }
+
+    /**
+     * Returns additional data attributes that are added to the rendered button.
+     *
+     * The returned names and values are HTML encoded by the caller.
+     *
+     * @return array<string, string>
+     * @since 6.3
+     */
+    protected function getAdditionalDataAttributes(DatabaseObject $object): array
+    {
+        return [];
     }
 
     #[\Override]

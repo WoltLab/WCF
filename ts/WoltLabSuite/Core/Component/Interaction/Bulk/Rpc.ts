@@ -9,7 +9,7 @@
 
 import { deleteObject } from "WoltLabSuite/Core/Api/DeleteObject";
 import { postObject } from "WoltLabSuite/Core/Api/PostObject";
-import { ConfirmationType, handleConfirmation } from "../Confirmation";
+import { ConfirmationType, handleConfirmation, parseAffectedObjects } from "../Confirmation";
 import { showProgressSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
 
 async function handleRpcInteraction(
@@ -19,8 +19,9 @@ async function handleRpcInteraction(
   label: string,
   confirmationType: ConfirmationType,
   customConfirmationMessage: string = "",
+  affectedObjects: string[] = [],
 ): Promise<void> {
-  const confirmationResult = await handleConfirmation("", confirmationType, customConfirmationMessage);
+  const confirmationResult = await handleConfirmation("", confirmationType, customConfirmationMessage, affectedObjects);
   if (!confirmationResult.result) {
     return;
   }
@@ -75,6 +76,7 @@ export function setup(identifier: string, container: HTMLElement): void {
         event.detail.label,
         event.detail.confirmationType,
         event.detail.confirmationMessage,
+        parseAffectedObjects(event.detail.affectedObjects),
       );
     }
   });

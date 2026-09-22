@@ -14,9 +14,14 @@ use wcf\system\interaction\InteractionConfirmationType;
  */
 class BulkDeleteInteraction extends BulkRpcInteraction
 {
+    /**
+     * @param list<string> $affectedObjects Names of the objects that are implicitly deleted
+     *                     along with the objects themselves.
+     */
     public function __construct(
         string $endpoint,
-        ?\Closure $isAvailableCallback = null
+        ?\Closure $isAvailableCallback = null,
+        private readonly array $affectedObjects = []
     ) {
         parent::__construct(
             'delete',
@@ -26,5 +31,17 @@ class BulkDeleteInteraction extends BulkRpcInteraction
             '',
             $isAvailableCallback
         );
+    }
+
+    #[\Override]
+    protected function getAdditionalDataAttributes(array $objects): array
+    {
+        if ($this->affectedObjects === []) {
+            return [];
+        }
+
+        return [
+            'data-affected-objects' => \json_encode($this->affectedObjects, \JSON_THROW_ON_ERROR),
+        ];
     }
 }

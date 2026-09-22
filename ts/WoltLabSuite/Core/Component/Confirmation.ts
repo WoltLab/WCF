@@ -26,6 +26,7 @@ import { dialogFactory } from "./Dialog";
 import { getPhrase } from "../Language";
 import * as DomUtil from "../Dom/Util";
 import { ConfirmationCustom } from "./Confirmation/Custom";
+import { escapeHTML } from "../StringUtil";
 
 type ResultSoftDeleteWithoutReason = {
   result: boolean;
@@ -40,8 +41,15 @@ class ConfirmationPrefab {
     return new ConfirmationCustom(question);
   }
 
-  async delete(title?: string): Promise<boolean> {
-    const html = `<p>${getPhrase("wcf.dialog.confirmation.cannotBeUndone")}</p>`;
+  async delete(title?: string, affectedObjects: string[] = []): Promise<boolean> {
+    let html = "";
+    if (affectedObjects.length > 0) {
+      const items = affectedObjects.map((name) => `<li>${escapeHTML(name)}</li>`).join("");
+      html += `<p>${getPhrase("wcf.dialog.confirmation.delete.affectedObjects")}</p>`;
+      html += `<ul class="nativeList">${items}</ul>`;
+    }
+    html += `<p>${getPhrase("wcf.dialog.confirmation.cannotBeUndone")}</p>`;
+
     const dialog = dialogFactory()
       .fromHtml(html)
       .asConfirmation({

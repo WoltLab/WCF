@@ -238,4 +238,10 @@ abstract class AbstractCategoryType implements ICategoryType
     {
         return '';
     }
+
+    #[\Override]
+    public function getAffectedObjects(): array
+    {
+        return [];
+    }
 }

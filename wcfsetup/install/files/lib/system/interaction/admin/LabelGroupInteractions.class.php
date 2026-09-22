@@ -31,7 +31,10 @@ final class LabelGroupInteractions extends AbstractInteractionProvider
         }
 
         $this->addInteractions([
-            new DeleteInteraction('core/labels/groups/%s'),
+            new DeleteInteraction(
+                'core/labels/groups/%s',
+                affectedObjects: [WCF::getLanguage()->get('wcf.label.labels')]
+            ),
             new class(
                 "show-labels",
             ) extends AbstractInteraction {
