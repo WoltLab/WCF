@@ -24,10 +24,32 @@ type ResultConfirmationWithReason = {
   reason?: string;
 };
 
+/**
+ * Parses the JSON encoded list of affected objects from a data attribute. Absent or
+ * malformed values yield an empty list, the confirmation is then shown without them.
+ */
+export function parseAffectedObjects(value: string | undefined): string[] {
+  if (!value) {
+    return [];
+  }
+
+  try {
+    const result: unknown = JSON.parse(value);
+    if (Array.isArray(result)) {
+      return result.filter((item): item is string => typeof item === "string");
+    }
+  } catch {
+    // Ignore malformed values.
+  }
+
+  return [];
+}
+
 export async function handleConfirmation(
   objectName: string,
   confirmationType: ConfirmationType,
   customMessage: string = "",
+  affectedObjects: string[] = [],
 ): Promise<ResultConfirmationWithReason> {
   if (confirmationType == ConfirmationType.SoftDelete) {
     return await confirmationFactory().softDelete(objectName ? objectName : undefined);
@@ -45,7 +67,7 @@ export async function handleConfirmation(
 
   if (confirmationType == ConfirmationType.Delete) {
     return {
-      result: await confirmationFactory().delete(objectName ? objectName : undefined),
+      result: await confirmationFactory().delete(objectName ? objectName : undefined, affectedObjects),
     };
   }
 

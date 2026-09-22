@@ -37,7 +37,9 @@ class BulkRpcInteraction extends AbstractBulkInteraction
         $identifier = StringUtil::encodeJS($this->getIdentifier());
         $dataLabel = WCF::getLanguage()->get($this->languageItem);
         $label = WCF::getLanguage()->get($this->languageItem);
-        $confirmationMessage = WCF::getLanguage()->getDynamicVariable($this->confirmationMessage);
+        $confirmationMessage = StringUtil::encodeHTML(
+            WCF::getLanguage()->getDynamicVariable($this->confirmationMessage)
+        );
         $endpoint = StringUtil::encodeHTML(
             LinkHandler::getInstance()->getControllerLink(ApiAction::class, ['id' => 'rpc']) . $this->endpoint
         );
@@ -48,6 +50,15 @@ class BulkRpcInteraction extends AbstractBulkInteraction
             )
         );
 
+        $additionalAttributes = '';
+        foreach ($this->getAdditionalDataAttributes($objects) as $name => $value) {
+            $additionalAttributes .= \sprintf(
+                ' %s="%s"',
+                StringUtil::encodeHTML($name),
+                StringUtil::encodeHTML($value)
+            );
+        }
+
         return <<<HTML
             <button
                 type="button"
@@ -56,11 +67,25 @@ class BulkRpcInteraction extends AbstractBulkInteraction
                 data-object-ids="{$objectIDs}"
                 data-confirmation-type="{$this->confirmationType->toString()}"
                 data-confirmation-message="{$confirmationMessage}"
-                data-label="{$dataLabel}"
+                data-label="{$dataLabel}"{$additionalAttributes}
             >
                 {$label}
             </button>
             HTML;
+    }
+
+    /**
+     * Returns additional data attributes that are added to the rendered button.
+     *
+     * The returned names and values are HTML encoded by the caller.
+     *
+     * @param DatabaseObject[] $objects
+     * @return array<string, string>
+     * @since 6.3
+     */
+    protected function getAdditionalDataAttributes(array $objects): array
+    {
+        return [];
     }
 
     #[\Override]

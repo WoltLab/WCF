@@ -2,6 +2,8 @@
 
 namespace wcf\system\interaction;
 
+use wcf\data\DatabaseObject;
+
 /**
  * Represents a delete interaction.
  *
@@ -12,9 +14,14 @@ namespace wcf\system\interaction;
  */
 class DeleteInteraction extends RpcInteraction
 {
+    /**
+     * @param list<string> $affectedObjects Names of the objects that are implicitly deleted
+     *                     along with the object itself.
+     */
     public function __construct(
         string $endpoint,
-        ?\Closure $isAvailableCallback = null
+        ?\Closure $isAvailableCallback = null,
+        private readonly array $affectedObjects = []
     ) {
         parent::__construct(
             'delete',
@@ -25,5 +32,17 @@ class DeleteInteraction extends RpcInteraction
             $isAvailableCallback,
             InteractionEffect::RemoveItem
         );
+    }
+
+    #[\Override]
+    protected function getAdditionalDataAttributes(DatabaseObject $object): array
+    {
+        if ($this->affectedObjects === []) {
+            return [];
+        }
+
+        return [
+            'data-affected-objects' => \json_encode($this->affectedObjects, \JSON_THROW_ON_ERROR),
+        ];
     }
 }
