@@ -15,13 +15,14 @@ use wcf\data\DatabaseObject;
 class DeleteInteraction extends RpcInteraction
 {
     /**
-     * @param list<string> $affectedObjects Names of the objects that are implicitly deleted
-     *                     along with the object itself.
+     * @param list<string>|\Closure $affectedObjects Names of the objects that are implicitly deleted
+     *                              along with the object itself. A closure receives the `DatabaseObject` the
+     *                              interaction is rendered for and must return a list of names.
      */
     public function __construct(
         string $endpoint,
         ?\Closure $isAvailableCallback = null,
-        private readonly array $affectedObjects = []
+        private readonly array|\Closure $affectedObjects = []
     ) {
         parent::__construct(
             'delete',
@@ -37,12 +38,18 @@ class DeleteInteraction extends RpcInteraction
     #[\Override]
     protected function getAdditionalDataAttributes(DatabaseObject $object): array
     {
-        if ($this->affectedObjects === []) {
+        if (\is_array($this->affectedObjects)) {
+            $affectedObjects = $this->affectedObjects;
+        } else {
+            $affectedObjects = ($this->affectedObjects)($object);
+        }
+
+        if ($affectedObjects === []) {
             return [];
         }
 
         return [
-            'data-affected-objects' => \json_encode($this->affectedObjects, \JSON_THROW_ON_ERROR),
+            'data-affected-objects' => \json_encode(\array_values($affectedObjects), \JSON_THROW_ON_ERROR),
         ];
     }
 }

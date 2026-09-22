@@ -57,6 +57,12 @@ class ArticleCategoryType extends AbstractCategoryType
     }
 
     #[\Override]
+    public function getAffectedObjects(): array
+    {
+        return [WCF::getLanguage()->get('wcf.article.articles')];
+    }
+
+    #[\Override]
     public function canAddCategory()
     {
         return $this->canEditCategory();
