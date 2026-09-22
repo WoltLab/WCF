@@ -48,7 +48,6 @@ class RpcInteraction extends AbstractInteraction
         } else {
             $confirmationMessage = ($this->confirmationMessage)($object);
         }
-        $confirmationMessage = StringUtil::encodeHTML($confirmationMessage);
 
         $endpoint = StringUtil::encodeHTML(
             LinkHandler::getInstance()->getControllerLink(ApiAction::class, ['id' => 'rpc']) .

@@ -7,7 +7,6 @@ use wcf\data\DatabaseObject;
 use wcf\system\interaction\InteractionConfirmationType;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-
 use wcf\util\StringUtil;
 
 /**
@@ -34,12 +33,10 @@ class BulkRpcInteraction extends AbstractBulkInteraction
     #[\Override]
     public function render(array $objects): string
     {
-        $identifier = StringUtil::encodeJS($this->getIdentifier());
+        $identifier = StringUtil::encodeHTML($this->getIdentifier());
         $dataLabel = WCF::getLanguage()->get($this->languageItem);
         $label = WCF::getLanguage()->get($this->languageItem);
-        $confirmationMessage = StringUtil::encodeHTML(
-            WCF::getLanguage()->getDynamicVariable($this->confirmationMessage)
-        );
+        $confirmationMessage = WCF::getLanguage()->getDynamicVariable($this->confirmationMessage);
         $endpoint = StringUtil::encodeHTML(
             LinkHandler::getInstance()->getControllerLink(ApiAction::class, ['id' => 'rpc']) . $this->endpoint
         );
