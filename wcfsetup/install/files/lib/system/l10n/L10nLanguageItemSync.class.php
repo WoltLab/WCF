@@ -23,6 +23,8 @@ use wcf\system\WCF;
  * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
+ *
+ * @phpstan-import-type L10nValue from L10nStorage
  */
 final class L10nLanguageItemSync
 {
@@ -177,9 +179,9 @@ final class L10nLanguageItemSync
      * language items of each column. Writes a single monolingual row when none
      * of the columns is backed by a language variable.
      *
-     * @param array<string, ?array<int, string>> $columnItems
+     * @param array<string, ?L10nValue> $columnItems
      * @param \Closure(string): ?string $literalProvider
-     * @return array<string, array<int, string>>
+     * @return array<string, L10nValue>
      */
     private static function buildValues(
         L10nDefinition $definition,
@@ -224,7 +226,7 @@ final class L10nLanguageItemSync
      * Resolves the value for a single language mirroring the phrase fallback
      * semantics: requested language, default language, any value, literal.
      *
-     * @param ?array<int, string> $items
+     * @param ?L10nValue $items
      */
     private static function resolve(?array $items, ?string $literal, int $languageID, int $defaultLanguageID): ?string
     {
@@ -245,7 +247,7 @@ final class L10nLanguageItemSync
      * Returns a closure that resolves a language variable to its
      * `languageID => value` map.
      *
-     * @return \Closure(string): array<int, string>
+     * @return \Closure(string): L10nValue
      */
     private static function createItemReader(): \Closure
     {

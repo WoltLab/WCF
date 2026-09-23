@@ -19,21 +19,23 @@ use wcf\system\l10n\L10nStorage;
  * @since       6.3
  *
  * @extends DatabaseObjectBuilder<CaptchaQuestion>
+ *
+ * @phpstan-import-type L10nValue from L10nStorage
  */
 final class CaptchaQuestionBuilder extends DatabaseObjectBuilder
 {
     /**
-     * @var array<int, string>
+     * @var L10nValue
      */
     private array $question;
 
     /**
-     * @var array<int, string>
+     * @var L10nValue
      */
     private array $answers;
 
     /**
-     * @param array<int, string> $question
+     * @param L10nValue $question
      */
     public function setQuestion(array $question): static
     {
@@ -43,7 +45,7 @@ final class CaptchaQuestionBuilder extends DatabaseObjectBuilder
     }
 
     /**
-     * @param array<int, string> $answers
+     * @param L10nValue $answers
      */
     public function setAnswers(array $answers): static
     {
