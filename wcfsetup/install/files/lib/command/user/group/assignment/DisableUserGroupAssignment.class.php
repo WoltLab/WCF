@@ -3,7 +3,7 @@
 namespace wcf\command\user\group\assignment;
 
 use wcf\data\user\group\assignment\UserGroupAssignment;
-use wcf\data\user\group\assignment\UserGroupAssignmentEditor;
+use wcf\data\user\group\assignment\UserGroupAssignmentBuilder;
 use wcf\event\user\group\assignment\UserGroupAssignmentDisabled;
 use wcf\system\event\EventHandler;
 
@@ -21,13 +21,12 @@ final class DisableUserGroupAssignment
 
     public function __invoke(): void
     {
-        (new UserGroupAssignmentEditor($this->assignment))->update([
-            'isDisabled' => 1,
-        ]);
+        UserGroupAssignmentBuilder::forUpdate($this->assignment)
+            ->setIsDisabled(true)
+            ->update();
 
-        UserGroupAssignmentEditor::resetCache();
+        UserGroupAssignmentBuilder::resetCache();
 
-        $event = new UserGroupAssignmentDisabled($this->assignment);
-        EventHandler::getInstance()->fire($event);
+        EventHandler::getInstance()->fire(new UserGroupAssignmentDisabled($this->assignment));
     }
 }
