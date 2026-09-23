@@ -13,11 +13,13 @@ use wcf\system\l10n\L10nStorage;
  * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
+ *
+ * @phpstan-import-type L10nValue from L10nStorage
  */
 trait TCollectionL10n
 {
     /**
-     * @var array<int, array<string, array<int, string>>>
+     * @var array<int, array<string, L10nValue>>
      */
     private array $l10nValues;
 
@@ -29,7 +31,7 @@ trait TCollectionL10n
     }
 
     /**
-     * @return array<int, string>
+     * @return L10nValue
      */
     public function getL10nValues(DatabaseObject $object, string $columnName): array
     {

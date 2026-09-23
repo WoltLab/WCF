@@ -6,6 +6,7 @@ use wcf\data\ITitledObject;
 use wcf\data\option\Option;
 use wcf\data\user\User;
 use wcf\system\l10n\L10nDefinition;
+use wcf\system\l10n\L10nStorage;
 use wcf\system\WCF;
 
 /**
@@ -27,6 +28,8 @@ use wcf\system\WCF;
  * @property-read   ?string $labeledUrl         the url, if the option type is `labeledUrl`
  * @property-read   0|1     $showOnUserCard     is `1` if the user option should be displayed on the user card, otherwise `0`
  * @property-read   ?string $l10nIdentifier     base name of the language variable the localized title/description are derived from, `null` for options created by an administrator
+ *
+ * @phpstan-import-type L10nValue from L10nStorage
  */
 class UserOption extends Option implements ITitledObject
 {
@@ -157,7 +160,7 @@ class UserOption extends Option implements ITitledObject
      * Returns the localized values of the given column as a
      * `languageID => value` map (see `L10nStorage`).
      *
-     * @return array<int, string>
+     * @return L10nValue
      * @since 6.3
      */
     public function getL10nValues(string $columnName): array

@@ -22,23 +22,25 @@ use wcf\util\StringUtil;
  * @since       6.3
  *
  * @extends DatabaseObjectBuilder<UserOption>
+ *
+ * @phpstan-import-type L10nValue from L10nStorage
  */
 final class UserOptionBuilder extends DatabaseObjectBuilder
 {
     private bool $isGenericOptionName = false;
 
     /**
-     * @var array<int, string>
+     * @var L10nValue
      */
     private array $l10nTitle;
 
     /**
-     * @var array<int, string>
+     * @var L10nValue
      */
     private array $l10nDescription;
 
     /**
-     * @param array<int, string> $title
+     * @param L10nValue $title
      */
     public function setL10nTitle(array $title): static
     {
@@ -48,7 +50,7 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
     }
 
     /**
-     * @param array<int, string> $description
+     * @param L10nValue $description
      */
     public function setL10nDescription(array $description): static
     {

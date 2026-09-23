@@ -5,6 +5,7 @@ namespace wcf\data\captcha\question;
 use wcf\data\CollectionDatabaseObject;
 use wcf\data\ITitledObject;
 use wcf\system\l10n\L10nDefinition;
+use wcf\system\l10n\L10nStorage;
 use wcf\system\Regex;
 use wcf\util\StringUtil;
 
@@ -25,6 +26,8 @@ use wcf\util\StringUtil;
  * @property-read   int     $incorrectSubmissions
  *
  * @extends CollectionDatabaseObject<CaptchaQuestionCollection>
+ *
+ * @phpstan-import-type L10nValue from L10nStorage
  */
 class CaptchaQuestion extends CollectionDatabaseObject implements ITitledObject
 {
@@ -70,7 +73,7 @@ class CaptchaQuestion extends CollectionDatabaseObject implements ITitledObject
     /**
      * Returns the localized values of this question.
      *
-     * @return array<int, string>
+     * @return L10nValue
      * @since 6.3
      */
     public function getL10nValues(string $columnName): array

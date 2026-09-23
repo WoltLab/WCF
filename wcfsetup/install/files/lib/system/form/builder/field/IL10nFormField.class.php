@@ -2,6 +2,8 @@
 
 namespace wcf\system\form\builder\field;
 
+use wcf\system\l10n\L10nStorage;
+
 /**
  * Every form field able to store its localized values in the `_l10n` table of
  * the database object has to implement this interface.
@@ -15,6 +17,8 @@ namespace wcf\system\form\builder\field;
  * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
+ *
+ * @phpstan-import-type L10nValue from L10nStorage
  */
 interface IL10nFormField extends IFormField
 {
@@ -44,7 +48,7 @@ interface IL10nFormField extends IFormField
      * `[L10nStorage::MONOLINGUAL => value]` for a monolingual value or
      * `[languageID => value, ...]` for multilingual values.
      *
-     * @return array<int, string>
+     * @return L10nValue
      */
     public function getL10nValues(): array;
 }

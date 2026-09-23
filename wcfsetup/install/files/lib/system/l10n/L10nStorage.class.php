@@ -24,6 +24,8 @@ use wcf\system\WCF;
  * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
+ *
+ * @phpstan-type L10nValue array<non-negative-int, string>
  */
 final class L10nStorage
 {
@@ -41,7 +43,7 @@ final class L10nStorage
      * `columnName => [languageID => value]` using `MONOLINGUAL` as the key
      * for the monolingual row.
      *
-     * @return array<string, array<int, string>>
+     * @return array<string, L10nValue>
      */
     public function getValues(int $objectID): array
     {
@@ -54,7 +56,7 @@ final class L10nStorage
      * for the monolingual row.
      *
      * @param non-empty-list<int> $objectIDs
-     * @return array<int, array<string, array<int, string>>>
+     * @return array<int, array<string, L10nValue>>
      */
     public function getValuesForObjects(array $objectIDs): array
     {
@@ -95,7 +97,7 @@ final class L10nStorage
      * did not change, rows of user-created objects and changed values are
      * written as modified (`isPristine = 0`).
      *
-     * @param array<string, array<int, string>> $values `columnName => [languageID => value]`
+     * @param array<string, L10nValue> $values `columnName => [languageID => value]`
      */
     public function setValues(int $objectID, array $values): void
     {
@@ -167,8 +169,8 @@ final class L10nStorage
      * the flag for a language whose values did not change, everything else is
      * marked as modified.
      *
-     * @param array<string, array<int, string>> $values
-     * @param array<string, array<int, string>> $previousValues
+     * @param array<string, L10nValue> $values
+     * @param array<string, L10nValue> $previousValues
      * @param list<int> $previousPristineLanguageIDs
      */
     private function getPristineFlag(
@@ -200,7 +202,7 @@ final class L10nStorage
      * Only valid for definitions that support the synchronization with language
      * variables.
      *
-     * @param array<string, array<int, string>> $values `columnName => [languageID => value]`
+     * @param array<string, L10nValue> $values `columnName => [languageID => value]`
      */
     public function syncValues(int $objectID, array $values): void
     {
@@ -339,7 +341,7 @@ final class L10nStorage
      * Validates the given values and returns the union of language ids across
      * all columns.
      *
-     * @param array<string, array<int, string>> $values
+     * @param array<string, L10nValue> $values
      * @return list<int>
      */
     private function validateValues(array $values): array
