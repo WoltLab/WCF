@@ -16,6 +16,7 @@ use wcf\system\condition\ConditionHandler;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @extends AbstractDatabaseObjectAction<UserGroupAssignment, UserGroupAssignmentEditor>
+ * @deprecated 6.3 use `UserGroupAssignmentBuilder` instead.
  */
 class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements IToggleAction
 {

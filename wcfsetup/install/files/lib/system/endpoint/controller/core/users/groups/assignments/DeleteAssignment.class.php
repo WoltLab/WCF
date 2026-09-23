@@ -5,8 +5,8 @@ namespace wcf\system\endpoint\controller\core\users\groups\assignments;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\command\user\group\assignment\DeleteUserGroupAssignment;
 use wcf\data\user\group\assignment\UserGroupAssignment;
-use wcf\data\user\group\assignment\UserGroupAssignmentAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\DeleteRequest;
 use wcf\system\endpoint\IController;
@@ -30,7 +30,7 @@ final class DeleteAssignment implements IController
 
         $assignment = Helper::fetchObjectFromRequestParameter($variables['id'], UserGroupAssignment::class);
 
-        (new UserGroupAssignmentAction([$assignment], 'delete'))->executeAction();
+        new DeleteUserGroupAssignment($assignment)();
 
         return new JsonResponse([]);
     }
