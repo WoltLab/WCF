@@ -208,12 +208,6 @@ parameters:
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 1
-			path: wcfsetup/install/files/lib/acp/form/UserGroupAssignmentAddForm.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
-			count: 1
 			path: wcfsetup/install/files/lib/acp/form/UserTrophyEditForm.class.php
 
 		-

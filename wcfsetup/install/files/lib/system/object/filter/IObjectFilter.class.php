@@ -20,7 +20,9 @@ interface IObjectFilter
      */
     public function getFormField(): AbstractFormField;
 
-    // -> DB
+    /**
+     * @param TValueType $value
+     */
     public function serializeValue(mixed $value): string;
 
     /**

@@ -3,7 +3,6 @@
 namespace wcf\system\object\filter\user;
 
 use wcf\data\user\User;
-use Override;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\language\LanguageFactory;
@@ -67,7 +66,7 @@ final class UserLanguageObjectFilter implements IUserObjectFilter
         return $configuredValue === $value;
     }
 
-    #[Override]
+    #[\Override]
     public function testUser(User $user, mixed $configuredValue): bool
     {
         return $user->languageID === $configuredValue;

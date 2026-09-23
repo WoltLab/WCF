@@ -2,7 +2,6 @@
 
 namespace wcf\system\object\filter\builder;
 
-use Override;
 use wcf\data\user\group\assignment\UserGroupAssignment;
 use wcf\data\user\User;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -28,13 +27,13 @@ final class UserGroupAssignmentObjectFilterBuilder implements IObjectFilterBuild
         ];
     }
 
-    #[Override]
+    #[\Override]
     public function getFilters(): array
     {
         return $this->filters;
     }
 
-    #[Override]
+    #[\Override]
     public function getObjectTypeName(): string
     {
         return 'com.woltlab.wcf.userGroupAssignment';
