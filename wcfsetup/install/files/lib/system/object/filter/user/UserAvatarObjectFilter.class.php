@@ -3,7 +3,6 @@
 namespace wcf\system\object\filter\user;
 
 use wcf\data\user\User;
-use Override;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\BooleanFormField;
 
@@ -44,11 +43,7 @@ final class UserAvatarObjectFilter implements IUserObjectFilter
     #[\Override]
     public function serializeValue(mixed $value): string
     {
-        if ($value) {
-            return '1';
-        }
-
-        return '0';
+        return $value ? '1' : '0';
     }
 
     #[\Override]
@@ -73,7 +68,7 @@ final class UserAvatarObjectFilter implements IUserObjectFilter
         return (bool)$value;
     }
 
-    #[Override]
+    #[\Override]
     public function testUser(User $user, mixed $unserializedValue): bool
     {
         return match ($unserializedValue) {

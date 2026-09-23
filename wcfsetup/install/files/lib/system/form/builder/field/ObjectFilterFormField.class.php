@@ -5,7 +5,6 @@ namespace wcf\system\form\builder\field;
 use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\MapperBuilder;
-use Override;
 use wcf\action\ObjectFilterBuilderAction;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\TObjectTypeFormNode;
@@ -18,7 +17,7 @@ final class ObjectFilterFormField extends AbstractFormField
 
     protected $templateName = 'shared_objectFilterFormField';
 
-    #[Override]
+    #[\Override]
     public function readValue(): ObjectFilterFormField
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
@@ -28,7 +27,7 @@ final class ObjectFilterFormField extends AbstractFormField
         return $this;
     }
 
-    #[Override]
+    #[\Override]
     public function validate(): void
     {
         try {
@@ -48,7 +47,7 @@ final class ObjectFilterFormField extends AbstractFormField
         }
     }
 
-    #[Override]
+    #[\Override]
     public function getObjectTypeDefinition(): string
     {
         return 'com.woltlab.wcf.objectFilter';
