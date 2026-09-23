@@ -79,4 +79,8 @@ return [
                 ->defaultValue('')
                 ->drop(),
         ]),
+    PartialDatabaseTable::create('wcf1_user_group_assignment')
+        ->columns([
+            JsonDatabaseTableColumn::create('conditions'),
+        ])
 ];
