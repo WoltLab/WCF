@@ -10,7 +10,6 @@ use wcf\data\user\UserAction;
 use wcf\data\user\UserList;
 use wcf\system\cache\builder\UserGroupAssignmentCacheBuilder;
 use wcf\system\object\filter\builder\UserGroupAssignmentObjectFilterBuilder;
-use wcf\system\object\filter\ObjectFilterHandler;
 use wcf\system\SingletonFactory;
 
 /**

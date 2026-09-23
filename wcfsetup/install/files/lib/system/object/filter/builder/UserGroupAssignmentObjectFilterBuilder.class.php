@@ -9,6 +9,7 @@ use wcf\system\object\filter\IObjectFilter;
 use wcf\system\object\filter\ObjectFilterHandler;
 use wcf\system\object\filter\user\UserAvatarObjectFilter;
 use wcf\system\object\filter\user\UserLanguageObjectFilter;
+use wcf\system\WCF;
 
 final class UserGroupAssignmentObjectFilterBuilder implements IObjectFilterBuilder
 {
@@ -34,7 +35,7 @@ final class UserGroupAssignmentObjectFilterBuilder implements IObjectFilterBuild
     }
 
     #[\Override]
-    public function getObjectTypeName(): string
+    public function getIdentifier(): string
     {
         return 'com.woltlab.wcf.userGroupAssignment';
     }
@@ -43,7 +44,6 @@ final class UserGroupAssignmentObjectFilterBuilder implements IObjectFilterBuild
     {
         $this->getHandler()->applyFilters(
             $conditions,
-            $this->getObjectTypeName(),
             $assignment->conditions,
         );
     }
@@ -52,7 +52,6 @@ final class UserGroupAssignmentObjectFilterBuilder implements IObjectFilterBuild
     {
         return $this->getHandler()->testUser(
             $user,
-            $this->getObjectTypeName(),
             $assignment->conditions,
         );
     }
@@ -64,5 +63,11 @@ final class UserGroupAssignmentObjectFilterBuilder implements IObjectFilterBuild
         }
 
         return $this->handler;
+    }
+
+    #[\Override]
+    public function isAccessible(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canManageGroupAssignment');
     }
 }

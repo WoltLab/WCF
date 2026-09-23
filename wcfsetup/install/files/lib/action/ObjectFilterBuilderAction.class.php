@@ -6,9 +6,11 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use wcf\data\object\type\ObjectTypeCache;
+use wcf\event\object\filter\ObjectFilterBuilderCollecting;
 use wcf\http\Helper;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\SelectFormField;
@@ -24,21 +26,22 @@ final class ObjectFilterBuilderAction implements RequestHandlerInterface
             $request->getQueryParams(),
             <<<'EOT'
                 array {
-                    objectType: string,
+                    identifier: string,
                 }
                 EOT
         );
-        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
-            'com.woltlab.wcf.objectFilter',
-            $parameters['objectType'],
-        );
 
-        if ($objectType === null) {
+        $event = new ObjectFilterBuilderCollecting();
+        EventHandler::getInstance()->fire($event);
+
+        $builder = $event->getBuilders()[$parameters['identifier']] ?? null;
+        if ($builder === null) {
             throw new IllegalLinkException();
         }
 
-        $builder = $objectType->getProcessor();
-        \assert($builder instanceof IObjectFilterBuilder);
+        if (!$builder->isAccessible()) {
+            throw new PermissionDeniedException();
+        }
 
         $form = $this->getForm($builder);
 
