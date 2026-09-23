@@ -11,5 +11,11 @@ interface IObjectFilterBuilder
      */
     public function getFilters(): array;
 
-    public function getObjectTypeName(): string;
+    // `com.woltlab.wcf.userGroupAssignment`
+    public function getIdentifier(): string;
+
+    /**
+     * Returns true if this builder is accessible for the active user.
+     */
+    public function isAccessible(): bool;
 }

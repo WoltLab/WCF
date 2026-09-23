@@ -7,15 +7,36 @@ use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\MapperBuilder;
 use wcf\action\ObjectFilterBuilderAction;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
-use wcf\system\form\builder\TObjectTypeFormNode;
 use wcf\system\object\filter\builder\IObjectFilterBuilder;
 use wcf\system\request\LinkHandler;
 
 final class ObjectFilterFormField extends AbstractFormField
 {
-    use TObjectTypeFormNode;
-
     protected $templateName = 'shared_objectFilterFormField';
+
+    private IObjectFilterBuilder $builder;
+
+    /**
+     * Sets the builder that provides the available filters.
+     */
+    public function builder(IObjectFilterBuilder $builder): static
+    {
+        $this->builder = $builder;
+
+        return $this;
+    }
+
+    /**
+     * @throws \BadMethodCallException if no builder has been set
+     */
+    public function getBuilder(): IObjectFilterBuilder
+    {
+        if (!isset($this->builder)) {
+            throw new \BadMethodCallException("Builder has not been set for field '{$this->getId()}'.");
+        }
+
+        return $this->builder;
+    }
 
     #[\Override]
     public function readValue(): ObjectFilterFormField
@@ -47,12 +68,6 @@ final class ObjectFilterFormField extends AbstractFormField
         }
     }
 
-    #[\Override]
-    public function getObjectTypeDefinition(): string
-    {
-        return 'com.woltlab.wcf.objectFilter';
-    }
-
     public function toJson(): string
     {
         return \json_encode(
@@ -66,7 +81,7 @@ final class ObjectFilterFormField extends AbstractFormField
         return LinkHandler::getInstance()->getControllerLink(
             ObjectFilterBuilderAction::class,
             [
-                'objectType' => $this->getObjectType()->objectType,
+                'identifier' => $this->getBuilder()->getIdentifier(),
             ],
         );
     }
@@ -97,10 +112,8 @@ final class ObjectFilterFormField extends AbstractFormField
             return $values;
         }
 
-        /** @var IObjectFilterBuilder $builder */
-        $builder = $this->getObjectType()->getProcessor();
         $filters = [];
-        foreach ($builder->getFilters() as $filter) {
+        foreach ($this->getBuilder()->getFilters() as $filter) {
             $filters[$filter->getIdentifier()] = $filter;
         }
 
@@ -117,10 +130,10 @@ final class ObjectFilterFormField extends AbstractFormField
                     'value' => $serializedValue,
                 ];
             },
-            \array_filter(
+            \array_values(\array_filter(
                 $values,
                 static fn($value) => isset($filters[$value[0]]),
-            ),
+            )),
         );
     }
 }

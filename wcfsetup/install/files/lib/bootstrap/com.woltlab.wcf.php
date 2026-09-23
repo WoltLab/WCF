@@ -16,6 +16,7 @@ return new class {
         $this->initSitemapObjects();
         $this->initACPMenuItems();
         $this->initACPSearchProviders();
+        $this->initObjectFilters();
         $this->initLicenseData();
     }
 
@@ -172,6 +173,16 @@ return new class {
         EventHandler::getInstance()->register(
             \wcf\event\acp\search\provider\ProviderCollecting::class,
             \wcf\system\event\listener\AcpSearchProviderCollectingListener::class
+        );
+    }
+
+    private function initObjectFilters(): void
+    {
+        EventHandler::getInstance()->register(
+            \wcf\event\object\filter\ObjectFilterBuilderCollecting::class,
+            static function (\wcf\event\object\filter\ObjectFilterBuilderCollecting $event) {
+                $event->register(new \wcf\system\object\filter\builder\UserGroupAssignmentObjectFilterBuilder());
+            }
         );
     }
 

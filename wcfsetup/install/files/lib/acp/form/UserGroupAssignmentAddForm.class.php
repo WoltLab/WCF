@@ -10,6 +10,7 @@ use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\ObjectFilterFormField;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\TitleFormField;
+use wcf\system\object\filter\builder\UserGroupAssignmentObjectFilterBuilder;
 
 /**
  * Shows the form to create a new automatic user group assignment.
@@ -53,7 +54,7 @@ class UserGroupAssignmentAddForm extends AbstractFormBuilderForm
             BooleanFormField::create('isDisabled')
                 ->label('wcf.acp.group.assignment.isDisabled'),
             ObjectFilterFormField::create('conditions')
-                ->objectType('com.woltlab.wcf.userGroupAssignment')
+                ->builder(new UserGroupAssignmentObjectFilterBuilder())
                 ->required()
         ]);
     }

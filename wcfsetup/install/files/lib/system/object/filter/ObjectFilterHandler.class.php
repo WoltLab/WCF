@@ -5,12 +5,9 @@ namespace wcf\system\object\filter;
 use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\MapperBuilder;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\form\builder\field\SelectFormField;
-use wcf\system\object\filter\builder\IObjectFilterBuilder;
 use wcf\system\object\filter\user\IUserObjectFilter;
 use wcf\system\WCF;
 
@@ -23,6 +20,9 @@ final class ObjectFilterHandler
         private readonly array $filters,
     ) {}
 
+    /**
+     * This method is intended to eventually take over the generation of the form in `ObjectFilterBuilderAction`.
+     */
     public function getFormFields(): void
     {
         $filters = [];
@@ -44,42 +44,16 @@ final class ObjectFilterHandler
     /**
      * @throws MappingError
      */
-    public function applyFilters(PreparedStatementConditionBuilder $conditions, string $objectTypeName, ?string $json): void
+    public function applyFilters(PreparedStatementConditionBuilder $conditions, ?string $json): void
     {
-        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
-            'com.woltlab.wcf.objectFilter',
-            $objectTypeName,
-        );
-        if ($objectType === null) {
-            throw new InvalidObjectTypeException($objectTypeName, 'com.woltlab.wcf.objectFilter');
-        }
-
-        if ($json === null) {
-            $conditions->add('1=0');
-
-            return;
-        }
-
-        /** @var list<array{0: string, 1: string}> $values */
-        $values = (new MapperBuilder())->mapper()->map(
-            <<<'EOT'
-                list<array{0: string, 1: string}>
-                EOT,
-            Source::json($json)
-        );
-
+        $values = $this->unserializeValues($json);
         if ($values === []) {
             $conditions->add('1=0');
 
             return;
         }
 
-        /** @var IObjectFilterBuilder $builder */
-        $builder = $objectType->getProcessor();
-        $filters = [];
-        foreach ($builder->getFilters() as $filter) {
-            $filters[$filter->getIdentifier()] = $filter;
-        }
+        $filters = $this->getFiltersByIdentifier();
 
         $hasActiveFilters = false;
         foreach ($values as [$identifier, $serializedValue]) {
@@ -100,38 +74,17 @@ final class ObjectFilterHandler
         }
     }
 
-    public function testUser(User $user, string $objectTypeName, ?string $json): bool
+    /**
+     * @throws MappingError
+     */
+    public function testUser(User $user, ?string $json): bool
     {
-        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
-            'com.woltlab.wcf.objectFilter',
-            $objectTypeName,
-        );
-        if ($objectType === null) {
-            throw new InvalidObjectTypeException($objectTypeName, 'com.woltlab.wcf.objectFilter');
-        }
-
-        if ($json === null) {
-            return false;
-        }
-
-        /** @var list<array{0: string, 1: string}> $values */
-        $values = (new MapperBuilder())->mapper()->map(
-            <<<'EOT'
-                list<array{0: string, 1: string}>
-                EOT,
-            Source::json($json)
-        );
-
+        $values = $this->unserializeValues($json);
         if ($values === []) {
             return false;
         }
 
-        /** @var IObjectFilterBuilder $builder */
-        $builder = $objectType->getProcessor();
-        $filters = [];
-        foreach ($builder->getFilters() as $filter) {
-            $filters[$filter->getIdentifier()] = $filter;
-        }
+        $filters = $this->getFiltersByIdentifier();
 
         $hasActiveFilters = false;
         foreach ($values as [$identifier, $serializedValue]) {
@@ -139,8 +92,6 @@ final class ObjectFilterHandler
             if ($filter === null) {
                 continue;
             }
-
-            \assert($filter instanceof IUserObjectFilter);
 
             $hasActiveFilters = true;
             if (!$filter->testUser($user, $filter->unserializeValue($serializedValue))) {
@@ -151,5 +102,39 @@ final class ObjectFilterHandler
         // Returns true if there are active filters because any negative test
         // would have returned early.
         return $hasActiveFilters;
+    }
+
+    /**
+     * @return array<string, IUserObjectFilter<mixed>>
+     */
+    private function getFiltersByIdentifier(): array
+    {
+        $filters = [];
+        foreach ($this->filters as $filter) {
+            $filters[$filter->getIdentifier()] = $filter;
+        }
+
+        return $filters;
+    }
+
+    /**
+     * @return list<array{0: string, 1: string}>
+     * @throws MappingError
+     */
+    private function unserializeValues(?string $json): array
+    {
+        if ($json === null) {
+            return [];
+        }
+
+        /** @var list<array{0: string, 1: string}> $values */
+        $values = (new MapperBuilder())->mapper()->map(
+            <<<'EOT'
+                list<array{0: string, 1: string}>
+                EOT,
+            Source::json($json)
+        );
+
+        return $values;
     }
 }
