@@ -44,6 +44,7 @@ final readonly class BigRational extends BigNumber
      * @param BigInteger $numerator        The numerator.
      * @param BigInteger $denominator      The denominator.
      * @param bool       $checkDenominator Whether to check the denominator for negative and zero.
+     * @param bool       $simplify         Whether to simplify the fraction to lowest terms.
      *
      * @throws DivisionByZeroException If the denominator is zero.
      *
@@ -503,6 +504,8 @@ final readonly class BigRational extends BigNumber
      * - `171/70` returns `2.4(428571)`
      * - `1/2` returns `0.5`
      *
+     * @return non-empty-string
+     *
      * @pure
      */
     public function toRepeatingDecimalString(): string
@@ -573,12 +576,10 @@ final readonly class BigRational extends BigNumber
      */
     public function __unserialize(array $data): void
     {
-        /** @phpstan-ignore isset.initializedProperty */
         if (isset($this->numerator)) {
             throw new LogicException('__unserialize() is an internal function, it must not be called directly.');
         }
 
-        /** @phpstan-ignore deadCode.unreachable */
         $this->numerator = $data['numerator'];
         $this->denominator = $data['denominator'];
     }
@@ -587,5 +588,18 @@ final readonly class BigRational extends BigNumber
     protected static function from(BigNumber $number): static
     {
         return $number->toBigRational();
+    }
+
+    #[Override]
+    protected function digitCount(): int
+    {
+        $count = $this->numerator->digitCount();
+
+        // Mirrors toString(), which does not write a denominator of 1.
+        if ($this->denominator->toString() === '1') {
+            return $count;
+        }
+
+        return $count + $this->denominator->digitCount();
     }
 }

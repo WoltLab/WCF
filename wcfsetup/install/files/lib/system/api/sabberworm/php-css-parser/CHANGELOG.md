@@ -20,6 +20,21 @@ Please also have a look at our
 
 ### Documentation
 
+## 9.5.0: Add support for PHP 8.6
+
+### Added
+
+- Add support for PHP 8.6 (#1619)
+
+### Removed
+
+- Remove the `thecodingmachine/safe` dependency (#1622)
+
+### Fixed
+
+- Parse semicolon-terminated `@layer` statements (and other statement at-rules)
+  instead of consuming until the next `{` (#1624)
+
 ## 9.4.0: Deprecations and bugfixes
 
 ### Deprecated
