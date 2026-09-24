@@ -27,8 +27,14 @@ class Empty extends Abstract {
 
               return !field.checked;
 
-            default:
+            default: {
+              const itemList = field.closest(".inputItemList");
+              if (itemList !== null) {
+                return itemList.querySelector("li.item") === null;
+              }
+
               return field.value.trim().length === 0;
+            }
           }
         }
 

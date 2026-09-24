@@ -383,6 +383,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 
             TextFormField::create('urlParameters')
                 ->label('wcf.acp.pip.menuItem.urlParameters')
+                ->description('wcf.acp.pip.menuItem.urlParameters.description')
                 ->maximumLength(255)
                 ->addDependency(
                     ValueFormFieldDependency::create('linkType')
@@ -591,7 +592,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
             [
                 'page' => '',
                 'externalURL' => '',
-                'additionalInternalURL' => [
+                'urlParameters' => [
                     'defaultValue' => '',
                     'cdata' => true,
                 ],

@@ -34,8 +34,8 @@ class PackageList extends DatabaseObjectList
     public static function getTopologicallySortedPackages(): array
     {
         $list = new self();
-        $list->readObjects();
         $list->sqlOrderBy = "packageID ASC";
+        $list->readObjects();
         $pending = $list->getObjects();
 
         $sql = "SELECT  packageID, requirement
@@ -62,6 +62,13 @@ class PackageList extends DatabaseObjectList
                 } else {
                     $newPending[] = $package;
                 }
+            }
+
+            if ($newResult === []) {
+                throw new \RuntimeException(\sprintf(
+                    "Unable to resolve the package dependencies, circular requirements detected for the packages: %s",
+                    \implode(', ', \array_column($pending, 'package')),
+                ));
             }
 
             \array_push($handled, ...\array_column($newResult, 'packageID'));

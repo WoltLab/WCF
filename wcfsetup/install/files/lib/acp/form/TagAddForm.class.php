@@ -77,6 +77,16 @@ class TagAddForm extends AbstractDatabaseObjectBuilderForm
     {
         $contentLanguages = LanguageFactory::getInstance()->getContentLanguages();
 
+        // Tags are always assigned to a language, content without a content
+        // language uses the default language.
+        $defaultLanguageID = LanguageFactory::getInstance()->getDefaultLanguageID();
+        $preselectedLanguageID = null;
+        if (isset($contentLanguages[$defaultLanguageID])) {
+            $preselectedLanguageID = $defaultLanguageID;
+        } elseif (isset($contentLanguages[WCF::getLanguage()->languageID])) {
+            $preselectedLanguageID = WCF::getLanguage()->languageID;
+        }
+
         $this->form->appendChildren([
             FormContainer::create('general')
                 ->appendChildren([
@@ -94,8 +104,9 @@ class TagAddForm extends AbstractDatabaseObjectBuilderForm
                         })
                         ->addValidator(
                             new FormFieldValidator('duplicateTagValidator', function (TextFormField $field) {
-                                $languageIDFormField = $field->getDocument()->getFormField('languageID');
-                                $languageID = $languageIDFormField->getValue();
+                                $languageID = $this->formObject->languageID
+                                    ?? $field->getDocument()->getFormField('languageID')->getValue()
+                                    ?? LanguageFactory::getInstance()->getDefaultLanguageID();
 
                                 $tag = Tag::getTag($field->getValue(), $languageID ?? 0);
                                 if ($tag !== null && $tag->tagID !== $this->formObject?->tagID) {
@@ -112,7 +123,7 @@ class TagAddForm extends AbstractDatabaseObjectBuilderForm
                         ->label('wcf.acp.tag.languageID')
                         ->available($contentLanguages !== [])
                         ->options($contentLanguages)
-                        ->value(isset($contentLanguages[WCF::getLanguage()->languageID]) ? WCF::getLanguage()->languageID : null)
+                        ->value($preselectedLanguageID)
                         ->immutable($this->formAction !== 'create')
                         ->required()
                         ->saveValueCallback(static function (TagBuilder $builder, IFormField $field) {

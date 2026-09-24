@@ -32,8 +32,12 @@ class DevtoolsProjectPipEntryEditForm extends DevtoolsProjectPipEntryAddForm
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['identifier'])) {
-            $this->identifier = StringUtil::trim($_REQUEST['identifier']);
+        // Only read the identifier from the URL because form fields are read
+        // from `$_POST` which takes precedence in `$_REQUEST`. Otherwise, pips
+        // with an `identifier` form field would report the new identifier here
+        // when the identifier is changed.
+        if (isset($_GET['identifier'])) {
+            $this->identifier = StringUtil::trim($_GET['identifier']);
         }
     }
 

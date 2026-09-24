@@ -193,7 +193,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
         } else {
             $this->clip($originX, $originY, $originWidth, $originHeight);
 
-            $this->imagick->resizeImage($targetWidth, $targetHeight, $this->getResizeFilter(), 0);
+            $this->imagick->resizeImage($targetWidth, $targetHeight, $this->getResizeFilter(), 1);
         }
     }
 
@@ -437,7 +437,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
             $parameters = ['filter' => null];
             EventHandler::getInstance()->fireAction($this, 'getResizeFilter', $parameters);
 
-            $filter = $parameters['filter'] ?? \Imagick::FILTER_POINT;
+            $filter = $parameters['filter'] ?? \Imagick::FILTER_BOX;
         }
 
         return $filter;

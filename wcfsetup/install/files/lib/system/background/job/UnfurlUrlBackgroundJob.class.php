@@ -152,7 +152,12 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
                 $image
             );
 
-            $width = $height = 0;
+            // The remote dimensions are the fallback, because the image is
+            // served through the proxy or from the external source whenever the
+            // thumbnail could not be created. Storing `0` for both would make
+            // the image appear as a squared preview.
+            $width = $imageData[0];
+            $height = $imageData[1];
             if ($file !== null) {
                 // The stored file contains the base64 encoded image, see CreateUnfurlUrlImageFile.
                 $decodedImage = \base64_decode(
