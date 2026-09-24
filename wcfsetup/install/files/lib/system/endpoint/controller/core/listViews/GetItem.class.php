@@ -32,7 +32,10 @@ final class GetItem implements IController
             throw new UserInputException('listView', 'invalid');
         }
 
-        $view = new $parameters->listView(...$parameters->listViewParameters);
+        $view = Helper::mapQueryParametersToClass(
+            $parameters->listViewParameters,
+            $parameters->listView
+        );
         // @phpstan-ignore function.alreadyNarrowedType, instanceof.alwaysTrue
         \assert($view instanceof AbstractListView);
 
@@ -68,5 +71,6 @@ final class GetItemParameters
         public readonly array $listViewParameters,
         public readonly bool $allowInteractions = true,
         public readonly bool $allowBulkInteractions = true,
-    ) {}
+    ) {
+    }
 }
