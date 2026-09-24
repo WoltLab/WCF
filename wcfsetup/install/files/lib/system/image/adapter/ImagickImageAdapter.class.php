@@ -437,7 +437,7 @@ class ImagickImageAdapter implements IImageAdapter, ISingleFrameImageAdapter, IW
             $parameters = ['filter' => null];
             EventHandler::getInstance()->fireAction($this, 'getResizeFilter', $parameters);
 
-            $filter = $parameters['filter'] ?? \Imagick::FILTER_BOX;
+            $filter = $parameters['filter'] ?? \Imagick::FILTER_LANCZOS2;
         }
 
         return $filter;
