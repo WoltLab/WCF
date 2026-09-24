@@ -6,7 +6,7 @@
 		{assign var=error value=''}
 	{/if}
 	<dl class="{$option->optionName}Input{if $error} formError{/if}">
-		<dt{if $optionData[cssClassName]} class="{$optionData[cssClassName]}"{/if}><label for="{$option->optionName}">{$langPrefix|concat:$option->optionName|phrase}</label></dt>
+		<dt{if $optionData[cssClassName]} class="{$optionData[cssClassName]}"{/if}><label for="{$option->optionName}">{$option->getTitle()}</label></dt>
 		<dd>{unsafe:$optionData[html]}
 			{if $error}
 				<small class="innerError">
@@ -17,7 +17,7 @@
 					{/if}
 				</small>
 			{/if}
-			<small>{lang __optional=true}{$langPrefix}{$option->optionName}.description{/lang}</small>
+			<small>{$option->getDescription()}</small>
 		</dd>
 	</dl>
 {/foreach}

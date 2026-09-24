@@ -208,7 +208,11 @@ class PackageInstallationDispatcher
 
             VersionTracker::getInstance()->createStorageTables();
 
+            new \wcf\command\l10n\SyncL10nTables()();
+
             new \wcf\command\package\RebuildBootstrapper()();
+
+            (new \wcf\command\l10n\SyncL10nLanguageItems())();
 
             EventHandler::getInstance()->fire(new PackageListChanged());
 

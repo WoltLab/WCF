@@ -4,32 +4,35 @@ namespace wcf\command\user\option;
 
 use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionBuilder;
-use wcf\event\user\option\UserOptionEnabled;
+use wcf\event\user\option\UserOptionUpdated;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\event\EventHandler;
 
 /**
- * Enables a user option.
+ * Updates a user option.
  *
  * @author      Marcel Werk
- * @copyright   2001-2024 WoltLab GmbH
+ * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @since       6.2
+ * @since       6.3
  */
-final class EnableOption
+final class UpdateUserOption
 {
     public function __construct(
-        private readonly UserOption $option,
+        private readonly UserOptionBuilder $builder,
     ) {}
 
-    public function __invoke(): void
+    public function __invoke(): UserOption
     {
-        UserOptionBuilder::forUpdate($this->option)
-            ->setIsDisabled(false)
-            ->update();
+        $option = $this->builder->update();
 
         UserOptionCacheBuilder::getInstance()->reset();
 
-        EventHandler::getInstance()->fire(new UserOptionEnabled($this->option));
+        EventHandler::getInstance()->fire(new UserOptionUpdated(
+            $option,
+            $this->builder
+        ));
+
+        return $option;
     }
 }
