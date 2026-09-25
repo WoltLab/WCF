@@ -11,32 +11,23 @@ use wcf\system\object\filter\user\UserLanguageObjectFilter;
 use wcf\system\WCF;
 
 /**
- * @implements IObjectFilterBuilder<User>
+ * @extends AbstractObjectFilterBuilder<User, IObjectFilter<User, mixed>, ObjectFilterHandler<User>>
  */
-final class NoticeObjectFilterBuilder implements IObjectFilterBuilder
+final class NoticeObjectFilterBuilder extends AbstractObjectFilterBuilder
 {
-    /**
-     * @var list<IObjectFilter<User, mixed>>
-     */
-    private readonly array $filters;
-
-    /**
-     * @var ObjectFilterHandler<User>
-     */
-    private ObjectFilterHandler $handler;
-
-    public function __construct()
+    #[\Override]
+    protected function createFilters(): array
     {
-        $this->filters = [
+        return [
             new UserAvatarObjectFilter(),
             new UserLanguageObjectFilter(),
         ];
     }
 
     #[\Override]
-    public function getFilters(): array
+    protected function createHandler(array $filters): ObjectFilterHandler
     {
-        return $this->filters;
+        return new ObjectFilterHandler($filters);
     }
 
     #[\Override]
@@ -63,17 +54,5 @@ final class NoticeObjectFilterBuilder implements IObjectFilterBuilder
         }
 
         return $this->getHandler()->testObject($user, $notice->conditions);
-    }
-
-    /**
-     * @return ObjectFilterHandler<User>
-     */
-    private function getHandler(): ObjectFilterHandler
-    {
-        if (!isset($this->handler)) {
-            $this->handler = new ObjectFilterHandler($this->getFilters());
-        }
-
-        return $this->handler;
     }
 }
