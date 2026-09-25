@@ -17,6 +17,19 @@ use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\Psr15DialogForm;
 use wcf\system\object\filter\builder\IObjectFilterBuilder;
 
+/**
+ * Provides the dialog to configure a single filter of an object filter builder.
+ *
+ * The builder is selected through the `identifier` query parameter. A GET
+ * request returns the dialog, a POST request validates it and responds with
+ * the identifier of the chosen filter, a human-readable summary and the
+ * serialized value of the filter.
+ *
+ * @author      Alexander Ebert, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since       6.3
+ */
 final class ObjectFilterBuilderAction implements RequestHandlerInterface
 {
     #[\Override]
@@ -81,6 +94,9 @@ final class ObjectFilterBuilderAction implements RequestHandlerInterface
     }
 
     /**
+     * Builds the dialog that offers a selection of the available filters.
+     * The form field of each filter is only shown while it is selected.
+     *
      * @param IObjectFilterBuilder<*> $builder
      */
     private function getForm(IObjectFilterBuilder $builder): Psr15DialogForm

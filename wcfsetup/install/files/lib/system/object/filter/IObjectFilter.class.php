@@ -6,14 +6,30 @@ use wcf\data\DatabaseObject;
 use wcf\system\form\builder\field\AbstractFormField;
 
 /**
+ * Represents a single condition that can be configured for an object filter
+ * and tested against individual objects.
+ *
+ * The configured value is stored in its serialized form and converted back
+ * into its native type before being evaluated.
+ *
+ * @author      Alexander Ebert, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since       6.3
+ *
  * @template TDatabaseObject of DatabaseObject
  * @template TValueType of mixed
  */
 interface IObjectFilter
 {
-    // `com.woltlab.wcf.username`
+    /**
+     * Returns the unique identifier of this filter, e.g. `com.woltlab.wcf.username`.
+     */
     public function getIdentifier(): string;
 
+    /**
+     * Returns the title of this filter that is shown when selecting a filter.
+     */
     public function getTitle(): string;
 
     /**
@@ -22,22 +38,30 @@ interface IObjectFilter
     public function getFormField(): AbstractFormField;
 
     /**
+     * Converts the given value into its string representation for storage.
+     *
      * @param TValueType $value
      */
     public function serializeValue(mixed $value): string;
 
     /**
+     * Restores the value from its string representation created by `serializeValue()`.
+     *
      * @return TValueType
      */
     public function unserializeValue(string $serializedValue): mixed;
 
-    // "In user group <strong>%s</strong>"
     /**
+     * Returns a human-readable summary of the configured value,
+     * e.g. "In user group <strong>%s</strong>".
+     *
      * @param TValueType $value
      */
     public function summarizeValue(mixed $value): string;
 
     /**
+     * Returns whether the given object matches the configured value.
+     *
      * @param TDatabaseObject $object
      * @param TValueType $configuredValue
      */

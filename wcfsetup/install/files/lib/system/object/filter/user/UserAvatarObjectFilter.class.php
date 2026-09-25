@@ -9,6 +9,13 @@ use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\object\filter\IObjectListFilter;
 
 /**
+ * Filters users by whether they have an avatar.
+ *
+ * @author      Alexander Ebert, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since       6.3
+ *
  * @implements IObjectListFilter<User, bool>
  */
 final class UserAvatarObjectFilter implements IObjectListFilter

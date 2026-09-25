@@ -18,7 +18,7 @@ use wcf\system\WCF;
  * The filters can be evaluated against a single user or applied to the
  * conditions of a user list to find all matching users at once.
  *
- * @author      Marcel Werk
+ * @author      Alexander Ebert, Marcel Werk
  * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3

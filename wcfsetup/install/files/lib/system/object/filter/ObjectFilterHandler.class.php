@@ -10,6 +10,17 @@ use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\WCF;
 
 /**
+ * Evaluates the stored filter values against individual objects.
+ *
+ * The filter values are stored as a JSON-encoded list of
+ * `[filterIdentifier, serializedValue]` pairs. An object matches only if it
+ * satisfies all filters (logical AND).
+ *
+ * @author      Alexander Ebert, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since       6.3
+ *
  * @template TDatabaseObject of DatabaseObject
  */
 class ObjectFilterHandler
@@ -43,8 +54,13 @@ class ObjectFilterHandler
     }
 
     /**
+     * Returns whether the given object satisfies all stored filter values.
+     * Values of unknown filters are ignored.
+     *
+     * Returns false if there are no active filters.
+     *
      * @param TDatabaseObject $object
-     * @throws MappingError
+     * @throws MappingError if the stored filter values are malformed
      */
     public function testObject(DatabaseObject $object, ?string $json): bool
     {
@@ -74,6 +90,8 @@ class ObjectFilterHandler
     }
 
     /**
+     * Returns the available filters indexed by their identifier.
+     *
      * @return array<string, IObjectFilter<TDatabaseObject, mixed>>
      */
     protected function getFiltersByIdentifier(): array
@@ -87,8 +105,11 @@ class ObjectFilterHandler
     }
 
     /**
+     * Decodes the stored filter values into a list of
+     * `[filterIdentifier, serializedValue]` pairs.
+     *
      * @return list<array{0: string, 1: string}>
-     * @throws MappingError
+     * @throws MappingError if the stored filter values are malformed
      */
     protected function unserializeValues(?string $json): array
     {

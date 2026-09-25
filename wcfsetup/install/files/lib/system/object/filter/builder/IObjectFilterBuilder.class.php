@@ -12,7 +12,7 @@ use wcf\system\object\filter\IObjectFilter;
  * Builders are registered through the `ObjectFilterBuilderCollecting` event
  * and are addressed by their identifier when the filter dialog is requested.
  *
- * @author      Marcel Werk
+ * @author      Alexander Ebert, Marcel Werk
  * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3

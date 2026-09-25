@@ -10,6 +10,13 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\object\filter\IObjectListFilter;
 
 /**
+ * Filters users by their interface language. The value is the id of the language.
+ *
+ * @author      Alexander Ebert, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since       6.3
+ *
  * @implements IObjectListFilter<User, int>
  */
 final class UserLanguageObjectFilter implements IObjectListFilter

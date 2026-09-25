@@ -10,6 +10,17 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\object\filter\builder\IObjectFilterBuilder;
 use wcf\system\request\LinkHandler;
 
+/**
+ * Form field to configure a list of object filters provided by an object filter builder.
+ *
+ * The value is stored as a JSON-encoded list of `[filterIdentifier, serializedValue]`
+ * pairs, which is the format expected by `ObjectFilterHandler`.
+ *
+ * @author      Alexander Ebert, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since       6.3
+ */
 final class ObjectFilterFormField extends AbstractFormField
 {
     protected $templateName = 'shared_objectFilterFormField';
@@ -32,6 +43,8 @@ final class ObjectFilterFormField extends AbstractFormField
     }
 
     /**
+     * Returns the builder that provides the available filters.
+     *
      * @return IObjectFilterBuilder<*>
      * @throws \BadMethodCallException if no builder has been set
      */
@@ -74,6 +87,13 @@ final class ObjectFilterFormField extends AbstractFormField
         }
     }
 
+    /**
+     * Returns the configured filters as JSON for the client-side filter builder.
+     * Each filter consists of its identifier, a human-readable summary and the
+     * serialized value.
+     *
+     * @throws MappingError if the value of this field is malformed
+     */
     public function toJson(): string
     {
         return \json_encode(
@@ -82,6 +102,9 @@ final class ObjectFilterFormField extends AbstractFormField
         );
     }
 
+    /**
+     * Returns the URL of the dialog that is used to add a new filter.
+     */
     public function getEndpoint(): string
     {
         return LinkHandler::getInstance()->getControllerLink(
@@ -93,12 +116,15 @@ final class ObjectFilterFormField extends AbstractFormField
     }
 
     /**
+     * Decodes the given value and enriches each filter with a human-readable
+     * summary. Values of unknown filters are ignored.
+     *
      * @return list<array{
      *  identifier: string,
      *  summary: string,
      *  value: string,
      * }>
-     * @throws MappingError
+     * @throws MappingError if the given value is malformed
      */
     private function unserializeFilters(?string $json): array
     {
