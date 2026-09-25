@@ -181,6 +181,7 @@ return new class {
         EventHandler::getInstance()->register(
             \wcf\event\object\filter\ObjectFilterBuilderCollecting::class,
             static function (\wcf\event\object\filter\ObjectFilterBuilderCollecting $event) {
+                $event->register(new \wcf\system\object\filter\builder\NoticeObjectFilterBuilder());
                 $event->register(new \wcf\system\object\filter\builder\UserGroupAssignmentObjectFilterBuilder());
             }
         );

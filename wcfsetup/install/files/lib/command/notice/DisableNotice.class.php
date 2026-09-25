@@ -3,7 +3,7 @@
 namespace wcf\command\notice;
 
 use wcf\data\notice\Notice;
-use wcf\data\notice\NoticeEditor;
+use wcf\data\notice\NoticeBuilder;
 use wcf\event\notice\NoticeDisabled;
 use wcf\system\event\EventHandler;
 
@@ -21,11 +21,11 @@ final class DisableNotice
 
     public function __invoke(): void
     {
-        (new NoticeEditor($this->notice))->update([
-            'isDisabled' => 1,
-        ]);
+        NoticeBuilder::forUpdate($this->notice)
+            ->setIsDisabled(true)
+            ->update();
 
-        NoticeEditor::resetCache();
+        NoticeBuilder::resetCache();
 
         $event = new NoticeDisabled($this->notice);
         EventHandler::getInstance()->fire($event);

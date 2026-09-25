@@ -25,6 +25,7 @@ use wcf\util\StringUtil;
  * @property-read   int     $showOrder      position of the notice in relation to the other notices
  * @property-read   0|1     $isDisabled     is `1` if the notice is disabled and thus not shown, otherwise `0`
  * @property-read   0|1     $isDismissible  is `1` if the notice can be dismissed by users, otherwise `0`
+ * @property-read   ?string $conditions     serialized object filters the active user must match or `null` if the notice has no filters
  */
 class Notice extends DatabaseObject implements IRouteController, \Stringable
 {

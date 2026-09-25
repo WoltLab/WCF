@@ -6,7 +6,7 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\notice\Notice;
-use wcf\data\notice\NoticeAction;
+use wcf\command\notice\DeleteNotice as DeleteNoticeCommand;
 use wcf\http\Helper;
 use wcf\system\endpoint\DeleteRequest;
 use wcf\system\endpoint\IController;
@@ -30,7 +30,7 @@ final class DeleteNotice implements IController
 
         $notice = Helper::fetchObjectFromRequestParameter($variables['id'], Notice::class);
 
-        (new NoticeAction([$notice], 'delete'))->executeAction();
+        new DeleteNoticeCommand($notice)();
 
         return new JsonResponse([]);
     }

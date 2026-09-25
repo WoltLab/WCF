@@ -105,12 +105,6 @@ parameters:
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
-			count: 3
-			path: wcfsetup/install/files/lib/acp/form/NoticeAddForm.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
 			count: 1
 			path: wcfsetup/install/files/lib/acp/form/NotificationPresetSettingsForm.class.php
 

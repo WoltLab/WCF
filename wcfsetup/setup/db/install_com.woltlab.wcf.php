@@ -2157,6 +2157,7 @@ return [
                 ->defaultValue(0),
             DefaultFalseBooleanDatabaseTableColumn::create('isDisabled'),
             DefaultFalseBooleanDatabaseTableColumn::create('isDismissible'),
+            JsonDatabaseTableColumn::create('conditions'),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()

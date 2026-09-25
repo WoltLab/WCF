@@ -4,7 +4,9 @@ namespace wcf\system\notice;
 
 use wcf\data\notice\Notice;
 use wcf\system\cache\builder\NoticeCacheBuilder;
+use wcf\system\object\filter\builder\NoticeObjectFilterBuilder;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 
 /**
  * Handles notice-related matters.
@@ -44,17 +46,16 @@ class NoticeHandler extends SingletonFactory
             return [];
         }
 
+        $filterBuilder = new NoticeObjectFilterBuilder();
+
         $notices = [];
         foreach ($this->notices as $notice) {
             if ($notice->isDismissed()) {
                 continue;
             }
 
-            $conditions = $notice->getConditions();
-            foreach ($conditions as $condition) {
-                if (!$condition->getObjectType()->getProcessor()->showContent($condition)) {
-                    continue 2;
-                }
+            if (!$filterBuilder->testUser($notice, WCF::getUser())) {
+                continue;
             }
 
             $notices[$notice->noticeID] = $notice;

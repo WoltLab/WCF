@@ -1264,6 +1264,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.notice.add"><![CDATA[Hinweis hinzufügen]]></item>
 		<item name="wcf.acp.notice.cssClassName"><![CDATA[Darstellung]]></item>
 		<item name="wcf.acp.notice.cssClassName.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} aus den vorgegebenen Darstellungen wählen oder eine eigene Darstellung durch Angabe einer <abbr title="Cascading Style Sheets">CSS</abbr>-Klasse nutzen.]]></item>
+		<item name="wcf.acp.notice.cssClassName.custom"><![CDATA[Eigene CSS-Klasse]]></item>
 		<item name="wcf.acp.notice.cssClassName.error"><![CDATA[Fehlermeldung]]></item>
 		<item name="wcf.acp.notice.cssClassName.error.invalid"><![CDATA[Die gewählte CSS-Klasse ist ungültig.]]></item>
 		<item name="wcf.acp.notice.cssClassName.info"><![CDATA[Information]]></item>
@@ -1277,6 +1278,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.notice.conditions.pointInTime.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Leg{else}Legen Sie{/if} den Zeitpunkt fest, zu dem der Hinweis angezeigt werden soll.]]></item>
 		<item name="wcf.acp.notice.conditions.user"><![CDATA[Aktiver Benutzer]]></item>
 		<item name="wcf.acp.notice.conditions.user.description"><![CDATA[Der aktive Benutzer muss die folgenden Bedingungen erfüllen, damit der Hinweis angezeigt wird.]]></item>
+		<item name="wcf.acp.notice.customCssClassName"><![CDATA[CSS-Klasse]]></item>
 		<item name="wcf.acp.notice.edit"><![CDATA[Hinweis bearbeiten]]></item>
 		<item name="wcf.acp.notice.example"><![CDATA[Beispieltext für einen Hinweis]]></item>
 		<item name="wcf.acp.notice.isDisabled"><![CDATA[Hinweis deaktivieren]]></item>
